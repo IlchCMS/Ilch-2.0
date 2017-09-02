@@ -210,7 +210,6 @@ class Index extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $userData = $this->getRequest()->getPost('user');
 
-                $generated = false;
                 if (!empty($userData['password'])) {
                     $userData['password'] = (new PasswordService())->hash($userData['password']);
                 } else {
@@ -221,7 +220,6 @@ class Index extends \Ilch\Controller\Admin
                         $password .= $pool{rand(0, strlen($pool)-1)};
                     }
                     $userData['password'] = (new PasswordService())->hash($password);
-                    $generated = true;
                 }
 
                 $user = $userMapper->loadFromArray($userData);
@@ -241,54 +239,54 @@ class Index extends \Ilch\Controller\Admin
                     $user->setLocale($this->getTranslator()->getLocale());
                 }
 
-                if (!empty($userId) && empty($userData['id'])) {
-                    if ($generated) {
-                        $selector = bin2hex(openssl_random_pseudo_bytes(9));
-                        $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
-                        $user->setSelector($selector);
-                        $user->setConfirmedCode($confirmedCode);
+                if (empty($userData['password']) AND !$this->getRequest()->getParam('id')) {
+                    $selector = bin2hex(openssl_random_pseudo_bytes(9));
+                    $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
+                    $user->setSelector($selector);
+                    $user->setConfirmedCode($confirmedCode);
 
-                        $name = $user->getName();
-                        $email = $user->getEmail();
-                        $sitetitle = $this->getConfig()->get('page_title');
-                        $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
-                        $date = new \Ilch\Date();
-                        $mailContent = $emailsMapper->getEmail('user', 'assign_password_mail', $user->getLocale());
+                    $name = $user->getName();
+                    $email = $user->getEmail();
+                    $sitetitle = $this->getConfig()->get('page_title');
+                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                    $date = new \Ilch\Date();
+                    $mailContent = $emailsMapper->getEmail('user', 'assign_password_mail', $user->getLocale());
 
-                        $layout = '';
-                        if (!empty($_SESSION['layout'])) {
-                            $layout = $_SESSION['layout'];
-                        }
-
-                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php');
-                        } else {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
-                        }
-                        $messageReplace = [
-                            '{content}' => $mailContent->getText(),
-                            '{sitetitle}' => $sitetitle,
-                            '{date}' => $date->format("l, d. F Y", true),
-                            '{name}' => $name,
-                            '{confirm}' => $confirmCode,
-                            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
-                        ];
-                        $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
-
-                        $mail = new \Ilch\Mail();
-                        $mail->setFromName($this->getConfig()->get('page_title'))
-                            ->setFromEmail($this->getConfig()->get('standardMail'))
-                            ->setToName($name)
-                            ->setToEmail($email)
-                            ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                            ->setMessage($message)
-                            ->sent();
+                    $layout = '';
+                    if (!empty($_SESSION['layout'])) {
+                        $layout = $_SESSION['layout'];
                     }
 
-                    $userId = $userMapper->save($user);
+                    if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php');
+                    } else {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
+                    }
+                    $messageReplace = [
+                        '{content}' => $mailContent->getText(),
+                        '{sitetitle}' => $sitetitle,
+                        '{date}' => $date->format("l, d. F Y", true),
+                        '{name}' => $name,
+                        '{confirm}' => $confirmCode,
+                        '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                    ];
+                    $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
+                    $mail = new \Ilch\Mail();
+                    $mail->setFromName($this->getConfig()->get('page_title'))
+                        ->setFromEmail($this->getConfig()->get('standardMail'))
+                        ->setToName($name)
+                        ->setToEmail($email)
+                        ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                        ->setMessage($message)
+                        ->sent();
+                }
+
+                $userId = $userMapper->save($user);
+
+                if (!empty($userId) && empty($userData['id'])) {
                     $this->addMessage('newUserMsg');
                 } else {
-                    $userId = $userMapper->save($user);
                     $this->addMessage('success');
                 }
                 $this->redirect()
