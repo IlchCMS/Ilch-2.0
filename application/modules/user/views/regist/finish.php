@@ -13,6 +13,8 @@
             <br /><br />
         <?php if ($this->get('regist_confirm') == '1'): ?>
             <?=$this->getTranslator()->trans('registerMailSent', $this->escape($_SESSION["email"])) ?>
+        <?php elseif ($this->get('regist_setfree') == '1'): ?>
+            <?=$this->getTrans('registerSetfree') ?>
         <?php else: ?>
             <?=$this->getTrans('readyToLogin') ?>
         <?php endif; ?>

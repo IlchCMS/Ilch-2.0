@@ -56,21 +56,28 @@ class Settings extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('regist_accept', $this->getRequest()->getPost('regist_accept'));
-            $this->getConfig()->set('regist_confirm', $this->getRequest()->getPost('regist_confirm'));
-            $this->getConfig()->set('avatar_height', $this->getRequest()->getPost('avatar_height'));
-            $this->getConfig()->set('avatar_width', $this->getRequest()->getPost('avatar_width'));
-            $this->getConfig()->set('avatar_size', $this->getRequest()->getPost('avatar_size'));
-            $this->getConfig()->set('avatar_filetypes', strtolower($this->getRequest()->getPost('avatar_filetypes')));
-            $this->getConfig()->set('usergallery_allowed', $this->getRequest()->getPost('usergallery_allowed'));
-            $this->getConfig()->set('usergallery_filetypes', strtolower($this->getRequest()->getPost('usergallery_filetypes')));
-            $this->getConfig()->set('regist_rules', $this->getRequest()->getPost('regist_rules'));
-            $this->getConfig()->set('user_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
+            if ($this->getRequest()->getPost('regist_confirm') == 1) {
+                $this->getConfig()->set('regist_setfree', 0);
+            } else {
+                $this->getConfig()->set('regist_setfree', $this->getRequest()->getPost('regist_setfree'));
+            }
+
+            $this->getConfig()->set('regist_accept', $this->getRequest()->getPost('regist_accept'))
+                ->set('regist_confirm', $this->getRequest()->getPost('regist_confirm'))
+                ->set('avatar_height', $this->getRequest()->getPost('avatar_height'))
+                ->set('avatar_width', $this->getRequest()->getPost('avatar_width'))
+                ->set('avatar_size', $this->getRequest()->getPost('avatar_size'))
+                ->set('avatar_filetypes', strtolower($this->getRequest()->getPost('avatar_filetypes')))
+                ->set('usergallery_allowed', $this->getRequest()->getPost('usergallery_allowed'))
+                ->set('usergallery_filetypes', strtolower($this->getRequest()->getPost('usergallery_filetypes')))
+                ->set('regist_rules', $this->getRequest()->getPost('regist_rules'))
+                ->set('user_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
             $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'))
             ->set('regist_confirm', $this->getConfig()->get('regist_confirm'))
+            ->set('regist_setfree', $this->getConfig()->get('regist_setfree'))
             ->set('avatar_height', $this->getConfig()->get('avatar_height'))
             ->set('avatar_width', $this->getConfig()->get('avatar_width'))
             ->set('avatar_size', $this->getConfig()->get('avatar_size'))

@@ -71,16 +71,16 @@ class Regist extends \Ilch\Controller\Frontend
                 $emailsMapper = new EmailsMapper();
 
                 $model = new UserModel();
-                if ($this->getConfig()->get('regist_confirm') == 0) {
+                if ($this->getConfig()->get('regist_confirm') == 0 AND $this->getConfig()->get('regist_setfree') == 0) {
                     $model->setDateConfirmed($currentDate->format("Y-m-d H:i:s", true));
                 } else {
                     $selector = bin2hex(openssl_random_pseudo_bytes(9));
                     // 33 bytes instead of 32 bytes just that the confirmedCode to confirm a registration
                     // is different from the one to change a password and therefore can only be used for this purpose.
                     $confirmedCode = bin2hex(openssl_random_pseudo_bytes(33));
-                    $model->setSelector($selector);
-                    $model->setConfirmedCode($confirmedCode);
-                    $model->setConfirmed(0);
+                    $model->setSelector($selector)
+                        ->setConfirmedCode($confirmedCode)
+                        ->setConfirmed(0);
                 }
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setPassword((new PasswordService())->hash($this->getRequest()->getPost('password')))
@@ -147,7 +147,8 @@ class Regist extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('step3to3'), ['action' => 'finish']);
 
-        $this->getView()->set('regist_confirm', $this->getConfig()->get('regist_confirm'));    
+        $this->getView()->set('regist_confirm', $this->getConfig()->get('regist_confirm'))
+            ->set('regist_setfree', $this->getConfig()->get('regist_setfree'));
     }
 
     public function confirmAction()

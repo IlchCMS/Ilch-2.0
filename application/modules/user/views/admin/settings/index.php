@@ -22,10 +22,26 @@
             </div>
             <div class="col-lg-4">
                 <div class="flipswitch">
-                    <input type="radio" class="flipswitch-input" id="regist-confirm-yes" name="regist_confirm" value="1" <?php if ($this->get('regist_confirm') == '1') { echo 'checked="checked"'; } ?> />  
+                    <input type="radio" class="flipswitch-input" id="regist-confirm-yes" name="regist_confirm" value="1" <?php if ($this->get('regist_confirm') == '1') { echo 'checked="checked"'; } ?> />
                     <label for="regist-confirm-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                    <input type="radio" class="flipswitch-input" id="regist-confirm-no" name="regist_confirm" value="0" <?php if ($this->get('regist_confirm') != '1') { echo 'checked="checked"'; } ?> />  
+                    <input type="radio" class="flipswitch-input" id="regist-confirm-no" name="regist_confirm" value="0" <?php if ($this->get('regist_confirm') != '1') { echo 'checked="checked"'; } ?> />
                     <label for="regist-confirm-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                    <span class="flipswitch-selection"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="registSetfree" <?php if ($this->get('regist_accept') == '1' AND $this->get('regist_confirm') == '1') { echo 'class="hidden"'; } ?>>
+        <div class="form-group">
+            <div class="col-lg-2 control-label">
+                <?=$this->getTrans('setfreeRegistration') ?>:
+            </div>
+            <div class="col-lg-4">
+                <div class="flipswitch">
+                    <input type="radio" class="flipswitch-input" id="regist-setfree-yes" name="regist_setfree" value="1" <?php if ($this->get('regist_setfree') == '1') { echo 'checked="checked"'; } ?> />
+                    <label for="regist-setfree-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                    <input type="radio" class="flipswitch-input" id="regist-setfree-no" name="regist_setfree" value="0" <?php if ($this->get('regist_setfree') != '1') { echo 'checked="checked"'; } ?> />
+                    <label for="regist-setfree-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                     <span class="flipswitch-selection"></span>
                 </div>
             </div>
@@ -144,13 +160,22 @@
 <script>
 $('[name="regist_accept"]').click(function () {
     if ($(this).val() == "1") {
+        $('#registSetfree').removeClass('hidden');
         $('#registRules').removeClass('hidden');
         $('#rulesForRegist').removeClass('hidden');
         $('#registAccept').removeClass('hidden');
     } else {
+        $('#registSetfree').addClass('hidden');
         $('#registRules').addClass('hidden');
         $('#rulesForRegist').addClass('hidden');
         $('#registAccept').addClass('hidden');
-        }
+    }
+});
+$('[name="regist_confirm"]').click(function () {
+    if ($(this).val() == "0") {
+        $('#registSetfree').removeClass('hidden');
+    } else {
+        $('#registSetfree').addClass('hidden');
+    }
 });
 </script>
