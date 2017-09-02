@@ -307,6 +307,22 @@ class Config extends \Ilch\Config\Install
                       <p>{confirm}</p>
                       <p>&nbsp;</p>
                       <p>Best regards</p>
+                      <p>Administrator</p>", "en_EN"),
+                ("user", "assign_password_mail", "Benutzerkonto angelegt", "<p>Hallo <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>es wurde ein Benutzerkonto auf <i>{sitetitle}</i> angelegt.
+                      <p>Um Ihr Benutzerkonto zu aktivieren und ein Passwort zu vergeben klicken Sie Bitte auf folgenden Link.</p>
+                      <p>{confirm}</p>
+                      <p>&nbsp;</p>
+                      <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                      <p>Administrator</p>", "de_DE"),
+                ("user", "assign_password_mail", "New Password", "<p>Hello <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>a user account at <i>{sitetitle}</i> has been created.
+                      <p>To activate your user account and assign a password, please click at the following link.</p>
+                      <p>{confirm}</p>
+                      <p>&nbsp;</p>
+                      <p>Best regards</p>
                       <p>Administrator</p>", "en_EN");';
     }
 
