@@ -52,7 +52,7 @@ if ($this->getUser()) {
                         <dd class="posts"><?=$this->getTrans('replies') ?> / <?=$this->getTrans('views') ?></dd>
                         <dd class="lastpost"><span><?=$this->getTrans('lastPost') ?></span></dd>
                         <?php if ($forumEdit): ?>
-                            <dd class="forumEdit"><input type="checkbox" class="check_all" id="allTopics" data-childs="check_topics" onclick="validate()" /></dd>
+                            <dd class="forumEdit"><input type="checkbox" class="check_all" id="allTopics" data-childs="check_topics" /></dd>
                         <?php endif; ?>
                     </dl>
                 </li>
@@ -142,7 +142,7 @@ if ($this->getUser()) {
                                     </div>
                                 </dd>
                                 <?php if ($forumEdit): ?>
-                                    <dd class="forumEdit"><input type="checkbox" name="check_topics[]" value="<?=$topic->getId() ?>" onclick="validate(<?=$topic->getId() ?>)" /></dd>
+                                    <dd class="forumEdit"><input type="checkbox" name="check_topics[]" value="<?=$topic->getId() ?>" /></dd>
                                 <?php endif; ?>
                             </dl>
                         </li>
@@ -211,30 +211,29 @@ if ($this->getUser()) {
 <script>
 $('.row.tack').last().addClass('last');
 
-function validate() {
+$('input[type=checkbox]').change(function () {
     var checked = false,
         checkboxes = document.getElementsByName('check_topics[]'),
-        allCheckbox = document.getElementById('allTopics'),
-        i = 0;
+        allCheckbox = document.getElementById('allTopics');
 
     if (allCheckbox.checked) {
         checked = true;
     }
 
-    for (i; i < checkboxes.length; i++) {
+    for (i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
             checked = true;
         }
     }
 
     if (!checked) {
-        $('#topicDelete').attr('disabled', 'disabled');
-        $('#topicMove').attr('disabled', 'disabled');
-        $('#topicChangeStatus').attr('disabled', 'disabled');
+        $('#topicDelete').prop('disabled', true);
+        $('#topicMove').prop('disabled', true);
+        $('#topicChangeStatus').prop('disabled', true);
     } else {
-        $('#topicDelete').removeAttr('disabled');
-        $('#topicMove').removeAttr('disabled');
-        $('#topicChangeStatus').removeAttr('disabled');
+        $('#topicDelete').prop('disabled', false);
+        $('#topicMove').prop('disabled', false);
+        $('#topicChangeStatus').prop('disabled', false);
     }
-}
+});
 </script>
