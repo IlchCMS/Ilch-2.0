@@ -12,43 +12,43 @@ if ($user->getId()) {
 <form action="<?=$this->getUrl(['action' => 'treat']) ?>" method="POST" class="form-horizontal" id="userForm">
     <?=$this->getTokenField() ?>
     <input type="hidden"
-           name="user[id]"
+           name="id"
            value="<?=$user->getId() ?>" />
-    <div class="form-group" <?=$this->validation()->hasError('userName') ? 'has-error' : '' ?>">
-        <label for="userName" class="col-lg-3 control-label">
+    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+        <label for="name" class="col-lg-3 control-label">
             <?=$this->getTrans('userName') ?>
         </label>
         <div class="col-lg-9">
             <input type="text"
                    class="form-control required"
-                   id="userName"
-                   name="user[name]"
+                   id="name"
+                   name="name"
                    placeholder="<?=$this->getTrans('userName') ?>"
-                   value="<?=$this->escape($user->getName()) ?>" />
+                   value="<?=($this->originalInput('name') != '') ? $this->escape($this->originalInput('name')) : $this->escape($user->getName()) ?>" />
         </div>
     </div>
-    <div class="form-group" <?=$this->validation()->hasError('userEmail') ? 'has-error' : '' ?>">
-        <label for="userEmail" class="col-lg-3 control-label">
+    <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+        <label for="email" class="col-lg-3 control-label">
             <?=$this->getTrans('userEmail') ?>
         </label>
         <div class="col-lg-9">
             <input type="text"
                    class="form-control required email"
-                   id="userEmail"
-                   name="user[email]"
+                   id="email"
+                   name="email"
                    placeholder="<?=$this->getTrans('userEmail') ?>"
-                   value="<?=$this->escape($user->getEmail()) ?>" />
+                   value="<?=($this->originalInput('email') != '') ? $this->escape($this->originalInput('email')) : $this->escape($user->getEmail()) ?>" />
         </div>
     </div>
-    <div class="form-group" <?=$this->validation()->hasError('userPassword') ? 'has-error' : '' ?>">
-        <label for="userPassword" class="col-lg-3 control-label">
+    <div class="form-group <?=$this->validation()->hasError('userPassword') ? 'has-error' : '' ?>">
+        <label for="password" class="col-lg-3 control-label">
             <?=$this->getTrans('userPassword') ?>
         </label>
         <div class="col-lg-9">
             <input type="password"
                    class="form-control"
-                   id="userPassword"
-                   name="user[password]"
+                   id="password"
+                   name="password"
                    placeholder="<?=$this->getTrans('userPassword') ?>"
                    value="" />
         </div>
@@ -98,9 +98,9 @@ if ($user->getId()) {
         </div>
         <div class="col-lg-9">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="opt-gallery-yes" name="user[opt_gallery]" value="1" <?php if ($user->getOptGallery() == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="opt-gallery-yes" name="opt_gallery" value="1" <?php if ($user->getOptGallery() == '1') { echo 'checked="checked"'; } ?> />
                 <label for="opt-gallery-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="opt-gallery-no" name="user[opt_gallery]" value="0" <?php if ($user->getOptGallery() != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="opt-gallery-no" name="opt_gallery" value="0" <?php if ($user->getOptGallery() != '1') { echo 'checked="checked"'; } ?> />
                 <label for="opt-gallery-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -113,7 +113,7 @@ if ($user->getId()) {
         <div class="col-lg-9">
             <select class="chosen-select form-control"
                     id="assignedGroups"
-                    name="user[groups][]"
+                    name="groups[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
                     multiple>
                 <?php

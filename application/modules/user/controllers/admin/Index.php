@@ -188,7 +188,7 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat']);
 
         if ($this->getRequest()->isPost()) {
-            $userData = $this->getRequest()->getPost('user');
+            $userData = $this->getRequest()->getPost();
 
             $rules = [
                 'name' => 'required|unique:users,name',
@@ -207,7 +207,7 @@ class Index extends \Ilch\Controller\Admin
                 'email' => 'userEmail'
             ]);
 
-            $validation = Validation::create($this->getRequest()->getPost('user'), $rules);
+            $validation = Validation::create($this->getRequest()->getPost(), $rules);
 
             if ($validation->isValid()) {
                 $generated = false;
@@ -287,7 +287,7 @@ class Index extends \Ilch\Controller\Admin
 
                 $userId = $userMapper->save($user);
 
-                if (!empty($userId) && empty($userData['id'])) {
+                if (empty($userData['id'])) {
                     $this->addMessage('newUserMsg');
                 } else {
                     $this->addMessage('success');
@@ -297,10 +297,17 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $redirectTarget = ['action' => 'treat'];
+            if (empty($userData['id'])) {
+                $redirectTarget = ['action' => 'treat'];
+            } else {
+                $redirectTarget = ['action' => 'treat', 'id' => $userData['id']];
+            }
+
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
+                ->to($redirectTarget);
         }
 
         if (empty($userId)) {
