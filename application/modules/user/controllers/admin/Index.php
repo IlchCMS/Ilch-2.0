@@ -210,6 +210,7 @@ class Index extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $userData = $this->getRequest()->getPost('user');
 
+                $generated = false;
                 if (!empty($userData['password'])) {
                     $userData['password'] = (new PasswordService())->hash($userData['password']);
                 } else {
@@ -220,6 +221,8 @@ class Index extends \Ilch\Controller\Admin
                         $password .= $pool{rand(0, strlen($pool)-1)};
                     }
                     $userData['password'] = (new PasswordService())->hash($password);
+
+                    $generated = true;
                 }
 
                 $user = $userMapper->loadFromArray($userData);
@@ -239,7 +242,7 @@ class Index extends \Ilch\Controller\Admin
                     $user->setLocale($this->getTranslator()->getLocale());
                 }
 
-                if (empty($userData['password']) AND !$this->getRequest()->getParam('id')) {
+                if ($generated AND !$this->getRequest()->getParam('id')) {
                     $selector = bin2hex(openssl_random_pseudo_bytes(9));
                     $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
                     $user->setSelector($selector);
