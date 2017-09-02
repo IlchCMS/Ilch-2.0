@@ -223,6 +223,7 @@ $('input[type=checkbox]').change(function () {
 
     for (i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
+            checked = true;
             checkedBoxes++;
         }
     }
