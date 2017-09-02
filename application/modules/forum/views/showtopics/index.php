@@ -213,6 +213,7 @@ $('.row.tack').last().addClass('last');
 
 $('input[type=checkbox]').change(function () {
     var checked = false,
+        checkedBoxes = 0,
         checkboxes = document.getElementsByName('check_topics[]'),
         allCheckbox = document.getElementById('allTopics');
 
@@ -222,8 +223,12 @@ $('input[type=checkbox]').change(function () {
 
     for (i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
-            checked = true;
+            checkedBoxes++;
         }
+    }
+
+    if (checkedBoxes == 0) {
+        checked = false;
     }
 
     if (!checked) {
