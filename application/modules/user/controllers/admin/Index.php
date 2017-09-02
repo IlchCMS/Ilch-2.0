@@ -214,15 +214,17 @@ class Index extends \Ilch\Controller\Admin
                 if (!empty($userData['password'])) {
                     $userData['password'] = (new PasswordService())->hash($userData['password']);
                 } else {
-                    $pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+                    if (empty($userData['id'])) {
+                        $pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 
-                    $password = '';
-                    for ($i = 0; $i < 10; $i++) {
-                        $password .= $pool{rand(0, strlen($pool)-1)};
+                        $password = '';
+                        for ($i = 0; $i < 10; $i++) {
+                            $password .= $pool{rand(0, strlen($pool)-1)};
+                        }
+                        $userData['password'] = (new PasswordService())->hash($password);
+
+                        $generated = true;
                     }
-                    $userData['password'] = (new PasswordService())->hash($password);
-
-                    $generated = true;
                 }
 
                 $user = $userMapper->loadFromArray($userData);
@@ -293,7 +295,7 @@ class Index extends \Ilch\Controller\Admin
                     $this->addMessage('success');
                 }
                 $this->redirect()
-                    ->to(['action' => 'treat']);
+                    ->to(['action' => 'index']);
             }
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
