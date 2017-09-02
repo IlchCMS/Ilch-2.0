@@ -46,7 +46,7 @@ if ($user->getId()) {
         </label>
         <div class="col-lg-9">
             <input type="password"
-                   class="form-control required"
+                   class="form-control"
                    id="userPassword"
                    name="user[password]"
                    placeholder="<?=$this->getTrans('userPassword') ?>"
