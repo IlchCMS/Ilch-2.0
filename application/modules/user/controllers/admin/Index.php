@@ -188,28 +188,28 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat']);
 
         if ($this->getRequest()->isPost()) {
+            $userData = $this->getRequest()->getPost('user');
+
             $rules = [
-                'email' => 'required|email|unique:users,email',
-                'name' => 'required|unique:users,name'
+                'name' => 'required|unique:users,name',
+                'email' => 'required|email|unique:users,email'
                 ];
 
-            if ($this->getRequest()->getParam('id')) {
+            if ($userData['id']) {
                 $rules = [
-                    'email' => 'required|email|unique:users,email,'.$this->getRequest()->getParam('id'),
-                    'name' => 'required|unique:users,name'
+                    'name' => 'required|unique:users,name,'.$userData['id'],
+                    'email' => 'required|email|unique:users,email,'.$userData['id']
                     ];
             }
 
             Validation::setCustomFieldAliases([
-                'email' => 'userEmail',
-                'name' => 'userName'
+                'name' => 'userName',
+                'email' => 'userEmail'
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost('user'), $rules);
 
             if ($validation->isValid()) {
-                $userData = $this->getRequest()->getPost('user');
-
                 $generated = false;
                 if (!empty($userData['password'])) {
                     $userData['password'] = (new PasswordService())->hash($userData['password']);
@@ -242,7 +242,7 @@ class Index extends \Ilch\Controller\Admin
                     $user->setLocale($this->getTranslator()->getLocale());
                 }
 
-                if ($generated AND !$this->getRequest()->getParam('id')) {
+                if ($generated AND !empty($userData['id'])) {
                     $selector = bin2hex(openssl_random_pseudo_bytes(9));
                     $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
                     $user->setSelector($selector);
