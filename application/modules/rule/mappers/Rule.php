@@ -21,7 +21,7 @@ class Rule extends \Ilch\Mapper
         $rulesArray = $this->db()->select('*')
             ->from('rules')
             ->where($where)
-            ->order(['paragraph' => 'ASC'])
+            ->order(['position' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -32,43 +32,12 @@ class Rule extends \Ilch\Mapper
         $rules = [];
         foreach ($rulesArray as $rule) {
             $ruleModel = new RuleModel();
-            $ruleModel->setId($rule['id']);
-            $ruleModel->setParagraph($rule['paragraph']);
-            $ruleModel->setTitle($rule['title']);
-            $ruleModel->setText($rule['text']);
-            $rules[] = $ruleModel;
-        }
+            $ruleModel->setId($rule['id'])
+                ->setParagraph($rule['paragraph'])
+                ->setTitle($rule['title'])
+                ->setText($rule['text'])
+                ->setPosition($rule['position']);
 
-        return $rules;
-    }
-
-    /**
-     * Gets rules.
-     *
-     * @param array $where
-     * @param array $orderBy
-     * @return RuleModel[]|null
-     */
-    public function getRulesBy($where = [], $orderBy = ['id' => 'ASC'])
-    {
-        $ruleArray = $this->db()->select('*')
-            ->from('rules')
-            ->where($where)
-            ->order($orderBy)
-            ->execute()
-            ->fetchRows();
-
-        if (empty($ruleArray)) {
-            return null;
-        }
-
-        $rules = [];
-        foreach ($ruleArray as $ruleRow) {
-            $ruleModel = new RuleModel();
-            $ruleModel->setId($ruleRow['id']);
-            $ruleModel->setParagraph($ruleRow['paragraph']);
-            $ruleModel->setTitle($ruleRow['title']);
-            $ruleModel->setText($ruleRow['text']);
             $rules[] = $ruleModel;
         }
 
@@ -94,12 +63,27 @@ class Rule extends \Ilch\Mapper
         }
 
         $ruleModel = new RuleModel();
-        $ruleModel->setId($ruleRow['id']);
-        $ruleModel->setParagraph($ruleRow['paragraph']);
-        $ruleModel->setTitle($ruleRow['title']);
-        $ruleModel->setText($ruleRow['text']);
+        $ruleModel->setId($ruleRow['id'])
+            ->setParagraph($ruleRow['paragraph'])
+            ->setTitle($ruleRow['title'])
+            ->setText($ruleRow['text'])
+            ->setPosition($ruleRow['position']);
 
         return $ruleModel;
+    }
+
+    /**
+     * Sort rules.
+     *
+     * @param int $id
+     * @param int $key
+     */
+    public function sort($id, $key)
+    {
+        $this->db()->update('rules')
+            ->values(['position' => $key])
+            ->where(['id' => $id])
+            ->execute();
     }
 
     /**

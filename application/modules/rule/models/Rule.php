@@ -37,6 +37,13 @@ class Rule extends \Ilch\Model
     protected $text;
 
     /**
+     * The position of th rule.
+     *
+     * @var int
+     */
+    protected $position;
+
+    /**
      * Gets the id of the rule.
      *
      * @return int
@@ -50,7 +57,7 @@ class Rule extends \Ilch\Model
      * Sets the id of the rule.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
     public function setId($id)
     {
@@ -73,7 +80,7 @@ class Rule extends \Ilch\Model
      * Sets the paragraph of the rule.
      *
      * @param int $paragraph
-     * @return this
+     * @return $this
      */
     public function setParagraph($paragraph)
     {
@@ -96,7 +103,7 @@ class Rule extends \Ilch\Model
      * Sets the title of the rule.
      *
      * @param string $title
-     * @return this
+     * @return $this
      */
     public function setTitle($title)
     {
@@ -119,11 +126,34 @@ class Rule extends \Ilch\Model
      * Sets the text of the rule.
      *
      * @param string $text
-     * @return this
+     * @return $this
      */
     public function setText($text)
     {
         $this->text = (string)$text;
+
+        return $this;
+    }
+
+    /**
+     * Gets the position of the rule.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Sets the position of the rule.
+     *
+     * @param int $position
+     * @return $this
+     */
+    public function setPosition($position)
+    {
+        $this->position = (int)$position;
 
         return $this;
     }

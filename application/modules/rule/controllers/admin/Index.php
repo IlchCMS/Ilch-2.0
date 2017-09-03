@@ -47,8 +47,8 @@ class Index extends \Ilch\Controller\Admin
         $ruleMapper = new RuleMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -58,9 +58,17 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $rules = $ruleMapper->getRules();
+        if ($this->getRequest()->getPost('saveRules')) {
+            foreach ($this->getRequest()->getPost('items') as $i => $id) {
+                $ruleMapper->sort($id, $i);
+            }
 
-        $this->getView()->set('rules', $rules);
+            $this->redirect()
+                ->withMessage('saveSuccess')
+                ->to(['action' => 'index']);
+        }
+
+        $this->getView()->set('rules', $ruleMapper->getRules());
     }
 
     public function treatAction() 
@@ -69,30 +77,18 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('rule', $ruleMapper->getRuleById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        $post = [
-            'title' => '',
-            'text' => '',
-            'paragraph' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'paragraph' => $this->getRequest()->getPost('paragraph'),
-                'title' => trim($this->getRequest()->getPost('title')),
-                'text' => trim($this->getRequest()->getPost('text'))
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'paragraph' => 'required|numeric|integer|min:1',
                 'title' => 'required',
                 'text' => 'required'
@@ -103,19 +99,29 @@ class Index extends \Ilch\Controller\Admin
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-                $model->setParagraph($post['paragraph']);
-                $model->setTitle($post['title']);
-                $model->setText($post['text']);
+                $model->setParagraph($this->getRequest()->getPost('paragraph'))
+                    ->setTitle($this->getRequest()->getPost('title'))
+                    ->setText($this->getRequest()->getPost('text'));
                 $ruleMapper->save($model);
 
-                $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
+            }
+
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag());
+
+            if ($this->getRequest()->getParam('id')) {
+                $this->redirect()
+                    ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
             } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->to(['action' => 'treat']);
             }
         }
-
-        $this->getView()->set('post', $post);
     }
 
     public function delAction()
