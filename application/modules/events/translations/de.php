@@ -66,6 +66,7 @@ return [
     'noSelection' => 'keine Auswahl',
     'visibleFor' => 'Sichtbar für',
     'selectAssignedGroups' => 'Ausgewählte Gruppen',
+    'showMore' => 'Mehr anzeigen',
 
     'currencies' => 'Währungen',
     'currency' => 'Währung',

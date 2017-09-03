@@ -51,37 +51,35 @@ if ($event->getUserId()) {
                         <form class="form-horizontal" method="POST" action="">
                             <?=$this->getTokenField() ?>
                             <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
-                            <?php if ($event->getUserId() != $this->getUser()->getId()): ?>
-                                <?php if ($eventEntrants != ''): ?>
-                                    <?php if ($eventEntrants->getUserId() != $this->getUser()->getId()): ?>
-                                        <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
-                                            <?=$this->getTrans('join') ?>
-                                        </button>
+                            <?php if ($eventEntrants != ''): ?>
+                                <?php if ($eventEntrants->getUserId() != $this->getUser()->getId()): ?>
+                                    <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
+                                        <?=$this->getTrans('join') ?>
+                                    </button>
+                                    <button type="submit" class="btn btn-sm btn-warning" name="save" value="2">
+                                        <?=$this->getTrans('maybe') ?>
+                                    </button>
+                                <?php else: ?>
+                                    <?php if ($eventEntrants->getStatus() == 1): ?>
                                         <button type="submit" class="btn btn-sm btn-warning" name="save" value="2">
                                             <?=$this->getTrans('maybe') ?>
                                         </button>
                                     <?php else: ?>
-                                        <?php if ($eventEntrants->getStatus() == 1): ?>
-                                            <button type="submit" class="btn btn-sm btn-warning" name="save" value="2">
-                                                <?=$this->getTrans('maybe') ?>
-                                            </button>
-                                        <?php else: ?>
-                                            <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
-                                                <?=$this->getTrans('agree') ?>
-                                            </button>
-                                        <?php endif; ?>
+                                        <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
+                                            <?=$this->getTrans('agree') ?>
+                                        </button>
                                     <?php endif; ?>
-                                    <button type="submit" class="btn btn-sm btn-danger" name="deleteUser" value="deleteUser">
-                                        <?=$this->getTrans('decline') ?>
-                                    </button>
-                                <?php else: ?>
-                                    <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
-                                        <?=$this->getTrans('join') ?>
-                                    </button>
-                                    <button type="submit" class="btn btn-sm btn-warning"name="save" value="2" >
-                                        <?=$this->getTrans('maybe') ?>
-                                    </button>
                                 <?php endif; ?>
+                                <button type="submit" class="btn btn-sm btn-danger" name="deleteUser" value="deleteUser">
+                                    <?=$this->getTrans('decline') ?>
+                                </button>
+                            <?php else: ?>
+                                <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
+                                    <?=$this->getTrans('join') ?>
+                                </button>
+                                <button type="submit" class="btn btn-sm btn-warning"name="save" value="2" >
+                                    <?=$this->getTrans('maybe') ?>
+                                </button>
                             <?php endif; ?>
                         </form>
                     <?php endif; ?>
@@ -173,9 +171,6 @@ if ($event->getUserId()) {
             <?php if ($this->get('eventEntrantsCount') != ''): ?>
                 <div class="eventBoxBottom">
                     <div style="margin-left: 2px;">
-                        <?php if ($event->getUserId()): ?>
-                            <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?>"></a>
-                        <?php endif; ?>
                         <?php if ($this->get('eventEntrantsCount') != ''): ?>
                             <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
                             <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
@@ -183,6 +178,8 @@ if ($event->getUserId()) {
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
+
+                    <div class="more-entrants" data-toggle="modal" data-target="#entrantsModal"><?=$this->getTrans('showMore') ?></div>
                 </div>
             <?php endif; ?>
             <br />
@@ -241,6 +238,31 @@ if ($event->getUserId()) {
                         <br />
                     <?php endforeach; ?>
                 <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entrants Modal -->
+    <div id="entrantsModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><?=$this->getTrans('entrant') ?></h4>
+                </div>
+                <div class="modal-body">
+                    <?php if ($this->get('eventEntrantsCount') != ''): ?>
+                        <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
+                            <div class="entrants-user">
+                                <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
+                                <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" class="entrants-user-link">
+                                    <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>">
+                                    <?=$entrantsUser->getName() ?>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </div>

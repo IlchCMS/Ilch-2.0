@@ -66,6 +66,7 @@ return [
     'noSelection' => 'No selection',
     'visibleFor' => 'Visible for',
     'selectAssignedGroups' => 'Selected groups',
+    'showAll' => 'Show more',
 
     'currencies' => 'Currencies',
     'currency' => 'Currency',
