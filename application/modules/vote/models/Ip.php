@@ -23,6 +23,13 @@ class Ip extends \Ilch\Model
     protected $ip;
 
     /**
+     * The user id of the Vote.
+     *
+     * @var int
+     */
+    protected $userId;
+
+    /**
      * Gets the pollId of the Vote.
      *
      * @return int
@@ -66,6 +73,30 @@ class Ip extends \Ilch\Model
     public function setIP($ip)
     {
         $this->ip = (string)$ip;
+
+        return $this;
+    }
+
+    /**
+     * Gets the user id of the Vote.
+     *
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Sets the user id of the Vote.
+     *
+     * @param int $userId
+     *
+     * @return $this
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = (int)$userId;
 
         return $this;
     }

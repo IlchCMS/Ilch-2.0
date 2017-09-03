@@ -1,9 +1,9 @@
 <?php
 $vote = $this->get('vote');
-$userMapper = new Modules\User\Mappers\User();
-$voteMapper = new Modules\Vote\Mappers\Vote();
-$resultMapper = new \Modules\Vote\Mappers\Result();
-$ipMapper = new \Modules\Vote\Mappers\Ip();
+$voteMapper = $this->get('voteMapper');
+$resultMapper = $this->get('resultMapper');
+$ipMapper = $this->get('ipMapper');
+$userMapper = $this->get('userMapper');
 
 if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
     $clientIP = $_SERVER['REMOTE_ADDR'];
@@ -44,7 +44,8 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                             </div>
                             <?php $voteRes = $resultMapper->getVoteRes($groupVote->getId()); ?>
                             <?php $ip = $ipMapper->getIP($groupVote->getId(), $clientIP); ?>
-                            <?php if ($ip != '' OR $groupVote->getStatus() != 0 OR !in_array($groupVote->getGroup(), $groupIds)): ?>
+                            <?php $votedUser = $ipMapper->getVotedUser($groupVote->getId(), $userId); ?>
+                            <?php if ($ip != '' OR $votedUser != '' OR $groupVote->getStatus() != 0 OR !in_array($groupVote->getGroup(), $groupIds)): ?>
                                 <div class="vote-body">
                                     <div class="list-group">
                                         <?php foreach ($voteRes as $voteRes): ?>

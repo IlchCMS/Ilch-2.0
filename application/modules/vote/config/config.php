@@ -45,8 +45,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_poll`;');
-        $this->db()->queryMulti('DROP TABLE `[prefix]_poll_res`;');
+        $this->db()->queryMulti('DROP TABLE `[prefix]_poll`;
+            DROP TABLE `[prefix]_poll_res`;');
     }
 
     public function getInstallSql()
@@ -69,7 +69,8 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_poll_ip` (
                 `poll_id` INT(11) NOT NULL,
-                `ip` VARCHAR(255) NOT NULL
+                `ip` VARCHAR(255) NOT NULL,
+                `user_id` INT(11) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
     }
 
@@ -77,7 +78,8 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                $this->db()->query('ALTER TABLE `[prefix]_poll` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `group`;');
+                $this->db()->query('ALTER TABLE `[prefix]_poll` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `group`;
+                    ALTER TABLE `[prefix]_poll_ip` ADD `user_id` INT(11) NOT NULL AFTER `ip`;');
         }
     }
 }

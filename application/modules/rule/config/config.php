@@ -54,7 +54,7 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                $this->db()->query('ALTER TABLE `[prefix]_rules` ADD `position` INT NOT NULL DEFAULT 0;');
+                $this->db()->query('ALTER TABLE `[prefix]_rules` ADD `position` INT(11) NOT NULL DEFAULT 0;');
         }
     }
 }

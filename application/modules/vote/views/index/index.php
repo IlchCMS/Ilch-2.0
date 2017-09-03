@@ -37,7 +37,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         <?php if (is_in_array($this->get('readAccess'), explode(',', $groupVote->getReadAccess())) || $admin == TRUE): ?>
             <div class="row">
                 <div class="col-lg-12">
-                    <form action="<?=$this->getUrl(['module' => 'vote']) ?>" class="form-horizontal" method="POST">
+                    <form action="" class="form-horizontal" method="POST">
                         <?=$this->getTokenField() ?>
                         <div class="panel panel-primary">
                             <div class="panel-heading">
@@ -45,7 +45,8 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                             </div>
                             <?php $voteRes = $resultMapper->getVoteRes($groupVote->getId()); ?>
                             <?php $ip = $ipMapper->getIP($groupVote->getId(), $clientIP); ?>
-                            <?php if ($ip != '' OR $groupVote->getStatus() != 0 OR !in_array($groupVote->getGroup(), $groupIds)): ?>
+                            <?php $votedUser = $ipMapper->getVotedUser($groupVote->getId(), $userId); ?>
+                            <?php if ($ip != '' OR $votedUser != '' OR $groupVote->getStatus() != 0 OR !in_array($groupVote->getGroup(), $groupIds)): ?>
                                 <div class="vote-body">
                                     <div class="list-group">
                                         <?php foreach ($voteRes as $voteRes): ?>

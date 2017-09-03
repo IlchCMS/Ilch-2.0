@@ -28,6 +28,24 @@ class Ip extends \Ilch\Mapper
         return $ipModel;
     }
 
+    public function getVotedUser($pollId, $userId)
+    {
+        $ipRow = $this->db()->select('*')
+            ->from('poll_ip')
+            ->where(['poll_id' => $pollId, 'user_id' => $userId])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($ipRow)) {
+            return null;
+        }
+
+        $ipModel = new IpModel();
+        $ipModel->setUserId($ipRow['user_id']);
+
+        return $ipModel;
+    }
+
     /**
      * Inserts Ip model.
      *
@@ -37,7 +55,8 @@ class Ip extends \Ilch\Mapper
     {
         $fields = [
             'poll_id' => $vote->getPollId(),
-            'ip' => $vote->getIP()
+            'ip' => $vote->getIP(),
+            'user_id' => $vote->getUserId()
         ];
 
         $this->db()->insert('poll_ip')

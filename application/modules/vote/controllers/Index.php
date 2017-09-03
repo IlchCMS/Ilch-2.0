@@ -44,8 +44,14 @@ class Index extends \Ilch\Controller\Frontend
             } else {
                 $clientIP = $_SERVER['HTTP_X_FORWARDED_FOR'];
             }
+
+            $userId = null;
+            if ($this->getUser()) {
+                $userId = $this->getUser()->getId();
+            }
             $ipModel->setPollId($this->getRequest()->getPost('id'))
-                ->setIP($clientIP);
+                ->setIP($clientIP)
+                ->setUserId($userId);
             $ipMapper->saveIP($ipModel);
 
             $this->redirect()
