@@ -179,7 +179,9 @@ if ($event->getUserId()) {
                         <?php endif; ?>
                     </div>
 
-                    <div class="more-entrants" data-toggle="modal" data-target="#entrantsModal"><?=$this->getTrans('showMore') ?></div>
+                    <div class="more-entrants">
+                        <a href="" data-toggle="modal" data-target="#entrantsModal"><?=$this->getTrans('showMore') ?></a>
+                    </div>
                 </div>
             <?php endif; ?>
             <br />
