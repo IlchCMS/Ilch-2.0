@@ -244,114 +244,118 @@ if ($event->getUserId()) {
         </div>
     </div>
 
-    <!-- Entrants Modal -->
-    <div id="entrantsModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><?=$this->getTrans('entrant') ?></h4>
-                </div>
-                <div class="modal-body">
-                    <?php if ($this->get('eventEntrantsCount') != ''): ?>
-                        <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
-                            <div class="entrants-user">
-                                <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
-                                <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" class="entrants-user-link">
-                                    <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>">
-                                    <?=$entrantsUser->getName() ?>
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+    <?php if ($this->get('eventEntrantsCount') != ''): ?>
+        <!-- Entrants Modal -->
+        <div id="entrantsModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><?=$this->getTrans('entrant') ?></h4>
+                    </div>
+                    <div class="modal-body">
+                        <?php if ($this->get('eventEntrantsCount') != ''): ?>
+                            <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
+                                <div class="entrants-user">
+                                    <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
+                                    <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" class="entrants-user-link">
+                                        <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>">
+                                        <?=$entrantsUser->getName() ?>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<?php endif; ?>
+    <?php endif; ?>
 
-<?php $place = $this->escape($event->getPlace()); ?>
-<?=$this->getDialog('showBigGoogleMapsModal', $place, '<div id="big-map-canvas"></div>') ?>
-<?php if ($this->get('event_google_maps_api_key') != ''): ?>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>" async defer></script>
-<?php endif; ?>
+    <?php if ($this->get('event_google_maps_api_key') != ''): ?>
+        <?php $place = $this->escape($event->getPlace()); ?>
+        <?=$this->getDialog('showBigGoogleMapsModal', $place, '<div id="big-map-canvas"></div>') ?>
 
-<script>
-// Textarea AutoResize
-$('textarea').on('keyup', function() {
-    $(this).css('height', 'auto');
-    $(this).height(this.scrollHeight);
-});
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>" async defer></script>
+    <?php endif; ?>
 
-<?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
-    // Google Maps
-    $(document).ready(function() {
-        var mapCanvas = document.getElementById('map-canvas');
-        var latLng = {lat: <?=$latLong[0] ?>, lng: <?=$latLong[1] ?>};
-        var mapOptions = {
-            zoom: 15,
-            center: latLng,
-            mapTypeId: google.maps.MapTypeId.<?=$this->get('event_google_maps_map_typ') ?>,
-            disableDefaultUI: true,
-            disableDoubleClickZoom: true,
-            scrollwheel: false,
-            draggable: false,
-            clickableIcons: false
-        };
+    <script>
+    // Textarea AutoResize
+    $('textarea').on('keyup', function() {
+        $(this).css('height', 'auto');
+        $(this).height(this.scrollHeight);
+    });
 
-        $("#showMap").click(function() {
-            $("#googleMap").slideToggle("slow");
-            var map = new google.maps.Map(mapCanvas, mapOptions);
+    <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
+        // Google Maps
+        $(document).ready(function() {
+            var mapCanvas = document.getElementById('map-canvas');
+            var latLng = {lat: <?=$latLong[0] ?>, lng: <?=$latLong[1] ?>};
+            var mapOptions = {
+                zoom: 15,
+                center: latLng,
+                mapTypeId: google.maps.MapTypeId.<?=$this->get('event_google_maps_map_typ') ?>,
+                disableDefaultUI: true,
+                disableDoubleClickZoom: true,
+                scrollwheel: false,
+                draggable: false,
+                clickableIcons: false
+            };
 
-            setTimeout(function() {
+            $("#showMap").click(function() {
+                $("#googleMap").slideToggle("slow");
+                var map = new google.maps.Map(mapCanvas, mapOptions);
+
+                setTimeout(function() {
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        draggable: false,
+                        title: '<?=$this->escape($event->getTitle()) ?>',
+                        animation: google.maps.Animation.DROP
+                    });
+                }, 600);
+            });
+
+            $('#showBigGoogleMapsModal').on('shown.bs.modal', function () {
+                bigMap();
+            });
+
+            function bigMap() {
+                var mapCanvas = document.getElementById('big-map-canvas');
+                var mapOptions = {
+                    zoom: <?=$this->get('event_google_maps_zoom') ?>,
+                    center: latLng,
+                    mapTypeId: google.maps.MapTypeId.<?=$this->get('event_google_maps_map_typ') ?>,
+                    streetViewControl: false
+                };
+
+                var map = new google.maps.Map(mapCanvas, mapOptions);
+
                 var marker = new google.maps.Marker({
                     position: latLng,
                     map: map,
-                    draggable: false,
                     title: '<?=$this->escape($event->getTitle()) ?>',
                     animation: google.maps.Animation.DROP
                 });
-            }, 600);
+
+                <?php $place = $this->escape($event->getPlace()); ?>
+                <?php $infoPlace = str_replace(', ', '<br />', $place); ?>
+                <?php $infoRoutePlace = str_replace(' ', '+', $place); ?>
+                var infoWindowContent = '<div class="poi-info-window"><div class="title"><?=$this->escape($event->getTitle()) ?></div><div class="address"><?=$infoPlace ?><br /><a href="http://maps.google.com?daddr=<?=$infoRoutePlace ?>" target="_blank"><?=$this->getTrans('googleMapsPlanRoute') ?></a></div></div>';
+                var infowindow = new google.maps.InfoWindow({
+                    content: infoWindowContent
+                });
+
+                setTimeout(function() {
+                    infowindow.open(map,marker);
+                }, 700);
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.open(map,marker);
+                });
+            }
         });
-
-        $('#showBigGoogleMapsModal').on('shown.bs.modal', function () {
-            bigMap();
-        });
-
-        function bigMap() {
-            var mapCanvas = document.getElementById('big-map-canvas');
-            var mapOptions = {
-                zoom: <?=$this->get('event_google_maps_zoom') ?>,
-                center: latLng,
-                mapTypeId: google.maps.MapTypeId.<?=$this->get('event_google_maps_map_typ') ?>,
-                streetViewControl: false
-            };
-
-            var map = new google.maps.Map(mapCanvas, mapOptions);
-            
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: map,
-                title: '<?=$this->escape($event->getTitle()) ?>',
-                animation: google.maps.Animation.DROP
-            });
-
-            <?php $place = $this->escape($event->getPlace()); ?>
-            <?php $infoPlace = str_replace(', ', '<br />', $place); ?>
-            <?php $infoRoutePlace = str_replace(' ', '+', $place); ?>
-            var infoWindowContent = '<div class="poi-info-window"><div class="title"><?=$this->escape($event->getTitle()) ?></div><div class="address"><?=$infoPlace ?><br /><a href="http://maps.google.com?daddr=<?=$infoRoutePlace ?>" target="_blank"><?=$this->getTrans('googleMapsPlanRoute') ?></a></div></div>';
-            var infowindow = new google.maps.InfoWindow({
-                content: infoWindowContent
-            });
-
-            setTimeout(function() {
-                infowindow.open(map,marker);
-            }, 700);
-
-            google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
-            });
-        }
-    });
+    <?php endif; ?>
+    </script>
 <?php endif; ?>
-</script>
+
