@@ -80,6 +80,18 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="access" class="col-lg-2 control-label">
+            <?=$this->getTrans('visibleFor') ?>
+        </label>
+        <div class="col-lg-4">
+            <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+                <?php foreach ($this->get('userGroupList') as $groupList): ?>
+                    <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
@@ -109,6 +121,8 @@
     ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
     ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
+$('#access').chosen();
+
 $(document).ready(function() {
     $(".form_datetime").datetimepicker({
         format: "dd.mm.yyyy hh:ii",

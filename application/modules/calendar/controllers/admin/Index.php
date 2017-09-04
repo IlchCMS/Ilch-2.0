@@ -8,6 +8,7 @@ namespace Modules\Calendar\Controllers\Admin;
 
 use Modules\Calendar\Mappers\Calendar as CalendarMapper;
 use Modules\Calendar\Models\Calendar as CalendarModel;
+use Modules\User\Mappers\Group as GroupMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -64,7 +65,8 @@ class Index extends \Ilch\Controller\Admin
     {
         $calendarMapper = new CalendarMapper();
         $calendarModel = new CalendarModel();
-
+        $groupMapper = new GroupMapper();
+        
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuCalendar'), ['action' => 'index'])
@@ -94,12 +96,17 @@ class Index extends \Ilch\Controller\Admin
             } elseif (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
             } else {
+                $groups = '';
+                if (!empty($this->getRequest()->getPost('groups'))) {
+                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                }
                 $calendarModel->setTitle($title);
                 $calendarModel->setPlace($place);
                 $calendarModel->setStart($start);
                 $calendarModel->setEnd($end);
                 $calendarModel->setText($text);
                 $calendarModel->setColor($color);
+                $calendarModel->setReadAccess($groups);
                 $calendarMapper->save($calendarModel);
                 
                 $this->addMessage('saveSuccess');
@@ -107,6 +114,15 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
         }
+
+        if ($this->getRequest()->getParam('id')) {
+            $groups = explode(',', $calendarMapper->getCalendarById($this->getRequest()->getParam('id'))->getReadAccess());
+        } else {
+            $groups = [1,2,3];
+        }
+
+        $this->getView()->set('userGroupList', $groupMapper->getGroupList());
+        $this->getView()->set('groups', $groups);
     }
 
     public function delAction()

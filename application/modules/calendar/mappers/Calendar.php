@@ -38,6 +38,7 @@ class Calendar extends \Ilch\Mapper
             $entryModel->setEnd($entries['end']);
             $entryModel->setText($entries['text']);
             $entryModel->setColor($entries['color']);
+            $entryModel->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -70,6 +71,7 @@ class Calendar extends \Ilch\Mapper
         $calendarModel->setEnd($calendarRow['end']);
         $calendarModel->setText($calendarRow['text']);
         $calendarModel->setColor($calendarRow['color']);
+        $calendarModel->setReadAccess($calendarRow['read_access']);
 
         return $calendarModel;
     }
@@ -106,6 +108,7 @@ class Calendar extends \Ilch\Mapper
             $entryModel->setStart($entries['start']);
             $entryModel->setEnd($entries['end']);
             $entryModel->setColor($entries['color']);
+            $entryModel->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -125,7 +128,8 @@ class Calendar extends \Ilch\Mapper
             'start' => $term->getStart(),
             'end' => $term->getEnd(),
             'text' => $term->getText(),
-            'color' => $term->getColor()
+            'color' => $term->getColor(),
+            'read_access' => $term->getReadAccess()
         ];
 
         if ($term->getId()) {

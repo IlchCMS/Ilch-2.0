@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -49,6 +49,7 @@ class Config extends \Ilch\Config\Install
                   `end` DATETIME DEFAULT NULL,
                   `text` MEDIUMTEXT DEFAULT NULL,
                   `color` VARCHAR(7) DEFAULT NULL,
+                  `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\',
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -63,6 +64,9 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
+        }
     }
 }

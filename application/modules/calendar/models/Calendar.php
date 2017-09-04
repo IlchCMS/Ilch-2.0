@@ -58,6 +58,13 @@ class Calendar extends \Ilch\Model
     protected $color;
 
     /**
+     * Read access of the article.
+     *
+     * @var string
+     */
+    protected $readAccess;
+
+    /**
      * Gets the id of the calendar.
      *
      * @return int
@@ -215,6 +222,27 @@ class Calendar extends \Ilch\Model
     {
         $this->color = (string)$color;
 
+        return $this;
+    }
+
+    /**
+     * Gets the read access.
+     *
+     * @return string
+     */
+    public function getReadAccess()
+    {
+        return $this->readAccess;
+    }
+    /**
+     * Sets the read access.
+     *
+     * @param integer $readAccess
+     * @return $this
+     */
+    public function setReadAccess($readAccess)
+    {
+        $this->readAccess = (string) $readAccess;
         return $this;
     }
 }
