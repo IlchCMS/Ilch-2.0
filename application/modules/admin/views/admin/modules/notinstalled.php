@@ -1,6 +1,9 @@
 <h1><?=$this->getTrans('modulesNotInstalled') ?></h1>
 <?php if (!empty($this->get('modulesNotInstalled'))): ?>
     <?php
+    $modulesList = url_get_contents($this->get('updateserver'));
+    $modulesOnUpdateServer = json_decode($modulesList);
+
     function checkOwnDependencies($versionsOfModules, $dependencies) {
         foreach ($dependencies as $key => $value) {
             $parsed = explode(',', $value);
@@ -15,12 +18,14 @@
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="col-lg-2">
-                <col>
+                <col class="col-lg-2" />
+                <col class="col-lg-1" />
+                <col />
             </colgroup>
             <thead>
                 <tr>
-                    <th><?=$this->getTrans('modules') ?></th>
+                    <th><?=$this->getTrans('name') ?></th>
+                    <th><?=$this->getTrans('version') ?></th>
                     <th><?=$this->getTrans('desc') ?></th>
                 </tr>
             </thead>
@@ -28,6 +33,14 @@
                 <?php foreach ($this->get('modulesNotInstalled') as $module): ?>
                     <?php
                     $content = $module->getContentForLocale($this->getTranslator()->getLocale());
+
+                    $moduleOnUpdateServerFound = null;
+                    foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
+                        if ($moduleOnUpdateServer->key == $module->getKey()) {
+                            $moduleOnUpdateServerFound = $moduleOnUpdateServer;
+                            break;
+                        }
+                    }
 
                     if ($module->getPHPExtension() != '') {
                         $extensionCheck = [];
@@ -99,16 +112,25 @@
                                     <i class="fa fa-save"></i>
                                 </a>
                             <?php endif; ?>
-                            <span class="btn btn-default"
-                                  data-toggle="modal"
-                                  data-target="#infoModal<?=$module->getKey() ?>"
-                                  title="<?=$this->getTrans('info') ?>">
-                                <i class="fa fa-info text-info"></i>
-                            </span>
+                            <?php if ($module->getKey() == $moduleOnUpdateServer->key): ?>
+                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                                    <span class="btn btn-default">
+                                        <i class="fa fa-info text-info"></i>
+                                    </span>
+                                </a>
+                            <?php else: ?>
+                                <span class="btn btn-default"
+                                      data-toggle="modal"
+                                      data-target="#infoModal<?=$module->getKey() ?>"
+                                      title="<?=$this->getTrans('info') ?>">
+                                    <i class="fa fa-info text-info"></i>
+                                </span>
+                            <?php endif; ?>
                             <a href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('delete') ?>">
                                 <i class="fa fa-trash-o text-warning"></i>
                             </a>
                         </td>
+                        <td><?=$module->getVersion() ?></td>
                         <td>
                             <?php if (!empty($content['description'])): ?>
                                 <?=$content['description'] ?>

@@ -62,12 +62,14 @@ if (empty($modulesOnUpdateServer)) {
 <div id="modules" class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-2">
-            <col>
+            <col class="col-lg-2" />
+            <col class="col-lg-1" />
+            <col />
         </colgroup>
         <thead>
             <tr>
-                <th><?=$this->getTrans('modules') ?></th>
+                <th><?=$this->getTrans('name') ?></th>
+                <th><?=$this->getTrans('version') ?></th>
                 <th><?=$this->getTrans('desc') ?></th>
             </tr>
         </thead>
@@ -156,6 +158,7 @@ if (empty($modulesOnUpdateServer)) {
                             </span>
                         </a>
                     </td>
+                    <td><?=$moduleOnUpdateServer->version?></td>
                     <td><?=$moduleOnUpdateServer->desc ?></td>
                 </tr>
                 <?php

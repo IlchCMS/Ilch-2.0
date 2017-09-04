@@ -46,12 +46,14 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 <div id="modules" class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-2">
-            <col>
+            <col class="col-lg-2" />
+            <col class="col-lg-1" />
+            <col />
         </colgroup>
         <thead>
             <tr>
-                <th><?=$this->getTrans('modules') ?></th>
+                <th><?=$this->getTrans('name') ?></th>
+                <th><?=$this->getTrans('version') ?></th>
                 <th><?=$this->getTrans('desc') ?></th>
             </tr>
         </thead>
@@ -93,25 +95,19 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('administrate') ?>">
                                 <i class="fa fa-pencil text-success"></i>
                             </a>
-                            <span class="btn btn-default"
-                                  data-toggle="modal"
-                                  data-target="#infoModal<?=$module->getKey() ?>"
-                                  title="<?=$this->getTrans('info') ?>">
-                                <i class="fa fa-info text-info"></i>
-                            </span>
-                            <?php if (!isset($config->isSystemModule)): ?>
-                                <?php if (!empty(checkOthersDependencies([$module->getKey() => $module->getVersion()], $dependencies))): ?>
-                                    <button class="btn disabled"
-                                            data-toggle="modal"
-                                            data-target="#dependencyInfoModal<?=$module->getKey() ?>"
-                                            title="<?=$this->getTrans('dependencyError') ?>">
-                                        <i class="fa fa-trash-o text-warning"></i>
-                                    </button>
-                                <?php else: ?>
-                                <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('uninstall') ?>">
-                                   <i class="fa fa-trash-o text-warning"></i>
+                            <?php if ($module->getKey() == $moduleOnUpdateServer->key): ?>
+                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                                    <span class="btn btn-default">
+                                        <i class="fa fa-info text-info"></i>
+                                    </span>
                                 </a>
-                                <?php endif; ?>
+                            <?php else: ?>
+                                <span class="btn btn-default"
+                                      data-toggle="modal"
+                                      data-target="#infoModal<?=$module->getKey() ?>"
+                                      title="<?=$this->getTrans('info') ?>">
+                                    <i class="fa fa-info text-info"></i>
+                                </span>
                             <?php endif; ?>
                             <?php
                             if (!empty($moduleOnUpdateServerFound)) {
@@ -159,7 +155,20 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                     </form>
                                 <?php endif; ?>
                             <?php } ?>
+                            <?php if (!empty(checkOthersDependencies([$module->getKey() => $module->getVersion()], $dependencies))): ?>
+                                <button class="btn disabled"
+                                        data-toggle="modal"
+                                        data-target="#dependencyInfoModal<?=$module->getKey() ?>"
+                                        title="<?=$this->getTrans('dependencyError') ?>">
+                                    <i class="fa fa-trash-o text-warning"></i>
+                                </button>
+                            <?php else: ?>
+                                <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('uninstall') ?>">
+                                    <i class="fa fa-trash-o text-warning"></i>
+                                </a>
+                            <?php endif; ?>
                         </td>
+                        <td><?=$module->getVersion() ?></td>
                         <td><?=$content['description'] ?></td>
                     </tr>
 
@@ -196,8 +205,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
             <?php endforeach; ?>
             <?php if (!$found) : ?>
                 <tr>
-                    <td><?=$this->getTrans('noUpdatesAvailable'); ?></td>
-                    <td></td>
+                    <td colspan="3"><?=$this->getTrans('noUpdatesAvailable'); ?></td>
                 </tr>
             <?php endif; ?>
         </tbody>

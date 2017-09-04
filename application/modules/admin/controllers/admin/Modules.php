@@ -31,25 +31,25 @@ class Modules extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'notinstalled'])
             ],
             [
-                'name' => 'menuSearch',
-                'active' => false,
-                'icon' => 'fa fa-search',
-                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'search'])
-            ],
-            [
                 'name' => 'menuUpdates',
                 'active' => false,
                 'icon' => 'fa fa-refresh',
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'updates'])
+            ],
+            [
+                'name' => 'menuSearch',
+                'active' => false,
+                'icon' => 'fa fa-search',
+                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'search'])
             ]
         ];
 
         if ($this->getRequest()->getActionName() == 'notinstalled') {
             $items[1]['active'] = true; 
-        } elseif ($this->getRequest()->getActionName() == 'search' OR $this->getRequest()->getActionName() == 'show') {
-            $items[2]['active'] = true; 
         } elseif ($this->getRequest()->getActionName() == 'updates') {
-            $items[3]['active'] = true; 
+            $items[2]['active'] = true;
+        } elseif ($this->getRequest()->getActionName() == 'search' OR $this->getRequest()->getActionName() == 'show') {
+            $items[3]['active'] = true;
         } else {
             $items[0]['active'] = true; 
         }
@@ -66,8 +66,8 @@ class Modules extends \Ilch\Controller\Admin
         $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
 
         $dependencies = [];
 
@@ -83,12 +83,12 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php');
-        $this->getView()->set('modules', $moduleMapper->getModules());
-        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
-        $this->getView()->set('dependencies', $dependencies);
-        $this->getView()->set('configurations', $configurations);
-        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+            ->set('modules', $moduleMapper->getModules())
+            ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
+            ->set('dependencies', $dependencies)
+            ->set('configurations', $configurations)
+            ->set('coreVersion', $this->getConfig()->get('version'));
     }
 
     public function notinstalledAction()
@@ -96,8 +96,8 @@ class Modules extends \Ilch\Controller\Admin
         $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuNotInstalled'), ['action' => 'notinstalled']);
+            ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuNotInstalled'), ['action' => 'notinstalled']);
 
         $modulesNotInstalled = $moduleMapper->getModulesNotInstalled();
 
@@ -117,10 +117,11 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
-        $this->getView()->set('modulesNotInstalled', $modulesNotInstalled);
-        $this->getView()->set('dependencies', $dependencies);
-        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+            ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
+            ->set('modulesNotInstalled', $modulesNotInstalled)
+            ->set('dependencies', $dependencies)
+            ->set('coreVersion', $this->getConfig()->get('version'));
     }
 
     public function searchAction()
@@ -128,8 +129,8 @@ class Modules extends \Ilch\Controller\Admin
         $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
+            ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
 
         try {
             if ($this->getRequest()->isSecure()) {
@@ -170,11 +171,11 @@ class Modules extends \Ilch\Controller\Admin
                 }
             }
 
-            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php');
-            $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
-            $this->getView()->set('modules', $modulesDir);
-            $this->getView()->set('dependencies', $dependencies);
-            $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
+            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+                ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
+                ->set('modules', $modulesDir)
+                ->set('dependencies', $dependencies)
+                ->set('coreVersion', $this->getConfig()->get('version'));
         }
     }
 
@@ -183,8 +184,8 @@ class Modules extends \Ilch\Controller\Admin
         $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('updatesAvailable'), ['action' => 'index']);
 
         $dependencies = [];
 
@@ -200,12 +201,12 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php');
-        $this->getView()->set('modules', $moduleMapper->getModules());
-        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
-        $this->getView()->set('dependencies', $dependencies);
-        $this->getView()->set('configurations', $configurations);
-        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+            ->set('modules', $moduleMapper->getModules())
+            ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
+            ->set('dependencies', $dependencies)
+            ->set('configurations', $configurations)
+            ->set('coreVersion', $this->getConfig()->get('version'));
     }
 
     public function updateAction()
@@ -253,19 +254,19 @@ class Modules extends \Ilch\Controller\Admin
         $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
-                ->add($this->getTranslator()->trans('menuModules').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+            ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
+            ->add($this->getTranslator()->trans('menuModules').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
         foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
             $modulesDir[] = basename($modulesPath);
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
-        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
-        $this->getView()->set('moduleMapper', $moduleMapper);
-        $this->getView()->set('modules', $modulesDir);
-        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'))
+            ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
+            ->set('moduleMapper', $moduleMapper)
+            ->set('modules', $modulesDir)
+            ->set('coreVersion', $this->getConfig()->get('version'));
     }
 
     public function installAction()
