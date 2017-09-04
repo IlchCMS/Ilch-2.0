@@ -4,13 +4,25 @@ header('Content-Disposition: inline; filename=cal.ics');
 
 define('DATE_ICAL', 'Ymd\THis');
 
+$adminAccess = null;
+if ($this->getUser()) {
+    $adminAccess = $this->getUser()->isAdmin();
+}
+
 if ($this->get('calendarList')) {
 $ical = "BEGIN:VCALENDAR
 METHOD:PUBLISH
 VERSION:2.0
 PRODID:-//Ilch 2.0 Kalender//Clinic Time//DE\n";
 
+$displayedEntries = 0;
+
 foreach ($this->get('calendarList') as $calendarList) {
+if (!is_in_array($this->get('readAccess'), explode(',', $calendarList->getReadAccess())) && $adminAccess == false) {
+    continue;
+}
+$displayedEntries++;
+
 $description = $calendarList->getText();
 $description = strip_tags($description, '<p><br>');
 $description = str_replace("<p>", "",$description);
@@ -32,5 +44,7 @@ END:VEVENT\n";
 
 $ical .= "END:VCALENDAR";
 
+if ($displayedEntries) {
 echo $ical;
+}
 }

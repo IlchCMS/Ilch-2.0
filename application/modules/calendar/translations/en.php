@@ -17,6 +17,7 @@ return [
     'noDescription' => 'No description available',
     'at' => 'at',
     'clock' => 'o\'clock',
+    'visibleFor' => 'Visible for',
 
     'calendarMonth' => 'Month',
     'calendarWeek' => 'Week',

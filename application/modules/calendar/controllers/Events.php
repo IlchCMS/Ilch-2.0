@@ -70,9 +70,25 @@ class Events extends \Ilch\Controller\Frontend
     public function iCalAction()
     {
         $calendarMapper = new CalendarMapper();
+        $userMapper = new UserMapper();
+
+        $userId = null;
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+        $user = $userMapper->getUserById($userId);
+        $ids = [3];
+        if ($user) {
+            $ids = [];
+            foreach ($user->getGroups() as $us) {
+                $ids[] = $us->getId();
+            }
+        }
+        $readAccess = explode(',',implode(',', $ids));
 
         $this->getLayout()->setFile('modules/calendar/layouts/iCal');
 
-        $this->getView()->set('calendarList', $calendarMapper->getEntries());
+        $this->getView()->set('calendarList', $calendarMapper->getEntries())
+            ->set('readAccess', $readAccess);
     }
 }

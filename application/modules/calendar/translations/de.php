@@ -17,6 +17,7 @@ return [
     'noDescription' => 'Keine Beschreibung vorhanden',
     'at' => 'um',
     'clock' => 'Uhr',
+    'visibleFor' => 'Sichtbar für',
 
     'calendarMonth' => 'Monat',
     'calendarWeek' => 'Woche',
