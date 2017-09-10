@@ -60,7 +60,12 @@ if (empty($modulesOnUpdateServer)) {
 ?>
 
 <div id="modules" class="table-responsive">
-    <table class="table table-hover table-striped">
+    <div class="col-lg-12 input-group">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <input class="form-control hasclear" id="user-search" placeholder="<?=$this->getTrans('search') ?>" required>
+    </div>
+    <br />
+    <table class="table table-hover table-striped table-list-search">
         <colgroup>
             <col class="col-lg-2" />
             <col class="col-lg-1" />
@@ -172,3 +177,45 @@ if (empty($modulesOnUpdateServer)) {
         </tbody>
     </table>
 </div>
+
+<script>
+// search
+$(document).ready(function() {
+    // something is entered in search form
+    $('#user-search').keyup( function() {
+        var that = this,
+            tableBody = $('.table-list-search tbody'),
+            tableRowsClass = $('.table-list-search tbody tr');
+
+        $('.search-sf').remove();
+        tableRowsClass.each( function(i, val) {
+
+            // lower text for case insensitive
+            var rowText = $(val).text().toLowerCase(),
+                inputText = $(that).val().toLowerCase();
+
+            if(inputText != '') {
+                $('.search-query-sf').remove();
+                tableBody.prepend('<tr class="search-query-sf"><td colspan="3"><strong><?=$this->getTrans('searchingFor') ?>: "'
+                    + $(that).val()
+                    + '"</strong></td></tr>');
+            } else {
+                $('.search-query-sf').remove();
+            }
+
+            if( rowText.indexOf( inputText ) == -1 ) {
+                // hide rows
+                tableRowsClass.eq(i).hide();
+            } else {
+                $('.search-sf').remove();
+                tableRowsClass.eq(i).show();
+            }
+        });
+
+        // all tr elements are hidden
+        if(tableRowsClass.children(':visible').length == 0) {
+            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="3"><?=$this->getTrans('noResultFound') ?></td></tr>');
+        }
+    });
+});
+</script>

@@ -86,6 +86,8 @@ return [
     'hmenuFixed' => 'HMenu fixed',
     'search' => 'Search',
     'go' => 'Go',
+    'noResultFound' => 'No entries found',
+    'searchingFor' => 'Search for',
     'welcomeBack' => 'Welcome back %s',
     'welcomeBackDescripton' => 'To find your target, please choose on the top menu or on the search on the top right corner.',
     'validateRequired' => 'This field is required.',
