@@ -34,12 +34,23 @@ header .rightbar li > #search-header {
     cursor: pointer;
     text-align: center;
     display: inline-block;
-    padding: 10px;
+    padding: 10px 10px 10px 17px;
     line-height: 20px;
+    font-size: 14px;
 }
 header .rightbar li > #search-header:hover {
     color: #000;
     background: #e7e7e7;
+}
+header .rightbar li > #search-header .search-text {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #777;
+    margin-left: 9px;
+}
+#search-div{
+    position: relative;
+    top: 0;
+    width: 100%;
 }
 header .rightbar .opens {
     right: 0; 
@@ -69,7 +80,7 @@ header .rightbar .search-opens .form-control {
 }
 header .rightbar .search-close .form-control:focus {
     border-color: #66AFE9;
-    outline: 0px none;
+    outline: 0 none;
     box-shadow: none;
 }
 header .rightbar .search-opens .btn {
@@ -92,8 +103,8 @@ a {
     margin-right: 0 !important;
 }
 #content .form-horizontal .form-group {
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left: 0;
+    margin-right: 0;
 }
 .leftbar {
     margin-right: 80px;
@@ -101,7 +112,7 @@ a {
 .home {
     padding: 5px;
     border: 1px solid #ccc !important;
-    border-radius: 0px;
+    border-radius: 0;
     margin: 4px;
     padding-left: 7px;
     padding-right: 7px;
@@ -112,14 +123,8 @@ a {
 }
 .rightbar {
     border-color: #ccc !important;
-    padding-left: 0px;
-    padding-right: 0px;
-}
-.rightbar .navbar-nav > li {
-    border-left: 1px solid silver;
-}
-.rightbar .navbar-nav > li:last-of-type {
-    border-right: 1px solid silver;
+    padding-left: 0;
+    padding-right: 0;
 }
 aside > nav > ul > li.heading {
     display: block;
@@ -183,15 +188,18 @@ aside nav ul .active > a {
 }
 
 .topnavbar {
-    margin-bottom: 0px !important;
+    margin-bottom: 0 !important;
     background-color: #F3F3F3;
     background-image: linear-gradient(to bottom, #F3F3F3, #E2E2E2);
     background-repeat: repeat-x;
     border: none !important;
 }
 .navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
-    padding-right: 0px;
-    padding-left: 0px;
+    padding-right: 0;
+    padding-left: 0;
+}
+.navbar-fixed-top .navbar-collapse {
+    max-height: calc(100vh - 40px);
 }
 .navbar {
     border-radius: 0 !important;
@@ -225,21 +233,18 @@ aside nav ul .active > a {
     padding-bottom: 10px !important;
 }
 .leftbar > div > button {
-    padding: 5px;
+    padding:  5px 7px 5px 7px;
     border: 1px solid #ccc !important;
-    border-radius: 0px;
+    border-radius: 0;
     margin: 4px;
-    padding-left: 7px;
-    padding-right: 7px;
 }
 .navbar  .leftbar .navbar-toggle {
     margin-right: 14px;
 }
 #toggleLeftMenu i {
-    padding: 8px;
-    padding-bottom: 7px;
+    padding: 8px 8px 7px 8px;
     border: 1px solid #ccc !important;
-    border-radius: 0px;
+    border-radius: 0;
     margin: 4px;
 }
 ul > .heading {
@@ -260,7 +265,7 @@ ul > .heading {
     border-top: 1px solid silver;
     border-left: 1px solid silver;
     z-index: 4;
-    bottom: 0px;
+    bottom: 0;
     width:100%;
     position: fixed;
     padding: 5px 30px 5px 30px;
@@ -311,10 +316,9 @@ ul > .heading {
 .btn {
     background-image: none;
     border: 1px solid silver;
-    border-color: silver;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 .form-horizontal .form-group .control-label {
     text-align: left;
@@ -355,7 +359,7 @@ hr {
 #mediaModal .modal-body {
     height: 100%;
     border-radius: 0;
-    padding: 0px 0px 57px !important;
+    padding: 0 0 57px !important;
 }
 #mediaModal .modal-footer {
     display: none;
@@ -447,7 +451,7 @@ aside {
     left: 0;
     right: 0;
     top: 40px;
-    bottom: 0px;
+    bottom: 0;
 }
 .savebox_bottom {
     bottom: 45px !important;
@@ -464,10 +468,10 @@ aside {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     border-image: none;
-    border-width: 1px 0px;
-    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1) inset, 0px -1px 0px rgba(0, 0, 0, 0.07) inset;
+    border-width: 1px 0;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1) inset, 0 -1px 0 rgba(0, 0, 0, 0.07) inset;
     width: 100%;
-    margin: 0px !important;
+    margin: 0 !important;
     box-sizing: border-box;
 }
 .ribbon-fixed {
@@ -795,6 +799,28 @@ table tbody i.fa.fa-sort {
     .changeBox {
         margin-top: 0;
     }
+    header .rightbar .navbar-nav > li {
+        border-left: 1px solid silver;
+    }
+    header .rightbar .navbar-nav > li:last-of-type {
+        border-right: 1px solid silver;
+    }
+    header .rightbar li > #search-header {
+        padding: 10px;
+    }
+    #search-div{
+        position: absolute;
+        top: 40px;
+        right: -1px;
+        width: 330px;
+    }
+    .logout {
+        text-align: center;
+    }
+    .navbar-fixed-top .navbar-collapse {
+        max-height: 240px;
+    }
+
 }
 @media (min-width: 992px) {
     #ilch_dropdown .full {
@@ -819,13 +845,6 @@ table tbody i.fa.fa-sort {
     .hidden-menu  #left-panel:hover ~ #main  {
         margin-left: 10px;
     }
-    #search-div{
-        width: 93%;
-        top: 0px;
-    }
-    header .rightbar li > #search-header {
-        padding-left: 20px !important;
-    }
     body.container {
         border: none !important;
         width: 100% !important;
@@ -834,7 +853,7 @@ table tbody i.fa.fa-sort {
         overflow: hidden;
     }
     .leftbar {
-        margin-right: 0px;
+        margin-right: 0;
     }
 }
 @media (min-width:768px) and (max-width:991px) {
@@ -993,9 +1012,6 @@ table tbody i.fa.fa-sort {
     .hidden-menu #main {
         left: 210px;
     }
-    .navbar-fixed-top .navbar-collapse {
-        max-height: 240px;
-    }
 }
 @media only screen and (min-width:320px) and (max-width:479px) {
 
@@ -1063,9 +1079,6 @@ table tbody i.fa.fa-sort {
         width: 100%;
         color: #000;
         padding: 7px 7px !important;
-    }
-    .navbar-fixed-top .navbar-collapse {
-        max-height: 240px;
     }
 }
 

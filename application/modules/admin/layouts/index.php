@@ -246,7 +246,7 @@
                                 <b class="caret"></b>
                             </a>
                             <ul role="menu" class="dropdown-menu">
-                                <li class="text-center">
+                                <li class="logout">
                                     <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'logout']) ?>">
                                         <i class="fa fa-power-off"></i> <?=$this->getTrans('logout') ?>
                                     </a>
@@ -255,7 +255,7 @@
                         </li>
                         <!-- Search Block -->
                         <li>
-                            <i id="search-header" class="fa fa-search search-btn"></i>
+                            <i id="search-header" class="fa fa-search search-btn"><span class="search-text visible-xs-inline"><?=$this->getTrans('search') ?></span></i>
                             <div id="search-div" class="search-close">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
