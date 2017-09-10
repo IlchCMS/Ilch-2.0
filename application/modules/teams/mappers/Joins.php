@@ -170,9 +170,24 @@ class Joins extends \Ilch\Mapper
             'undecided' => $join->getUndecided()
         ];
 
-        $this->db()->insert('teams_joins')
-            ->values($fields)
-            ->execute();
+        $id = (int)$this->db()->select('id')
+            ->from('teams_joins')
+            ->where(['id' => $join->getId()])
+            ->execute()
+            ->fetchCell();
+
+        if ($id) {
+            $this->db()->update('teams_joins')
+                ->values($fields)
+                ->where(['id' => $id])
+                ->execute();
+        } else {
+            $id = $this->db()->insert('teams_joins')
+                ->values($fields)
+                ->execute();
+        }
+
+        return $id;
     }
 
     /**

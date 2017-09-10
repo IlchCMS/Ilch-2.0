@@ -32,7 +32,11 @@ $teamsCache = [];
                     
                     $date = new Ilch\Date($join->getDateCreated()); ?>
                     <tr>
+                    <?php if ($join->getUserId()) : ?>
                         <td><a href="<?=$this->getUrl(['action' => 'showuserhistory', 'userId' => $join->getUserId()]) ?>" title="<?=$this->getTrans('show') ?>"><?=$this->escape($join->getName()) ?></a></td>
+                    <?php else: ?>
+                        <td><?=$this->escape($join->getName()) ?></td>
+                    <?php endif; ?>
                         <td><?=$this->escape($team->getName()) ?></td>
                         <td><?=$date->format('d.m.Y H:i', true) ?></td>
                         <td><?=($join->getDecision() == 1) ? $this->getTrans('accepted') : $this->getTrans('declined')?></td>

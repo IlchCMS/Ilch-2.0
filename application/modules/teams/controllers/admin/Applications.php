@@ -100,7 +100,8 @@ class Applications extends \Ilch\Controller\Admin
             $name = $join->getName();
             $email = $join->getEmail();
             $team = $teamsMapper->getTeamById($join->getTeamId());
-            
+            $newUser = false;
+
             if ($join->getUserId()) {
                 $user = $userMapper->getUserById($join->getUserId());
                 $mailContent = $emailsMapper->getEmail('teams', 'teams_accept_user_mail', $user->getLocale());
@@ -128,7 +129,10 @@ class Applications extends \Ilch\Controller\Admin
                     ->setSelector($selector)
                     ->setConfirmedCode($confirmedCode)
                     ->setConfirmed(0);
-                $userMapper->save($userModel);
+                $userId = $userMapper->save($userModel);
+                $join->setUserId($userId);
+                $joinsMapper->save($join);
+                $newUser = true;
             }
 
             $teamname = $team->getName();
@@ -157,7 +161,7 @@ class Applications extends \Ilch\Controller\Admin
                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
             ];
 
-            if (!$join->getUserId()) {
+            if ($newUser) {
                 $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirm').'</a>';
                 $messageConfirm = ['{confirm}' => $confirmCode];
                 $messageReplace = array_merge($messageReplace, $messageConfirm);
