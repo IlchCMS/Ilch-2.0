@@ -218,6 +218,10 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
+            case "2.1.1":
+                // Remove no longer needed gallery_id column.
+                $this->db()->query('ALTER TABLE `[prefix]_users_gallery_items` DROP COLUMN `gallery_id`;');
+                break;
         }
 
         return 'Update function executed.';

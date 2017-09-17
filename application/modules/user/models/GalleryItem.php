@@ -37,13 +37,6 @@ class GalleryItem extends \Ilch\Model
     protected $userId;
 
     /**
-     * GalleryId of the item.
-     *
-     * @var integer
-     */
-    protected $galleryId;
-
-    /**
      * ParentId of the item.
      *
      * @var integer
@@ -142,26 +135,6 @@ class GalleryItem extends \Ilch\Model
     public function setUserId($userId)
     {
         $this->userId = (int) $userId;
-    }
-
-    /**
-     * Gets the gallery id.
-     *
-     * @return integer
-     */
-    public function getGalleryId()
-    {
-        return $this->galleryId;
-    }
-
-    /**
-     * Sets the gallery id.
-     *
-     * @param integer $id
-     */
-    public function setGalleryId($id)
-    {
-        $this->galleryId = (int) $id;
     }
 
     /**

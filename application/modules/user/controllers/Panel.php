@@ -427,7 +427,7 @@ class Panel extends BaseController
         if ($this->getRequest()->getPost('saveGallery')) {
             $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
             $items = $this->getRequest()->getPost('items');
-            $oldItems = $galleryMapper->getGalleryItems(1);
+            $oldItems = $galleryMapper->getGalleryItems($this->getUser()->getId());
 
             /*
              * Deletes old entries from database.
@@ -458,7 +458,6 @@ class Panel extends BaseController
                         $galleryItem->setId($item['id']);
                     }
 
-                    $galleryItem->setGalleryId(1);
                     $galleryItem->setUserId($this->getUser()->getId());
                     $galleryItem->setType($item['type']);
                     $galleryItem->setTitle($item['title']);
@@ -495,7 +494,7 @@ class Panel extends BaseController
             $this->redirect(['action' => 'gallery']);
         }
 
-        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getUser()->getId(), 1, 0));
+        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getUser()->getId(), 0));
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
     }

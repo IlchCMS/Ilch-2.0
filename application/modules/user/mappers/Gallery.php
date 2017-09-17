@@ -13,12 +13,12 @@ class Gallery extends \Ilch\Mapper
     /**
      * Gets all gallery items by parent item id.
      */
-    public function getGalleryItemsByParent($userId, $galleryId, $itemId)
+    public function getGalleryItemsByParent($userId, $itemId)
     {
         $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('users_gallery_items')
-                ->where(['user_id' => $userId, 'gallery_id' => $galleryId, 'parent_id' => $itemId])
+                ->where(['user_id' => $userId, 'parent_id' => $itemId])
                 ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
@@ -34,7 +34,6 @@ class Gallery extends \Ilch\Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemId);
-            $itemModel->setGalleryId($galleryId);
             $itemModel->setUserId($userId);
             $items[] = $itemModel;
         }
@@ -67,7 +66,6 @@ class Gallery extends \Ilch\Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setGalleryId($itemRow['gallery_id']);
             $items[] = $itemModel;
         }
 
@@ -94,9 +92,42 @@ class Gallery extends \Ilch\Mapper
         $itemModel->setTitle($itemRows['title']);
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
-        $itemModel->setGalleryId($itemRows['gallery_id']);
 
         return $itemModel;
+    }
+
+    /**
+     * Gets all gallery items by user id.
+     *
+     * @param integer $userId
+     * @return null|GalleryItem[];
+     */
+    public function getGalleryItems($userId)
+    {
+        $items = [];
+        $itemRows = $this->db()->select('*')
+                ->from('users_gallery_items')
+                ->where(['user_id' => $userId])
+                ->order(['sort' => 'ASC'])
+                ->execute()
+                ->fetchRows();
+
+        if (empty($itemRows)) {
+            return null;
+        }
+
+        foreach ($itemRows as $itemRow) {
+            $itemModel = new GalleryItem();
+            $itemModel->setId($itemRow['id']);
+            $itemModel->setUserId($itemRow['user_id']);
+            $itemModel->setType($itemRow['type']);
+            $itemModel->setTitle($itemRow['title']);
+            $itemModel->setDesc($itemRow['description']);
+            $itemModel->setParentId($itemRow['parent_id']);
+            $items[] = $itemModel;
+        }
+
+        return $items;
     }
 
     public function getCountGalleryByUser($id)
@@ -121,7 +152,6 @@ class Gallery extends \Ilch\Mapper
         $fields = [
             'user_id' => $galleryItem->getUserId(),
             'title' => $galleryItem->getTitle(),
-            'gallery_id' => $galleryItem->getGalleryId(),
             'sort' => $galleryItem->getSort(),
             'parent_id' => $galleryItem->getParentId(),
             'type' => $galleryItem->getType(),
@@ -164,37 +194,5 @@ class Gallery extends \Ilch\Mapper
         $this->db()->delete('users_gallery_items')
             ->where(['id' => $galleryItem->getId()])
             ->execute();
-    }
-
-    /**
-     * Gets all gallery items by gallery id.
-     */
-    public function getGalleryItems($galleryId)
-    {
-        $items = [];
-        $itemRows = $this->db()->select('*')
-                ->from('users_gallery_items')
-                ->where(['gallery_id' => $galleryId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
-
-        if (empty($itemRows)) {
-            return null;
-        }
-
-        foreach ($itemRows as $itemRow) {
-            $itemModel = new GalleryItem();
-            $itemModel->setId($itemRow['id']);
-            $itemModel->setUserId($itemRow['user_id']);
-            $itemModel->setType($itemRow['type']);
-            $itemModel->setTitle($itemRow['title']);
-            $itemModel->setDesc($itemRow['description']);
-            $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setGalleryId($galleryId);
-            $items[] = $itemModel;
-        }
-
-        return $items;
     }
 }

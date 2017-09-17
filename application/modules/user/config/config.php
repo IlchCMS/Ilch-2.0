@@ -197,7 +197,6 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `user_id` INT(11) NOT NULL,
-                `gallery_id` INT(11) NOT NULL DEFAULT 0,
                 `sort` INT(11) NOT NULL DEFAULT 0,
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
                 `type` TINYINT(1) NOT NULL,

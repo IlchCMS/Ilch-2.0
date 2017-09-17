@@ -5,7 +5,7 @@ $imageMapper = $this->get('imageMapper');
 
 function rec($item, $galleryMapper, $obj, $imageMapper)
 {
-    $subItems = $galleryMapper->getGalleryItemsByParent($item->getUserId(), '1', $item->getId());
+    $subItems = $galleryMapper->getGalleryItemsByParent($item->getUserId(), $item->getId());
     $imageCount = $imageMapper->getCountImageById($item->getId());
 
     if ($item->getType() === 0) {

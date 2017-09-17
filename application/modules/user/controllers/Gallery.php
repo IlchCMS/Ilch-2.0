@@ -31,7 +31,7 @@ class Gallery extends \Ilch\Controller\Frontend
                 ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
                 ->add($this->getTranslator()->trans('menuGallery'), ['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
 
-        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getRequest()->getParam('user'), 1, 0));
+        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getRequest()->getParam('user'), 0));
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
     }
