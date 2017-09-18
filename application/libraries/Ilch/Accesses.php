@@ -49,10 +49,9 @@ class Accesses
      */
     public function hasAccess($getAccessTo = '')
     {
-
         $userId = '';
         $groupAccessList = [];
-        $groupIds = [0];
+        $groupIds = [3];
 
         if (isset($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
@@ -77,7 +76,7 @@ class Accesses
 
         if ($getAccessTo == 'Module') {
             $getAccessTo = $this->getAccessModule($groupAccessList);
-        } elseif ($getAccessTo == 'Admin') {
+        } else {
             $getAccessTo = $this->getAccessAdmin($groupAccessList);
         }
         return $getAccessTo;

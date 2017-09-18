@@ -73,13 +73,18 @@ class Showtopics extends \Ilch\Controller\Frontend
     {
         $topicMapper = new TopicMapper();
 
-        if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicDelete') == 'topicDelete') {
-            foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
-                $topicMapper->deleteById($topicId);
-            }
+        if ($this->getUser()) {
+            $access = new Accesses($this->getRequest());
+            if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
+                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicDelete') == 'topicDelete') {
+                    foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
+                        $topicMapper->deleteById($topicId);
+                    }
 
-            $this->addMessage('deleteSuccess');
-            $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]);
+                    $this->addMessage('deleteSuccess');
+                    $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]);
+                }
+            }
         }
     }
 }
