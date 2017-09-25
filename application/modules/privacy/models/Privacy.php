@@ -135,7 +135,7 @@ class Privacy extends \Ilch\Model
      * @param string $url
      * @return this
      */
-    public function setName($url)
+    public function setURL($url)
     {
         $this->url = (string)$url;
 
