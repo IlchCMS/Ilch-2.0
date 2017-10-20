@@ -66,6 +66,7 @@ class Newtopic extends \Ilch\Controller\Frontend
                 $postModel->setTopicId($lastid)
                     ->setUserId($this->getUser()->getId())
                     ->setText($this->getRequest()->getPost('text'))
+                    ->setForumId($id)
                     ->setDateCreated($dateTime);
                 $postMapper->save($postModel);
                 $this->trigger(ForumConfig::EVENT_ADDTOPIC_AFTER, ['topicModel' => $topicModel, 'postModel' => $postModel, 'request' => $this->getRequest()]);
