@@ -79,10 +79,13 @@ class Index extends BaseController
                         $forumItem->setType($item['type']);
                         $forumItem->setTitle($item['title']);
                         $forumItem->setDesc($item['desc']);
-                        $forumItem->setPrefix($item['prefix']);
-                        $forumItem->setReadAccess($item['readAccess']);
-                        $forumItem->setReplayAccess($item['replayAccess']);
-                        $forumItem->setCreateAccess($item['createAccess']);
+                        // Don't try to store these values for a categorie. This avoids storing "undefined" from JS in the database.
+                        if ($item['type'] != 0) {
+                            $forumItem->setPrefix($item['prefix']);
+                            $forumItem->setReadAccess($item['readAccess']);
+                            $forumItem->setReplayAccess($item['replayAccess']);
+                            $forumItem->setCreateAccess($item['createAccess']);
+                        }
                         $newId = $forumMapper->saveItem($forumItem);
 
                         if (isset($tmpId)) {
