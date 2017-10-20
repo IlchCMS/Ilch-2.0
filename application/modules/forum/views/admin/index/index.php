@@ -4,7 +4,7 @@ $forumItems = $this->get('forumItems');
 
 function rec($item, $forumMapper, $obj)
 {
-    $subItems = $forumMapper->getforumItemsByParent('1', $item->getId());
+    $subItems = $forumMapper->getforumItemsByParent($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (empty($subItems)) {

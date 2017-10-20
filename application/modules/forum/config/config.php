@@ -65,7 +65,6 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_forum_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `forum_id` INT(11) NOT NULL,
                 `sort` INT(11) NOT NULL DEFAULT 0,
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
                 `type` TINYINT(1) NOT NULL,
@@ -104,9 +103,9 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-            INSERT INTO `[prefix]_forum_items` (`id`, `forum_id`, `sort`, `parent_id`, `type`, `title`, `description`, `read_access`, `replay_access`, `create_access`) VALUES
-                (1, 1, 0, 0, 0, "Meine Kategorie", "Meine erste Kategorie", "", "", ""),
-                (2, 1, 10, 1, 1, "Mein Forum", "Mein erstes Forum", "2,3", 2, 2);
+            INSERT INTO `[prefix]_forum_items` (`id`, `sort`, `parent_id`, `type`, `title`, `description`, `read_access`, `replay_access`, `create_access`) VALUES
+                (1, 0, 0, 0, "Meine Kategorie", "Meine erste Kategorie", "", "", ""),
+                (2, 10, 1, 1, "Mein Forum", "Mein erstes Forum", "2,3", 2, 2);
 
             INSERT INTO `[prefix]_forum_topics` (`id`, `topic_id`, `topic_title`, `creator_id`, `date_created`, `forum_id`) VALUES
                 (1, 2, "Willkommen bei Ilch!", 0, NOW(), 2);
@@ -117,7 +116,13 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+            case "1.1":
+            case "1.2":
+            case "1.3":
+                $this->db()->query('ALTER TABLE `[prefix]_forum_items` DROP COLUMN `forum_id`;');
+        }
     }
 }
 

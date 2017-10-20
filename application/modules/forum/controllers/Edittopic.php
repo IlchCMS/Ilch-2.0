@@ -20,7 +20,7 @@ class Edittopic extends \Ilch\Controller\Frontend
     {
         $userMapper = new UserMapper();
         $forumMapper = new ForumMapper();
-        $forumItems = $forumMapper->getForumItemsByParent(1, 0);
+        $forumItems = $forumMapper->getForumItemsByParent(0);
 
         $forumId = $this->getRequest()->getParam('forumid');
         $forum = $forumMapper->getForumById($forumId);

@@ -22,7 +22,7 @@ class Index extends \Ilch\Controller\Frontend
         $staticsMapper = new ForumStaticsMapper();
         $groupMapper = new GroupMapper();
 
-        $forumItems = $forumMapper->getForumItemsByParent(1, 0);
+        $forumItems = $forumMapper->getForumItemsByParent(0);
         $allOnlineUsers = $visitMapper->getVisitsCountOnline();
         $usersOnline = $visitMapper->getVisitsOnlineUser();
 

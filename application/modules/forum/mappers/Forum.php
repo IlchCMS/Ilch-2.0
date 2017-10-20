@@ -13,12 +13,12 @@ use Modules\Forum\Mappers\Topic as TopicMapper;
 
 class Forum extends \Ilch\Mapper
 {
-    public function getForumItemsByParent($forumId, $itemId)
+    public function getForumItemsByParent($itemId)
     {
         $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('forum_items')
-                ->where(['forum_id' => $forumId, 'parent_id' => $itemId])
+                ->where(['parent_id' => $itemId])
                 ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
@@ -34,12 +34,11 @@ class Forum extends \Ilch\Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemId);
-            $itemModel->setForumId($forumId);
             $itemModel->setPrefix($itemRow['prefix']);
             $itemModel->setReadAccess($itemRow['read_access']);
             $itemModel->setReplayAccess($itemRow['replay_access']);
             $itemModel->setCreateAccess($itemRow['create_access']);
-            $itemModel->setSubItems($this->getForumItemsByParent('1',$itemRow['id']));
+            $itemModel->setSubItems($this->getForumItemsByParent($itemRow['id']));
             $itemModel->setTopics($this->getCountTopicsById($itemRow['id']));
             $itemModel->setLastPost($this->getLastPostByTopicId($itemRow['id']));
             $itemModel->setPosts($this->getCountPostsById($itemRow['id']));
@@ -68,7 +67,6 @@ class Forum extends \Ilch\Mapper
         $itemModel->setTitle($itemRows['title']);
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
-        $itemModel->setForumId($itemRows['forum_id']);
         $itemModel->setPrefix($itemRows['prefix']);
         $itemModel->setReadAccess($itemRows['read_access']);
         $itemModel->setReplayAccess($itemRows['replay_access']);
@@ -82,7 +80,7 @@ class Forum extends \Ilch\Mapper
         $select = $this->db()->select();
         $result = $select->fields(['t.id', 't.topic_id'])
             ->from(['t' => 'forum_topics'])
-            ->join(['i' => 'forum_items'], 'i.id = t.topic_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.prefix', 'i.parent_id', 'i.forum_id', 'i.read_access', 'i.replay_access', 'i.create_access'])
+            ->join(['i' => 'forum_items'], 'i.id = t.topic_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.prefix', 'i.parent_id', 'i.read_access', 'i.replay_access', 'i.create_access'])
             ->where(['t.id' => $topicId]);
 
         $items = $result->execute();
@@ -99,7 +97,6 @@ class Forum extends \Ilch\Mapper
         $itemModel->setTitle($itemRows['title']);
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
-        $itemModel->setForumId($itemRows['forum_id']);
         $itemModel->setPrefix($itemRows['prefix']);
         $itemModel->setReadAccess($itemRows['read_access']);
         $itemModel->setReplayAccess($itemRows['replay_access']);
@@ -158,7 +155,6 @@ class Forum extends \Ilch\Mapper
         $itemModel->setTitle($itemRows['title']);
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
-        $itemModel->setForumId($itemRows['forum_id']);
         $itemModel->setPrefix($itemRows['prefix']);
         $itemModel->setReadAccess($itemRows['read_access']);
         $itemModel->setReplayAccess($itemRows['replay_access']);
@@ -171,7 +167,6 @@ class Forum extends \Ilch\Mapper
     {
         $fields = [
             'title' => $forumItem->getTitle(),
-            'forum_id' => $forumItem->getForumId(),
             'sort' => $forumItem->getSort(),
             'parent_id' => $forumItem->getParentId(),
             'type' => $forumItem->getType(),
@@ -221,12 +216,11 @@ class Forum extends \Ilch\Mapper
             ->execute();
     }
 
-    public function getForumItems($forumId)
+    public function getForumItems()
     {
         $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('forum_items')
-                ->where(['forum_id' => $forumId])
                 ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
@@ -242,7 +236,6 @@ class Forum extends \Ilch\Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setForumId($forumId);
             $itemModel->setPrefix($itemRow['prefix']);
             $itemModel->setReadAccess($itemRow['read_access']);
             $itemModel->setReplayAccess($itemRow['replay_access']);

@@ -16,7 +16,7 @@ class Showcat extends \Ilch\Controller\Frontend
         $catId = (int)$this->getRequest()->getParam('id');
         
         $forumMapper = new ForumMapper();
-        $forumItems = $forumMapper->getForumItemsByParent(1, $catId);
+        $forumItems = $forumMapper->getForumItemsByParent($catId);
         $cat = $forumMapper->getForumById($catId);
 
         $this->getLayout()->getTitle()

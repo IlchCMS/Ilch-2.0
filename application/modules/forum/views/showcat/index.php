@@ -6,7 +6,7 @@ $readAccess = $this->get('readAccess');
 
 function rec($item, $forumMapper, $obj, $readAccess)
 {
-    $subItems = $forumMapper->getForumItemsByParent('1', $item->getId());
+    $subItems = $forumMapper->getForumItemsByParent($item->getId());
     $topics = $forumMapper->getCountTopicsById($item->getId());
     $lastPost = $forumMapper->getLastPostByTopicId($item->getId());
     $posts = $forumMapper->getCountPostsById($item->getId());

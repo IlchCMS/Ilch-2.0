@@ -30,13 +30,6 @@ class ForumItem extends \Ilch\Model
     protected $type;
 
     /**
-     * Forum Id of the item.
-     *
-     * @var integer
-     */
-    protected $forumId;
-
-    /**
      * Parent Id of the item.
      *
      * @var integer
@@ -178,29 +171,6 @@ class ForumItem extends \Ilch\Model
     public function setType($type)
     {
         $this->type = (int)$type;
-
-        return $this;
-    }
-
-    /**
-     * Gets the forum id.
-     *
-     * @return integer
-     */
-    public function getForumId()
-    {
-        return $this->forumId;
-    }
-
-    /**
-     * Sets the forum id.
-     *
-     * @param integer $id
-     * @return $this
-     */
-    public function setForumId($id)
-    {
-        $this->forumId = (int) $id;
 
         return $this;
     }

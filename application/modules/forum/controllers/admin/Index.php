@@ -44,7 +44,7 @@ class Index extends BaseController
                     }
                 }
 
-                $oldItems = $forumMapper->getForumItems(1);
+                $oldItems = $forumMapper->getForumItems();
 
                 /*
                  * Deletes old entries from database.
@@ -119,7 +119,7 @@ class Index extends BaseController
             $this->redirect(['action' => 'index']);
         }
 
-        $forumItems = $forumMapper->getForumItemsByParent(1, 0);
+        $forumItems = $forumMapper->getForumItemsByParent(0);
         $this->getView()->set('forumItems', $forumItems);
         $this->getView()->set('forumMapper', $forumMapper);
 
