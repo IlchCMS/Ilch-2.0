@@ -1,0 +1,13 @@
+forum_ranks:
+  -
+    id: 1
+    title: "Gruenschnabel"
+    posts: 0
+  -
+    id: 2
+    title: "Jungspund"
+    posts: 25
+  -
+    id: 3
+    title: "Mitglied"
+    posts: 50
