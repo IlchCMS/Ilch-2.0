@@ -21,8 +21,13 @@ class Base extends \Ilch\Controller\Admin
     {
         $active = [];
 
-        foreach (['index', 'settings'] as $controllerName) {
+        foreach (['index', 'settings', 'ranks'] as $controllerName) {
             $active[$controllerName] = (boolean)($this->getRequest()->getControllerName() == $controllerName);
+        }
+
+        $active['ranks_add'] = (boolean)($active['ranks'] && $this->getRequest()->getActionName() == 'treat');
+        if ($active['ranks_add']) {
+            $active['ranks'] = false;
         }
 
         $this->getLayout()->addMenu
@@ -34,6 +39,18 @@ class Base extends \Ilch\Controller\Admin
                     'active' => $active['index'],
                     'icon' => 'fa fa-th',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
+                    'name' => 'menuRanks',
+                    'active' => $active['ranks'],
+                    'icon' => 'fa fa-th-list',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index']),
+                    [
+                        'name' => 'add',
+                        'active' => $active['ranks_add'],
+                        'icon' => 'fa fa-plus-circle',
+                        'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'treat'])
+                    ]
                 ],
                 [
                     'name' => 'menuSettings',

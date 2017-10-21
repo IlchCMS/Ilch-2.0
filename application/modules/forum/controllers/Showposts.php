@@ -9,6 +9,7 @@ namespace Modules\Forum\Controllers;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
+use Modules\Forum\Mappers\Rank as RankMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Modules\User\Mappers\User as UserMapper;
@@ -24,6 +25,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $forumMapper = new ForumMapper();
         $topicModel = new ForumTopicModel;
         $pagination = new \Ilch\Pagination();
+        $rankMapper = new RankMapper();
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
@@ -100,6 +102,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getView()->set('readAccess', $readAccess);
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('userAccess', new Accesses($this->getRequest()));
+        $this->getView()->set('rankMapper', $rankMapper);
     }
 
     public function deleteAction()

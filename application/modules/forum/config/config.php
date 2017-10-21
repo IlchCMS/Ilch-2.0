@@ -58,7 +58,8 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_forum_topics`;
             DROP TABLE `[prefix]_forum_items`;
-            DROP TABLE `[prefix]_forum_posts`');
+            DROP TABLE `[prefix]_forum_posts`;
+            DROP TABLE `[prefix]_forum_ranks`');
     }
 
     public function getInstallSql()
@@ -103,6 +104,13 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_ranks` (
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `title` TEXT NOT NULL,
+                `posts` INT(11) NOT NULL DEFAULT 0,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
             INSERT INTO `[prefix]_forum_items` (`id`, `sort`, `parent_id`, `type`, `title`, `description`, `read_access`, `replay_access`, `create_access`) VALUES
                 (1, 0, 0, 0, "Meine Kategorie", "Meine erste Kategorie", "", "", ""),
                 (2, 10, 1, 1, "Mein Forum", "Mein erstes Forum", "2,3", 2, 2);
@@ -111,7 +119,21 @@ class Config extends \Ilch\Config\Install
                 (1, 2, "Willkommen bei Ilch!", 0, NOW(), 2);
 
             INSERT INTO `[prefix]_forum_posts` (`id`, `topic_id`, `text`, `user_id`, `date_created`, `forum_id`) VALUES
-                (1, 1, "Willkommen im Ilch 2.0 Forum!\n\nBei Fragen oder Probleme im [url=http://www.ilch.de/forum.html]Ilch Forum[/url] melden.\n\nViel Erfolg\nIlch", 0, NOW(), 2);';
+                (1, 1, "Willkommen im Ilch 2.0 Forum!\n\nBei Fragen oder Probleme im [url=http://www.ilch.de/forum.html]Ilch Forum[/url] melden.\n\nViel Erfolg\nIlch", 0, NOW(), 2);
+
+            INSERT INTO `[prefix]_forum_ranks` (`id`, `title`, `posts`) VALUES
+                (1, "Grünschnabel", 0),
+                (2, "Jungspund", 25),
+                (3, "Mitglied", 50),
+                (4, "Eroberer", 75),
+                (5, "Doppel-As", 150),
+                (6, "Tripel-As", 250),
+                (7, "Haudegen", 500),
+                (8, "Routinier", 1000),
+                (9, "König", 2000),
+                (10, "Kaiser", 5000),
+                (11, "Legende", 7000),
+                (12, "Foren Gott", 10000);';
     }
 
     public function getUpdate($installedVersion)
@@ -122,6 +144,13 @@ class Config extends \Ilch\Config\Install
             case "1.2":
             case "1.3":
                 $this->db()->query('ALTER TABLE `[prefix]_forum_items` DROP COLUMN `forum_id`;');
+
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_ranks` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `title` TEXT NOT NULL,
+                    `posts` INT(11) NOT NULL DEFAULT 0,
+                    PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
         }
     }
 }

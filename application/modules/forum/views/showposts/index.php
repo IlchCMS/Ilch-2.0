@@ -1,5 +1,6 @@
 <?php
 $forumMapper = $this->get('forumMapper');
+$rankMapper = $this->get('rankMapper');
 $posts = $this->get('posts');
 $cat = $this->get('cat');
 $topicpost = $this->get('post');
@@ -143,6 +144,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                         <?php foreach ($post->getAutor()->getGroups() as $group): ?>
                             <i><?=$group->getName() ?></i><br>
                         <?php endforeach; ?>
+                        <i><?=$rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle() ?></i>
                     </dd>
                     <dd>&nbsp;</dd>
                     <dd><b><?=$this->getTrans('posts') ?>:</b> <?=$post->getAutorAllPost() ?></dd>

@@ -73,4 +73,8 @@ return [
     'legendThreadLocked' => 'Thread closed',
     'noThreads' => 'No Threads available',
     'noNewThreads' => 'No new Threads available',
+    'ranks' => 'Ranks',
+    'posts' => 'Posts',
+    'menuRanks' => 'Ranks',
+    'noRanks' => 'No ranks available',
 ];
