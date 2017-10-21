@@ -38,7 +38,7 @@ class Cats extends \Ilch\Controller\Admin
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];

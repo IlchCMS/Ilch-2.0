@@ -55,7 +55,7 @@ class Base extends \Ilch\Controller\Admin
                 [
                     'name' => 'menuSettings',
                     'active' => $active['settings'],
-                    'icon' => 'fa fa-th-list',
+                    'icon' => 'fa fa-cogs',
                     'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
                 ]
             ]
