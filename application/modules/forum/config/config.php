@@ -150,7 +150,21 @@ class Config extends \Ilch\Config\Install
                     `title` TEXT NOT NULL,
                     `posts` INT(11) NOT NULL DEFAULT 0,
                     PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;');
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                INSERT INTO `[prefix]_forum_ranks` (`id`, `title`, `posts`) VALUES
+                    (1, "Grünschnabel", 0),
+                    (2, "Jungspund", 25),
+                    (3, "Mitglied", 50),
+                    (4, "Eroberer", 75),
+                    (5, "Doppel-As", 150),
+                    (6, "Tripel-As", 250),
+                    (7, "Haudegen", 500),
+                    (8, "Routinier", 1000),
+                    (9, "König", 2000),
+                    (10, "Kaiser", 5000),
+                    (11, "Legende", 7000),
+                    (12, "Foren Gott", 10000);');
         }
     }
 }
