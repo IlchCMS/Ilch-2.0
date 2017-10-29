@@ -94,7 +94,7 @@ class Index extends \Ilch\Controller\Frontend
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);
-            $this->redirect(['action' => 'showImage', 'id' => $id]);
+            $this->redirect(['action' => 'showimage', 'id' => $id]);
         }
         if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
             $id = $this->getRequest()->getParam('id');
