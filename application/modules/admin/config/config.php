@@ -222,6 +222,10 @@ class Config extends \Ilch\Config\Install
                 // Remove no longer needed gallery_id column.
                 $this->db()->query('ALTER TABLE `[prefix]_users_gallery_items` DROP COLUMN `gallery_id`;');
                 break;
+            case "2.1.2":
+                // Add new votes column for the article rating feature
+                $this->db()->query('ALTER TABLE `[prefix]_articles_content` ADD COLUMN `votes` LONGTEXT NOT NULL;');
+                break;
         }
 
         return 'Update function executed.';
