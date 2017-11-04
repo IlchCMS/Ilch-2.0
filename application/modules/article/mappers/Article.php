@@ -24,9 +24,9 @@ class Article extends \Ilch\Mapper
         $select = $this->db()->select()
                 ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access'])
                 ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
                 ->where(['pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source'])
+                ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
                 ->order(['top' => 'DESC', 'date_created' => 'DESC']);
 
         if ($pagination !== null) {
@@ -62,6 +62,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setReadAccess($articleRow['read_access']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
+            $articleModel->setVotes($articleRow['votes']);
             $articles[] = $articleModel;
         }
 
@@ -81,7 +82,7 @@ class Article extends \Ilch\Mapper
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'read_access'])
             ->from(['p' => 'articles'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->where(['p.cat_id LIKE' => '%'.$catId.'%', 'pc.locale' => $this->db()->escape($locale)])
             ->order(['id' => 'DESC']);
 
@@ -117,6 +118,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setReadAccess($articleRow['read_access']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
+            $articleModel->setVotes($articleRow['votes']);
             $articles[] = $articleModel;
         }
 
@@ -144,7 +146,7 @@ class Article extends \Ilch\Mapper
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', [])
             ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo])
-            ->group(['p.id' => 'DESC', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source']);
+            ->group(['p.id' => 'DESC', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -178,6 +180,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setReadAccess($articleRow['read_access']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
+            $articleModel->setVotes($articleRow['votes']);
             $articles[] = $articleModel;
         }
 
@@ -267,10 +270,10 @@ class Article extends \Ilch\Mapper
         $select = $this->db()->select()
                 ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.read_access'])
                 ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
                 ->join(['m' => 'media'], 'pc.img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
                 ->where(['pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.read_access', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'm.url_thumb', 'm.url'])
+                ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.read_access', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes', 'm.url_thumb', 'm.url'])
                 ->order(['date_created' => 'DESC']);
 
         if ($limit !== null) {
@@ -298,6 +301,7 @@ class Article extends \Ilch\Mapper
             $articleModel->seImage($articleRow['img']);
             $articleModel->setImageThumb($articleRow['url_thumb']);
             $articleModel->setImageSource($articleRow['img_source']);
+            $articleModel->setVotes($articleRow['votes']);
             $articles[] = $articleModel;
         }
 
@@ -316,7 +320,7 @@ class Article extends \Ilch\Mapper
         $select = $this->db()->select()
                 ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access'])
                 ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source', 'pc.votes'])
                 ->where(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)]);
 
         $result = $select->execute();
@@ -343,6 +347,7 @@ class Article extends \Ilch\Mapper
         $articleModel->setReadAccess($articleRow['read_access']);
         $articleModel->setImage($articleRow['img']);
         $articleModel->setImageSource($articleRow['img_source']);
+        $articleModel->setVotes($articleRow['votes']);
 
         return $articleModel;
     }
@@ -410,7 +415,7 @@ class Article extends \Ilch\Mapper
         $articleRow = $this->db()->select('*')
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access'])
             ->from(['p' => 'articles'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->where(['top' => 1])
             ->execute()
             ->fetchAssoc();
@@ -436,6 +441,7 @@ class Article extends \Ilch\Mapper
         $articleModel->setReadAccess($articleRow['read_access']);
         $articleModel->setImage($articleRow['img']);
         $articleModel->setImageSource($articleRow['img_source']);
+        $articleModel->setVotes($articleRow['votes']);
 
         return $articleModel;
     }
@@ -499,7 +505,8 @@ class Article extends \Ilch\Mapper
                             'content' => $article->getContent(),
                             'perma' => $article->getPerma(),
                             'img' => $article->getImage(),
-                            'img_source' => $article->getImageSource()
+                            'img_source' => $article->getImageSource(),
+                            'votes' => $article->getVotes()
                         ]
                     )
                     ->where
@@ -526,7 +533,8 @@ class Article extends \Ilch\Mapper
                             'perma' => $article->getPerma(),
                             'locale' => $article->getLocale(),
                             'img' => $article->getImage(),
-                            'img_source' => $article->getImageSource()
+                            'img_source' => $article->getImageSource(),
+                            'votes' => $article->getVotes()
                         ]
                     )
                     ->execute();
@@ -561,7 +569,8 @@ class Article extends \Ilch\Mapper
                         'perma' => $article->getPerma(),
                         'locale' => $article->getLocale(),
                         'img' => $article->getImage(),
-                        'img_source' => $article->getImageSource()
+                        'img_source' => $article->getImageSource(),
+                        'votes' => $article->getVotes()
                     ]
                 )
                 ->execute();
@@ -572,6 +581,31 @@ class Article extends \Ilch\Mapper
         $this->setTopArticle($id, (bool)$article->getTopArticle());
 
         return $id;
+    }
+
+    /**
+     * Save article vote/like.
+     *
+     * @param integer $id
+     * @param integer $userId
+     */
+    public function saveVotes($id, $userId)
+    {
+        $votes = $this->getVotes($id);
+
+        $this->db()->update('articles_content')
+            ->values(['votes' => $votes.$userId.','])
+            ->where(['article_id' => $id])
+            ->execute();
+    }
+
+    public function getVotes($id)
+    {
+        return $this->db()->select('votes')
+            ->from('articles_content')
+            ->where(['article_id' => $id])
+            ->execute()
+            ->fetchCell();
     }
 
     /**

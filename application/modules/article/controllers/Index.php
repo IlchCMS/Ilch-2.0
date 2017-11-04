@@ -71,6 +71,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('userMapper', $userMapper)
+            ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
             ->set('articles', $articleMapper->getArticles($this->locale, $pagination))
             ->set('pagination', $pagination)
             ->set('readAccess', $readAccess);
@@ -234,5 +235,15 @@ class Index extends \Ilch\Controller\Frontend
                     )
                 );
         }
+    }
+
+    public function voteAction()
+    {
+        $id = $this->getRequest()->getParam('id');
+
+        $articleMapper = new ArticleMapper();
+        $articleMapper->saveVotes($id, $this->getUser()->getId());
+
+        $this->redirect(['action' => $this->getRequest()->getParam('from'), 'id' => $id]);
     }
 }

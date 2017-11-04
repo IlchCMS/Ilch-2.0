@@ -46,6 +46,21 @@ if ($this->getUser()) {
                 &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('cats') ?>"></i> <?=rtrim($categories, ', '); ?>
                 &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId().'#comment']) ?>"><?=$commentsCount ?></a>
                 &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('hits') ?>"></i> <?=$article->getVisits() ?>
+                <?php if ($this->get('article_articleRating')) : ?>
+                    <?php
+                    $votes = explode(',', $article->getVotes());
+                    $countOfVotes = count($votes) - 1;
+                    ?>
+                    <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $votes) == false) : ?>
+                        <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'index']) ?>" title="<?=$this->getTrans('iLike') ?>">
+                            <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                        </a>
+                    <?php else: ?>
+                        <button class="btn btn-sm btn-default btn-success">
+                            <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                        </button>
+                    <?php endif; ?>
+                <?php endif; ?>
                 <?php if ($article->getKeywords() != ''): ?>
                     <i class="fa fa-hashtag"></i> <?=$article->getKeywords() ?>
                 <?php endif; ?>

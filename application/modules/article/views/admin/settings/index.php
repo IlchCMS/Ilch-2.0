@@ -14,6 +14,20 @@
                    value="<?=($this->get('articlesPerPage') != '') ? $this->escape($this->get('articlesPerPage')) : $this->originalInput('articlesPerPage') ?>" />
         </div>
     </div>
+    <div class="form-group <?=$this->validation()->hasError('articleRating') ? 'has-error' : '' ?>">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('articleRating') ?>
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="articleRating-on" name="articleRating" value="1" <?php if ($this->get('articleRating') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="articleRating-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="articleRating-off" name="articleRating" value="0" <?php if ($this->get('articleRating') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="articleRating-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
 
     <h2><?=$this->getTrans('boxSettings') ?></h2>
     <b><?=$this->getTrans('boxArticle') ?></b>

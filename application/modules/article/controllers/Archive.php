@@ -67,6 +67,7 @@ class Archive extends \Ilch\Controller\Frontend
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('userMapper', $userMapper)
+            ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
             ->set('articles', $articleMapper->getArticles($this->locale, $pagination))
             ->set('readAccess', $readAccess)
             ->set('pagination', $pagination);
@@ -114,8 +115,24 @@ class Archive extends \Ilch\Controller\Frontend
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('userMapper', $userMapper)
+            ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
             ->set('articles', $articleMapper->getArticlesByDate($date, $pagination))
             ->set('readAccess', $readAccess)
             ->set('pagination', $pagination);
+    }
+
+    public function voteAction()
+    {
+        $id = $this->getRequest()->getParam('id');
+        $from = $this->getRequest()->getParam('from');
+
+        $articleMapper = new ArticleMapper();
+        $articleMapper->saveVotes($id, $this->getUser()->getId());
+
+        if ($from == 'show') {
+            $this->redirect(['action' => $from, 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
+        } else {
+            $this->redirect(['action' => $from, 'id' => $id]);
+        }
     }
 }

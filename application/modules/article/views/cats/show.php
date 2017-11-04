@@ -72,6 +72,21 @@ if ($this->getUser()) {
             <?php if ($article->getTopArticle()) : ?>
             &nbsp;&nbsp;<i class="fa fa-star-o" title="<?=$this->getTrans('topArticle') ?>"></i>
             <?php endif; ?>
+            <?php if ($this->get('article_articleRating')) : ?>
+                <?php
+                $votes = explode(',', $article->getVotes());
+                $countOfVotes = count($votes) - 1;
+                ?>
+                <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $votes) == false) : ?>
+                    <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'show', 'catId' => $catId]) ?>" title="<?=$this->getTrans('iLike') ?>">
+                        <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                    </a>
+                <?php else: ?>
+                    <button class="btn btn-sm btn-default btn-success">
+                        <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                    </button>
+                <?php endif; ?>
+            <?php endif; ?>
             <?php if ($article->getKeywords() != ''): ?>
                 <br /><i class="fa fa-hashtag"></i> <?=$article->getKeywords() ?>
             <?php endif; ?>

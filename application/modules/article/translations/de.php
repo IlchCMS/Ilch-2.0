@@ -45,4 +45,5 @@ return [
     'missingName' => 'Es wurde kein Name für die Kategorie eingegeben.',
     'categoryInUse' => 'Diese Kategorie kann nicht gelöscht werden, da sie noch Artikeln zugewiesen ist.',
     'articlesPerPage' => 'Artikel pro Seite',
+    'articleRating' => 'Bewerten von Artikeln erlauben',
 ];

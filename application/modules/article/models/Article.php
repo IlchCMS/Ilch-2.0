@@ -128,6 +128,13 @@ class Article extends \Ilch\Model
     protected $imageSource;
 
     /**
+     * The votes of this article.
+     *
+     * @var string
+     */
+    protected $votes;
+
+    /**
      * Gets the id of the article.
      *
      * @return int
@@ -514,6 +521,29 @@ class Article extends \Ilch\Model
     public function setImageSource($imageSource)
     {
         $this->imageSource = $imageSource;
+
+        return $this;
+    }
+
+    /**
+     * Gets the votes of this article.
+     *
+     * @return string
+     */
+    public function getVotes()
+    {
+        return $this->votes;
+    }
+
+    /**
+     * Sets the votes of this article.
+     *
+     * @param string $votes
+     * @return $this
+     */
+    public function setVotes($votes)
+    {
+        $this->votes = $votes;
 
         return $this;
     }

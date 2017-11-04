@@ -113,7 +113,8 @@ class Config extends \Ilch\Config\Install
                   `teaser` VARCHAR(255) NOT NULL,
                   `perma` VARCHAR(255) NOT NULL,
                   `img` VARCHAR(255) NOT NULL,
-                  `img_source` VARCHAR(255) NOT NULL
+                  `img_source` VARCHAR(255) NOT NULL,
+                  `votes` LONGTEXT NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 INSERT INTO `[prefix]_articles` (`cat_id`, `date_created`, `top`) VALUES (1, now(), 0);
