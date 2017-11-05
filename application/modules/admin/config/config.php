@@ -225,6 +225,9 @@ class Config extends \Ilch\Config\Install
             case "2.1.2":
                 // Add new votes column for the article rating feature
                 $this->db()->query('ALTER TABLE `[prefix]_articles_content` ADD COLUMN `votes` LONGTEXT NOT NULL;');
+
+                removeDir(ROOT_PATH.'/vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
         }
 

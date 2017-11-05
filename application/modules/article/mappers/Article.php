@@ -599,6 +599,11 @@ class Article extends \Ilch\Mapper
             ->execute();
     }
 
+    /**
+     * Get the votes/likes for an article.
+     *
+     * @param integer $id
+     */
     public function getVotes($id)
     {
         return $this->db()->select('votes')
