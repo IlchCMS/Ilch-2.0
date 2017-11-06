@@ -118,6 +118,7 @@ class Index extends \Ilch\Controller\Admin
                 $model->setDate(new \Ilch\Date($this->getRequest()->getPost('date')))
                     ->setRank($this->getRequest()->getPost('rank'))
                     ->setTyp($typ)
+                    ->setImage($this->getRequest()->getPost('image'))
                     ->setUTId($userTeamId)
                     ->setEvent($this->getRequest()->getPost('event'))
                     ->setURL($this->getRequest()->getPost('page'));
