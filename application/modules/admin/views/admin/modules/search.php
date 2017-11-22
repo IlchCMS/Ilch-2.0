@@ -11,9 +11,6 @@ function custom_sort($a,$b)
     return strcmp($a->name, $b->name);
 }
 
-// Sort the modules by name
-usort($modulesOnUpdateServer, "custom_sort");
-
 function checkOthersDependencies($module, $dependencies)
 {
     $dependencyCheck = [];
@@ -56,6 +53,9 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
 if (empty($modulesOnUpdateServer)) {
     echo $this->getTrans('noModulesAvailable');
     return;
+} else {
+    // Sort the modules by name
+    usort($modulesOnUpdateServer, "custom_sort");
 }
 ?>
 
