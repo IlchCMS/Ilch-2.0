@@ -7,6 +7,10 @@ $dependencies = $this->get('dependencies');
 $configurations = $this->get('configurations');
 $found = false;
 
+if (is_null($modulesOnUpdateServer)) {
+    $modulesOnUpdateServer = [];
+}
+
 function checkOthersDependencies($module, $dependencies) {
     $dependencyCheck = [];
     foreach ($dependencies as $dependency) {
