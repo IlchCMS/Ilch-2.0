@@ -6,6 +6,10 @@ $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
 $configurations = $this->get('configurations');
 
+if (is_null($modulesOnUpdateServer)) {
+    $modulesOnUpdateServer = [];
+}
+
 function checkOthersDependencies($module, $dependencies) {
     $dependencyCheck = [];
     foreach ($dependencies as $dependency) {
@@ -87,7 +91,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('administrate') ?>">
                                 <i class="fa fa-pencil text-success"></i>
                             </a>
-                            <?php if ($module->getKey() == $moduleOnUpdateServer->key): ?>
+                            <?php if (!empty($moduleOnUpdateServer) && $module->getKey() == $moduleOnUpdateServer->key): ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-default">
                                         <i class="fa fa-info text-info"></i>
