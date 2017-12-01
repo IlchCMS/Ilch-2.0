@@ -69,7 +69,7 @@ if ($this->getUser()) {
     </ul>
     <?php if ($displayedArticles > 0) : ?>
         <div class="pull-right">
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'id' => $this->getRequest()->getParam('id')]) ?>
         </div>
     <?php else: ?>
         <?=$this->getTrans('noArticles') ?>
