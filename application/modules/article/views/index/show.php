@@ -13,8 +13,10 @@ $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config
 $catIds = explode(",", $article->getCatId());
 $categories = '';
 foreach ($catIds as $catId) {
-    $articlesCats = $categoryMapper->getCategoryById($catId);
-    $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$articlesCats->getName().'</a>, ';
+    if ($catId) {
+        $articlesCats = $categoryMapper->getCategoryById($catId);
+        $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$articlesCats->getName().'</a>, ';
+    }
 }
 
 $adminAccess = null;

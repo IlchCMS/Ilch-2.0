@@ -143,7 +143,10 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('preview'), ['action' => 'index']);
 
-            $catIds = implode(",", $this->getRequest()->getPost('cats'));
+            $catIds = '';
+            if ($this->getRequest()->getPost('cats')) {
+                $catIds = implode(",", $this->getRequest()->getPost('cats'));
+            }
 
             $articleModel = new ArticleModel();
             $articleModel->setTitle($this->getRequest()->getPost('title'))
@@ -156,6 +159,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->setVisits(0);
 
             $this->getView()->set('categoryMapper', $categoryMapper)
+                ->set('config', $config)
                 ->set('commentMapper', $commentMapper)
                 ->set('readAccess', $readAccess)
                 ->set('article', $articleModel);
