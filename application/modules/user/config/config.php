@@ -99,7 +99,7 @@ class Config extends \Ilch\Config\Install
                 `birthday` DATE NULL DEFAULT NULL,
                 `avatar` VARCHAR(255) NOT NULL DEFAULT "",
                 `signature` VARCHAR(255) NOT NULL DEFAULT "",
-                `locale` VARCHAR(255) NOT NULL,
+                `locale` VARCHAR(255) NOT NULL DEFAULT "",
                 `opt_mail` TINYINT(1) DEFAULT 1,
                 `opt_gallery` TINYINT(1) DEFAULT 1,
                 `date_created` DATETIME NOT NULL,
