@@ -55,6 +55,10 @@ abstract class Composite implements CompositePart
      */
     public function __toString()
     {
+        if (!is_array($this->parts)) {
+            return '';
+        }
+
         if (count($this->parts) === 1) {
             return (string) $this->parts[0];
         } elseif (count($this->parts) > 0) {
