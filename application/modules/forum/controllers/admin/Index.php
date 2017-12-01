@@ -75,7 +75,6 @@ class Index extends BaseController
                             $forumItem->setId($item['id']);
                         }
 
-                        $forumItem->setForumId(1);
                         $forumItem->setType($item['type']);
                         $forumItem->setTitle($item['title']);
                         $forumItem->setDesc($item['desc']);
