@@ -49,7 +49,7 @@ class Factory
             $port = $hostParts[1];
         }
 
-        $db->connect(reset($hostParts), $dbData['dbUser'], $dbData['dbPassword'], $port);
+        $db->connect(reset($hostParts), $dbData['dbUser'], $dbData['dbPassword'], null, $port);
         if (!$db->setDatabase($dbData['dbName'])) {
             throw new \RuntimeException('Unable to select database ' . $dbData['dbName']);
         };

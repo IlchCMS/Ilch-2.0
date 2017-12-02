@@ -230,6 +230,7 @@ class Index extends \Ilch\Controller\Frontend
                     reset($hostParts),
                     $this->getRequest()->getPost('dbUser'),
                     $this->getRequest()->getPost('dbPassword'),
+                    null,
                     $port
                 );
             } catch (\RuntimeException $ex) {
@@ -284,6 +285,7 @@ class Index extends \Ilch\Controller\Frontend
                     reset($hostParts),
                     $_SESSION['install']['dbUser'],
                     $_SESSION['install']['dbPassword'],
+                    null,
                     $port
                 );
 
