@@ -93,7 +93,7 @@ class Mysql
      */
     public function connect($host, $name, $password, $port = null)
     {
-        $this->conn = @new \mysqli($host, $name, $password, $port);
+        $this->conn = @new \mysqli($host, $name, $password, null, $port);
         if (mysqli_connect_error() !== null) {
             throw new \RuntimeException('Cannot connect to database.');
         }

@@ -230,7 +230,6 @@ class Index extends \Ilch\Controller\Frontend
                     reset($hostParts),
                     $this->getRequest()->getPost('dbUser'),
                     $this->getRequest()->getPost('dbPassword'),
-                    null,
                     $port
                 );
             } catch (\RuntimeException $ex) {
@@ -253,7 +252,14 @@ class Index extends \Ilch\Controller\Frontend
 
     public function databaseAction()
     {
-        $con = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword']);
+        $port = null;
+        $hostParts = explode(':', $_SESSION['install']['dbHost']);
+
+        if (!empty($hostParts[1])) {
+            $port = $hostParts[1];
+        }
+
+        $con = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
         $result = mysqli_query($con, 'SHOW DATABASES');
 
         $dbList = [];
@@ -274,18 +280,11 @@ class Index extends \Ilch\Controller\Frontend
             try {
                 $ilch = new \Ilch\Database\Factory();
                 $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
-                $hostParts = explode(':', $_SESSION['install']['dbHost']);
-                $port = null;
-
-                if (!empty($hostParts[1])) {
-                    $port = $hostParts[1];
-                }
 
                 $db->connect(
                     reset($hostParts),
                     $_SESSION['install']['dbUser'],
                     $_SESSION['install']['dbPassword'],
-                    null,
                     $port
                 );
 
