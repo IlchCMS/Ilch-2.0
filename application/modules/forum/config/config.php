@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.4',
+        'version' => '1.5',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
