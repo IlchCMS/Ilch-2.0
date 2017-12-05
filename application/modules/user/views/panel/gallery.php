@@ -5,7 +5,7 @@ $imageMapper = $this->get('imageMapper');
 
 function rec($item, $galleryMapper, $obj, $imageMapper)
 {
-    $subItems = $galleryMapper->getGalleryItemsByParent($item->getUserId(), '1', $item->getId());
+    $subItems = $galleryMapper->getGalleryItemsByParent($item->getUserId(), $item->getId());
     $image = $imageMapper->getCountImageById($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
