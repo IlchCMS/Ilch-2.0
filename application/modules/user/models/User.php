@@ -79,6 +79,34 @@ class User extends \Ilch\Model
     protected $google;
 
     /**
+     * The steam address of the user.
+     *
+     * @var string
+     */
+    protected $steam;
+
+    /**
+     * The twitch address of the user.
+     *
+     * @var string
+     */
+    protected $twitch;
+
+    /**
+     * The teamspeak address of the user.
+     *
+     * @var string
+     */
+    protected $teamspeak;
+
+    /**
+     * The discord address of the user.
+     *
+     * @var string
+     */
+    protected $discord;
+
+    /**
      * The city of the user.
      *
      * @var string
@@ -693,6 +721,99 @@ class User extends \Ilch\Model
 
         return $this;
     }
+
+    /**
+     * Returns the steam address of the user.
+     *
+     * @return string
+     */
+    public function getSteam()
+    {
+        return $this->steam;
+    }
+
+    /**
+     * Saves the steam address of the user.
+     * 
+     * @param string $steam
+     * @return User
+     */
+    public function setSteam($steam)
+    {
+        $this->steam = (string)$steam;
+
+        return $this;
+    }
+
+    /**
+     * Returns the twitch address of the user.
+     *
+     * @return string
+     */
+    public function getTwitch()
+    {
+        return $this->twitch;
+    }
+
+    /**
+     * Saves the twitch address of the user.
+     * 
+     * @param string $twitch
+     * @return User
+     */
+    public function setTwitch($twitch)
+    {
+        $this->twitch = (string)$twitch;
+
+        return $this;
+    }
+
+    /**
+     * Returns the teamspeak address of the user.
+     *
+     * @return string
+     */
+    public function getTeamspeak()
+    {
+        return $this->teamspeak;
+    }
+
+    /**
+     * Saves the teamspeak address of the user.
+     * 
+     * @param string $teamspeak
+     * @return User
+     */
+    public function setTeamspeak($teamspeak)
+    {
+        $this->teamspeak = (string)$teamspeak;
+
+        return $this;
+    }
+
+    /**
+     * Returns the discord address of the user.
+     *
+     * @return string
+     */
+    public function getDiscord()
+    {
+        return $this->discord;
+    }
+
+    /**
+     * Saves the discord address of the user.
+     * 
+     * @param string $discord
+     * @return User
+     */
+    public function setDiscord($discord)
+    {
+        $this->discord = (string)$discord;
+
+        return $this;
+    }
+
 
     /**
      * Returns the avatar of the user.

@@ -195,6 +195,22 @@ class User extends \Ilch\Mapper
             $user->setGoogle($userRow['google']);
         }
 
+        if (isset($userRow['steam'])) {
+            $user->setSteam($userRow['steam']);
+        }
+
+        if (isset($userRow['twitch'])) {
+            $user->setTwitch($userRow['twitch']);
+        }
+
+        if (isset($userRow['teamspeak'])) {
+            $user->setTeamspeak($userRow['teamspeak']);
+        }
+
+        if (isset($userRow['discord'])) {
+            $user->setDiscord($userRow['discord']);
+        }
+
         if (isset($userRow['city'])) {
             $user->setCity($userRow['city']);
         }
@@ -324,6 +340,10 @@ class User extends \Ilch\Mapper
         $fields['facebook'] = $user->getFacebook();
         $fields['twitter'] = $user->getTwitter();
         $fields['google'] = $user->getGoogle();
+        $fields['steam'] = $user->getSteam();
+        $fields['twitch'] = $user->getTwitch();
+        $fields['teamspeak'] = $user->getTeamspeak();
+        $fields['discord'] = $user->getDiscord();
         $fields['city'] = $user->getCity();
         $fields['birthday'] = $user->getBirthday();
         $fields['avatar'] = $user->getAvatar();

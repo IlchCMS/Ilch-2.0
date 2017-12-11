@@ -116,6 +116,54 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">
+                        <?=$this->getTrans('profileSteam'); ?>
+                    </label>
+                    <div class="col-lg-8">
+                       <input type="text"
+                              class="form-control"
+                              name="steam"
+                              placeholder="<?=$this->escape($profil->getSteam()) ?>"
+                              value="<?=($this->originalInput('steam') != '') ? $this->escape($this->originalInput('steam')) : $this->escape($profil->getSteam()) ?>" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">
+                        <?=$this->getTrans('profileTwitch'); ?>
+                    </label>
+                    <div class="col-lg-8">
+                       <input type="text"
+                              class="form-control"
+                              name="twitch"
+                              placeholder="<?=$this->escape($profil->getTwitch()) ?>"
+                              value="<?=($this->originalInput('twitch') != '') ? $this->escape($this->originalInput('twitch')) : $this->escape($profil->getTwitch()) ?>" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">
+                        <?=$this->getTrans('profileTeamspeak'); ?>
+                    </label>
+                    <div class="col-lg-8">
+                       <input type="text"
+                              class="form-control"
+                              name="teamspeak"
+                              placeholder="<?=$this->escape($profil->getTeamspeak()) ?>"
+                              value="<?=($this->originalInput('teamspeak') != '') ? $this->escape($this->originalInput('teamspeak')) : $this->escape($profil->getTeamspeak()) ?>" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">
+                        <?=$this->getTrans('profileDiscord'); ?>
+                    </label>
+                    <div class="col-lg-8">
+                       <input type="text"
+                              class="form-control"
+                              name="discord"
+                              placeholder="<?=$this->escape($profil->getDiscord()) ?>"
+                              value="<?=($this->originalInput('discord') != '') ? $this->escape($this->originalInput('discord')) : $this->escape($profil->getDiscord()) ?>" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileCity'); ?>
                     </label>
                     <div class="col-lg-8">

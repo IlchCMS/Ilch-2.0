@@ -77,6 +77,10 @@ class Panel extends BaseController
                 'facebook' => trim($this->getRequest()->getPost('facebook')),
                 'twitter' => trim($this->getRequest()->getPost('twitter')),
                 'google' => trim($this->getRequest()->getPost('google')),
+                'steam' => trim($this->getRequest()->getPost('steam')),
+                'twitch' => trim($this->getRequest()->getPost('twitch')),
+                'teamspeak' => trim($this->getRequest()->getPost('teamspeak')),
+                'discord' => trim($this->getRequest()->getPost('discord')),
                 'city' => trim($this->getRequest()->getPost('city'))
             ];
 
@@ -107,6 +111,10 @@ class Panel extends BaseController
                 $model->setFacebook($post['facebook']);
                 $model->setTwitter($post['twitter']);
                 $model->setGoogle($post['google']);
+                $model->setSteam($post['steam']);
+                $model->setTwitch($post['twitch']);
+                $model->setTeamspeak($post['teamspeak']);
+                $model->setDiscord($post['discord']);
                 $model->setCity($post['city']);
                 $model->setBirthday($birthday);
                 $profilMapper->save($model);
