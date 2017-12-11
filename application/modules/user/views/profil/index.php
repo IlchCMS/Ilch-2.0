@@ -60,16 +60,16 @@ foreach ($profil->getGroups() as $group) {
                     <a href="https://plus.google.com/<?=$this->escape($profil->getGoogle()) ?>" target="_blank" class="fa fa-google-plus" title="<?=$this->getTrans('profileGoogle') ?>"></a>
                 <?php endif; ?>
                 <?php if ($this->escape($profil->getSteam()) != ''): ?>
-                    <a href="https://steamcommunity.com/id/<?=$this->escape($profil->getSteam()) ?>" target="_blank" class="fa fa-steam-square fa-lg user-link" title="<?=$this->getTrans('profileSteam') ?>"></a>
+                    <a href="https://steamcommunity.com/id/<?=$this->escape($profil->getSteam()) ?>" target="_blank" class="fa fa-steam-square" title="<?=$this->getTrans('profileSteam') ?>"></a>
                 <?php endif; ?>
                 <?php if ($this->escape($profil->getTwitch()) != ''): ?>
-                    <a href="https://www.twitch.tv/<?=$this->escape($profil->getTwitch()) ?>" target="_blank" class="fa fa-twitch fa-lg user-link" title="<?=$this->getTrans('profileTwitch') ?>"></a>
+                    <a href="https://www.twitch.tv/<?=$this->escape($profil->getTwitch()) ?>" target="_blank" class="fa fa-twitch" title="<?=$this->getTrans('profileTwitch') ?>"></a>
                 <?php endif; ?>
                 <?php if ($this->escape($profil->getTeamspeak()) != ''): ?>
-                    <a href="ts3server://<?=$this->escape($profil->getTeamspeak()) ?>" target="_blank" class="fa fa-teamspeak fa-lg user-link" title="<?=$this->getTrans('profileTeamspeak') ?>"></a>
+                    <a href="ts3server://<?=$this->escape($profil->getTeamspeak()) ?>" target="_blank" class="fa fa-teamspeak" title="<?=$this->getTrans('profileTeamspeak') ?>"></a>
                 <?php endif; ?>
                 <?php if ($this->escape($profil->getDiscord()) != ''): ?>
-                    <a href="https://discord.gg/<?=$this->escape($profil->getDiscord()) ?>" target="_blank" class="fa fa-discord fa-lg user-link" title="<?=$this->getTrans('profileDiscord') ?>"></a>
+                    <a href="https://discord.gg/<?=$this->escape($profil->getDiscord()) ?>" target="_blank" class="fa fa-discord" title="<?=$this->getTrans('profileDiscord') ?>"></a>
                 <?php endif; ?>
             </div>
         </div>        
