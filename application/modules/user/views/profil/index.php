@@ -30,7 +30,7 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-5 col-xs-12">
                 <h3><?=$this->escape($profil->getName()) ?></h3>
                 <?php if ($this->getUser() AND $this->getUser()->getId() != $this->escape($profil->getID())): ?>
-                    <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId()]) ?>" >Neue Nachricht</a>
+                    <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId()]) ?>" ><?=$this->getTrans('newMessage') ?></a>
                  <?php endif; ?>
                 <div class="detail">
                     <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
