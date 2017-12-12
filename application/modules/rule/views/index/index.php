@@ -4,7 +4,7 @@
 <?php if ($rules != ''): ?>
     <table class="table table-striped table-responsive">
         <?php foreach ($this->get('rules') as $rule): ?>
-            <tr>
+            <tr id="paragraph<?=$this->escape($rule->getParagraph()) ?>" tabindex="-1">
                 <th>§<?=$this->escape($rule->getParagraph()).'. '.$this->escape($rule->getTitle()) ?></th>
             </tr>
             <tr>
