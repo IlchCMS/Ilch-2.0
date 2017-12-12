@@ -66,10 +66,10 @@ foreach ($profil->getGroups() as $group) {
                     <a href="https://www.twitch.tv/<?=$this->escape($profil->getTwitch()) ?>" target="_blank" class="fa fa-twitch" title="<?=$this->getTrans('profileTwitch') ?>"></a>
                 <?php endif; ?>
                 <?php if ($this->escape($profil->getTeamspeak()) != ''): ?>
-                    <a href="ts3server://<?=$this->escape($profil->getTeamspeak()) ?>" target="_blank" class="fa fa-teamspeak" title="<?=$this->getTrans('profileTeamspeak') ?>"></a>
+                    <a href="ts3server://<?=$this->escape($profil->getTeamspeak()) ?>" target="_blank" title="<?=$this->getTrans('profileTeamspeak') ?>"><img src="<?=$this->getModuleUrl('static/images/teamspeak/teamspeak.svg') ?>" style="width:24px;height:24px;"></a>
                 <?php endif; ?>
                 <?php if ($this->escape($profil->getDiscord()) != ''): ?>
-                    <a href="https://discord.gg/<?=$this->escape($profil->getDiscord()) ?>" target="_blank" class="fa fa-discord" title="<?=$this->getTrans('profileDiscord') ?>"></a>
+                    <a href="https://discord.gg/<?=$this->escape($profil->getDiscord()) ?>" target="_blank" title="<?=$this->getTrans('profileDiscord') ?>"><img src="<?=$this->getModuleUrl('static/images/discord/discord.svg') ?>" style="width:24px;height:24px;"></a>
                 <?php endif; ?>
             </div>
         </div>        

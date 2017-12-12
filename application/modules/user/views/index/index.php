@@ -63,10 +63,10 @@
                                         <a href="https://www.twitch.tv/<?=$this->escape($userlist->getTwitch()) ?>" target="_blank" class="fa fa-twitch fa-lg user-link" title="<?=$this->getTrans('profileTwitch') ?>"></a>
                                     <?php endif; ?>
                                     <?php if ($this->escape($userlist->getTeamspeak()) != ''): ?>
-                                        <a href="ts3server://<?=$this->escape($userlist->getTeamspeak()) ?>" target="_blank" class="fa fa-teamspeak fa-lg user-link" title="<?=$this->getTrans('profileTeamspeak') ?>"></a>
+                                        <a href="ts3server://<?=$this->escape($userlist->getTeamspeak()) ?>" target="_blank" title="<?=$this->getTrans('profileTeamspeak') ?>"><img src="<?=$this->getModuleUrl('static/images/teamspeak/teamspeak.svg') ?>" style="width:24px;height:24px;"></a>
                                     <?php endif; ?>
                                     <?php if ($this->escape($userlist->getDiscord()) != ''): ?>
-                                        <a href="https://discord.gg/<?=$this->escape($userlist->getDiscord()) ?>" target="_blank" class="fa fa-discord fa-lg user-link" title="<?=$this->getTrans('profileDiscord') ?>"></a>
+                                        <a href="https://discord.gg/<?=$this->escape($userlist->getDiscord()) ?>" target="_blank" title="<?=$this->getTrans('profileDiscord') ?>"><img src="<?=$this->getModuleUrl('static/images/discord/discord.svg') ?>" style="width:24px;height:24px;"></a>
                                     <?php endif; ?>
                                 </td>
                             </tr>
