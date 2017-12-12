@@ -161,7 +161,7 @@ return [
 
     'logout' => 'Logout',
     'message' => 'Nachricht',
-    'newMessage' => 'Neu',
+    'new' => 'Neu',
     'userPanel' => 'User Panel',
     'hello' => 'Hallo',
     'admincenter' => 'Admincenter',
