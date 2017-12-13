@@ -15,17 +15,12 @@ class Ajax extends \Ilch\Controller\Frontend
         $this->getLayout()->setFile('modules/admin/layouts/ajax');
 
         if ($this->getUser()) {
-            $unread = '';
+            $unread = 0;
             $dialogCheck = new DialogMapper();
             $dialogs = $dialogCheck->getDialog($this->getUser()->getId());
 
             if (!empty($dialogs)) {
-                foreach ($dialogs as $dialog) {
-                    $dialogsUnread = $dialogCheck->getReadLastOneDialog($dialog->getCId());
-                    if ($dialogsUnread and $dialogsUnread->getUserOne() != $this->getUser()->getId()) {
-                        $unread .= true;
-                    }
-                }
+                $unread = $dialogCheck->getCountOfUnreadMessagesByUser($this->getUser()->getId());
 
                 $this->getView()->set('dialogUnread', $unread);
             }
