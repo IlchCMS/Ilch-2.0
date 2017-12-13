@@ -17,13 +17,10 @@ class Ajax extends \Ilch\Controller\Frontend
         if ($this->getUser()) {
             $unread = 0;
             $dialogCheck = new DialogMapper();
-            $dialogs = $dialogCheck->getDialog($this->getUser()->getId());
 
-            if (!empty($dialogs)) {
-                $unread = $dialogCheck->getCountOfUnreadMessagesByUser($this->getUser()->getId());
+            $unread = $dialogCheck->getCountOfUnreadMessagesByUser($this->getUser()->getId());
 
-                $this->getView()->set('dialogUnread', $unread);
-            }
+            $this->getView()->set('dialogUnread', $unread);
         }
     }
 }
