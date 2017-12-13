@@ -165,6 +165,11 @@ class Index extends \Ilch\Controller\Frontend
                 ->set('article', $articleModel);
         } else {
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
+            if (empty($article)) {
+                $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Article', 'errorText' => 'notFound']);
+                return;
+            }
+
             $catIds = explode(",", $article->getCatId());
 
             $this->getLayout()->header()
