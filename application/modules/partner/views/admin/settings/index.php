@@ -33,7 +33,6 @@ if (!$this->validation()->hasErrors()) {
                 <select class="form-control" name="boxSliderMode">
                     <option <?php if ($this->get('boxSliderMode') == 'vertical') { echo 'selected="selected"'; } ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
                     <option <?php if ($this->get('boxSliderMode') == 'horizontal') { echo 'selected="selected"'; } ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
-                    <option <?php if ($this->get('boxSliderMode') == 'fade') { echo 'selected="selected"'; } ?> value="fade"><?=$this->getTrans('boxSliderModeFade') ?></option>
                 </select>
             </div>
         </div>

@@ -27,7 +27,7 @@
 <?php else: ?>
     <?php if (!empty($this->get('partners'))) : ?>
         <div class="partnersslider">
-            <ul class="bxslider">
+            <div class="bxslider">
                 <?php
                 foreach ($this->get('partners') as $partner):
                     $userMapper = new Modules\User\Mappers\User();
@@ -38,13 +38,11 @@
                         $banner = $partner->getBanner();
                     }
                     ?>
-                    <li>
-                        <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="_blank">
-                            <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>">
-                        </a>
-                    </li>
+                    <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="_blank">
+                        <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>">
+                    </a>
                 <?php endforeach; ?>
-            </ul>
+            </div>
         </div>
     <?php endif; ?>
 <?php endif; ?>

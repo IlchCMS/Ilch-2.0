@@ -24,5 +24,4 @@ return [
     'boxSliderHeight' => 'Höhe der Slider Box',
     'boxSliderModeVertical' => 'vertikal',
     'boxSliderModeHorizontal' => 'horizontal',
-    'boxSliderModeFade' => 'ausblenden',
 ];

@@ -6,10 +6,3 @@
     box-shadow: none !important;
     left: 0px;
 }
-.partnersslider .bx-viewport ul {
-    margin-left: -36px;
-}
-.partnersslider .bx-viewport li {
-    border-bottom-width: 0px !important;
-    width: 99% !important;
-}
