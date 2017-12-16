@@ -1,4 +1,10 @@
-#bxSlider 4.1.2
+#⚠️ Looking for a maintainer ⚠️
+Please contact me if you are interested in keeping our community alive:  
+https://github.com/stevenwanderski/bxslider-4/issues/1095
+
+---
+
+#bxSlider 4.2.12
 ##The fully-loaded, responsive jQuery content slider
 
 ###Why should I use this slider?
@@ -29,7 +35,7 @@ First and most important, the jQuery library needs to be included (no need to do
 
 ```html
 <!-- jQuery library (served from Google) -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- bxSlider Javascript file -->
 <script src="/js/jquery.bxslider.min.js"></script>
 <!-- bxSlider CSS file -->
@@ -51,7 +57,7 @@ Create a `<ul class="bxslider">` element, with a `<li>` for each slide. Slides c
 
 ###Step 3: Call the bxSlider
 
-Call .bxslider() on `<ul class="bxslider">`. Note that the call must be made inside of a $(document).ready() call, or the plugin will not work!
+Call .bxSlider() on `<ul class="bxslider">`. Note that the call must be made inside of a $(document).ready() call, or the plugin will not work!
 
 ```javascript
 $(document).ready(function(){
@@ -347,10 +353,23 @@ default: null
 options: jQuery selector
 ```
 
+**keyboardEnabled**
+Enable keyboard navigation for visible sliders
+```
+default: false
+options: boolean (true / false)
+```
+
 ###Auto
 
 **auto**
 Slides will automatically transition
+```
+default: false
+options: boolean (true / false)
+```
+**stopAutoOnClick**
+Auto will stop on interaction with controls
 ```
 default: false
 options: boolean (true / false)
@@ -419,6 +438,37 @@ The width of each slide. This setting is required for all horizontal carousels!
 ```
 default: 0
 options: integer
+```
+
+**shrinkItems**
+The Carousel will only show whole items and shrink the images to fit the viewport based on maxSlides/MinSlides.
+```
+default: false
+options: boolean (true / false)
+```
+
+###Keyboard
+
+**keyboardEnabled**
+Allows for keyboard control of visible slider. Keypress ignored if slider not visible.
+```
+default: false
+options: boolean (true / false)
+```
+
+###Accessibility
+**ariaLive**
+Adds Aria Live attribute to slider.
+```
+default: true
+options: boolean (true / false)
+```
+
+**ariaHidden**
+Adds Aria Hidden attribute to any nonvisible slides.
+```
+default: true
+options: boolean (true / false)
 ```
 
 ###Callbacks
@@ -543,6 +593,14 @@ slider = $('.bxslider').bxSlider();
 var slideQty = slider.getSlideCount();
 ```
 
+**redrawSlider**
+Redraw the slider. Useful when needing to redraw a hidden slider after it is unhidden.
+```
+example:
+slider = $('.bxslider').bxSlider();
+slider.redrawSlider();
+```
+
 **reloadSlider**
 Reload the slider. Useful when adding slides on the fly. Accepts an optional settings object. <a href="/examples/reload-slider-settings">See here for an example.</a>
 ```
@@ -559,7 +617,137 @@ slider = $('.bxslider').bxSlider();
 slider.destroySlider();
 ```
 
+### Local Development with Gulp
+
+**Unfamiliar with npm? Don't have node installed?** [Download and install node.js](http://nodejs.org/download/) before proceeding.
+
+From the command line:
+
+1. Install the CLI: `npm install --global gulp-cli`
+2. Run `npm install` to install local development tools
+3. Run `gulp` which will build the project
+
+## Contributing
+
+Everyone is welcome to help [contribute](CONTRIBUTING.md) and improve this project. There are several ways you can contribute:
+
+* Reporting issues (please read [issue guidelines](https://github.com/necolas/issue-guidelines))
+* Suggesting new features
+* Writing or refactoring code
+* Fixing [issues](https://github.com/roots/roots/issues)
+
 ## Changelog
+
+### Version 4.2.12
+* Fixes auto control theme
+
+### Version 4.2.11
+* Removes auto-centering for sliders with no pager or controls
+
+### Version 4.2.10
+* Bumps npm and bower versions
+
+### Version 4.2.9
+* Removes node engine version requirement
+
+### Version 4.2.8
+* Removes auto-centering from the theme file (`jquery.bxslider.css`)
+
+### Version 4.2.7
+* Allows new version to be published to NPM
+
+### Version 4.2.6
+* Fix: jQuery 3 support
+* Adds Gulp and removes Grunt (for easier local development)
+
+### Version 4.2.5
+* Fix: Vertical carousel minSlides not working #840
+* Fix: slider breaks with css animations if settings.speed set to 0 #838
+* Fix: Slider runs into undefined state when reloadSlider is called before initialization was finished #833
+
+### Version 4.2.4
+NOTICE: We have switched to a Grunt based build process in order to leverage [Assemble](http://assemble.io) for local documentation building. Please review the above notes about Grunt for the commands available.
+
+* Fix: Fixed transition from first to last slide during infinite loop #778
+* Fix: Reload on multiple sliders doesn't work? #755
+* Fix: bxSlider with text only #746
+* Fix: bower missing main and ignore entries #738
+* Fix: Tickermode transitionend event bubbling #737
+* Fix: Initializing before destroyed breaks slider #748
+* Enhancement: Added shrinkItems carousel setting #772
+* Enhancement: Maintain auto display of slides after a manual selection #594
+* Enhancement: Slider getter through jquery object #739
+* Enhancement: Add aria attributes #751
+* Enhancement: Slider element in every callback and a new method getSliderElement (#780)
+* Enhancement: Local Documentiation and examples. I have added buildable documentation to the repo. This will expand over time and allow for community corrections as needed. Please see above Grunt notes on how to build.
+
+
+### Version 4.2.3
+* Minor bug fix
+
+### Version 4.2.2
+* Fix: Remove unused plugin variable (#733)
+* Fix: `updateAfterSlideTransition` not being called (#704)
+* Fix: Slider stops auto advancing (#702)
+* Fix: Refresh page, slider show the last item at the first in mode: 'horizontal' (#694)
+* Fix: horizintal ticker stutters on loop (#669)
+* Fix: Wrong bx-wrapper bottom margin with controls=true and pager=false (#647)
+* Fix: add css tickerHover. (#629)
+* Fix: Slider refusing to scale down, only up (#611)
+* Fix: bxSlider freezes on touch devices (#540)
+* Fix: Multiple fixes and improvements for Windows Mobile Devices (#596)
+* Fix: Accessing bxslider's slider object inside its “onSliderLoad” callback returns undefined (#475)
+* Fix: infiniteLoop glitch when scrolling from first to last slide (#429)
+* Enhancement: Cancel transitions on callbacks by returning false. (#411)
+* Enhancement: Added Keyboard arrow left and right support (#239)
+
+### Version 4.2.1
+* Fix: Merge Conflict in dist
+* Fix: modified bower.json
+
+### Version 4.2.0
+* Fix: Reverse #714, fixes #722.
+* Fix: Repo Tag #729
+* Fix: #720 pagerCustom issues
+
+4.2.0 Introduces a streamlined build process using [gulp](www.gulpjs.com). Along with this new build process the projects folder structure has been changed. You will find a `dist` folder with all assets ready to use, including both minified and unminified versions of the javascript. These assets should be ready to go. In `src` you will find the uncompiled assets, including a new less version of the css for bxslider. This is an important step for bxslider. It will help speed development up and keep work clean. It also paves the way for a big revamp we have planned in the future.
+
+**Unfamiliar with npm? Don't have node installed?** [Download and install node.js](http://nodejs.org/download/) before proceeding.
+
+From the command line:
+
+1. Install [gulp](http://gulpjs.com) globally with `npm install -g gulp`
+2. Navigate to the project directory, then run `npm install`
+
+You now have all the necessary dependencies to run the build process.
+
+### Available gulp commands
+
+* `gulp` — Compile and optimize all files to `dist`
+* `gulp styles` — Compile css assets only to `dist`
+* `gulp scripts` — Compile js assets only to `dist`
+* `gulp images` - Run lossless compression on all the images and copy to `dist`
+* `gulp jshint` — Checks JS and JSON code for errors based on our .jshintrc settings
+
+
+### Version 4.1.3
+* Fix: responsive issue for horizontal mode for issue #611, #714
+* Fix: extra space on the left when using fade mode. #715
+* Fix: wrongly removing custom pager in destroySlider #610
+* Fix: bug with reloading slider with custom pager #545
+* Fix: Issue with infinite scroll sometimes returning to 0 #481
+* Fix: When "infiniteLoop" is used, true is not passed to a clone method. #346
+* Fix: "pagerCustom" won't work when using reloadSlider #171
+* Fix: Remove vendor prefix for translateZ(0) #565
+* Fix: give styles on focus for accessibility #228
+* Fix: Minified Version out of sync.
+* Fix: Remove -5px left #517
+* Enhancement: Invert order call of appendControls() and appendPager() #226
+* Enhancement: Various Indentation and typos in docs fixed. #551, #578
+* Enhancement: Update jsDelivr with update.json for autoupdate of CDN
+* Enhancement: Tag Repo so it can be included in CDNJS
+* Created development branch to work from. Eventually will restructure entire repo to follow best practice setup.
+
 
 ### Version 4.1.2
 * Added `bower.json` configuration file. Manage bxSlider as a dependency using [bower](http://bower.io/).
