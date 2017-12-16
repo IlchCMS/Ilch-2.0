@@ -42,12 +42,14 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'slider' => 'required|numeric|integer|min:0|max:1',
+                'boxSliderMode' => 'required',
                 'boxSliderHeight' => 'required|numeric|integer|min:0',
                 'boxSliderSpeed' => 'required|numeric|integer|min:0'
             ]);
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('partners_slider', $this->getRequest()->getPost('slider'));
+                $this->getConfig()->set('partners_slider_mode', $this->getRequest()->getPost('boxSliderMode'));
                 $this->getConfig()->set('partners_box_height', $this->getRequest()->getPost('boxSliderHeight'));
                 $this->getConfig()->set('partners_slider_speed', $this->getRequest()->getPost('boxSliderSpeed'));
                 $this->addMessage('saveSuccess');
@@ -61,6 +63,7 @@ class Settings extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('slider', $this->getConfig()->get('partners_slider'));
+        $this->getView()->set('boxSliderMode', $this->getConfig()->get('partners_slider_mode'));
         $this->getView()->set('boxSliderHeight', $this->getConfig()->get('partners_box_height'));
         $this->getView()->set('boxSliderSpeed', $this->getConfig()->get('partners_slider_speed'));
     }

@@ -52,7 +52,7 @@
 <script src="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.min.js') ?>"></script>
 <script>
 $('.bxslider').bxSlider({
-    mode: 'vertical',
+    mode: '<?=$this->get('sliderMode') ?>',
     ticker: true,
     slideMargin: 10,
     speed: <?=$this->get('sliderSpeed') ?>,

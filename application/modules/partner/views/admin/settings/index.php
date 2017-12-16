@@ -25,6 +25,18 @@ if (!$this->validation()->hasErrors()) {
         </div>
     </div>
     <div id="contentHeight" class="<?php if (!$slider) { echo 'hidden'; } ?>">
+        <div class="form-group <?=$this->validation()->hasError('boxSliderMode') ? 'has-error' : '' ?>">
+            <label for="boxSliderMode" class="col-lg-2 control-label">
+                <?=$this->getTrans('boxSliderMode') ?>:
+            </label>
+            <div class="col-lg-2">
+                <select class="form-control" name="boxSliderMode">
+                    <option <?php if ($this->get('boxSliderMode') == 'vertical') { echo 'selected="selected"'; } ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
+                    <option <?php if ($this->get('boxSliderMode') == 'horizontal') { echo 'selected="selected"'; } ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
+                    <option <?php if ($this->get('boxSliderMode') == 'fade') { echo 'selected="selected"'; } ?> value="fade"><?=$this->getTrans('boxSliderModeFade') ?></option>
+                </select>
+            </div>
+        </div>
         <div class="form-group <?=$this->validation()->hasError('boxSliderHeight') ? 'has-error' : '' ?>">
             <label for="boxSliderHeight" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxSliderHeight') ?>:

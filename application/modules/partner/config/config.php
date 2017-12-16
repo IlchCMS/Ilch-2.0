@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'partner',
-        'version' => '1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-handshake-o',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -44,6 +44,7 @@ class Config extends \Ilch\Config\Install
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('partners_slider', '0');
+        $databaseConfig->set('partners_slider_mode', 'vertical');
         $databaseConfig->set('partners_box_height', '90');
         $databaseConfig->set('partners_slider_speed', '6000');
     }
@@ -52,6 +53,7 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_partners`');
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider_mode'");
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_box_height'");
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider_speed'");
     }
@@ -74,6 +76,10 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('partners_slider_mode', 'vertical');
+        }
     }
 }

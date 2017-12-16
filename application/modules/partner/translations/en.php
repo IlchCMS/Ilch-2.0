@@ -19,6 +19,10 @@ return [
     'addButton' => 'Entry',
     'httpOrMedia' => 'http:// or Media',
     'slider' => 'Slider',
+    'boxSliderMode' => 'Mode of the slider',
     'boxSliderSpeed' => 'Speed of the slider in ms',
     'boxSliderHeight' => 'Height of Slider Box',
+    'boxSliderModeVertical' => 'vertical',
+    'boxSliderModeHorizontal' => 'horizontal',
+    'boxSliderModeFade' => 'fade',
 ];

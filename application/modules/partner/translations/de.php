@@ -19,6 +19,10 @@ return [
     'addButton' => 'Eintragen',
     'httpOrMedia' => 'http:// oder Medien',
     'slider' => 'Slider',
+    'boxSliderMode' => 'Modus des Sliders',
     'boxSliderSpeed' => 'Geschwindigkeit des Slider in ms',
     'boxSliderHeight' => 'Höhe der Slider Box',
+    'boxSliderModeVertical' => 'vertikal',
+    'boxSliderModeHorizontal' => 'horizontal',
+    'boxSliderModeFade' => 'ausblenden',
 ];
