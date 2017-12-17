@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'jobs',
-        'version' => '1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-briefcase',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',

@@ -135,7 +135,12 @@ class Index extends \Ilch\Controller\Admin
                 $newsletterModel->setText($post['text']);
                 $newsletterMapper->save($newsletterModel);
 
-                if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/newsletter/layouts/mail/newsletter.php')) {
+                $layout = '';
+                if (!empty($_SESSION['layout'])) {
+                    $layout = $_SESSION['layout'];
+                }
+
+                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/newsletter/layouts/mail/newsletter.php')) {
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/newsletter/layouts/mail/newsletter.php');
                 } else {
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/newsletter/layouts/mail/newsletter.php');

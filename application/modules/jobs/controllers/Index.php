@@ -55,7 +55,12 @@ class Index extends \Ilch\Controller\Frontend
                 $job = $jobsMapper->getJobsById($id);
                 $user = $userMapper->getUserById($this->getUser()->getId());
 
-                if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/jobs/layouts/mail/apply.php')) {
+                $layout = '';
+                if (!empty($_SESSION['layout'])) {
+                    $layout = $_SESSION['layout'];
+                }
+
+                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/jobs/layouts/mail/apply.php')) {
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/jobs/layouts/mail/apply.php');
                 } else {
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/jobs/layouts/mail/apply.php');
