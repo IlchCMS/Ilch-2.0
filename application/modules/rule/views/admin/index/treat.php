@@ -6,11 +6,10 @@
             <?=$this->getTrans('paragraph') ?>
         </label>
         <div class="col-lg-1">
-            <input type="number"
+            <input type="text"
                    class="form-control"
                    id="paragraph"
                    name="paragraph"
-                   min="1"
                    value="<?=($this->get('rule') != '') ? $this->escape($this->get('rule')->getParagraph()) : $this->originalInput('paragraph') ?>" />
         </div>
     </div>
