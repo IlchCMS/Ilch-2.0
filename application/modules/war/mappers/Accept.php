@@ -59,11 +59,11 @@ class Accept extends \Ilch\Mapper
             ->execute()
             ->fetchRows();
 
-        if (empty($select)) {
-            return null;
-        }
-
         $accepts = [];
+
+        if (empty($select)) {
+            return $accepts;
+        }
 
         foreach ($select as $accept) {
             $acceptModel = new AcceptModel();
