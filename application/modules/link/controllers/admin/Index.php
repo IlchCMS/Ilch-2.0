@@ -82,14 +82,22 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
-            $positions = explode(',', $postData['hiddenMenu']);
-            $positionsCat = explode(',', $postData['hiddenMenuCat']);
-            for($x = 0; $x < count($positions); $x++) {
-                $linkMapper->updatePositionById($positions[$x], $x);
+
+            if (isset($postData['hiddenMenu'])) {
+                $positions = explode(',', $postData['hiddenMenu']);
+
+                for($x = 0; $x < count($positions); $x++) {
+                    $linkMapper->updatePositionById($positions[$x], $x);
+                }
             }
-            for($x = 0; $x < count($positionsCat); $x++) {
-                $categoryMapper->updatePositionById($positionsCat[$x], $x);
+            if (isset($postData['hiddenMenuCat'])) {
+                $positionsCat = explode(',', $postData['hiddenMenuCat']);
+
+                for($x = 0; $x < count($positionsCat); $x++) {
+                    $categoryMapper->updatePositionById($positionsCat[$x], $x);
+                }
             }
+            
             $this->addMessage('saveSuccess');
             $this->redirect(['action' => 'index']);
         }
