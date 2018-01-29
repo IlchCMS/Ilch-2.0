@@ -107,11 +107,15 @@ class Model
     public function getItems($tpl = '', $options = [])
     {
         $groupIds = [3];
-
+        $adminAccess = '';
         if ($this->layout->getUser()) {
             $groupIds = [];
             foreach ($this->layout->getUser()->getGroups() as $groups) {
                 $groupIds[] = $groups->getId();
+            }
+
+            if($this->layout->getUser()->isAdmin()){
+                $adminAccess = true;
             }
         }
 
@@ -135,7 +139,7 @@ class Model
 
         /** @var MenuItem $item */
         foreach ($items as $item) {
-            if (!is_in_array($groupIdsArray, explode(',', $item->getAccess()))) {
+            if (!is_in_array($groupIdsArray, explode(',', $item->getAccess())) || $adminAccess) {
                 if ($item->isBox()) {
                     // Do not render boxes if boxes.render is set to false
                     if (array_dot($options, 'boxes.render') === false) {
@@ -188,11 +192,16 @@ class Model
     {
         $html = '';
         $groupIds = [3];
+        $adminAccess = '';
 
         if ($this->layout->getUser()) {
             $groupIds = [];
             foreach ($this->layout->getUser()->getGroups() as $groups) {
                 $groupIds[] = $groups->getId();
+            }
+
+            if($this->layout->getUser()->isAdmin()){
+                $adminAccess = true;
             }
         }
 
@@ -226,7 +235,7 @@ class Model
                     $liClasses[] = array_dot($options, 'menus.li-class-active');
                 }
 
-                if (!is_in_array($groupIdsArray, explode(',', $menuData['items'][$itemId]->getAccess()))) {
+                if (!is_in_array($groupIdsArray, explode(',', $menuData['items'][$itemId]->getAccess())) || $adminAccess) {
                     $contentHtml = '<a href="' . $href . '">' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
                     $subItemsHtml = '';
 
