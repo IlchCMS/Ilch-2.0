@@ -46,7 +46,8 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_poll`;
-            DROP TABLE `[prefix]_poll_res`;');
+            DROP TABLE `[prefix]_poll_res`;
+            DROP TABLE `[prefix]_poll_ip`;');
     }
 
     public function getInstallSql()
