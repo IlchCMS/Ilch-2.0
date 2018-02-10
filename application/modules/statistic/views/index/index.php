@@ -384,7 +384,8 @@ $osStatistic = $this->get('osStatistic');
                                 <?php if ($statisticList->getLang() == ''): ?>
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
-                                    <?=$languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()) ?>
+                                    <?php $language = $languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()); ?>
+                                    <?= ($language == '') ? $this->getTrans('unknown') : $language ?>
                                 <?php endif; ?>
                             </strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
