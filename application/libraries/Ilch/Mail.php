@@ -6,6 +6,8 @@
 
 namespace Ilch;
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 class Mail
 {
     /**
@@ -55,7 +57,7 @@ class Mail
 
     public function PHPMailer()
     {
-        return new \PHPMailer();
+        return new PHPMailer;
     }
 
     /**
