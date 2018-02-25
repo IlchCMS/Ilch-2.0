@@ -214,8 +214,14 @@ if ($this->getUser()) {
             <?php endif; ?>
         <?php endif; ?>
         <?php if ($article->getKeywords() != ''): ?>
-            <br />
-            <i class="fa fa-hashtag"></i> <?=$article->getKeywords() ?>
+            <br /><i class="fa fa-hashtag"></i>
+            <?php $keywordsList = $article->getKeywords();
+            $keywordsListArray = explode(", ", $keywordsList);
+            $keywordsList = [];
+            foreach ($keywordsListArray as $keyword) {
+                $keywordsList[] = '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a>';
+            }
+            echo implode(", ",$keywordsList); ?>
         <?php endif; ?>
     </div>
 

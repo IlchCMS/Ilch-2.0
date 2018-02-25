@@ -126,6 +126,62 @@ class Article extends \Ilch\Mapper
     }
 
     /**
+     * Get articles by keyword.
+     *
+     * @param integer $keyword
+     * @param string $locale
+     * @param \Ilch\Pagination|null $pagination
+     * @return ArticleModel[]|array
+     */
+    public function getArticlesByKeyword($keyword, $locale = '', $pagination = null)
+    {
+        $select = $this->db()->select()
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'read_access'])
+            ->from(['p' => 'articles'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->where(['pc.keywords LIKE' => '%'.$keyword.'%', 'pc.locale' => $this->db()->escape($locale)])
+            ->order(['id' => 'DESC']);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+        $articleArray = $result->fetchRows();
+
+        if (empty($articleArray)) {
+            return null;
+        }
+
+        $articles = [];
+        foreach ($articleArray as $articleRow) {
+            $articleModel = new ArticleModel();
+            $articleModel->setId($articleRow['id']);
+            $articleModel->setCatId($articleRow['cat_id']);
+            $articleModel->setVisits($articleRow['visits']);
+            $articleModel->setAuthorId($articleRow['author_id']);
+            $articleModel->setDescription($articleRow['description']);
+            $articleModel->setKeywords($articleRow['keywords']);
+            $articleModel->setTitle($articleRow['title']);
+            $articleModel->setTeaser($articleRow['teaser']);
+            $articleModel->setPerma($articleRow['perma']);
+            $articleModel->setContent($articleRow['content']);
+            $articleModel->setDateCreated($articleRow['date_created']);
+            $articleModel->setTopArticle($articleRow['top']);
+            $articleModel->setReadAccess($articleRow['read_access']);
+            $articleModel->setImage($articleRow['img']);
+            $articleModel->setImageSource($articleRow['img_source']);
+            $articleModel->setVotes($articleRow['votes']);
+            $articles[] = $articleModel;
+        }
+
+        return $articles;
+    }
+
+    /**
      * Get articles of the month of the given date
      *
      * @param \DateTime $date

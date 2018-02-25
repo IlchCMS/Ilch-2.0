@@ -3,6 +3,7 @@ $articles = $this->get('articles');
 $categoryMapper = $this->get('categoryMapper');
 $commentMapper = $this->get('commentMapper');
 $userMapper = $this->get('userMapper');
+$keyword = $this->getRequest()->getParam('keyword');
 
 $adminAccess = null;
 if ($this->getUser()) {
@@ -10,7 +11,7 @@ if ($this->getUser()) {
 }
 ?>
 
-<h1><?=$this->getTrans('menuArticle') ?></h1>
+<h1><?=$this->getTrans('keyword') ?>: <i><?=$this->escape($keyword) ?></i></h1>
 <?php if ($articles != ''):
     $displayedArticles = 0;
 
@@ -36,7 +37,7 @@ if ($this->getUser()) {
         <?php if ($article->getTeaser()): ?>
             <h3><?=$this->escape($article->getTeaser()) ?></h3>
         <?php endif; ?>
-        <h2><a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a></h2>
+        <h2><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a></h2>
         <?php if (!empty($image)): ?>
             <figure>
                 <img class="article_image" src="<?=$this->getBaseUrl($image) ?>">
@@ -45,14 +46,13 @@ if ($this->getUser()) {
                 <?php endif; ?>
             </figure>
         <?php endif; ?>
-
         <?php $content = $article->getContent(); ?>
 
         <?php if (strpos($content, '[PREVIEWSTOP]') !== false): ?>
             <?php $contentParts = explode('[PREVIEWSTOP]', $content); ?>
             <?=reset($contentParts) ?>
             <br />
-            <a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId()]) ?>" class="pull-right"><?=$this->getTrans('readMore') ?></a>
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>" class="pull-right"><?=$this->getTrans('readMore') ?></a>
         <?php else: ?>
             <?=$content ?>
         <?php endif; ?>
@@ -67,7 +67,7 @@ if ($this->getUser()) {
             <i class="fa fa-calendar" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(['controller' => 'archive', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>"><?=$date->format('d.', true) ?> <?=$this->getTrans($date->format('F', true)) ?> <?=$date->format('Y', true) ?></a>
             &nbsp;&nbsp;<i class="fa fa-clock-o" title="<?=$this->getTrans('time') ?>"></i> <?=$date->format('H:i', true) ?>
             &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('cats') ?>"></i> <?=rtrim($categories, ', '); ?>
-            &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId().'#comment']) ?>"><?=$commentsCount ?></a>
+            &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId().'#comment']) ?>"><?=$commentsCount ?></a>
             &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('hits') ?>"></i> <?=$article->getVisits() ?>
             <?php if ($article->getTopArticle()) : ?>
             &nbsp;&nbsp;<i class="fa fa-star-o" title="<?=$this->getTrans('topArticle') ?>"></i>
@@ -78,7 +78,7 @@ if ($this->getUser()) {
                 $countOfVotes = count($votes) - 1;
                 ?>
                 <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $votes) == false) : ?>
-                    <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'index']) ?>" title="<?=$this->getTrans('iLike') ?>">
+                    <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'show', 'catId' => $catId]) ?>" title="<?=$this->getTrans('iLike') ?>">
                         <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
                     </a>
                 <?php else: ?>
@@ -87,26 +87,25 @@ if ($this->getUser()) {
                     </button>
                 <?php endif; ?>
             <?php endif; ?>
-            <?php if ($article->getKeywords() != ''): ?>
-                <br /><i class="fa fa-hashtag"></i>
-                <?php $keywordsList = $article->getKeywords();
-                    $keywordsListArray = explode(", ", $keywordsList);
-                    $keywordsList = [];
-                    foreach ($keywordsListArray as $keyword) {
-                        $keywordsList[] = '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a>';
-                    }
-                    echo implode(", ",$keywordsList); ?>
-            <?php endif; ?>
+            <br /><i class="fa fa-hashtag"></i>
+            <?php $keywordsList = $article->getKeywords();
+            $keywordsListArray = explode(", ", $keywordsList);
+            $keywordsList = [];
+            foreach ($keywordsListArray as $keyword) {
+                $keywordsList[] = '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a>';
+            }
+            echo implode(", ",$keywordsList); ?>
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
     <?php if ($displayedArticles > 0) : ?>
         <div class="pull-right">
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'keyword' => $keyword]) ?>
         </div>
     <?php else: ?>
         <?=$this->getTrans('noArticles') ?>
     <?php endif; ?>
+
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

@@ -46,4 +46,7 @@ return [
     'categoryInUse' => 'Diese Kategorie kann nicht gelöscht werden, da sie noch Artikeln zugewiesen ist.',
     'articlesPerPage' => 'Artikel pro Seite',
     'articleRating' => 'Bewerten von Artikeln erlauben',
+    'menuKeywords' => 'Keywords',
+    'keyword' => 'Keyword',
+    'noKeywords' => 'Keine Keywords vorhanden',
 ];

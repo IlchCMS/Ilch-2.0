@@ -46,4 +46,7 @@ return [
     'categoryInUse' => 'This category cannot be deleted as it is still assigned with articles.',
     'articlesPerPage' => 'Article per page',
     'articleRating' => 'Allow rating of articles',
+    'menuKeywords' => 'Keywords',
+    'keyword' => 'Keyword',
+    'noKeywords' => 'No keywords available',
 ];
