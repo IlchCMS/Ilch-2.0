@@ -4,15 +4,15 @@
     <div class="article-keywords-box">
         <?php foreach ($this->get('keywordsList') as $keyword => $count) {
             if ($count >= 5) {
-                echo '<span style="font-size:'.$this->get('keywordsH5').'px">'.$keyword.'</span> ';
+                echo '<span style="font-size:'.$this->get('keywordsH5').'px"><a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a></span> ';
             } elseif ($count == 4) {
-                echo '<span style="font-size:'.$this->get('keywordsH4').'px">'.$keyword.'</span> ';
+                echo '<span style="font-size:'.$this->get('keywordsH4').'px"><a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a></span> ';
             } elseif ($count == 3) {
-                echo '<span style="font-size:'.$this->get('keywordsH3').'px">'.$keyword.'</span> ';
+                echo '<span style="font-size:'.$this->get('keywordsH3').'px"><a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a></span> ';
             } elseif ($count == 2) {
-                echo '<span style="font-size:'.$this->get('keywordsH2').'px">'.$keyword.'</span> ';
+                echo '<span style="font-size:'.$this->get('keywordsH2').'px"><a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a></span> ';
             } else {
-                echo $keyword.' ';
+                echo '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a> ';
             }
         } ?>
     </div>
