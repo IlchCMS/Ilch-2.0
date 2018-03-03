@@ -53,7 +53,7 @@ $date;
     </div>
     <br>
     <br>
-    <div class="col-lg-12">
+    <div class="col-lg-4">
         <h1><?=$this->getTrans('bankbalance') ?></h1>
         <div class="panel panel-default">
             <div class="panel-body">
@@ -72,7 +72,8 @@ $date;
                 ?>
             </div>
         </div>
-
+    </div>
+    <div class="col-lg-12">
         <h1><?=$this->getTrans('bookedpayments') ?></h1>
         <table class="table table-hover table-striped">
             <colgroup>
