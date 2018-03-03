@@ -1,5 +1,6 @@
 <?php
 $currency = $this->escape($this->get('currency'));
+$date;
 ?>
 
 <h1><?=$this->getTrans('accountdata') ?></h1>
@@ -42,8 +43,9 @@ $currency = $this->escape($this->get('currency'));
     </thead>
     <tbody>
     <?php foreach ($this->get('checkout') as $checkout): ?>
+        <?php $date = new \Ilch\Date($checkout->getDatetime()); ?>
         <tr>
-            <td><?=$this->escape($checkout->getDatetime()) ?></td>
+            <td><?=$this->escape($date->format(null, true)) ?></td>
             <td><?=$this->escape($checkout->getName()) ?></td>
             <td><?=$this->escape($checkout->getAmount()) ?> <?=$currency ?></td>
             <td><?=$this->escape($checkout->getUsage()) ?></td>
