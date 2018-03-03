@@ -52,7 +52,7 @@ $currency = $this->escape($this->get('currency'));
     </div>
     <br>
     <br>
-    <div class="col-lg-4">
+    <div class="col-lg-12">
         <h1><?=$this->getTrans('bankbalance') ?></h1>
         <div class="panel panel-default">
             <div class="panel-body">
@@ -72,26 +72,39 @@ $currency = $this->escape($this->get('currency'));
             </div>
         </div>
 
-        <h1> <?=$this->getTrans('bookedpayments') ?></h1>
-        <div class="panel-default">
-            <ul class="list-group">
-                <?php foreach ($this->get('checkout') as $checkout): ?>
-                    <li class="list-group-item">
-                        <?=$this->escape($checkout->getName()) ?>: 
-                        <strong>
-                            <?=$this->escape($checkout->getAmount()) ?>
-                            <?=$currency ?>
-                        </strong> 
-                        <?=$this->getTrans('for') ?>: 
-                        <?=$this->escape($checkout->getUsage()) ?>
-                        <?=$this->getEditIcon(['action' => 'treatPayment', 'id' => $this->escape($checkout->getId())]) ?>
-                        <?=$this->getDeleteIcon(['action' => 'del', 'id' => $this->escape($checkout->getId())]) ?>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-        <br>
-        <br>
+        <h1><?=$this->getTrans('bookedpayments') ?></h1>
+        <table class="table table-hover table-striped">
+            <colgroup>
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="col-lg-2">
+                <col>
+                <col class="col-lg-2">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th><?=$this->getTrans('datetime') ?></th>
+                    <th><?=$this->getTrans('name') ?></th>
+                    <th><?=$this->getTrans('amount') ?></th> 
+                    <th><?=$this->getTrans('usage') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($this->get('checkout') as $checkout): ?>
+                <tr>
+                    <td><?=$this->getEditIcon(['action' => 'treatPayment', 'id' => $this->escape($checkout->getId())]) ?></td>
+                    <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $this->escape($checkout->getId())]) ?></td>
+                    <td><?=$this->escape($checkout->getDatetime()) ?></td>
+                    <td><?=$this->escape($checkout->getName()) ?></td>
+                    <td><?=$this->escape($checkout->getAmount()) ?> <?=$currency ?></td>
+                    <td><?=$this->escape($checkout->getUsage()) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
     <?=$this->getSaveBar($this->getTrans('book')) ?>
 </form>

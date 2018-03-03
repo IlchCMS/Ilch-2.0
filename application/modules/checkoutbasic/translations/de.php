@@ -16,7 +16,6 @@ return [
     'settings' => 'Einstellungen',
     'accountdata' => 'Kontodaten',
     'book' => 'Buchen',
-    'for' => 'für',
     'amountinfo' => 'z.B. -30.50 für eine Ausgabe oder +30 für eine Einnahme.',
     'balancetotal' => 'Kontostand Gesamt',
     'totalpaid' => 'Insgesamt eingezahlt',

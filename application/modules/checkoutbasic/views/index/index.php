@@ -25,16 +25,29 @@ $currency = $this->escape($this->get('currency'));
 <br>
 <br>
 <h1><?=$this->getTrans('bookedpayments') ?></h1>
-<ul>
-<?php foreach ($this->get('checkout') as $checkout): ?>
-    <li>
-        <?=$this->escape($checkout->getName()) ?>: 
-        <strong>
-            <?=$this->escape($checkout->getAmount()) ?>
-            <?=$currency ?>
-        </strong> 
-        <?=$this->getTrans('for') ?>: 
-        <?=$this->escape($checkout->getUsage()) ?>
-    </li>
+<table class="table table-hover table-striped">
+    <colgroup>
+        <col class="col-lg-2">
+        <col>
+        <col class="col-lg-2">
+        <col>
+    </colgroup>
+    <thead>
+        <tr>
+            <th><?=$this->getTrans('datetime') ?></th>
+            <th><?=$this->getTrans('name') ?></th>
+            <th><?=$this->getTrans('amount') ?></th> 
+            <th><?=$this->getTrans('usage') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->get('checkout') as $checkout): ?>
+        <tr>
+            <td><?=$this->escape($checkout->getDatetime()) ?></td>
+            <td><?=$this->escape($checkout->getName()) ?></td>
+            <td><?=$this->escape($checkout->getAmount()) ?> <?=$currency ?></td>
+            <td><?=$this->escape($checkout->getUsage()) ?></td>
+        </tr>
     <?php endforeach; ?>
-</ul>
+    </tbody>
+</table>

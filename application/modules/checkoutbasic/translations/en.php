@@ -16,7 +16,6 @@ return [
     'settings' => 'Settings',
     'accountdata' => 'Account data',
     'book' => 'Book',
-    'for' => 'for',
     'amountinfo' => 'e.g. -30.50 for an expense or +30 for a revenue.',
     'balancetotal' => 'Balance total',
     'totalpaid' => 'Total paid',
