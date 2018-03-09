@@ -240,6 +240,10 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `teamspeak` VARCHAR(255) NOT NULL;');
                 $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `discord` VARCHAR(255) NOT NULL;');
                 break;
+            case "2.1.5":
+                removeDir(ROOT_PATH.'/vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                break;
         }
 
         return 'Update function executed.';
