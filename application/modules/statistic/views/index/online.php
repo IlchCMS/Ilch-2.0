@@ -40,7 +40,7 @@ if ($this->getUser()) {
                 <?php $moduleKey = implode('/',array_slice(explode('/',$userOnlineList->getSite()),1,1)); ?>
                 <?php if ($moduleKey != ''): ?>
                     <?php $module = $modulesMapper->getModulesByKey($moduleKey, $this->getTranslator()->getLocale()); ?>
-                    <?php $moduleName = $module->getName() ?>
+                    <?php (!empty($module)) ? $moduleName = $module->getName() : $moduleName = '' ?>
                 <?php else: ?>
                     <?php $moduleName = '' ?>
                 <?php endif; ?>
