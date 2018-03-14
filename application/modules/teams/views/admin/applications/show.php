@@ -102,12 +102,18 @@ $teamsMapper = $this->get('teamsMapper');
         </div>
 
         <div class="content_savebox">
+            <?php if (!$this->get('userDeleted')) : ?>
             <a href="<?=$this->getUrl(['action' => 'accept', 'id' => $join->getId()], null, true) ?>" class="save_button btn btn-default">
                 <?=$this->getTrans('accept') ?>
             </a>
             <a href="<?=$this->getUrl(['action' => 'reject', 'id' => $join->getId()], null, true) ?>" class="delete_button btn btn-default">
                 <?=$this->getTrans('reject') ?>
             </a>
+            <?php else: ?>
+            <a href="<?=$this->getUrl(['action' => 'delete', 'id' => $join->getId()], null, true) ?>" class="delete_button btn btn-default">
+                <?=$this->getTrans('delete') ?>
+            </a>
+            <?php endif; ?>
         </div>
     </div>
 <?php endif; ?>

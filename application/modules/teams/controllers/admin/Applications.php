@@ -71,8 +71,16 @@ class Applications extends \Ilch\Controller\Admin
     {
         $joinsMapper = new JoinsMapper();
         $teamsMapper = new TeamsMapper();
+        $userMapper = new UserMapper();
 
+        $userDeleted = false;
         $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
+
+        if ($join->getUserId()) {
+            if (!$userMapper->userWithIdExists($join->getUserId())) {
+                $userDeleted = true;
+            }
+        }
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])
@@ -83,7 +91,8 @@ class Applications extends \Ilch\Controller\Admin
 
         $this->getView()->set('joinsMapper', $joinsMapper)
             ->set('teamsMapper', $teamsMapper)
-            ->set('join', $join);
+            ->set('join', $join)
+            ->set('userDeleted', $userDeleted); 
     }
 
     public function acceptAction()
@@ -242,6 +251,19 @@ class Applications extends \Ilch\Controller\Admin
 
             $this->redirect()
                 ->withMessage('rejectSuccess')
+                ->to(['action' => 'index']);
+        }
+    }
+
+    public function deleteAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $joinsMapper = new JoinsMapper();
+
+            $joinsMapper->delete($this->getRequest()->getParam('id'));
+            
+            $this->redirect()
+                ->withMessage('deleteSuccess')
                 ->to(['action' => 'index']);
         }
     }
