@@ -11,7 +11,7 @@ if ($this->getUser()) {
 }
 ?>
 
-<h1><?=$this->getTrans('monthArchives') ?>: <i><?=$date->format('F Y', true) ?></i></h1>
+<h1><?=$this->getTrans('monthArchives') ?>: <i><?=$this->getTrans($date->format('F', true)).$date->format(' Y', true) ?></i></h1>
 <?php if ($articles != ''): ?>
     <?php
     $displayedArticles = 0;
