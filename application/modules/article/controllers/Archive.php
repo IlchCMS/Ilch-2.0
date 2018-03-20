@@ -88,7 +88,7 @@ class Archive extends \Ilch\Controller\Frontend
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuArticle'))
             ->add($this->getTranslator()->trans('menuArchives'))
-            ->add($date->format('F Y', true));
+            ->add($this->getTranslator()->trans($date->format('F', true)).$date->format(' Y', true));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index'])
