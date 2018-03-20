@@ -92,7 +92,7 @@ class Archive extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index'])
-            ->add($date->format('F Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
+            ->add($this->getTranslator()->trans($date->format('F', true)).$date->format(' Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
 
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page'));
