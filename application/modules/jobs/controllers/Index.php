@@ -93,6 +93,10 @@ class Index extends \Ilch\Controller\Frontend
                 $this->redirect(['action' => 'index']);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'show', 'id' => $id]);
             }
         }
 

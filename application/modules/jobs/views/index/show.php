@@ -28,7 +28,7 @@ $jobs = $this->get('jobs');
     <h1><?=$this->getTrans('apply') ?></h1>
     <form action="" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
-        <div class="form-group <?=in_array('title', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
             <label for="title" class="col-lg-3 control-label">
                 <div class="text-left">
                     <?=$this->getTrans('applyAs') ?>:
