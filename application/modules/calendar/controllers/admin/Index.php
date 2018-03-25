@@ -90,6 +90,7 @@ class Index extends \Ilch\Controller\Admin
             $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));
             $text = trim($this->getRequest()->getPost('text'));
             $color = trim($this->getRequest()->getPost('color'));
+            $periodDay = trim($this->getRequest()->getPost('periodDay'));
             
             if (empty($start)) {
                 $this->addMessage('missingDate', 'danger');
@@ -106,6 +107,7 @@ class Index extends \Ilch\Controller\Admin
                 $calendarModel->setEnd($end);
                 $calendarModel->setText($text);
                 $calendarModel->setColor($color);
+                $calendarModel->setPeriodDay($periodDay);
                 $calendarModel->setReadAccess($groups);
                 $calendarMapper->save($calendarModel);
                 

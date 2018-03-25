@@ -1,3 +1,15 @@
+<?php
+$periodDays = [
+    '1' => $this->getTranslator()->trans('Monday'),
+    '2' => $this->getTranslator()->trans('Tuesday'),
+    '3' => $this->getTranslator()->trans('Wednesday'),
+    '4' => $this->getTranslator()->trans('Thursday'),
+    '5' => $this->getTranslator()->trans('Friday'),
+    '6' => $this->getTranslator()->trans('Saturday'),
+    '7' => $this->getTranslator()->trans('Sunday')
+];
+?>
+
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
@@ -63,6 +75,24 @@
                    id="place"
                    name="place"
                    value="<?php if ($this->get('calendar') != '') { echo $this->escape($this->get('calendar')->getPlace()); } ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="place" class="col-lg-2 control-label">
+            <?=$this->getTrans('periodEntry') ?>:
+        </label>
+        <div class="col-lg-4">
+            <select class="form-control" name="periodDay" id="periodDay">
+                <option selected="selected"><?=$this->getTrans('noPeriodEntry') ?></option>
+                <?php foreach ($periodDays as $key => $value): ?>
+                    <?php $selected = ''; ?>
+                    <?php if ($this->get('calendar') != '' AND $this->get('calendar')->getPeriodDay() == $key OR $this->originalInput('periodDay') == $key): ?>
+                        <?php $selected = 'selected="selected"'; ?>
+                    <?php endif; ?>
+
+                    <option <?=$selected ?> value="<?=$key ?>"><?=$value ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
     <div class="form-group">

@@ -19,10 +19,10 @@ class Calendar extends \Ilch\Mapper
     public function getEntries($where = [])
     {
         $entryArray = $this->db()->select('*')
-                ->from('calendar')
-                ->where($where)
-                ->execute()
-                ->fetchRows();
+            ->from('calendar')
+            ->where($where)
+            ->execute()
+            ->fetchRows();
 
         if (empty($entryArray)) {
             return null;
@@ -31,14 +31,15 @@ class Calendar extends \Ilch\Mapper
         $entry = [];
         foreach ($entryArray as $entries) {
             $entryModel = new CalendarModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setTitle($entries['title']);
-            $entryModel->setPlace($entries['place']);
-            $entryModel->setStart($entries['start']);
-            $entryModel->setEnd($entries['end']);
-            $entryModel->setText($entries['text']);
-            $entryModel->setColor($entries['color']);
-            $entryModel->setReadAccess($entries['read_access']);
+            $entryModel->setId($entries['id'])
+                ->setTitle($entries['title'])
+                ->setPlace($entries['place'])
+                ->setStart($entries['start'])
+                ->setEnd($entries['end'])
+                ->setText($entries['text'])
+                ->setColor($entries['color'])
+                ->setPeriodDay($entries['period_day'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -54,24 +55,25 @@ class Calendar extends \Ilch\Mapper
     public function getCalendarById($id)
     {
         $calendarRow = $this->db()->select('*')
-                ->from('calendar')
-                ->where(['id' => $id])
-                ->execute()
-                ->fetchAssoc();
+            ->from('calendar')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($calendarRow)) {
             return null;
         }
 
         $calendarModel = new CalendarModel();
-        $calendarModel->setId($calendarRow['id']);
-        $calendarModel->setTitle($calendarRow['title']);
-        $calendarModel->setPlace($calendarRow['place']);
-        $calendarModel->setStart($calendarRow['start']);
-        $calendarModel->setEnd($calendarRow['end']);
-        $calendarModel->setText($calendarRow['text']);
-        $calendarModel->setColor($calendarRow['color']);
-        $calendarModel->setReadAccess($calendarRow['read_access']);
+        $calendarModel->setId($calendarRow['id'])
+            ->setTitle($calendarRow['title'])
+            ->setPlace($calendarRow['place'])
+            ->setStart($calendarRow['start'])
+            ->setEnd($calendarRow['end'])
+            ->setText($calendarRow['text'])
+            ->setColor($calendarRow['color'])
+            ->setPeriodDay($calendarRow['period_day'])
+            ->setReadAccess($calendarRow['read_access']);
 
         return $calendarModel;
     }
@@ -103,12 +105,13 @@ class Calendar extends \Ilch\Mapper
         $entry = [];
         foreach ($entryArray as $entries) {
             $entryModel = new CalendarModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setTitle($entries['title']);
-            $entryModel->setStart($entries['start']);
-            $entryModel->setEnd($entries['end']);
-            $entryModel->setColor($entries['color']);
-            $entryModel->setReadAccess($entries['read_access']);
+            $entryModel->setId($entries['id'])
+                ->setTitle($entries['title'])
+                ->setStart($entries['start'])
+                ->setEnd($entries['end'])
+                ->setColor($entries['color'])
+                ->setPeriodDay($entries['period_day'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -129,6 +132,7 @@ class Calendar extends \Ilch\Mapper
             'end' => $term->getEnd(),
             'text' => $term->getText(),
             'color' => $term->getColor(),
+            'period_day' => $term->getPeriodDay(),
             'read_access' => $term->getReadAccess()
         ];
 

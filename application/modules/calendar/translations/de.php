@@ -18,6 +18,8 @@ return [
     'at' => 'um',
     'clock' => 'Uhr',
     'visibleFor' => 'Sichtbar für',
+    'periodEntry' => 'Zyklus',
+    'noPeriodEntry' => 'kein Zyklus',
 
     'calendarMonth' => 'Monat',
     'calendarWeek' => 'Woche',

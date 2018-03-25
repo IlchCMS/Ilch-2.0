@@ -19,6 +19,14 @@ if ($this->get('calendarList')) {
         $e['color'] = $calendarList->getColor();
         $e['url'] = $this->getUrl('calendar/events/show/id/' . $calendarList->getId());
 
+        if ($calendarList->getPeriodDay()) {
+            $startDate = new \Ilch\Date($calendarList->getStart());
+            $endDate = new \Ilch\Date($calendarList->getEnd());
+            $e['start'] = $startDate->format('H:i');
+            $e['end'] = $endDate->format('H:i');
+            $e['dow'] = [$calendarList->getPeriodDay()];
+        }
+
         array_push($events, $e);
     }
 }

@@ -58,6 +58,13 @@ class Calendar extends \Ilch\Model
     protected $color;
 
     /**
+     * The period day of the calendar.
+     *
+     * @var int
+     */
+    protected $periodDay;
+
+    /**
      * Read access of the article.
      *
      * @var string
@@ -78,7 +85,7 @@ class Calendar extends \Ilch\Model
      * Sets the id of the calendar.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
     public function setId($id)
     {
@@ -101,7 +108,7 @@ class Calendar extends \Ilch\Model
      * Sets the title of the calendar.
      *
      * @param string $title
-     * @return this
+     * @return $this
      */
     public function setTitle($title)
     {
@@ -124,7 +131,7 @@ class Calendar extends \Ilch\Model
      * Sets the place of the calendar.
      *
      * @param string $place
-     * @return this
+     * @return $this
      */
     public function setPlace($place)
     {
@@ -147,7 +154,7 @@ class Calendar extends \Ilch\Model
      * Sets the start date of the calendar.
      *
      * @param string $start
-     * @return this
+     * @return $this
      */
     public function setStart($start)
     {
@@ -170,7 +177,7 @@ class Calendar extends \Ilch\Model
      * Sets the end date of the calendar.
      *
      * @param string $end
-     * @return this
+     * @return $this
      */
     public function setEnd($end)
     {
@@ -193,7 +200,7 @@ class Calendar extends \Ilch\Model
      * Sets the text of the calendar.
      *
      * @param string $text
-     * @return this
+     * @return $this
      */
     public function setText($text)
     {
@@ -216,11 +223,34 @@ class Calendar extends \Ilch\Model
      * Sets the color of the calendar.
      *
      * @param string $color
-     * @return this
+     * @return $this
      */
     public function setColor($color)
     {
         $this->color = (string)$color;
+
+        return $this;
+    }
+
+    /**
+     * Gets the period day of the calendar.
+     *
+     * @return int
+     */
+    public function getPeriodDay()
+    {
+        return $this->periodDay;
+    }
+
+    /**
+     * Sets the period day of the calendar.
+     *
+     * @param int $periodDay
+     * @return $this
+     */
+    public function setPeriodDay($periodDay)
+    {
+        $this->periodDay = (int)$periodDay;
 
         return $this;
     }
