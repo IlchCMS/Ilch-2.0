@@ -36,7 +36,7 @@ if ($event->getUserId()) {
                 <?php endif; ?>
                 <div class="datePic">
                     <div class="dateDayPic"><?=$start->format("d", true) ?></div>
-                    <div class="dateMonthPic"><?=$start->format("M", true) ?></div>
+                    <div class="dateMonthPic"><?=$this->getTrans($start->format('M', true)) ?></div>
                 </div>
                 <div class="titlePic"><?=$this->escape($event->getTitle()) ?></div>
             </div>
@@ -93,7 +93,7 @@ if ($event->getUserId()) {
                     <?php $eventDate = $start->format("H:i"); ?>
                 <?php endif; ?>
 
-                <i class="fa fa-clock-o"></i> <?=$start->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
+                <i class="fa fa-clock-o"></i> <?=$this->getTrans($start->format("l")).$start->format(", d. ").$this->getTrans($start->format("F")).$start->format(" Y") ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
             </div>
             <div class="eventBoxBottom">
                 <?php $place = $this->escape($event->getPlace()); ?>

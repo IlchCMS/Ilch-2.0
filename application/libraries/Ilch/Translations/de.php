@@ -72,6 +72,20 @@ return [
     'November' => 'November',
     'December' => 'Dezember',
 
+    // month name abbreviation (according to DIN ISO 8601)
+    'Jan' => 'Jan.',
+    'Feb' => 'Feb.',
+    'Mar' => 'Mrz.',
+    'Apr' => 'Apr.',
+    'May' => 'Mai',
+    'Jun' => 'Jun.',
+    'Jul' => 'Jul.',
+    'Aug' => 'Aug.',
+    'Sep' => 'Sep.',
+    'Oct' => 'Okt.',
+    'Nov' => 'Nov.',
+    'Dec' => 'Dez.',
+
     // weekday name
     'Monday' => 'Montag',
     'Tuesday' => 'Dienstag',

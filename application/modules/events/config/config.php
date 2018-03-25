@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.3',
+        'version' => '1.4',
         'icon_small' => 'fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -36,7 +36,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.7',
         'phpVersion' => '5.6'
     ];
 

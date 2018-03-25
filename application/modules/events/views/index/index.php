@@ -24,7 +24,7 @@ $entrantsMapper = $this->get('entrantsMapper');
                             <li>
                                 <time>
                                     <span class="day"><?=$date->format("j", true) ?></span>
-                                    <span class="month"><?=$date->format("M", true) ?></span>
+                                    <span class="month"><?=$this->getTrans($date->format('M', true)) ?></span>
                                 </time>
                                 <div class="info">
                                     <h2 class="title"><a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><?=$this->escape($eventlist->getTitle()) ?></a></h2>
