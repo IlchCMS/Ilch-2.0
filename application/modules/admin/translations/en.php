@@ -275,7 +275,7 @@ return [
 
     'menuUpdate' => 'Update',
     'backupBeforeUpdate' => 'It is recommended to create a backup of the installation and the database before executing an update.',
-    'updateProcess' => 'Ilch 2.0 UPDATE PROCESS',
+    'updateProcess' => 'Ilch 2 UPDATE PROCESS',
     'versionNow' => 'Current version: ',
     'readReleas' => 'Read current release version...',
     'foundNewVersions' => 'New version found: ',
