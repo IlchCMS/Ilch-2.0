@@ -15,7 +15,7 @@ if ($this->get('awayList')) {
         }
         $e['url'] = $this->getUrl('away/index/index/#' . $awayList->getId());
 
-        array_push($events, $e);
+        $events[] = $e;
     }
 }
 

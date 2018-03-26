@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'birthday',
-        'version' => '1.1',
+        'version' => '1.2',
         'icon_small' => 'fa-birthday-cake',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',

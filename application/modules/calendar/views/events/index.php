@@ -27,7 +27,7 @@ if ($this->get('calendarList')) {
             $e['dow'] = [$calendarList->getPeriodDay()];
         }
 
-        array_push($events, $e);
+        $events[] = $e;
     }
 }
 

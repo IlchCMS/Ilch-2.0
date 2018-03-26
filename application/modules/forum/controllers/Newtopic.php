@@ -83,23 +83,17 @@ class Newtopic extends \Ilch\Controller\Frontend
         }
 
         $userMapper = new UserMapper();
-        $userId = null;
-
+        $user = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $userMapper->getUserById($this->getUser()->getId());
         }
 
-        $user = $userMapper->getUserById($userId);
-        $ids = [0];
-
+        $readAccess = [3];
         if ($user) {
-            $ids = [];
             foreach ($user->getGroups() as $us) {
-                $ids[] = $us->getId();
+                $readAccess[] = $us->getId();
             }
         }
-
-        $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('readAccess', $readAccess);
         $this->getView()->set('cat', $cat);

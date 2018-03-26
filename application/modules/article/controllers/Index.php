@@ -53,20 +53,17 @@ class Index extends \Ilch\Controller\Frontend
         $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $userId = null;
+        $user = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $userMapper->getUserById($this->getUser()->getId());
         }
-        $user = $userMapper->getUserById($userId);
 
-        $ids = [3];
+        $readAccess = [3];
         if ($user) {
-            $ids = [];
             foreach ($user->getGroups() as $us) {
-                $ids[] = $us->getId();
+                $readAccess[] = $us->getId();
             }
         }
-        $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
@@ -120,20 +117,17 @@ class Index extends \Ilch\Controller\Frontend
             $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
         }
 
-        $userId = null;
+        $user = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $userMapper->getUserById($this->getUser()->getId());
         }
-        $user = $userMapper->getUserById($userId);
 
-        $ids = [3];
+        $readAccess = [3];
         if ($user) {
-            $ids = [];
             foreach ($user->getGroups() as $us) {
-                $ids[] = $us->getId();
+                $readAccess[] = $us->getId();
             }
         }
-        $readAccess = explode(',',implode(',', $ids));
 
         if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
             $this->getLayout()->getTitle()

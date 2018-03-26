@@ -19,7 +19,7 @@ if ($this->get('eventList')) {
         $e['color'] = '#C52C66';
         $e['url'] = $this->getUrl('events/show/event/id/' . $eventList->getId());
 
-        array_push($events, $e);
+        $events[] = $e;
     }
 }
 

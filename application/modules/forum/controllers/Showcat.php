@@ -13,9 +13,10 @@ class Showcat extends \Ilch\Controller\Frontend
 {
     public function indexAction() 
     {
-        $catId = (int)$this->getRequest()->getParam('id');
-        
         $forumMapper = new ForumMapper();
+        $userMapper = new UserMapper();
+
+        $catId = (int)$this->getRequest()->getParam('id');
         $forumItems = $forumMapper->getForumItemsByParent($catId);
         $cat = $forumMapper->getForumById($catId);
 
@@ -31,22 +32,17 @@ class Showcat extends \Ilch\Controller\Frontend
         $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('cat', $cat);
 
-        $userMapper = new UserMapper();
-        $userId = null;
+        $user = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $userMapper->getUserById($this->getUser()->getId());
         }
-        $user = $userMapper->getUserById($userId);
 
-
-        $ids = [3];
+        $readAccess = [3];
         if ($user) {
-            $ids = [];
             foreach ($user->getGroups() as $us) {
-                $ids[] = $us->getId();
+                $readAccess[] = $us->getId();
             }
         }
-        $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('readAccess', $readAccess);
     }

@@ -13,7 +13,7 @@ if ($this->get('birthdayList')) {
             $e['color'] = '#257e4a';
             $e['url'] = $this->getUrl('user/profil/index/user/' . $birthdayList->getId());
 
-            array_push($events, $e);
+            $events[] = $e;
         }
     }
 }

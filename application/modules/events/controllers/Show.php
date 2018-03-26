@@ -67,19 +67,17 @@ class Show extends \Ilch\Controller\Frontend
             $this->getView()->set('eventEntrants', $entrantsMapper->getEventEntrants($this->getRequest()->getParam('id'), $this->getUser()->getId()));
         }
 
-        $userId = null;
+        $user = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $userMapper->getUserById($this->getUser()->getId());
         }
-        $user = $userMapper->getUserById($userId);
-        $ids = [3];
+
+        $readAccess = [3];
         if ($user) {
-            $ids = [];
             foreach ($user->getGroups() as $us) {
-                $ids[] = $us->getId();
+                $readAccess[] = $us->getId();
             }
         }
-        $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('userMapper', $userMapper)
             ->set('currencyMapper', $currencyMapper)
@@ -106,19 +104,17 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('naviEventsUpcoming'), ['action' => 'upcoming']);
 
-        $userId = null;
+        $user = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $userMapper->getUserById($this->getUser()->getId());
         }
-        $user = $userMapper->getUserById($userId);
-        $ids = [3];
+
+        $readAccess = [3];
         if ($user) {
-            $ids = [];
             foreach ($user->getGroups() as $us) {
-                $ids[] = $us->getId();
+                $readAccess[] = $us->getId();
             }
         }
-        $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
             ->set('eventListUpcoming', $eventMapper->getEventListUpcoming())
@@ -138,19 +134,17 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('naviEventsPast'), ['action' => 'past']);
 
-        $userId = null;
+        $user = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $userMapper->getUserById($this->getUser()->getId());
         }
-        $user = $userMapper->getUserById($userId);
-        $ids = [3];
+
+        $readAccess = [3];
         if ($user) {
-            $ids = [];
             foreach ($user->getGroups() as $us) {
-                $ids[] = $us->getId();
+                $readAccess[] = $us->getId();
             }
         }
-        $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
             ->set('eventListPast', $eventMapper->getEventListPast())
@@ -170,19 +164,17 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('naviEventsParticipation'), ['action' => 'participation']);
 
-        $userId = null;
+        $user = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $userMapper->getUserById($this->getUser()->getId());
         }
-        $user = $userMapper->getUserById($userId);
-        $ids = [3];
+
+        $readAccess = [3];
         if ($user) {
-            $ids = [];
             foreach ($user->getGroups() as $us) {
-                $ids[] = $us->getId();
+                $readAccess[] = $us->getId();
             }
         }
-        $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
             ->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()))
