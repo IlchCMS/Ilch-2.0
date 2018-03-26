@@ -10,7 +10,7 @@ if ($this->getUser()) {
 }
 ?>
 
-<?php if (is_in_array($this->get('readAccess'), explode(',', $calendar->getReadAccess())) && $adminAccess == true): ?>
+<?php if (is_in_array($this->get('readAccess'), explode(',', $calendar->getReadAccess())) or $adminAccess == true): ?>
     <h1><?=$this->escape($calendar->getTitle()) ?></h1>
     <div class="form-horizontal">
         <?php if ($calendar->getPlace()!= ''): ?>
@@ -21,12 +21,12 @@ if ($this->getUser()) {
         <?php endif; ?>
         <div class="form-group">
             <div class="col-lg-2"><?=$this->getTrans('start') ?></div>
-            <div class="col-lg-10"><?=$start->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$start->format("H:i") ?> <?=$this->getTrans('clock') ?></div>
+            <div class="col-lg-10"><?=$this->getTrans($start->format("l")).$start->format(", d. ").$this->getTrans($start->format("F")).$start->format(" Y") ?> <?=$this->getTrans('at') ?> <?=$start->format("H:i") ?> <?=$this->getTrans('clock') ?></div>
         </div>
         <?php if ($calendar->getEnd()!= '0000-00-00 00:00:00'): ?>
         <div class="form-group">
             <div class="col-lg-2"><?=$this->getTrans('end') ?></div>
-            <div class="col-lg-10"><?=$end->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$end->format("H:i") ?> <?=$this->getTrans('clock') ?></div>
+            <div class="col-lg-10"><?=$this->getTrans($end->format("l")).$end->format(", d. ").$this->getTrans($end->format("F")).$end->format(" Y") ?> <?=$this->getTrans('at') ?> <?=$end->format("H:i") ?> <?=$this->getTrans('clock') ?></div>
         </div>
         <?php endif; ?>
         <div class="form-group">
