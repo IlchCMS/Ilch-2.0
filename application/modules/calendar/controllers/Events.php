@@ -51,16 +51,27 @@ class Events extends \Ilch\Controller\Frontend
             }
         }
 
+        $adminAccess = false;
+        if ($this->getUser()) {
+            $adminAccess = $this->getUser()->isAdmin();
+        }
+
         $calendar = $calendarMapper->getCalendarById($this->getRequest()->getParam('id'));
         $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuCalendar'))
-            ->add($calendar->getTitle());
+            ->add($this->getTranslator()->trans('menuCalendar'));
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuCalendar'), ['controller' => 'index', 'action' => 'index'])
-            ->add($calendar->getTitle(), ['controller' => 'events', 'action' => 'show', 'id' => $calendar->getId()]);
+            ->add($this->getTranslator()->trans('menuCalendar'), ['controller' => 'index', 'action' => 'index']);
 
-        $this->getView()->set('calendar', $calendarMapper->getCalendarById($this->getRequest()->getParam('id')))
-            ->set('readAccess', $readAccess);
+        if (is_in_array($readAccess, explode(',', $calendar->getReadAccess())) or $adminAccess == true) {
+            $this->getLayout()->getTitle()
+                ->add($calendar->getTitle());
+            $this->getLayout()->getHmenu()
+                ->add($calendar->getTitle(), ['controller' => 'events', 'action' => 'show', 'id' => $calendar->getId()]);
+        } else {
+            $calendar = null;
+        }
+
+        $this->getView()->set('calendar', $calendar);
     }
 
     public function iCalAction()

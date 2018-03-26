@@ -4,18 +4,20 @@ $eventEntrants = $this->get('eventEntrants');
 $userMapper = $this->get('userMapper');
 $currencyMapper = $this->get('currencyMapper');
 
-$start = new \Ilch\Date($event->getStart());
-$end = new \Ilch\Date($event->getEnd());
-$latLong = explode(',', $event->getLatLong());
+if (!empty($event)) {
+    $start = new \Ilch\Date($event->getStart());
+    $end = new \Ilch\Date($event->getEnd());
+    $latLong = explode(',', $event->getLatLong());
 
-if ($event->getUserId()) {
-    $user = $userMapper->getUserById($event->getUserId());
+    if ($event->getUserId()) {
+        $user = $userMapper->getUserById($event->getUserId());
+    }
 }
 ?>
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 
-<?php if (is_in_array($this->get('readAccess'), explode(',', $event->getReadAccess())) OR $this->getUser() AND $this->getUser()->isAdmin()): ?>
+<?php if (!empty($event)): ?>
     <h1>
         <?=$this->getTrans('event') ?>
         <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId() OR $this->getUser() AND $this->getUser()->isAdmin()): ?>

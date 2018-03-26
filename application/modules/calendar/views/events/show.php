@@ -1,16 +1,13 @@
 <?php
 $calendar = $this->get('calendar');
 
-$start = new \Ilch\Date($calendar->getStart());
-$end = new \Ilch\Date($calendar->getEnd());
-
-$adminAccess = null;
-if ($this->getUser()) {
-    $adminAccess = $this->getUser()->isAdmin();
+if (!empty($calendar)) {
+    $start = new \Ilch\Date($calendar->getStart());
+    $end = new \Ilch\Date($calendar->getEnd());
 }
 ?>
 
-<?php if (is_in_array($this->get('readAccess'), explode(',', $calendar->getReadAccess())) or $adminAccess == true): ?>
+<?php if (!empty($calendar)): ?>
     <h1><?=$this->escape($calendar->getTitle()) ?></h1>
     <div class="form-horizontal">
         <?php if ($calendar->getPlace()!= ''): ?>

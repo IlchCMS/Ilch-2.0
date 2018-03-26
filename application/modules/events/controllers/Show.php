@@ -28,10 +28,9 @@ class Show extends \Ilch\Controller\Frontend
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
         $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuEvents'))
-            ->add($event->getTitle());
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
-            ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()]);
+            ->add($this->getTranslator()->trans('menuEvents'));
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             $date = new \Ilch\Date();
@@ -79,9 +78,18 @@ class Show extends \Ilch\Controller\Frontend
             }
         }
 
+        if (is_in_array($readAccess, explode(',', $event->getReadAccess())) OR $this->getUser() AND $this->getUser()->isAdmin()) {
+            $this->getLayout()->getTitle()
+                ->add($event->getTitle());
+            $this->getLayout()->getHmenu()
+                ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()]);
+        } else {
+            $event = null;
+        }
+
         $this->getView()->set('userMapper', $userMapper)
             ->set('currencyMapper', $currencyMapper)
-            ->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')))
+            ->set('event', $event)
             ->set('eventEntrantsUser', $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id')))
             ->set('eventEntrantsCount', count($entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'))))
             ->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/'.$this->getRequest()->getParam('id')))
