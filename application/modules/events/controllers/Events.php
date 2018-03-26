@@ -18,19 +18,17 @@ class Events extends \Ilch\Controller\Frontend
 
         $this->getLayout()->setFile('modules/calendar/layouts/events');
 
-        $userId = null;
+        $user = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
+            $user = $userMapper->getUserById($this->getUser()->getId());
         }
-        $user = $userMapper->getUserById($userId);
-        $ids = [3];
+
+        $readAccess = [3];
         if ($user) {
-            $ids = [];
             foreach ($user->getGroups() as $us) {
-                $ids[] = $us->getId();
+                $readAccess[] = $us->getId();
             }
         }
-        $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('eventList', $eventsMapper->getEntriesForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')))
             ->set('readAccess', $readAccess);

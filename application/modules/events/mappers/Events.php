@@ -214,7 +214,8 @@ class Events extends \Ilch\Mapper
                 ->setStart($entries['start'])
                 ->setEnd($entries['end'])
                 ->setTitle($entries['title'])
-                ->setShow($entries['show']);
+                ->setShow($entries['show'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
