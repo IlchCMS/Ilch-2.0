@@ -38,4 +38,5 @@ return [
     'missingTitle' => 'It is required to add a title.',
     'missingCat' => 'It is required to first add a category.',
     'downloadsPerPage' => 'Downloads per page',
+    'downloadNotFound' => 'Download not found.',
 ];

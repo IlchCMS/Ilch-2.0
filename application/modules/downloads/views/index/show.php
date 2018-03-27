@@ -62,5 +62,8 @@
             </div>
         </div>
     <?php endforeach; ?>
+    <?php if (empty($this->get('file'))) : ?>
+        <?=$this->getTrans('downloadNotFound') ?>
+    <?php endif; ?>
 </div>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>

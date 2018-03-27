@@ -43,12 +43,18 @@ class Index extends \Ilch\Controller\Frontend
         $downloads = $downloadsMapper->getDownloadsById($id);
 
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('downloads'))
-                ->add($downloads->getTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$downloads->getDesc());
+                ->add($this->getTranslator()->trans('downloads'));
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index'])
-                ->add($downloads->getTitle(), ['action' => 'show', 'id' => $id]);
+                ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
+
+        if (!empty($downloads)) {
+            $this->getLayout()->getTitle()
+                    ->add($downloads->getTitle());
+            $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$downloads->getDesc());
+            $this->getLayout()->getHmenu()
+                    ->add($downloads->getTitle(), ['action' => 'show', 'id' => $id]);
+        }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('downloads_downloadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
@@ -67,22 +73,29 @@ class Index extends \Ilch\Controller\Frontend
 
         $id = $this->getRequest()->getParam('id');
         $file = $fileMapper->getFileById($id);
-        $download = $downloadsMapper->getDownloadsById($file->getCat());
 
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('downloads'))
-                ->add($download->getTitle())
-                ->add($file->getFileTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$file->getFileDesc());
+                ->add($this->getTranslator()->trans('downloads'));
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index'])
-                ->add($download->getTitle(), ['action' => 'show', 'id' => $download->getId()])
-                ->add($file->getFileTitle(), ['action' => 'showfile', 'id' => $id]);
+                ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
 
-        $model = new FileModel();
-        $model->setFileId($file->getFileId());
-        $model->setVisits($file->getVisits() + 1);
-        $fileMapper->saveVisits($model);
+        if (!empty($file)) {
+            $download = $downloadsMapper->getDownloadsById($file->getCat());
+
+            $this->getLayout()->getTitle()
+                    ->add($download->getTitle())
+                    ->add($file->getFileTitle());
+            $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$file->getFileDesc());
+            $this->getLayout()->getHmenu()
+                    ->add($download->getTitle(), ['action' => 'show', 'id' => $download->getId()])
+                    ->add($file->getFileTitle(), ['action' => 'showfile', 'id' => $id]);
+
+            $model = new FileModel();
+            $model->setFileId($file->getFileId());
+            $model->setVisits($file->getVisits() + 1);
+            $fileMapper->saveVisits($model);
+        }
 
         if ($this->getRequest()->getPost('saveComment')) {
             $date = new \Ilch\Date();
@@ -120,7 +133,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('commentMapper', $commentMapper);
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('config', $config);
-        $this->getView()->set('file', $fileMapper->getFileById($id));
+        $this->getView()->set('file', $file);
         $this->getView()->set('comments', $commentMapper->getCommentsByKey('downloads/index/showfile/id/'.$id));
     }
 }

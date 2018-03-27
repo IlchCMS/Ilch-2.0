@@ -7,10 +7,12 @@ $commentsCount = $commentMapper->getCountComments('downloads/index/showfile/id/'
 $nowDate = new \Ilch\Date();
 $config = $this->get('config');
 $image = '';
-if ($file->getFileImage() != '') {
-    $image = $this->getBaseUrl($file->getFileImage());
-} else {
-    $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png');
+if (!empty($file)) {
+    if ($file->getFileImage() != '') {
+        $image = $this->getBaseUrl($file->getFileImage());
+    } else {
+        $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png');
+    }
 }
 ?>
 
@@ -155,6 +157,7 @@ if ($file->getFileImage() != '') {
 
 <link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
 
+<?php if (!empty($file)) : ?>
 <div id="downloads">
     <div class="row">
         <div class="col-md-6">
@@ -331,3 +334,6 @@ function slideReply(thechosenone) {
     });
 }
 </script>
+<?php else : ?>
+    <?=$this->getTrans('downloadNotFound') ?>
+<?php endif; ?>

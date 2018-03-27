@@ -38,4 +38,5 @@ return [
     'missingTitle' => 'Es muss ein Titel angegeben werden.',
     'missingCat' => 'Es muss zuerst eine Kategorie hinzugefügt werden.',
     'downloadsPerPage' => 'Downloads pro Seite',
+    'downloadNotFound' => 'Download nicht gefunden.',
 ];
