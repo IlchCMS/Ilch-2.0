@@ -10,7 +10,7 @@ class Frontend extends Base
     public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)
     {
         parent::__construct($layout, $view, $request, $router, $translator);
-        
+
         if (!empty($_SESSION['layout'])) {
             $layoutKey = $_SESSION['layout'];
         } elseif ($this->getConfig() !== NULL) {
@@ -22,7 +22,6 @@ class Frontend extends Base
         $layoutFile = '';
 
         if (!empty($layoutKey)) {
-            
             if (is_file(APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php')) {
                 $configClass = '\\Layouts\\'.ucfirst(basename($layoutKey)).'\\Config\\Config';
                 $layoutConfig = new $configClass($this->getTranslator());
@@ -34,33 +33,46 @@ class Frontend extends Base
             if (!empty($config['layouts'])) {
                 foreach ($config['layouts'] as $layoutKeyConfig => $layouts) {
                     foreach ($layouts as $url) {
-                        if (empty($url['action'])) {
-                            $url['action'] = '';
-                        }
-                        if (empty($url['controller'])) {
-                            $url['controller'] = '';
+                        $arrayKeys = array_keys($url);
+                        $arrayValues = array_values($url);
+                        if (!empty($arrayValues[3])) {
+                            $paramKey = $arrayKeys[3];
+                        } else {
+                            $paramKey = '';
                         }
                         if (empty($url['module'])) {
                             $url['module'] = '';
                         }
-                       
-                        if ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName()) {
+                        if (empty($url['controller'])) {
+                            $url['controller'] = '';
+                        }
+                        if (empty($url['action'])) {
+                            $url['action'] = '';
+                        }
+                        if (empty($url[$paramKey])) {
+                            $url[$paramKey] = '';
+                        }
+
+                        if ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName() and $url[$paramKey] == $this->getRequest()->getParam($paramKey)) {
                             $layoutFile = $layoutKeyConfig;
                             break;
-                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and empty ($url['action'])) {
+                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName() and empty ($url[$paramKey])) {
                             $layoutFile = $layoutKeyConfig;
                             break;
-                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and empty ($url['controller']) and empty ($url['action'])) {
+                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and empty ($url['action']) and empty ($url[$paramKey])) {
+                            $layoutFile = $layoutKeyConfig;
+                            break;
+                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and empty ($url['controller']) and empty ($url['action']) and empty ($url[$paramKey])) {
                             $layoutFile = $layoutKeyConfig;
                             break;
                         }
-                        
                     }
                 }
             }
             if (empty($layoutFile)) {
                 $layoutFile = 'index';
             }
+
             $this->getLayout()->setFile('layouts/'.$layoutKey.'/'.$layoutFile, $layoutKey);
         }
     }
