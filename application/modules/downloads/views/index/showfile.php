@@ -168,7 +168,7 @@ if (!empty($file)) {
         <div class="col-md-6">
             <h3><?=$file->getFileTitle() ?></h3>
             <p><?=$file->getFileDesc() ?></p>
-            <a href="<?=$this->getUrl().'/'.$file->getFileUrl() ?>" class="btn btn-primary pull-right"><?=$this->getTrans('download') ?></a>
+            <a href="<?=$this->getUrl().'/'.$file->getFileUrl() ?>" class="btn btn-primary pull-right" download="<?=$file->getFileTitle() ?>"><?=$this->getTrans('download') ?></a>
         </div>
     </div>
 </div>
