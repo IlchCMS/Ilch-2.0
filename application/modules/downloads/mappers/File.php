@@ -18,6 +18,11 @@ class File extends \Ilch\Mapper
 
                            WHERE g.id = '.$id;
         $fileRow = $this->db()->queryRow($sql);
+
+        if (empty($fileRow)) {
+            return null;
+        }
+
         $entryModel = new FileModel();
         $entryModel->setFileId($fileRow['file_id']);
         $entryModel->setFileUrl($fileRow['url']);
