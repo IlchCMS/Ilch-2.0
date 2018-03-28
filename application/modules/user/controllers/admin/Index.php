@@ -184,8 +184,15 @@ class Index extends \Ilch\Controller\Admin
         $emailsMapper = new EmailsMapper();
 
         $this->getLayout()->getAdminHmenu()
-            ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index'])
-            ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat']);
+            ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
+
+        if (empty($this->getRequest()->getParam('id'))) {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('addUser'), ['action' => 'treat']);
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat']);
+        }
 
         if ($this->getRequest()->isPost()) {
             $userData = $this->getRequest()->getPost();
