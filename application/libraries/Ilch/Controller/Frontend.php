@@ -33,9 +33,9 @@ class Frontend extends Base
             if (!empty($config['layouts'])) {
                 foreach ($config['layouts'] as $layoutKeyConfig => $layouts) {
                     foreach ($layouts as $url) {
-                        $arrayKeys = array_keys($url);
                         $arrayValues = array_values($url);
                         if (!empty($arrayValues[3])) {
+                            $arrayKeys = array_keys($url);
                             $paramKey = $arrayKeys[3];
                         } else {
                             $paramKey = '';
@@ -56,13 +56,13 @@ class Frontend extends Base
                         if ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName() and $url[$paramKey] == $this->getRequest()->getParam($paramKey)) {
                             $layoutFile = $layoutKeyConfig;
                             break;
-                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName() and empty ($url[$paramKey])) {
+                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName() and empty($url[$paramKey])) {
                             $layoutFile = $layoutKeyConfig;
                             break;
-                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and empty ($url['action']) and empty ($url[$paramKey])) {
+                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and empty($url['action']) and empty($url[$paramKey])) {
                             $layoutFile = $layoutKeyConfig;
                             break;
-                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and empty ($url['controller']) and empty ($url['action']) and empty ($url[$paramKey])) {
+                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and empty($url['controller']) and empty($url['action']) and empty($url[$paramKey])) {
                             $layoutFile = $layoutKeyConfig;
                             break;
                         }
