@@ -30,7 +30,7 @@ class Events extends \Ilch\Box
             }
         }
 
-        $this->getView()->set('eventList', $eventMapper->getEventListUpcoming($config->get('event_boxEventLimit')))
+        $this->getView()->set('eventList', $eventMapper->getEventListUpcoming($config->get('event_box_event_limit')))
             ->set('readAccess', $readAccess);
     }
 }
