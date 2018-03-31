@@ -6,7 +6,10 @@
 
 namespace Modules\User\Plugins;
 
+use Modules\User\Mappers\AuthToken as AuthTokenMapper;
+use Modules\User\Mappers\CookieStolen as CookieStolenMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Models\AuthToken as AuthTokenModel;
 
 class BeforeControllerLoad
 {
@@ -26,14 +29,14 @@ class BeforeControllerLoad
         if (empty($_SESSION['user_id']) && !empty($_COOKIE['remember'])) {
             list($selector, $authenticator) = explode(':', $_COOKIE['remember']);
 
-            $authTokenMapper = new \Modules\User\Mappers\AuthToken();
-            $row = $authTokenMapper->getAuthToken($selector);
+            $authTokenMapper = new AuthTokenMapper();
+            $authToken = $authTokenMapper->getAuthToken($selector);
 
-            if (!empty($row) && strtotime($row['expires']) >= time()) {
-                if (hash_equals($row['token'], hash('sha256', base64_decode($authenticator)))) {
-                    $_SESSION['user_id'] = $row['userid'];
+            if (!empty($authToken) && strtotime($authToken->getExpires()) >= time()) {
+                if (hash_equals($authToken->getToken(), hash('sha256', base64_decode($authenticator)))) {
+                    $_SESSION['user_id'] = $authToken->getUserid();
                     // A new token is generated, a new hash for the token is stored over the old record, and a new login cookie is issued to the user.
-                    $authTokenModel = new \Modules\User\Models\AuthToken();
+                    $authTokenModel = new AuthTokenModel();
 
                     $authTokenModel->setSelector($selector);
                     // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
@@ -50,9 +53,9 @@ class BeforeControllerLoad
                 } else {
                     // If the series is present but the token does not match, a theft is assumed.
                     // The user receives a strongly worded warning and all of the user's remembered sessions are deleted.
-                    $cookieStolenMapper = new \Modules\User\Mappers\CookieStolen();
-                    $cookieStolenMapper->addCookieStolen($row['userid']);
-                    $authTokenMapper->deleteAllAuthTokenOfUser($row['userid']);
+                    $cookieStolenMapper = new CookieStolenMapper();
+                    $cookieStolenMapper->addCookieStolen($authToken->getUserid());
+                    $authTokenMapper->deleteAllAuthTokenOfUser($authToken->getUserid());
                 }
             }
         }
