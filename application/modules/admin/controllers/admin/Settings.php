@@ -278,7 +278,7 @@ HTACCESS;
         }
 
         if ($this->getRequest()->isPost()) {
-            $validation;
+            $validation = null;
             foreach ($this->getRequest()->getPost('data') as $data) {
                 $validation = Validation::create($data, [
                     'key' => 'required',
@@ -296,7 +296,7 @@ HTACCESS;
                 }
             }
 
-            if ($validation->isValid()) {
+            if (!empty($validation) && $validation->isValid()) {
                 $this->addMessage('saveSuccess');
             }
         }
