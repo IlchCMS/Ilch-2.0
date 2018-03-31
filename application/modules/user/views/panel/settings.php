@@ -93,7 +93,6 @@
                                 <?php $i = 0; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
-                    </div>
                 <?php endif; ?>
             </div>
         </div>

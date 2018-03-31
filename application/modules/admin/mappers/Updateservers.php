@@ -23,7 +23,7 @@ class Updateservers extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($array)) {
-            return $array;
+            return [];
         }
 
         $updateservers = [];

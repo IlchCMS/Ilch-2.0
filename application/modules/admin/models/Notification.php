@@ -56,7 +56,7 @@ class Notification extends \Ilch\Model
     /**
      * Set the id of the notification
      *
-     * @param int $userId
+     * @param int $id
      */
     public function setId($id)
     {

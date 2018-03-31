@@ -54,7 +54,7 @@ class Notifications extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($array)) {
-            return $array;
+            return [];
         }
 
         $notifications = [];
@@ -86,7 +86,7 @@ class Notifications extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($array)) {
-            return $array;
+            return [];
         }
 
         $notifications = [];

@@ -24,7 +24,7 @@ class NotificationPermission extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($array)) {
-            return $array;
+            return [];
         }
 
         $notificationPermissions = [];
