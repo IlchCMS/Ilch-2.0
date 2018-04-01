@@ -1,3 +1,22 @@
+auth_tokens:
+  -
+    id: 1
+    selector: "selector"
+    token: "token"
+    userid: 1
+    expires: "2014-01-01 12:12:12"
+  -
+    id: 2
+    selector: "selector2"
+    token: "token"
+    userid: 2
+    expires: "2014-01-01 12:12:12"
+
+cookie_stolen:
+  -
+    id: 1
+    userid: 1
+
 users:
   -
     id: 1

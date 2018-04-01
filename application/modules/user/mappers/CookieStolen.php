@@ -26,10 +26,11 @@ class CookieStolen extends \Ilch\Mapper
      * Add cookieStolen-message for an user.
      *
      * @param int userid
+     * @return int
      */
     public function addCookieStolen($userid) {
         if ($this->containsCookieStolen($userid)) {
-            return;
+            return 0;
         }
         $insert = $this->db()->insert();
         return $insert->into('cookie_stolen')
@@ -41,6 +42,7 @@ class CookieStolen extends \Ilch\Mapper
      * Delete the cookieStolen-message of an user.
      *
      * @param int userid
+     * @return \Ilch\Database\Mysql\Result|int
      */
     public function deleteCookieStolen($userid) {
         $delete = $this->db()->delete();
