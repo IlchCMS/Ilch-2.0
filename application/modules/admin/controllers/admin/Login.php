@@ -69,7 +69,7 @@ class Login extends \Ilch\Controller\Admin
     public function logoutAction()
     {
         if (!empty($_COOKIE['remember'])) {
-            list($selector, $authenticator) = explode(':', $_COOKIE['remember']);
+            list($selector) = explode(':', $_COOKIE['remember']);
             $authTokenMapper = new \Modules\User\Mappers\AuthToken();
             $authTokenMapper->deleteAuthToken($selector);
             setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], false, false);

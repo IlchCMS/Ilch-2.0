@@ -145,7 +145,7 @@ class Index extends \Ilch\Controller\Admin
                     ->setImage($this->getRequest()->getPost('image'))
                     ->setImageSource($this->getRequest()->getPost('imageSource'));
                 $this->trigger(ArticleConfig::EVENT_SAVE_BEFORE, ['model' => $model]);
-                $id = $articleMapper->save($model);
+                $articleMapper->save($model);
                 $this->trigger(ArticleConfig::EVENT_SAVE_AFTER, ['model' => $model]);
 
                 if ($this->getRequest()->getParam('id')) {

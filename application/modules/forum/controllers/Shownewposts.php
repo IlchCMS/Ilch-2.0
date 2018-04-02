@@ -22,11 +22,7 @@ class Shownewposts extends \Ilch\Controller\Frontend
             $pagination = new \Ilch\Pagination();
             $userMapper = new UserMapper();
 
-            $userId = null;
-            $groupIds = [3];
-
-            $userId = $this->getUser()->getId();
-            $user = $userMapper->getUserById($userId);
+            $user = $userMapper->getUserById($this->getUser()->getId());
 
             $groupIds = [];
             foreach ($user->getGroups() as $groups) {

@@ -6,9 +6,8 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
-use Modules\Admin\Mappers\Logs as LogsMapper;
-use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
