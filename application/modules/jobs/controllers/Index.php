@@ -33,11 +33,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index'])
                 ->add($job->getTitle(), ['action' => 'show', 'id' => $id]);
-           
-        $post = [
-            'title' => '',
-            'text' => ''
-        ];
 
         if ($this->getRequest()->getPost('saveApply')) {
             $post = [

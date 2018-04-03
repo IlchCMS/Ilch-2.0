@@ -34,16 +34,8 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuBirthday'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
-        $post = [
-            'numberOfBirthdaysShow' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'numberOfBirthdaysShow' => $this->getRequest()->getPost('numberOfBirthdaysShow')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'numberOfBirthdaysShow' => 'required|numeric|integer|min:1'
             ]);
 

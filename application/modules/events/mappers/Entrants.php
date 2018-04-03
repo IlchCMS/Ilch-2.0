@@ -100,7 +100,7 @@ class Entrants extends \Ilch\Mapper
             /*
              * User does not exist yet, insert.
              */
-            $userId = $this->db()->insert('events_entrants')
+            $this->db()->insert('events_entrants')
                 ->values($fields)
                 ->execute();
         }
