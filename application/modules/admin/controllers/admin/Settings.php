@@ -204,16 +204,13 @@ class Settings extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $htaccess = $this->getRequest()->getPost('htaccess');
-                // true if mod rewrite got toggled from off to on
+                // true if mod rewrite got toggled from on to off
                 $removeModRewrite = ($this->getConfig()->get('mod_rewrite') && !(int)$this->getRequest()->getPost('modRewrite'));
                 $remove = false;
 
                 if (!$this->getConfig()->get('mod_rewrite') && (int)$this->getRequest()->getPost('modRewrite')) {
                     // Mod rewrite got toggled from off to on.
-                    //if (!empty($htaccess)) {
-                    //    $htaccess .= PHP_EOL." ".PHP_EOL;
-                    //}
-                    $htaccess .= <<<'HTACCESS'
+                    $temp = <<<'HTACCESS'
 # Begin Mod Rewrite default lines
 # These lines get deleted when disabling Modrewrite in Admincenter!
 <IfModule mod_rewrite.c>
@@ -226,7 +223,7 @@ class Settings extends \Ilch\Controller\Admin
 </IfModule>
 # End Mod Rewrite default lines
 HTACCESS;
-
+                    $htaccess .= sprintf($temp, REWRITE_BASE);
                     $this->addMessage('modrewriteLinesAdded', 'info');
                 }
 
