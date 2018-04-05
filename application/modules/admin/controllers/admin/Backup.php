@@ -35,6 +35,12 @@ class Backup extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'customcss'])
             ],
             [
+                'name' => 'menuHtaccess',
+                'active' => false,
+                'icon' => 'fa fa-file-code-o',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'htaccess'])
+            ],
+            [
                 'name' => 'menuBackup',
                 'active' => false,
                 'icon' => 'fa fa-download',
@@ -73,9 +79,9 @@ class Backup extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->getActionName() == 'create') {
-            $items[3][0]['active'] = true; 
+            $items[4][0]['active'] = true;
         } else {
-            $items[3]['active'] = true; 
+            $items[4]['active'] = true;
         }
 
         $this->getLayout()->addMenu

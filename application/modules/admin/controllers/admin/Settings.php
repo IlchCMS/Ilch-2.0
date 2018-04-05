@@ -36,6 +36,12 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'customcss'])
             ],
             [
+                'name' => 'menuHtaccess',
+                'active' => false,
+                'icon' => 'fa fa-file-code-o',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'htaccess'])
+            ],
+            [
                 'name' => 'menuBackup',
                 'active' => false,
                 'icon' => 'fa fa-download',
@@ -71,12 +77,14 @@ class Settings extends \Ilch\Controller\Admin
             $items[1]['active'] = true;  
         } elseif ($this->getRequest()->getActionName() == 'customcss') {
             $items[2]['active'] = true;
+        } elseif ($this->getRequest()->getActionName() == 'htaccess') {
+            $items[3]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'update') {
-            $items[4]['active'] = true; 
+            $items[5]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'notifications') {
-            $items[5]['active'] = true; 
+            $items[6]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'mail') {
-            $items[7]['active'] = true;
+            $items[8]['active'] = true;
         } else {
             $items[0]['active'] = true; 
         }
@@ -100,7 +108,6 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'multilingualAcp' => 'required|numeric|integer|min:0|max:1',
-                'modRewrite' => 'required|numeric|integer|min:0|max:1',
                 'standardMail' => 'required|email',
                 'defaultPaginationObjects' => 'numeric|integer|min:1',
                 'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
@@ -111,7 +118,6 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
                 $this->getConfig()->set('content_language', $this->getRequest()->getPost('contentLanguage'));
                 $this->getConfig()->set('start_page', $this->getRequest()->getPost('startPage'));
-                $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
                 $this->getConfig()->set('standardMail', $this->getRequest()->getPost('standardMail'));
                 $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
                 $this->getConfig()->set('locale', $this->getRequest()->getPost('locale'));
@@ -122,22 +128,6 @@ class Settings extends \Ilch\Controller\Admin
                     $this->getConfig()->set('admin_layout_hmenu', '');
                 }
                 $this->getConfig()->set('updateserver', $this->getRequest()->getPost('updateserver'));
-
-                if ((int)$this->getRequest()->getPost('modRewrite')) {
-                    $htaccess = <<<'HTACCESS'
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase %1$s/
-    RewriteRule ^index\.php$ - [L]
-    RewriteCond %%{REQUEST_FILENAME} !-f
-    RewriteCond %%{REQUEST_FILENAME} !-d
-    RewriteRule . %1$s/index.php [L]
-</IfModule>
-HTACCESS;
-                    file_put_contents(ROOT_PATH.'/.htaccess', sprintf($htaccess, REWRITE_BASE));
-                } elseif (file_exists(ROOT_PATH.'/.htaccess')) {
-                    file_put_contents(ROOT_PATH.'/.htaccess', '');
-                }
 
                 $this->addMessage('saveSuccess');
             } else {
@@ -153,7 +143,6 @@ HTACCESS;
         $this->getView()->set('multilingualAcp', $this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('startPage', $this->getConfig()->get('start_page'));
-        $this->getView()->set('modRewrite', $this->getConfig()->get('mod_rewrite'));
         $this->getView()->set('standardMail', $this->getConfig()->get('standardMail'));
         $this->getView()->set('timezones', \DateTimeZone::listIdentifiers());
         $this->getView()->set('timezone', $this->getConfig()->get('timezone'));
@@ -200,6 +189,77 @@ HTACCESS;
         }
 
         $this->getView()->set('customCSS', $this->getConfig()->get('custom_css'));
+    }
+
+    public function htaccessAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuHtaccess'), ['action' => 'htaccess']);
+
+        if ($this->getRequest()->isPost()) {
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'modRewrite' => 'required|numeric|integer|min:0|max:1',
+            ]);
+
+            if ($validation->isValid()) {
+                $htaccess = $this->getRequest()->getPost('htaccess');
+                // true if mod rewrite got toggled from off to on
+                $removeModRewrite = ($this->getConfig()->get('mod_rewrite') && !(int)$this->getRequest()->getPost('modRewrite'));
+                $remove = false;
+
+                if (!$this->getConfig()->get('mod_rewrite') && (int)$this->getRequest()->getPost('modRewrite')) {
+                    // Mod rewrite got toggled from off to on.
+                    //if (!empty($htaccess)) {
+                    //    $htaccess .= PHP_EOL." ".PHP_EOL;
+                    //}
+                    $htaccess .= <<<'HTACCESS'
+# Begin Mod Rewrite default lines
+# These lines get deleted when disabling Modrewrite in Admincenter!
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase %1$s/
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %%{REQUEST_FILENAME} !-f
+    RewriteCond %%{REQUEST_FILENAME} !-d
+    RewriteRule . %1$s/index.php [L]
+</IfModule>
+# End Mod Rewrite default lines
+HTACCESS;
+
+                    $this->addMessage('modrewriteLinesAdded', 'info');
+                }
+
+                $htaccess = explode(PHP_EOL, $htaccess);
+                // Writing the htaccess file and removing the mod rewrite default lines if necessary
+                $filePointer = fopen(ROOT_PATH.'/.htaccess', 'wb');
+                foreach($htaccess as $line) {
+                    if ($removeModRewrite && (strpos($line, '# Begin Mod Rewrite default lines') !== false)) {
+                        $this->addMessage('modrewriteLinesRemoved', 'info');
+                        $remove = true;
+                    }
+
+                    if ($remove) {
+                        continue;
+                    }
+
+                    fwrite($filePointer, $line);
+
+                    if ($removeModRewrite && (strpos($line, '# End Mod Rewrite default lines') !== false)) {
+                        $remove = false;
+                    }
+                }
+                fclose($filePointer);
+
+                $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
+                $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            }
+        }
+
+        $this->getView()->set('modRewrite', $this->getConfig()->get('mod_rewrite'));
+        $this->getView()->set('htaccess', file_get_contents(ROOT_PATH.'/.htaccess'));
     }
 
     public function updateAction()

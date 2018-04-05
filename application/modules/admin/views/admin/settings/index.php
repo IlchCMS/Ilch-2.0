@@ -150,20 +150,6 @@
                    value="<?=$this->escape($this->get('defaultPaginationObjects')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('modRewrite') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('modRewrite') ?>:
-        </div>
-        <div class="col-lg-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="modRewrite-on" name="modRewrite" value="1" <?php if ($this->get('modRewrite') == '1') { echo 'checked="checked"'; } ?> />
-                <label for="modRewrite-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="modRewrite-off" name="modRewrite" value="0" <?php if ($this->get('modRewrite') != '1') { echo 'checked="checked"'; } ?> />
-                <label for="modRewrite-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-        </div>
-    </div>
 
     <h1><?=$this->getTrans('backendFunctions') ?></h1>
     <div id="hmenuFixed" class="form-group">

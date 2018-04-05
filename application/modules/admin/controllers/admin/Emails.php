@@ -35,6 +35,12 @@ class Emails extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'customcss'])
             ],
             [
+                'name' => 'menuHtaccess',
+                'active' => false,
+                'icon' => 'fa fa-file-code-o',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'htaccess'])
+            ],
+            [
                 'name' => 'menuBackup',
                 'active' => false,
                 'icon' => 'fa fa-download',
