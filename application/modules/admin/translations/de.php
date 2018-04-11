@@ -134,6 +134,7 @@ return [
     'menuHtaccess' => 'htaccess',
     'modrewriteLinesAdded' => 'Einträge für Mod-Rewrite hinzugefügt.',
     'modrewriteLinesRemoved' => 'Einträge für Mod-Rewrite entfernt.',
+    'adjustHtaccess' => 'Passen Sie den Inhalt der htaccess-Datei an',
     'alreadyExists' => 'Bereits vorhanden',
     'layoutDownload' => 'Layout herunterladen',
     'layoutUpdate' => 'Layout aktualisieren',

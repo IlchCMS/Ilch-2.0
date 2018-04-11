@@ -20,7 +20,8 @@
             <textarea class="form-control"
                       id="htaccess"
                       name="htaccess"
-                      rows="20"><?=$this->get('htaccess') ?></textarea>
+                      rows="20"
+                      title="<?=$this->getTrans('adjustHtaccess') ?>"><?=$this->get('htaccess') ?></textarea>
         </div>
     </div>
     <?=$this->getSaveBar() ?>
