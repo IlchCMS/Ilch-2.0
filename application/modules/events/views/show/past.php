@@ -11,7 +11,7 @@ $entrantsMapper = $this->get('entrantsMapper');
             <?php if ($this->get('eventListPast') != ''): ?>
                 <?php foreach ($this->get('eventListPast') as $eventlist): ?>
                     <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
-                    <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND ($this->getUser()->hasAccess('module_events') OR $this->getUser()->isAdmin())): ?>
+                    <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND $this->getUser()->hasAccess('module_events')): ?>
                         <li>
                             <time>
                                 <span class="day"><?=$date->format("j", true) ?></span>

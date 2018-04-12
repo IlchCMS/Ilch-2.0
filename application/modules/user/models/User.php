@@ -934,7 +934,7 @@ class User extends \Ilch\Model
      */
     public function hasAccess($key, $isInAdmin = true)
     {
-        if (in_array(1, array_keys($this->getGroups()))) {
+        if ($this->isAdmin()) {
             /*
              * The user is an admin, allow him everything.
              */

@@ -21,7 +21,7 @@ $users = $userMapper->getUserList();
     ?>
 </h1>
 
-<?php if ($this->getUser() AND (in_array($this->getUser()->getId(), $groupAccesses) OR $this->getUser()->hasAccess('module_events') OR $this->getUser()->isAdmin())): ?>
+<?php if ($this->getUser() AND (in_array($this->getUser()->getId(), $groupAccesses) OR $this->getUser()->hasAccess('module_events'))): ?>
     <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
         <div class="form-group">
