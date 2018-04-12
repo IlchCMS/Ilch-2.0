@@ -2,7 +2,7 @@
     <ul class="list-unstyled">
         <?php foreach ($this->get('eventList') as $eventlist): ?>
             <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
-            <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND $this->getUser()->isAdmin()): ?>
+            <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND ($this->getUser()->hasAccess('module_events') OR $this->getUser()->isAdmin())): ?>
                 <li>
                     <i class="fa fa-calendar"></i>
                     <a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>">
