@@ -941,28 +941,23 @@ class User extends \Ilch\Model
             return true;
         }
 
-        $type = '';
         $sql = 'SELECT ga.access_level
                 FROM [prefix]_groups_access AS ga';
 
         if (strpos($key, 'module_') !== false) {
             $moduleKey = substr($key, 7);
-            $type = 'module';
             $sqlJoin = ' INNER JOIN `[prefix]_modules` AS m ON ga.module_key = m.key';
             $sqlWhere = ' WHERE m.key = "' . $moduleKey . '"';
         } elseif (strpos($key, 'page_') !== false) {
             $pageId = (int)substr($key, 5);
-            $type = 'page';
             $sqlJoin = ' INNER JOIN `[prefix]_pages` AS p ON ga.page_id = p.id';
             $sqlWhere = ' WHERE p.id = ' . (int)$pageId;
         } elseif (strpos($key, 'article_') !== false) {
             $articleId = (int)substr($key, 8);
-            $type = 'article';
             $sqlJoin = ' INNER JOIN [prefix]_articles AS a ON ga.article_id = a.id';
             $sqlWhere = ' WHERE a.id = ' . (int)$articleId;
         } elseif (strpos($key, 'box_') !== false) {
             $boxId = (int)substr($key, 4);
-            $type = 'box';
             $sqlJoin = ' INNER JOIN [prefix]_boxes AS b ON ga.box_id = b.id';
             $sqlWhere = ' WHERE b.id = ' . (int)$boxId;
         }
