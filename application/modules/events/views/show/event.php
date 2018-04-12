@@ -20,7 +20,7 @@ if (!empty($event)) {
 <?php if (!empty($event)): ?>
     <h1>
         <?=$this->getTrans('event') ?>
-        <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId() OR $this->getUser() AND $this->getUser()->isAdmin()): ?>
+        <?php if ($this->getUser() AND ($event->getUserId() == $this->getUser()->getId() OR $this->getUser()->hasAccess('module_events') OR $this->getUser()->isAdmin())): ?>
             <div class="pull-right">
                 <?=$this->getEditIcon(['controller' => 'index', 'action' => 'treat', 'id' => $event->getId()]) ?>
                 <?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $event->getId()]) ?>
