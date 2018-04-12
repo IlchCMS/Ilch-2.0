@@ -26,7 +26,7 @@ $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
                     <li <?php if ($this->getRequest()->getActionName() == 'participation') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'participation']); ?>"><i class="fa fa-sign-in"></i>&nbsp; <?=$this->getTrans('naviEventsParticipation') ?></a></li>
                 <?php endif; ?>
             </ul>
-            <?php if ($this->getUser() AND (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->isAdmin())): ?>
+            <?php if ($this->getUser() AND (in_array($this->getUser()->getId(), $groupAccesses) OR $this->getUser()->hasAccess('module_events') OR $this->getUser()->isAdmin())): ?>
                 <ul class="nav navbar-nav navbar-right">
                     <li <?php if ($this->getRequest()->getActionName() == 'treat') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treat']); ?>"><i class="fa fa-plus"></i>&nbsp; <?=$this->getTrans('naviEventsAdd') ?></a></li>
                 </ul>
