@@ -14,7 +14,7 @@
 <script>
 $(document).ready(function() {
     var date = new Date();
-    var language = navigator.language || navigator.userLanguage;
+    var language = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
 
     $('#calendar').fullCalendar({
         header: {
@@ -29,6 +29,8 @@ $(document).ready(function() {
         contentHeight: 'auto',
         timeFormat: 'HH:mm',
         axisFormat: 'HH:mm',
+        slotLabelFormat: "HH:mm",
+        allDaySlot: false,
         eventLimit: true,
         eventLimitClick: 'listWeek',
         eventLimitText: '<?=$this->getTrans('calendarLimitText') ?>',
