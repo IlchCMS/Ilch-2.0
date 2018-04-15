@@ -16,6 +16,14 @@ $(document).ready(function() {
     var date = new Date();
     var language = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
 
+    if (language == 'de') {
+        var timeFormat = 'HH:mm',
+            labelTimeFormat = 'HH:mm';
+    } else if (language == 'en') {
+        var timeFormat = 'hh:mm',
+            labelTimeFormat = 'hh:mm A';
+    }
+
     $('#calendar').fullCalendar({
         header: {
             left: 'prev',
@@ -27,9 +35,8 @@ $(document).ready(function() {
         firstDay: '1',
         eventColor: '#32333B',
         contentHeight: 'auto',
-        timeFormat: 'HH:mm',
-        axisFormat: 'HH:mm',
-        slotLabelFormat: "HH:mm",
+        timeFormat: timeFormat,
+        slotLabelFormat: labelTimeFormat,
         allDaySlot: false,
         eventLimit: true,
         eventLimitClick: 'listWeek',
