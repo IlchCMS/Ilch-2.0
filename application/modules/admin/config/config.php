@@ -244,6 +244,28 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
+            case "2.1.7":
+                // Create statistic_visibleStats and convert old settings into new format
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $visibilitySettings = $databaseConfig->get('statistic_site');
+
+                if ($databaseConfig->get('statistic_site')) {
+                    $visibilitySettings .= ',1,1';
+                } else {
+                    $visibilitySettings .= ',0,0';
+                }
+
+                $visibilitySettings .= ','.$databaseConfig->get('statistic_visits');
+                $visibilitySettings .= ','.$databaseConfig->get('statistic_browser');
+                $visibilitySettings .= ','.$databaseConfig->get('statistic_os');
+                $databaseConfig->set('statistic_visibleStats', $visibilitySettings, 0);
+
+                // Remove the no longer needed settings of the statistic module
+                $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_site';
+                             DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_visits';
+                             DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_browser';
+                             DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_os';");
+                break;
         }
 
         return 'Update function executed.';

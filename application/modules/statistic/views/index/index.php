@@ -6,6 +6,8 @@ $languageCodes = new \Modules\Statistic\Plugins\languageCodes();
 $date = new \Ilch\Date();
 $dateCmsInstalled = new \Ilch\Date($this->get('dateCmsInstalled'));
 $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
+$ilchVersionStatistic = $this->get('ilchVersionStatistic');
+$modulesStatistic = $this->get('modulesStatistic');
 $siteStatistic = $this->get('siteStatistic');
 $visitsStatistic = $this->get('visitsStatistic');
 $browserStatistic = $this->get('browserStatistic');
@@ -99,6 +101,7 @@ $osStatistic = $this->get('osStatistic');
                         </div>
                     </div>
 
+                    <?php if ($modulesStatistic) : ?>
                     <div class="col-xs-12 col-md-6 col-lg-3">
                         <div class="panel stats panel-default" title="<?=$this->getTrans('installedModules') ?>: <?=$this->get('modulesCount') ?>">
                             <div class="panel-heading">
@@ -109,7 +112,9 @@ $osStatistic = $this->get('osStatistic');
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
 
+                    <?php if ($ilchVersionStatistic) : ?>
                     <div class="col-xs-12 col-md-6 col-lg-3">
                         <div class="panel stats panel-default" title="<?=$this->getTrans('IlchCMSVersion') ?>: <?=$this->get('CMSVersion') ?>">
                             <a href="http://ilch.de" target="_blank">
@@ -126,9 +131,11 @@ $osStatistic = $this->get('osStatistic');
                             </a>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
+            <?php if ($modulesStatistic) : ?>
             <div class="panel-footer">
                 <?=$this->getTrans('installedModules') ?>
             </div>
@@ -160,6 +167,7 @@ $osStatistic = $this->get('osStatistic');
                     <?php endforeach; ?>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

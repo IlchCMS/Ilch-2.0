@@ -35,6 +35,8 @@ return [
 
     'visitsStatistic' => 'Visitor statistics',
     'siteStatistic' => 'Site statistics',
+    'ilchVersionStatistic' => 'Version of Ilch',
+    'modulesStatistic' => 'Installed Modules',
     'browserStatistic' => 'Browser-Statistics',
     'osStatistic' => 'OS-Statistics',
     'hour' => 'Hour',

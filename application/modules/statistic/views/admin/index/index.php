@@ -16,6 +16,36 @@
         </div>
     </div>
 
+    <div class="form-group <?=$this->validation()->hasError('ilchVersionStatistic') ? 'has-error' : '' ?>">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('ilchVersionStatistic') ?>:
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="ilchVersionStatistic-on" name="ilchVersionStatistic" value="1" <?php if ($this->get('ilchVersionStatistic') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="ilchVersionStatistic-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="ilchVersionStatistic-off" name="ilchVersionStatistic" value="0" <?php if ($this->get('ilchVersionStatistic') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="ilchVersionStatistic-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group <?=$this->validation()->hasError('modulesStatistic') ? 'has-error' : '' ?>">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('modulesStatistic') ?>:
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="modulesStatistic-on" name="modulesStatistic" value="1" <?php if ($this->get('modulesStatistic') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="modulesStatistic-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="modulesStatistic-off" name="modulesStatistic" value="0" <?php if ($this->get('modulesStatistic') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="modulesStatistic-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+
     <div class="form-group <?=$this->validation()->hasError('visitsStatistic') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('visitsStatistic') ?>:
@@ -62,3 +92,18 @@
     </div>
     <?=$this->getSaveBar() ?>
 </form>
+
+<script>
+    $('#siteStatistic-off').click(function(){
+        $('#ilchVersionStatistic-off').click();
+        $('#modulesStatistic-off').click();
+    });
+
+    $('#ilchVersionStatistic-on').click(function(){
+        $('#siteStatistic-on').click();
+    });
+
+    $('#modulesStatistic-on').click(function(){
+        $('#siteStatistic-on').click();
+    });
+</script>

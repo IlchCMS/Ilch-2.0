@@ -33,16 +33,18 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'siteStatistic' => 'required|numeric|integer|min:0|max:1',
+                'ilchVersionStatistic' => 'required|numeric|integer|min:0|max:1',
+                'modulesStatistic' => 'required|numeric|integer|min:0|max:1',
                 'visitsStatistic' => 'required|numeric|integer|min:0|max:1',
                 'browserStatistic' => 'required|numeric|integer|min:0|max:1',
                 'osStatistic' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('statistic_site', $this->getRequest()->getPost('siteStatistic'));
-                $this->getConfig()->set('statistic_visits', $this->getRequest()->getPost('visitsStatistic'));
-                $this->getConfig()->set('statistic_browser', $this->getRequest()->getPost('browserStatistic'));
-                $this->getConfig()->set('statistic_os', $this->getRequest()->getPost('osStatistic'));
+                // offset of 1 because the first element is the token. length of 6 because of 6 settings - last element is the action.
+                // sites,ilch version,modules,visits,browser,os
+                $visibilitySettings = array_slice($this->getRequest()->getPost(),1, 6);
+                $this->getConfig()->set('statistic_visibleStats', implode(',', $visibilitySettings));
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
@@ -55,9 +57,12 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('siteStatistic', $this->getConfig()->get('statistic_site'));
-        $this->getView()->set('visitsStatistic', $this->getConfig()->get('statistic_visits'));
-        $this->getView()->set('browserStatistic', $this->getConfig()->get('statistic_browser'));
-        $this->getView()->set('osStatistic', $this->getConfig()->get('statistic_os'));
+        $visibilitySettings = explode(',', $this->getConfig()->get('statistic_visibleStats'));
+        $this->getView()->set('siteStatistic', $visibilitySettings[0]);
+        $this->getView()->set('ilchVersionStatistic', $visibilitySettings[1]);
+        $this->getView()->set('modulesStatistic', $visibilitySettings[2]);
+        $this->getView()->set('visitsStatistic', $visibilitySettings[3]);
+        $this->getView()->set('browserStatistic', $visibilitySettings[4]);
+        $this->getView()->set('osStatistic', $visibilitySettings[5]);
     }
 }
