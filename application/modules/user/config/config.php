@@ -47,7 +47,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('regist_accept', '1')
             ->set('regist_confirm', '1')
             ->set('regist_setfree', '0')
-            ->set('regist_rules', '<p>Die Registrierung ist völlig kostenlos</p>
+            ->set('regist_rules', '<p>Mit der Registrierung auf dieser Webseite, akzeptieren Sie die Datenschutzbestimmungen und den Haftungsausschluss.</p>
+                  <p>Die Registrierung ist völlig kostenlos.</p>
                   <p>Die Betreiber der Seite übernehmen keine Haftung.</p>
                   <p>Bitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.</p>')
             ->set('avatar_uploadpath', 'application/modules/user/static/upload/avatar/')

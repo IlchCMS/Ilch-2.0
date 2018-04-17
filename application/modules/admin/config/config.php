@@ -265,6 +265,10 @@ class Config extends \Ilch\Config\Install
                              DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_visits';
                              DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_browser';
                              DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_os';");
+
+                // Add new default rule to the beginning of the current rules (DSGVO)
+                $databaseConfig->set('regist_rules', '<p>Mit der Registrierung auf dieser Webseite, akzeptieren Sie die Datenschutzbestimmungen und den Haftungsausschluss.</p>'
+                    .$databaseConfig->get('regist_rules'));
                 break;
         }
 
