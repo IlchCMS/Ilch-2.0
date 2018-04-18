@@ -14,6 +14,7 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $receiverMapper = new ReceiverMapper();
+        $captchaNeeded = captchaNeeded();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuContact'));
@@ -26,13 +27,18 @@ class Index extends \Ilch\Controller\Frontend
                 'senderEmail' => 'email'
             ]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validationRules = [
                 'receiver' => 'required',
                 'senderName' => 'required',
                 'senderEmail' => 'required|email',
-                'message' => 'required',
-                'captcha' => 'captcha'
-            ]);
+                'message' => 'required'
+            ];
+
+            if ($captchaNeeded) {
+                $validationRules['captcha'] = 'captcha';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
                 $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('receiver'));
@@ -89,5 +95,6 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('receivers', $receiverMapper->getReceivers());
+        $this->getView()->set('captchaNeeded', $captchaNeeded);
     }
 }

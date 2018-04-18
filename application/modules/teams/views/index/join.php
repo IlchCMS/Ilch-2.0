@@ -167,7 +167,7 @@ if ($this->getUser()) {
                           rows="5"><?=$this->originalInput('text') ?></textarea>
             </div>
         </div>
-        <?php if (!$this->getUser()): ?>
+        <?php if ($this->get('captchaNeeded')) : ?>
             <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
                 <label class="col-lg-2 control-label">
                     <?=$this->getTrans('captcha') ?>

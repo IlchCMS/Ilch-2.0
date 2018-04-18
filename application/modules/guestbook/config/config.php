@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'version' => '1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage your guestbook entries.',
             ],
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.8',
         'phpVersion' => '5.6'
     ];
 

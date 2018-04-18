@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.6',
+        'version' => '1.7',
         'icon_small' => 'fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can add and change your Teams.',
             ],
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.8',
         'phpVersion' => '5.6'
     ];
 

@@ -39,6 +39,7 @@ class Index extends \Ilch\Controller\Frontend
         $joinsMapper = new JoinsMapper();
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
+        $captchaNeeded = captchaNeeded();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuTeams'))
@@ -48,26 +49,28 @@ class Index extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuJoin'), ['action' => 'join']);
 
         if ($this->getRequest()->isPost()) {
-            if ($this->getUser()) {
-                $validation = Validation::create($this->getRequest()->getPost(), [
-                    'name' => 'required|unique:teams_joins,name,0,undecided',
-                    'email' => 'required|email|unique:teams_joins,email,0,undecided',
-                    'teamId' => 'numeric|integer|min:1',
-                    'gender' => 'numeric|integer|min:1|max:2',
-                    'birthday' => 'required',
-                    'text' => 'required'
-                ]);
-            } else {
-                $validation = Validation::create($this->getRequest()->getPost(), [
-                    'name' => 'required|unique:users,name|unique:teams_joins,name,0,undecided',
-                    'email' => 'required|email|unique:users,email|unique:teams_joins,email,0,undecided',
-                    'teamId' => 'numeric|integer|min:1',
-                    'gender' => 'numeric|integer|min:1|max:2',
-                    'birthday' => 'required',
-                    'text' => 'required',
-                    'captcha' => 'captcha'
-                ]);
+            $validationRules = [
+                'name' => 'required|unique:teams_joins,name,0,undecided',
+                'email' => 'required|email|unique:teams_joins,email,0,undecided',
+                'teamId' => 'numeric|integer|min:1',
+                'gender' => 'numeric|integer|min:1|max:2',
+                'birthday' => 'required',
+                'text' => 'required'
+            ];
+
+            if ($captchaNeeded) {
+                $validationRules['captcha'] = 'captcha';
             }
+
+            if ($this->getUser()) {
+                $validationRules['name'] = 'required|unique:teams_joins,name,0,undecided';
+                $validationRules['email'] = 'required|email|unique:teams_joins,email,0,undecided';
+            } else {
+                $validationRules['name'] = 'required|unique:users,name|unique:teams_joins,name,0,undecided';
+                $validationRules['email'] = 'required|email|unique:users,email|unique:teams_joins,email,0,undecided';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
                 $model = new JoinsModel();
@@ -112,6 +115,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('teamsMapper', $teamsMapper)
             ->set('userMapper', $userMapper)
             ->set('groupMapper', $groupMapper)
-            ->set('teams', $teamsMapper->getTeams());
+            ->set('teams', $teamsMapper->getTeams())
+            ->set('captchaNeeded', $captchaNeeded);
     }
 }

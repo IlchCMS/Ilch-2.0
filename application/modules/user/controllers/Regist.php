@@ -50,19 +50,25 @@ class Regist extends \Ilch\Controller\Frontend
     public function inputAction()
     {
         $registMapper = new UserMapper();
+        $captchaNeeded = captchaNeeded();
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('step2to3'), ['action' => 'input']);
 
         if ($this->getRequest()->getPost('saveRegist') AND $this->getRequest()->getPost('bot') === '') {
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validationRules = [
                 'name' => 'required|unique:users,name',
                 'password' => 'required|min:6,string|max:30,string',
                 'password2' => 'required|same:password|min:6,string|max:30,string',
-                'email' => 'required|email|unique:users,email',
-                'captcha' => 'captcha'
-            ]);
+                'email' => 'required|email|unique:users,email'
+            ];
+
+            if ($captchaNeeded) {
+                $validationRules['captcha'] = 'captcha';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
                 $groupMapper = new GroupMapper();
@@ -139,6 +145,8 @@ class Regist extends \Ilch\Controller\Frontend
                     ->to(['action' => 'input']);
             }
         }
+
+        $this->getView()->set('captchaNeeded', $captchaNeeded);
     }
 
     public function finishAction()

@@ -15,6 +15,7 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $partnerMapper = new PartnerMapper();
+        $captchaNeeded = captchaNeeded();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuPartnerAdd'), ['action' => 'index']);
@@ -33,12 +34,17 @@ class Index extends \Ilch\Controller\Frontend
                 'captcha' => trim($this->getRequest()->getPost('captcha'))
             ];
 
-            $validation = Validation::create($post, [
+            $validationRules = [
                 'name' => 'required',
                 'link' => 'required|url',
-                'banner' => 'required|url',
-                'captcha' => 'captcha'
-            ]);
+                'banner' => 'required|url'
+            ];
+
+            if ($captchaNeeded) {
+                $validationRules['captcha'] = 'captcha';
+            }
+
+            $validation = Validation::create($post, $validationRules);
 
             if ($validation->isValid()) {
                 $model = new PartnerModel();
@@ -60,5 +66,6 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('post', $post);
+        $this->getView()->set('captchaNeeded', $captchaNeeded);
     }
 }

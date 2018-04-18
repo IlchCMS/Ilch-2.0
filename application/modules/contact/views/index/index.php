@@ -49,6 +49,7 @@
                           rows="5"><?=$this->originalInput('message') ?></textarea>
             </div>
         </div>
+        <?php if ($this->get('captchaNeeded')) : ?>
         <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
             <label class="col-lg-2 control-label">
                 <?=$this->getTrans('captcha') ?>
@@ -75,6 +76,7 @@
                 </span>
             </div>
         </div>
+        <?php endif; ?>
         <div class="col-lg-10" align="right">
             <?=$this->getSaveBar('addButton', 'Contact') ?>
         </div>

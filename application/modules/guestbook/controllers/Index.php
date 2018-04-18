@@ -33,6 +33,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $guestbookMapper = new GuestbookMapper();
         $ilchDate = new \Ilch\Date;
+        $captchaNeeded = captchaNeeded();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('guestbook'))
@@ -46,13 +47,18 @@ class Index extends \Ilch\Controller\Frontend
                 'homepage' => 'page',
             ]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validationRules =  [
                 'name'      => 'required',
                 'email'     => 'required|email',
                 'homepage'  => 'url',
-                'text'      => 'required',
-                'captcha'   => 'captcha'
-            ]);
+                'text'      => 'required'
+            ];
+
+            if ($captchaNeeded) {
+                $validationRules['captcha'] = 'captcha';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
                 $model = new GuestbookModel();
@@ -78,5 +84,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'newEntry']);
         }
+
+        $this->getView()->set('captchaNeeded', $captchaNeeded);
     }
 }
