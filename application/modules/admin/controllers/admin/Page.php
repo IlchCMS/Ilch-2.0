@@ -8,6 +8,7 @@ namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Admin\Models\Page as PageModel;
+use Modules\Admin\Mappers\Menu as MenuMapper;
 use Ilch\Validation;
 
 class Page extends \Ilch\Controller\Admin
@@ -45,6 +46,7 @@ class Page extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $pageMapper = new PageMapper();
+        $menuMapper = New MenuMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index']);
@@ -52,6 +54,7 @@ class Page extends \Ilch\Controller\Admin
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_pages')) {
             foreach ($this->getRequest()->getPost('check_pages') as $pageId) {
                 $pageMapper->delete($pageId);
+                $menuMapper->deleteItemByPageId($pageId);
             }
         }
 
@@ -166,7 +169,10 @@ class Page extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             $pageMapper = new PageMapper();
+            $menuMapper = New MenuMapper();
+
             $pageMapper->delete($this->getRequest()->getParam('id'));
+            $menuMapper->deleteItemByPageId($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
         }

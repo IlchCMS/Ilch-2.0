@@ -8,6 +8,7 @@ namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
+use Modules\Admin\Mappers\Menu as MenuMapper;
 use Ilch\Validation;
 
 class Boxes extends \Ilch\Controller\Admin
@@ -45,6 +46,7 @@ class Boxes extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $boxMapper = new BoxMapper();
+        $menuMapper = New MenuMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuBoxes'), ['action' => 'index']);
@@ -52,6 +54,7 @@ class Boxes extends \Ilch\Controller\Admin
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_boxes')) {
             foreach ($this->getRequest()->getPost('check_boxes') as $boxId) {
                 $boxMapper->delete($boxId);
+                $menuMapper->deleteItemByBoxId($boxId);
             }
         }
 
@@ -158,7 +161,10 @@ class Boxes extends \Ilch\Controller\Admin
 
         if ($user->hasAccess('box_'.$this->getRequest()->getParam('id')) && $this->getRequest()->isSecure()) {
             $boxMapper = new BoxMapper();
+            $menuMapper = New MenuMapper();
+
             $boxMapper->delete($this->getRequest()->getParam('id'));
+            $menuMapper->deleteItemByBoxId($this->getRequest()->getParam('id'));
         }
 
         $this->redirect(['action' => 'index']);

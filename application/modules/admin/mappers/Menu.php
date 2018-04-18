@@ -15,6 +15,7 @@ class Menu extends \Ilch\Mapper
      * Gets the menu id for the menu position.
      *
      * @param integer $position
+     * @return int|string
      */
     public function getMenuIdForPosition($position)
     {
@@ -279,6 +280,30 @@ class Menu extends \Ilch\Mapper
     {
         $this->db()->delete('menu')
             ->where(['id' => $id])
+            ->execute();
+    }
+
+    /**
+     * Delete menu item by the box id.
+     *
+     * @param integer $boxId
+     */
+    public function deleteItemByBoxId($boxId)
+    {
+        $this->db()->delete('menu_items')
+            ->where(['box_id' => $boxId])
+            ->execute();
+    }
+
+    /**
+     * Delete menu item by the page id.
+     *
+     * @param integer $pageId
+     */
+    public function deleteItemByPageId($pageId)
+    {
+        $this->db()->delete('menu_items')
+            ->where(['page_id' => $pageId])
             ->execute();
     }
 }
