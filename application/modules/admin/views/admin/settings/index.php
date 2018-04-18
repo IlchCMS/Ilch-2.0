@@ -150,6 +150,36 @@
                    value="<?=$this->escape($this->get('defaultPaginationObjects')) ?>" />
         </div>
     </div>
+    <div class="form-group">
+        <label for="hideCaptchaFor" class="col-lg-2 control-label">
+            <?=$this->getTrans('hideCaptchaFor') ?>:
+        </label>
+        <div class="col-lg-4">
+            <select class="chosen-select form-control"
+                    id="hideCaptchaFor"
+                    name="groups[]"
+                    data-placeholder="<?=$this->getTrans('hideCaptchaFor') ?>"
+                    multiple>
+                <?php
+                foreach ($this->get('groupList') as $group) {
+                    ?>
+                    <option value="<?=$group->getId() ?>"
+                        <?php
+                        foreach ($this->get('hideCaptchaFor') as $assignedGroup) {
+                            if ($group->getId() == $assignedGroup) {
+                                echo 'selected="selected"';
+                                break;
+                            }
+                        }
+                        ?>>
+                        <?=$this->escape($group->getName()) ?>
+                    </option>
+                    <?php
+                }
+                ?>
+            </select>
+        </div>
+    </div>
 
     <h1><?=$this->getTrans('backendFunctions') ?></h1>
     <div id="hmenuFixed" class="form-group">
@@ -211,4 +241,6 @@ $('[name="multilingualAcp"]').click(function () {
         $('#contentLanguage').addClass('hidden');
     }
 });
+
+$('#hideCaptchaFor').chosen();
 </script>

@@ -49,6 +49,7 @@ class Config extends \Ilch\Config\Install
             ->set('description', 'Das ilch CMS bietet dir ein einfach erweiterbares Grundsystem, welches keinerlei Kenntnisse in Programmiersprachen voraussetzt.')
             ->set('standardMail', $_SESSION['install']['adminEmail'])
             ->set('defaultPaginationObjects', 20)
+            ->set('hideCaptchaFor', '1')
             ->set('admin_layout_hmenu', 'hmenu-fixed')
             ->set('maintenance_mode', '0')
             ->set('maintenance_status', '0')
@@ -270,6 +271,9 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('regist_rules', '<p>Mit der Registrierung auf dieser Webseite, akzeptieren Sie die Datenschutzbestimmungen und den Haftungsausschluss.</p>'
                     .$databaseConfig->get('regist_rules'));
                 break;
+
+                // Add default value for the captcha setting, which indicates that administrators should not need to solve captchas.
+                $databaseConfig->set('hideCaptchaFor', '1');
         }
 
         return 'Update function executed.';

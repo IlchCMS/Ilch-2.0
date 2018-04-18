@@ -272,6 +272,25 @@ function currentUser()
 }
 
 /**
+ * Check if the guest or user needs to solve a captcha according to the setting
+ * in the admincenter.
+ *
+ * @return bool
+ */
+function captchaNeeded()
+{
+    $user = \Ilch\Registry::get('user');
+    $hideCaptchaFor = explode(',', \Ilch\Registry::get('config')->get('hideCaptchaFor'));
+
+    if (empty($user)) {
+        // 3 = group guest
+        return !in_array(3, $hideCaptchaFor);
+    }
+
+    return !is_in_array(array_keys($user->getGroups()), $hideCaptchaFor);
+}
+
+/**
  * Random_* Compatibility Library
  * for using the new PHP 7 random_* API in PHP 5 projects
  *

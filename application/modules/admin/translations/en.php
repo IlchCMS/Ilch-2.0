@@ -50,6 +50,7 @@ return [
     'contentLanguage' => 'Contentlanguage',
     'standardMail' => 'Standard E-Mail sender',
     'defaultPaginationObjects' => 'Default count of objects per page',
+    'hideCaptchaFor' => 'Hide captcha for',
     'timezone' => 'timezone',
     'home' => 'Start',
     'updateserver' => 'Updateserver',

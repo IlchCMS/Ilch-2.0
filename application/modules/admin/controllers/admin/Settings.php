@@ -10,6 +10,7 @@ use Ilch\Transfer as IlchTransfer;
 use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Modules\Admin\Mappers\Updateservers as UpdateserversMapper;
+use Modules\User\Mappers\Group as GroupMapper;
 use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
@@ -101,6 +102,7 @@ class Settings extends \Ilch\Controller\Admin
         $moduleMapper = new \Modules\Admin\Mappers\Module();
         $pageMapper = new \Modules\Admin\Mappers\Page();
         $updateserversMapper = new UpdateserversMapper();
+        $groupMapper = new GroupMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
@@ -122,6 +124,7 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
                 $this->getConfig()->set('locale', $this->getRequest()->getPost('locale'));
                 $this->getConfig()->set('defaultPaginationObjects', $this->getRequest()->getPost('defaultPaginationObjects'));
+                $this->getConfig()->set('hideCaptchaFor', implode(',', ($this->getRequest()->getPost('groups')) ? $this->getRequest()->getPost('groups') : []));
                 if ($this->getRequest()->getPost('hmenuFixed') === '1') {
                     $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
                 } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
@@ -151,6 +154,8 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('pages', $pageMapper->getPageList());
         $this->getView()->set('hmenuFixed', $this->getConfig()->get('admin_layout_hmenu'));
         $this->getView()->set('defaultPaginationObjects', $this->getConfig()->get('defaultPaginationObjects'));
+        $this->getView()->set('hideCaptchaFor', explode(',', $this->getConfig()->get('hideCaptchaFor')));
+        $this->getView()->set('groupList', $groupMapper->getGroupList());
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
         $this->getView()->set('updateservers', $updateserversMapper->getUpdateservers());
     }
