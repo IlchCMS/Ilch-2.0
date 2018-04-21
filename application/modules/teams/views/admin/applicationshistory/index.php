@@ -49,7 +49,7 @@ $teamsCache = [];
 
     <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
     <div class="content_savebox">
-        <form class="form-horizontal" method="POST" action="">
+        <form class="form-horizontal" method="POST">
             <?=$this->getTokenField() ?>
             <button type="submit" name="clearHistory" class="btn btn-default"><?=$this->getTrans('clearHistory') ?></button>
         </form>

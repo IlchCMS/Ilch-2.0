@@ -8,7 +8,7 @@
     ?>
 </h1>
 
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('pageTitle') ? 'has-error' : '' ?>">
         <label for="pageTitle" class="col-lg-2 control-label">

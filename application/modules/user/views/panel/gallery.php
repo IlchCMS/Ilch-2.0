@@ -63,7 +63,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
         <div class="profile-content active">
             <h1><?=$this->getTrans('menuGallery') ?></h1>
             <?php if ($profil->getOptGallery() != 0 AND $this->get('galleryAllowed') != 0): ?>
-                <form class="form-horizontal" id="galleryForm" method="POST" action="">
+                <form class="form-horizontal" id="galleryForm" method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="row">
                         <div class="col-lg-5">

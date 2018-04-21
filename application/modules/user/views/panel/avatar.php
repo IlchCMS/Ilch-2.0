@@ -11,7 +11,7 @@ $settingMapper = $this->get('settingMapper');
 
         <div class="profile-content active">
             <h1>Avatar</h1>
-            <form action="" class="form-horizontal" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <?=$this->getTokenField(); ?>
                     <div class="col-lg-2 col-sm-2 col-2">

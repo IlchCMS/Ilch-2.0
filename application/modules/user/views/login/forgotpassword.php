@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('newPassword'); ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="name" class="control-label col-lg-2">

@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('menuContact') ?></h1>
 <?php if ($this->get('receivers') != ''): ?>
-    <form method="POST" class="form-horizontal" action="">
+    <form method="POST" class="form-horizontal">
         <?=$this->getTokenField() ?>
         <div class="form-group <?=$this->validation()->hasError('receiver') ? 'has-error' : '' ?>">
             <label for="receiver" class="col-lg-2 control-label">

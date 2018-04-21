@@ -8,7 +8,7 @@
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('treatImage') ?></h1>
-            <form class="form-horizontal" method="POST" action="">
+            <form class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
                 <div id="gallery">
                     <div class="col-md-5">

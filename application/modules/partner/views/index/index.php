@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('menuPartnerAdd') ?></h1>
-<form method="POST" class="form-horizontal" action="">
+<form method="POST" class="form-horizontal">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">

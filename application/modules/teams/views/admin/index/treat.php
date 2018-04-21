@@ -11,7 +11,7 @@
         <i class="fa fa-info"></i>
     </a>
 </h1>
-<form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
+<form class="form-horizontal" method="POST" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">

@@ -4,7 +4,7 @@
     $isHTTPS = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? true : false;
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="startPage" class="col-lg-2 control-label">

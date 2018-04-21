@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
         <li <?php if (!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>

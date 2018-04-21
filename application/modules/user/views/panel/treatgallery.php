@@ -13,7 +13,7 @@
             </h1>
             <?=$this->get('pagination')->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>
             <?php if ($this->get('image')): ?>
-                <form class="form-horizontal" method="POST" action="">
+                <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">

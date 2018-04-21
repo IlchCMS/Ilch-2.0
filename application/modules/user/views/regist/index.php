@@ -1,6 +1,6 @@
 <?php if ($this->get('regist_accept') == '1'): ?>
     <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="panel panel-default">
             <div class="panel-heading">

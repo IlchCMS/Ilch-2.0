@@ -5,7 +5,7 @@ $module = $moduleMapper->getModulesByKey($this->getRequest()->getParam('key'), $
 ?>
 
 <h1><?=$this->getTrans('edit') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label class="col-lg-2">

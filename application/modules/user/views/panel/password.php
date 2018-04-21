@@ -6,7 +6,7 @@
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('settingsPassword'); ?></h1>
-            <form action="" class="form-horizontal" method="POST">
+            <form class="form-horizontal" method="POST">
                 <?=$this->getTokenField(); ?>
                 <div class="form-group <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">

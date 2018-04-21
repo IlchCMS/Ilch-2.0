@@ -1,5 +1,5 @@
 <?php if ($this->getUser() == null): ?>
-    <form class="form-horizontal" action="" method="post">
+    <form class="form-horizontal" method="post">
         <h1><?=$this->getTrans('menuLogin') ?></h1>
         <?=$this->getTokenField() ?>
         <input type="hidden" name="login_redirect_url" value="<?=$this->get('redirectUrl');?>" />

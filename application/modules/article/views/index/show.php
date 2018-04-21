@@ -95,7 +95,7 @@ if ($this->getUser()) {
 
                     <?php if ($obj->getUser()): ?>
                         <div class="replyHidden" id="reply_<?=$fk_comment->getId() ?>">
-                            <form class="form-horizontal" action="" method="POST">
+                            <form class="form-horizontal" method="POST">
                                 <?=$obj->getTokenField(); ?>
                                 <div>
                                     <div class="media-block">
@@ -232,7 +232,7 @@ if ($this->getUser()) {
                 <h1 class="page-header" id="comment"><?=$this->getTrans('comments') ?> (<?=$commentsCount ?>)</h1>
                 <?php if ($this->getUser()): ?>
                     <div class="reply">
-                        <form action="" class="form-horizontal" method="POST">
+                        <form class="form-horizontal" method="POST">
                             <?=$this->getTokenField() ?>
                             <section class="comment-list">
                                 <div class="panel">
@@ -324,7 +324,7 @@ if ($this->getUser()) {
 
                                             <?php if ($this->getUser()): ?>
                                                 <div class="replyHidden" id="reply_<?=$comment->getId() ?>">
-                                                    <form action="" class="form-horizontal" method="POST">
+                                                    <form class="form-horizontal" method="POST">
                                                         <?=$this->getTokenField() ?>
                                                         <div>
                                                             <div class="media-block">

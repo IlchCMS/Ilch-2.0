@@ -3,7 +3,7 @@ $articleMapper = $this->get('articleMapper');
 ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">

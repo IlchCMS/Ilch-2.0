@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('settings') ?></h1>
-<form method="POST" class="form-horizontal" action="">
+<form method="POST" class="form-horizontal">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="smiley_filetypes" class="col-lg-2 control-label">

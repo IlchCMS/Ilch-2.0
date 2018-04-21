@@ -13,7 +13,7 @@ if ($this->getUser()) {
 
 <h1><?=$this->getTrans('menuJoin') ?></h1>
 <?php if ($this->get('teams') != ''): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="form-group <?=$this->validation()->hasError('teamId') ? 'has-error' : '' ?>">
             <label for="teamId" class="col-lg-2 control-label">

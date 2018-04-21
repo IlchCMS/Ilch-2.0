@@ -6,7 +6,7 @@ if ($this->get('article') != '') {
 ?>
 
 <h1><?=($this->get('article') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form id="article_form" class="form-horizontal" method="POST" action="">
+<form id="article_form" class="form-horizontal" method="POST">
     <?=$this->getTokenField(); ?>
     <div class="form-group <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
         <label for="teaser" class="col-lg-2 control-label">

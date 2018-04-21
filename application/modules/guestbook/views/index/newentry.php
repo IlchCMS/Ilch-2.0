@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('menuGuestbook') ?></h1>
 
-<form action="" class="form-horizontal" method="POST">
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group hidden">
         <label class="col-lg-2 control-label">

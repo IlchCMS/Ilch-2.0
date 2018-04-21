@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('menuMail') ?></legend>
     <div class="form-group">
