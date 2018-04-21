@@ -131,7 +131,7 @@ class Router
     {
         if (!empty($_SERVER['QUERY_STRING'])) {
             $length = -1 * (strlen($_SERVER['QUERY_STRING']) + 1);
-            $query = substr(urldecode($_SERVER['REQUEST_URI']), strlen(REWRITE_BASE), $length);
+            $query = urldecode(substr($_SERVER['REQUEST_URI'], strlen(REWRITE_BASE), $length));
         } else {
             $query = substr(urldecode($_SERVER['REQUEST_URI']), strlen(REWRITE_BASE));
         }
