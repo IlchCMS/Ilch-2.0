@@ -57,7 +57,7 @@ class Shoutbox extends \Ilch\Model
      * Sets the id of the shoutbox.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
     public function setId($id)
     {
@@ -80,7 +80,7 @@ class Shoutbox extends \Ilch\Model
      * Sets the uid of the shoutbox.
      *
      * @param string $uid
-     * @return this
+     * @return $this
      */
     public function setUid($uid)
     {
@@ -103,7 +103,7 @@ class Shoutbox extends \Ilch\Model
      * Sets the name of the shoutbox.
      *
      * @param string $name
-     * @return this
+     * @return $this
      */
     public function setName($name)
     {
@@ -126,7 +126,7 @@ class Shoutbox extends \Ilch\Model
      * Sets the textarea of the shoutbox.
      *
      * @param string $textarea
-     * @return this
+     * @return $this
      */
     public function setTextarea($textarea)
     {
@@ -149,7 +149,7 @@ class Shoutbox extends \Ilch\Model
      * Sets the time of the shoutbox.
      *
      * @param string $time
-     * @return this
+     * @return $this
      */
     public function setTime($time)
     {

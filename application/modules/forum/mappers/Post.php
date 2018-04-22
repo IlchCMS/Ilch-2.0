@@ -143,10 +143,11 @@ class Post extends \Ilch\Mapper
     public function deleteById($id)
     {
         $this->trigger(ForumConfig::EVENT_DELETEPOST_BEFORE, ['id' => $id]);
-        return $this->db()->delete('forum_posts')
+        $returnValue = $this->db()->delete('forum_posts')
             ->where(['id' => $id])
             ->execute();
         $this->trigger(ForumConfig::EVENT_DELETEPOST_AFTER, ['id' => $id]);
+        return $returnValue;
     }
 
     public function saveVisits(PostModel $model)

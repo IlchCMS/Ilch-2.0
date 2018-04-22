@@ -40,7 +40,7 @@ class Rank extends \Ilch\Mapper
      * Get rank by id.
      *
      * @param integer $id
-     * @return ArticleModel
+     * @return RankModel
      */
     public function getRankById($id)
     {
@@ -63,7 +63,7 @@ class Rank extends \Ilch\Mapper
      * Get rank by posts.
      *
      * @param integer $posts
-     * @return ArticleModel
+     * @return RankModel
      */
     public function getRankByPosts($posts)
     {

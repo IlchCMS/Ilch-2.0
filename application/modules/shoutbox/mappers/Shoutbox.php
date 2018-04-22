@@ -44,6 +44,7 @@ class Shoutbox extends \Ilch\Mapper
     /**
      * Gets the Shoutbox.
      *
+     * @param null|int $limit
      * @return ShoutboxModel[]|array
      */
     public function getShoutboxLimit($limit = null)
@@ -71,19 +72,6 @@ class Shoutbox extends \Ilch\Mapper
         }
 
         return $shoutbox;
-    }
-
-    /**
-     * Gets shoutbox.
-     *
-     * @param integer $id
-     * @return ShoutboxModel|null
-     */
-    public function getShoutboxById($id)
-    {
-        $shoutbox = $this->getShoutbox(['id' => $id]);
-
-        return reset($shoutbox);
     }
 
     /**

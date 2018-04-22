@@ -74,7 +74,6 @@ return [
     'noThreads' => 'Keine Themen vorhanden',
     'noNewThreads' => 'Keine neuen Themen vorhanden',
     'ranks' => 'Ränge',
-    'posts' => 'Beiträge',
     'menuRanks' => 'Ränge',
     'noRanks' => 'Keine Ränge vorhanden',
 ];

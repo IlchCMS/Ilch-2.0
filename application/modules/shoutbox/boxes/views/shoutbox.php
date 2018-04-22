@@ -76,7 +76,7 @@ $(function() {
 
     <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))): ?>
         <div id="shoutbox-form-container" style="display: none;">
-            <form class="form-horizontal" action="" method="post">
+            <form class="form-horizontal" method="post">
                <?=$this->getTokenField() ?>
                 <div class="form-group hidden">
                     <label class="col-lg-2 control-label">

@@ -37,7 +37,7 @@ class ForumStatistics extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param integer $countPosts
      */
     public function setCountPosts($countPosts)
     {
@@ -57,7 +57,7 @@ class ForumStatistics extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param integer $countTopics
      */
     public function setCountTopics($countTopics)
     {
@@ -76,7 +76,7 @@ class ForumStatistics extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param integer $countUsers
      */
     public function setCountUsers($countUsers)
     {
