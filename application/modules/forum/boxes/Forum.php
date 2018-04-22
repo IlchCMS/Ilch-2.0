@@ -31,11 +31,9 @@ class Forum extends \Ilch\Box
             }
         }
 
-        $groupIdsArray = explode(',',implode(',', $groupIds));
-
         $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('topicMapper', $topicMapper);
         $this->getView()->set('topics', $topicMapper->getTopics('', 5));
-        $this->getView()->set('groupIdsArray', $groupIdsArray);
+        $this->getView()->set('groupIdsArray', $groupIds);
     }
 }

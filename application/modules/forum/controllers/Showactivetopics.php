@@ -36,8 +36,6 @@ class Showactivetopics extends \Ilch\Controller\Frontend
             }
         }
 
-        $groupIdsArray = explode(',',implode(',', $groupIds));
-
         $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
@@ -53,7 +51,7 @@ class Showactivetopics extends \Ilch\Controller\Frontend
         $this->getView()->set('topicMapper', $topicMapper);
         $this->getView()->set('postMapper', $postMapper);
         $this->getView()->set('topics', $topicMapper->getTopics($pagination));
-        $this->getView()->set('groupIdsArray', $groupIdsArray);
+        $this->getView()->set('groupIdsArray', $groupIds);
         $this->getView()->set('pagination', $pagination);
     }
 }

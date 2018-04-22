@@ -11,7 +11,7 @@
         </div>
         <div class="col-lg-12">
             <div class="new-topic ilch-bg ilch-border">
-                <form class="form-horizontal" method="POST" action="">
+                <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
                         <div class="col-lg-12">

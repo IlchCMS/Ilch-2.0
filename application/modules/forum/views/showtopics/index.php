@@ -41,7 +41,7 @@ if ($this->getUser()) {
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]); ?>
         </div>
         <?php if ($forumEdit): ?>
-            <form class="form-horizontal" name="editForm" method="POST" action="">
+            <form class="form-horizontal" name="editForm" method="POST">
                 <?=$this->getTokenField(); ?>
         <?php endif; ?>
         <div class="forabg">
@@ -172,7 +172,7 @@ if ($this->getUser()) {
         <div class="topic-actions">
             <?php if ($adminAccess || (!empty($userAccess) AND $userAccess->hasAccess('forum'))): ?>
                 <?php if (!$forumEdit): ?>
-                    <form action="" method="post">
+                    <form method="post">
                         <?=$this->getTokenField() ?>
                         <button class="btn btn-default" name="forumEdit" value="forumEdit"><?=$this->getTrans('forumEdit') ?></button>
                     </form>

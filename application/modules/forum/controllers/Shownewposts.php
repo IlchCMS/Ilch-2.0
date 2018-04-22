@@ -29,8 +29,6 @@ class Shownewposts extends \Ilch\Controller\Frontend
                 $groupIds[] = $groups->getId();
             }
 
-            $groupIdsArray = explode(',',implode(',', $groupIds));
-
             $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
             $pagination->setPage($this->getRequest()->getParam('page'));
 
@@ -46,7 +44,7 @@ class Shownewposts extends \Ilch\Controller\Frontend
             $this->getView()->set('topicMapper', $topicMapper);
             $this->getView()->set('postMapper', $postMapper);
             $this->getView()->set('topics', $topicMapper->getTopics($pagination));
-            $this->getView()->set('groupIdsArray', $groupIdsArray);
+            $this->getView()->set('groupIdsArray', $groupIds);
             $this->getView()->set('pagination', $pagination);
         } else {
             $this->addMessage('noAccessForum', 'warning');

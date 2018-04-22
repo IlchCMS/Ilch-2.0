@@ -39,8 +39,6 @@ class Edittopic extends \Ilch\Controller\Frontend
             }
         }
 
-        $groupIdsArray = explode(',',implode(',', $groupIds));
-
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('forum'))
             ->add($cat->getTitle())
@@ -85,7 +83,7 @@ class Edittopic extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('groupIdsArray', $groupIdsArray)
+        $this->getView()->set('groupIdsArray', $groupIds)
             ->set('forumItems', $forumItems)
             ->set('editTopicItems', $this->getRequest()->getPost('check_topics'));
     }

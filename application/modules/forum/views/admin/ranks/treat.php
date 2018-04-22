@@ -1,5 +1,5 @@
 <h1><?=($this->get('rank')->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">

@@ -39,15 +39,13 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        $groupIdsArray = explode(',',implode(',', $groupIds));
-
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'));
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['action' => 'index']);
 
-        $this->getView()->set('groupIdsArray', $groupIdsArray);
+        $this->getView()->set('groupIdsArray', $groupIds);
         $this->getView()->set('forumItems', $forumItems);
         $this->getView()->set('usersOnlineList', $usersOnline);
         $this->getView()->set('usersOnline', count($usersOnline));

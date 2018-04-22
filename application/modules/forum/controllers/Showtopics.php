@@ -43,8 +43,6 @@ class Showtopics extends \Ilch\Controller\Frontend
             }
         }
 
-        $groupIdsArray = explode(',',implode(',', $groupIds));
-
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))
                 ->add($cat->getTitle())
@@ -64,7 +62,7 @@ class Showtopics extends \Ilch\Controller\Frontend
         $this->getView()->set('topicMapper', $topicMapper);
         $this->getView()->set('postMapper', $postMapper);
         $this->getView()->set('topics', $topicMapper->getTopicsByForumId($forumId, $pagination));
-        $this->getView()->set('groupIdsArray', $groupIdsArray);
+        $this->getView()->set('groupIdsArray', $groupIds);
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('userAccess', new Accesses($this->getRequest()));
     }

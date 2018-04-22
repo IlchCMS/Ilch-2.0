@@ -119,8 +119,6 @@ class Model
             }
         }
 
-        $groupIdsArray = explode(',',implode(',', $groupIds));
-
         $items = $this->menuMapper->getMenuItemsByParent($this->getId(), 0);
         if (empty($items)) {
             return '';
@@ -139,7 +137,7 @@ class Model
 
         /** @var MenuItem $item */
         foreach ($items as $item) {
-            if (!is_in_array($groupIdsArray, explode(',', $item->getAccess())) || $adminAccess) {
+            if (!is_in_array($groupIds, explode(',', $item->getAccess())) || $adminAccess) {
                 if ($item->isBox()) {
                     // Do not render boxes if boxes.render is set to false
                     if (array_dot($options, 'boxes.render') === false) {
@@ -205,8 +203,6 @@ class Model
             }
         }
 
-        $groupIdsArray = explode(',',implode(',', $groupIds));
-
         if (isset($menuData['parents'][$parentId])) {
             foreach ($menuData['parents'][$parentId] as $itemId) {
                 $liClasses = [];
@@ -235,7 +231,7 @@ class Model
                     $liClasses[] = array_dot($options, 'menus.li-class-active');
                 }
 
-                if (!is_in_array($groupIdsArray, explode(',', $menuData['items'][$itemId]->getAccess())) || $adminAccess) {
+                if (!is_in_array($groupIds, explode(',', $menuData['items'][$itemId]->getAccess())) || $adminAccess) {
                     $contentHtml = '<a href="' . $href . '">' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
                     $subItemsHtml = '';
 
