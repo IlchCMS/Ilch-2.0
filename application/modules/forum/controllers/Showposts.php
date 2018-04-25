@@ -68,8 +68,9 @@ class Showposts extends \Ilch\Controller\Frontend
         $topicMapper->saveVisits($topicModel);
 
         $userMapper = new UserMapper();
-        $user = null;
+        $userId = null;
         if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
             $postMapper = new PostMapper;
             $postModel = new ForumPostModel;
 
@@ -82,7 +83,7 @@ class Showposts extends \Ilch\Controller\Frontend
                 $postMapper->saveRead($postModel);
             }
         }
-        $user = $userMapper->getUserById($this->getUser()->getId());
+        $user = $userMapper->getUserById($userId);
 
         $readAccess = [3];
         if ($user) {
