@@ -38,8 +38,8 @@ return [
     'picturesPerPage' => 'Bilder pro Seite',
     'missingTitle' => 'Es muss ein Titel angegeben werden.',
     'missingCat' => 'Es muss zuerst eine Kategorie hinzugefügt werden.',
-	'navigation' => 'Navigation',
-	'allCat' => 'Alle Kategorien',
-	'sort' => 'Sortieren',
-	'search' => 'Suche',
+    'navigation' => 'Navigation',
+    'allCat' => 'Alle Kategorien',
+    'sort' => 'Sortieren',
+    'search' => 'Suche',
 ];
