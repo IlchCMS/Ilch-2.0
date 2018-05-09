@@ -12,8 +12,8 @@ function recCategory($item, $galleryMapper, $obj, $imageMapper)
     $imageCount = $imageMapper->getCountImageById($item->getId());
     if ($item->getType() === 0) {
         echo '<li>
-				<a href="#filter" data-filter=".X'.$obj->escape($item->getId()).'X"><i class="fa fa-image"></i> '.$obj->escape($item->getTitle()).'</a>
-			  </li>';
+                <a href="#filter" data-filter=".X'.$obj->escape($item->getId()).'X"><i class="fa fa-image"></i> '.$obj->escape($item->getTitle()).'</a>
+              </li>';
     }
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
@@ -28,7 +28,7 @@ function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle
     $imageCount = $imageMapper->getCountImageById($item->getId());
     if ($item->getType() === 0) {
         $catID = $obj->escape($item->getId());
-		$catTitle = $obj->escape($item->getTitle());
+        $catTitle = $obj->escape($item->getTitle());
     }
     if ($item->getType() != 0) {
         $lastImage = $imageMapper->getLastImageByGalleryId($item->getId());
@@ -50,8 +50,8 @@ function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle
                                 <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
                                     '.$obj->escape($item->getTitle()).'
                                 </a>
-								<p class="text-left">'.$obj->getTrans('cat').': '.$catTitle.'
-								<br />'.$obj->getTrans('images').': '.count($imageCount).'</p>
+                                <p class="text-left">'.$obj->getTrans('cat').': '.$catTitle.'
+                                <br />'.$obj->getTrans('images').': '.count($imageCount).'</p>
                                 <div class="lib-header-seperator"></div>
                             </div>
                             <div class="lib-row lib-desc">
@@ -62,11 +62,11 @@ function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle
                 </div>
             </div>';        
     }
-	if (!empty($subItems)) {
-		foreach ($subItems as $subItem) {
-			recGallery($subItem, $galleryMapper, $obj, $imageMapper, $catID, $catTitle);
-		}
-	}
+    if (!empty($subItems)) {
+        foreach ($subItems as $subItem) {
+            recGallery($subItem, $galleryMapper, $obj, $imageMapper, $catID, $catTitle);
+        }
+    }
 }
 ?>
 
