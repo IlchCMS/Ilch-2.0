@@ -1,7 +1,7 @@
 <?php $vote = $this->get('vote'); ?>
 
 <h1><?=($vote != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form role="form" class="form-horizontal" method="POST" action="">
+<form role="form" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="group" class="col-lg-2 control-label">
