@@ -72,7 +72,10 @@
                     </div>
                 </div>
                 <?php if ($this->get('usermenusettingslinks') != ''): ?>
-                        <?php $i = 0; ?>
+                        <?php
+                        $i = 0;
+                        $countLinks = count($this->get('usermenusettingslinks'));
+                        ?>
                         <?php foreach ($this->get('usermenusettingslinks') as $usermenulinks): ?>
                             <?php if ($i % 3 == 0): ?>
                                 <div class="settings-stretch">
@@ -88,7 +91,7 @@
                                 </div>
                             </div>
                             <?php $i++ ?>
-                            <?php if ($i == 3): ?>
+                            <?php if ($i == 3 || $i == $countLinks): ?>
                                 </div>
                                 <?php $i = 0; ?>
                             <?php endif; ?>
