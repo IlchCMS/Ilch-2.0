@@ -17,7 +17,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 
 <?php if ($vote != '' ):
     $userId = null;
-    $groupIds = [0];
+    $groupIds = [];
     $admin = FALSE;
     $i = '';
 
@@ -26,10 +26,11 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         $userId = $this->getUser()->getId();
         $user = $userMapper->getUserById($userId);
 
-        $groupIds = [];
         foreach ($user->getGroups() as $groups) {
             $groupIds[] = $groups->getId();
         }
+    } else {
+        $groupIds = [3];
     }
     ?>
     <?php foreach ($vote as $groupVote): ?>
@@ -45,6 +46,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                             <?php $voteRes = $resultMapper->getVoteRes($groupVote->getId()); ?>
                             <?php $ip = $ipMapper->getIP($groupVote->getId(), $clientIP); ?>
                             <?php $votedUser = $ipMapper->getVotedUser($groupVote->getId(), $userId); ?>
+                            <?php ($groupVote->getGroup() == 0) ? $groupIds[] = 0 : ''; ?>
                             <?php if ($ip != '' OR $votedUser != '' OR $groupVote->getStatus() != 0 OR !in_array($groupVote->getGroup(), $groupIds)): ?>
                                 <div class="vote-body">
                                     <div class="list-group">
