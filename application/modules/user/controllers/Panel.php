@@ -94,10 +94,9 @@ class Panel extends BaseController
                 'homepage' => 'url'
             ]);
 
+            $birthday = '';
             if ($this->getRequest()->getPost('birthday') != '') {
                 $birthday = new \Ilch\Date($this->getRequest()->getPost('birthday'));
-            } else {
-                $birthday = '00-00-0000';
             }
 
             if ($validation->isValid()) {

@@ -506,7 +506,7 @@ class User extends \Ilch\Mapper
         $user->setAvatar('static/img/noavatar.jpg');
         //$user->setGroups(array(3));
 
-        $user->setGroups($groups->getGroupById('3'));
+        $user->setGroups($groups->getGroupById(3));
 
         return $user;
     }

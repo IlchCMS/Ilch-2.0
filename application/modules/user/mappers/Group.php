@@ -13,8 +13,8 @@ class Group extends \Ilch\Mapper
     /**
      * Returns user model found by the id or false if none found.
      *
-     * @param  int              $id
-     * @return false|GroupModel
+     * @param  int $id
+     * @return null|GroupModel
      */
     public function getGroupById($id)
     {

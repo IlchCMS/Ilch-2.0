@@ -891,6 +891,9 @@ class User extends \Ilch\Model
      */
     public function getBirthday()
     {
+        if ($this->birthday == '0000-00-00') {
+            return '';
+        }
         return $this->birthday;
     }
 
