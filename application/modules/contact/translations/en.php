@@ -17,4 +17,6 @@ return [
     'captchaRead' => 'Not readable? Change text!',
     'addButton' => 'Send',
     'writes' => 'writes',
+    'privacy' => 'Privacy',
+    'acceptPrivacy' => 'I have read the <a href="/index.php/privacy/index/index" title="data protection information" target="_blank">data protection information</a>.',
 ];

@@ -49,33 +49,40 @@
                           rows="5"><?=$this->originalInput('message') ?></textarea>
             </div>
         </div>
+        <div class="form-group <?=$this->validation()->hasError('privacy') ? 'has-error' : '' ?>">
+            <div class="col-lg-offset-2 col-lg-8">
+                <div class="checkbox inline <?=$this->validation()->hasError('privacy') ? 'has-error' : '' ?>">
+                    <input type="checkbox" style="margin-left: 0;" id="privacy" name="privacy" value="1"<?=($this->originalInput('privacy')) ? ' checked' : '' ?>> <label for="privacy"><?=$this->getTrans('acceptPrivacy') ?></label>
+                </div>
+            </div>
+        </div>
         <?php if ($this->get('captchaNeeded')) : ?>
-        <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
-            <label class="col-lg-2 control-label">
-                <?=$this->getTrans('captcha') ?>
-            </label>
-            <div class="col-lg-8">
-                <?=$this->getCaptchaField() ?>
+            <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
+                <label class="col-lg-2 control-label">
+                    <?=$this->getTrans('captcha') ?>
+                </label>
+                <div class="col-lg-8">
+                    <?=$this->getCaptchaField() ?>
+                </div>
             </div>
-        </div>
-        <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
-            <div class="col-lg-offset-2 col-lg-8 input-group captcha">
-                <input type="text"
-                       class="form-control"
-                       id="captcha-form"
-                       name="captcha"
-                       autocomplete="off"
-                       placeholder="<?=$this->getTrans('captcha') ?>" />
-                <span class="input-group-addon">
-                    <a href="javascript:void(0)" onclick="
-                        document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
-                        document.getElementById('captcha-form').focus();"
-                        id="change-image">
-                        <i class="fa fa-refresh"></i>
-                    </a>
-                </span>
+            <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
+                <div class="col-lg-offset-2 col-lg-8 input-group captcha">
+                    <input type="text"
+                           class="form-control"
+                           id="captcha-form"
+                           name="captcha"
+                           autocomplete="off"
+                           placeholder="<?=$this->getTrans('captcha') ?>" />
+                    <span class="input-group-addon">
+                        <a href="javascript:void(0)" onclick="
+                            document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
+                            document.getElementById('captcha-form').focus();"
+                            id="change-image">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </span>
+                </div>
             </div>
-        </div>
         <?php endif; ?>
         <div class="col-lg-10" align="right">
             <?=$this->getSaveBar('addButton', 'Contact') ?>

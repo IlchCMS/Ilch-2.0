@@ -31,7 +31,8 @@ class Index extends \Ilch\Controller\Frontend
                 'receiver' => 'required',
                 'senderName' => 'required',
                 'senderEmail' => 'required|email',
-                'message' => 'required'
+                'message' => 'required',
+                'privacy' => 'required'
             ];
 
             if ($captchaNeeded) {
