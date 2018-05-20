@@ -270,10 +270,10 @@ class Config extends \Ilch\Config\Install
                 // Add new default rule to the beginning of the current rules (DSGVO)
                 $databaseConfig->set('regist_rules', '<p>Mit der Registrierung auf dieser Webseite, akzeptieren Sie die Datenschutzbestimmungen und den Haftungsausschluss.</p>'
                     .$databaseConfig->get('regist_rules'));
-                break;
 
                 // Add default value for the captcha setting, which indicates that administrators should not need to solve captchas.
                 $databaseConfig->set('hideCaptchaFor', '1');
+                break;
         }
 
         return 'Update function executed.';
