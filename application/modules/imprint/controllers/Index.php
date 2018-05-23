@@ -17,7 +17,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuImprint'), ['action' => 'index']);
 
-        $this->getView()->set('imprint', $imprintMapper->getImprint());
-        $this->getView()->set('imprintStyle', $this->getConfig()->get('imprint_style'));
+        $this->getView()->set('imprint', $imprintMapper->getImprint()[0]);
     }
 }

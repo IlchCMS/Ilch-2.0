@@ -33,20 +33,7 @@ class Imprint extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $entryModel = new ImprintModel();
             $entryModel->setId($entries['id']);
-            $entryModel->setParagraph($entries['paragraph']);
-            $entryModel->setCompany($entries['company']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setAddress($entries['address']);
-            $entryModel->setAddressAdd($entries['addressadd']);
-            $entryModel->setCity($entries['city']);
-            $entryModel->setPhone($entries['phone']);
-            $entryModel->setFax($entries['fax']);
-            $entryModel->setEmail($entries['email']);
-            $entryModel->setRegistration($entries['registration']);
-            $entryModel->setCommercialRegister($entries['commercialregister']);
-            $entryModel->setVatId($entries['vatid']);
-            $entryModel->setOther($entries['other']);
-            $entryModel->setDisclaimer($entries['disclaimer']);
+            $entryModel->setImprint($entries['imprint']);
             $imprint[] = $entryModel;
         }
 
@@ -77,20 +64,7 @@ class Imprint extends \Ilch\Mapper
             ->values
             (
                 [
-                    'paragraph' => $imprint->getParagraph(),
-                    'company' => $imprint->getCompany(),
-                    'name' => $imprint->getName(),
-                    'address' => $imprint->getAddress(),
-                    'addressadd' => $imprint->getAddressAdd(),
-                    'city' => $imprint->getCity(),
-                    'phone' => $imprint->getPhone(),
-                    'fax' => $imprint->getFax(),
-                    'email' => $imprint->getEmail(),
-                    'registration' => $imprint->getRegistration(),
-                    'commercialregister' => $imprint->getCommercialRegister(),
-                    'vatid' => $imprint->getVatId(),
-                    'other' => $imprint->getOther(),
-                    'disclaimer' => $imprint->getDisclaimer()
+                    'imprint' => $imprint->getImprint(),
                 ]
             )
             ->where(['id' => $imprint->getId()])
@@ -102,7 +76,7 @@ class Imprint extends \Ilch\Mapper
      *
      * @param string         $key
      * @param string|integer $value
-     * @param integer        $autoload
+     * @param integer        $id
      */
     public function set($key, $value, $id)
     {
