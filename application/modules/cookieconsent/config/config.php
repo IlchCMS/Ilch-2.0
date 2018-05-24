@@ -26,8 +26,6 @@ class Config extends \Ilch\Config\Install
 
     public function install()
     {
-        $this->db()->queryMulti($this->getInstallSql());
-
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('cookie_consent', '1')
             ->set('cookie_consent_layout', 'classic')
