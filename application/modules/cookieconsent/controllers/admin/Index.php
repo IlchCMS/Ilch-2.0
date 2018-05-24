@@ -15,7 +15,7 @@ class Index extends \Ilch\Controller\Admin
         $items = [
             [
                 'name' => 'manage',
-                'active' => false,
+                'active' => true,
                 'icon' => 'fa fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ]
