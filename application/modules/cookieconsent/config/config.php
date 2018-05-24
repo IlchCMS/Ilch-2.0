@@ -51,15 +51,12 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('DROP TABLE `[prefix]_cookies_consent`');
 
                 // Delete unneeded files and folders
-                unlink(ROOT_PATH.'/application/modules/cookieconsent/controllers/admin/Index.php');
                 unlink(ROOT_PATH.'/application/modules/cookieconsent/controllers/Index.php');
+                unlink(ROOT_PATH.'/application/modules/cookieconsent/controllers/admin/Settings.php');
                 removeDir(ROOT_PATH.'/application/modules/cookieconsent/mappers');
                 removeDir(ROOT_PATH.'/application/modules/cookieconsent/models');
                 removeDir(ROOT_PATH.'/application/modules/cookieconsent/views/index');
-
-                // Rename files and folders
-                rename(ROOT_PATH.'/application/modules/cookieconsent/controllers/admin/Settings.php', ROOT_PATH.'/application/modules/cookieconsent/controllers/admin/Index.php');
-                rename(ROOT_PATH.'/application/modules/cookieconsent/views/settings', ROOT_PATH.'/application/modules/cookieconsent/views/index');
+                removeDir(ROOT_PATH.'/application/modules/cookieconsent/views/admin/settings');
         }
     }
 }
