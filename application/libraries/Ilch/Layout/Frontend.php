@@ -248,7 +248,7 @@ class Frontend extends Base
                             "message": "'.$this->getTrans('policyInfoText').'",
                             "dismiss": "'.$this->getTrans('dismissBTNText').'",
                             "link": "'.$this->getTrans('policyLinkText').'",
-                            "href": "'.$this->getUrl(['module' => 'cookieconsent', 'controller' => 'index', 'action' => 'index']).'"
+                            "href": "'.$this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']).'"
                           }
                         })});
                         </script>

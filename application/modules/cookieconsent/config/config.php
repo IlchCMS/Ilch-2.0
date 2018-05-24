@@ -6,9 +6,6 @@
 
 namespace Modules\Cookieconsent\Config;
 
-use Modules\Cookieconsent\Mappers\Cookieconsent as CookieConsentMappers;
-use Modules\Cookieconsent\Models\Cookieconsent as CookieConsentModel;
-
 class Config extends \Ilch\Config\Install
 {
     public $config = [
@@ -32,53 +29,37 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('cookie_consent', '0')
+        $databaseConfig->set('cookie_consent', '1')
             ->set('cookie_consent_layout', 'classic')
             ->set('cookie_consent_pos', 'top')
             ->set('cookie_consent_popup_bg_color', '#000000')
             ->set('cookie_consent_popup_text_color', '#ffffff')
             ->set('cookie_consent_btn_bg_color', '#f1d600')
             ->set('cookie_consent_btn_text_color', '#00000');
-
-        $cookieconsentMapper = new CookieConsentMappers();
-        $cookieconsentModel = new CookieConsentModel();
-        $cookieconsentModel->setText('<h3>Einsatz von Cookies</h3>
-                <p>Wie viele Internetseiten nutzt auch diese Seite Cookies. An dieser Stelle wird erklärt was Cookies sind und wie sie genutzt werden.</p>
-                <p>&nbsp;</p>
-                <h4>Was sind Cookies</h4>
-                <p>Cookies sind kleine Dateien, die beim Aufruf von Internetseiten durch den Internet Browser auf Ihrem lokalen Rechner gespeichert werden. In den Dateien speichern Internetseiten verschiedene Informationen, um die Nutzung von besuchten Internetseiten für Sie komfortabler zu gestalten. Oftmals wird in Cookies z.B. Ihr Login gespeichert, um Sie bei einem späteren Besuch der Internetseite automatisch anzumelden, ohne dass Sie Ihre Zugangsdaten noch einmal manuell eingeben müssen.</p>
-                <p>&nbsp;</p>
-                <h4>Wie wir Cookies nutzen</h4>
-                <p>Wir setzen Cookies für folgende Zwecke ein:</p>
-                <ul>
-                <li>Anmeldung: Bei der Anmeldung werden Ihre Zugangsdaten in verschlüsselter Form als Cookies gespeichert, um Sie bei einem späteren Seitenaufruf automatisiert anzumelden. Im Anmeldefenster können Sie mit der Option „Dauerhaft angemeldet bleiben“ festlegen, ob diese Cookies angelegt werden sollen.</li>
-                <li>Sitzung: Beim ersten Aufruf unserer Seite wird eine neue Sitzung gestartet, diese wird durch ein eindeutiges Cookies Ihrem Computer zugeordnet. Sitzungen erlauben es, Sie zwischen zwei Seitenaufrufen wieder zu erkennen und Ihnen alle Funktionalitäten bereitstellen zu können. Es handelt sich um ein temporäres Cookies, dass beim Beenden des Internet Browsers automatisch gelöscht wird.</li>
-                <li>Drittanbieter-Dienste: Die Einblendung vcookies_consenton Werbeanzeigen oder das Teilen von Inhalten auf sozialen Netzwerken oder vergleichbaren Internetseiten kann die Erzeugung eines Cookies zur Folge haben. Diese Cookies werden nicht direkt von unserer Seite erzeugt, sondern durch den Drittanbieter selbst.</li>
-                </ul>
-                <p>&nbsp;</p>
-                <h4>Wie Sie Cookies deaktivieren und entfernen</h4>
-                <p>Cookies können in den Einstellungen Ihres Internet Browsers verwaltet und entfernt werden. Darüber hinaus lässt sich in den Einstellungen das Speichern von Cookies zudem vollständig deaktivieren. Bitte entnehmen Sie der folgenden Auflistung die passende Anleitung für den Umgang mit Cookies zu dem von Ihnen genutzten Internet Browser.</p>
-                <ul>
-                <li><a href="https://support.google.com/chrome/answer/95647?hl=de" target="_blank">Google Chrome</a></li>
-                <li><a href="https://support.mozilla.org/de/kb/cookies-informationen-websites-auf-ihrem-computer" target="_blank">Mozilla Firefox</a></li>
-                <li><a href="http://help.opera.com/Windows/12.00/de/cookies.html" target="_blank">Opera</a></li>
-                <li><a href="https://support.apple.com/kb/ph17191?locale=de_DE" target="_blank">Safari</a></li>
-                <li><a href="http://windows.microsoft.com/de-DE/internet-explorer/delete-manage-cookies" target="_blank">Windows Internet Explorer</a></li>
-                </ul>')
-            ->setLocale('de_DE');
-        $cookieconsentMapper->save($cookieconsentModel);
     }
 
     public function getInstallSql()
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_cookies_consent` (
-            `text` TEXT NOT NULL,
-            `locale` VARCHAR(255) NOT NULL
-        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;';
+
     }
 
     public function getUpdate($installedVersion)
     {
+        switch ($installedVersion) {
+            case "2.1.8":
+                // Delete now unneeded table
+                $this->db()->query('DROP TABLE `[prefix]_cookies_consent`');
 
+                // Delete unneeded files and folders
+                unlink(ROOT_PATH.'/application/modules/cookieconsent/controllers/admin/Index.php');
+                unlink(ROOT_PATH.'/application/modules/cookieconsent/controllers/Index.php');
+                removeDir(ROOT_PATH.'/application/modules/cookieconsent/mappers');
+                removeDir(ROOT_PATH.'/application/modules/cookieconsent/models');
+                removeDir(ROOT_PATH.'/application/modules/cookieconsent/views/index');
+
+                // Rename files and folders
+                rename(ROOT_PATH.'/application/modules/cookieconsent/controllers/admin/Settings.php', ROOT_PATH.'/application/modules/cookieconsent/controllers/admin/Index.php');
+                rename(ROOT_PATH.'/application/modules/cookieconsent/views/settings', ROOT_PATH.'/application/modules/cookieconsent/views/index');
+        }
     }
 }
