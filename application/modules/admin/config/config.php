@@ -274,6 +274,57 @@ class Config extends \Ilch\Config\Install
                 // Add default value for the captcha setting, which indicates that administrators should not need to solve captchas.
                 $databaseConfig->set('hideCaptchaFor', '1');
                 break;
+            case "2.1.8":
+                // Imprint module
+                // Create new needed column "imprint"
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` ADD COLUMN `imprint` MEDIUMTEXT NULL DEFAULT NULL;');
+
+                // Copy previous entered information to the new column "imprint"
+                $content = $this->db()->select('*')
+                    ->from('imprint')
+                    ->execute()
+                    ->fetchAssoc();
+                $contentString = '<b>'.$content['paragraph'].'</b><br><br>';
+                $contentString .= $content['company'].'<br>';
+                $contentString .= $content['name'].'<br>';
+                $contentString .= $content['address'].'<br>';
+                $contentString .= $content['addressadd'].'<br><br>';
+                $contentString .= $content['city'].'<br><br>';
+
+                $contentString .= '<b>Kontakt</b><br>';
+                $contentString .= 'Telefon: '.$content['phone'].'<br>';
+                $contentString .= 'Telefax: '.$content['fax'].'<br>';
+                $contentString .= 'E-Mail: '.$content['email'].'<br><br>';
+
+                $contentString .= 'Registergericht: '.$content['registration'].'<br>';
+                $contentString .= 'Handelsregisternummer: '.$content['commercialregister'].'<br>';
+                $contentString .= 'Umsatzsteuer-ID-Nummer: '.$content['vatid'].'<br>';
+
+                $contentString .= $content['other'].'<br><br>';
+                $contentString .= $content['disclaimer'].'<br>';
+
+                $this->db()->query('UPDATE `[prefix]_imprint` SET `imprint` = \''.$contentString.'\';');
+
+                // Delete now unneeded old columns
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `paragraph`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `company`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `name`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `address`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `addressadd`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `city`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `phone`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `fax`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `email`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `registration`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `commercialregister`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `vatid`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `other`;');
+                $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `disclaimer`;');
+
+                // Delete unneeded files and folders
+                unlink(ROOT_PATH.'/application/modules/imprint/controllers/admin/Settings.php');
+                removeDir(ROOT_PATH.'/application/modules/imprint/views/admin/settings');
+                break;
         }
 
         return 'Update function executed.';
