@@ -87,7 +87,7 @@ return [
     'menuConfirm' => 'Confirm',
     'confirmCode' => 'Activation Code',
     'unlockUserAcc' => 'unlock User',
-    'acceptRule' => 'Rules read and accepted',
+    'acceptRule' => 'Rules, disclaimer of liability and privacy policy read and accepted',
     'registButton' => 'Register',
     'backButton' => 'Back',
     'nextButton' => 'Next',

@@ -87,7 +87,7 @@ return [
     'menuConfirm' => 'Bestätigen',
     'confirmCode' => 'Aktivierungscode',
     'unlockUserAcc' => 'Benutzer freischalten',
-    'acceptRule' => 'Regeln gelesen und akzeptiert',
+    'acceptRule' => 'Regeln, Haftungsausschluss und Datenschutzerklärung gelesen und akzeptiert',
     'registButton' => 'Registrieren',
     'backButton' => 'Zurück',
     'nextButton' => 'Weiter',
