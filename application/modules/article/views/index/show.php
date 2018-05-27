@@ -1,20 +1,3 @@
-<?php
-$comments = $this->get('comments');
-$article = $this->get('article');
-$categoryMapper = $this->get('categoryMapper');
-$commentMapper = $this->get('commentMapper');
-$userMapper = $this->get('userMapper');
-$content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
-$preview = $this->getRequest()->getParam('preview');
-$config = $this->get('config');
-$date = new \Ilch\Date($article->getDateCreated());
-
-$adminAccess = null;
-if ($this->getUser()) {
-    $adminAccess = $this->getUser()->isAdmin();
-}
-?>
-
 <?php function rec($id, $commentId, $uid, $req, $obj)
 {
     $commentMappers = $obj->get('commentMapper');
@@ -153,8 +136,17 @@ if ($this->getUser()) {
 }
 ?>
 
-<?php if (is_in_array($this->get('readAccess'), explode(',', $article->getReadAccess())) || $adminAccess == true) : ?>
+<?php if ($this->get('hasReadAccess')) : ?>
     <?php
+    $comments = $this->get('comments');
+    $article = $this->get('article');
+    $categoryMapper = $this->get('categoryMapper');
+    $commentMapper = $this->get('commentMapper');
+    $userMapper = $this->get('userMapper');
+    $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
+    $preview = $this->getRequest()->getParam('preview');
+    $config = $this->get('config');
+    $date = new \Ilch\Date($article->getDateCreated());
     $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
 
     $catIds = explode(",", $article->getCatId());

@@ -81,6 +81,7 @@ class Index extends \Ilch\Controller\Frontend
         $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
         $config = \Ilch\Registry::get('config');
+        $hasReadAccess = true;
 
         if ($this->getRequest()->getPost('saveComment')) {
             $date = new \Ilch\Date();
@@ -115,18 +116,6 @@ class Index extends \Ilch\Controller\Frontend
             $commentMapper->saveLike($commentModel);
 
             $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
-        }
-
-        $user = null;
-        if ($this->getUser()) {
-            $user = $userMapper->getUserById($this->getUser()->getId());
-        }
-
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
-            }
         }
 
         $this->getLayout()->getTitle()
@@ -176,41 +165,62 @@ class Index extends \Ilch\Controller\Frontend
                 $this->getLayout()->getHmenu()->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $catId]);
             }
 
-            $this->getLayout()->getTitle()->add($article->getTitle());
-            $this->getLayout()->getHmenu()->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
-
-            $this->getLayout()->set('metaDescription', $article->getDescription());
-            $this->getLayout()->set('metaKeywords', $article->getKeywords());
-            
-            $metaTagModel = new MetaTagModel();
-            $metaTagModel->setName('og:title')
-                         ->setContent($article->getTitle());
-            $this->getLayout()->add('metaTags', 'og:title', $metaTagModel);
-
-            if (!empty($article->getDescription())) {
-                $metaTagModel = new MetaTagModel();
-                $metaTagModel->setName('og:description')
-                             ->setContent($article->getDescription());
-                $this->getLayout()->add('metaTags', 'og:description', $metaTagModel);
+            $user = null;
+            if ($this->getUser()) {
+                $user = $userMapper->getUserById($this->getUser()->getId());
             }
 
-            $metaTagModel = new MetaTagModel();
-            $metaTagModel->setName('og:type')
-                         ->setContent('article');
-            $this->getLayout()->add('metaTags', 'og:type', $metaTagModel);
-
-            if (!empty($article->getImage())) {
-                $metaTagModel = new MetaTagModel();
-                $metaTagModel->setName('og:image')
-                             ->setContent(BASE_URL.'/'.$article->getImage());
-                $this->getLayout()->add('metaTags', 'og:image', $metaTagModel);
+            $readAccess = [3];
+            if ($user) {
+                foreach ($user->getGroups() as $us) {
+                    $readAccess[] = $us->getId();
+                }
             }
 
-            if (!empty($article->getLocale())) {
+            $adminAccess = null;
+            if ($this->getUser()) {
+                $adminAccess = $this->getUser()->isAdmin();
+            }
+
+            $hasReadAccess = (is_in_array($readAccess, explode(',', $article->getReadAccess())) || $adminAccess == true);
+
+            if ($hasReadAccess) {
+                $this->getLayout()->getTitle()->add($article->getTitle());
+                $this->getLayout()->getHmenu()->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
+
+                $this->getLayout()->set('metaDescription', $article->getDescription());
+                $this->getLayout()->set('metaKeywords', $article->getKeywords());
+
                 $metaTagModel = new MetaTagModel();
-                $metaTagModel->setName('og:locale')
-                             ->setContent($article->getLocale());
-                $this->getLayout()->add('metaTags', 'og:locale', $metaTagModel);
+                $metaTagModel->setName('og:title')
+                    ->setContent($article->getTitle());
+                $this->getLayout()->add('metaTags', 'og:title', $metaTagModel);
+
+                if (!empty($article->getDescription())) {
+                    $metaTagModel = new MetaTagModel();
+                    $metaTagModel->setName('og:description')
+                        ->setContent($article->getDescription());
+                    $this->getLayout()->add('metaTags', 'og:description', $metaTagModel);
+                }
+
+                $metaTagModel = new MetaTagModel();
+                $metaTagModel->setName('og:type')
+                    ->setContent('article');
+                $this->getLayout()->add('metaTags', 'og:type', $metaTagModel);
+
+                if (!empty($article->getImage())) {
+                    $metaTagModel = new MetaTagModel();
+                    $metaTagModel->setName('og:image')
+                        ->setContent(BASE_URL.'/'.$article->getImage());
+                    $this->getLayout()->add('metaTags', 'og:image', $metaTagModel);
+                }
+
+                if (!empty($article->getLocale())) {
+                    $metaTagModel = new MetaTagModel();
+                    $metaTagModel->setName('og:locale')
+                        ->setContent($article->getLocale());
+                    $this->getLayout()->add('metaTags', 'og:locale', $metaTagModel);
+                }
             }
 
             $articleModel = new ArticleModel();
@@ -231,7 +241,7 @@ class Index extends \Ilch\Controller\Frontend
             ->set('config', $config)
             ->set('commentMapper', $commentMapper)
             ->set('article', $article)
-            ->set('readAccess', $readAccess);
+            ->set('hasReadAccess', $hasReadAccess);
     }
 
     public function voteAction()
