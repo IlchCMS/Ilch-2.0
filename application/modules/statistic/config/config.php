@@ -49,10 +49,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('statistic_site', 1);
-        $databaseConfig->set('statistic_visits', 1);
-        $databaseConfig->set('statistic_browser', 1);
-        $databaseConfig->set('statistic_os', 1);
+        $databaseConfig->set('statistic_visibleStats', '1,1,1,1,1,1');
     }
 
     public function getInstallSql()
