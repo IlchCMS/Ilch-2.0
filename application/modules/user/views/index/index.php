@@ -32,10 +32,10 @@
                                     <a href="<?=$this->getUrl(['controller' => 'profil', 'action' => 'index', 'user' => $userlist->getId()]) ?>" title="<?=$this->escape($userlist->getName()) ?>s <?=$this->getTrans('profile') ?>" class="user-link"><?=$this->escape($userlist->getName()) ?></a>
                                 </td>
                                 <td>
-                                    <?=substr($this->getTrans($ilchDate->format('l')), 0, 2).', '.$ilchDate->format('d. ').substr($this->getTrans($ilchDate->format('F')), 0, 4).$ilchDate->format(' Y') ?>
+                                    <?=substr($this->getTrans($ilchDate->format('l')), 0, 2).', '.$ilchDate->format('d. ').$this->getTrans($ilchDate->format('M')).$ilchDate->format(' Y') ?>
                                 </td>
                                 <td>
-                                    <?=(!empty($ilchLastDate)) ? substr($this->getTrans($ilchLastDate->format('l')), 0, 2).', '.$ilchLastDate->format('d. ').substr($this->getTrans($ilchLastDate->format('F')), 0, 4).$ilchLastDate->format(' Y') : ''; ?>
+                                    <?=(!empty($ilchLastDate)) ? substr($this->getTrans($ilchLastDate->format('l')), 0, 2).', '.$ilchLastDate->format('d. ').$this->getTrans($ilchLastDate->format('M')).$ilchLastDate->format(' Y') : ''; ?>
                                 </td>
                                 <td>
                                     <?php if ($this->getUser() AND $this->getUser()->getId() != $this->escape($userlist->getID())): ?>
