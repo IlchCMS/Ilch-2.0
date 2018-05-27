@@ -8,16 +8,6 @@ $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
 $preview = $this->getRequest()->getParam('preview');
 $config = $this->get('config');
 $date = new \Ilch\Date($article->getDateCreated());
-$commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
-
-$catIds = explode(",", $article->getCatId());
-$categories = '';
-foreach ($catIds as $catId) {
-    if ($catId) {
-        $articlesCats = $categoryMapper->getCategoryById($catId);
-        $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$articlesCats->getName().'</a>, ';
-    }
-}
 
 $adminAccess = null;
 if ($this->getUser()) {
@@ -164,6 +154,18 @@ if ($this->getUser()) {
 ?>
 
 <?php if (is_in_array($this->get('readAccess'), explode(',', $article->getReadAccess())) || $adminAccess == true) : ?>
+    <?php
+    $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
+
+    $catIds = explode(",", $article->getCatId());
+    $categories = '';
+    foreach ($catIds as $catId) {
+        if ($catId) {
+            $articlesCats = $categoryMapper->getCategoryById($catId);
+            $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$articlesCats->getName().'</a>, ';
+        }
+    }
+    ?>
     <?php if ($preview): ?>
         <div class="article_preview"></div>
     <?php endif; ?>

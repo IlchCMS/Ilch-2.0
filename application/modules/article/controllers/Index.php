@@ -129,12 +129,15 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuArticle'));
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
+
         if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
             $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuArticle'))
                 ->add($this->getTranslator()->trans('preview'));
             $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('preview'), ['action' => 'index']);
 
             $catIds = '';
@@ -142,8 +145,8 @@ class Index extends \Ilch\Controller\Frontend
                 $catIds = implode(",", $this->getRequest()->getPost('cats'));
             }
 
-            $articleModel = new ArticleModel();
-            $articleModel->setTitle($this->getRequest()->getPost('title'))
+            $article = new ArticleModel();
+            $article->setTitle($this->getRequest()->getPost('title'))
                 ->setTeaser($this->getRequest()->getPost('teaser'))
                 ->setCatId($catIds)
                 ->setKeywords($this->getRequest()->getPost('keywords'))
@@ -151,12 +154,6 @@ class Index extends \Ilch\Controller\Frontend
                 ->setImage($this->getRequest()->getPost('image'))
                 ->setImageSource($this->getRequest()->getPost('imageSource'))
                 ->setVisits(0);
-
-            $this->getView()->set('categoryMapper', $categoryMapper)
-                ->set('config', $config)
-                ->set('commentMapper', $commentMapper)
-                ->set('readAccess', $readAccess)
-                ->set('article', $articleModel);
         } else {
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
             if (empty($article)) {
@@ -164,19 +161,24 @@ class Index extends \Ilch\Controller\Frontend
                 return;
             }
 
-            $catIds = explode(",", $article->getCatId());
-
             $this->getLayout()->header()
                 ->css('static/css/article.css')
                 ->css('../comment/static/css/comment.css');
             $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuArticle'))
                 ->add($this->getTranslator()->trans('menuCats'));
+            $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index']);
+
+            $catIds = explode(",", $article->getCatId());
             foreach ($catIds as $catId) {
                 $articlesCats = $categoryMapper->getCategoryById($catId);
                 $this->getLayout()->getTitle()->add($articlesCats->getName());
+                $this->getLayout()->getHmenu()->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $catId]);
             }
+
             $this->getLayout()->getTitle()->add($article->getTitle());
+            $this->getLayout()->getHmenu()->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
+
             $this->getLayout()->set('metaDescription', $article->getDescription());
             $this->getLayout()->set('metaKeywords', $article->getKeywords());
             
@@ -211,26 +213,12 @@ class Index extends \Ilch\Controller\Frontend
                 $this->getLayout()->add('metaTags', 'og:locale', $metaTagModel);
             }
 
-            $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index']);
-            foreach ($catIds as $catId) {
-                $articlesCats = $categoryMapper->getCategoryById($catId);
-                $this->getLayout()->getHmenu()->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $catId]);
-            }
-             $this->getLayout()->getHmenu()->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
-
             $articleModel = new ArticleModel();
             $articleModel->setId($article->getId())
                 ->setVisits($article->getVisits() + 1);
             $articleMapper->saveVisits($articleModel);
 
-            $this->getView()->set('categoryMapper', $categoryMapper)
-                ->set('commentMapper', $commentMapper)
-                ->set('userMapper', $userMapper)
-                ->set('config', $config)
-                ->set('article', $article)
-                ->set('readAccess', $readAccess)
+            $this->getView()->set('userMapper', $userMapper)
                 ->set(
                     'comments',
                     $commentMapper->getCommentsByKey(
@@ -238,6 +226,12 @@ class Index extends \Ilch\Controller\Frontend
                     )
                 );
         }
+
+        $this->getView()->set('categoryMapper', $categoryMapper)
+            ->set('config', $config)
+            ->set('commentMapper', $commentMapper)
+            ->set('article', $article)
+            ->set('readAccess', $readAccess);
     }
 
     public function voteAction()
