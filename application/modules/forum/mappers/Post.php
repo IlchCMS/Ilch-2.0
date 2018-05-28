@@ -172,4 +172,22 @@ class Post extends \Ilch\Mapper
                 ->execute();
         }
     }
+
+    /**
+     * Check if a post is the first one of a topic.
+     *
+     * @param $topicId
+     * @param $postId
+     * @return bool
+     */
+    public function isFirstPostOfTopic($topicId, $postId)
+    {
+        $row = $this->db()->select('id')
+            ->from('forum_posts')
+            ->where(['topic_id' => $topicId])
+            ->execute()
+            ->fetchAssoc();
+
+        return ($row['id'] == $postId);
+    }
 }

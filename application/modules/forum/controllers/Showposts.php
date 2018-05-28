@@ -145,11 +145,11 @@ class Showposts extends \Ilch\Controller\Frontend
         if ($this->getUser()) {
             if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum')) {
                 $this->getLayout()->getTitle()
-                        ->add($this->getTranslator()->trans('forum'))
-                        ->add($cat->getTitle())
-                        ->add($forum->getTitle())
-                        ->add($topic->getTopicTitle())
-                        ->add($this->getTranslator()->trans('editPost'));
+                    ->add($this->getTranslator()->trans('forum'))
+                    ->add($cat->getTitle())
+                    ->add($forum->getTitle())
+                    ->add($topic->getTopicTitle())
+                    ->add($this->getTranslator()->trans('editPost'));
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                     ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
@@ -157,19 +157,31 @@ class Showposts extends \Ilch\Controller\Frontend
                     ->add($topic->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId])
                     ->add($this->getTranslator()->trans('editPost'), ['controller' => 'newpost', 'action' => 'index', 'topicid' => $topicId]);
 
+                $isFirstPost = $postMapper->isFirstPostOfTopic($topicId, $postId);
+
                 if ($this->getRequest()->getPost('editPost')) {
-                    $validation = Validation::create($this->getRequest()->getPost(), [
+                    $validationRules = [
                         'text' => 'required'
-                    ]);
+                    ];
+
+                    if ($isFirstPost) {
+                        $validationRules['topicTitle'] = 'required';
+                    }
+
+                    $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
                     if ($validation->isValid()) {
-                        $postMapper = new PostMapper;
-
                         $postModel = new ForumPostModel;
                         $postModel->setId($postId)
                             ->setTopicId($topicId)
                             ->setText($this->getRequest()->getPost('text'));
                         $postMapper->save($postModel);
+
+                        // Only allow updating of the topic title if it is the first post (normally the one, which started the topic)
+                        // This ensures that only the autor or an admin can change the topic title
+                        if ($isFirstPost) {
+                            $topicMapper->update($topicId, 'topic_title', $this->getRequest()->getPost('topicTitle'));
+                        }
 
                         $this->redirect()
                             ->withMessage('saveSuccess')
@@ -183,7 +195,10 @@ class Showposts extends \Ilch\Controller\Frontend
                         ->to(['controller' => 'showposts', 'action' => 'edit', 'id' => $postId, 'topicid' => $topicId]);
                 }
 
+                $this->getView()->set('forum', $forum);
+                $this->getView()->set('topic', $topic);
                 $this->getView()->set('post', $postMapper->getPostById($postId));
+                $this->getView()->set('isFirstPost', $isFirstPost);
             } else {
                 $this->redirect()
                     ->withMessage('noAccessForum', 'danger')

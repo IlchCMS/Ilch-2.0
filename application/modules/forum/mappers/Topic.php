@@ -218,6 +218,20 @@ class Topic extends \Ilch\Mapper
             ->execute();
     }
 
+    /**
+     * Update specific column of a topic
+     *
+     * @param $id
+     * @param $column
+     * @param $value
+     */
+    public function update($id, $column, $value) {
+        $this->db()->update('forum_topics')
+            ->values([$column => $value])
+            ->where(['id' => $id])
+            ->execute();
+    }
+
     public function getLastInsertId()
     {
         return $this->last_insert_id;
