@@ -63,10 +63,15 @@ class Accesses
         if ($userId) {
             $user = $userMapper->getUserById($userId);
 
-            $groupIds = [];
-            foreach ($user->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
-                $groupAccessList[] = $groupMapper->getGroupAccessList($groups->getId());
+            if (!empty($user)) {
+                $groupIds = [];
+                foreach ($user->getGroups() as $groups) {
+                    $groupIds[] = $groups->getId();
+                    $groupAccessList[] = $groupMapper->getGroupAccessList($groups->getId());
+                }
+            } else {
+                // User doesn't exist anymore. "Downgrade" to guest.
+                $groupAccessList[] = $groupMapper->getGroupAccessList('3');
             }
         } else {
             $groupAccessList[] = $groupMapper->getGroupAccessList('3');
