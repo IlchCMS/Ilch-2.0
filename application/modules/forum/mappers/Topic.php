@@ -193,17 +193,29 @@ class Topic extends \Ilch\Mapper
                         ->execute()
                         ->fetchCell();
 
-        if ($status == 1) {
-            $this->db()->update('forum_topics')
-                ->values(['status' => 0])
-                ->where(['id' => $id])
-                ->execute();
-        } else {
-            $this->db()->update('forum_topics')
-                ->values(['status' => 1])
-                ->where(['id' => $id])
-                ->execute();
-        }
+        $this->db()->update('forum_topics')
+            ->values(['status' => !$status])
+            ->where(['id' => $id])
+            ->execute();
+    }
+
+    /**
+     * Updates topic type with given id.
+     *
+     * @param integer $id
+     */
+    public function updateType($id)
+    {
+        $type = (int) $this->db()->select('type')
+            ->from('forum_topics')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchCell();
+
+        $this->db()->update('forum_topics')
+            ->values(['type' => !$type])
+            ->where(['id' => $id])
+            ->execute();
     }
 
     public function getLastInsertId()

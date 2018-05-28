@@ -43,6 +43,7 @@ return [
     'selectForum' => 'Forum auswählen',
     'move' => 'Verschieben',
     'topicChangeStatus' => 'Status ändern',
+    'topicChangeType' => 'Typ ändern',
     'forumTypeFixed' => 'Thema fixieren',
     'forumOptions' => 'Optionen',
     'yes' => 'Ja',

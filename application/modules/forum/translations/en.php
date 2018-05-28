@@ -43,6 +43,7 @@ return [
     'selectForum' => 'Select Forum',
     'move' => 'Move',
     'topicChangeStatus' => 'Change status',
+    'topicChangeType' => 'Change type',
     'forumTypeFixed' => 'Fixed topic',
     'forumOptions' => 'Options',
     'yes' => 'Yes',

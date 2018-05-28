@@ -29,9 +29,9 @@ class Showtopics extends \Ilch\Controller\Frontend
         $userId = null;
         $groupIds = [3];
 
-       if ($this->getRequest()->isPost() && $this->getRequest()->getPost('forumEdit') === 'forumEdit') {
+        if ($this->getRequest()->isPost() && $this->getRequest()->getPost('forumEdit') === 'forumEdit') {
            $this->getView()->set('forumEdit', true);
-       }
+        }
 
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();

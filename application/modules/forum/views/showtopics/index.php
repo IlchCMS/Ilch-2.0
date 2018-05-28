@@ -180,6 +180,7 @@ if ($this->getUser()) {
                     <button class="btn btn-primary" name="topicDelete" value="topicDelete" id="topicDelete" OnClick="SetAction1()" disabled><?=$this->getTrans('topicDelete') ?></button>
                     <button class="btn btn-primary" name="topicMove" value="topicMove" id="topicMove" OnClick="SetAction2()" disabled><?=$this->getTrans('topicMove') ?></button>
                     <button class="btn btn-primary" name="topicChangeStatus" value="topicChangeStatus" id="topicChangeStatus" OnClick="SetAction3()" disabled><?=$this->getTrans('topicChangeStatus') ?></button>
+                    <button class="btn btn-primary" name="topicChangeType" value="topicChangeType" id="topicChangeType" OnClick="SetAction4()" disabled><?=$this->getTrans('topicChangeType') ?></button>
 
                     <script>
                         function SetAction1() {
@@ -192,6 +193,10 @@ if ($this->getUser()) {
 
                         function SetAction3() {
                             document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'edittopic', 'action' => 'status', 'forumid' => $forum->getId()]) ?>";
+                        }
+
+                        function SetAction4() {
+                            document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'edittopic', 'action' => 'type', 'forumid' => $forum->getId()]) ?>";
                         }
                     </script>
                 <?php endif; ?>
@@ -236,10 +241,12 @@ $('input[type=checkbox]').change(function () {
         $('#topicDelete').prop('disabled', true);
         $('#topicMove').prop('disabled', true);
         $('#topicChangeStatus').prop('disabled', true);
+        $('#topicChangeType').prop('disabled', true);
     } else {
         $('#topicDelete').prop('disabled', false);
         $('#topicMove').prop('disabled', false);
         $('#topicChangeStatus').prop('disabled', false);
+        $('#topicChangeType').prop('disabled', false);
     }
 });
 </script>
