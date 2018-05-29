@@ -43,6 +43,7 @@ class Post extends \Ilch\Mapper
         $userMapper = new UserMapper();
         $postModel->setId($fileRow['id']);
         $postModel->setText($fileRow['text']);
+        $postModel->setVotes($fileRow['votes']);
         $postModel->setDateCreated($fileRow['date_created']);
         if ($userMapper->getUserById($fileRow['user_id'])) {
             $postModel->setAutor($userMapper->getUserById($fileRow['user_id']));
@@ -69,6 +70,58 @@ class Post extends \Ilch\Mapper
         }
 
         return $topics;
+    }
+
+    public function getPostByTopicId($topicId, $pagination = null)
+    {
+        $select = $this->db()->select('*')
+            ->from('forum_posts')
+            ->where(['topic_id' => $topicId]);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $fileArray = $result->fetchRows();
+        $postEntry = [];
+
+        foreach ($fileArray as $entries) {
+            $entryModel = new PostModel();
+            $userMapper = new UserMapper();
+            $entryModel->setId($entries['id']);
+            $entryModel->setText($entries['text']);
+            $entryModel->setVotes($entries['votes']);
+            $entryModel->setDateCreated($entries['date_created']);
+            if ($userMapper->getUserById($entries['user_id'])) {
+                $entryModel->setAutor($userMapper->getUserById($entries['user_id']));
+            } else {
+                $entryModel->setAutor($userMapper->getDummyUser());
+            }
+            $entryModel->setAutorAllPost($this->getAllPostsByUserId($entries['user_id']));
+            $postEntry[] = $entryModel;
+        }
+
+        return $postEntry;
+    }
+
+    /**
+     * Get the votes/likes for a post.
+     *
+     * @param integer $id
+     * @return false|null|string
+     */
+    public function getVotes($id)
+    {
+        return $this->db()->select('votes')
+            ->from('forum_posts')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchCell();
     }
 
     public function save(PostModel $model)
@@ -104,52 +157,6 @@ class Post extends \Ilch\Mapper
         }
     }
 
-    public function getPostByTopicId($topicId, $pagination = null)
-    {
-        $select = $this->db()->select('*')
-            ->from('forum_posts')
-            ->where(['topic_id' => $topicId]);
-
-        if ($pagination !== null) {
-            $select->limit($pagination->getLimit())
-                ->useFoundRows();
-            $result = $select->execute();
-            $pagination->setRows($result->getFoundRows());
-        } else {
-            $result = $select->execute();
-        }
-
-        $fileArray = $result->fetchRows();
-        $postEntry = [];
-
-        foreach ($fileArray as $entries) {
-            $entryModel = new PostModel();
-            $userMapper = new UserMapper();
-            $entryModel->setId($entries['id']);
-            $entryModel->setText($entries['text']);
-            $entryModel->setDateCreated($entries['date_created']);
-            if ($userMapper->getUserById($entries['user_id'])) {
-                $entryModel->setAutor($userMapper->getUserById($entries['user_id']));
-            } else {
-                $entryModel->setAutor($userMapper->getDummyUser());
-            }
-            $entryModel->setAutorAllPost($this->getAllPostsByUserId($entries['user_id']));
-            $postEntry[] = $entryModel;
-        }
-
-        return $postEntry;
-    }
-
-    public function deleteById($id)
-    {
-        $this->trigger(ForumConfig::EVENT_DELETEPOST_BEFORE, ['id' => $id]);
-        $returnValue = $this->db()->delete('forum_posts')
-            ->where(['id' => $id])
-            ->execute();
-        $this->trigger(ForumConfig::EVENT_DELETEPOST_AFTER, ['id' => $id]);
-        return $returnValue;
-    }
-
     public function saveVisits(PostModel $model)
     {
         if ($model->getVisits()) {
@@ -158,6 +165,22 @@ class Post extends \Ilch\Mapper
                     ->where(['id' => $model->getFileId()])
                     ->execute();
         }
+    }
+
+    /**
+     * Save post vote/like.
+     *
+     * @param integer $id
+     * @param integer $userId
+     */
+    public function saveVotes($id, $userId)
+    {
+        $votes = $this->getVotes($id);
+
+        $this->db()->update('forum_posts')
+            ->values(['votes' => $votes.$userId.','])
+            ->where(['id' => $id])
+            ->execute();
     }
 
     public function saveForEdit(PostModel $model)
@@ -171,6 +194,16 @@ class Post extends \Ilch\Mapper
                 ->where(['topic_id' => $model->getTopicId()])
                 ->execute();
         }
+    }
+
+    public function deleteById($id)
+    {
+        $this->trigger(ForumConfig::EVENT_DELETEPOST_BEFORE, ['id' => $id]);
+        $returnValue = $this->db()->delete('forum_posts')
+            ->where(['id' => $id])
+            ->execute();
+        $this->trigger(ForumConfig::EVENT_DELETEPOST_AFTER, ['id' => $id]);
+        return $returnValue;
     }
 
     /**

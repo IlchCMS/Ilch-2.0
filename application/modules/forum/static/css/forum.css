@@ -423,7 +423,7 @@ legend .forum.fa {
 .new-topic {
     padding: 15px 15px 0 15px;
 }
-.post {
+.post, .post-footer {
     padding: 12px;
     margin-bottom: 12px;
     background-repeat: no-repeat;

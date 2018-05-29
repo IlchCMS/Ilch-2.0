@@ -51,6 +51,13 @@ class ForumPost extends \Ilch\Model
     protected $visits;
 
     /**
+     * The votes of the post.
+     *
+     * @var string
+     */
+    protected $votes;
+
+    /**
      * The forum id of the post.
      *
      * @var integer
@@ -200,6 +207,16 @@ class ForumPost extends \Ilch\Model
     public function getVisits()
     {
         return $this->visits;
+    }
+
+    /**
+     * Gets the votes of the post.
+     *
+     * @return string
+     */
+    public function getVotes()
+    {
+        return $this->votes;
     }
 
     /**
@@ -405,6 +422,19 @@ class ForumPost extends \Ilch\Model
     public function setVisits($visits)
     {
         $this->visits = (string) $visits;
+
+        return $this;
+    }
+
+    /**
+     * Sets the votes of the post.
+     *
+     * @param string $votes
+     * @return $this
+     */
+    public function setVotes($votes)
+    {
+        $this->votes = $votes;
 
         return $this;
     }

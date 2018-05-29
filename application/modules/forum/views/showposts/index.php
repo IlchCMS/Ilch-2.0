@@ -151,6 +151,21 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     <dd><b><?=$this->getTrans('joined') ?>:</b> <?=$post->getAutor()->getDateCreated() ?></dd>
                 </dl>
             </div>
+            <div class="post-footer ilch-bg">
+                <?php
+                $votes = explode(',', $post->getVotes());
+                $countOfVotes = count($votes) - 1;
+                ?>
+                <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $votes) == false) : ?>
+                    <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
+                        <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                    </a>
+                <?php else: ?>
+                    <button class="btn btn-sm btn-default btn-success">
+                        <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                    </button>
+                <?php endif; ?>
+            </div>
         <?php endforeach; ?>
         <div class="topic-actions">
             <?php if ($topicpost->getStatus() == 0): ?>

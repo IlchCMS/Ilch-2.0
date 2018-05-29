@@ -210,4 +210,12 @@ class Showposts extends \Ilch\Controller\Frontend
                 ->to(['controller' => 'index', 'action' => 'index']);
         }
     }
+
+    public function voteAction()
+    {
+        $postMapper = new PostMapper();
+        $postMapper->saveVotes($this->getRequest()->getParam('id'), $this->getUser()->getId());
+
+        $this->redirect(['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]);
+    }
 }

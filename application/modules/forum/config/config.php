@@ -97,6 +97,7 @@ class Config extends \Ilch\Config\Install
                 `topic_id` VARCHAR(150) NOT NULL,
                 `text` TEXT NOT NULL,
                 `visits` INT(11) NOT NULL DEFAULT 0,
+                `votes` LONGTEXT NOT NULL,
                 `user_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
                 `forum_id` INT(11) NOT NULL DEFAULT 0,
@@ -165,6 +166,8 @@ class Config extends \Ilch\Config\Install
                     (10, "Kaiser", 5000),
                     (11, "Legende", 7000),
                     (12, "Foren Gott", 10000);');
+            case "1.8":
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
         }
     }
 }
