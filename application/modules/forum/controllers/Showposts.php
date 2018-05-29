@@ -181,6 +181,7 @@ class Showposts extends \Ilch\Controller\Frontend
                         // This ensures that only the autor or an admin can change the topic title
                         if ($isFirstPost) {
                             $topicMapper->update($topicId, 'topic_title', $this->getRequest()->getPost('topicTitle'));
+                            $topicMapper->update($topicId, 'topic_prefix', $this->getRequest()->getPost('topicPrefix'));
                         }
 
                         $this->redirect()

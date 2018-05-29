@@ -29,10 +29,9 @@ $post = $this->get('post');
                                 <select class="form-control" id="topicPrefix" name="topicPrefix">
                                     <?php foreach ($prefix as $key => $value): ?>
                                         <?php $selected = ''; ?>
-                                        <?php if ($key == 0): ?>
+                                        <?php if ($key == $topic->getTopicPrefix()): ?>
                                             <?php $selected = 'selected="selected"'; ?>
                                         <?php endif; ?>
-
                                         <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
                                     <?php endforeach; ?>
                                 </select>
