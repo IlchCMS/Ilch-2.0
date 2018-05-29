@@ -160,7 +160,7 @@ class Page
 
         if (($this->fileConfig->get('dbUser')) !== null) {
             // Always allow access to registration (previously no access for guests to the user module lead to them being unable to register)
-            $accesses = $this->request->getModuleName() == 'user' && $this->request->getControllerName()  == 'regist' || $accesses = $this->accesses->hasAccess('Module');
+            $accesses = $this->request->getModuleName() == 'user' && ($this->request->getControllerName()  == 'regist' || $this->request->getControllerName()  == 'login') || $accesses = $this->accesses->hasAccess('Module');
         } else {
             $accesses = true;
         }
