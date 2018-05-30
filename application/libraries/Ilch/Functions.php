@@ -303,7 +303,7 @@ function isEmailOnBlacklist($emailAddress) {
 
     $emailBlacklist = explode(PHP_EOL, \Ilch\Registry::get('config')->get('emailBlacklist'));
     foreach ($emailBlacklist as $entry) {
-        if (strpos($emailAddress, $entry) !== false) {
+        if (strpos($emailAddress, trim($entry)) !== false) {
             return true;
         }
     }
