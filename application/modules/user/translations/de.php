@@ -89,6 +89,7 @@ return [
     'unlockUserAcc' => 'Benutzer freischalten',
     'acceptRule' => 'Regeln, Haftungsausschluss und Datenschutzerklärung gelesen und akzeptiert',
     'registButton' => 'Registrieren',
+    'emailOnBlacklist' => 'Ihre E-Mail Adresse oder Ihr Anbieter ist auf der Sperrliste. Registrierung nicht möglich.',
     'backButton' => 'Zurück',
     'nextButton' => 'Weiter',
     'step1to3' => 'Schritt 1 von 3',

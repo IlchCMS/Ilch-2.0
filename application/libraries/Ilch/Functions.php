@@ -291,6 +291,27 @@ function captchaNeeded()
 }
 
 /**
+ * Check if email address is in blacklist.
+ *
+ * @param string $emailAddress
+ * @return bool
+ */
+function isEmailOnBlacklist($emailAddress) {
+    if (empty($emailAddress)) {
+        return false;
+    }
+
+    $emailBlacklist = explode(PHP_EOL, \Ilch\Registry::get('config')->get('emailBlacklist'));
+    foreach ($emailBlacklist as $entry) {
+        if (strpos($emailAddress, $entry) !== false) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
  * Random_* Compatibility Library
  * for using the new PHP 7 random_* API in PHP 5 projects
  *

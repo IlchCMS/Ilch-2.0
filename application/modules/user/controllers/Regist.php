@@ -69,8 +69,9 @@ class Regist extends \Ilch\Controller\Frontend
             }
 
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
+            $emailOnBlacklist = isEmailOnBlacklist($this->getRequest()->getPost('email'));
 
-            if ($validation->isValid()) {
+            if (!$emailOnBlacklist && $validation->isValid()) {
                 $groupMapper = new GroupMapper();
                 $userGroup = $groupMapper->getGroupById(2);
                 $currentDate = new \Ilch\Date();
@@ -138,6 +139,9 @@ class Regist extends \Ilch\Controller\Frontend
                 $this->redirect()
                     ->to(['action' => 'finish']);
             } else {
+                if ($emailOnBlacklist) {
+                    $this->addMessage('emailOnBlacklist', 'danger');
+                }
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
                     ->withInput()

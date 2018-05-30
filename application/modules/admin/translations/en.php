@@ -342,4 +342,6 @@ return [
     'smtp_secure' => 'Encryption',
     'smtp_user' => 'Login',
     'smtp_pass' => 'Password',
+    'emailBlacklist' => 'E-mail blacklist',
+    'editEmailBlacklist' => 'Edit e-mail blacklist',
 ];

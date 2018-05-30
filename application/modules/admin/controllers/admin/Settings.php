@@ -412,6 +412,7 @@ HTACCESS;
             $this->getConfig()->set('smtp_secure', $this->getRequest()->getPost('smtp_secure'));
             $this->getConfig()->set('smtp_user', $this->getRequest()->getPost('smtp_user'));
             $this->getConfig()->set('smtp_pass', $this->getRequest()->getPost('smtp_pass'));
+            $this->getConfig()->set('emailBlacklist', $this->getRequest()->getPost('emailBlacklist'));
         }
         $this->getView()->set('smtp_mode', $this->getConfig()->get('smtp_mode'));
         $this->getView()->set('smtp_server', $this->getConfig()->get('smtp_server'));
@@ -419,5 +420,6 @@ HTACCESS;
         $this->getView()->set('smtp_secure', $this->getConfig()->get('smtp_secure'));
         $this->getView()->set('smtp_user', $this->getConfig()->get('smtp_user'));
         $this->getView()->set('smtp_pass', $this->getConfig()->get('smtp_pass'));
+        $this->getView()->set('emailBlacklist', $this->getConfig()->get('emailBlacklist'));
     }
 }

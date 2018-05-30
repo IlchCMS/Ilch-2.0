@@ -85,5 +85,18 @@
                    value="<?=$this->escape($this->get('smtp_pass')) ?>" />
         </div>
     </div>
+    <legend><?=$this->getTrans('emailBlacklist') ?></legend>
+    <div class="form-group">
+        <label for="emailBlacklist" class="col-lg-2 control-label">
+            <?=$this->getTrans('emailBlacklist') ?>:
+        </label>
+        <div class="col-lg-6">
+            <textarea class="form-control"
+                      id="emailBlacklist"
+                      name="emailBlacklist"
+                      rows="20"
+                      title="<?=$this->getTrans('editEmailBlacklist') ?>"><?=$this->escape($this->get('emailBlacklist')) ?></textarea>
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>

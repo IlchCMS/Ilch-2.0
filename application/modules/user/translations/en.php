@@ -88,6 +88,7 @@ return [
     'confirmCode' => 'Activation Code',
     'unlockUserAcc' => 'unlock User',
     'acceptRule' => 'Rules, disclaimer of liability and privacy policy read and accepted',
+    'emailOnBlacklist' => 'Your e-mail address or your email service provider is on the blacklist. Registration not possible.',
     'registButton' => 'Register',
     'backButton' => 'Back',
     'nextButton' => 'Next',
