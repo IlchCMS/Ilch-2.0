@@ -19,6 +19,9 @@ class Result
     /** @var string */
     const USER_NOT_ACTIVATED = 'userNotActivated';
 
+    /** @var string */
+    const USER_LOCKED = 'userLocked';
+
     /** @var bool */
     private $success;
 

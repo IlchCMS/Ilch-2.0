@@ -354,6 +354,9 @@ class Config extends \Ilch\Config\Install
                              DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_visits';
                              DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_browser';
                              DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_os';");
+
+                // Add "locked" column
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `locked` TINYINT(1) NOT NULL DEFAULT 0;');
                 break;
         }
 

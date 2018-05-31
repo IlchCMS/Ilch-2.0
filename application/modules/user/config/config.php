@@ -113,6 +113,7 @@ class Config extends \Ilch\Config\Install
                 `confirmed` TINYINT(1) DEFAULT 1,
                 `confirmed_code` VARCHAR(255) NULL DEFAULT NULL,
                 `selector` char(18),
+                `locked` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
             

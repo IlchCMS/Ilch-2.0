@@ -58,6 +58,8 @@ class Login
             return new LoginResult(false, $user, LoginResult::LOGIN_FAILED);
         } elseif (!$user->getConfirmed()) {
             return new LoginResult(false, $user, LoginResult::USER_NOT_ACTIVATED);
+        } elseif ($user->getLocked()) {
+            return new LoginResult(false, $user, LoginResult::USER_LOCKED);
         }
 
         $_SESSION['user_id'] = $user->getId();

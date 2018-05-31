@@ -296,6 +296,13 @@ class Index extends \Ilch\Controller\Admin
 
                 $userId = $userMapper->save($user);
 
+                // Check if user got locked and delete his authtokens.
+                if (!empty($userData['locked']) && $userData['locked'] == 1) {
+                    $authTokenMapper = new AuthTokenMapper();
+
+                    $authTokenMapper->deleteAllAuthTokenOfUser($userId);
+                }
+
                 if (empty($userData['id'])) {
                     $this->addMessage('newUserMsg');
                 } else {
@@ -307,9 +314,7 @@ class Index extends \Ilch\Controller\Admin
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $redirectTarget = ['action' => 'treat'];
-            if (empty($userData['id'])) {
-                $redirectTarget = ['action' => 'treat'];
-            } else {
+            if (!empty($userData['id'])) {
                 $redirectTarget = ['action' => 'treat', 'id' => $userData['id']];
             }
 

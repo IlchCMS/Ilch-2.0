@@ -44,6 +44,8 @@ return [
     'menuSettingsGallery' => 'Gallery',
     'usergalleryAllowed' => 'Allow Gallery?',
     'usergalleryNotAllowed' => 'Gallery disabled by the administrator',
+    'lockUser' => 'Lock user?',
+    'locked' => 'locked',
 
     'groupName' => 'Groupname',
     'groupAssignedUsers' => 'Number "Assigned users"',
@@ -157,6 +159,7 @@ return [
     'loginSuccessful' => 'You logged in successfully.',
     'loginFailed' => 'You used a incorrect username, e-mail or password. Please verify you inputs and try it again.',
     'userNotActivated' => 'The user account is not activated yet. Please activate your account with the link in the sent e-mail or request a new e-mail with an activation link.',
+    'userLocked' => 'User is locked. Login therefore not possible.',
     'rememberMe' => 'Remember me?',
     'registDescription' => 'The registration is done in just a moment and allows you to access more features. The administration can give registered users further rights, too.',
     'accountApproved' => 'Your account was approved. You can now login with your credentials.',

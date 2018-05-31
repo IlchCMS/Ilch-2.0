@@ -55,6 +55,7 @@ class Password
      * @param int $length
      * @param string|null $keyspace
      * @return string
+     * @throws \Exception
      */
     public static function generateSecurePassword($length = 16, $keyspace = null)
     {

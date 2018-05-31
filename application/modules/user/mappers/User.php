@@ -101,6 +101,7 @@ class User extends \Ilch\Mapper
      * none found.
      *
      * @param  array $where
+     * @param null $pagination
      * @return null|\Modules\User\Models\User[]
      */
     protected function getBy($where = [], $pagination = null)
@@ -274,6 +275,10 @@ class User extends \Ilch\Mapper
             $user->setSelector($userRow['selector']);
         }
 
+        if (isset($userRow['locked'])) {
+            $user->setLocked($userRow['locked']);
+        }
+
         return $user;
     }
 
@@ -331,6 +336,10 @@ class User extends \Ilch\Mapper
 
         if ($selector !== null) {
             $fields['selector'] = $selector;
+        }
+
+        if ($user->getLocked() !== null) {
+            $fields['locked'] = $user->getLocked();
         }
 
         $fields['first_name'] = $user->getFirstName();
@@ -420,7 +429,7 @@ class User extends \Ilch\Mapper
      * Returns a array of all user model objects.
      *
      * @param array|mixed $where
-     *
+     * @param null $pagination
      * @return UserModel[]
      */
     public function getUserList($where = [], $pagination = null)
@@ -500,7 +509,7 @@ class User extends \Ilch\Mapper
     public function getDummyUser()
     {
         $user = new UserModel();
-        $groups = new \Modules\User\Mappers\Group();
+        $groups = new GroupMapper();
         $user->setId('');
         $user->setName('No longer exist');
         $user->setAvatar('static/img/noavatar.jpg');

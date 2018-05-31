@@ -94,7 +94,7 @@ if ($user->getId()) {
     <?php endif; ?>
     <div class="form-group">
         <div class="col-lg-3 control-label">
-            <?=$this->getTrans('usergalleryAllowed') ?>:
+            <?=$this->getTrans('usergalleryAllowed') ?>
         </div>
         <div class="col-lg-9">
             <div class="flipswitch">
@@ -106,6 +106,22 @@ if ($user->getId()) {
             </div>
         </div>
     </div>
+    <?php if ($user->getId()) : ?>
+    <div class="form-group">
+        <div class="col-lg-3 control-label">
+            <?=$this->getTrans('lockUser') ?>
+        </div>
+        <div class="col-lg-9">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="locked-yes" name="locked" value="1" <?php if ($user->getLocked() == '1') { echo 'checked="checked"'; } ?> />
+                <label for="locked-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="locked-no" name="locked" value="0" <?php if ($user->getLocked() != '1') { echo 'checked="checked"'; } ?> />
+                <label for="locked-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
     <div class="form-group">
         <label for="assignedGroups" class="col-lg-3 control-label">
                 <?=$this->getTrans('assignedGroups') ?>

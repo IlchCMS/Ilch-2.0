@@ -211,6 +211,13 @@ class User extends \Ilch\Model
     protected $groups = [];
 
     /**
+     * Indicates if user is locked.
+     *
+     * @var int
+     */
+    protected $locked;
+
+    /**
      * Returns the id of the user.
      *
      * @return int
@@ -530,6 +537,7 @@ class User extends \Ilch\Model
      * Saves the date_confirmed timestamp of the user.
      *
      * @param \Ilch\Date $dateConfirmed
+     * @return User
      */
     public function setDateConfirmed($dateConfirmed)
     {
@@ -906,6 +914,29 @@ class User extends \Ilch\Model
     public function setBirthday($birthday)
     {
         $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    /**
+     * Get if user is locked.
+     *
+     * @return mixed
+     */
+    public function getLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * Set if user is locked
+     *
+     * @param mixed $locked
+     * @return User
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
 
         return $this;
     }

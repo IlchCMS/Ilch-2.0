@@ -44,6 +44,8 @@ return [
     'menuSettingsGallery' => 'Galerie',
     'usergalleryAllowed' => 'Galerie erlauben?',
     'usergalleryNotAllowed' => 'Galerie wurde vom Administrator deaktiviert',
+    'lockUser' => 'Benutzer sperren?',
+    'locked' => 'gesperrt',
 
     'groupName' => 'Gruppenname',
     'groupAssignedUsers' => 'Anzahl "Zugeordnete Benutzer"',
@@ -153,6 +155,7 @@ return [
     'loginSuccessful' => 'Sie haben sich erfolgreich eingeloggt.',
     'loginFailed' => 'Sie haben einen fehlerhaften Benutzername, E-Mail oder Passwort angegeben. Bitte prüfen Sie ihre Angaben und versuche Sie es erneut.',
     'userNotActivated' => 'Benutzer nicht freigeschaltet! Bitte bestätigen Sie ihren Account in der verschickten E-Mail oder fordern Sie eine neue E-Mail mit einen Freischaltlink an.',
+    'userLocked' => 'Benutzer ist gesperrt. Eine Anmeldung ist daher nicht möglich.',
     'rememberMe' => 'Angemeldet bleiben?',
     'registDescription' => 'Die Registrierung ist in wenigen Augenblicken erledigt und ermöglicht Ihnen auf weitere Funktionen zuzugreifen. Die Administration kann registrierten Benutzern auch zusätzliche Berechtigungen zuweisen.',
     'accountApproved' => 'Ihr Benutzerkonto wurde erfolgreich freigeschaltet. Sie können sich jetzt mit Ihren Benutzerdaten anmelden.',
