@@ -269,6 +269,7 @@ return [
 
     'users' => 'Users',
     'setfree' => 'Set free',
+    'unlock' => 'Unlock',
 
     'back' => 'Back to mainpage',
     'alreadyLoggedIn' => 'You are already logged in!',

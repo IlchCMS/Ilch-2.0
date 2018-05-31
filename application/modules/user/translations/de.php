@@ -265,6 +265,7 @@ return [
 
     'users' => 'Benutzer',
     'setfree' => 'Freischalten',
+    'unlock' => 'Entsperren',
 
     'back' => 'Zurück zur Startseite',
     'alreadyLoggedIn' => 'Du bist bereits angemeldet!',

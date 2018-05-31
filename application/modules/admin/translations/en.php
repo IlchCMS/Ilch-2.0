@@ -13,6 +13,7 @@ return [
     'updateSuccess' => 'Successfully updated',
     'uninstallSuccess' => 'Successfully uninstalled',
     'freeSuccess' => 'Successful activated',
+    'unlockSuccess' => 'Successfully unlocked',
     'installSuccess' => 'Successfully installed',
     'treat' => 'Edit',
     'menuChange' => 'Menu change',

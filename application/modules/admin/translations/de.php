@@ -13,6 +13,7 @@ return [
     'updateSuccess' => 'Erfolgreich aktualisiert',
     'uninstallSuccess' => 'Erfolgreich deinstalliert',
     'freeSuccess' => 'Erfolgreich freigeschaltet',
+    'unlockSuccess' => 'Erfolgreich entsperrt',
     'installSuccess' => 'Erfolgreich installiert',
     'treat' => 'Bearbeiten',
     'menuChange' => 'Menü bearbeiten',

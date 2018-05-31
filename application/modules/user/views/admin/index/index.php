@@ -2,7 +2,7 @@
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
-        <li <?php if (!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
+        <li <?php if (!$this->getRequest()->getParam('showsetfree') && !$this->getRequest()->getParam('showlocked')) { echo 'class="active"'; } ?>>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
                 <?=$this->getTrans('users') ?>
             </a>
@@ -11,6 +11,13 @@
             <li <?php if ($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                     <?=$this->getTrans('setfree'); ?> <span class="badge"><?=$this->get('badge') ?></span>
+                </a>
+            </li>
+        <?php endif; ?>
+        <?php if ($this->get('badgeLocked') > 0): ?>
+            <li <?php if ($this->getRequest()->getParam('showlocked')) { echo 'class="active"'; } ?>>
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showlocked' => 1]) ?>">
+                    <?=$this->getTrans('unlock'); ?> <span class="badge"><?=$this->get('badgeLocked') ?></span>
                 </a>
             </li>
         <?php endif; ?>
@@ -71,11 +78,13 @@
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_users', $user->getId()) ?></td>
                             <td>
-                                <?php  if ($this->getRequest()->getParam('showsetfree')): ?>
-                                    <a href="<?=$this->getUrl(['action' => 'setfree', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa fa-check text-success"></i></a>
-                                <?php else: ?>                                
-                                    <?=$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]) ?>
-                                <?php endif; ?>
+                            <?php if ($this->getRequest()->getParam('showsetfree')): ?>
+                                <a href="<?=$this->getUrl(['action' => 'setfree', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa fa-check text-success"></i></a>
+                            <?php elseif ($this->getRequest()->getParam('showlocked')): ?>
+                                <a href="<?=$this->getUrl(['action' => 'unlock', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('unlock') ?>"><i class="fa fa-check text-success"></i></a>
+                            <?php else: ?>
+                                <?=$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]) ?>
+                            <?php endif; ?>
                             </td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]) ?></td>
                             <td><?=$this->escape($user->getName()) ?></td>

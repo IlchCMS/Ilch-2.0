@@ -109,6 +109,8 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('showsetfree')) {
             $entries = $userMapper->getUserList(['confirmed' => 0], $pagination);
+        } else if ($this->getRequest()->getParam('showlocked')) {
+            $entries = $userMapper->getUserList(['locked' => 1], $pagination);
         } else {
             $entries = $userMapper->getUserList(['confirmed' => 1], $pagination);
         }
@@ -117,6 +119,7 @@ class Index extends \Ilch\Controller\Admin
             ->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'))
             ->set('errorMsg', $this->getRequest()->getParam('errorMsg'))
             ->set('badge', count($userMapper->getUserList(['confirmed' => 0])))
+            ->set('badgeLocked', count($userMapper->getUserList(['locked' => 1])))
             ->set('pagination', $pagination);
     }
 
@@ -172,6 +175,25 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->redirect(['action' => 'index', 'showsetfree' => 1]);
+    }
+
+    /**
+     * Unlock a locked user
+     */
+    public function unlockAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $userMapper = new UserMapper();
+
+            $userModel = new UserModel();
+            $userModel->setId($this->getRequest()->getParam('id'));
+            $userModel->setLocked(0);
+            $userMapper->save($userModel);
+
+            $this->addMessage('unlockSuccess');
+        }
+
+        $this->redirect(['action' => 'index', 'showlocked' => 1]);
     }
 
     /**
