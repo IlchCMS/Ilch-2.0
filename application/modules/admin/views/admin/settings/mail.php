@@ -17,7 +17,7 @@
     </div>
     <div class="form-group">
         <label for="smtp_server" class="col-lg-2 control-label">
-            <?=$this->getTrans('SMTP-Server-Adresse') ?>:
+            <?=$this->getTrans('smtp_server') ?>:
         </label>
         <div class="col-lg-6">
             <input class="form-control"
