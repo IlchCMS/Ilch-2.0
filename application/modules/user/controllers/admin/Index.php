@@ -319,6 +319,7 @@ class Index extends \Ilch\Controller\Admin
                 $userId = $userMapper->save($user);
 
                 // Check if user got locked and delete his authtokens.
+                // TODO Implement deletion of the users session
                 if (!empty($userData['locked']) && $userData['locked'] == 1) {
                     $authTokenMapper = new AuthTokenMapper();
 

@@ -296,7 +296,8 @@ function captchaNeeded()
  * @param string $emailAddress
  * @return bool
  */
-function isEmailOnBlacklist($emailAddress) {
+function isEmailOnBlacklist($emailAddress)
+{
     if (empty($emailAddress)) {
         return false;
     }
