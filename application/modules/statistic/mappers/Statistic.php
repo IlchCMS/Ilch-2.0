@@ -562,6 +562,8 @@ class Statistic extends \Ilch\Mapper
                 return "Opera";
             } elseif (preg_match("=Edge/([0-9\.]*)=", $useragent)) {
                 return "Edge";
+            } elseif (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent)) {
+                return "Vivaldi";
             } elseif (preg_match("=Chrome/([0-9\.]*)=", $useragent)) {
                 return "Chrome";
             } elseif (preg_match('=Safari/=', $useragent)) {
@@ -589,6 +591,12 @@ class Statistic extends \Ilch\Mapper
                 }
                 return $browser[1];
             } elseif (preg_match("=Edge/([0-9\.]*)=", $useragent, $browser)) {
+                $tmp = explode('.', $browser[1]);
+                if (count($tmp) > 2) {
+                    $browser[1] = $tmp[0] . '.' . $tmp[1];
+                }
+                return $browser[1];
+            } elseif (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
