@@ -19,7 +19,7 @@ $version = $this->get('version');
 <?=$this->getTokenField() ?>
 <?php endif; ?>
 <div class="row">
-    <?php if ($this->get('guestbookEntries') or $this->get('partnerEntries')): ?>
+    <?php if ($this->get('guestbookEntries') or $this->get('partnerEntries') or $this->get('usersNotConfirmed')): ?>
         <div class="col-lg-6 col-md-6">
             <h1><?=$this->getTrans('awaitingUnlocking') ?></h1>
             <div class="table-responsive">
