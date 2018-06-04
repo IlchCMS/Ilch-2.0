@@ -19,10 +19,12 @@ class Settings extends BaseController
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('forum_threadsPerPage', $this->getRequest()->getPost('threadsPerPage'));
             $this->getConfig()->set('forum_postsPerPage', $this->getRequest()->getPost('postsPerPage'));
+            $this->getConfig()->set('forum_postVoting', $this->getRequest()->getPost('postVoting'));
             $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('threadsPerPage', $this->getConfig()->get('forum_threadsPerPage'));
         $this->getView()->set('postsPerPage', $this->getConfig()->get('forum_postsPerPage'));
+        $this->getView()->set('postVoting', $this->getConfig()->get('forum_postVoting'));
     }
 }

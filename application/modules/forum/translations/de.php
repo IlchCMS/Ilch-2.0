@@ -67,6 +67,7 @@ return [
     'missingTitle' => 'Es muss ein Titel angegeben werden.',
     'threadsPerPage' => 'Themen pro Seite',
     'postsPerPage' => 'Beiträge pro Seite',
+    'postVoting' => 'Mag ich-Schaltfläche aktivieren',
     'currentInfo' => 'Aktuelle Informationen',
     'activeUser' => 'Zurzeit aktive Benutzer',
     'legendNewPost' => 'Ungelesene Beiträge',

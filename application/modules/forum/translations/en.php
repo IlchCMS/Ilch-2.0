@@ -67,6 +67,7 @@ return [
     'missingTitle' => 'It is required to add a title.',
     'threadsPerPage' => 'Threads per page',
     'postsPerPage' => 'Posts per page',
+    'postVoting' => 'Enable Like button',
     'currentInfo' => 'Current Information',
     'activeUser' => 'Currently Active Users',
     'legendNewPost' => 'Unread posts',

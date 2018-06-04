@@ -52,6 +52,9 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('forum_postVoting', '0');
     }
 
     public function uninstall()
@@ -167,6 +170,9 @@ class Config extends \Ilch\Config\Install
                     (11, "Legende", 7000),
                     (12, "Foren Gott", 10000);');
             case "1.8":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+
+                $databaseConfig->set('forum_postVoting', '0');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
         }
     }

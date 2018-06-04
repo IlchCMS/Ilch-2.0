@@ -151,6 +151,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     <dd><b><?=$this->getTrans('joined') ?>:</b> <?=$post->getAutor()->getDateCreated() ?></dd>
                 </dl>
             </div>
+            <?php if ($this->get('postVoting')) : ?>
             <div class="post-footer ilch-bg">
                 <?php
                 $votes = explode(',', $post->getVotes());
@@ -166,6 +167,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     </button>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
         <?php endforeach; ?>
         <div class="topic-actions">
             <?php if ($topicpost->getStatus() == 0): ?>

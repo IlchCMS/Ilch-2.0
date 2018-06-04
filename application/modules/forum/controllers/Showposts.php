@@ -101,6 +101,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('userAccess', new Accesses($this->getRequest()));
         $this->getView()->set('rankMapper', $rankMapper);
+        $this->getView()->set('postVoting', $this->getConfig()->get('forum_postVoting'));
     }
 
     public function deleteAction()
@@ -214,8 +215,10 @@ class Showposts extends \Ilch\Controller\Frontend
 
     public function voteAction()
     {
-        $postMapper = new PostMapper();
-        $postMapper->saveVotes($this->getRequest()->getParam('id'), $this->getUser()->getId());
+        if ($this->getConfig()->get('forum_postVoting')) {
+            $postMapper = new PostMapper();
+            $postMapper->saveVotes($this->getRequest()->getParam('id'), $this->getUser()->getId());
+        }
 
         $this->redirect(['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]);
     }
