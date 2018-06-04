@@ -146,7 +146,11 @@
 
     CKEDITOR.on('instanceReady', function(e) {
         $('.cke_contents iframe').contents().keyup(function(){
-            $(".chat-textarea").find('#chatSendBtn').show();
+            if (CKEDITOR.instances.ck_1.getData().trim() === '') {
+                $(".chat-textarea").find('#chatSendBtn').hide();
+            } else {
+                $(".chat-textarea").find('#chatSendBtn').show();
+            }
         });
     });
 
