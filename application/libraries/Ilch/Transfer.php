@@ -417,6 +417,11 @@ class Transfer
                         if (method_exists($config, 'install')) {
                             $content[] = $config->install();
 
+                            // Skip module related stuff if this is a layout install.
+                            if (strpos($thisFileName, 'application/modules/') === false) {
+                                continue;
+                            }
+
                             $moduleMapper = new \Modules\Admin\Mappers\Module();
                             $moduleModel = new \Modules\Admin\Models\Module();
                             $moduleModel->setKey($config->config['key']);
