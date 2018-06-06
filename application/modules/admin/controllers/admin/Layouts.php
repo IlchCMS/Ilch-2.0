@@ -209,9 +209,15 @@ class Layouts extends \Ilch\Controller\Admin
         if ($this->getConfig()->get('default_layout') == $this->getRequest()->getParam('key')) {
             $this->addMessage('cantDeleteDefaultLayout', 'info');
         } else {
-            removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
-            unlink(ROOT_PATH.'/updates/'.$this->getRequest()->getParam('key').'.zip-signature.sig');
+            $configClass = '\\Layouts\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
+            $config = new $configClass();
 
+            if (method_exists($config, 'uninstall')) {
+                $config->uninstall();
+            }
+            removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
+
+            // Call uninstall() of module related to the layout
             if (is_dir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'))) {
                 $modules = new ModuleMapper();
 
