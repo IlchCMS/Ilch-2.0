@@ -168,14 +168,14 @@ class Transfer
     {
         $result = curl_exec($this->transferUrl);
         if ($result == false) {
-            return;
+            return '';
         }
         return $result;
     }
 
     /**
      * Gets the VersionList.
-     * @return string
+     * @return string[]
      */
     public function getVersionsList()
     {
@@ -257,7 +257,7 @@ class Transfer
     /**
      * @param string $opt
      * @param string $param
-     * @return array
+     * @return $this
      */
     public function setCurlOpt($opt, $param)
     {
@@ -321,22 +321,19 @@ class Transfer
      */
     public function validateCert($certificate)
     {
-        if (!is_file(ROOT_PATH.'/certificate/Certificate.crt')) {
+        if (!is_file($certificate)) {
             return false;
         }
 
         $public_key = file_get_contents($certificate);
-
         $certinfo = openssl_x509_parse($public_key);
         $validTo = $certinfo['validTo_time_t'];
 
-        if ($validTo >= time()) {
-            return true;
-        }
-        return false;
+        return ($validTo >= time());
     }
 
     /**
+     * @param string $installedVersion
      * @return true/false
      */
     public function update($installedVersion)
