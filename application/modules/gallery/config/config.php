@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.2',
+        'version' => '1.3',
         'icon_small' => 'fa-picture-o',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
