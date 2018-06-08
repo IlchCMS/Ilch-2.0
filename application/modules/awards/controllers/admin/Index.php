@@ -95,33 +95,53 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost()) {
+            // Add BASE_URL if image starts with application to get a complete URL for validation
+            $image = trim($this->getRequest()->getPost('image'));
+            if (!empty($image)) {
+                if (substr($image, 0, 11) == 'application') {
+                    $image = BASE_URL.'/'.$image;
+                }
+            }
+
+            $post = [
+                'date' => trim($this->getRequest()->getPost('date')),
+                'rank' => trim($this->getRequest()->getPost('rank')),
+                'image' => $image,
+                'utId' => trim($this->getRequest()->getPost('utId')),
+                'event' => trim($this->getRequest()->getPost('event')),
+                'page' => trim($this->getRequest()->getPost('page'))
+            ];
+
             Validation::setCustomFieldAliases([
                 'utId' => 'invalidUserTeam',
             ]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validation = Validation::create($post, [
                 'date'  => 'required',
                 'rank'  => 'required|numeric|integer|min:1',
+                'image' => 'url',
                 'utId'  => 'required',
                 'event' => 'required',
-                'page' => 'url',
+                'page' => 'url'
             ]);
 
+            $post['image'] = trim($this->getRequest()->getPost('image'));
+
             if ($validation->isValid()) {
-                $typ = substr($this->getRequest()->getPost('utId'), 0, 1);
-                $userTeamId = substr($this->getRequest()->getPost('utId'), 2);
+                $typ = substr($post['utId'], 0, 1);
+                $userTeamId = substr($post['utId'], 2);
 
                 $model = new AwardsModel();
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-                $model->setDate(new \Ilch\Date($this->getRequest()->getPost('date')))
-                    ->setRank($this->getRequest()->getPost('rank'))
+                $model->setDate(new \Ilch\Date($post['date']))
+                    ->setRank($post['rank'])
                     ->setTyp($typ)
-                    ->setImage($this->getRequest()->getPost('image'))
+                    ->setImage($post['image'])
                     ->setUTId($userTeamId)
-                    ->setEvent($this->getRequest()->getPost('event'))
-                    ->setURL($this->getRequest()->getPost('page'));
+                    ->setEvent($post['event'])
+                    ->setURL($post['page']);
                 $awardsMapper->save($model);
 
                 $this->redirect()

@@ -58,7 +58,7 @@ $teamsMapper = $this->get('teamsMapper');
                     </div>
                     <?php if ($awards->getImage() != ''): ?>
                         <div class="rank_image">
-                            <img src="<?=$this->getBaseUrl($awards->getImage()) ?>" alt="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" />
+                            <img src="<?=(substr($awards->getImage(), 0, 11) == 'application') ? $this->getBaseUrl($awards->getImage()) : $this->escape($awards->getImage()) ?>" alt="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" />
                         </div>
                     <?php endif; ?>
                 </div>
