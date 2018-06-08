@@ -40,6 +40,7 @@ if ($awards != '') {
                    id="rank"
                    name="rank"
                    min="1"
+                   placeholder="1"
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->originalInput('rank') ?>" />
         </div>
     </div>
@@ -53,8 +54,14 @@ if ($awards != '') {
                        class="form-control"
                        id="selectedImage"
                        name="image"
+                       placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                        value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getImage()) : $this->originalInput('image') ?>" />
-                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon">
+                    <span class="fa fa-times"></span>
+                </span>
+                <span class="input-group-addon">
+                    <a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a>
+                </span>
             </div>
         </div>
     </div>
