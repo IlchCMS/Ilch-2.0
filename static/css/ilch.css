@@ -83,3 +83,12 @@ img {
 .ilch-link-red {
     color: #AA0000;
 }
+
+
+/* Set cursor and remove left border on input-group-addon fa-times span to remove input value */
+.input-group .input-group-addon span.fa-times {
+    cursor: pointer;
+}
+.input-group > :not(.input-group-addon):not(.input-group-btn) + .input-group-addon {
+    border-left-width: 0;
+}
