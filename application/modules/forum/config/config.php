@@ -169,7 +169,7 @@ class Config extends \Ilch\Config\Install
                     (10, "Kaiser", 5000),
                     (11, "Legende", 7000),
                     (12, "Foren Gott", 10000);');
-            case "1.8":
+            case "1.7":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
 
                 $databaseConfig->set('forum_postVoting', '0');
