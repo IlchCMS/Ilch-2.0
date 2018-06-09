@@ -169,21 +169,21 @@ $(document).ready (
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
-                        <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
+                        <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="form-group"><label for="assignedGroupsReplay" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsReplay" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
-                        <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
+                        <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="form-group"><label for="assignedGroupsCreate" class="col-lg-3 control-label"><?=$this->getTrans('create') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsCreate" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
-                        <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
+                        <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>';
 
