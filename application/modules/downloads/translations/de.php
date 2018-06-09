@@ -34,6 +34,8 @@ return [
     'treatFile' => 'Datei bearbeiten',
     'menuDownloadsBack' => 'zurück zu Downloads',
     'fileTitle' => 'Titel',
+    'fileImage' => 'Datei-Bild',
+    'fileImageInfo' => 'Bild für Datei hinzufügen',
     'fileDesc' => 'Beschreibung',
     'missingTitle' => 'Es muss ein Titel angegeben werden.',
     'missingCat' => 'Es muss zuerst eine Kategorie hinzugefügt werden.',

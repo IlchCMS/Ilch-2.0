@@ -34,6 +34,8 @@ return [
     'treatFile' => 'Treat file',
     'menuDownloadsBack' => 'back to Downloads',
     'fileTitle' => 'Title',
+    'fileImage' => 'File image',
+    'fileImageInfo' => 'Add image for file',
     'fileDesc' => 'Description',
     'missingTitle' => 'It is required to add a title.',
     'missingCat' => 'It is required to first add a category.',
