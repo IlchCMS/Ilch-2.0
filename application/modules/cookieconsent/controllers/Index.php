@@ -6,7 +6,7 @@
 
 namespace Modules\Cookieconsent\Controllers;
 
-class Index extends \Ilch\Controller\FrontEnd
+class Index extends \Ilch\Controller\Frontend
 {
     public function init()
     {
