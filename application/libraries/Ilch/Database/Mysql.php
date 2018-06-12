@@ -109,6 +109,7 @@ class Mysql
      *
      * @param  string $sql
      * @return \mysqli_result
+     * @throws Exception
      */
     public function query($sql)
     {
@@ -186,6 +187,7 @@ class Mysql
      *
      * @param  string $sql
      * @return string|int
+     * @throws Exception
      */
     public function queryCell($sql)
     {
@@ -199,6 +201,7 @@ class Mysql
      *
      * @param  string $table
      * @return true|false
+     * @throws Exception
      */
     public function ifTableExists($table)
     {
@@ -213,10 +216,31 @@ class Mysql
     }
 
     /**
+     * Check if column in table exists.
+     *
+     * @param  string $table
+     * @param  string $column
+     * @return true|false
+     * @throws Exception
+     */
+    public function ifColumnExists($table, $column)
+    {
+        $sql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME = '$column' AND TABLE_NAME = '$table'";
+        $result = $this->query($sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Select one row from table.
      *
      * @param  string $sql
      * @return array|null
+     * @throws Exception
      */
     public function queryRow($sql)
     {
@@ -230,6 +254,7 @@ class Mysql
      *
      * @param  string $sql
      * @return array
+     * @throws Exception
      */
     public function queryArray($sql)
     {
@@ -248,6 +273,7 @@ class Mysql
      *
      * @param  string $sql
      * @return array
+     * @throws Exception
      */
     public function queryList($sql)
     {
@@ -308,6 +334,7 @@ class Mysql
      *
      * @param string $table
      * @return \mysqli_result
+     * @throws Exception
      */
     public function drop($table)
     {
@@ -321,6 +348,7 @@ class Mysql
      *
      * @param string $table
      * @return \mysqli_result
+     * @throws Exception
      */
     public function truncate($table)
     {
@@ -420,6 +448,7 @@ class Mysql
      *
      * @param  string $sql The string with the multiple queries.
      * @return boolean false if the first statement failed. Otherwise true.
+     * @throws Exception
      */
     public function queryMulti($sql)
     {
@@ -457,6 +486,7 @@ class Mysql
      * Drop all tables for given prefix.
      *
      * @param string $prefix
+     * @throws Exception
      */
     public function dropTablesByPrefix($prefix)
     {
