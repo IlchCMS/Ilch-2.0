@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.8',
+        'version' => '1.9',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -45,7 +45,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.0',
+        'ilchCore' => '2.1.11',
         'phpVersion' => '5.6'
     ];
 
@@ -177,6 +177,10 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig->set('forum_postVoting', '0');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
+            case "1.8":
+                if (!$this->db()->ifColumnExists('forum_posts', 'votes')) {
+                    $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
+                }
         }
     }
 }
