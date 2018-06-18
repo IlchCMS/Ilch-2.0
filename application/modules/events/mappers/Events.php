@@ -95,7 +95,9 @@ class Events extends \Ilch\Mapper
     }
 
     /**
+     * @param null $limit
      * @return EventMapper[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getEventListUpcoming($limit = null)
     {
@@ -148,7 +150,9 @@ class Events extends \Ilch\Mapper
     }
 
     /**
+     * @param null $limit
      * @return EventMapper[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getEventListPast($limit = null)
     {
@@ -189,6 +193,7 @@ class Events extends \Ilch\Mapper
      * @param int $end
      *
      * @return EventModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getEntriesForJson($start, $end)
     {
@@ -228,7 +233,7 @@ class Events extends \Ilch\Mapper
      * @param string $address
      * @param string $googleMapsKey
      *
-     * @return $latlongitude
+     * @return string $latlongitude
      */
     public function getLatLongFromAddress($address, $googleMapsKey) 
     {
