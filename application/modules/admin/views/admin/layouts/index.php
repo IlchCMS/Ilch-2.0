@@ -38,6 +38,7 @@ $versionsOfLayouts = $this->get('versionsOfLayouts');
                     <div class="pull-left">
                         <?php
                         $layoutOnUpdateServerFound = null;
+                        $layoutsOnUpdateServer = (empty($layoutsOnUpdateServer)) ? [] : $layoutsOnUpdateServer;
                         foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer) {
                             if ($layoutOnUpdateServer->key == $layout->getKey()) {
                                 $layoutOnUpdateServerFound = $layoutOnUpdateServer;
