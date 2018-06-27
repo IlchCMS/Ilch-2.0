@@ -66,9 +66,19 @@ class Show extends \Ilch\Controller\Frontend
             $this->getView()->set('eventEntrants', $entrantsMapper->getEventEntrants($this->getRequest()->getParam('id'), $this->getUser()->getId()));
         }
 
+        $eventEntrantsUser = $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'));
+        foreach ($eventEntrantsUser as $entrant) {
+            $userDetails[$entrant->getUserId()] = $userMapper->getUserById($entrant->getUserId());
+        }
+
         $user = null;
         if ($this->getUser()) {
-            $user = $userMapper->getUserById($this->getUser()->getId());
+            // Check if user is already in $userDetails
+            if (isset($userDetails[$this->getUser()->getId()])) {
+                $user = $userDetails[$this->getUser()->getId()];
+            } else {
+                $user = $userMapper->getUserById($this->getUser()->getId());
+            }
         }
 
         $readAccess = [3];
@@ -90,8 +100,9 @@ class Show extends \Ilch\Controller\Frontend
         $this->getView()->set('userMapper', $userMapper)
             ->set('currencyMapper', $currencyMapper)
             ->set('event', $event)
-            ->set('eventEntrantsUser', $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id')))
-            ->set('eventEntrantsCount', count($entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'))))
+            ->set('eventEntrantsUser', $eventEntrantsUser)
+            ->set('eventEntrantsCount', count($eventEntrantsUser))
+            ->set('userDetails', $userDetails)
             ->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/'.$this->getRequest()->getParam('id')))
             ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
             ->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'))

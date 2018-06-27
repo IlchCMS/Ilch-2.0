@@ -3,6 +3,7 @@ $event = $this->get('event');
 $eventEntrants = $this->get('eventEntrants');
 $userMapper = $this->get('userMapper');
 $currencyMapper = $this->get('currencyMapper');
+$userDetails = $this->get('userDetails');
 
 if (!empty($event)) {
     $start = new \Ilch\Date($event->getStart());
@@ -10,7 +11,11 @@ if (!empty($event)) {
     $latLong = explode(',', $event->getLatLong());
 
     if ($event->getUserId()) {
-        $user = $userMapper->getUserById($event->getUserId());
+        if (isset($userDetails[$event->getUserId()])) {
+            $user = $userDetails[$event->getUserId()];
+        } else {
+            $user = $userMapper->getUserById($event->getUserId());
+        }
     }
 }
 ?>
@@ -175,7 +180,7 @@ if (!empty($event)) {
                     <div style="margin-left: 2px;">
                         <?php if ($this->get('eventEntrantsCount') != ''): ?>
                             <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
-                            <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
+                            <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>
                                 <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -224,7 +229,7 @@ if (!empty($event)) {
                         <strong><?=$this->getTrans('comments') ?></strong>
                     </div>
                     <?php foreach ($this->get('eventComments') as $eventComments): ?>
-                        <?php $commentUser = $userMapper->getUserById($eventComments->getUserId()); ?>
+                        <?php $commentUser = (isset($userDetails[$eventComments->getUserId()])) ? $userDetails[$eventComments->getUserId()] : $userMapper->getUserById($eventComments->getUserId()); ?>
                         <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
                         <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
                             <?php if ($this->getUser()): ?>
@@ -259,7 +264,7 @@ if (!empty($event)) {
                         <?php if ($this->get('eventEntrantsCount') != ''): ?>
                             <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
                                 <div class="entrants-user">
-                                    <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
+                                    <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>
                                     <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" class="entrants-user-link">
                                         <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>">
                                         <?=$entrantsUser->getName() ?>
