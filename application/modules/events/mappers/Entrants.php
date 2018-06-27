@@ -50,7 +50,6 @@ class Entrants extends \Ilch\Mapper
         $entryArray = $this->db()->select('*')
             ->from('events_entrants')
             ->where(['event_id' => $eventId])
-            ->limit('17')
             ->execute()
             ->fetchRows();
 
