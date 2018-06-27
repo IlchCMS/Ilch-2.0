@@ -178,7 +178,7 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('forum_postVoting', '0');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
             case "1.8":
-                if (!$this->db()->ifColumnExists('forum_posts', 'votes')) {
+                if (!$this->db()->ifColumnExists('[prefix]_forum_posts', 'votes')) {
                     $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
                 }
         }
