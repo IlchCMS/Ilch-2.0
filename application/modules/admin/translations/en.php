@@ -241,7 +241,7 @@ return [
     'certificateKeyType' => 'Type',
     'certificateKeySize' => 'Key size',
     'bit' => ' bit',
-    'certificateDigest' => 'Fingerprint (SHA-1)',
+    'certificateDigest' => 'Fingerprint',
     'certificateCountry' => 'Country',
     'certificateCommonName' => 'Common Name',
     'certificateMissing' => 'Certificate missing. It is impossible to install updates without a certificate.',

@@ -59,8 +59,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><?=$this->getTrans('certificateDigest') ?></td>
+                    <td><?=$this->getTrans('certificateDigest').' (SHA-1)' ?></td>
                     <td><?=$this->get('certificateDigest') ?></td>
+                </tr>
+                <tr>
+                    <td><?=$this->getTrans('certificateDigest').' (SHA-256)' ?></td>
+                    <td><?=$this->get('certificateDigestSHA256') ?></td>
                 </tr>
                 <tr>
                     <td><?=$this->getTrans('certificateCountry') ?></td>

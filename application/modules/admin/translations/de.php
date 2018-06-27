@@ -241,7 +241,7 @@ return [
     'certificateKeyType' => 'Typ',
     'certificateKeySize' => 'Schlüssellänge',
     'bit' => ' Bit',
-    'certificateDigest' => 'Fingerabdruck (SHA-1)',
+    'certificateDigest' => 'Fingerabdruck',
     'certificateCountry' => 'Land',
     'certificateCommonName' => 'Gemeinsamer Name',
     'certificateMissing' => 'Zertifikat fehlt. Ohne Zertifikat können keine Updates installiert werden.',
