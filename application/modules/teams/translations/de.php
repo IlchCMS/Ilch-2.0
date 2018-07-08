@@ -20,6 +20,7 @@ return [
     'selectLeader' => 'Wähle ein Leader aus',
     'selectCoLeader' => 'Wähle ein CoLeader aus',
     'noTeams' => 'Keine Teams vorhanden',
+    'noTeam' => 'Team nicht vorhanden',
     'imageDelete' => 'Bild löschen?',
     'imageHeight' => 'Bild Höhe',
     'imageWidth' => 'Bild Breite',

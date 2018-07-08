@@ -20,6 +20,7 @@ return [
     'selectLeader' => 'Select a Leader',
     'selectCoLeader' => 'Select a CoLeader',
     'noTeams' => 'No Teams available',
+    'noTeam' => 'Team not available',
     'imageDelete' => 'Image delete?',
     'imageHeight' => 'Image hight',
     'imageWidth' => 'Image width',

@@ -10,11 +10,13 @@ $groupMapper = $this->get('groupMapper');
             <?php foreach ($this->get('teams') as $teamlist): ?>
                 <?php if ($teamlist->getOptShow() == 1): ?>
                     <div class="col-lg-12 team-name">
+                        <a href="<?=$this->getUrl(['action' => 'team', 'id' => $teamlist->getId()]) ?>">
                         <?php if ($teamlist->getImg() != ''): ?>
                             <img src="<?=$this->getBaseUrl().$teamlist->getImg() ?>" alt="<?=$this->escape($teamlist->getName()) ?>" title="<?=$this->escape($teamlist->getName()) ?>" />
                         <?php else: ?>
                             <h3><?=$this->escape($teamlist->getName()) ?></h3>
                         <?php endif; ?>
+                        </a>
                     </div>
                     <div class="col-lg-12">
                         <?php

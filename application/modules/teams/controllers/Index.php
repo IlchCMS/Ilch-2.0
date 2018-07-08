@@ -33,6 +33,25 @@ class Index extends \Ilch\Controller\Frontend
             ->set('teams', $teamsMapper->getTeams());
     }
 
+    public function teamAction()
+    {
+        $teamsMapper = new TeamsMapper();
+        $userMapper = new UserMapper();
+        $groupMapper = new GroupMapper();
+
+        $this->getLayout()->header()
+            ->css('static/css/teams.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuTeams'));
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuTeam'), ['action' => 'team', 'id' => $this->getRequest()->getParam('id')]);
+
+        $this->getView()->set('userMapper', $userMapper)
+            ->set('groupMapper', $groupMapper)
+            ->set('team', $teamsMapper->getTeamById($this->getRequest()->getParam('id')));
+    }
+
     public function joinAction()
     {
         $teamsMapper = new TeamsMapper();
