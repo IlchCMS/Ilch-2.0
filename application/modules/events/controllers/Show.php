@@ -67,6 +67,7 @@ class Show extends \Ilch\Controller\Frontend
         }
 
         $eventEntrantsUser = $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'));
+        $userDetails = [];
         foreach ($eventEntrantsUser as $entrant) {
             $userDetails[$entrant->getUserId()] = $userMapper->getUserById($entrant->getUserId());
         }
