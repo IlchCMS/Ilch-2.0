@@ -41,14 +41,14 @@ class Setting extends \Ilch\Mapper
      */
     public function delAvatarById($id) 
     {
-        $avatarRow = $this->db()->select('*')
+        $avatar = $this->db()->select('*')
             ->from('users')
             ->where(['id' => $id])
             ->execute()
-            ->fetchAssoc();
+            ->fetchCell('avatar');
 
-        if (file_exists($avatarRow['avatar'])) {
-            unlink($avatarRow['avatar']);
+        if (file_exists($avatar)) {
+            unlink($avatar);
         }
 
         $this->db()->update('users')
