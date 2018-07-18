@@ -41,7 +41,7 @@ class Setting extends \Ilch\Mapper
      */
     public function delAvatarById($id) 
     {
-        $avatar = $this->db()->select('*')
+        $avatar = $this->db()->select('avatar')
             ->from('users')
             ->where(['id' => $id])
             ->execute()
