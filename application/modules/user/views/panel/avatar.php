@@ -10,7 +10,7 @@ $settingMapper = $this->get('settingMapper');
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <h1>Avatar</h1>
+            <h1><?=$this->getTrans('menuAvatar') ?></h1>
             <form class="form-horizontal" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <?=$this->getTokenField(); ?>
@@ -30,7 +30,7 @@ $settingMapper = $this->get('settingMapper');
                         <div class="input-group col-lg-6">
                             <span class="input-group-btn">
                                 <span class="btn btn-primary btn-file">
-                                    Browse&hellip; <input type="file" name="avatar" accept="image/*">
+                                    <?=$this->getTrans('browse') ?> <input type="file" name="avatar" accept="image/*">
                                 </span>
                             </span>
                             <input type="text" 
