@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.1',
+        'version' => '1.2',
         'icon_small' => 'fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -45,13 +45,15 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('shoutbox_limit', '5')
             ->set('shoutbox_maxwordlength', '10')
-            ->set('shoutbox_maxtextlength', '50');
+            ->set('shoutbox_maxtextlength', '50')
+            ->set('shoutbox_writeaccess', '1,2');
     }
 
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_shoutbox`');
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_limit';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_maxtextlength';
             DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_maxwordlength';
             DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_writeaccess'");
     }

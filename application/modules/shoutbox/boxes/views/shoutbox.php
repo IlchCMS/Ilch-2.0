@@ -131,7 +131,7 @@ $(function() {
 
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
-            <?php if ($this->get('shoutbox') != ''): ?>
+            <?php if (!empty($this->get('shoutbox'))): ?>
                 <?php foreach ($this->get('shoutbox') as $shoutbox): ?>
                     <?php $userMapper = new \Modules\User\Mappers\User() ?>
                     <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
