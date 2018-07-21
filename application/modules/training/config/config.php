@@ -68,8 +68,9 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            return $installSql.'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("training/trainings/index/");';
+            $installSql.='INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("training/trainings/index/");';
         }
+        return $installSql;
     }
 
     public function getUpdate($installedVersion)
