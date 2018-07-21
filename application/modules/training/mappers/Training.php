@@ -66,6 +66,14 @@ class Training extends \Ilch\Mapper
         return reset($training);
     }
 
+    /**
+     * Get the trainings between start and end.
+     *
+     * @param string $start Y-m-d H:m:i
+     * @param string $end Y-m-d H:m:i
+     * @return array|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getTrainingsForJson($start, $end)
     {
         if ($start && $end) {
