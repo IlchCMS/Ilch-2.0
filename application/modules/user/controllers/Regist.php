@@ -181,6 +181,7 @@ class Regist extends \Ilch\Controller\Frontend
                 $user->setConfirmed(1);
                 $user->setConfirmedCode('');
                 $user->setSelector('');
+                $user->setAvatar('');
                 $userMapper->save($user);
 
                 $this->redirect()

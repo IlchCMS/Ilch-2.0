@@ -103,6 +103,7 @@ class User extends \Ilch\Mapper
      * @param  array $where
      * @param null $pagination
      * @return null|\Modules\User\Models\User[]
+     * @throws \Ilch\Database\Exception
      */
     protected function getBy($where = [], $pagination = null)
     {
