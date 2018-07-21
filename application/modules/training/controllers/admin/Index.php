@@ -10,6 +10,7 @@ use Modules\Training\Mappers\Training as TrainingMapper;
 use Modules\Training\Models\Training as TrainingModel;
 use Modules\Training\Mappers\Entrants as EntrantsMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\Group as GroupMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -65,6 +66,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $trainingMapper = new TrainingMapper();
         $userMapper = new UserMapper();
+        $groupMapper = new GroupMapper();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -90,6 +92,11 @@ class Index extends \Ilch\Controller\Admin
             if (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
             } else {
+                $groups = '';
+                if (!empty($this->getRequest()->getPost('groups'))) {
+                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                }
+
                 $model->setTitle($title);
                 $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'))));
                 $model->setTime($this->getRequest()->getPost('time'));
@@ -102,6 +109,8 @@ class Index extends \Ilch\Controller\Admin
                 $model->setGameServerIP($this->getRequest()->getPost('gameServerIP'));
                 $model->setGameServerPW($this->getRequest()->getPost('gameServerPW'));
                 $model->setText($this->getRequest()->getPost('text'));
+                $model->setShow($this->getRequest()->getPost('calendarShow'));
+                $model->setReadAccess($groups);
                 $trainingMapper->save($model);
 
                 $this->addMessage('saveSuccess');
@@ -110,7 +119,19 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('users', $userMapper->getUserList(['confirmed' => 1]));
+        if ($trainingMapper->existsTable('calendar')) {
+            $this->getView()->set('calendarShow', 1);
+        }
+
+        if ($this->getRequest()->getParam('id')) {
+            $groups = explode(',', $trainingMapper->getTrainingById($this->getRequest()->getParam('id'))->getReadAccess());
+        } else {
+            $groups = [2,3];
+        }
+
+        $this->getView()->set('users', $userMapper->getUserList(['confirmed' => 1]))
+                        ->set('userGroupList', $groupMapper->getGroupList())
+                        ->set('groups', $groups);
     }
 
     public function delAction()

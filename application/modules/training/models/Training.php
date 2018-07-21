@@ -100,6 +100,20 @@ class Training extends \Ilch\Model
     protected $text;
 
     /**
+     * The show value (hide or show in calendar) of the training.
+     *
+     * @var int
+     */
+    protected $show;
+
+    /**
+     * The readaccess of the training.
+     *
+     * @var string
+     */
+    protected $readAccess;
+
+    /**
      * Gets the id of the training.
      *
      * @return int
@@ -113,7 +127,7 @@ class Training extends \Ilch\Model
      * Sets the id of the training.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
     public function setId($id)
     {
@@ -136,7 +150,7 @@ class Training extends \Ilch\Model
      * Sets the title of the training.
      *
      * @param string $title
-     * @return this
+     * @return $this
      */
     public function setTitle($title)
     {
@@ -159,7 +173,7 @@ class Training extends \Ilch\Model
      * Sets the date of the training.
      *
      * @param string $date
-     * @return this
+     * @return $this
      */
     public function setDate($date)
     {
@@ -182,7 +196,7 @@ class Training extends \Ilch\Model
      * Sets the time of the training.
      *
      * @param int $time
-     * @return this
+     * @return $this
      */
     public function setTime($time)
     {
@@ -205,7 +219,7 @@ class Training extends \Ilch\Model
      * Sets the place of the training.
      *
      * @param string $place
-     * @return this
+     * @return $this
      */
     public function setPlace($place)
     {
@@ -228,7 +242,7 @@ class Training extends \Ilch\Model
      * Sets the contact of the training.
      *
      * @param string $contact
-     * @return this
+     * @return $this
      */
     public function setContact($contact)
     {
@@ -251,7 +265,7 @@ class Training extends \Ilch\Model
      * Sets the voice server of the training.
      *
      * @param int $voiceServer
-     * @return this
+     * @return $this
      */
     public function setVoiceServer($voiceServer)
     {
@@ -274,7 +288,7 @@ class Training extends \Ilch\Model
      * Sets the voice server ip of the training.
      *
      * @param string $voiceServerIP
-     * @return this
+     * @return $this
      */
     public function setVoiceServerIP($voiceServerIP)
     {
@@ -297,7 +311,7 @@ class Training extends \Ilch\Model
      * Sets the voice server pw of the training.
      *
      * @param string $voiceServerPW
-     * @return this
+     * @return $this
      */
     public function setVoiceServerPW($voiceServerPW)
     {
@@ -320,7 +334,7 @@ class Training extends \Ilch\Model
      * Sets the game server of the training.
      *
      * @param int $gameServer
-     * @return this
+     * @return $this
      */
     public function setGameServer($gameServer)
     {
@@ -343,7 +357,7 @@ class Training extends \Ilch\Model
      * Sets the game server ip of the training.
      *
      * @param string $gameServerIP
-     * @return this
+     * @return $this
      */
     public function setGameServerIP($gameServerIP)
     {
@@ -366,7 +380,7 @@ class Training extends \Ilch\Model
      * Sets the game server pw of the training.
      *
      * @param string $gameServerPW
-     * @return this
+     * @return $this
      */
     public function setGameServerPW($gameServerPW)
     {
@@ -389,11 +403,58 @@ class Training extends \Ilch\Model
      * Sets the text of the training.
      *
      * @param string $text
-     * @return this
+     * @return $this
      */
     public function setText($text)
     {
         $this->text = (string)$text;
+
+        return $this;
+    }
+
+    /**
+     * Gets show of the training.
+     *
+     * @return int
+     */
+    public function getShow()
+    {
+        return $this->show;
+    }
+
+    /**
+     * Sets show of the training.
+     *
+     * @param int $show
+     * @return $this
+     */
+    public function setShow($show)
+    {
+        $this->show = (int)$show;
+
+        return $this;
+    }
+
+    /**
+     * Gets the read access of the training.
+     *
+     * @return int
+     */
+    public function getReadAccess()
+    {
+        return $this->readAccess;
+    }
+
+    /**
+     * Sets the read access of the training.
+     *
+     * @param string $readAccess
+     *
+     * @return $this
+     */
+    public function setReadAccess($readAccess)
+    {
+        $this->readAccess = (string)$readAccess;
 
         return $this;
     }

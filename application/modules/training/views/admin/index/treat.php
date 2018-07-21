@@ -199,6 +199,34 @@
                       rows="5"><?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getText()); } ?></textarea>
         </div>
     </div>
+    <div class="form-group">
+        <label for="access" class="col-lg-2 control-label">
+            <?=$this->getTrans('visibleFor') ?>
+        </label>
+        <div class="col-lg-6">
+            <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+                <?php foreach ($this->get('userGroupList') as $groupList): ?>
+                    <?php if ($groupList->getId() != 1): ?>
+                        <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <?php if ($this->get('calendarShow') == 1): ?>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <input type="checkbox"
+                       id="calendarShow"
+                       name="calendarShow"
+                       value="1"
+                    <?php if (($this->get('training') != '' AND $this->get('training')->getShow() == 1) OR $this->originalInput('calendarShow') == 1) { echo 'checked'; } ?> />
+                <label for="calendarShow">
+                    <?=$this->getTrans('calendarShow') ?>
+                </label>
+            </div>
+        </div>
+    <?php endif; ?>
     <?php
     if ($this->get('training') != '') {
         echo $this->getSaveBar('updateButton');
@@ -214,6 +242,8 @@
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
+$('#access').chosen();
+
 $(document).ready(function() {
     $(".form_datetime").datetimepicker({
         format: "dd.mm.yyyy hh:ii",

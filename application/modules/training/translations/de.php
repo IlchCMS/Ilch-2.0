@@ -15,6 +15,8 @@ return [
     'clock' => 'Uhr',
     'at' => 'um',
     'otherInfo' => 'Weitere Informationen',
+    'visibleFor' => 'Sichtbar für',
+    'calendarShow' => 'Training im Kalender anzeigen?',
     'noOtherInfo'=> 'Keine weiteren Information vorhanden',
     'entrant' => 'Teilnehmer',
     'trainDetails' => 'Training Details',

@@ -15,6 +15,8 @@ return [
     'clock' => 'o\'clock',
     'at' => 'at',
     'otherInfo' => 'Other information',
+    'visibleFor' => 'Visible for',
+    'calendarShow' => 'Show training in calendar?',
     'noOtherInfo'=> 'No other information available',
     'entrant' => 'Entrants',
     'trainDetails' => 'Training details',

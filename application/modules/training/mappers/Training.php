@@ -45,6 +45,8 @@ class Training extends \Ilch\Mapper
             $entryModel->setGameServerIP($entries['game_server_ip']);
             $entryModel->setGameServerPW($entries['game_server_pw']);
             $entryModel->setText($entries['text']);
+            $entryModel->setShow($entries['show']);
+            $entryModel->setReadAccess($entries['read_access']);
             $training[] = $entryModel;
         }
 
@@ -62,6 +64,38 @@ class Training extends \Ilch\Mapper
         $training = $this->getTraining(['id' => $id]);
 
         return reset($training);
+    }
+
+    public function getTrainingsForJson($start, $end)
+    {
+        if ($start && $end) {
+            $start = new \Ilch\Date($start);
+            $end = new \Ilch\Date($end);
+
+            $sql = sprintf("SELECT * FROM `[prefix]_training` WHERE date >= '%s' AND date <= '%s' AND `show` = 1 ORDER BY date ASC;", $start, $end);
+        } else {
+            return null;
+        }
+
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = [];
+        foreach ($entryArray as $entries) {
+            $entryModel = new TrainingModel();
+            $entryModel->setId($entries['id'])
+                ->setDate($entries['date'])
+                ->setTime($entries['time'])
+                ->setTitle($entries['title'])
+                ->setShow($entries['show'])
+                ->setReadAccess($entries['read_access']);
+            $entry[] = $entryModel;
+        }
+
+        return $entry;
     }
 
     /**
@@ -83,7 +117,9 @@ class Training extends \Ilch\Mapper
             'game_server' => $training->getGameServer(),
             'game_server_ip' => $training->getGameServerIP(),
             'game_server_pw' => $training->getGameServerPW(),
-            'text' => $training->getText()
+            'text' => $training->getText(),
+            'show' => $training->getShow(),
+            'read_access' => $training->getReadAccess()
         ];
 
         if ($training->getId()) {
@@ -96,6 +132,20 @@ class Training extends \Ilch\Mapper
                 ->values($fields)
                 ->execute();
         }
+    }
+
+    /**
+     * Check if table exists.
+     *
+     * @param $table
+     * @return false|true
+     * @throws \Ilch\Database\Exception
+     */
+    public function existsTable($table)
+    {
+        $module = $this->db()->ifTableExists('[prefix]_'.$table);
+
+        return $module;
     }
 
     /**
