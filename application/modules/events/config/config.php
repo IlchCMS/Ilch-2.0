@@ -123,8 +123,9 @@ class Config extends \Ilch\Config\Install
             INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES ("events", "static/upload/image");';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            return $installSql.'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("events/events/index/");';
+            $installSql.='INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("events/events/index/");';
         }
+        return $installSql;
     }
 
     public function getUpdate($installedVersion)

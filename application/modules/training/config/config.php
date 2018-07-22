@@ -37,6 +37,10 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_training`;
                                  DROP TABLE `[prefix]_training_entrants`;');
+
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            $this->db()->queryMulti('DELETE FROM `[prefix]_calendar_events` WHERE `url` = \'training/trainings/index/\';');
+        }
     }
 
     public function getInstallSql()
@@ -77,8 +81,8 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                $this->db()->query('ALTER TABLE `[prefix]_training` ADD `show` TINYINT(1) NOT NULL DEFAULT 0;');
-                $this->db()->query('ALTER TABLE `[prefix]_training` ADD `read_access` VARCHAR(255) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_training` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `text`;');
+                $this->db()->query('ALTER TABLE `[prefix]_training` ADD `read_access` VARCHAR(255) NOT NULL AFTER `show`;');
         }
     }
 }
