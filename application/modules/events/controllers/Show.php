@@ -70,6 +70,9 @@ class Show extends \Ilch\Controller\Frontend
         $userDetails = [];
         foreach ($eventEntrantsUser as $entrant) {
             $userDetails[$entrant->getUserId()] = $userMapper->getUserById($entrant->getUserId());
+            if (empty($userDetails[$entrant->getUserId()])) {
+                $userDetails[$entrant->getUserId()] = $userMapper->getDummyUser();
+            }
         }
 
         $user = null;

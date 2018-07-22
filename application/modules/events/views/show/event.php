@@ -230,6 +230,7 @@ if (!empty($event)) {
                     </div>
                     <?php foreach ($this->get('eventComments') as $eventComments): ?>
                         <?php $commentUser = (isset($userDetails[$eventComments->getUserId()])) ? $userDetails[$eventComments->getUserId()] : $userMapper->getUserById($eventComments->getUserId()); ?>
+                        <?php $commentUser = (empty($commentUser)) ? $userMapper->getDummyUser() : $commentUser; ?>
                         <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
                         <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
                             <?php if ($this->getUser()): ?>
