@@ -57,7 +57,7 @@ class Config extends \Ilch\Config\Install
                 `game_server_pw` VARCHAR(100) NOT NULL,
                 `text` MEDIUMTEXT NOT NULL,
                 `show` TINYINT(1) NOT NULL DEFAULT 0,
-                `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\',
+                `read_access` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
             
@@ -78,7 +78,7 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_training` ADD `show` TINYINT(1) NOT NULL DEFAULT 0;');
-                $this->db()->query('ALTER TABLE `[prefix]_training` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_training` ADD `read_access` VARCHAR(255) NOT NULL;');
         }
     }
 }
