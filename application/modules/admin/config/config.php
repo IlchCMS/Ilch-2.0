@@ -358,6 +358,14 @@ class Config extends \Ilch\Config\Install
                 // Add "locked" column
                 $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `locked` TINYINT(1) NOT NULL DEFAULT 0;');
                 break;
+            case "2.1.11":
+                // restore noavatar.jpg if it is missing due to a previous bug.
+                if (file_exists(ROOT_PATH.'/static/img/noavatar.jpg')) {
+                    unlink(ROOT_PATH.'/static/img/q2E9CeHhA5cTNKpa.jpg');
+                } else {
+                    rename(ROOT_PATH.'/static/img/q2E9CeHhA5cTNKpa.jpg', ROOT_PATH.'/static/img/noavatar.jpg');
+                }
+                break;
         }
 
         return 'Update function executed.';
