@@ -39,8 +39,8 @@ class Entrants extends \Ilch\Mapper
     /**
      * Gets the Event entrants.
      *
-     * @param integer $id
-     * @return EntrantsModel|null
+     * @param integer $trainId
+     * @return EntrantsModel[]|null
      */
     public function getEntrantsById($trainId)
     {

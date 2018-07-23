@@ -91,9 +91,10 @@ class Index extends \Ilch\Controller\Frontend
         if ($hasReadAccess) {
             $this->getLayout()->getHmenu()->add($training->getTitle(), ['controller' => 'index', 'action' => 'show', 'id' => $training->getId()]);
 
+            $trainEntrantsUser = $entrantsMapper->getEntrantsById($this->getRequest()->getParam('id'));
             $this->getView()->set('training', $trainingMapper->getTrainingById($this->getRequest()->getParam('id')))
-                ->set('trainEntrantsUserCount', count($entrantsMapper->getEntrantsById($this->getRequest()->getParam('id'))))
-                ->set('trainEntrantsUser', $entrantsMapper->getEntrantsById($this->getRequest()->getParam('id')));
+                ->set('trainEntrantsUserCount', count($trainEntrantsUser))
+                ->set('trainEntrantsUser', $trainEntrantsUser);
         }
         $this->getView()->set('hasReadAccess', $hasReadAccess);
     }
