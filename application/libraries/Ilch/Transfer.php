@@ -359,12 +359,20 @@ class Transfer
 
                 //Overwrite the file
                 if (!is_dir(ROOT_PATH.'/'.$thisFileName)) {
-                    $content[] = 'New file: '.$thisFileName.'...........';
+                    $content[] = 'New file: '.$thisFileName;
                     $contents = zip_entry_read($aF, zip_entry_filesize($aF));
                     $updateThis = @fopen(ROOT_PATH.'/'.$thisFileName, 'w');
-                    @fwrite($updateThis, $contents);
+                    $bytesWritten = @fwrite($updateThis, $contents);
+                    $successfull = $updateThis !== false && $bytesWritten !== false;
                     @fclose($updateThis);
+                    $successfull = $successfull && !($bytesWritten == 0 && $bytesWritten != strlen($contents));
                     unset($contents);
+
+                    if (!$successfull) {
+                        $content[] = 'Error writing new file: '.$thisFileName;
+                        unset($aF);
+                        return false;
+                    }
 
                     //If we need to run commands, then do it.
                     if ($thisFileName == $thisFileDir.'/config.php') {
@@ -381,9 +389,9 @@ class Transfer
                     }
                 }
             }
-            $this->setContent($content);
             return true;
         } finally {
+            $this->setContent($content);
             if (is_resource($zipHandle)) {
                 zip_close($zipHandle);
             }

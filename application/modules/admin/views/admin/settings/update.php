@@ -42,12 +42,12 @@ $updateSuccessfull = $this->get('updateSuccessfull');
             <?php endif; ?>
         <?php endif; ?>
         <?php if ($doUpdate): ?>
+            <div class="list-files" id="list-files">
+                <?php foreach ($this->get('content') as $list): ?>
+                    <p><?=$list ?></p>
+                <?php endforeach; ?>
+            </div>
             <?php if ($updateSuccessfull) : ?>
-                <div class="list-files" id="list-files">
-                    <?php foreach ($this->get('content') as $list): ?>
-                        <p><?=$list ?></p>
-                    <?php endforeach; ?>
-                </div>
                 <p><?=$this->getTrans('updateComplied') ?></p>
             <?php else: ?>
                 <p><?=$this->getTrans('updateFailed') ?></p>
