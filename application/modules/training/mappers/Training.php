@@ -26,7 +26,7 @@ class Training extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
 
         $training = [];
@@ -71,7 +71,7 @@ class Training extends \Ilch\Mapper
      *
      * @param string $start Y-m-d H:m:i
      * @param string $end Y-m-d H:m:i
-     * @return array|null
+     * @return TrainingModel[]|array
      * @throws \Ilch\Database\Exception
      */
     public function getTrainingsForJson($start, $end)
@@ -82,13 +82,13 @@ class Training extends \Ilch\Mapper
 
             $sql = sprintf("SELECT * FROM `[prefix]_training` WHERE date >= '%s' AND date <= '%s' AND `show` = 1 ORDER BY date ASC;", $start, $end);
         } else {
-            return null;
+            return [];
         }
 
         $entryArray = $this->db()->queryArray($sql);
 
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
 
         $entry = [];

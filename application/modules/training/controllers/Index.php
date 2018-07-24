@@ -49,6 +49,11 @@ class Index extends \Ilch\Controller\Frontend
         $training = $trainingMapper->getTrainingById($this->getRequest()->getParam('id'));
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), ['controller' => 'index', 'action' => 'index']);
 
+        if (empty($training)) {
+            $this->getView()->set('hasReadAccess', false);
+            return;
+        }
+
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('save')) {
                 $entrantsModel->setTrainId($this->getRequest()->getParam('id'));

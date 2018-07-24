@@ -13,7 +13,8 @@ class Entrants extends \Ilch\Mapper
     /**
      * Gets the Event entrants.
      *
-     * @param integer $id
+     * @param $trainId
+     * @param $userId
      * @return EntrantsModel|null
      */
     public function getEntrants($trainId, $userId)
@@ -40,7 +41,7 @@ class Entrants extends \Ilch\Mapper
      * Gets the Event entrants.
      *
      * @param integer $trainId
-     * @return EntrantsModel[]|null
+     * @return EntrantsModel[]|[]
      */
     public function getEntrantsById($trainId)
     {
@@ -51,7 +52,7 @@ class Entrants extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
 
         $entry = [];
