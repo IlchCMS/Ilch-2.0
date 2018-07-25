@@ -361,10 +361,11 @@ class Config extends \Ilch\Config\Install
             case "2.1.11":
                 // restore noavatar.jpg if it is missing due to a previous bug.
                 if (file_exists(ROOT_PATH.'/static/img/noavatar.jpg')) {
-                    unlink(ROOT_PATH.'/q2E9CeHhA5cTNKpa.jpg');
+                    unlink(ROOT_PATH.'/_q2E9CeHhA5cTNKpa/noavatar.jpg');
                 } else {
-                    rename(ROOT_PATH.'/q2E9CeHhA5cTNKpa.jpg', ROOT_PATH.'/static/img/noavatar.jpg');
+                    rename(ROOT_PATH.'/_q2E9CeHhA5cTNKpa/noavatar.jpg', ROOT_PATH.'/static/img/noavatar.jpg');
                 }
+                rmdir(ROOT_PATH.'/_q2E9CeHhA5cTNKpa');
                 break;
         }
 
