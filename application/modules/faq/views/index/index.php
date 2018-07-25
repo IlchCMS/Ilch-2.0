@@ -5,7 +5,7 @@ $faqMapper = $this->get('faqMapper');
 ?>
 
 <h1><?=$this->getTrans('faqFrequentlyAskedQuestions') ?></h1>
-<?php if ($faqs != ''): ?>
+<?php if (!empty($faqs)): ?>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">

@@ -1,5 +1,5 @@
 <h1>
-    <?php if ($this->get('link') != '') {
+    <?php if (!empty($this->get('faq'))) {
         echo $this->getTrans('edit');
     } else {
         echo $this->getTrans('add');
@@ -55,7 +55,7 @@
                           toolbar="ilch_html"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getAnswer()); } else { echo $this->originalInput('answer'); } ?></textarea>
             </div>
         </div>
-        <?php if ($this->get('faq') != '') {
+        <?php if (!empty($this->get('faq'))) {
             echo $this->getSaveBar('updateButton');
         } else {
             echo $this->getSaveBar('addButton');

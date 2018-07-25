@@ -1,7 +1,7 @@
 <?php $categoryMapper = $this->get('categoryMapper'); ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('faqs') != ''): ?>
+<?php if (!empty($this->get('faqs'))): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">

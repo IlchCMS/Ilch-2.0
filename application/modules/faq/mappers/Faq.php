@@ -14,7 +14,7 @@ class Faq extends \Ilch\Mapper
      * Gets faqs.
      *
      * @param array $where
-     * @return FaqModel[]|null
+     * @return FaqModel[]|[]
      */
     public function getFaqs($where = [])
     {
@@ -25,7 +25,7 @@ class Faq extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($faqArray)) {
-            return null;
+            return [];
         }
 
         $faqs = [];
@@ -55,35 +55,15 @@ class Faq extends \Ilch\Mapper
     }
 
     /**
-     * Gets faq by catId.
+     * Gets faqs by catId.
      *
      * @param integer $catId
-     * @return FaqModel|null
+     * @return FaqModel[]|[]
      */
     public function getFaqsByCatId($catId)
     {
-        $faqArray = $this->db()->select('*')
-            ->from('faqs')
-            ->where(['cat_id' => $catId])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($faqArray)) {
-            return null;
-        }
-
-        $faqs = [];
-        foreach ($faqArray as $faqRow) {
-            $faqModel = new FaqModel();
-            $faqModel->setId($faqRow['id']);
-            $faqModel->setCatId($faqRow['cat_id']);
-            $faqModel->setQuestion($faqRow['question']);
-            $faqModel->setAnswer($faqRow['answer']);
-
-            $faqs[] = $faqModel;
-        }
-
-        return $faqs;
+        $faqs = $this->getFaqs(['cat_id' => $catId]);
+        return reset($faqs);
     }
 
     /**
