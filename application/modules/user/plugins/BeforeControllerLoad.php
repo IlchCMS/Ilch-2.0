@@ -46,7 +46,7 @@ class BeforeControllerLoad
                     $authTokenModel->setUserid($_SESSION['user_id']);
                     $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
 
-                    setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], false, false);
+                    setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
                     $authTokenMapper->updateAuthToken($authTokenModel);
 
                     $pluginData['controller']->redirect('');

@@ -11,6 +11,7 @@ if (!version_compare(phpversion(), '5.6.0', '>=')) {
 @ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
+session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 $serverTimeZone = @date_default_timezone_get();

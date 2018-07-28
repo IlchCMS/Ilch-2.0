@@ -72,11 +72,20 @@ class Login extends \Ilch\Controller\Admin
             list($selector) = explode(':', $_COOKIE['remember']);
             $authTokenMapper = new \Modules\User\Mappers\AuthToken();
             $authTokenMapper->deleteAuthToken($selector);
-            setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], false, false);
+            setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
         }
 
-        unset($_SESSION['user_id']);
+        $_SESSION = [];
         \Ilch\Registry::remove('user');
+
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000, $params["path"],
+                $params["domain"], $params["secure"], $params["httponly"]
+            );
+        }
+
+        session_destroy();
 
         if ($this->getRequest()->getParam('from_frontend')) {
             $this->redirect([]);
