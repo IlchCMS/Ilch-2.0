@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.1',
+        'version' => '1.2',
         'icon_small' => 'fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -67,63 +67,76 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql()
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_war_groups` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `name` VARCHAR(32) NOT NULL,
-                  `tag` VARCHAR(20) NOT NULL,
-                  `image` VARCHAR(255) NOT NULL,
-                  `desc` VARCHAR(255) NOT NULL,
-                  `member` INT(11) NOT NULL,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+        $installSql =
+            'CREATE TABLE IF NOT EXISTS `[prefix]_war_groups` (
+              `id` INT(11) NOT NULL AUTO_INCREMENT,
+              `name` VARCHAR(32) NOT NULL,
+              `tag` VARCHAR(20) NOT NULL,
+              `image` VARCHAR(255) NOT NULL,
+              `desc` VARCHAR(255) NOT NULL,
+              `member` INT(11) NOT NULL,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                CREATE TABLE IF NOT EXISTS `[prefix]_war_enemy` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `name` VARCHAR(150) NOT NULL,
-                  `tag` VARCHAR(20) NOT NULL,
-                  `homepage` VARCHAR(150) NOT NULL,
-                  `image` VARCHAR(255) NOT NULL,
-                  `contact_name` VARCHAR(50) NOT NULL,
-                  `contact_email` VARCHAR(150) NOT NULL,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            CREATE TABLE IF NOT EXISTS `[prefix]_war_enemy` (
+              `id` INT(11) NOT NULL AUTO_INCREMENT,
+              `name` VARCHAR(150) NOT NULL,
+              `tag` VARCHAR(20) NOT NULL,
+              `homepage` VARCHAR(150) NOT NULL,
+              `image` VARCHAR(255) NOT NULL,
+              `contact_name` VARCHAR(50) NOT NULL,
+              `contact_email` VARCHAR(150) NOT NULL,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                CREATE TABLE IF NOT EXISTS `[prefix]_war` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `enemy` INT(11) NOT NULL,
-                  `group` INT(11) NOT NULL,
-                  `time` DATETIME NOT NULL,
-                  `maps` VARCHAR(255) NOT NULL,
-                  `server` VARCHAR(255) NOT NULL,
-                  `password` VARCHAR(255) NOT NULL,
-                  `xonx` VARCHAR(50) NOT NULL,
-                  `game` VARCHAR(255) NOT NULL,
-                  `matchtype` VARCHAR(255) NOT NULL,
-                  `report` TEXT NOT NULL,
-                  `status` TINYINT(1) NOT NULL DEFAULT 0,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            CREATE TABLE IF NOT EXISTS `[prefix]_war` (
+              `id` INT(11) NOT NULL AUTO_INCREMENT,
+              `enemy` INT(11) NOT NULL,
+              `group` INT(11) NOT NULL,
+              `time` DATETIME NOT NULL,
+              `maps` VARCHAR(255) NOT NULL,
+              `server` VARCHAR(255) NOT NULL,
+              `password` VARCHAR(255) NOT NULL,
+              `xonx` VARCHAR(50) NOT NULL,
+              `game` VARCHAR(255) NOT NULL,
+              `matchtype` VARCHAR(255) NOT NULL,
+              `report` TEXT NOT NULL,
+              `status` TINYINT(1) NOT NULL DEFAULT 0,
+              `show` TINYINT(1) NOT NULL DEFAULT 0,
+              `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\',
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                CREATE TABLE IF NOT EXISTS `[prefix]_war_played` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `war_id` INT(11) DEFAULT NULL,
-                  `map` VARCHAR(255) NOT NULL DEFAULT "",
-                  `group_points` MEDIUMINT(9) DEFAULT NULL,
-                  `enemy_points` MEDIUMINT(9) DEFAULT NULL,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-                
-                CREATE TABLE IF NOT EXISTS `[prefix]_war_accept` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `war_id` INT(11) DEFAULT NULL,
-                  `user_id` INT(11) DEFAULT NULL,
-                  `accept` TINYINT(1) DEFAULT NULL,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+            CREATE TABLE IF NOT EXISTS `[prefix]_war_played` (
+              `id` INT(11) NOT NULL AUTO_INCREMENT,
+              `war_id` INT(11) DEFAULT NULL,
+              `map` VARCHAR(255) NOT NULL DEFAULT "",
+              `group_points` MEDIUMINT(9) DEFAULT NULL,
+              `enemy_points` MEDIUMINT(9) DEFAULT NULL,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            
+            CREATE TABLE IF NOT EXISTS `[prefix]_war_accept` (
+              `id` INT(11) NOT NULL AUTO_INCREMENT,
+              `war_id` INT(11) DEFAULT NULL,
+              `user_id` INT(11) DEFAULT NULL,
+              `accept` TINYINT(1) DEFAULT NULL,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            $installSql.='INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("war/wars/index/");';
+        }
+
+        return $installSql;
     }
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.1":
+                $this->db()->query('ALTER TABLE `[prefix]_war` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `status`;');
+                $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access` VARCHAR(255) NOT NULL AFTER `show`;');
+        }
     }
 }

@@ -135,4 +135,6 @@ return [
     'is' => 'ist',
     'warNotFound' => 'War wurde nicht gefunden',
     'groupNotFound' => 'Gruppe wurde nicht gefunden',
+    'visibleFor' => 'Sichtbar für',
+    'calendarShow' => 'War im Kalender anzeigen?',
 ];

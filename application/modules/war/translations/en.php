@@ -135,4 +135,6 @@ return [
     'is' => 'is',
     'warNotFound' => 'War not found',
     'groupNotFound' => 'Group not found',
+    'visibleFor' => 'Visible for',
+    'calendarShow' => 'Show war in calendar?',
 ];

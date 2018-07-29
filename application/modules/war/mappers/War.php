@@ -50,6 +50,8 @@ class War extends \Ilch\Mapper
             $entryModel->setWarMatchtype($entries['matchtype']);
             $entryModel->setWarReport($entries['report']);
             $entryModel->setWarStatus($entries['status']);
+            $entryModel->setShow($entries['show']);
+            $entryModel->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -96,6 +98,8 @@ class War extends \Ilch\Mapper
             $entryModel->setWarMatchtype($entries['matchtype']);
             $entryModel->setWarReport($entries['report']);
             $entryModel->setWarStatus($entries['status']);
+            $entryModel->setShow($entries['show']);
+            $entryModel->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -133,19 +137,54 @@ class War extends \Ilch\Mapper
         $warModel->setWarMatchtype($warRow['matchtype']);
         $warModel->setWarReport($warRow['report']);
         $warModel->setWarStatus($warRow['status']);
+        $warModel->setShow($warRow['show']);
+        $warModel->setReadAccess($warRow['read_access']);
 
         return $warModel;
+    }
+
+    /**
+     * Get wars for json (for example the calendar)
+     *
+     * @param $start
+     * @param $end
+     * @return array|array[]|null
+     */
+    public function getWarsForJson($start, $end)
+    {
+        if ($start && $end) {
+            $start = new \Ilch\Date($start);
+            $end = new \Ilch\Date($end);
+            $entryArray = $this->db()->select()
+                ->fields(['w.id', 'w.time', 'w.show', 'w.read_access'])
+                ->from(['w' => 'war'])
+                ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT', ['g.tag'])
+                ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT', ['war_enemy' => 'e.tag'])
+                ->where(['show' => 1, 'time >=' => $start, 'time <=' => $end])
+                ->execute()
+                ->fetchRows();
+        } else {
+            return null;
+        }
+
+        if (empty($entryArray)) {
+            return [];
+        }
+
+        return $entryArray;
     }
 
     /**
      * Gets war by where
      *
      * @param mixed $where
-     * @return WarModel|null
+     * @param int $pagination
+     * @return WarModel[]|null
+     * @throws \Ilch\Database\Exception
      */
     public function getWarsByWhere($where = null, $pagination = null)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,g.name as group_name,g.id as group_is,e.name as enemy_name,e.id as enemy_id
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,w.show,w.read_access,g.name as group_name,g.id as group_is,e.name as enemy_name,e.id as enemy_id
                 FROM `[prefix]_war` as w
                 LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
@@ -176,6 +215,8 @@ class War extends \Ilch\Mapper
             $entryModel->setWarMatchtype($entries['matchtype']);
             $entryModel->setWarReport($entries['report']);
             $entryModel->setWarStatus($entries['status']);
+            $entryModel->setShow($entries['show']);
+            $entryModel->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -200,7 +241,9 @@ class War extends \Ilch\Mapper
             'game' => $model->getWarGame(),
             'matchtype' => $model->getWarMatchtype(),
             'report' => $model->getWarReport(),
-            'status' => $model->getWarStatus()
+            'status' => $model->getWarStatus(),
+            'show' => $model->getShow(),
+            'read_access' => $model->getReadAccess()
         ];
 
         if ($model->getId()) {
@@ -224,7 +267,7 @@ class War extends \Ilch\Mapper
 
     public function getWarListByStatus($status = NULL, $pagination = NULL) 
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,g.name as group_name,g.id as group_is,e.name as enemy_name,e.id as enemy_id
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,w.show,w.read_access,g.name as group_name,g.id as group_is,e.name as enemy_name,e.id as enemy_id
                 FROM `[prefix]_war` as w
                 LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
@@ -255,6 +298,8 @@ class War extends \Ilch\Mapper
             $entryModel->setWarMatchtype($entries['matchtype']);
             $entryModel->setWarReport($entries['report']);
             $entryModel->setWarStatus($entries['status']);
+            $entryModel->setShow($entries['show']);
+            $entryModel->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -263,7 +308,7 @@ class War extends \Ilch\Mapper
 
     public function getWarList($pagination = NULL) 
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,w.show,w.read_access,
                 g.name as group_name,g.id as group_is,
                 e.name as enemy_name,e.id as enemy_id
                 FROM `[prefix]_war` as w
@@ -295,6 +340,8 @@ class War extends \Ilch\Mapper
             $entryModel->setWarMatchtype($entries['matchtype']);
             $entryModel->setWarReport($entries['report']);
             $entryModel->setWarStatus($entries['status']);
+            $entryModel->setShow($entries['show']);
+            $entryModel->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -303,7 +350,7 @@ class War extends \Ilch\Mapper
 
     public function getWarListByStatusAndLimt($status = NULL, $limit = NULL) 
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,g.name as group_name,g.tag as group_tag,g.id as group_id,e.name as enemy_name,e.tag as enemy_tag,e.id as enemy_id
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,w.show,w.read_access,g.name as group_name,g.tag as group_tag,g.id as group_id,e.name as enemy_name,e.tag as enemy_tag,e.id as enemy_id
                 FROM `[prefix]_war` as w
                 LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
@@ -335,6 +382,8 @@ class War extends \Ilch\Mapper
             $entryModel->setWarMatchtype($entries['matchtype']);
             $entryModel->setWarReport($entries['report']);
             $entryModel->setWarStatus($entries['status']);
+            $entryModel->setShow($entries['show']);
+            $entryModel->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -438,5 +487,19 @@ class War extends \Ilch\Mapper
         } else {
             echo $days_left.'d '.$hours_left.'h';
         }
+    }
+
+    /**
+     * Check if table exists.
+     *
+     * @param $table
+     * @return false|true
+     * @throws \Ilch\Database\Exception
+     */
+    public function existsTable($table)
+    {
+        $module = $this->db()->ifTableExists('[prefix]_'.$table);
+
+        return $module;
     }
 }

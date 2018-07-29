@@ -4,19 +4,19 @@
  * @package ilch
  */
 
-namespace Modules\War\Boxes;
+namespace Modules\War\Controllers;
 
 use Modules\War\Mappers\War as WarMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Nextwar extends \Ilch\Box
+class Wars extends \Ilch\Controller\Frontend
 {
-    public function render()
+    public function indexAction()
     {
         $warMapper = new WarMapper();
         $userMapper = new UserMapper();
-        $date = new \Ilch\Date();
-        $config = \Ilch\Registry::get('config');
+
+        $this->getLayout()->setFile('modules/calendar/layouts/events');
 
         $user = null;
         if ($this->getUser()) {
@@ -30,9 +30,7 @@ class Nextwar extends \Ilch\Box
             }
         }
 
-        $this->getView()->set('warMapper', $warMapper);
-        $this->getView()->set('date', $date->format(null, true));
-        $this->getView()->set('war', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit')));
-        $this->getView()->set('readAccess', $readAccess);
+        $this->getView()->set('warList', $warMapper->getWarsForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')))
+            ->set('readAccess', $readAccess);
     }
 }

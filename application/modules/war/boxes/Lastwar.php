@@ -8,6 +8,7 @@ namespace Modules\War\Boxes;
 
 use Modules\War\Mappers\War as WarMapper;
 use Modules\War\Mappers\Games as GamesMapper;
+use Modules\User\Mappers\User as UserMapper;
 
 class Lastwar extends \Ilch\Box
 {
@@ -15,10 +16,24 @@ class Lastwar extends \Ilch\Box
     {
         $warMapper = new WarMapper();
         $gamesMapper = new GamesMapper();
+        $userMapper = new UserMapper();
         $config = \Ilch\Registry::get('config');
+
+        $user = null;
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+        }
+
+        $readAccess = [3];
+        if ($user) {
+            foreach ($user->getGroups() as $us) {
+                $readAccess[] = $us->getId();
+            }
+        }
 
         $this->getView()->set('warMapper', $warMapper);
         $this->getView()->set('gamesMapper', $gamesMapper);
         $this->getView()->set('war', $warMapper->getWarListByStatusAndLimt(2, $config->get('war_boxLastWarLimit')));
+        $this->getView()->set('readAccess', $readAccess);
     }
 }

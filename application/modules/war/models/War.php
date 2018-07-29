@@ -107,6 +107,19 @@ class War extends \Ilch\Model
     protected $warStatus;
 
     /**
+     * The show value (hide or show in calendar) of the training.
+     *
+     * @var int
+     */
+    protected $show;
+    /**
+     * The readaccess of the training.
+     *
+     * @var string
+     */
+    protected $readAccess;
+
+    /**
      * Gets the id of the group.
      *
      * @return int
@@ -384,5 +397,48 @@ class War extends \Ilch\Model
     public function setWarStatus($warStatus)
     {
         $this->warStatus = (int)$warStatus;
+    }
+
+    /**
+     * Gets show of the war.
+     *
+     * @return int
+     */
+    public function getShow()
+    {
+        return $this->show;
+    }
+
+    /**
+     * Sets show of the war.
+     *
+     * @param int $show
+     * @return $this
+     */
+    public function setShow($show)
+    {
+        $this->show = (int)$show;
+        return $this;
+    }
+    /**
+     * Gets the read access of the war.
+     *
+     * @return int
+     */
+    public function getReadAccess()
+    {
+        return $this->readAccess;
+    }
+    /**
+     * Sets the read access of the war.
+     *
+     * @param string $readAccess
+     *
+     * @return $this
+     */
+    public function setReadAccess($readAccess)
+    {
+        $this->readAccess = (string)$readAccess;
+        return $this;
     }
 }

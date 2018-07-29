@@ -6,12 +6,14 @@
 
 namespace Modules\War\Controllers\Admin;
 
+use Modules\User\Models\User;
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\War as WarMapper;
 use Modules\War\Models\War as WarModel;
 use Modules\War\Models\Games as GamesModel;
 use Modules\War\Mappers\Games as GamesMapper;
+use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
@@ -99,6 +101,7 @@ class Index extends \Ilch\Controller\Admin
         $warModel = new WarModel();
         $gameMapper = new GamesMapper();
         $gameModel = new GamesModel();
+        $userGroupMapper = New UserGroupMapper();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -147,6 +150,8 @@ class Index extends \Ilch\Controller\Admin
             $post['warPassword'] = $this->getRequest()->getPost('warPassword');
             $post['warReport'] = $this->getRequest()->getPost('warReport');
             $post['warStatus'] = $this->getRequest()->getPost('warStatus');
+            $post['calendarShow'] = $this->getRequest()->getPost('calendarShow');
+            $post['groups'] = $this->getRequest()->getPost('groups');
 
             $validation = Validation::create($post, [
                 'warXonx' => 'required',
@@ -160,6 +165,11 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
+                $groups = '';
+                if (!empty($this->getRequest()->getPost('groups'))) {
+                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                }
+
                 if ($this->getRequest()->getPost('warMapPlayed')) {
                     $warId = $this->getRequest()->getParam('id');
 
@@ -189,6 +199,8 @@ class Index extends \Ilch\Controller\Admin
                 $warModel->setWarMatchtype($post['warMatchtype']);
                 $warModel->setWarReport($post['warReport']);
                 $warModel->setWarStatus($post['warStatus']);
+                $warModel->setShow($post['calendarShow']);
+                $warModel->setReadAccess($groups);
                 $warMapper->save($warModel);
 
                 $this->redirect()
@@ -203,11 +215,23 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
         }
 
+        if ($warMapper->existsTable('calendar')) {
+            $this->getView()->set('calendarShow', 1);
+        }
+
+        if ($this->getRequest()->getParam('id')) {
+            $groups = explode(',', $warMapper->getWarById($this->getRequest()->getParam('id'))->getReadAccess());
+        } else {
+            $groups = [2,3];
+        }
+
         $this->getView()->set('group', $groupMapper->getGroups());
         $this->getView()->set('enemy', $enemyMapper->getEnemy());
         $this->getView()->set('warOptXonx', $warMapper->getWarOptDistinctXonx());
         $this->getView()->set('warOptGame', $warMapper->getWarOptDistinctGame());
         $this->getView()->set('warOptMatchtype', $warMapper->getWarOptDistinctMatchtype());
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
+        $this->getView()->set('groups', $groups);
     }
 
     public function delAction()

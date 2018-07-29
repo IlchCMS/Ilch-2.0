@@ -1,5 +1,12 @@
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
+<?php
+$adminAccess = null;
+if ($this->getUser()) {
+    $adminAccess = $this->getUser()->isAdmin();
+}
+?>
+
 <h1><?=$this->getTrans('menuGroups') ?></h1>
 <h4><a class="btn btn-default" href="<?=$this->getUrl(['controller' => 'group', 'action' => 'index']) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
 
@@ -28,6 +35,11 @@
             </thead>
             <tbody>
                 <?php foreach ($this->get('war') as $war): ?>
+                    <?php
+                    if (!is_in_array($this->get('readAccess'), explode(',', $war->getReadAccess())) && $adminAccess == false) {
+                        continue;
+                    }
+                    ?>
                     <?php $date = new \Ilch\Date($war->getWarTime()) ?>
                     <tr>
                         <td><?=$this->escape($war->getWarEnemy()) ?></td>

@@ -1,7 +1,18 @@
 <link href="<?=$this->getBoxUrl('static/css/style.css') ?>" rel="stylesheet">
 
 <?php if ($this->get('war') != ''):
-    foreach ($this->get('war') as $war):        
+    $displayed = 0;
+    $adminAccess = null;
+    if ($this->getUser()) {
+        $adminAccess = $this->getUser()->isAdmin();
+    }
+
+    foreach ($this->get('war') as $war):
+        if (!is_in_array($this->get('readAccess'), explode(',', $war->getReadAccess())) && $adminAccess == false) {
+            continue;
+        }
+        $displayed++;
+
         $warMapper = $this->get('warMapper');
         $warTime = $war->getWarTime();    
         $gameImg = $this->getBoxUrl('static/img/'.$war->getWarGame().'.png');
@@ -35,6 +46,9 @@
             </div>
         </div>
     <?php endforeach; ?>
+    <?php if (!$displayed) : ?>
+        <?=$this->getTrans('noWars'); ?>
+    <?php endif; ?>
 <?php else: ?>
     <?=$this->getTrans('noWars'); ?>
 <?php endif; ?>

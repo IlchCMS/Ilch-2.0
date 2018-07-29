@@ -23,12 +23,26 @@ class Index extends \Ilch\Controller\Frontend
 
         $pagination = new \Ilch\Pagination();
         $warMapper = new WarMapper();
+        $userMapper = new UserMapper();
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
+        $user = null;
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+        }
+
+        $readAccess = [3];
+        if ($user) {
+            foreach ($user->getGroups() as $us) {
+                $readAccess[] = $us->getId();
+            }
+        }
+
         $this->getView()->set('war', $warMapper->getWarList($pagination));
         $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('readAccess', $readAccess);
     }
 
     public function showAction()
@@ -70,6 +84,32 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index'])
                 ->add($group != '' ? $group->getGroupName(): '', $group != '' ? ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()] : '')
                 ->add($this->getTranslator()->trans('warPlay'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+
+            $user = null;
+            if ($this->getUser()) {
+                $user = $userMapper->getUserById($this->getUser()->getId());
+            }
+
+            $readAccess = [3];
+            if ($user) {
+                foreach ($user->getGroups() as $us) {
+                    $readAccess[] = $us->getId();
+                }
+            }
+
+            $adminAccess = null;
+            if ($this->getUser()) {
+                $adminAccess = $this->getUser()->isAdmin();
+            }
+
+            $hasReadAccess = (is_in_array($readAccess, explode(',', $war->getReadAccess())) || $adminAccess == true);
+
+            if (!$hasReadAccess) {
+                $this->redirect()
+                    ->withMessage('warNotFound', 'warning')
+                    ->to(['action' => 'index']);
+                return;
+            }
 
             $this->getView()->set('games', $gamesMapper->getGamesByWarId($this->getRequest()->getParam('id')));
             $this->getView()->set('gamesMapper', $gamesMapper);

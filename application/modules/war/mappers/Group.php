@@ -60,6 +60,7 @@ class Group extends \Ilch\Mapper
      *
      * @param \Ilch\Pagination|null $pagination
      * @return GroupModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getGroupList($pagination = null)
     {
