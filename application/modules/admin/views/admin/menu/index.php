@@ -165,6 +165,7 @@ function resetBox() {
     .removeAttr('checked')
     .removeAttr('selected');
 
+    $('#type').val('0')
     $('#type').change();
     $('#access').val('');
     $('#access').trigger("chosen:updated");
