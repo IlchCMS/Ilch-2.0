@@ -67,9 +67,11 @@ class Page
         }
 
         if ($this->request->isPost() && !$this->request->isSecure()) {
-            throw new \InvalidArgumentException(
-                'no valid secure token given, add function getTokenField() to formular'
-            );
+            $message = 'No valid secure token given, add function getTokenField() to formular.';
+            if (!(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')) {
+                $message .= ' If you previously visited this website over HTTPS, try again accessing this site over HTTPS or restart your browser.';
+            }
+            throw new \InvalidArgumentException($message);
         }
 
         $this->plugin->detectPlugins();

@@ -311,7 +311,7 @@ class Captcha
         }
 
         // Full path of font file
-        $fontfile = $this->resourcesPath.'/fonts/'.$fontcfg['font'];
+        $fontfile = dirname(__FILE__).'/'.$this->resourcesPath.'/fonts/'.$fontcfg['font'];
 
 
         /** Increase font-size for shortest words: 9% for each glyp missing */
