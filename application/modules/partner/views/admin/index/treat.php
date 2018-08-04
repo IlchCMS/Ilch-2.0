@@ -14,11 +14,11 @@
                    value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getName()) : $this->originalInput('name') ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
+    <div class="form-group">
         <label for="link" class="col-lg-2 control-label">
             <?=$this->getTrans('link') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-lg-3 <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
             <input type="text"
                    class="form-control"
                    id="link"
