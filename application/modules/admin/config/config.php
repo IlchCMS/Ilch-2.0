@@ -367,6 +367,9 @@ class Config extends \Ilch\Config\Install
                 }
                 rmdir(ROOT_PATH.'/_q2E9CeHhA5cTNKpa');
                 break;
+            case "2.1.12":
+                mkdir(ROOT_PATH.'/cache');
+                break;
         }
 
         return 'Update function executed.';

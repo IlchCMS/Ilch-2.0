@@ -204,24 +204,61 @@ function is_in_array($needle, $haystack)
 
 /**
  * cUrl function, gets a url result
+ *
  * @param string $url
- * @return string
+ * @param bool $skip_cache
+ * @param integer $cache_time
+ * @return mixed $data | FALSE
  */
-function url_get_contents($url)
+function url_get_contents($url, $skip_cache = FALSE, $cache_time = 21600)
 {
     if (!function_exists('curl_init')) {
         die('CURL is not installed!');
     }
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2); 
-    curl_setopt($ch, CURLOPT_CAINFO, ROOT_PATH.'/certificate/cacert.pem');
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-    $output = curl_exec($ch);
-    curl_close($ch);
+
+    // settings
+    $cachetime = $cache_time; //Default 6 hours
+    $where = "cache";
+    if (!is_dir($where)) {
+        mkdir($where);
+    }
+
+    $hash = md5($url);
+    $file = "$where/$hash.cache";
+
+    // check the bloody file.
+    $mtime = 0;
+    if (file_exists($file)) {
+        $mtime = filemtime($file);
+    }
+    $filetimemod = $mtime + $cachetime;
+
+    // if the renewal date is smaller than now, return true; else false (no need for update)
+    if ($filetimemod < time() OR $skip_cache) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_USERAGENT      => 'Ilch 2 (+http://www.ilch.de)',
+            CURLOPT_FOLLOWLOCATION => TRUE,
+            CURLOPT_MAXREDIRS      => 5,
+            CURLOPT_CONNECTTIMEOUT => 15,
+            CURLOPT_TIMEOUT        => 30,
+            CURLOPT_SSL_VERIFYPEER => TRUE,
+            CURLOPT_SSL_VERIFYHOST => 2,
+            CURLOPT_CAINFO         => ROOT_PATH.'/certificate/cacert.pem',
+            CURLOPT_URL            => $url,
+        ]);
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        // save the file if there's data
+        if ($output AND !$skip_cache) {
+            file_put_contents($file, $output);
+        }
+    } else {
+        $output = file_get_contents($file);
+    }
+
     return $output;
 }
 
