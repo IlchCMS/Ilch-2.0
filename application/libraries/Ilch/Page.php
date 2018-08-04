@@ -69,7 +69,9 @@ class Page
         if ($this->request->isPost() && !$this->request->isSecure()) {
             $message = 'No valid secure token given, add function getTokenField() to formular.';
             if (!(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')) {
-                $message .= ' If you previously visited this website over HTTPS, try again accessing this site over HTTPS or restart your browser.';
+                $message .= ' If you previously visited this website over HTTPS, try again accessing this site over HTTPS or clear cookies and restart your browser.
+
+<a href="http://redmine.ilch2.de/projects/dev2/wiki/LoginIssues">Dokumentation zu Problemen beim Login</a>';
             }
             throw new \InvalidArgumentException($message);
         }
