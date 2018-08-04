@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.6',
+        'version' => '1.7',
         'icon_small' => 'fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -132,9 +132,16 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
+            case "1.1":
+            case "1.2":
+            case "1.3":
+            case "1.4":
+            case "1.5":
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `website` VARCHAR(255) NOT NULL AFTER `place`;');
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `show`;');
                 unlink(APPLICATION_PATH.'/modules/events/views/show/my.php');
+            case "1.6":
+                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `user_limit` TINYINT(1) NOT NULL AFTER `show`;');
         }
     }
 }
