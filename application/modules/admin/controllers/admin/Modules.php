@@ -83,7 +83,8 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+        $this->getView()->set('moduleMapper', $moduleMapper)
+            ->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
             ->set('modules', $moduleMapper->getModules())
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('dependencies', $dependencies)
@@ -359,5 +360,14 @@ class Modules extends \Ilch\Controller\Admin
         }
 
         $this->redirect(['action' => 'notinstalled']);
+    }
+
+    public function refreshURLAction()
+    {
+        url_get_contents($this->getConfig()->get('updateserver').'modules.php', true);
+
+        $this->redirect()
+            ->withMessage('updateSuccess')
+            ->to(['action' => $this->getRequest()->getParam('from')]);
     }
 }

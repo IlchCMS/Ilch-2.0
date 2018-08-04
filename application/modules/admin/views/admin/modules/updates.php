@@ -6,6 +6,8 @@ $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
 $configurations = $this->get('configurations');
 $found = false;
+$cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
+$cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
 
 if (is_null($modulesOnUpdateServer)) {
     $modulesOnUpdateServer = [];
@@ -47,6 +49,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('updatesAvailable') ?></h1>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
 <div id="modules" class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>

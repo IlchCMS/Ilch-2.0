@@ -199,6 +199,7 @@ return [
     'pageAdress' => 'Page adress',
     'noPages' => 'No pages available',
     'choose' => 'Choose',
+    'lastUpdateOn' => 'Last checked on',
 
     'menuInfos' => 'Information',
     'menuPHPInfo' => 'PHP Info',

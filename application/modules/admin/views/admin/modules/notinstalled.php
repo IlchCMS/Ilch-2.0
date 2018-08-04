@@ -3,6 +3,8 @@
     <?php
     $modulesList = url_get_contents($this->get('updateserver'));
     $modulesOnUpdateServer = json_decode($modulesList);
+    $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
+    $cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
 
     function checkOwnDependencies($versionsOfModules, $dependencies) {
         foreach ($dependencies as $key => $value) {
@@ -15,6 +17,7 @@
         return true;
     }
     ?>
+    <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'notinstalled']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>

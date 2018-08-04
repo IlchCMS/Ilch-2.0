@@ -4,6 +4,8 @@ $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
+$cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
+$cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
 
 // Define the custom sort function
 function custom_sort($a,$b)
@@ -49,6 +51,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('search') ?></h1>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
 <?php
 if (empty($modulesOnUpdateServer)) {
     echo $this->getTrans('noModulesAvailable');
