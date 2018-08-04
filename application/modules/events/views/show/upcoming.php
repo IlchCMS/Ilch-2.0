@@ -1,16 +1,18 @@
 <?php
-$date = new \Ilch\Date();
 $entrantsMapper = $this->get('entrantsMapper');
 ?>
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
+
 <h1><?=$this->getTrans('menuEventUpcoming') ?></h1>
 <div class="row">
     <div class="col-lg-12">
         <ul class="event-list">
             <?php if ($this->get('eventListUpcoming') != ''): ?>
                 <?php foreach ($this->get('eventListUpcoming') as $eventlist): ?>
+                    <?php $eventEntrants = $entrantsMapper->getEventEntrantsById($eventlist->getId()) ?>
                     <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
+                    <?php $agree = 0; $maybe = 0; ?>
                     <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND $this->getUser()->hasAccess('module_events')): ?>
                         <li>
                             <time>
@@ -26,9 +28,8 @@ $entrantsMapper = $this->get('entrantsMapper');
                                         <br /><span class="text-muted"><?=$place[1] ?></span>
                                     <?php endif; ?>
                                 </p>
-                                <?php $agree = 0; $maybe = 0; ?>
-                                <?php if ($entrantsMapper->getEventEntrantsById($eventlist->getId()) != ''): ?>
-                                    <?php foreach ($entrantsMapper->getEventEntrantsById($eventlist->getId()) as $eventEntrantsUser): ?>
+                                <?php if ($eventEntrants != ''): ?>
+                                    <?php foreach ($eventEntrants as $eventEntrantsUser): ?>
                                         <?php if ($eventEntrantsUser->getStatus() == 1): ?>
                                             <?php $agree++; ?>
                                         <?php elseif ($eventEntrantsUser->getStatus() == 2): ?>
@@ -37,9 +38,16 @@ $entrantsMapper = $this->get('entrantsMapper');
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                                 <ul>
-                                    <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
-                                    <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
-                                    <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
+                                    <?php if ($eventlist->getUserLimit() > 0): ?>
+                                        <li style="width:25%;"><?=$this->getTrans('guest') ?></li>
+                                        <li style="width:25%;"><?=$agree ?> <i class="fa fa-check"></i></li>
+                                        <li style="width:25%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
+                                        <li style="width:25%;"><?=$eventlist->getUserLimit() ?> <i class="fa fa-users"></i></li>
+                                    <?php else: ?>
+                                        <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
+                                        <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
+                                        <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                         </li>

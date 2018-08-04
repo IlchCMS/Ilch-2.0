@@ -107,6 +107,13 @@ class Events extends \Ilch\Model
     protected $show;
 
     /**
+     * The user limit of the event.
+     *
+     * @var int
+     */
+    protected $userLimit;
+
+    /**
      * The read access of the event.
      *
      * @var string
@@ -445,6 +452,30 @@ class Events extends \Ilch\Model
     public function setShow($show)
     {
         $this->show = (int)$show;
+
+        return $this;
+    }
+
+    /**
+     * Gets the user limit of the event.
+     *
+     * @return int
+     */
+    public function getUserLimit()
+    {
+        return $this->userLimit;
+    }
+
+    /**
+     * Sets the user limit of the event.
+     *
+     * @param int $userLimit
+     *
+     * @return $this
+     */
+    public function setUserLimit($userLimit)
+    {
+        $this->userLimit = (int)$userLimit;
 
         return $this;
     }

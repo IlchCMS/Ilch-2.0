@@ -48,6 +48,7 @@ class Events extends \Ilch\Mapper
                 ->setPrice($entries['price'])
                 ->setPriceArt($entries['price_art'])
                 ->setShow($entries['show'])
+                ->setUserLimit($entries['user_limit'])
                 ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
@@ -89,6 +90,7 @@ class Events extends \Ilch\Mapper
             ->setPrice($eventRow['price'])
             ->setPriceArt($eventRow['price_art'])
             ->setShow($eventRow['show'])
+            ->setUserLimit($eventRow['user_limit'])
             ->setReadAccess($eventRow['read_access']);
 
         return $eventModel;
@@ -268,6 +270,7 @@ class Events extends \Ilch\Mapper
             'price' => $event->getPrice(),
             'price_art' => $event->getPriceArt(),
             'show' => $event->getShow(),
+            'user_limit' => $event->getUserLimit(),
             'read_access' => $event->getReadAccess()
         ];
 
@@ -301,16 +304,16 @@ class Events extends \Ilch\Mapper
         }
 
         $this->db()->delete('events')
-                ->where(['id' => $id])
-                ->execute();
+            ->where(['id' => $id])
+            ->execute();
 
         $this->db()->delete('events_entrants')
-                ->where(['event_id' => $id])
-                ->execute();
+            ->where(['event_id' => $id])
+            ->execute();
 
         $this->db()->delete('comments')
-                ->where(['key' => 'events/show/event/id/'.$id])
-                ->execute();
+            ->where(['key' => 'events/show/event/id/'.$id])
+            ->execute();
     }
 
     /**

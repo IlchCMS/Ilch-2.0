@@ -11,16 +11,8 @@ $users = $userMapper->getUserList();
 <link href="<?=$this->getStaticUrl('css/chosen/chosen.css') ?>" rel="stylesheet">
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
-<h1>
-    <?php
-    if ($this->get('event') != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
-</h1>
 
+<h1><?=($this->get('event') != '' ? $this->getTrans('edit') : $this->getTrans('add')) ?></h1>
 <?php if ($this->getUser() AND (in_array($this->getUser()->getId(), $groupAccesses) OR $this->getUser()->hasAccess('module_events'))): ?>
     <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
@@ -177,6 +169,7 @@ $users = $userMapper->getUserList();
                        id="price"
                        name="price"
                        step="0.01"
+                       min="0"
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPrice()) : $this->originalInput('price') ?>" />
             </div>
             <div class="col-lg-2">
@@ -191,6 +184,20 @@ $users = $userMapper->getUserList();
                     }
                     ?>
                 </select>
+            </div>
+        </div>
+        <div class="form-group <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
+            <label for="userLimit" class="col-lg-2 control-label">
+                <?=$this->getTrans('userLimit') ?> <div class="badge" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa fa-info"></i></div>
+            </label>
+            <div class="col-lg-2">
+                <input type="number"
+                       class="form-control"
+                       id="userLimit"
+                       name="userLimit"
+                       step="1"
+                       min="0"
+                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getUserLimit()) : $this->originalInput('userLimit') ?>" />
             </div>
         </div>
         <div class="form-group">
@@ -278,6 +285,13 @@ $(document).ready(function() {
             if (log) alert(log);
         }
     });
+});
+
+$(function () {
+    $('[data-toggle="event-popover"]').popover({
+        container: 'body',
+        trigger: 'hover'
+    })
 });
 
 <?php if ($this->get('event_google_maps_api_key') != ''): ?>

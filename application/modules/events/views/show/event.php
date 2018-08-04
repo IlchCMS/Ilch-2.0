@@ -1,6 +1,7 @@
 <?php
 $event = $this->get('event');
 $eventEntrants = $this->get('eventEntrants');
+$eventEntrantsCount = $this->get('eventEntrantsCount');
 $userMapper = $this->get('userMapper');
 $currencyMapper = $this->get('currencyMapper');
 $userDetails = $this->get('userDetails');
@@ -81,12 +82,14 @@ if (!empty($event)) {
                                     <?=$this->getTrans('decline') ?>
                                 </button>
                             <?php else: ?>
-                                <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
-                                    <?=$this->getTrans('join') ?>
-                                </button>
-                                <button type="submit" class="btn btn-sm btn-warning"name="save" value="2" >
-                                    <?=$this->getTrans('maybe') ?>
-                                </button>
+                                <?php if ($eventEntrantsCount < $event->getUserLimit() OR $event->getUserLimit() == 0): ?>
+                                    <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
+                                        <?=$this->getTrans('join') ?>
+                                    </button>
+                                    <button type="submit" class="btn btn-sm btn-warning"name="save" value="2" >
+                                        <?=$this->getTrans('maybe') ?>
+                                    </button>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </form>
                     <?php endif; ?>
@@ -152,6 +155,12 @@ if (!empty($event)) {
                     ?>
                 </div>
             <?php endif; ?>
+
+            <?php if ($event->getUserLimit() > 0): ?>
+                <div class="eventBoxBottom">
+                    <i class="fa fa-users"></i> <?=$eventEntrantsCount ?> / <?=$event->getUserLimit() ?>
+                </div>
+            <?php endif; ?>
             <br />
             <div class="eventBoxHead">
                 <div style="width: 10%; float: left;">
@@ -159,7 +168,7 @@ if (!empty($event)) {
                 </div>
                 <div style="width: 45%; float: left;" align="right">
                     <?php $agree = 0; $maybe = 0; ?>
-                    <?php if ($this->get('eventEntrantsCount') != ''): ?>
+                    <?php if ($eventEntrantsCount != ''): ?>
                         <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
                             <?php if ($eventEntrantsUser->getStatus() == 1): ?>
                                 <?php $agree++; ?>
@@ -175,10 +184,10 @@ if (!empty($event)) {
                 </div>
                 <div style="clear: both;"></div>
             </div>
-            <?php if ($this->get('eventEntrantsCount') != ''): ?>
+            <?php if ($eventEntrantsCount != ''): ?>
                 <div class="eventBoxBottom">
                     <div style="margin-left: 2px;">
-                        <?php if ($this->get('eventEntrantsCount') != ''): ?>
+                        <?php if ($eventEntrantsCount != ''): ?>
                             <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
                             <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>
                                 <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
@@ -252,7 +261,7 @@ if (!empty($event)) {
         </div>
     </div>
 
-    <?php if ($this->get('eventEntrantsCount') != ''): ?>
+    <?php if ($eventEntrantsCount != ''): ?>
         <!-- Entrants Modal -->
         <div id="entrantsModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -262,7 +271,7 @@ if (!empty($event)) {
                         <h4 class="modal-title"><?=$this->getTrans('entrant') ?></h4>
                     </div>
                     <div class="modal-body">
-                        <?php if ($this->get('eventEntrantsCount') != ''): ?>
+                        <?php if ($eventEntrantsCount != ''): ?>
                             <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
                                 <div class="entrants-user">
                                     <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>

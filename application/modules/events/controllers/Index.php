@@ -96,11 +96,12 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'start'        => 'required',
-                'title'        => 'required',
-                'place'        => 'required',
-                'website'      => 'url',
-                'text'         => 'required',
+                'start' => 'required',
+                'title' => 'required',
+                'place' => 'required',
+                'website' => 'url',
+                'text' => 'required',
+                'userLimit' => 'numeric|min:0',
                 'calendarShow' => 'numeric|min:0|max:1'
             ]);
 
@@ -181,6 +182,7 @@ class Index extends \Ilch\Controller\Frontend
                         ->setPrice($this->getRequest()->getPost('price'))
                         ->setPriceArt($this->getRequest()->getPost('priceArt'))
                         ->setShow($this->getRequest()->getPost('calendarShow'))
+                        ->setUserLimit($this->getRequest()->getPost('userLimit'))
                         ->setReadAccess($groups);
                     $eventMapper->save($eventModel);
 

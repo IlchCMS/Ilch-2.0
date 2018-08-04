@@ -84,4 +84,8 @@ return [
     'googleMapsMapTyp' => 'Map Typ',
     'googleMapsPlanRoute' => 'Plan route',
     'boxEventLimit' => 'Event limit',
+
+    'popoverInfo' => 'Info',
+    'userLimit' => 'Participants limit',
+    'userLimitInfo' => 'Leave field empty or 0 for unlimited number of participants',
 ];
