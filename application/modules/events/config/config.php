@@ -97,6 +97,7 @@ class Config extends \Ilch\Config\Install
                 `price` VARCHAR(255) NOT NULL,
                 `price_art` TINYINT(1) NOT NULL,
                 `show` TINYINT(1) NOT NULL,
+                `user_limit` INT(11) NOT NULL,
                 `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\',
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -141,7 +142,7 @@ class Config extends \Ilch\Config\Install
             case "1.4":
             case "1.5":
             case "1.6":
-                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `user_limit` TINYINT(1) NOT NULL AFTER `show`;');
+                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `user_limit` INT(11) NOT NULL AFTER `show`;');
         }
     }
 }

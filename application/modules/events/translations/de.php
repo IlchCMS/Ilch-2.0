@@ -87,5 +87,5 @@ return [
 
     'popoverInfo' => 'Info',
     'userLimit' => 'Teilnehmerzahl',
-    'userLimitInfo' => 'Felt leer lassen oder 0 für unbegrenzte Teilnehmerzahl',
+    'userLimitInfo' => 'Feld leer lassen oder 0 für unbegrenzte Teilnehmerzahl',
 ];
