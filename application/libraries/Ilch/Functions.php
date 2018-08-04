@@ -252,7 +252,7 @@ function url_get_contents($url, $skip_cache = FALSE, $cache_time = 21600)
         curl_close($ch);
 
         // save the file if there's data
-        if ($output AND !$skip_cache) {
+        if ($output) {
             file_put_contents($file, $output);
         }
     } else {
