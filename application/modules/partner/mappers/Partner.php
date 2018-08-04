@@ -36,6 +36,7 @@ class Partner extends \Ilch\Mapper
                 ->setName($entries['name'])
                 ->setLink($entries['link'])
                 ->setBanner($entries['banner'])
+                ->setTarget($entries['target'])
                 ->setFree($entries['setfree']);
             $entry[] = $entryModel;
         }
@@ -69,7 +70,8 @@ class Partner extends \Ilch\Mapper
             $partnerModel->setId($partnerRow['id'])
                 ->setName($partnerRow['name'])
                 ->setLink($partnerRow['link'])
-                ->setBanner($partnerRow['banner']);
+                ->setBanner($partnerRow['banner'])
+                ->setTarget($partnerRow['target']);
             $partners[] = $partnerModel;
         }
 
@@ -98,7 +100,8 @@ class Partner extends \Ilch\Mapper
         $partnerModel->setId($partnerRow['id'])
             ->setName($partnerRow['name'])
             ->setLink($partnerRow['link'])
-            ->setBanner($partnerRow['banner']);
+            ->setBanner($partnerRow['banner'])
+            ->setTarget($partnerRow['target']);
 
         return $partnerModel;
     }
@@ -114,6 +117,7 @@ class Partner extends \Ilch\Mapper
             'name' => $partner->getName(),
             'link' => $partner->getLink(),
             'banner' => $partner->getBanner(),
+            'target' => $partner->getTarget(),
             'setfree' => $partner->getFree()
         ];
 

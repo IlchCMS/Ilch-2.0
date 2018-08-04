@@ -11,20 +11,26 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=($this->originalInput('name') ? $this->originalInput('name') : $this->escape($this->get('partner')->getName())) ?>" />
+                   value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getName()) : $this->originalInput('name') ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
         <label for="link" class="col-lg-2 control-label">
             <?=$this->getTrans('link') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <input type="text"
                    class="form-control"
                    id="link"
                    name="link"
                    placeholder="http://"
-                   value="<?=($this->originalInput('link') ? $this->originalInput('link') : $this->escape($this->get('partner')->getLink())) ?>" />
+                   value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getLink()) : $this->originalInput('link') ?>" />
+        </div>
+        <div class="col-lg-1">
+            <select class="form-control" id="target" name="target">
+                <option value="0"<?=($this->get('partner') != '' AND $this->get('partner')->getTarget() == 0 ? ' selected="selected"' : '') ?>><?=$this->getTrans('targetBlank') ?></option>
+                <option value="1"<?=($this->get('partner') != '' AND $this->get('partner')->getTarget() == 1 ? ' selected="selected"' : '') ?>><?=$this->getTrans('targetSelf') ?></option>
+            </select>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
@@ -38,7 +44,7 @@
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?=($this->originalInput('banner') ? $this->originalInput('banner') : $this->escape($this->get('partner')->getBanner())) ?>" />
+                       value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getBanner()) : $this->originalInput('banner') ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>

@@ -41,7 +41,7 @@
                         ?>
 
                         <div class="partner-item">
-                            <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="_blank">
+                            <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="<?=($partner->getTarget() == 0 ? '_blank' : '_self') ?>">
                                 <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" class="img-responsive">
                             </a>
                         </div>

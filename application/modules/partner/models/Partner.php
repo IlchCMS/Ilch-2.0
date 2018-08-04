@@ -37,6 +37,13 @@ class Partner extends \Ilch\Model
     protected $banner;
 
     /**
+     * The link target of the entry.
+     *
+     * @var integer
+     */
+    protected $target;
+
+    /**
      * The free of the entry.
      *
      * @var integer
@@ -136,6 +143,29 @@ class Partner extends \Ilch\Model
     }
 
     /**
+     * Gets the link target of the entry.
+     *
+     * @return integer
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
+     * Set the link target of the entry.
+     *
+     * @param integer $target
+     * @return $this
+     */
+    public function setTarget($target)
+    {
+        $this->target = (int)$target;
+
+        return $this;
+    }
+
+    /**
      * Gets the free of the entry.
      *
      * @return integer
@@ -148,10 +178,13 @@ class Partner extends \Ilch\Model
     /**
      * Set the free of the entry.
      *
-     * @return integer
+     * @param integer $free
+     * @return $this
      */
     public function setFree($free)
     {
         $this->free = (int)$free;
+
+        return $this;
     }
 }

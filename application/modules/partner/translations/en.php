@@ -24,4 +24,6 @@ return [
     'boxSliderHeight' => 'Height of Slider Box',
     'boxSliderModeVertical' => 'vertical',
     'boxSliderModeHorizontal' => 'horizontal',
+    'targetBlank' => '_blank',
+    'targetSelf' => '_self',
 ];
