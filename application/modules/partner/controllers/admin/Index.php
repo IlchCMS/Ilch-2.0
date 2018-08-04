@@ -152,12 +152,14 @@ class Index extends \Ilch\Controller\Admin
             $post = [
                 'name' => trim($this->getRequest()->getPost('name')),
                 'link' => trim($this->getRequest()->getPost('link')),
+                'target' => $this->getRequest()->getPost('target'),
                 'banner' => $banner
             ];
 
             $validation = Validation::create($post, [
                 'name' => 'required',
                 'link' => 'required|url',
+                'target' => 'numeric|min:0|max:1',
                 'banner' => 'required|url'
             ]);
 
@@ -170,6 +172,7 @@ class Index extends \Ilch\Controller\Admin
                 }
                 $model->setName($post['name'])
                     ->setLink($post['link'])
+                    ->setTarget($post['target'])
                     ->setBanner($post['banner']);
                 $partnerMapper->save($model);
 

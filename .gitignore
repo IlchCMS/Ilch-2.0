@@ -12,4 +12,5 @@ web.config
 robots.txt
 .user.ini
 
+/cache/
 /vendor/
