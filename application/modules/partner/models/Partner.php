@@ -57,7 +57,7 @@ class Partner extends \Ilch\Model
      * Sets the id of the partner.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
     public function setId($id)
     {
@@ -80,7 +80,7 @@ class Partner extends \Ilch\Model
      * Sets the name of the partner.
      *
      * @param string $name
-     * @return this
+     * @return $this
      */
     public function setName($name)
     {
@@ -103,7 +103,7 @@ class Partner extends \Ilch\Model
      * Sets the link of the partner.
      *
      * @param string $link
-     * @return this
+     * @return $this
      */
     public function setLink($link)
     {
@@ -126,7 +126,7 @@ class Partner extends \Ilch\Model
      * Sets the banner of the partner.
      *
      * @param string $banner
-     * @return this
+     * @return $this
      */
     public function setBanner($banner)
     {

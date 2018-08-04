@@ -53,7 +53,7 @@ class Index extends \Ilch\Controller\Admin
         $partnerMapper = new PartnerMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -65,9 +65,16 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getPost('action') == 'setfree') {
                 foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
                     $model = new PartnerModel();
-                    $model->setId($entryId);
-                    $model->setFree(1);
+                    $model->setId($entryId)
+                        ->setFree(1);
                     $partnerMapper->save($model);
+                }
+
+                $badge = count($partnerMapper->getEntries(['setfree' => 0]));
+                if ($badge > 0) {
+                    $this->redirect(['action' => 'index', 'showsetfree' => 1]);
+                } else {
+                    $this->redirect(['action' => 'index']);
                 }
             }
         }
@@ -78,8 +85,8 @@ class Index extends \Ilch\Controller\Admin
             $entries = $partnerMapper->getEntries(['setfree' => 1]);
         }
 
-        $this->getView()->set('entries', $entries);
-        $this->getView()->set('badge', count($partnerMapper->getEntries(['setfree' => 0])));
+        $this->getView()->set('entries', $entries)
+            ->set('badge', count($partnerMapper->getEntries(['setfree' => 0])));
     }
 
     public function delAction()
@@ -91,7 +98,11 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(['action' => 'index']);
+        if ($this->getRequest()->getParam('showsetfree')) {
+            $this->redirect(['action' => 'index', 'showsetfree' => 1]);
+        } else {
+            $this->redirect(['action' => 'index']);
+        }
     }
 
     public function setfreeAction()
@@ -100,8 +111,8 @@ class Index extends \Ilch\Controller\Admin
             $partnerMapper = new PartnerMapper();
 
             $model = new PartnerModel();
-            $model->setId($this->getRequest()->getParam('id'));
-            $model->setFree(1);
+            $model->setId($this->getRequest()->getParam('id'))
+                ->setFree(1);
             $partnerMapper->save($model);
 
             $this->addMessage('freeSuccess');
@@ -120,24 +131,17 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('partner', $partnerMapper->getPartnerById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        $post = [
-            'name' => '',
-            'link' => '',
-            'banner' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-
             $banner = trim($this->getRequest()->getPost('banner'));
             if (!empty($banner)) {
                 if (substr($banner, 0, 11) == 'application') {
@@ -164,23 +168,28 @@ class Index extends \Ilch\Controller\Admin
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-                $model->setName($post['name']);
-                $model->setLink($post['link']);
-                $model->setBanner($post['banner']);
-                $model->setFree(1);
+                $model->setName($post['name'])
+                    ->setLink($post['link'])
+                    ->setBanner($post['banner']);
                 $partnerMapper->save($model);
 
-                unset($_SESSION['captcha']);
-
-                $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                if ($this->getRequest()->getParam('id')) {
+                    $this->redirect()
+                        ->withInput()
+                        ->withErrors($validation->getErrorBag())
+                        ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
+                } else {
+                    $this->redirect()
+                        ->withInput()
+                        ->withErrors($validation->getErrorBag())
+                        ->to(['action' => 'treat']);
+                }
             }
-
-            unset($_SESSION['captcha']);
         }
-
-        $this->getView()->set('post', $post);
     }
 }

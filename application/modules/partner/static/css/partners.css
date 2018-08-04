@@ -1,8 +1,20 @@
-.partnersslider .bx-wrapper {
-    margin: 0px;
+.partner-box .partner-item {
+    margin-bottom: 15px;
 }
-.partnersslider .bx-viewport {
-    border: 0px;
+.partner-box .partner-item:last-child {
+    margin-bottom: 0;
+}
+.partner-box .h-slide .partner-item {
+    width: auto !important;
+    margin-right: 15px !important;
+    margin-bottom: 0;
+}
+
+.partner-box .partnersslider .bx-wrapper {
+    margin: 0;
+}
+.partner-box .partnersslider .bx-viewport {
+    border: 0;
     box-shadow: none !important;
-    left: 0px;
+    left: 0;
 }

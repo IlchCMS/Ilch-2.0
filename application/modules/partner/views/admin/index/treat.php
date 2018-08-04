@@ -1,12 +1,4 @@
-<h1>
-    <?php
-    if ($this->get('partner') != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
-</h1>
+<h1><?=($this->get('partner') != '' ? $this->getTrans('edit') : $this->getTrans('add')) ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
@@ -19,7 +11,7 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } else { echo $this->get('post')['name']; } ?>" />
+                   value="<?=($this->originalInput('name') ? $this->originalInput('name') : $this->escape($this->get('partner')->getName())) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
@@ -32,7 +24,7 @@
                    id="link"
                    name="link"
                    placeholder="http://"
-                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getLink()); } else { echo $this->get('post')['link']; } ?>" />
+                   value="<?=($this->originalInput('link') ? $this->originalInput('link') : $this->escape($this->get('partner')->getLink())) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
@@ -46,26 +38,19 @@
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } else { echo $this->get('post')['banner']; } ?>" />
+                       value="<?=($this->originalInput('banner') ? $this->originalInput('banner') : $this->escape($this->get('partner')->getBanner())) ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
     </div>
-    <?php
-    if ($this->get('partner') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?=($this->get('partner') != '' ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton')) ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
-// Example for multiple input filds
 <?=$this->getMedia()
-        ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
-        ->addInputId('_1')
-        ->addUploadController($this->getUrl('admin/media/index/upload'))
+    ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
+    ->addInputId('_1')
+    ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
 </script>

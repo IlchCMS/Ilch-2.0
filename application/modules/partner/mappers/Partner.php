@@ -32,11 +32,11 @@ class Partner extends \Ilch\Mapper
         $entry = [];
         foreach ($entryArray as $entries) {
             $entryModel = new PartnerModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setLink($entries['link']);
-            $entryModel->setBanner($entries['banner']);
-            $entryModel->setFree($entries['setfree']);
+            $entryModel->setId($entries['id'])
+                ->setName($entries['name'])
+                ->setLink($entries['link'])
+                ->setBanner($entries['banner'])
+                ->setFree($entries['setfree']);
             $entry[] = $entryModel;
         }
 
@@ -66,10 +66,10 @@ class Partner extends \Ilch\Mapper
         $partners = [];
         foreach ($partnerArray as $partnerRow) {
             $partnerModel = new PartnerModel();
-            $partnerModel->setId($partnerRow['id']);
-            $partnerModel->setName($partnerRow['name']);
-            $partnerModel->setLink($partnerRow['link']);
-            $partnerModel->setBanner($partnerRow['banner']);
+            $partnerModel->setId($partnerRow['id'])
+                ->setName($partnerRow['name'])
+                ->setLink($partnerRow['link'])
+                ->setBanner($partnerRow['banner']);
             $partners[] = $partnerModel;
         }
 
@@ -95,10 +95,10 @@ class Partner extends \Ilch\Mapper
         }
 
         $partnerModel = new PartnerModel();
-        $partnerModel->setId($partnerRow['id']);
-        $partnerModel->setName($partnerRow['name']);
-        $partnerModel->setLink($partnerRow['link']);
-        $partnerModel->setBanner($partnerRow['banner']);
+        $partnerModel->setId($partnerRow['id'])
+            ->setName($partnerRow['name'])
+            ->setLink($partnerRow['link'])
+            ->setBanner($partnerRow['banner']);
 
         return $partnerModel;
     }

@@ -21,15 +21,21 @@
             <table class="table table-hover table-striped">
                 <colgroup>
                     <col class="icon_width">
+                    <?php  if ($this->getRequest()->getParam('showsetfree')): ?>
+                        <col class="icon_width">
+                    <?php endif; ?>
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="col-lg-2">
-                    <col>
+                    <col />
                 </colgroup>
                 <thead>
                     <tr>
                         <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
                         <th></th>
+                        <?php  if ($this->getRequest()->getParam('showsetfree')): ?>
+                            <th></th>
+                        <?php endif; ?>
                         <th></th>
                         <th><?=$this->getTrans('name') ?></th>
                         <th><?=$this->getTrans('banner') ?></th>
@@ -44,29 +50,26 @@
                         <?php endif; ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_entries', $entry->getId()) ?></td>
-                            <td>
-                                <?php 
-                                if ($this->getRequest()->getParam('showsetfree')) {
-                                    $freeArray = ['module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId()];
-
+                            <?php if ($this->getRequest()->getParam('showsetfree')): ?>
+                                <td>
+                                    <?php
+                                    $freeArray = ['action' => 'setfree', 'id' => $entry->getId()];
                                     if ($this->get('badge') > 1) {
                                         $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
                                     }
                                     echo '<a href="'.$this->getUrl($freeArray, null, true).'" title="'.$this->getTrans('setfree').'"><i class="fa fa-check-square-o text-success"></i></a>';
-                                } else {
-                                    echo $this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]);
-                                } 
-                                ?>
-                            </td>
+                                    ?>
+                                </td>
+                            <?php endif; ?>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]); ?></td>
                             <td>
                                 <?php
                                 $deleteArray = ['action' => 'del', 'id' => $entry->getId()];
-
-                                if ($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
+                                if ($this->get('badge') > 1) {
                                     $deleteArray = ['action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1];
                                 }
+                                echo $this->getDeleteIcon($deleteArray);
                                 ?>
-                                <?=$this->getDeleteIcon($deleteArray) ?>
                             </td>
                             <td><?=$this->escape($entry->getName()) ?></td>
                             <td><a href='<?=$this->escape($entry->getLink()) ?>' target="_blank"><img src='<?=$banner ?>'></a></td>
@@ -79,7 +82,7 @@
         $actions = ['delete' => 'delete'];
 
         if ($this->getRequest()->getParam('showsetfree')) {
-            $actions = ['delete' => 'delete', 'setfree' => 'setfree'];
+            $actions += ['setfree' => 'setfree'];
         }
 
         echo $this->getListBar($actions);
