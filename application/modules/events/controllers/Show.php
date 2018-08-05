@@ -36,10 +36,14 @@ class Show extends \Ilch\Controller\Frontend
             $date = new \Ilch\Date();
 
             if ($this->getRequest()->getPost('save')) {
-                $entrantsModel->setEventId(trim($this->getRequest()->getPost('id')))
-                    ->setUserId($this->getUser()->getId())
-                    ->setStatus(trim($this->getRequest()->getPost('save')));
-                $entrantsMapper->saveUserOnEvent($entrantsModel);
+                if ($entrantsMapper->getCountOfEventEntrans($this->getRequest()->getPost('id'), $this->getUser()->getId()) < $event->getUserLimit()) {
+                    $entrantsModel->setEventId($this->getRequest()->getPost('id'))
+                        ->setUserId($this->getUser()->getId())
+                        ->setStatus($this->getRequest()->getPost('save'));
+                    $entrantsMapper->saveUserOnEvent($entrantsModel);
+                } else {
+                    $this->addMessage('maximumEntrantsReached', 'warning');
+                }
             }
             if ($this->getRequest()->getPost('commentEvent')) {
                 $commentModel->setKey('events/show/event/id/'.$this->getRequest()->getParam('id'))

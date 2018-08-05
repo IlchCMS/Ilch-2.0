@@ -39,6 +39,21 @@ class Entrants extends \Ilch\Mapper
     }
 
     /**
+     * Gets the count of entrants of an event.
+     *
+     * @param int $eventId
+     *
+     * @return int
+     */
+    public function getCountOfEventEntrans($eventId)
+    {
+        return $this->db()->select('COUNT(*)', 'events_entrants')
+            ->where(['event_id' => $eventId])
+            ->execute()
+            ->fetchCell();
+    }
+
+    /**
      * Gets the Event entrants.
      *
      * @param int $eventId
