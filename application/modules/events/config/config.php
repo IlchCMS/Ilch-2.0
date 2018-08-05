@@ -72,7 +72,8 @@ class Config extends \Ilch\Config\Install
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_api_key';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_map_typ';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_zoom';
-            DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events';");
+            DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events';
+            DELETE FROM `[prefix]_comments` WHERE `key` LIKE 'events/%';");
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $this->db()->queryMulti("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'events/events/index/';");
