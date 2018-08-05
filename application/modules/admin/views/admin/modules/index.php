@@ -206,11 +206,3 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
         </tbody>
     </table>
 </div>
-
-<script>
-    $('h1 .fa-refresh').hover(function() {
-        $(this).addClass('fa-spin');
-    }, function() {
-        $(this).removeClass('fa-spin');
-    });
-</script>
