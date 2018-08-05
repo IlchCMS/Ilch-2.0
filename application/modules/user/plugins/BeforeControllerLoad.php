@@ -80,6 +80,25 @@ class BeforeControllerLoad
             return;
         }
 
+        // Check if user is locked out. If that is the case log him out.
+        if ($user->getLocked()) {
+            if (!empty($_COOKIE['remember'])) {
+                setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], false, false);
+            }
+
+            $_SESSION = [];
+            \Ilch\Registry::remove('user');
+
+            if (ini_get("session.use_cookies")) {
+                $params = session_get_cookie_params();
+                setcookie(session_name(), '', time() - 42000, $params["path"],
+                    $params["domain"], $params["secure"], $params["httponly"]
+                );
+            }
+
+            session_destroy();
+        }
+
         if ($user->isAdmin()) {
             /*
              * Administrator group should have sight on everything, return here.
