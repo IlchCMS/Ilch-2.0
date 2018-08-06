@@ -154,10 +154,14 @@ class Group extends \Ilch\Controller\Admin
             $groupId = $groupMapper->save($group);
 
             if (!empty($groupId) && empty($groupData['id'])) {
-                $this->addMessage('newGroupMsg');
+                $this->redirect()
+                    ->withMessage('newGroupMsg')
+                    ->to(['action' => 'treat', 'id' => $groupId]);
+            } else {
+                $this->redirect()
+                    ->withMessage('treatGroupMsg')
+                    ->to(['action' => 'treat', 'id' => $groupId]);
             }
-
-            $this->redirect(['action' => 'treat', 'id' => $groupId]);
         }
     }
 
