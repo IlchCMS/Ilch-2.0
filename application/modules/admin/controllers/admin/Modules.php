@@ -134,10 +134,13 @@ class Modules extends \Ilch\Controller\Admin
 
         try {
             if ($this->getRequest()->isSecure()) {
+                $key = $this->getRequest()->getParam('key');
+                $moduleFilename = $key.'-v'.$this->getRequest()->getParam('version');
+
                 $transfer = new \Ilch\Transfer();
                 $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$this->getRequest()->getParam('key').'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$this->getRequest()->getParam('key').'.zip-signature.sig');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip-signature.sig');
 
                 if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
@@ -214,11 +217,12 @@ class Modules extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             try {
                 $key = $this->getRequest()->getParam('key');
+                $moduleFilename = $key.'-v'.$this->getRequest()->getParam('version');
 
                 $transfer = new \Ilch\Transfer();
                 $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$key.'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$key.'.zip-signature.sig');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip-signature.sig');
 
                 if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.

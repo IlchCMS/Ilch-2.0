@@ -5,7 +5,6 @@ $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
 $configurations = $this->get('configurations');
-$moduleMapper = $this->get('moduleMapper');
 $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
 $cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
 
@@ -145,7 +144,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                         <i class="fa fa-refresh"></i>
                                     </button>
                                 <?php elseif (version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
-                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServerFound->key, 'from' => 'index']) ?>">
+                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServerFound->key, 'version' => $moduleOnUpdateServerFound->version, 'from' => 'index']) ?>">
                                         <?=$this->getTokenField() ?>
                                         <button type="submit"
                                                 class="btn btn-default"
