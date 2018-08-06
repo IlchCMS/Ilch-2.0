@@ -83,8 +83,7 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('moduleMapper', $moduleMapper)
-            ->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
             ->set('modules', $moduleMapper->getModules())
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('dependencies', $dependencies)
@@ -160,7 +159,7 @@ class Modules extends \Ilch\Controller\Admin
             }
         } finally {
             $dependencies = [];
-
+            $modulesDir = [];
             foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
                 $key = basename($modulesPath);
                 $modulesDir[] = $key;
@@ -259,6 +258,7 @@ class Modules extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
             ->add($this->getTranslator()->trans('menuModules').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
+        $modulesDir = [];
         foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
             $modulesDir[] = basename($modulesPath);
         }
