@@ -134,8 +134,7 @@ class Modules extends \Ilch\Controller\Admin
 
         try {
             if ($this->getRequest()->isSecure()) {
-                $key = $this->getRequest()->getParam('key');
-                $moduleFilename = $key.'-v'.$this->getRequest()->getParam('version');
+                $moduleFilename = $this->getRequest()->getParam('key').'-v'.$this->getRequest()->getParam('version');
 
                 $transfer = new \Ilch\Transfer();
                 $transfer->setZipSavePath(ROOT_PATH.'/updates/');

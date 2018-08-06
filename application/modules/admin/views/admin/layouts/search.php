@@ -46,7 +46,7 @@ if (empty($layoutsOnUpdateServer)) {
                                 <i class="fa fa-check text-success"></i>
                             </span>
                         <?php elseif (in_array($layoutOnUpdateServer->key, $this->get('layouts')) && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '<')): ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServer->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServer->key], 'from' => 'search']) ?>">
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServer->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServer->key], 'newVersion' => $layoutOnUpdateServer->version, 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"
@@ -55,7 +55,7 @@ if (empty($layoutsOnUpdateServer)) {
                                 </button>
                             </form>
                         <?php else: ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $layoutOnUpdateServer->key]) ?>">
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $layoutOnUpdateServer->key, 'version' => $layoutOnUpdateServer->version]) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"
