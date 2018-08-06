@@ -273,13 +273,13 @@ class Transfer
     public function save()
     {
         try {
-            $newUpdate = url_get_contents($this->getDownloadUrl());
+            $newUpdate = url_get_contents($this->getDownloadUrl(), false, true);
             if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
             $dlHandler = fopen($this->zipFile, 'w');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
 
-            $newUpdate = url_get_contents($this->getDownloadSignatureUrl());
+            $newUpdate = url_get_contents($this->getDownloadSignatureUrl(), false, true);
             $dlHandler = fopen($this->zipSigFile, 'w');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);

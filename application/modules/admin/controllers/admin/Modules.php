@@ -367,7 +367,7 @@ class Modules extends \Ilch\Controller\Admin
 
     public function refreshURLAction()
     {
-        url_get_contents($this->getConfig()->get('updateserver').'modules.php', true);
+        url_get_contents($this->getConfig()->get('updateserver').'modules.php', true, true);
 
         $this->redirect()
             ->withMessage('updateSuccess')

@@ -206,11 +206,12 @@ function is_in_array($needle, $haystack)
  * cUrl function, gets a url result
  *
  * @param string $url
- * @param bool $skip_cache
+ * @param bool $write_cache Set this to false if you don't want to write a cache file.
+ * @param bool $ignoreCache Set this to true to ignore the cache and fetch from server.
  * @param integer $cache_time
  * @return mixed $data | FALSE
  */
-function url_get_contents($url, $skip_cache = FALSE, $cache_time = 21600)
+function url_get_contents($url, $write_cache = true, $ignoreCache = false, $cache_time = 21600)
 {
     if (!function_exists('curl_init')) {
         die('CURL is not installed!');
@@ -234,7 +235,7 @@ function url_get_contents($url, $skip_cache = FALSE, $cache_time = 21600)
     $filetimemod = $mtime + $cachetime;
 
     // if the renewal date is smaller than now, return true; else false (no need for update)
-    if ($filetimemod < time() OR $skip_cache) {
+    if ($filetimemod < time() || $ignoreCache) {
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => TRUE,
@@ -252,7 +253,7 @@ function url_get_contents($url, $skip_cache = FALSE, $cache_time = 21600)
         curl_close($ch);
 
         // save the file if there's data
-        if ($output) {
+        if ($output && $write_cache) {
             file_put_contents($file, $output);
         }
     } else {

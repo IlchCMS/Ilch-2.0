@@ -243,7 +243,7 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function refreshURLAction()
     {
-        url_get_contents($this->getConfig()->get('updateserver').'layouts.php', true);
+        url_get_contents($this->getConfig()->get('updateserver').'layouts.php', true, true);
 
         $this->redirect()
             ->withMessage('updateSuccess')
