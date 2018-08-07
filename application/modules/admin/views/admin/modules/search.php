@@ -141,7 +141,7 @@ if (empty($modulesOnUpdateServer)) {
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
                         <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServerFound->version, 'from' => 'search']) ?>">
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version, 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"
@@ -150,7 +150,7 @@ if (empty($modulesOnUpdateServer)) {
                                 </button>
                             </form>
                         <?php else: ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServerFound->version]) ?>">
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version]) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"
