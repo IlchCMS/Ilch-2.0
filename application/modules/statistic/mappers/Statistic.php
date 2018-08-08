@@ -14,7 +14,8 @@ class Statistic extends \Ilch\Mapper
     /**
      * Returns all online users.
      *
-     * @return []|\Modules\User\Models\User[]
+     * @return array []|\Modules\User\Models\User[]
+     * @throws \Ilch\Database\Exception
      */
     public function getVisitsOnlineUser()
     {
@@ -43,6 +44,7 @@ class Statistic extends \Ilch\Mapper
      * Returns all online visits.
      *
      * @return null|\Modules\Statistic\Models\Statistic[]
+     * @throws \Ilch\Database\Exception
      */
     public function getVisitsOnline()
     {
@@ -354,6 +356,7 @@ class Statistic extends \Ilch\Mapper
 
     /**
      * @return integer
+     * @throws \Ilch\Database\Exception
      */
     public function getVisitsCountOnline()
     {
@@ -424,6 +427,7 @@ class Statistic extends \Ilch\Mapper
 
     /**
      * @return integer
+     * @throws \Ilch\Database\Exception
      */
     public function getVisitsCount($date = null, $year = null, $month = null)
     {
@@ -487,58 +491,60 @@ class Statistic extends \Ilch\Mapper
      */
     public function getOS($name = null, $version = null) {
         $useragent = $_SERVER['HTTP_USER_AGENT'];
+        $osArray = [];
 
         if ($name != null) {
             $osArray = [
-                'Windows' => '=Windows NT|Windows Server 2003|Windows XP x64|Windows 98|Windows Phone|Windows 95=',
-                'Android' => '=Android=',
-                'Linux' => '=Linux|Ubuntu|X11=',
-                'SunOs' => '=SunOS=',
-                'iPhone' => '=iPhone=',
-                'iPad' => '=iPad=',
-                'Mac OS X' => '=Mac OS X=',
-                'Mac OS' => '=Mac OS=',
-                'Macintosh' => '=Mac_PowerPC|Macintosh='
+                '=Windows NT|Windows Server 2003|Windows XP x64|Windows 98|Windows Phone|Windows 95=' => 'Windows',
+                '=Android=' => 'Android',
+                '=Linux|Ubuntu|X11=' => 'Linux',
+                '=SunOS=' => 'SunOs',
+                '=iPhone=' => 'iPhone',
+                '=iPad=' => 'iPad',
+                '=Mac OS X=' => 'Mac OS X',
+                '=Mac OS=' => 'Mac OS',
+                '=Mac_PowerPC|Macintosh=' => 'Macintosh'
             ];
         } elseif ($version != null) {
             $osArray = [
-                '8.1' => '=Android 8.1=',
-                '8.0' => '=Android 8.0=',
-                '7.x' => '=Android 7=',
-                '6.x' => '=Android 6=',
-                '5.x' => '=Android 5=',
-                '4.4' => '=Android 4.4=',
-                '4.x' => '=Android 4.1|Android 4.2|Android 4.3=',
-                '4.0' => '=Android 4.0=',
-                '3.x' => '=Android 3=',
-                '2.3' => '=Android 2.3=',
-                '2.2' => '=Android 2.2=',
-                'XP' => '=Windows NT 5.1|Windows XP=',
-                'Vista' => '=Windows NT 6.0|Windows Vista=',
-                '7' => '=Windows NT 6.1|Windows 7=',
-                '8' => '=Windows NT 6.2|Windows 8=',
-                '8.1' => '=Windows NT 6.3|Windows 8.1=',
-                '10' => '=Windows NT 10.0|Windows 10=',
-                '2000' => '=Windows NT 5.0|Windows 2000=',
-                'Server 2003' => '=Windows NT 5\.2|Windows Server 2003|Windows XP x64=',
-                'NT' => '=Windows NT 4|WinNT4=',
-                'Phone 7.x' => '=Windows Phone OS 7=',
-                'Phone 8.0' => '=Windows Phone 8=',
-                'Phone 8.1' => '=Windows Phone 8.1=',
-                '10 Mobile' => '=Windows Phone 10=',
-                '98' => '=Windows 98=',
-                '95' => '=Windows 95=',
-                '10.8' => '=Mac OS X 10.8|Mac OS X 10_8=',
-                '10.9' => '=Mac OS X 10.9|Mac OS X 10_9=',
-                '10.10' => '=Mac OS X 10.10|Mac OS X 10_10=',
-                '10.11' => '=Mac OS X 10.11|Mac OS X 10_11=',
-                '10.12' => '=Mac OS X 10.12|Mac OS X 10_12=',
-                '10.13' => '=Mac OS X 10.13|Mac OS X 10_13=',
-                '10.14' => '=Mac OS X 10.14|Mac OS X 10_14=',
+                '=Android 9.0=' => '9.0',
+                '=Android 8.1=' => '8.1',
+                '=Android 8.0=' => '8.0',
+                '=Android 7=' => '7.x',
+                '=Android 6=' => '6.x',
+                '=Android 5=' => '5.x',
+                '=Android 4.4=' => '4.4',
+                '=Android 4.1|Android 4.2|Android 4.3=' => '4.x',
+                '=Android 4.0=' => '4.0',
+                '=Android 3=' => '3.x',
+                '=Android 2.3=' => '2.3',
+                '=Android 2.2=' => '2.2',
+                '=Windows NT 5.1|Windows XP=' => 'XP',
+                '=Windows NT 6.0|Windows Vista=' => 'Vista',
+                '=Windows NT 6.1|Windows 7=' => '7',
+                '=Windows NT 6.2|Windows 8=' => '8',
+                '=Windows NT 6.3|Windows 8.1=' => '8.1',
+                '=Windows NT 10.0|Windows 10=' => '10',
+                '=Windows NT 5.0|Windows 2000=' => '2000',
+                '=Windows NT 5\.2|Windows Server 2003|Windows XP x64=' => 'Server 2003',
+                '=Windows NT 4|WinNT4=' => 'NT',
+                '=Windows Phone OS 7=' => 'Phone 7.x',
+                '=Windows Phone 8=' => 'Phone 8.0',
+                '=Windows Phone 8.1=' => 'Phone 8.1',
+                '=Windows Phone 10=' => '10 Mobile',
+                '=Windows 98=' => '98',
+                '=Windows 95=' => '95',
+                '=Mac OS X 10.8|Mac OS X 10_8=' => '10.8',
+                '=Mac OS X 10.9|Mac OS X 10_9=' => '10.9',
+                '=Mac OS X 10.10|Mac OS X 10_10=' => '10.10',
+                '=Mac OS X 10.11|Mac OS X 10_11=' => '10.11',
+                '=Mac OS X 10.12|Mac OS X 10_12=' => '10.12',
+                '=Mac OS X 10.13|Mac OS X 10_13=' => '10.13',
+                '=Mac OS X 10.14|Mac OS X 10_14=' => '10.14'
             ];
         }
 
-        foreach ($osArray as $os => $regex) {
+        foreach ($osArray as $regex => $os) {
             if (preg_match($regex, $useragent)) {
                 return $os;
             }
@@ -547,6 +553,12 @@ class Statistic extends \Ilch\Mapper
         return "";
     }
 
+    /**
+     * Detect which browser is used.
+     *
+     * @param null $version
+     * @return null|string
+     */
     public function getBrowser($version = null) {
         $useragent = $_SERVER['HTTP_USER_AGENT'];
 
@@ -623,7 +635,10 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Save visit to database.
+     *
      * @param array $row
+     * @throws \Ilch\Database\Exception
      */
     public function saveVisit($row)
     {
