@@ -54,7 +54,9 @@ class Redirect
      * Adds a flash message
      *
      * @param  string $message Translation key for the flash message
+     * @param string $type
      * @return self
+     * @throws \Exception
      */
     public function withMessage($message, $type = 'success')
     {
@@ -118,10 +120,9 @@ class Redirect
     /**
      * Redirects to the desired location.
      *
-     * @param string    $default Default location
-     * @param int       $status  HTTP Status Code
-     * @param array     $headers An array with headers
-     * @param bool|null $secure  Whether or not it is a secure request
+     * @param string $destination
+     * @param int $status HTTP Status Code
+     * @param array $headers An array with headers
      */
     protected function perform($destination = '/', $status = 302, $headers = [])
     {
