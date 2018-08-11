@@ -60,7 +60,7 @@ class Import extends \Ilch\Controller\Admin
         $filetypes = $this->getConfig()->get('media_ext_img');
         $globMediaArray = glob($directory . "*.*");
 
-        if ($this->getRequest()->getPost('save') === 'save') {
+        if ($this->getRequest()->getPost('save') && $this->getRequest()->getPost('check_medias')) {
             foreach ($this->getRequest()->getPost('check_medias') as $media) {
                 $upload = new \Ilch\Upload();
                 $upload->setFile($media);
@@ -76,7 +76,7 @@ class Import extends \Ilch\Controller\Admin
                 $model->setDatetime($ilchdate->toDb());
                 $mediaMapper->save($model);
             }
-            $this->addMessage('Success');
+            $this->addMessage('success');
             $this->redirect(['action' => 'index']);
         }
 
