@@ -519,13 +519,14 @@ class Index extends \Ilch\Controller\Frontend
         /*
          * Optional-Modules.
          */
+        // calendar module needs to be installed early, so that the table calendar_events exists for modules that use it.
+        $modules['calendar']['types'] = ['clan', 'private'];
         $modules['checkoutbasic']['types'] = ['clan'];
         $modules['war']['types'] = ['clan'];
         $modules['history']['types'] = ['clan'];
         $modules['rule']['types'] = ['clan'];
         $modules['teams']['types'] = ['clan'];
         $modules['training']['types'] = ['clan'];
-        $modules['calendar']['types'] = ['clan', 'private'];
         $modules['forum']['types'] = ['clan', 'private'];
         $modules['guestbook']['types'] = ['clan', 'private'];
         $modules['link']['types'] = ['clan', 'private'];
