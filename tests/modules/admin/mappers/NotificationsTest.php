@@ -212,6 +212,26 @@ class NotificationsTest extends DatabaseTestCase
     }
 
     /**
+     * Tests if deleteNotificationsByType() deletes the entry with the specified type.
+     *
+     */
+    public function testDeleteNotificationsByType()
+    {
+        $this->out->deleteNotificationsByType('awardsNewAward');
+        $this->assertTrue(count($this->out->getNotificationsByType('awardsNewAward')) == 0);
+    }
+
+    /**
+     * Tests if deleteNotificationsByType() doesn't delete anything if the type was wrong.
+     *
+     */
+    public function testDeleteNotificationsByTypeNotExisting()
+    {
+        $this->out->deleteNotificationsByType('xyzmodule');
+        $this->assertTrue(count($this->out->getNotifications()) == 2);
+    }
+
+    /**
      * Tests if deleteAllNotifications() deletes all notifications.
      *
      */

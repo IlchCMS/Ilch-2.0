@@ -6,8 +6,11 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Ilch\Date;
 use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Models\Notification as NotificationModel;
+use Modules\Admin\Mappers\Module as ModuleMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -18,6 +21,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $moduleMapper = new ModuleMapper();
+        $modules = $moduleMapper->getKeysInstalledModules();
+
         // Delete selected notifications
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_notifications')) {
             $notificationsMapper = new NotificationsMapper();
@@ -46,6 +52,40 @@ class Index extends \Ilch\Controller\Admin
         if ($update->getVersions() == '') {
             $this->getView()->set('curlErrorOccured', true);
             $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
+        } else {
+            // If check for an ilch update didn't already failed then check for module updates
+            $countOfUpdatesAvailable = 0;
+            $modulesList = url_get_contents($this->getConfig()->get('updateserver').'modules.php');
+            $modulesOnUpdateServer = json_decode($modulesList);
+            $versionsOfModules = $moduleMapper->getVersionsOfModules();
+
+            foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
+                if (in_array($moduleOnUpdateServer->key, $modules)) {
+                    if (version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')) {
+                        $countOfUpdatesAvailable += 1;
+                    }
+                }
+            }
+
+            $notificationsMapper = new NotificationsMapper();
+            if ($countOfUpdatesAvailable) {
+                $notifications = $notificationsMapper->getNotificationsByType('adminModuleUpdatesAvailable');
+
+                // Add notification if there is none or if the newest one is older than 24 hours.
+                $currentTime = new Date();
+                if (!$notifications || ($notifications && (strtotime($currentTime->toDb(true)) - strtotime($notifications[count($notifications)-1]->getTimestamp()) > 86400))) {
+                    $notificationModel = new NotificationModel();
+                    $notificationModel->setModule('admin');
+                    $notificationModel->setMessage($this->getTranslator()->trans('moduleUpdatesAvailable', $countOfUpdatesAvailable));
+                    $notificationModel->setURL($this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'updates']));
+                    $notificationModel->setType('adminModuleUpdatesAvailable');
+
+                    $notificationsMapper->addNotification($notificationModel);
+                }
+            } else {
+                // There are no module updates available. Delete notifications.
+                $notificationsMapper->deleteNotificationsByType('adminModuleUpdatesAvailable');
+            }
         }
 
         if ($update->newVersionFound() == true) {
@@ -54,14 +94,12 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('newVersion', $newVersion);
         }
 
-        $modulesMapper = new \Modules\Admin\Mappers\Module();
-        $modules = $modulesMapper->getKeysInstalledModules();
         $moduleLocales = [];
 
         if (in_array('guestbook', $modules)) {
             // Check if there are guestbook entries, which need approval
             $guestbookMapper = new \Modules\Guestbook\Mappers\Guestbook();
-            $moduleLocales['guestbook'] = $modulesMapper->getModulesByKey('guestbook', $this->getTranslator()->getLocale());
+            $moduleLocales['guestbook'] = $moduleMapper->getModulesByKey('guestbook', $this->getTranslator()->getLocale());
 
             $this->getView()->set('guestbookEntries', $guestbookMapper->getEntries(['setfree' => 0]));
         }
@@ -69,14 +107,14 @@ class Index extends \Ilch\Controller\Admin
         if (in_array('partner', $modules)) {
             // Check if there are partner entries, which need approval
             $partnerMapper = new \Modules\Partner\Mappers\Partner();
-            $moduleLocales['partner'] = $modulesMapper->getModulesByKey('partner', $this->getTranslator()->getLocale());
+            $moduleLocales['partner'] = $moduleMapper->getModulesByKey('partner', $this->getTranslator()->getLocale());
 
             $this->getView()->set('partnerEntries', $partnerMapper->getEntries(['setfree' => 0]));
         }
 
         // Check if there are users, which need approval
         $userMapper = new \Modules\User\Mappers\User();
-        $moduleLocales['user'] = $modulesMapper->getModulesByKey('user', $this->getTranslator()->getLocale());
+        $moduleLocales['user'] = $moduleMapper->getModulesByKey('user', $this->getTranslator()->getLocale());
 
         // Check if there are notifications, which need to be shown
         $notificationsMapper = new NotificationsMapper();

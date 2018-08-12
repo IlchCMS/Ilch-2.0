@@ -230,6 +230,18 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
+     * Delete notifications by type.
+     *
+     * @param string $type
+     */
+    public function deleteNotificationsByType($type)
+    {
+        $this->db()->delete('admin_notifications')
+            ->where(['type' => $type])
+            ->execute();
+    }
+
+    /**
      * Delete all notifications by truncating the table.
      *
      */
