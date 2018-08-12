@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'training',
-        'version' => '1.1',
+        'version' => '1.2',
         'icon_small' => 'fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -83,6 +83,13 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_training` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `text`;');
                 $this->db()->query('ALTER TABLE `[prefix]_training` ADD `read_access` VARCHAR(255) NOT NULL AFTER `show`;');
+            case "1.1":
+                // On installation of Ilch adding this entry failed. Reinstalling or a later install of this module adds the entry.
+                // Add entry on update. Instead of checking if the entry exists, delete entry/entries and add it again.
+                if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+                    $this->db()->query("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'training/trainings/index/'");
+                    $this->db()->query('INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("training/trainings/index/");');
+                }
         }
     }
 }

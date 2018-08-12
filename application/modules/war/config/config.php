@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.2',
+        'version' => '1.3',
         'icon_small' => 'fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -137,6 +137,13 @@ class Config extends \Ilch\Config\Install
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `status`;');
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access` VARCHAR(255) NOT NULL AFTER `show`;');
+            case "1.2":
+                // On installation of Ilch adding this entry failed. Reinstalling or a later install of this module adds the entry.
+                // Add entry on update. Instead of checking if the entry exists, delete entry/entries and add it again.
+                if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+                    $this->db()->query("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'war/wars/index/'");
+                    $this->db()->query('INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("war/wars/index/");');
+                }
         }
     }
 }
