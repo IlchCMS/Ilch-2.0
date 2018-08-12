@@ -101,6 +101,9 @@ class Accesses
         }
 
         if ($this->request->getModuleName() == 'admin' || empty($entrie)) {
+            if($this->request->getControllerName() == 'page') {
+                return $this->getAccessPage($array);
+            }
             return true;
         }
 
@@ -112,6 +115,33 @@ class Accesses
             $entrie[$this->request->getModuleName()] == '2' ||
             is_in_array($this->getGroupIds(), ['1']) == 'true') {
             return true;
+        }
+    }
+
+    /**
+     * @param $array
+     * @return bool
+     */
+    public function getAccessPage($array) {
+
+        $entrie = [];
+        foreach ($array as $kay => $value) {
+            $entries[] = $value['entries'];
+            foreach ($entries as $value) {
+                $entrie[] = $value['page'];
+            }
+        }
+
+        if (is_in_array($this->getGroupIds(), ['1']) == 'true') {
+            return true;
+        }
+
+        foreach ($entrie as $item => $value) {
+            if ($value[$this->request->getParam('id')] == '0') {
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 
@@ -140,7 +170,7 @@ class Accesses
     public function getErrorPage($text = '') {
         $html = '<div class="centering text-center error-container">
                     <div class="text-center">
-                        <h2 class="without-margin"><span class="text-warning"><big>403</big></span> Access denied.</h2>
+                        <h2 class="without-margin"><span class="text-warning">403</span> Access denied.</h2>
                         <h4 class="text-warning">'.$text.'</h4>
                     </div>
                  </div>';
