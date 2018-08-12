@@ -29,7 +29,7 @@ class Accesses
     /**
      * @return mixed
      */
-    public function getGroupIds()
+    private function getGroupIds()
     {
         return $this->groupIds;
     }
@@ -37,7 +37,7 @@ class Accesses
     /**
      * @param $id
      */
-    public function setGroupIds($id)
+    private function setGroupIds($id)
     {
         $this->groupIds = $id;
     }
@@ -45,7 +45,7 @@ class Accesses
     /**
      * @todo expansion and more functions
      * @param $getAccessTo string Module, Admin
-     * @return array $groupAccessList
+     * @return bool|string $groupAccessList
      */
     public function hasAccess($getAccessTo = '')
     {
@@ -91,8 +91,8 @@ class Accesses
      * @param $array
      * @return bool
      */
-    public function getAccessModule($array) {
-
+    private function getAccessModule($array)
+    {
         foreach ($array as $kay => $value) {
             $entries[] = $value['entries'];
             foreach ($entries as $value) {
@@ -122,8 +122,8 @@ class Accesses
      * @param $array
      * @return bool
      */
-    public function getAccessPage($array) {
-
+    private function getAccessPage($array)
+    {
         $entrie = [];
         foreach ($array as $kay => $value) {
             $entries[] = $value['entries'];
@@ -149,8 +149,8 @@ class Accesses
      * @param $array
      * @return bool
      */
-    public function getAccessAdmin($array) {
-
+    private function getAccessAdmin($array)
+    {
         foreach ($array as $kay => $value) {
             $entries[] = $value['entries'];
             foreach ($entries as $value) {
@@ -167,7 +167,8 @@ class Accesses
      * @param string $text
      * @return string
      */
-    public function getErrorPage($text = '') {
+    public function getErrorPage($text = '')
+    {
         $html = '<div class="centering text-center error-container">
                     <div class="text-center">
                         <h2 class="without-margin"><span class="text-warning">403</span> Access denied.</h2>
