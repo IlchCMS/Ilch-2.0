@@ -42,6 +42,7 @@ class NotificationsTest extends DatabaseTestCase
         $notificationModel->setModule('article');
         $notificationModel->setMessage('Testmessage1');
         $notificationModel->setURL('http://www.google.de');
+        $notificationModel->setType('articleNewArticle');
 
         $notification = $this->out->getNotificationById(1);
         $this->assertTrue($notification->getId() == 1);
@@ -50,6 +51,7 @@ class NotificationsTest extends DatabaseTestCase
         $this->assertTrue($notification->getModule() == 'article');
         $this->assertTrue($notification->getMessage() == 'Testmessage1');
         $this->assertTrue($notification->getURL() == 'http://www.google.de');
+        $this->assertTrue($notification->getType() == 'articleNewArticle');
     }
 
     /**
@@ -90,6 +92,24 @@ class NotificationsTest extends DatabaseTestCase
     }
 
     /**
+     * Tests if getNotificationsByType() returns all samples from the database with a specific type.
+     *
+     */
+    public function testGetNotificationsByType()
+    {
+        $this->assertTrue(count($this->out->getNotificationsByType('articleNewArticle')) == 1);
+    }
+
+    /**
+     * Tests if getNotificationsByType() returns an empty array if there is no notification with a specific type.
+     *
+     */
+    public function testGetNotificationsByTypeNotExisting()
+    {
+        $this->assertEmpty($this->out->getNotificationsByType('xyzmodule'));
+    }
+
+    /**
      * Tests if isValidNotification() returns true for a valid NotificationModel.
      *
      */
@@ -117,6 +137,7 @@ class NotificationsTest extends DatabaseTestCase
         $notificationModel->setModule('awards');
         $notificationModel->setMessage('Testmessage3');
         $notificationModel->setURL('http://www.google.de');
+        $notificationModel->setType('awardsNewAward');
         $_SERVER['HTTP_HOST'] = '127.0.0.1';
 
         $this->assertTrue($this->out->addNotification($notificationModel) == 3);
@@ -124,6 +145,7 @@ class NotificationsTest extends DatabaseTestCase
         $this->assertTrue($notification->getModule() == 'awards');
         $this->assertTrue($notification->getMessage() == 'Testmessage3');
         $this->assertTrue($notification->getURL() == 'http://www.google.de');
+        $this->assertTrue($notification->getType() == 'awardsNewAward');
     }
 
     /**
@@ -138,6 +160,7 @@ class NotificationsTest extends DatabaseTestCase
         $notificationModel->setModule('awards');
         $notificationModel->setMessage('Testmessage3');
         $notificationModel->setURL('http://www.google.de');
+        $notificationModel->setType('awardsNewAward2');
         $_SERVER['HTTP_HOST'] = '127.0.0.1';
 
         $this->out->updateNotificationById($notificationModel);
@@ -145,6 +168,7 @@ class NotificationsTest extends DatabaseTestCase
         $this->assertTrue($notification->getModule() == 'awards');
         $this->assertTrue($notification->getMessage() == 'Testmessage3');
         $this->assertTrue($notification->getURL() == 'http://www.google.de');
+        $this->assertTrue($notification->getType() == 'awardsNewAward2');
     }
 
     /**

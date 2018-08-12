@@ -182,6 +182,7 @@ class Config extends \Ilch\Config\Install
                 `module` VARCHAR(255) NOT NULL,
                 `message` VARCHAR(255) NOT NULL,
                 `url` VARCHAR(255) NOT NULL,
+                `type` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
             
@@ -369,6 +370,10 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.12":
                 mkdir(ROOT_PATH.'/cache');
+                break;
+            case "2.1.13":
+                // Add new needed column "type" for the notifications.
+                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications` ADD COLUMN `type` VARCHAR(255) NOT NULL;');
                 break;
         }
 

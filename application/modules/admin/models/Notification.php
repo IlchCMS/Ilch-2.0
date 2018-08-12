@@ -44,6 +44,14 @@ class Notification extends \Ilch\Model
     protected $url;
 
     /**
+     * The type of the notification. This can be used to mark a notification as
+     * a specific one e.g. "adminModuleUpdatesAvailable"
+     *
+     * @var string
+     */
+    protected $type;
+
+    /**
      * Get the id of the notification
      *
      * @return int
@@ -140,5 +148,25 @@ class Notification extends \Ilch\Model
     public function setURL($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * Gets the type of the notification.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Sets the type of the notification.
+     *
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }

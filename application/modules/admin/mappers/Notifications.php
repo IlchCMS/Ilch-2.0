@@ -37,21 +37,24 @@ class Notifications extends \Ilch\Mapper
         $notificationModel->setModule($result['module']);
         $notificationModel->setMessage($result['message']);
         $notificationModel->setURL($result['url']);
+        $notificationModel->setType($result['type']);
 
         return $notificationModel;
     }
 
     /**
-     * Get all notifications.
+     * Get notifications by specified condition
      *
-     * @return NotificationModel[]|[]
+     * @param array $where
+     * @return array
      */
-    public function getNotifications()
+    public function getNotificationsBy($where = [])
     {
         $array = $this->db()->select('*')
-                ->from('admin_notifications')
-                ->execute()
-                ->fetchRows();
+            ->from('admin_notifications')
+            ->where($where)
+            ->execute()
+            ->fetchRows();
 
         if (empty($array)) {
             return [];
@@ -65,10 +68,21 @@ class Notifications extends \Ilch\Mapper
             $notificationModel->setModule($entries['module']);
             $notificationModel->setMessage($entries['message']);
             $notificationModel->setURL($entries['url']);
+            $notificationModel->setType($entries['type']);
             $notifications[] = $notificationModel;
         }
 
         return $notifications;
+    }
+
+    /**
+     * Get all notifications.
+     *
+     * @return NotificationModel[]|[]
+     */
+    public function getNotifications()
+    {
+        return $this->getNotificationsBy();
     }
 
     /**
@@ -79,28 +93,18 @@ class Notifications extends \Ilch\Mapper
      */
     public function getNotificationsByModule($module)
     {
-        $array = $this->db()->select('*')
-                ->from('admin_notifications')
-                ->where(['module' => $module])
-                ->execute()
-                ->fetchRows();
+        return $this->getNotificationsBy(['module' => $module]);
+    }
 
-        if (empty($array)) {
-            return [];
-        }
-
-        $notifications = [];
-        foreach ($array as $entries) {
-            $notificationModel = new NotificationModel();
-            $notificationModel->setId($entries['id']);
-            $notificationModel->setTimestamp($entries['timestamp']);
-            $notificationModel->setModule($entries['module']);
-            $notificationModel->setMessage($entries['message']);
-            $notificationModel->setURL($entries['url']);
-            $notifications[] = $notificationModel;
-        }
-
-        return $notifications;
+    /**
+     * Get notifications by type.
+     *
+     * @param $type
+     * @return array
+     */
+    public function getNotificationsByType($type)
+    {
+        return $this->getNotificationsBy(['type' => $type]);
     }
 
     /**
@@ -141,7 +145,8 @@ class Notifications extends \Ilch\Mapper
         $fields = [
             'module' => $notification->getModule(),
             'message' => $notification->getMessage(),
-            'url' => $notification->getURL()
+            'url' => $notification->getURL(),
+            'type' => $notification->getType()
         ];
 
         $count = $this->db()->select()->fields('COUNT(*)')
@@ -174,7 +179,7 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
-     * Update a notification (module, message, url).
+     * Update a notification (module, message, url, type).
      *
      * @param NotificationModel $notification
      * @return int
@@ -188,7 +193,8 @@ class Notifications extends \Ilch\Mapper
         $fields = [
             'module' => $notification->getModule(),
             'message' => $notification->getMessage(),
-            'url' => $notification->getURL()
+            'url' => $notification->getURL(),
+            'type' => $notification->getType()
         ];
 
         $updated = $this->db()->update()->table('admin_notifications')
