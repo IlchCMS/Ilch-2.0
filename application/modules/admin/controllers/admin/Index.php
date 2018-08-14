@@ -71,16 +71,18 @@ class Index extends \Ilch\Controller\Admin
             if ($countOfUpdatesAvailable) {
                 $notifications = $notificationsMapper->getNotificationsByType('adminModuleUpdatesAvailable');
 
-                // Add notification if there is none or if the newest one is older than 24 hours.
                 $currentTime = new Date();
-                if (!$notifications || ($notifications && (strtotime($currentTime->toDb(true)) - strtotime($notifications[count($notifications)-1]->getTimestamp()) > 86400))) {
-                    $notificationModel = new NotificationModel();
-                    $notificationModel->setModule('admin');
-                    $notificationModel->setMessage($this->getTranslator()->trans('moduleUpdatesAvailable', $countOfUpdatesAvailable));
-                    $notificationModel->setURL($this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'updates']));
-                    $notificationModel->setType('adminModuleUpdatesAvailable');
+                $notificationModel = new NotificationModel();
+                $notificationModel->setModule('admin');
+                $notificationModel->setMessage($this->getTranslator()->trans('moduleUpdatesAvailable', $countOfUpdatesAvailable));
+                $notificationModel->setURL($this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'updates']));
+                $notificationModel->setType('adminModuleUpdatesAvailable');
 
+                if (!$notifications) {
                     $notificationsMapper->addNotification($notificationModel);
+                } elseif ((strtotime($currentTime->toDb(true)) - strtotime($notifications[count($notifications)-1]->getTimestamp()) > 86400)) {
+                    $notificationModel->setId($notifications[count($notifications)-1]->getId());
+                    $notificationsMapper->updateNotificationById($notificationModel);
                 }
             } else {
                 // There are no module updates available. Delete notifications.
