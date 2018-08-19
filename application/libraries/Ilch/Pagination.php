@@ -87,7 +87,7 @@ class Pagination
             } else {
                 $html .= '<span class="hide">&laquo;</span>';
             }
-            if ($lastPage < 1 + ($adj * 2)) {
+            if ($lastPage <= 1 + ($adj * 2)) {
                 for ($counter = 1; $counter <= $lastPage; $counter++) {
                     if ($counter == $page) {
                         $html.= '<li><span class="current">'.$counter.'</span></li>';
