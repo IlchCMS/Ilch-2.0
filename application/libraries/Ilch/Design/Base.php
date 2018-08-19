@@ -317,7 +317,7 @@ abstract class Base
         $parser = new \JBBCode\Parser();
         $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
 
-        $parser->addCodeDefinition(new \Ilch\BBCode\CodeHelper(false));
+        //$parser->addCodeDefinition(new \Ilch\BBCode\CodeHelper(false));
 
         $builder = new \JBBCode\CodeDefinitionBuilder('quote', '<blockquote>{param}</blockquote>');
         $parser->addCodeDefinition($builder->build());
@@ -337,6 +337,13 @@ abstract class Base
 
         $builder = new \JBBCode\CodeDefinitionBuilder('size', '<span style="font-size:{option}%;">{param}</span>');
         $builder->setUseOption(true);
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('youtube', '<div id="youtube-iframe"><iframe src="https://www.youtube.com/embed/{param}" frameborder="0" allowfullscreen></iframe></div> ');
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('code', '<pre><code>{param}</code></pre>');
+        $builder->setParseContent(false);
         $parser->addCodeDefinition($builder->build());
 
         $parser->parse($bbcode);
