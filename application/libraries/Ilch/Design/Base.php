@@ -315,9 +315,40 @@ abstract class Base
     public function getHtmlFromBBCode($bbcode)
     {
         $parser = new \JBBCode\Parser();
-        $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
-
+        //test without default
+        //$parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
         //$parser->addCodeDefinition(new \Ilch\BBCode\CodeHelper(false));
+
+        $urlValidator = new \JBBCode\validators\UrlValidator();
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('b', '<strong>{param}</strong>');
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('i', '<em>{param}</em>');
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('u', '<u>{param}</u>');
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a target="_blank" href="{param}">{param}</a>');
+        $builder->setParseContent(false)->setBodyValidator($urlValidator);
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a target="_blank" href="{option}">{param}</a>');
+        $builder->setUseOption(true)->setParseContent(true)->setOptionValidator($urlValidator);
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('img', '<img src="{param}" />');
+        $builder->setUseOption(false)->setParseContent(false)->setBodyValidator($urlValidator);
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('img', '<img src="{param}" alt="{option}" />');
+        $builder->setUseOption(true)->setParseContent(false)->setBodyValidator($urlValidator);
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('color', '<span style="color: {option}">{param}</span>');
+        $builder->setUseOption(true)->setOptionValidator(new \JBBCode\validators\CssColorValidator());
+        $parser->addCodeDefinition($builder->build());
 
         $builder = new \JBBCode\CodeDefinitionBuilder('quote', '<blockquote>{param}</blockquote>');
         $parser->addCodeDefinition($builder->build());
