@@ -52,31 +52,30 @@ $acceptCheckArray = $this->get('acceptCheck');
             <div class="panel-body">
                 <?php
                 $games = $gamesMapper->getGamesByWarId($war->getId());
-                $enemyPoints = '';
-                $groupPoints = '';
+                $enemyPoints = 0;
+                $groupPoints = 0;
                 $class = '';
-                $ergebniss = '';
+                $result = '';
                 if ($games != '') {
-
                     foreach ($games as $game) {
                         $groupPoints += $game->getGroupPoints();
                         $enemyPoints += $game->getEnemyPoints();
                     }
                     if ($groupPoints > $enemyPoints) {
                         $class = 'class="war_win"';
-                        $ergebniss = $this->getTrans('warWin');
+                        $result = $this->getTrans('warWin');
                     }
                     if ($groupPoints < $enemyPoints) {
                         $class = 'class="war_lost"';
-                        $ergebniss = $this->getTrans('warLost');
+                        $result = $this->getTrans('warLost');
                     }
                     if ($groupPoints == $enemyPoints) {
                         $class = 'class="war_drawn"';
-                        $ergebniss = $this->getTrans('warDrawn');
+                        $result = $this->getTrans('warDrawn');
                     }
                 }
                 ?>
-                <span <?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?> <?=$ergebniss ?></span>
+                <span <?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?> <?=$result ?></span>
             </div>
         </div>
     </div>

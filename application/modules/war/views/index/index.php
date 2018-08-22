@@ -55,8 +55,8 @@ if ($this->getUser()) {
                         <?php
                         $gameMapper = new \Modules\War\Mappers\Games();
                         $games = $gameMapper->getGamesByWarId($war->getId());
-                        $enemyPoints = '';
-                        $groupPoints = '';
+                        $enemyPoints = 0;
+                        $groupPoints = 0;
                         $class = '';
                         if ($games != '') {
                             foreach ($games as $game) {
@@ -65,15 +65,12 @@ if ($this->getUser()) {
                             }
                             if ($groupPoints > $enemyPoints) {
                                 $class = 'class="war_win"';
-                                $ergebniss = 'gewonnen';
                             }
                             if ($groupPoints < $enemyPoints) {
                                 $class = 'class="war_lost"';
-                                $ergebniss = 'verloren';
                             }
                             if ($groupPoints == $enemyPoints) {
                                 $class = 'class="war_drawn"';
-                                $ergebniss = 'unentschieden';
                             }
                         }
                         ?>

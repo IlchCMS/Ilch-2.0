@@ -13,8 +13,8 @@ $drawnCount = 0;
 $wars = $warMapper->getWars(['group' => $group->getId()]);
 
 foreach ($wars as $war) {
-    $enemyPoints = '';
-    $groupPoints = '';
+    $enemyPoints = 0;
+    $groupPoints = 0;
     $games = $gamesMapper->getGamesByWhere(['war_id' => $war->getId()]);
 
     if($games) {
@@ -105,8 +105,8 @@ foreach ($wars as $war) {
                         $gameMapper = new \Modules\War\Mappers\Games();
                         $games = $gameMapper->getGamesByWarId($war->getId());
                         $class = '';
-                        $enemyPoints = '';
-                        $groupPoints = '';
+                        $enemyPoints = 0;
+                        $groupPoints = 0;
                         if ($games != '') {
                             foreach ($games as $game) {
                                 $groupPoints += $game->getGroupPoints();

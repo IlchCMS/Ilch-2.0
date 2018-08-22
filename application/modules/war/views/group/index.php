@@ -19,8 +19,8 @@
             $wars = $warMapper->getWars(['group' => $group->getId()]);
 
             foreach ($wars as $war) {
-                $enemyPoints = '';
-                $groupPoints = '';
+                $enemyPoints = 0;
+                $groupPoints = 0;
                 $games = $gamesMapper->getGamesByWhere(['war_id' => $war->getId()]);
 
                 if($games) {

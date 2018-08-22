@@ -17,7 +17,7 @@
         $warMapper = $this->get('warMapper');
         $games = $gamesMapper->getGamesByWarId($war->getId());
         if ($games != '') {
-            $enemyPoints = '';
+            $enemyPoints = 0;
             $groupPoints = 0;
             $matchStatus = '';
             foreach ($games as $game) {
