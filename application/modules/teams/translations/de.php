@@ -81,4 +81,11 @@ return [
     'clearHistory' => 'Verlauf löschen',
     'historyOfUser' => 'Ältere Bewerbungen dieses Benutzers',
     'teamUsersInfoText' => 'Benutzer in der zugewiesenen Gruppe werden dem Team als Mitglieder hinzugefügt.',
+
+    'privateMessage' => 'Private Nachricht',
+    'website' => 'Homepage',
+    'profileFacebook' => 'Facebook',
+    'profileTwitter' => 'Twitter',
+    'profileGoogle' => 'Google+',
+    'profileSteam' => 'Steam',
 ];

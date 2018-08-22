@@ -80,4 +80,11 @@ return [
     'clearHistory' => 'Clear history',
     'historyOfUser' => 'Older applications of this user',
     'teamUsersInfoText' => 'Users of the associated group will be added as members of the team.',
+
+    'privateMessage' => 'Private message',
+    'website' => 'Homepage',
+    'profileFacebook' => 'Facebook',
+    'profileTwitter' => 'Twitter',
+    'profileGoogle' => 'Google+',
+    'profileSteam' => 'Steam',
 ];
