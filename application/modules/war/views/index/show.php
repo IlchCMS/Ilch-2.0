@@ -179,7 +179,7 @@ $acceptCheckArray = $this->get('acceptCheck');
                 <h3 class="panel-title"><?=$this->getTrans('warReport') ?></h3>
             </div>
             <div class="panel-body">
-                <?=nl2br($this->getHtmlFromBBCode($war->getWarReport())) ?>
+                <?=$war->getWarReport() ?>
             </div>
         </div>
     </div>
