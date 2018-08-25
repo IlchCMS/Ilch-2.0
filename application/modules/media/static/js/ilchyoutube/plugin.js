@@ -1,14 +1,13 @@
-CKEDITOR.plugins.add( 'ilchyoutube', {
-    icons: 'ilchyoutube',
-    class: 'cke_label',
-    init: function( editor ) {
-        editor.addCommand( 'ilchyoutubeDialog', new CKEDITOR.dialogCommand( 'ilchyoutubeDialog', {} ) );
-        editor.ui.addButton( 'ilchyoutube', {
-            label: 'Youtube',
-            command: 'ilchyoutubeDialog',
-            toolbar: 'ilchyoutube'
+CKEDITOR.plugins.add('ilchyoutube', {
+    init: function(editor) {
+        editor.addCommand('ilchYoutubeDialog', new CKEDITOR.dialogCommand('ilchYoutubeDialog', {}));
+        editor.ui.addButton('ilchyoutube', {
+            label: '',
+            toolbar: 'ilchyoutube',
+            command: 'ilchYoutubeDialog',
+            icon: this.path + 'icons/youtube.png'
         });
 
-        CKEDITOR.dialog.add( 'ilchyoutubeDialog', this.path + 'dialogs/ilchyoutube.js' );
+        CKEDITOR.dialog.add('ilchYoutubeDialog', this.path + 'dialogs/ilchyoutube.js');
     }
 });

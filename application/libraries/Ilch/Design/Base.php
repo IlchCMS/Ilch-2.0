@@ -370,7 +370,12 @@ abstract class Base
         $builder->setUseOption(true);
         $parser->addCodeDefinition($builder->build());
 
-        $builder = new \JBBCode\CodeDefinitionBuilder('youtube', '<div class="youtube-iframe"><iframe src="https://www.youtube-nocookie.com/embed/{param}?rel=0" frameborder="0" allowfullscreen></iframe></div> ');
+        $builder = new \JBBCode\CodeDefinitionBuilder('youtube', '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/{param}" frameborder="0" allowfullscreen></iframe></div>');
+        $builder->setUseOption(false);
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('youtube', '<iframe src="https://www.youtube-nocookie.com/embed/{param}" width="{w}" height="{h}" frameborder="0" allowfullscreen></iframe>');
+        $builder->setUseOption(true);
         $parser->addCodeDefinition($builder->build());
 
         $builder = new \JBBCode\CodeDefinitionBuilder('code', '<pre><code>{param}</code></pre>');
