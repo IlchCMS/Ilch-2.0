@@ -84,11 +84,32 @@ img {
     color: #AA0000;
 }
 
-
 /* Set cursor and remove left border on input-group-addon fa-times span to remove input value */
 .input-group .input-group-addon span.fa-times {
     cursor: pointer;
 }
 .input-group > :not(.input-group-addon):not(.input-group-btn) + .input-group-addon {
     border-left-width: 0;
+}
+
+/* BBCode YouTube Iframe */
+.youtube-iframe iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.youtube-iframe {
+    position: relative;
+    padding-bottom: 56.25%; /* Default for 1600x900 videos 16:9 ratio*/
+    padding-top: 0px;
+    height: 0;
+    overflow: hidden;
+}
+.cke_button__ilchyoutube_label {
+    display: inline !important;
+}
+#bbcode_infotext b {
+    font-weight: bold;
 }

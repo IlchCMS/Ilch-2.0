@@ -283,6 +283,7 @@ class Frontend extends Base
     {
         $html = '<script>
             var ilchSmileysPlugin = "'.$this->getBaseUrl('application/modules/smilies/static/js/ilchsmileys/').'";
+            var ilchYoutubePlugin = "'.$this->getBaseUrl('application/modules/media/static/js/ilchyoutube/').'";
             var ilchSmileysPluginUrl = "'.$this->getUrl(['module' => 'smilies', 'controller' => 'iframe', 'action' => 'smilies']).'";
         </script>';
 

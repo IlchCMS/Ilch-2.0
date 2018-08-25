@@ -317,7 +317,7 @@ abstract class Base
         $parser = new \JBBCode\Parser();
         //test without default
         //$parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
-        //$parser->addCodeDefinition(new \Ilch\BBCode\CodeHelper(false));
+        //$parser->addCodeDefinition(new \Ilch\BBCode\CodeHelper());
 
         $urlValidator = new \JBBCode\validators\UrlValidator();
 
@@ -370,7 +370,7 @@ abstract class Base
         $builder->setUseOption(true);
         $parser->addCodeDefinition($builder->build());
 
-        $builder = new \JBBCode\CodeDefinitionBuilder('youtube', '<div id="youtube-iframe"><iframe src="https://www.youtube.com/embed/{param}" frameborder="0" allowfullscreen></iframe></div> ');
+        $builder = new \JBBCode\CodeDefinitionBuilder('youtube', '<div class="youtube-iframe"><iframe src="https://www.youtube-nocookie.com/embed/{param}?rel=0" frameborder="0" allowfullscreen></iframe></div> ');
         $parser->addCodeDefinition($builder->build());
 
         $builder = new \JBBCode\CodeDefinitionBuilder('code', '<pre><code>{param}</code></pre>');
