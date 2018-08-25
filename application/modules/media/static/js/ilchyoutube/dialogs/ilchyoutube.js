@@ -10,17 +10,17 @@ CKEDITOR.dialog.add('ilchYoutubeDialog', function (editor) {
                     {
                         id: 'url',
                         type: 'text',
-                        label: 'Video Link',
+                        label: editor.lang.ilchyoutube.videoLabel,
                         labelStyle: 'font-weight: bold',
                         validate: function () {
                             if (!this.getValue()) {
-                                alert('Es wurde kein Link angegeben.');
+                                alert(editor.lang.ilchyoutube.noURL);
                                 return false;
                             } else {
                                 var video = ytVidId(this.getValue());
 
                                 if (this.getValue().length === 0 || video === false) {
-                                    alert('URL muss ein gültiger Yotube Link sein. Zb. https://www.youtube.com/watch?v=ZmFa2jqBhJY');
+                                    alert(editor.lang.ilchyoutube.invalidURL + ' https://www.youtube.com/watch?v=ZmFa2jqBhJY');
                                     return false;
                                 }
                             }
@@ -28,7 +28,7 @@ CKEDITOR.dialog.add('ilchYoutubeDialog', function (editor) {
                     },
                     {
                         type : 'html',
-                        html : 'Bsp. https://www.youtube.com/watch?v=ZmFa2jqBhJY'
+                        html : editor.lang.ilchyoutube.example + ' https://www.youtube.com/watch?v=ZmFa2jqBhJY'
                     },
                     {
                         type: 'hbox',
@@ -37,13 +37,13 @@ CKEDITOR.dialog.add('ilchYoutubeDialog', function (editor) {
                             {
                                 id: 'width',
                                 type: 'text',
-                                label: 'Breite (optional)',
+                                label: editor.lang.ilchyoutube.widthLabel,
                                 labelStyle: 'font-weight: bold'
                             },
                             {
                                 id: 'height',
                                 type: 'text',
-                                label: 'Höhe (optional)',
+                                label: editor.lang.ilchyoutube.heightLabel,
                                 labelStyle: 'font-weight: bold'
                             }
                         ]
@@ -52,17 +52,17 @@ CKEDITOR.dialog.add('ilchYoutubeDialog', function (editor) {
                         id : 'control',
                         type : 'checkbox',
                         default: 'checked',
-                        label : 'Steuerung anzeigen'
+                        label : editor.lang.ilchyoutube.controlLabel
                     },
                     {
                         id : 'autoplay',
                         type : 'checkbox',
-                        label : 'Autoplay'
+                        label : editor.lang.ilchyoutube.autoplayLabel
                     },
                     {
                         id : 'rel',
                         type : 'checkbox',
-                        label : 'Anzeige relevanter Videos am ende'
+                        label : editor.lang.ilchyoutube.relLabel
                     }
                 ]
             }
