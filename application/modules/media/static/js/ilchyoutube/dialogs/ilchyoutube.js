@@ -54,11 +54,11 @@ CKEDITOR.dialog.add('ilchYoutubeDialog', function (editor) {
                         default: 'checked',
                         label : editor.lang.ilchyoutube.controlLabel
                     },
-                    {
-                        id : 'autoplay',
-                        type : 'checkbox',
-                        label : editor.lang.ilchyoutube.autoplayLabel
-                    },
+                    // {
+                    //     id : 'autoplay',
+                    //     type : 'checkbox',
+                    //     label : editor.lang.ilchyoutube.autoplayLabel
+                    // },
                     {
                         id : 'rel',
                         type : 'checkbox',
@@ -83,9 +83,9 @@ CKEDITOR.dialog.add('ilchYoutubeDialog', function (editor) {
             if (height.getValue()) {
                 options.push('h=' + this.getValueOf('ilchYoutube', 'height') + '');
             }
-            if (autoplay.getValue() === true) {
-                params.push('autoplay=1');
-            }
+            // if (autoplay.getValue() === true) {
+            //     params.push('autoplay=1');
+            // }
             if (control.getValue() === false) {
                 params.push('controls=0');
             }
