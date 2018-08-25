@@ -1,4 +1,4 @@
-CKEDITOR.plugins.setLang('ilchyoutube', 'de', {
+CKEDITOR.plugins.setLang('ilchyoutube', 'en', {
     videoLabel: 'Video link',
     widthLabel: 'Width (optional)',
     heightLabel: 'Height (optional)',
