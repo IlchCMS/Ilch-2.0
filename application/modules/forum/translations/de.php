@@ -78,4 +78,5 @@ return [
     'ranks' => 'Ränge',
     'menuRanks' => 'Ränge',
     'noRanks' => 'Keine Ränge vorhanden',
+    'clock' => 'Uhr',
 ];
