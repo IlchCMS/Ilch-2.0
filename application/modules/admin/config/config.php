@@ -374,6 +374,9 @@ class Config extends \Ilch\Config\Install
             case "2.1.13":
                 // Add new needed column "type" for the notifications.
                 $this->db()->query('ALTER TABLE `[prefix]_admin_notifications` ADD COLUMN `type` VARCHAR(255) NOT NULL;');
+
+                // Change datatype of the column gender of the users table.
+                $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `gender` TINYINT(1) NOT NULL DEFAULT 0;');
                 break;
         }
 

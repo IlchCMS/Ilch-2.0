@@ -102,8 +102,10 @@ foreach ($profil->getGroups() as $group) {
                     echo $this->getTrans('profileGenderMale');
                 } elseif ($profil->getGender() == 2) {
                     echo $this->getTrans('profileGenderFemale');
+                } elseif ($profil->getGender() == 3) {
+                    echo $this->getTrans('profileGenderNonBinary');
                 } else {
-                    echo $this->getTrans('profileGenderUnknow');
+                    echo $this->getTrans('profileGenderUnknown');
                 } ?>
             </div>
         </div>

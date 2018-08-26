@@ -91,7 +91,7 @@ class Config extends \Ilch\Config\Install
                 `email` VARCHAR(255) NOT NULL,
                 `first_name` VARCHAR(255) NOT NULL DEFAULT "",
                 `last_name` VARCHAR(255) NOT NULL DEFAULT "",
-                `gender` INT(1) NOT NULL DEFAULT 0,
+                `gender` TINYINT(1) NOT NULL DEFAULT 0,
                 `homepage` VARCHAR(255) NOT NULL DEFAULT "",
                 `facebook` VARCHAR(255) NOT NULL DEFAULT "",
                 `twitter` VARCHAR(255) NOT NULL DEFAULT "",

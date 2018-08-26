@@ -60,9 +60,10 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                     </label>
                     <div class="col-lg-2">
                         <select class="form-control" id="gender" name="gender">
-                            <option value="0" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 0) ? "selected='selected'" : ($profil->getGender() == 0) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderUnknow') ?></option>
+                            <option value="0" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 0) ? "selected='selected'" : ($profil->getGender() == 0) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderUnknown') ?></option>
                             <option value="1" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 1) ? "selected='selected'" : ($profil->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderMale') ?></option>
-                            <option value="2"><?=$this->getTrans('profileGenderFemale') ?></option>
+                            <option value="2" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 2) ? "selected='selected'" : ($profil->getGender() == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderFemale') ?></option>
+                            <option value="3" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 3) ? "selected='selected'" : ($profil->getGender() == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderNonBinary') ?></option>
                         </select>
                     </div>
                 </div>
