@@ -144,7 +144,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->setImageSource($this->getRequest()->getPost('imageSource'))
                 ->setVisits(0);
         } else {
-            $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
+            $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), $this->locale);
             if (empty($article)) {
                 $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Article', 'errorText' => 'notFound']);
                 return;
