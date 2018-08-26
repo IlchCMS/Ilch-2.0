@@ -51,6 +51,8 @@ $teamsMapper = $this->get('teamsMapper');
                     echo $this->getTrans('genderMale');
                 } elseif ($join->getGender() == 2) {
                     echo $this->getTrans('genderFemale');
+                } else {
+                    echo $this->getTrans('genderNonBinary');
                 } ?>
             </div>
         </div>

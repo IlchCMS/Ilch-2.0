@@ -72,7 +72,7 @@ class Index extends \Ilch\Controller\Frontend
                 'name' => 'required|unique:teams_joins,name,0,undecided',
                 'email' => 'required|email|unique:teams_joins,email,0,undecided',
                 'teamId' => 'numeric|integer|min:1',
-                'gender' => 'numeric|integer|min:1|max:2',
+                'gender' => 'numeric|integer|min:1|max:3',
                 'birthday' => 'required',
                 'text' => 'required'
             ];

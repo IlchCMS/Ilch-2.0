@@ -91,11 +91,13 @@ if ($this->getUser()) {
                     <select class="form-control" id="gender" name="gender" <?=($user->getGender() == 0) ? '' : 'disabled="disabled"' ?>>
                         <option value="1" <?=($user->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
                         <option value="2" <?=($user->getGender() == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
+                        <option value="3" <?=($user->getGender() == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderNonBinary') ?></option>
                     </select>
                 <?php else: ?>
                     <select class="form-control" id="gender" name="gender">
                         <option value="1" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
                         <option value="2" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
+                        <option value="3" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderNonBinary') ?></option>
                     </select>
                 <?php endif; ?>
             </div>
