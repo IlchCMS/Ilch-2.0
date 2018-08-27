@@ -28,6 +28,49 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="floodIntervalInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('floodInterval') ?>:
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="floodIntervalInput"
+                   name="floodInterval"
+                   min="0"
+                   value="<?=$this->escape($this->get('floodInterval')) ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="excludeFloodProtection" class="col-lg-2 control-label">
+            <?=$this->getTrans('excludeFloodProtection') ?>:
+        </label>
+        <div class="col-lg-4">
+            <select class="chosen-select form-control"
+                    id="excludeFloodProtection"
+                    name="groups[]"
+                    data-placeholder="<?=$this->getTrans('excludeFloodProtection') ?>"
+                    multiple>
+                <?php
+                foreach ($this->get('groupList') as $group) {
+                    ?>
+                    <option value="<?=$group->getId() ?>"
+                        <?php
+                        foreach ($this->get('excludeFloodProtection') as $assignedGroup) {
+                            if ($group->getId() == $assignedGroup) {
+                                echo 'selected="selected"';
+                                break;
+                            }
+                        }
+                        ?>>
+                        <?=$this->escape($group->getName()) ?>
+                    </option>
+                    <?php
+                }
+                ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('postVoting') ?>:
         </div>
@@ -43,3 +86,7 @@
     </div>
     <?=$this->getSaveBar() ?>
 </form>
+
+<script>
+    $('#excludeFloodProtection').chosen();
+</script>

@@ -12,25 +12,6 @@ use Modules\Forum\Config\Config as ForumConfig;
 
 class Post extends \Ilch\Mapper
 {
-    public function getPostsByTopicId($id)
-    {
-        $fileRow = $this->db()->select('*')
-            ->from('forum_topics')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
-
-        $entryModel = new TopicModel();
-        $entryModel->setId($fileRow['id']);
-        $entryModel->setTopicTitle($fileRow['topic_title']);
-        $entryModel->setText($fileRow['text']);
-        $entryModel->setCreatorId($fileRow['creator_id']);
-        $entryModel->setCreatorName($fileRow['creator_name']);
-        $entryModel->setDateCreated($fileRow['date_created']);
-
-        return $entryModel;
-    }
-
     public function getPostById($id)
     {
         $fileRow = $this->db()->select('*')
@@ -51,7 +32,6 @@ class Post extends \Ilch\Mapper
             $postModel->setAutor($userMapper->getDummyUser());
         }
         $postModel->setAutorAllPost($this->getAllPostsByUserId($fileRow['user_id']));
-
 
         return $postModel;
     }
@@ -107,6 +87,29 @@ class Post extends \Ilch\Mapper
         }
 
         return $postEntry;
+    }
+
+    /**
+     * Get date of last post created by user.
+     *
+     * @param $userId
+     * @return false|null|string
+     */
+    public function getDateOfLastPostByUserId($userId)
+    {
+        $select = $this->db()->select('date_created')
+            ->from('forum_posts')
+            ->where(['user_id' => $userId])
+            ->order(['id' => 'DESC'])
+            ->limit(1)
+            ->execute()
+            ->fetchCell();
+
+        if (empty($select)) {
+            return 0;
+        }
+
+        return $select;
     }
 
     /**

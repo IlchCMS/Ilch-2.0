@@ -40,36 +40,46 @@ class Newpost extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('newPost'), ['controller' => 'newpost','action' => 'index', 'topicid' => $topicId]);
 
         if ($this->getRequest()->getPost('saveNewPost')) {
-            $validation = Validation::create($this->getRequest()->getPost(), [
-                'text' => 'required'
-            ]);
+            $postMapper = new PostMapper;
+            $dateCreated = $postMapper->getDateOfLastPostByUserId($this->getUser()->getId());
+            $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser()->getGroups()), explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
 
-            if ($validation->isValid()) {
-                $postMapper = new PostMapper;
-                $dateTime = new \Ilch\Date();
-
-                $postModel = new ForumPostModel;
-                $postModel->setTopicId($topicId)
-                    ->setUserId($this->getUser()->getId())
-                    ->setText($this->getRequest()->getPost('text'))
-                    ->setForumId($forum->getId())
-                    ->setDateCreated($dateTime);
-                $this->trigger(ForumConfig::EVENT_SAVEPOST_BEFORE, ['model' => $postModel]);
-                $postMapper->save($postModel);
-                $this->trigger(ForumConfig::EVENT_SAVEPOST_AFTER, ['model' => $postModel]);
-                $this->trigger(ForumConfig::EVENT_ADDPOST_AFTER, ['postModel' => $postModel, 'forum' => $forum, 'category' => $cat, 'topic' => $topic, 'request' => $this->getRequest()]);
-
-                $lastPost = $forumMapper->getLastPostByTopicId($forum->getId());
-
+            if (!$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$this->getConfig()->get('forum_floodInterval')))) {
+                $this->addMessage('floodError', 'danger');
                 $this->redirect()
-                    ->withMessage('saveSuccess')
-                    ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]);
+                    ->withInput()
+                    ->to(['controller' => 'newpost', 'action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]);
+            } else {
+                $validation = Validation::create($this->getRequest()->getPost(), [
+                    'text' => 'required'
+                ]);
+
+                if ($validation->isValid()) {
+                    $dateTime = new \Ilch\Date();
+
+                    $postModel = new ForumPostModel;
+                    $postModel->setTopicId($topicId)
+                        ->setUserId($this->getUser()->getId())
+                        ->setText($this->getRequest()->getPost('text'))
+                        ->setForumId($forum->getId())
+                        ->setDateCreated($dateTime);
+                    $this->trigger(ForumConfig::EVENT_SAVEPOST_BEFORE, ['model' => $postModel]);
+                    $postMapper->save($postModel);
+                    $this->trigger(ForumConfig::EVENT_SAVEPOST_AFTER, ['model' => $postModel]);
+                    $this->trigger(ForumConfig::EVENT_ADDPOST_AFTER, ['postModel' => $postModel, 'forum' => $forum, 'category' => $cat, 'topic' => $topic, 'request' => $this->getRequest()]);
+
+                    $lastPost = $forumMapper->getLastPostByTopicId($forum->getId());
+
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]);
+                }
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['controller' => 'newpost', 'action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]);
             }
-            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $this->redirect()
-                ->withInput()
-                ->withErrors($validation->getErrorBag())
-                ->to(['controller' => 'newpost', 'action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]);
         }
 
         $this->getView()->set('forumMapper', $forumMapper);

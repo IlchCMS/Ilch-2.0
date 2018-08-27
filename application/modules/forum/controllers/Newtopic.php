@@ -37,49 +37,59 @@ class Newtopic extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('newTopicTitle'), ['controller' => 'newtopic','action' => 'index', 'id' => $id]);
 
         if ($this->getRequest()->getPost('saveNewTopic')) {
-            $validation = Validation::create($this->getRequest()->getPost(), [
-                'topicTitle' => 'required',
-                'text' => 'required'
-            ]);
+            $postMapper = new PostMapper;
+            $dateCreated = $postMapper->getDateOfLastPostByUserId($this->getUser()->getId());
+            $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser()->getGroups()), explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
 
-            if ($validation->isValid()) {
-                $topicMapper = new TopicMapper();
-                $postMapper = new PostMapper;
-                $dateTime = new \Ilch\Date();
-
-                $topicModel = new ForumTopicModel();
-                $topicModel->setTopicPrefix($this->getRequest()->getPost('topicPrefix'))
-                    ->setTopicTitle($this->getRequest()->getPost('topicTitle'))
-                    ->setTopicId($id)
-                    ->setForumId($id)
-                    ->setCat($id)
-                    ->setCreatorId($this->getUser()->getId())
-                    ->setType($this->getRequest()->getPost('fix'))
-                    ->setDateCreated($dateTime);
-                $this->trigger(ForumConfig::EVENT_SAVETOPIC_BEFORE, ['model' => $topicModel]);
-                $topicMapper->save($topicModel);
-                $this->trigger(ForumConfig::EVENT_SAVETOPIC_AFTER, ['model' => $topicModel]);
-
-                $lastid = $topicMapper->getLastInsertId();
-
-                $postModel = new ForumPostModel;
-                $postModel->setTopicId($lastid)
-                    ->setUserId($this->getUser()->getId())
-                    ->setText($this->getRequest()->getPost('text'))
-                    ->setForumId($id)
-                    ->setDateCreated($dateTime);
-                $postMapper->save($postModel);
-                $this->trigger(ForumConfig::EVENT_ADDTOPIC_AFTER, ['topicModel' => $topicModel, 'postModel' => $postModel, 'request' => $this->getRequest()]);
-
+            if (!$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$this->getConfig()->get('forum_floodInterval')))) {
+                $this->addMessage('floodError', 'danger');
                 $this->redirect()
-                    ->withMessage('saveSuccess')
-                    ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastid]);
+                    ->withInput()
+                    ->to(['action' => 'index', 'id' => $this->getRequest()->getParam('id')]);
+            } else {
+                $validation = Validation::create($this->getRequest()->getPost(), [
+                    'topicTitle' => 'required',
+                    'text' => 'required'
+                ]);
+
+                if ($validation->isValid()) {
+                    $topicMapper = new TopicMapper();
+                    $dateTime = new \Ilch\Date();
+
+                    $topicModel = new ForumTopicModel();
+                    $topicModel->setTopicPrefix($this->getRequest()->getPost('topicPrefix'))
+                        ->setTopicTitle($this->getRequest()->getPost('topicTitle'))
+                        ->setTopicId($id)
+                        ->setForumId($id)
+                        ->setCat($id)
+                        ->setCreatorId($this->getUser()->getId())
+                        ->setType($this->getRequest()->getPost('fix'))
+                        ->setDateCreated($dateTime);
+                    $this->trigger(ForumConfig::EVENT_SAVETOPIC_BEFORE, ['model' => $topicModel]);
+                    $topicMapper->save($topicModel);
+                    $this->trigger(ForumConfig::EVENT_SAVETOPIC_AFTER, ['model' => $topicModel]);
+
+                    $lastid = $topicMapper->getLastInsertId();
+
+                    $postModel = new ForumPostModel;
+                    $postModel->setTopicId($lastid)
+                        ->setUserId($this->getUser()->getId())
+                        ->setText($this->getRequest()->getPost('text'))
+                        ->setForumId($id)
+                        ->setDateCreated($dateTime);
+                    $postMapper->save($postModel);
+                    $this->trigger(ForumConfig::EVENT_ADDTOPIC_AFTER, ['topicModel' => $topicModel, 'postModel' => $postModel, 'request' => $this->getRequest()]);
+
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastid]);
+                }
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'index', 'id' => $this->getRequest()->getParam('id')]);
             }
-            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $this->redirect()
-                ->withInput()
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'index', 'id' => $this->getRequest()->getParam('id')]);
         }
 
         $userMapper = new UserMapper();

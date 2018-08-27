@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.9',
+        'version' => '1.10',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -54,6 +54,8 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('forum_floodInterval', '0');
+        $databaseConfig->set('forum_excludeFloodProtection', '1');
         $databaseConfig->set('forum_postVoting', '0');
     }
 
@@ -181,6 +183,11 @@ class Config extends \Ilch\Config\Install
                 if (!$this->db()->ifColumnExists('[prefix]_forum_posts', 'votes')) {
                     $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
                 }
+            case "1.9":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+
+                $databaseConfig->set('forum_floodInterval', '0');
+                $databaseConfig->set('forum_excludeFloodProtection', '1');
         }
     }
 }
