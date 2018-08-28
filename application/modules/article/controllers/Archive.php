@@ -110,7 +110,7 @@ class Archive extends \Ilch\Controller\Frontend
             ->set('commentMapper', $commentMapper)
             ->set('userMapper', $userMapper)
             ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
-            ->set('articles', $articleMapper->getArticlesByDate($date, $pagination))
+            ->set('articles', $articleMapper->getArticlesByDate($date, $pagination, $this->locale))
             ->set('readAccess', $readAccess)
             ->set('pagination', $pagination);
     }

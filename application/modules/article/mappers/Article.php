@@ -186,9 +186,10 @@ class Article extends \Ilch\Mapper
      *
      * @param \DateTime $date
      * @param \Ilch\Pagination|null $pagination
+     * @param string $locale
      * @return ArticleModel[]|array
      */
-    public function getArticlesByDate(\DateTime $date, $pagination = null)
+    public function getArticlesByDate(\DateTime $date, $pagination = null, $locale = '')
     {
         $db = $this->db();
 
@@ -201,7 +202,7 @@ class Article extends \Ilch\Mapper
         $select = $this->db()->select()
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', [])
-            ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo])
+            ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo, 'pc.locale' => $this->db()->escape($locale)])
             ->group(['p.id' => 'DESC', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes']);
 
         if ($pagination !== null) {

@@ -28,7 +28,14 @@ class Article extends \Ilch\Box
             }
         }
 
-        $this->getView()->set('articles', $articleMapper->getArticleList('', $this->getConfig()->get('article_box_articleLimit')))
+        $locale = '';
+        if ((bool)$this->getConfig()->get('multilingual_acp')) {
+            if ($this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
+                $locale = $this->getTranslator()->getLocale();
+            }
+        }
+
+        $this->getView()->set('articles', $articleMapper->getArticleList($locale, $this->getConfig()->get('article_box_articleLimit')))
                         ->set('readAccess', $readAccess);
     }
 }
