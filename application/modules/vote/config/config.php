@@ -56,7 +56,7 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `question` VARCHAR(255) NOT NULL,
                 `key` VARCHAR(255) NOT NULL,
-                `group` INT(11) NOT NULL DEFAULT 0,
+                `groups` VARCHAR(255) NOT NULL DEFAULT '0',
                 `read_access` VARCHAR(255) NOT NULL DEFAULT '2,3',
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
@@ -81,6 +81,12 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_poll` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `group`;');
                 $this->db()->query('ALTER TABLE `[prefix]_poll_ip` ADD `user_id` INT(11) NOT NULL AFTER `ip`;');
+            case "1.1":
+            case "1.2":
+            case "1.3":
+            case "1.4":
+            case "1.5":
+                $this->db()->query('ALTER TABLE `[prefix]_poll` CHANGE `group` `groups` VARCHAR(255) NOT NULL DEFAULT \'0\';');
         }
     }
 }

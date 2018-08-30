@@ -47,8 +47,8 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                             <?php $voteRes = $resultMapper->getVoteRes($groupVote->getId()); ?>
                             <?php $ip = $ipMapper->getIP($groupVote->getId(), $clientIP); ?>
                             <?php $votedUser = $ipMapper->getVotedUser($groupVote->getId(), $userId); ?>
-                            <?php ($groupVote->getGroups() == 0) ? $groupIds[] = 0 : ''; ?>
-                            <?php if ($ip != '' OR $votedUser != '' OR $groupVote->getStatus() != 0 OR !in_array($groupVote->getGroups(), $groupIds)): ?>
+                            <?php (in_array('0', explode(',', $groupVote->getGroups()))) ? $groupIds[] = 0 : ''; ?>
+                            <?php if ($ip != '' OR $votedUser != '' OR $groupVote->getStatus() != 0 OR !is_in_array(explode(',', $groupVote->getGroups()), $groupIds)): ?>
                                 <div class="vote-body">
                                     <div class="list-group">
                                         <?php foreach ($voteRes as $voteRes): ?>
