@@ -14,5 +14,7 @@ return [
     'groupAll' => 'Alle',
     'visibleFor' => 'Sichtbar für',
     'selectAssignedGroups' => 'Ausgewählte Gruppen',
-
+    'lock' => 'Umfrage schließen',
+    'unlock' => 'Umfrage öffnen',
+    'reset' => 'Zurücksetzen',
 ];

@@ -30,17 +30,17 @@
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $vote->getId()]) ?></td>
                             <td>
                                 <?php if ($vote->getStatus() == 1): ?>
-                                    <a href="<?=$this->getUrl(['action' => 'lock', 'id' => $vote->getId()], null, true) ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'lock', 'id' => $vote->getId()], null, true) ?>" title="<?=$this->getTrans('unlock') ?>">
                                         <span class="fa fa-lock"></span>
                                     </a>
                                 <?php else: ?>
-                                    <a href="<?=$this->getUrl(['action' => 'lock', 'id' => $vote->getId()], null, true) ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'lock', 'id' => $vote->getId()], null, true) ?>" title="<?=$this->getTrans('lock') ?>">
                                         <span class="fa fa-unlock te"></span>
                                     </a>
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a href="<?=$this->getUrl(['action' => 'reset', 'id' => $vote->getId()], null, true) ?>">
+                                <a href="<?=$this->getUrl(['action' => 'reset', 'id' => $vote->getId()], null, true) ?>" title="<?=$this->getTrans('reset') ?>">
                                     <span class="fa fa-refresh text-primary"></span>
                                 </a>
                             </td>
