@@ -16,42 +16,42 @@ class Vote extends \Ilch\Model
     protected $id;
 
     /**
-     * The question of the Vote.
+     * The question of the vote.
      *
      * @var string
      */
     protected $question;
 
     /**
-     * The key of the Vote.
+     * The key of the vote.
      *
      * @var string
      */
     protected $key;
 
     /**
-     * The group of the Vote.
+     * The groups of the vote.
      *
-     * @var int
+     * @var string
      */
-    protected $group;
+    protected $groups;
 
     /**
-     * The read access of the Vote.
+     * The read access of the vote.
      *
      * @var string
      */
     protected $readAccess;
 
     /**
-     * The status of the Vote.
+     * The status of the vote.
      *
      * @var int
      */
     protected $status;
 
     /**
-     * Gets the id of the Vote.
+     * Gets the id of the vote.
      *
      * @return int
      */
@@ -61,7 +61,7 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * Sets the id of the Vote.
+     * Sets the id of the vote.
      *
      * @param int $id
      *
@@ -75,7 +75,7 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * Gets the question of the Vote.
+     * Gets the question of the vote.
      *
      * @return string
      */
@@ -85,7 +85,7 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * Sets the question of the Vote.
+     * Sets the question of the vote.
      *
      * @param string $question
      *
@@ -99,7 +99,7 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * Gets the key of the Vote.
+     * Gets the key of the vote.
      *
      * @return string
      */
@@ -109,7 +109,7 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * Sets the key of the Vote.
+     * Sets the key of the vote.
      *
      * @param string $key
      *
@@ -123,25 +123,25 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * Gets the group of the Vote.
+     * Gets the groups of the vote.
      *
-     * @return int
+     * @return string
      */
-    public function getGroup()
+    public function getGroups()
     {
-        return $this->group;
+        return $this->groups;
     }
 
     /**
-     * Sets the group of the Vote.
+     * Sets the groups of the vote.
      *
-     * @param int $group
+     * @param string $groups
      *
      * @return $this
      */
-    public function setGroup($group)
+    public function setGroups($groups)
     {
-        $this->group = (int)$group;
+        $this->groups = (string)$groups;
 
         return $this;
     }
@@ -171,7 +171,7 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * Gets the status of the Vote.
+     * Gets the status of the vote.
      *
      * @return int
      */
@@ -181,7 +181,7 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * Sets the status of the Vote.
+     * Sets the status of the vote.
      *
      * @param int $status
      *

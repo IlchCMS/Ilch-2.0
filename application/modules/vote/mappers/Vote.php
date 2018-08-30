@@ -35,7 +35,7 @@ class Vote extends \Ilch\Mapper
             $entryModel->setId($entries['id'])
                 ->setQuestion($entries['question'])
                 ->setKey($entries['key'])
-                ->setGroup($entries['group'])
+                ->setGroups($entries['groups'])
                 ->setReadAccess($entries['read_access'])
                 ->setStatus($entries['status']);
             $vote[] = $entryModel;
@@ -65,7 +65,7 @@ class Vote extends \Ilch\Mapper
         $voteModel = new VoteModel();
         $voteModel->setId($voteRow['id'])
             ->setQuestion($voteRow['question'])
-            ->setGroup($voteRow['group'])
+            ->setGroups($voteRow['groups'])
             ->setReadAccess($voteRow['read_access']);
 
         return $voteModel;
@@ -117,7 +117,7 @@ class Vote extends \Ilch\Mapper
         $fields = [
             'question' => $vote->getQuestion(),
             'key' => $vote->getKey(),
-            'group' => $vote->getGroup(),
+            'groups' => $vote->getGroups(),
             'read_access' => $vote->getReadAccess()
         ];
 

@@ -8,17 +8,18 @@
             <?=$this->getTrans('participationGroup') ?>
         </label>
         <div class="col-lg-4">
-            <select name="group"
-                    id="group"
-                    class="form-control">
-                <option value="0" <?=($vote != '' AND $this->escape($vote->getGroup()) == 0) ? 'selected="selected"' : '' ?>>
+            <select class="chosen-select form-control"
+                    id="group" name="participationGroups[]"
+                    data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
+                    multiple>
+                <option value="0" <?=($vote != '' AND $this->escape($vote->getGroups()) == '0') ? 'selected="selected"' : '' ?>>
                     <?=$this->getTrans('groupAll') ?>
                 </option>
-                <?php foreach($this->get('userGroupList') as $group): ?>
-                    <option value="<?=$group->getId() ?>" <?=($vote != '' AND $this->escape($vote->getGroup()) == $group->getId()) ? 'selected="selected"' : '' ?>>
-                        <?=$this->escape($group->getName()) ?>
-                    </option>
-                <?php endforeach; ?>
+            <?php foreach($this->get('userGroupList') as $group): ?>
+                <option value="<?=$group->getId() ?>" <?=(in_array($group->getId(), $this->get('participationGroups'))) ? ' selected' : '' ?>>
+                    <?=$this->escape($group->getName()) ?>
+                </option>
+            <?php endforeach; ?>
             </select>
         </div>
     </div>
@@ -31,11 +32,11 @@
                     id="access" name="groups[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
                     multiple>
-                <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <?php if ($groupList->getId() != 1): ?>
-                        <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
-                    <?php endif; ?>
-                <?php endforeach; ?>
+            <?php foreach ($this->get('userGroupList') as $groupList): ?>
+                <?php if ($groupList->getId() != 1): ?>
+                    <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                <?php endif; ?>
+            <?php endforeach; ?>
             </select>
         </div>
     </div>
@@ -92,6 +93,7 @@
 
 <script>
 $('#access').chosen();
+$('#group').chosen();
 
 (function ($) {
     $(function () {

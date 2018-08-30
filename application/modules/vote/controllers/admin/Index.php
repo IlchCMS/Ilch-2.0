@@ -98,9 +98,14 @@ class Index extends \Ilch\Controller\Admin
                     $groups = implode(',', $this->getRequest()->getPost('groups'));
                 }
 
+                $participationGroups = '';
+                if (!empty($this->getRequest()->getPost('participationGroups'))) {
+                    $participationGroups = implode(',', $this->getRequest()->getPost('participationGroups'));
+                }
+
                 $voteModel->setQuestion($this->getRequest()->getPost('question'))
                     ->setKey('vote/index/index')
-                    ->setGroup($this->getRequest()->getPost('group'))
+                    ->setGroups($participationGroups)
                     ->setReadAccess($groups);
                 $voteMapper->save($voteModel);
 
@@ -135,12 +140,15 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $groups = explode(',', $voteMapper->getVoteById($this->getRequest()->getParam('id'))->getReadAccess());
+            $participationGroups = explode(',', $voteMapper->getVoteById($this->getRequest()->getParam('id'))->getGroups());
         } else {
             $groups = [2,3];
+            $participationGroups = [];
         }
 
         $this->getView()->set('userGroupList', $groupMapper->getGroupList())
-            ->set('groups', $groups);
+            ->set('groups', $groups)
+            ->set('participationGroups', $participationGroups);
     }
 
     public function lockAction()
