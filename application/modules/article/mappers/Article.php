@@ -248,7 +248,8 @@ class Article extends \Ilch\Mapper
      * Get articles count by cat id
      *
      * @param int $catId
-     * @return $count
+     * @return int|string $count
+     * @throws \Ilch\Database\Exception
      */
     public function getCountArticlesByCatId($catId)
     {
@@ -266,6 +267,7 @@ class Article extends \Ilch\Mapper
      *
      * @param integer $date
      * @return int
+     * @throws \Ilch\Database\Exception
      */
     public function getCountArticlesByMonthYear($date = null)
     {
@@ -285,7 +287,8 @@ class Article extends \Ilch\Mapper
      * Get a list for the archive-box.
      *
      * @param int|null $limit
-     * @return []|ArticleModel[]
+     * @return array []|ArticleModel[]
+     * @throws \Ilch\Database\Exception
      * @todo: Remove the group (aggregate) function MAX() workaround, which avoids duplicated entries in the archive-box if possible.
      */
     public function getArticleDateList($limit = null)
@@ -414,6 +417,7 @@ class Article extends \Ilch\Mapper
      *
      * @param int $limit
      * @return ArticleModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getKeywordsList($limit = null)
     {
@@ -444,6 +448,7 @@ class Article extends \Ilch\Mapper
      * Returns all article permas.
      *
      * @return array|null
+     * @throws \Ilch\Database\Exception
      */
     public function getArticlePermas()
     {
@@ -660,6 +665,7 @@ class Article extends \Ilch\Mapper
      * Get the votes/likes for an article.
      *
      * @param integer $id
+     * @return false|null|string
      */
     public function getVotes($id)
     {
