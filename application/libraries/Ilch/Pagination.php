@@ -64,98 +64,60 @@ class Pagination
     }
 
     /**
+     * Return HTML needed to display the pagination.
+     *
+     * @param $view
+     * @param $urlArray
      * @return string
      */
     public function getHtml($view, $urlArray)
     {
         if (empty($this->rows)) {
-            return;
+            return '';
         }
 
-        $page = $this->page;
-        $adj = '2';
-        $prev = $page - 1;
-        $next = $page + 1;
-        $lastPage = ceil($this->rows/$this->rowsPerPage);
-        $lpm1 = $lastPage - 1;
-        $html = '';
-        if ($lastPage > 1) {
-            $html .= '<ul class="pagination">';
-            if ($page > 1) {
-                $urlArray['page'] = $prev;
-                $html .= '<li><a href="'.$view->getUrl($urlArray).'">&laquo;</a></li>';
-            } else {
-                $html .= '<span class="hide">&laquo;</span>';
-            }
-            if ($lastPage <= 1 + ($adj * 2)) {
-                for ($counter = 1; $counter <= $lastPage; $counter++) {
-                    if ($counter == $page) {
-                        $html.= '<li><span class="current">'.$counter.'</span></li>';
-                    } else {
-                        $urlArray['page'] = $counter;
-                        $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$counter.'</a></li>';
-                    }
-                }
-            }
-            elseif ($lastPage > 1 + ($adj * 2)) {
-                if ($page < 1 + ($adj * 2)) {
-                    for ($counter = 1; $counter < 1 + ($adj * 2); $counter++) {
-                        if ($counter == $page) {
-                            $html .= '<li><span class="current">'.$counter.'</span></li>';
-                        } else {
-                            $urlArray['page'] = $counter;
-                            $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$counter.'</a></li>';
-                        }
-                    }
-                    $html .= '<li><a>...</a></li>';
-                    $urlArray['page'] = $lpm1;
-                    $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$lpm1.'</a></li>';
-                    $urlArray['page'] = $lastPage;
-                    $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$lastPage.'</a></li>';
-                }
-                elseif ($lastPage - ($adj * 2) > $page && $page > ($adj * 2)) {
-                    $urlArray['page'] = 1;
-                    $html .= '<li><a href="'.$view->getUrl($urlArray).'">1</a></li>';
-                    $urlArray['page'] = 2;
-                    $html .= '<li><a href="'.$view->getUrl($urlArray).'">2</a></li>';
-                    $html .= '<li><a>...</a></li>';
-                    for ($counter = $page - $adj; $counter <= $page + $adj; $counter++) {
-                        if ($counter == $page) {
-                            $html .= '<li class="active"><a href="#">'.$counter.'<span class="sr-only"></span></a></li>';
-                        } else {
-                            $urlArray['page'] = $counter;
-                            $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$counter.'</a></li>';
-                        }
-                    }
-                    $html .= '<li><a>...</a></li>';
-                    $urlArray['page'] = $lpm1;
-                    $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$lpm1.'</a></li>';
-                    $urlArray['page'] = $lastPage;
-                    $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$lastPage.'</a></li>';
-                } else {
-                    $urlArray['page'] = 1;
-                    $html .= '<li><a href="'.$view->getUrl($urlArray).'">1</a></li>';
-                    $urlArray['page'] = 2;
-                    $html .= '<li><a href="'.$view->getUrl($urlArray).'">2</a></li>';
-                    $html .= '<li><a>...</a></li>';
-                    for ($counter = $lastPage - (1 + ($adj * 2)); $counter <= $lastPage; $counter++) {
-                        if ($counter == $page) {
-                            $html .= '<li class="active"><a href="#">'.$counter.'<span class="sr-only"></span></a></li>';
-                        } else {
-                            $urlArray['page'] = $counter;
-                            $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$counter.'</a></li>';
-                        }
-                    }
-                }
-            }
-            if ($lastPage > $page) {
-                $urlArray['page'] = $next;
-                $html .= '<li><a href="'.$view->getUrl($urlArray).'">&raquo;</a></li>';
-            } else {
-                $html .= '<li><span class="hide">&raquo;</span></li>';
-            }
-            $html .= '</ul>';
+        $links = 7;
+        $last = ceil($this->rows/$this->rowsPerPage);
+
+        if ($last == 1){
+            return '';
         }
+
+        $start = (($this->page - $links) > 0) ? $this->page - $links : 1;
+        $end = (($this->page + $links) < $last) ? $this->page + $links : $last;
+
+        $html = '<ul class="pagination">';
+
+        if ($this->page > 1) {
+            $urlArray['page'] = $this->page - 1;
+            $html .= '<li><a href="'.$view->getUrl($urlArray).'">&laquo;</a></li>';
+        }
+
+        if ($start > 1) {
+            $urlArray['page'] = 1;
+            $html .= '<li><a href="'.$view->getUrl($urlArray).'">1</a></li>';
+            $html .= '<li class="disabled"><span>...</span></li>';
+        }
+
+        for ($i = $start; $i <= $end; $i++) {
+            $class  = ( $this->page == $i ) ? "active" : "";
+            $urlArray['page'] = $i;
+            $html .= '<li class="'.$class.'"><a href="'.$view->getUrl($urlArray).'">'.$i.'</a></li>';
+        }
+
+        if ($end < $last) {
+            $urlArray['page'] = $last;
+            $html .= '<li class="disabled"><span>...</span></li>';
+            $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$last.'</a></li>';
+        }
+
+        if ($last > $this->page) {
+            $urlArray['page'] = $this->page + 1;
+            $html .= '<li><a href="'.$view->getUrl($urlArray).'">&raquo;</a></li>';
+        }
+
+        $html .= '</ul>';
+
         return $html;
     }
 }
