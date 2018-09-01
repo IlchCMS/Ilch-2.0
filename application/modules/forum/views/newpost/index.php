@@ -44,7 +44,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
                                       name="text"
-                                      toolbar="ilch_bbcode"></textarea>
+                                      toolbar="ilch_bbcode"><?=$this->originalInput('text') ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">

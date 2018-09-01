@@ -42,7 +42,7 @@ if ($this->getUser()) {
                                             <select class="form-control" id="topicPrefix" name="topicPrefix">
                                                 <?php foreach ($prefix as $key => $value): ?>
                                                     <?php $selected = ''; ?>
-                                                    <?php if ($key == 0): ?>
+                                                    <?php if ($key == $this->originalInput('topicPrefix')): ?>
                                                         <?php $selected = 'selected="selected"'; ?>
                                                     <?php endif; ?>
 
@@ -56,7 +56,7 @@ if ($this->getUser()) {
                                                class="form-control"
                                                id="topicTitle"
                                                name="topicTitle"
-                                               value="" />
+                                               value="<?=$this->originalInput('topicTitle') ?>" />
                                     </div>
                                 </div>
                                 <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -67,7 +67,7 @@ if ($this->getUser()) {
                                     <textarea class="form-control ckeditor"
                                               id="ck_1"
                                               name="text"
-                                              toolbar="ilch_bbcode"></textarea>
+                                              toolbar="ilch_bbcode"><?=$this->originalInput('text') ?></textarea>
                                     </div>
                                 </div>
                                 <?php if ($this->getUser()->isAdmin()): ?>
@@ -79,7 +79,8 @@ if ($this->getUser()) {
                                             <input type="checkbox"
                                                    id="fix"
                                                    name="fix"
-                                                   value="1" />
+                                                   value="1"
+                                                   <?=($this->originalInput('fix')) ? 'checked' : '' ?> />
                                             <label for="fix">
                                                 <?=$this->getTrans('forumTypeFixed') ?>
                                             </label>
