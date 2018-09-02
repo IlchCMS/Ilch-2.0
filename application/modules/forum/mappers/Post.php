@@ -85,6 +85,7 @@ class Post extends \Ilch\Mapper
                 $user = $userMapper->getUserById($entries['user_id']);
                 if ($user) {
                     $userCache[$entries['user_id']] = $user;
+                    $entryModel->setAutor($user);
                 } else {
                     if (!$dummyUser) {
                         $dummyUser = $userMapper->getDummyUser();
@@ -92,7 +93,7 @@ class Post extends \Ilch\Mapper
                     $entryModel->setAutor($dummyUser);
                 }
             } else {
-                $entryModel->setAutor($user);
+                $entryModel->setAutor($userCache[$entries['user_id']]);
             }
             $entryModel->setAutorAllPost($this->getAllPostsByUserId($entries['user_id']));
             $postEntry[] = $entryModel;
