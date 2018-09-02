@@ -30,6 +30,9 @@ class Topic extends \Ilch\Mapper
 
         $fileArray = $this->db()->queryArray($sql);
         $entry = [];
+        $user = null;
+        $dummyUser = null;
+        $userCache = [];
 
         foreach ($fileArray as $entries) {
             $entryModel = new TopicModel();
@@ -39,11 +42,22 @@ class Topic extends \Ilch\Mapper
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
-            if ($userMapper->getUserById($entries['creator_id'])) {
-                $entryModel->setAuthor($userMapper->getUserById($entries['creator_id']));
+
+            if (!array_key_exists($entries['creator_id'], $userCache)) {
+                $user = $userMapper->getUserById($entries['creator_id']);
+                if ($user) {
+                    $userCache[$entries['creator_id']] = $user;
+                    $entryModel->setAuthor($user);
+                } else {
+                    if (!$dummyUser) {
+                        $dummyUser = $userMapper->getDummyUser();
+                    }
+                    $entryModel->setAuthor($dummyUser);
+                }
             } else {
-                $entryModel->setAuthor($userMapper->getDummyUser());
+                $entryModel->setAuthor($userCache[$entries['creator_id']]);
             }
+
             $entryModel->setTopicPrefix($entries['topic_prefix']);
             $entryModel->setTopicTitle($entries['topic_title']);
             $entryModel->setDateCreated($entries['date_created']);
@@ -72,6 +86,9 @@ class Topic extends \Ilch\Mapper
         }
 
         $entry = [];
+        $user = null;
+        $dummyUser = null;
+        $userCache = [];
 
         foreach ($fileArray as $entries) {
             $entryModel = new TopicModel();
@@ -82,11 +99,22 @@ class Topic extends \Ilch\Mapper
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
-            if ($userMapper->getUserById($entries['creator_id'])) {
-                $entryModel->setAuthor($userMapper->getUserById($entries['creator_id']));
+
+            if (!array_key_exists($entries['creator_id'], $userCache)) {
+                $user = $userMapper->getUserById($entries['creator_id']);
+                if ($user) {
+                    $userCache[$entries['creator_id']] = $user;
+                    $entryModel->setAuthor($user);
+                } else {
+                    if (!$dummyUser) {
+                        $dummyUser = $userMapper->getDummyUser();
+                    }
+                    $entryModel->setAuthor($dummyUser);
+                }
             } else {
-                $entryModel->setAuthor($userMapper->getDummyUser());
+                $entryModel->setAuthor($userCache[$entries['creator_id']]);
             }
+
             $entryModel->setTopicPrefix($entries['topic_prefix']);
             $entryModel->setTopicTitle($entries['topic_title']);
             $entryModel->setDateCreated($entries['date_created']);
@@ -110,11 +138,12 @@ class Topic extends \Ilch\Mapper
         $entryModel->setTopicTitle($fileRow['topic_title']);
         $entryModel->setCreatorId($fileRow['creator_id']);
         $entryModel->setVisits($fileRow['visits']);
-        if ($userMapper->getUserById($fileRow['creator_id'])) {
-                $entryModel->setAuthor($userMapper->getUserById($fileRow['creator_id']));
-            } else {
-                $entryModel->setAuthor($userMapper->getDummyUser());
-            }
+        $user = $userMapper->getUserById($fileRow['creator_id']);
+        if ($user) {
+            $entryModel->setAuthor($user);
+        } else {
+            $entryModel->setAuthor($userMapper->getDummyUser());
+        }
         $entryModel->setDateCreated($fileRow['date_created']);
         $entryModel->setStatus($fileRow['status']);
 
@@ -137,11 +166,12 @@ class Topic extends \Ilch\Mapper
         $userMapper = new UserMapper();
         $forumMapper = new ForumMapper();
         $entryModel->setId($fileRow['id']);
-        if ($userMapper->getUserById($fileRow['user_id'])) {
-                $entryModel->setAutor($userMapper->getUserById($fileRow['user_id']));
-            } else {
-                $entryModel->setAutor($userMapper->getDummyUser());
-            }
+        $user = $userMapper->getUserById($fileRow['user_id']);
+        if ($user) {
+            $entryModel->setAutor($user);
+        } else {
+            $entryModel->setAutor($userMapper->getDummyUser());
+        }
         $entryModel->setDateCreated($fileRow['date_created']);
         $entryModel->setTopicId($fileRow['topic_id']);
         $entryModel->setRead($fileRow['read']);
