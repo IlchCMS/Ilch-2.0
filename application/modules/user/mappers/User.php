@@ -17,6 +17,7 @@ class User extends \Ilch\Mapper
      *
      * @param  int $id
      * @return null|\Modules\User\Models\User
+     * @throws \Ilch\Database\Exception
      */
     public function getUserById($id)
     {
@@ -38,6 +39,7 @@ class User extends \Ilch\Mapper
      *
      * @param  string $name
      * @return null|\Modules\User\Models\User
+     * @throws \Ilch\Database\Exception
      */
     public function getUserByName($name)
     {
@@ -59,6 +61,7 @@ class User extends \Ilch\Mapper
      *
      * @param  string $email
      * @return null|\Modules\User\Models\User
+     * @throws \Ilch\Database\Exception
      */
     public function getUserByEmail($email)
     {
@@ -80,6 +83,7 @@ class User extends \Ilch\Mapper
      *
      * @param  string $selector
      * @return null|\Modules\User\Models\User
+     * @throws \Ilch\Database\Exception
      */
     public function getUserBySelector($selector)
     {
@@ -432,6 +436,7 @@ class User extends \Ilch\Mapper
      * @param array|mixed $where
      * @param null $pagination
      * @return UserModel[]
+     * @throws \Ilch\Database\Exception
      */
     public function getUserList($where = [], $pagination = null)
     {

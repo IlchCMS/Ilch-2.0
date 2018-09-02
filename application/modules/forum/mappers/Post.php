@@ -26,8 +26,9 @@ class Post extends \Ilch\Mapper
         $postModel->setText($fileRow['text']);
         $postModel->setVotes($fileRow['votes']);
         $postModel->setDateCreated($fileRow['date_created']);
-        if ($userMapper->getUserById($fileRow['user_id'])) {
-            $postModel->setAutor($userMapper->getUserById($fileRow['user_id']));
+        $user = $userMapper->getUserById($fileRow['user_id']);
+        if ($user) {
+            $postModel->setAutor($user);
         } else {
             $postModel->setAutor($userMapper->getDummyUser());
         }
@@ -69,6 +70,9 @@ class Post extends \Ilch\Mapper
 
         $fileArray = $result->fetchRows();
         $postEntry = [];
+        $user = null;
+        $dummyUser = null;
+        $userCache = [];
 
         foreach ($fileArray as $entries) {
             $entryModel = new PostModel();
@@ -77,10 +81,18 @@ class Post extends \Ilch\Mapper
             $entryModel->setText($entries['text']);
             $entryModel->setVotes($entries['votes']);
             $entryModel->setDateCreated($entries['date_created']);
-            if ($userMapper->getUserById($entries['user_id'])) {
-                $entryModel->setAutor($userMapper->getUserById($entries['user_id']));
+            if (!array_key_exists($entries['user_id'], $userCache)) {
+                $user = $userMapper->getUserById($entries['user_id']);
+                if ($user) {
+                    $userCache[$entries['user_id']] = $user;
+                } else {
+                    if (!$dummyUser) {
+                        $dummyUser = $userMapper->getDummyUser();
+                    }
+                    $entryModel->setAutor($dummyUser);
+                }
             } else {
-                $entryModel->setAutor($userMapper->getDummyUser());
+                $entryModel->setAutor($user);
             }
             $entryModel->setAutorAllPost($this->getAllPostsByUserId($entries['user_id']));
             $postEntry[] = $entryModel;
