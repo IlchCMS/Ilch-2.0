@@ -53,7 +53,15 @@ class Post extends \Ilch\Mapper
         return $topics;
     }
 
-    public function getPostByTopicId($topicId, $pagination = null)
+    /**
+     * Get all posts by topic id (posts of a topic)
+     *
+     * @param $topicId
+     * @param null $pagination
+     * @return array
+     * @throws \Ilch\Database\Exception
+     */
+    public function getPostsByTopicId($topicId, $pagination = null)
     {
         $select = $this->db()->select('*')
             ->from('forum_posts')
@@ -100,6 +108,39 @@ class Post extends \Ilch\Mapper
         }
 
         return $postEntry;
+    }
+
+    /**
+     * Get first post of topic.
+     *
+     * @param $topicId
+     * @return PostModel
+     * @throws \Ilch\Database\Exception
+     */
+    public function getFirstPostByTopicId($topicId)
+    {
+        $select = $this->db()->select('*')
+            ->from('forum_posts')
+            ->where(['topic_id' => $topicId])
+            ->limit(1)
+            ->execute()
+            ->fetchAssoc();
+
+        $postModel = new PostModel();
+        $userMapper = new UserMapper();
+        $postModel->setId($select['id']);
+        $postModel->setText($select['text']);
+        $postModel->setVotes($select['votes']);
+        $postModel->setDateCreated($select['date_created']);
+        $user = $userMapper->getUserById($select['user_id']);
+        if ($user) {
+            $postModel->setAutor($user);
+        } else {
+            $postModel->setAutor($userMapper->getDummyUser());
+        }
+        $postModel->setAutorAllPost($this->getAllPostsByUserId($select['user_id']));
+
+        return $postModel;
     }
 
     /**

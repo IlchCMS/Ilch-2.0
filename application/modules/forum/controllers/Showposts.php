@@ -35,7 +35,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $forum = $forumMapper->getForumById($forumId->getId());
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
-        $posts = $postMapper->getPostByTopicId($topicId, $pagination);
+        $posts = $postMapper->getPostsByTopicId($topicId, $pagination);
         $post = $topicMapper->getPostById($topicId);
 
         $prefix = '';

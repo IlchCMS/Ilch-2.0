@@ -294,7 +294,7 @@ class Topic extends \Ilch\Mapper
     {
         $this->trigger(ForumConfig::EVENT_DELETETOPIC_BEFORE, ['id' => $id]);
         $postMapper = new PostMapper();
-        $posts = $postMapper->getPostByTopicId($id);
+        $posts = $postMapper->getPostsByTopicId($id);
         foreach ($posts as $post){
             $postMapper->deleteById($post->getId());
         }

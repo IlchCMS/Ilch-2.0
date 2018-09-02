@@ -33,7 +33,7 @@ if ($this->getUser()) {
             <?php foreach ($topics as $topic): ?>
                 <?php $forum = $forumMapper->getForumById($topic->getTopicId()); ?>
                 <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
-                <?php $firstPost = $postMapper->getPostByTopicId($topic->getId()) ?>
+                <?php $firstPost = $postMapper->getFirstPostByTopicId($topic->getId()) ?>
                 <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                 <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
                     <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
@@ -56,7 +56,7 @@ if ($this->getUser()) {
                                     topic-read
                                 <?php endif; ?>
                             ">
-                                <dt title="<?=$firstPost[0]->getText() ?>">
+                                <dt title="<?=$firstPost->getText() ?>">
                                     <?php
                                     if ($forumPrefix->getPrefix() != '' AND $topic->getTopicPrefix() > 0) {
                                         $prefix = explode(',', $forumPrefix->getPrefix());

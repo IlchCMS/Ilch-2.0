@@ -67,7 +67,7 @@ class Edittopic extends \Ilch\Controller\Frontend
                             ->setForumId($this->getRequest()->getPost('edit'));
                         $topicMapper->save($topicModel);
 
-                        $posts = $postMapper->getPostByTopicId($topic);
+                        $posts = $postMapper->getPostsByTopicId($topic);
                         foreach ($posts as $post) {
                             $postModel->setId($post->getId())
                                 ->setTopicId($this->getRequest()->getPost('edit'))

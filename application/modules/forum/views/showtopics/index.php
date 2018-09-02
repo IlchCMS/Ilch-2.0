@@ -60,7 +60,7 @@ if ($this->getUser()) {
             <ul class="topiclist topics">
                 <?php if (!empty($topics)): ?>
                     <?php foreach ($topics as $topic): ?>
-                        <?php $firstPost = $postMapper->getPostByTopicId($topic->getId()) ?>
+                        <?php $firstPost = $postMapper->getFirstPostByTopicId($topic->getId()) ?>
                         <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                         <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
                         <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
@@ -82,7 +82,7 @@ if ($this->getUser()) {
                                     topic-read
                                 <?php endif; ?>
                             ">
-                                <dt title="<?=$this->escape($firstPost[0]->getText()) ?>">
+                                <dt title="<?=$this->escape($firstPost->getText()) ?>">
                                     <?php
                                     if ($forumPrefix->getPrefix() != '' AND $topic->getTopicPrefix() > 0) {
                                         $prefix = explode(',', $forumPrefix->getPrefix());

@@ -121,8 +121,9 @@ class Forum extends \Ilch\Mapper
         $entryModel = new PostModel();
         $userMapper = new UserMapper();
         $entryModel->setId($fileRow['id']);
-        if ($userMapper->getUserById($fileRow['user_id'])) {
-            $entryModel->setAutor($userMapper->getUserById($fileRow['user_id']));
+        $user = $userMapper->getUserById($fileRow['user_id']);
+        if ($user) {
+            $entryModel->setAutor($user);
         } else {
             $entryModel->setAutor($userMapper->getDummyUser());
         }
