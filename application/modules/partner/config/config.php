@@ -64,8 +64,8 @@ class Config extends \Ilch\Config\Install
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `pos` INT(11) NOT NULL DEFAULT 0,
             `name` VARCHAR(100) NOT NULL,
-            `banner` VARCHAR(255) NOT NULL,
-            `link` VARCHAR(255) NOT NULL,
+            `banner` varchar(191) NOT NULL,
+            `link` varchar(191) NOT NULL,
             `target` TINYINT(1) NOT NULL DEFAULT 0,
             `setfree` TINYINT(1) NOT NULL DEFAULT 0,
             PRIMARY KEY (`id`)

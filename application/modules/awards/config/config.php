@@ -44,7 +44,7 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `date` DATE NOT NULL,
                   `rank` INT(11) NOT NULL,
-                  `image` VARCHAR(255) NOT NULL,
+                  `image` varchar(191) NOT NULL,
                   `event` VARCHAR(100) NOT NULL,
                   `url` VARCHAR(150) NOT NULL,
                   `ut_id` INT(11) NOT NULL,
@@ -57,7 +57,7 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.1":
-                $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` VARCHAR(255) NOT NULL AFTER `rank`;');
+                $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` varchar(191) NOT NULL AFTER `rank`;');
         }
     }
 }

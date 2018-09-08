@@ -49,7 +49,7 @@ class Config extends \Ilch\Config\Install
         return "CREATE TABLE IF NOT EXISTS `[prefix]_linkus` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `title` VARCHAR(100) NOT NULL,
-                  `banner` VARCHAR(255) NOT NULL,
+                  `banner` varchar(191) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1";
     }

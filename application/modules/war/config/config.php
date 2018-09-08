@@ -72,8 +72,8 @@ class Config extends \Ilch\Config\Install
               `id` INT(11) NOT NULL AUTO_INCREMENT,
               `name` VARCHAR(32) NOT NULL,
               `tag` VARCHAR(20) NOT NULL,
-              `image` VARCHAR(255) NOT NULL,
-              `desc` VARCHAR(255) NOT NULL,
+              `image` varchar(191) NOT NULL,
+              `desc` varchar(191) NOT NULL,
               `member` INT(11) NOT NULL,
               PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
@@ -83,7 +83,7 @@ class Config extends \Ilch\Config\Install
               `name` VARCHAR(150) NOT NULL,
               `tag` VARCHAR(20) NOT NULL,
               `homepage` VARCHAR(150) NOT NULL,
-              `image` VARCHAR(255) NOT NULL,
+              `image` varchar(191) NOT NULL,
               `contact_name` VARCHAR(50) NOT NULL,
               `contact_email` VARCHAR(150) NOT NULL,
               PRIMARY KEY (`id`)
@@ -94,23 +94,23 @@ class Config extends \Ilch\Config\Install
               `enemy` INT(11) NOT NULL,
               `group` INT(11) NOT NULL,
               `time` DATETIME NOT NULL,
-              `maps` VARCHAR(255) NOT NULL,
-              `server` VARCHAR(255) NOT NULL,
-              `password` VARCHAR(255) NOT NULL,
+              `maps` varchar(191) NOT NULL,
+              `server` varchar(191) NOT NULL,
+              `password` varchar(191) NOT NULL,
               `xonx` VARCHAR(50) NOT NULL,
-              `game` VARCHAR(255) NOT NULL,
-              `matchtype` VARCHAR(255) NOT NULL,
+              `game` varchar(191) NOT NULL,
+              `matchtype` varchar(191) NOT NULL,
               `report` TEXT NOT NULL,
               `status` TINYINT(1) NOT NULL DEFAULT 0,
               `show` TINYINT(1) NOT NULL DEFAULT 0,
-              `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\',
+              `read_access` varchar(191) NOT NULL DEFAULT \'2,3\',
               PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_war_played` (
               `id` INT(11) NOT NULL AUTO_INCREMENT,
               `war_id` INT(11) DEFAULT NULL,
-              `map` VARCHAR(255) NOT NULL DEFAULT "",
+              `map` varchar(191) NOT NULL DEFAULT "",
               `group_points` MEDIUMINT(9) DEFAULT NULL,
               `enemy_points` MEDIUMINT(9) DEFAULT NULL,
               PRIMARY KEY (`id`)
@@ -136,7 +136,7 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `status`;');
-                $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access` VARCHAR(255) NOT NULL AFTER `show`;');
+                $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access` varchar(191) NOT NULL AFTER `show`;');
             case "1.2":
                 // On installation of Ilch adding this entry failed. Reinstalling or a later install of this module adds the entry.
                 // Add entry on update. Instead of checking if the entry exists, delete entry/entries and add it again.

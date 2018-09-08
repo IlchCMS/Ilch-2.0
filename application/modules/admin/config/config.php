@@ -62,59 +62,59 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_config` (
-                `key` VARCHAR(255) NOT NULL,
+                `key` varchar(191) NOT NULL,
                 `value` TEXT NOT NULL,
                 `autoload` TINYINT(1) NOT NULL,
                 UNIQUE KEY `key` (`key`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_emails` (
-                `moduleKey` VARCHAR(255) NOT NULL,
-                `type` VARCHAR(255) NOT NULL,
-                `desc` VARCHAR(255) NOT NULL,
+                `moduleKey` varchar(191) NOT NULL,
+                `type` varchar(191) NOT NULL,
+                `desc` varchar(191) NOT NULL,
                 `text` TEXT NOT NULL,
-                `locale` VARCHAR(255) NOT NULL
+                `locale` varchar(191) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
-                `key` VARCHAR(255) NOT NULL,
+                `key` varchar(191) NOT NULL,
                 `system` TINYINT(1) NOT NULL DEFAULT 0,
                 `layout` TINYINT(1) NOT NULL DEFAULT 0,
                 `hide_menu` TINYINT(1) NOT NULL DEFAULT 0,
-                `author` VARCHAR(255) NULL DEFAULT NULL,
-                `version` VARCHAR(255) NULL DEFAULT NULL,
-                `link` VARCHAR(255) NULL DEFAULT NULL,
-                `icon_small` VARCHAR(255) NOT NULL,
+                `author` varchar(191) NULL DEFAULT NULL,
+                `version` varchar(191) NULL DEFAULT NULL,
+                `link` varchar(191) NULL DEFAULT NULL,
+                `icon_small` varchar(191) NOT NULL,
                 UNIQUE KEY `key` (`key`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_content` (
-                `key` VARCHAR(255) NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `description` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
+                `key` varchar(191) NOT NULL,
+                `locale` varchar(191) NOT NULL,
+                `description` varchar(191) NOT NULL,
+                `name` varchar(191) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_php_extensions` (
-                `key` VARCHAR(255) NOT NULL,
-                `extension` VARCHAR(255) NOT NULL
+                `key` varchar(191) NOT NULL,
+                `extension` varchar(191) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_folderrights` (
-                `key` VARCHAR(255) NOT NULL,
-                `folder` VARCHAR(255) NOT NULL
+                `key` varchar(191) NOT NULL,
+                `folder` varchar(191) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_boxes_content` (
-                `key` VARCHAR(255) NOT NULL,
-                `module` VARCHAR(255) NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
+                `key` varchar(191) NOT NULL,
+                `module` varchar(191) NOT NULL,
+                `locale` varchar(191) NOT NULL,
+                `name` varchar(191) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_menu` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `title` VARCHAR(255) NOT NULL,
+                `title` varchar(191) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
             
@@ -125,12 +125,12 @@ class Config extends \Ilch\Config\Install
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
                 `page_id` INT(11) NOT NULL DEFAULT 0,
                 `box_id` INT(11) NOT NULL DEFAULT 0,
-                `box_key` VARCHAR(255) NULL DEFAULT NULL,
+                `box_key` varchar(191) NULL DEFAULT NULL,
                 `type` TINYINT(1) NOT NULL,
-                `title` VARCHAR(255) NOT NULL,
-                `href` VARCHAR(255) NULL DEFAULT NULL,
-                `module_key` VARCHAR(255) NULL DEFAULT NULL,
-                `access` VARCHAR(255) NOT NULL DEFAULT "",
+                `title` varchar(191) NOT NULL,
+                `href` varchar(191) NULL DEFAULT NULL,
+                `module_key` varchar(191) NULL DEFAULT NULL,
+                `access` varchar(191) NOT NULL DEFAULT "",
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
             
@@ -143,8 +143,8 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_boxes_content` (
                 `box_id` INT(11) NOT NULL,
                 `content` MEDIUMTEXT NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `title` VARCHAR(255) NOT NULL
+                `locale` varchar(191) NOT NULL,
+                `title` varchar(191) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_pages` (
@@ -158,45 +158,45 @@ class Config extends \Ilch\Config\Install
                 `content` MEDIUMTEXT NOT NULL,
                 `description` MEDIUMTEXT NOT NULL,
                 `keywords` MEDIUMTEXT NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `title` VARCHAR(255) NOT NULL,
-                `perma` VARCHAR(255) NOT NULL
+                `locale` varchar(191) NOT NULL,
+                `title` varchar(191) NOT NULL,
+                `perma` varchar(191) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_backup` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
+                `name` varchar(191) NOT NULL,
                 `date` DATETIME NOT NULL,
             PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_logs` (
-                `user_id` VARCHAR(255) NOT NULL,
+                `user_id` varchar(191) NOT NULL,
                 `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                `info` VARCHAR(255) NOT NULL
+                `info` varchar(191) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_notifications` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                `module` VARCHAR(255) NOT NULL,
-                `message` VARCHAR(255) NOT NULL,
-                `url` VARCHAR(255) NOT NULL,
-                `type` VARCHAR(255) NOT NULL,
+                `module` varchar(191) NOT NULL,
+                `message` varchar(191) NOT NULL,
+                `url` varchar(191) NOT NULL,
+                `type` varchar(191) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_notifications_permission` (
-                `module` VARCHAR(255) NOT NULL,
+                `module` varchar(191) NOT NULL,
                 `granted` TINYINT(1) NOT NULL,
                 `limit` TINYINT(1) UNSIGNED NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_updateservers` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `url` VARCHAR(255) NOT NULL,
-                `operator` VARCHAR(255) NOT NULL,
-                `country` VARCHAR(255) NOT NULL,
+                `url` varchar(191) NOT NULL,
+                `operator` varchar(191) NOT NULL,
+                `country` varchar(191) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
             
@@ -216,7 +216,7 @@ class Config extends \Ilch\Config\Install
                 // Add new top column for the top article feature
                 // Add new read_access column to restrict who can read an article
                 $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `top` TINYINT(1) NOT NULL DEFAULT 0;');
-                $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `read_access` varchar(191) NOT NULL DEFAULT \'1,2,3\';');
 
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
@@ -233,15 +233,15 @@ class Config extends \Ilch\Config\Install
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
             case "2.1.3":
-                $this->db()->query('ALTER TABLE `[prefix]_menu_items` MODIFY COLUMN `access` VARCHAR(255) NOT NULL DEFAULT "";');
-                $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `locale` VARCHAR(255) NOT NULL DEFAULT "";');
+                $this->db()->query('ALTER TABLE `[prefix]_menu_items` MODIFY COLUMN `access` varchar(191) NOT NULL DEFAULT "";');
+                $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `locale` varchar(191) NOT NULL DEFAULT "";');
                 break;
             case "2.1.4":
                 // Add new columns for user profile
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `steam` VARCHAR(255) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `twitch` VARCHAR(255) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `teamspeak` VARCHAR(255) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `discord` VARCHAR(255) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `steam` varchar(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `twitch` varchar(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `teamspeak` varchar(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `discord` varchar(191) NOT NULL;');
                 break;
             case "2.1.5":
                 removeDir(ROOT_PATH.'/vendor');
@@ -373,7 +373,7 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.13":
                 // Add new needed column "type" for the notifications.
-                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications` ADD COLUMN `type` VARCHAR(255) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications` ADD COLUMN `type` varchar(191) NOT NULL;');
 
                 // Change datatype of the column gender of the users table.
                 $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `gender` TINYINT(1) NOT NULL DEFAULT 0;');

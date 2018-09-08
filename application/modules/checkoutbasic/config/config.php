@@ -50,15 +50,15 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
                   `date_created` DATETIME NOT NULL,
-                  `name` VARCHAR(255) NOT NULL,
-                  `usage` VARCHAR(255) NOT NULL,
+                  `name` varchar(191) NOT NULL,
+                  `usage` varchar(191) NOT NULL,
                   `amount` FLOAT NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic_currencies` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
-                  `name` VARCHAR(255) NOT NULL,
+                  `name` varchar(191) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
 

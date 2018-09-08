@@ -42,7 +42,7 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_rules` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
-            `paragraph` VARCHAR(255) NOT NULL,
+            `paragraph` varchar(191) NOT NULL,
             `title` VARCHAR(100) NOT NULL,
             `text` MEDIUMTEXT NOT NULL,
             `position` INT(11) NOT NULL DEFAULT 0,
@@ -56,7 +56,7 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_rules` ADD `position` INT(11) NOT NULL DEFAULT 0;');
             case "1.1":
-                $this->db()->query('ALTER TABLE `[prefix]_rules` MODIFY COLUMN `paragraph` VARCHAR(255) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_rules` MODIFY COLUMN `paragraph` varchar(191) NOT NULL;');
         }
     }
 }

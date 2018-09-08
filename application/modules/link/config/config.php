@@ -46,9 +46,9 @@ class Config extends \Ilch\Config\Install
                   `cat_id` INT(11) NULL DEFAULT 0,
                   `pos` INT(11) NOT NULL DEFAULT 0,
                   `name` VARCHAR(100) NOT NULL,
-                  `desc` VARCHAR(255) NOT NULL,
-                  `banner` VARCHAR(255) NOT NULL,
-                  `link` VARCHAR(255) NOT NULL,
+                  `desc` varchar(191) NOT NULL,
+                  `banner` varchar(191) NOT NULL,
+                  `link` varchar(191) NOT NULL,
                   `hits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
@@ -58,7 +58,7 @@ class Config extends \Ilch\Config\Install
                   `parent_id` INT(11) NULL DEFAULT 0,
                   `pos` INT(11) NOT NULL DEFAULT 0,
                   `name` VARCHAR(100) NOT NULL,
-                  `desc` VARCHAR(255) NOT NULL,
+                  `desc` varchar(191) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
 

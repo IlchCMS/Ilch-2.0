@@ -44,8 +44,8 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_gallery_imgs` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `image_id` VARCHAR(150) NOT NULL,
-                  `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
-                  `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `image_title` varchar(191) NOT NULL DEFAULT \'\',
+                  `image_description` varchar(191) NOT NULL DEFAULT \'\',
                   `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
@@ -57,8 +57,8 @@ class Config extends \Ilch\Config\Install
                   `sort` INT(11) NULL DEFAULT 0,
                   `parent_id` INT(11) NULL DEFAULT 0,
                   `type` TINYINT(1) NOT NULL,
-                  `title` VARCHAR(255) NOT NULL,
-                  `description` VARCHAR(255) NOT NULL,
+                  `title` varchar(191) NOT NULL,
+                  `description` varchar(191) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;';
     }
