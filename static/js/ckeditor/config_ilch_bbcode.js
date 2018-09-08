@@ -7,7 +7,7 @@ CKEDITOR.editorConfig = function (config) {
     if (typeof ilchSmileysPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal('ilchsmileys', ilchSmileysPlugin);
         CKEDITOR.plugins.addExternal('ilchyoutube', ilchYoutubePlugin);
-        config.extraPlugins = "bbcode,font,colorbutton,codesnippet,ilchsmileys,ilchyoutube";
+        config.extraPlugins = "bbcode,font,colorbutton,codesnippet,smiley,ilchsmileys,ilchyoutube";
         config.fontSize_sizes = "30/30%;50/50%;100/100%;120/120%;150/150%;200/200%;300/300%";
     }
     config.toolbar = 'ilch_bbcode';
