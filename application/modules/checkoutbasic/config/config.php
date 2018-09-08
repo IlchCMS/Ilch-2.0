@@ -54,13 +54,13 @@ class Config extends \Ilch\Config\Install
                   `usage` VARCHAR(255) NOT NULL,
                   `amount` FLOAT NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic_currencies` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
                   `name` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (1, "EUR (€)");
                 INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (2, "USD ($)");
