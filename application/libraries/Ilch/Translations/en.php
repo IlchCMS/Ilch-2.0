@@ -30,7 +30,6 @@ return [
     'updateSuccess' => 'Update successful',
     'captcha' => 'Captcha',
     'close' => 'Close',
-    'smilies' => 'Smilies',
     'submit' => 'Save',
     'reply' => 'Reply',
     'delete' => 'Delete',

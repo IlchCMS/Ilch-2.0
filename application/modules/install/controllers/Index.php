@@ -140,10 +140,6 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableMedia'] = true;
         }
 
-        if (!is_writable(APPLICATION_PATH.'/modules/smilies/static/img/')) {
-            $errors['writableMedia'] = true;
-        }
-
         if (!is_writable(APPLICATION_PATH.'/modules/user/static/upload/avatar/')) {
             $errors['writableAvatar'] = true;
         }
@@ -372,9 +368,9 @@ class Index extends \Ilch\Controller\Frontend
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
                 if (!empty($modulesToInstall)) {
-                    $modulesToInstall = array_merge(['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'smilies'], $modulesToInstall);
+                    $modulesToInstall = array_merge(['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'], $modulesToInstall);
                 } else {
-                    $modulesToInstall = ['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'smilies'];
+                    $modulesToInstall = ['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'];
                 }
 
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
@@ -452,7 +448,7 @@ class Index extends \Ilch\Controller\Frontend
                  * Will not linked in menu
                  */
                 foreach ($modulesToInstall as $module) {
-                    if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'newsletter', 'statistic', 'cookieconsent', 'error', 'smilies', 'contact', 'imprint', 'privacy'])) {
+                    if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'newsletter', 'statistic', 'cookieconsent', 'error', 'contact', 'imprint', 'privacy'])) {
                         continue;
                     }
 
@@ -514,7 +510,6 @@ class Index extends \Ilch\Controller\Frontend
         $modules['privacy']['types'] = [];
         $modules['cookieconsent']['types'] = [];
         $modules['statistic']['types'] = [];
-        $modules['smilies']['types'] = [];
 
         /*
          * Optional-Modules.
