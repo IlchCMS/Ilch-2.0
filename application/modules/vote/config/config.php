@@ -60,19 +60,19 @@ class Config extends \Ilch\Config\Install
                 `read_access` VARCHAR(255) NOT NULL DEFAULT '2,3',
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_poll_res` (
                 `poll_id` INT(11) NOT NULL,
                 `reply` VARCHAR(255) NOT NULL,
                 `result` INT(11) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_poll_ip` (
                 `poll_id` INT(11) NOT NULL,
                 `ip` VARCHAR(255) NOT NULL,
                 `user_id` INT(11) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;";
     }
 
     public function getUpdate($installedVersion)
