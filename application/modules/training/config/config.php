@@ -63,13 +63,13 @@ class Config extends \Ilch\Config\Install
                 `show` TINYINT(1) NOT NULL DEFAULT 0,
                 `read_access` varchar(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_training_entrants` (
               `train_id` INT(11) NOT NULL,
               `user_id` INT(11) NOT NULL,
               `note` VARCHAR(100) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $installSql.='INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("training/trainings/index/");';

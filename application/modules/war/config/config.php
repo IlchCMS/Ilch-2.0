@@ -76,7 +76,7 @@ class Config extends \Ilch\Config\Install
               `desc` varchar(191) NOT NULL,
               `member` INT(11) NOT NULL,
               PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_war_enemy` (
               `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -87,7 +87,7 @@ class Config extends \Ilch\Config\Install
               `contact_name` VARCHAR(50) NOT NULL,
               `contact_email` VARCHAR(150) NOT NULL,
               PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_war` (
               `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -105,7 +105,7 @@ class Config extends \Ilch\Config\Install
               `show` TINYINT(1) NOT NULL DEFAULT 0,
               `read_access` varchar(191) NOT NULL DEFAULT \'2,3\',
               PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_war_played` (
               `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -114,7 +114,7 @@ class Config extends \Ilch\Config\Install
               `group_points` MEDIUMINT(9) DEFAULT NULL,
               `enemy_points` MEDIUMINT(9) DEFAULT NULL,
               PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_war_accept` (
               `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -122,7 +122,7 @@ class Config extends \Ilch\Config\Install
               `user_id` INT(11) DEFAULT NULL,
               `accept` TINYINT(1) DEFAULT NULL,
               PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $installSql.='INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("war/wars/index/");';

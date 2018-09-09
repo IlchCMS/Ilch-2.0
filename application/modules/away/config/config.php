@@ -55,7 +55,7 @@ class Config extends \Ilch\Config\Install
             `status` INT(11) NOT NULL DEFAULT "2",
             `show` INT(11) NOT NULL,
             PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             return $installSql.'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("away/aways/index/");';

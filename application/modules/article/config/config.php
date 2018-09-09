@@ -92,14 +92,14 @@ class Config extends \Ilch\Config\Install
                   `top` TINYINT(1) NOT NULL DEFAULT 0,
                   `read_access` varchar(191) NOT NULL DEFAULT \'1,2,3\',
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1 ;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_articles_cats` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `name` VARCHAR(100) NOT NULL,
                   `sort` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_articles_content` (
                   `article_id` INT(11) NOT NULL,
@@ -115,7 +115,7 @@ class Config extends \Ilch\Config\Install
                   `img` varchar(191) NOT NULL,
                   `img_source` varchar(191) NOT NULL,
                   `votes` LONGTEXT NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
                 INSERT INTO `[prefix]_articles` (`cat_id`, `date_created`, `top`) VALUES (1, now(), 0);
 

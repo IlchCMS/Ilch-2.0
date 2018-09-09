@@ -81,7 +81,7 @@ class Config extends \Ilch\Config\Install
                 `replay_access` varchar(191) NOT NULL,
                 `create_access` varchar(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_topics` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -95,7 +95,7 @@ class Config extends \Ilch\Config\Install
                 `type` TINYINT(1) NOT NULL DEFAULT 0,
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_posts` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -108,14 +108,14 @@ class Config extends \Ilch\Config\Install
                 `forum_id` INT(11) NOT NULL DEFAULT 0,
                 `read` VARCHAR(225) NOT NULL DEFAULT \'\',
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_ranks` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `title` TEXT NOT NULL,
                 `posts` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             INSERT INTO `[prefix]_forum_items` (`id`, `sort`, `parent_id`, `type`, `title`, `description`, `read_access`, `replay_access`, `create_access`) VALUES
                 (1, 0, 0, 0, "Meine Kategorie", "Meine erste Kategorie", "", "", ""),
@@ -156,7 +156,7 @@ class Config extends \Ilch\Config\Install
                     `title` TEXT NOT NULL,
                     `posts` INT(11) NOT NULL DEFAULT 0,
                     PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
                 INSERT INTO `[prefix]_forum_ranks` (`id`, `title`, `posts`) VALUES
                     (1, "Grünschnabel", 0),

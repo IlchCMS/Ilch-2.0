@@ -52,13 +52,13 @@ class Config extends \Ilch\Config\Install
                   `period_day` INT(1) DEFAULT NULL,
                   `read_access` varchar(191) NOT NULL DEFAULT \'1,2,3\',
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_calendar_events` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `url` varchar(191) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("calendar/events/index/");';
     }

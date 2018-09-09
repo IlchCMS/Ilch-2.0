@@ -64,7 +64,7 @@ class Config extends \Ilch\Config\Install
                 `optIn` TINYINT(1) NOT NULL,
                 `position` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_teams_joins` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -82,7 +82,7 @@ class Config extends \Ilch\Config\Install
                 `decision` TINYINT(1) NOT NULL,
                 `undecided` TINYINT(1) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES
             ("teams", "static/upload/image");

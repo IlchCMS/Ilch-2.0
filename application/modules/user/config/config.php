@@ -82,7 +82,7 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `name` varchar(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=2;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -115,12 +115,12 @@ class Config extends \Ilch\Config\Install
                 `selector` char(18),
                 `locked` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
                 `user_id` INT(11) NOT NULL,
                 `group_id` INT(11) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
                 `group_id` INT(11) NOT NULL,
@@ -130,13 +130,13 @@ class Config extends \Ilch\Config\Install
                 `box_id` INT(11) DEFAULT 0,
                 `access_level` INT(11) DEFAULT 0,
                 PRIMARY KEY (`group_id`, `page_id`, `module_key`, `article_id`, `box_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_content` (
                 `user_id` INT(11) NOT NULL,
                 `field_id` INT(11) NOT NULL,
                 `value` varchar(191) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -144,21 +144,21 @@ class Config extends \Ilch\Config\Install
                 `type` TINYINT(1) NOT NULL,
                 `position` INT(11) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `key` varchar(191) NOT NULL,
                 `icon` varchar(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_user_menu_settings_links` (
                 `key` varchar(191) NOT NULL,
                 `locale` varchar(191) NOT NULL,
                 `description` varchar(191) NOT NULL,
                 `name` varchar(191) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
                 `c_id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -166,7 +166,7 @@ class Config extends \Ilch\Config\Install
                 `user_two` INT(11) UNSIGNED NOT NULL,
                 `time` DATETIME NOT NULL,
                 PRIMARY KEY (`c_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
                 `cr_id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -176,7 +176,7 @@ class Config extends \Ilch\Config\Install
                 `time` DATETIME NOT NULL,
                 `read` TINYINT(1) DEFAULT 0,
                 PRIMARY KEY (`cr_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_media` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -187,7 +187,7 @@ class Config extends \Ilch\Config\Install
                 `ending` VARCHAR(5) NOT NULL DEFAULT 0,
                 `datetime` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_imgs` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -198,7 +198,7 @@ class Config extends \Ilch\Config\Install
                 `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                 `visits` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -209,13 +209,13 @@ class Config extends \Ilch\Config\Install
                 `title` varchar(191) NOT NULL,
                 `description` varchar(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_trans` (
                 `field_id` INT(11) NOT NULL,
                 `locale` varchar(191) NOT NULL,
                 `name` varchar(191) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_tokens` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -224,13 +224,13 @@ class Config extends \Ilch\Config\Install
                 `userid` INT(11) UNSIGNED NOT NULL,
                 `expires` DATETIME,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_cookie_stolen` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `userid` INT(11) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers` (
                 `key` VARCHAR(45) NOT NULL,
@@ -239,7 +239,7 @@ class Config extends \Ilch\Config\Install
                 `module` varchar(191) DEFAULT NULL,
                 PRIMARY KEY (`key`),
                 UNIQUE KEY `key_UNIQUE` (`key`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers_modules` (
                 `module` VARCHAR(50) NOT NULL,
@@ -249,7 +249,7 @@ class Config extends \Ilch\Config\Install
                 `unlink_controller` varchar(191) DEFAULT NULL,
                 `unlink_action` varchar(191) DEFAULT NULL,
                 PRIMARY KEY (`module`, `provider`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_auth_providers` (
                 `user_id` INT(11) NOT NULL,
@@ -260,7 +260,7 @@ class Config extends \Ilch\Config\Install
                 `oauth_token_secret` varchar(191) DEFAULT NULL,
                 `created_at` VARCHAR(45) DEFAULT NULL,
                 PRIMARY KEY (`user_id`, `provider`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
                 (1, "Administrator"),
