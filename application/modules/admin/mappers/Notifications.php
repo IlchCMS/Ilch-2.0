@@ -6,9 +6,9 @@
 
 namespace Modules\Admin\Mappers;
 
-use Modules\Admin\Mappers\Notificationpermission as NotificationPermissionMapper;
+use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
 use Modules\Admin\Models\Notification as NotificationModel;
-use Modules\Admin\Models\Notificationpermission as NotificationPermissionModel;
+use Modules\Admin\Models\NotificationPermission as NotificationPermissionModel;
 use Ilch\Validation;
 
 class Notifications extends \Ilch\Mapper
