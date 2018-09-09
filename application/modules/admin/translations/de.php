@@ -328,6 +328,7 @@ return [
                                 Den Modulen kann die Erlaubnis Benachrichtigungen im Admincenter anzuzeigen entzogen werden.<br>
                                 Desweiteren kann begrenzt werden wie viele Benachrichtungen ein Modul im Admincenter anzeigen kann.
                                 Ein Limit von 0 ist gleichbedeutend mit kein Limit.',
+    'moduleUpdatesAvailable' => 'Modul Update(s) verfügbar (%s)',
 
     'menuEmails' => 'E-Mails',
     'hmenuEmails' => 'E-Mails',

@@ -328,6 +328,7 @@ return [
                                 The permission to issue a message to the admincenter can be revoked.<br>
                                 Further it is possible to limit the number of messages a module can issue to the admincenter.
                                 A limit of 0 is the same as no limit.',
+    'moduleUpdatesAvailable' => 'Module update(s) available (%s)',
 
     'menuEmails' => 'E-Mails',
     'hmenuEmails' => 'E-Mails',
