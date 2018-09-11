@@ -44,7 +44,7 @@ return [
     'gender' => 'Geschlecht',
     'genderMale' => 'männlich',
     'genderFemale' => 'weiblich',
-    'genderNonBinary' => 'andere',
+    'genderNonBinary' => 'divers',
     'birthday' => 'Geburtstag',
     'place' => 'Wohnort',
     'skill' => 'Erfahrung',
