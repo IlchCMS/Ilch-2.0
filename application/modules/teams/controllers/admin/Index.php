@@ -145,7 +145,7 @@ class Index extends \Ilch\Controller\Admin
 
                         $width = $imageInfo[0];
                         $height = $imageInfo[1];
-                        $newName = str_replace(' ','',$this->getRequest()->getPost('name'));
+                        $newName = str_replace(['\'', '\"', '?', '|', '*', '<', '>', ':',' '],'',$this->getRequest()->getPost('name'));
                         $image = $path.$newName.'.'.$endung;
 
                         if (move_uploaded_file($file_tmpe, $image)) {
