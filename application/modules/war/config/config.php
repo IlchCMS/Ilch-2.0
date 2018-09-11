@@ -63,6 +63,9 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti('DROP TABLE `[prefix]_war_accept`');
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'war_boxNextWarLimit'");
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'war_boxLastWarLimit'");
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            $this->db()->queryMulti("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'war/wars/index/'");
+        }
     }
 
     public function getInstallSql()
