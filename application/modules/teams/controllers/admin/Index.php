@@ -135,18 +135,20 @@ class Index extends \Ilch\Controller\Admin
                     $path = $this->getConfig()->get('teams_uploadpath');
                     $file = $_FILES['img']['name'];
                     $file_tmpe = $_FILES['img']['tmp_name'];
-                    $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                    $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                     $imageInfo = getimagesize($file_tmpe);
 
-                    if (in_array($endung, explode(' ', $allowedFiletypes)) && strpos($imageInfo['mime'], 'image/') === 0) {
+                    if (in_array($extension, explode(' ', $allowedFiletypes)) && strpos($imageInfo['mime'], 'image/') === 0) {
                         if ($this->getRequest()->getParam('id')) {
                             $teamsMapper->delImageById($this->getRequest()->getParam('id'));
                         }
 
                         $width = $imageInfo[0];
                         $height = $imageInfo[1];
-                        $newName = str_replace(' ','',$this->getRequest()->getPost('name'));
-                        $image = $path.$newName.'.'.$endung;
+                        do {
+                            $newName = str_replace('.', '', uniqid(rand(), true));
+                            $image = $path.$newName.'.'.$extension;
+                        } while (file_exists($image));
 
                         if (move_uploaded_file($file_tmpe, $image)) {
                             if ($width > $imageMaxWidth OR $height > $imageMaxHeight) {
