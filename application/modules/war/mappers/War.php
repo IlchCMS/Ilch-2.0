@@ -158,7 +158,7 @@ class War extends \Ilch\Mapper
             $entryArray = $this->db()->select()
                 ->fields(['w.id', 'w.time', 'w.show', 'w.read_access'])
                 ->from(['w' => 'war'])
-                ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT', ['g.tag'])
+                ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT', ['war_groups' => 'g.tag'])
                 ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT', ['war_enemy' => 'e.tag'])
                 ->where(['show' => 1, 'time >=' => $start, 'time <=' => $end])
                 ->execute()
