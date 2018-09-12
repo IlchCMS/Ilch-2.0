@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.3',
+        'version' => '1.4',
         'icon_small' => 'fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -137,6 +137,7 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
+            case "1.0":
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `status`;');
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access` VARCHAR(255) NOT NULL AFTER `show`;');
