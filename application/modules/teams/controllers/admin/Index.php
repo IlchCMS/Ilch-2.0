@@ -177,7 +177,6 @@ class Index extends \Ilch\Controller\Admin
 
                                     $thumb -> Thumbheight = $calcHeight;
                                     $thumb -> Thumbwidth = $calcWidth;
-
                                     $thumb -> Thumblocation = $path;
                                     $thumb -> Createthumb($image, 'file');
                                 }
