@@ -378,6 +378,15 @@ class Config extends \Ilch\Config\Install
                 // Change datatype of the column gender of the users table.
                 $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `gender` TINYINT(1) NOT NULL DEFAULT 0;');
                 break;
+            case "2.1.14":
+                // Convert all tables to new character and collate
+                $fileConfig = new \Ilch\Config\File();
+                $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+                $tables = $this->db()->query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = "' . $fileConfig->get('dbName') . '";');
+                foreach ($tables as $table) {
+                    $this->db()->query("ALTER TABLE " . $table['TABLE_NAME'] . " CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+                }
+                break;
         }
 
         return 'Update function executed.';
