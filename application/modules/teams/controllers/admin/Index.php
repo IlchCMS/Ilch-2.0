@@ -160,10 +160,25 @@ class Index extends \Ilch\Controller\Admin
                                     $this->addMessage('failedFilesize', 'warning');
                                 } else {
                                     $thumb = new \Thumb\Thumbnail();
-                                    $thumb -> Thumbsize = ($imageMaxWidth <= $imageMaxHeight) ? $imageMaxWidth : $imageMaxHeight;
-                                    $thumb -> Square = true;
+                                    $calcHeight = $height;
+                                    $calcWidth = $width;
+
+                                    // adjust height first to max height
+                                    if ($calcHeight > $imageMaxHeight) {
+                                        $calcWidth = $calcWidth / $calcHeight * $imageMaxHeight;
+                                        $calcHeight = $imageMaxHeight;
+                                    }
+
+                                    // now adjust width to max width
+                                    if ($calcWidth > $imageMaxWidth) {
+                                        $calcHeight = $calcHeight / $calcWidth * $imageMaxWidth;
+                                        $calcWidth = $imageMaxWidth;
+                                    }
+
+                                    $thumb -> Thumbheight = $calcHeight;
+                                    $thumb -> Thumbwidth = $calcWidth;
+
                                     $thumb -> Thumblocation = $path;
-                                    $thumb -> Cropimage = [3,1,50,50,50,50];
                                     $thumb -> Createthumb($image, 'file');
                                 }
                             }
