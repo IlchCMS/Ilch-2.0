@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.10',
+        'version' => '1.11',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -74,12 +74,12 @@ class Config extends \Ilch\Config\Install
                 `sort` INT(11) NOT NULL DEFAULT 0,
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
                 `type` TINYINT(1) NOT NULL,
-                `title` varchar(191) NOT NULL,
-                `description` varchar(191) NOT NULL,
-                `prefix` varchar(191) NOT NULL,
-                `read_access` varchar(191) NOT NULL,
-                `replay_access` varchar(191) NOT NULL,
-                `create_access` varchar(191) NOT NULL,
+                `title` VARCHAR(191) NOT NULL,
+                `description` VARCHAR(191) NOT NULL,
+                `prefix` VARCHAR(191) NOT NULL,
+                `read_access` VARCHAR(191) NOT NULL,
+                `replay_access` VARCHAR(191) NOT NULL,
+                `create_access` VARCHAR(191) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -87,7 +87,7 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `topic_id` INT(11) NOT NULL,
                 `topic_prefix` INT(11) NOT NULL DEFAULT 0,
-                `topic_title` varchar(191) NOT NULL,
+                `topic_title` VARCHAR(191) NOT NULL,
                 `visits` INT(11) NOT NULL DEFAULT 0,
                 `creator_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
@@ -188,6 +188,10 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig->set('forum_floodInterval', '0');
                 $databaseConfig->set('forum_excludeFloodProtection', '1');
+            case "1.10":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_items` MODIFY COLUMN `title` `description` `prefix` `read_access` `replay_access` `create_access` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` MODIFY COLUMN `topic_title` VARCHAR(191);');
         }
     }
 }

@@ -38,7 +38,7 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_comments` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `key` varchar(191) NOT NULL,
+                  `key` VARCHAR(191) NOT NULL,
                   `text` MEDIUMTEXT NOT NULL,
                   `date_created` DATETIME NOT NULL,
                   `user_id` INT(11) NOT NULL,

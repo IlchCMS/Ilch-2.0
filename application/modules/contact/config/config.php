@@ -40,8 +40,8 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_contact_receivers` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `email` varchar(191) NOT NULL,
-                  `name` varchar(191) NOT NULL,
+                  `email` VARCHAR(191) NOT NULL,
+                  `name` VARCHAR(191) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }

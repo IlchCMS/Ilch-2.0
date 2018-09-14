@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'training',
-        'version' => '1.2',
+        'version' => '1.3',
         'icon_small' => 'fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -61,7 +61,7 @@ class Config extends \Ilch\Config\Install
                 `game_server_pw` VARCHAR(100) NOT NULL,
                 `text` MEDIUMTEXT NOT NULL,
                 `show` TINYINT(1) NOT NULL DEFAULT 0,
-                `read_access` varchar(191) NOT NULL,
+                `read_access` VARCHAR(191) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
@@ -82,7 +82,7 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_training` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `text`;');
-                $this->db()->query('ALTER TABLE `[prefix]_training` ADD `read_access` varchar(191) NOT NULL AFTER `show`;');
+                $this->db()->query('ALTER TABLE `[prefix]_training` ADD `read_access` VARCHAR(191) NOT NULL AFTER `show`;');
             case "1.1":
                 // On installation of Ilch adding this entry failed. Reinstalling or a later install of this module adds the entry.
                 // Add entry on update. Instead of checking if the entry exists, delete entry/entries and add it again.
@@ -90,6 +90,9 @@ class Config extends \Ilch\Config\Install
                     $this->db()->query("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'training/trainings/index/'");
                     $this->db()->query('INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("training/trainings/index/");');
                 }
+            case "1.2":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_training` MODIFY COLUMN `read_access` VARCHAR(191);');
         }
     }
 }

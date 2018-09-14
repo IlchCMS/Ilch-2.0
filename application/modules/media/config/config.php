@@ -10,7 +10,6 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'media',
-        'version' => '1.0',
         'icon_small' => 'fa-th',
         'system_module' => true,
         'languages' => [
@@ -42,9 +41,9 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_media` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `name` varchar(191) NOT NULL DEFAULT 0,
-                  `url` varchar(191) NOT NULL DEFAULT 0,
-                  `url_thumb` varchar(191) NOT NULL DEFAULT 0,
+                  `name` VARCHAR(191) NOT NULL DEFAULT 0,
+                  `url` VARCHAR(191) NOT NULL DEFAULT 0,
+                  `url_thumb` VARCHAR(191) NOT NULL DEFAULT 0,
                   `ending` VARCHAR(5) NOT NULL DEFAULT 0,
                   `datetime` DATETIME NOT NULL,
                   `cat_name` VARCHAR(100) NOT NULL,

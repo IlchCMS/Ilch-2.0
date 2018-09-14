@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'linkus',
-        'version' => '1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-link',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -49,13 +49,17 @@ class Config extends \Ilch\Config\Install
         return "CREATE TABLE IF NOT EXISTS `[prefix]_linkus` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `title` VARCHAR(100) NOT NULL,
-                  `banner` varchar(191) NOT NULL,
+                  `banner` VARCHAR(191) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
     }
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_linkus` MODIFY COLUMN `banner` VARCHAR(191);');
+        }
     }
 }

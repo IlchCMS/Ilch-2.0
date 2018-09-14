@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.9',
+        'version' => '1.10',
         'icon_small' => 'fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -55,10 +55,10 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_teams` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `name` varchar(191) NOT NULL,
-                `img` varchar(191) NOT NULL,
-                `leader` varchar(191) NOT NULL,
-                `coLeader` varchar(191) NULL DEFAULT NULL,
+                `name` VARCHAR(191) NOT NULL,
+                `img` VARCHAR(191) NOT NULL,
+                `leader` VARCHAR(191) NOT NULL,
+                `coLeader` VARCHAR(191) NULL DEFAULT NULL,
                 `groupId` INT(11) NOT NULL,
                 `optShow` TINYINT(1) NOT NULL,
                 `optIn` TINYINT(1) NOT NULL,
@@ -69,14 +69,14 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_teams_joins` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `userId` INT(11) NULL DEFAULT NULL,
-                `name` varchar(191) NOT NULL,
-                `email` varchar(191) NOT NULL,
-                `place` varchar(191) NOT NULL,
+                `name` VARCHAR(191) NOT NULL,
+                `email` VARCHAR(191) NOT NULL,
+                `place` VARCHAR(191) NOT NULL,
                 `birthday` DATE NOT NULL,
                 `gender` INT(1) NOT NULL,
                 `skill` INT(1) NOT NULL,
                 `teamId` INT(11) NOT NULL,
-                `locale` varchar(191) NOT NULL,
+                `locale` VARCHAR(191) NOT NULL,
                 `dateCreated` DATETIME NOT NULL,
                 `text` LONGTEXT NOT NULL,
                 `decision` TINYINT(1) NOT NULL,
@@ -144,6 +144,15 @@ class Config extends \Ilch\Config\Install
             case "1.2":
             case "1.3":
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `optShow` TINYINT(1) NOT NULL AFTER `groupId`;');
+            case "1.4":
+            case "1.5":
+            case "1.6":
+            case "1.7":
+            case "1.8":
+            case "1.9":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY COLUMN `name` `img` `leader` `coLeader` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` MODIFY COLUMN `name` `email` `place` `locale` VARCHAR(191);');
         }
     }
 }

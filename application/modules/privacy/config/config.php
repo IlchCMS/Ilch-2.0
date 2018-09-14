@@ -33,9 +33,9 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_privacy` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `title` varchar(191) NOT NULL,
-                  `urltitle` varchar(191) NOT NULL,
-                  `url` varchar(191) NOT NULL,
+                  `title` VARCHAR(191) NOT NULL,
+                  `urltitle` VARCHAR(191) NOT NULL,
+                  `url` VARCHAR(191) NOT NULL,
                   `text` MEDIUMTEXT NOT NULL,
                   `show` TINYINT(1) NOT NULL,
                   PRIMARY KEY (`id`)

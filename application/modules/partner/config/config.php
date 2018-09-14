@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'partner',
-        'version' => '1.3',
+        'version' => '1.4',
         'icon_small' => 'fa-handshake-o',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -64,8 +64,8 @@ class Config extends \Ilch\Config\Install
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `pos` INT(11) NOT NULL DEFAULT 0,
             `name` VARCHAR(100) NOT NULL,
-            `banner` varchar(191) NOT NULL,
-            `link` varchar(191) NOT NULL,
+            `banner` VARCHAR(191) NOT NULL,
+            `link` VARCHAR(191) NOT NULL,
             `target` TINYINT(1) NOT NULL DEFAULT 0,
             `setfree` TINYINT(1) NOT NULL DEFAULT 0,
             PRIMARY KEY (`id`)
@@ -84,6 +84,9 @@ class Config extends \Ilch\Config\Install
             case "1.1":
             case "1.2":
                 $this->db()->query('ALTER TABLE `[prefix]_partners` ADD `target` TINYINT(1) NOT NULL DEFAULT 0 AFTER `link`;');
+            case "1.3":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_partners` MODIFY COLUMN `banner` `link` VARCHAR(191);');
         }
     }
 }

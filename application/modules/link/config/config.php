@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'link',
-        'version' => '1.2',
+        'version' => '1.4',
         'icon_small' => 'fa-external-link',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -46,9 +46,9 @@ class Config extends \Ilch\Config\Install
                   `cat_id` INT(11) NULL DEFAULT 0,
                   `pos` INT(11) NOT NULL DEFAULT 0,
                   `name` VARCHAR(100) NOT NULL,
-                  `desc` varchar(191) NOT NULL,
-                  `banner` varchar(191) NOT NULL,
-                  `link` varchar(191) NOT NULL,
+                  `desc` VARCHAR(191) NOT NULL,
+                  `banner` VARCHAR(191) NOT NULL,
+                  `link` VARCHAR(191) NOT NULL,
                   `hits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -58,7 +58,7 @@ class Config extends \Ilch\Config\Install
                   `parent_id` INT(11) NULL DEFAULT 0,
                   `pos` INT(11) NOT NULL DEFAULT 0,
                   `name` VARCHAR(100) NOT NULL,
-                  `desc` varchar(191) NOT NULL,
+                  `desc` VARCHAR(191) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -68,6 +68,14 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+            case "1.1":
+            case "1.2":
+            case "1.3":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_links` MODIFY COLUMN `desc` `banner` `link` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_link_cats` MODIFY COLUMN `desc` VARCHAR(191);');
+        }
     }
 }

@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'downloads',
-        'version' => '1.3',
+        'version' => '1.4',
         'icon_small' => 'fa-arrow-circle-o-down',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -44,9 +44,9 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `file_id` VARCHAR(150) NOT NULL,
-                  `file_title` varchar(191) NOT NULL DEFAULT \'\',
-                  `file_description` varchar(191) NOT NULL DEFAULT \'\',
-                  `file_image` varchar(191) NOT NULL DEFAULT \'\',
+                  `file_title` VARCHAR(191) NOT NULL DEFAULT \'\',
+                  `file_description` VARCHAR(191) NOT NULL DEFAULT \'\',
+                  `file_image` VARCHAR(191) NOT NULL DEFAULT \'\',
                   `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
@@ -58,15 +58,23 @@ class Config extends \Ilch\Config\Install
                   `sort` INT(11) NULL DEFAULT 0,
                   `parent_id` INT(11) NULL DEFAULT 0,
                   `type` INT(11) NOT NULL,
-                  `title` varchar(191) NOT NULL,
-                  `description` varchar(191) NOT NULL,
+                  `title` VARCHAR(191) NOT NULL,
+                  `description` VARCHAR(191) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+            case "1.1":
+            case "1.2":
+            case "1.3":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_files` MODIFY COLUMN `file_title` `file_description` `file_image` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_items` MODIFY COLUMN `title` `description` VARCHAR(191);');
+        }
     }
 }
 

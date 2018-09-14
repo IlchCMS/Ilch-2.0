@@ -57,12 +57,12 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_visits_online` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `user_id` INT(11) NOT NULL DEFAULT 0,
-                  `site` varchar(191) NOT NULL,
-                  `os` varchar(191) NOT NULL,
-                  `os_version` varchar(191) NOT NULL,
-                  `browser` varchar(191) NOT NULL,
-                  `browser_version` varchar(191) NOT NULL,
-                  `ip_address` varchar(191) NOT NULL,
+                  `site` VARCHAR(191) NOT NULL,
+                  `os` VARCHAR(191) NOT NULL,
+                  `os_version` VARCHAR(191) NOT NULL,
+                  `browser` VARCHAR(191) NOT NULL,
+                  `browser_version` VARCHAR(191) NOT NULL,
+                  `ip_address` VARCHAR(191) NOT NULL,
                   `lang` VARCHAR(11) NOT NULL,
                   `date_last_activity` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
@@ -70,12 +70,12 @@ class Config extends \Ilch\Config\Install
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_visits_stats` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `os` varchar(191) NOT NULL,
-                  `os_version` varchar(191) NOT NULL,
-                  `browser` varchar(191) NOT NULL,
-                  `browser_version` varchar(191) NOT NULL,
-                  `ip_address` varchar(191) NOT NULL,
-                  `referer` varchar(191) NOT NULL,
+                  `os` VARCHAR(191) NOT NULL,
+                  `os_version` VARCHAR(191) NOT NULL,
+                  `browser` VARCHAR(191) NOT NULL,
+                  `browser_version` VARCHAR(191) NOT NULL,
+                  `ip_address` VARCHAR(191) NOT NULL,
+                  `referer` VARCHAR(191) NOT NULL,
                   `lang` VARCHAR(11) NOT NULL,
                   `date` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
