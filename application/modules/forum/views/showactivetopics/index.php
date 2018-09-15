@@ -56,7 +56,7 @@ if ($this->getUser()) {
                                     topic-read
                                 <?php endif; ?>
                             ">
-                                <dt title="<?=$firstPost->getText() ?>">
+                                <dt>
                                     <?php
                                     if ($forumPrefix->getPrefix() != '' AND $topic->getTopicPrefix() > 0) {
                                         $prefix = explode(',', $forumPrefix->getPrefix());

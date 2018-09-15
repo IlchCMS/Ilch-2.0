@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <?=nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))) ?>
+            <?=$this->getHtmlFromBBCode($entry->getText()) ?>
         </div>
     </div>
 <?php endforeach; ?>

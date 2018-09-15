@@ -6,13 +6,54 @@
 
 namespace Modules\Forum\Controllers\Admin;
 
-use Modules\Forum\Controllers\Admin\Base as BaseController;
 use Modules\Forum\Mappers\Rank as RankMapper;
 use Modules\Forum\Models\Rank as RankModel;
 use Ilch\Validation;
 
-class Ranks extends BaseController
+class Ranks extends \Ilch\Controller\Admin
 {
+    public function init()
+    {
+        $items = [
+            [
+                'name' => 'forum',
+                'active' => false,
+                'icon' => 'fa fa-th',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuRanks',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index']),
+                [
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'treat'])
+                ]
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ]
+        ];
+
+        if ($this->getRequest()->getActionName() == 'treat') {
+            $items[1][0]['active'] = true;
+        } else {
+            $items[1]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'forum',
+            $items
+        );
+    }
+
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()

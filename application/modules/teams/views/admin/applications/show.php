@@ -99,7 +99,7 @@ $teamsMapper = $this->get('teamsMapper');
                 <?=$this->getTrans('text') ?>:
             </label>
             <div class="col-lg-12">
-                <?=nl2br($this->getHtmlFromBBCode($join->getText())) ?>
+                <?=$this->getHtmlFromBBCode($join->getText()) ?>
             </div>
         </div>
 
