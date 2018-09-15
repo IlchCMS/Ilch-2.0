@@ -3,14 +3,16 @@
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
+var basePath = CKEDITOR.basePath;
+basePath = basePath.substr(0, basePath.indexOf("vendor/ckeditor/"));
+
+CKEDITOR.plugins.addExternal('ilchmedia', basePath+'application/modules/media/static/js/ilchmedia/');
+
 CKEDITOR.editorConfig = function( config ) {
-    if (typeof ilchMediaPlugin !== "undefined" && typeof ilchPsPlugin !== "undefined") {
-        CKEDITOR.plugins.addExternal('ilchmedia', ilchMediaPlugin);
+    if (typeof ilchPsPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal('ilchps', ilchPsPlugin);
         config.extraPlugins = "justify,font,colorbutton,colordialog,ilchmedia,ilchps";
-    }
-    else if (typeof ilchMediaPlugin !== "undefined") {
-        CKEDITOR.plugins.addExternal('ilchmedia', ilchMediaPlugin);
+    } else {
         config.extraPlugins = "justify,font,colorbutton,colordialog,ilchmedia";
     }
 
