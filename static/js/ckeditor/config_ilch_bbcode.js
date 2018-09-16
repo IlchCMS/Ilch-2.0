@@ -23,7 +23,4 @@ CKEDITOR.editorConfig = function (config) {
     ];
 
     config.removeDialogTabs = 'link:advanced';
-    config.enterMode = CKEDITOR.ENTER_BR;
-    config.shiftEnterMode = CKEDITOR.ENTER_BR;
-    config.autoParagraph = false;
 };
