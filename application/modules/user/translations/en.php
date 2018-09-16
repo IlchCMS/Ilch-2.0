@@ -84,7 +84,6 @@ return [
     'contact' => 'Contact',
     'profile' => 'Profile',
     'privateMessage' => 'Private Message',
-    'newMessage' => 'New message',
 
     'menuRegist' => 'Registration',
     'menuConfirm' => 'Confirm',
