@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'awards',
-        'version' => '1.4',
+        'version' => '1.5',
         'icon_small' => 'fa-trophy',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -44,20 +44,25 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `date` DATE NOT NULL,
                   `rank` INT(11) NOT NULL,
-                  `image` VARCHAR(255) NOT NULL,
+                  `image` VARCHAR(191) NOT NULL,
                   `event` VARCHAR(100) NOT NULL,
                   `url` VARCHAR(150) NOT NULL,
                   `ut_id` INT(11) NOT NULL,
                   `typ` TINYINT(1) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
             case "1.1":
-                $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` VARCHAR(255) NOT NULL AFTER `rank`;');
+                $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` VARCHAR(191) NOT NULL AFTER `rank`;');
+            case "1.2":
+            case "1.3":
+            case "1.4":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_awards` MODIFY COLUMN `image` VARCHAR(191);');
         }
     }
 }

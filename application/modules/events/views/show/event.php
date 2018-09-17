@@ -205,7 +205,7 @@ if (!empty($event)) {
                 <strong><?=$this->getTrans('description') ?></strong>
             </div>
             <div class="eventBoxContent">
-                <?=nl2br($this->getHtmlFromBBCode($this->escape($event->getText()))) ?>
+                <?=$this->getHtmlFromBBCode($event->getText()) ?>
             </div>
         </div>
 

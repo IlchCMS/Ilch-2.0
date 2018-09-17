@@ -7,12 +7,41 @@
 namespace Modules\Forum\Controllers\Admin;
 
 use Modules\Forum\Mappers\Forum as ForumMapper;
-use Modules\Forum\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
 
-class Index extends BaseController
+class Index extends \Ilch\Controller\Admin
 {
+    public function init()
+    {
+        $items = [
+            [
+                'name' => 'forum',
+                'active' => true,
+                'icon' => 'fa fa-th',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuRanks',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ]
+        ];
+
+        $this->getLayout()->addMenu
+        (
+            'forum',
+            $items
+        );
+    }
+
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()

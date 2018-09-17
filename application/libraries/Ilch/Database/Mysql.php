@@ -98,7 +98,7 @@ class Mysql
             throw new \RuntimeException('Cannot connect to database.');
         }
 
-        $this->conn->set_charset('utf8');
+        $this->conn->set_charset('utf8mb4');
 
         $mode = "SET SESSION sql_mode = 'ONLY_FULL_GROUP_BY'";
         mysqli_query($this->conn, $mode);

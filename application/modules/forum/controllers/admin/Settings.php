@@ -6,11 +6,40 @@
 
 namespace Modules\Forum\Controllers\Admin;
 
-use Modules\Forum\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\Group as GroupMapper;
 
-class Settings extends BaseController
+class Settings extends \Ilch\Controller\Admin
 {
+    public function init()
+    {
+        $items = [
+            [
+                'name' => 'forum',
+                'active' => false,
+                'icon' => 'fa fa-th',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuRanks',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => true,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ]
+        ];
+
+        $this->getLayout()->addMenu
+        (
+            'forum',
+            $items
+        );
+    }
+
     public function indexAction()
     {
         $groupMapper = new GroupMapper();

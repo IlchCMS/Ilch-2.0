@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'version' => '1.1',
+        'version' => '1.2',
         'icon_small' => 'fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -49,15 +49,20 @@ class Config extends \Ilch\Config\Install
                   `text` MEDIUMTEXT NOT NULL,
                   `datetime` DATETIME NOT NULL,
                   `homepage` VARCHAR(32) NOT NULL,
-                  `name` VARCHAR(255) NOT NULL,
+                  `name` VARCHAR(191) NOT NULL,
                   `setfree` TINYINT(1) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+            case "1.1":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_gbook` MODIFY COLUMN `name` VARCHAR(191);');
+        }
     }
 }
 

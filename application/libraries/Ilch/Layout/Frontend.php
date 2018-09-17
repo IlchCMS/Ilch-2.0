@@ -281,11 +281,7 @@ class Frontend extends Base
      */
     public function getFooter()
     {
-        $html = '<script>
-            var ilchSmileysPlugin = "'.$this->getBaseUrl('application/modules/smilies/static/js/ilchsmileys/').'";
-            var ilchYoutubePlugin = "'.$this->getBaseUrl('application/modules/media/static/js/ilchyoutube/').'";
-            var ilchSmileysPluginUrl = "'.$this->getUrl(['module' => 'smilies', 'controller' => 'iframe', 'action' => 'smilies']).'";
-        </script>';
+        $html = '';
 
         if (\Ilch\DebugBar::isInitialized()) {
             $html .= \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->render();

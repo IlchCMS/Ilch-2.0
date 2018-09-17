@@ -1,8 +1,6 @@
 .htaccess
 application/config.php
 
-application/modules/smilies/static/img
-
 /nbproject/
 .idea
 /.vagrant

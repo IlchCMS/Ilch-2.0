@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.2',
+        'version' => '1.3',
         'icon_small' => 'fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -50,15 +50,15 @@ class Config extends \Ilch\Config\Install
                   `text` MEDIUMTEXT DEFAULT NULL,
                   `color` VARCHAR(7) DEFAULT NULL,
                   `period_day` INT(1) DEFAULT NULL,
-                  `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\',
+                  `read_access` VARCHAR(191) NOT NULL DEFAULT \'1,2,3\',
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_calendar_events` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `url` VARCHAR(255) NOT NULL,
+                  `url` VARCHAR(191) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("calendar/events/index/");';
     }
@@ -67,9 +67,13 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'1,2,3\';');
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `period_day` INT(1) DEFAULT NULL AFTER `color`;');
+            case "1.2":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` MODIFY COLUMN `read_access` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_calendar_events` MODIFY COLUMN `url` VARCHAR(191);');
         }
     }
 }

@@ -62,61 +62,61 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_config` (
-                `key` VARCHAR(255) NOT NULL,
+                `key` VARCHAR(191) NOT NULL,
                 `value` TEXT NOT NULL,
                 `autoload` TINYINT(1) NOT NULL,
                 UNIQUE KEY `key` (`key`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_emails` (
-                `moduleKey` VARCHAR(255) NOT NULL,
-                `type` VARCHAR(255) NOT NULL,
-                `desc` VARCHAR(255) NOT NULL,
+                `moduleKey` VARCHAR(191) NOT NULL,
+                `type` VARCHAR(191) NOT NULL,
+                `desc` VARCHAR(191) NOT NULL,
                 `text` TEXT NOT NULL,
-                `locale` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `locale` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
-                `key` VARCHAR(255) NOT NULL,
+                `key` VARCHAR(191) NOT NULL,
                 `system` TINYINT(1) NOT NULL DEFAULT 0,
                 `layout` TINYINT(1) NOT NULL DEFAULT 0,
                 `hide_menu` TINYINT(1) NOT NULL DEFAULT 0,
-                `author` VARCHAR(255) NULL DEFAULT NULL,
-                `version` VARCHAR(255) NULL DEFAULT NULL,
-                `link` VARCHAR(255) NULL DEFAULT NULL,
-                `icon_small` VARCHAR(255) NOT NULL,
+                `author` VARCHAR(191) NULL DEFAULT NULL,
+                `version` VARCHAR(191) NULL DEFAULT NULL,
+                `link` VARCHAR(191) NULL DEFAULT NULL,
+                `icon_small` VARCHAR(191) NOT NULL,
                 UNIQUE KEY `key` (`key`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_content` (
-                `key` VARCHAR(255) NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `description` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `key` VARCHAR(191) NOT NULL,
+                `locale` VARCHAR(191) NOT NULL,
+                `description` VARCHAR(191) NOT NULL,
+                `name` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_php_extensions` (
-                `key` VARCHAR(255) NOT NULL,
-                `extension` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `key` VARCHAR(191) NOT NULL,
+                `extension` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_folderrights` (
-                `key` VARCHAR(255) NOT NULL,
-                `folder` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `key` VARCHAR(191) NOT NULL,
+                `folder` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_boxes_content` (
-                `key` VARCHAR(255) NOT NULL,
-                `module` VARCHAR(255) NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `key` VARCHAR(191) NOT NULL,
+                `module` VARCHAR(191) NOT NULL,
+                `locale` VARCHAR(191) NOT NULL,
+                `name` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_menu` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `title` VARCHAR(255) NOT NULL,
+                `title` VARCHAR(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_menu_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -125,80 +125,80 @@ class Config extends \Ilch\Config\Install
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
                 `page_id` INT(11) NOT NULL DEFAULT 0,
                 `box_id` INT(11) NOT NULL DEFAULT 0,
-                `box_key` VARCHAR(255) NULL DEFAULT NULL,
+                `box_key` VARCHAR(191) NULL DEFAULT NULL,
                 `type` TINYINT(1) NOT NULL,
-                `title` VARCHAR(255) NOT NULL,
-                `href` VARCHAR(255) NULL DEFAULT NULL,
-                `module_key` VARCHAR(255) NULL DEFAULT NULL,
-                `access` VARCHAR(255) NOT NULL DEFAULT "",
+                `title` VARCHAR(191) NOT NULL,
+                `href` VARCHAR(191) NULL DEFAULT NULL,
+                `module_key` VARCHAR(191) NULL DEFAULT NULL,
+                `access` VARCHAR(191) NOT NULL DEFAULT "",
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_boxes` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `date_created` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_boxes_content` (
                 `box_id` INT(11) NOT NULL,
                 `content` MEDIUMTEXT NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `title` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `locale` VARCHAR(191) NOT NULL,
+                `title` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_pages` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `date_created` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_pages_content` (
                 `page_id` INT(11) NOT NULL,
                 `content` MEDIUMTEXT NOT NULL,
                 `description` MEDIUMTEXT NOT NULL,
                 `keywords` MEDIUMTEXT NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `title` VARCHAR(255) NOT NULL,
-                `perma` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `locale` VARCHAR(191) NOT NULL,
+                `title` VARCHAR(191) NOT NULL,
+                `perma` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_backup` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
+                `name` VARCHAR(191) NOT NULL,
                 `date` DATETIME NOT NULL,
             PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_logs` (
-                `user_id` VARCHAR(255) NOT NULL,
+                `user_id` VARCHAR(191) NOT NULL,
                 `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                `info` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `info` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_notifications` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                `module` VARCHAR(255) NOT NULL,
-                `message` VARCHAR(255) NOT NULL,
-                `url` VARCHAR(255) NOT NULL,
-                `type` VARCHAR(255) NOT NULL,
+                `module` VARCHAR(191) NOT NULL,
+                `message` VARCHAR(191) NOT NULL,
+                `url` VARCHAR(191) NOT NULL,
+                `type` VARCHAR(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_notifications_permission` (
-                `module` VARCHAR(255) NOT NULL,
+                `module` VARCHAR(191) NOT NULL,
                 `granted` TINYINT(1) NOT NULL,
                 `limit` TINYINT(1) UNSIGNED NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_updateservers` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `url` VARCHAR(255) NOT NULL,
-                `operator` VARCHAR(255) NOT NULL,
-                `country` VARCHAR(255) NOT NULL,
+                `url` VARCHAR(191) NOT NULL,
+                `operator` VARCHAR(191) NOT NULL,
+                `country` VARCHAR(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://ilch2.de/development/updateserver/stable/", "corian (ilch-Team)", "Germany");
             INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://www.blackcoder.de/ilch-us/stable/", "blackcoder (ilch-Team)", "Germany");';
@@ -216,7 +216,7 @@ class Config extends \Ilch\Config\Install
                 // Add new top column for the top article feature
                 // Add new read_access column to restrict who can read an article
                 $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `top` TINYINT(1) NOT NULL DEFAULT 0;');
-                $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'1,2,3\';');
 
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
@@ -233,15 +233,15 @@ class Config extends \Ilch\Config\Install
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
             case "2.1.3":
-                $this->db()->query('ALTER TABLE `[prefix]_menu_items` MODIFY COLUMN `access` VARCHAR(255) NOT NULL DEFAULT "";');
-                $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `locale` VARCHAR(255) NOT NULL DEFAULT "";');
+                $this->db()->query('ALTER TABLE `[prefix]_menu_items` MODIFY COLUMN `access` VARCHAR(191) NOT NULL DEFAULT "";');
+                $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `locale` VARCHAR(191) NOT NULL DEFAULT "";');
                 break;
             case "2.1.4":
                 // Add new columns for user profile
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `steam` VARCHAR(255) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `twitch` VARCHAR(255) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `teamspeak` VARCHAR(255) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `discord` VARCHAR(255) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `steam` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `twitch` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `teamspeak` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `discord` VARCHAR(191) NOT NULL;');
                 break;
             case "2.1.5":
                 removeDir(ROOT_PATH.'/vendor');
@@ -373,10 +373,58 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.13":
                 // Add new needed column "type" for the notifications.
-                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications` ADD COLUMN `type` VARCHAR(255) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications` ADD COLUMN `type` VARCHAR(191) NOT NULL;');
 
                 // Change datatype of the column gender of the users table.
                 $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `gender` TINYINT(1) NOT NULL DEFAULT 0;');
+                break;
+            case "2.1.14":
+                // Convert all tables to new character and collate
+                $fileConfig = new \Ilch\Config\File();
+                $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+                $tables = $this->db()->query('SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = "' . $fileConfig->get('dbName') . '";');
+                foreach ($tables as $table) {
+                    $this->db()->query("ALTER TABLE " . $table['TABLE_NAME'] . " CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+                }
+
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_config` MODIFY COLUMN `key` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_emails` MODIFY COLUMN `moduleKey` `type` `desc` `locale` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_modules` MODIFY COLUMN `key` `author` `version` `link` `icon_small` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_modules_content` MODIFY COLUMN `key` `locale` `description` `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_modules_php_extensions` MODIFY COLUMN `key` `extension` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_modules_folderrights` MODIFY COLUMN `key` `folder` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_modules_boxes_content` MODIFY COLUMN `key` `module` `locale` `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_menu` MODIFY COLUMN `title` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_menu_items` MODIFY COLUMN `box_key` `title` `href` `module_key` `access` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_boxes_content` MODIFY COLUMN `locale` `title` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_pages` MODIFY COLUMN `locale` `title` `perma` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_backup` MODIFY COLUMN `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_logs` MODIFY COLUMN `user_id` `info` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications` MODIFY COLUMN `module` `message` `url` `type` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications_permission` MODIFY COLUMN `module` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_admin_updateservers` MODIFY COLUMN `url` `operator` `country` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_articles` MODIFY COLUMN `cat_id` `read_access` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_articles_content` MODIFY COLUMN `keywords` `locale` `title` `teaser` `perma` `img` `img_source` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_comments` MODIFY COLUMN `key` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_contact_receivers` MODIFY COLUMN `email` `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_media` MODIFY COLUMN `name` `url` `url_thumb` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_privacy` MODIFY COLUMN `title` `urltitle` `url` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_visits_online` MODIFY COLUMN `site` `os` `os_version` `browser` `browser_version` `ip_address` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_visits_stats` MODIFY COLUMN `os` `os_version` `browser` `browser_version` `ip_address` `referer` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `name` `password` `email` `first_name` `last_name` `homepage` `facebook` `twitter` `google` `steam` `twitch` `teamspeak` `discord` `city` `avatar` `signature` `locale` `confirmed_code` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_groups` MODIFY COLUMN `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_groups_access` MODIFY COLUMN `module_key` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_content` MODIFY COLUMN `value` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` MODIFY COLUMN `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_user_menu` MODIFY COLUMN `key` `icon` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_user_menu_settings_links` MODIFY COLUMN `key` `locale` `description` `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_users_dialog` MODIFY COLUMN `image_title` `image_description` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_users_gallery_items` MODIFY COLUMN `title` `description` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_trans` MODIFY COLUMN `locale` `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_auth_providers` MODIFY COLUMN `name` `icon` `module` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_auth_providers_modules` MODIFY COLUMN `auth_controller` `auth_action` `unlink_controller` `unlink_action` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_users_auth_providers` MODIFY COLUMN `identifier` `screen_name` `oauth_token` `oauth_token_secret` VARCHAR(191);');
                 break;
         }
 

@@ -108,5 +108,3 @@ if ($this->getUser()) {
     exit;
     ?>
 <?php endif; ?>
-
-<?=$this->getDialog('smiliesModal', $this->getTrans('smilies'), '<iframe frameborder="0"></iframe>'); ?>

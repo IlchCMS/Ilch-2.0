@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'rule',
-        'version' => '1.2',
+        'version' => '1.3',
         'icon_small' => 'fa-gavel',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -42,12 +42,12 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_rules` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
-            `paragraph` VARCHAR(255) NOT NULL,
+            `paragraph` VARCHAR(191) NOT NULL,
             `title` VARCHAR(100) NOT NULL,
             `text` MEDIUMTEXT NOT NULL,
             `position` INT(11) NOT NULL DEFAULT 0,
             PRIMARY KEY (`id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate($installedVersion)
@@ -56,7 +56,10 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_rules` ADD `position` INT(11) NOT NULL DEFAULT 0;');
             case "1.1":
-                $this->db()->query('ALTER TABLE `[prefix]_rules` MODIFY COLUMN `paragraph` VARCHAR(255) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_rules` MODIFY COLUMN `paragraph` VARCHAR(191) NOT NULL;');
+            case "1.2":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_rules` MODIFY COLUMN `paragraph` VARCHAR(191);');
         }
     }
 }

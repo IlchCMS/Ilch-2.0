@@ -80,85 +80,85 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_groups` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
+                `name` VARCHAR(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
-                `password` VARCHAR(255) NOT NULL,
-                `email` VARCHAR(255) NOT NULL,
-                `first_name` VARCHAR(255) NOT NULL DEFAULT "",
-                `last_name` VARCHAR(255) NOT NULL DEFAULT "",
+                `name` VARCHAR(191) NOT NULL,
+                `password` VARCHAR(191) NOT NULL,
+                `email` VARCHAR(191) NOT NULL,
+                `first_name` VARCHAR(191) NOT NULL DEFAULT "",
+                `last_name` VARCHAR(191) NOT NULL DEFAULT "",
                 `gender` TINYINT(1) NOT NULL DEFAULT 0,
-                `homepage` VARCHAR(255) NOT NULL DEFAULT "",
-                `facebook` VARCHAR(255) NOT NULL DEFAULT "",
-                `twitter` VARCHAR(255) NOT NULL DEFAULT "",
-                `google` VARCHAR(255) NOT NULL DEFAULT "",
-                `steam` VARCHAR(255) NOT NULL DEFAULT "",
-                `twitch` VARCHAR(255) NOT NULL DEFAULT "",
-                `teamspeak` VARCHAR(255) NOT NULL DEFAULT "",
-                `discord` VARCHAR(255) NOT NULL DEFAULT "",
-                `city` VARCHAR(255) NOT NULL DEFAULT "",
+                `homepage` VARCHAR(191) NOT NULL DEFAULT "",
+                `facebook` VARCHAR(191) NOT NULL DEFAULT "",
+                `twitter` VARCHAR(191) NOT NULL DEFAULT "",
+                `google` VARCHAR(191) NOT NULL DEFAULT "",
+                `steam` VARCHAR(191) NOT NULL DEFAULT "",
+                `twitch` VARCHAR(191) NOT NULL DEFAULT "",
+                `teamspeak` VARCHAR(191) NOT NULL DEFAULT "",
+                `discord` VARCHAR(191) NOT NULL DEFAULT "",
+                `city` VARCHAR(191) NOT NULL DEFAULT "",
                 `birthday` DATE NULL DEFAULT NULL,
-                `avatar` VARCHAR(255) NOT NULL DEFAULT "",
-                `signature` VARCHAR(255) NOT NULL DEFAULT "",
-                `locale` VARCHAR(255) NOT NULL DEFAULT "",
+                `avatar` VARCHAR(191) NOT NULL DEFAULT "",
+                `signature` VARCHAR(191) NOT NULL DEFAULT "",
+                `locale` VARCHAR(191) NOT NULL DEFAULT "",
                 `opt_mail` TINYINT(1) DEFAULT 1,
                 `opt_gallery` TINYINT(1) DEFAULT 1,
                 `date_created` DATETIME NOT NULL,
                 `date_confirmed` DATETIME NULL DEFAULT NULL,
                 `date_last_activity` DATETIME NULL DEFAULT NULL,
                 `confirmed` TINYINT(1) DEFAULT 1,
-                `confirmed_code` VARCHAR(255) NULL DEFAULT NULL,
+                `confirmed_code` VARCHAR(191) NULL DEFAULT NULL,
                 `selector` char(18),
                 `locked` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
                 `user_id` INT(11) NOT NULL,
                 `group_id` INT(11) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
                 `group_id` INT(11) NOT NULL,
                 `page_id` INT(11) DEFAULT 0,
-                `module_key` VARCHAR(255) DEFAULT 0,
+                `module_key` VARCHAR(191) DEFAULT 0,
                 `article_id` INT(11) DEFAULT 0,
                 `box_id` INT(11) DEFAULT 0,
                 `access_level` INT(11) DEFAULT 0,
                 PRIMARY KEY (`group_id`, `page_id`, `module_key`, `article_id`, `box_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_content` (
                 `user_id` INT(11) NOT NULL,
                 `field_id` INT(11) NOT NULL,
-                `value` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `value` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
+                `name` VARCHAR(191) NOT NULL,
                 `type` TINYINT(1) NOT NULL,
                 `position` INT(11) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `key` VARCHAR(255) NOT NULL,
-                `icon` VARCHAR(255) NOT NULL,
+                `key` VARCHAR(191) NOT NULL,
+                `icon` VARCHAR(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_user_menu_settings_links` (
-                `key` VARCHAR(255) NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `description` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `key` VARCHAR(191) NOT NULL,
+                `locale` VARCHAR(191) NOT NULL,
+                `description` VARCHAR(191) NOT NULL,
+                `name` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
                 `c_id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -166,7 +166,7 @@ class Config extends \Ilch\Config\Install
                 `user_two` INT(11) UNSIGNED NOT NULL,
                 `time` DATETIME NOT NULL,
                 PRIMARY KEY (`c_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
                 `cr_id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -176,7 +176,7 @@ class Config extends \Ilch\Config\Install
                 `time` DATETIME NOT NULL,
                 `read` TINYINT(1) DEFAULT 0,
                 PRIMARY KEY (`cr_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_media` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -187,18 +187,18 @@ class Config extends \Ilch\Config\Install
                 `ending` VARCHAR(5) NOT NULL DEFAULT 0,
                 `datetime` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_imgs` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `user_id` INT(11) NOT NULL,
                 `image_id` VARCHAR(150)NOT NULL,
-                `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
-                `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
+                `image_title` VARCHAR(191) NOT NULL DEFAULT \'\',
+                `image_description` VARCHAR(191) NOT NULL DEFAULT \'\',
                 `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                 `visits` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -206,16 +206,16 @@ class Config extends \Ilch\Config\Install
                 `sort` INT(11) NOT NULL DEFAULT 0,
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
                 `type` TINYINT(1) NOT NULL,
-                `title` VARCHAR(255) NOT NULL,
-                `description` VARCHAR(255) NOT NULL,
+                `title` VARCHAR(191) NOT NULL,
+                `description` VARCHAR(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_trans` (
                 `field_id` INT(11) NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                `locale` VARCHAR(191) NOT NULL,
+                `name` VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_tokens` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -224,43 +224,43 @@ class Config extends \Ilch\Config\Install
                 `userid` INT(11) UNSIGNED NOT NULL,
                 `expires` DATETIME,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_cookie_stolen` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `userid` INT(11) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers` (
                 `key` VARCHAR(45) NOT NULL,
-                `name` VARCHAR(255) NOT NULL,
-                `icon` VARCHAR(255) DEFAULT NULL,
-                `module` VARCHAR(255) DEFAULT NULL,
+                `name` VARCHAR(191) NOT NULL,
+                `icon` VARCHAR(191) DEFAULT NULL,
+                `module` VARCHAR(191) DEFAULT NULL,
                 PRIMARY KEY (`key`),
                 UNIQUE KEY `key_UNIQUE` (`key`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers_modules` (
                 `module` VARCHAR(50) NOT NULL,
                 `provider` VARCHAR(50) NOT NULL,
-                `auth_controller` VARCHAR(255) DEFAULT NULL,
-                `auth_action` VARCHAR(255) DEFAULT NULL,
-                `unlink_controller` VARCHAR(255) DEFAULT NULL,
-                `unlink_action` VARCHAR(255) DEFAULT NULL,
+                `auth_controller` VARCHAR(191) DEFAULT NULL,
+                `auth_action` VARCHAR(191) DEFAULT NULL,
+                `unlink_controller` VARCHAR(191) DEFAULT NULL,
+                `unlink_action` VARCHAR(191) DEFAULT NULL,
                 PRIMARY KEY (`module`, `provider`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_users_auth_providers` (
                 `user_id` INT(11) NOT NULL,
                 `provider` VARCHAR(50) NOT NULL,
-                `identifier` VARCHAR(255) NOT NULL,
-                `screen_name` VARCHAR(255) DEFAULT NULL,
-                `oauth_token` VARCHAR(255) DEFAULT NULL,
-                `oauth_token_secret` VARCHAR(255) DEFAULT NULL,
+                `identifier` VARCHAR(191) NOT NULL,
+                `screen_name` VARCHAR(191) DEFAULT NULL,
+                `oauth_token` VARCHAR(191) DEFAULT NULL,
+                `oauth_token_secret` VARCHAR(191) DEFAULT NULL,
                 `created_at` VARCHAR(45) DEFAULT NULL,
                 PRIMARY KEY (`user_id`, `provider`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
                 (1, "Administrator"),

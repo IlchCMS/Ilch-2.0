@@ -10,7 +10,6 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'media',
-        'version' => '1.0',
         'icon_small' => 'fa-th',
         'system_module' => true,
         'languages' => [
@@ -42,21 +41,21 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_media` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `name` VARCHAR(255) NOT NULL DEFAULT 0,
-                  `url` VARCHAR(255) NOT NULL DEFAULT 0,
-                  `url_thumb` VARCHAR(255) NOT NULL DEFAULT 0,
+                  `name` VARCHAR(191) NOT NULL DEFAULT 0,
+                  `url` VARCHAR(191) NOT NULL DEFAULT 0,
+                  `url_thumb` VARCHAR(191) NOT NULL DEFAULT 0,
                   `ending` VARCHAR(5) NOT NULL DEFAULT 0,
                   `datetime` DATETIME NOT NULL,
                   `cat_name` VARCHAR(100) NOT NULL,
                   `cat` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
                 
                 CREATE TABLE IF NOT EXISTS `[prefix]_media_cats` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `cat_name` VARCHAR(100) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate($installedVersion)

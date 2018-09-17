@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'checkoutbasic',
-        'version' => '1.1',
+        'version' => '1.2',
         'icon_small' => 'fa-credit-card',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -50,17 +50,17 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
                   `date_created` DATETIME NOT NULL,
-                  `name` VARCHAR(255) NOT NULL,
-                  `usage` VARCHAR(255) NOT NULL,
+                  `name` VARCHAR(191) NOT NULL,
+                  `usage` VARCHAR(191) NOT NULL,
                   `amount` FLOAT NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic_currencies` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
-                  `name` VARCHAR(255) NOT NULL,
+                  `name` VARCHAR(191) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (1, "EUR (€)");
                 INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (2, "USD ($)");
@@ -72,6 +72,12 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+            case "1.1":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic` MODIFY COLUMN `name` `usage` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic_currencies` MODIFY COLUMN `name` VARCHAR(191);');
+        }
     }
 }

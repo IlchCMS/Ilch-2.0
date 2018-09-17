@@ -55,34 +55,34 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_teams` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
-                `img` VARCHAR(255) NOT NULL,
-                `leader` VARCHAR(255) NOT NULL,
-                `coLeader` VARCHAR(255) NULL DEFAULT NULL,
+                `name` VARCHAR(191) NOT NULL,
+                `img` VARCHAR(191) NOT NULL,
+                `leader` VARCHAR(191) NOT NULL,
+                `coLeader` VARCHAR(191) NULL DEFAULT NULL,
                 `groupId` INT(11) NOT NULL,
                 `optShow` TINYINT(1) NOT NULL,
                 `optIn` TINYINT(1) NOT NULL,
                 `position` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_teams_joins` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `userId` INT(11) NULL DEFAULT NULL,
-                `name` VARCHAR(255) NOT NULL,
-                `email` VARCHAR(255) NOT NULL,
-                `place` VARCHAR(255) NOT NULL,
+                `name` VARCHAR(191) NOT NULL,
+                `email` VARCHAR(191) NOT NULL,
+                `place` VARCHAR(191) NOT NULL,
                 `birthday` DATE NOT NULL,
                 `gender` INT(1) NOT NULL,
                 `skill` INT(1) NOT NULL,
                 `teamId` INT(11) NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
+                `locale` VARCHAR(191) NOT NULL,
                 `dateCreated` DATETIME NOT NULL,
                 `text` LONGTEXT NOT NULL,
                 `decision` TINYINT(1) NOT NULL,
                 `undecided` TINYINT(1) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES
             ("teams", "static/upload/image");
@@ -144,6 +144,15 @@ class Config extends \Ilch\Config\Install
             case "1.2":
             case "1.3":
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `optShow` TINYINT(1) NOT NULL AFTER `groupId`;');
+            case "1.4":
+            case "1.5":
+            case "1.6":
+            case "1.7":
+            case "1.8":
+            case "1.9":
+                // Change VARCHAR length for new table character.
+                $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY COLUMN `name` `img` `leader` `coLeader` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` MODIFY COLUMN `name` `email` `place` `locale` VARCHAR(191);');
         }
     }
 }

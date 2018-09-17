@@ -124,12 +124,12 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                 <div class="postbody">
                     <hr class="hr-top" />
                     <div class="content">
-                        <?=nl2br($this->getHtmlFromBBCode($this->escape($post->getText()))) ?>
+                        <?=$this->getHtmlFromBBCode($post->getText()) ?>
                     </div>
 
                     <?php if ($post->getAutor()->getSignature()): ?>
                         <hr />
-                        <?=nl2br($this->getHtmlFromBBCode($this->escape($post->getAutor()->getSignature()))) ?>
+                        <?=$this->getHtmlFromBBCode($post->getAutor()->getSignature()) ?>
                     <?php endif; ?>
                 </div>
                 <dl class="postprofile">

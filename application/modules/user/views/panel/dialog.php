@@ -59,7 +59,7 @@
                                                                 </small>
                                                             </div>
                                                             <p>
-                                                                <?=nl2br($this->getHtmlFromBBCode($this->escape($dialog->getText()))) ?>
+                                                                <?=$this->getHtmlFromBBCode($dialog->getText()) ?>
                                                             </p>
                                                         </div>
                                                     </a>
@@ -203,4 +203,3 @@
         });
     }
 </script>
-<?=$this->getDialog('smiliesModal', $this->getTrans('smilies'), '<iframe frameborder="0"></iframe>'); ?>

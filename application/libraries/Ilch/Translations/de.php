@@ -30,7 +30,6 @@ return [
     'updateSuccess' => 'Erfolgreich geupdatet',
     'close' => 'Schließen',
     'captcha' => 'Captcha',
-    'smilies' => 'Smilies',
     'submit' => 'Eintragen',
     'reply' => 'Antworten',
     'delete' => 'Löschen',

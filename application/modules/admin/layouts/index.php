@@ -332,9 +332,6 @@
         var iframeUrlVideoCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/videockeditor/') ?>";
         var iframeUrlFileCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/fileckeditor/') ?>";
         var iframeMediaUploadCkeditor = "<?=$this->getUrl('admin/media/iframe/uploadckeditor/') ?>";
-        var ilchMediaPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/ilchmedia/') ?>";
-        var ilchSmileysPlugin = "<?=$this->getBaseUrl('application/modules/smilies/static/js/ilchsmileys/') ?>";
-        var ilchSmileysPluginUrl = "<?=$this->getUrl(['module' => 'smilies', 'controller' => 'iframe', 'action' => 'smilies']) ?>";
         </script>
         <?php
             if (\Ilch\DebugBar::isInitialized()) {
