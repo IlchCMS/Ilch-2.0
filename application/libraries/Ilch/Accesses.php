@@ -137,6 +137,10 @@ class Accesses
         }
 
         foreach ($entrie as $item => $value) {
+            if (empty($value[$this->request->getParam('id')])) {
+                return true;
+            }
+
             if ($value[$this->request->getParam('id')] == '0') {
                 return false;
             } else {
