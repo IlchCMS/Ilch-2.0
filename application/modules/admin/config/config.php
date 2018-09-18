@@ -116,7 +116,7 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(191) NOT NULL,
                 PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_menu_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
