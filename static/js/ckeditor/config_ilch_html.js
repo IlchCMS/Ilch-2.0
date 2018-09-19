@@ -11,9 +11,9 @@ CKEDITOR.plugins.addExternal('ilchmedia', basePath+'application/modules/media/st
 CKEDITOR.editorConfig = function( config ) {
     if (typeof ilchPsPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal('ilchps', ilchPsPlugin);
-        config.extraPlugins = "justify,font,colorbutton,colordialog,ilchmedia,ilchps";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,ilchmedia,ilchps";
     } else {
-        config.extraPlugins = "justify,font,colorbutton,colordialog,ilchmedia";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,ilchmedia";
     }
 
     config.protectedSource.push(/<i[^>]*><\/i>/g);
