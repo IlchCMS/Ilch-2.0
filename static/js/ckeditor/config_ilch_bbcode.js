@@ -24,3 +24,15 @@ CKEDITOR.editorConfig = function (config) {
 
     config.removeDialogTabs = 'link:advanced';
 };
+
+CKEDITOR.on('dialogDefinition', function(ev) {
+    var dialogName = ev.data.name,
+        dialogDefinition = ev.data.definition,
+        dialog = dialogDefinition.dialog;
+
+    if (dialogName === 'codeSnippet') {
+        dialog.on('show', function () {
+            this.getContentElement('info','lang').getElement().hide();
+        });
+    }
+});
