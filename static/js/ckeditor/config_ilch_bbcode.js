@@ -10,7 +10,7 @@ CKEDITOR.plugins.addExternal('emojione', basePath+'static/js/ckeditor/plugins/em
 CKEDITOR.plugins.addExternal('ilchyoutube', basePath+'application/modules/media/static/js/ilchyoutube/');
 
 CKEDITOR.editorConfig = function (config) {
-    config.extraPlugins = 'emojione,ilchyoutube';
+    config.extraPlugins = 'bbcode,font,colorbutton,codesnippet,emojione,ilchyoutube';
 
     config.fontSize_sizes = "30/30%;50/50%;100/100%;120/120%;150/150%;200/200%;300/300%";
     config.toolbar = 'ilch_bbcode';

@@ -76,7 +76,7 @@
                             <?=$this->escape($entry->getDateTime()) ?>
                         </td>
                         <td>
-                            <?=$this->getHtmlFromBBCode($entry->getText()) ?>
+                            <?=nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))) ?>
                         </td>
                     </tr>
                 </tbody>

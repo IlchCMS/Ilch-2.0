@@ -4,7 +4,7 @@
         <li class="<?=$inbox->getId() == ($this->getUser()->getId()) ? 'right' : 'left'; ?>">
             <div class="body">
                 <div class="message well well-sm">
-                    <?=$this->getHtmlFromBBCode($inbox->getText()) ?>
+                    <?=nl2br($this->getHtmlFromBBCode($this->escape($inbox->getText()))) ?>
                 </div>
             </div>
             <small class="timestamp">

@@ -163,7 +163,7 @@ foreach ($profil->getGroups() as $group) {
             <h1><?=$this->getTrans('profileSignature') ?></h1>
             <div class="row">
                 <div class="col-lg-10 detail">
-                    <?=$this->getHtmlFromBBCode($profil->getSignature()) ?>
+                    <?=nl2br($this->getHtmlFromBBCode($this->escape($profil->getSignature()))) ?>
                 </div>
             </div>
         <?php endif; ?>

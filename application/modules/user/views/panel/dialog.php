@@ -59,7 +59,7 @@
                                                                 </small>
                                                             </div>
                                                             <p>
-                                                                <?=$this->getHtmlFromBBCode($dialog->getText()) ?>
+                                                                <?=nl2br($this->getHtmlFromBBCode($this->escape($dialog->getText()))) ?>
                                                             </p>
                                                         </div>
                                                     </a>
