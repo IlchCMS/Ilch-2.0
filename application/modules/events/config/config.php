@@ -46,6 +46,7 @@ class Config extends \Ilch\Config\Install
 
         $databaseConfig = new IlchDatabase($this->db());
         $databaseConfig->set('event_add_entries_accesses', '2')
+            ->set('event_show_members_accesses', '2,3')
             ->set('event_box_event_limit', '5')
             ->set('event_uploadpath', 'application/modules/events/static/upload/image/')
             ->set('event_height', '150')
@@ -63,6 +64,7 @@ class Config extends \Ilch\Config\Install
             DROP TABLE `[prefix]_events_entrants`;
             DROP TABLE `[prefix]_events_currencies`');
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_add_entries_accesses';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'event_show_members_accesses';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_box_event_limit';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_uploadpath';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_height';
@@ -149,6 +151,8 @@ class Config extends \Ilch\Config\Install
                 // Change VARCHAR length for new table character.
                 $this->db()->query('ALTER TABLE `[prefix]_events` MODIFY COLUMN `website` `image` `price` `read_access` VARCHAR(191);');
                 $this->db()->query('ALTER TABLE `[prefix]_events_currencies` MODIFY COLUMN `name` VARCHAR(191);');
+
+                $this->db()->query('INSERT INTO `[prefix]_config` (`key`, `value`) VALUES ("event_show_members_accesses", "2,3");');
         }
     }
 }

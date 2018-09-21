@@ -90,10 +90,14 @@ class Show extends \Ilch\Controller\Frontend
         }
 
         $readAccess = [3];
+        $showMembersAccess = [];
         if ($user) {
             foreach ($user->getGroups() as $us) {
                 $readAccess[] = $us->getId();
+                $showMembersAccess[] = $us->getId();
             }
+        } else {
+            $showMembersAccess = [3];
         }
 
         if (is_in_array($readAccess, explode(',', $event->getReadAccess())) OR $this->getUser() AND $this->getUser()->isAdmin()) {
@@ -115,7 +119,9 @@ class Show extends \Ilch\Controller\Frontend
             ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
             ->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'))
             ->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'))
-            ->set('readAccess', $readAccess);
+            ->set('readAccess', $readAccess)
+            ->set('showMembersAccesses', $this->getConfig()->get('event_show_members_accesses'))
+            ->set('showMembersAccess', $showMembersAccess);
     }
 
     public function upcomingAction()

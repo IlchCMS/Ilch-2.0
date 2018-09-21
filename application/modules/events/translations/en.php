@@ -67,6 +67,7 @@ return [
     'visibleFor' => 'Visible for',
     'selectAssignedGroups' => 'Selected groups',
     'showAll' => 'Show more',
+    'login' => 'Login',
 
     'currencies' => 'Currencies',
     'currency' => 'Currency',
@@ -75,6 +76,7 @@ return [
     'noCurrenciesExist' => 'No currencies exists.',
 
     'addEntriesGroupAccesses' => 'Create entries',
+    'showEntryMembersAccesses' => 'Members visible for',
     'selectGroupAccesses' => 'Choose group',
     'menuGoogleMaps' => 'Google Maps',
     'googleMapsAPIKey' => 'Google Maps API-Key',

@@ -92,6 +92,10 @@ if (!empty($event)) {
                                 <?php endif; ?>
                             <?php endif; ?>
                         </form>
+                    <?php else: ?>
+                        <a href="<?=$this->getUrl('user/login/index') ?>" class="btn btn-sm btn-primary">
+                            <?=$this->getTrans('login') ?>
+                        </a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -184,7 +188,7 @@ if (!empty($event)) {
                 </div>
                 <div style="clear: both;"></div>
             </div>
-            <?php if ($eventEntrantsCount != ''): ?>
+            <?php if ($eventEntrantsCount != '' AND is_in_array($this->get('showMembersAccess'), explode(',', $this->get('showMembersAccesses'))) OR $this->getUser() AND $this->getUser()->isAdmin()): ?>
                 <div class="eventBoxBottom">
                     <div style="margin-left: 2px;">
                         <?php if ($eventEntrantsCount != ''): ?>

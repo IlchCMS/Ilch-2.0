@@ -71,8 +71,10 @@ class Settings extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $groupAccesses = implode(",", $this->getRequest()->getPost('event_add_entries_accesses'));
+                $membersAccesses = implode(",", $this->getRequest()->getPost('event_show_members_accesses'));
 
                 $this->getConfig()->set('event_add_entries_accesses', $groupAccesses)
+                    ->set('event_show_members_accesses', $membersAccesses)
                     ->set('event_box_event_limit', $this->getRequest()->getPost('event_box_event_limit'))
                     ->set('event_height', $this->getRequest()->getPost('event_height'))
                     ->set('event_width', $this->getRequest()->getPost('event_width'))
@@ -96,6 +98,7 @@ class Settings extends \Ilch\Controller\Admin
 
         $this->getView()->set('userGroupList', $userGroupMapper->getGroupList())
             ->set('event_add_entries_accesses', $this->getConfig()->get('event_add_entries_accesses'))
+            ->set('event_show_members_accesses', $this->getConfig()->get('event_show_members_accesses'))
             ->set('event_box_event_limit', $this->getConfig()->get('event_box_event_limit'))
             ->set('event_height', $this->getConfig()->get('event_height'))
             ->set('event_width', $this->getConfig()->get('event_width'))
