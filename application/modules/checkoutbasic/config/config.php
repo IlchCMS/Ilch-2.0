@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'The basic version of the checkout-module. Here you can manage your clan cash.',
             ],
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -76,8 +76,9 @@ class Config extends \Ilch\Config\Install
             case "1.0":
             case "1.1":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic` MODIFY COLUMN `name` `usage` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic_currencies` MODIFY COLUMN `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic` MODIFY COLUMN `name` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `usage` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic_currencies` MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
         }
     }
 }

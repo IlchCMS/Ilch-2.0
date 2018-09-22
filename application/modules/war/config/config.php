@@ -42,7 +42,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -150,10 +150,16 @@ class Config extends \Ilch\Config\Install
                 }
             case "1.3":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_war_groups` MODIFY COLUMN `image` `desc` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_war_enemy` MODIFY COLUMN `image` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_war` MODIFY COLUMN `maps` `server` `password` `game` `matchtype` `read_access` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_war_played` MODIFY COLUMN `map` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_war_groups` MODIFY COLUMN `image` VARCHAR(191) NOT NULL,
+                                                                                    `desc` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_war_enemy` MODIFY COLUMN `image` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_war` MODIFY COLUMN `maps` VARCHAR(191) NOT NULL,
+                                                               MODIFY COLUMN `server` VARCHAR(191) NOT NULL,
+                                                               MODIFY COLUMN `password` VARCHAR(191) NOT NULL,
+                                                               MODIFY COLUMN `game` VARCHAR(191) NOT NULL,
+                                                               MODIFY COLUMN `matchtype` VARCHAR(191) NOT NULL,
+                                                               MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_war_played` MODIFY COLUMN `map` VARCHAR(191) NOT NULL DEFAULT "";');
         }
     }
 }

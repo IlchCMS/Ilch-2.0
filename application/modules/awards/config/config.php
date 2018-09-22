@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can award users or teams an award.',
             ],
         ],
-        'ilchCore' => '2.1.10',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -56,13 +56,14 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
+            case "1.0":
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` VARCHAR(191) NOT NULL AFTER `rank`;');
             case "1.2":
             case "1.3":
             case "1.4":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_awards` MODIFY COLUMN `image` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_awards` MODIFY COLUMN `image` VARCHAR(191) NOT NULL;');
         }
     }
 }

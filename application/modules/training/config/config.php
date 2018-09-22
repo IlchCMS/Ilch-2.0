@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the training list.',
             ],
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -92,7 +92,7 @@ class Config extends \Ilch\Config\Install
                 }
             case "1.2":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_training` MODIFY COLUMN `read_access` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_training` MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL;');
         }
     }
 }

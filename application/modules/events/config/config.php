@@ -36,7 +36,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.7',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -149,8 +149,11 @@ class Config extends \Ilch\Config\Install
             case "1.7":
             case "1.8":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_events` MODIFY COLUMN `website` `image` `price` `read_access` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_events_currencies` MODIFY COLUMN `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_events` MODIFY COLUMN `website` VARCHAR(191) NOT NULL,
+                                                                  MODIFY COLUMN `image` VARCHAR(191) NULL DEFAULT NULL,
+                                                                  MODIFY COLUMN `price` VARCHAR(191) NOT NULL,
+                                                                  MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_events_currencies` MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
 
                 $this->db()->query('INSERT INTO `[prefix]_config` (`key`, `value`) VALUES ("event_show_members_accesses", "2,3");');
         }

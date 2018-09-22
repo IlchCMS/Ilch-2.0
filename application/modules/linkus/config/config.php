@@ -59,7 +59,7 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_linkus` MODIFY COLUMN `banner` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_linkus` MODIFY COLUMN `banner` VARCHAR(191) NOT NULL;');
         }
     }
 }

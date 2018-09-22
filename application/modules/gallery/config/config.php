@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the gallery.',
             ],
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -71,8 +71,10 @@ class Config extends \Ilch\Config\Install
             case "1.2":
             case "1.3":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` MODIFY COLUMN `image_title` `image_description` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_gallery_items` MODIFY COLUMN `title` `description` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` MODIFY COLUMN `image_title` VARCHAR(191) NOT NULL DEFAULT \'\',
+                                                                        MODIFY COLUMN `image_description` VARCHAR(191) NOT NULL DEFAULT \'\';');
+                $this->db()->query('ALTER TABLE `[prefix]_gallery_items` MODIFY COLUMN `title` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `description` VARCHAR(191) NOT NULL;');
         }
     }
 }

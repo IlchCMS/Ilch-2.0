@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the downloads.',
             ],
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -72,8 +72,10 @@ class Config extends \Ilch\Config\Install
             case "1.2":
             case "1.3":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_downloads_files` MODIFY COLUMN `file_title` `file_description` `file_image` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_downloads_items` MODIFY COLUMN `title` `description` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_files` MODIFY COLUMN `file_title` VARCHAR(191) NOT NULL DEFAULT \'\',
+                                                                           MODIFY COLUMN `file_description` VARCHAR(191) NOT NULL DEFAULT \'\',
+                                                                           MODIFY COLUMN `file_image` VARCHAR(191) NOT NULL DEFAULT \'\';');
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_items` MODIFY COLUMN `title` `description` VARCHAR(191) NOT NULL;');
         }
     }
 }

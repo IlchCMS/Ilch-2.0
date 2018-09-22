@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage your links.',
             ],
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -74,8 +74,10 @@ class Config extends \Ilch\Config\Install
             case "1.2":
             case "1.3":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_links` MODIFY COLUMN `desc` `banner` `link` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_link_cats` MODIFY COLUMN `desc` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_links` MODIFY COLUMN `desc` VARCHAR(191) NOT NULL,
+                                                                 MODIFY COLUMN `banner` VARCHAR(191) NOT NULL,
+                                                                 MODIFY COLUMN `link` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_link_cats` MODIFY COLUMN `desc` VARCHAR(191) NOT NULL;');
         }
     }
 }

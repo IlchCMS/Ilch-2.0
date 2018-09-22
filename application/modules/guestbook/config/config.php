@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage your guestbook entries.',
             ],
         ],
-        'ilchCore' => '2.1.8',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -61,7 +61,7 @@ class Config extends \Ilch\Config\Install
             case "1.0":
             case "1.1":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_gbook` MODIFY COLUMN `name` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_gbook` MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
         }
     }
 }

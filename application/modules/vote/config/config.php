@@ -34,7 +34,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -89,9 +89,12 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_poll` CHANGE `group` `groups` VARCHAR(191) NOT NULL DEFAULT \'0\';');
             case "1.6":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_poll` MODIFY COLUMN `question` `key` `groups` `read_access` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_poll_res` MODIFY COLUMN `reply` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_poll_ip` MODIFY COLUMN `ip` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_poll` MODIFY COLUMN `question` VARCHAR(191) NOT NULL,
+                                                                MODIFY COLUMN `key` VARCHAR(191) NOT NULL,
+                                                                MODIFY COLUMN `groups` VARCHAR(191) NOT NULL DEFAULT \'0\',
+                                                                MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_poll_res` MODIFY COLUMN `reply` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_poll_ip` MODIFY COLUMN `ip` VARCHAR(191) NOT NULL;');
         }
     }
 }

@@ -45,7 +45,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.11',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -106,7 +106,7 @@ class Config extends \Ilch\Config\Install
                 `user_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
                 `forum_id` INT(11) NOT NULL DEFAULT 0,
-                `read` VARCHAR(225) NOT NULL DEFAULT \'\',
+                `read` VARCHAR(191) NOT NULL DEFAULT \'\',
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -190,8 +190,14 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('forum_excludeFloodProtection', '1');
             case "1.10":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_forum_items` MODIFY COLUMN `title` `description` `prefix` `read_access` `replay_access` `create_access` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` MODIFY COLUMN `topic_title` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_items` MODIFY COLUMN `title` VARCHAR(191) NOT NULL,
+                                                                       MODIFY COLUMN `description` VARCHAR(191) NOT NULL,
+                                                                       MODIFY COLUMN `prefix` VARCHAR(191) NOT NULL,
+                                                                       MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL,
+                                                                       MODIFY COLUMN `replay_access` VARCHAR(191) NOT NULL,
+                                                                       MODIFY COLUMN `create_access` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` MODIFY COLUMN `topic_title` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` MODIFY COLUMN `read` VARCHAR(191) NOT NULL DEFAULT \'\';');
         }
     }
 }

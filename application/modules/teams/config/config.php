@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can add and change your Teams.',
             ],
         ],
-        'ilchCore' => '2.1.8',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -151,8 +151,14 @@ class Config extends \Ilch\Config\Install
             case "1.8":
             case "1.9":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY COLUMN `name` `img` `leader` `coLeader` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` MODIFY COLUMN `name` `email` `place` `locale` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY COLUMN `name` VARCHAR(191) NOT NULL,
+                                                                 MODIFY COLUMN `img` VARCHAR(191) NOT NULL,
+                                                                 MODIFY COLUMN `leader` VARCHAR(191) NOT NULL,
+                                                                 MODIFY COLUMN `coLeader` VARCHAR(191) NULL DEFAULT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` MODIFY COLUMN `name` VARCHAR(191) NOT NULL,
+                                                                       MODIFY COLUMN `email` VARCHAR(191) NOT NULL,
+                                                                       MODIFY COLUMN `place` VARCHAR(191) NOT NULL,
+                                                                       MODIFY COLUMN `locale` VARCHAR(191) NOT NULL;');
         }
     }
 }

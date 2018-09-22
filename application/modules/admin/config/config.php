@@ -388,43 +388,125 @@ class Config extends \Ilch\Config\Install
                 }
 
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_config` MODIFY COLUMN `key` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_emails` MODIFY COLUMN `moduleKey` `type` `desc` `locale` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_modules` MODIFY COLUMN `key` `author` `version` `link` `icon_small` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_modules_content` MODIFY COLUMN `key` `locale` `description` `name` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_modules_php_extensions` MODIFY COLUMN `key` `extension` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_modules_folderrights` MODIFY COLUMN `key` `folder` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_modules_boxes_content` MODIFY COLUMN `key` `module` `locale` `name` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_menu` MODIFY COLUMN `title` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_menu_items` MODIFY COLUMN `box_key` `title` `href` `module_key` `access` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_boxes_content` MODIFY COLUMN `locale` `title` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_pages` MODIFY COLUMN `locale` `title` `perma` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_backup` MODIFY COLUMN `name` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_logs` MODIFY COLUMN `user_id` `info` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications` MODIFY COLUMN `module` `message` `url` `type` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications_permission` MODIFY COLUMN `module` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_admin_updateservers` MODIFY COLUMN `url` `operator` `country` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_articles` MODIFY COLUMN `cat_id` `read_access` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_articles_content` MODIFY COLUMN `keywords` `locale` `title` `teaser` `perma` `img` `img_source` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_comments` MODIFY COLUMN `key` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_contact_receivers` MODIFY COLUMN `email` `name` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_media` MODIFY COLUMN `name` `url` `url_thumb` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_privacy` MODIFY COLUMN `title` `urltitle` `url` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_visits_online` MODIFY COLUMN `site` `os` `os_version` `browser` `browser_version` `ip_address` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_visits_stats` MODIFY COLUMN `os` `os_version` `browser` `browser_version` `ip_address` `referer` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `name` `password` `email` `first_name` `last_name` `homepage` `facebook` `twitter` `google` `steam` `twitch` `teamspeak` `discord` `city` `avatar` `signature` `locale` `confirmed_code` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_groups` MODIFY COLUMN `name` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_groups_access` MODIFY COLUMN `module_key` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_profile_content` MODIFY COLUMN `value` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` MODIFY COLUMN `name` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_user_menu` MODIFY COLUMN `key` `icon` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_user_menu_settings_links` MODIFY COLUMN `key` `locale` `description` `name` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_users_dialog` MODIFY COLUMN `image_title` `image_description` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_users_gallery_items` MODIFY COLUMN `title` `description` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_profile_trans` MODIFY COLUMN `locale` `name` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_auth_providers` MODIFY COLUMN `name` `icon` `module` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_auth_providers_modules` MODIFY COLUMN `auth_controller` `auth_action` `unlink_controller` `unlink_action` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_users_auth_providers` MODIFY COLUMN `identifier` `screen_name` `oauth_token` `oauth_token_secret` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_config` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_emails` MODIFY COLUMN `moduleKey` VARCHAR(191) NOT NULL,
+                                                                  MODIFY COLUMN `type` VARCHAR(191) NOT NULL,
+                                                                  MODIFY COLUMN `desc` VARCHAR(191) NOT NULL,
+                                                                  MODIFY COLUMN `locale` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_modules` MODIFY COLUMN `key` VARCHAR(191) NOT NULL,
+                                                                   MODIFY COLUMN `author` VARCHAR(191) NULL DEFAULT NULL,
+                                                                   MODIFY COLUMN `version` VARCHAR(191) NULL DEFAULT NULL,
+                                                                   MODIFY COLUMN `link` VARCHAR(191) NULL DEFAULT NULL,
+                                                                   MODIFY COLUMN `icon_small` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_modules_content` MODIFY COLUMN `key` VARCHAR(191) NOT NULL,
+                                                                           MODIFY COLUMN `locale` VARCHAR(191) NOT NULL,
+                                                                           MODIFY COLUMN `description` VARCHAR(191) NOT NULL,
+                                                                           MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_modules_php_extensions` MODIFY COLUMN `key` VARCHAR(191) NOT NULL,
+                                                                                  MODIFY COLUMN `extension` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_modules_folderrights` MODIFY COLUMN `key` VARCHAR(191) NOT NULL,
+                                                                                MODIFY COLUMN `folder` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_modules_boxes_content` MODIFY COLUMN `key` VARCHAR(191) NOT NULL,
+                                                                                 MODIFY COLUMN `module` VARCHAR(191) NOT NULL,
+                                                                                 MODIFY COLUMN `locale` VARCHAR(191) NOT NULL,
+                                                                                 MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_menu` MODIFY COLUMN `title` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_menu_items` MODIFY COLUMN `box_key` VARCHAR(191) NULL DEFAULT NULL,
+                                                                      MODIFY COLUMN `title` VARCHAR(191) NOT NULL,
+                                                                      MODIFY COLUMN `href` VARCHAR(191) NULL DEFAULT NULL,
+                                                                      MODIFY COLUMN `module_key` VARCHAR(191) NULL DEFAULT NULL,
+                                                                      MODIFY COLUMN `access` VARCHAR(191) NOT NULL DEFAULT "";');
+                $this->db()->query('ALTER TABLE `[prefix]_boxes_content` MODIFY COLUMN `locale` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `title` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_pages_content` MODIFY COLUMN `locale` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `title` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `perma` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_backup` MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_logs` MODIFY COLUMN `user_id` VARCHAR(191) NOT NULL,
+                                                                MODIFY COLUMN `info` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications` MODIFY COLUMN `module` VARCHAR(191) NOT NULL,
+                                                                               MODIFY COLUMN `message` VARCHAR(191) NOT NULL,
+                                                                               MODIFY COLUMN `url` VARCHAR(191) NOT NULL,
+                                                                               MODIFY COLUMN `type` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_admin_notifications_permission` MODIFY COLUMN `module` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_admin_updateservers` MODIFY COLUMN `url` VARCHAR(191) NOT NULL,
+                                                                               MODIFY COLUMN `operator` VARCHAR(191) NOT NULL,
+                                                                               MODIFY COLUMN `country` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_articles` MODIFY COLUMN `cat_id` VARCHAR(191) NOT NULL,
+                                                                    MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'1,2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_articles_content` MODIFY COLUMN `keywords` VARCHAR(191) NOT NULL,
+                                                                            MODIFY COLUMN `locale` VARCHAR(191) NOT NULL,
+                                                                            MODIFY COLUMN `title` VARCHAR(191) NOT NULL,
+                                                                            MODIFY COLUMN `teaser` VARCHAR(191) NOT NULL,
+                                                                            MODIFY COLUMN `perma` VARCHAR(191) NOT NULL,
+                                                                            MODIFY COLUMN `img` VARCHAR(191) NOT NULL,
+                                                                            MODIFY COLUMN `img_source` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_comments` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_contact_receivers` MODIFY COLUMN `email` VARCHAR(191) NOT NULL,
+                                                                             MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_media` MODIFY COLUMN `name` VARCHAR(191) NOT NULL DEFAULT 0,
+                                                                 MODIFY COLUMN `url` VARCHAR(191) NOT NULL DEFAULT 0,
+                                                                 MODIFY COLUMN `url_thumb` VARCHAR(191) NOT NULL DEFAULT 0;');
+                $this->db()->query('ALTER TABLE `[prefix]_privacy` MODIFY COLUMN `title` VARCHAR(191) NOT NULL,
+                                                                   MODIFY COLUMN `urltitle` VARCHAR(191) NOT NULL,
+                                                                   MODIFY COLUMN `url` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_visits_online` MODIFY COLUMN `site` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `os` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `os_version` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `browser` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `browser_version` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `ip_address` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_visits_stats` MODIFY COLUMN `os` VARCHAR(191) NOT NULL,
+                                                                        MODIFY COLUMN `os_version` VARCHAR(191) NOT NULL,
+                                                                        MODIFY COLUMN `browser` VARCHAR(191) NOT NULL,
+                                                                        MODIFY COLUMN `browser_version` VARCHAR(191) NOT NULL,
+                                                                        MODIFY COLUMN `ip_address` VARCHAR(191) NOT NULL,
+                                                                        MODIFY COLUMN `referer` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `name` VARCHAR(191) NOT NULL,
+                                                                 MODIFY COLUMN `password` VARCHAR(191) NOT NULL,
+                                                                 MODIFY COLUMN `email` VARCHAR(191) NOT NULL,
+                                                                 MODIFY COLUMN `first_name` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `last_name` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `homepage` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `facebook` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `twitter` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `google` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `steam` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `twitch` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `teamspeak` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `discord` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `city` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `avatar` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `signature` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `locale` VARCHAR(191) NOT NULL DEFAULT "",
+                                                                 MODIFY COLUMN `confirmed_code` VARCHAR(191) NULL DEFAULT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_groups` MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_groups_access` MODIFY COLUMN `module_key` VARCHAR(191) DEFAULT 0;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_content` MODIFY COLUMN `value` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_user_menu` MODIFY COLUMN `key` VARCHAR(191) NOT NULL,
+                                                                     MODIFY COLUMN `icon` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_user_menu_settings_links` MODIFY COLUMN `key` VARCHAR(191) NOT NULL,
+                                                                                    MODIFY COLUMN `locale` VARCHAR(191) NOT NULL,
+                                                                                    MODIFY COLUMN `description` VARCHAR(191) NOT NULL,
+                                                                                    MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users_gallery_imgs` MODIFY COLUMN `image_title` VARCHAR(191) NOT NULL DEFAULT \'\',
+                                                                              MODIFY COLUMN `image_description` VARCHAR(191) NOT NULL DEFAULT \'\';');
+                $this->db()->query('ALTER TABLE `[prefix]_users_gallery_items` MODIFY COLUMN `title` VARCHAR(191) NOT NULL,
+                                                                               MODIFY COLUMN `description` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_trans` MODIFY COLUMN `locale` VARCHAR(191) NOT NULL,
+                                                                         MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_auth_providers` MODIFY COLUMN `name` VARCHAR(191) NOT NULL,
+                                                                          MODIFY COLUMN `icon` VARCHAR(191) DEFAULT NULL,
+                                                                          MODIFY COLUMN `module` VARCHAR(191) DEFAULT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_auth_providers_modules` MODIFY COLUMN `auth_controller` VARCHAR(191) DEFAULT NULL,
+                                                                                  MODIFY COLUMN `auth_action` VARCHAR(191) DEFAULT NULL,
+                                                                                  MODIFY COLUMN `unlink_controller` VARCHAR(191) DEFAULT NULL,
+                                                                                  MODIFY COLUMN `unlink_action` VARCHAR(191) DEFAULT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_users_auth_providers` MODIFY COLUMN `identifier` VARCHAR(191) NOT NULL,
+                                                                                MODIFY COLUMN `screen_name` VARCHAR(191) DEFAULT NULL,
+                                                                                MODIFY COLUMN `oauth_token` VARCHAR(191) DEFAULT NULL,
+                                                                                MODIFY COLUMN `oauth_token_secret` VARCHAR(191) DEFAULT NULL;');
                 break;
         }
 

@@ -34,7 +34,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.8',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -86,7 +86,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_partners` ADD `target` TINYINT(1) NOT NULL DEFAULT 0 AFTER `link`;');
             case "1.3":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_partners` MODIFY COLUMN `banner` `link` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_partners` MODIFY COLUMN `banner` VARCHAR(191) NOT NULL,
+                                                                    MODIFY COLUMN `link` VARCHAR(191) NOT NULL;');
         }
     }
 }

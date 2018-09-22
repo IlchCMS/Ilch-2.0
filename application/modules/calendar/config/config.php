@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the calendar.',
             ],
         ],
-        'ilchCore' => '2.0.0',
+        'ilchCore' => '2.1.15',
         'phpVersion' => '5.6'
     ];
 
@@ -72,8 +72,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `period_day` INT(1) DEFAULT NULL AFTER `color`;');
             case "1.2":
                 // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_calendar` MODIFY COLUMN `read_access` VARCHAR(191);');
-                $this->db()->query('ALTER TABLE `[prefix]_calendar_events` MODIFY COLUMN `url` VARCHAR(191);');
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'1,2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_calendar_events` MODIFY COLUMN `url` VARCHAR(191) NOT NULL;');
         }
     }
 }
