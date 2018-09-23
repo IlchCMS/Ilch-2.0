@@ -66,7 +66,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
         <tbody>
             <?php foreach ($this->get('modules') as $module):
                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
-
+                $localUpdateAvailable = false;
                 $moduleOnUpdateServerFound = null;
                 foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
                     if ($moduleOnUpdateServer->key == $module->getKey()) {
@@ -75,6 +75,14 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                     }
                 }
 
+                if (empty($moduleOnUpdateServerFound)) {
+                    if (!empty($configurations[$module->getKey()]['version'])) {
+                        if (version_compare($module->getVersion(), $configurations[$module->getKey()]['version'], '<')) {
+                            $localUpdateAvailable = true;
+                            $moduleOnUpdateServerFound = json_decode(json_encode($configurations[$module->getKey()]));
+                        }
+                    }
+                }
                 if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
                     <tr>
                         <td>
@@ -143,12 +151,21 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                             title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="fa fa-refresh"></i>
                                     </button>
-                                <?php elseif (version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
+                                <?php elseif (!$localUpdateAvailable && version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
                                     <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServerFound->key, 'version' => $moduleOnUpdateServerFound->version, 'from' => 'index']) ?>">
                                         <?=$this->getTokenField() ?>
                                         <button type="submit"
                                                 class="btn btn-default"
                                                 title="<?=$this->getTrans('moduleUpdate') ?>">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                    </form>
+                                <?php elseif ($localUpdateAvailable): ?>
+                                    <form method="POST" action="<?=$this->getUrl(['action' => 'localUpdate', 'key' => $moduleOnUpdateServerFound->key, 'from' => 'index']) ?>">
+                                        <?=$this->getTokenField() ?>
+                                        <button type="submit"
+                                                class="btn btn-default"
+                                                title="<?=$this->getTrans('localModuleUpdate') ?>">
                                             <i class="fa fa-refresh"></i>
                                         </button>
                                     </form>

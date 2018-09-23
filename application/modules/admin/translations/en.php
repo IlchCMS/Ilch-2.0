@@ -142,6 +142,7 @@ return [
     'layoutUpdate' => 'Update layout',
     'moduleDownload' => 'Download module',
     'moduleUpdate' => 'Update module',
+    'localModuleUpdate' => 'Update module from local source',
     'hits' => 'Hits',
     'download' => 'Download',
     'downloads' => 'Downloads',

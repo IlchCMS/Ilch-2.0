@@ -251,7 +251,25 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
     }
-    
+
+    public function localUpdateAction()
+    {
+        try {
+            $moduleMapper = new ModuleMapper();
+
+            $key = $this->getRequest()->getParam('key');
+            $moduleModel = $moduleMapper->getModuleByKey($key);
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $config = new $configClass($this->getTranslator());
+            // TODO: Check if update failed to display moduleUpdateFailed etc.
+            $config->getUpdate($moduleModel->getVersion());
+            $moduleMapper->updateVersion($key, $config->config['version']);
+            $this->addMessage('updateSuccess');
+        } finally {
+            $this->redirect(['action' => $this->getRequest()->getParam('from')]);
+        }
+    }
+
     public function showAction()
     {
         $moduleMapper = new ModuleMapper();

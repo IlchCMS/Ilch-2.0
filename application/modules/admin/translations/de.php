@@ -142,6 +142,7 @@ return [
     'layoutUpdate' => 'Layout aktualisieren',
     'moduleDownload' => 'Modul herunterladen',
     'moduleUpdate' => 'Modul aktualisieren',
+    'localModuleUpdate' => 'Modul aus lokaler Quelle aktualisieren',
     'rating' => 'Bewertung',
     'hits' => 'Aufrufe',
     'download' => 'Herunterladen',
