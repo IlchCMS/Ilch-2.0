@@ -300,7 +300,7 @@ class Topic extends \Ilch\Mapper
     {
         $select = $this->db()->select('DISTINCT(p.topic_id)', ['p' => 'forum_posts'])
             ->join(['t' => 'forum_topics'], 'p.topic_id = t.id', 'LEFT', ['topic_title' => 't.topic_title', 'forum_id' => 't.forum_id'])
-            ->order(['p.date_created' => 'DESC']);
+            ->order(['p.id' => 'DESC']);
 
         if ($limit !== null) {
             $select->limit($limit);
