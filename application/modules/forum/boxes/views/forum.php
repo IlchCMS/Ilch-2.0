@@ -11,9 +11,9 @@ if ($this->getUser()) {
 <?php if (!empty($this->get('topics'))): ?>
     <ul class="list-unstyled">
         <?php foreach ($this->get('topics') as $topic): ?>
-            <?php $forum = $forumMapper->getForumById($topic->getForumId()); ?>
+            <?php $forum = $forumMapper->getForumById($topic['forum_id']); ?>
             <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
-                <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
+                <?php $lastPost = $topicMapper->getLastPostByTopicId($topic['topic_id']) ?>
                 <?php $date = new \Ilch\Date($lastPost->getDateCreated()); ?>
                 <li style="line-height: 25px;">
                     <?php if ($this->getUser()): ?>
@@ -25,8 +25,8 @@ if ($this->getUser()) {
                     <?php else: ?>
                         <img src="<?=$this->getStaticUrl('../application/modules/forum/static/img/topic_read.png') ?>" style="float: left; margin-top: 8px;">
                     <?php endif; ?>
-                    <a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId()]) ?>">
-                        <?=$topic->getTopicTitle() ?>
+                    <a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $topic['topic_id']]) ?>">
+                        <?=$topic['topic_title'] ?>
                     </a>
                     <br />
                     <small><?=$date->format("d.m.y - H:i", true) ?> <?=$this->getTrans('clock') ?></small>

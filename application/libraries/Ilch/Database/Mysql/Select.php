@@ -411,6 +411,9 @@ class Select extends QueryBuilder
                 //single field
             } elseif (strpos($fields, ' ') === false) {
                 $fields = [$fields];
+            } else {
+                // Added to support for example "DISTINCT c1, c2, c3"
+                $fields = [new Expression\Expression($fields)];
             }
         } elseif ($fields instanceof Expression\Expression) {
             $fields = [$fields];

@@ -290,12 +290,32 @@ class Topic extends \Ilch\Mapper
         return $entry;
     }
 
+    /**
+     * Get x topics with latest activity where x is specifified by the limit.
+     *
+     * @param null|integer $limit
+     * @return array[]
+     */
+    public function getLastActiveTopics($limit = null)
+    {
+        $select = $this->db()->select('DISTINCT(p.topic_id)', ['p' => 'forum_posts'])
+            ->join(['t' => 'forum_topics'], 'p.topic_id = t.id', 'LEFT', ['topic_title' => 't.topic_title', 'forum_id' => 't.forum_id'])
+            ->order(['p.date_created' => 'DESC']);
+
+        if ($limit !== null) {
+            $select->limit($limit);
+        }
+
+        $result = $select->execute();
+        return $result->fetchRows();
+    }
+
     public function deleteById($id)
     {
         $this->trigger(ForumConfig::EVENT_DELETETOPIC_BEFORE, ['id' => $id]);
         $postMapper = new PostMapper();
         $posts = $postMapper->getPostsByTopicId($id);
-        foreach ($posts as $post){
+        foreach ($posts as $post) {
             $postMapper->deleteById($post->getId());
         }
         $this->db()->delete('forum_topics')

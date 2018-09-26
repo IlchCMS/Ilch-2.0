@@ -33,7 +33,7 @@ class Forum extends \Ilch\Box
 
         $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('topicMapper', $topicMapper);
-        $this->getView()->set('topics', $topicMapper->getTopics('', 5));
+        $this->getView()->set('topics', $topicMapper->getLastActiveTopics(5));
         $this->getView()->set('groupIdsArray', $groupIds);
     }
 }
