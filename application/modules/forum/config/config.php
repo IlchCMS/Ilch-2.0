@@ -198,6 +198,8 @@ class Config extends \Ilch\Config\Install
                                                                        MODIFY COLUMN `create_access` VARCHAR(191) NOT NULL;');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_topics` MODIFY COLUMN `topic_title` VARCHAR(191) NOT NULL;');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_posts` MODIFY COLUMN `read` VARCHAR(191) NOT NULL DEFAULT \'\';');
+                // Delete no longer needed file.
+                unlink(ROOT_PATH.'/application/modules/forum/controllers/admin/Base.php');
         }
     }
 }
