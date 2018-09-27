@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'link',
-        'version' => '1.4',
+        'version' => '1.3',
         'icon_small' => 'fa-external-link',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -72,7 +72,6 @@ class Config extends \Ilch\Config\Install
             case "1.0":
             case "1.1":
             case "1.2":
-            case "1.3":
                 // Change VARCHAR length for new table character.
                 $this->db()->query('ALTER TABLE `[prefix]_links` MODIFY COLUMN `desc` VARCHAR(191) NOT NULL,
                                                                  MODIFY COLUMN `banner` VARCHAR(191) NOT NULL,
