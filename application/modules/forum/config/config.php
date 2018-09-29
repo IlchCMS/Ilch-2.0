@@ -76,7 +76,7 @@ class Config extends \Ilch\Config\Install
                 `type` TINYINT(1) NOT NULL,
                 `title` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
-                `prefix` VARCHAR(191) NOT NULL,
+                `prefix` VARCHAR(255) NOT NULL,
                 `read_access` VARCHAR(255) NOT NULL,
                 `replay_access` VARCHAR(255) NOT NULL,
                 `create_access` VARCHAR(255) NOT NULL,
