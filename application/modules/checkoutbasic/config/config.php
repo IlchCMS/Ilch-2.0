@@ -50,15 +50,15 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
                   `date_created` DATETIME NOT NULL,
-                  `name` VARCHAR(191) NOT NULL,
-                  `usage` VARCHAR(191) NOT NULL,
+                  `name` VARCHAR(255) NOT NULL,
+                  `usage` VARCHAR(255) NOT NULL,
                   `amount` FLOAT NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic_currencies` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
-                  `name` VARCHAR(191) NOT NULL,
+                  `name` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -75,10 +75,9 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
             case "1.1":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic` MODIFY COLUMN `name` VARCHAR(191) NOT NULL,
-                                                                         MODIFY COLUMN `usage` VARCHAR(191) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic_currencies` MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic_currencies` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }
