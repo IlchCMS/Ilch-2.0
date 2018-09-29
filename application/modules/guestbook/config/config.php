@@ -49,7 +49,7 @@ class Config extends \Ilch\Config\Install
                   `text` MEDIUMTEXT NOT NULL,
                   `datetime` DATETIME NOT NULL,
                   `homepage` VARCHAR(32) NOT NULL,
-                  `name` VARCHAR(191) NOT NULL,
+                  `name` VARCHAR(255) NOT NULL,
                   `setfree` TINYINT(1) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
@@ -60,8 +60,8 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
             case "1.1":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_gbook` MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                // Convert table to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_gbook` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

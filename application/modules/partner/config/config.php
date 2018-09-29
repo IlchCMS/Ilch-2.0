@@ -64,8 +64,8 @@ class Config extends \Ilch\Config\Install
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `pos` INT(11) NOT NULL DEFAULT 0,
             `name` VARCHAR(100) NOT NULL,
-            `banner` VARCHAR(191) NOT NULL,
-            `link` VARCHAR(191) NOT NULL,
+            `banner` VARCHAR(255) NOT NULL,
+            `link` VARCHAR(255) NOT NULL,
             `target` TINYINT(1) NOT NULL DEFAULT 0,
             `setfree` TINYINT(1) NOT NULL DEFAULT 0,
             PRIMARY KEY (`id`)
@@ -85,9 +85,8 @@ class Config extends \Ilch\Config\Install
             case "1.2":
                 $this->db()->query('ALTER TABLE `[prefix]_partners` ADD `target` TINYINT(1) NOT NULL DEFAULT 0 AFTER `link`;');
             case "1.3":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_partners` MODIFY COLUMN `banner` VARCHAR(191) NOT NULL,
-                                                                    MODIFY COLUMN `link` VARCHAR(191) NOT NULL;');
+                // Convert table to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_partners` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

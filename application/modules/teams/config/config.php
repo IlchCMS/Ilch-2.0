@@ -55,10 +55,10 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_teams` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(191) NOT NULL,
-                `img` VARCHAR(191) NOT NULL,
-                `leader` VARCHAR(191) NOT NULL,
-                `coLeader` VARCHAR(191) NULL DEFAULT NULL,
+                `name` VARCHAR(255) NOT NULL,
+                `img` VARCHAR(255) NOT NULL,
+                `leader` VARCHAR(255) NOT NULL,
+                `coLeader` VARCHAR(255) NULL DEFAULT NULL,
                 `groupId` INT(11) NOT NULL,
                 `optShow` TINYINT(1) NOT NULL,
                 `optIn` TINYINT(1) NOT NULL,
@@ -69,14 +69,14 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_teams_joins` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `userId` INT(11) NULL DEFAULT NULL,
-                `name` VARCHAR(191) NOT NULL,
-                `email` VARCHAR(191) NOT NULL,
-                `place` VARCHAR(191) NOT NULL,
+                `name` VARCHAR(255) NOT NULL,
+                `email` VARCHAR(255) NOT NULL,
+                `place` VARCHAR(255) NOT NULL,
                 `birthday` DATE NOT NULL,
                 `gender` INT(1) NOT NULL,
                 `skill` INT(1) NOT NULL,
                 `teamId` INT(11) NOT NULL,
-                `locale` VARCHAR(191) NOT NULL,
+                `locale` VARCHAR(255) NOT NULL,
                 `dateCreated` DATETIME NOT NULL,
                 `text` LONGTEXT NOT NULL,
                 `decision` TINYINT(1) NOT NULL,
@@ -150,15 +150,9 @@ class Config extends \Ilch\Config\Install
             case "1.7":
             case "1.8":
             case "1.9":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY COLUMN `name` VARCHAR(191) NOT NULL,
-                                                                 MODIFY COLUMN `img` VARCHAR(191) NOT NULL,
-                                                                 MODIFY COLUMN `leader` VARCHAR(191) NOT NULL,
-                                                                 MODIFY COLUMN `coLeader` VARCHAR(191) NULL DEFAULT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` MODIFY COLUMN `name` VARCHAR(191) NOT NULL,
-                                                                       MODIFY COLUMN `email` VARCHAR(191) NOT NULL,
-                                                                       MODIFY COLUMN `place` VARCHAR(191) NOT NULL,
-                                                                       MODIFY COLUMN `locale` VARCHAR(191) NOT NULL;');
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_teams` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

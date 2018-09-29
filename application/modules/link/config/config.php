@@ -46,9 +46,9 @@ class Config extends \Ilch\Config\Install
                   `cat_id` INT(11) NULL DEFAULT 0,
                   `pos` INT(11) NOT NULL DEFAULT 0,
                   `name` VARCHAR(100) NOT NULL,
-                  `desc` VARCHAR(191) NOT NULL,
-                  `banner` VARCHAR(191) NOT NULL,
-                  `link` VARCHAR(191) NOT NULL,
+                  `desc` VARCHAR(255) NOT NULL,
+                  `banner` VARCHAR(255) NOT NULL,
+                  `link` VARCHAR(255) NOT NULL,
                   `hits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -58,7 +58,7 @@ class Config extends \Ilch\Config\Install
                   `parent_id` INT(11) NULL DEFAULT 0,
                   `pos` INT(11) NOT NULL DEFAULT 0,
                   `name` VARCHAR(100) NOT NULL,
-                  `desc` VARCHAR(191) NOT NULL,
+                  `desc` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -72,11 +72,9 @@ class Config extends \Ilch\Config\Install
             case "1.0":
             case "1.1":
             case "1.2":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_links` MODIFY COLUMN `desc` VARCHAR(191) NOT NULL,
-                                                                 MODIFY COLUMN `banner` VARCHAR(191) NOT NULL,
-                                                                 MODIFY COLUMN `link` VARCHAR(191) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_link_cats` MODIFY COLUMN `desc` VARCHAR(191) NOT NULL;');
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_links` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_link_cats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

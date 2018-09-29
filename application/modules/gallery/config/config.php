@@ -44,8 +44,8 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_gallery_imgs` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `image_id` VARCHAR(150) NOT NULL,
-                  `image_title` VARCHAR(191) NOT NULL DEFAULT \'\',
-                  `image_description` VARCHAR(191) NOT NULL DEFAULT \'\',
+                  `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
@@ -57,8 +57,8 @@ class Config extends \Ilch\Config\Install
                   `sort` INT(11) NULL DEFAULT 0,
                   `parent_id` INT(11) NULL DEFAULT 0,
                   `type` TINYINT(1) NOT NULL,
-                  `title` VARCHAR(191) NOT NULL,
-                  `description` VARCHAR(191) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `description` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
@@ -70,11 +70,9 @@ class Config extends \Ilch\Config\Install
             case "1.1":
             case "1.2":
             case "1.3":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` MODIFY COLUMN `image_title` VARCHAR(191) NOT NULL DEFAULT \'\',
-                                                                        MODIFY COLUMN `image_description` VARCHAR(191) NOT NULL DEFAULT \'\';');
-                $this->db()->query('ALTER TABLE `[prefix]_gallery_items` MODIFY COLUMN `title` VARCHAR(191) NOT NULL,
-                                                                         MODIFY COLUMN `description` VARCHAR(191) NOT NULL;');
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_gallery_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

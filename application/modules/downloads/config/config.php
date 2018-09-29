@@ -44,9 +44,9 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `file_id` VARCHAR(150) NOT NULL,
-                  `file_title` VARCHAR(191) NOT NULL DEFAULT \'\',
-                  `file_description` VARCHAR(191) NOT NULL DEFAULT \'\',
-                  `file_image` VARCHAR(191) NOT NULL DEFAULT \'\',
+                  `file_title` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `file_description` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `file_image` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
@@ -58,8 +58,8 @@ class Config extends \Ilch\Config\Install
                   `sort` INT(11) NULL DEFAULT 0,
                   `parent_id` INT(11) NULL DEFAULT 0,
                   `type` INT(11) NOT NULL,
-                  `title` VARCHAR(191) NOT NULL,
-                  `description` VARCHAR(191) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `description` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
@@ -71,11 +71,9 @@ class Config extends \Ilch\Config\Install
             case "1.1":
             case "1.2":
             case "1.3":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_downloads_files` MODIFY COLUMN `file_title` VARCHAR(191) NOT NULL DEFAULT \'\',
-                                                                           MODIFY COLUMN `file_description` VARCHAR(191) NOT NULL DEFAULT \'\',
-                                                                           MODIFY COLUMN `file_image` VARCHAR(191) NOT NULL DEFAULT \'\';');
-                $this->db()->query('ALTER TABLE `[prefix]_downloads_items` MODIFY COLUMN `title` `description` VARCHAR(191) NOT NULL;');
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_files` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

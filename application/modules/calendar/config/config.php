@@ -50,13 +50,13 @@ class Config extends \Ilch\Config\Install
                   `text` MEDIUMTEXT DEFAULT NULL,
                   `color` VARCHAR(7) DEFAULT NULL,
                   `period_day` INT(1) DEFAULT NULL,
-                  `read_access` VARCHAR(191) NOT NULL DEFAULT \'1,2,3\',
+                  `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\',
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_calendar_events` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `url` VARCHAR(191) NOT NULL,
+                  `url` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -67,13 +67,13 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'1,2,3\';');
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `period_day` INT(1) DEFAULT NULL AFTER `color`;');
             case "1.2":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_calendar` MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'1,2,3\';');
-                $this->db()->query('ALTER TABLE `[prefix]_calendar_events` MODIFY COLUMN `url` VARCHAR(191) NOT NULL;');
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_calendar_events` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

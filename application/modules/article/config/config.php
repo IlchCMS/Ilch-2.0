@@ -87,10 +87,10 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_articles` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `cat_id` VARCHAR(191) NOT NULL,
+                  `cat_id` VARCHAR(255) NOT NULL,
                   `date_created` DATETIME NOT NULL,
                   `top` TINYINT(1) NOT NULL DEFAULT 0,
-                  `read_access` VARCHAR(191) NOT NULL DEFAULT \'1,2,3\',
+                  `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\',
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -107,13 +107,13 @@ class Config extends \Ilch\Config\Install
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   `content` MEDIUMTEXT NOT NULL,
                   `description` MEDIUMTEXT NOT NULL,
-                  `keywords` VARCHAR(191) NOT NULL,
-                  `locale` VARCHAR(191) NOT NULL,
-                  `title` VARCHAR(191) NOT NULL,
-                  `teaser` VARCHAR(191) NOT NULL,
-                  `perma` VARCHAR(191) NOT NULL,
-                  `img` VARCHAR(191) NOT NULL,
-                  `img_source` VARCHAR(191) NOT NULL,
+                  `keywords` VARCHAR(255) NOT NULL,
+                  `locale` VARCHAR(255) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `teaser` VARCHAR(255) NOT NULL,
+                  `perma` VARCHAR(255) NOT NULL,
+                  `img` VARCHAR(255) NOT NULL,
+                  `img_source` VARCHAR(255) NOT NULL,
                   `votes` LONGTEXT NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

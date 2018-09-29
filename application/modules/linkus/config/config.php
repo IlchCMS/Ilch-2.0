@@ -49,7 +49,7 @@ class Config extends \Ilch\Config\Install
         return "CREATE TABLE IF NOT EXISTS `[prefix]_linkus` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `title` VARCHAR(100) NOT NULL,
-                  `banner` VARCHAR(191) NOT NULL,
+                  `banner` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
     }
@@ -58,8 +58,8 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_linkus` MODIFY COLUMN `banner` VARCHAR(191) NOT NULL;');
+                // Convert table to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_linkus` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

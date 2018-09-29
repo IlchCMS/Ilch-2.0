@@ -61,7 +61,7 @@ class Config extends \Ilch\Config\Install
                 `game_server_pw` VARCHAR(100) NOT NULL,
                 `text` MEDIUMTEXT NOT NULL,
                 `show` TINYINT(1) NOT NULL DEFAULT 0,
-                `read_access` VARCHAR(191) NOT NULL,
+                `read_access` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
@@ -91,8 +91,9 @@ class Config extends \Ilch\Config\Install
                     $this->db()->query('INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("training/trainings/index/");');
                 }
             case "1.2":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_training` MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL;');
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_training` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_training_entrants` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

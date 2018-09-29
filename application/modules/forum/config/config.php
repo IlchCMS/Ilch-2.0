@@ -74,12 +74,12 @@ class Config extends \Ilch\Config\Install
                 `sort` INT(11) NOT NULL DEFAULT 0,
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
                 `type` TINYINT(1) NOT NULL,
-                `title` VARCHAR(191) NOT NULL,
-                `description` VARCHAR(191) NOT NULL,
+                `title` VARCHAR(255) NOT NULL,
+                `description` VARCHAR(255) NOT NULL,
                 `prefix` VARCHAR(191) NOT NULL,
-                `read_access` VARCHAR(191) NOT NULL,
-                `replay_access` VARCHAR(191) NOT NULL,
-                `create_access` VARCHAR(191) NOT NULL,
+                `read_access` VARCHAR(255) NOT NULL,
+                `replay_access` VARCHAR(255) NOT NULL,
+                `create_access` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -87,7 +87,7 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `topic_id` INT(11) NOT NULL,
                 `topic_prefix` INT(11) NOT NULL DEFAULT 0,
-                `topic_title` VARCHAR(191) NOT NULL,
+                `topic_title` VARCHAR(255) NOT NULL,
                 `visits` INT(11) NOT NULL DEFAULT 0,
                 `creator_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
@@ -106,7 +106,7 @@ class Config extends \Ilch\Config\Install
                 `user_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
                 `forum_id` INT(11) NOT NULL DEFAULT 0,
-                `read` VARCHAR(191) NOT NULL DEFAULT \'\',
+                `read` VARCHAR(255) NOT NULL DEFAULT \'\',
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -189,15 +189,12 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('forum_floodInterval', '0');
                 $databaseConfig->set('forum_excludeFloodProtection', '1');
             case "1.10":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_forum_items` MODIFY COLUMN `title` VARCHAR(191) NOT NULL,
-                                                                       MODIFY COLUMN `description` VARCHAR(191) NOT NULL,
-                                                                       MODIFY COLUMN `prefix` VARCHAR(191) NOT NULL,
-                                                                       MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL,
-                                                                       MODIFY COLUMN `replay_access` VARCHAR(191) NOT NULL,
-                                                                       MODIFY COLUMN `create_access` VARCHAR(191) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` MODIFY COLUMN `topic_title` VARCHAR(191) NOT NULL;');
-                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` MODIFY COLUMN `read` VARCHAR(191) NOT NULL DEFAULT \'\';');
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_forum_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_ranks` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+
                 // Delete no longer needed file.
                 unlink(ROOT_PATH.'/application/modules/forum/controllers/admin/Base.php');
         }

@@ -44,7 +44,7 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `date` DATE NOT NULL,
                   `rank` INT(11) NOT NULL,
-                  `image` VARCHAR(191) NOT NULL,
+                  `image` VARCHAR(255) NOT NULL,
                   `event` VARCHAR(100) NOT NULL,
                   `url` VARCHAR(150) NOT NULL,
                   `ut_id` INT(11) NOT NULL,
@@ -58,12 +58,12 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
             case "1.1":
-                $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` VARCHAR(191) NOT NULL AFTER `rank`;');
+                $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` VARCHAR(255) NOT NULL AFTER `rank`;');
             case "1.2":
             case "1.3":
             case "1.4":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_awards` MODIFY COLUMN `image` VARCHAR(191) NOT NULL;');
+                // Convert table to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_awards` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
     }
 }

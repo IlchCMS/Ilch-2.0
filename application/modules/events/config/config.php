@@ -92,16 +92,16 @@ class Config extends \Ilch\Config\Install
                 `end` DATETIME NOT NULL,
                 `title` VARCHAR(100) NOT NULL,
                 `place` VARCHAR(150) NOT NULL,
-                `website` VARCHAR(191) NOT NULL,
+                `website` VARCHAR(255) NOT NULL,
                 `lat_long` VARCHAR(100) NULL DEFAULT NULL,
-                `image` VARCHAR(191) NULL DEFAULT NULL,
+                `image` VARCHAR(255) NULL DEFAULT NULL,
                 `text` LONGTEXT NOT NULL,
                 `currency` TINYINT(1) NOT NULL,
-                `price` VARCHAR(191) NOT NULL,
+                `price` VARCHAR(255) NOT NULL,
                 `price_art` TINYINT(1) NOT NULL,
                 `show` TINYINT(1) NOT NULL,
                 `user_limit` INT(11) NOT NULL,
-                `read_access` VARCHAR(191) NOT NULL DEFAULT \'2,3\',
+                `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\',
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -113,7 +113,7 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_events_currencies` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(191) NOT NULL,
+                `name` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -136,8 +136,8 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `website` VARCHAR(191) NOT NULL AFTER `place`;');
-                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `read_access` VARCHAR(191) NOT NULL DEFAULT \'2,3\' AFTER `show`;');
+                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `website` VARCHAR(255) NOT NULL AFTER `place`;');
+                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `show`;');
                 unlink(APPLICATION_PATH.'/modules/events/views/show/my.php');
             case "1.1":
             case "1.2":
@@ -148,12 +148,10 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `user_limit` INT(11) NOT NULL AFTER `show`;');
             case "1.7":
             case "1.8":
-                // Change VARCHAR length for new table character.
-                $this->db()->query('ALTER TABLE `[prefix]_events` MODIFY COLUMN `website` VARCHAR(191) NOT NULL,
-                                                                  MODIFY COLUMN `image` VARCHAR(191) NULL DEFAULT NULL,
-                                                                  MODIFY COLUMN `price` VARCHAR(191) NOT NULL,
-                                                                  MODIFY COLUMN `read_access` VARCHAR(191) NOT NULL DEFAULT \'2,3\';');
-                $this->db()->query('ALTER TABLE `[prefix]_events_currencies` MODIFY COLUMN `name` VARCHAR(191) NOT NULL;');
+                // Convert tables to new character set and collate
+                $this->db()->query('ALTER TABLE `[prefix]_events` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_events_entrants` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                $this->db()->query('ALTER TABLE `[prefix]_events_currencies` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
                 $this->db()->query('INSERT INTO `[prefix]_config` (`key`, `value`) VALUES ("event_show_members_accesses", "2,3");');
         }
