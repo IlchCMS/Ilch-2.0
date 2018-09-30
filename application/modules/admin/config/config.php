@@ -434,6 +434,10 @@ class Config extends \Ilch\Config\Install
                 ALTER TABLE `[prefix]_user_menu_settings_links` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
                 ALTER TABLE `[prefix]_visits_online` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
                 ALTER TABLE `[prefix]_visits_stats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+
+                // Change now no longer used smilies module to an optional module and set a few needed values so it can
+                // be uninstalled like a normal module. This is done so that the user can backup maybe needed smilies.
+                $this->db()->query("UPDATE `[prefix]_modules` SET `system` = '0', `version` = '1.0' WHERE `key` = 'smilies';");
                 break;
         }
 
