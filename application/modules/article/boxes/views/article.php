@@ -20,12 +20,15 @@ $displayedArticles = 0;
                 }
 
                 $displayedArticles++;
+                $date = new \Ilch\Date($article->getDateCreated());
             ?>
-                <li class="ellipsis">
+                <li class="ellipsis" style="line-height: 25px;">
                     <span class="ellipsis-item">
                         <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>">
                             <?=$this->escape($article->getTitle()) ?>
                         </a>
+                        <br>
+                        <small><?=$date->format("d.m.y - H:i", true) ?> <?=$this->getTrans('clock') ?></small>
                     </span>
                 </li>
             <?php endforeach; ?>
