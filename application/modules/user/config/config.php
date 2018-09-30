@@ -143,6 +143,7 @@ class Config extends \Ilch\Config\Install
                 `name` VARCHAR(255) NOT NULL,
                 `type` TINYINT(1) NOT NULL,
                 `position` INT(11) UNSIGNED NOT NULL,
+                `show_edit` TINYINT(1) NOT NULL DEFAULT 1,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
@@ -360,6 +361,21 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('regist_setfree', '0');
+
+            case "2.1.2":
+            case "2.1.3":
+            case "2.1.4":
+            case "2.1.5":
+            case "2.1.6":
+            case "2.1.7":
+            case "2.1.8":
+            case "2.1.9":
+            case "2.1.10":
+            case "2.1.11":
+            case "2.1.12":
+            case "2.1.13":
+            case "2.1.14":
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `show_edit` TINYINT(1) NOT NULL DEFAULT 1;');
         }
     }
 }

@@ -37,6 +37,13 @@ class ProfileField extends \Ilch\Model
     protected $position;
 
     /**
+     * The show edit status of the profile-field.
+     *
+     * @var int
+     */
+    protected $showEdit;
+
+    /**
      * Returns the id of the profile-field.
      *
      * @return int
@@ -124,6 +131,29 @@ class ProfileField extends \Ilch\Model
     public function setPosition($position)
     {
         $this->position = (int)$position;
+
+        return $this;
+    }
+
+    /**
+     * Returns the show edit status of the profile-field.
+     *
+     * @return int
+     */
+    public function getShowEdit()
+    {
+        return $this->showEdit;
+    }
+
+    /**
+     * Sets the show edit status.
+     *
+     * @param int $showEdit
+     * @return ProfileField
+     */
+    public function setShowEdit($showEdit)
+    {
+        $this->showEdit = (int)$showEdit;
 
         return $this;
     }

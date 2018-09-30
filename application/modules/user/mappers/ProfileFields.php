@@ -55,6 +55,27 @@ class ProfileFields extends \Ilch\Mapper
     }
 
     /**
+     * Returns a ProfileField id found by the name.
+     *
+     * @param  int $name
+     * @return null|\Modules\User\Models\ProfileField
+     */
+    public function getProfileFieldIdByName($name)
+    {
+        $profileFieldRow = $this->db()->select('*')
+            ->from('profile_fields')
+            ->where(['name' => $name])
+            ->execute()
+            ->fetchRows();
+
+        if (!empty($profileFieldRow)) {
+            $profileFields = array_map([$this, 'loadFromArray'], $profileFieldRow);
+            return reset($profileFields);
+        }
+        return null;
+    }
+
+    /**
      * Updates the position of a profile-field in the database.
      *
      * @param int $id, int $position
@@ -177,6 +198,10 @@ class ProfileFields extends \Ilch\Mapper
 
         if (isset($profileFieldRow['position'])) {
             $profileField->setPosition($profileFieldRow['position']);
+        }
+
+        if (isset($profileFieldRow['show_edit'])) {
+            $profileField->setShowEdit($profileFieldRow['show_edit']);
         }
 
         return $profileField;
