@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.11',
+        'version' => '1.11.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -145,10 +145,10 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0":
-            case "1.1":
-            case "1.2":
-            case "1.3":
+            case "1.0.0":
+            case "1.1.0":
+            case "1.2.0":
+            case "1.3.0":
                 $this->db()->query('ALTER TABLE `[prefix]_forum_items` DROP COLUMN `forum_id`;');
 
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_ranks` (
@@ -171,24 +171,24 @@ class Config extends \Ilch\Config\Install
                     (10, "Kaiser", 5000),
                     (11, "Legende", 7000),
                     (12, "Foren Gott", 10000);');
-            case "1.4":
-            case "1.5":
-            case "1.6":
-            case "1.7":
+            case "1.4.0":
+            case "1.5.0":
+            case "1.6.0":
+            case "1.7.0":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
 
                 $databaseConfig->set('forum_postVoting', '0');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
-            case "1.8":
+            case "1.8.0":
                 if (!$this->db()->ifColumnExists('[prefix]_forum_posts', 'votes')) {
                     $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
                 }
-            case "1.9":
+            case "1.9.0":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
 
                 $databaseConfig->set('forum_floodInterval', '0');
                 $databaseConfig->set('forum_excludeFloodProtection', '1');
-            case "1.10":
+            case "1.10.0":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_forum_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_topics` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');

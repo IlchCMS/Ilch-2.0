@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.4',
+        'version' => '1.4.0',
         'icon_small' => 'fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -137,18 +137,18 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0":
-            case "1.1":
+            case "1.0.0":
+            case "1.1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `status`;');
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access` VARCHAR(255) NOT NULL AFTER `show`;');
-            case "1.2":
+            case "1.2.0":
                 // On installation of Ilch adding this entry failed. Reinstalling or a later install of this module adds the entry.
                 // Add entry on update. Instead of checking if the entry exists, delete entry/entries and add it again.
                 if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
                     $this->db()->query("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'war/wars/index/'");
                     $this->db()->query('INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("war/wars/index/");');
                 }
-            case "1.3":
+            case "1.3.0":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_war_groups` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_war_enemy` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');

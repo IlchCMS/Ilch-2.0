@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'partner',
-        'version' => '1.4',
+        'version' => '1.4.0',
         'icon_small' => 'fa-handshake-o',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -78,13 +78,13 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0":
+            case "1.0.0":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('partners_slider_mode', 'vertical');
-            case "1.1":
-            case "1.2":
+            case "1.1.0":
+            case "1.2.0":
                 $this->db()->query('ALTER TABLE `[prefix]_partners` ADD `target` TINYINT(1) NOT NULL DEFAULT 0 AFTER `link`;');
-            case "1.3":
+            case "1.3.0":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_partners` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
