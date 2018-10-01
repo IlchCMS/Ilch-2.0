@@ -126,7 +126,7 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
+                `key` VARCHAR(255) NOT NULL,
                 `type` TINYINT(1) NOT NULL,
                 `icon` VARCHAR(255) NOT NULL DEFAULT \'\',
                 `addition` VARCHAR(255) NOT NULL DEFAULT \'\',
