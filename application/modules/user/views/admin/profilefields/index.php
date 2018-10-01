@@ -32,9 +32,14 @@
                 foreach ($profileFields as $profileField):
                 ?>
                 <tr id="<?=$profileField->getId() ?>">
-                    <td><?=$this->getDeleteCheckbox('check_users', $profileField->getId()) ?></td>
-                    <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $profileField->getId()]) ?></td>
-                    <td> <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $profileField->getId()]) ?></td>
+
+                    <?php if ($profileField->getHidden() == 0): ?>
+                        <td><?=$this->getDeleteCheckbox('check_users', $profileField->getId()) ?></td>
+                        <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $profileField->getId()]) ?></td>
+                        <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $profileField->getId()]) ?></td>
+                    <?php else: ?>
+                        <td colspan="3"></td>
+                    <?php endif; ?>
                     <td>
                         <?php if ($profileField->getShow() == 1): ?>
                             <a href="<?=$this->getUrl(['action' => 'update', 'id' => $profileField->getId()], null, true) ?>">
@@ -62,7 +67,7 @@
                     }
                     ?>
 
-                    <?php if ($profileField->getType() != 1) : ?>
+                    <?php if ($profileField->getType() != 1): ?>
                         <td><?=$this->escape($profileFieldName) ?></td>
                     <?php else: ?>
                         <td><b><?=$this->escape($profileFieldName) ?></b></td>

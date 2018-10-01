@@ -51,6 +51,13 @@ class ProfileField extends \Ilch\Model
     protected $show;
 
     /**
+     * The hidden status of the profile-field.
+     *
+     * @var int
+     */
+    protected $hidden;
+
+    /**
      * The position of the profile-field.
      *
      * @var int
@@ -191,6 +198,29 @@ class ProfileField extends \Ilch\Model
     public function setShow($show)
     {
         $this->show = (int)$show;
+
+        return $this;
+    }
+
+    /**
+     * Returns the hidden status of the profile-field.
+     *
+     * @return int
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * Sets the hidden status.
+     *
+     * @param int $hidden
+     * @return ProfileField
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = (int)$hidden;
 
         return $this;
     }

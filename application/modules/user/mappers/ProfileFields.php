@@ -239,6 +239,10 @@ class ProfileFields extends \Ilch\Mapper
             $profileField->setShow($profileFieldRow['show']);
         }
 
+        if (isset($profileFieldRow['hidden'])) {
+            $profileField->setHidden($profileFieldRow['hidden']);
+        }
+
         if (isset($profileFieldRow['position'])) {
             $profileField->setPosition($profileFieldRow['position']);
         }

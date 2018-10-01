@@ -131,6 +131,7 @@ class Config extends \Ilch\Config\Install
                 `icon` VARCHAR(255) NOT NULL DEFAULT \'\',
                 `addition` VARCHAR(255) NOT NULL DEFAULT \'\',
                 `show` TINYINT(1) NOT NULL DEFAULT 1,
+                `hidden` TINYINT(1) NOT NULL DEFAULT 0,
                 `position` INT(11) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -407,6 +408,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `icon` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `type`;');
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `addition` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `icon`;');
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `show` TINYINT(1) NOT NULL DEFAULT 1 AFTER `icon`;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `hidden` TINYINT(1) NOT NULL DEFAULT 0 AFTER `show`;');
         }
     }
 }
