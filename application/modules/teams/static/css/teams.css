@@ -12,8 +12,13 @@
 }
 .teams .contact-links a {
     font-size: 22px;
+    margin-right: 5px;
 }
-.teams .contact-links a:hover {
+.teams .contact-links a:last-child {
+    margin-right: 0;
+}
+.teams .contact-links a:hover,
+.teams .contact-links a:focus {
     text-decoration: none;
 }
 
