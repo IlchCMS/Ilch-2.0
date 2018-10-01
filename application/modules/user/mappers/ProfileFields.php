@@ -138,6 +138,32 @@ class ProfileFields extends \Ilch\Mapper
     }
 
     /**
+     * Updates profile-field with given id.
+     *
+     * @param integer $id
+     */
+    public function update($id)
+    {
+        $show = (int) $this->db()->select('show')
+            ->from('profile_fields')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchCell();
+
+        if ($show == 1) {
+            $this->db()->update('profile_fields')
+                ->values(['show' => 0])
+                ->where(['id' => $id])
+                ->execute();
+        } else {
+            $this->db()->update('profile_fields')
+                ->values(['show' => 1])
+                ->where(['id' => $id])
+                ->execute();
+        }
+    }
+
+    /**
      * Deletes a given profile-field with the given id.
      *
      * @param  int $id

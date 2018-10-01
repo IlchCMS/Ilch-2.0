@@ -9,14 +9,16 @@
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="icon_width">
-                <col class="icon_width">
-                <col class="icon_width">
-                <col>
+                <col class="icon_width" />
+                <col class="icon_width" />
+                <col class="icon_width" />
+                <col class="icon_width" />
+                <col />
             </colgroup>
             <thead>
                 <tr>
                     <th><?=$this->getCheckAllCheckbox('check_users') ?></th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th><?=$this->getTrans('profileFieldName') ?></th>
@@ -27,12 +29,23 @@
                 $profileFields = $this->get('profileFields');
                 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 
-                foreach ($profileFields as $profileField) :
+                foreach ($profileFields as $profileField):
                 ?>
                 <tr id="<?=$profileField->getId() ?>">
                     <td><?=$this->getDeleteCheckbox('check_users', $profileField->getId()) ?></td>
                     <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $profileField->getId()]) ?></td>
                     <td> <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $profileField->getId()]) ?></td>
+                    <td>
+                        <?php if ($profileField->getShow() == 1): ?>
+                            <a href="<?=$this->getUrl(['action' => 'update', 'id' => $profileField->getId()], null, true) ?>">
+                                <span class="fa fa-check-square-o text-info"></span>
+                            </a>
+                        <?php else: ?>
+                            <a href="<?=$this->getUrl(['action' => 'update', 'id' => $profileField->getId()], null, true) ?>">
+                                <span class="fa fa-square-o text-info"></span>
+                            </a>
+                        <?php endif; ?>
+                    </td>
                     <?php
                     $found = false;
 

@@ -165,6 +165,17 @@ class ProfileFields extends \Ilch\Controller\Admin
             ->set('localeList', $this->getTranslator()->getLocaleList());
     }
 
+    public function updateAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $profileFieldsMapper = new ProfileFieldsMapper();
+            $profileFieldsMapper->update($this->getRequest()->getParam('id'));
+            $this->addMessage('saveSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
+
     public function deleteAction()
     {
         $profileFieldsMapper = new ProfileFieldsMapper();
@@ -172,7 +183,6 @@ class ProfileFields extends \Ilch\Controller\Admin
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $id = $this->getRequest()->getParam('id');
-
         if ($id && $this->getRequest()->isSecure()) {
             $profileFieldsMapper->deleteProfileField($id);
             $profileFieldsContentMapper->deleteProfileFieldContentByFieldId($id);
