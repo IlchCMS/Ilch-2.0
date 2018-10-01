@@ -68,21 +68,23 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
                 $localUpdateAvailable = false;
                 $moduleOnUpdateServerFound = null;
-                foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
-                    if ($moduleOnUpdateServer->key == $module->getKey()) {
-                        $moduleOnUpdateServerFound = $moduleOnUpdateServer;
-                        break;
+
+                if (!empty($configurations[$module->getKey()]['version'])) {
+                    if (version_compare($module->getVersion(), $configurations[$module->getKey()]['version'], '<')) {
+                        $localUpdateAvailable = true;
+                        $moduleOnUpdateServerFound = json_decode(json_encode($configurations[$module->getKey()]));
                     }
                 }
 
-                if (empty($moduleOnUpdateServerFound)) {
-                    if (!empty($configurations[$module->getKey()]['version'])) {
-                        if (version_compare($module->getVersion(), $configurations[$module->getKey()]['version'], '<')) {
-                            $localUpdateAvailable = true;
-                            $moduleOnUpdateServerFound = json_decode(json_encode($configurations[$module->getKey()]));
+                if (!$localUpdateAvailable) {
+                    foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
+                        if ($moduleOnUpdateServer->key == $module->getKey()) {
+                            $moduleOnUpdateServerFound = $moduleOnUpdateServer;
+                            break;
                         }
                     }
                 }
+
                 if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
                     <tr>
                         <td>
