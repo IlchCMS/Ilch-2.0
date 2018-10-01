@@ -45,11 +45,11 @@
                     } 
 
                     if (!$found) {
-                        $profileFieldName = $profileField->getName();
+                        $profileFieldName = $profileField->getKey();
                     }
                     ?>
 
-                    <?php if (!$profileField->getType()) : ?>
+                    <?php if ($profileField->getType() != 1) : ?>
                         <td><?=$this->escape($profileFieldName) ?></td>
                     <?php else: ?>
                         <td><b><?=$this->escape($profileFieldName) ?></b></td>

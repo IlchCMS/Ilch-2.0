@@ -74,7 +74,7 @@ return [
     'group' => 'Gruppe',
 
     'menuUserList' => 'Mitgliederliste',
-    'profileDetails' => 'Profil Details',
+    'profileDetails' => 'Details',
     'others' => 'Sonstiges',
     'rank' => 'Rang',
     'regist' => 'Registrierungsdatum',
@@ -272,7 +272,13 @@ return [
     'alreadyLoggedIn' => 'Du bist bereits angemeldet!',
 
     'menuProfileFields' => 'Profil-Felder',
+    'profileFieldKey' => 'Key',
     'profileFieldName' => 'Name',
+    'profileFieldType' => 'Typ',
+    'profileFieldField' => 'Feld',
+    'profileFieldCat' => 'Kategorie',
+    'profileFieldIcon' => 'Icon',
+    'profileFieldLinkAddition' => 'Link Zusatz',
     'editProfileField' => 'Profil-Feld editieren',
     'addProfileField' => 'Profil-Feld hinzufügen',
     'newProfileFieldMsg' => 'Neues Profil-Feld erfolgreich hinzugefügt',
@@ -280,6 +286,7 @@ return [
     'profileFieldInfoText' => 'Erstellte Profil-Felder oder Kategorien können durch ziehen und ablegen sortiert werden.',
     'profileFieldTransInfoText' => 'Übersetzungen können mit der Plus-Schaltfläche hinzugefügt und mit der Minus-Schaltfläche oder durch das Löschen des Textes gelöscht werden.',
     'translationAlreadyExisting' => 'Es kann nur eine Übersetzung pro Sprache angelegt werden.',
+    'pleaseSelect' => 'Bitte auswählen',
 
     'picturesPerPage' => 'Bilder pro Seite',
 

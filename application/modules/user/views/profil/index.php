@@ -5,6 +5,7 @@ $birthday = '';
 if ($profil->getBirthday()) {
     $birthday = new \Ilch\Date($profil->getBirthday());
 }
+$profileIconFields = $this->get('profileIconFields');
 $profileFields = $this->get('profileFields');
 $profileFieldsContent = $this->get('profileFieldsContent');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
@@ -47,30 +48,26 @@ foreach ($profil->getGroups() as $group) {
                 <?php if ($this->get('gallery') != 0 AND $profil->getOptGallery() != 0 AND $this->get('galleryAllowed') != 0): ?>
                     <a href="<?=$this->getUrl(['controller' => 'gallery', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa fa-picture-o" title="<?=$this->getTrans('gallery') ?>"></a>
                 <?php endif; ?>
-                <?php if ($profil->getHomepage() != ''): ?>
-                    <a href="<?=$userMapper->getHomepage($this->escape($profil->getHomepage())) ?>" target="_blank" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>
-                <?php endif; ?>
-                <?php if ($profil->getFacebook() != ''): ?>
-                    <a href="https://www.facebook.com/<?=$this->escape($profil->getFacebook()) ?>" target="_blank" class="fa fa-facebook" title="<?=$this->getTrans('profileFacebook') ?>"></a>
-                <?php endif; ?>
-                <?php if ($profil->getTwitter() != ''): ?>
-                    <a href="https://twitter.com/<?=$this->escape($profil->getTwitter()) ?>" target="_blank" class="fa fa-twitter" title="<?=$this->getTrans('profileTwitter') ?>"></a>
-                <?php endif; ?>
-                <?php if ($profil->getGoogle() != ''): ?>
-                    <a href="https://plus.google.com/<?=$this->escape($profil->getGoogle()) ?>" target="_blank" class="fa fa-google-plus" title="<?=$this->getTrans('profileGoogle') ?>"></a>
-                <?php endif; ?>
-                <?php if ($this->escape($profil->getSteam()) != ''): ?>
-                    <a href="https://steamcommunity.com/id/<?=$this->escape($profil->getSteam()) ?>" target="_blank" class="fa fa-steam-square" title="<?=$this->getTrans('profileSteam') ?>"></a>
-                <?php endif; ?>
-                <?php if ($this->escape($profil->getTwitch()) != ''): ?>
-                    <a href="https://www.twitch.tv/<?=$this->escape($profil->getTwitch()) ?>" target="_blank" class="fa fa-twitch" title="<?=$this->getTrans('profileTwitch') ?>"></a>
-                <?php endif; ?>
-                <?php if ($this->escape($profil->getTeamspeak()) != ''): ?>
-                    <a href="ts3server://<?=$this->escape($profil->getTeamspeak()) ?>" target="_blank" title="<?=$this->getTrans('profileTeamspeak') ?>"><img src="<?=$this->getModuleUrl('static/images/teamspeak/teamspeak.svg') ?>" style="width:24px;height:24px;"></a>
-                <?php endif; ?>
-                <?php if ($this->escape($profil->getDiscord()) != ''): ?>
-                    <a href="https://discord.gg/<?=$this->escape($profil->getDiscord()) ?>" target="_blank" title="<?=$this->getTrans('profileDiscord') ?>"><img src="<?=$this->getModuleUrl('static/images/discord/discord.svg') ?>" style="width:24px;height:24px;"></a>
-                <?php endif; ?>
+
+                <?php foreach ($profileIconFields as $profileIconField) {
+                    if ($profileIconField->getShow()) {
+                        foreach ($profileFieldsContent as $profileFieldContent) {
+                            if ($profileFieldContent->getValue() AND $profileIconField->getId() == $profileFieldContent->getFieldId()) {
+                                $profileFieldName = $profileIconField->getKey();
+                                foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                                    if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
+                                        $profileFieldName = $profileFieldTrans->getName();
+                                        break;
+                                    }
+                                }
+
+                                echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" class="fa '.$profileIconField->getIcon().'" title="'.$profileFieldName.'"></a>';
+                                break;
+                            }
+                        }
+                    }
+                }
+                ?>
             </div>
         </div>        
     </div>
@@ -126,32 +123,33 @@ foreach ($profil->getGroups() as $group) {
             </div>
         </div>
 
-        <?php
-        foreach ($profileFields as $profileField) {
-            foreach ($profileFieldsContent as $profileFieldContent) {
-                if($profileField->getId() == $profileFieldContent->getFieldId()) {
-                    $profileFieldName = $profileField->getName();
-                    foreach ($profileFieldsTranslation as $profileFieldTrans) {
-                        if($profileField->getId() == $profileFieldTrans->getFieldId()) {
-                            $profileFieldName = $profileFieldTrans->getName();
-                            break;
+        <?php foreach ($profileFields as $profileField) {
+            if ($profileField->getShow()) {
+                foreach ($profileFieldsContent as $profileFieldContent) {
+                    if ($profileFieldContent->getValue() AND $profileField->getId() == $profileFieldContent->getFieldId()) {
+                        $profileFieldName = $profileField->getKey();
+                        foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                            if ($profileField->getId() == $profileFieldTrans->getFieldId()) {
+                                $profileFieldName = $profileFieldTrans->getName();
+                                break;
+                            }
                         }
+                        if ($profileField->getType() == 0): ?>
+                            <div class="row">
+                                <div class="col-lg-2 detail bold">
+                                    <?=$this->escape($profileFieldName) ?>
+                                </div>
+                                <div class="col-lg-10 detail">
+                                    <?=$this->escape($profileFieldContent->getValue()) ?>
+                                </div>
+                            </div>
+                        <?php else: ?>
+                            <div class="clearfix"></div>
+                            <br />
+                            <h1><?=$this->escape($profileFieldName) ?></h1>
+                        <?php endif;
+                        break;
                     }
-                    if($profileField->getType() == 0) : ?>
-                        <div class="row">
-                            <div class="col-lg-2 detail bold">
-                                <?=$this->escape($profileFieldName) ?>
-                            </div>
-                            <div class="col-lg-10 detail">
-                                <?=$this->escape($profileFieldContent->getValue()) ?>
-                            </div>
-                        </div>
-                    <?php else : ?>
-                        <div class="clearfix"></div>
-                        <br />
-                        <h1><?=$this->escape($profileFieldName) ?></h1>
-                    <?php endif;
-                    break;
                 }
             }
         }
@@ -172,7 +170,7 @@ foreach ($profil->getGroups() as $group) {
         <h1><?=$this->getTrans('others') ?></h1>
         <div class="row">
             <div class="col-lg-2 detail bold">
-                <?=$this->getTrans('groups') ?>:
+                <?=$this->getTrans('groups') ?>
             </div>
             <div class="col-lg-10 detail">
                 <?=$this->escape($groups) ?>
