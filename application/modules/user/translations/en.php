@@ -291,6 +291,7 @@ return [
     'profileFieldTransInfoText' => 'Translations can be added with the plus-button and deleted with the minus-button or by deleting the text.',
     'translationAlreadyExisting' => 'There can only be one translation per language.',
     'pleaseSelect' => 'Please select',
+    'profileFieldHidden' => 'Field hidden by the administrator.',
 
     'picturesPerPage' => 'Pictures per page',
 

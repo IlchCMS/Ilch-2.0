@@ -287,6 +287,7 @@ return [
     'profileFieldTransInfoText' => 'Übersetzungen können mit der Plus-Schaltfläche hinzugefügt und mit der Minus-Schaltfläche oder durch das Löschen des Textes gelöscht werden.',
     'translationAlreadyExisting' => 'Es kann nur eine Übersetzung pro Sprache angelegt werden.',
     'pleaseSelect' => 'Bitte auswählen',
+    'profileFieldHidden' => 'Feld vom Administrator ausgeblendet.',
 
     'picturesPerPage' => 'Bilder pro Seite',
 

@@ -121,11 +121,20 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                                     <?=$this->escape($profileFieldName) ?>
                                 </label>
                                 <div class="col-lg-8">
+                                    <?php if ($profileField->getShow() == 0): ?>
+                                        <div class="input-group">
+                                    <?php endif; ?>
                                    <input type="text"
                                           class="form-control"
                                           name="<?=$index ?>"
                                           placeholder="<?=$value ?>"
                                           value="<?=$value ?>" />
+                                    <?php if ($profileField->getShow() == 0): ?>
+                                        <span class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                            <span class="fa fa-eye-slash"></span>
+                                        </span>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         <?php else: ?>
@@ -161,5 +170,7 @@ $(document).ready(function() {
         minView: 2,
         todayHighlight: true
     });
+
+    $("[rel='tooltip']").tooltip();
 });
 </script>
