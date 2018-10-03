@@ -74,7 +74,7 @@ return [
     'group' => 'Group',
 
     'menuUserList' => 'Userlist',
-    'profileDetails' => 'Profile Details',
+    'profileDetails' => 'Details',
     'others' => 'Others',
     'rank' => 'Rank',
     'regist' => 'Registered Date',
@@ -276,7 +276,13 @@ return [
     'alreadyLoggedIn' => 'You are already logged in!',
 
     'menuProfileFields' => 'Profilefields',
+    'profileFieldKey' => 'Key',
     'profileFieldName' => 'Name',
+    'profileFieldType' => 'Type',
+    'profileFieldField' => 'Field',
+    'profileFieldCat' => 'Category',
+    'profileFieldIcon' => 'Icon',
+    'profileFieldLinkAddition' => 'Link addition',
     'editProfileField' => 'Edit profile-field',
     'addProfileField' => 'Create profile-field',
     'newProfileFieldMsg' => 'New profile-field successfully added',
@@ -284,6 +290,8 @@ return [
     'profileFieldInfoText' => 'Created profile-fields and categories can be sorted by drag and drop.',
     'profileFieldTransInfoText' => 'Translations can be added with the plus-button and deleted with the minus-button or by deleting the text.',
     'translationAlreadyExisting' => 'There can only be one translation per language.',
+    'pleaseSelect' => 'Please select',
+    'profileFieldHidden' => 'Field hidden by the administrator.',
 
     'picturesPerPage' => 'Pictures per page',
 

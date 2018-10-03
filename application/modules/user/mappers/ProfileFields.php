@@ -13,12 +13,14 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Returns all profile-fields.
      *
+     * @param  array $where
      * @return array()|\Modules\User\Models\ProfileField
      */
-    public function getProfileFields()
+    public function getProfileFields($where = [])
     {
         $profileFieldRows = $this->db()->select('*')
             ->from('profile_fields')
+            ->where($where, 'or')
             ->order(['position' => 'ASC'])
             ->execute()
             ->fetchRows();
@@ -55,6 +57,27 @@ class ProfileFields extends \Ilch\Mapper
     }
 
     /**
+     * Returns a ProfileField model found by the key.
+     *
+     * @param  int $key
+     * @return null|\Modules\User\Models\ProfileField
+     */
+    public function getProfileFieldIdByKey($key)
+    {
+        $profileFieldRow = $this->db()->select('*')
+            ->from('profile_fields')
+            ->where(['key' => $key])
+            ->execute()
+            ->fetchRows();
+
+        if (!empty($profileFieldRow)) {
+            $profileFields = array_map([$this, 'loadFromArray'], $profileFieldRow);
+            return reset($profileFields);
+        }
+        return null;
+    }
+
+    /**
      * Updates the position of a profile-field in the database.
      *
      * @param int $id, int $position
@@ -70,18 +93,21 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Inserts or updates a ProfileField model in the database.
      *
-     * @param UserModel $user
+     * @param ProfileFieldModel $profileField
      *
      * @return int The id of the updated or inserted profile-field.
      */
     public function save(ProfileFieldModel $profileField)
     {
         $fields = [];
-        $name = $profileField->getName();
+        $key = $profileField->getKey();
 
-        if (!empty($name)) {
-            $fields['name'] = $profileField->getName();
+        if (!empty($key)) {
+            $fields['key'] = $profileField->getKey();
             $fields['type'] = $profileField->getType();
+            $fields['icon'] = $profileField->getIcon();
+            $fields['addition'] = $profileField->getAddition();
+            $fields['show'] = $profileField->getShow();
             $fields['position'] = $profileField->getPosition();
         }
 
@@ -109,6 +135,32 @@ class ProfileFields extends \Ilch\Mapper
         }
 
         return $id;
+    }
+
+    /**
+     * Updates profile-field with given id.
+     *
+     * @param integer $id
+     */
+    public function update($id)
+    {
+        $show = (int) $this->db()->select('show')
+            ->from('profile_fields')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchCell();
+
+        if ($show == 1) {
+            $this->db()->update('profile_fields')
+                ->values(['show' => 0])
+                ->where(['id' => $id])
+                ->execute();
+        } else {
+            $this->db()->update('profile_fields')
+                ->values(['show' => 1])
+                ->where(['id' => $id])
+                ->execute();
+        }
     }
 
     /**
@@ -167,17 +219,34 @@ class ProfileFields extends \Ilch\Mapper
             $profileField->setId($profileFieldRow['id']);
         }
 
-        if (isset($profileFieldRow['name'])) {
-            $profileField->setName($profileFieldRow['name']);
+        if (isset($profileFieldRow['key'])) {
+            $profileField->setKey($profileFieldRow['key']);
         }
 
         if (isset($profileFieldRow['type'])) {
             $profileField->setType($profileFieldRow['type']);
         }
 
+        if (isset($profileFieldRow['icon'])) {
+            $profileField->setIcon($profileFieldRow['icon']);
+        }
+
+        if (isset($profileFieldRow['addition'])) {
+            $profileField->setAddition($profileFieldRow['addition']);
+        }
+
+        if (isset($profileFieldRow['show'])) {
+            $profileField->setShow($profileFieldRow['show']);
+        }
+
+        if (isset($profileFieldRow['hidden'])) {
+            $profileField->setHidden($profileFieldRow['hidden']);
+        }
+
         if (isset($profileFieldRow['position'])) {
             $profileField->setPosition($profileFieldRow['position']);
         }
+
 
         return $profileField;
     }

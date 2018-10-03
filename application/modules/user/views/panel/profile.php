@@ -67,102 +67,6 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         </select>
                     </div>
                 </div>
-                <div class="form-group <?=$this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
-                    <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileHomepage'); ?>
-                    </label>
-                    <div class="col-lg-8">
-                       <input type="text"
-                              class="form-control"
-                              name="homepage"
-                              placeholder="<?=$this->escape($profil->getHomepage()) ?>"
-                              value="<?=($this->originalInput('homepage') != '') ? $this->escape($this->originalInput('homepage')) : $this->escape($profil->getHomepage()) ?>" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileFacebook'); ?>
-                    </label>
-                    <div class="col-lg-8">
-                       <input type="text"
-                              class="form-control"
-                              name="facebook"
-                              placeholder="<?=$this->escape($profil->getFacebook()) ?>"
-                              value="<?=($this->originalInput('facebook') != '') ? $this->escape($this->originalInput('facebook')) : $this->escape($profil->getFacebook()) ?>" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileTwitter'); ?>
-                    </label>
-                    <div class="col-lg-8">
-                       <input type="text"
-                              class="form-control"
-                              name="twitter"
-                              placeholder="<?=$this->escape($profil->getTwitter()) ?>"
-                              value="<?=($this->originalInput('twitter') != '') ? $this->escape($this->originalInput('twitter')) : $this->escape($profil->getTwitter()) ?>" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileGoogle'); ?>
-                    </label>
-                    <div class="col-lg-8">
-                       <input type="text"
-                              class="form-control"
-                              name="google"
-                              placeholder="<?=$this->escape($profil->getGoogle()) ?>"
-                              value="<?=($this->originalInput('google') != '') ? $this->escape($this->originalInput('google')) : $this->escape($profil->getGoogle()) ?>" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileSteam'); ?>
-                    </label>
-                    <div class="col-lg-8">
-                       <input type="text"
-                              class="form-control"
-                              name="steam"
-                              placeholder="<?=$this->escape($profil->getSteam()) ?>"
-                              value="<?=($this->originalInput('steam') != '') ? $this->escape($this->originalInput('steam')) : $this->escape($profil->getSteam()) ?>" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileTwitch'); ?>
-                    </label>
-                    <div class="col-lg-8">
-                       <input type="text"
-                              class="form-control"
-                              name="twitch"
-                              placeholder="<?=$this->escape($profil->getTwitch()) ?>"
-                              value="<?=($this->originalInput('twitch') != '') ? $this->escape($this->originalInput('twitch')) : $this->escape($profil->getTwitch()) ?>" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileTeamspeak'); ?>
-                    </label>
-                    <div class="col-lg-8">
-                       <input type="text"
-                              class="form-control"
-                              name="teamspeak"
-                              placeholder="<?=$this->escape($profil->getTeamspeak()) ?>"
-                              value="<?=($this->originalInput('teamspeak') != '') ? $this->escape($this->originalInput('teamspeak')) : $this->escape($profil->getTeamspeak()) ?>" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileDiscord'); ?>
-                    </label>
-                    <div class="col-lg-8">
-                       <input type="text"
-                              class="form-control"
-                              name="discord"
-                              placeholder="<?=$this->escape($profil->getDiscord()) ?>"
-                              value="<?=($this->originalInput('discord') != '') ? $this->escape($this->originalInput('discord')) : $this->escape($profil->getDiscord()) ?>" />
-                    </div>
-                </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileCity'); ?>
@@ -189,44 +93,54 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         </span>
                     </div>
                 </div>
-                <?php
-                foreach ($profileFields as $profileField) :
-                    $profileFieldName = $profileField->getName();
-                    foreach ($profileFieldsTranslation as $profileFieldTranslation) {
-                        if($profileField->getId() == $profileFieldTranslation->getFieldId()) {
-                            $profileFieldName = $profileFieldTranslation->getName();
-                            break;
-                        }
-                    }
-                    
-                    if(!$profileField->getType()) :
-                        $value = '';
-                        $index = 'profileField'.$profileField->getId();
-                        if ($this->originalInput($index) != '') {
-                            $value = $this->escape($this->originalInput($index));
-                        } else {
-                            foreach($profileFieldsContent as $profileFieldContent) {
-                                if($profileField->getId() == $profileFieldContent->getFieldId()) {
-                                    $value = $this->escape($profileFieldContent->getValue());
-                                    break;
-                                }
+                <?php foreach ($profileFields as $profileField):
+                    if ($profileField->getHidden() == 0):
+                        $profileFieldName = $profileField->getKey();
+                        foreach ($profileFieldsTranslation as $profileFieldTranslation) {
+                            if ($profileField->getId() == $profileFieldTranslation->getFieldId()) {
+                                $profileFieldName = $profileFieldTranslation->getName();
+                                break;
                             }
-                        } ?>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">
-                                <?=$this->escape($profileFieldName) ?>
-                            </label>
-                            <div class="col-lg-8">
-                               <input type="text"
-                                      class="form-control"
-                                      name="<?=$index ?>"
-                                      placeholder="<?=$value ?>"
-                                      value="<?=$value ?>" />
+                        }
+
+                        if ($profileField->getType() != 1):
+                            $value = '';
+                            $index = 'profileField'.$profileField->getId();
+                            if ($this->originalInput($index) != '') {
+                                $value = $this->escape($this->originalInput($index));
+                            } else {
+                                foreach ($profileFieldsContent as $profileFieldContent) {
+                                    if ($profileField->getId() == $profileFieldContent->getFieldId()) {
+                                        $value = $this->escape($profileFieldContent->getValue());
+                                        break;
+                                    }
+                                }
+                            } ?>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">
+                                    <?=$this->escape($profileFieldName) ?>
+                                </label>
+                                <div class="col-lg-8">
+                                    <?php if ($profileField->getShow() == 0): ?>
+                                        <div class="input-group">
+                                    <?php endif; ?>
+                                   <input type="text"
+                                          class="form-control"
+                                          name="<?=$index ?>"
+                                          placeholder="<?=$value ?>"
+                                          value="<?=$value ?>" />
+                                    <?php if ($profileField->getShow() == 0): ?>
+                                        <span class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                            <span class="fa fa-eye-slash"></span>
+                                        </span>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                        </div>
-                    <?php else : ?>
-                        <h1><?=$this->escape($profileFieldName) ?></h1>
-                    <?php endif;
+                        <?php else: ?>
+                            <h1><?=$this->escape($profileFieldName) ?></h1>
+                        <?php endif;
+                     endif;
                 endforeach; ?>
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
@@ -256,5 +170,7 @@ $(document).ready(function() {
         minView: 2,
         todayHighlight: true
     });
+
+    $("[rel='tooltip']").tooltip();
 });
 </script>

@@ -11,6 +11,9 @@ use Modules\Teams\Mappers\Joins as JoinsMapper;
 use Modules\Teams\Models\Joins as JoinsModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
+use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
+use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
@@ -20,6 +23,9 @@ class Index extends \Ilch\Controller\Frontend
         $teamsMapper = new TeamsMapper();
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
+        $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+        $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $this->getLayout()->header()
             ->css('static/css/teams.css');
@@ -28,9 +34,15 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index']);
 
+        $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
+        $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
+
         $this->getView()->set('userMapper', $userMapper)
             ->set('groupMapper', $groupMapper)
-            ->set('teams', $teamsMapper->getTeams());
+            ->set('profileFieldsContentMapper', $profileFieldsContentMapper)
+            ->set('teams', $teamsMapper->getTeams())
+            ->set('profileIconFields', $profileIconFields)
+            ->set('profileFieldsTranslation', $profileFieldsTranslation);
     }
 
     public function teamAction()
@@ -38,6 +50,9 @@ class Index extends \Ilch\Controller\Frontend
         $teamsMapper = new TeamsMapper();
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
+        $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+        $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $this->getLayout()->header()
             ->css('static/css/teams.css');
@@ -47,9 +62,15 @@ class Index extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuTeam'), ['action' => 'team', 'id' => $this->getRequest()->getParam('id')]);
 
+        $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
+        $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
+
         $this->getView()->set('userMapper', $userMapper)
             ->set('groupMapper', $groupMapper)
-            ->set('team', $teamsMapper->getTeamById($this->getRequest()->getParam('id')));
+            ->set('profileFieldsContentMapper', $profileFieldsContentMapper)
+            ->set('team', $teamsMapper->getTeamById($this->getRequest()->getParam('id')))
+            ->set('profileIconFields', $profileIconFields)
+            ->set('profileFieldsTranslation', $profileFieldsTranslation);
     }
 
     public function joinAction()

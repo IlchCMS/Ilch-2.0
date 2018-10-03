@@ -83,7 +83,7 @@ class Config extends \Ilch\Config\Install
                 `name` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_users` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(255) NOT NULL,
@@ -92,14 +92,6 @@ class Config extends \Ilch\Config\Install
                 `first_name` VARCHAR(255) NOT NULL DEFAULT "",
                 `last_name` VARCHAR(255) NOT NULL DEFAULT "",
                 `gender` TINYINT(1) NOT NULL DEFAULT 0,
-                `homepage` VARCHAR(255) NOT NULL DEFAULT "",
-                `facebook` VARCHAR(255) NOT NULL DEFAULT "",
-                `twitter` VARCHAR(255) NOT NULL DEFAULT "",
-                `google` VARCHAR(255) NOT NULL DEFAULT "",
-                `steam` VARCHAR(255) NOT NULL DEFAULT "",
-                `twitch` VARCHAR(255) NOT NULL DEFAULT "",
-                `teamspeak` VARCHAR(255) NOT NULL DEFAULT "",
-                `discord` VARCHAR(255) NOT NULL DEFAULT "",
                 `city` VARCHAR(255) NOT NULL DEFAULT "",
                 `birthday` DATE NULL DEFAULT NULL,
                 `avatar` VARCHAR(255) NOT NULL DEFAULT "",
@@ -116,12 +108,12 @@ class Config extends \Ilch\Config\Install
                 `locked` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
                 `user_id` INT(11) NOT NULL,
                 `group_id` INT(11) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
                 `group_id` INT(11) NOT NULL,
                 `page_id` INT(11) DEFAULT 0,
@@ -131,35 +123,45 @@ class Config extends \Ilch\Config\Install
                 `access_level` INT(11) DEFAULT 0,
                 PRIMARY KEY (`group_id`, `page_id`, `module_key`, `article_id`, `box_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
-            CREATE TABLE IF NOT EXISTS `[prefix]_profile_content` (
-                `user_id` INT(11) NOT NULL,
-                `field_id` INT(11) NOT NULL,
-                `value` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
+                `key` VARCHAR(255) NOT NULL,
                 `type` TINYINT(1) NOT NULL,
+                `icon` VARCHAR(255) NOT NULL DEFAULT \'\',
+                `addition` VARCHAR(255) NOT NULL DEFAULT \'\',
+                `show` TINYINT(1) NOT NULL DEFAULT 1,
+                `hidden` TINYINT(1) NOT NULL DEFAULT 0,
                 `position` INT(11) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_profile_content` (
+                `field_id` INT(11) NOT NULL,
+                `user_id` INT(11) NOT NULL,
+                `value` VARCHAR(255) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_profile_trans` (
+                `field_id` INT(11) NOT NULL,
+                `locale` VARCHAR(255) NOT NULL,
+                `name` VARCHAR(255) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
             CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `key` VARCHAR(255) NOT NULL,
                 `icon` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_user_menu_settings_links` (
                 `key` VARCHAR(255) NOT NULL,
                 `locale` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
                 `name` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
                 `c_id` INT(11) NOT NULL AUTO_INCREMENT,
                 `user_one` INT(11) UNSIGNED NOT NULL,
@@ -167,7 +169,7 @@ class Config extends \Ilch\Config\Install
                 `time` DATETIME NOT NULL,
                 PRIMARY KEY (`c_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
                 `cr_id` INT(11) NOT NULL AUTO_INCREMENT,
                 `reply` TEXT,
@@ -177,7 +179,7 @@ class Config extends \Ilch\Config\Install
                 `read` TINYINT(1) DEFAULT 0,
                 PRIMARY KEY (`cr_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_users_media` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `user_id` INT(11) NOT NULL,
@@ -188,7 +190,7 @@ class Config extends \Ilch\Config\Install
                 `datetime` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_imgs` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `user_id` INT(11) NOT NULL,
@@ -199,7 +201,7 @@ class Config extends \Ilch\Config\Install
                 `visits` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `user_id` INT(11) NOT NULL,
@@ -210,13 +212,7 @@ class Config extends \Ilch\Config\Install
                 `description` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
-            CREATE TABLE IF NOT EXISTS `[prefix]_profile_trans` (
-                `field_id` INT(11) NOT NULL,
-                `locale` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_tokens` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `selector` CHAR(12),
@@ -225,13 +221,13 @@ class Config extends \Ilch\Config\Install
                 `expires` DATETIME,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_cookie_stolen` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `userid` INT(11) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers` (
                 `key` VARCHAR(45) NOT NULL,
                 `name` VARCHAR(255) NOT NULL,
@@ -240,7 +236,7 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`key`),
                 UNIQUE KEY `key_UNIQUE` (`key`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers_modules` (
                 `module` VARCHAR(50) NOT NULL,
                 `provider` VARCHAR(50) NOT NULL,
@@ -250,7 +246,7 @@ class Config extends \Ilch\Config\Install
                 `unlink_action` VARCHAR(255) DEFAULT NULL,
                 PRIMARY KEY (`module`, `provider`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_users_auth_providers` (
                 `user_id` INT(11) NOT NULL,
                 `provider` VARCHAR(50) NOT NULL,
@@ -261,18 +257,46 @@ class Config extends \Ilch\Config\Install
                 `created_at` VARCHAR(45) DEFAULT NULL,
                 PRIMARY KEY (`user_id`, `provider`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
                 (1, "Administrator"),
                 (2, "User"),
                 (3, "Guest");
-            
+
+            INSERT INTO `[prefix]_profile_fields` (`id`, `key`, `type`, `icon`, `addition`, `show`, `position`) VALUES
+                (1, "website", 2, "fa-globe", "", 1, 0),
+                (2, "facebook", 2, "fa-facebook", "https://www.facebook.com/", 1, 1),
+                (3, "twitter", 2, "fa-twitter", "https://twitter.com/", 1, 2),
+                (4, "google+", 2, "fa-google-plus", "https://plus.google.com/", 1, 3),
+                (5, "steam", 2, "fa-steam-square", "https://steamcommunity.com/id/", 1, 4),
+                (6, "twitch", 2, "fa-twitch", "https://www.twitch.tv/", 1, 5),
+                (7, "teamspeak", 2, "fa-headphones", "ts3server://", 1, 6),
+                (8, "discord", 2, "fa-headphones", "https://discord.gg/", 1, 7);
+
+            INSERT INTO `[prefix]_profile_trans` (`field_id`, `locale`, `name`) VALUES
+                (1, "de_DE", "Webseite"),
+                (1, "en_EN", "Website"),
+                (2, "de_DE", "Facebook"),
+                (2, "en_EN", "Facebook"),
+                (3, "de_DE", "Twitter"),
+                (3, "en_EN", "Twitter"),
+                (4, "de_DE", "Google+"),
+                (4, "en_EN", "Google+"),
+                (5, "de_DE", "Steam"),
+                (5, "en_EN", "Steam"),
+                (6, "de_DE", "Twitch"),
+                (6, "en_EN", "Twitch"),
+                (7, "de_DE", "Teamspeak"),
+                (7, "en_EN", "Teamspeak"),
+                (8, "de_DE", "Discord"),
+                (8, "en_EN", "Discord");
+
             INSERT INTO `[prefix]_user_menu` (`id`, `key`, `icon`) VALUES
                 (1, "user/panel/index", "fa-home"),
                 (2, "user/panel/dialog", "fa-envelope"),
                 (3, "user/panel/gallery", "fa-picture-o"),
                 (4, "user/panel/settings", "fa-cogs");
-            
+
             INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
                 ("user", "regist_confirm_mail", "Registrierbestätigung", "<p>Hallo <b>{name}</b>,</p>
                     <p>&nbsp;</p>
@@ -360,6 +384,31 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('regist_setfree', '0');
+            case "2.1.2":
+            case "2.1.3":
+            case "2.1.4":
+            case "2.1.5":
+            case "2.1.6":
+            case "2.1.7":
+            case "2.1.8":
+            case "2.1.9":
+            case "2.1.10":
+            case "2.1.11":
+            case "2.1.12":
+            case "2.1.13":
+            case "2.1.14":
+                $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `homepage`;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `facebook`;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `twitter`;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `google`;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `steam`;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `twitch`;');
+                $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `teamspeak`;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` CHANGE `name` `key` VARCHAR(255) NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `icon` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `type`;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `addition` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `icon`;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `show` TINYINT(1) NOT NULL DEFAULT 1 AFTER `icon`;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `hidden` TINYINT(1) NOT NULL DEFAULT 0 AFTER `show`;');
         }
     }
 }

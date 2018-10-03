@@ -70,14 +70,14 @@ class ProfileFields extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index']);
 
         $profileFieldsMapper = new ProfileFieldsMapper();
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
-        $this->getView()->set('profileFields', $profileFieldsMapper->getProfileFields());
-        $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale()));
+        $this->getView()->set('profileFields', $profileFieldsMapper->getProfileFields())
+            ->set('profileFieldsTranslation', $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale()));
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
             foreach ($this->getRequest()->getPost('check_users') as $id) {
@@ -90,7 +90,7 @@ class ProfileFields extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
             $positions = explode(',', $postData['hiddenMenu']);
-            for($x = 0; $x < count($positions); $x++) {
+            for ($x = 0; $x < count($positions); $x++) {
                 $profileFieldsMapper->updatePositionById($positions[$x], $x);
             }
             $this->addMessage('success');
@@ -101,9 +101,9 @@ class ProfileFields extends \Ilch\Controller\Admin
     public function treatAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('editProfileField'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
+            ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('editProfileField'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
 
         $profileFieldId = $this->getRequest()->getParam('id');
         $profileFieldsMapper = new ProfileFieldsMapper();
@@ -115,24 +115,12 @@ class ProfileFields extends \Ilch\Controller\Admin
             $profileField = new ProfileFieldModel();
         }
 
-        $this->getView()->set('countOfProfileFields', $profileFieldsMapper->getCountOfProfileFields());
-        $this->getView()->set('profileField', $profileField);
-        $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslationMapper->getProfileFieldTranslationByFieldId($profileFieldId));
-        $this->getView()->set('localeList', $this->getTranslator()->getLocaleList());
-    }
-
-    public function saveAction()
-    {
-        $postData = $this->getRequest()->getPost();
-
-        if (isset($postData['profileField'])) {
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->getRequest()->getPost();
             $profileFieldData = $postData['profileField'];
-
-            $profileFieldsMapper = new ProfileFieldsMapper();
-
-            if (empty($profileFieldData['type'])) {
-                // if 'type' is empty the checkbox for type category was unchecked.
-                $profileFieldData['type'] = 0;
+            if ($profileFieldData['type'] != 2) {
+                $profileFieldData['icon'] = '';
+                $profileFieldData['addition'] = '';
             }
 
             $profileField = $profileFieldsMapper->loadFromArray($profileFieldData);
@@ -143,13 +131,11 @@ class ProfileFields extends \Ilch\Controller\Admin
                     $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
                     $profileFieldTransData = $postData['profileFieldTrans'.$i];
-
                     if (empty($profileFieldTransData['field_id'])) {
                         $profileFieldTransData['field_id'] = $profileFieldId;
                     }
 
                     $profileFieldTrans = $profileFieldsTranslationMapper->loadFromArray($profileFieldTransData);
-
                     if ($profileFieldTrans->getName() != '') {
                         $profileFieldsTranslationMapper->save($profileFieldTrans);
                     } else {
@@ -160,14 +146,34 @@ class ProfileFields extends \Ilch\Controller\Admin
 
             if (!empty($profileFieldId)) {
                 if (empty($profileFieldData['id'])) {
-                    $this->addMessage('newProfileFieldMsg');
+                    $this->redirect()
+                        ->withMessage('newProfileFieldMsg')
+                        ->to(['action' => 'index']);
                 } else {
-                    $this->addMessage('saveSuccess');
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['action' => 'index']);
                 }
             }
 
             $this->redirect(['action' => 'treat', 'id' => $profileFieldId]);
         }
+
+        $this->getView()->set('countOfProfileFields', $profileFieldsMapper->getCountOfProfileFields())
+            ->set('profileField', $profileField)
+            ->set('profileFieldsTranslation', $profileFieldsTranslationMapper->getProfileFieldTranslationByFieldId($profileFieldId))
+            ->set('localeList', $this->getTranslator()->getLocaleList());
+    }
+
+    public function updateAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $profileFieldsMapper = new ProfileFieldsMapper();
+            $profileFieldsMapper->update($this->getRequest()->getParam('id'));
+            $this->addMessage('saveSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 
     public function deleteAction()
@@ -177,8 +183,7 @@ class ProfileFields extends \Ilch\Controller\Admin
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $id = $this->getRequest()->getParam('id');
-
-        if($id && $this->getRequest()->isSecure()) {
+        if ($id && $this->getRequest()->isSecure()) {
             $profileFieldsMapper->deleteProfileField($id);
             $profileFieldsContentMapper->deleteProfileFieldContentByFieldId($id);
             $profileFieldsTranslationMapper->deleteProfileFieldTranslationsByFieldId($id);

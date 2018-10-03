@@ -32,14 +32,14 @@ class Panel extends BaseController
     public function indexAction()
     {
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index', 'user' => $this->getUser()->getId()]);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index', 'user' => $this->getUser()->getId()]);
     }
 
     public function settingsAction()
     {
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings']);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings']);
     }
 
     public function profileAction()
@@ -47,9 +47,9 @@ class Panel extends BaseController
         $profilMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
-                ->add($this->getTranslator()->trans('menuEditProfile'), ['controller' => 'panel', 'action' => 'profile']);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+            ->add($this->getTranslator()->trans('menuEditProfile'), ['controller' => 'panel', 'action' => 'profile']);
 
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsMapper = new ProfileFieldsMapper();
@@ -58,9 +58,10 @@ class Panel extends BaseController
         $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getUser()->getId());
         $profileFields = $profileFieldsMapper->getProfileFields();
         $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
-        $this->getView()->set('profileFieldsContent', $profileFieldsContent);
-        $this->getView()->set('profileFields', $profileFields);
-        $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
+
+        $this->getView()->set('profileFieldsContent', $profileFieldsContent)
+            ->set('profileFields', $profileFields)
+            ->set('profileFieldsTranslation', $profileFieldsTranslation);
 
         if ($this->getRequest()->isPost()) {
             Validation::setCustomFieldAliases([
@@ -73,14 +74,6 @@ class Panel extends BaseController
                 'firstname' => trim($this->getRequest()->getPost('first-name')),
                 'lastname' => trim($this->getRequest()->getPost('last-name')),
                 'gender' => trim($this->getRequest()->getPost('gender')),
-                'homepage' => trim($this->getRequest()->getPost('homepage')),
-                'facebook' => trim($this->getRequest()->getPost('facebook')),
-                'twitter' => trim($this->getRequest()->getPost('twitter')),
-                'google' => trim($this->getRequest()->getPost('google')),
-                'steam' => trim($this->getRequest()->getPost('steam')),
-                'twitch' => trim($this->getRequest()->getPost('twitch')),
-                'teamspeak' => trim($this->getRequest()->getPost('teamspeak')),
-                'discord' => trim($this->getRequest()->getPost('discord')),
                 'city' => trim($this->getRequest()->getPost('city'))
             ];
 
@@ -90,8 +83,7 @@ class Panel extends BaseController
             }
 
             $validation = Validation::create($post, [
-                'email' => 'required|email',
-                'homepage' => 'url'
+                'email' => 'required|email'
             ]);
 
             $birthday = '';
@@ -101,29 +93,21 @@ class Panel extends BaseController
 
             if ($validation->isValid()) {
                 $model = new UserModel();
-                $model->setId($this->getUser()->getId());
-                $model->setEmail($post['email']);
-                $model->setFirstName($post['firstname']);
-                $model->setLastName($post['lastname']);
-                $model->setGender($post['gender']);
-                $model->setHomepage($post['homepage']);
-                $model->setFacebook($post['facebook']);
-                $model->setTwitter($post['twitter']);
-                $model->setGoogle($post['google']);
-                $model->setSteam($post['steam']);
-                $model->setTwitch($post['twitch']);
-                $model->setTeamspeak($post['teamspeak']);
-                $model->setDiscord($post['discord']);
-                $model->setCity($post['city']);
-                $model->setBirthday($birthday);
+                $model->setId($this->getUser()->getId())
+                    ->setEmail($post['email'])
+                    ->setFirstName($post['firstname'])
+                    ->setLastName($post['lastname'])
+                    ->setGender($post['gender'])
+                    ->setCity($post['city'])
+                    ->setBirthday($birthday);
                 $profilMapper->save($model);
 
                 foreach ($profileFields as $profileField) {
                     $index = 'profileField'.$profileField->getId();
                     $profileFieldsContent = new ProfileFieldContentModel();
-                    $profileFieldsContent->setFieldId($profileField->getId());
-                    $profileFieldsContent->setUserId($this->getUser()->getId());
-                    $profileFieldsContent->setValue($post[$index]);
+                    $profileFieldsContent->setFieldId($profileField->getId())
+                        ->setUserId($this->getUser()->getId())
+                        ->setValue($post[$index]);
                     $profileFieldsContentMapper->save($profileFieldsContent);
                 }
 
@@ -149,9 +133,9 @@ class Panel extends BaseController
         $avatarSize = $this->getConfig()->get('avatar_size');
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
-                ->add($this->getTranslator()->trans('menuAvatar'), ['controller' => 'panel', 'action' => 'avatar']);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+            ->add($this->getTranslator()->trans('menuAvatar'), ['controller' => 'panel', 'action' => 'avatar']);
 
         if ($this->getRequest()->isPost() && !empty($_FILES['avatar']['name'])) {
             $path = $this->getConfig()->get('avatar_uploadpath');
@@ -194,8 +178,8 @@ class Panel extends BaseController
                     }
 
                     $model = new UserModel();
-                    $model->setId($this->getUser()->getId());
-                    $model->setAvatar($avatar);
+                    $model->setId($this->getUser()->getId())
+                        ->setAvatar($avatar);
                     $profilMapper->save($model);
                 } else {
                     $this->addMessage('failedFilesize', 'warning');
@@ -213,11 +197,11 @@ class Panel extends BaseController
             $this->redirect(['action' => 'avatar']);
         }
 
-        $this->getView()->set('settingMapper', $settingMapper);
-        $this->getView()->set('avatar_height', $avatarHeight);
-        $this->getView()->set('avatar_width', $avatarWidth);
-        $this->getView()->set('avatar_size', $avatarSize);
-        $this->getView()->set('avatar_filetypes', $avatarAllowedFiletypes);
+        $this->getView()->set('settingMapper', $settingMapper)
+            ->set('avatar_height', $avatarHeight)
+            ->set('avatar_width', $avatarWidth)
+            ->set('avatar_size', $avatarSize)
+            ->set('avatar_filetypes', $avatarAllowedFiletypes);
     }
 
     public function signatureAction()
@@ -225,14 +209,14 @@ class Panel extends BaseController
         $profilMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
-                ->add($this->getTranslator()->trans('menuSignature'), ['controller' => 'panel', 'action' => 'signature']);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+            ->add($this->getTranslator()->trans('menuSignature'), ['controller' => 'panel', 'action' => 'signature']);
 
         if ($this->getRequest()->isPost()) {
             $model = new UserModel();
-            $model->setId($this->getUser()->getId());
-            $model->setSignature(trim($this->getRequest()->getPost('signature')));
+            $model->setId($this->getUser()->getId())
+                ->setSignature(trim($this->getRequest()->getPost('signature')));
             $profilMapper->save($model);
 
             $this->addMessage('saveSuccess');
@@ -245,9 +229,9 @@ class Panel extends BaseController
         $profilMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
-                ->add($this->getTranslator()->trans('menuPassword'), ['controller' => 'panel', 'action' => 'password']);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+            ->add($this->getTranslator()->trans('menuPassword'), ['controller' => 'panel', 'action' => 'password']);
 
         if ($this->getRequest()->isPost()) {
             Validation::setCustomFieldAliases([
@@ -267,8 +251,8 @@ class Panel extends BaseController
                 $authTokenMapper->deleteAllAuthTokenOfUser($this->getUser()->getId());
 
                 $model = new UserModel();
-                $model->setId($this->getUser()->getId());
-                $model->setPassword((new PasswordService())->hash($this->getRequest()->getPost('password')));
+                $model->setId($this->getUser()->getId())
+                    ->setPassword((new PasswordService())->hash($this->getRequest()->getPost('password')));
                 $profilMapper->save($model);
 
                 $this->redirect()
@@ -325,8 +309,8 @@ class Panel extends BaseController
         $ilchdate = new IlchDate;
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuDialog'), ['controller' => 'panel', 'action' => 'dialog']);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuDialog'), ['controller' => 'panel', 'action' => 'dialog']);
 
         $c_id = $this->getRequest()->getParam('id');
 
@@ -348,10 +332,10 @@ class Panel extends BaseController
                     $text = trim($this->getRequest()->getPost('text'));
 
                     $model = new DialogModel();
-                    $model->setCId($c_id);
-                    $model->setId($u_id_fk);
-                    $model->setTime($ilchdate->toDb());
-                    $model->setText($text);
+                    $model->setCId($c_id)
+                        ->setId($u_id_fk)
+                        ->setTime($ilchdate->toDb())
+                        ->setText($text);
                     $dialogMapper->save($model);
 
                     $this->redirect(['action' => 'dialog','id'=> $c_id]);
@@ -362,8 +346,8 @@ class Panel extends BaseController
                 $dialog = $dialogMapper->getReadLastOneDialog($c_id);
                 if ($dialog AND $dialog->getUserOne() != $this->getUser()->getId()) {
                     $model = new DialogModel();
-                    $model->setCrId($dialog->getCrId());
-                    $model->setRead(1);
+                    $model->setCrId($dialog->getCrId())
+                        ->setRead(1);
                     $dialogMapper->updateRead($model);
                 }
             } else {
@@ -385,8 +369,8 @@ class Panel extends BaseController
             $dialog = $dialogMapper->getReadLastOneDialog($c_id);
             if ($dialog and $dialog->getUserOne() != $this->getUser()->getId()) {
                 $model = new DialogModel();
-                $model->setCrId($dialog->getCrId());
-                $model->setRead(1);
+                $model->setCrId($dialog->getCrId())
+                    ->setRead(1);
                 $dialogMapper->updateRead($model);
             }
 
@@ -406,9 +390,9 @@ class Panel extends BaseController
             $c_exist = $DialogMapper->getDialogCheck($user_one, $user_two);
             if ($c_exist == null) {
                 $model = new DialogModel();
-                $model->setUserOne($user_one);
-                $model->setUserTwo($user_two);
-                $model->setTime($ilchdate->toDb());
+                $model->setUserOne($user_one)
+                    ->setUserTwo($user_two)
+                    ->setTime($ilchdate->toDb());
                 $DialogMapper->save($model);
 
                 $c_id = $DialogMapper->getDialogId($user_one);
@@ -425,8 +409,8 @@ class Panel extends BaseController
         $imageMapper = new GalleryImageMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery']);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery']);
 
         /*
          * Saves the item tree to database.
@@ -465,10 +449,10 @@ class Panel extends BaseController
                         $galleryItem->setId($item['id']);
                     }
 
-                    $galleryItem->setUserId($this->getUser()->getId());
-                    $galleryItem->setType($item['type']);
-                    $galleryItem->setTitle($item['title']);
-                    $galleryItem->setDesc($item['desc']);
+                    $galleryItem->setUserId($this->getUser()->getId())
+                        ->setType($item['type'])
+                        ->setTitle($item['title'])
+                        ->setDesc($item['desc']);
                     $newId = $galleryMapper->saveItem($galleryItem);
 
                     if (isset($tmpId)) {
@@ -489,9 +473,9 @@ class Panel extends BaseController
 
                 foreach ($sortArray as $id => $parent) {
                     $galleryItem = new GalleryItemModel();
-                    $galleryItem->setId($id);
-                    $galleryItem->setSort($sort);
-                    $galleryItem->setParentId($parent);
+                    $galleryItem->setId($id)
+                        ->setSort($sort)
+                        ->setParentId($parent);
                     $galleryMapper->saveItem($galleryItem);
                     $sort += 10;
                 }
@@ -501,9 +485,9 @@ class Panel extends BaseController
             $this->redirect(['action' => 'gallery']);
         }
 
-        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getUser()->getId(), 0));
-        $this->getView()->set('galleryMapper', $galleryMapper);
-        $this->getView()->set('imageMapper', $imageMapper);
+        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getUser()->getId(), 0))
+            ->set('galleryMapper', $galleryMapper)
+            ->set('imageMapper', $imageMapper);
     }
 
     public function treatGalleryAction() 
@@ -516,9 +500,9 @@ class Panel extends BaseController
         $gallery = $galleryMapper->getGalleryById($id);
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery'])
-                ->add($gallery->getTitle(), ['controller' => 'panel', 'action' => 'treatgallery', 'id' => $id]);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery'])
+            ->add($gallery->getTitle(), ['controller' => 'panel', 'action' => 'treatgallery', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
             $mediaMapper = new MediaMapper();
@@ -536,18 +520,18 @@ class Panel extends BaseController
                 $catId = $this->getRequest()->getParam('id');
 
                 $model = new GalleryImageModel();
-                $model->setUserId($this->getUser()->getId());
-                $model->setImageId($imageId);
-                $model->setCat($catId);
+                $model->setUserId($this->getUser()->getId())
+                    ->setImageId($imageId)
+                    ->setCat($catId);
                 $imageMapper->save($model);
             }
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('user_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('user_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
-        $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
-        $this->getView()->set('pagination', $pagination);
-        $this->getView()->set('galleryTitle', $gallery->getTitle());
+        $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination))
+            ->set('pagination', $pagination)
+            ->set('galleryTitle', $gallery->getTitle());
     }
 
     public function treatGalleryImageAction() 
@@ -560,19 +544,19 @@ class Panel extends BaseController
         $gallery = $galleryMapper->getGalleryById($galleryId);
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery'])
-                ->add($gallery->getTitle(), ['controller' => 'panel', 'action' => 'treatgallery', 'id' => $galleryId])
-                ->add($this->getTranslator()->trans('treatImage'), ['action' => 'treatgalleryimage', 'gallery' => $galleryId, 'id' => $id]);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery'])
+            ->add($gallery->getTitle(), ['controller' => 'panel', 'action' => 'treatgallery', 'id' => $galleryId])
+            ->add($this->getTranslator()->trans('treatImage'), ['action' => 'treatgalleryimage', 'gallery' => $galleryId, 'id' => $id]);
 
         if ($this->getRequest()->getPost()) {
             $imageTitle = $this->getRequest()->getPost('imageTitle');
             $imageDesc = $this->getRequest()->getPost('imageDesc');
 
             $model = new GalleryImageModel();
-            $model->setId($id);
-            $model->setImageTitle($imageTitle);
-            $model->setImageDesc($imageDesc);
+            $model->setId($id)
+                ->setImageTitle($imageTitle)
+                ->setImageDesc($imageDesc);
             $imageMapper->saveImageTreat($model);
 
             $this->addMessage('saveSuccess');
@@ -596,8 +580,8 @@ class Panel extends BaseController
     public function providersAction()
     {
         $authProvider = new AuthProvider();
-        
-        $this->getView()->set('authProvider', $authProvider);
-        $this->getView()->set('providers', $authProvider->getProviders());
+
+        $this->getView()->set('authProvider', $authProvider)
+            ->set('providers', $authProvider->getProviders());
     }
 }

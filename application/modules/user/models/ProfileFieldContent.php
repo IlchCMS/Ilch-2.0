@@ -9,13 +9,6 @@ namespace Modules\User\Models;
 class ProfileFieldContent extends \Ilch\Model
 {
     /**
-     * The user-id of the ProfileFieldContent.
-     *
-     * @var int
-     */
-    protected $userId;
-
-    /**
      * The field-id of the ProfileFieldContent.
      *
      * @var int
@@ -23,34 +16,18 @@ class ProfileFieldContent extends \Ilch\Model
     protected $fieldId;
 
     /**
+     * The user-id of the ProfileFieldContent.
+     *
+     * @var int
+     */
+    protected $userId;
+
+    /**
      * The value of the ProfileFieldContent.
      *
      * @var string
      */
     protected $value;
-
-    /**
-     * Returns the user-id of the ProfileFieldContent.
-     *
-     * @return int
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * Sets the user-id.
-     *
-     * @param int $userId
-     * @return ProfileFieldContent
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = (int)$userId;
-
-        return $this;
-    }
 
     /**
      * Returns the field-id of the ProfileFieldContent.
@@ -71,6 +48,29 @@ class ProfileFieldContent extends \Ilch\Model
     public function setFieldId($fieldId)
     {
         $this->fieldId = (int)$fieldId;
+
+        return $this;
+    }
+
+    /**
+     * Returns the user-id of the ProfileFieldContent.
+     *
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Sets the user-id.
+     *
+     * @param int $userId
+     * @return ProfileFieldContent
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = (int)$userId;
 
         return $this;
     }

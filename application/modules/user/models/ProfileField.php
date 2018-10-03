@@ -16,11 +16,11 @@ class ProfileField extends \Ilch\Model
     protected $id;
 
     /**
-     * The name of the profile-field.
+     * The key of the profile-field.
      *
      * @var string
      */
-    protected $name;
+    protected $key;
 
     /**
      * The type of the profile-field.
@@ -28,6 +28,34 @@ class ProfileField extends \Ilch\Model
      * @var int
      */
     protected $type;
+
+    /**
+     * The icon of the profile-field.
+     *
+     * @var string
+     */
+    protected $icon;
+
+    /**
+     * The addition of the profile-field.
+     *
+     * @var string
+     */
+    protected $addition;
+
+    /**
+     * The show status of the profile-field.
+     *
+     * @var int
+     */
+    protected $show;
+
+    /**
+     * The hidden status of the profile-field.
+     *
+     * @var int
+     */
+    protected $hidden;
 
     /**
      * The position of the profile-field.
@@ -60,24 +88,24 @@ class ProfileField extends \Ilch\Model
     }
 
     /**
-     * Returns the name of the profile-field.
+     * Returns the key of the profile-field.
      *
      * @return string
      */
-    public function getName()
+    public function getKey()
     {
-        return $this->name;
+        return $this->key;
     }
 
     /**
-     * Sets the name.
+     * Sets the key.
      *
-     * @param string $name
+     * @param string $key
      * @return ProfileField
      */
-    public function setName($name)
+    public function setKey($key)
     {
-        $this->name = $name;
+        $this->key = $key;
 
         return $this;
     }
@@ -101,6 +129,98 @@ class ProfileField extends \Ilch\Model
     public function setType($type)
     {
         $this->type = (int)$type;
+
+        return $this;
+    }
+
+    /**
+     * Returns the icon of the profile-field.
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * Sets the icon.
+     *
+     * @param string $icon
+     * @return ProfileField
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * Returns the addition of the profile-field.
+     *
+     * @return string
+     */
+    public function getAddition()
+    {
+        return $this->addition;
+    }
+
+    /**
+     * Sets the addition.
+     *
+     * @param string $addition
+     * @return ProfileField
+     */
+    public function setAddition($addition)
+    {
+        $this->addition = $addition;
+
+        return $this;
+    }
+
+    /**
+     * Returns the show status of the profile-field.
+     *
+     * @return int
+     */
+    public function getShow()
+    {
+        return $this->show;
+    }
+
+    /**
+     * Sets the show status.
+     *
+     * @param int $show
+     * @return ProfileField
+     */
+    public function setShow($show)
+    {
+        $this->show = (int)$show;
+
+        return $this;
+    }
+
+    /**
+     * Returns the hidden status of the profile-field.
+     *
+     * @return int
+     */
+    public function getHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * Sets the hidden status.
+     *
+     * @param int $hidden
+     * @return ProfileField
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = (int)$hidden;
 
         return $this;
     }

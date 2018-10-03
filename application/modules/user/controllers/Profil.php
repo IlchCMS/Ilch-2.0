@@ -8,8 +8,8 @@ namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Gallery as GalleryMapper;
-use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
+use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 
 class Profil extends \Ilch\Controller\Frontend
@@ -18,13 +18,14 @@ class Profil extends \Ilch\Controller\Frontend
     {
         $userMapper = new UserMapper();
         $galleryMapper = new GalleryMapper();
-        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
+        $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
+        $profileFields = $profileFieldsMapper->getProfileFields(['type !=' => 2]);
         $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getRequest()->getParam('user'));
-        $profileFields = $profileFieldsMapper->getProfileFields();
         $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
 
         if ($profil) {
@@ -34,8 +35,9 @@ class Profil extends \Ilch\Controller\Frontend
 
             $this->getView()->set('userMapper', $userMapper);
             $this->getView()->set('profil', $profil);
-            $this->getView()->set('profileFieldsContent', $profileFieldsContent);
+            $this->getView()->set('profileIconFields', $profileIconFields);
             $this->getView()->set('profileFields', $profileFields);
+            $this->getView()->set('profileFieldsContent', $profileFieldsContent);
             $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
             $this->getView()->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'));
             $this->getView()->set('gallery', $galleryMapper->getCountGalleryByUser($this->getRequest()->getParam('user')));
