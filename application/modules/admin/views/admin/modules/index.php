@@ -121,32 +121,34 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                         $extensionCheck[] = extension_loaded($extension);
                                     }
                                 }
+
+                                $icon = ($source == 'local') ? 'fa fa-download': 'fa fa-cloud-download';
                                 if (!empty($moduleOnUpdateServerFound->phpExtensions) AND in_array(false, $extensionCheck)): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('phpExtensionError') ?>">
-                                        <i class="fa fa-refresh"></i>
+                                        <i class="<?=$icon ?>"></i>
                                     </button>
                                 <?php elseif (version_compare(phpversion(), $moduleOnUpdateServerFound->phpVersion, '<')): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('phpVersionError') ?>">
-                                        <i class="fa fa-refresh"></i>
+                                        <i class="<?=$icon ?>"></i>
                                     </button>
                                 <?php elseif (version_compare($coreVersion, $moduleOnUpdateServerFound->ilchCore, '<')): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
-                                        <i class="fa fa-refresh"></i>
+                                        <i class="<?=$icon ?>"></i>
                                     </button>
                                 <?php elseif (!empty(checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies))): ?>
                                     <button class="btn disabled"
                                             data-toggle="modal"
                                             data-target="#dependencyInfoModal<?=$moduleOnUpdateServerFound->key ?>"
                                             title="<?=$this->getTrans('dependencyError') ?>">
-                                        <i class="fa fa-refresh"></i>
+                                        <i class="<?=$icon ?>"></i>
                                     </button>
                                 <?php elseif (!checkOwnDependencies($versionsOfModules, $moduleOnUpdateServerFound)): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('dependencyError') ?>">
-                                        <i class="fa fa-refresh"></i>
+                                        <i class="<?=$icon ?>"></i>
                                     </button>
                                 <?php elseif ($source == 'local' && !empty($moduleOnUpdateServerFound)): ?>
                                     <form method="POST" action="<?=$this->getUrl(['action' => 'localUpdate', 'key' => $moduleOnUpdateServerFound->key, 'from' => 'index']) ?>">
@@ -154,7 +156,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                         <button type="submit"
                                                 class="btn btn-default"
                                                 title="<?=$this->getTrans('localModuleUpdate') ?>">
-                                            <i class="fa fa-refresh"></i>
+                                            <i class="<?=$icon ?>"></i>
                                         </button>
                                     </form>
                                 <?php elseif ($source == 'updateserver' && version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
@@ -163,7 +165,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                         <button type="submit"
                                                 class="btn btn-default"
                                                 title="<?=$this->getTrans('moduleUpdate') ?>">
-                                            <i class="fa fa-refresh"></i>
+                                            <i class="<?=$icon ?>"></i>
                                         </button>
                                     </form>
                                 <?php endif; ?>
@@ -187,7 +189,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 
                     <?php
                     if ($module->getLink() != '') {
-                        $author = '<a href="'.$module->getLink().'" alt="'.$this->escape($module->getAuthor()).'" title="'.$this->escape($module->getAuthor()).'" target="_blank">'.$this->escape($module->getAuthor()).'</a>';
+                        $author = '<a href="'.$module->getLink().'" title="'.$this->escape($module->getAuthor()).'" target="_blank">'.$this->escape($module->getAuthor()).'</a>';
                     } else {
                         $author = $this->escape($module->getAuthor());
                     }
@@ -204,14 +206,12 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 
                     $moduleInfo .= '<br /><b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
 
-                    if (!empty($moduleOnUpdateServerFound)) {
-                        foreach (checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies) as $key => $value) {
-                            $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
-                        }
-
-                        $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
-                        echo $this->getDialog('dependencyInfoModal'.$module->getKey(), $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo);
+                    $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
+                    foreach (checkOthersDependencies([$module->getKey() => $module->getVersion()], $dependencies) as $key => $value) {
+                        $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
                     }
+
+                    echo $this->getDialog('dependencyInfoModal'.$module->getKey(), $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo);
                     ?>
                     <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
                 <?php endif; ?>
