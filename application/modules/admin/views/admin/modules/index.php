@@ -66,22 +66,18 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
         <tbody>
             <?php foreach ($this->get('modules') as $module):
                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
-                $localUpdateAvailable = false;
-                $moduleOnUpdateServerFound = null;
+                $moduleUpdate = [];
 
                 if (!empty($configurations[$module->getKey()]['version'])) {
                     if (version_compare($module->getVersion(), $configurations[$module->getKey()]['version'], '<')) {
-                        $localUpdateAvailable = true;
-                        $moduleOnUpdateServerFound = json_decode(json_encode($configurations[$module->getKey()]));
+                        $moduleUpdate['local'] = json_decode(json_encode($configurations[$module->getKey()]));
                     }
                 }
 
-                if (!$localUpdateAvailable) {
-                    foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
-                        if ($moduleOnUpdateServer->key == $module->getKey()) {
-                            $moduleOnUpdateServerFound = $moduleOnUpdateServer;
-                            break;
-                        }
+                foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
+                    if ($moduleOnUpdateServer->key == $module->getKey()) {
+                        $moduleUpdate['updateserver'] = $moduleOnUpdateServer;
+                        break;
                     }
                 }
 
@@ -93,7 +89,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <small>
                                 <?=$this->getTrans('author') ?>:
                                 <?php if ($module->getLink() != ''): ?>
-                                    <a href="<?=$module->getLink() ?>" alt="<?=$this->escape($module->getAuthor()) ?>" title="<?=$this->escape($module->getAuthor()) ?>" target="_blank">
+                                    <a href="<?=$module->getLink() ?>" title="<?=$this->escape($module->getAuthor()) ?>" target="_blank">
                                         <i><?=$this->escape($module->getAuthor()) ?></i>
                                     </a>
                                 <?php else: ?>
@@ -108,8 +104,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-default">
                                         <i class="fa fa-info text-info"></i>
-                                    </span>
-                                </a>
+                                    </span></a>
                             <?php else: ?>
                                 <span class="btn btn-default"
                                       data-toggle="modal"
@@ -119,7 +114,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                 </span>
                             <?php endif; ?>
                             <?php
-                            if (!empty($moduleOnUpdateServerFound)) {
+                            foreach($moduleUpdate as $source => $moduleOnUpdateServerFound) {
                                 if (!empty($moduleOnUpdateServerFound->phpExtensions)) {
                                     $extensionCheck = [];
                                     foreach ($moduleOnUpdateServerFound->phpExtensions as $extension) {
@@ -153,21 +148,21 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                             title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="fa fa-refresh"></i>
                                     </button>
-                                <?php elseif (!$localUpdateAvailable && version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
-                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServerFound->key, 'version' => $moduleOnUpdateServerFound->version, 'from' => 'index']) ?>">
-                                        <?=$this->getTokenField() ?>
-                                        <button type="submit"
-                                                class="btn btn-default"
-                                                title="<?=$this->getTrans('moduleUpdate') ?>">
-                                            <i class="fa fa-refresh"></i>
-                                        </button>
-                                    </form>
-                                <?php elseif ($localUpdateAvailable): ?>
+                                <?php elseif ($source == 'local' && !empty($moduleOnUpdateServerFound)): ?>
                                     <form method="POST" action="<?=$this->getUrl(['action' => 'localUpdate', 'key' => $moduleOnUpdateServerFound->key, 'from' => 'index']) ?>">
                                         <?=$this->getTokenField() ?>
                                         <button type="submit"
                                                 class="btn btn-default"
                                                 title="<?=$this->getTrans('localModuleUpdate') ?>">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                    </form>
+                                <?php elseif ($source == 'updateserver' && version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
+                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServerFound->key, 'version' => $moduleOnUpdateServerFound->version, 'from' => 'index']) ?>">
+                                        <?=$this->getTokenField() ?>
+                                        <button type="submit"
+                                                class="btn btn-default"
+                                                title="<?=$this->getTrans('moduleUpdate') ?>">
                                             <i class="fa fa-refresh"></i>
                                         </button>
                                     </form>
