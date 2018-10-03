@@ -26,7 +26,7 @@ class Awards extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($awardsArray)) {
-            return null;
+            return [];
         }
 
         $awards = [];

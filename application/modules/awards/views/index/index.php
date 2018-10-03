@@ -6,7 +6,7 @@ $teamsMapper = $this->get('teamsMapper');
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuAwards') ?></h1>
-<?php if ($this->get('awards') != ''): ?>
+<?php if ($this->get('awards')): ?>
     <div class="row">
         <div class="col-lg-12">
             <div class="award">

@@ -21,10 +21,11 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index']);
 
+        $awards = $awardsMapper->getAwards();
         $this->getView()->set('userMapper', $userMapper)
             ->set('teamsMapper', $teamsMapper)
-            ->set('awards', $awardsMapper->getAwards())
-            ->set('awardsCount', count($awardsMapper->getAwards()));
+            ->set('awards', $awards)
+            ->set('awardsCount', count($awards));
     }
 }
 
