@@ -114,44 +114,44 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                 </span>
                             <?php endif; ?>
                             <?php
-                            foreach($moduleUpdate as $source => $moduleOnUpdateServerFound) {
-                                if (!empty($moduleOnUpdateServerFound->phpExtensions)) {
+                            foreach($moduleUpdate as $source => $moduleUpdateInformation) {
+                                if (!empty($moduleUpdateInformation->phpExtensions)) {
                                     $extensionCheck = [];
-                                    foreach ($moduleOnUpdateServerFound->phpExtensions as $extension) {
+                                    foreach ($moduleUpdateInformation->phpExtensions as $extension) {
                                         $extensionCheck[] = extension_loaded($extension);
                                     }
                                 }
 
                                 $icon = ($source == 'local') ? 'fa fa-download': 'fa fa-cloud-download';
-                                if (!empty($moduleOnUpdateServerFound->phpExtensions) AND in_array(false, $extensionCheck)): ?>
+                                if (!empty($moduleUpdateInformation->phpExtensions) AND in_array(false, $extensionCheck)): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('phpExtensionError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
-                                <?php elseif (version_compare(phpversion(), $moduleOnUpdateServerFound->phpVersion, '<')): ?>
+                                <?php elseif (version_compare(phpversion(), $moduleUpdateInformation->phpVersion, '<')): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('phpVersionError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
-                                <?php elseif (version_compare($coreVersion, $moduleOnUpdateServerFound->ilchCore, '<')): ?>
+                                <?php elseif (version_compare($coreVersion, $moduleUpdateInformation->ilchCore, '<')): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
-                                <?php elseif (!empty(checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies))): ?>
+                                <?php elseif (!empty(checkOthersDependencies([$moduleUpdateInformation->key => $moduleUpdateInformation->version], $dependencies))): ?>
                                     <button class="btn disabled"
                                             data-toggle="modal"
-                                            data-target="#dependencyInfoModal<?=$moduleOnUpdateServerFound->key ?>"
+                                            data-target="#dependencyInfoModal<?=$moduleUpdateInformation->key ?>"
                                             title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
-                                <?php elseif (!checkOwnDependencies($versionsOfModules, $moduleOnUpdateServerFound)): ?>
+                                <?php elseif (!checkOwnDependencies($versionsOfModules, $moduleUpdateInformation)): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
-                                <?php elseif ($source == 'local' && !empty($moduleOnUpdateServerFound)): ?>
-                                    <form method="POST" action="<?=$this->getUrl(['action' => 'localUpdate', 'key' => $moduleOnUpdateServerFound->key, 'from' => 'index']) ?>">
+                                <?php elseif ($source == 'local' && !empty($moduleUpdateInformation)): ?>
+                                    <form method="POST" action="<?=$this->getUrl(['action' => 'localUpdate', 'key' => $moduleUpdateInformation->key, 'from' => 'index']) ?>">
                                         <?=$this->getTokenField() ?>
                                         <button type="submit"
                                                 class="btn btn-default"
@@ -159,8 +159,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                             <i class="<?=$icon ?>"></i>
                                         </button>
                                     </form>
-                                <?php elseif ($source == 'updateserver' && version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
-                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServerFound->key, 'version' => $moduleOnUpdateServerFound->version, 'from' => 'index']) ?>">
+                                <?php elseif ($source == 'updateserver' && version_compare($versionsOfModules[$moduleUpdateInformation->key]['version'], $moduleUpdateInformation->version, '<')): ?>
+                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleUpdateInformation->key, 'version' => $moduleUpdateInformation->version, 'from' => 'index']) ?>">
                                         <?=$this->getTokenField() ?>
                                         <button type="submit"
                                                 class="btn btn-default"
