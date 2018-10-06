@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'history',
-        'version' => '1.1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-history',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -54,7 +54,7 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0.0":
+            case "1.0":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_history` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }

@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'downloads',
-        'version' => '1.4.0',
+        'version' => '1.4',
         'icon_small' => 'fa-arrow-circle-o-down',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -67,10 +67,10 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0.0":
-            case "1.1.0":
-            case "1.2.0":
-            case "1.3.0":
+            case "1.0":
+            case "1.1":
+            case "1.2":
+            case "1.3":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_downloads_files` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_downloads_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');

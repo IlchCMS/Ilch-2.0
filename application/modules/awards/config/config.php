@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'awards',
-        'version' => '1.5.0',
+        'version' => '1.5',
         'icon_small' => 'fa-trophy',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -56,12 +56,12 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0.0":
-            case "1.1.0":
+            case "1.0":
+            case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` VARCHAR(255) NOT NULL AFTER `rank`;');
-            case "1.2.0":
-            case "1.3.0":
-            case "1.4.0":
+            case "1.2":
+            case "1.3":
+            case "1.4":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_awards` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }

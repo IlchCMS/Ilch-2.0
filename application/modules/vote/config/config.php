@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'vote',
-        'version' => '1.7.0',
+        'version' => '1.7',
         'icon_small' => 'fa-tasks',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -78,16 +78,16 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0.0":
+            case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_poll` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `group`;');
                 $this->db()->query('ALTER TABLE `[prefix]_poll_ip` ADD `user_id` INT(11) NOT NULL AFTER `ip`;');
-            case "1.1.0":
-            case "1.2.0":
-            case "1.3.0":
-            case "1.4.0":
-            case "1.5.0":
+            case "1.1":
+            case "1.2":
+            case "1.3":
+            case "1.4":
+            case "1.5":
                 $this->db()->query('ALTER TABLE `[prefix]_poll` CHANGE `group` `groups` VARCHAR(255) NOT NULL DEFAULT \'0\';');
-            case "1.6.0":
+            case "1.6":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_poll` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_poll_res` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');

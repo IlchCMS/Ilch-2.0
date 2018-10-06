@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'away',
-        'version' => '1.2.0',
+        'version' => '1.2',
         'icon_small' => 'fa-calendar-times-o',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -65,8 +65,8 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0.0":
-            case "1.1.0":
+            case "1.0":
+            case "1.1":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_away` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }

@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.10.0',
+        'version' => '1.10',
         'icon_small' => 'fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -133,23 +133,23 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0.0":
+            case "1.0":
                 // Add new decision and undecided columns needed for the application/joins-history
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `decision` TINYINT NOT NULL;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `undecided` TINYINT NOT NULL DEFAULT 1;');
 
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `position` INT NOT NULL DEFAULT 0;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY `optIn` TINYINT NOT NULL;');
-            case "1.1.0":
-            case "1.2.0":
-            case "1.3.0":
+            case "1.1":
+            case "1.2":
+            case "1.3":
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `optShow` TINYINT(1) NOT NULL AFTER `groupId`;');
-            case "1.4.0":
-            case "1.5.0":
-            case "1.6.0":
-            case "1.7.0":
-            case "1.8.0":
-            case "1.9.0":
+            case "1.4":
+            case "1.5":
+            case "1.6":
+            case "1.7":
+            case "1.8":
+            case "1.9":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_teams` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');

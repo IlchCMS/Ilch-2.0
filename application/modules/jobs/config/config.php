@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'jobs',
-        'version' => '1.3.0',
+        'version' => '1.3',
         'icon_small' => 'fa-briefcase',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -63,9 +63,9 @@ class Config extends \Ilch\Config\Install
     public function getUpdate($installedVersion)
     {
         switch ($installedVersion) {
-            case "1.0.0":
-            case "1.1.0":
-            case "1.2.0":
+            case "1.0":
+            case "1.1":
+            case "1.2":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_jobs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
         }
