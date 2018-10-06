@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'newsletter',
-        'version' => '1.2',
+        'version' => '1.2.0',
         'icon_small' => 'fa-newspaper-o',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',

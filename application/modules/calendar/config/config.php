@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.3',
+        'version' => '1.3.0',
         'icon_small' => 'fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',

@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'checkoutbasic',
-        'version' => '1.2',
+        'version' => '1.2.0',
         'icon_small' => 'fa-credit-card',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',

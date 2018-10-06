@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.11',
+        'version' => '1.11.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -144,6 +144,11 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
+        //Workaround to fix 1.1 and 1.10 being considered equal.
+        if ($installedVersion == "1.10") {
+            $installedVersion = "1.10.0";
+        }
+
         switch ($installedVersion) {
             case "1.0":
             case "1.1":
@@ -188,7 +193,7 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig->set('forum_floodInterval', '0');
                 $databaseConfig->set('forum_excludeFloodProtection', '1');
-            case "1.10":
+            case "1.10.0":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_forum_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_topics` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
