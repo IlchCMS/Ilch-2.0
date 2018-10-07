@@ -32,6 +32,8 @@ class Transfer
 
     protected $content;
 
+    protected $missingRequirements = [];
+
     /**
      * Sets the TransferUrl.
      * @var string $url
@@ -179,7 +181,7 @@ class Transfer
      */
     public function getVersionsList()
     {
-        return explode("\n", $this->getVersions());
+        return json_decode($this->getVersions());
     }
 
     /**
@@ -220,6 +222,15 @@ class Transfer
     }
 
     /**
+     * Gets the content of missingRequirements.
+     * @return array
+     */
+    public function getMissingRequirements()
+    {
+        return $this->missingRequirements;
+    }
+
+    /**
      * Sets the NewVersion.
      * @var string $version
      * @return string
@@ -244,14 +255,53 @@ class Transfer
      */
     public function newVersionFound()
     {
-        foreach ($this->getVersionsList() as $vL) {
-            if (version_compare(preg_replace('/\s+/', '', $vL), $this->getVersionNow(), '>')) {
-                $this->setNewVersion(trim(preg_replace('/\s\s+/','', $vL)));
+        foreach ($this->getVersionsList() as $version => $requirements) {
+            if (version_compare(preg_replace('/\s+/', '', $version), $this->getVersionNow(), '>')) {
+                $this->setNewVersion(trim(preg_replace('/\s\s+/','', $version)));
                 $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
+                $this->checkRequirements($requirements);
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Check the requirements for the update.
+     * Writes missing requirements to the 'missingRequirements' property.
+     *
+     * @param $requirements
+     * @return bool
+     */
+    public function checkRequirements($requirements)
+    {
+        if ($requirements['phpVersion']) {
+            if (!version_compare(phpversion(), $requirements['phpVersion'], '>=')) {
+                $this->missingRequirements = ['phpVersion' => $requirements['phpVersion']];
+            }
+        }
+
+        if ($requirements['mysqlVersion'] || $requirements['mariadbVersion']) {
+            if (strpos(mysqli_get_server_info($this->db()), 'MariaDB') !== false) {
+                if (!version_compare(mysqli_get_server_info($this->db()), $requirements['mariadbVersion'], '>=')) {
+                    $this->missingRequirements = ['mariadbVersion' => $requirements['mariadbVersion']];
+                }
+            } else {
+                if (!version_compare(mysqli_get_server_info($this->db()), $requirements['mysqlVersion'], '>=')) {
+                    $this->missingRequirements = ['mysqlVersion' => $requirements['mysqlVersion']];
+                }
+            }
+        }
+
+        if ($requirements['phpExtensions']) {
+            foreach ($requirements['phpExtensions'] as $extension) {
+                if (!extension_loaded($extension)) {
+                    $this->missingRequirements = $extension;
+                }
+            }
+        }
+
+        return empty($this->missingRequirements);
     }
 
     /**
@@ -354,7 +404,7 @@ class Transfer
                 //Make the directory if we need to...
                 if (!is_dir (ROOT_PATH.'/'.$thisFileDir)) {
                     mkdir (ROOT_PATH.'/'.$thisFileDir, 0777, true );
-                    $content[] = 'Created new Directory: '.$thisFileDir;
+                    $content[] = 'Created new directory: '.$thisFileDir;
                 }
 
                 //Overwrite the file

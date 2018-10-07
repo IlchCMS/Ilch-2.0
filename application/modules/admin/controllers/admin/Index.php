@@ -39,7 +39,7 @@ class Index extends \Ilch\Controller\Admin
 
         // Check if Ilch is up to date
         $update = new \Ilch\Transfer();
-        $update->setTransferUrl($this->getConfig()->get('updateserver').'updates.php');
+        $update->setTransferUrl($this->getConfig()->get('updateserver').'updates2.php');
         $update->setVersionNow($this->getConfig()->get('version'));
         $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 

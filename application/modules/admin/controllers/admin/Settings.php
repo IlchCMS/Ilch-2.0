@@ -278,7 +278,7 @@ HTACCESS;
         $this->getView()->set('version', $version);
 
         $update = new IlchTransfer();
-        $update->setTransferUrl($this->getConfig()->get('updateserver').'updates.php');
+        $update->setTransferUrl($this->getConfig()->get('updateserver').'updates2.php');
         $update->setVersionNow($version);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 
@@ -296,6 +296,11 @@ HTACCESS;
         $this->getView()->set('versions', $result);
 
         if ($update->newVersionFound() == true) {
+            if (!$update->getMissingRequirements()) {
+                // TODO: Add details of missingRequirements to the error message.
+                $this->getView()->set('missingRequirements', true);
+                return false;
+            }
             $update->setDownloadUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip');
             $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip-signature.sig');
             $newVersion = $update->getNewVersion();
