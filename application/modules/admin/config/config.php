@@ -438,6 +438,9 @@ class Config extends \Ilch\Config\Install
                 // Change now no longer used smilies module to an optional module and set a few needed values so it can
                 // be uninstalled like a normal module. This is done so that the user can backup maybe needed smilies.
                 $this->db()->query("UPDATE `[prefix]_modules` SET `system` = '0', `version` = '1.0' WHERE `key` = 'smilies';");
+
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('comment_box_comments_limit', '5');
                 break;
         }
 

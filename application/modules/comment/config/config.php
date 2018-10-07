@@ -22,6 +22,16 @@ class Config extends \Ilch\Config\Install
                 'name' => 'Comments',
                 'description' => 'Here you can manage all comments.',
             ],
+        ],
+        'boxes' => [
+            'comments' => [
+                'de_DE' => [
+                    'name' => 'Kommentare'
+                ],
+                'en_EN' => [
+                    'name' => 'Comments'
+                ]
+            ]
         ]
     ];
 
@@ -32,6 +42,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('comment_reply', '1');
         $databaseConfig->set('comment_nesting', '5');
+        $databaseConfig->set('comment_box_comments_limit', '5');
     }
 
     public function getInstallSql()

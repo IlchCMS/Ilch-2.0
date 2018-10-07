@@ -39,3 +39,15 @@
     color: #fff;
     background-color: #a94442;
 }
+.comment-list .ellipsis {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+}
+.comment-list .ellipsis-item {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

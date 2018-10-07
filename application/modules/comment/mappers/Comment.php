@@ -121,15 +121,22 @@ class Comment extends \Ilch\Mapper
     }
 
     /**
+     * @param integer $limit
+     *
      * @return CommentModel[]
      */
-    public function getComments()
+    public function getComments($limit = null)
     {
-        $commentsArray = $this->db()->select('*')
+        $select = $this->db()->select('*')
             ->from('comments')
-            ->order(['id' => 'DESC'])
-            ->execute()
-            ->fetchRows();
+            ->order(['id' => 'DESC']);
+
+        if ($limit !== null) {
+            $select->limit($limit);
+        }
+
+        $result = $select->execute();
+        $commentsArray = $result->fetchRows();
 
         $comments = [];
         foreach ($commentsArray as $commentRow) {
