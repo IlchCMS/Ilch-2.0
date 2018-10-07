@@ -5,7 +5,7 @@ $comments = $this->get('comments');
 <link href="<?=$this->getBoxUrl('static/css/comment.css') ?>" rel="stylesheet">
 
 <?php if (!empty($comments)): ?>
-    <div class="article-box">
+    <div class="comment-list">
         <ul class="list-unstyled">
             <?php foreach ($comments as $comment): ?>
                 <?php $date = new \Ilch\Date($comment->getDateCreated()); ?>
