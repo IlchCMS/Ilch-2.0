@@ -6,6 +6,8 @@
 
 namespace Ilch;
 
+use Ilch\Config\File;
+
 class Transfer
 {
     protected $transferUrl = '';
@@ -181,7 +183,7 @@ class Transfer
      */
     public function getVersionsList()
     {
-        return json_decode($this->getVersions());
+        return json_decode($this->getVersions(), true);
     }
 
     /**
@@ -275,25 +277,29 @@ class Transfer
      */
     public function checkRequirements($requirements)
     {
-        if ($requirements['phpVersion']) {
+        if (!empty($requirements['phpVersion'])) {
             if (!version_compare(phpversion(), $requirements['phpVersion'], '>=')) {
                 $this->missingRequirements = ['phpVersion' => $requirements['phpVersion']];
             }
         }
 
-        if ($requirements['mysqlVersion'] || $requirements['mariadbVersion']) {
-            if (strpos(mysqli_get_server_info($this->db()), 'MariaDB') !== false) {
-                if (!version_compare(mysqli_get_server_info($this->db()), $requirements['mariadbVersion'], '>=')) {
+        if (!empty($requirements['mysqlVersion']) || !empty($requirements['mariadbVersion'])) {
+            $fileConfig = new File();
+            $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+            $dbLinkIdentifier = mysqli_connect($fileConfig->get('dbHost'), $fileConfig->get('dbUser'), $fileConfig->get('dbPassword'));
+
+            if (strpos(mysqli_get_server_info($dbLinkIdentifier), 'MariaDB') !== false) {
+                if (!version_compare(mysqli_get_server_info($dbLinkIdentifier), $requirements['mariadbVersion'], '>=')) {
                     $this->missingRequirements = ['mariadbVersion' => $requirements['mariadbVersion']];
                 }
             } else {
-                if (!version_compare(mysqli_get_server_info($this->db()), $requirements['mysqlVersion'], '>=')) {
+                if (!version_compare(mysqli_get_server_info($dbLinkIdentifier), $requirements['mysqlVersion'], '>=')) {
                     $this->missingRequirements = ['mysqlVersion' => $requirements['mysqlVersion']];
                 }
             }
         }
 
-        if ($requirements['phpExtensions']) {
+        if (!empty($requirements['phpExtensions'])) {
             foreach ($requirements['phpExtensions'] as $extension) {
                 if (!extension_loaded($extension)) {
                     $this->missingRequirements = $extension;
