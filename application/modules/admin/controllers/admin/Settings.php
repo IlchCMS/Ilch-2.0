@@ -296,16 +296,17 @@ HTACCESS;
         $this->getView()->set('versions', $result);
 
         if ($update->newVersionFound() == true) {
-            if (!$update->getMissingRequirements()) {
-                // TODO: Add details of missingRequirements to the error message.
-                $this->getView()->set('missingRequirements', true);
-                return false;
-            }
             $update->setDownloadUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip');
             $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip-signature.sig');
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);
+
+            if (!empty($update->getMissingRequirements())) {
+                // TODO: Add details of missingRequirements to the error message.
+                $this->getView()->set('missingRequirements', true);
+                return false;
+            }
 
             if ($doSave == true) {
                 if (!$update->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
