@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the downloads.',
             ],
         ],
-        'ilchCore' => '2.1.15',
+        'ilchCore' => '2.1.16',
         'phpVersion' => '5.6'
     ];
 
