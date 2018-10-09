@@ -303,8 +303,24 @@ HTACCESS;
             $this->getView()->set('newVersion', $newVersion);
 
             if (!empty($update->getMissingRequirements())) {
-                // TODO: Add details of missingRequirements to the error message.
+                // Add details of missingRequirements to the error message.
+                $missingRequirementsMessages = [];
+                if (!empty($update->getMissingRequirements()['phpVersion'])) {
+                    $missingRequirementsMessages[] = $this->getTranslator()->trans('phpVersionError').' (<'.$update->getMissingRequirements()['phpVersion'].')';
+                }
+                if (!empty($update->getMissingRequirements()['mysqlVersion'])) {
+                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError').' (<'.$update->getMissingRequirements()['mysqlVersion'].')';
+                }
+                if (!empty($update->getMissingRequirements()['mariadbVersion'])) {
+                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError').' (<'.$update->getMissingRequirements()['mariadbVersion'].')';
+                }
+                if (!empty($update->getMissingRequirements()['phpExtensions'])) {
+                    $messageString = $this->getTranslator()->trans('phpExtensionError');
+                    $messageString .= ' ('.implode(', ', $update->getMissingRequirements()['phpExtensions']).')';
+                    $missingRequirementsMessages[] = $messageString;
+                }
                 $this->getView()->set('missingRequirements', true);
+                $this->getView()->set('missingRequirementsMessages', $missingRequirementsMessages);
                 return false;
             }
 

@@ -212,6 +212,7 @@ return [
     'hmenuFolderRights' => 'Ordner Rechte',
     'hmenuCertificate' => 'Zertifikat',
     'phpExtensionError' => 'Nicht alle PHP-Erweiterungen aktiviert',
+    'dbVersionError' => 'Die Version der Datenbank-Software ist zu alt.',
     'phpVersionError' => 'Die Version von PHP ist zu alt.',
     'ilchCoreError' => 'Die Ilch-Kern Version ist zu alt.',
     'dependencyError' => 'Abhängigkeiten sind nicht erfüllt.',

@@ -4,6 +4,7 @@ $doUpdate = $this->getRequest()->getParam('doupdate');
 $doSave = $this->getRequest()->getParam('dosave');
 $newVersion = $this->get('newVersion');
 $missingRequirements = $this->get('missingRequirements');
+$missingRequirementsMessages = $this->get('missingRequirementsMessages');
 $certMissingOrExpired = $this->get('certMissingOrExpired');
 $verificationFailed = $this->get('verificationFailed');
 $updateSuccessfull = $this->get('updateSuccessfull');
@@ -57,6 +58,9 @@ $updateSuccessfull = $this->get('updateSuccessfull');
             <?php endif; ?>
         <?php else: ?>
             <p><?=$this->getTrans('missingRequirements') ?></p>
+            <?php foreach ($missingRequirementsMessages as $message): ?>
+                <p><?=$message ?></p>
+            <?php endforeach; ?>
         <?php endif; ?>
     <?php endif; ?>
     </div>

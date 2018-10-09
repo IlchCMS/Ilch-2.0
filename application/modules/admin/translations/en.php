@@ -213,6 +213,7 @@ return [
     'hmenuCertificate' => 'Certificate',
     'phpExtensionError' => 'Not all PHP-Extensions active',
     'phpVersionError' => 'The version of PHP is too old.',
+    'dbVersionError' => 'The version of the database software is too old.',
     'ilchCoreError' => 'The Ilch-core version is too old.',
     'dependencyError' => 'Dependencies not fullfilled',
     'dependencyInfo' => 'Other moduls are dependent on this module. Uninstall or update these moduls first.',

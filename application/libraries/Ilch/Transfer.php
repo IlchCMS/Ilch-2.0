@@ -279,7 +279,7 @@ class Transfer
     {
         if (!empty($requirements['phpVersion'])) {
             if (!version_compare(phpversion(), $requirements['phpVersion'], '>=')) {
-                $this->missingRequirements = ['phpVersion' => $requirements['phpVersion']];
+                $this->missingRequirements['phpVersion'] = $requirements['phpVersion'];
             }
         }
 
@@ -290,19 +290,20 @@ class Transfer
 
             if (strpos(mysqli_get_server_info($dbLinkIdentifier), 'MariaDB') !== false) {
                 if (!version_compare(mysqli_get_server_info($dbLinkIdentifier), $requirements['mariadbVersion'], '>=')) {
-                    $this->missingRequirements = ['mariadbVersion' => $requirements['mariadbVersion']];
+                    $this->missingRequirements['mariadbVersion'] = $requirements['mariadbVersion'];
                 }
             } else {
                 if (!version_compare(mysqli_get_server_info($dbLinkIdentifier), $requirements['mysqlVersion'], '>=')) {
-                    $this->missingRequirements = ['mysqlVersion' => $requirements['mysqlVersion']];
+                    $this->missingRequirements['mysqlVersion'] = $requirements['mysqlVersion'];
                 }
             }
         }
 
         if (!empty($requirements['phpExtensions'])) {
+            $this->missingRequirements['phpExtensions'] = [];
             foreach ($requirements['phpExtensions'] as $extension) {
                 if (!extension_loaded($extension)) {
-                    $this->missingRequirements = $extension;
+                    $this->missingRequirements['phpExtensions'][] = $extension;
                 }
             }
         }
