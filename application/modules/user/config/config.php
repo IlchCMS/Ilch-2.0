@@ -384,19 +384,8 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('regist_setfree', '0');
-            case "2.1.2":
-            case "2.1.3":
-            case "2.1.4":
-            case "2.1.5":
-            case "2.1.6":
-            case "2.1.7":
-            case "2.1.8":
-            case "2.1.9":
-            case "2.1.10":
-            case "2.1.11":
-            case "2.1.12":
-            case "2.1.13":
-            case "2.1.14":
+                break;
+            case "2.1.15":
                 $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `homepage`;');
                 $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `facebook`;');
                 $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `twitter`;');
@@ -409,6 +398,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `addition` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `icon`;');
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `show` TINYINT(1) NOT NULL DEFAULT 1 AFTER `icon`;');
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `hidden` TINYINT(1) NOT NULL DEFAULT 0 AFTER `show`;');
+                break;
         }
     }
 }

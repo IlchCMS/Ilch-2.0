@@ -378,7 +378,7 @@ class Config extends \Ilch\Config\Install
                 // Change datatype of the column gender of the users table.
                 $this->db()->query('ALTER TABLE `[prefix]_users` MODIFY COLUMN `gender` TINYINT(1) NOT NULL DEFAULT 0;');
                 break;
-            case "2.1.14":
+            case "2.1.15":
                 set_time_limit(300);
                 // Change VARCHAR length for new table character.
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_config` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;
