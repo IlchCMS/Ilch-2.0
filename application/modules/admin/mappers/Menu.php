@@ -16,6 +16,7 @@ class Menu extends \Ilch\Mapper
      *
      * @param integer $position
      * @return int|string
+     * @throws \Ilch\Database\Exception
      */
     public function getMenuIdForPosition($position)
     {
@@ -51,12 +52,13 @@ class Menu extends \Ilch\Mapper
 
     /**
      * Gets the menu for the given id.
-     * 
+     *
+     * @param $menuId
      * @return \Modules\Admin\Models\Menu
      */
     public function getMenu($menuId)
     {
-        $menu = new \Modules\Admin\Models\Menu();
+        $menu = new MenuModel();
         
         $menuRow = $this->db()->select(['id','title'])
             ->from('menu')
@@ -72,6 +74,8 @@ class Menu extends \Ilch\Mapper
 
     /**
      * Gets all menu items by menu id.
+     * @param $menuId
+     * @return array|[]
      */
     public function getMenuItems($menuId)
     {
@@ -84,7 +88,7 @@ class Menu extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($itemRows)) {
-            return null;
+            return [];
         }
 
         foreach ($itemRows as $itemRow) {
@@ -108,6 +112,9 @@ class Menu extends \Ilch\Mapper
 
     /**
      * Gets all menu items by parent item id.
+     * @param $menuId
+     * @param $itemId
+     * @return array|null
      */
     public function getMenuItemsByParent($menuId, $itemId)
     {
