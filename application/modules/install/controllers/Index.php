@@ -35,8 +35,8 @@ class Index extends \Ilch\Controller\Frontend
             $menu = [
                 'index' => ['langKey' => 'menuWelcome'],
                 'license' => ['langKey' => 'menuLicense'],
-                'systemcheck' => ['langKey' => 'menuSystemCheck'],
                 'connect' => ['langKey' => 'menuConnect'],
+                'systemcheck' => ['langKey' => 'menuSystemCheck'],
                 'database' => ['langKey' => 'menuDatabase'],
                 'configuration' => ['langKey' => 'menuConfiguration'],
                 'finish' => ['langKey' => 'menuFinish'],
@@ -100,12 +100,60 @@ class Index extends \Ilch\Controller\Frontend
             if (empty($_SESSION['install']['licenseAccepted'])) {
                 $this->getView()->set('error', true);
             } else {
-                $this->redirect(['action' => 'systemcheck']);
+                $this->redirect(['action' => 'connect']);
             }
         }
 
         if (!empty($_SESSION['install']['licenseAccepted'])) {
             $this->getView()->set('licenseAccepted', $_SESSION['install']['licenseAccepted']);
+        }
+    }
+
+    public function connectAction()
+    {
+        $errors = [];
+        if ($this->getRequest()->isPost()) {
+            $_SESSION['install']['dbEngine'] = $this->getRequest()->getPost('dbEngine');
+            $_SESSION['install']['dbHost'] = $this->getRequest()->getPost('dbHost');
+            $_SESSION['install']['dbUser'] = $this->getRequest()->getPost('dbUser');
+            $_SESSION['install']['dbPassword'] = $this->getRequest()->getPost('dbPassword');
+
+            if (empty($_SESSION['install']['dbUser'])) {
+                $errors['dbUser'] = 'fieldEmpty';
+            }
+
+            $ilch = new \Ilch\Database\Factory();
+            $db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
+            $hostParts = explode(':', $this->getRequest()->getPost('dbHost'));
+            $port = null;
+
+            if (!empty($hostParts[1])) {
+                $port = $hostParts[1];
+            }
+
+            try {
+                $db->connect(
+                    reset($hostParts),
+                    $this->getRequest()->getPost('dbUser'),
+                    $this->getRequest()->getPost('dbPassword'),
+                    $port
+                );
+            } catch (\RuntimeException $ex) {
+                $errors['dbConnection'] = 'dbConnectionError';
+            }
+
+            if (empty($errors)) {
+                $this->redirect(['action' => 'systemcheck']);
+//                $this->redirect(['action' => 'database']);
+            }
+
+            $this->getView()->set('errors', $errors);
+        }
+
+        foreach (['dbHost', 'dbUser', 'dbPassword'] as $name) {
+            if (!empty($_SESSION['install'][$name])) {
+                $this->getView()->set($name, $_SESSION['install'][$name]);
+            }
         }
     }
 
@@ -115,6 +163,21 @@ class Index extends \Ilch\Controller\Frontend
         if (!version_compare(phpversion(), '5.6.0', '>=')) {
             $errors['version'] = true;
         }
+
+        $hostParts = explode(':', $_SESSION['install']['dbHost']);
+        $port = (!empty($hostParts[1])) ? $hostParts[1] : null;
+        $dbLinkIdentifier = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
+        $dbVersion = mysqli_get_server_info($dbLinkIdentifier);
+        if (strpos(mysqli_get_server_info($dbLinkIdentifier), 'MariaDB') !== false) {
+            if (!version_compare($dbVersion, '5.5', '>=')) {
+                $errors['mariadbVersion'] = true;
+            }
+        } else {
+            if (!version_compare($dbVersion, '5.5.3', '>=')) {
+                $errors['mysqlVersion'] = true;
+            }
+        }
+        $this->getView()->set('dbVersion', $dbVersion);
 
         if (!is_writable(ROOT_PATH)) {
             $errors['writableRootPath'] = true;
@@ -191,59 +254,12 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         if ($this->getRequest()->isPost() && empty($errors)) {
-            $this->redirect(['action' => 'connect']);
+            $this->redirect(['action' => 'database']);
         } else {
             $this->getView()->set('errors', $errors);
         }
 
         $this->getView()->set('phpVersion', phpversion());
-    }
-
-    public function connectAction()
-    {
-        $errors = [];
-        if ($this->getRequest()->isPost()) {
-            $_SESSION['install']['dbEngine'] = $this->getRequest()->getPost('dbEngine');
-            $_SESSION['install']['dbHost'] = $this->getRequest()->getPost('dbHost');
-            $_SESSION['install']['dbUser'] = $this->getRequest()->getPost('dbUser');
-            $_SESSION['install']['dbPassword'] = $this->getRequest()->getPost('dbPassword');
-
-            if (empty($_SESSION['install']['dbUser'])) {
-                $errors['dbUser'] = 'fieldEmpty';
-            }
-
-            $ilch = new \Ilch\Database\Factory();
-            $db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
-            $hostParts = explode(':', $this->getRequest()->getPost('dbHost'));
-            $port = null;
-
-            if (!empty($hostParts[1])) {
-                $port = $hostParts[1];
-            }
-
-            try {
-                $db->connect(
-                    reset($hostParts),
-                    $this->getRequest()->getPost('dbUser'),
-                    $this->getRequest()->getPost('dbPassword'),
-                    $port
-                );
-            } catch (\RuntimeException $ex) {
-                $errors['dbConnection'] = 'dbConnectionError';
-            }
-
-            if (empty($errors)) {
-                $this->redirect(['action' => 'database']);
-            }
-
-            $this->getView()->set('errors', $errors);
-        }
-
-        foreach (['dbHost', 'dbUser', 'dbPassword'] as $name) {
-            if (!empty($_SESSION['install'][$name])) {
-                $this->getView()->set($name, $_SESSION['install'][$name]);
-            }
-        }
     }
 
     public function databaseAction()

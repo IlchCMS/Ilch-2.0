@@ -24,6 +24,7 @@ return [
     'required' => 'Erforderlich',
     'available' => 'Vorhanden',
     'phpVersion' => 'PHP Version',
+    'dbVersion' => 'Datenbank-Software Version',
     'dbEngine' => 'Engine',
     'dbHost' => 'Host',
     'dbUser' => 'Benutzername',

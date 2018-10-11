@@ -24,6 +24,7 @@ return [
     'required' => 'Required',
     'available' => 'Available',
     'phpVersion' => 'PHP Version',
+    'dbVersion' => 'Database software version',
     'dbEngine' => 'engine',
     'dbHost' => 'host',
     'dbUser' => 'username',

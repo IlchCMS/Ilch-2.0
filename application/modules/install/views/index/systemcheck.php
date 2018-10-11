@@ -19,6 +19,24 @@
                     <?=$this->get('phpVersion') ?>
                 </td>
             </tr>
+            <?php
+            $dbVersion = $this->get('dbVersion');
+            if (!empty($this->get('errors') && $this->get('errors')['mariadbVersion'])) {
+                $requiredVersion = '5.5';
+            } else {
+                $requiredVersion = '5.5.3';
+            } ?>
+            <tr>
+                <td><?=$this->getTrans('dbVersion') ?></td>
+                <td class="text-success">>= <?=$requiredVersion ?></td>
+                <td class="<?php if (version_compare($dbVersion, $requiredVersion, '>=')): ?>
+                                text-success
+                            <?php else: ?>
+                                text-danger
+                            <?php endif; ?>">
+                    <?=$dbVersion ?>
+                </td>
+            </tr>
             <tr>
                 <td>PHP-<?=$this->getTrans('extension') ?> cURL</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
