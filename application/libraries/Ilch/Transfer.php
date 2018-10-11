@@ -286,7 +286,9 @@ class Transfer
         if (!empty($requirements['mysqlVersion']) || !empty($requirements['mariadbVersion'])) {
             $fileConfig = new File();
             $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
-            $dbLinkIdentifier = mysqli_connect($fileConfig->get('dbHost'), $fileConfig->get('dbUser'), $fileConfig->get('dbPassword'));
+            $hostParts = explode(':', $fileConfig->get('dbHost'));
+            $port = (!empty($hostParts[1])) ? $hostParts[1] : null;
+            $dbLinkIdentifier = mysqli_connect($fileConfig->get('dbHost'), $fileConfig->get('dbUser'), $fileConfig->get('dbPassword'), null, $port);
 
             if (strpos(mysqli_get_server_info($dbLinkIdentifier), 'MariaDB') !== false) {
                 if (!version_compare(mysqli_get_server_info($dbLinkIdentifier), $requirements['mariadbVersion'], '>=')) {

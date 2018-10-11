@@ -144,7 +144,6 @@ class Index extends \Ilch\Controller\Frontend
 
             if (empty($errors)) {
                 $this->redirect(['action' => 'systemcheck']);
-//                $this->redirect(['action' => 'database']);
             }
 
             $this->getView()->set('errors', $errors);
