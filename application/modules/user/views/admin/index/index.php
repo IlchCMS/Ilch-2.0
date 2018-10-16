@@ -32,6 +32,7 @@
                 <col class="col-lg-2">
                 <col class="col-lg-2">
                 <col class="col-lg-2">
+                <col class="col-lg-2">
                 <col>
             </colgroup>
             <thead>
@@ -42,6 +43,7 @@
                     <th><?=$this->getTrans('userName') ?></th>
                     <th><?=$this->getTrans('userEmail') ?></th>
                     <th><?=$this->getTrans('userDateCreated') ?></th>
+                    <th><?=$this->getTrans('userDateLastActivity') ?></th>
                     <th><?=$this->getTrans('userGroups') ?></th>
                 </tr>
             </thead>
@@ -90,6 +92,7 @@
                             <td><?=$this->escape($user->getName()) ?></td>
                             <td><?=$this->escape($user->getEmail()) ?></td>
                             <td><?=$this->escape($user->getDateCreated()) ?></td>
+                            <td><?=$this->escape($user->getDateLastActivity()) ?></td>
                             <td><?=$this->escape($groups) ?></td>
                         </tr>
                     <?php endforeach; ?>
