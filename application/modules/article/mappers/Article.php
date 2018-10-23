@@ -351,6 +351,7 @@ class Article extends \Ilch\Mapper
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
             $articleModel->setCatId($articleRow['cat_id']);
+            $articleModel->setDateCreated($articleRow['date_created']);
             $articleModel->setAuthorId($articleRow['author_id']);
             $articleModel->setVisits($articleRow['visits']);
             $articleModel->setKeywords($articleRow['keywords']);
