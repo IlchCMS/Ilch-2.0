@@ -442,6 +442,19 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('comment_box_comments_limit', '5');
                 break;
+            case "2.1.16":
+                // Add comments box to list of boxes.
+                $configClass = '\\Modules\\Comment\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+
+                if (isset($config->config['boxes'])) {
+                    $boxModel = new \Modules\Admin\Models\Box();
+                    $boxModel->setModule($config->config['key']);
+                    foreach ($config->config['boxes'] as $key => $value) {
+                        $boxModel->addContent($key, $value);
+                    }
+                    $boxMapper->install($boxModel);
+                }
         }
 
         return 'Update function executed.';
