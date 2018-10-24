@@ -71,10 +71,13 @@ class GalleryItem extends \Ilch\Model
      * Sets the id.
      *
      * @param integer $id
+     * @return GalleryItem
      */
     public function setId($id)
     {
         $this->id = (int) $id;
+
+        return $this;
     }
 
     /**
@@ -91,10 +94,13 @@ class GalleryItem extends \Ilch\Model
      * Sets the sort.
      *
      * @param integer $sort
+     * @return GalleryItem
      */
     public function setSort($sort)
     {
         $this->sort = (int)$sort;
+
+        return $this;
     }
 
     /**
@@ -111,10 +117,13 @@ class GalleryItem extends \Ilch\Model
      * Sets the type.
      *
      * @param integer $type
+     * @return GalleryItem
      */
     public function setType($type)
     {
         $this->type = (int)$type;
+
+        return $this;
     }
 
     /**
@@ -131,10 +140,13 @@ class GalleryItem extends \Ilch\Model
      * Sets the gallery userId.
      *
      * @param integer $userId
+     * @return GalleryItem
      */
     public function setUserId($userId)
     {
         $this->userId = (int) $userId;
+
+        return $this;
     }
 
     /**
@@ -151,10 +163,13 @@ class GalleryItem extends \Ilch\Model
      * Sets the parent id.
      *
      * @param integer $id
+     * @return GalleryItem
      */
     public function setParentId($id)
     {
         $this->parentId = (int) $id;
+
+        return $this;
     }
 
     /**
@@ -171,10 +186,13 @@ class GalleryItem extends \Ilch\Model
      * Sets the title.
      *
      * @param string $title
+     * @return GalleryItem
      */
     public function setTitle($title)
     {
         $this->title = (string) $title;
+
+        return $this;
     }
 
     /**
@@ -191,9 +209,12 @@ class GalleryItem extends \Ilch\Model
      * Sets the desc.
      *
      * @param string $desc
+     * @return GalleryItem
      */
     public function setDesc($desc)
     {
         $this->desc = (string)$desc;
+
+        return $this;
     }
 }

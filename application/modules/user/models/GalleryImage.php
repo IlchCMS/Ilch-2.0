@@ -30,6 +30,13 @@ class GalleryImage extends \Ilch\Model
     protected $imageId;
 
     /**
+     * The thumb of the image.
+     *
+     * @var string
+     */
+    protected $thumb;
+
+    /**
      * Title of the image.
      *
      * @var string
@@ -64,7 +71,7 @@ class GalleryImage extends \Ilch\Model
      */
     protected $url;
 
-   /**
+    /**
      * Gets the id of the image.
      *
      * @return integer
