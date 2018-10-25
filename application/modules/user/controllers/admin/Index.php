@@ -87,7 +87,8 @@ class Index extends \Ilch\Controller\Admin
         $userMapper = new UserMapper();
         $authTokenMapper = new AuthTokenMapper();
         $statisticMapper = new StatisticMapper();
-        
+        $authProviderMapper = new AuthProvider();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
 
@@ -100,6 +101,7 @@ class Index extends \Ilch\Controller\Admin
                         $userMapper->delete($deleteUser->getId());
                         $authTokenMapper->deleteAllAuthTokenOfUser($deleteUser->getId());
                         $statisticMapper->deleteUserOnline($deleteUser->getId());
+                        $authProviderMapper->deleteUser($userId);
                     }
                 }
             }
