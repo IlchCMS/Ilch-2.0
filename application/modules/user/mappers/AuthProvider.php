@@ -183,6 +183,24 @@ class AuthProvider extends \Ilch\Mapper
         return $result;
     }
 
+    /**
+     * Delete user by id.
+     * Call this function if the user for example gets deleted and therefore
+     * the links to the auth providers of that deleted user are of no use anymore.
+     *
+     * @param $user_id
+     * @return \Ilch\Database\Mysql\Result|int
+     */
+    public function deleteUser($user_id)
+    {
+        $result = $this->db()->delete()
+            ->from($this->default_table)
+            ->where(['user_id' => $user_id])
+            ->execute();
+
+        return $result;
+    }
+
     public function authProvidersModuleExistsForProvider($provider, $module)
     {
         if (empty($module)) {

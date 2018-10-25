@@ -15,6 +15,7 @@ use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
+use Modules\User\Mappers\AuthProvider as AuthProvider;
 use \Ilch\Registry as Registry;
 use Ilch\Validation;
 
@@ -372,6 +373,7 @@ class Index extends \Ilch\Controller\Admin
         $authTokenMapper = new AuthTokenMapper();
         $statisticMapper = new StatisticMapper();
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+        $authProviderMapper = new AuthProvider();
 
         $userId = $this->getRequest()->getParam('id');
 
@@ -405,6 +407,7 @@ class Index extends \Ilch\Controller\Admin
                 }
 
                 $profileFieldsContentMapper->deleteProfileFieldContentByUserId($userId);
+                $authProviderMapper->deleteUser($userId);
                 if ($userMapper->delete($userId)) {
                     $authTokenMapper->deleteAllAuthTokenOfUser($userId);
                     $statisticMapper->deleteUserOnline($userId);
