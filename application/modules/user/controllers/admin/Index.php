@@ -97,7 +97,7 @@ class Index extends \Ilch\Controller\Admin
                 $deleteUser = $userMapper->getUserById($userId);
 
                 if ($deleteUser->getId() != Registry::get('user')->getId()) {
-                    if ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() == 1) {} else {
+                    if (!$deleteUser->hasGroup(1) || $userMapper->getAdministratorCount() > 1) {
                         $userMapper->delete($deleteUser->getId());
                         $authTokenMapper->deleteAllAuthTokenOfUser($deleteUser->getId());
                         $statisticMapper->deleteUserOnline($deleteUser->getId());
@@ -276,7 +276,7 @@ class Index extends \Ilch\Controller\Admin
                     $user->setLocale($this->getTranslator()->getLocale());
                 }
 
-                if ($generated AND empty($userData['id'])) {
+                if ($generated && empty($userData['id'])) {
                     $selector = bin2hex(openssl_random_pseudo_bytes(9));
                     $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
                     $user->setSelector($selector);
