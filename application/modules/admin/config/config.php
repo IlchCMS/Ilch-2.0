@@ -446,6 +446,7 @@ class Config extends \Ilch\Config\Install
                 // Add comments box to list of boxes.
                 $configClass = '\\Modules\\Comment\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
+                $boxMapper = new \Modules\Admin\Mappers\Box();
 
                 if (isset($config->config['boxes'])) {
                     $boxModel = new \Modules\Admin\Models\Box();
