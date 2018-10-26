@@ -248,11 +248,7 @@ class Index extends \Ilch\Controller\Admin
                 } else {
                     if (empty($userData['id'])) {
                         $pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-
-                        $password = '';
-                        for ($i = 0; $i < 10; $i++) {
-                            $password .= $pool{rand(0, strlen($pool)-1)};
-                        }
+                        $password = PasswordService::generateSecurePassword(10, $pool);
                         $userData['password'] = (new PasswordService())->hash($password);
 
                         $generated = true;
