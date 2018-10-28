@@ -151,6 +151,7 @@ class Joins extends \Ilch\Mapper
      * Inserts Join Model.
      *
      * @param JoinsModel $join
+     * @return int
      */
     public function save(JoinsModel $join)
     {

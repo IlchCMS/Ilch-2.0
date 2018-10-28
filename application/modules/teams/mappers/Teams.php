@@ -77,8 +77,8 @@ class Teams extends \Ilch\Mapper
     /**
      * Updates the position of the team.
      *
-     * @param int $id, int $position
-     *
+     * @param int $id , int $position
+     * @param int $position
      */
     public function updatePositionById($id, $position) {
         $this->db()->update('teams')
