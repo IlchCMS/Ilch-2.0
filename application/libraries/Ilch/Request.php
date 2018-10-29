@@ -216,6 +216,7 @@ class Request
     /**
      * Gets param with given key.
      *
+     * @param string $key
      * @return string|null
      */
     public function getParam($key)
@@ -230,7 +231,7 @@ class Request
     /**
      * Sets the param with the given key / value.
      *
-     * @param string $name
+     * @param string $key
      * @param string $value
      */
     public function setParam($key, $value)
