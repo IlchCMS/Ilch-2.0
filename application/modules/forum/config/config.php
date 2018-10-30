@@ -102,7 +102,7 @@ class Config extends \Ilch\Config\Install
                 `topic_id` VARCHAR(150) NOT NULL,
                 `text` TEXT NOT NULL,
                 `visits` INT(11) NOT NULL DEFAULT 0,
-                `votes` LONGTEXT NOT NULL DEFAULT \'\',
+                `votes` LONGTEXT NOT NULL,
                 `user_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
                 `forum_id` INT(11) NOT NULL DEFAULT 0,
@@ -202,9 +202,6 @@ class Config extends \Ilch\Config\Install
 
                 // Delete no longer needed file.
                 unlink(ROOT_PATH.'/application/modules/forum/controllers/admin/Base.php');
-            case "1.11.0":
-                // Add default value for votes column to avoid error when creating a new post.
-                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` MODIFY COLUMN `votes` LONGTEXT NOT NULL DEFAULT \'\';');
         }
     }
 }
