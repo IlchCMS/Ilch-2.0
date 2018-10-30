@@ -56,7 +56,7 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
-                $items = $this->getRequest()->getPost('items');
+                $items = (!empty($this->getRequest()->getPost('items'))) ? $this->getRequest()->getPost('items') : [];
 
                 foreach ($items as $item) {
                     $validation = Validation::create($item, [
