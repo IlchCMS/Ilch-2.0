@@ -516,13 +516,14 @@ class Panel extends BaseController
         }
 
         if ($this->getRequest()->getPost()) {
+
             foreach ($this->getRequest()->getPost('check_image') as $imageId ) {
                 $catId = $this->getRequest()->getParam('id');
 
                 $model = new GalleryImageModel();
-                $model->setUserId($this->getUser()->getId())
-                    ->setImageId($imageId)
-                    ->setCat($catId);
+                $model->setUserId($this->getUser()->getId());
+                $model->setImageId($imageId);
+                $model->setCat($catId);
                 $imageMapper->save($model);
             }
         }
@@ -554,9 +555,9 @@ class Panel extends BaseController
             $imageDesc = $this->getRequest()->getPost('imageDesc');
 
             $model = new GalleryImageModel();
-            $model->setId($id)
-                ->setImageTitle($imageTitle)
-                ->setImageDesc($imageDesc);
+            $model->setId($id);
+            $model->setImageTitle($imageTitle);
+            $model->setImageDesc($imageDesc);
             $imageMapper->saveImageTreat($model);
 
             $this->addMessage('saveSuccess');
