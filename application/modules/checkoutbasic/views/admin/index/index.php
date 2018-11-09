@@ -102,7 +102,7 @@ $date;
                     <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $this->escape($checkout->getId())]) ?></td>
                     <td><?=$this->escape($date->format(null, true)) ?></td>
                     <td><?=$this->escape($checkout->getName()) ?></td>
-                    <td><?=$this->escape($checkout->getAmount()) ?> <?=$currency ?></td>
+                    <td><?=$this->escape(number_format($checkout->getAmount(), 2, '.', '')) ?> <?=$currency ?></td>
                     <td><?=$this->escape($checkout->getUsage()) ?></td>
                 </tr>
             <?php endforeach; ?>
