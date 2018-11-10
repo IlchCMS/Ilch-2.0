@@ -38,7 +38,7 @@ return [
     'optIn' => 'Beitreten möglich?',
     'team' => 'Team',
     'teams' => 'Teams',
-    'name' => 'Name',
+    'name' => 'Benutzername',
     'email' => 'E-Mail',
     'dateTime' => 'Datum / Uhrzeit',
     'gender' => 'Geschlecht',
