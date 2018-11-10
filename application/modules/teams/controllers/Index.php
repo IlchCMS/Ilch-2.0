@@ -14,6 +14,8 @@ use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Models\Notification as NotificationModel;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
@@ -133,6 +135,16 @@ class Index extends \Ilch\Controller\Frontend
                     ->setText($this->getRequest()->getPost('text'))
                     ->setUndecided(1);
                 $joinsMapper->save($model);
+
+                // Add notification for the admincenter
+                $notificationsMapper = new NotificationsMapper();
+                $notificationModel = new NotificationModel();
+                $notificationModel->setModule('teams');
+                $notificationModel->setMessage($this->getTranslator()->trans('notificationMessage', $this->getRequest()->getPost('name')));
+                $notificationModel->setURL($this->getLayout()->getUrl(['module' => 'admin/teams', 'controller' => 'applications', 'action' => 'index']));
+                $notificationModel->setType('teamsNewApplication');
+
+                $notificationsMapper->addNotification($notificationModel);
 
                 $this->redirect()
                     ->withMessage('saveSuccess')

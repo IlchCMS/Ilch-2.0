@@ -13,6 +13,7 @@ use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 
 class Applications extends \Ilch\Controller\Admin
 {
@@ -56,6 +57,7 @@ class Applications extends \Ilch\Controller\Admin
     {
         $joinsMapper = new JoinsMapper();
         $teamsMapper = new TeamsMapper();
+        $notificationsMapper = new NotificationsMapper();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])
@@ -63,8 +65,14 @@ class Applications extends \Ilch\Controller\Admin
 
         $this->addMessage('rightsOfGroup', 'danger');
 
+        $applications = $joinsMapper->getJoins();
+        // Delete notifications for new applications if there are none anymore.
+        if (empty($applications)) {
+            $notificationsMapper->deleteNotificationsByType('teamsNewApplication');
+        }
+
         $this->getView()->set('teamsMapper', $teamsMapper)
-            ->set('joins', $joinsMapper->getJoins());
+            ->set('joins', $applications);
     }
 
     public function showAction()

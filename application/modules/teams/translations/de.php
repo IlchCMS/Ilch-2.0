@@ -82,6 +82,7 @@ return [
     'clearHistory' => 'Verlauf löschen',
     'historyOfUser' => 'Ältere Bewerbungen dieses Benutzers',
     'teamUsersInfoText' => 'Benutzer in der zugewiesenen Gruppe werden dem Team als Mitglieder hinzugefügt.',
+    'notificationMessage' => 'Neue Bewerbung von %s',
 
     'privateMessage' => 'Private Nachricht',
     'website' => 'Homepage',

@@ -81,6 +81,7 @@ return [
     'clearHistory' => 'Clear history',
     'historyOfUser' => 'Older applications of this user',
     'teamUsersInfoText' => 'Users of the associated group will be added as members of the team.',
+    'notificationMessage' => 'New application of %s',
 
     'privateMessage' => 'Private message',
     'website' => 'Homepage',
