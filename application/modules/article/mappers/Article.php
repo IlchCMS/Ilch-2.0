@@ -553,7 +553,9 @@ class Article extends \Ilch\Mapper
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 // Update existing article with specific id and locale
                 $this->db()->update('articles')
-                    ->values(['cat_id' => $article->getCatId(), 'read_access' => $article->getReadAccess()])
+                    ->values(['cat_id' => $article->getCatId(),
+                              'date_created' => $article->getDateCreated(),
+                              'read_access' => $article->getReadAccess()])
                     ->where(['id' => $article->getId()])
                     ->execute();
 
