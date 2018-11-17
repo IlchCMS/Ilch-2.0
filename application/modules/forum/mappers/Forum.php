@@ -107,7 +107,7 @@ class Forum extends \Ilch\Mapper
 
     public function getLastPostByTopicId($topicId)
     {
-        $sql = 'SELECT `t`.`id`, `t`.`topic_id`, `p`.`read`, `p`.`id`, `p`.`topic_id`, `p`.`date_created`, `p`.`user_id`
+        $sql = 'SELECT `t`.`id`, `t`.`topic_id`, `t`.`topic_title`, `p`.`read`, `p`.`id`, `p`.`topic_id`, `p`.`date_created`, `p`.`user_id`
                 FROM `[prefix]_forum_topics` AS `t`
                 LEFT JOIN `[prefix]_forum_posts` AS `p` ON `t`.`id` = `p`.`topic_id`
                 WHERE `t`.`topic_id` = '.$topicId.'
@@ -129,6 +129,7 @@ class Forum extends \Ilch\Mapper
         }
         $entryModel->setDateCreated($fileRow['date_created']);
         $entryModel->setTopicId($fileRow['topic_id']);
+        $entryModel->setTopicTitle($fileRow['topic_title']);
         $entryModel->setRead($fileRow['read']);
         $posts = $this->getCountPostsByTopicId($fileRow['topic_id'])-1;
         $page = floor($posts / 20)+1;
