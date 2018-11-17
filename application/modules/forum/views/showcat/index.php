@@ -78,6 +78,10 @@ function rec($item, $forumMapper, $obj, $readAccess)
                                     </a>
                                 </div>
                                 <div class="pull-left">
+                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId() ?>">
+                                        <?=$lastPost->getTopicTitle() ?>
+                                    </a>
+                                    <br>
                                     <?=$obj->getTrans('by') ?>
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                         <?=$obj->escape($lastPost->getAutor()->getName()) ?>
