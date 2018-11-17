@@ -614,7 +614,7 @@ class Article extends \Ilch\Mapper
                 (
                     [
                         'cat_id' => $article->getCatId(),
-                        'date_created' => $date->toDb(),
+                        'date_created' => $article->getDateCreated(),
                         'read_access' => $article->getReadAccess()
                     ]
                 )
