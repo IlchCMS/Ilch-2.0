@@ -608,7 +608,6 @@ class Article extends \Ilch\Mapper
             $id = $article->getId();
         } else {
             // Insert new article
-            $date = new \Ilch\Date();
             $articleId = $this->db()->insert('articles')
                 ->values
                 (

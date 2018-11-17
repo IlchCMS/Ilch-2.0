@@ -215,7 +215,7 @@ if ($this->get('article') != '') {
 $('#access').chosen();
 $(document).ready(function() {
     $(".form_datetime").datetimepicker({
-        format: "yyyy.mm.dd hh:ii:ss",
+        format: "dd.mm.yyyy hh:ii",
         startDate: new Date(),
         autoclose: true,
         language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',

@@ -88,7 +88,7 @@ class Article extends \Ilch\Model
     /**
      * The datetime when the article got created.
      *
-     * @var DateTime
+     * @var string
      */
     protected $dateCreated;
 
@@ -390,7 +390,7 @@ class Article extends \Ilch\Model
     /**
      * Gets the date_created timestamp of the article.
      *
-     * @return DateTime
+     * @return string
      */
     public function getDateCreated()
     {
@@ -400,7 +400,7 @@ class Article extends \Ilch\Model
     /**
      * Sets the date_created date of the article.
      *
-     * @param DateTime $dateCreated
+     * @param string $dateCreated
      * @return $this
      */
     public function setDateCreated($dateCreated)

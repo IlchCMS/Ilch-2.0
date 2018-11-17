@@ -137,7 +137,7 @@ class Index extends \Ilch\Controller\Admin
                     ->setDescription($this->getRequest()->getPost('description'))
                     ->setKeywords($this->getRequest()->getPost('keywords'))
                     ->setTitle($this->getRequest()->getPost('title'))
-                    ->setDateCreated($this->getRequest()->getPost('date_created'))
+                    ->setDateCreated(new \Ilch\Date($this->getRequest()->getPost('date_created')))
                     ->setTeaser($this->getRequest()->getPost('teaser'))
                     ->setContent($this->getRequest()->getPost('content'))
                     ->setPerma($this->getRequest()->getPost('permaLink'))
