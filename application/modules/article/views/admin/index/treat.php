@@ -4,7 +4,7 @@ if ($this->get('article') != '') {
     $articleID = $this->get('article')->getId();
 }
 ?>
-
+<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <h1><?=($this->get('article') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST">
     <?=$this->getTokenField(); ?>
@@ -30,6 +30,22 @@ if ($this->get('article') != '') {
                    id="title"
                    name="title"
                    value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTitle()) : $this->originalInput('title') ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="title" class="col-lg-2 control-label">
+            <?=$this->getTrans('date') ?>:
+        </label>
+        <div class="col-lg-4 input-group ilch-date date form_datetime">
+            <input type="text"
+                   class="form-control"
+                   id="date_created"
+                   name="date_created"
+                   value="<?php if ($this->get('article') != '') { echo date('d.m.Y H:i', strtotime($this->get('article')->getDateCreated())); } ?>"
+                   readonly>
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">
@@ -191,9 +207,23 @@ if ($this->get('article') != '') {
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
+<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<?php endif; ?>
 <script>
-$('#cats').chosen();
 $('#access').chosen();
+$(document).ready(function() {
+    $(".form_datetime").datetimepicker({
+        format: "yyyy.mm.dd hh:ii:ss",
+        startDate: new Date(),
+        autoclose: true,
+        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        minuteStep: 15,
+        todayHighlight: true
+    });
+});
+$('#cats').chosen();
 
 $('#title').change(
     function () {
