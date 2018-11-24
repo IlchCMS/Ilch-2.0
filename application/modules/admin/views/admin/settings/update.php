@@ -42,7 +42,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                         <p><?=$this->getTrans('verificationFailed') ?>
                     <?php endif; ?>
                     <p><?=$this->getTrans('doSave') ?>
-                        <a class="btn btn-primary btn-xs"
+                        <a class="btn btn-primary"
                            href="<?=$this->getUrl(['action' => 'update', 'dosave' => 'true']) ?>"><?=$this->getTrans('doSaveNow') ?>
                         </a>
                     </p>
@@ -74,7 +74,10 @@ $updateSuccessfull = $this->get('updateSuccessfull');
 
 <script>
 $(document).ready(function() {
-   var objDiv = document.getElementById("list-files");
-    objDiv.scrollTop = objDiv.scrollHeight;
+    let objDiv = document.getElementById("list-files");
+
+    if (objDiv !== null) {
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
 });
 </script>
