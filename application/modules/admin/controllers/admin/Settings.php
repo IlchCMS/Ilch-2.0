@@ -347,6 +347,20 @@ HTACCESS;
         }
     }
 
+    public function clearCacheAction()
+    {
+        // Delete downloaded updates
+        $files = glob('updates/*');
+        foreach($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+
+        $this->redirect()
+            ->to(['action' => 'update']);
+    }
+
     public function notificationsAction()
     {
         $this->getLayout()->getAdminHmenu()

@@ -14,16 +14,20 @@ $updateSuccessfull = $this->get('updateSuccessfull');
 <?php if ($getVersions != ''): ?>
     <div id="update">
     <p><?=$this->getTrans('versionNow') ?><?=$this->get('version') ?></p>
-    <p><?=$this->getTrans('readReleas') ?></p>
+    <p><?=$this->getTrans('searchUpdate') ?></p>
     <?php if ($this->get('foundNewVersions')): ?>
         <p><?=$this->getTrans('foundNewVersions') ?><?=$newVersion ?></p>
         <?php if (!$missingRequirements) : ?>
             <?php if (!$doUpdate): ?>
                 <?php if (is_file(ROOT_PATH.'/updates/Master-'.$newVersion.'.zip')): ?>
                     <?php if (!$doSave): ?>
-                        <p><?=$this->getTrans('isSave') ?></p>
+                        <p><?=$this->getTrans('isSave') ?>
+                            <a class="btn btn-primary"
+                               href="<?=$this->getUrl(['action' => 'clearCache']) ?>"><?=$this->getTrans('clearCache') ?>
+                            </a>
+                        </p>
                     <?php else: ?>
-                        <p><?=$this->getTrans('save') ?></p>
+                        <p><?=$this->getTrans('saveSuccess') ?></p>
                     <?php endif; ?>
                     <p><?=$this->getTrans('updateReady') ?>
                         <a class="btn btn-primary"
@@ -65,7 +69,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
     <?php endif; ?>
     </div>
 <?php else: ?>
-    <p><?=$this->getTrans('noReleas') ?></p>
+    <p><?=$this->getTrans('noUpdateFound') ?></p>
 <?php endif; ?>
 
 <script>
