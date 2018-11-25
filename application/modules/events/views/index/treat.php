@@ -8,7 +8,7 @@ $users = $userMapper->getUserList();
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/chosen/chosen.css') ?>" rel="stylesheet">
+<link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 
@@ -242,7 +242,7 @@ $users = $userMapper->getUserList();
     <?=$this->getTrans('noAccess') ?>
 <?php endif; ?>
 
-<script src="<?=$this->getStaticUrl('js/chosen/chosen.jquery.min.js') ?>"></script>
+<script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
