@@ -27,7 +27,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                             </a>
                         </p>
                     <?php else: ?>
-                        <p><?=$this->getTrans('saveSuccess') ?></p>
+                        <p><?=$this->getTrans('updateSaveSuccess') ?></p>
                     <?php endif; ?>
                     <p><?=$this->getTrans('updateReady') ?>
                         <a class="btn btn-primary"

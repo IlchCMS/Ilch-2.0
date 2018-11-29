@@ -292,7 +292,7 @@ return [
     'doSave' => 'Update herunterladen',
     'isSave' => 'Update bereits heruntergeladen.',
     'clearCache' => 'Update löschen',
-    'saveSuccess' => 'Update erfolgreich heruntergeladen.',
+    'updateSaveSuccess' => 'Update erfolgreich heruntergeladen.',
     'doSaveNow' => 'Jetzt herunterladen',
     'updateReady' => 'Update bereit zum Installieren.',
     'installNow' => 'Jetzt installieren',

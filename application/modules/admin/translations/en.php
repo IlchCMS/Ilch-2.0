@@ -291,7 +291,7 @@ return [
     'noUpdateFound' => 'No update found.',
     'doSave' => 'Download update',
     'isSave' => 'Update already downloaded.',
-    'saveSuccess' => 'Update successfully downloaded.',
+    'updateSaveSuccess' => 'Update successfully downloaded.',
     'clearCache' => 'Delete update',
     'doSaveNow' => 'Download now',
     'updateReady' => 'Update ready to install.',
