@@ -29,7 +29,7 @@
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_entries', $shoutbox->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $shoutbox->getId()]) ?></td>
-                            <?php if ($shoutbox->getUid() == '0'): ?>
+                            <?php if ($shoutbox->getUid() == '0' || empty($user)): ?>
                                 <td><?=$this->escape($shoutbox->getName()) ?></td>
                             <?php else: ?>
                                 <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>

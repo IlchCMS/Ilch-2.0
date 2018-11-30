@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.3.0',
+        'version' => '1.4.0',
         'icon_small' => 'fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',

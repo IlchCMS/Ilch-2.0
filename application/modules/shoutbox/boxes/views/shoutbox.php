@@ -137,7 +137,7 @@ $(function() {
                     <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
                     <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
                     <tr>
-                        <?php if ($shoutbox->getUid() == '0'): ?>
+                        <?php if ($shoutbox->getUid() == '0' || empty($user)): ?>
                             <td>
                                 <b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
                                 <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
