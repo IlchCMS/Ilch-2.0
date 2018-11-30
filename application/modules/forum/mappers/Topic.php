@@ -25,10 +25,12 @@ class Topic extends \Ilch\Mapper
 
         if (!empty($pagination)) {
             $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
+            $fileArray = $this->db()->queryArray($sql);
             $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        } else {
+            $fileArray = $this->db()->queryArray($sql);
         }
-
-        $fileArray = $this->db()->queryArray($sql);
+        
         $entry = [];
         $user = null;
         $dummyUser = null;
