@@ -462,7 +462,11 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.17":
                 removeDir(ROOT_PATH.'/vendor');
-                removeDir(ROOT_PATH.'/_vendor');
+                // Delete possible rest of update to 2.1.17.
+                if (file_exists(ROOT_PATH.'/_vendor')) {
+                    removeDir(ROOT_PATH.'/_vendor');
+                }
+
                 rename(ROOT_PATH.'/__vendor', ROOT_PATH.'/vendor');
                 break;
         }
