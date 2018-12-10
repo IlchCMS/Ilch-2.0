@@ -131,9 +131,6 @@ class Forum extends \Ilch\Mapper
         $entryModel->setTopicId($fileRow['topic_id']);
         $entryModel->setTopicTitle($fileRow['topic_title']);
         $entryModel->setRead($fileRow['read']);
-        $posts = $this->getCountPostsByTopicId($fileRow['topic_id'])-1;
-        $page = floor($posts / 20)+1;
-        $entryModel->setPage($page);
 
         return $entryModel;
     }

@@ -161,16 +161,6 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the desc of the post.
-     *
-     * @return string
-     */
-    public function getTopicDesc()
-    {
-        return $this->topic_desc;
-    }
-
-    /**
      * Gets the file text of the post.
      *
      * @return string
@@ -178,15 +168,6 @@ class ForumPost extends \Ilch\Model
     public function getText()
     {
         return $this->text;
-    }
-    /**
-     * Gets the image of the post.
-     *
-     * @return string
-     */
-    public function getTopicImage()
-    {
-        return $this->topic_image;
     }
 
     /**
@@ -230,16 +211,6 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the topic url of the post.
-     *
-     * @return string
-     */
-    public function getTopicUrl()
-    {
-        return $this->topic_url;
-    }
-
-    /**
      * Gets the user id of the post.
      *
      * @return integer
@@ -247,16 +218,6 @@ class ForumPost extends \Ilch\Model
     public function getUserId()
     {
         return $this->user_id;
-    }
-
-    /**
-     * Gets the page of the post.
-     *
-     * @return string
-     */
-    public function getPage()
-    {
-        return $this->page;
     }
 
     /**
@@ -362,32 +323,6 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Sets the image of the post.
-     *
-     * @param string $topicImage
-     * @return $this
-     */
-    public function setTopicImage($topicImage)
-    {
-        $this->topic_image = (string) $topicImage;
-
-        return $this;
-    }
-
-    /**
-     * Sets the desc of the post.
-     *
-     * @param string $topicDesc
-     * @return $this
-     */
-    public function setTopicDesc($topicDesc)
-    {
-        $this->topic_desc = (string) $topicDesc;
-
-        return $this;
-    }
-
-    /**
      * Sets the text of the post.
      *
      * @param string $text
@@ -453,19 +388,6 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Sets the topic url of the post.
-     *
-     * @param string $topicUrl
-     * @return $this
-     */
-    public function setTopicUrl($topicUrl)
-    {
-        $this->topic_url = (string) $topicUrl;
-
-        return $this;
-    }
-
-    /**
      * Sets the user id of the post.
      *
      * @param int $userId
@@ -474,19 +396,6 @@ class ForumPost extends \Ilch\Model
     public function setUserId($userId)
     {
         $this->user_id = (int) $userId;
-
-        return $this;
-    }
-
-    /**
-     * Sets the page of the post.
-     *
-     * @param string $page
-     * @return $this
-     */
-    public function setPage($page)
-    {
-        $this->page = (string) $page;
 
         return $this;
     }

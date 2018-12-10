@@ -9,7 +9,6 @@ namespace Modules\Forum\Mappers;
 use Modules\Forum\Models\ForumTopic as TopicModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Models\ForumPost as PostModel;
-use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Config\Config as ForumConfig;
 
@@ -166,7 +165,6 @@ class Topic extends \Ilch\Mapper
 
         $entryModel = new PostModel();
         $userMapper = new UserMapper();
-        $forumMapper = new ForumMapper();
         $entryModel->setId($fileRow['id']);
         $user = $userMapper->getUserById($fileRow['user_id']);
         if ($user) {
@@ -177,9 +175,6 @@ class Topic extends \Ilch\Mapper
         $entryModel->setDateCreated($fileRow['date_created']);
         $entryModel->setTopicId($fileRow['topic_id']);
         $entryModel->setRead($fileRow['read']);
-        $posts = $forumMapper->getCountPostsByTopicId($fileRow['topic_id'])-1;
-        $page = floor($posts / 20)+1;
-        $entryModel->setPage($page);
 
         return $entryModel;
     }

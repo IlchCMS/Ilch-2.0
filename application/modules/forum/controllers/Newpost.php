@@ -68,11 +68,12 @@ class Newpost extends \Ilch\Controller\Frontend
                     $this->trigger(ForumConfig::EVENT_SAVEPOST_AFTER, ['model' => $postModel]);
                     $this->trigger(ForumConfig::EVENT_ADDPOST_AFTER, ['postModel' => $postModel, 'forum' => $forum, 'category' => $cat, 'topic' => $topic, 'request' => $this->getRequest()]);
 
-                    $lastPost = $forumMapper->getLastPostByTopicId($forum->getId());
+                    $postsPerPage = (empty($this->getConfig()->get('forum_postsPerPage'))) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage');
+                    $page = floor(($forumMapper->getCountPostsByTopicId($forum->getId()) - 1) / $postsPerPage) + 1;
 
                     $this->redirect()
                         ->withMessage('saveSuccess')
-                        ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]);
+                        ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $forum->getId(), 'page' => $page]);
                 }
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
