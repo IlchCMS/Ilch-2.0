@@ -73,7 +73,7 @@ class Newpost extends \Ilch\Controller\Frontend
 
                     $this->redirect()
                         ->withMessage('saveSuccess')
-                        ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $forum->getId(), 'page' => $page]);
+                        ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId, 'page' => $page]);
                 }
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
