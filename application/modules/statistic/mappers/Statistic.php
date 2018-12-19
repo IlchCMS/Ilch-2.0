@@ -240,6 +240,7 @@ class Statistic extends \Ilch\Mapper
 
     public function getVisitsBrowser($year = null, $month = null, $browser = null)
     {
+        $browser = $this->db()->escape($browser);
         $sql = 'SELECT `browser`, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null AND $year != null AND $browser != null) {
@@ -313,6 +314,7 @@ class Statistic extends \Ilch\Mapper
 
     public function getVisitsOS($year = null, $month = null, $os = null)
     {
+        $os = $this->db()->escape($os);
         $sql = 'SELECT 
                 MAX(`date`),
                 `os_version`,
@@ -426,6 +428,9 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * @param null $date
+     * @param null $year
+     * @param null $month
      * @return integer
      * @throws \Ilch\Database\Exception
      */

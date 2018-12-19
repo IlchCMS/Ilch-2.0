@@ -10,7 +10,7 @@
                             <big>404</big>
                         </span>
                     </h2>
-                    <h4 class="text-warning"><?=$this->get('error') ?> "<?=$this->get('errorText') ?>" <?=$this->getTrans('notFound'); ?>!</h4>
+                    <h4 class="text-warning"><?=$this->escape($this->get('error')) ?> "<?=$this->escape($this->get('errorText')) ?>" <?=$this->getTrans('notFound'); ?>!</h4>
                 </div>
                 <div class="row text-center">
                     <a class="btn btn-default" href="<?=$this->getUrl() ?>"><?=$this->getTrans('back'); ?></a>

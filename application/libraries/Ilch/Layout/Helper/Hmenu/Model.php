@@ -69,7 +69,7 @@ class Model
                 $html .= '</li>';
             } else {
                 $html .= '<li>';
-                $html .= '<a href="'.$this->layout->getUrl($value).'">'.$this->layout->escape($key).'</a>';
+                $html .= '<a href="'.$this->layout->escape($this->layout->getUrl($value)).'">'.$this->layout->escape($key).'</a>';
                 $html .= '</li>';
             }
         }

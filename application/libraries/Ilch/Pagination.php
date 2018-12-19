@@ -28,7 +28,7 @@ class Pagination
      */
     public function setPage($page)
     {
-        if ($page == null) {
+        if ($page == null || !is_numeric($page)) {
             $page = 1;
         }
 
