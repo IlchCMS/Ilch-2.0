@@ -57,6 +57,7 @@ return [
     'commentDateTime' => 'Date/Time',
     'iLike' => 'I like this',
     'notLike' => 'I dislike this',
+    'loginRequired' => 'You need to be registered to write a comment.',
 
     // month name
     'January' => 'January',

@@ -18,5 +18,5 @@ return [
     'pictureSelect' => 'Picture',
     'videoSelect' => 'Video',
     'locationSelect' => 'Location',
-    'noHistorys' => 'No histories available',
+    'noHistorys' => 'No history available',
 ];

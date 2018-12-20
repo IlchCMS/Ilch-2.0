@@ -18,5 +18,5 @@ return [
     'pictureSelect' => 'Bild',
     'videoSelect' => 'Video',
     'locationSelect' => 'Ort',
-    'noHistorys' => 'Keine Geschichten vorhanden',
+    'noHistorys' => 'Keine Geschichte vorhanden',
 ];

@@ -57,6 +57,7 @@ return [
     'commentDateTime' => 'Datum/Uhrzeit',
     'iLike' => 'Mag ich',
     'notLike' => 'Mag ich nicht',
+    'loginRequired' => 'Sie müssen angemeldet sein, um einen Kommentar zu schreiben.',
 
     // month name
     'January' => 'Januar',

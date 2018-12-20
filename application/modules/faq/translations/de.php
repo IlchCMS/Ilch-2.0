@@ -5,9 +5,9 @@
  */
 
 return [
-    'menuFaqs' => 'F.A.Q.',
+    'menuFaqs' => 'FAQ',
     'menuCats' => 'Kategorien',
-    'faqs' => 'FAQs',
+    'faqs' => 'FAQ',
     'faqFrequentlyAskedQuestions' => 'FAQ - Häufig gestellte Fragen',
     'cat' => 'Kategorie',
     'title' => 'Titel',
@@ -16,6 +16,6 @@ return [
     'entries' => 'Einträge',
     'deleteFailed' => 'Es befinden sich noch Einträge in der Kategorie',
     'missingTitle' => 'Titel muss ausgefüllt werden',
-    'noFaqs' => 'Keine FAQs vorhanden',
+    'noFaqs' => 'Keine FAQ vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',
 ];

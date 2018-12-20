@@ -219,6 +219,8 @@ if (!empty($file)) {
                     </section>
                 </form>
             </div>
+        <?php else : ?>
+            <?=$this->getTrans('loginRequired') ?>
         <?php endif; ?>
         <?php foreach ($comments as $comment): ?>
             <?php $user = $userMapper->getUserById($comment->getUserId()); ?>

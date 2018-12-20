@@ -5,9 +5,9 @@
  */
 
 return [
-    'menuFaqs' => 'F.A.Q.',
+    'menuFaqs' => 'FAQ',
     'menuCats' => 'Categories',
-    'faqs' => 'FAQs',
+    'faqs' => 'FAQ',
     'faqFrequentlyAskedQuestions' => 'FAQ - Frequently Asked Questions',
     'cat' => 'Category',
     'title' => 'Title',
@@ -15,7 +15,7 @@ return [
     'answer' => 'Answer',
     'entries' => 'Entries',
     'deleteFailed' => 'There are still entries in the category',
-    'missingTitle' => 'Title was not filled',
-    'noFaqs' => 'No FAQs available',
+    'missingTitle' => 'Title was not entered',
+    'noFaqs' => 'No FAQ available',
     'noCategory' => 'No category available',
 ];

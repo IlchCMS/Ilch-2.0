@@ -9,7 +9,7 @@ return [
     'participationGroup' => 'Teilnahmegruppe',
     'question' => 'Frage',
     'reply' => 'Antworten',
-    'noVote' => 'keine Umfragen vorhanden',
+    'noVote' => 'Keine Umfragen vorhanden',
     'voteButton' => 'Abstimmen',
     'groupAll' => 'Alle',
     'visibleFor' => 'Sichtbar für',

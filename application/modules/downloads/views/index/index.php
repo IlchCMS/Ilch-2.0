@@ -113,6 +113,8 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
             foreach ($downloadsItems as $item) {
                 rec($item, $downloadsMapper, $this, $fileMapper);
             }
+        } else {
+            echo $this->getTrans('noDownloads');
         }
         ?>
     </ul>
