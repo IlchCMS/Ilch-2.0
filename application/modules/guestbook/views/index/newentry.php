@@ -21,7 +21,7 @@
             <input type="text"
                    class="form-control"
                    name="name"
-                   placeholder="Name"
+                   placeholder="<?=$this->getTrans('name') ?>"
                    value="<?= $this->originalInput('name') ?>" />
         </div>
     </div>
@@ -33,7 +33,7 @@
             <input type="text"
                    class="form-control"
                    name="email"
-                   placeholder="E-Mail"
+                   placeholder="<?=$this->getTrans('emailVisibleForAdmins') ?>"
                    value="<?= $this->originalInput('email') ?>" />
         </div>
     </div>

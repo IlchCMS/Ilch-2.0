@@ -13,9 +13,11 @@
                     <?=$this->getTrans('from'); ?>: <?=$this->escape($entry->getName()) ?>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <a target="_blank" href="mailto:<?=$this->escape($entry->getEmail()) ?>">
-                        <i class="fa fa-envelope"></i>
-                    </a>
+                    <?php if ($this->getUser() && $this->getUser()->isAdmin()) : ?>
+                        <a target="_blank" href="mailto:<?=$this->escape($entry->getEmail()) ?>">
+                            <i class="fa fa-envelope"></i>
+                        </a>
+                    <?php endif; ?>
                     <?php if ($entry->getHomepage() != ''): ?>
                         <a target="_blank" href="<?=$this->escape($entry->getHomepage()) ?>">
                             <i class="fa fa-home"></i>
@@ -32,5 +34,7 @@
         </div>
     </div>
 <?php endforeach; ?>
-
+<?php if (empty($this->get('entries'))) : ?>
+    <?=$this->getTrans('noEntries') ?>
+<?php endif; ?>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>

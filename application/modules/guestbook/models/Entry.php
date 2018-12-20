@@ -131,6 +131,7 @@ class Entry extends \Ilch\Model
      * Sets the id of the entry.
      *
      * @param integer $id
+     * @return Entry
      */
     public function setId($id)
     {
@@ -143,6 +144,7 @@ class Entry extends \Ilch\Model
      * Sets the email.
      *
      * @param string $email
+     * @return Entry
      */
     public function setEmail($email)
     {
@@ -155,6 +157,7 @@ class Entry extends \Ilch\Model
      * Sets the text of the entry.
      *
      * @param string $text
+     * @return Entry
      */
     public function setText($text)
     {
@@ -167,6 +170,7 @@ class Entry extends \Ilch\Model
      * Sets the name of the entry.
      *
      * @param string $name
+     * @return Entry
      */
     public function setName($name)
     {
@@ -179,6 +183,7 @@ class Entry extends \Ilch\Model
      * Sets the homepage of the entry.
      *
      * @param string $homepage
+     * @return Entry
      */
     public function setHomepage($homepage)
     {
@@ -191,6 +196,7 @@ class Entry extends \Ilch\Model
      * Sets the datetime of the entry.
      *
      * @param string $datetime
+     * @return Entry
      */
     public function setDatetime($datetime)
     {
@@ -203,6 +209,7 @@ class Entry extends \Ilch\Model
      * Sets the free of the entry.
      *
      * @param integer $free
+     * @return Entry
      */
     public function setFree($free)
     {

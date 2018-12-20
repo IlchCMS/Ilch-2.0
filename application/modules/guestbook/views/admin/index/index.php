@@ -28,6 +28,7 @@
                 <col class="icon_width">
                 <col class="col-lg-2">
                 <col class="col-lg-2">
+                <col class="col-lg-2">
                 <col>
             </colgroup>
             <thead>
@@ -40,6 +41,7 @@
                     ?>
                     <th></th>
                     <th><?=$this->getTrans('from') ?></th>
+                    <th><?=$this->getTrans('email') ?></th>
                     <th><?=$this->getTrans('date') ?></th>
                     <th><?=$this->getTrans('message') ?></th>
                 </tr>
@@ -67,10 +69,14 @@
                                 $deleteArray = ['action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1];
                             }
                         ?>
-                        </td>
                         <td><?=$this->getDeleteIcon($deleteArray) ?></td>
                         <td>
                             <?=$this->escape($entry->getName()) ?>
+                        </td>
+                        <td>
+                            <a target="_blank" href="mailto:<?=$this->escape($entry->getEmail()) ?>">
+                                <?=$this->escape($entry->getEmail()) ?>
+                            </a>
                         </td>
                         <td>
                             <?=$this->escape($entry->getDateTime()) ?>
