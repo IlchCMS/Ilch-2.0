@@ -344,6 +344,26 @@ class Config extends \Ilch\Config\Install
                     <p>Best regards</p>
                     <p>Administrator</p>
                     <p class=\"small text-muted\">This action was requested from ip address {remoteaddr}.</p>", "en_EN"),
+                ("user", "password_change_fail_mail", "Passwort ändern fehlgeschlagen", "<p>Hallo,</p>
+                    <p>&nbsp;</p>
+                    <p>Sie oder jemand anderes hat versucht Ihr Passwort zu ändern, aber es wurde kein Benutzer mit dieser E-Mail-Adresse auf {siteurl} gefunden.</p>
+                    <p>Wenn Sie auf dieser Seite registriert sind und diese E-Mail erwartet haben, probieren Sie es bitte erneut mit
+                    der E-Mail Adresse mit der Sie sich registriert haben.</p>
+                    <p>Wenn Sie nicht auf dieser Seite registriert sind, ignorieren Sie diese E-Mail bitte.</p>
+                    <p>&nbsp;</p>
+                    <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                    <p>Administrator</p>
+                    <p class=\"small text-muted\">Diese Aktion wurde angefordert von der IP-Adresse {remoteaddr}.</p>", "de_DE"),
+                ("user", "password_change_fail_mail", "Password reset failed", "<p>Hello,</p>
+                    <p>&nbsp;</p>
+                    <p>You or someone else tried to change your password at {siteurl}, but no user was found with your email address.</p>
+                    <p>If you are registered at this site and were expecting this email, please try again using the email address
+                    you gave when registering.</p>
+                    <p>If you are not registered at this site, please ignore this email.</p>
+                    <p>&nbsp;</p>
+                    <p>Best regards</p>
+                    <p>Administrator</p>
+                    <p class=\"small text-muted\">This action was requested from ip address {remoteaddr}.</p>", "en_EN"),
                 ("user", "assign_password_mail", "Benutzerkonto angelegt", "<p>Hallo <b>{name}</b>,</p>
                     <p>&nbsp;</p>
                     <p>es wurde ein Benutzerkonto auf <i>{sitetitle}</i> angelegt.
@@ -359,21 +379,7 @@ class Config extends \Ilch\Config\Install
                     <p>{confirm}</p>
                     <p>&nbsp;</p>
                     <p>Best regards</p>
-                    <p>Administrator</p>", "en_EN"),
-                ("user", "password_change_fail_mail", "Passwort ändern fehlgeschlagen", "<p>Hallo,</p>
-                    <p>&nbsp;</p>
-                    <p>Sie oder jemand anderes hat versucht Ihr Passwort zu ändern, aber es wurde kein Benutzer mit dieser E-Mail-Adresse auf {siteurl} gefunden.</p>
-                    <p>&nbsp;</p>
-                    <p>Mit freundlichen Gr&uuml;&szlig;en</p>
-                    <p>Administrator</p>
-                    <p class=\"small text-muted\">Diese Aktion wurde angefordert von der IP-Adresse {remoteaddr}.</p>", "de_DE"),
-                ("user", "password_change_fail_mail", "Password reset failed", "<p>Hello,</p>
-                    <p>&nbsp;</p>
-                    <p>You or someone else tried to change your password at {siteurl}, but no user was found with your email address.</p>
-                    <p>&nbsp;</p>
-                    <p>Best regards</p>
-                    <p>Administrator</p>
-                    <p class=\"small text-muted\">This action was requested from ip address {remoteaddr}.</p>", "en_EN");';
+                    <p>Administrator</p>", "en_EN");';
     }
 
     public function getUpdate($installedVersion)
@@ -420,6 +426,9 @@ class Config extends \Ilch\Config\Install
                 ("user", "password_change_fail_mail", "Passwort ändern fehlgeschlagen", "<p>Hallo,</p>
                       <p>&nbsp;</p>
                       <p>Sie oder jemand anderes hat versucht Ihr Passwort zu ändern, aber es wurde kein Benutzer mit dieser E-Mail-Adresse auf {siteurl} gefunden.</p>
+                      <p>Wenn Sie auf dieser Seite registriert sind und diese E-Mail erwartet haben, probieren Sie es bitte erneut mit
+                      der E-Mail Adresse mit der Sie sich registriert haben.</p>
+                      <p>Wenn Sie nicht auf dieser Seite registriert sind, ignorieren Sie diese E-Mail bitte.</p>
                       <p>&nbsp;</p>
                       <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                       <p>Administrator</p>
@@ -427,6 +436,9 @@ class Config extends \Ilch\Config\Install
                 ("user", "password_change_fail_mail", "Password reset failed", "<p>Hello,</p>
                       <p>&nbsp;</p>
                       <p>You or someone else tried to change your password at {siteurl}, but no user was found with your email address.</p>
+                      <p>If you are registered at this site and were expecting this email, please try again using the email address
+                      you gave when registering.</p>
+                      <p>If you are not registered at this site, please ignore this email.</p>
                       <p>&nbsp;</p>
                       <p>Best regards</p>
                       <p>Administrator</p>
