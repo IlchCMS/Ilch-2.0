@@ -147,7 +147,6 @@ return [
     'register' => 'Registrieren',
     'forgotPassword' => 'Passwort vergessen?',
     'buttonNewPassword' => 'Neues Passwort anfordern',
-    'missingNameEmail' => 'Name oder E-Mail muss ausgefüllt werden',
     'newPasswordSuccess' => 'Sie können sich nun mit ihrem neuen Passwort einloggen',
     'newPasswordEMailSuccess' => 'Neues Passwort wurde per E-Mail zugesendet',
     'incompleteNewPasswordUrl' => 'Die Adresse zur Änderung ihres Passwortes ist ungültig.',

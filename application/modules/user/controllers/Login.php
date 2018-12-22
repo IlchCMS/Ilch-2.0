@@ -101,7 +101,7 @@ class Login extends \Ilch\Controller\Frontend
     }
 
     public function newpasswordAction()
-    {        
+    {
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('newPassword'), ['action' => 'newpassword']);
@@ -152,73 +152,97 @@ class Login extends \Ilch\Controller\Frontend
     }
 
     public function forgotpasswordAction()
-    {        
+    {
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuLogin'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuForgotPassword'), ['action' => 'forgotpassword']);
 
         if ($this->getRequest()->getPost('saveNewPassword')) {
-            $name = trim($this->getRequest()->getPost('name'));
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'email' => 'required|email',
+            ]);
 
-            if (empty($name)) {
-                $this->addMessage('missingNameEmail', 'danger');
-            } else {
+            if ($validation->isValid()) {
                 $userMapper = new UserMapper();
                 $emailsMapper = new EmailsMapper();
+                $email = $this->getRequest()->getPost('email');
 
-                $user = $userMapper->getUserByEmail($name);
+                // Do all the work like generating a selector and confirm code even though it might be not needed later
+                // if the user was not found. This is done on purpose so both cases take ideally the same time (constant time).
+                // This is security relevant!
+                $dummy = $userMapper->getDummyUser();
+                $user = $userMapper->getUserByEmail($email);
                 if ($user == null) {
-                    $user = $userMapper->getUserByName($name);
+                    $user = $dummy;
                 }
 
-                if (!empty($user)) {
-                    $selector = bin2hex(openssl_random_pseudo_bytes(9));
-                    $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
-                    $user->setSelector($selector);
-                    $user->setConfirmedCode($confirmedCode);
+                $selector = bin2hex(openssl_random_pseudo_bytes(9));
+                $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
+                $user->setSelector($selector);
+                $user->setConfirmedCode($confirmedCode);
+                if ($user->getId()) {
+                    // TODO: Ideally call save() for a dummy user too. Currently not possible.
                     $userMapper->save($user);
-
-                    $name = $user->getName();
-                    $email = $user->getEmail();
-                    $sitetitle = $this->getConfig()->get('page_title');
-                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
-                    $date = new \Ilch\Date();
-                    $mailContent = $emailsMapper->getEmail('user', 'password_change_mail', $user->getLocale());
-
-                    $layout = '';
-                    if (!empty($_SESSION['layout'])) {
-                        $layout = $_SESSION['layout'];
-                    }
-
-                    if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
-                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php');
-                    } else {
-                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
-                    }
-                    $messageReplace = [
-                        '{content}' => $mailContent->getText(),
-                        '{sitetitle}' => $sitetitle,
-                        '{date}' => $date->format("l, d. F Y", true),
-                        '{name}' => $name,
-                        '{confirm}' => $confirmCode,
-                        '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
-                    ];
-                    $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
-
-                    $mail = new \Ilch\Mail();
-                    $mail->setFromName($this->getConfig()->get('page_title'))
-                        ->setFromEmail($this->getConfig()->get('standardMail'))
-                        ->setToName($name)
-                        ->setToEmail($email)
-                        ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                        ->setMessage($message)
-                        ->sent();
-
-                    $this->addMessage('newPasswordEMailSuccess');
-                } else {
-                    $this->addMessage('newPasswordFailed', 'danger');
                 }
+
+                $name = $user->getName();
+                $sitetitle = $this->getConfig()->get('page_title');
+                $siteurl = '<a href="'.BASE_URL.'"><i>'.$sitetitle.'</i></a>';
+                $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                $date = new \Ilch\Date();
+
+                $layout = '';
+                if (!empty($_SESSION['layout'])) {
+                    $layout = $_SESSION['layout'];
+                }
+
+                if ($user->getId()) {
+                    // User found. Send email with the link to change the password.
+                    $type = 'password_change_mail';
+                } else {
+                    // User not found. Still send an email, but regarding the user or someone else tried to reset the password.
+                    $type = 'password_change_fail_mail';
+                }
+
+                $mailContent = $emailsMapper->getEmail('user', $type, $user->getLocale());
+
+                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php');
+                } else {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
+                }
+
+                $messageReplace = [
+                    '{content}' => $mailContent->getText(),
+                    '{sitetitle}' => $sitetitle,
+                    '{date}' => $date->format("l, d. F Y", true),
+                    '{name}' => $name,
+                    '{siteurl}' => $siteurl,
+                    '{remoteaddr}' => $_SERVER['REMOTE_ADDR'],
+                    '{confirm}' => $confirmCode,
+                    '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                ];
+                $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
+                $mail = new \Ilch\Mail();
+                $mail->setFromName($this->getConfig()->get('page_title'))
+                    ->setFromEmail($this->getConfig()->get('standardMail'))
+                    ->setToName($name)
+                    ->setToEmail($email)
+                    ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                    ->setMessage($message)
+                    ->sent();
+
+                $this->addMessage('newPasswordEMailSuccess');
+                $this->redirect()
+                    ->to(['action' => 'forgotpassword']);
             }
+
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'forgotpassword']);
         }
     }
 }

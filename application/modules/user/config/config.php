@@ -334,14 +334,16 @@ class Config extends \Ilch\Config\Install
                     <p>{confirm}</p>
                     <p>&nbsp;</p>
                     <p>Mit freundlichen Gr&uuml;&szlig;en</p>
-                    <p>Administrator</p>", "de_DE"),
+                    <p>Administrator</p>
+                    <p class="small text-muted">Diese Aktion wurde angefordert von der IP-Adresse {remoteaddr}.</p>", "de_DE"),
                 ("user", "password_change_mail", "New Password", "<p>Hello <b>{name}</b>,</p>
                     <p>&nbsp;</p>
                     <p>to change the Password at <i>{sitetitle}</i> please click at the following link.</p>
                     <p>{confirm}</p>
                     <p>&nbsp;</p>
                     <p>Best regards</p>
-                    <p>Administrator</p>", "en_EN"),
+                    <p>Administrator</p>
+                    <p class="small text-muted">This action was requested from ip address {remoteaddr}.</p>", "en_EN"),
                 ("user", "assign_password_mail", "Benutzerkonto angelegt", "<p>Hallo <b>{name}</b>,</p>
                     <p>&nbsp;</p>
                     <p>es wurde ein Benutzerkonto auf <i>{sitetitle}</i> angelegt.
@@ -357,7 +359,21 @@ class Config extends \Ilch\Config\Install
                     <p>{confirm}</p>
                     <p>&nbsp;</p>
                     <p>Best regards</p>
-                    <p>Administrator</p>", "en_EN");';
+                    <p>Administrator</p>", "en_EN"),
+                ("user", "password_change_fail_mail", "Passwort ändern fehlgeschlagen", "<p>Hallo,</p>
+                    <p>&nbsp;</p>
+                    <p>Sie oder jemand anderes hat versucht Ihr Passwort zu ändern, aber es wurde kein Benutzer mit dieser E-Mail-Adresse auf {siteurl} gefunden.
+                    <p>&nbsp;</p>
+                    <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                    <p>Administrator</p>
+                    <p class="small text-muted">Diese Aktion wurde angefordert von der IP-Adresse {remoteaddr}.</p>", "de_DE"),
+                ("user", "password_change_fail_mail", "Password reset failed", "<p>Hello,</p>
+                    <p>&nbsp;</p>
+                    <p>You or someone else tried to change your password at {siteurl}, but no user was found with your email address.
+                    <p>&nbsp;</p>
+                    <p>Best regards</p>
+                    <p>Administrator</p>
+                    <p class="small text-muted">This action was requested from ip address {remoteaddr}.</p>", "en_EN");';
     }
 
     public function getUpdate($installedVersion)
@@ -398,6 +414,23 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `addition` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `icon`;');
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `show` TINYINT(1) NOT NULL DEFAULT 1 AFTER `icon`;');
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `hidden` TINYINT(1) NOT NULL DEFAULT 0 AFTER `show`;');
+                break;
+            case '2.1.17':
+                $this->db()->query('INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
+                ("user", "password_change_fail_mail", "Passwort ändern fehlgeschlagen", "<p>Hallo,</p>
+                      <p>&nbsp;</p>
+                      <p>Sie oder jemand anderes hat versucht Ihr Passwort zu ändern, aber es wurde kein Benutzer mit dieser E-Mail-Adresse auf {siteurl} gefunden.
+                      <p>&nbsp;</p>
+                      <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                      <p>Administrator</p>
+                      <p class="small text-muted">Diese Aktion wurde angefordert von der IP-Adresse {remoteaddr}.</p>", "de_DE"),
+                ("user", "password_change_fail_mail", "Password reset failed", "<p>Hello,</p>
+                      <p>&nbsp;</p>
+                      <p>You or someone else tried to change your password at {siteurl}, but no user was found with your email address.
+                      <p>&nbsp;</p>
+                      <p>Best regards</p>
+                      <p>Administrator</p>
+                      <p class="small text-muted">This action was requested from ip address {remoteaddr}.</p>", "en_EN");');
                 break;
         }
     }

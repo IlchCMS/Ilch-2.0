@@ -151,7 +151,6 @@ return [
     'register' => 'Register',
     'forgotPassword' => 'Forgot password?',
     'buttonNewPassword' => 'New password request',
-    'missingNameEmail' => 'Name or e-mail was not filled',
     'newPasswordSuccess' => 'You can now log in with your new password',
     'incompleteNewPasswordUrl' => 'The url to change your password is invalid.',
     'newPasswordEMailSuccess' => 'New Password send via e-mail',
