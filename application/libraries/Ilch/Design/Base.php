@@ -57,6 +57,7 @@ abstract class Base
      *
      * @param string $name
      * @param string $type
+     * @return mixed
      */
     public function getHelper($name, $type)
     {
@@ -114,7 +115,8 @@ abstract class Base
      * @param string $objectKey
      * @param mixed $value
      *
-     * @throws Exception if it was tried to add a value to a non-array.
+     * @return bool
+     * @throws \Exception
      */
     public function add($key, $objectKey, $value)
     {
