@@ -80,7 +80,8 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Updates the position of a profile-field in the database.
      *
-     * @param int $id, int $position
+     * @param int $id
+     * @param int $position
      *
      */
     public function updatePositionById($id, $position) {

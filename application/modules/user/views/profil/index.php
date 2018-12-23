@@ -124,34 +124,42 @@ foreach ($profil->getGroups() as $group) {
         </div>
 
         <?php foreach ($profileFields as $profileField) {
-            if ($profileField->getShow()) {
+            if (!$profileField->getShow()) {
+                continue;
+            }
+
+            $profileFieldName = $profileField->getKey();
+            if (!$profileField->getType()) {
                 foreach ($profileFieldsContent as $profileFieldContent) {
                     if ($profileFieldContent->getValue() AND $profileField->getId() == $profileFieldContent->getFieldId()) {
-                        $profileFieldName = $profileField->getKey();
-                        foreach ($profileFieldsTranslation as $profileFieldTrans) {
-                            if ($profileField->getId() == $profileFieldTrans->getFieldId()) {
-                                $profileFieldName = $profileFieldTrans->getName();
-                                break;
-                            }
-                        }
-                        if ($profileField->getType() == 0): ?>
-                            <div class="row">
-                                <div class="col-lg-2 detail bold">
-                                    <?=$this->escape($profileFieldName) ?>
-                                </div>
-                                <div class="col-lg-10 detail">
-                                    <?=$this->escape($profileFieldContent->getValue()) ?>
-                                </div>
-                            </div>
-                        <?php else: ?>
-                            <div class="clearfix"></div>
-                            <br />
-                            <h1><?=$this->escape($profileFieldName) ?></h1>
-                        <?php endif;
+                        $value = $profileFieldContent->getValue();
+                    }
+                }
+            }
+
+            if ($profileField->getType() || (!$profileField->getType() && !empty($value))) {
+                foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                    if ($profileField->getId() == $profileFieldTrans->getFieldId()) {
+                        $profileFieldName = $profileFieldTrans->getName();
                         break;
                     }
                 }
             }
+
+            if (!$profileField->getType() && !empty($value)): ?>
+                <div class="row">
+                    <div class="col-lg-2 detail bold">
+                        <?=$this->escape($profileFieldName) ?>
+                    </div>
+                    <div class="col-lg-10 detail">
+                        <?=$this->escape($value) ?>
+                    </div>
+                </div>
+            <?php elseif ($profileField->getType()): ?>
+                <div class="clearfix"></div>
+                <br />
+                <h1><?=$this->escape($profileFieldName) ?></h1>
+            <?php endif;
         }
         ?>
 
