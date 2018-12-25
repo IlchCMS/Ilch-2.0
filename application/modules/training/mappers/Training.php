@@ -21,7 +21,7 @@ class Training extends \Ilch\Mapper
         $entryArray = $this->db()->select('*')
             ->from('training')
             ->where($where)
-            ->order(['id' => 'ASC'])
+            ->order(['date' => 'ASC'])
             ->execute()
             ->fetchRows();
 
