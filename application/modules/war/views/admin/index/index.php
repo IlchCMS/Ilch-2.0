@@ -1,10 +1,3 @@
-<style>
-.group-image{
-    max-width: 100px;
-    height: auto;
-}
-</style>
-
 <h1><?=$this->getTrans('manageWarOverview') ?></h1>
 <?php if ($this->get('war') != ''): ?>
     <div id="filter-media">
@@ -44,7 +37,7 @@
                     <col class="icon_width">
                     <col class="col-lg-2">
                     <col class="col-lg-2">
-                    <col class="col-lg-4">
+                    <col class="col-lg-2">
                     <col>
                 </colgroup>
                 <thead>

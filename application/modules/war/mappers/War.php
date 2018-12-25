@@ -189,7 +189,7 @@ class War extends \Ilch\Mapper
                 LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
                 WHERE w.'.$where.'
-                ORDER by w.id DESC
+                ORDER by w.time DESC
                 LIMIT '.implode(',',$pagination->getLimit());
 
         $warArray = $this->db()->queryArray($sql);
@@ -272,7 +272,7 @@ class War extends \Ilch\Mapper
                 LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
                 WHERE status = "'.$status.'"
-                ORDER by w.id DESC
+                ORDER by w.time DESC
                 LIMIT '.implode(',',$pagination->getLimit());
 
         $warArray = $this->db()->queryArray($sql);
@@ -314,7 +314,7 @@ class War extends \Ilch\Mapper
                 FROM `[prefix]_war` as w
                 LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
-                ORDER by w.id DESC
+                ORDER by w.time DESC
                 LIMIT '.implode(',',$pagination->getLimit());
 
         $warArray = $this->db()->queryArray($sql);
