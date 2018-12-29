@@ -12,6 +12,10 @@ class Gallery extends \Ilch\Mapper
 {
     /**
      * Gets all gallery items by parent item id.
+     *
+     * @param $galleryId
+     * @param $itemId
+     * @return array|null
      */
     public function getGalleryItemsByParent($galleryId, $itemId)
     {
@@ -43,6 +47,9 @@ class Gallery extends \Ilch\Mapper
 
     /**
      * Gets all gallery items by type.
+     *
+     * @param $type
+     * @return array|null
      */
     public function getGalleryCatItem($type)
     {
@@ -72,6 +79,12 @@ class Gallery extends \Ilch\Mapper
         return $items;
     }
 
+    /**
+     * Get gallery by id.
+     *
+     * @param $id
+     * @return GalleryItem|null
+     */
     public function getGalleryById($id)
     {
         $itemRows = $this->db()->select('*')
@@ -154,6 +167,9 @@ class Gallery extends \Ilch\Mapper
 
     /**
      * Gets all gallery items by gallery id.
+     *
+     * @param $galleryId
+     * @return array|null
      */
     public function getGalleryItems($galleryId)
     {

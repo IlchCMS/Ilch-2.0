@@ -23,6 +23,13 @@ class Image extends \Ilch\Model
     protected $image_id;
 
     /**
+     * The imageThumb of the image.
+     *
+     * @var string
+     */
+    protected $image_thumb;
+
+    /**
      * Title of the image.
      *
      * @var string
@@ -84,7 +91,7 @@ class Image extends \Ilch\Model
      */
     public function getImageThumb()
     {
-        return $this->imagethumb;
+        return $this->image_thumb;
     }
 
     /**
@@ -164,7 +171,7 @@ class Image extends \Ilch\Model
      */
     public function setImageThumb($imagethumb)
     {
-        $this->imagethumb = (string)$imagethumb;
+        $this->image_thumb = (string)$imagethumb;
     }
 
     /**

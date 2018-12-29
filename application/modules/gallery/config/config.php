@@ -24,6 +24,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the gallery.',
             ],
         ],
+        'boxes' => [
+            'pictureofx' => [
+                'de_DE' => [
+                    'name' => 'Bild des X'
+                ],
+                'en_EN' => [
+                    'name' => 'Picture of X'
+                ]
+            ]
+        ],
         'ilchCore' => '2.1.16',
         'phpVersion' => '5.6'
     ];
@@ -73,6 +83,20 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.4":
+                // Add "picture of x" box to list of boxes.
+                $configClass = '\\Modules\\Gallery\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                $boxMapper = new \Modules\Admin\Mappers\Box();
+
+                if (isset($config->config['boxes'])) {
+                    $boxModel = new \Modules\Admin\Models\Box();
+                    $boxModel->setModule($config->config['key']);
+                    foreach ($config->config['boxes'] as $key => $value) {
+                        $boxModel->addContent($key, $value);
+                    }
+                    $boxMapper->install($boxModel);
+                }
         }
     }
 }

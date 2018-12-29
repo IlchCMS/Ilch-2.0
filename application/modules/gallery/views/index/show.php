@@ -45,7 +45,7 @@
                 <div class="panel-image thumbnail">
                     <a href="<?=$this->getUrl(['action' => 'showimage', 'id' => $image->getId()]) ?>">
                         <?php $altText = (empty($image->getImageTitle())) ? basename($image->getImageUrl()) : $image->getImageTitle(); ?>
-                        <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$altText ?>" />
+                        <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$this->escape($altText) ?>" />
                     </a>
                 </div>
                 <div class="panel-footer text-center">

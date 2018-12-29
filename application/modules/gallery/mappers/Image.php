@@ -10,6 +10,11 @@ use Modules\Gallery\Models\Image as ImageModel;
 
 class Image extends \Ilch\Mapper
 {
+    /**
+     * @param $id
+     * @return ImageModel
+     * @throws \Ilch\Database\Exception
+     */
     public function getImageById($id)
     {
         $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
@@ -19,8 +24,10 @@ class Image extends \Ilch\Mapper
                            WHERE g.id = '.$id;
         $imageRow = $this->db()->queryRow($sql);
         $entryModel = new ImageModel();
+        $entryModel->setId($imageRow['imgid']);
         $entryModel->setImageId($imageRow['image_id']);
         $entryModel->setImageUrl($imageRow['url']);
+        $entryModel->setImageThumb($imageRow['url_thumb']);
         $entryModel->setImageTitle($imageRow['image_title']);
         $entryModel->setImageDesc($imageRow['image_description']);
         $entryModel->setCat($imageRow['cat']);
@@ -29,6 +36,11 @@ class Image extends \Ilch\Mapper
         return $entryModel;
     }
 
+    /**
+     * @param $id
+     * @return ImageModel
+     * @throws \Ilch\Database\Exception
+     */
     public function getLastImageByGalleryId($id)
     {
         $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
@@ -47,6 +59,11 @@ class Image extends \Ilch\Mapper
         return $entryModel;
     }
 
+    /**
+     * @param $id
+     * @return array
+     * @throws \Ilch\Database\Exception
+     */
     public function getCountImageById($id)
     {
         $sql = 'SELECT *
@@ -77,6 +94,12 @@ class Image extends \Ilch\Mapper
         }
     }
 
+    /**
+     * @param $id
+     * @param null $pagination
+     * @return array
+     * @throws \Ilch\Database\Exception
+     */
     public function getImageByGalleryId($id, $pagination = NULL)
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS g.image_id,g.cat,g.id as imgid,g.image_title,g.image_description,g.visits, m.url, m.id, m.url_thumb
@@ -105,6 +128,25 @@ class Image extends \Ilch\Mapper
         return $entry;
     }
 
+    /**
+     * Get a list of valid image ids.
+     *
+     * @param array $where
+     * @return string[]
+     */
+    public function getListOfValidIds($where = [])
+    {
+        return $this->db()->select('id')
+            ->from('gallery_imgs')
+            ->where($where, 'or')
+            ->execute()
+            ->fetchList();
+    }
+
+    /**
+     * @param $id
+     * @return \Ilch\Database\Mysql\Result|int
+     */
     public function deleteById($id)
     {
             return $this->db()->delete('gallery_imgs')
