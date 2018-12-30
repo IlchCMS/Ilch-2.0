@@ -150,6 +150,7 @@ class Menu extends \Ilch\Controller\Admin
             if ($this->getRequest()->getPost('delete')) {
                 $id = (int)$this->getRequest()->getParam('menu');
                 $menuMapper->delete($id);
+                $menuMapper->deleteItemsByMenuId($id);
                 $this->redirect(['action' => 'index']);
             }
 

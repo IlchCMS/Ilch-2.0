@@ -291,6 +291,18 @@ class Menu extends \Ilch\Mapper
     }
 
     /**
+     * Delete all items with a specific menu id.
+     *
+     * @param $menuId
+     */
+    public function deleteItemsByMenuId($menuId)
+    {
+        $this->db()->delete('menu_items')
+            ->where(['menu_id' => $menuId])
+            ->execute();
+    }
+
+    /**
      * Delete menu item by the box id.
      *
      * @param integer $boxId
