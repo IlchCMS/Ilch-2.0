@@ -16,8 +16,8 @@ $entrantsMapper = $this->get('entrantsMapper');
                     <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND $this->getUser()->hasAccess('module_events')): ?>
                         <li>
                             <time>
-                                <span class="day"><?=$date->format("j", true) ?></span>
-                                <span class="month"><?=$this->getTrans($date->format('M', true)) ?></span>
+                                <span class="day"><?=$date->format("j") ?></span>
+                                <span class="month"><?=$this->getTrans($date->format('M')) ?></span>
                             </time>
                             <div class="info">
                                 <h2 class="title"><a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><?=$this->escape($eventlist->getTitle()) ?></a></h2>

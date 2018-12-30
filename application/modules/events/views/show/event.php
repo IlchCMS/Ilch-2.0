@@ -43,8 +43,8 @@ if (!empty($event)) {
                     <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>" class="headPic">
                 <?php endif; ?>
                 <div class="datePic">
-                    <div class="dateDayPic"><?=$start->format("d", true) ?></div>
-                    <div class="dateMonthPic"><?=$this->getTrans($start->format('M', true)) ?></div>
+                    <div class="dateDayPic"><?=$start->format("d") ?></div>
+                    <div class="dateMonthPic"><?=$this->getTrans($start->format('M')) ?></div>
                 </div>
                 <div class="titlePic"><?=$this->escape($event->getTitle()) ?></div>
             </div>
