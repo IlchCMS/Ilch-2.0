@@ -250,11 +250,19 @@ nav {
     margin-top: 10px;
     border-top: 1px solid #dddddd;
 }
-.thumbnail {
+.events-thumbnail {
     width: 68px;
     display: inline;
     margin-right: 5px;
     margin-bottom: 0;
+    border-width: medium;
+    border-style: solid;
+}
+.events-thumbnail-agree {
+    border-color: green;
+}
+.events-thumbnail-maybe {
+    border-color: orange;
 }
 .eventBoxHead {
     border: 1px solid #dddddd;

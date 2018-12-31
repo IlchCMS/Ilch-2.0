@@ -194,7 +194,7 @@ if (!empty($event)) {
                         <?php if ($eventEntrantsCount != ''): ?>
                             <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
                             <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>
-                                <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
+                                <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="events-thumbnail <?=($eventEntrantsUser->getStatus() == 1) ? 'events-thumbnail-agree' : 'events-thumbnail-maybe' ?>" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
@@ -280,7 +280,7 @@ if (!empty($event)) {
                                 <div class="entrants-user">
                                     <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>
                                     <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" class="entrants-user-link">
-                                        <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>">
+                                        <img class="events-thumbnail <?=($eventEntrantsUser->getStatus() == 1) ? 'events-thumbnail-agree' : 'events-thumbnail-maybe' ?>" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>">
                                         <?=$entrantsUser->getName() ?>
                                     </a>
                                 </div>
