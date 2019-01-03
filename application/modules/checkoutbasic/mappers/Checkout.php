@@ -21,7 +21,7 @@ class Checkout extends \Ilch\Mapper
         $entryArray = $this->db()->select('*')
             ->from('checkoutbasic')
             ->where($where)
-            ->order(['id' => 'DESC'])
+            ->order(['date_created' => 'DESC'])
             ->execute()
             ->fetchRows();
 
@@ -44,12 +44,19 @@ class Checkout extends \Ilch\Mapper
         return $entry;
     }
 
+    /**
+     * @param $id
+     * @return array|CheckoutModel[]
+     */
     public function getEntryById($id)
     {
         $entry = $this->getEntries(['id' => $id]);
         return $entry;
     }
 
+    /**
+     * @return false|string|null
+     */
     public function getAmount()
     {
         return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutbasic')
@@ -57,6 +64,9 @@ class Checkout extends \Ilch\Mapper
             ->fetchCell();
     }
 
+    /**
+     * @return false|string|null
+     */
     public function getAmountPlus()
     {
         return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutbasic', ['amount >' => 0])
@@ -64,6 +74,9 @@ class Checkout extends \Ilch\Mapper
             ->fetchCell();
     }
 
+    /**
+     * @return false|string|null
+     */
     public function getAmountMinus()
     {
         return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutbasic', ['amount <' => 0])
@@ -94,6 +107,7 @@ class Checkout extends \Ilch\Mapper
      * Deletes the Checkout entry.
      *
      * @param integer $id
+     * @return \Ilch\Database\Mysql\Result|int
      */
     public function deleteById($id)
     {

@@ -89,6 +89,7 @@ class Currency extends \Ilch\Mapper
      * Deletes the currency by id.
      *
      * @param integer $id
+     * @return \Ilch\Database\Mysql\Result|int
      */
     public function deleteCurrencyById($id)
     {
