@@ -21,6 +21,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
 
+        $userCache = [];
         $post = [
             'reason' => '',
             'start' => '',
@@ -70,6 +71,13 @@ class Index extends \Ilch\Controller\Frontend
             $errorFields = $validation->getFieldsWithError();
         }
 
+        $aways = $awayMapper->getAway();
+        foreach ($aways as $away) {
+            if (!array_key_exists($away->getUserId(), $userCache)) {
+                $userCache[$away->getUserId()] = $userMapper->getUserById($away->getUserId());
+            }
+        }
+
         if ($awayMapper->existsTable('calendar') == true) {
             $this->getView()->set('calendarShow', 1);
         }
@@ -77,7 +85,8 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('post', $post);
         $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('aways', $awayMapper->getAway());
+        $this->getView()->set('userCache', $userCache);
+        $this->getView()->set('aways', $aways);
     }
 
     public function updateAction()

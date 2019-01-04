@@ -46,9 +46,16 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        $userCache = [];
         $aways = $awayMapper->getAway();
 
-        $this->getView()->set('userMapper', $userMapper);
+        foreach ($aways as $away) {
+            if (!array_key_exists($away->getUserId(), $userCache)) {
+                $userCache[$away->getUserId()] = $userMapper->getUserById($away->getUserId());
+            }
+        }
+
+        $this->getView()->set('userCache', $userCache);
         $this->getView()->set('aways', $aways);
     }
 

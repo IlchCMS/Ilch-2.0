@@ -20,4 +20,5 @@ return [
     'approved' => 'approved',
     'addButton' => 'Entry',
     'calendarShow' => 'Show in the calendar?',
+    'unknown' => 'unknown',
 ];

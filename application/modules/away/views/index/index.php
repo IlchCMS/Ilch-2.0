@@ -1,4 +1,5 @@
 <?php
+$userCache = $this->get('userCache');
 $userMapper = $this->get('userMapper');
 if ($this->getUser()) {
     $userCheck = $userMapper->getUserById($this->getUser()->getId());
@@ -28,10 +29,14 @@ if ($this->getUser()) {
                 <?=$this->getTokenField() ?>
                 <tbody>
                     <?php foreach ($this->get('aways') as $away): ?>
-                        <?php $user = $userMapper->getUserById($away->getUserId()) ?>
+                        <?php $user = (!empty($userCache[$away->getUserId()])) ? $userCache[$away->getUserId()] : null; ?>
                         <tr id="<?=$away->getId() ?>">
                             <td>
-                                <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a><br />
+                                <?php if (!empty($user)) : ?>
+                                    <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a><br>
+                                <?php else : ?>
+                                    <?=$this->getTrans('unknown') ?><br>
+                                <?php endif; ?>
                                 <?=$this->escape($away->getReason()) ?>
                             </td>
                             <?php $startDate = new \Ilch\Date($away->getStart()); ?>

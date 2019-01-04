@@ -20,4 +20,5 @@ return [
     'approved' => 'genehmigt',
     'addButton' => 'Eintragen',
     'calendarShow' => 'Im Kalender anzeigen?',
+    'unknown' => 'Unbekannt',
 ];

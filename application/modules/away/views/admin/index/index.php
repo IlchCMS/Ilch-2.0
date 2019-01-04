@@ -1,4 +1,4 @@
-<?php $userMapper = $this->get('userMapper'); ?>
+<?php $userCache = $this->get('userCache') ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($this->get('aways') != ''): ?>
@@ -28,7 +28,7 @@
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('aways') as $away): ?>
-                        <?php $user = $userMapper->getUserById($away->getUserId()) ?>
+                        <?php $user = (!empty($userCache[$away->getUserId()])) ? $userCache[$away->getUserId()] : null; ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_aways', $away->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $away->getId()]) ?></td>
@@ -43,7 +43,11 @@
                                     </a>
                                 <?php endif; ?>
                             </td>
-                            <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
+                            <?php if (!empty($user)) : ?>
+                                <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
+                            <?php else : ?>
+                                <td><?=$this->getTrans('unknown') ?></td>
+                            <?php endif; ?>
                             <?php $startDate = new \Ilch\Date($away->getStart()); ?>
                             <?php $endDate = new \Ilch\Date($away->getEnd()); ?>
                             <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
