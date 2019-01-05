@@ -8,14 +8,13 @@ basePath = basePath.substr(0, basePath.indexOf("vendor/ckeditor/"));
 
 CKEDITOR.plugins.addExternal('emojione', basePath+'static/js/ckeditor/plugins/emojione/');
 CKEDITOR.plugins.addExternal('ilchmedia', basePath+'application/modules/media/static/js/ilchmedia/');
-CKEDITOR.plugins.addExternal('ilchyoutube', basePath+'application/modules/media/static/js/ilchyoutube/');
 
 CKEDITOR.editorConfig = function( config ) {
     if (typeof ilchPsPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal('ilchps', ilchPsPlugin);
-        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,emojione,ilchmedia,ilchyoutube,ilchps";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,emojione,ilchmedia,ilchps";
     } else {
-        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,emojione,ilchmedia,ilchyoutube";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,emojione,ilchmedia";
     }
 
     config.protectedSource.push(/<i[^>]*><\/i>/g);
@@ -34,6 +33,6 @@ CKEDITOR.editorConfig = function( config ) {
         { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
         { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
         { name: 'tools', items: [ 'Maximize' ] },
-        { name: 'insert', items: [ 'ilchmedia', 'ilchyoutube', 'ilchps' ] }
+        { name: 'insert', items: [ 'ilchmedia', 'ilchps' ] }
     ];
 };
