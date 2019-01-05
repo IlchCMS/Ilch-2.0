@@ -1,7 +1,7 @@
 <?php $userCache = $this->get('userCache') ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('aways') != ''): ?>
+<?php if (!empty($this->get('aways'))): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">

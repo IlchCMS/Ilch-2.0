@@ -26,7 +26,7 @@ class Away extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
 
         $away = [];
@@ -100,7 +100,8 @@ class Away extends \Ilch\Mapper
      *
      * @param integer $start
      * @param integer $end
-     * @return AwayModel|null
+     * @return AwayModel[]|array|null
+     * @throws \Ilch\Database\Exception
      */
     public function getEntriesForJson($start, $end)
     {

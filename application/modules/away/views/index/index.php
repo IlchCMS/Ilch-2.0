@@ -24,7 +24,7 @@ if ($this->getUser()) {
                 <th colspan="3"><?=$this->getTrans('status') ?></th>
             </tr>
         </thead>
-        <?php if ($this->get('aways') != ''): ?>
+        <?php if (!empty($this->get('aways'))): ?>
             <form class="form-horizontal" method="POST" action="">
                 <?=$this->getTokenField() ?>
                 <tbody>
