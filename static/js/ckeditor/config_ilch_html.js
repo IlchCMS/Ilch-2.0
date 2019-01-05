@@ -6,14 +6,16 @@
 var basePath = CKEDITOR.basePath;
 basePath = basePath.substr(0, basePath.indexOf("vendor/ckeditor/"));
 
+CKEDITOR.plugins.addExternal('emojione', basePath+'static/js/ckeditor/plugins/emojione/');
 CKEDITOR.plugins.addExternal('ilchmedia', basePath+'application/modules/media/static/js/ilchmedia/');
+CKEDITOR.plugins.addExternal('ilchyoutube', basePath+'application/modules/media/static/js/ilchyoutube/');
 
 CKEDITOR.editorConfig = function( config ) {
     if (typeof ilchPsPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal('ilchps', ilchPsPlugin);
-        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,ilchmedia,ilchps";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,emojione,ilchmedia,ilchyoutube,ilchps";
     } else {
-        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,ilchmedia";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,emojione,ilchmedia,ilchyoutube";
     }
 
     config.protectedSource.push(/<i[^>]*><\/i>/g);
@@ -26,12 +28,12 @@ CKEDITOR.editorConfig = function( config ) {
         '/',
         { name: 'basicstyles', groups: [ 'basicstyles', 'alignment', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'RemoveFormat' ] },
         { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
-        { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+        { name: 'links', items: [ 'Link', 'Unlink', 'Emojione', 'Anchor' ] },
         { name: 'insert', items: [ 'Table', 'HorizontalRule' ] },
         '/',
         { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
         { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
         { name: 'tools', items: [ 'Maximize' ] },
-        { name: 'insert', items: [ 'ilchmedia', 'ilchps' ] }
+        { name: 'insert', items: [ 'ilchmedia', 'ilchyoutube', 'ilchps' ] }
     ];
 };
