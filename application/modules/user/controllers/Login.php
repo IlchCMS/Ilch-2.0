@@ -117,7 +117,7 @@ class Login extends \Ilch\Controller\Frontend
                 $user = $userMapper->getUserBySelector($selector);
 
                 // Compare confirmedCode from the database with the one provided as parameter in the url
-                if (!empty($user) and hash_equals($user->getConfirmedCode(), $confirmedCode)) {
+                if (!empty($user) && (strtotime($user->getExpires()) >= time()) && hash_equals($user->getConfirmedCode(), $confirmedCode)) {
                     Validation::setCustomFieldAliases([
                         'password' => 'profileNewPassword',
                         'password2' => 'profileNewPasswordRetype',
@@ -180,6 +180,7 @@ class Login extends \Ilch\Controller\Frontend
                 $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
                 $user->setSelector($selector);
                 $user->setConfirmedCode($confirmedCode);
+                $user->setExpires(date('Y-m-d\TH:i:s', strtotime( '+1 day' )));
                 if ($user->getId()) {
                     // TODO: Ideally call save() for a dummy user too. Currently not possible.
                     $userMapper->save($user);

@@ -17,6 +17,7 @@ class BeforeControllerLoad
      * Checks if the user has enought rights to access the requested page.
      *
      * @param array $pluginData
+     * @throws \Ilch\Database\Exception
      */
     public function __construct(array $pluginData)
     {

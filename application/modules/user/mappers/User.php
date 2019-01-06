@@ -248,6 +248,10 @@ class User extends \Ilch\Mapper
             $user->setSelector($userRow['selector']);
         }
 
+        if (isset($userRow['expires'])) {
+            $user->setExpires($userRow['expires']);
+        }
+
         if (isset($userRow['locked'])) {
             $user->setLocked($userRow['locked']);
         }
@@ -309,6 +313,10 @@ class User extends \Ilch\Mapper
 
         if ($selector !== null) {
             $fields['selector'] = $selector;
+        }
+
+        if ($user->getExpires() !== null) {
+            $fields['expires'] = $user->getExpires();
         }
 
         if ($user->getLocked() !== null) {

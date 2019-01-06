@@ -16,6 +16,7 @@ class AfterDatabaseLoad
      * If no user id is given a default user will be created.
      *
      * @param array $pluginData
+     * @throws \Ilch\Database\Exception
      */
     public function __construct(array $pluginData)
     {

@@ -148,6 +148,13 @@ class User extends \Ilch\Model
     protected $selector;
 
     /**
+     * date at which the confirmCode expires.
+     *
+     * @var \Ilch\Date
+     */
+    protected $expires;
+
+    /**
      * The associated user group object.
      *
      * @var \Modules\User\Models\Group[]
@@ -387,6 +394,29 @@ class User extends \Ilch\Model
     public function setSelector($selector)
     {
         $this->selector = (string)$selector;
+
+        return $this;
+    }
+
+    /**
+     * Get date at which the confirm code expires.
+     *
+     * @return \Ilch\Date
+     */
+    public function getExpires()
+    {
+        return $this->expires;
+    }
+
+    /**
+     * Set date at which the confirm code expires.
+     *
+     * @param $expires
+     * @return User
+     */
+    public function setExpires($expires)
+    {
+        $this->expires = $expires;
 
         return $this;
     }

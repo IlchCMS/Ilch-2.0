@@ -45,6 +45,7 @@ class Login
      * @param string $userNameOrEmail
      * @param string $password
      * @return LoginResult
+     * @throws \Ilch\Database\Exception
      */
     public function perform($userNameOrEmail, $password)
     {
