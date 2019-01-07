@@ -83,9 +83,23 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.4.0":
             case "1.5.0":
                 // Add "picture of x" box to list of boxes.
                 $boxMapper = new \Modules\Admin\Mappers\Box();
+
+                $boxes = $boxMapper->getBoxList('de_DE');
+                $alreadyInstalled = false;
+                foreach ($boxes as $box) {
+                    if ($box->getKey() == 'pictureofx' && $box->getModule() == 'gallery') {
+                        $alreadyInstalled = true;
+                        break;
+                    }
+                }
+
+                if ($alreadyInstalled) {
+                    break;
+                }
 
                 if (isset($this->config['boxes'])) {
                     $boxModel = new \Modules\Admin\Models\Box();

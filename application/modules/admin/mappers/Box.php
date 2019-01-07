@@ -15,6 +15,7 @@ class Box extends \Ilch\Mapper
      *
      * @param string $locale
      * @return BoxModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getBoxList($locale)
     {
@@ -45,6 +46,7 @@ class Box extends \Ilch\Mapper
      *
      * @param string $locale
      * @return BoxModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getSelfBoxList($locale)
     {
@@ -77,6 +79,7 @@ class Box extends \Ilch\Mapper
      * @param string $id
      * @param string $locale
      * @return BoxModel|null
+     * @throws \Ilch\Database\Exception
      */
     public function getSelfBoxByIdLocale($id, $locale = '')
     {
@@ -123,6 +126,7 @@ class Box extends \Ilch\Mapper
      * Inserts or updates a box model in the database.
      *
      * @param BoxModel $box
+     * @throws \Ilch\Database\Exception
      */
     public function save(BoxModel $box)
     {
@@ -149,6 +153,28 @@ class Box extends \Ilch\Mapper
         }
     }
 
+    /**
+     * Returns true if there is a module box with a specific value for key and module.
+     *
+     * @param string $key
+     * @param string $module
+     * @return bool
+     * @since 2.1.19
+     */
+    public function modulesBoxExists($key, $module)
+    {
+        return (boolean)$this->db()->select('COUNT(*)')
+            ->from('modules_boxes_content')
+            ->where(['key' => $key, 'module' => $module])
+            ->execute()
+            ->fetchCell();
+    }
+
+    /**
+     * Delete box with specific id.
+     *
+     * @param $id
+     */
     public function delete($id)
     {
         $this->db()->delete('boxes')
