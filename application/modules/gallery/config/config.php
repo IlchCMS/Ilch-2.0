@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.5.0',
+        'version' => '1.6.0',
         'icon_small' => 'fa-picture-o',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -83,16 +83,14 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
-            case "1.4":
+            case "1.5.0":
                 // Add "picture of x" box to list of boxes.
-                $configClass = '\\Modules\\Gallery\\Config\\Config';
-                $config = new $configClass($this->getTranslator());
                 $boxMapper = new \Modules\Admin\Mappers\Box();
 
-                if (isset($config->config['boxes'])) {
+                if (isset($this->config['boxes'])) {
                     $boxModel = new \Modules\Admin\Models\Box();
-                    $boxModel->setModule($config->config['key']);
-                    foreach ($config->config['boxes'] as $key => $value) {
+                    $boxModel->setModule($this->config['key']);
+                    foreach ($this->config['boxes'] as $key => $value) {
                         $boxModel->addContent($key, $value);
                     }
                     $boxMapper->install($boxModel);
