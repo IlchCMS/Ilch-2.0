@@ -355,7 +355,7 @@ class War extends \Ilch\Mapper
                 LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
                 WHERE status = "'.$status.'"
-                ORDER by w.id DESC
+                ORDER by w.time ASC
                 LIMIT '.$limit;
 
         $warArray = $this->db()->queryArray($sql);
@@ -462,7 +462,7 @@ class War extends \Ilch\Mapper
         $date = $date->format(null, true);
 
         // make a unix timestamp for the given date
-        $the_countdown_date = mktime($hour, $minute, 0, $month, $day, $year, -1);
+        $the_countdown_date = mktime($hour, $minute, 0, $month, $day, $year);
 
         // get current unix timestamp
         $today = strtotime($date);
