@@ -40,7 +40,7 @@
     <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/'.$image->getId()); ?>
     <div class="panel panel-default">
         <div class="panel-image thumbnail">
-            <a href="<?=$this->getUrl(['action' => 'showimage', 'id' => $image->getId()]) ?>">
+            <a href="<?=$this->getUrl(['module' => 'gallery', 'controller' => 'index', 'action' => 'showimage', 'id' => $image->getId()]) ?>">
                 <?php $altText = (empty($image->getImageTitle())) ? basename($image->getImageUrl()) : $image->getImageTitle(); ?>
                 <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$this->escape($altText) ?>" />
             </a>
