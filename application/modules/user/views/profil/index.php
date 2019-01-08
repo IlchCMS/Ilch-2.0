@@ -130,6 +130,7 @@ foreach ($profil->getGroups() as $group) {
 
             $profileFieldName = $profileField->getKey();
             if (!$profileField->getType()) {
+                $value = '';
                 foreach ($profileFieldsContent as $profileFieldContent) {
                     if ($profileFieldContent->getValue() AND $profileField->getId() == $profileFieldContent->getFieldId()) {
                         $value = $profileFieldContent->getValue();
