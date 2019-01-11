@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "4fdd639713861eb68245b71bad4b2ddd",
@@ -273,23 +273,22 @@
         },
         {
             "name": "ifsnop/mysqldump-php",
-            "version": "v2.5",
+            "version": "v2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ifsnop/mysqldump-php.git",
-                "reference": "8d063449981e3f7bd28a3a083842e21a24d1f4af"
+                "reference": "d830857e93c3f309fd63768c0fe6d13d9240fc70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ifsnop/mysqldump-php/zipball/8d063449981e3f7bd28a3a083842e21a24d1f4af",
-                "reference": "8d063449981e3f7bd28a3a083842e21a24d1f4af",
+                "url": "https://api.github.com/repos/ifsnop/mysqldump-php/zipball/d830857e93c3f309fd63768c0fe6d13d9240fc70",
+                "reference": "d830857e93c3f309fd63768c0fe6d13d9240fc70",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*",
                 "squizlabs/php_codesniffer": "1.*"
             },
             "type": "library",
@@ -300,7 +299,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "GPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -309,19 +308,22 @@
                     "role": "Developer"
                 }
             ],
-            "description": "This is a php version of linux's mysqldump in terminal \"$ mysqldump -u username -p...\"",
+            "description": "PHP version of mysqldump cli that comes with MySQL",
             "homepage": "https://github.com/ifsnop/mysqldump-php",
             "keywords": [
-                "backup",
+                "PHP7",
                 "database",
-                "dump",
-                "export",
+                "hhvm",
+                "mariadb",
                 "mysql",
+                "mysql-backup",
                 "mysqldump",
                 "pdo",
-                "sqlite"
+                "php",
+                "php5",
+                "sql"
             ],
-            "time": "2018-06-30T19:40:05+00:00"
+            "time": "2018-12-27T00:33:19+00:00"
         },
         {
             "name": "jbbcode/jbbcode",
@@ -415,16 +417,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.17",
+            "version": "v2.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "29af24f25bab834fcbb38ad2a69fa93b867e070d"
+                "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/29af24f25bab834fcbb38ad2a69fa93b867e070d",
-                "reference": "29af24f25bab834fcbb38ad2a69fa93b867e070d",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
+                "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
                 "shasum": ""
             },
             "require": {
@@ -460,7 +462,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2018-07-04T16:31:37+00:00"
+            "time": "2019-01-03T20:59:08+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -579,16 +581,16 @@
         },
         {
             "name": "twbs/bootstrap",
-            "version": "v3.3.7",
+            "version": "v3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86"
+                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/0b9c4a4007c44201dce9a6cc1a38407005c26c86",
-                "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/4c547f2175b9a05aa43551f6927da83fe249ce42",
+                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42",
                 "shasum": ""
             },
             "replace": {
@@ -597,7 +599,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3.x-dev"
+                    "dev-master": "3.4.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -615,7 +617,7 @@
                 }
             ],
             "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-            "homepage": "http://getbootstrap.com",
+            "homepage": "https://getbootstrap.com/",
             "keywords": [
                 "JS",
                 "css",
@@ -626,7 +628,7 @@
                 "responsive",
                 "web"
             ],
-            "time": "2016-07-25T15:51:55+00:00"
+            "time": "2018-12-13T23:45:51+00:00"
         }
     ],
     "packages-dev": [
@@ -2123,16 +2125,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.4.19",
+            "version": "v3.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "6867713afe6c50ade2f34ed6435563b065a52145"
+                "reference": "a5f39641bb62e8b74e343467b145331273f615a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/6867713afe6c50ade2f34ed6435563b065a52145",
-                "reference": "6867713afe6c50ade2f34ed6435563b065a52145",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/a5f39641bb62e8b74e343467b145331273f615a2",
+                "reference": "a5f39641bb62e8b74e343467b145331273f615a2",
                 "shasum": ""
             },
             "require": {
@@ -2188,20 +2190,20 @@
                 "debug",
                 "dump"
             ],
-            "time": "2018-11-20T16:10:26+00:00"
+            "time": "2019-01-01T13:45:19+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.19",
+            "version": "v3.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "291e13d808bec481eab83f301f7bff3e699ef603"
+                "reference": "554a59a1ccbaac238a89b19c8e551a556fd0e2ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/291e13d808bec481eab83f301f7bff3e699ef603",
-                "reference": "291e13d808bec481eab83f301f7bff3e699ef603",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/554a59a1ccbaac238a89b19c8e551a556fd0e2ea",
+                "reference": "554a59a1ccbaac238a89b19c8e551a556fd0e2ea",
                 "shasum": ""
             },
             "require": {
@@ -2247,24 +2249,25 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-11T19:48:54+00:00"
+            "time": "2019-01-01T13:45:19+00:00"
         },
         {
             "name": "webmozart/assert",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "0df1908962e7a3071564e857d86874dad1ef204a"
+                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/0df1908962e7a3071564e857d86874dad1ef204a",
-                "reference": "0df1908962e7a3071564e857d86874dad1ef204a",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/83e253c8e0be5b0257b881e1827274667c5c17a9",
+                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3 || ^7.0"
+                "php": "^5.3.3 || ^7.0",
+                "symfony/polyfill-ctype": "^1.8"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.6",
@@ -2297,7 +2300,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2018-01-29T19:49:41+00:00"
+            "time": "2018-12-25T11:19:39+00:00"
         }
     ],
     "aliases": [],
