@@ -48,7 +48,7 @@ $browser = $this->getRequest()->getParam('browser');
         </div>
     </div>
 <?php elseif ($this->get('statisticBrowserVersionList') != '' AND $browser != ''): ?>
-    <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('browserStatistic') ?> - <?=$browser ?></i></h1>
+    <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('browserStatistic') ?> - <?=$this->escape($browser) ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-primary">
