@@ -42,7 +42,7 @@ class Login extends \Ilch\Controller\Admin
                 $password = $this->getRequest()->getPost('password');
                 $language = $this->getRequest()->getPost('language');
 
-                if (is_string($emailName) && !empty($language)) {
+                if (is_string($language) && !empty($language)) {
                     $_SESSION['language'] = $language;
                     $this->getTranslator()->setLocale($language, true);
                 }

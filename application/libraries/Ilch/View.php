@@ -28,7 +28,7 @@ class View extends Design\Base
     /**
      * Loads a view file.
      *
-     * @param string $url
+     * @param string $file
      * @param mixed[] $data
      */
     public function load($file, $data = [])
@@ -46,6 +46,7 @@ class View extends Design\Base
      * Gets the save bar html.
      *
      * @param string $saveKey
+     * @param string|null $nameKey
      * @param string $deleteKey
      * @return string
      */
@@ -71,10 +72,9 @@ class View extends Design\Base
      * Gets the list bar html.
      *
      * @param array $actions
-     * @param string $name
      * @return string
      */
-    public function getListBar($actions = [], $name = '')
+    public function getListBar($actions = [])
     {
         $html = '<div class="content_savebox">
                     <input type="hidden" class="content_savebox_hidden" name="action" value="" />
@@ -120,6 +120,7 @@ class View extends Design\Base
     /**
      * Gets checkbox for check delete.
      *
+     * @param string $name
      * @param string $id
      * @return integer
      */

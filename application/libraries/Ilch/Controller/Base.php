@@ -16,6 +16,11 @@ class Base
     private $request;
 
     /**
+     * @var \Ilch\Router
+     */
+    private $router;
+
+    /**
      * @var \Ilch\Translator
      */
     private $translator;
@@ -65,7 +70,8 @@ class Base
      * Redirect to given url or url params.
      *
      * @param array|string $url
-     * @param string  $route
+     * @param string $route
+     * @return \Ilch\Redirect
      */
     public function redirect($url = null, $route = null)
     {

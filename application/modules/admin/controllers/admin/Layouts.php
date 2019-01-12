@@ -58,6 +58,7 @@ class Layouts extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index']);
 
         $layouts = [];
+        $versionsOfLayouts = [];
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
             $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
             $config = new $configClass($this->getTranslator());
@@ -124,6 +125,7 @@ class Layouts extends \Ilch\Controller\Admin
             }
         } finally {
             $layoutsDir = [];
+            $versionsOfLayouts = [];
             foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
                 $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
