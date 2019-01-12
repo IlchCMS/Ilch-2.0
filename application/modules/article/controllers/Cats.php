@@ -58,6 +58,10 @@ class Cats extends \Ilch\Controller\Frontend
         $pagination = new \Ilch\Pagination();
 
         $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
+        if (empty($articlesCats)) {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Category', 'errorText' => 'notFound']);
+            return;
+        }
 
         $this->getLayout()->header()
             ->css('static/css/article.css');

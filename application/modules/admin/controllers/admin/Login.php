@@ -36,13 +36,13 @@ class Login extends \Ilch\Controller\Admin
 
             $emailName = $this->getRequest()->getPost('emailname');
 
-            if ($emailName === '') {
+            if (!is_string($emailName) || empty($emailName)) {
                 $errors[] = 'noUserEmailGiven';
             } else {
                 $password = $this->getRequest()->getPost('password');
                 $language = $this->getRequest()->getPost('language');
 
-                if (!empty($language)) {
+                if (is_string($emailName) && !empty($language)) {
                     $_SESSION['language'] = $language;
                     $this->getTranslator()->setLocale($language, true);
                 }

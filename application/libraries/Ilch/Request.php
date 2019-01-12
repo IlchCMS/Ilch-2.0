@@ -310,6 +310,18 @@ class Request
      */
     public function isSecure()
     {
+        // Return false if ilch_token is empty or not a string.
+        // Fixes "Illegal offset type in isset or empty"
+        if ($this->isPost()) {
+            if (empty($this->getPost('ilch_token')) || !is_string($this->getPost('ilch_token'))) {
+                return false;
+            }
+        } else {
+            if (empty($this->getParam('ilch_token'))) {
+                return false;
+            }
+        }
+
         $returnValue = false;
 
         if (isset($_SESSION['token'][$this->getPost('ilch_token')])

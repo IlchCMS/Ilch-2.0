@@ -305,6 +305,9 @@ abstract class Base
      */
     public function escape($string)
     {
+        if (!is_string($string)) {
+            return '';
+        }
         return htmlspecialchars($string, ENT_QUOTES, 'UTF-8', false);
     }
 
