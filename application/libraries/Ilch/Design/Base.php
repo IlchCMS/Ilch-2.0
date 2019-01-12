@@ -305,7 +305,7 @@ abstract class Base
      */
     public function escape($string)
     {
-        if (!is_string($string)) {
+        if (!is_string($string) && !(is_object($string) && method_exists($string, '__toString'))) {
             return '';
         }
         return htmlspecialchars($string, ENT_QUOTES, 'UTF-8', false);
