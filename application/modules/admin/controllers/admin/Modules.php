@@ -70,10 +70,10 @@ class Modules extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
 
         $dependencies = [];
+        $configurations = [];
 
         foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
             $key = basename($modulesPath);
-            $modulesDir[] = $key;
 
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
             if (class_exists($configClass)) {
@@ -190,6 +190,7 @@ class Modules extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('updatesAvailable'), ['action' => 'index']);
 
         $dependencies = [];
+        $configurations = [];
 
         foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
             $key = basename($modulesPath);

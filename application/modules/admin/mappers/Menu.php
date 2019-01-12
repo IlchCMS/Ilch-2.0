@@ -293,7 +293,7 @@ class Menu extends \Ilch\Mapper
     /**
      * Delete all items with a specific menu id.
      *
-     * @param $menuId
+     * @param integer $menuId
      */
     public function deleteItemsByMenuId($menuId)
     {
