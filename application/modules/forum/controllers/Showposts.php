@@ -30,8 +30,18 @@ class Showposts extends \Ilch\Controller\Frontend
         $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $topicId = (int)$this->getRequest()->getParam('topicid');
+        $topicId = $this->getRequest()->getParam('topicid');
+        if (empty($topicId) || !is_numeric($topicId)) {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Topic', 'errorText' => 'notFound']);
+            return;
+        }
+
         $forumId = $forumMapper->getForumByTopicId($topicId);
+        if (empty($forumId)) {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Topic', 'errorText' => 'notFound']);
+            return;
+        }
+
         $forum = $forumMapper->getForumById($forumId->getId());
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 

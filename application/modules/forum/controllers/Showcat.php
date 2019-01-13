@@ -16,9 +16,19 @@ class Showcat extends \Ilch\Controller\Frontend
         $forumMapper = new ForumMapper();
         $userMapper = new UserMapper();
 
-        $catId = (int)$this->getRequest()->getParam('id');
-        $forumItems = $forumMapper->getForumItemsByParent($catId);
+        $catId = $this->getRequest()->getParam('id');
+        if (empty($catId) || !is_numeric($catId)) {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Category', 'errorText' => 'notFound']);
+            return;
+        }
+
         $cat = $forumMapper->getForumById($catId);
+        if (empty($cat)) {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Category', 'errorText' => 'notFound']);
+            return;
+        }
+
+        $forumItems = $forumMapper->getForumItemsByParent($catId);
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))

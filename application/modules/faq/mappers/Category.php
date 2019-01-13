@@ -14,7 +14,7 @@ class Category extends \Ilch\Mapper
      * Gets categorys.
      *
      * @param array $where
-     * @return CategoryModel[]|null
+     * @return CategoryModel[]|[]
      */
     public function getCategories($where = [])
     {
@@ -25,7 +25,7 @@ class Category extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($categoryArray)) {
-            return null;
+            return [];
         }
 
         $categorys = [];

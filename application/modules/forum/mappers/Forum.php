@@ -13,6 +13,13 @@ use Modules\Forum\Mappers\Topic as TopicMapper;
 
 class Forum extends \Ilch\Mapper
 {
+    /**
+     * Get all forumItems by its parent (specified by its id)
+     *
+     * @param integer $itemId
+     * @return ForumItem[]|[]
+     * @throws \Ilch\Database\Exception
+     */
     public function getForumItemsByParent($itemId)
     {
         $items = [];
@@ -24,7 +31,7 @@ class Forum extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($itemRows)) {
-            return null;
+            return [];
         }
 
         foreach ($itemRows as $itemRow) {
@@ -48,6 +55,12 @@ class Forum extends \Ilch\Mapper
         return $items;
     }
 
+    /**
+     * Get forum by id.
+     *
+     * @param int $id
+     * @return ForumItem|null
+     */
     public function getForumById($id)
     {
         $itemRows = $this->db()->select('*')
@@ -75,6 +88,12 @@ class Forum extends \Ilch\Mapper
         return $itemModel;
     }
 
+    /**
+     * Get forum by topic id.
+     *
+     * @param int $topicId
+     * @return ForumItem|null
+     */
     public function getForumByTopicId($topicId)
     {
         $select = $this->db()->select();
@@ -105,6 +124,11 @@ class Forum extends \Ilch\Mapper
         return $itemModel;
     }
 
+    /**
+     * @param int $topicId
+     * @return PostModel|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getLastPostByTopicId($topicId)
     {
         $sql = 'SELECT `t`.`id`, `t`.`topic_id`, `t`.`topic_title`, `p`.`read`, `p`.`id`, `p`.`topic_id`, `p`.`date_created`, `p`.`user_id`
@@ -135,6 +159,10 @@ class Forum extends \Ilch\Mapper
         return $entryModel;
     }
 
+    /**
+     * @param int $id
+     * @return ForumItem|null
+     */
     public function getCatByParentId($id)
     {
         $itemRows = $this->db()->select('*')
@@ -162,6 +190,10 @@ class Forum extends \Ilch\Mapper
         return $itemModel;
     }
 
+    /**
+     * @param ForumItem $forumItem
+     * @return int
+     */
     public function saveItem(ForumItem $forumItem)
     {
         $fields = [
@@ -201,7 +233,10 @@ class Forum extends \Ilch\Mapper
 
         return $itemId;
     }
- 
+
+    /**
+     * @param $forumItem
+     */
     public function deleteItem($forumItem)
     {
         $topicMapper = new TopicMapper();
@@ -215,6 +250,9 @@ class Forum extends \Ilch\Mapper
             ->execute();
     }
 
+    /**
+     * @return array|null
+     */
     public function getForumItems()
     {
         $items = [];
@@ -245,6 +283,10 @@ class Forum extends \Ilch\Mapper
         return $items;
     }
 
+    /**
+     * @param int $id
+     * @return int
+     */
     public function getCountPostsById($id)
     {
         $select = $this->db()->select('*')
@@ -259,6 +301,11 @@ class Forum extends \Ilch\Mapper
         return $select;
     }
 
+    /**
+     * @param int $id
+     * @return int|string
+     * @throws \Ilch\Database\Exception
+     */
     public function getCountPostsByTopicId($id)
     {
         $sql = 'SELECT COUNT(id)
@@ -273,6 +320,11 @@ class Forum extends \Ilch\Mapper
         return $topics;
     }
 
+    /**
+     * @param int $id
+     * @return int|string
+     * @throws \Ilch\Database\Exception
+     */
     public function getCountTopicsById($id)
     {
         $sql = 'SELECT COUNT(`topic_id`)
@@ -288,6 +340,10 @@ class Forum extends \Ilch\Mapper
         return $topics;
     }
 
+    /**
+     * @return array|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getForumPermas()
     {
         $sql = 'SELECT * FROM `[prefix]_forum_items`';

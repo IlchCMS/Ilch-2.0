@@ -128,13 +128,11 @@ function rec($item, $obj, $readAccess, $i)
 
 <div id="forum">
     <h1><?=$this->getTrans('forum') ?></h1>
-    <?php if (!empty($forumItems)): ?>
-        <?php foreach ($forumItems as $item): ?>
-            <div class="forabg">
-                <?php rec($item, $this, $readAccess, $i = null) ?>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
+    <?php foreach ($forumItems as $item): ?>
+        <div class="forabg">
+            <?php rec($item, $this, $readAccess, $i = null) ?>
+        </div>
+    <?php endforeach; ?>
     <div class="foren-actions clearfix">
         <ul class="pull-left">
             <li><a href="<?=$this->getUrl(['controller' => 'showunansweredtopics', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showUnansweredTopics') ?></a></li>

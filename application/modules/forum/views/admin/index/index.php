@@ -51,10 +51,8 @@ function rec($item, $forumMapper, $obj)
     <div class="col-lg-6">
         <ol id="sortable" class="sortable">
             <?php
-                if (!empty($forumItems)) {
-                    foreach ($forumItems as $item) {
-                        rec($item, $forumMapper, $this);
-                    }
+                foreach ($forumItems as $item) {
+                    rec($item, $forumMapper, $this);
                 }
             ?>
         </ol>

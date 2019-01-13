@@ -534,9 +534,10 @@ abstract class Base
     /**
      * Gets the MediaModal.
      * Place inside Javascript tag.
-     * 
+     *
      * @param string $mediaButton Define Media Button by given URL
      * @param string $actionButton Define Action Button by given URL
+     * @param null $inputId
      * @return string
      */
     public function getMedia($mediaButton = null, $actionButton = null, $inputId = null)
@@ -632,6 +633,10 @@ abstract class Base
     /**
      * Gets the dialog.
      *
+     * @param $id
+     * @param $name
+     * @param $content
+     * @param null $submit
      * @return string
      */
     public function getDialog($id, $name, $content, $submit = null)

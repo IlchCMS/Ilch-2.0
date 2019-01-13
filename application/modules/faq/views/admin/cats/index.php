@@ -1,7 +1,7 @@
 <?php $faqMapper = $this->get('faqMapper'); ?>
 
 <h1><?=$this->getTrans('menuCats') ?></h1>
-<?php if ($this->get('cats') != ''): ?>
+<?php if (!empty($this->get('cats'))): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">

@@ -5,6 +5,8 @@
  * @copyright Ilch 2.0
  * @package ilch
  */
+
+$languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +32,7 @@
             <div class="row">
                 <div class="login_container">
                     <div class="form_container">
-                        <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>" />
+                        <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>"  alt="ilch logo"/>
                         <?php $errors = $this->get('errors'); ?>
                         <?php $emailname = $this->get('emailname'); ?>
                         <form class="form-signin" method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'index']) ?>">
@@ -58,7 +60,7 @@
                             <div class="form-group">
                                 <select class="form-control" name="language">
                                     <option value="">Standard</option>
-                                    <?php foreach ($this->get('languages') as $key => $value): ?>
+                                    <?php foreach ($languages as $key => $value): ?>
                                         <option value="<?=$key ?>"><?=$this->escape($value) ?></option>
                                     <?php endforeach; ?>
                                 </select>

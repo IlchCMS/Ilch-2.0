@@ -141,6 +141,7 @@ class Frontend extends Base
     /**
      * Get key from config.
      *
+     * @param $key
      * @return string
      */
     public function getConfigKey($key)

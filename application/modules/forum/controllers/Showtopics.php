@@ -23,7 +23,17 @@ class Showtopics extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
 
         $forumId = $this->getRequest()->getParam('forumid');
+        if (empty($forumId) || !is_numeric($forumId)) {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Forum', 'errorText' => 'notFound']);
+            return;
+        }
+
         $forum = $forumMapper->getForumById($forumId);
+        if (empty($forum)) {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Forum', 'errorText' => 'notFound']);
+            return;
+        }
+
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
         $userId = null;
