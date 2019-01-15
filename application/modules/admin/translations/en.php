@@ -35,6 +35,7 @@ return [
     'menuSearch' => 'Search',
     'menuUpdates' => 'Updates',
     'menuFrontend' => 'Frontend',
+    'language' => 'Language',
     'loginWelcome' => 'Please sign in',
     'emailname' => 'Username or E-Mail',
     'password' => 'Password',

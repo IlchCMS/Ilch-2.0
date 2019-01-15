@@ -17,7 +17,7 @@ header('Content-Type: text/html; charset=utf-8');
 $serverTimeZone = @date_default_timezone_get();
 date_default_timezone_set('UTC');
 
-define('VERSION', '2.1.18');
+define('VERSION', '2.1.19');
 define('ILCH_SERVER', 'http://www.ilch.de/ilch2');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
