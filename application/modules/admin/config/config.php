@@ -472,6 +472,9 @@ class Config extends \Ilch\Config\Install
             case "2.1.18":
                 // Add "expires" column to let the confirm code expire after a specific time.
                 $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `expires` DATETIME AFTER `selector`;');
+
+                removeDir(ROOT_PATH.'/vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
         }
 
