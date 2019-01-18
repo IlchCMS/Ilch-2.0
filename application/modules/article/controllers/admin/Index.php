@@ -159,11 +159,18 @@ class Index extends \Ilch\Controller\Admin
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'index']);
             }
+
+            if ($this->getRequest()->getParam('id')) {
+                $redirect = ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')];
+            } else {
+                $redirect = ['action' => 'treat'];
+            }
+
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
+                ->to($redirect);
         }
 
         if ($this->getRequest()->getParam('id')) {
