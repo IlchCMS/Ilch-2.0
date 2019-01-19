@@ -308,7 +308,7 @@ class Upload extends \Ilch\Controller\Base
         // channels will be 3 for RGB pictures and 4 for CMYK pictures
         // bits is the number of bits for each color.
         // The tweak-factor might be overly careful and could therefore be lowered if necessary.
-        return ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 2.5);
+        return ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 1.9);
     }
 
     public function upload()
