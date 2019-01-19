@@ -311,6 +311,27 @@ class Upload extends \Ilch\Controller\Base
         return ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 1.9);
     }
 
+    /**
+     * Returns if there would likely be enough free memory for the image.
+     * Returns true in case of memory_limit = -1 e.g. no memory limit.
+     *
+     * @param string $imageFilePath
+     * @return bool
+     * @since 2.1.20
+     */
+    public function enoughFreeMemory($imageFilePath) {
+        $memoryLimit = ini_get('memory_limit');
+        if ($memoryLimit == '-1') {
+            return true;
+        }
+
+        if (($this->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $this->guessRequiredMemory($imageFilePath)) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function upload()
     {
         $hash = uniqid() . $this->getName();
@@ -319,10 +340,10 @@ class Upload extends \Ilch\Controller\Base
 
         if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path.$hash.'.'.$this->getEnding())) {
             if (in_array($this->getEnding() , explode(' ', $this->types))) {
-                // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to create a thumbnail.
-                if (($this->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $this->guessRequiredMemory($this->path.$hash.'.'.$this->getEnding())) {
+                if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
                     return;
                 }
+
                 $thumb = new \Thumb\Thumbnail();
                 $thumb -> Thumbprefix = 'thumb_';
                 $thumb -> Thumblocation = $this->path;
@@ -358,10 +379,10 @@ class Upload extends \Ilch\Controller\Base
 
         rename($this->path.$this->getName().'.'.$this->getEnding(), $this->path.$hash.'.'.$this->getEnding());
         if (in_array($this->getEnding() , explode(' ', $this->types))) {
-            // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to create a thumbnail.
-            if (($this->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $this->guessRequiredMemory($this->path.$hash.'.'.$this->getEnding())) {
+            if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
                 return;
             }
+
             $thumb = new \Thumb\Thumbnail();
             $thumb -> Thumbprefix = 'thumb_';
             $thumb -> Thumblocation = $this->path;

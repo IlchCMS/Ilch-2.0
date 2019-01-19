@@ -154,8 +154,7 @@ class Index extends \Ilch\Controller\Admin
                             if ($width > $imageMaxWidth OR $height > $imageMaxHeight) {
                                 $upload = new \Ilch\Upload();
 
-                                // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to crop the image.
-                                if (($upload->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $upload->guessRequiredMemory($image)) {
+                                if (!$upload->enoughFreeMemory($image)) {
                                     unlink($image);
                                     $this->addMessage('failedFilesize', 'warning');
                                 } else {

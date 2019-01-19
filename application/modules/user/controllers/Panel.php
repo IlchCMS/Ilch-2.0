@@ -161,8 +161,7 @@ class Panel extends BaseController
                         if ($width > $avatarWidth OR $height > $avatarHeight) {
                             $upload = new \Ilch\Upload();
 
-                            // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to crop the image.
-                            if (($upload->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $upload->guessRequiredMemory($avatar)) {
+                            if (!$upload->enoughFreeMemory($avatar)) {
                                 unlink($avatar);
                                 $this->addMessage('failedFilesize', 'warning');
                             } else {
