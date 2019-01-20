@@ -71,15 +71,17 @@
                 <colgroup>
                         <col class="icon_width">
                         <col class="icon_width">
+                        <col class="icon_width">
                         <col class="col-xs-1">
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
+                        <col class="col-lg-1">
                         <col>
+                        <col class="col-lg-2">
                         <col class="col-lg-2">
                 </colgroup>
                 <thead>
                     <tr>
                         <th><?=$this->getCheckAllCheckbox('check_medias') ?></th>
+                        <th></th>
                         <th></th>
                         <th><?=$this->getTrans('type') ?></th>
                         <th></th>
@@ -93,6 +95,7 @@
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_medias', $media->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $media->getId()]) ?></td>
+                            <td><a href="<?=$this->getUrl(['action' => 'refresh', 'id' => $media->getId()]) ?>"><i class="fa fa-refresh" title="<?=$this->getTrans('refreshThumbnail') ?>"></i></a></td>
                             <td><?=$media->getEnding() ?></td>
                             <td>
                                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>

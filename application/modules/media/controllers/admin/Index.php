@@ -146,4 +146,27 @@ class Index extends \Ilch\Controller\Admin
         $this->addMessage('deleteSuccess');
         $this->redirect(['action' => 'index']);
     }
+
+    public function refreshAction()
+    {
+        $mediaMapper = new MediaMapper();
+        $image = $mediaMapper->getByWhere(['id' => $this->getRequest()->getParam('id')]);
+
+        $upload = new \Ilch\Upload();
+        $upload->setURL($image->getUrl());
+        $upload->setPath($this->getConfig()->get('media_uploadpath'));
+        $upload->createThumbnail();
+
+        $model = new \Modules\Media\Models\Media();
+        $model->setId($image->getId());
+        $model->setUrl($image->getUrl());
+        $model->setUrlThumb($upload->getUrlThumb());
+        $model->setEnding($image->getEnding());
+        $model->setName($image->getName());
+        $model->setDatetime($image->getDatetime());
+        $mediaMapper->save($model);
+
+//        $this->addMessage('refreshSuccess');
+//        $this->redirect(['action' => 'index']);
+    }
 }

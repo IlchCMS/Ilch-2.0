@@ -57,6 +57,11 @@ class Upload extends \Ilch\Controller\Base
     protected $path;
 
     /**
+     * @var string $path
+     */
+    protected $mediaExtImage;
+
+    /**
      * @var string $size
      */
     protected $size;
@@ -325,13 +330,16 @@ class Upload extends \Ilch\Controller\Base
             return true;
         }
 
-        if (($this->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $this->guessRequiredMemory($imageFilePath)) {
+        if (($this->returnBytes($memoryLimit) - memory_get_usage(true)) < $this->guessRequiredMemory($imageFilePath)) {
             return false;
         }
 
         return true;
     }
 
+    /**
+     * Upload image file and create thumbnail for it.
+     */
     public function upload()
     {
         $hash = uniqid() . $this->getName();
@@ -343,23 +351,27 @@ class Upload extends \Ilch\Controller\Base
                 if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
                     return;
                 }
-
-                $thumb = new \Thumb\Thumbnail();
-                $thumb -> Thumbprefix = 'thumb_';
-                $thumb -> Thumblocation = $this->path;
-                $thumb -> Thumbsize = 300;
-                $thumb -> Square = true;
-                $thumb -> Cropimage = [3,1,50,50,50,50];
-                $thumb -> Createthumb($this->path.$hash.'.'.$this->getEnding(),'file');
+                $this->createThumbnail();
             }
         }
     }
 
+    /**
+     * Check if the file extension is in the list of allowed file extensions.
+     *
+     * @return bool
+     */
     public function isAllowedExtension()
     {
         return in_array($this->getEnding(), explode(' ', $this->getAllowedExtensions()));
     }
 
+    /**
+     * Convert for example the memory_limit of php (example: 128M) to bytes.
+     *
+     * @param $size_str
+     * @return float|int
+     */
     public function returnBytes ($size_str)
     {
         switch (substr($size_str, -1))
@@ -371,6 +383,9 @@ class Upload extends \Ilch\Controller\Base
         }
     }
 
+    /**
+     * Rename the images to uniquie names and create thumbnails for them.
+     */
     public function save()
     {
         $hash = uniqid() . $this->getName();
@@ -382,14 +397,21 @@ class Upload extends \Ilch\Controller\Base
             if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
                 return;
             }
-
-            $thumb = new \Thumb\Thumbnail();
-            $thumb -> Thumbprefix = 'thumb_';
-            $thumb -> Thumblocation = $this->path;
-            $thumb -> Thumbsize = 300;
-            $thumb -> Square = true;
-            $thumb -> Cropimage = [3,1,50,50,50,50];
-            $thumb -> Createthumb($this->path.$hash.'.'.$this->getEnding(),'file');
+            $this->createThumbnail();
         }
+    }
+
+    /**
+     * Create thumbnail
+     */
+    public function createThumbnail()
+    {
+        $thumb = new \Thumb\Thumbnail();
+        $thumb->Thumbprefix = 'thumb_';
+        $thumb->Thumblocation = $this->path;
+        $thumb->Thumbsize = 300;
+        $thumb->Createthumb($this->getUrl(),'file');
+
+        $this->setUrlThumb($this->path.'thumb_'.basename($this->getUrl()));
     }
 }

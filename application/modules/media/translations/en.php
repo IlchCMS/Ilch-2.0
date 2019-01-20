@@ -42,6 +42,8 @@ return [
     'advancedSearch' => 'Advanced search',
     'fileTooBig' => 'The file is too big.',
     'extensionNotAllowed' => 'Files with this extension are not allowed.',
+    'refreshThumbnail' => 'Refresh thumbnail',
+    'refreshSuccess' => 'Thumbnail refreshed.',
 
     'cats' => 'Categories',
     'cat' => 'Category',

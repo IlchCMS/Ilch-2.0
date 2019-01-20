@@ -42,6 +42,8 @@ return [
     'advancedSearch' => 'Erweiterte Suche',
     'fileTooBig' => 'Die Datei ist zu groß.',
     'extensionNotAllowed' => 'Dateien mit dieser Dateiendung sind nicht erlaubt.',
+    'refreshThumbnail' => 'Vorschaubild neu generieren',
+    'refreshSuccess' => 'Vorschaubild neu generiert.',
 
     'cats' => 'Kategorien',
     'cat' => 'Kategorie',

@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can add and change your Teams.',
             ],
         ],
-        'ilchCore' => '2.1.16',
+        'ilchCore' => '2.1.20',
         'phpVersion' => '5.6'
     ];
 

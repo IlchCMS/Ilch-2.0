@@ -15,6 +15,7 @@ class Media extends \Ilch\Mapper
      *
      * @param \Ilch\Pagination|null $pagination
      * @return MediaModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getMediaList($pagination = NULL) 
     {
@@ -53,6 +54,7 @@ class Media extends \Ilch\Mapper
      * Gets the Media List.
      *
      * @return MediaModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getMediaListAll()
     {
@@ -91,6 +93,7 @@ class Media extends \Ilch\Mapper
      * @param string $ending
      * @param \Ilch\Pagination|null $pagination
      * @return MediaModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getMediaListByEnding($ending = NULL, $pagination = NULL) 
     {
@@ -131,6 +134,7 @@ class Media extends \Ilch\Mapper
      *
      * @param int $lastId
      * @return MediaModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getMediaListScroll($lastId = NULL) 
     {
@@ -232,10 +236,15 @@ class Media extends \Ilch\Mapper
         }
 
         $mediaModel = new MediaModel();
-        $mediaModel->setUrlThumb($mediaRow['url_thumb']);
+        $mediaModel->setId($mediaRow['id']);
         $mediaModel->setUrl($mediaRow['url']);
+        $mediaModel->setUrlThumb($mediaRow['url_thumb']);
         $mediaModel->setName($mediaRow['name']);
-        
+        $mediaModel->setDatetime($mediaRow['datetime']);
+        $mediaModel->setEnding($mediaRow['ending']);
+        $mediaModel->setCatName(($mediaRow['cat_name']));
+        $mediaModel->setCatId(($mediaRow['cat']));
+
         return $mediaModel;
     }
 
@@ -246,17 +255,39 @@ class Media extends \Ilch\Mapper
      */
     public function save(MediaModel $model)
     {
-        $this->db()->insert('media')
-            ->values([
-                'url' => $model->getUrl(),
-                'url_thumb' => $model->getUrlThumb(),
-                'name' => $model->getName(),
-                'datetime' => $model->getDatetime(),
-                'ending' => $model->getEnding(),
-                'cat' => '0',
-                'cat_name' => 'Allgemein',
-            ])
-            ->execute();
+        $id = (int)$this->db()->select('id')
+            ->from('media')
+            ->where(['id' => $model->getId()])
+            ->execute()
+            ->fetchCell();
+
+        if ($id) {
+            $this->db()->update('media')
+                ->values([
+                    'id' => $model->getId(),
+                    'url' => $model->getUrl(),
+                    'url_thumb' => $model->getUrlThumb(),
+                    'name' => $model->getName(),
+                    'datetime' => $model->getDatetime(),
+                    'ending' => $model->getEnding(),
+                    'cat' => '0',
+                    'cat_name' => 'Allgemein',
+                ])
+                ->where(['id' => $id])
+                ->execute();
+        } else {
+            $this->db()->insert('media')
+                ->values([
+                    'url' => $model->getUrl(),
+                    'url_thumb' => $model->getUrlThumb(),
+                    'name' => $model->getName(),
+                    'datetime' => $model->getDatetime(),
+                    'ending' => $model->getEnding(),
+                    'cat' => '0',
+                    'cat_name' => 'Allgemein',
+                ])
+                ->execute();
+        }
     }
 
     /**
