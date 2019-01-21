@@ -154,6 +154,36 @@ class Show extends \Ilch\Controller\Frontend
             ->set('readAccess', $readAccess);
     }
 
+    public function CurrentAction()
+    {
+        $eventMapper = new EventMapper();
+        $entrantsMapper = new EntrantsMapper();
+        $userMapper = new UserMapper;
+
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuEvents'))
+            ->add($this->getTranslator()->trans('naviEventsCurrent'));
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('naviEventsCurrent'), ['action' => 'current']);
+
+        $user = null;
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+        }
+
+        $readAccess = [3];
+        if ($user) {
+            foreach ($user->getGroups() as $us) {
+                $readAccess[] = $us->getId();
+            }
+        }
+
+        $this->getView()->set('entrantsMapper', $entrantsMapper)
+            ->set('eventListCurrent', $eventMapper->getEventListCurrent())
+            ->set('readAccess', $readAccess);
+    }
+
     public function pastAction()
     {
         $eventMapper = new EventMapper();

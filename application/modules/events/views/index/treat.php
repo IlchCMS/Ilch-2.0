@@ -197,7 +197,7 @@ $users = $userMapper->getUserList();
                        name="userLimit"
                        step="1"
                        min="0"
-                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getUserLimit()) : $this->originalInput('userLimit') ?>" />
+                       value="<?=($this->get('event') != '') ? $this->get('event')->getUserLimit() : $this->originalInput('userLimit') ?>" />
             </div>
         </div>
         <div class="form-group">

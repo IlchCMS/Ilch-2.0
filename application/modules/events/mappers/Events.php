@@ -127,7 +127,6 @@ class Events extends \Ilch\Mapper
     }
 
     /**
-     * @param $userId
      * @return EventMapper[]|array
      */
     public function getEventListParticipation($userId)
@@ -163,7 +162,32 @@ class Events extends \Ilch\Mapper
 
         $sql = 'SELECT *
                 FROM `[prefix]_events`
-                WHERE start < CURDATE()
+                WHERE end < CURDATE()
+                ORDER BY start DESC';
+
+        if ($limit !== null) { $sql .= ' LIMIT '.$limit; }
+
+        $rows = $this->db()->queryArray($sql);
+
+        if (empty($rows)) {
+            return null;
+        }
+
+        $events = [];
+        foreach ($rows as $row) {
+            $events[] = $eventMapper->getEventById($row['id']);
+        }
+
+        return $events;
+    }
+
+    public function getEventListCurrent($limit = null)
+    {
+        $eventMapper = new EventMapper();
+
+        $sql = 'SELECT *
+                FROM `[prefix]_events`
+                WHERE start < CURDATE() AND end > CURDATE()
                 ORDER BY start DESC';
 
         if ($limit !== null) { $sql .= ' LIMIT '.$limit; }

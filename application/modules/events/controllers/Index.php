@@ -46,6 +46,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('entrantsMapper', $entrantsMapper)
             ->set('eventList', $eventMapper->getEntries())
             ->set('eventListUpcoming', $eventMapper->getEventListUpcoming($upcomingLimit))
+            ->set('eventListCurrent', $eventMapper->getEventListCurrent($pastLimit))
             ->set('eventListPast', $eventMapper->getEventListPast($pastLimit))
             ->set('readAccess', $readAccess);
     }

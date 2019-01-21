@@ -24,6 +24,7 @@ return [
     'entry' => 'Eintritt',
 
     'menuEventUpcoming' => 'Bevorstehende Veranstaltungen',
+    'menuEventCurrent' => 'Derzeitige Veranstaltungen',
     'menuEventAll' => 'Alle Veranstaltungen',
     'menuEventPast' => 'Vergangene Veranstaltungen',
     'menuEventHost' => 'Meine Veranstaltungen',
@@ -46,6 +47,7 @@ return [
     'navigation' => 'Navigation',
     'naviEventsAll' => 'Alle',
     'naviEventsUpcoming' => 'Bevorstehende',
+    'naviEventsCurrent' => 'Derzeitige',
     'naviEventsPast' => 'Vergangene',
     'naviEventsAdd' => 'Erstellen',
     'naviEventsParticipation' => 'Teilnahme',
