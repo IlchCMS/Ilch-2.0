@@ -36,8 +36,8 @@ class Show extends \Ilch\Controller\Frontend
             $date = new \Ilch\Date();
 
             if ($this->getRequest()->getPost('save')) {
-                if (empty($event->getUserLimit()) || $entrantsMapper->getCountOfEventEntrans($this->getRequest()->getPost('id'), $this->getUser()->getId()) < $event->getUserLimit()) {
-                    $entrantsModel->setEventId($this->getRequest()->getPost('id'))
+                if (empty($event->getUserLimit()) || ($entrantsMapper->getCountOfEventEntrans($this->getRequest()->getParam('id')) < $event->getUserLimit())) {
+                    $entrantsModel->setEventId($this->getRequest()->getParam('id'))
                         ->setUserId($this->getUser()->getId())
                         ->setStatus($this->getRequest()->getPost('save'));
                     $entrantsMapper->saveUserOnEvent($entrantsModel);

@@ -68,6 +68,8 @@ return [
     'selectAssignedGroups' => 'Selected groups',
     'showAll' => 'Show more',
     'login' => 'Login',
+    'headpic' => 'Image of the event.',
+    'avatar' => 'Avatar',
 
     'currencies' => 'Currencies',
     'currency' => 'Currency',

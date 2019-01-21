@@ -38,9 +38,9 @@ if (!empty($event)) {
         <div class="col-lg-6">
             <div class="event-head">
                 <?php if ($this->escape($event->getImage()) != ''): ?>
-                    <img src="<?=$this->getBaseUrl().$this->escape($event->getImage()) ?>" class="headPic">
+                    <img src="<?=$this->getBaseUrl().$this->escape($event->getImage()) ?>" class="headPic" alt="<?=$this->getTrans('headpic') ?>">
                 <?php else: ?>
-                    <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>" class="headPic">
+                    <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>" class="headPic" alt="<?=$this->getTrans('headpic') ?>">
                 <?php endif; ?>
                 <div class="datePic">
                     <div class="dateDayPic"><?=$start->format("d") ?></div>
@@ -86,7 +86,7 @@ if (!empty($event)) {
                                     <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
                                         <?=$this->getTrans('join') ?>
                                     </button>
-                                    <button type="submit" class="btn btn-sm btn-warning"name="save" value="2" >
+                                    <button type="submit" class="btn btn-sm btn-warning" name="save" value="2" >
                                         <?=$this->getTrans('maybe') ?>
                                     </button>
                                 <?php endif; ?>
@@ -102,7 +102,11 @@ if (!empty($event)) {
             <br />
             <div class="eventBoxHead">
                 <?php if ($event->getEnd() != '0000-00-00 00:00:00'): ?>
-                    <?php $eventDate = $start->format("H:i").' - '.$end->format("H:i"); ?>
+                    <?php if (strtotime($event->getEnd()) - strtotime($event->getStart()) > 86400 ): ?>
+                        <?php $eventDate = $start->format("H:i").' - '.$this->getTrans($end->format("l")).$end->format(", d. ").$this->getTrans($end->format("F")).$end->format(" Y").' '.$this->getTrans('at').' '.$end->format("H:i"); ?>
+                    <?php else: ?>
+                        <?php $eventDate = $start->format("H:i").' - '.$end->format("H:i"); ?>
+                    <?php endif; ?>
                 <?php else: ?>
                     <?php $eventDate = $start->format("H:i"); ?>
                 <?php endif; ?>
@@ -194,7 +198,7 @@ if (!empty($event)) {
                         <?php if ($eventEntrantsCount != ''): ?>
                             <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
                             <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>
-                                <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="events-thumbnail <?=($eventEntrantsUser->getStatus() == 1) ? 'events-thumbnail-agree' : 'events-thumbnail-maybe' ?>" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
+                                <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="events-thumbnail <?=($eventEntrantsUser->getStatus() == 1) ? 'events-thumbnail-agree' : 'events-thumbnail-maybe' ?>" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>"></a>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
@@ -280,7 +284,7 @@ if (!empty($event)) {
                                 <div class="entrants-user">
                                     <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>
                                     <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" class="entrants-user-link">
-                                        <img class="events-thumbnail <?=($eventEntrantsUser->getStatus() == 1) ? 'events-thumbnail-agree' : 'events-thumbnail-maybe' ?>" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>">
+                                        <img class="events-thumbnail <?=($eventEntrantsUser->getStatus() == 1) ? 'events-thumbnail-agree' : 'events-thumbnail-maybe' ?>" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
                                         <?=$entrantsUser->getName() ?>
                                     </a>
                                 </div>

@@ -68,6 +68,8 @@ return [
     'selectAssignedGroups' => 'Ausgewählte Gruppen',
     'showMore' => 'Mehr anzeigen',
     'login' => 'Login',
+    'headpic' => 'Bild zur Veranstaltung.',
+    'avatar' => 'Avatar',
 
     'currencies' => 'Währungen',
     'currency' => 'Währung',

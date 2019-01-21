@@ -127,6 +127,7 @@ class Events extends \Ilch\Mapper
     }
 
     /**
+     * @param $userId
      * @return EventMapper[]|array
      */
     public function getEventListParticipation($userId)
