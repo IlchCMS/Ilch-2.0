@@ -44,6 +44,7 @@ return [
     'extensionNotAllowed' => 'Dateien mit dieser Dateiendung sind nicht erlaubt.',
     'refreshThumbnail' => 'Vorschaubild neu generieren',
     'refreshSuccess' => 'Vorschaubild neu generiert.',
+    'refreshFailure' => 'Fehlgeschlagen. Kein Vorschaubild generiert.',
 
     'cats' => 'Kategorien',
     'cat' => 'Kategorie',

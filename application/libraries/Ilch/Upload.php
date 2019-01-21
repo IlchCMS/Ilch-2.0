@@ -403,9 +403,15 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * Create thumbnail
+     *
+     * @return bool
      */
     public function createThumbnail()
     {
+        if (!$this->enoughFreeMemory($this->getUrl())) {
+            return false;
+        }
+
         $thumb = new \Thumb\Thumbnail();
         $thumb->Thumbprefix = 'thumb_';
         $thumb->Thumblocation = $this->path;
@@ -413,5 +419,6 @@ class Upload extends \Ilch\Controller\Base
         $thumb->Createthumb($this->getUrl(),'file');
 
         $this->setUrlThumb($this->path.'thumb_'.basename($this->getUrl()));
+        return true;
     }
 }

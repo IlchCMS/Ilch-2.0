@@ -152,21 +152,29 @@ class Index extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
         $image = $mediaMapper->getByWhere(['id' => $this->getRequest()->getParam('id')]);
 
-        $upload = new \Ilch\Upload();
-        $upload->setURL($image->getUrl());
-        $upload->setPath($this->getConfig()->get('media_uploadpath'));
-        $upload->createThumbnail();
+        if (!empty($image)) {
+            $upload = new \Ilch\Upload();
+            $upload->setURL($image->getUrl());
+            $upload->setPath($this->getConfig()->get('media_uploadpath'));
+            $result = $upload->createThumbnail();
 
-        $model = new \Modules\Media\Models\Media();
-        $model->setId($image->getId());
-        $model->setUrl($image->getUrl());
-        $model->setUrlThumb($upload->getUrlThumb());
-        $model->setEnding($image->getEnding());
-        $model->setName($image->getName());
-        $model->setDatetime($image->getDatetime());
-        $mediaMapper->save($model);
+            if (!$result) {
+                $this->addMessage('refreshFailure');
+            }
 
-//        $this->addMessage('refreshSuccess');
-//        $this->redirect(['action' => 'index']);
+            $model = new \Modules\Media\Models\Media();
+            $model->setId($image->getId());
+            $model->setUrl($image->getUrl());
+            $model->setUrlThumb($upload->getUrlThumb());
+            $model->setEnding($image->getEnding());
+            $model->setName($image->getName());
+            $model->setDatetime($image->getDatetime());
+            $mediaMapper->save($model);
+
+            $this->addMessage('refreshSuccess');
+        } else {
+            $this->addMessage('refreshFailure');
+        }
+        $this->redirect(['action' => 'index']);
     }
 }

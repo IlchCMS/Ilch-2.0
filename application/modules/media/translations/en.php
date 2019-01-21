@@ -44,6 +44,7 @@ return [
     'extensionNotAllowed' => 'Files with this extension are not allowed.',
     'refreshThumbnail' => 'Refresh thumbnail',
     'refreshSuccess' => 'Thumbnail refreshed.',
+    'refreshFailure' => 'Failure. No thumbnail generated.',
 
     'cats' => 'Categories',
     'cat' => 'Category',
