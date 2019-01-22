@@ -476,6 +476,10 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
+            case "2.1.19":
+                // Remove no longer used column.
+                $this->db()->query('ALTER TABLE `[prefix]_media` DROP COLUMN `cat_name`;');
+                break;
         }
 
         return 'Update function executed.';

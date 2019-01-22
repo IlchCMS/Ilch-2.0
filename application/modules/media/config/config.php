@@ -46,7 +46,6 @@ class Config extends \Ilch\Config\Install
                   `url_thumb` VARCHAR(255) NOT NULL DEFAULT 0,
                   `ending` VARCHAR(5) NOT NULL DEFAULT 0,
                   `datetime` DATETIME NOT NULL,
-                  `cat_name` VARCHAR(100) NOT NULL,
                   `cat` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;

@@ -97,6 +97,8 @@ class Events extends \Ilch\Mapper
     }
 
     /**
+     * Get list of upcoming events.
+     *
      * @param null $limit
      * @return EventMapper[]|array
      * @throws \Ilch\Database\Exception
@@ -127,6 +129,9 @@ class Events extends \Ilch\Mapper
     }
 
     /**
+     * Get list of events a user participates in.
+     *
+     * @param $userId
      * @return EventMapper[]|array
      */
     public function getEventListParticipation($userId)
@@ -152,6 +157,8 @@ class Events extends \Ilch\Mapper
     }
 
     /**
+     * Get list of past events.
+     *
      * @param null $limit
      * @return EventMapper[]|array
      * @throws \Ilch\Database\Exception
@@ -181,6 +188,13 @@ class Events extends \Ilch\Mapper
         return $events;
     }
 
+    /**
+     * Get a list of the current events.
+     *
+     * @param null $limit
+     * @return array|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getEventListCurrent($limit = null)
     {
         $eventMapper = new EventMapper();
@@ -206,6 +220,13 @@ class Events extends \Ilch\Mapper
         return $events;
     }
 
+    /**
+     * Check if table exists.
+     *
+     * @param $table
+     * @return false|true
+     * @throws \Ilch\Database\Exception
+     */
     public function existsTable($table)
     {
         $module = $this->db()->ifTableExists('[prefix]_'.$table);
