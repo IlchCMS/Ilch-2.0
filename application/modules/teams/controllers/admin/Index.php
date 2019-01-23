@@ -72,7 +72,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        if ($this->getRequest()->getPost('saveTeams')) {
+        if ($this->getRequest()->getPost('saveTeams') && !empty($this->getRequest()->getPost('items'))) {
             foreach ($this->getRequest()->getPost('items') as $i => $teamId) {
                 $teamsMapper->sort($teamId, $i);
             }
