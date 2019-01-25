@@ -11,6 +11,7 @@ use Modules\User\Mappers\Gallery as GalleryMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
+use Modules\User\Mappers\Friends as FriendsMapper;
 
 class Profil extends \Ilch\Controller\Frontend
 {
@@ -21,6 +22,7 @@ class Profil extends \Ilch\Controller\Frontend
         $profileFieldsMapper = new ProfileFieldsMapper();
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
+        $friendsMapper = new FriendsMapper();
 
         $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
         $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
@@ -41,6 +43,7 @@ class Profil extends \Ilch\Controller\Frontend
             $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
             $this->getView()->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'));
             $this->getView()->set('gallery', $galleryMapper->getCountGalleryByUser($this->getRequest()->getParam('user')));
+            $this->getView()->set('isFriend', $friendsMapper->hasFriend($this->getUser()->getId(), $profil->getid()));
         } else {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'User', 'errorText' => 'notFound']);
         }

@@ -10,6 +10,8 @@ function getTransKey($usermenuId) {
     case 3:
         return 'gallery';
     case 4:
+        return 'friends';
+    case 5:
         return 'settingsSettings';
     }
 }
@@ -20,7 +22,7 @@ function getTransKey($usermenuId) {
         <i class="fa fa-bars pull-right"></i>
     </div>
     <div class="profile-userpic">
-        <img src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" class="img-circle" title="<?=$this->escape($profil->getName()) ?>">
+        <img src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" class="img-circle" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
     </div>
     <div class="profile-usertitle">
         <div class="profile-name">

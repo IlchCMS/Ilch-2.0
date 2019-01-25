@@ -13,14 +13,15 @@ class Usermenu extends \Ilch\Mapper
 {
     /**
      * Gets the usermenu.
-     * @param
-     * @return null|\Modules\User\Models\Usermenu
+     *
+     * @return null|\Modules\User\Models\Usermenu[]
      */
     public function getUserMenu()
     {
         $usermenu = [];
         $usermenuRows = $this->db()->select('*')
                 ->from('user_menu')
+                ->order(['position' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 
@@ -33,6 +34,7 @@ class Usermenu extends \Ilch\Mapper
             $usermenuModel->setId($item['id']);
             $usermenuModel->setKey($item['key']);
             $usermenuModel->setIcon($item['icon']);
+            $usermenuModel->setPosition($item['position']);
             $usermenu[] = $usermenuModel;
         }
 
@@ -41,8 +43,8 @@ class Usermenu extends \Ilch\Mapper
 
     /**
      * Gets the usermenusettings.
-     * @param
-     * @return null|\Modules\User\Models\Usermenusettings
+     * @param $locale
+     * @return null|\Modules\User\Models\Usermenusettings[]
      */
     public function getUserMenuSettingsLinks($locale)
     {

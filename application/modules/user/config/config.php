@@ -149,10 +149,19 @@ class Config extends \Ilch\Config\Install
                 `name` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+            CREATE TABLE IF NOT EXISTS `[prefix]_user_friends` (
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `user_id` INT(11) NOT NULL,
+                `friend_user_id` INT(11) NOT NULL,
+                `approved` TINYINT(1) NOT NULL DEFAULT 2,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
             CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `key` VARCHAR(255) NOT NULL,
                 `icon` VARCHAR(255) NOT NULL,
+                `position` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -292,11 +301,12 @@ class Config extends \Ilch\Config\Install
                 (8, "de_DE", "Discord"),
                 (8, "en_EN", "Discord");
 
-            INSERT INTO `[prefix]_user_menu` (`id`, `key`, `icon`) VALUES
-                (1, "user/panel/index", "fa-home"),
-                (2, "user/panel/dialog", "fa-envelope"),
-                (3, "user/panel/gallery", "fa-picture-o"),
-                (4, "user/panel/settings", "fa-cogs");
+            INSERT INTO `[prefix]_user_menu` (`id`, `key`, `icon`, `position`) VALUES
+                (1, "user/panel/index", "fa-home", 1),
+                (2, "user/panel/dialog", "fa-envelope", 2),
+                (3, "user/panel/gallery", "fa-picture-o", 3),
+                (4, "user/panel/friends", "fa-users", 4),
+                (5, "user/panel/settings", "fa-cogs", 5);
 
             INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
                 ("user", "regist_confirm_mail", "Registrierbestätigung", "<p>Hallo <b>{name}</b>,</p>
@@ -444,6 +454,24 @@ class Config extends \Ilch\Config\Install
                       <p>Best regards</p>
                       <p>Administrator</p>
                       <p class=\"small text-muted\">This action was requested from ip address {remoteaddr}.</p>", "en_EN");');
+                break;
+            case "2.1.19":
+                // Add position column and new menu to user_menu and set default order.
+                $this->db()->query('ALTER TABLE `[prefix]_user_menu` ADD COLUMN `position` INT(11) NOT NULL DEFAULT 0;');
+                $this->db()->query('INSERT INTO `[prefix]_user_menu` (`key`, `icon`, `position`) VALUES ("user/panel/friends", "fa-users", 4);');
+                $this->db()->query('UPDATE `[prefix]_user_menu` SET `position` = 1 WHERE `key` = "user/panel/index";');
+                $this->db()->query('UPDATE `[prefix]_user_menu` SET `position` = 2 WHERE `key` = "user/panel/dialog";');
+                $this->db()->query('UPDATE `[prefix]_user_menu` SET `position` = 3 WHERE `key` = "user/panel/gallery";');
+                $this->db()->query('UPDATE `[prefix]_user_menu` SET `position` = 5 WHERE `key` = "user/panel/settings";');
+
+                // Add new table user_friends.
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_user_friends` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `user_id` INT(11) NOT NULL,
+                    `friend_user_id` INT(11) NOT NULL,
+                    `approved` TINYINT(1) NOT NULL DEFAULT 2,
+                    PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
                 break;
         }
     }

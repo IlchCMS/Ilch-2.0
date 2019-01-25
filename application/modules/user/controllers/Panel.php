@@ -18,6 +18,7 @@ use Modules\User\Models\GalleryItem as GalleryItemModel;
 use Modules\User\Mappers\GalleryImage as GalleryImageMapper;
 use Modules\User\Models\GalleryImage as GalleryImageModel;
 use Modules\User\Mappers\Media as MediaMapper;
+use Modules\User\Mappers\Friends as FriendsMapper;
 use Ilch\Date as IlchDate;
 use Ilch\Validation;
 
@@ -31,8 +32,12 @@ class Panel extends BaseController
 {
     public function indexAction()
     {
+        $friendsMapper = new FriendsMapper();
+
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index', 'user' => $this->getUser()->getId()]);
+
+        $this->getView()->set('openFriendRequests', $friendsMapper->getOpenFriendRequests($this->getUser()->getId()));
     }
 
     public function settingsAction()
@@ -489,6 +494,61 @@ class Panel extends BaseController
             ->set('imageMapper', $imageMapper);
     }
 
+    public function friendsAction()
+    {
+        $friendsMapper = new FriendsMapper();
+
+        $this->getView()->set('friends', $friendsMapper->getFriendsByUserId($this->getUser()->getId()));
+    }
+
+    public function sendFriendRequestAction()
+    {
+        $id = $this->getRequest()->getParam('id');
+
+        if ($this->getRequest()->isSecure()) {
+            $friendsMapper = new FriendsMapper();
+
+            $friendsMapper->addFriend($this->getUser()->getId(), $id);
+            $this->addMessage('sendFriendRequestSuccess');
+        } else {
+            $this->addMessage('sendFriendRequestFail', 'warning');
+        }
+
+        $this->redirect(['controller' => 'profil', 'action' => 'index', 'user' => $id]);
+    }
+
+    public function approveFriendRequestAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $friendsMapper = new FriendsMapper();
+
+            $friendsMapper->approveFriendRequest($this->getUser()->getId(), $this->getRequest()->getParam('id'));
+            $friendsMapper->addFriend($this->getUser()->getId(), $this->getRequest()->getParam('id'), 1);
+            $this->addMessage('approveFriendRequestSuccess');
+        } else {
+            $this->addMessage('approveFriendRequestFail', 'warning');
+        }
+
+        $this->redirect(['controller' => 'panel', 'action' => 'index']);
+    }
+
+    public function removeFriendAction()
+    {
+        $id = $this->getRequest()->getParam('id');
+
+        if ($this->getRequest()->isSecure()) {
+            $friendsMapper = new FriendsMapper();
+
+            $friendsMapper->deleteFriendByFriendUserId($id);
+            $friendsMapper->deleteFriendOfUser($id, $this->getUser()->getId());
+            $this->addMessage('removeFriendSuccess');
+        } else {
+            $this->addMessage('removeFriendFail', 'warning');
+        }
+
+        $this->redirect(['controller' => 'profil', 'action' => 'index', 'user' => $id]);
+    }
+
     public function treatGalleryAction() 
     {
         $imageMapper = new GalleryImageMapper();
@@ -515,7 +575,6 @@ class Panel extends BaseController
         }
 
         if ($this->getRequest()->getPost()) {
-
             foreach ($this->getRequest()->getPost('check_image') as $imageId ) {
                 $catId = $this->getRequest()->getParam('id');
 

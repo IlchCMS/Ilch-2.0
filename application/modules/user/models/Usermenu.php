@@ -30,6 +30,13 @@ class Usermenu extends \Ilch\Model
     protected $icon;
 
     /**
+     * Position of the menu.
+     *
+     * @var integer
+     */
+    protected $position;
+
+    /**
      * Sets the menu id.
      *
      * @param integer $id
@@ -78,12 +85,12 @@ class Usermenu extends \Ilch\Model
     /**
      * Sets the menu icon.
      *
-     * @param int $icon
+     * @param string $icon
      * @return $this
      */
     public function setIcon($icon)
     {
-        $this->icon = (string)$icon;
+        $this->icon = $icon;
 
         return $this;
     }
@@ -91,10 +98,33 @@ class Usermenu extends \Ilch\Model
     /**
      * Gets the menu icon.
      *
-     * @return int
+     * @return string
      */
     public function getIcon()
     {
         return $this->icon;
+    }
+
+    /**
+     * Sets the menu position.
+     *
+     * @param int $position
+     * @return $this
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Gets the menu position.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

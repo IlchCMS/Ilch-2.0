@@ -318,4 +318,17 @@ return [
     'invalidModule' => 'The selected module does not support the selected authentication provider. Please choose a valid module.',
     'providerDeleted' => 'Authentication provider has been removed',
     'providerNotDeleted' => 'Could not remove authentication provider',
+
+    'friends' => 'Friends',
+    'sendFriendRequest' => 'Add friend',
+    'sendFriendRequestSuccess' => 'Freundschaftsanfrage erfolgreich gesendet.',
+    'sendFriendRequestFail' => 'Freundschaftsanfrage senden fehlgeschlagen.',
+    'removeFriend' => 'Remove friend',
+    'removeFriendSuccess' => 'Freund erfolgreich entfernt.',
+    'removeFriendFail' => 'Freund entfernen fehlgeschlagen.',
+    'friendRequests' => 'Friendrequests',
+    'approveFriendRequest' => 'Approve friendrequest',
+    'approveFriendRequestSuccess' => 'Friendrequest successfull approved.',
+    'approveFriendRequestFail' => 'Freundschaftsanfrage akzeptieren fehlgeschlagen.',
+    'declineFriendRequest' => 'Decline friendrequest',
 ];
