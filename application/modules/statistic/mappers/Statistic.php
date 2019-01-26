@@ -66,6 +66,7 @@ class Statistic extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setUserId($entries['user_id']);
+            $statisticModel->setSessionId($entries['session_id']);
             $statisticModel->setSite($entries['site']);
             $statisticModel->setIPAdress($entries['ip_address']);
             $statisticModel->setOS($entries['os']);
@@ -650,13 +651,14 @@ class Statistic extends \Ilch\Mapper
         $date = new \Ilch\Date();
         $visitId = (int) $this->db()->select('id')
             ->from('visits_online')
-            ->where(['user_id' => $row['user_id'], 'ip_address' => $row['ip']])
+            ->where(['user_id >' => 0, 'user_id' => $row['user_id']])
+            ->orWhere(['session_id' => $row['session_id']])
             ->execute()
             ->fetchCell();
 
         if ($visitId) {
             $this->db()->update('visits_online')
-                ->values(['site' => $row['site'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)])
+                ->values(['user_id' => $row['user_id'], 'session_id' => $row['session_id'], 'site' => $row['site'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)])
                 ->where(['id' => $visitId])
                 ->execute();
 
@@ -668,9 +670,11 @@ class Statistic extends \Ilch\Mapper
             }
         } else {
             $this->db()->insert('visits_online')
-                ->values(['user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)])
+                ->values(['user_id' => $row['user_id'], 'session_id' => $row['session_id'], 'site' => $row['site'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)])
                 ->execute();
         }
+
+        $this->cleanUpOnline();
 
         $sql = 'SELECT id
                 FROM `[prefix]_visits_stats`
@@ -698,6 +702,31 @@ class Statistic extends \Ilch\Mapper
     public function deleteUserOnline($userId) {
         $this->db()->delete('visits_online')
             ->where(['user_id' => $userId])
+            ->execute();
+    }
+
+    /**
+     * Clean up the visits_online table.
+     * By default rows for users will not be deleted.
+     *
+     * @param bool $keepUsers Set to false to delete rows for users, too.
+     */
+    public function cleanUpOnline($keepUsers = true)
+    {
+        $date = new \Ilch\Date();
+        $date->modify('1 day');
+
+        $where = [
+            'date_last_activity <' => $date->format("Y-m-d H:i:s", true),
+        ];
+
+        if ($keepUsers) {
+            $where['user_id'] = 0;
+        }
+
+        $this->db()->delete()
+            ->from('visits_online')
+            ->where($where)
             ->execute();
     }
 }

@@ -479,6 +479,10 @@ class Config extends \Ilch\Config\Install
             case "2.1.19":
                 // Remove no longer used column.
                 $this->db()->query('ALTER TABLE `[prefix]_media` DROP COLUMN `cat_name`;');
+
+                // Clear visits_online and add new session_id column
+                $this->db()->truncate('[prefix]_visits_online');
+                $this->db()->query('ALTER TABLE `[prefix]_visits_online` ADD COLUMN `session_id` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `user_id`;');
                 break;
         }
 

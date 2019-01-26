@@ -23,6 +23,13 @@ class Statistic extends \Ilch\Model
     protected $userId;
 
     /**
+     * The sessionId of the Statistic.
+     *
+     * @var string
+     */
+    protected $sessionId;
+
+    /**
      * The visits of the Statistic.
      *
      * @var int
@@ -129,6 +136,28 @@ class Statistic extends \Ilch\Model
         $this->userId = (int)$userId;
 
         return $this;
+    }
+
+    /**
+     * The php session id of the guest or user.
+     * Usefull to better identify a guest/user as there might be
+     * more than one guest/user with the same ip-adress.
+     *
+     * @return string
+     */
+    public function getSessionId()
+    {
+        return $this->sessionId;
+    }
+
+    /**
+     * Set the php session id of the guest or user.
+     *
+     * @param string $sessionId
+     */
+    public function setSessionId($sessionId)
+    {
+        $this->sessionId = $sessionId;
     }
 
     /**

@@ -57,6 +57,7 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_visits_online` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `user_id` INT(11) NOT NULL DEFAULT 0,
+                  `session_id` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `site` VARCHAR(255) NOT NULL,
                   `os` VARCHAR(255) NOT NULL,
                   `os_version` VARCHAR(255) NOT NULL,

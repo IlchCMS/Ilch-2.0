@@ -35,6 +35,12 @@ class AfterDatabaseLoad
 
         \Ilch\Registry::set('user', $user);
 
+        if (!empty($_COOKIE["PHPSESSID"])) {
+            $sessionId = $_COOKIE["PHPSESSID"];
+        } else {
+            $sessionId = '';
+        }
+
         if (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) && preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER["HTTP_X_FORWARDED_FOR"])) {
             $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
         } elseif (preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER["REMOTE_ADDR"])) {
@@ -66,7 +72,7 @@ class AfterDatabaseLoad
         if (!$request->isAdmin()) {
             if (strpos($site, 'user/ajax/checknewmessage') == false) {
                 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
-                $statisticMapper->saveVisit(['user_id' => $userId, 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
+                $statisticMapper->saveVisit(['user_id' => $userId, 'session_id' => $sessionId, 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
             }
         }
 
