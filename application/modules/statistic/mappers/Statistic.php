@@ -714,7 +714,7 @@ class Statistic extends \Ilch\Mapper
     public function cleanUpOnline($keepUsers = true)
     {
         $date = new \Ilch\Date();
-        $date->modify('1 day');
+        $date->modify('-1 day');
 
         $where = [
             'date_last_activity <' => $date->format("Y-m-d H:i:s", true),
