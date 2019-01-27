@@ -674,6 +674,16 @@ class Statistic extends \Ilch\Mapper
                 ->execute();
         }
 
+        // Delete "temporary" row of user being online as a guest before logging in.
+        // This is the case when the user was logged in before (so there is a row with his user id),
+        // but didn't logged out or not using remember me, returned as guest (user_id is 0 and session_id different as before).
+        if ($row['user_id'] > 0) {
+            $this->db()->delete()
+                ->from('visits_online')
+                ->where(['session_id' => $row['session_id'], 'user_id' => 0])
+                ->execute();
+        }
+
         $this->cleanUpOnline();
 
         $sql = 'SELECT id
