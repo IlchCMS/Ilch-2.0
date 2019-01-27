@@ -138,9 +138,34 @@
                 </tbody>
             </table>
         </div>
+        <div class="modal fade" id="modalDialogAssignCategory">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4><?=$this->getTrans('assignCategory') ?></h4>
+                    </div>
+                    <ul class="list-unstyled">
+                        <?php foreach ($this->get('catnames') as $name): ?>
+                            <li><button name="assignedCategory" class="btn btn-default list-group-item" type="submit" value="<?=$name->getId() ?>"><?=$name->getCatName() ?></button></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
-        <?=$this->getListBar(['delete' => 'delete']) ?>
+        <?=$this->getListBar(['delete' => 'delete', 'assignCategory' => 'assignCategory']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noMedias') ?>
 <?php endif; ?>
+
+<script>
+    $('#assignCategory').click(
+        function()
+        {
+            let dialog = $('#modalDialogAssignCategory');
+            dialog.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
+            dialog.collapse("toggle");
+        }
+    );
+</script>

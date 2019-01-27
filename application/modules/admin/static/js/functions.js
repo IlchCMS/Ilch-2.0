@@ -47,6 +47,12 @@ $(document).ready
         (
             function()
             {
+                if ($(this).data('hiddenkey') == 'assignCategory') {
+                    return;
+                }
+
+                let txt = "";
+
                 if ($(this).data('hiddenkey') == 'setfree') {
                     txt = enableSelectedEntries
                 }

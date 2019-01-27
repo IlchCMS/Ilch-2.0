@@ -55,4 +55,6 @@ return [
     'treatCat' => 'Treat category',
 
     'mediaPerPage' => 'Media per page',
+
+    'assignCategory' => 'Assign category',
 ];

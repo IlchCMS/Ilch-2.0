@@ -676,7 +676,7 @@ class Statistic extends \Ilch\Mapper
 
         // Delete "temporary" row of user being online as a guest before logging in.
         // This is the case when the user was logged in before (so there is a row with his user id),
-        // but didn't logged out or not using remember me, returned as guest (user_id is 0 and session_id different as before).
+        // but didn't logged out or not using remember me, returned as guest with different session_id (user_id is 0).
         if ($row['user_id'] > 0) {
             $this->db()->delete()
                 ->from('visits_online')
@@ -686,6 +686,7 @@ class Statistic extends \Ilch\Mapper
 
         $this->cleanUpOnline();
 
+        // TODO: The ip adress is not a criteria for a unique visitor. Probably better to work with the session_id here.
         $sql = 'SELECT id
                 FROM `[prefix]_visits_stats`
                 WHERE ip_address = "'.$row['ip'].'" AND YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE()) AND DAY(`date`) = DAY(CURDATE())';
@@ -720,6 +721,7 @@ class Statistic extends \Ilch\Mapper
      * By default rows for users will not be deleted.
      *
      * @param bool $keepUsers Set to false to delete rows for users, too.
+     * @since 2.1.20
      */
     public function cleanUpOnline($keepUsers = true)
     {

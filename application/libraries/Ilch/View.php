@@ -84,7 +84,7 @@ class View extends Design\Base
                             </button>
                             <ul class="dropdown-menu listChooser" role="menu">';
                                 foreach ($actions as $key => $name) {
-                                    $html .= '<li><a href="#" data-hiddenkey="'.$key.'">'.$this->getTrans($name).'</a></li>';
+                                    $html .= '<li><a href="#" data-hiddenkey="'.$key.'" id="'.$key.'">'.$this->getTrans($name).'</a></li>';
                                 }
         $html .= '</ul></div></div>';
 

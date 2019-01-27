@@ -7,6 +7,7 @@
 namespace Modules\Media\Controllers\Admin;
 
 use Modules\Media\Mappers\Media as MediaMapper;
+use Modules\Media\Models\Media as MediaModel;
 use Ilch\Date as IlchDate;
 
 class Index extends \Ilch\Controller\Admin
@@ -71,6 +72,17 @@ class Index extends \Ilch\Controller\Admin
                 $mediaMapper->delMediaById($mediaId);
             }
             $this->addMessage('deleteSuccess');
+            $this->redirect(['action' => 'index']);
+        }
+
+        if ($this->getRequest()->getPost('assignedCategory') && $this->getRequest()->getPost('check_medias') > 0) {
+            foreach ($this->getRequest()->getPost('check_medias') as $mediaId) {
+                $mediaModel = new MediaModel();
+                $mediaModel->setId($mediaId);
+                $mediaModel->setCatId($this->getRequest()->getPost('assignedCategory'));
+                $mediaMapper->setCat($mediaModel);
+            }
+            $this->addMessage('saveSuccess');
             $this->redirect(['action' => 'index']);
         }
 

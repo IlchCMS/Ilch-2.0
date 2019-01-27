@@ -55,4 +55,6 @@ return [
     'treatCat' => 'Kategorie bearbeiten',
 
     'mediaPerPage' => 'Dateien pro Seite',
+
+    'assignCategory' => 'Kategorie zuweisen',
 ];
