@@ -37,7 +37,7 @@
                             <td><?=$upload->getEnding() ?></td>
                             <td>
                                 <?php if (in_array($upload->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
-                                    <img class="img-preview" src="<?=$this->getBaseUrl($this->get('path').$upload->getName().'.'.$upload->getEnding()) ?>" alt="">
+                                    <img class="img-preview" src="<?=$this->getBaseUrl($media) ?>" alt="">
                                 <?php else: ?>
                                     <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                                          class="img-preview"

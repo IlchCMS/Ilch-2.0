@@ -150,9 +150,7 @@ class Upload extends \Ilch\Controller\Base
      */
     public function getName()
     {
-        $search = ["Ä", "Ö", "Ü", "ä", "ö", "ü", "ß", "´", " "];
-        $replace = ["Ae", "Oe", "Ue", "ae", "oe", "ue", "ss", "", ""];
-        $this->name = str_replace($search, $replace, pathinfo($this->file, PATHINFO_FILENAME));
+        $this->name = pathinfo($this->file, PATHINFO_FILENAME);
 
         return $this->name;
     }

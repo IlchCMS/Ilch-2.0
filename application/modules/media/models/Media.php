@@ -126,7 +126,7 @@ class Media extends \Ilch\Model
     }
 
     /**
-     * Gets the cat_id of the media.
+     * Gets the cat_name of the media.
      *
      * @return integer
      */

@@ -57,4 +57,5 @@ return [
     'mediaPerPage' => 'Media per page',
 
     'assignCategory' => 'Assign category',
+    'directoriesAsCategories' => 'Create categories of found directories on import.',
 ];

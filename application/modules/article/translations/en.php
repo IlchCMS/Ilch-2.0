@@ -49,4 +49,5 @@ return [
     'menuKeywords' => 'Keywords',
     'keyword' => 'Keyword',
     'noKeywords' => 'No keywords available',
+    'clock' => 'o\'clock',
 ];

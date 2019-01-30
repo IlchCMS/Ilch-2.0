@@ -55,6 +55,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('media_ext_file', strtolower($this->getRequest()->getPost('allowedFiles')));
             $this->getConfig()->set('media_ext_video', strtolower($this->getRequest()->getPost('allowedVideos')));
             $this->getConfig()->set('media_mediaPerPage', $this->getRequest()->getPost('mediaPerPage'));
+            $this->getConfig()->set('media_directoriesAsCategories', $this->getRequest()->getPost('directoriesAsCategories'));
 
             $this->addMessage('success');
         }
@@ -63,5 +64,6 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));
         $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
         $this->getView()->set('mediaPerPage', $this->getConfig()->get('media_mediaPerPage'));
+        $this->getView()->set('directoriesAsCategories', $this->getConfig()->get('media_directoriesAsCategories'));
     }
 }

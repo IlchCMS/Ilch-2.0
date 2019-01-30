@@ -57,4 +57,5 @@ return [
     'mediaPerPage' => 'Dateien pro Seite',
 
     'assignCategory' => 'Kategorie zuweisen',
+    'directoriesAsCategories' => 'Beim Import Kategorien für gefundene Ordner erstellen.',
 ];

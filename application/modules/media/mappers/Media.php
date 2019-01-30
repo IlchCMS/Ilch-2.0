@@ -183,7 +183,7 @@ class Media extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($mediaArray)) {
-            return null;
+            return [];
         }
 
         $media = [];
@@ -206,9 +206,25 @@ class Media extends \Ilch\Mapper
      */
     public function getCatById($id)
     {
+        return $this->getCatByWhere(['id' => $id]);
+    }
+
+    /**
+     * Get cat by name.
+     *
+     * @param $name
+     * @return MediaModel|null
+     */
+    public function getCatByName($name)
+    {
+        return $this->getCatByWhere(['cat_name' => $name]);
+    }
+
+    private function getCatByWhere($where = [])
+    {
         $catRow = $this->db()->select('*')
             ->from('media_cats')
-            ->where(['id' => $id])
+            ->where($where)
             ->execute()
             ->fetchAssoc();
 
@@ -223,6 +239,13 @@ class Media extends \Ilch\Mapper
         return $mediaModel;
     }
 
+    /**
+     * Get media by where.
+     * Returns only a single item.
+     * 
+     * @param array $where
+     * @return MediaModel|null
+     */
     public function getByWhere($where = [])
     {
         $mediaRow = $this->db()->select('*')
@@ -242,7 +265,6 @@ class Media extends \Ilch\Mapper
         $mediaModel->setName($mediaRow['name']);
         $mediaModel->setDatetime($mediaRow['datetime']);
         $mediaModel->setEnding($mediaRow['ending']);
-        $mediaModel->setCatName(($mediaRow['cat_name']));
         $mediaModel->setCatId(($mediaRow['cat']));
 
         return $mediaModel;
@@ -271,11 +293,11 @@ class Media extends \Ilch\Mapper
                     'datetime' => $model->getDatetime(),
                     'ending' => $model->getEnding(),
                     'cat' => '0',
-                    'cat_name' => 'Allgemein',
                 ])
                 ->where(['id' => $id])
                 ->execute();
         } else {
+            $catId = ($model->getCatId()) ? $model->getCatId() : 0;
             $this->db()->insert('media')
                 ->values([
                     'url' => $model->getUrl(),
@@ -283,8 +305,7 @@ class Media extends \Ilch\Mapper
                     'name' => $model->getName(),
                     'datetime' => $model->getDatetime(),
                     'ending' => $model->getEnding(),
-                    'cat' => '0',
-                    'cat_name' => 'Allgemein',
+                    'cat' => $catId,
                 ])
                 ->execute();
         }
@@ -317,6 +338,7 @@ class Media extends \Ilch\Mapper
      * Inserts Cat
      *
      * @param MediaModel $model
+     * @return int id
      */
     public function saveCat(MediaModel $model)
     {
@@ -325,6 +347,8 @@ class Media extends \Ilch\Mapper
                 'cat_name' => $model->getCatName()
             ])
             ->execute();
+
+        return $this->db()->getLastInsertId();
     }
 
     /**
