@@ -7,6 +7,7 @@
 namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
@@ -27,8 +28,13 @@ class Index extends \Ilch\Controller\Frontend
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        if ($this->getRequest()->getParam('groupid')) {
-            $userlist = $userMapper->getUserListByGroupId($this->getRequest()->getParam('groupid'), 1, $pagination);
+        $groupId = $this->getRequest()->getParam('groupid');
+        if ($groupId) {
+            $groupMapper = new GroupMapper();
+            $userlist = $userMapper->getUserListByGroupId($groupId, 1, $pagination);
+            $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('Gruppe'), ['action' => 'index', 'groupid' => $groupId]);
+            $this->getView()->set('group', $groupMapper->getGroupById($groupId));
         } else {
             $userlist = $userMapper->getUserList(['confirmed' => 1], $pagination);
         }

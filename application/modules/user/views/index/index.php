@@ -3,11 +3,13 @@ $userMapper = $this->get('userMapper');
 $profileFieldsContentMapper = $this->get('profileFieldsContentMapper');
 $profileIconFields = $this->get('profileIconFields');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
+$group = $this->get('group');
+$groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape($group->getName()).')' : '';
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
-<h1><?=$this->getTrans('menuUserList') ?></h1>
+<h1><?=$this->getTrans('menuUserList').$groupText ?></h1>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
 <div class="userlist">
     <div class="row">
