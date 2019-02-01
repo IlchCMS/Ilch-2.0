@@ -54,4 +54,5 @@ return [
     'monthly' => 'monatlich',
     'pictureOfXRandom' => 'Zufälliges Bild',
     'noPictures' => 'Keine Biler vorhanden.',
+    'pictureMissing' => 'Bild nicht gefunden.',
 ];

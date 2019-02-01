@@ -54,4 +54,5 @@ return [
     'monthly' => 'monthly',
     'pictureOfXRandom' => 'Random picture',
     'noPictures' => 'No pictures available.',
+    'pictureMissing' => 'Picture not found.',
 ];

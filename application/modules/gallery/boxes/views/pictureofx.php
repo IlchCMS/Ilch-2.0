@@ -40,10 +40,14 @@
     <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/'.$image->getId()); ?>
     <div class="panel panel-default">
         <div class="panel-image thumbnail">
+        <?php if (file_exists($image->getImageThumb())) : ?>
             <a href="<?=$this->getUrl(['module' => 'gallery', 'controller' => 'index', 'action' => 'showimage', 'id' => $image->getId()]) ?>">
                 <?php $altText = (empty($image->getImageTitle())) ? basename($image->getImageUrl()) : $image->getImageTitle(); ?>
                 <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$this->escape($altText) ?>" />
             </a>
+        <?php else : ?>
+            <?=$this->getTrans('pictureMissing') ?>
+        <?php endif; ?>
         </div>
         <div class="panel-footer text-center">
             <i class="fa fa-comment-o"></i> <?=$commentsCount ?>
