@@ -27,12 +27,17 @@ class Index extends \Ilch\Controller\Frontend
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
+        if ($this->getRequest()->getParam('groupid')) {
+            $userlist = $userMapper->getUserListByGroupId($this->getRequest()->getParam('groupid'), 1, $pagination);
+        } else {
+            $userlist = $userMapper->getUserList(['confirmed' => 1], $pagination);
+        }
         $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
         $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
 
         $this->getView()->set('userMapper', $userMapper)
             ->set('profileFieldsContentMapper', $profileFieldsContentMapper)
-            ->set('userList', $userMapper->getUserList(['confirmed' => 1], $pagination))
+            ->set('userList', $userlist)
             ->set('profileIconFields', $profileIconFields)
             ->set('profileFieldsTranslation', $profileFieldsTranslation)
             ->set('pagination', $pagination);

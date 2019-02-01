@@ -101,6 +101,46 @@ class User extends \Ilch\Mapper
     }
 
     /**
+     * Get users (not all fields) by group id.
+     *
+     * @param $groupId
+     * @param int $confirmed
+     * @param null $pagination
+     * @return array
+     * @since 2.1.20
+     */
+    public function getUserListByGroupId($groupId, $confirmed = 0, $pagination = null)
+    {
+        $select = $this->db()->select()
+            ->fields(['u.id', 'u.name', 'u.opt_mail', 'u.date_created', 'u.date_last_activity', 'u.confirmed'])
+            ->from(['u' => 'users'])
+            ->join(['g' => 'users_groups'], 'u.id = g.user_id', 'LEFT', ['group_id' => 'g.group_id'])
+            ->where(['group_id' => $groupId, 'confirmed' => $confirmed]);
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        if (!empty($select)) {
+            $entryArray = $result->fetchRows();
+            $users = [];
+
+            foreach ($entryArray as $userRow) {
+                $user = $this->loadFromArray($userRow);
+                $users[] = $user;
+            }
+
+            return $users;
+        }
+
+        return [];
+    }
+
+    /**
      * Returns an array with user models found by the where clause of false if
      * none found.
      *

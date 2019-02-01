@@ -101,6 +101,7 @@ class Group extends \Ilch\Mapper
      * Loads the user ids associated with a user group.
      *
      * @param int $groupId
+     * @return string[]
      */
     public function getUsersForGroup($groupId)
     {
@@ -115,6 +116,7 @@ class Group extends \Ilch\Mapper
      * Inserts or updates a user group model into the database.
      *
      * @param GroupModel $group
+     * @return int
      */
     public function save(GroupModel $group)
     {
@@ -197,8 +199,9 @@ class Group extends \Ilch\Mapper
     /**
      * Returns the group access list from the database.
      *
-     * @param  int     $groupId
+     * @param  int $groupId
      * @return mixed[]
+     * @throws \Ilch\Database\Exception
      */
     public function getGroupAccessList($groupId)
     {
