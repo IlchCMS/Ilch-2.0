@@ -335,6 +335,15 @@ abstract class Base
         $builder = new \JBBCode\CodeDefinitionBuilder('u', '<u>{param}</u>');
         $parser->addCodeDefinition($builder->build());
 
+        $builder = new \JBBCode\CodeDefinitionBuilder('center', '<p style="text-align: center;">{param}</p>');
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('right', '<p style="text-align: right;">{param}</p>');
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('justify', '<p style="text-align: justify;">{param}</p>');
+        $parser->addCodeDefinition($builder->build());
+
         $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a target="_blank" href="{param}">{param}</a>');
         $builder->setParseContent(false)->setBodyValidator($urlValidator);
         $parser->addCodeDefinition($builder->build());
