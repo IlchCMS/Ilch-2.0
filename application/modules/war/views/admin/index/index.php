@@ -5,7 +5,9 @@
             <form class="form-horizontal" method="POST" action="">
                 <?=$this->getTokenField() ?>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-perpage"><?=$this->getTrans('showOnly') ?></label>
+                    <label class="col-lg-2 control-label" for="pref-perpage">
+                        <?=$this->getTrans('showOnly') ?>
+                    </label>
                     <div class="col-lg-2">
                         <select class="form-control" id="pref-perpage" name="filterLastNext">
                             <option value="0"><?=$this->getTrans('all') ?></option>
@@ -16,7 +18,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-default filter-col" name="filter" value="filter">
-                        <span class="fa fa-search"></span><?=$this->getTrans('send') ?>
+                        <span class="fa fa-search"></span> <?=$this->getTrans('send') ?>
                     </button>
                 </div>
             </form>
@@ -29,16 +31,15 @@
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
-            
             <table class="table table-striped table-hover">
                 <colgroup>
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
-                    <col>
+                    <col class="icon_width" />
+                    <col class="icon_width" />
+                    <col class="icon_width" />
+                    <col class="col-lg-2" />
+                    <col class="col-lg-2" />
+                    <col class="col-lg-2" />
+                    <col />
                 </colgroup>
                 <thead>
                     <tr>
@@ -61,11 +62,13 @@
                             <td><?=$this->escape($war->getWarGroup()) ?></td>
                             <td><?=date('d.m.Y H:i', strtotime($war->getWarTime())) ?></td>
                             <td>
-                                <?php if ($war->getWarStatus() == '1'): ?>
-                                    <?=$this->getTrans('warStatusOpen') ?>
-                                <?php elseif ($war->getWarStatus() == '2'): ?>
-                                    <?=$this->getTrans('warStatusClose') ?>
-                                <?php endif; ?>
+                                <?php
+                                if ($war->getWarStatus() == '1') {
+                                    echo $this->getTrans('warStatusOpen');
+                                } elseif ($war->getWarStatus() == '2') {
+                                    echo $this->getTrans('warStatusClose');
+                                }
+                                ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

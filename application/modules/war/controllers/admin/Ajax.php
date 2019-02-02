@@ -12,9 +12,9 @@ class Ajax extends \Ilch\Controller\Admin
 {
     public function gameAction()
     {
-        $this->getLayout()->setFile('modules/admin/layouts/ajax');
-
         $gameMapper = new GamesMapper();
+
+        $this->getLayout()->setFile('modules/admin/layouts/ajax');
 
         if ($this->getRequest()->getParam('id')) {
             $this->getView()->set('games', $gameMapper->getGamesByWarId($this->getRequest()->getParam('id')));
@@ -23,9 +23,8 @@ class Ajax extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        $mapId = (int)$this->getRequest()->getParam('mapid');
         $gameMapper = new GamesMapper();
-        $gameMapper->deleteById($mapId);
+        $gameMapper->deleteById((int)$this->getRequest()->getParam('mapid'));
 
         $this->redirect(['action' => 'game', 'id' => $this->getRequest()->getParam('id')]);
     }

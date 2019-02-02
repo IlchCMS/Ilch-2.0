@@ -1,15 +1,15 @@
 .group-image {
     width: 100px;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 #war_index {
     overflow: hidden;
 }
 #war_index .col-lg-12 {
-    border-width: 0px 0px 1px;
+    border-width: 0 0 1px;
     border-style: none none solid;
-    border-color: -moz-use-text-color -moz-use-text-color #E5E5E5;
+    border-color: #E5E5E5;
     -moz-border-top-colors: none;
     -moz-border-right-colors: none;
     -moz-border-bottom-colors: none;
@@ -19,12 +19,12 @@
     padding-bottom: 5px;
 }
 #war_index h3 {
-    margin-top: 0px;
+    margin-top: 0;
 }
 #war_index .thumbnail {
     display: inline-block;
     float: left;
-    margin: 5px 10px 5px 0px;
+    margin: 5px 10px 5px 0;
 }
 .center-text {
     text-align: center;
@@ -42,10 +42,10 @@
     color: #006FFF;
 }
 .no_margin {
-    margin: 0px !important;
+    margin: 0 !important;
 }
 .no_padding {
-    padding: 0px !important;
+    padding: 0 !important;
 }
 .center-text img {
     min-width: 100%;

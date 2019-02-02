@@ -33,10 +33,10 @@ class Accept extends \Ilch\Mapper
 
         foreach ($select as $accept) {
             $acceptModel = new AcceptModel();
-            $acceptModel->setId($accept['id']);
-            $acceptModel->setWarId($accept['war_id']);
-            $acceptModel->setUserId($accept['user_id']);
-            $acceptModel->setAccept($accept['accept']);
+            $acceptModel->setId($accept['id'])
+                ->setWarId($accept['war_id'])
+                ->setUserId($accept['user_id'])
+                ->setAccept($accept['accept']);
             $accepts[] = $acceptModel;
         }
 
@@ -67,10 +67,10 @@ class Accept extends \Ilch\Mapper
 
         foreach ($select as $accept) {
             $acceptModel = new AcceptModel();
-            $acceptModel->setId($accept['id']);
-            $acceptModel->setWarId($accept['war_id']);
-            $acceptModel->setUserId($accept['user_id']);
-            $acceptModel->setAccept($accept['accept']);
+            $acceptModel->setId($accept['id'])
+                ->setWarId($accept['war_id'])
+                ->setUserId($accept['user_id'])
+                ->setAccept($accept['accept']);
             $accepts[] = $acceptModel;
         }
 

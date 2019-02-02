@@ -14,7 +14,7 @@ class Games extends \Ilch\Mapper
      * Gets the Games.
      *
      * @param string $id
-     * @return GameModel[]|array
+     * @return GamesModel[]|array
      */
     public function getGamesByWarId($id = null)
     {
@@ -33,11 +33,11 @@ class Games extends \Ilch\Mapper
 
         foreach ($select as $game) {
             $gameModel = new GamesModel();
-            $gameModel->setId($game['id']);
-            $gameModel->setWarId($game['war_id']);
-            $gameModel->setMap(($game['map']));
-            $gameModel->setGroupPoints(($game['group_points']));
-            $gameModel->setEnemyPoints(($game['enemy_points']));
+            $gameModel->setId($game['id'])
+                ->setWarId($game['war_id'])
+                ->setMap(($game['map']))
+                ->setGroupPoints(($game['group_points']))
+                ->setEnemyPoints(($game['enemy_points']));
             $games[] = $gameModel;
         }
 
@@ -48,7 +48,7 @@ class Games extends \Ilch\Mapper
      * Gets the Games.
      *
      * @param array[]
-     * @return GameModel[]|array
+     * @return GamesModel[]|array
      */
     public function getGamesByWhere($where = [])
     {
@@ -67,11 +67,11 @@ class Games extends \Ilch\Mapper
 
         foreach ($select as $game) {
             $gameModel = new GamesModel();
-            $gameModel->setId($game['id']);
-            $gameModel->setWarId($game['war_id']);
-            $gameModel->setMap(($game['map']));
-            $gameModel->setGroupPoints(($game['group_points']));
-            $gameModel->setEnemyPoints(($game['enemy_points']));
+            $gameModel->setId($game['id'])
+                ->setWarId($game['war_id'])
+                ->setMap(($game['map']))
+                ->setGroupPoints(($game['group_points']))
+                ->setEnemyPoints(($game['enemy_points']));
             $games[] = $gameModel;
         }
 
@@ -81,7 +81,7 @@ class Games extends \Ilch\Mapper
     /**
      * Inserts or updates Game entry.
      *
-     * @param GameModel $model
+     * @param GamesModel $model
      */
     public function save(GamesModel $model)
     {
@@ -111,7 +111,7 @@ class Games extends \Ilch\Mapper
      */
     public function deleteById($id)
     {
-            return $this->db()->delete('war_played')
+        $this->db()->delete('war_played')
             ->where(['id' => $id])
             ->execute();
     }

@@ -59,7 +59,7 @@
                         <hr />
                         <div class="row rating-desc">
                             <div class="col-md-12">
-                                <strong><?=$this->getTrans('games') ?></strong></br>
+                                <strong><?=$this->getTrans('games') ?></strong><br />
                                 <span><?=$this->getTrans('warWin') ?></span>(<?=$winCount ?>)<span class="separator">|</span>
                                 <span><?=$this->getTrans('warLost') ?></span>(<?=$lostCont ?>)<span class="separator">|</span>
                                 <span><?=$this->getTrans('warDrawn') ?></span>(<?=$drawnCount ?>)

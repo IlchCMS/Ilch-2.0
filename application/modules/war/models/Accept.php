@@ -50,10 +50,13 @@ class Accept extends \Ilch\Model
      * Sets the id
      *
      * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
@@ -70,10 +73,13 @@ class Accept extends \Ilch\Model
      * Sets the userId
      *
      * @param int $userId
+     * @return $this
      */
     public function setUserId($userId)
     {
         $this->userId = (int)$userId;
+
+        return $this;
     }
 
     /**
@@ -90,10 +96,13 @@ class Accept extends \Ilch\Model
      * Sets the warId
      *
      * @param int $warId
+     * @return $this
      */
     public function setWarId($warId)
     {
         $this->warId = (int)$warId;
+
+        return $this;
     }
 
     /**
@@ -110,9 +119,12 @@ class Accept extends \Ilch\Model
      * Sets the accept.
      *
      * @param int $accept
+     * @return $this
      */
     public function setAccept($accept)
     {
         $this->accept = (int)$accept;
+
+        return $this;
     }
 }

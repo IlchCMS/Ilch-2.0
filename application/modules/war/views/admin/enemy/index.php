@@ -1,9 +1,9 @@
 <style>
-.group-image{
-    max-width: 100px;
-    height: 50px;
-    margin: -8px;
-}
+    .group-image {
+         max-width: 100px;
+         height: 50px;
+         margin: -8px;
+     }
 </style>
 
 <h1><?=$this->getTrans('manageEnemy') ?></h1>
@@ -14,14 +14,14 @@
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <colgroup>
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col class="col-lg-1">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
-                    <col>
+                    <col class="icon_width" />
+                    <col class="icon_width" />
+                    <col class="icon_width" />
+                    <col class="col-lg-2" />
+                    <col class="col-lg-1" />
+                    <col class="col-lg-2" />
+                    <col class="col-lg-2" />
+                    <col />
                 </colgroup>
                 <thead>
                     <tr>

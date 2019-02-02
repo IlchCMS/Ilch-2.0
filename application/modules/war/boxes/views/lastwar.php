@@ -51,7 +51,7 @@
                             <?=$this->escape($war->getWarGroupTag()) ?>
                         </div>
                     </div>
-                    <div class="col-xs-2 small pull-left nextwar-vs"><?=$this->getTrans('vs'); ?></div>
+                    <div class="col-xs-2 small pull-left nextwar-vs"><?=$this->getTrans('vs') ?></div>
                     <div class="col-xs-3 ellipsis">
                         <div class="ellipsis-item">
                             <?=$this->escape($war->getWarEnemyTag()) ?>
@@ -67,8 +67,8 @@
         </div>
     <?php endforeach; ?>
     <?php if (!$displayed) : ?>
-        <?=$this->getTrans('noWars'); ?>
+        <?=$this->getTrans('noWars') ?>
     <?php endif; ?>
 <?php else: ?>
-    <?=$this->getTrans('noWars'); ?>
+    <?=$this->getTrans('noWars') ?>
 <?php endif; ?>

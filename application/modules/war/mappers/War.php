@@ -38,20 +38,20 @@ class War extends \Ilch\Mapper
 
         foreach ($entryArray as $entries) {
             $entryModel = new WarModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setWarEnemy($entries['enemy']);
-            $entryModel->setWarGroup($entries['group']);
-            $entryModel->setWarTime($entries['time']);
-            $entryModel->setWarMaps($entries['maps']);
-            $entryModel->setWarServer($entries['server']);
-            $entryModel->setWarPassword($entries['password']);
-            $entryModel->setWarXonx($entries['xonx']);
-            $entryModel->setWarGame($entries['game']);
-            $entryModel->setWarMatchtype($entries['matchtype']);
-            $entryModel->setWarReport($entries['report']);
-            $entryModel->setWarStatus($entries['status']);
-            $entryModel->setShow($entries['show']);
-            $entryModel->setReadAccess($entries['read_access']);
+            $entryModel->setId($entries['id'])
+                ->setWarEnemy($entries['enemy'])
+                ->setWarGroup($entries['group'])
+                ->setWarTime($entries['time'])
+                ->setWarMaps($entries['maps'])
+                ->setWarServer($entries['server'])
+                ->setWarPassword($entries['password'])
+                ->setWarXonx($entries['xonx'])
+                ->setWarGame($entries['game'])
+                ->setWarMatchtype($entries['matchtype'])
+                ->setWarReport($entries['report'])
+                ->setWarStatus($entries['status'])
+                ->setShow($entries['show'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -86,20 +86,20 @@ class War extends \Ilch\Mapper
 
         foreach ($entryArray as $entries) {
             $entryModel = new WarModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setWarEnemy($entries['enemy']);
-            $entryModel->setWarGroup($entries['group']);
-            $entryModel->setWarTime($entries['time']);
-            $entryModel->setWarMaps($entries['maps']);
-            $entryModel->setWarServer($entries['server']);
-            $entryModel->setWarPassword($entries['password']);
-            $entryModel->setWarXonx($entries['xonx']);
-            $entryModel->setWarGame($entries['game']);
-            $entryModel->setWarMatchtype($entries['matchtype']);
-            $entryModel->setWarReport($entries['report']);
-            $entryModel->setWarStatus($entries['status']);
-            $entryModel->setShow($entries['show']);
-            $entryModel->setReadAccess($entries['read_access']);
+            $entryModel->setId($entries['id'])
+                ->setWarEnemy($entries['enemy'])
+                ->setWarGroup($entries['group'])
+                ->setWarTime($entries['time'])
+                ->setWarMaps($entries['maps'])
+                ->setWarServer($entries['server'])
+                ->setWarPassword($entries['password'])
+                ->setWarXonx($entries['xonx'])
+                ->setWarGame($entries['game'])
+                ->setWarMatchtype($entries['matchtype'])
+                ->setWarReport($entries['report'])
+                ->setWarStatus($entries['status'])
+                ->setShow($entries['show'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -125,20 +125,20 @@ class War extends \Ilch\Mapper
         }
 
         $warModel = new WarModel();
-        $warModel->setId($warRow['id']);
-        $warModel->setWarEnemy($warRow['enemy']);
-        $warModel->setWarGroup($warRow['group']);
-        $warModel->setWarTime($warRow['time']);
-        $warModel->setWarMaps($warRow['maps']);
-        $warModel->setWarServer($warRow['server']);
-        $warModel->setWarPassword($warRow['password']);
-        $warModel->setWarXonx($warRow['xonx']);
-        $warModel->setWarGame($warRow['game']);
-        $warModel->setWarMatchtype($warRow['matchtype']);
-        $warModel->setWarReport($warRow['report']);
-        $warModel->setWarStatus($warRow['status']);
-        $warModel->setShow($warRow['show']);
-        $warModel->setReadAccess($warRow['read_access']);
+        $warModel->setId($warRow['id'])
+            ->setWarEnemy($warRow['enemy'])
+            ->setWarGroup($warRow['group'])
+            ->setWarTime($warRow['time'])
+            ->setWarMaps($warRow['maps'])
+            ->setWarServer($warRow['server'])
+            ->setWarPassword($warRow['password'])
+            ->setWarXonx($warRow['xonx'])
+            ->setWarGame($warRow['game'])
+            ->setWarMatchtype($warRow['matchtype'])
+            ->setWarReport($warRow['report'])
+            ->setWarStatus($warRow['status'])
+            ->setShow($warRow['show'])
+            ->setReadAccess($warRow['read_access']);
 
         return $warModel;
     }
@@ -203,20 +203,20 @@ class War extends \Ilch\Mapper
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
-            $entryModel->setId($entries['war_id']);
-            $entryModel->setWarEnemy($entries['enemy_name']);
-            $entryModel->setWarGroup($entries['group_name']);
-            $entryModel->setWarTime($entries['time']);
-            $entryModel->setWarMaps($entries['maps']);
-            $entryModel->setWarServer($entries['server']);
-            $entryModel->setWarPassword($entries['password']);
-            $entryModel->setWarXonx($entries['xonx']);
-            $entryModel->setWarGame($entries['game']);
-            $entryModel->setWarMatchtype($entries['matchtype']);
-            $entryModel->setWarReport($entries['report']);
-            $entryModel->setWarStatus($entries['status']);
-            $entryModel->setShow($entries['show']);
-            $entryModel->setReadAccess($entries['read_access']);
+            $entryModel->setId($entries['war_id'])
+                ->setWarEnemy($entries['enemy_name'])
+                ->setWarGroup($entries['group_name'])
+                ->setWarTime($entries['time'])
+                ->setWarMaps($entries['maps'])
+                ->setWarServer($entries['server'])
+                ->setWarPassword($entries['password'])
+                ->setWarXonx($entries['xonx'])
+                ->setWarGame($entries['game'])
+                ->setWarMatchtype($entries['matchtype'])
+                ->setWarReport($entries['report'])
+                ->setWarStatus($entries['status'])
+                ->setShow($entries['show'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -286,20 +286,20 @@ class War extends \Ilch\Mapper
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
-            $entryModel->setId($entries['war_id']);
-            $entryModel->setWarEnemy($entries['enemy_name']);
-            $entryModel->setWarGroup($entries['group_name']);
-            $entryModel->setWarTime($entries['time']);
-            $entryModel->setWarMaps($entries['maps']);
-            $entryModel->setWarServer($entries['server']);
-            $entryModel->setWarPassword($entries['password']);
-            $entryModel->setWarXonx($entries['xonx']);
-            $entryModel->setWarGame($entries['game']);
-            $entryModel->setWarMatchtype($entries['matchtype']);
-            $entryModel->setWarReport($entries['report']);
-            $entryModel->setWarStatus($entries['status']);
-            $entryModel->setShow($entries['show']);
-            $entryModel->setReadAccess($entries['read_access']);
+            $entryModel->setId($entries['war_id'])
+                ->setWarEnemy($entries['enemy_name'])
+                ->setWarGroup($entries['group_name'])
+                ->setWarTime($entries['time'])
+                ->setWarMaps($entries['maps'])
+                ->setWarServer($entries['server'])
+                ->setWarPassword($entries['password'])
+                ->setWarXonx($entries['xonx'])
+                ->setWarGame($entries['game'])
+                ->setWarMatchtype($entries['matchtype'])
+                ->setWarReport($entries['report'])
+                ->setWarStatus($entries['status'])
+                ->setShow($entries['show'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -328,34 +328,34 @@ class War extends \Ilch\Mapper
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
-            $entryModel->setId($entries['war_id']);
-            $entryModel->setWarEnemy($entries['enemy_name']);
-            $entryModel->setWarGroup($entries['group_name']);
-            $entryModel->setWarTime($entries['time']);
-            $entryModel->setWarMaps($entries['maps']);
-            $entryModel->setWarServer($entries['server']);
-            $entryModel->setWarPassword($entries['password']);
-            $entryModel->setWarXonx($entries['xonx']);
-            $entryModel->setWarGame($entries['game']);
-            $entryModel->setWarMatchtype($entries['matchtype']);
-            $entryModel->setWarReport($entries['report']);
-            $entryModel->setWarStatus($entries['status']);
-            $entryModel->setShow($entries['show']);
-            $entryModel->setReadAccess($entries['read_access']);
+            $entryModel->setId($entries['war_id'])
+                ->setWarEnemy($entries['enemy_name'])
+                ->setWarGroup($entries['group_name'])
+                ->setWarTime($entries['time'])
+                ->setWarMaps($entries['maps'])
+                ->setWarServer($entries['server'])
+                ->setWarPassword($entries['password'])
+                ->setWarXonx($entries['xonx'])
+                ->setWarGame($entries['game'])
+                ->setWarMatchtype($entries['matchtype'])
+                ->setWarReport($entries['report'])
+                ->setWarStatus($entries['status'])
+                ->setShow($entries['show'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
         return $entry;
     }
 
-    public function getWarListByStatusAndLimt($status = NULL, $limit = NULL) 
+    public function getWarListByStatusAndLimt($status = NULL, $limit = NULL, $order = 'ASC')
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,w.show,w.read_access,g.name as group_name,g.tag as group_tag,g.id as group_id,e.name as enemy_name,e.tag as enemy_tag,e.id as enemy_id
                 FROM `[prefix]_war` as w
                 LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
                 WHERE status = "'.$status.'"
-                ORDER by w.time ASC
+                ORDER by w.time '.$order.'
                 LIMIT '.$limit;
 
         $warArray = $this->db()->queryArray($sql);
@@ -368,22 +368,22 @@ class War extends \Ilch\Mapper
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
-            $entryModel->setId($entries['war_id']);
-            $entryModel->setWarEnemy($entries['enemy_name']);
-            $entryModel->setWarEnemyTag($entries['enemy_tag']);
-            $entryModel->setWarGroup($entries['group_name']);
-            $entryModel->setWarGroupTag($entries['group_tag']);
-            $entryModel->setWarTime($entries['time']);
-            $entryModel->setWarMaps($entries['maps']);
-            $entryModel->setWarServer($entries['server']);
-            $entryModel->setWarPassword($entries['password']);
-            $entryModel->setWarXonx($entries['xonx']);
-            $entryModel->setWarGame($entries['game']);
-            $entryModel->setWarMatchtype($entries['matchtype']);
-            $entryModel->setWarReport($entries['report']);
-            $entryModel->setWarStatus($entries['status']);
-            $entryModel->setShow($entries['show']);
-            $entryModel->setReadAccess($entries['read_access']);
+            $entryModel->setId($entries['war_id'])
+                ->setWarEnemy($entries['enemy_name'])
+                ->setWarEnemyTag($entries['enemy_tag'])
+                ->setWarGroup($entries['group_name'])
+                ->setWarGroupTag($entries['group_tag'])
+                ->setWarTime($entries['time'])
+                ->setWarMaps($entries['maps'])
+                ->setWarServer($entries['server'])
+                ->setWarPassword($entries['password'])
+                ->setWarXonx($entries['xonx'])
+                ->setWarGame($entries['game'])
+                ->setWarMatchtype($entries['matchtype'])
+                ->setWarReport($entries['report'])
+                ->setWarStatus($entries['status'])
+                ->setShow($entries['show'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 

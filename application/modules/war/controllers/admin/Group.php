@@ -67,7 +67,7 @@ class Group extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
             foreach ($this->getRequest()->getPost('check_groups') as $groupId) {
@@ -78,8 +78,8 @@ class Group extends \Ilch\Controller\Admin
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_groupsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_groupsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('groups', $groupMapper->getGroupList($pagination));
-        $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('groups', $groupMapper->getGroupList($pagination))
+            ->set('pagination', $pagination);
     }
 
     public function treatAction()
@@ -91,16 +91,15 @@ class Group extends \Ilch\Controller\Admin
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('treatGroup'), ['action' => 'treat']);
-            $groups = $groupMapper->getGroupById($this->getRequest()->getParam('id'));
-            $this->getView()->set('groups', $groups);
+
+            $this->getView()->set('groups', $groupMapper->getGroupById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manageNewGroup'), ['action' => 'treat']);
         }
 
-        $userGroupList = $userGroupMapper->getGroupList();
-        $this->getView()->set('userGroupList', $userGroupList);
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
 
         $post = [
             'groupName' => '',
@@ -113,7 +112,7 @@ class Group extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $groupImage = trim($this->getRequest()->getPost('groupImage'));
             if (!empty($groupImage)) {
-                $groupImage = BASE_URL.'/'.$groupImage;
+                $groupImage = BASE_URL . '/' . $groupImage;
             }
 
             $post = [
@@ -135,16 +134,14 @@ class Group extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $groupModel = new GroupModel();
-
                 if ($this->getRequest()->getParam('id')) {
                     $groupModel->setId($this->getRequest()->getParam('id'));
                 }
-
-                $groupModel->setGroupMember($post['userGroup']);
-                $groupModel->setGroupName($post['groupName']);
-                $groupModel->setGroupTag($post['groupTag']);
-                $groupModel->setGroupImage($post['groupImage']);
-                $groupModel->setGroupDesc($post['groupDesc']);
+                $groupModel->setGroupMember($post['userGroup'])
+                    ->setGroupName($post['groupName'])
+                    ->setGroupTag($post['groupTag'])
+                    ->setGroupImage($post['groupImage'])
+                    ->setGroupDesc($post['groupDesc']);
                 $groupMapper->save($groupModel);
 
                 $this->addMessage('saveSuccess');
@@ -155,16 +152,15 @@ class Group extends \Ilch\Controller\Admin
             $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
+        $this->getView()->set('post', $post)
+            ->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function delAction()
     {
         if ($this->getRequest()->isSecure()) {
-            $id = (int)$this->getRequest()->getParam('id');
             $groupMapper = new GroupMapper();
-            $groupMapper->delete($id);
+            $groupMapper->delete((int)$this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
         }

@@ -66,7 +66,7 @@ class Enemy extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_enemy')) {
             foreach ($this->getRequest()->getPost('check_enemy') as $enemyId) {
@@ -77,8 +77,8 @@ class Enemy extends \Ilch\Controller\Admin
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_enemiesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_enemiesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('enemy', $enemyMapper->getEnemyList($pagination));
-        $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('enemy', $enemyMapper->getEnemyList($pagination))
+            ->set('pagination', $pagination);
     }
 
     public function treatAction()
@@ -89,8 +89,8 @@ class Enemy extends \Ilch\Controller\Admin
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('treatEnemy'), ['action' => 'treat']);
-            $enemy = $enemyMapper->getEnemyById($this->getRequest()->getParam('id'));
-            $this->getView()->set('enemy', $enemy);
+
+            $this->getView()->set('enemy', $enemyMapper->getEnemyById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index'])
@@ -109,7 +109,7 @@ class Enemy extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $enemyImage = trim($this->getRequest()->getPost('enemyImage'));
             if (!empty($enemyImage)) {
-                $enemyImage = BASE_URL.'/'.$enemyImage;
+                $enemyImage = BASE_URL . '/' . $enemyImage;
             }
 
             $post = [
@@ -133,17 +133,15 @@ class Enemy extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $enemyModel = new EnemyModel();
-
                 if ($this->getRequest()->getParam('id')) {
                     $enemyModel->setId($this->getRequest()->getParam('id'));
                 }
-
-                $enemyModel->setEnemyName($post['enemyName']);
-                $enemyModel->setEnemyTag($post['enemyTag']);
-                $enemyModel->setEnemyImage($post['enemyImage']);
-                $enemyModel->setEnemyHomepage($post['enemyHomepage']);
-                $enemyModel->setEnemyContactName($post['enemyContactName']);
-                $enemyModel->setEnemyContactEmail($post['enemyContactEmail']);
+                $enemyModel->setEnemyName($post['enemyName'])
+                    ->setEnemyTag($post['enemyTag'])
+                    ->setEnemyImage($post['enemyImage'])
+                    ->setEnemyHomepage($post['enemyHomepage'])
+                    ->setEnemyContactName($post['enemyContactName'])
+                    ->setEnemyContactEmail($post['enemyContactEmail']);
                 $enemyMapper->save($enemyModel);
 
                 $this->addMessage('saveSuccess');
@@ -154,16 +152,15 @@ class Enemy extends \Ilch\Controller\Admin
             $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
+        $this->getView()->set('post', $post)
+            ->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function delAction()
     {
         if ($this->getRequest()->isSecure()) {
-            $id = (int)$this->getRequest()->getParam('id');
             $enemyMapper = new EnemyMapper();
-            $enemyMapper->delete($id);
+            $enemyMapper->delete((int)$this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
         }

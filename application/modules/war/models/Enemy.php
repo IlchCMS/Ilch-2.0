@@ -85,10 +85,13 @@ class Enemy extends \Ilch\Model
      * Sets the id of the group.
      *
      * @param integer $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
@@ -105,10 +108,13 @@ class Enemy extends \Ilch\Model
      * Sets the enemy name.
      *
      * @param string $enemyName
+     * @return $this
      */
     public function setEnemyName($enemyName)
     {
         $this->enemyName = (string)$enemyName;
+
+        return $this;
     }
 
     /**
@@ -125,10 +131,13 @@ class Enemy extends \Ilch\Model
      * Sets the enemy tag.
      *
      * @param string $enemyTag
+     * @return $this
      */
     public function setEnemyTag($enemyTag)
     {
         $this->enemyTag = (string)$enemyTag;
+
+        return $this;
     }
 
     /**
@@ -145,10 +154,13 @@ class Enemy extends \Ilch\Model
      * Sets the enemy Homepage.
      *
      * @param string $enemyHomepage
+     * @return $this
      */
     public function setEnemyHomepage($enemyHomepage)
     {
         $this->enemyHomepage = (string)$enemyHomepage;
+
+        return $this;
     }
 
     /**
@@ -165,10 +177,13 @@ class Enemy extends \Ilch\Model
      * Sets the enemy Image.
      *
      * @param string $enemyImage
+     * @return $this
      */
     public function setEnemyImage($enemyImage)
     {
         $this->enemyImage = (string)$enemyImage;
+
+        return $this;
     }
 
     /**
@@ -185,10 +200,13 @@ class Enemy extends \Ilch\Model
      * Sets the enemy ImageThumb.
      *
      * @param string $enemyImageThumb
+     * @return $this
      */
     public function setEnemyImageThumb($enemyImageThumb)
     {
         $this->enemyImageThumb = (string)$enemyImageThumb;
+
+        return $this;
     }
 
     /**
@@ -205,10 +223,13 @@ class Enemy extends \Ilch\Model
      * Sets the enemy Land.
      *
      * @param string $enemyLand
+     * @return $this
      */
     public function setEnemyLand($enemyLand)
     {
         $this->enemyLand = (string)$enemyLand;
+
+        return $this;
     }
 
     /**
@@ -225,10 +246,13 @@ class Enemy extends \Ilch\Model
      * Sets the enemy Contact Name.
      *
      * @param string $enemyContactName
+     * @return $this
      */
     public function setEnemyContactName($enemyContactName)
     {
         $this->enemyContactName = (string)$enemyContactName;
+
+        return $this;
     }
 
     /**
@@ -245,9 +269,12 @@ class Enemy extends \Ilch\Model
      * Sets the enemy Contact Email.
      *
      * @param string $enemyContactEmail
+     * @return $this
      */
     public function setEnemyContactEmail($enemyContactEmail)
     {
         $this->enemyContactEmail = (string)$enemyContactEmail;
+
+        return $this;
     }
 }

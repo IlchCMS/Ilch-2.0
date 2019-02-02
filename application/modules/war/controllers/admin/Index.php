@@ -6,7 +6,6 @@
 
 namespace Modules\War\Controllers\Admin;
 
-use Modules\User\Models\User;
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\War as WarMapper;
@@ -72,7 +71,7 @@ class Index extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_war')) {
             foreach ($this->getRequest()->getPost('check_war') as $warId) {
@@ -83,9 +82,8 @@ class Index extends \Ilch\Controller\Admin
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        if ($this->getRequest()->getPost('filter') == 'filter' and $this->getRequest()->getPost('filterLastNext') !='0') {
-                $status = $this->getRequest()->getPost('filterLastNext');
-                $this->getView()->set('war', $warMapper->getWarListByStatus($status, $pagination));
+        if ($this->getRequest()->getPost('filter') == 'filter' and $this->getRequest()->getPost('filterLastNext') != '0') {
+            $this->getView()->set('war', $warMapper->getWarListByStatus($this->getRequest()->getPost('filterLastNext'), $pagination));
         } else {
             $this->getView()->set('war', $warMapper->getWarList($pagination));
         }
@@ -108,11 +106,10 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manageWar'), ['action' => 'treat']);
 
-            $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
-            $this->getView()->set('war', $war);
-            $this->getView()->set('warOptXonx', $warMapper->getWarOptDistinctXonx());
-            $this->getView()->set('warOptGame', $warMapper->getWarOptDistinctGame());
-            $this->getView()->set('warOptMatchtype', $warMapper->getWarOptDistinctMatchtype());
+            $this->getView()->set('war', $warMapper->getWarById($this->getRequest()->getParam('id')))
+                ->set('warOptXonx', $warMapper->getWarOptDistinctXonx())
+                ->set('warOptGame', $warMapper->getWarOptDistinctGame())
+                ->set('warOptMatchtype', $warMapper->getWarOptDistinctMatchtype());
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index'])
@@ -123,7 +120,6 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getParam('id')) {
                 $warModel->setId($this->getRequest()->getParam('id'));
             }
-
             if ($this->getRequest()->getPost('warXonx') == 'neu') {
                 $post['warXonx'] = $this->getRequest()->getPost('warXonxNew');
             } else {
@@ -179,28 +175,28 @@ class Index extends \Ilch\Controller\Admin
                     $enemyPoints = $this->getRequest()->getPost('warErgebnisEnemy');
 
                     for ($i = 0; $i < count($maps); $i++) {
-                        $gameModel->setId($ids[$i]);
-                        $gameModel->setWarId($warId);
-                        $gameModel->setMap($maps[$i]);
-                        $gameModel->setGroupPoints($groupPoints[$i]);
-                        $gameModel->setEnemyPoints($enemyPoints[$i]);
+                        $gameModel->setId($ids[$i])
+                            ->setWarId($warId)
+                            ->setMap($maps[$i])
+                            ->setGroupPoints($groupPoints[$i])
+                            ->setEnemyPoints($enemyPoints[$i]);
                         $gameMapper->save($gameModel);
                     }
                 }
 
-                $warModel->setWarEnemy($post['warEnemy']);
-                $warModel->setWarGroup($post['warGroup']);
-                $warModel->setWarTime($post['warTime']);
-                $warModel->setWarMaps($post['warMap']);
-                $warModel->setWarServer($post['warServer']);
-                $warModel->setWarPassword($post['warPassword']);
-                $warModel->setWarXonx($post['warXonx']);
-                $warModel->setWarGame($post['warGame']);
-                $warModel->setWarMatchtype($post['warMatchtype']);
-                $warModel->setWarReport($post['warReport']);
-                $warModel->setWarStatus($post['warStatus']);
-                $warModel->setShow($post['calendarShow']);
-                $warModel->setReadAccess($groups);
+                $warModel->setWarEnemy($post['warEnemy'])
+                    ->setWarGroup($post['warGroup'])
+                    ->setWarTime($post['warTime'])
+                    ->setWarMaps($post['warMap'])
+                    ->setWarServer($post['warServer'])
+                    ->setWarPassword($post['warPassword'])
+                    ->setWarXonx($post['warXonx'])
+                    ->setWarGame($post['warGame'])
+                    ->setWarMatchtype($post['warMatchtype'])
+                    ->setWarReport($post['warReport'])
+                    ->setWarStatus($post['warStatus'])
+                    ->setShow($post['calendarShow'])
+                    ->setReadAccess($groups);
                 $warMapper->save($warModel);
 
                 $this->redirect()
@@ -222,24 +218,23 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->getParam('id')) {
             $groups = explode(',', $warMapper->getWarById($this->getRequest()->getParam('id'))->getReadAccess());
         } else {
-            $groups = [2,3];
+            $groups = [2, 3];
         }
 
-        $this->getView()->set('group', $groupMapper->getGroups());
-        $this->getView()->set('enemy', $enemyMapper->getEnemy());
-        $this->getView()->set('warOptXonx', $warMapper->getWarOptDistinctXonx());
-        $this->getView()->set('warOptGame', $warMapper->getWarOptDistinctGame());
-        $this->getView()->set('warOptMatchtype', $warMapper->getWarOptDistinctMatchtype());
-        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
-        $this->getView()->set('groups', $groups);
+        $this->getView()->set('group', $groupMapper->getGroups())
+            ->set('enemy', $enemyMapper->getEnemy())
+            ->set('warOptXonx', $warMapper->getWarOptDistinctXonx())
+            ->set('warOptGame', $warMapper->getWarOptDistinctGame())
+            ->set('warOptMatchtype', $warMapper->getWarOptDistinctMatchtype())
+            ->set('userGroupList', $userGroupMapper->getGroupList())
+            ->set('groups', $groups);
     }
 
     public function delAction()
     {
         if ($this->getRequest()->isSecure()) {
-            $id = (int)$this->getRequest()->getParam('id');
             $warMapper = new WarMapper();
-            $warMapper->delete($id);
+            $warMapper->delete((int)$this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
         }

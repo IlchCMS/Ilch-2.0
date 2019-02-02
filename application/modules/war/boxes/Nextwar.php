@@ -30,9 +30,9 @@ class Nextwar extends \Ilch\Box
             }
         }
 
-        $this->getView()->set('warMapper', $warMapper);
-        $this->getView()->set('date', $date->format(null, true));
-        $this->getView()->set('war', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit')));
-        $this->getView()->set('readAccess', $readAccess);
+        $this->getView()->set('warMapper', $warMapper)
+            ->set('date', $date->format(null, true))
+            ->set('war', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit')))
+            ->set('readAccess', $readAccess);
     }
 }

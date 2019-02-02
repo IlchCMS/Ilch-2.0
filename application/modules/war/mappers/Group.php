@@ -43,12 +43,12 @@ class Group extends \Ilch\Mapper
 
         foreach ($entryArray as $entries) {
             $entryModel = new GroupModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setGroupName($entries['name']);
-            $entryModel->setGroupTag($entries['tag']);
-            $entryModel->setGroupImage($entries['image']);
-            $entryModel->setGroupMember($entries['member']);
-            $entryModel->setGroupDesc($entries['desc']);
+            $entryModel->setId($entries['id'])
+                ->setGroupName($entries['name'])
+                ->setGroupTag($entries['tag'])
+                ->setGroupImage($entries['image'])
+                ->setGroupMember($entries['member'])
+                ->setGroupDesc($entries['desc']);
             $entry[] = $entryModel;
         }
 
@@ -68,7 +68,7 @@ class Group extends \Ilch\Mapper
                 FROM `[prefix]_war_groups` as g
                 LEFT JOIN [prefix]_media m ON g.image = m.url
                 ORDER by g.id DESC
-                LIMIT '.implode(',',$pagination->getLimit());
+                LIMIT ' . implode(',', $pagination->getLimit());
 
         $groupArray = $this->db()->queryArray($sql);
         $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
@@ -81,12 +81,12 @@ class Group extends \Ilch\Mapper
 
         foreach ($groupArray as $entries) {
             $entryModel = new GroupModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setGroupName($entries['name']);
-            $entryModel->setGroupTag($entries['tag']);
-            $entryModel->setGroupImage($entries['url_thumb']);
-            $entryModel->setGroupMember($entries['member']);
-            $entryModel->setGroupDesc($entries['desc']);
+            $entryModel->setId($entries['id'])
+                ->setGroupName($entries['name'])
+                ->setGroupTag($entries['tag'])
+                ->setGroupImage($entries['url_thumb'])
+                ->setGroupMember($entries['member'])
+                ->setGroupDesc($entries['desc']);
             $entry[] = $entryModel;
         }
 
@@ -112,12 +112,12 @@ class Group extends \Ilch\Mapper
         }
 
         $groupModel = new GroupModel();
-        $groupModel->setId($groupRow['id']);
-        $groupModel->setGroupName($groupRow['name']);
-        $groupModel->setGroupTag($groupRow['tag']);
-        $groupModel->setGroupImage($groupRow['image']);
-        $groupModel->setGroupMember($groupRow['member']);
-        $groupModel->setGroupDesc($groupRow['desc']);
+        $groupModel->setId($groupRow['id'])
+            ->setGroupName($groupRow['name'])
+            ->setGroupTag($groupRow['tag'])
+            ->setGroupImage($groupRow['image'])
+            ->setGroupMember($groupRow['member'])
+            ->setGroupDesc($groupRow['desc']);
 
         return $groupModel;
     }

@@ -14,22 +14,22 @@ class Group extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuWarList'), ['controller' => 'index', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('menuGroupList'), ['action' => 'index']);
-
         $groupMapper = new GroupMapper();
         $warMapper = new WarMapper();
         $gamesMapper = new GamesMapper();
         $pagination = new \Ilch\Pagination();
 
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuWarList'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGroupList'), ['action' => 'index']);
+
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('groups', $groupMapper->getGroupList($pagination));
-        $this->getView()->set('warMapper', $warMapper);
-        $this->getView()->set('gamesMapper', $gamesMapper);
-        $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('warMapper', $warMapper)
+            ->set('gamesMapper', $gamesMapper)
+            ->set('groups', $groupMapper->getGroupList($pagination))
+            ->set('pagination', $pagination);
     }
 
     public function showAction()
@@ -50,11 +50,11 @@ class Group extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuGroupList'), ['action' => 'index'])
                 ->add($group->getGroupName(), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
-            $this->getView()->set('group', $group);
-            $this->getView()->set('war', $warMapper->getWarsByWhere('group ='.$id, $pagination));
-            $this->getView()->set('warMapper', $warMapper);
-            $this->getView()->set('gamesMapper', $gamesMapper);
-            $this->getView()->set('pagination', $pagination);
+            $this->getView()->set('warMapper', $warMapper)
+                ->set('gamesMapper', $gamesMapper)
+                ->set('group', $group)
+                ->set('war', $warMapper->getWarsByWhere('group ='.$id, $pagination))
+                ->set('pagination', $pagination);
         } else {
             $this->redirect()
                 ->withMessage('groupNotFound', 'warning')

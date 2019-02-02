@@ -1,11 +1,12 @@
-<link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
-
 <?php
+$gamesMapper = $this->get('gamesMapper');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
 }
 ?>
+
+<link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuGroups') ?></h1>
 <h4><a class="btn btn-default" href="<?=$this->getUrl(['controller' => 'group', 'action' => 'index']) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
@@ -16,12 +17,12 @@ if ($this->getUser()) {
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <colgroup>
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col>
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col />
             </colgroup>
             <thead>
                 <tr>
@@ -39,22 +40,23 @@ if ($this->getUser()) {
                     if (!is_in_array($this->get('readAccess'), explode(',', $war->getReadAccess())) && $adminAccess == false) {
                         continue;
                     }
+                    $date = new \Ilch\Date($war->getWarTime())
                     ?>
-                    <?php $date = new \Ilch\Date($war->getWarTime()) ?>
                     <tr>
                         <td><?=$this->escape($war->getWarEnemy()) ?></td>
                         <td><?=$this->escape($war->getWarGroup()) ?></td>
                         <td><?=$date->format("d.m.Y H:i", true) ?></td>
                         <td>
-                            <?php if ($war->getWarStatus() == '1'): ?>
-                                <?=$this->getTrans('warStatusOpen') ?>
-                            <?php elseif ($war->getWarStatus() == '2'): ?>
-                                <?=$this->getTrans('warStatusClose') ?>
-                            <?php endif; ?>
+                            <?php
+                            if ($war->getWarStatus() == '1') {
+                                echo $this->getTrans('warStatusOpen');
+                            } elseif ($war->getWarStatus() == '2') {
+                                echo $this->getTrans('warStatusClose');
+                            }
+                            ?>
                         </td>
                         <?php
-                        $gameMapper = new \Modules\War\Mappers\Games();
-                        $games = $gameMapper->getGamesByWarId($war->getId());
+                        $games = $gamesMapper->getGamesByWarId($war->getId());
                         $enemyPoints = 0;
                         $groupPoints = 0;
                         $class = '';
@@ -64,20 +66,18 @@ if ($this->getUser()) {
                                 $enemyPoints += $game->getEnemyPoints();
                             }
                             if ($groupPoints > $enemyPoints) {
-                                $class = 'class="war_win"';
+                                $class = ' class="war_win"';
                             }
                             if ($groupPoints < $enemyPoints) {
-                                $class = 'class="war_lost"';
+                                $class = ' class="war_lost"';
                             }
                             if ($groupPoints == $enemyPoints) {
-                                $class = 'class="war_drawn"';
+                                $class = ' class="war_drawn"';
                             }
                         }
                         ?>
-                        <td <?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?></td>
-                        <td>
-                            <a href="<?=$this->getUrl(['action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warReportShow') ?></a>
-                        </td>
+                        <td<?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?></td>
+                        <td><a href="<?=$this->getUrl(['action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warReportShow') ?></a></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

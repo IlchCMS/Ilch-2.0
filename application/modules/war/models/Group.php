@@ -71,10 +71,13 @@ class Group extends \Ilch\Model
      * Sets the id of the group.
      *
      * @param integer $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
@@ -91,10 +94,13 @@ class Group extends \Ilch\Model
      * Sets the group name.
      *
      * @param string $groupName
+     * @return $this
      */
     public function setGroupName($groupName)
     {
         $this->groupName = (string)$groupName;
+
+        return $this;
     }
 
     /**
@@ -111,10 +117,13 @@ class Group extends \Ilch\Model
      * Sets the group tag.
      *
      * @param string $groupTag
+     * @return $this
      */
     public function setGroupTag($groupTag)
     {
         $this->groupTag = (string)$groupTag;
+
+        return $this;
     }
 
     /**
@@ -131,10 +140,13 @@ class Group extends \Ilch\Model
      * Sets the group Image.
      *
      * @param string $groupImage
+     * @return $this
      */
     public function setGroupImage($groupImage)
     {
         $this->groupImage = (string)$groupImage;
+
+        return $this;
     }
 
     /**
@@ -151,10 +163,13 @@ class Group extends \Ilch\Model
      * Sets the group ImageThumb.
      *
      * @param string $groupImageThumb
+     * @return $this
      */
     public function setGroupImageThumb($groupImageThumb)
     {
         $this->groupImageThumb = (string)$groupImageThumb;
+
+        return $this;
     }
 
     /**
@@ -171,10 +186,13 @@ class Group extends \Ilch\Model
      * Sets the group Member.
      *
      * @param string $groupMember
+     * @return $this
      */
     public function setGroupMember($groupMember)
     {
         $this->groupMember = (string)$groupMember;
+
+        return $this;
     }
 
     /**
@@ -191,9 +209,12 @@ class Group extends \Ilch\Model
      * Sets the group Desc.
      *
      * @param string $groupDesc
+     * @return $this
      */
     public function setGroupDesc($groupDesc)
     {
         $this->groupDesc = (string)$groupDesc;
+
+        return $this;
     }
 }

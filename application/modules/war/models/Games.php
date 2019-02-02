@@ -57,10 +57,13 @@ class Games extends \Ilch\Model
      * Sets the id.
      *
      * @param integer $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
@@ -77,10 +80,13 @@ class Games extends \Ilch\Model
      * Sets the warId.
      *
      * @param integer $warId
+     * @return $this
      */
     public function setWarId($warId)
     {
         $this->warId = (int)$warId;
+
+        return $this;
     }
 
     /**
@@ -97,10 +103,13 @@ class Games extends \Ilch\Model
      * Sets the map.
      *
      * @param string $map
+     * @return $this
      */
     public function setMap($map)
     {
         $this->map = (string)$map;
+
+        return $this;
     }
 
     /**
@@ -117,10 +126,13 @@ class Games extends \Ilch\Model
      * Sets the groupPoints.
      *
      * @param string $groupPoints
+     * @return $this
      */
     public function setGroupPoints($groupPoints)
     {
         $this->groupPoints = (string)$groupPoints;
+
+        return $this;
     }
 
     /**
@@ -137,9 +149,12 @@ class Games extends \Ilch\Model
      * Sets the enemyPoints.
      *
      * @param string $enemyPoints
+     * @return $this
      */
     public function setEnemyPoints($enemyPoints)
     {
         $this->enemyPoints = (string)$enemyPoints;
+
+        return $this;
     }
 }

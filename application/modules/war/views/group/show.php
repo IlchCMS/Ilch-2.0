@@ -11,13 +11,12 @@ $lostCont = 0;
 $drawnCount = 0;
 
 $wars = $warMapper->getWars(['group' => $group->getId()]);
-
 foreach ($wars as $war) {
     $enemyPoints = 0;
     $groupPoints = 0;
     $games = $gamesMapper->getGamesByWhere(['war_id' => $war->getId()]);
 
-    if($games) {
+    if ($games) {
         foreach ($games as $game) {
             $groupPoints += $game->getGroupPoints();
             $enemyPoints += $game->getEnemyPoints();
@@ -37,6 +36,7 @@ foreach ($wars as $war) {
     $drawnCount = $drawn;
 }
 ?>
+
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
 <div id="war_index">
@@ -54,7 +54,7 @@ foreach ($wars as $war) {
                 <hr />
                 <div class="row rating-desc">
                     <div class="col-md-12">
-                        <strong><?=$this->getTrans('games') ?></strong></br>
+                        <strong><?=$this->getTrans('games') ?></strong><br />
                         <span><?=$this->getTrans('warWin') ?></span>(<?=$winCount ?>)<span class="separator">|</span>
                         <span><?=$this->getTrans('warLost') ?></span>(<?=$lostCont ?>)<span class="separator">|</span>
                         <span><?=$this->getTrans('warDrawn') ?></span>(<?=$drawnCount ?>)
@@ -70,12 +70,12 @@ foreach ($wars as $war) {
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <colgroup>
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col>
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col />
             </colgroup>
             <thead>
                 <tr>
@@ -95,15 +95,16 @@ foreach ($wars as $war) {
                         <td><?=$this->escape($war->getWarGroup()) ?></td>
                         <td><?=$date->format("d.m.Y H:i", true) ?></td>
                         <td>
-                            <?php if ($war->getWarStatus() == '1'): ?>
-                                <?=$this->getTrans('warStatusOpen') ?>
-                            <?php elseif ($war->getWarStatus() == '2'): ?>
-                                <?=$this->getTrans('warStatusClose') ?>
-                            <?php endif; ?>
+                            <?php
+                            if ($war->getWarStatus() == '1') {
+                                echo $this->getTrans('warStatusOpen');
+                            } elseif ($war->getWarStatus() == '2') {
+                                echo $this->getTrans('warStatusClose');
+                            }
+                            ?>
                         </td>
                         <?php
-                        $gameMapper = new \Modules\War\Mappers\Games();
-                        $games = $gameMapper->getGamesByWarId($war->getId());
+                        $games = $gamesMapper->getGamesByWarId($war->getId());
                         $class = '';
                         $enemyPoints = 0;
                         $groupPoints = 0;

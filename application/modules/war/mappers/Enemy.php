@@ -43,13 +43,13 @@ class Enemy extends \Ilch\Mapper
 
         foreach ($entryArray as $entries) {
             $entryModel = new EnemyModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setEnemyName($entries['name']);
-            $entryModel->setEnemyTag($entries['tag']);
-            $entryModel->setEnemyImage($entries['image']);
-            $entryModel->setEnemyHomepage($entries['homepage']);
-            $entryModel->setEnemyContactName($entries['contact_name']);
-            $entryModel->setEnemyContactEmail($entries['contact_email']);
+            $entryModel->setId($entries['id'])
+                ->setEnemyName($entries['name'])
+                ->setEnemyTag($entries['tag'])
+                ->setEnemyImage($entries['image'])
+                ->setEnemyHomepage($entries['homepage'])
+                ->setEnemyContactName($entries['contact_name'])
+                ->setEnemyContactEmail($entries['contact_email']);
             $entry[] = $entryModel;
         }
 
@@ -81,13 +81,13 @@ class Enemy extends \Ilch\Mapper
 
         foreach ($enemyArray as $entries) {
             $entryModel = new EnemyModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setEnemyName($entries['name']);
-            $entryModel->setEnemyTag($entries['tag']);
-            $entryModel->setEnemyImage($entries['image']);
-            $entryModel->setEnemyHomepage($entries['homepage']);
-            $entryModel->setEnemyContactName($entries['contact_name']);
-            $entryModel->setEnemyContactEmail($entries['contact_email']);
+            $entryModel->setId($entries['id'])
+                ->setEnemyName($entries['name'])
+                ->setEnemyTag($entries['tag'])
+                ->setEnemyImage($entries['image'])
+                ->setEnemyHomepage($entries['homepage'])
+                ->setEnemyContactName($entries['contact_name'])
+                ->setEnemyContactEmail($entries['contact_email']);
             $entry[] = $entryModel;
         }
 
@@ -113,13 +113,13 @@ class Enemy extends \Ilch\Mapper
         }
 
         $enemyModel = new EnemyModel();
-        $enemyModel->setId($enemyRow['id']);
-        $enemyModel->setEnemyName($enemyRow['name']);
-        $enemyModel->setEnemyTag($enemyRow['tag']);
-        $enemyModel->setEnemyImage($enemyRow['image']);
-        $enemyModel->setEnemyHomepage($enemyRow['homepage']);
-        $enemyModel->setEnemyContactName($enemyRow['contact_name']);
-        $enemyModel->setEnemyContactEmail($enemyRow['contact_email']);
+        $enemyModel->setId($enemyRow['id'])
+            ->setEnemyName($enemyRow['name'])
+            ->setEnemyTag($enemyRow['tag'])
+            ->setEnemyImage($enemyRow['image'])
+            ->setEnemyHomepage($enemyRow['homepage'])
+            ->setEnemyContactName($enemyRow['contact_name'])
+            ->setEnemyContactEmail($enemyRow['contact_email']);
 
         return $enemyModel;
     }

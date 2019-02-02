@@ -1,5 +1,3 @@
-<link href="<?=$this->getModuleUrl('static/css/style.css') ?>" rel="stylesheet">
-
 <?php
 $gamesMapper = $this->get('gamesMapper');
 $war = $this->get('war');
@@ -10,6 +8,8 @@ $userGroupMapper = $this->get('userGroupMapper');
 $acceptArray = $this->get('accept');
 $acceptCheckArray = $this->get('acceptCheck');
 ?>
+
+<link href="<?=$this->getModuleUrl('static/css/style.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('warPlay') ?></h1>
 <div class="row">
@@ -36,11 +36,13 @@ $acceptCheckArray = $this->get('acceptCheck');
                 <h3 class="panel-title"><?=$this->getTrans('warStatusFrom') ?> <?=$war->getWarTime() ?></h3>
             </div>
             <div class="panel-body">
-                <?php if ($war->getWarStatus() == '1'): ?>
-                    <?=$this->getTrans('warStatusOpen') ?>
-                <?php elseif ($war->getWarStatus() == '2'): ?>
-                    <?=$this->getTrans('warStatusClose') ?>
-                <?php endif; ?>
+                <?php
+                if ($war->getWarStatus() == '1') {
+                    echo $this->getTrans('warStatusOpen');
+                } elseif ($war->getWarStatus() == '2') {
+                    echo $this->getTrans('warStatusClose');
+                }
+                ?>
             </div>
         </div>
     </div>
@@ -62,20 +64,20 @@ $acceptCheckArray = $this->get('acceptCheck');
                         $enemyPoints += $game->getEnemyPoints();
                     }
                     if ($groupPoints > $enemyPoints) {
-                        $class = 'class="war_win"';
+                        $class = ' class="war_win"';
                         $result = $this->getTrans('warWin');
                     }
                     if ($groupPoints < $enemyPoints) {
-                        $class = 'class="war_lost"';
+                        $class = ' class="war_lost"';
                         $result = $this->getTrans('warLost');
                     }
                     if ($groupPoints == $enemyPoints) {
-                        $class = 'class="war_drawn"';
+                        $class = ' class="war_drawn"';
                         $result = $this->getTrans('warDrawn');
                     }
                 }
                 ?>
-                <span <?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?> <?=$result ?></span>
+                <span<?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?> <?=$result ?></span>
             </div>
         </div>
     </div>
@@ -127,28 +129,28 @@ $acceptCheckArray = $this->get('acceptCheck');
                     <form id="accept_form" class="form-horizontal" method="POST" action="">
                         <?=$this->getTokenField() ?>
                         <ul class="list-group">
-                        <?php if ($acceptCheckArray): ?>
-                            <?php foreach ($acceptCheckArray as $acceptCheck): ?>
-                                <?php $user = $userMapper->getUserById($acceptCheck->getUserId()) ?>
-                                <?php if ($user): ?>
-                                    <?php
-                                    if ($acceptCheck->getAccept() == '1') {
-                                        $class = 'war_win';
-                                        $text = $this->getTrans('has').' '.$this->getTrans('accept');
-                                    }
-                                    if ($acceptCheck->getAccept() == '2') {
-                                        $class = 'war_lost';
-                                        $text = $this->getTrans('has').' '.$this->getTrans('cancel');
-                                    }
-                                    if ($acceptCheck->getAccept() == '3') {
-                                        $class = 'war_drawn';
-                                        $text = $this->getTrans('is').' '.$this->getTrans('undecided');
-                                    }
-                                    ?>
-                                    <li class="list-group-item <?=$class ?>"><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: <?=$text ?></li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                            <?php if ($acceptCheckArray): ?>
+                                <?php foreach ($acceptCheckArray as $acceptCheck): ?>
+                                    <?php $user = $userMapper->getUserById($acceptCheck->getUserId()) ?>
+                                    <?php if ($user): ?>
+                                        <?php
+                                        if ($acceptCheck->getAccept() == '1') {
+                                            $class = ' war_win';
+                                            $text = $this->getTrans('has').' '.$this->getTrans('accept');
+                                        }
+                                        if ($acceptCheck->getAccept() == '2') {
+                                            $class = ' war_lost';
+                                            $text = $this->getTrans('has').' '.$this->getTrans('cancel');
+                                        }
+                                        if ($acceptCheck->getAccept() == '3') {
+                                            $class = ' war_drawn';
+                                            $text = $this->getTrans('is').' '.$this->getTrans('undecided');
+                                        }
+                                        ?>
+                                        <li class="list-group-item<?=$class ?>"><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: <?=$text ?></li>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </ul>
                         <?php $userGroupIds = $userGroupMapper->getUsersForGroup($group->getGroupMember()); ?>
                         <?php foreach ($userGroupIds as $userGroupId): ?>

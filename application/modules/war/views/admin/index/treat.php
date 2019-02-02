@@ -1,17 +1,10 @@
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<h1>
-    <?php if ($this->getRequest()->getParam('id') == ''): ?>
-        <?=$this->getTrans('menuActionNewWar') ?>
-    <?php else: ?>
-        <?=$this->getTrans('manageWar') ?>
-    <?php endif; ?>
-</h1>
-
+<h1><?=($this->getRequest()->getParam('id') == '') ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
 <?php if ($this->get('group') != '' and $this->get('enemy') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group <?=$this->validation()->hasError('warEnemy') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('warEnemy') ? ' has-error' : '' ?>">
             <label for="warEnemy" class="col-lg-2 control-label">
                 <?=$this->getTrans('warEnemy') ?>:
             </label>
@@ -19,17 +12,19 @@
                 <select class="form-control" id="warEnemy" name="warEnemy">
                     <optgroup label="<?=$this->getTrans('enemysName') ?>">
                         <?php foreach ($this->get('enemy') as $enemy): ?>
-                            <?php $selected = ''; ?>
-                            <?php if ($this->get('war') != '' and $this->get('war')->getWarEnemy() == $enemy->getId()): ?>
-                                <?php $selected = 'selected="selected"'; ?>
-                            <?php endif; ?>
-                            <option <?=$selected ?> value="<?=$enemy->getId() ?>"><?=$this->escape($enemy->getEnemyName()) ?></option>
+                            <?php
+                            $selected = '';
+                            if ($this->get('war') != '' AND $this->get('war')->getWarEnemy() == $enemy->getId()) {
+                                $selected = ' selected="selected"';
+                            }
+                            ?>
+                            <option<?=$selected ?> value="<?=$enemy->getId() ?>"><?=$this->escape($enemy->getEnemyName()) ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('warGroup') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('warGroup') ? ' has-error' : '' ?>">
             <label for="warGroup" class="col-lg-2 control-label">
                 <?=$this->getTrans('warGroup') ?>:
             </label>
@@ -37,17 +32,19 @@
                 <select class="form-control" id="warGroup" name="warGroup">
                     <optgroup label="<?=$this->getTrans('groupsName') ?>">
                         <?php foreach ($this->get('group') as $group): ?>
-                            <?php $selected = ''; ?>
-                            <?php if ($this->get('war') != '' and $this->get('war')->getWarGroup() == $group->getId()): ?>
-                                <?php $selected = 'selected="selected"'; ?>
-                            <?php endif; ?>
-                            <option <?=$selected ?> value="<?=$group->getId() ?>"><?=$this->escape($group->getGroupName()) ?></option>
+                            <?php
+                            $selected = '';
+                            if ($this->get('war') != '' AND $this->get('war')->getWarGroup() == $group->getId()) {
+                                $selected = ' selected="selected"';
+                            }
+                            ?>
+                            <option<?=$selected ?> value="<?=$group->getId() ?>"><?=$this->escape($group->getGroupName()) ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('warTime') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('warTime') ? ' has-error' : '' ?>">
             <label for="warTimeInput" class="col-md-2 control-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
@@ -57,14 +54,14 @@
                        id="warTimeInput"
                        name="warTime"
                        size="16"
-                       value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarTime(); } ?>"
-                       readonly>
+                       value="<?=($this->get('war') != '') ? $this->get('war')->getWarTime() : '' ?>"
+                       readonly />
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </span>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('warMap') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('warMap') ? ' has-error' : '' ?>">
             <label for="warMapInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('warMap') ?>:
             </label>
@@ -84,7 +81,7 @@
                        value="<?=$value ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('warServer') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('warServer') ? ' has-error' : '' ?>">
             <label for="warServerInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('warServer') ?>:
             </label>
@@ -124,7 +121,7 @@
                        value="<?=$value ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('warXonx') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('warXonx') ? ' has-error' : '' ?>">
             <label for="warXonx" class="col-lg-2 control-label">
                 <?=$this->getTrans('warXonx') ?>:
             </label>
@@ -134,11 +131,13 @@
                         <option value="neu"><?=$this->getTrans('new') ?></option>
                         <?php if ($this->get('warOptXonx') != ''): ?>
                             <?php foreach ($this->get('warOptXonx') as $opt): ?>
-                                <?php $selected = ''; ?>
-                                <?php if ($this->get('war') != '' and $this->get('war')->getWarXonx() == $opt->getWarXonx()): ?>
-                                    <?php $selected = 'selected="selected"'; ?>
-                                <?php endif; ?>
-                                <option <?=$selected ?> value="<?=$opt->getWarXonx() ?>"><?=$this->escape($opt->getWarXonx()) ?></option>
+                                <?php
+                                $selected = '';
+                                if ($this->get('war') != '' AND $this->get('war')->getWarXonx() == $opt->getWarXonx()) {
+                                    $selected = ' selected="selected"';
+                                }
+                                ?>
+                                <option<?=$selected ?> value="<?=$opt->getWarXonx() ?>"><?=$this->escape($opt->getWarXonx()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -153,7 +152,7 @@
                        value="" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('warGame') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('warGame') ? ' has-error' : '' ?>">
             <label for="warGame" class="col-lg-2 control-label">
                 <?=$this->getTrans('warGame'); ?>:
             </label>
@@ -163,11 +162,13 @@
                         <option value="neu"><?=$this->getTrans('warNew') ?></option>
                         <?php if ($this->get('warOptGame') != ''): ?>
                             <?php foreach ($this->get('warOptGame') as $opt): ?>
-                                <?php $selected = ''; ?>
-                                <?php if ($this->get('war') != '' and $this->get('war')->getWarGame() == $opt->getWarGame()): ?>
-                                    <?php $selected = 'selected="selected"'; ?>
-                                <?php endif; ?>
-                                <option <?=$selected ?> value="<?=$opt->getWarGame() ?>"><?=$this->escape($opt->getWarGame()) ?></option>
+                                <?php
+                                $selected = '';
+                                if ($this->get('war') != '' and $this->get('war')->getWarGame() == $opt->getWarGame()) {
+                                    $selected = ' selected="selected"';
+                                }
+                                ?>
+                                <option<?=$selected ?> value="<?=$opt->getWarGame() ?>"><?=$this->escape($opt->getWarGame()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -182,7 +183,7 @@
                        value="" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('warMatchtype') ? 'has-error' : '' ?>">
+        <div class="form-group<?=$this->validation()->hasError('warMatchtype') ? ' has-error' : '' ?>">
             <label for="warMatchtype" class="col-lg-2 control-label">
                 <?=$this->getTrans('warMatchtype') ?>:
             </label>
@@ -192,11 +193,13 @@
                         <option value="neu"><?=$this->getTrans('new') ?></option>
                         <?php if ($this->get('warOptMatchtype') != ''): ?>
                             <?php foreach ($this->get('warOptMatchtype') as $opt): ?>
-                                <?php $selected = ''; ?>
-                                <?php if ($this->get('war') != '' and $this->get('war')->getWarMatchtype() == $opt->getWarMatchtype()): ?>
-                                    <?php $selected = 'selected="selected"'; ?>
-                                <?php endif; ?>
-                                <option <?=$selected ?> value="<?=$opt->getWarMatchtype() ?>"><?=$this->escape($opt->getWarMatchtype()) ?></option>
+                                <?php
+                                $selected = '';
+                                if ($this->get('war') != '' and $this->get('war')->getWarMatchtype() == $opt->getWarMatchtype()) {
+                                    $selected = ' selected="selected"';
+                                }
+                                ?>
+                                <option<?=$selected ?> value="<?=$opt->getWarMatchtype() ?>"><?=$this->escape($opt->getWarMatchtype()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -263,7 +266,7 @@
                            id="calendarShow"
                            name="calendarShow"
                            value="1"
-                        <?php if (($this->get('war') != '' AND $this->get('war')->getShow() == 1) OR $this->originalInput('calendarShow') == 1) { echo 'checked'; } ?> />
+                        <?=(($this->get('war') != '' AND $this->get('war')->getShow() == 1) OR $this->originalInput('calendarShow') == 1) ? 'checked' : '' ?> />
                     <label for="calendarShow">
                         <?=$this->getTrans('calendarShow') ?>
                     </label>
@@ -278,12 +281,8 @@
             <div class="col-lg-4">
                 <select class="form-control" id="warStatus" name="warStatus">
                     <optgroup label="<?=$this->getTrans('warStatus') ?>">
-                        <option <?php if ($this->get('war') != '' && $this->get('war')->getWarStatus() == '1'): ?>
-                                    <?='selected="selected"'; ?>
-                                <?php endif; ?> value="1"><?=$this->getTrans('warStatusOpen') ?></option>
-                        <option <?php if ($this->get('war') != '' && $this->get('war')->getWarStatus() == '2'): ?>
-                                    <?='selected="selected"'; ?>
-                                <?php endif; ?> value="2"><?=$this->getTrans('warStatusClose') ?></option>
+                        <option<?=($this->get('war') != '' && $this->get('war')->getWarStatus() == '1') ? ' selected="selected"' : '' ?> value="1"><?=$this->getTrans('warStatusOpen') ?></option>
+                        <option<?=($this->get('war') != '' && $this->get('war')->getWarStatus() == '2') ? ' selected="selected"' : '' ?> value="2"><?=$this->getTrans('warStatusClose') ?></option>
                     </optgroup>
                 </select>
             </div>
@@ -294,68 +293,63 @@
     <?=$this->getTranslator()->trans('firstGroupEnemy') ?>
 <?php endif; ?>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
-$('#access').chosen();
-$(document).ready(function()
-{
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true
+    $('#access').chosen();
+    $(document).ready(function () {
+        $(".form_datetime").datetimepicker({
+            format: "dd.mm.yyyy hh:ii",
+            autoclose: true,
+            language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+            minuteStep: 15,
+            todayHighlight: true
+        });
+
+        diasableXonx();
+        diasableGame();
+        diasableMatchtype();
+        loadGames();
+
+        document.getElementById('warXonx').onchange = diasableXonx;
+        document.getElementById('warGame').onchange = diasableGame;
+        document.getElementById('warMatchtype').onchange = diasableMatchtype;
+
+        function diasableXonx() {
+            if (document.getElementById('warXonx').value === 'neu') {
+                document.getElementById("warXonxNew").style.display = "block";
+                document.getElementById("warXonx").style.margin = "0 0 5px";
+            } else {
+                document.getElementById("warXonxNew").style.display = "none";
+                document.getElementById("warXonxNew").value = '';
+            }
+        }
+
+        function diasableGame() {
+            if (document.getElementById('warGame').value === 'neu') {
+                document.getElementById("warGameNew").style.display = "block";
+                document.getElementById("warGame").style.margin = "0 0 5px";
+            } else {
+                document.getElementById("warGameNew").style.display = "none";
+                document.getElementById("warGameNew").value = '';
+            }
+        }
+
+        function diasableMatchtype() {
+            if (document.getElementById('warMatchtype').value === 'neu') {
+                document.getElementById("warMatchtypeNew").style.display = "block";
+                document.getElementById("warMatchtype").style.margin = "0 0 5px";
+            } else {
+                document.getElementById("warMatchtypeNew").style.display = "none";
+                document.getElementById("warMatchtypeNew").value = '';
+            }
+        }
+
+        function loadGames() {
+            $('#games').load('<?=$this->getUrl('index.php/admin/war/ajax/game/id/' . $this->getRequest()->getParam('id') . '') ?>');
+        }
     });
-
-    diasableXonx();
-    diasableGame();
-    diasableMatchtype();
-    loadGames();
-
-    document.getElementById('warXonx').onchange = diasableXonx;
-    document.getElementById('warGame').onchange = diasableGame;
-    document.getElementById('warMatchtype').onchange = diasableMatchtype;
-
-    function diasableXonx()
-    {
-        if (document.getElementById('warXonx').value==='neu') {
-            document.getElementById("warXonxNew").style.display="block";
-            document.getElementById("warXonx").style.margin="0 0 5px";
-        } else {
-            document.getElementById("warXonxNew").style.display="none";
-            document.getElementById("warXonxNew").value = '';
-        }
-    };
-
-    function diasableGame()
-    {
-        if (document.getElementById('warGame').value==='neu') {
-            document.getElementById("warGameNew").style.display="block";
-            document.getElementById("warGame").style.margin="0 0 5px";
-        } else {
-            document.getElementById("warGameNew").style.display="none";
-            document.getElementById("warGameNew").value = '';
-        }
-    };
-
-    function diasableMatchtype()
-    {
-        if (document.getElementById('warMatchtype').value==='neu') {
-            document.getElementById("warMatchtypeNew").style.display="block";
-            document.getElementById("warMatchtype").style.margin="0 0 5px";
-        } else {
-            document.getElementById("warMatchtypeNew").style.display="none";
-            document.getElementById("warMatchtypeNew").value = '';
-        }
-    };
-
-    function loadGames()
-    {
-        $('#games').load('<?=$this->getUrl('index.php/admin/war/ajax/game/id/'.$this->getRequest()->getParam('id').''); ?>');
-    };
-});
 </script>

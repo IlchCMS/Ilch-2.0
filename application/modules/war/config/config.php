@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.6.0',
+        'version' => '1.7.0',
         'icon_small' => 'fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -50,8 +50,8 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->queryMulti($this->getInstallSql());
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('war_boxNextWarLimit', '5');
-        $databaseConfig->set('war_boxLastWarLimit', '5');
+        $databaseConfig->set('war_boxNextWarLimit', '5')
+            ->set('war_boxLastWarLimit', '5');
     }
 
     public function uninstall()

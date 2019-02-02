@@ -19,11 +19,13 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index']);
-
         $pagination = new \Ilch\Pagination();
         $warMapper = new WarMapper();
         $userMapper = new UserMapper();
+        $gamesMapper = new GamesMapper();
+
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index']);
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
@@ -40,9 +42,10 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('war', $warMapper->getWarList($pagination));
-        $this->getView()->set('pagination', $pagination);
-        $this->getView()->set('readAccess', $readAccess);
+        $this->getView()->set('gamesMapper', $gamesMapper)
+            ->set('war', $warMapper->getWarList($pagination))
+            ->set('pagination', $pagination)
+            ->set('readAccess', $readAccess);
     }
 
     public function showAction()
@@ -56,25 +59,20 @@ class Index extends \Ilch\Controller\Frontend
         $acceptMapper = new AcceptMapper();
 
         $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
-
         if ($war) {
             $group = $groupMapper->getGroupById($war->getWarGroup());
-            $enemy = $enemyMapper->getEnemyById($war->getWarEnemy());
-
             if ($this->getRequest()->isPost() && $this->getUser()) {
                 $checkAccept = $acceptMapper->getAcceptListByGroupId($group->getGroupMember(), $this->getRequest()->getParam('id'));
-                $warAccept = (int)$this->getRequest()->getPost('warAccept');
-                $model = new AcceptModel();
 
+                $model = new AcceptModel();
                 foreach ($checkAccept as $check) {
-                    if($this->getUser()->getId() == $check->getUserId()) {
+                    if ($this->getUser()->getId() == $check->getUserId()) {
                         $model->setId($check->getId());
                     }
                 }
-                $model->setWarId($war->getId());
-                $model->setUserId($this->getUser()->getId());
-                $model->setAccept($warAccept);
-
+                $model->setWarId($war->getId())
+                    ->setUserId($this->getUser()->getId())
+                    ->setAccept((int)$this->getRequest()->getPost('warAccept'));
                 $acceptMapper->save($model);
 
                 $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
@@ -82,7 +80,7 @@ class Index extends \Ilch\Controller\Frontend
 
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index'])
-                ->add($group != '' ? $group->getGroupName(): '', $group != '' ? ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()] : '')
+                ->add($group != '' ? $group->getGroupName() : '', $group != '' ? ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()] : '')
                 ->add($this->getTranslator()->trans('warPlay'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
             $user = null;
@@ -103,23 +101,23 @@ class Index extends \Ilch\Controller\Frontend
             }
 
             $hasReadAccess = (is_in_array($readAccess, explode(',', $war->getReadAccess())) || $adminAccess == true);
-
             if (!$hasReadAccess) {
                 $this->redirect()
                     ->withMessage('warNotFound', 'warning')
                     ->to(['action' => 'index']);
+
                 return;
             }
 
-            $this->getView()->set('games', $gamesMapper->getGamesByWarId($this->getRequest()->getParam('id')));
-            $this->getView()->set('gamesMapper', $gamesMapper);
-            $this->getView()->set('group', $group);
-            $this->getView()->set('enemy', $enemy);
-            $this->getView()->set('war', $war);
-            $this->getView()->set('userMapper', $userMapper);
-            $this->getView()->set('userGroupMapper', $userGroupMapper);
-            $this->getView()->set('accept', $acceptMapper->getAcceptByWhere(['war_id' => $this->getRequest()->getParam('id')]));
-            $this->getView()->set('acceptCheck', $group != '' ? $acceptMapper->getAcceptListByGroupId($group->getGroupMember(), $this->getRequest()->getParam('id')) : '');
+            $this->getView()->set('gamesMapper', $gamesMapper)
+                ->set('userMapper', $userMapper)
+                ->set('userGroupMapper', $userGroupMapper)
+                ->set('games', $gamesMapper->getGamesByWarId($this->getRequest()->getParam('id')))
+                ->set('group', $group)
+                ->set('enemy', $enemyMapper->getEnemyById($war->getWarEnemy()))
+                ->set('war', $war)
+                ->set('accept', $acceptMapper->getAcceptByWhere(['war_id' => $this->getRequest()->getParam('id')]))
+                ->set('acceptCheck', $group != '' ? $acceptMapper->getAcceptListByGroupId($group->getGroupMember(), $this->getRequest()->getParam('id')) : '');
         } else {
             $this->redirect()
                 ->withMessage('warNotFound', 'warning')

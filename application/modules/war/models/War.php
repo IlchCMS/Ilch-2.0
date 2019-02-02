@@ -133,10 +133,13 @@ class War extends \Ilch\Model
      * Sets the id of the group.
      *
      * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
@@ -153,10 +156,13 @@ class War extends \Ilch\Model
      * Sets the war enemy.
      *
      * @param int $warEnemy
+     * @return $this
      */
     public function setWarEnemy($warEnemy)
     {
         $this->warEnemy = (string)$warEnemy;
+
+        return $this;
     }
 
     /**
@@ -173,10 +179,13 @@ class War extends \Ilch\Model
      * Sets the war enemy tag.
      *
      * @param int $warEnemyTag
+     * @return $this
      */
     public function setWarEnemyTag($warEnemyTag)
     {
         $this->warEnemyTag = (string)$warEnemyTag;
+
+        return $this;
     }
 
     /**
@@ -193,10 +202,13 @@ class War extends \Ilch\Model
      * Sets the war group.
      *
      * @param int $warGroup
+     * @return $this
      */
     public function setWarGroup($warGroup)
     {
         $this->warGroup = (string)$warGroup;
+
+        return $this;
     }
 
     /**
@@ -213,10 +225,13 @@ class War extends \Ilch\Model
      * Sets the war group tag.
      *
      * @param int $warGroupTag
+     * @return $this
      */
     public function setWarGroupTag($warGroupTag)
     {
         $this->warGroupTag = (string)$warGroupTag;
+
+        return $this;
     }
 
     /**
@@ -233,10 +248,13 @@ class War extends \Ilch\Model
      * Sets the war time.
      *
      * @param string $warTime
+     * @return $this
      */
     public function setWarTime($warTime)
     {
         $this->warTime = (string)$warTime;
+
+        return $this;
     }
 
     /**
@@ -253,10 +271,13 @@ class War extends \Ilch\Model
      * Sets the war maps.
      *
      * @param string $warMaps
+     * @return $this
      */
     public function setWarMaps($warMaps)
     {
         $this->warMaps = (string)$warMaps;
+
+        return $this;
     }
 
     /**
@@ -273,10 +294,13 @@ class War extends \Ilch\Model
      * Sets the war server.
      *
      * @param string $warServer
+     * @return $this
      */
     public function setWarServer($warServer)
     {
         $this->warServer = (string)$warServer;
+
+        return $this;
     }
 
     /**
@@ -293,10 +317,13 @@ class War extends \Ilch\Model
      * Sets the war password.
      *
      * @param string $warPassword
+     * @return $this
      */
     public function setWarPassword($warPassword)
     {
         $this->warPassword = (string)$warPassword;
+
+        return $this;
     }
 
     /**
@@ -313,10 +340,13 @@ class War extends \Ilch\Model
      * Sets the war Xonx.
      *
      * @param string $warXonx
+     * @return $this
      */
     public function setWarXonx($warXonx)
     {
         $this->warXonx = (string)$warXonx;
+
+        return $this;
     }
 
     /**
@@ -333,10 +363,13 @@ class War extends \Ilch\Model
      * Sets the war game.
      *
      * @param string $warGame
+     * @return $this
      */
     public function setWarGame($warGame)
     {
         $this->warGame = (string)$warGame;
+
+        return $this;
     }
 
     /**
@@ -353,10 +386,13 @@ class War extends \Ilch\Model
      * Sets the war matchtype.
      *
      * @param string $warMatchtype
+     * @return $this
      */
     public function setWarMatchtype($warMatchtype)
     {
         $this->warMatchtype = (string)$warMatchtype;
+
+        return $this;
     }
 
     /**
@@ -373,10 +409,13 @@ class War extends \Ilch\Model
      * Sets the war report.
      *
      * @param string $warReport
+     * @return $this
      */
     public function setWarReport($warReport)
     {
         $this->warReport = (string)$warReport;
+
+        return $this;
     }
 
     /**
@@ -393,10 +432,13 @@ class War extends \Ilch\Model
      * Sets the war status.
      *
      * @param int $warStatus
+     * @return $this
      */
     public function setWarStatus($warStatus)
     {
         $this->warStatus = (int)$warStatus;
+
+        return $this;
     }
 
     /**
@@ -418,6 +460,7 @@ class War extends \Ilch\Model
     public function setShow($show)
     {
         $this->show = (int)$show;
+
         return $this;
     }
     /**
@@ -433,12 +476,12 @@ class War extends \Ilch\Model
      * Sets the read access of the war.
      *
      * @param string $readAccess
-     *
      * @return $this
      */
     public function setReadAccess($readAccess)
     {
         $this->readAccess = (string)$readAccess;
+
         return $this;
     }
 }
