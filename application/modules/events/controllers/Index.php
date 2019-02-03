@@ -29,6 +29,7 @@ class Index extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index']);
 
         $upcomingLimit = 5;
+        $currentLimit = 5;
         $pastLimit = 5;
 
         $user = null;
@@ -46,7 +47,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('entrantsMapper', $entrantsMapper)
             ->set('eventList', $eventMapper->getEntries())
             ->set('eventListUpcoming', $eventMapper->getEventListUpcoming($upcomingLimit))
-            ->set('eventListCurrent', $eventMapper->getEventListCurrent($pastLimit))
+            ->set('eventListCurrent', $eventMapper->getEventListCurrent($currentLimit))
             ->set('eventListPast', $eventMapper->getEventListPast($pastLimit))
             ->set('readAccess', $readAccess);
     }
