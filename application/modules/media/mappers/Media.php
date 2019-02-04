@@ -242,7 +242,7 @@ class Media extends \Ilch\Mapper
     /**
      * Get media by where.
      * Returns only a single item.
-     * 
+     *
      * @param array $where
      * @return MediaModel|null
      */

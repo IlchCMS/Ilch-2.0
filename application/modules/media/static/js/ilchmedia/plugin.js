@@ -1,4 +1,5 @@
 CKEDITOR.plugins.add( 'ilchmedia', {
+    lang: ['de', 'en'],
     icons: 'ilchmedia',
     class: 'cke_label',
     init: function( editor ) {

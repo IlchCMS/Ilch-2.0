@@ -6,12 +6,12 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
         contents: [
             {
                 id: 'tab-basic',
-                label: 'Insert Image',
+                label: editor.lang.ilchmedia.insertImage,
                 elements: [
                     {
                         type: 'text',
                         id: 'src',
-                        label: 'Image URL',
+                        label: editor.lang.ilchmedia.imageLink,
                         labelStyle: 'font-weight: bold'
                     },
                     {
@@ -22,14 +22,14 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                                     {
                                         type: 'text',
                                         id: 'width',
-                                        label: 'Width (optional)',
+                                        label: editor.lang.ilchmedia.widthLabel,
                                         labelStyle: 'font-weight: bold',
                                         style: 'float:left;display:inline;'
                                     },
                                     {
                                         type: 'text',
                                         id: 'height',
-                                        label: 'Height (optional)',
+                                        label: editor.lang.ilchmedia.heightLabel,
                                         labelStyle: 'font-weight: bold',
                                         style: 'float:left;display:inline;'
                                     }
@@ -37,7 +37,7 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                     },
                     {
                         type: 'button',
-                        label: 'Select from Server',
+                        label: editor.lang.ilchmedia.selectFromServer,
                         labelStyle: 'font-weight: bold',
                         id: 'urlbutton',
                         onClick: function() {
@@ -56,23 +56,23 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
             },
             {
                 id: 'tab-adv',
-                label: 'Insert File',
+                label: editor.lang.ilchmedia.insertFile,
                 elements: [
                     {
                         type: 'text',
                         id: 'file',
-                        label: 'Link URL',
+                        label: editor.lang.ilchmedia.fileLink,
                         labelStyle: 'font-weight: bold'
                     },
                     {
                         type: 'text',
                         id: 'alt',
-                        label: 'Link Name',
+                        label: editor.lang.ilchmedia.fileLinkName,
                         labelStyle: 'font-weight: bold'
                     },
                     {
                         type: 'button',
-                        label: 'Select from Server',
+                        label: editor.lang.ilchmedia.selectFromServer,
                         labelStyle: 'font-weight: bold',
                         id: 'urlbutton',
                         onClick: function() {
@@ -91,12 +91,12 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
             },
             {
                 id: 'tab-mov',
-                label: 'Insert Video',
+                label: editor.lang.ilchmedia.insertVideo,
                 elements: [
                     {
                         type: 'text',
                         id: 'video',
-                        label: 'Video URL',
+                        label: editor.lang.ilchmedia.videoLink,
                         labelStyle: 'font-weight: bold'
                     },
                     {
@@ -107,14 +107,14 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                                     {
                                         type: 'text',
                                         id: 'width',
-                                        label: 'Width (optional)',
+                                        label: editor.lang.ilchmedia.widthLabel,
                                         labelStyle: 'font-weight: bold',
                                         style: 'float:left;display:inline;'
                                     },
                                     {
                                         type: 'text',
                                         id: 'height',
-                                        label: 'Height (optional)',
+                                        label: editor.lang.ilchmedia.heightLabel,
                                         labelStyle: 'font-weight: bold',
                                         style: 'float:left;display:inline;'
                                     }
@@ -122,7 +122,7 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                     },
                     {
                         type: 'button',
-                        label: 'Select from Server',
+                        label: editor.lang.ilchmedia.selectFromServer,
                         labelStyle: 'font-weight: bold',
                         id: 'urlbutton',
                         onClick: function() {
@@ -140,11 +140,11 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                 ]
             },{
                 id: 'tab-upload',
-                label: 'Upload to Server',
+                label: editor.lang.ilchmedia.uploadToServer,
                 elements: [
                     {
                         type: 'button',
-                        label: 'Upload to Server',
+                        label: editor.lang.ilchmedia.uploadToServer,
                         labelStyle: 'font-weight: bold',
                         id: 'uploadbutton',
                         onClick: function() {
