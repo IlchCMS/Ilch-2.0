@@ -15,8 +15,8 @@ $friends = $this->get('friends');
                 <div class="friend panel panel-default">
                     <div class="panel-body">
                         <?php $avatar = (empty($friend->getAvatar)) ? $this->getStaticUrl().'/img/noavatar.jpg' : $this->getStaticUrl().$this->escape($friend->getAvatar())?>
-                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'removeFriend', 'id' => $friend->getFriendUserId()], null, true) ?>" class="fa fa-minus" title="<?=$this->getTrans('removeFriend') ?>"></a>
-                        <img class="thumbnail" src="<?=$avatar ?>" title="<?=$this->escape($friend->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
+                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'removeFriend', 'id' => $friend->getFriendUserId()], null, true) ?>" class="btn btn-default" style="margin-bottom: 5px;" title="<?=$this->getTrans('removeFriend') ?>"><?=$this->getTrans('removeFriend') ?></a>
+                        <img class="img-thumbnail" src="<?=$avatar ?>" title="<?=$this->escape($friend->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
                         <a href="<?=$this->getUrl(['controller' => 'profil', 'action' => 'index', 'user' => $friend->getFriendUserId()]) ?>" title="<?=$this->escape($friend->getName()) ?>s <?=$this->getTrans('profile') ?>" class="user-link"><?=$this->escape($friend->getName()) ?></a>
                     </div>
                 </div>
