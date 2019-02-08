@@ -58,6 +58,11 @@ class Module extends \Ilch\Model
     protected $link;
 
     /**
+     * @var bool
+     */
+    protected $official;
+
+    /**
      * @var string
      */
     protected $ilchCore;
@@ -290,6 +295,26 @@ class Module extends \Ilch\Model
     public function setLink($link)
     {
         $this->link = (string)$link;
+    }
+
+    /**
+     * Gets the official flag.
+     *
+     * @return bool
+     */
+    public function getOfficial()
+    {
+        return $this->official;
+    }
+
+    /**
+     * Sets the official flag.
+     *
+     * @param bool $official
+     */
+    public function setOfficial($official)
+    {
+        $this->official = (bool)$official;
     }
 
     /**

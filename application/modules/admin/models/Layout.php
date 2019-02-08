@@ -44,6 +44,13 @@ class Layout extends \Ilch\Model
     protected $link;
 
     /**
+     * Ilch official label of the layout.
+     *
+     * @var bool
+     */
+    protected $official;
+
+    /**
      * Description of the layout.
      *
      * @var string
@@ -155,6 +162,26 @@ class Layout extends \Ilch\Model
     public function setLink($link)
     {
         $this->link = (string)$link;
+    }
+
+    /**
+     * Gets the official flag.
+     *
+     * @return bool
+     */
+    public function getOfficial()
+    {
+        return $this->official;
+    }
+
+    /**
+     * Sets the official flag.
+     *
+     * @param bool $official
+     */
+    public function setOfficial($official)
+    {
+        $this->official = (bool)$official;
     }
     
     /**

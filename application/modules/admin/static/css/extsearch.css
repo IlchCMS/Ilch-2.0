@@ -1,6 +1,7 @@
 .panel-ilch {
     border-color: #C9C9C9;
 }
+
 .panel-ilch > .panel-heading {
     color: #000;
     border-color: #C9C9C9;
@@ -18,6 +19,7 @@
     margin-right: auto;
     display: block;
 }
+
 #layouts .panel-body span {
     cursor: pointer;
 }
@@ -31,6 +33,7 @@
 #layouts .unchecked i {
     width: 14px;
 }
+
 #layouts .unchecked:hover i:before {
     content: "\f00c";
 }
@@ -48,12 +51,35 @@
 #layout .rating-container {
     font-size: 15px;
 }
+
 #layout .thumbnail {
     text-align: center;
 }
+
 #module .rating-container .rating,
 #layout .rating-container .rating,
 #layout .thumbnail span {
     cursor: help;
     text-align: center;
+}
+
+/* Mark official modules/layouts  */
+#modules table tbody tr td:last-child,
+#layouts .panel .panel-body {
+    position: relative;
+    overflow: hidden;
+}
+
+#modules table tbody tr td:last-child span.ilch-official,
+#layouts .panel .panel-body span.ilch-official {
+    position: absolute;
+    top: 7px;
+    right: -47px;
+    background: green;
+    color: white;
+    padding: 2px 50px;
+    text-transform: uppercase;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }

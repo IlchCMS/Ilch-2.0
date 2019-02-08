@@ -167,7 +167,10 @@ if (empty($modulesOnUpdateServer)) {
                         </a>
                     </td>
                     <td><?=$moduleOnUpdateServer->version?></td>
-                    <td><?=$moduleOnUpdateServer->desc ?></td>
+                    <td>
+                        <?=$moduleOnUpdateServer->desc ?>
+                        <?=($moduleOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
+                    </td>
                 </tr>
                 <?php
                     $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';

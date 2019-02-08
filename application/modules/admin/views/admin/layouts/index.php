@@ -35,6 +35,7 @@ $cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)))
                       title="<?=$this->getTrans('info') ?>">
                     <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" alt="<?=$this->escape($layout->getName()) ?>" title="<?=$this->escape($layout->getName()) ?>" />
                 </span>
+                <?=($layout->getOfficial()) ? '<span class="ilch-official">ilch</span>' : '' ?>
             </div>
             <div class="panel-footer">
                 <div class="clearfix">
