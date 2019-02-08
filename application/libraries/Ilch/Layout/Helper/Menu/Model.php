@@ -213,8 +213,10 @@ class Model
                     $liClasses[] = array_dot($options, 'menus.li-class-child');
                 }
 
+                $target = '';
                 if ($menuData['items'][$itemId]->isExternalLink()) {
                     $href = $menuData['items'][$itemId]->getHref();
+                    $target = ' target="_blank"';
                 } elseif ($menuData['items'][$itemId]->isPageLink()) {
                     $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId(), $locale);
                     $href = $this->layout->getUrl($page->getPerma());
@@ -232,7 +234,7 @@ class Model
                 }
 
                 if (!is_in_array($groupIds, explode(',', $menuData['items'][$itemId]->getAccess())) || $adminAccess) {
-                    $contentHtml = '<a href="' . $href . '">' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
+                    $contentHtml = '<a href="' . $href . '"' . $target . '>' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
                     $subItemsHtml = '';
 
                     // find childitems recursively
