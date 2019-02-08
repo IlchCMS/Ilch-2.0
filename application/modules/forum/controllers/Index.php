@@ -14,7 +14,7 @@ use Modules\User\Mappers\Group as GroupMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $userMapper = new UserMapper();
         $forumMapper = new ForumMapper();
@@ -22,13 +22,19 @@ class Index extends \Ilch\Controller\Frontend
         $staticsMapper = new ForumStaticsMapper();
         $groupMapper = new GroupMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('forum'));
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum'));
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('forum'), ['action' => 'index']);
+
         $forumItems = $forumMapper->getForumItemsByParent(0);
+        $whoWasOnlineUsers = $visitMapper->getWhoWasOnline();
         $allOnlineUsers = $visitMapper->getVisitsCountOnline();
         $usersOnline = $visitMapper->getVisitsOnlineUser();
 
         $userId = null;
         $groupIds = [3];
-
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();
             $user = $userMapper->getUserById($userId);
@@ -39,19 +45,14 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('forum'));
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum'));
-        $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), ['action' => 'index']);
-
-        $this->getView()->set('groupIdsArray', $groupIds);
-        $this->getView()->set('forumItems', $forumItems);
-        $this->getView()->set('usersOnlineList', $usersOnline);
-        $this->getView()->set('usersOnline', count($usersOnline));
-        $this->getView()->set('guestOnline', $allOnlineUsers - count($usersOnline));
-        $this->getView()->set('forumStatics', $staticsMapper->getForumStatistics());
-        $this->getView()->set('registNewUser', $userMapper->getUserById($visitMapper->getRegistNewUser()));
-        $this->getView()->set('listGroups', $groupMapper->getGroupList());
+        $this->getView()->set('groupIdsArray', $groupIds)
+            ->set('forumItems', $forumItems)
+            ->set('usersOnlineList', $usersOnline)
+            ->set('usersWhoWasOnline', $whoWasOnlineUsers)
+            ->set('usersOnline', count($usersOnline))
+            ->set('guestOnline', $allOnlineUsers - count($usersOnline))
+            ->set('forumStatics', $staticsMapper->getForumStatistics())
+            ->set('registNewUser', $userMapper->getUserById($visitMapper->getRegistNewUser()))
+            ->set('listGroups', $groupMapper->getGroupList());
     }
 }

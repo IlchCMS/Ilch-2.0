@@ -2,6 +2,7 @@
 $forumItems = $this->get('forumItems');
 $readAccess = $this->get('groupIdsArray');
 $usersOnlineList = $this->get('usersOnlineList');
+$usersWhoWasOnline = $this->get('usersWhoWasOnline');
 $usersOnline = $this->get('usersOnline');
 $guestOnline = $this->get('guestOnline');
 $forumStatistics = $this->get('forumStatics');
@@ -189,9 +190,13 @@ function rec($item, $obj, $readAccess, $i)
                 </div>
             </div>
             <hr />
-            <h5><i class="fa fa-user"></i> <?=$this->getTrans('whoWasHere') ?></h5>
+            <h5><i class="fa fa-users"></i> <?=$this->getTrans('whoWasHere') ?></h5>
             <div class="statistics">
-                <!-- @todo add statistics info -->
+                <ul class="user-list">
+                    <?php foreach ($usersWhoWasOnline as $user): ?>
+                        <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><?=$this->escape($user->getName()) ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
             <hr />
             <div class="stats">

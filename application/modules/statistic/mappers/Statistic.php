@@ -80,6 +80,35 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
+    /**
+     * Returns all users who was online.
+     *
+     * @return array []|\Modules\User\Models\User[]
+     * @throws \Ilch\Database\Exception
+     */
+    public function getWhoWasOnline()
+    {
+        $userMapper = new UserMapper();
+        $date = new \Ilch\Date();
+        $date->format("Y-m-d H:i:s", true);
+
+        $sql = 'SELECT *
+                FROM `[prefix]_visits_stats`
+                WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")  AND DAY(`date`) = DAY("'.$date.'") AND `user_id` > 0
+                GROUP BY `user_id`';
+
+        $rows = $this->db()->queryArray($sql);
+
+        $users = [];
+        foreach ($rows as $row) {
+            if ($userMapper->getUserById($row['user_id'])) {
+                $users[] = $userMapper->getUserById($row['user_id']);
+            }
+        }
+
+        return $users;
+    }
+
     public function getVisitsHour($year = null, $month = null)
     {
         $sql = 'SELECT
@@ -686,21 +715,20 @@ class Statistic extends \Ilch\Mapper
 
         $this->cleanUpOnline();
 
-        // TODO: The ip adress is not a criteria for a unique visitor. Probably better to work with the session_id here.
         $sql = 'SELECT id
                 FROM `[prefix]_visits_stats`
-                WHERE ip_address = "'.$row['ip'].'" AND YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE()) AND DAY(`date`) = DAY(CURDATE())';
+                WHERE `session_id` = "'.$row['session_id'].'" AND YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE()) AND DAY(`date`) = DAY(CURDATE())';
 
         $uniqueUser = $this->db()->queryCell($sql);
 
         if ($uniqueUser) {
             $this->db()->update('visits_stats')
-                ->values(['os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'lang' => $row['lang']])
+                ->values(['user_id' => $row['user_id'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'lang' => $row['lang']])
                 ->where(['id' => $uniqueUser])
                 ->execute();
         } else {
             $this->db()->insert('visits_stats')
-                ->values(['referer' => $row['referer'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date' => $date->format('Y-m-d H:i:s', true)])
+                ->values(['user_id' => $row['user_id'], 'session_id' => $row['session_id'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'ip_address' => $row['ip'], 'referer' => $row['referer'], 'lang' => $row['lang'], 'date' => $date->format('Y-m-d H:i:s', true)])
                 ->execute();
         }
     }

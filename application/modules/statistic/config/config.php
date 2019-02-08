@@ -71,6 +71,8 @@ class Config extends \Ilch\Config\Install
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_visits_stats` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `user_id` INT(11) NOT NULL DEFAULT 0,
+                  `session_id` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `os` VARCHAR(255) NOT NULL,
                   `os_version` VARCHAR(255) NOT NULL,
                   `browser` VARCHAR(255) NOT NULL,
@@ -85,6 +87,12 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "2.1.19":
+                // Add user_id and session_id to all visits stats.
+                $this->db()->query('ALTER TABLE `[prefix]_visits_stats` ADD COLUMN `user_id` INT(11) NOT NULL DEFAULT 0 AFTER `id`;');
+                $this->db()->query('ALTER TABLE `[prefix]_visits_stats` ADD COLUMN `session_id` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `user_id`;');
+                break;
+        }
     }
 }
