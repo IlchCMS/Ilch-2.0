@@ -81,10 +81,11 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
-     * Returns all users who was online.
+     * Returns all users who were online.
      *
      * @return array []|\Modules\User\Models\User[]
      * @throws \Ilch\Database\Exception
+     * @since 2.1.20
      */
     public function getWhoWasOnline()
     {
@@ -92,18 +93,17 @@ class Statistic extends \Ilch\Mapper
         $date = new \Ilch\Date();
         $date->format("Y-m-d H:i:s", true);
 
-        $sql = 'SELECT *
+        $sql = 'SELECT `[prefix]_visits_stats`.user_id, `[prefix]_visits_stats`.date, `[prefix]_users`.*
                 FROM `[prefix]_visits_stats`
-                WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")  AND DAY(`date`) = DAY("'.$date.'") AND `user_id` > 0
+                INNER JOIN `[prefix]_users` ON user_id = `[prefix]_users`.id
+                WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'") AND DAY(`date`) = DAY("'.$date.'") AND `user_id` > 0
                 GROUP BY `user_id`';
 
         $rows = $this->db()->queryArray($sql);
 
         $users = [];
         foreach ($rows as $row) {
-            if ($userMapper->getUserById($row['user_id'])) {
-                $users[] = $userMapper->getUserById($row['user_id']);
-            }
+            $users[] = $userMapper->loadFromArray($row);
         }
 
         return $users;
@@ -736,7 +736,7 @@ class Statistic extends \Ilch\Mapper
     /**
      * Deletes a user from list of online users.
      *
-     * @param  int $userId
+     * @param int $userId
      */
     public function deleteUserOnline($userId) {
         $this->db()->delete('visits_online')
