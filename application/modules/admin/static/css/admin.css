@@ -508,13 +508,14 @@ nav ul .active > a {
     position: relative;
 }
 nav ul li.active > a:before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
     content: "\f0d9";
-    font-family: FontAwesome;
     display: block;
     height: 27px;
     line-height: normal;
     position: absolute;
-    right: 0px;
+    right: -1px;
     font-size: 20px;
     color: #fff;
 }
