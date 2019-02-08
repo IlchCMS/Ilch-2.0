@@ -483,6 +483,9 @@ class Config extends \Ilch\Config\Install
                 // Clear visits_online and add new session_id column
                 $this->db()->truncate('[prefix]_visits_online');
                 $this->db()->query('ALTER TABLE `[prefix]_visits_online` ADD COLUMN `session_id` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `user_id`;');
+
+                removeDir(ROOT_PATH.'/vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
         }
 
