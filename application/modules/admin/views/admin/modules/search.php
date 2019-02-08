@@ -169,7 +169,7 @@ if (empty($modulesOnUpdateServer)) {
                     <td><?=$moduleOnUpdateServer->version?></td>
                     <td>
                         <?=$moduleOnUpdateServer->desc ?>
-                        <?=($moduleOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
+                        <?=(!empty($moduleOnUpdateServer->official) && $moduleOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
                     </td>
                 </tr>
                 <?php

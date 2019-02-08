@@ -36,7 +36,7 @@ if (empty($layoutsOnUpdateServer)) {
                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
                     <img src="<?=$this->get('updateserver').'layouts/images/'.$layoutOnUpdateServer->thumbs[0]->img ?>" alt="<?=$this->escape($layoutOnUpdateServer->name) ?>" />
                 </a>
-                <?=($layoutOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
+                <?=(!empty($layoutOnUpdateServer->official) && $layoutOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
             </div>
             <div class="panel-footer">
                 <div class="clearfix">
