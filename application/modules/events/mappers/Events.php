@@ -109,7 +109,7 @@ class Events extends \Ilch\Mapper
 
         $sql = 'SELECT *
                 FROM `[prefix]_events`
-                WHERE start > CURDATE()
+                WHERE start > NOW()
                 ORDER BY start ASC';
 
         if ($limit !== null) { $sql .= ' LIMIT '.$limit; }
@@ -169,7 +169,7 @@ class Events extends \Ilch\Mapper
 
         $sql = 'SELECT *
                 FROM `[prefix]_events`
-                WHERE end < CURDATE()
+                WHERE end < NOW()
                 ORDER BY start DESC';
 
         if ($limit !== null) { $sql .= ' LIMIT '.$limit; }
@@ -201,7 +201,7 @@ class Events extends \Ilch\Mapper
 
         $sql = 'SELECT *
                 FROM `[prefix]_events`
-                WHERE start < CURDATE() AND end > CURDATE()
+                WHERE start < NOW() AND end > NOW()
                 ORDER BY start DESC';
 
         if ($limit !== null) { $sql .= ' LIMIT '.$limit; }

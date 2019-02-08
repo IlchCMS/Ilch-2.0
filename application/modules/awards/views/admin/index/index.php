@@ -4,7 +4,7 @@ $teamsMapper = $this->get('teamsMapper');
 ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('awards') != ''): ?>
+<?php if (!empty($this->get('awards'))): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">

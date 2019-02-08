@@ -320,7 +320,7 @@ return [
     'providerNotDeleted' => 'Authentifizierungsanbieter konnte nicht gelöscht werden.',
 
     'friends' => 'Freunde',
-    'sendFriendRequest' => 'Freundschaftsanfrage absenden',
+    'sendFriendRequest' => 'Freundschaftsanfrage senden',
     'sendFriendRequestSuccess' => 'Freundschaftsanfrage erfolgreich gesendet.',
     'sendFriendRequestFail' => 'Freundschaftsanfrage senden fehlgeschlagen.',
     'removeFriend' => 'Freund entfernen',

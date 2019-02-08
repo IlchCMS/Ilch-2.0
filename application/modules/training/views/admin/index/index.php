@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('training') != ''): ?>
+<?php if (!empty($this->get('training'))): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">

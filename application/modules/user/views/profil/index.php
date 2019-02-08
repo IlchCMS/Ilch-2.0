@@ -28,11 +28,13 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-2">
                 <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
                 <?php if ($profil->getId() != $this->getUser()->getId()) : ?>
+                <div style="margin-top: 5px">
                     <?php if (!$this->get('isFriend')) : ?>
-                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'sendFriendRequest', 'id' => $profil->getId()], null, true) ?>" class="fa fa-plus" title="<?=$this->getTrans('sendFriendRequest') ?>"></a>
+                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'sendFriendRequest', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('sendFriendRequest') ?>"><?=$this->getTrans('sendFriendRequest') ?></a>
                     <?php else : ?>
-                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'removeFriend', 'id' => $profil->getId()], null, true) ?>" class="fa fa-minus" title="<?=$this->getTrans('removeFriend') ?>"></a>
+                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'removeFriend', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('removeFriend') ?>"><?=$this->getTrans('removeFriend') ?></a>
                     <?php endif; ?>
+                </div>
                 <?php endif; ?>
             </div>
             <div class="col-lg-5 col-xs-12">

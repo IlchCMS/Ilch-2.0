@@ -42,34 +42,23 @@ if ($this->getUser()) {
                             <?php $startDate = new \Ilch\Date($away->getStart()); ?>
                             <?php $endDate = new \Ilch\Date($away->getEnd()); ?>
                             <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
-                                <td style="color: #008000; border-right: 1px solid #dddddd; border-left: 1px solid #dddddd;">
-                                    <div class="agenda" style="float:left;">
-                                        <div class="dayofmonth"><?=$startDate->format('d', true) ?></div>
-                                        <div><?=$startDate->format('l', true) ?></div>
-                                        <div class="shortdate"><?=$startDate->format('F, Y', true) ?></div>
-                                    </div>
-                                    <div class="agenda-arrow"><i class="fa fa-chevron-right"></i></div>
-                                    <div>
-                                        <div class="dayofmonth"><?=$endDate->format('d', true) ?></div>
-                                        <div><?=$endDate->format('l', true) ?></div>
-                                        <div class="shortdate"><?=$endDate->format('F, Y', true) ?></div>
-                                    </div>
-                                </td>
+                                <?php $style = 'color: #008000; border-right: 1px solid #dddddd; border-left: 1px solid #dddddd;'?>
                             <?php else: ?>
-                                <td style="color: #ff0000; border-right: 1px solid #dddddd; border-left: 1px solid #dddddd;">
-                                    <div class="agenda" style="float:left;">
-                                        <div class="dayofmonth"><?=$startDate->format('d', true) ?></div>
-                                        <div><?=$startDate->format('l', true) ?></div>
-                                        <div class="shortdate"><?=$startDate->format('F, Y', true) ?></div>
-                                    </div>
-                                    <div class="agenda-arrow"><i class="fa fa-chevron-right"></i></div>
-                                    <div>
-                                        <div class="dayofmonth"><?=$endDate->format('d', true) ?></div>
-                                        <div><?=$endDate->format('l', true) ?></div>
-                                        <div class="shortdate"><?=$endDate->format('F, Y', true) ?></div>
-                                    </div>
-                                </td>
+                                <?php $style = 'color: #ff0000; border-right: 1px solid #dddddd; border-left: 1px solid #dddddd;'?>
                             <?php endif; ?>
+                            <td style="<?=$style ?>">
+                                <div class="agenda" style="float:left;">
+                                    <div class="dayofmonth"><?=$startDate->format('d', true) ?></div>
+                                    <div><?=$this->getTrans($startDate->format('l', true)) ?></div>
+                                    <div class="shortdate"><?=$this->getTrans($startDate->format('F', true)).$startDate->format(', Y', true) ?></div>
+                                </div>
+                                <div class="agenda-arrow"><i class="fa fa-chevron-right"></i></div>
+                                <div>
+                                    <div class="dayofmonth"><?=$endDate->format('d', true) ?></div>
+                                    <div><?=$this->getTrans($endDate->format('l', true)) ?></div>
+                                    <div class="shortdate"><?=$this->getTrans($endDate->format('F', true)).$endDate->format(', Y', true) ?></div>
+                                </div>
+                            </td>
                             <?php if ($away->getStatus() == 2): ?>
                                 <td style="color: #4295C9;"><?=$this->getTrans('reported') ?></td>
                             <?php elseif ($away->getStatus() == 0): ?>
