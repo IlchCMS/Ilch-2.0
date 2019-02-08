@@ -50,4 +50,5 @@ return [
     'keyword' => 'Keyword',
     'noKeywords' => 'Keine Keywords vorhanden',
     'clock' => 'Uhr',
+    'rssDesc' => 'Alle Neuigkeiten von %s',
 ];

@@ -253,4 +253,27 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->redirect(['action' => $this->getRequest()->getParam('from'), 'id' => $id]);
     }
+
+    public function rssAction()
+    {
+        $articleMapper = new ArticleMapper();
+        $userMapper = new UserMapper();
+
+        $user = null;
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+        }
+
+        $readAccess = [3];
+        if ($user) {
+            foreach ($user->getGroups() as $us) {
+                $readAccess[] = $us->getId();
+            }
+        }
+
+        $this->getView()->set('userMapper', $userMapper)
+            ->set('siteTitle', $this->getConfig()->get('page_title'))
+            ->set('articles', $articleMapper->getArticles($this->locale))
+            ->set('readAccess', $readAccess);
+    }
 }
