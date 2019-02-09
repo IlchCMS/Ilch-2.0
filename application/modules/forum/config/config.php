@@ -25,6 +25,7 @@ class Config extends \Ilch\Config\Install
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
+        'official' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Forum',

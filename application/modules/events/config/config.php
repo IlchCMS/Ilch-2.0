@@ -16,6 +16,7 @@ class Config extends \Ilch\Config\Install
         'icon_small' => 'fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
+        'official' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Veranstaltungen',

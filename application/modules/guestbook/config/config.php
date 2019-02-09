@@ -14,6 +14,7 @@ class Config extends \Ilch\Config\Install
         'icon_small' => 'fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
+        'official' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Gästebuch',

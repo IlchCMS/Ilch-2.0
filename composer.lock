@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.11.1",
+            "version": "4.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "70e6f8f01c3d7d8f713291984017a6005c4e737a"
+                "reference": "b711816ce4e81a0287327fc7be1359e1adc9352b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/70e6f8f01c3d7d8f713291984017a6005c4e737a",
-                "reference": "70e6f8f01c3d7d8f713291984017a6005c4e737a",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/b711816ce4e81a0287327fc7be1359e1adc9352b",
+                "reference": "b711816ce4e81a0287327fc7be1359e1adc9352b",
                 "shasum": ""
             },
             "type": "library",
@@ -45,7 +45,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2018-11-08T18:19:19+00:00"
+            "time": "2019-01-10T16:43:23+00:00"
         },
         {
             "name": "components/jquery",
@@ -2067,7 +2067,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
