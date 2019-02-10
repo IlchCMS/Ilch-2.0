@@ -61,7 +61,6 @@ CREATE TABLE IF NOT EXISTS `menu_items` (
   `type` int(11) NOT NULL,
   `title` VARCHAR(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `href` VARCHAR(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `target` VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=3 ;
 

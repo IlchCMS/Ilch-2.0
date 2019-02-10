@@ -129,6 +129,7 @@ class Config extends \Ilch\Config\Install
                 `type` TINYINT(1) NOT NULL,
                 `title` VARCHAR(255) NOT NULL,
                 `href` VARCHAR(255) NULL DEFAULT NULL,
+                `target` VARCHAR(50) NULL DEFAULT NULL,
                 `module_key` VARCHAR(255) NULL DEFAULT NULL,
                 `access` VARCHAR(255) NOT NULL DEFAULT "",
                 PRIMARY KEY (`id`)
@@ -487,6 +488,9 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
+            case "2.1.20":
+                // Add target column to menu_items
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `target` VARCHAR(50) NULL DEFAULT NULL  AFTER `href`;');
         }
 
         return 'Update function executed.';
