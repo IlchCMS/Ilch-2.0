@@ -366,16 +366,6 @@ class MenuItem extends \Ilch\Model
     }
 
     /**
-     * Checks if the item is an external link
-     *
-     * @return boolean
-     */
-    public function isExternalLink()
-    {
-        return $this->getType() === self::TYPE_LINK;
-    }
-
-    /**
      * Checks if the item is a page link
      *
      * @return boolean

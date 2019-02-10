@@ -214,16 +214,16 @@ class Model
                 }
 
                 $target = '';
-                if ($menuData['items'][$itemId]->isExternalLink()) {
-                    $href = $menuData['items'][$itemId]->getHref();
-                    $target = ' target="_blank"';
-                } elseif ($menuData['items'][$itemId]->isPageLink()) {
+                if ($menuData['items'][$itemId]->isPageLink()) {
                     $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId(), $locale);
                     $href = $this->layout->getUrl($page->getPerma());
                 } elseif ($menuData['items'][$itemId]->isModuleLink()) {
                     $href = $this->layout->getUrl(
                         ['module' => $menuData['items'][$itemId]->getModuleKey(), 'action' => 'index', 'controller' => 'index']
                     );
+                } elseif ($menuData['items'][$itemId]->isLink()) {
+                    $href = $menuData['items'][$itemId]->getHref();
+                    $target = $menuData['items'][$itemId]->getTarget();
                 } else {
                     return '';
                 }
