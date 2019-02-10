@@ -9,7 +9,7 @@ namespace Modules\Admin\Models;
 class MenuItem extends \Ilch\Model
 {
     const TYPE_MENU = 0;
-    const TYPE_EXTERNAL_LINK = 1;
+    const TYPE_LINK = 1;
     const TYPE_PAGE_LINK = 2;
     const TYPE_MODULE_LINK = 3;
     const TYPE_BOX = 4;
@@ -90,6 +90,13 @@ class MenuItem extends \Ilch\Model
      * @var string
      */
     protected $href;
+
+    /**
+     * target of the item (a link).
+     *
+     * @var string
+     */
+    protected $target;
 
     /**
      * Access of the item.
@@ -319,13 +326,33 @@ class MenuItem extends \Ilch\Model
     }
 
     /**
+     * Get the target of a link.
+     *
+     * @return string
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
+     * Sets the target of a link.
+     *
+     * @param string $target
+     */
+    public function setTarget($target)
+    {
+        $this->target = $target;
+    }
+
+    /**
      * Checks if the item is any link
      *
      * @return boolean
      */
     public function isLink()
     {
-        return in_array($this->getType(), [self::TYPE_EXTERNAL_LINK, self::TYPE_PAGE_LINK, self::TYPE_MODULE_LINK]);
+        return in_array($this->getType(), [self::TYPE_LINK, self::TYPE_PAGE_LINK, self::TYPE_MODULE_LINK]);
     }
 
     /**
@@ -345,7 +372,7 @@ class MenuItem extends \Ilch\Model
      */
     public function isExternalLink()
     {
-        return $this->getType() === self::TYPE_EXTERNAL_LINK;
+        return $this->getType() === self::TYPE_LINK;
     }
 
     /**

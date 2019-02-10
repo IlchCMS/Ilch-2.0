@@ -99,6 +99,7 @@ class Menu extends \Ilch\Mapper
             $itemModel->setBoxId($itemRow['box_id']);
             $itemModel->setBoxKey($itemRow['box_key']);
             $itemModel->setHref($itemRow['href']);
+            $itemModel->setTarget($itemRow['target']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setParentId($itemRow['parent_id']);
             $itemModel->setModuleKey($itemRow['module_key']);
@@ -138,6 +139,7 @@ class Menu extends \Ilch\Mapper
             $itemModel->setBoxId($itemRow['box_id']);
             $itemModel->setBoxKey($itemRow['box_key']);
             $itemModel->setHref($itemRow['href']);
+            $itemModel->setTarget($itemRow['target']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setModuleKey($itemRow['module_key']);
             $itemModel->setAccess($itemRow['access']);
@@ -159,6 +161,7 @@ class Menu extends \Ilch\Mapper
     {
         $fields = [
             'href' => $menuItem->getHref(),
+            'target' => $menuItem->getTarget(),
             'title' => $menuItem->getTitle(),
             'menu_id' => $menuItem->getMenuId(),
             'sort' => $menuItem->getSort(),

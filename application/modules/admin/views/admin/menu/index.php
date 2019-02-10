@@ -11,6 +11,12 @@ $pages = $this->get('pages');
 $modules = $this->get('modules');
 $boxes = $this->get('boxes');
 $selfBoxes = $this->get('self_boxes');
+$targets = [
+    '_blank' => 'targetBlank',
+    '_self' => 'targetSelf',
+    '_parent' => 'targetParent',
+    '_top' => 'targetTop',
+];
 
 function rec(MenuMapper $menuMapper, View $view) {
     $items = $menuMapper->getMenuItems($view->get('menu')->getId());
@@ -55,6 +61,7 @@ function buildMenu($parentId, $menuData, View $view) {
                     <input type="hidden" class="hidden_id" name="items['.$menuData['items'][$itemId]->getId().'][id]" value="'.$menuData['items'][$itemId]->getId().'" />
                     <input type="hidden" class="hidden_title" name="items['.$menuData['items'][$itemId]->getId().'][title]" value="'.$view->escape($menuData['items'][$itemId]->getTitle()).'" />
                     <input type="hidden" class="hidden_href" name="items['.$menuData['items'][$itemId]->getId().'][href]" value="'.$menuData['items'][$itemId]->getHref().'" />
+                    <input type="hidden" class="hidden_target" name="items['.$menuData['items'][$itemId]->getId().'][target]" value="'.$menuData['items'][$itemId]->getTarget().'" />
                     <input type="hidden" class="hidden_type" name="items['.$menuData['items'][$itemId]->getId().'][type]" value="'.$menuData['items'][$itemId]->getType().'" />
                     <input type="hidden" class="hidden_siteid" name="items['.$menuData['items'][$itemId]->getId().'][siteid]" value="'.$menuData['items'][$itemId]->getSiteId().'" />
                     <input type="hidden" class="hidden_boxkey" name="items['.$menuData['items'][$itemId]->getId().'][boxkey]" value="'.$boxKey.'" />
@@ -129,7 +136,7 @@ function buildMenu($parentId, $menuData, View $view) {
                         <optgroup label="<?=$this->getTrans('linking') ?>">
                             <option value="<?=MenuItem::TYPE_MODULE_LINK ?>"><?=$this->getTrans('moduleLinking') ?></option>
                             <option value="<?=MenuItem::TYPE_PAGE_LINK ?>"><?=$this->getTrans('siteLinking') ?></option>
-                            <option value="<?=MenuItem::TYPE_EXTERNAL_LINK ?>"><?=$this->getTrans('externalLinking') ?></option>
+                            <option value="<?=MenuItem::TYPE_LINK ?>"><?=$this->getTrans('linking') ?></option>
                         </optgroup>
                     </select>
                 </div>
@@ -292,6 +299,7 @@ $(document).ready
                     +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
                     +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+title+'" />'
                     +'<input type="hidden" class="hidden_href" name="items[tmp_'+itemId+'][href]" value="'+$('#href').val()+'" />'
+                    +'<input type="hidden" class="hidden_target" name="items[tmp_'+itemId+'][target]" value="'+$('#target').val()+'" />'
                     +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
                     +'<input type="hidden" class="hidden_siteid" name="items[tmp_'+itemId+'][siteid]" value="'+$('#siteid').val()+'" />'
                     +'<input type="hidden" class="hidden_boxkey" name="items[tmp_'+itemId+'][boxkey]" value="'+$('#boxkey').val()+'" />'
@@ -323,6 +331,7 @@ $(document).ready
                 $('#'+$('#id').val()).find('.title:first').text(title);
                 $('#'+$('#id').val()).find('.hidden_title:first').val(title);
                 $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
+                $('#'+$('#id').val()).find('.hidden_target:first').val($('#target').val());
                 $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
                 $('#'+$('#id').val()).find('.hidden_siteid:first').val($('#siteid').val());
                 $('#'+$('#id').val()).find('.hidden_modulekey:first').val(modulKey);
@@ -359,7 +368,9 @@ $(document).ready
                 $('.dyn').html('');
             } else if ($(this).val() == '1') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-4 control-label"><?=$this->getTrans('address') ?></label>\n\
-                                <div class="col-lg-8"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
+                                <div class="col-lg-8"><input type="text" class="form-control" id="href" value="http://" /></div></div>\n\
+                                <div class="form-group"><label for="target" class="col-lg-4 control-label"><?=$this->getTrans('target') ?></label>\n\
+                                <div class="col-lg-8"><select class="form-control" id="target"><?php foreach ($targets as $target => $translation) { echo '<option value="'.$target.'">'.$this->getTrans($translation).'</option>';} ?></select></div></div>'+menuHtml);
             } else if ($(this).val() == '2') {
                  $('.dyn').html('<div class="form-group"><label for="siteid" class="col-lg-4 control-label"><?=$this->getTrans('page') ?></label>\n\
                                 <div class="col-lg-8"><?php if (!empty($pages)) { echo '<select class="form-control" id="siteid">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$this->escape($page->getTitle()).'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
@@ -386,6 +397,7 @@ $(document).ready
            $('#id').val($(this).closest('li').attr('id'));
            $('#type').change();
            $('#href').val($(this).parent().find('.hidden_href').val());
+           $('#target').val($(this).parent().find('.hidden_target').val());
            $('#siteid').val($(this).parent().find('.hidden_siteid').val());
            $('#boxkey').val($(this).parent().find('.hidden_boxkey').val());
            $('#modulekey').val($(this).parent().find('.hidden_modulekey').val());

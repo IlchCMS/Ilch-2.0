@@ -78,6 +78,13 @@ class Menu extends \Ilch\Controller\Admin
                         }
                     }
 
+                    $targets = [
+                        '_blank',
+                        '_self',
+                        '_parent',
+                        '_top',
+                    ];
+
                     foreach ($items as $item) {
                         $entityMap = [
                             "&" => "",
@@ -103,6 +110,9 @@ class Menu extends \Ilch\Controller\Admin
                         $menuItem->setType($item['type']);
                         $menuItem->setSiteId($item['siteid']);
                         $menuItem->setHref($item['href']);
+                        if ($item['type'] == 1 && in_array($item['target'], $targets)) {
+                            $menuItem->setTarget($item['target']);
+                        }
                         $menuItem->setTitle(strtr($item['title'], $entityMap));
                         $menuItem->setAccess($item['access']);
 
