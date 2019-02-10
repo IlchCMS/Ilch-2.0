@@ -223,7 +223,7 @@ class Model
                     );
                 } elseif ($menuData['items'][$itemId]->isLink()) {
                     $href = $menuData['items'][$itemId]->getHref();
-                    $target = $menuData['items'][$itemId]->getTarget();
+                    $target = ' target="'.$menuData['items'][$itemId]->getTarget().'"';
                 } else {
                     return '';
                 }
