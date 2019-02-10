@@ -166,32 +166,38 @@ function buildMenu($parentId, $menuData, View $view) {
 
 <script>
 function resetBox() {
+    let type = $('#type');
+    let access = $('#access');
+
     $(':input','.changeBox')
     .not(':button, :submit, :reset, :hidden')
     .val('')
     .removeAttr('checked')
     .removeAttr('selected');
 
-    $('#type').val('0')
-    $('#type').change();
-    $('#access').val('');
-    $('#access').trigger("chosen:updated");
+    type.val('0');
+    type.change();
+    access.val('');
+    access.trigger("chosen:updated");
 }
 
-$('.deleteMenu').on('click', function(event) {
+$('.deleteMenu').on('click', function() {
     $('#modalButton').data('clickurl', $(this).data('clickurl'));
     $('#modalText').html($(this).data('modaltext'));
 });
 
-$('#modalButton').on('click', function(event) {
+$('#modalButton').on('click', function() {
     window.location = $(this).data('clickurl');
 });
 
 $(document).ready
 (
     function () {
-        var itemId = 999;
-        $('.sortable').nestedSortable ({
+        let itemId = 999;
+        let sortable = $('.sortable');
+        let menuForm = $('#menuForm');
+
+        sortable.nestedSortable ({
             forcePlaceholderSize: true,
             handle: 'div',
             helper: 'clone',
@@ -207,7 +213,7 @@ $(document).ready
             expandOnHover: 700,
             startCollapsed: false,
             stop: function(event, ui) {
-                val = ui.item.find('input.hidden_type').val();
+                let val = ui.item.find('input.hidden_type').val();
 
                 if ((val == 4 || val == 0)) {
                     if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() != undefined) {
@@ -226,13 +232,13 @@ $(document).ready
             $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
         });
 
-        $('#menuForm').submit (
+        menuForm.submit (
             function () {
                 $('#hiddenMenu').val(JSON.stringify($('.sortable').nestedSortable('toArray', {startDepthCount: 0})));
             }
         );
 
-        var entityMap = {
+        let entityMap = {
             "&": "",
             "<": "",
             ">": "",
@@ -249,21 +255,22 @@ $(document).ready
             return String(string).replace(/[&<>"'\/(); ]/g, function (s) {
                 return entityMap[s];
             });
-        };
+        }
 
-        $('#menuForm').on('click', '#menuItemAdd', function () {
-
-            var title = escapeHtml($('#title').val());
+        menuForm.on('click', '#menuItemAdd', function () {
+            let title = escapeHtml($('#title').val());
+            let type = $('#type');
 
             if (title == '') {
                 alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                 return;
             }
 
-            append = '#sortable';
+            let append = '#sortable';
+            let menuKey = $('#menukey');
 
-            if ($('#type').val() != 0 && $('#type').val() != 4 && $('#menukey').val() != 0) {
-                id = $('#menukey').val();
+            if (type.val() != 0 && type.val() != 4 && menuKey.val() != 0) {
+                let id = menuKey.val();
 
                 if ($('#sortable #'+id+' ol').length > 0) {
 
@@ -286,13 +293,13 @@ $(document).ready
 
             }
 
-            var modulKey = $('#modulekey').val();
-            var boxkey = $('#boxkey').val();
+            let modulKeyValue = $('#modulekey').val();
+            let boxKeyValue = $('#boxkey').val();
 
-            if (typeof modulKey == "undefined" && typeof boxkey != "undefined")
+            if (typeof modulKeyValue == "undefined" && typeof boxKeyValue != "undefined")
             {
-                boxkeyParts = boxkey.split('_');
-                modulKey = boxkeyParts[0];
+                let boxkeyParts = boxKeyValue.split('_');
+                modulKeyValue = boxkeyParts[0];
             }
 
             $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
@@ -300,11 +307,11 @@ $(document).ready
                     +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+title+'" />'
                     +'<input type="hidden" class="hidden_href" name="items[tmp_'+itemId+'][href]" value="'+$('#href').val()+'" />'
                     +'<input type="hidden" class="hidden_target" name="items[tmp_'+itemId+'][target]" value="'+$('#target').val()+'" />'
-                    +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
+                    +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+type.val()+'" />'
                     +'<input type="hidden" class="hidden_siteid" name="items[tmp_'+itemId+'][siteid]" value="'+$('#siteid').val()+'" />'
-                    +'<input type="hidden" class="hidden_boxkey" name="items[tmp_'+itemId+'][boxkey]" value="'+$('#boxkey').val()+'" />'
-                    +'<input type="hidden" class="hidden_modulekey" name="items[tmp_'+itemId+'][modulekey]" value="'+modulKey+'" />'
-                    +'<input type="hidden" class="hidden_menukey" name="items[tmp_'+itemId+'][menukey]" value="'+$('#menukey').val()+'" />'
+                    +'<input type="hidden" class="hidden_boxkey" name="items[tmp_'+itemId+'][boxkey]" value="'+boxKeyValue+'" />'
+                    +'<input type="hidden" class="hidden_modulekey" name="items[tmp_'+itemId+'][modulekey]" value="'+modulKeyValue+'" />'
+                    +'<input type="hidden" class="hidden_menukey" name="items[tmp_'+itemId+'][menukey]" value="'+menuKey.val()+'" />'
                     +'<input type="hidden" class="hidden_access" name="items[tmp_'+itemId+'][access]" value="'+$('#access').val()+'" />'
                     +'</span></span><span class="title">'+title+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
             itemId++;
@@ -312,42 +319,44 @@ $(document).ready
             }
         );
 
-        $('#menuForm').on('click', '#menuItemEdit', function () {
-                var title = escapeHtml($('#title').val());
+        menuForm.on('click', '#menuItemEdit', function () {
+                let title = escapeHtml($('#title').val());
+
                 if (title == '') {
                     alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                     return;
                 }
 
-                var modulKey = $('#modulekey').val();
-                var boxkey = $('#boxkey').val();
+                let modulKeyValue = $('#modulekey').val();
+                let boxKeyValue = $('#boxkey').val();
+                let id = $('#'+$('#id').val());
 
-                if (typeof modulKey == "undefined" && typeof boxkey != "undefined")
+                if (typeof modulKeyValue == "undefined" && typeof boxKeyValue != "undefined")
                 {
-                    boxkeyParts = boxkey.split('_');
-                    modulKey = boxkeyParts[0];
+                    let boxkeyParts = boxKeyValue.split('_');
+                    modulKeyValue = boxkeyParts[0];
                 }
 
-                $('#'+$('#id').val()).find('.title:first').text(title);
-                $('#'+$('#id').val()).find('.hidden_title:first').val(title);
-                $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
-                $('#'+$('#id').val()).find('.hidden_target:first').val($('#target').val());
-                $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
-                $('#'+$('#id').val()).find('.hidden_siteid:first').val($('#siteid').val());
-                $('#'+$('#id').val()).find('.hidden_modulekey:first').val(modulKey);
-                $('#'+$('#id').val()).find('.hidden_boxkey:first').val($('#boxkey').val());
-                $('#'+$('#id').val()).find('.hidden_menukey:first').val($('#menukey').val());
-                $('#'+$('#id').val()).find('.hidden_access:first').val($('#access').val());
+                id.find('.title:first').text(title);
+                id.find('.hidden_title:first').val(title);
+                id.find('.hidden_href:first').val($('#href').val());
+                id.find('.hidden_target:first').val($('#target').val());
+                id.find('.hidden_type:first').val($('#type').val());
+                id.find('.hidden_siteid:first').val($('#siteid').val());
+                id.find('.hidden_modulekey:first').val(modulKeyValue);
+                id.find('.hidden_boxkey:first').val(boxKeyValue);
+                id.find('.hidden_menukey:first').val($('#menukey').val());
+                id.find('.hidden_access:first').val($('#access').val());
                 resetBox();
             }
         );
 
-        $('.sortable').on('click', '.item_delete', function() {
+        sortable.on('click', '.item_delete', function() {
             $(this).closest('li').remove();
         });
 
-        $('#menuForm').on('change', '#type', function() {
-            var options = '';
+        menuForm.on('change', '#type', function() {
+            let options = '';
 
             $('#sortable').find('li').each(function() {
                 if ($(this).find('input.hidden_type:first').val() == 0) {
@@ -361,8 +370,8 @@ $(document).ready
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="menukey" class="col-lg-4 control-label"><?=$this->getTrans('labelMenu') ?></label>\n\
-                        <div class="col-lg-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+            let menuHtml = '<div class="form-group"><label for="menukey" class="col-lg-4 control-label"><?=$this->getTrans('labelMenu') ?></label>\n\
+                            <div class="col-lg-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
@@ -384,31 +393,34 @@ $(document).ready
             }
         });
 
-        $('#menuForm').on('click', '#menuItemEditCancel', function() {
+        menuForm.on('click', '#menuItemEditCancel', function() {
             $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">');
             resetBox();
         });
 
-        $('.sortable').on('click', '.item_edit', function() {
+        sortable.on('click', '.item_edit', function() {
+            let type = $('#type');
+            let access = $('#access');
+
             $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
                                 <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
-           $('#title').val($(this).parent().find('.hidden_title').val());
-           $('#type').val($(this).parent().find('.hidden_type').val());
-           $('#id').val($(this).closest('li').attr('id'));
-           $('#type').change();
-           $('#href').val($(this).parent().find('.hidden_href').val());
-           $('#target').val($(this).parent().find('.hidden_target').val());
-           $('#siteid').val($(this).parent().find('.hidden_siteid').val());
-           $('#boxkey').val($(this).parent().find('.hidden_boxkey').val());
-           $('#modulekey').val($(this).parent().find('.hidden_modulekey').val());
-           $('#menukey').val($(this).parent().find('.hidden_menukey').val());
-           $('#access').val($(this).parent().find('.hidden_access').val());
-           $.each($(this).parent().find('.hidden_access').val().split(","), function(index, element) {
+            $('#title').val($(this).parent().find('.hidden_title').val());
+            type.val($(this).parent().find('.hidden_type').val());
+            $('#id').val($(this).closest('li').attr('id'));
+            type.change();
+            $('#href').val($(this).parent().find('.hidden_href').val());
+            $('#target').val($(this).parent().find('.hidden_target').val());
+            $('#siteid').val($(this).parent().find('.hidden_siteid').val());
+            $('#boxkey').val($(this).parent().find('.hidden_boxkey').val());
+            $('#modulekey').val($(this).parent().find('.hidden_modulekey').val());
+            $('#menukey').val($(this).parent().find('.hidden_menukey').val());
+            access.val($(this).parent().find('.hidden_access').val());
+            $.each($(this).parent().find('.hidden_access').val().split(","), function (index, element) {
                 if (element !== "") {
-                   $('#access > option[value=' + element + ']').prop("selected", true);
+                    $('#access > option[value=' + element + ']').prop("selected", true);
                 }
-           });
-           $('#access').trigger("chosen:updated");
+            });
+            access.trigger("chosen:updated");
         });
 
         $('#access').chosen();

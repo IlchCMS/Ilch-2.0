@@ -473,6 +473,16 @@ class Config extends \Ilch\Config\Install
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
                 break;
+            case "2.1.20":
+                // Correct wrong id in user_menu, which ended up wrong on an update, by truncating the table and readding the entries.
+                $this->db()->truncate('[prefix]_user_menu');
+                $this->db()->query('INSERT INTO `[prefix]_user_menu` (`id`, `key`, `icon`, `position`) VALUES
+                (1, "user/panel/index", "fa-home", 1),
+                (2, "user/panel/dialog", "fa-envelope", 2),
+                (3, "user/panel/gallery", "fa-picture-o", 3),
+                (4, "user/panel/friends", "fa-users", 4),
+                (5, "user/panel/settings", "fa-cogs", 5);');
+                break;
         }
     }
 }
