@@ -81,5 +81,7 @@ return [
     'ranks' => 'Ranks',
     'menuRanks' => 'Ranks',
     'noRanks' => 'No ranks available',
-    'clock' => 'o\'clock'
+    'clock' => 'o\'clock',
+    'read' => 'read',
+    'unread' => 'unread',
 ];

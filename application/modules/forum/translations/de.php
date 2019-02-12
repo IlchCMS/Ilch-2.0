@@ -82,4 +82,6 @@ return [
     'menuRanks' => 'Ränge',
     'noRanks' => 'Keine Ränge vorhanden',
     'clock' => 'Uhr',
+    'read' => 'gelesen',
+    'unread' => 'ungelesen',
 ];
