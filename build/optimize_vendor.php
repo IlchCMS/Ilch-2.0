@@ -18,8 +18,9 @@
 $directories = [
     'fortawesome' => [
         'keep' => [
-            'font-awesome/css/font-awesome.min.css',
-            'font-awesome/fonts/',
+            'font-awesome/css/all.min.css',
+            'font-awesome/css/v4-shims.min.css',
+            'font-awesome/webfonts/',
             'font-awesome/README.md',
         ],
     ],

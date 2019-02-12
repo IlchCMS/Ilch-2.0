@@ -213,8 +213,8 @@ class Frontend extends Base
 
         $html .= '
                 <link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">
-                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/all.css').'" rel="stylesheet">
-                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.css').'" rel="stylesheet">
+                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/all.min.css').'" rel="stylesheet">
+                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getVendorUrl('components/jqueryui/themes/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
                 <script src="'.$this->getVendorUrl('components/jquery/jquery.min.js').'"></script>
