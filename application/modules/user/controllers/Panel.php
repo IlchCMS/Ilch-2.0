@@ -542,11 +542,11 @@ class Panel extends BaseController
             $friendsMapper->deleteFriendByFriendUserId($id);
             $friendsMapper->deleteFriendOfUser($id, $this->getUser()->getId());
             $this->addMessage('removeFriendSuccess');
+            $this->redirect(['controller' => 'panel', 'action' => 'index']);
         } else {
             $this->addMessage('removeFriendFail', 'warning');
+            $this->redirect(['controller' => 'profil', 'action' => 'index', 'user' => $id]);
         }
-
-        $this->redirect(['controller' => 'profil', 'action' => 'index', 'user' => $id]);
     }
 
     public function treatGalleryAction() 
