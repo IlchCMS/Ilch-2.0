@@ -15,6 +15,7 @@ return [
     'adress' => 'Adresse',
     'noArticles' => 'Keine Artikel vorhanden',
     'readMore' => 'Ganzen Artikel lesen',
+    'by' => 'von',
     'author' => 'Autor',
     'image' => 'Bild',
     'preview' => 'Vorschau',

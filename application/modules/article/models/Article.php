@@ -18,7 +18,7 @@ class Article extends \Ilch\Model
     /**
      * The catId of the article.
      *
-     * @var string
+     * @var int
      */
     protected $catId;
 
@@ -28,6 +28,13 @@ class Article extends \Ilch\Model
      * @var int
      */
     protected $authorId;
+
+    /**
+     * The name of the author.
+     *
+     * @var string
+     */
+    protected $authorName;
 
     /**
      * The visits of the article.
@@ -199,6 +206,29 @@ class Article extends \Ilch\Model
     public function setAuthorId($authorId)
     {
         $this->authorId = (int) $authorId;
+
+        return $this;
+    }
+
+    /**
+     * Get the name of the author.
+     *
+     * @return string
+     */
+    public function getAuthorName()
+    {
+        return $this->authorName;
+    }
+
+    /**
+     * Set the name of the author.
+     *
+     * @param $authorName
+     * @return $this
+     */
+    public function setAuthorName($authorName)
+    {
+        $this->authorName = $authorName;
 
         return $this;
     }

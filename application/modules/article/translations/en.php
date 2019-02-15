@@ -15,6 +15,7 @@ return [
     'adress' => 'Adress',
     'noArticles' => 'No articles',
     'readMore' => 'Read whole article',
+    'by' => 'by',
     'author' => 'Author',
     'image' => 'Image',
     'preview' => 'Preview',

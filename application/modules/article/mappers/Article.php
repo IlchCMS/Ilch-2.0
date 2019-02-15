@@ -332,6 +332,7 @@ class Article extends \Ilch\Mapper
                 ->from(['p' => 'articles'])
                 ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
                 ->join(['m' => 'media'], 'pc.img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
+                ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
                 ->where(['pc.locale' => $this->db()->escape($locale)])
                 ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.read_access', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes', 'm.url_thumb', 'm.url'])
                 ->order(['date_created' => 'DESC']);
@@ -353,13 +354,14 @@ class Article extends \Ilch\Mapper
             $articleModel->setCatId($articleRow['cat_id']);
             $articleModel->setDateCreated($articleRow['date_created']);
             $articleModel->setAuthorId($articleRow['author_id']);
+            $articleModel->setAuthorName($articleRow['name']);
             $articleModel->setVisits($articleRow['visits']);
             $articleModel->setKeywords($articleRow['keywords']);
             $articleModel->setTitle($articleRow['title']);
             $articleModel->setTeaser($articleRow['teaser']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setReadAccess($articleRow['read_access']);
-            $articleModel->seImage($articleRow['img']);
+            $articleModel->setImage($articleRow['img']);
             $articleModel->setImageThumb($articleRow['url_thumb']);
             $articleModel->setImageSource($articleRow['img_source']);
             $articleModel->setVotes($articleRow['votes']);

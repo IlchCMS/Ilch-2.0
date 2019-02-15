@@ -28,6 +28,8 @@ $displayedArticles = 0;
                             <?=$this->escape($article->getTitle()) ?>
                         </a>
                         <br>
+                        <?=$this->getTrans('by') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $article->getAuthorId()]) ?>"><?=$this->escape($article->getAuthorName()) ?></a>
+                        <br>
                         <small><?=$date->format("d.m.y - H:i", true) ?> <?=$this->getTrans('clock') ?></small>
                     </span>
                 </li>
