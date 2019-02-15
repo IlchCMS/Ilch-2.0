@@ -27,8 +27,10 @@ $displayedArticles = 0;
                         <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>">
                             <?=$this->escape($article->getTitle()) ?>
                         </a>
-                        <br>
+                        <?php if (!empty($article->getAuthorName())) : ?>
+                            <br>
                         <?=$this->getTrans('by') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $article->getAuthorId()]) ?>"><?=$this->escape($article->getAuthorName()) ?></a>
+                        <?php endif; ?>
                         <br>
                         <small><?=$date->format("d.m.y - H:i", true) ?> <?=$this->getTrans('clock') ?></small>
                     </span>
