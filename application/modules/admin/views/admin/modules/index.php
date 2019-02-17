@@ -186,7 +186,6 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                         <td><?=$module->getVersion() ?></td>
                         <td>
                             <?=$content['description'] ?>
-                            <?=$moduleOnUpdateServer->official ?>
                             <?=(!empty($moduleOnUpdateServer->official) && $moduleOnUpdateServer->official == true) ? '<span class="ilch-official">ilch</span>' : '' ?>
                         </td>
                     </tr>
