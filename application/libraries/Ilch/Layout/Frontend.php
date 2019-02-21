@@ -246,9 +246,12 @@ class Frontend extends Base
                           },
                           "theme": "'.$this->escape($this->getConfigKey('cookie_consent_layout')).'",
                           "position": "'.$this->escape($this->getConfigKey('cookie_consent_pos')).'",
+                          "type": "'.$this->escape($this->getConfigKey('cookie_consent_type')).'",
                           "content": {
                             "message": "'.$this->getTrans('policyInfoText').'",
                             "dismiss": "'.$this->getTrans('dismissBTNText').'",
+                            "allow": "'.$this->getTrans('allowBTNText').'",
+                            "deny": "'.$this->getTrans('denyBTNText').'",
                             "link": "'.$this->getTrans('policyLinkText').'",
                             "href": "'.$this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']).'"
                           }

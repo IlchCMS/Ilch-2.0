@@ -16,11 +16,11 @@
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('cookieConsentLayout') ? 'has-error' : '' ?>">
-        <label for="cookieConsentStyle" class="col-lg-2 control-label">
+        <label for="cookieConsentLayout" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentLayout') ?>:
         </label>
         <div class="col-lg-2">
-            <select class="form-control" name="cookieConsentLayout">
+            <select class="form-control" name="cookieConsentLayout" id="cookieConsentLayout">
                 <option <?php if ($this->get('cookieConsentLayout') == 'block') { echo 'selected="selected"'; } ?> value="block"><?=$this->getTrans('cookieConsentLayoutBlock') ?></option>
                 <option <?php if ($this->get('cookieConsentLayout') == 'classic') { echo 'selected="selected"'; } ?> value="classic"><?=$this->getTrans('cookieConsentLayoutClassic') ?></option>
                 <option <?php if ($this->get('cookieConsentLayout') == 'edgeless') { echo 'selected="selected"'; } ?> value="edgeless"><?=$this->getTrans('cookieConsentLayoutEdgeless') ?></option>
@@ -32,11 +32,23 @@
             <?=$this->getTrans('cookieConsentPos') ?>:
         </label>
         <div class="col-lg-2">
-            <select class="form-control" name="cookieConsentPos">
+            <select class="form-control" name="cookieConsentPos" id="cookieConsentPos">
                 <option <?php if ($this->get('cookieConsentPos') == 'top') { echo 'selected="selected"'; } ?> value="top"><?=$this->getTrans('cookieConsentPosTop') ?></option>
                 <option <?php if ($this->get('cookieConsentPos') == 'bottom-left') { echo 'selected="selected"'; } ?> value="bottom-left"><?=$this->getTrans('cookieConsentPosFloatingLeft') ?></option>
                 <option <?php if ($this->get('cookieConsentPos') == 'bottom-right') { echo 'selected="selected"'; } ?> value="bottom-right"><?=$this->getTrans('cookieConsentPosFloatingRight') ?></option>
                 <option <?php if ($this->get('cookieConsentPos') == 'bottom') { echo 'selected="selected"'; } ?> value="bottom"><?=$this->getTrans('cookieConsentPosBottom') ?></option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group <?=$this->validation()->hasError('cookieConsentType') ? 'has-error' : '' ?>">
+        <label for="cookieConsentType" class="col-lg-2 control-label">
+            <?=$this->getTrans('cookieConsentType') ?>:
+        </label>
+        <div class="col-lg-2">
+            <select class="form-control" name="cookieConsentType" id="cookieConsentType">
+                <option <?php if ($this->get('cookieConsentType') == 'info') { echo 'selected="selected"'; } ?> value="info"><?=$this->getTrans('cookieConsentTypeInfo') ?></option>
+                <option <?php if ($this->get('cookieConsentType') == 'opt-in') { echo 'selected="selected"'; } ?> value="opt-in"><?=$this->getTrans('cookieConsentTypeOptIn') ?></option>
+                <option <?php if ($this->get('cookieConsentType') == 'opt-out') { echo 'selected="selected"'; } ?> value="opt-out"><?=$this->getTrans('cookieConsentTypeOptOut') ?></option>
             </select>
         </div>
     </div>

@@ -48,6 +48,8 @@ return [
 
     // cookieconsent
     'dismissBTNText' => 'OK',
+    'allowBTNText' => 'Cookies erlauben',
+    'denyBTNText' => 'Cookies ablehnen',
     'policyLinkText' => 'Weitere Informationen',
     'policyInfoText' => 'Diese Website nutzt Cookies, um bestmögliche Funktionalität bieten zu können.',
 
