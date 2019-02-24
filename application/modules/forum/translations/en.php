@@ -71,6 +71,7 @@ return [
     'excludeFloodProtection' => 'Exclude from flood interval',
     'floodError' => 'You cannot make another post/topic so soon after your last.',
     'postVoting' => 'Enable Like button',
+    'boxForumLimit' => 'Number of entries',
     'currentInfo' => 'Current Information',
     'activeUser' => 'Currently Active Users',
     'legendNewPost' => 'Unread posts',

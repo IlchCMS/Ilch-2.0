@@ -84,6 +84,20 @@
             </div>
         </div>
     </div>
+    <h2><?=$this->getTrans('boxSettings') ?></h2>
+    <div class="form-group">
+        <label for="boxForumLimit" class="col-lg-2 control-label">
+            <?=$this->getTrans('boxForumLimit') ?>
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="boxForumLimit"
+                   name="boxForumLimit"
+                   min="1"
+                   value="<?=($this->get('boxForumLimit') != '') ? $this->escape($this->get('boxForumLimit')) : 5 ?>" />
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 

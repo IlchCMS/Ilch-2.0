@@ -71,6 +71,7 @@ return [
     'excludeFloodProtection' => 'Wartezeit ignorieren für',
     'floodError' => 'Sie können einen Beitrag oder ein Thema nicht so schnell nach Ihrem letzten schreiben.',
     'postVoting' => 'Mag ich-Schaltfläche aktivieren',
+    'boxForumLimit' => 'Anzahl an Einträgen',
     'currentInfo' => 'Aktuelle Informationen',
     'activeUser' => 'Zurzeit aktive Benutzer',
     'legendNewPost' => 'Ungelesene Beiträge',

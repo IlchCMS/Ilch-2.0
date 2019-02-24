@@ -31,9 +31,10 @@ class Forum extends \Ilch\Box
             }
         }
 
+        $BoxEntryLimit = (!empty($this->getConfig()->get('forum_boxForumLimit'))) ? $this->getConfig()->get('forum_boxForumLimit') : 5;
         $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('topicMapper', $topicMapper);
-        $this->getView()->set('topics', $topicMapper->getLastActiveTopics(5));
+        $this->getView()->set('topics', $topicMapper->getLastActiveTopics($BoxEntryLimit));
         $this->getView()->set('groupIdsArray', $groupIds);
     }
 }
