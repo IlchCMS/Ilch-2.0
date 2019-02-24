@@ -155,45 +155,44 @@
     });
 
     if (<?=$this->getRequest()->getParam('id') ?>) {
+        let old_data = '';
         $(document).ready(function() {
-            var token = document.body.querySelector('[name="ilch_token"]').value;
-            var id = <?=$this->getRequest()->getParam('id') ?>;
+            let token = document.body.querySelector('[name="ilch_token"]').value;
+            let id = <?=$this->getRequest()->getParam('id') ?>;
+            let load_data = {'fetch':1, 'ilch_token':token};
 
-            load_data = {'fetch':1, 'ilch_token':token};
             window.setInterval(function() {
                 $.post('<?=$this->getUrl('user/panel/dialogmessage/id/') ?>'+id, load_data,
                     function(data) {
-                        $('.message_box').html(data);
+                        if (old_data !== data) {
+                            $('.message_box').html(data);
+                        }
+                        old_data = data;
                     });
             }, 1000);
 
             document.getElementById("chatSendBtn").onclick = function () {
-                var token = document.body.querySelector('[name="ilch_token"]').value;
-                var editorText = CKEDITOR.instances.ck_1.getData();
-                var imessage = editorText;
-
-                post_data = {'text':imessage, 'ilch_token':token};
+                let token = document.body.querySelector('[name="ilch_token"]').value;
+                let post_data = {'text':CKEDITOR.instances.ck_1.getData(), 'ilch_token':token};
 
                 $.post('<?=$this->getUrl('user/panel/dialog/id/') ?>'+id, post_data,
                     function() {
                         CKEDITOR.instances.ck_1.setData("");
-                        var scrolltoh = $('.message-list-wrapper')[0].scrollHeight;
-                        $('.message-list-wrapper').scrollTop(scrolltoh);
 
-                        var messageDiv = $('.message-list-wrapper');
-                        messageDiv.scrollTop(messageDiv.prop("scrollHeight"));
+                        let messageDiv = $('.message-list-wrapper');
+                        messageDiv.scrollTop(messageDiv[0].scrollHeight - messageDiv[0].clientHeight);
                     }).fail(function(err) {
 
                     alert(err.statusText);
                 });
             };
 
-            var varCounter = 0;
-            var varName = function() {
+            let varCounter = 0;
+            let varName = function() {
                 if (varCounter <= 1) {
                     varCounter++;
-                    var scrolltoh = $('.message-list-wrapper')[0].scrollHeight;
-                    $('.message-list-wrapper').scrollTop(scrolltoh);
+                    let messageDiv = $('.message-list-wrapper');
+                    messageDiv.scrollTop(messageDiv[0].scrollHeight - messageDiv[0].clientHeight);
                 } else {
                     clearInterval(varName);
                 }
