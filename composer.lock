@@ -176,16 +176,16 @@
         },
         {
             "name": "fortawesome/font-awesome",
-            "version": "5.7.1",
+            "version": "5.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "def7d5bda0d2df311fe069f805093c2fe019139d"
+                "reference": "1cf1062e0cfda5e9b5b2cac7844721b345e1a9c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/def7d5bda0d2df311fe069f805093c2fe019139d",
-                "reference": "def7d5bda0d2df311fe069f805093c2fe019139d",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/1cf1062e0cfda5e9b5b2cac7844721b345e1a9c5",
+                "reference": "1cf1062e0cfda5e9b5b2cac7844721b345e1a9c5",
                 "shasum": ""
             },
             "type": "library",
@@ -235,7 +235,7 @@
                 "icon",
                 "svg"
             ],
-            "time": "2019-02-01T19:17:32+00:00"
+            "time": "2019-02-12T17:09:34+00:00"
         },
         {
             "name": "harvesthq/chosen",
@@ -342,23 +342,25 @@
         },
         {
             "name": "jbbcode/jbbcode",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jbowens/jBBCode.git",
-                "reference": "645b6a1c0afa92b7d029d3417ebd8b60a5c578b3"
+                "reference": "740092873a687e61b980d2a094f6323b0d3b273c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jbowens/jBBCode/zipball/645b6a1c0afa92b7d029d3417ebd8b60a5c578b3",
-                "reference": "645b6a1c0afa92b7d029d3417ebd8b60a5c578b3",
+                "url": "https://api.github.com/repos/jbowens/jBBCode/zipball/740092873a687e61b980d2a094f6323b0d3b273c",
+                "reference": "740092873a687e61b980d2a094f6323b0d3b273c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*"
+                "friendsofphp/php-cs-fixer": "^2.1",
+                "phpunit/phpunit": "4.5.*",
+                "satooshi/php-coveralls": "0.6.*"
             },
             "type": "library",
             "autoload": {
@@ -384,7 +386,7 @@
                 "BB",
                 "bbcode"
             ],
-            "time": "2014-07-06T05:48:20+00:00"
+            "time": "2019-02-22T23:54:11+00:00"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
@@ -596,16 +598,16 @@
         },
         {
             "name": "twbs/bootstrap",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42"
+                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/4c547f2175b9a05aa43551f6927da83fe249ce42",
-                "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/68b0d231a13201eb14acd3dc84e51543d16e5f7e",
+                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e",
                 "shasum": ""
             },
             "replace": {
@@ -643,7 +645,7 @@
                 "responsive",
                 "web"
             ],
-            "time": "2018-12-13T23:45:51+00:00"
+            "time": "2019-02-13T15:55:38+00:00"
         }
     ],
     "packages-dev": [
