@@ -490,7 +490,7 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.20":
                 // Add target column to menu_items
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `target` VARCHAR(50) NULL DEFAULT NULL  AFTER `href`;');
+                $this->db()->query('ALTER TABLE `[prefix]_menu_items` ADD COLUMN `target` VARCHAR(50) NULL DEFAULT NULL  AFTER `href`;');
 
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
