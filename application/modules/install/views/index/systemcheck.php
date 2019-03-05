@@ -21,11 +21,8 @@
             </tr>
             <?php
             $dbVersion = $this->get('dbVersion');
-            if (!empty($this->get('errors') && $this->get('errors')['mariadbVersion'])) {
-                $requiredVersion = '5.5';
-            } else {
-                $requiredVersion = '5.5.3';
-            } ?>
+            $requiredVersion = $this->get('requiredVersion');
+            ?>
             <tr>
                 <td><?=$this->getTrans('dbVersion') ?></td>
                 <td class="text-success">>= <?=$requiredVersion ?></td>

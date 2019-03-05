@@ -168,14 +168,17 @@ class Index extends \Ilch\Controller\Frontend
         $dbLinkIdentifier = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
         $dbVersion = mysqli_get_server_info($dbLinkIdentifier);
         if (strpos(mysqli_get_server_info($dbLinkIdentifier), 'MariaDB') !== false) {
+            $requiredVersion = '5.5';
             if (!version_compare($dbVersion, '5.5', '>=')) {
                 $errors['mariadbVersion'] = true;
             }
         } else {
+            $requiredVersion = '5.5.3';
             if (!version_compare($dbVersion, '5.5.3', '>=')) {
                 $errors['mysqlVersion'] = true;
             }
         }
+        $this->getView()->set('requiredVersion', $requiredVersion);
         $this->getView()->set('dbVersion', $dbVersion);
 
         if (!is_writable(ROOT_PATH)) {
