@@ -131,32 +131,30 @@ class Forum extends \Ilch\Mapper
      */
     public function getLastPostByTopicId($topicId)
     {
-        $lastPostRow = $this->db()->select()
-            ->fields(['t.id', 't.topic_id', 't.topic_title', 'p.read', 'p.id', 'p.topic_id', 'p.date_created', 'p.user_id'])
-            ->from(['t' => '[prefix]_forum_topics'])
-            ->join(['p' => '[prefix]_forum_posts'], 't.id = p.topic_id', 'LEFT')
-            ->where(['t.topic_id' => $topicId])
-            ->order(['p.id' => 'DESC'])
-            ->execute()
-            ->fetchRow();
+        $sql = 'SELECT `t`.`id`, `t`.`topic_id`, `t`.`topic_title`, `p`.`read`, `p`.`id`, `p`.`topic_id`, `p`.`date_created`, `p`.`user_id`
+                FROM `[prefix]_forum_topics` AS `t`
+                LEFT JOIN `[prefix]_forum_posts` AS `p` ON `t`.`id` = `p`.`topic_id`
+                WHERE `t`.`topic_id` = '.$topicId.'
+                ORDER BY `p`.`id` DESC';
 
-        if (empty($lastPostRow)) {
+        $fileRow = $this->db()->queryRow($sql);
+        if (empty($fileRow)) {
             return null;
         }
 
         $entryModel = new PostModel();
         $userMapper = new UserMapper();
-        $entryModel->setId($lastPostRow['id']);
-        $user = $userMapper->getUserById($lastPostRow['user_id']);
+        $entryModel->setId($fileRow['id']);
+        $user = $userMapper->getUserById($fileRow['user_id']);
         if ($user) {
             $entryModel->setAutor($user);
         } else {
             $entryModel->setAutor($userMapper->getDummyUser());
         }
-        $entryModel->setDateCreated($lastPostRow['date_created']);
-        $entryModel->setTopicId($lastPostRow['topic_id']);
-        $entryModel->setTopicTitle($lastPostRow['topic_title']);
-        $entryModel->setRead($lastPostRow['read']);
+        $entryModel->setDateCreated($fileRow['date_created']);
+        $entryModel->setTopicId($fileRow['topic_id']);
+        $entryModel->setTopicTitle($fileRow['topic_title']);
+        $entryModel->setRead($fileRow['read']);
 
         return $entryModel;
     }
