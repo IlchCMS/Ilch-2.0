@@ -169,12 +169,12 @@ class Index extends \Ilch\Controller\Frontend
         $dbVersion = mysqli_get_server_info($dbLinkIdentifier);
         if (strpos(mysqli_get_server_info($dbLinkIdentifier), 'MariaDB') !== false) {
             $requiredVersion = '5.5';
-            if (!version_compare($dbVersion, '5.5', '>=')) {
+            if (!version_compare($dbVersion, $requiredVersion, '>=')) {
                 $errors['mariadbVersion'] = true;
             }
         } else {
             $requiredVersion = '5.5.3';
-            if (!version_compare($dbVersion, '5.5.3', '>=')) {
+            if (!version_compare($dbVersion, $requiredVersion, '>=')) {
                 $errors['mysqlVersion'] = true;
             }
         }
