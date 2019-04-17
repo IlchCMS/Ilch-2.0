@@ -45,9 +45,9 @@
         </label>
         <div class="col-lg-2">
             <select class="form-control" id="smtp_secure" name="smtp_secure">
-                <optgroup>
+                <optgroup label="<?=$this->getTrans('smtp_secure') ?>">
                     <?php
-                    $values = ['TLS', 'SSL', 'STARTTLS'];
+                    $values = ['', 'ssl', 'tsl'];
 
                     foreach ($values as $value) :
                         $selected = '';

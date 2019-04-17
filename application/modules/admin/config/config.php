@@ -495,6 +495,20 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
+            case "2.1.21":
+                // Convert old value of smtp_secure (phpmailer) to a valid one if neccessary.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $smtpSecureSetting = $databaseConfig->get('smtp_secure');
+                if (!empty($smtpSecureSetting)) {
+                    switch($smtpSecureSetting) {
+                        case "TLS":
+                        case "STARTTLS":
+                            $databaseConfig->set('smtp_secure', 'tls');
+                            break;
+                        case "SSL":
+                            $databaseConfig->set('smtp_secure', 'ssl');
+                    }
+                }
         }
 
         return 'Update function executed.';
