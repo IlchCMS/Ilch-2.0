@@ -142,12 +142,10 @@ function rec($item, $obj, $readAccess, $i)
             <?php endif; ?>
             <li><a href="<?=$this->getUrl(['controller' => 'showactivetopics', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showActiveTopics') ?></a></li>
         </ul>
-        <?php if ($this->getUser()): ?>
-            <!--            
-                <div class="pull-right">
-                    <a href="<?=$this->getUrl(['controller' => 'markallread', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
-                </div>
-            -->
+        <?php if ($this->getUser()): ?>          
+			<div class="pull-right">
+				<a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'markallasread']) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
+			</div>
         <?php endif; ?>
     </div>
 
