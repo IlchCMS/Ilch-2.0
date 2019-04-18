@@ -13,7 +13,6 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - nightly
 
 before_install:
   - mysql -e 'CREATE DATABASE ilch2_test DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_unicode_ci;'
