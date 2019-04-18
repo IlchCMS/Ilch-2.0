@@ -5,7 +5,7 @@
         <?=$this->getTrans('userPanel') ?>
     </a>
     <br />
-    <div class="ilch-notifications"></div>
+    <div class="ilch--new-message"></div>
     <?php if ($this->get('userAccesses') || $this->getUser()->isAdmin()): ?>
         <a target="_blank" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'admin', 'action' => 'index']) ?>">
             <?=$this->getTrans('admincenter') ?>
@@ -65,7 +65,7 @@
 
 <script>
 $(document).ready(function () {
-    let notificationsDiv = $(".ilch-notifications"),
+    let notificationsDiv = $(".ilch--new-message"),
         messageCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>",
         openFriendRequestsCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewfriendrequests']); ?>",
         globalStore = [];
