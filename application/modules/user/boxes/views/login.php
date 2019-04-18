@@ -65,16 +65,28 @@
 
 <script>
 $(document).ready(function () {
-    var messageDiv = $(".ilch--new-message"),
-        messageCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>";
+    let notificationsDiv = $(".ilch--new-message"),
+        messageCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>",
+        openFriendRequestsCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewfriendrequests']); ?>",
+        globalStore = [];
 
-    function loadMessage() {
-        messageDiv.load(messageCheckLink);
-    };
+    function loadNotifications()
+    {
+        $.when(
+            $.get(messageCheckLink, function(newMessages) {
+                globalStore['newMessages'] = newMessages;
+            }),
 
-    loadMessage();
-    setInterval(function() {
-        loadMessage();
-    }, 60000);
+            $.get(openFriendRequestsCheckLink, function(newFriendRequests) {
+                globalStore['newFriendRequests'] = newFriendRequests;
+            }),
+        ).then(function() {
+            notificationsDiv.html(globalStore['newMessages']);
+            notificationsDiv.append(globalStore['newFriendRequests'])
+        });
+    }
+
+    loadNotifications();
+    setInterval(loadNotifications, 60000);
 });
 </script>

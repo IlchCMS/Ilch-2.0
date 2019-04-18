@@ -64,7 +64,7 @@ class AfterDatabaseLoad
         $request = $pluginData['request'];
 
         if (!$request->isAdmin()) {
-            if (strpos($site, 'user/ajax/checknewmessage') == false) {
+            if ((strpos($site, 'user/ajax/checknewmessage') == false) && (strpos($site, 'user/ajax/checknewfriendrequests') == false)) {
                 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
                 $statisticMapper->saveVisit(['user_id' => $userId, 'session_id' => session_id(), 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
             }
