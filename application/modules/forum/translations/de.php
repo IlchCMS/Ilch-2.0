@@ -53,7 +53,7 @@ return [
     'showUnansweredTopics' => 'Unbeantwortete Themen',
     'showActiveTopics' => 'Aktive Themen',
     'markAllAsRead' => 'Alle Foren als gelesen markieren',
-	'allasreadForum' => 'Alle Foren wurden als gelesen markiert',
+    'allasreadForum' => 'Alle Foren wurden als gelesen markiert',
     'noPosts' => 'Keine Beiträge vorhanden',
     'totalMembers' => 'Mitglieder insgesamt',
     'newMember' => 'Wir begrüßen unseren neuesten Benutzer,',

@@ -53,7 +53,7 @@ return [
     'showUnansweredTopics' => 'Unanswered topics',
     'showActiveTopics' => 'Active topics',
     'markAllAsRead' => 'Mark all topics as read',
-	'allasreadForum' => 'All forums have been marked as read',
+    'allasreadForum' => 'All forums have been marked as read',
     'noPosts' => 'No posts available',
     'totalMembers' => 'Total members',
     'newMember' => 'Newest member',

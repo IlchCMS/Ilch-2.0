@@ -53,18 +53,18 @@ class Shownewposts extends \Ilch\Controller\Frontend
             $this->redirect(['module' => 'forum', 'controller' => 'index']);
         }
     }
-	
-	public function markallasreadAction()
+
+    public function markallasreadAction()
     {
         if ($this->getUser()) {
-			$adminAccess = $this->getUser()->isAdmin();
-			
+            $adminAccess = $this->getUser()->isAdmin();
+            
             $forumMapper = new ForumMapper();
             $topicMapper = new TopicMapper();
             $postMapper = new PostMapper();
             $userMapper = new UserMapper();
-			
-			$postModel = new ForumPostModel;
+            
+            $postModel = new ForumPostModel;
 
             $user = $userMapper->getUserById($this->getUser()->getId());
 
@@ -73,25 +73,24 @@ class Shownewposts extends \Ilch\Controller\Frontend
                 $groupIds[] = $groups->getId();
             }
 
-			foreach ($topicMapper->getTopics() as $topic){
+            foreach ($topicMapper->getTopics() as $topic) {
                 $forum = $forumMapper->getForumById($topic->getTopicId());
-                //$firstPost = $postMapper->getFirstPostByTopicId($topic->getId());
                 $lastPost = $topicMapper->getLastPostByTopicId($topic->getId());
-                if (is_in_array($groupIds, explode(',', $forum->getReadAccess())) || $adminAccess == true){
-                    if (!in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))){
-						echo $topic->getId()." (".$topic->getTopicTitle().")<br>";
-						
-						$lastRead = $lastPost->getRead();
-						if (in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
-							$postModel->setId($lastPost->getId());
-							$postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
-							$postMapper->saveRead($postModel);
-						}
+                if (is_in_array($groupIds, explode(',', $forum->getReadAccess())) || $adminAccess == true) {
+                    if (!in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))) {
+                        echo $topic->getId()." (".$topic->getTopicTitle().")<br>";
+
+                        $lastRead = $lastPost->getRead();
+                        if (in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
+                            $postModel->setId($lastPost->getId());
+                            $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
+                            $postMapper->saveRead($postModel);
+                        }
                     }
                 }
             }
-			$this->addMessage('allasreadForum', 'info');
-			$this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
+            $this->addMessage('allasreadForum', 'info');
+            $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
         } else {
             $this->addMessage('noAccessForum', 'warning');
             $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
