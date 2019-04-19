@@ -11,6 +11,8 @@ use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\User\Mappers\User as UserMapper;
 
+use Modules\Forum\Models\ForumPost as ForumPostModel;
+
 class Shownewposts extends \Ilch\Controller\Frontend
 {
     public function indexAction()
@@ -49,6 +51,49 @@ class Shownewposts extends \Ilch\Controller\Frontend
         } else {
             $this->addMessage('noAccessForum', 'warning');
             $this->redirect(['module' => 'forum', 'controller' => 'index']);
+        }
+    }
+
+    public function markallasreadAction()
+    {
+        if ($this->getUser()) {
+            $adminAccess = $this->getUser()->isAdmin();
+            
+            $forumMapper = new ForumMapper();
+            $topicMapper = new TopicMapper();
+            $postMapper = new PostMapper();
+            $userMapper = new UserMapper();
+            
+            $postModel = new ForumPostModel;
+
+            $user = $userMapper->getUserById($this->getUser()->getId());
+
+            $groupIds = [];
+            foreach ($user->getGroups() as $groups) {
+                $groupIds[] = $groups->getId();
+            }
+
+            foreach ($topicMapper->getTopics() as $topic) {
+                $forum = $forumMapper->getForumById($topic->getTopicId());
+                $lastPost = $topicMapper->getLastPostByTopicId($topic->getId());
+                if (is_in_array($groupIds, explode(',', $forum->getReadAccess())) || $adminAccess == true) {
+                    if (!in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))) {
+                        echo $topic->getId()." (".$topic->getTopicTitle().")<br>";
+
+                        $lastRead = $lastPost->getRead();
+                        if (in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
+                            $postModel->setId($lastPost->getId());
+                            $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
+                            $postMapper->saveRead($postModel);
+                        }
+                    }
+                }
+            }
+            $this->addMessage('allasreadForum', 'info');
+            $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
+        } else {
+            $this->addMessage('noAccessForum', 'warning');
+            $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
         }
     }
 }
