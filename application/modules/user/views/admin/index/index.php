@@ -106,4 +106,10 @@
     </div>
     <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>
+<?php if ($this->getRequest()->getParam('showsetfree')): ?>
+<?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showsetfree' => 1]) ?>
+<?php elseif ($this->getRequest()->getParam('showlocked')): ?>
+<?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showlocked' => 1]) ?>
+<?php else: ?>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
+<?php endif; ?>
