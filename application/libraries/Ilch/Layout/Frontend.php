@@ -139,6 +139,53 @@ class Frontend extends Base
     }
 
     /**
+     * Get the link tag as string.
+     *
+     * @param $key
+     * @return string
+     */
+    public function getLinkTagString($key)
+    {
+        $linkTagModel = $this->get('linkTags')[$key];
+
+        // If the rel attribute is absent, has no keywords, or if none of the keywords used are allowed according
+        // to the definitions in this specification, then the element does not create any links.
+        // The href attribute must be present and must contain a valid non-empty URL potentially surrounded by spaces.
+        // If the href attribute is absent, then the element does not define a link.
+        if (empty($linkTagModel->getRel()) || empty($linkTagModel->getHref())) {
+            return "";
+        }
+
+        $linkTagString = sprintf('<link rel="%s" href="%s"', $this->escape($linkTagModel->getRel()), $this->escape($linkTagModel->getHref()));
+
+        if ($linkTagModel->getCrossorigin()) {
+            $linkTagString = $linkTagString . sprintf(' crossorigin="%s"', $this->escape($linkTagModel->getCrossorigin()));
+        }
+
+        if ($linkTagModel->getHreflang()) {
+            $linkTagString = $linkTagString . sprintf(' hreflang="%s"', $this->escape($linkTagModel->getHreflang()));
+        }
+
+        if ($linkTagModel->getSizes()) {
+            $linkTagString = $linkTagString . sprintf(' sizes="%s"', $this->escape($linkTagModel->getSizes()));
+        }
+
+        if ($linkTagModel->getType()) {
+            $linkTagString = $linkTagString . sprintf(' type="%s"', $this->escape($linkTagModel->getType()));
+        }
+
+        if ($linkTagModel->getMedia()) {
+            $linkTagString = $linkTagString . sprintf(' media="%s"', $this->escape($linkTagModel->getMedia()));
+        }
+
+        if ($linkTagModel->getTitle()) {
+            $linkTagString = $linkTagString . sprintf(' title="%s"', $this->escape($linkTagModel->getTitle()));
+        }
+
+        return $linkTagString . '>';
+    }
+
+    /**
      * Get key from config.
      *
      * @param $key
@@ -208,6 +255,13 @@ class Frontend extends Base
             foreach ($this->get('metaTags') as $key => $metaTag) {
                 $html .= '
                 '.$this->getMetaTagString($key);
+            }
+        }
+
+        if (is_array($this->get('linkTags'))) {
+            foreach ($this->get('linkTags') as $key => $linkTag) {
+                $html .= '
+                '.$this->getLinkTagString($key);
             }
         }
 
