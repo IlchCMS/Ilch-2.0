@@ -123,6 +123,7 @@ class Frontend extends Base
      *
      * @param string $key
      * @return string
+     * @since 2.1.0
      */
     public function getMetaTagString($key)
     {
@@ -131,7 +132,7 @@ class Frontend extends Base
         // If either name or http-equiv is specified, then the content attribute must also be specified. Otherwise, it must be omitted.
         if ($metaTagModel->getName()) {
             return sprintf('<meta name="%s" content="%s">', $this->escape($metaTagModel->getName()), $this->escape($metaTagModel->getContent()));
-        } else if ($metaTagModel->getHTTPEquiv()){
+        } elseif ($metaTagModel->getHTTPEquiv()){
             return sprintf('<meta http-equiv="%s" content="%s">', $this->escape($metaTagModel->getHTTPEquiv()), $this->escape($metaTagModel->getContent()));
         } else {
             return sprintf('<meta charset="%s">', $this->escape($metaTagModel->getCharset()));
@@ -143,6 +144,7 @@ class Frontend extends Base
      *
      * @param $key
      * @return string
+     * @since 2.1.22
      */
     public function getLinkTagString($key)
     {

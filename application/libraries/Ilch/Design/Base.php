@@ -117,6 +117,7 @@ abstract class Base
      *
      * @return bool
      * @throws \Exception
+     * @since 2.1.0
      */
     public function add($key, $objectKey, $value)
     {
