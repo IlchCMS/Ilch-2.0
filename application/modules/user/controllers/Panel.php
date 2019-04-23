@@ -382,6 +382,17 @@ class Panel extends BaseController
         }
     }
 
+    public function deletedialogmessageAction()
+    {
+        $id = $this->getRequest()->getParam('id');
+        $dialogMapper = new DialogMapper();
+
+        // Check if the current user is the autor of the message.
+        if ($dialogMapper->isMessageOfUser($id, $this->getUser()->getId())) {
+            $dialogMapper->deleteMessageOfUser($id, $this->getUser()->getId());
+        }
+    }
+
     public function dialognewAction()
     {
         $DialogMapper = new DialogMapper();

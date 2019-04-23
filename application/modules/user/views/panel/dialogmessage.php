@@ -3,7 +3,7 @@
         <?php $date = new \Ilch\Date($inbox->getTime()); ?>
         <li class="<?=$inbox->getId() == ($this->getUser()->getId()) ? 'right' : 'left'; ?>">
             <div class="body">
-                <div class="message well well-sm">
+                <div data-crid="<?=$inbox->getCrId() ?>" class="message well well-sm">
                     <?=nl2br($this->getHtmlFromBBCode($this->escape($inbox->getText()))) ?>
                 </div>
             </div>
@@ -23,3 +23,45 @@
         </li>
     <?php endforeach; ?>
 <?php endif; ?>
+
+<script>
+    $(".message").click(function() {
+        let menu = '<div class="menu" data-crid="'+$(this).attr("data-crid")+'">delete</div>';
+        let sel = getSelection().toString();
+
+        $("#menucode").html(menu);
+        $(".menu").dialog({
+            autoOpen: false,
+            appendTo: "#menucode",
+            dialogClass: "no-close no-titlebar",
+            minHeight: 10,
+            minWidth: 100,
+            width: "auto",
+            position: {of: $(this)}
+        });
+
+        if (!sel && !$(this).parent().closest('li').hasClass("left")) {
+            $(".menu").dialog("open");
+        }
+    });
+
+    $("#menucode").click(function(e) {
+        let menuSelector = $(".menu");
+        let crid = menuSelector.attr("data-crid");
+
+        $.post('<?=$this->getUrl('user/panel/deletedialogmessage/id/') ?>'+crid);
+        menuSelector.dialog("close");
+        $("#menucode").html('');
+    });
+
+    $(document).mouseup(function(e) {
+        let myDialog = $(".menu");
+        let container = $(".ui-dialog");
+
+        if (myDialog.dialog("isOpen") === true) {
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                myDialog.dialog("close");
+            }
+        }
+    });
+</script>

@@ -389,3 +389,11 @@
     border-radius: 0;
     margin-bottom: 0;
 }
+
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+
+.no-titlebar .ui-dialog-titlebar {
+    display: none;
+}

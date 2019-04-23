@@ -210,6 +210,40 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
+     * Check if a user is the autor of a message.
+     *
+     * @param int $cr_id
+     * @param int $userId
+     * @return bool
+     */
+    public function isMessageOfUser($cr_id, $userId)
+    {
+        $messageRow = $this->db()->select(['cr_id', 'user_id_fk'])
+            ->from('users_dialog_reply')
+            ->where(['cr_id' => $cr_id, 'user_id_fk' => $userId])
+            ->execute()
+            ->fetchRow();
+
+        if (empty($messageRow)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Delete message of user.
+     *
+     * @param int $cr_id
+     * @param int $userId
+     */
+    public function deleteMessageOfUser($cr_id, $userId)
+    {
+        $this->db()->delete('users_dialog_reply', ['cr_id' => $cr_id, 'user_id_fk' => $userId])
+            ->execute();
+    }
+
+    /**
     * Check is exist dialog by $c_id
     * @param int $c_id
     * @return null|\Modules\User\Models\Dialog

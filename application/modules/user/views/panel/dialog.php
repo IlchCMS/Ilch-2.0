@@ -134,6 +134,8 @@
     </div>
 </div>
 
+<div id="menucode"></div>
+
 <script src="<?=$this->getModuleUrl('static/js/jquery.nicescroll.js') ?>"></script>
 <script>
     $(function(){
