@@ -26,13 +26,13 @@
 
 <script>
     $(".message").click(function() {
-        let menu = '<div class="menu" data-crid="'+$(this).attr("data-crid")+'">delete</div>';
+        let deleteDialog = '<div class="deletedialog" data-crid="'+$(this).attr("data-crid")+'"><?=$this->getTrans("delete") ?></div>';
         let sel = getSelection().toString();
 
-        $("#menucode").html(menu);
-        $(".menu").dialog({
+        $("#deletedialogcode").html(deleteDialog);
+        $(".deletedialog").dialog({
             autoOpen: false,
-            appendTo: "#menucode",
+            appendTo: "#deletedialogcode",
             dialogClass: "no-close no-titlebar",
             minHeight: 10,
             minWidth: 100,
@@ -41,21 +41,21 @@
         });
 
         if (!sel && !$(this).parent().closest('li').hasClass("left")) {
-            $(".menu").dialog("open");
+            $(".deletedialog").dialog("open");
         }
     });
 
-    $("#menucode").click(function(e) {
-        let menuSelector = $(".menu");
+    $("#deletedialogcode").click(function() {
+        let menuSelector = $(".deletedialog");
         let crid = menuSelector.attr("data-crid");
 
         $.post('<?=$this->getUrl('user/panel/deletedialogmessage/id/') ?>'+crid);
         menuSelector.dialog("close");
-        $("#menucode").html('');
+        $("#deletedialogcode").html('');
     });
 
     $(document).mouseup(function(e) {
-        let myDialog = $(".menu");
+        let myDialog = $(".deletedialog");
         let container = $(".ui-dialog");
 
         if (myDialog.dialog("isOpen") === true) {

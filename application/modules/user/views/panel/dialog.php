@@ -134,7 +134,7 @@
     </div>
 </div>
 
-<div id="menucode"></div>
+<div id="deletedialogcode"></div>
 
 <script src="<?=$this->getModuleUrl('static/js/jquery.nicescroll.js') ?>"></script>
 <script>
