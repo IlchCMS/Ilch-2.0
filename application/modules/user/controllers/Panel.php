@@ -358,10 +358,33 @@ class Panel extends BaseController
                 $this->redirect(['action' => 'dialog']);
             }
 
+            $dialogMapper->unhideDialog($c_id, $this->getUser()->getId());
             $this->getView()->set('dialog', $dialogMapper->getDialogByCId($user_one));
         }
 
-        $this->getView()->set('dialogs', $dialogMapper->getDialog($this->getUser()->getId()));
+        $this->getView()->set('dialogs', $dialogMapper->getDialog($this->getUser()->getId(), ($this->getRequest()->getParam('showhidden') == 1)));
+        $this->getView()->set('dialogsHidden', $dialogMapper->hasHiddenDialog($this->getUser()->getId()));
+    }
+
+    public function hidedialogAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $c_id = $this->getRequest()->getParam('id');
+
+            $dialogMapper = new DialogMapper();
+            $dialog = $dialogMapper->getDialogCheckByCId($c_id);
+
+            // Allow hiding of dialog if user is part of the conversation.
+            if (($dialog->getUserOne() == $this->getUser()->getId()) || ($dialog->getUserTwo() == $this->getUser()->getId())) {
+                $dialogMapper->hideDialog($c_id, $this->getUser()->getId());
+
+                $this->redirect()
+                    ->withMessage('hideDialogSuccess', 'success')
+                    ->to(['action' => 'dialog']);
+            }
+        }
+
+        $this->redirect(['action' => 'dialog']);
     }
 
     public function dialogmessageAction()

@@ -17,6 +17,7 @@ use Modules\User\Service\Password as PasswordService;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\User\Mappers\AuthProvider as AuthProvider;
 use Modules\User\Mappers\Friends as FriendsMapper;
+use Modules\User\Mappers\Dialog as DialogMapper;
 use \Ilch\Registry as Registry;
 use Ilch\Validation;
 
@@ -377,6 +378,7 @@ class Index extends \Ilch\Controller\Admin
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $authProviderMapper = new AuthProvider();
         $friendsMapper = new FriendsMapper();
+        $dialogMapper = new DialogMapper();
 
         $userId = $this->getRequest()->getParam('id');
 
@@ -416,6 +418,7 @@ class Index extends \Ilch\Controller\Admin
                     $statisticMapper->deleteUserOnline($userId);
                     $friendsMapper->deleteFriendsByUserId($userId);
                     $friendsMapper->deleteFriendByFriendUserId($userId);
+                    $dialogMapper->unhideAllDialogsByUser($userId);
                     $this->addMessage('delUserMsg');
                 }
             }

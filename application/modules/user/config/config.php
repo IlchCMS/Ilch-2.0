@@ -180,6 +180,11 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`c_id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
+            CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_hidden` (
+                `c_id` INT(11) UNSIGNED NOT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
                 `cr_id` INT(11) NOT NULL AUTO_INCREMENT,
                 `reply` TEXT,
@@ -482,6 +487,13 @@ class Config extends \Ilch\Config\Install
                 (3, "user/panel/gallery", "fa-picture-o", 3),
                 (4, "user/panel/friends", "fa-users", 4),
                 (5, "user/panel/settings", "fa-cogs", 5);');
+                break;
+            case "2.1.21":
+                // Add new table users_dialog_hidden
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_hidden` (
+                    `c_id` INT(11) UNSIGNED NOT NULL,
+                    `user_id` INT(11) UNSIGNED NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
                 break;
         }
     }

@@ -4,13 +4,12 @@
 <div class="row">
     <div class="col-lg-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
-
         <div class="profile-content active">
             <h1><?=$this->getTrans('dialog') ?></h1>
+            <?=(($this->getRequest()->getParam('showhidden') != 1) && !empty($this->get('dialogsHidden'))) ? '<a href="'.$this->getUrl(['controller' => 'panel', 'action' => 'dialog', 'showhidden' => 1]).'"><i class="fas fa-eye-slash"></i> '.$this->getTrans('dialogsHidden').'</a>' : '' ?>
             <div id="uMessenger">
                 <div class="chat">
                     <div class="row chat-wrapper">
-
                         <div class="col-xs-12 col-md-5 col-lg-4 <?=$this->get('dialog') ? 'hidden-list-massage' : '' ?>">
                             <div class="chat-list-info">
                                 <span class="avatar">
@@ -20,7 +19,6 @@
                             <div class="slimScrollDiv chat-list-scroll <?=$this->get('dialog') ? '' : 'noscroll' ?>">
                                 <div class="chat-list-wrapper">
                                     <ul class="chat-list">
-
                                         <?php if ($this->get('dialogs') != ''): ?>
                                             <?php foreach ($this->get('dialogs') as $dialog): ?>
                                                 <?php
@@ -57,6 +55,7 @@
                                                                     };
                                                                     ?>
                                                                 </small>
+                                                                <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>"><i class="fas fa-eye-slash"></i></a>
                                                             </div>
                                                             <p>
                                                                 <?=nl2br($this->getHtmlFromBBCode($this->escape($dialog->getText()))) ?>
@@ -70,7 +69,6 @@
                                                 <?=$this->getTrans('noDialog') ?>
                                             </div>
                                         <?php endif; ?>
-
                                     </ul>
                                 </div>
                                 <div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 100%; background: rgb(0, 0, 0);"></div>
@@ -97,13 +95,11 @@
                             <div class="slimScrollDiv message-list-scroll <?=$this->get('dialog') ? 'noscroll' : '' ?>">
                                 <div class="message-list-wrapper" style="overflow: hidden; width: auto; height: 100%;">
                                     <ul class="message-list">
-
                                         <?php if ($this->get('dialog') != ''): ?>
                                             <div class="message_box"></div>
                                         <?php else: ?>
                                             <div class="no-dialog"><?=$this->getTrans('selectDialog') ?></div>
                                         <?php endif; ?>
-
                                     </ul>
                                 </div>
                                 <div class="slimScrollBar" style="width: 7px; position: absolute; top: 265px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 187.092px; background: rgb(0, 0, 0);"></div>

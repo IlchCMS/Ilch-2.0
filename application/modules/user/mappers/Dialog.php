@@ -11,14 +11,17 @@ use Modules\User\Models\Dialog as DialogModel;
 class Dialog extends \Ilch\Mapper
 {
     /**
-    * Get users dialog
-    * @param int $userid the user
-    * @return null|\Modules\User\Models\Dialog
-    */
-    public function getDialog( $userid )
+     * Get users dialog
+     * @param int $userid the user
+     * @param bool $showHidden
+     * @return null|\Modules\User\Models\Dialog
+     * @throws \Ilch\Database\Exception
+     */
+    public function getDialog($userid, $showHidden = true)
     {
         $sql = 'SELECT u.id, u.avatar, c.c_id, u.name, c.time
         FROM [prefix]_users u, [prefix]_users_dialog c
+        LEFT JOIN [prefix]_users_dialog_hidden AS h ON h.c_id = c.c_id and h.user_id = '.$userid.'
         WHERE CASE
         WHEN c.user_one = '.$userid.'
         THEN c.user_two = u.id
@@ -26,8 +29,9 @@ class Dialog extends \Ilch\Mapper
         THEN c.user_one = u.id
         END
         AND
-        (c.user_one = '.$userid.' or c.user_two = '.$userid.')
-        ORDER BY c.time DESC';
+        (c.user_one = '.$userid.' or c.user_two = '.$userid.')';
+        $sql .= ($showHidden) ? '' : ' AND h.c_id IS NULL ';
+        $sql .= ' ORDER BY c.time DESC';
 
         $mailArray = $this->db()->queryArray($sql);
 
@@ -241,6 +245,68 @@ class Dialog extends \Ilch\Mapper
     {
         $this->db()->delete('users_dialog_reply', ['cr_id' => $cr_id, 'user_id_fk' => $userId])
             ->execute();
+    }
+
+    /**
+     * Add dialog to list of hidden dialogs.
+     *
+     * @param int $c_id
+     * @param int $userId
+     */
+    public function hideDialog($c_id, $userId)
+    {
+        $dialogHiddenRow = $this->db()->select('*')
+            ->from('users_dialog_hidden')
+            ->where(['c_id' => $c_id, 'user_id' => $userId])
+            ->execute()
+            ->fetchRow();
+
+        if (empty($dialogHiddenRow)) {
+            $this->db()->insert('users_dialog_hidden')
+                ->values(['c_id' => $c_id, 'user_id' => $userId])
+                ->execute();
+        }
+    }
+
+    /**
+     * Check if user has hidden a dialog.
+     *
+     * @param int $userId
+     * @return bool
+     */
+    public function hasHiddenDialog($userId)
+    {
+        $dialogHiddenRow = $this->db()->select('user_id')
+            ->from('users_dialog_hidden')
+            ->where(['user_id' => $userId])
+            ->execute()
+            ->fetchRow();
+
+        return (!empty($dialogHiddenRow));
+    }
+
+    /**
+     * Unhide a dialog of an user.
+     *
+     * @param int $c_id
+     * @param int $userId
+     * @return int count of affected rows.
+     */
+    public function unhideDialog($c_id, $userId)
+    {
+        return $this->db()->delete('users_dialog_hidden', ['c_id' => $c_id, 'user_id' => $userId])->execute();
+    }
+
+    /**
+     * Unhide all dialogs of a specific user.
+     * This can be called too, when the user gets deleted to get rid of then orphaned entries.
+     *
+     * @param $userId
+     * @return int
+     */
+    public function unhideAllDialogsByUser($userId)
+    {
+        return $this->db()->delete('users_dialog_hidden', ['user_id' => $userId])->execute();
     }
 
     /**
