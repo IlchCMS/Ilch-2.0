@@ -398,11 +398,13 @@ class Transfer
     public function update($installedVersion)
     {
         try {
+            $content = [];
             $zipHandle = zip_open($this->zipFile);
             if (!is_resource($zipHandle)) {
+                $content[] = 'Failed to open update file.';
                 return false;
             }
-            $content = [];
+
             while ($aF = zip_read($zipHandle)) {
                 $thisFileName = zip_entry_name($aF);
                 $thisFileDir = dirname($thisFileName);
