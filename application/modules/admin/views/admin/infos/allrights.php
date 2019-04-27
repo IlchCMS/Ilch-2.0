@@ -1,20 +1,31 @@
-<h1><?=$this->getTrans('allRights') ?></h1>
+<h1><?=$this->getTrans('allRights') ?> <a href="<?=$this->getUrl(['controller' => 'infos', 'action' => 'allrights'], null, true) ?>" title="<?=$this->getTrans('refreshAllRights') ?>"><i class="fas fa-sync"></i></a></h1>
+<?php if (!empty($this->get('results'))) : ?>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
             <col>
             <col class="col-lg-2">
+            <col class="col-lg-2">
+            <col class="col-lg-2">
+            <col class="col-lg-2">
+            <col class="col-lg-2">
         </colgroup>
         <thead>
-            <tr>
-                <th><?=$this->getTrans('folder') ?></th>
-                <th><?=$this->getTrans('available') ?></th>
-            </tr>
+        <tr>
+            <th><?=$this->getTrans('path') ?></th>
+            <th><?=$this->getTrans('fileOwner') ?></th>
+            <th><?=$this->getTrans('fileGroup') ?></th>
+            <th><?=$this->getTrans('chmod') ?></th>
+            <th><?=$this->getTrans('available') ?></th>
+        </tr>
         </thead>
         <tbody>
         <?php foreach ($this->get('results') as $result) : ?>
             <tr>
                 <td><?=$result['path'] ?></td>
+                <td><?=$result['owner'] ?></td>
+                <td><?=$result['group'] ?></td>
+                <td><?=$result['chmod'] ?></td>
                 <td>
                     <?php if ($result['writable']): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
@@ -27,3 +38,6 @@
         </tbody>
     </table>
 </div>
+<?php else : ?>
+    <?=$this->getTrans('allRightsFailure') ?>
+<?php endif; ?>

@@ -241,6 +241,11 @@ return [
     'allRights' => 'All rights',
     'allRightsInfo' => 'Checking the rights of all files takes several seconds.',
     'checkAllRights' => 'Check rights of all files',
+    'refreshAllRights' => 'Update',
+    'allRightsFailure' => 'An error occured. Click on the "Update" icon to try it again.',
+    'path' => 'Path',
+    'fileOwner' => 'Owner',
+    'fileGroup' => 'Group',
     'certificate' => 'Certificate',
     'certificateInfoText' => 'Ilch uses the certificate to verify if the update, module or layout is from the ilch-developers and was not manipulated in the meantime.
                               The type of the certificate should be RSA, the key size at least 2048-bit and it should be valid.

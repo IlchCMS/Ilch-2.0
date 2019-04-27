@@ -241,6 +241,11 @@ return [
     'allRights' => 'Alle Rechte',
     'allRightsInfo' => 'Das Prüfen der Rechte aller Dateien nimmt mehrere Sekunden in Anspruch.',
     'checkAllRights' => 'Rechte aller Dateien prüfen',
+    'refreshAllRights' => 'Aktualisieren',
+    'allRightsFailure' => 'Es ist ein Fehler aufgetreten. Klicken Sie auf das "Aktualisieren"-Icon um es erneut zu versuchen.',
+    'path' => 'Pfad',
+    'fileOwner' => 'Eigentümer',
+    'fileGroup' => 'Gruppe',
     'certificate' => 'Zertifikat',
     'certificateInfoText' => 'Ilch nutzt das Zertifikat um zu prüfen ob ein Update, Modul oder Layout von den Ilch-Entwicklern kommt und nicht
                               zwischenzeitlich manipuliert wurde. Der Typ des Zertifikats sollte RSA, die Schlüssellänge mindestens 2048 Bit und das Zertifikat gültig sein.

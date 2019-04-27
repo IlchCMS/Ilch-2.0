@@ -129,6 +129,9 @@ class Infos extends \Ilch\Controller\Admin
             foreach ($filesystem as $path) {
                 $result['path'] = $path;
                 $result['writable'] = is_writable_fileperms($path);
+                $result['owner'] = owner($path);
+                $result['group'] = group($path);
+                $result['chmod'] = getchmod($path);
                 $results[] = $result;
             }
         }

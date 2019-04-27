@@ -378,16 +378,70 @@ function glob_recursive($pattern, $flags = 0){
 /**
  * Check if writable with taking group membership into consideration.
  *
+ * @since 2.1.22
+ *
  * @param string $filename
  * @return bool
  */
 function is_writable_fileperms($filename) {
-    $ret = is_writable($filename);
+    $perms = fileperms($filename);
+    return ($perms & 0x0080) || ($perms & 0x0010) || ($perms & 0x0002);
+}
 
-    if (!$ret) {
-        $perms = fileperms($filename);
-        $ret = ($perms & 0x0080) || ($perms & 0x0010) || ($perms & 0x0002);
+/**
+ * Gets the file owner.
+ *
+ * @since 2.1.22
+ *
+ * @param string $file Path to the file.
+ * @return string|false Username of the owner on success, false on failure.
+ */
+function owner($file) {
+    $owneruid = @fileowner( $file );
+
+    if ( ! $owneruid ) {
+        return false;
     }
 
-    return $ret;
+    if ( ! function_exists( 'posix_getpwuid' ) ) {
+        return $owneruid;
+    }
+
+    $ownerarray = posix_getpwuid( $owneruid );
+    return $ownerarray['name'];
+}
+
+/**
+ * Gets the permissions of the specified file or filepath in their octal format.
+ *
+ * @since 2.1.22
+ *
+ * @param string $file Path to the file.
+ * @return string Mode of the file (the last 3 digits).
+ */
+function getchmod( $file ) {
+    return substr( decoct( @fileperms( $file ) ), -3 );
+}
+
+/**
+ * Gets the file's group.
+ *
+ * @since 2.1.22
+ *
+ * @param string $file Path to the file.
+ * @return string|false The group on success, false on failure.
+ */
+function group( $file ) {
+    $gid = @filegroup( $file );
+
+    if ( ! $gid ) {
+        return false;
+    }
+
+    if ( ! function_exists( 'posix_getgrgid' ) ) {
+        return $gid;
+    }
+
+    $grouparray = posix_getgrgid( $gid );
+    return $grouparray['name'];
 }
