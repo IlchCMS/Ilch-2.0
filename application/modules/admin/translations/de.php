@@ -215,6 +215,7 @@ return [
     'hmenuInfos' => 'Informationen',
     'hmenuPHPInfo' => 'PHP Info',
     'hmenuFolderRights' => 'Ordner Rechte',
+    'hmenuAllRights' => 'Alle Rechte',
     'hmenuCertificate' => 'Zertifikat',
     'phpExtensionError' => 'Nicht alle PHP-Erweiterungen aktiviert',
     'dbVersionError' => 'Die Version der Datenbank-Software ist zu alt.',
@@ -237,6 +238,9 @@ return [
     'available' => 'Vorhanden',
     'writable' => 'Beschreibbar',
     'notWritable' => 'nicht beschreibbar',
+    'allRights' => 'Alle Rechte',
+    'allRightsInfo' => 'Das Prüfen der Rechte aller Dateien nimmt mehrere Sekunden in Anspruch.',
+    'checkAllRights' => 'Rechte aller Dateien prüfen',
     'certificate' => 'Zertifikat',
     'certificateInfoText' => 'Ilch nutzt das Zertifikat um zu prüfen ob ein Update, Modul oder Layout von den Ilch-Entwicklern kommt und nicht
                               zwischenzeitlich manipuliert wurde. Der Typ des Zertifikats sollte RSA, die Schlüssellänge mindestens 2048 Bit und das Zertifikat gültig sein.

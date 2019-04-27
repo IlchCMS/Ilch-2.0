@@ -374,3 +374,20 @@ function glob_recursive($pattern, $flags = 0){
 
     return $files;
 }
+
+/**
+ * Check if writable with taking group membership into consideration.
+ *
+ * @param string $filename
+ * @return bool
+ */
+function is_writable_fileperms($filename) {
+    $ret = is_writable($filename);
+
+    if (!$ret) {
+        $perms = fileperms($filename);
+        $ret = ($perms & 0x0080) || ($perms & 0x0010) || ($perms & 0x0002);
+    }
+
+    return $ret;
+}

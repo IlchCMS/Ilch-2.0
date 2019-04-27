@@ -55,7 +55,7 @@ class Infos extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getActionName() == 'phpextensions') {
             $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'folderrights') {
+        } elseif ($this->getRequest()->getActionName() == 'folderrights' || $this->getRequest()->getActionName() == 'allrights') {
             $items[2]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'logs') {
             $items[3]['active'] = true;
@@ -113,6 +113,27 @@ class Infos extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('hmenuFolderRights'), ['action' => 'folderrights']);
 
         $this->getView()->set('folderrights', $infosMapper->getModulesFolderRights());
+    }
+
+    public function allrightsAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('hmenuAllRights'), ['action' => 'allrights']);
+
+        $results = [];
+
+        if ($this->getRequest()->isSecure()) {
+            $filesystem = glob_recursive('*', GLOB_MARK);
+
+            foreach ($filesystem as $path) {
+                $result['path'] = $path;
+                $result['writable'] = is_writable_fileperms($path);
+                $results[] = $result;
+            }
+        }
+
+        $this->getView()->set('results', $results);
     }
 
     public function logsAction()
