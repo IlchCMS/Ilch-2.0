@@ -392,6 +392,34 @@ class Transfer
     }
 
     /**
+     * Check if it would be possible to write the changed files
+     * of the zip file to their destination.
+     *
+     * @param string $pathZipFile
+     * @return array|bool
+     */
+    public function checkIfDestinationIsWritable($pathZipFile)
+    {
+        $zip = new \ZipArchive();
+
+        if ($zip->open($pathZipFile) !== true) {
+            return false;
+        }
+
+        $notWritable = [];
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $path = ROOT_PATH.'/'.$zip->getNameIndex($i);
+
+            if (file_exists($path) && !is_writable($path)) {
+                $notWritable[] = $path;
+            }
+        }
+
+        $zip->close();
+        return $notWritable;
+    }
+
+    /**
      * @param string $installedVersion
      * @return true/false
      */
@@ -399,9 +427,26 @@ class Transfer
     {
         try {
             $content = [];
+            @set_time_limit(300);
             $zipHandle = zip_open($this->zipFile);
             if (!is_resource($zipHandle)) {
                 $content[] = 'Failed to open update file.';
+                return false;
+            }
+
+            // Check if it would be possible to write the changed files.
+            $notWritable = $this->checkIfDestinationIsWritable($this->zipFile);
+
+            if ($notWritable === false) {
+                return false;
+            }
+
+            if (!empty($notWritable)) {
+                $content[] = 'Some files/directories seem to be not writable:';
+                foreach($notWritable as $path) {
+                    $content[] = $path;
+                }
+
                 return false;
             }
 
