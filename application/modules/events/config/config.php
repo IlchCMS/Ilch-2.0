@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.11.0',
+        'version' => '1.12.0',
         'icon_small' => 'fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -49,6 +49,9 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('event_add_entries_accesses', '2')
             ->set('event_show_members_accesses', '2,3')
             ->set('event_box_event_limit', '5')
+            ->set('event_upcoming_event_limit', '5')
+            ->set('event_current_event_limit', '5')
+            ->set('event_past_event_limit', '5')
             ->set('event_uploadpath', 'application/modules/events/static/upload/image/')
             ->set('event_height', '150')
             ->set('event_width', '450')
@@ -67,6 +70,9 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_add_entries_accesses';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_show_members_accesses';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_box_event_limit';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'event_upcoming_event_limit';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'event_current_event_limit';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'event_past_event_limit';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_uploadpath';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_height';
             DELETE FROM `[prefix]_config` WHERE `key` = 'event_width';
@@ -155,6 +161,14 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_events_currencies` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
                 $this->db()->query('INSERT INTO `[prefix]_config` (`key`, `value`) VALUES ("event_show_members_accesses", "2,3");');
+            case "1.9.0":
+            case "1.10.0":
+            case "1.11.0":
+                // Add default values for the new settings
+                $databaseConfig = new IlchDatabase($this->db());
+                $databaseConfig->set('event_upcoming_event_limit', '5')
+                    ->set('event_current_event_limit', '5')
+                    ->set('event_past_event_limit', '5');
         }
     }
 }

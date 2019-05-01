@@ -61,6 +61,9 @@ class Settings extends \Ilch\Controller\Admin
 
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'event_box_event_limit'     => 'required|numeric|min:1',
+                'event_upcoming_event_limit'=> 'required|numeric|min:1',
+                'event_current_event_limit' => 'required|numeric|min:1',
+                'event_past_event_limit'    => 'required|numeric|min:1',
                 'event_height'              => 'required|numeric|min:1',
                 'event_width'               => 'required|numeric|min:1',
                 'event_size'                => 'required|numeric|min:1',
@@ -76,6 +79,9 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('event_add_entries_accesses', $groupAccesses)
                     ->set('event_show_members_accesses', $membersAccesses)
                     ->set('event_box_event_limit', $this->getRequest()->getPost('event_box_event_limit'))
+                    ->set('event_upcoming_event_limit', $this->getRequest()->getPost('event_upcoming_event_limit'))
+                    ->set('event_current_event_limit', $this->getRequest()->getPost('event_current_event_limit'))
+                    ->set('event_past_event_limit', $this->getRequest()->getPost('event_past_event_limit'))
                     ->set('event_height', $this->getRequest()->getPost('event_height'))
                     ->set('event_width', $this->getRequest()->getPost('event_width'))
                     ->set('event_size', $this->getRequest()->getPost('event_size'))
@@ -100,6 +106,9 @@ class Settings extends \Ilch\Controller\Admin
             ->set('event_add_entries_accesses', $this->getConfig()->get('event_add_entries_accesses'))
             ->set('event_show_members_accesses', $this->getConfig()->get('event_show_members_accesses'))
             ->set('event_box_event_limit', $this->getConfig()->get('event_box_event_limit'))
+            ->set('event_upcoming_event_limit', $this->getConfig()->get('event_upcoming_event_limit'))
+            ->set('event_current_event_limit', $this->getConfig()->get('event_current_event_limit'))
+            ->set('event_past_event_limit', $this->getConfig()->get('event_past_event_limit'))
             ->set('event_height', $this->getConfig()->get('event_height'))
             ->set('event_width', $this->getConfig()->get('event_width'))
             ->set('event_size', $this->getConfig()->get('event_size'))

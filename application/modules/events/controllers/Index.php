@@ -28,9 +28,9 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index']);
 
-        $upcomingLimit = 5;
-        $currentLimit = 5;
-        $pastLimit = 5;
+        $upcomingLimit = (empty($this->getConfig()->get('event_upcoming_event_limit'))) ? '5' : $this->getConfig()->get('event_upcoming_event_limit');
+        $currentLimit = (empty($this->getConfig()->get('event_current_event_limit'))) ? '5' : $this->getConfig()->get('event_current_event_limit');
+        $pastLimit = (empty($this->getConfig()->get('event_past_event_limit'))) ? '5' : $this->getConfig()->get('event_past_event_limit');
 
         $user = null;
         if ($this->getUser()) {

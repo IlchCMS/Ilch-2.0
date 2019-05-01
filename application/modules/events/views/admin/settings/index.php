@@ -59,6 +59,48 @@
             </select>
         </div>
     </div>
+    <div class="form-group <?=$this->validation()->hasError('event_upcoming_event_limit') ? 'has-error' : '' ?>">
+        <label for="event_upcoming_event_limit" class="col-lg-2 control-label">
+            <?=$this->getTrans('upcomingEventLimit') ?>:
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="event_upcoming_event_limit"
+                   name="event_upcoming_event_limit"
+                   min="1"
+                   value="<?=$this->get('event_upcoming_event_limit') ?>"
+                   required />
+        </div>
+    </div>
+    <div class="form-group <?=$this->validation()->hasError('event_current_event_limit') ? 'has-error' : '' ?>">
+        <label for="event_current_event_limit" class="col-lg-2 control-label">
+            <?=$this->getTrans('currentEventLimit') ?>:
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="event_current_event_limit"
+                   name="event_current_event_limit"
+                   min="1"
+                   value="<?=$this->get('event_current_event_limit') ?>"
+                   required />
+        </div>
+    </div>
+    <div class="form-group <?=$this->validation()->hasError('event_past_event_limit') ? 'has-error' : '' ?>">
+        <label for="event_past_event_limit" class="col-lg-2 control-label">
+            <?=$this->getTrans('pastEventLimit') ?>:
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="event_past_event_limit"
+                   name="event_past_event_limit"
+                   min="1"
+                   value="<?=$this->get('event_past_event_limit') ?>"
+                   required />
+        </div>
+    </div>
     <div class="form-group <?=$this->validation()->hasError('event_height') ? 'has-error' : '' ?>">
         <label for="event_height" class="col-lg-2 control-label">
             <?=$this->getTrans('imageHeight') ?>:
