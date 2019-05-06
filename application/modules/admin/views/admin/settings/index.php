@@ -35,8 +35,9 @@
                     <?php endforeach; ?>
                 </optgroup>
                 <optgroup label="<?=$this->getTrans('layouts') ?>">
-                    <?php $layouts = []; ?>
-                    <?php foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath): ?>
+                <?php $layouts = []; ?>
+                <?php foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath): ?>
+                    <?php if (is_dir($layoutPath)): ?>
                         <?php
                         $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
                         $config = new $configClass($this->getTranslator()); ?>
@@ -53,7 +54,8 @@
                         <?php if (!empty($module)): ?>
                             <option <?=$selected ?> value="layouts_<?=$module ?>"><?=$module ?></option>
                         <?php endif; ?>
-                    <?php endforeach; ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
                 </optgroup>
             </select>
         </div>
