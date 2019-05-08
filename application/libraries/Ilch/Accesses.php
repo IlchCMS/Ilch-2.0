@@ -136,16 +136,10 @@ class Accesses
             return true;
         }
 
-        foreach ($entrie as $item => $value) {
-            if (empty($value[$this->request->getParam('id')])) {
-                return true;
-            }
-
-            if ($value[$this->request->getParam('id')] == '0') {
-                return false;
-            } else {
-                return true;
-            }
+        if(in_array('1', array_column($entrie, $this->request->getParam('id'))) || in_array('2', array_column($entrie, $this->request->getParam('id')))) {
+            return true;
+        } else {
+            return false;
         }
     }
 
