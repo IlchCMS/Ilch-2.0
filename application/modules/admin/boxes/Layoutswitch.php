@@ -18,19 +18,7 @@ class Layoutswitch extends \Ilch\Box
             if (is_dir($layoutPath)){
                 $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
-                $model = new LayoutModel();
-                $model->setKey(basename($layoutPath));
-                $model->setName($config->config['name']);
-                $model->setVersion($config->config['version']);
-                $model->setAuthor($config->config['author']);
-                if (!empty($config->config['link'])) {
-                    $model->setLink($config->config['link']);
-                }
-                $model->setDesc($config->config['desc']);
-                if (!empty($config->config['modulekey'])) {
-                    $model->setModulekey($config->config['modulekey']);
-                }
-                $layouts[] = $model;
+                $layouts[basename($layoutPath)] = $config->config['name'];
             }
         }
         
