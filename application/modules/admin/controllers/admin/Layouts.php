@@ -60,22 +60,24 @@ class Layouts extends \Ilch\Controller\Admin
         $layouts = [];
         $versionsOfLayouts = [];
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
-            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
-            $config = new $configClass($this->getTranslator());
-            $model = new LayoutModel();
-            $model->setKey(basename($layoutPath));
-            $model->setName($config->config['name']);
-            $model->setVersion($config->config['version']);
-            $model->setAuthor($config->config['author']);
-            if (!empty($config->config['link'])) {
-                $model->setLink($config->config['link']);
+            if (is_dir($layoutPath)){
+                $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                $model = new LayoutModel();
+                $model->setKey(basename($layoutPath));
+                $model->setName($config->config['name']);
+                $model->setVersion($config->config['version']);
+                $model->setAuthor($config->config['author']);
+                if (!empty($config->config['link'])) {
+                    $model->setLink($config->config['link']);
+                }
+                $model->setDesc($config->config['desc']);
+                if (!empty($config->config['modulekey'])) {
+                    $model->setModulekey($config->config['modulekey']);
+                }
+                $layouts[] = $model;
+                $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
             }
-            $model->setDesc($config->config['desc']);
-            if (!empty($config->config['modulekey'])) {
-                $model->setModulekey($config->config['modulekey']);
-            }
-            $layouts[] = $model;
-            $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
         }
 
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'layouts.php')
@@ -127,10 +129,12 @@ class Layouts extends \Ilch\Controller\Admin
             $layoutsDir = [];
             $versionsOfLayouts = [];
             foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
-                $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
-                $config = new $configClass($this->getTranslator());
-                $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
-                $layoutsDir[] = basename($layoutPath);
+                if (is_dir($layoutPath)){
+                    $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                    $config = new $configClass($this->getTranslator());
+                    $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
+                    $layoutsDir[] = basename($layoutPath);
+                }
             }
 
             $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'))
@@ -182,7 +186,9 @@ class Layouts extends \Ilch\Controller\Admin
 
         $layoutsDir = [];
         foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
-            $layoutsDir[] = basename($layoutPath);
+            if (is_dir($layoutPath)){
+                $layoutsDir[] = basename($layoutPath);
+            }
         }
 
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'))

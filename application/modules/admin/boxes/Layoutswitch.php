@@ -6,10 +6,23 @@
 
 namespace Modules\Admin\Boxes;
 
+use Modules\Admin\Models\Layout as LayoutModel;
+
 class Layoutswitch extends \Ilch\Box
 {
     public function render()
     {
-        $this->getView()->set('layouts', glob(APPLICATION_PATH.'/layouts/*'));
+        $layouts = [];
+        
+        foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
+            if (is_dir($layoutPath)){
+                $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                $layouts[basename($layoutPath)] = $config->config['name'];
+            }
+        }
+        
+        $this->getView()->set('layouts', $layouts)
+                        ->set('defaultLayout', $this->getConfig()->get('default_layout'));
     }
 }
