@@ -22,6 +22,8 @@ use Modules\User\Mappers\Friends as FriendsMapper;
 use Ilch\Date as IlchDate;
 use Ilch\Validation;
 
+use Modules\User\Mappers\AuthToken as AuthTokenMapper;
+use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
@@ -305,6 +307,81 @@ class Panel extends BaseController
         }
 
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
+    }
+    public function deleteaccountAction()
+    {
+        $userMapper = new UserMapper();
+        $authTokenMapper = new AuthTokenMapper();
+        $statisticMapper = new StatisticMapper();
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+        $authProviderMapper = new AuthProvider();
+        $friendsMapper = new FriendsMapper();
+        $dialogMapper = new DialogMapper();
+        
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+            ->add($this->getTranslator()->trans('menuDeleteAccount'), ['controller' => 'panel', 'action' => 'deleteaccount']);
+
+        if ($this->getRequest()->isSecure()) {
+            $userId = $this->getUser()->getId();
+            if ($this->getUser()->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
+                $this->addMessage('delLastAdminProhibited', 'warning');
+                $this->redirect(['controller' => 'panel', 'action' => 'deleteaccount']);
+            }else{
+                if ($this->getConfig()->get('userdeletetime') == 0){
+                    if ($this->getUser()->getAvatar() != 'static/img/noavatar.jpg') {
+                        unlink($this->getUser()->getAvatar());
+                    }
+
+                    if (is_dir(APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId)) {
+                        $path = APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId;
+                        $files = array_diff(scandir($path), ['.', '..']);
+
+                        foreach ($files as $file) {
+                            unlink(realpath($path).'/'.$file);
+                        }
+
+                        rmdir($path);
+                    }
+
+                    $profileFieldsContentMapper->deleteProfileFieldContentByUserId($userId);
+                    $authProviderMapper->deleteUser($userId);
+                    if ($userMapper->delete($userId)) {
+                        $authTokenMapper->deleteAllAuthTokenOfUser($userId);
+                        $statisticMapper->deleteUserOnline($userId);
+                        $friendsMapper->deleteFriendsByUserId($userId);
+                        $friendsMapper->deleteFriendByFriendUserId($userId);
+                        $dialogMapper->unhideAllDialogsByUser($userId);
+                    }
+
+                    if (!empty($_COOKIE['remember'])) {
+                        list($selector) = explode(':', $_COOKIE['remember']);
+                        $authTokenMapper->deleteAuthToken($selector);
+                        setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
+                    }
+
+                    $_SESSION = [];
+                    \Ilch\Registry::remove('user');
+
+                    if (ini_get("session.use_cookies")) {
+                        $params = session_get_cookie_params();
+                        setcookie(session_name(), '', time() - 42000, $params["path"],
+                            $params["domain"], $params["secure"], $params["httponly"]
+                        );
+                    }
+
+                    session_destroy();
+                    
+                    $this->redirect([]);
+                }else{
+                    $userMapper->selectsdelete($userId, new \Ilch\Date());
+                    $this->redirect(['module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1]);
+                }
+            }
+        }
+        
+        $this->getView()->set('delete_time', $this->getConfig()->get('userdeletetime'));
     }
 
     public function dialogAction()

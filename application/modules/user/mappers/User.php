@@ -295,6 +295,9 @@ class User extends \Ilch\Mapper
         if (isset($userRow['locked'])) {
             $user->setLocked($userRow['locked']);
         }
+        if (isset($userRow['selectsdelete'])) {
+            $user->setSelectsDelete($userRow['selectsdelete']);
+        }
 
         return $user;
     }
@@ -361,6 +364,9 @@ class User extends \Ilch\Mapper
 
         if ($user->getLocked() !== null) {
             $fields['locked'] = $user->getLocked();
+        }
+        if ($user->getSelectsDelete() !== null) {
+            $fields['selectsdelete'] = $user->getSelectsDelete();
         }
 
         $fields['first_name'] = $user->getFirstName();
@@ -484,6 +490,53 @@ class User extends \Ilch\Mapper
                 ->values(['user_id' => $userId, 'group_id' => $groupId])
                 ->execute();
         }
+    }
+    
+    /**
+     * Selects a specific user or user with the specified ID to delete.
+     *
+     * @param  int|UserModel $userId
+     * @param  string $deletedate
+     *
+     * @return boolean True of success, otherwise false.
+     */
+     
+     public function selectsdelete($userId, $deletedate = '')
+     {
+        if (is_a($userId, '\Modules\User\Models\User')) {
+            $userId = $userId->getId();
+        }
+        
+        return $this->db()->update('users')
+                ->values(['selectsdelete' => $deletedate])
+                ->where(['id' => $userId])
+                ->execute();
+    }
+    
+    /**
+     * Delete all Selects Delete finaly.
+     *
+     * @param  int $timetodelete
+     *
+     * @return boolean True of success, otherwise false.
+     */
+     
+     public function deleteselectsdelete($timetodelete = 5)
+     {
+        $date = new \Ilch\Date();
+        $date->modify('-'.$timetodelete.' days');
+        
+        $entries = $this->getUserList(['selectsdelete >' => 0, 'selectsdelete <=' => $date]);
+        
+        foreach ($entries as $user){
+            if ($user->getSelectsDelete() != ''){
+                $dateuser = new \Ilch\Date($user->getSelectsDelete());
+                if ($dateuser->getTimestamp() <= $date->getTimestamp()){
+                    $this->delete($user->getId());
+                }
+            }
+        }
+        return true;
     }
 
     /**

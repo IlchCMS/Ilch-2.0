@@ -62,6 +62,18 @@
             </div>
         </div>
     </div>
+    <div class="form-group">
+        <label for="delete_time" class="col-lg-2 control-label">
+            <?=$this->getTrans('deletetime') ?>
+        </label>
+        <div class="col-lg-2">
+            <input type="text"
+                   class="form-control required"
+                   id="delete_time"
+                   name="delete_time"
+                   value="<?=$this->get('delete_time') ?>" />
+        </div>
+    </div>
 
     <h1><?=$this->getTrans('menuSettingsAvatar') ?></h1>
     <div class="form-group">

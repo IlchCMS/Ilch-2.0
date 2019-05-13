@@ -167,6 +167,13 @@ class User extends \Ilch\Model
      * @var int
      */
     protected $locked;
+    
+    /**
+     * Selects Delete timestamp of the user.
+     *
+     * @var \Ilch\Date
+     */
+    protected $selectsdelete;
 
     /**
      * Returns the id of the user.
@@ -726,7 +733,29 @@ class User extends \Ilch\Model
     public function setLocked($locked)
     {
         $this->locked = $locked;
+        
+        return $this;
+    }
+    
+    /**
+     * Returns the selectsdelete \Ilch\Date of the user.
+     *
+     * @return \Ilch\Date
+     */
+    public function getSelectsDelete()
+    {
+        return $this->selectsdelete;
+    }
 
+    /**
+     * Saves the selectsdelete \Ilch\Date of the user.
+     *
+     * @param \Ilch\Date $selectsdelete
+     * @return User
+     */
+    public function setSelectsDelete($selectsdelete)
+    {
+        $this->selectsdelete = $selectsdelete;
         return $this;
     }
 
