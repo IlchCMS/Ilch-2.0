@@ -97,6 +97,16 @@
                             <?php endif; ?>
                         <?php endforeach; ?>
                 <?php endif; ?>
+                <div class="col-xs-12 col-md-4">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'deleteaccount']) ?>"><?=$this->getTrans('deleteaccount') ?></a></h3>
+                        </div>
+                        <div class="panel-body">
+                            <?=$this->getTrans('deleteaccountDesc') ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

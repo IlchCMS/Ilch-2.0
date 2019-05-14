@@ -61,6 +61,11 @@ class Settings extends \Ilch\Controller\Admin
             } else {
                 $this->getConfig()->set('regist_setfree', $this->getRequest()->getPost('regist_setfree'));
             }
+            if ($this->getRequest()->getPost('delete_time') == '') {
+                $this->getConfig()->set('userdeletetime', 0);
+            } else {
+                $this->getConfig()->set('userdeletetime', $this->getRequest()->getPost('delete_time'));
+            }
 
             $this->getConfig()->set('regist_accept', $this->getRequest()->getPost('regist_accept'))
                 ->set('regist_confirm', $this->getRequest()->getPost('regist_confirm'))
@@ -85,6 +90,7 @@ class Settings extends \Ilch\Controller\Admin
             ->set('usergallery_allowed', $this->getConfig()->get('usergallery_allowed'))
             ->set('usergallery_filetypes', $this->getConfig()->get('usergallery_filetypes'))
             ->set('regist_rules', $this->getConfig()->get('regist_rules'))
-            ->set('picturesPerPage', $this->getConfig()->get('user_picturesPerPage'));
+            ->set('picturesPerPage', $this->getConfig()->get('user_picturesPerPage'))
+            ->set('delete_time', $this->getConfig()->get('userdeletetime'));
     }
 }

@@ -21,6 +21,8 @@ class Result
 
     /** @var string */
     const USER_LOCKED = 'userLocked';
+    /** @var string */
+    const USER_SELECTSDELETE = 'userSelectsDelete';
 
     /** @var bool */
     private $success;
