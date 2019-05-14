@@ -308,6 +308,7 @@ class Panel extends BaseController
 
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
     }
+
     public function deleteaccountAction()
     {
         $userMapper = new UserMapper();

@@ -500,7 +500,6 @@ class User extends \Ilch\Mapper
      *
      * @return boolean True of success, otherwise false.
      */
-     
      public function selectsdelete($userId, $deletedate = '')
      {
         if (is_a($userId, '\Modules\User\Models\User')) {
@@ -520,7 +519,6 @@ class User extends \Ilch\Mapper
      *
      * @return boolean True of success, otherwise false.
      */
-     
      public function deleteselectsdelete($timetodelete = 5)
      {
         $date = new \Ilch\Date();

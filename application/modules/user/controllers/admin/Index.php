@@ -134,6 +134,7 @@ class Index extends \Ilch\Controller\Admin
             ->set('timetodelete', $this->getConfig()->get('userdeletetime'))
             ->set('pagination', $pagination);
     }
+
     /**
      * selects Delete manually
      */

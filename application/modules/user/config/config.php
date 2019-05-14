@@ -496,6 +496,7 @@ class Config extends \Ilch\Config\Install
                     `c_id` INT(11) UNSIGNED NOT NULL,
                     `user_id` INT(11) UNSIGNED NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
                 // SelectsDelete update
                 $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `selectsdelete` DATETIME;');
                 $databaseConfig = new \Ilch\Config\Database($this->db());

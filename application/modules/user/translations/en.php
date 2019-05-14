@@ -168,11 +168,11 @@ return [
     'deleteaccountreset' => 'Reset Delete Account',
     'deleteaccountquestion' => 'Really delete account?',
     'deleteaccountInfoText' => 'Clicking on "Delete" immediately deletes the account and can not be undone!',
-    'deleteaccountwithdayInfoText' => 'By clicking on Delete, the account will be marked as "delete" and will be deleted after a period of %s Day(s).<br>During this period must be no login in this account, otherwise the process is aborted!',
+    'deleteaccountwithdayInfoText' => 'By clicking on Delete, the account will be marked as "delete" and will be deleted after a period of %s day(s).<br>During this period there must be no login in this account, otherwise the process is aborted!',
     'deleteaccountDesc' => 'Here you can delete your account.',
     'selectsdelete' => 'Delete Account',
     'selectsdeletetime' => 'Deletion Date',
-    'deletetime' => 'Time (Days) until the account is deleted during a deletion. Wenn 0 wird sofort gelöscht. If 0 is deleted immediately.',
+    'deletetime' => 'Time (days) until the account is deleted during a deletion. If 0 it will be deleted immediately.',
     'selectsdeletetimeInfoText' => 'Red -> the deletion time has expired (can be deleted).<br>Green -> is still within the extinguishing time.',
 
     'logout' => 'Logout',
