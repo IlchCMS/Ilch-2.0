@@ -115,7 +115,9 @@ class Index extends \Ilch\Controller\Admin
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        if ($this->getRequest()->getParam('showsetfree')) {
+        if ($this->getRequest()->getParam('showselectsdelete')) {
+            $entries = $userMapper->getUserList(['selectsdelete >' => 0], $pagination);
+        } else if ($this->getRequest()->getParam('showsetfree')) {
             $entries = $userMapper->getUserList(['confirmed' => 0], $pagination);
         } else if ($this->getRequest()->getParam('showlocked')) {
             $entries = $userMapper->getUserList(['locked' => 1], $pagination);
@@ -128,7 +130,21 @@ class Index extends \Ilch\Controller\Admin
             ->set('errorMsg', $this->getRequest()->getParam('errorMsg'))
             ->set('badge', count($userMapper->getUserList(['confirmed' => 0])))
             ->set('badgeLocked', count($userMapper->getUserList(['locked' => 1])))
+            ->set('badgeSelectsDelete', count($userMapper->getUserList(['selectsdelete >' => 0])))
+            ->set('timetodelete', $this->getConfig()->get('userdeletetime'))
             ->set('pagination', $pagination);
+    }
+
+    /**
+     * selects Delete manually
+     */
+    public function selectsdeleteAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $userMapper = new UserMapper();
+            $userMapper->selectsdelete($this->getRequest()->getParam('id'));
+            $this->redirect(['action' => 'index', 'showselectsdelete' => 1]);
+        }
     }
 
     /**

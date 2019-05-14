@@ -40,6 +40,9 @@ class Login extends \Ilch\Controller\Frontend
             ]);
 
             if ($validation->isValid()) {
+                $userMapper = new UserMapper();
+                $userMapper->deleteselectsdelete(($this->getConfig()->get('userdeletetime')));
+                
                 $result  = LoginService::factory()->perform($this->getRequest()->getPost('login_emailname'), $this->getRequest()->getPost('login_password'));
 
                 if ($result->isSuccessful()) {
@@ -71,6 +74,8 @@ class Login extends \Ilch\Controller\Frontend
                         $authTokenMapper = new AuthTokenMapper();
                         $authTokenMapper->addAuthToken($authTokenModel);
                     }
+                    
+                    if ($result->getError() != '') $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
                 } else {
                     $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
                     $redirectUrl = ['module' => 'user', 'controller' => 'login', 'action' => 'index'];

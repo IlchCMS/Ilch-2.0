@@ -58,7 +58,8 @@ class Config extends \Ilch\Config\Install
             ->set('avatar_filetypes', 'jpg jpeg png gif')
             ->set('usergallery_allowed', '1')
             ->set('usergallery_uploadpath', 'application/modules/user/static/upload/gallery/')
-            ->set('usergallery_filetypes', 'jpg jpeg png gif');
+            ->set('usergallery_filetypes', 'jpg jpeg png gif')
+            ->set('userdeletetime', '5');
 
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
@@ -107,6 +108,7 @@ class Config extends \Ilch\Config\Install
                 `selector` char(18),
                 `expires` DATETIME,
                 `locked` TINYINT(1) NOT NULL DEFAULT 0,
+                `selectsdelete` DATETIME,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -494,6 +496,11 @@ class Config extends \Ilch\Config\Install
                     `c_id` INT(11) UNSIGNED NOT NULL,
                     `user_id` INT(11) UNSIGNED NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // SelectsDelete update
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `selectsdelete` DATETIME;');
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('userdeletetime', '5');
                 break;
         }
     }

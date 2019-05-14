@@ -20,7 +20,7 @@ class Index extends \Ilch\Controller\Frontend
             /*
              * Cms is installed
              */
-            $this->redirect()->to();
+            $this->redirect()->to(null);
         } else {
             /*
              * Cms not installed yet.
