@@ -106,12 +106,12 @@
                             <td><?=$this->escape($user->getDateLastActivity()) ?></td>
                             <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
                             <?php
-                            if ($this->get('timetodelete') > 0){
+                            if ($this->get('timetodelete') > 0) {
                                 $date = new \Ilch\Date();
                                 $date->modify('-'.$this->get('timetodelete').' days');
                                 $dateuser = new \Ilch\Date($user->getSelectsDelete());
-                                $classadd = ($dateuser->getTimestamp() <= $date->getTimestamp()?'danger':'success');
-                            }else{
+                                $classadd = ($dateuser->getTimestamp() <= $date->getTimestamp() ? 'danger' : 'success');
+                            } else {
                                 $classadd = 'danger';
                             }
                             ?>

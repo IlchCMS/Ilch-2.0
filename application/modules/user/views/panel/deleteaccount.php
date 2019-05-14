@@ -12,5 +12,5 @@
     </a>
 </div>
 <script>
-var deleteEntry = <?=json_encode($this->getTrans('deleteaccountquestion')) ?>;
+let deleteEntry = <?=json_encode($this->getTrans('deleteaccountquestion')) ?>;
 </script>

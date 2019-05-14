@@ -318,7 +318,7 @@ class Panel extends BaseController
         $authProviderMapper = new AuthProvider();
         $friendsMapper = new FriendsMapper();
         $dialogMapper = new DialogMapper();
-        
+
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
@@ -329,8 +329,8 @@ class Panel extends BaseController
             if ($this->getUser()->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
                 $this->addMessage('delLastAdminProhibited', 'warning');
                 $this->redirect(['controller' => 'panel', 'action' => 'deleteaccount']);
-            }else{
-                if ($this->getConfig()->get('userdeletetime') == 0){
+            } else {
+                if ($this->getConfig()->get('userdeletetime') == 0) {
                     if ($this->getUser()->getAvatar() != 'static/img/noavatar.jpg') {
                         unlink($this->getUser()->getAvatar());
                     }
@@ -373,15 +373,15 @@ class Panel extends BaseController
                     }
 
                     session_destroy();
-                    
+
                     $this->redirect([]);
-                }else{
+                } else {
                     $userMapper->selectsdelete($userId, new \Ilch\Date());
                     $this->redirect(['module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1]);
                 }
             }
         }
-        
+
         $this->getView()->set('delete_time', $this->getConfig()->get('userdeletetime'));
     }
 

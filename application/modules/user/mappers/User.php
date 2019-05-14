@@ -523,17 +523,18 @@ class User extends \Ilch\Mapper
      {
         $date = new \Ilch\Date();
         $date->modify('-'.$timetodelete.' days');
-        
+
         $entries = $this->getUserList(['selectsdelete >' => 0, 'selectsdelete <=' => $date]);
-        
-        foreach ($entries as $user){
-            if ($user->getSelectsDelete() != ''){
+
+        foreach ($entries as $user) {
+            if ($user->getSelectsDelete() != '') {
                 $dateuser = new \Ilch\Date($user->getSelectsDelete());
-                if ($dateuser->getTimestamp() <= $date->getTimestamp()){
+                if ($dateuser->getTimestamp() <= $date->getTimestamp()) {
                     $this->delete($user->getId());
                 }
             }
         }
+
         return true;
     }
 
