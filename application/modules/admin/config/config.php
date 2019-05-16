@@ -509,6 +509,10 @@ class Config extends \Ilch\Config\Install
                             $databaseConfig->set('smtp_secure', 'ssl');
                     }
                 }
+
+                removeDir(ROOT_PATH.'/vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                break;
         }
 
         return 'Update function executed.';
