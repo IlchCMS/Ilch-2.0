@@ -259,9 +259,12 @@ class Index extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
 
         $user = null;
-        if ($this->getUser()) {
-            $user = $userMapper->getUserById($this->getUser()->getId());
-        }
+        // FIXME: Only create RSS-Feed with guest rights to avoid leaking articles not supposed to be for everyone.
+        // This (unfinished) feature needs a complete rewrite to be ready.
+        // http://redmine.ilch2.de/issues/591
+        // if ($this->getUser()) {
+            // $user = $userMapper->getUserById($this->getUser()->getId());
+        // }
 
         $readAccess = [3];
         if ($user) {
