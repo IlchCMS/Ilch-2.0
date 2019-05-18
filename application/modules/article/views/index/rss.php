@@ -3,10 +3,10 @@ $userMapper = $this->get('userMapper');
 $articles = $this->get('articles');
 $date = new \Ilch\Date();
 
-$adminAccess = null;
-if ($this->getUser()) {
-    $adminAccess = $this->getUser()->isAdmin();
-}
+// $adminAccess = null;
+// if ($this->getUser()) {
+    // $adminAccess = $this->getUser()->isAdmin();
+// }
 
 $xml = new DOMDocument('1.0', 'utf-8');
 $xml->formatOutput = true;
@@ -35,7 +35,8 @@ $channel->appendChild($head);
 
 if ($articles) {
     foreach ($articles as $article) {
-        if (!is_in_array($this->get('readAccess'), explode(',', $article->getReadAccess())) && $adminAccess == false) {
+        //if (!is_in_array($this->get('readAccess'), explode(',', $article->getReadAccess())) && $adminAccess == false) {
+        if (!is_in_array($this->get('readAccess'), explode(',', $article->getReadAccess()))) {
             continue;
         }
 
