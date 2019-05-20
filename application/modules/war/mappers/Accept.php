@@ -36,7 +36,8 @@ class Accept extends \Ilch\Mapper
             $acceptModel->setId($accept['id'])
                 ->setWarId($accept['war_id'])
                 ->setUserId($accept['user_id'])
-                ->setAccept($accept['accept']);
+                ->setAccept($accept['accept'])
+                ->setComment($accept['comment']);
             $accepts[] = $acceptModel;
         }
 
@@ -54,7 +55,7 @@ class Accept extends \Ilch\Mapper
         $select = $this->db()->select('*')
             ->fields(['u.group_id', 'u.user_id', 'a.war_id'])
             ->from(['u' => 'users_groups'])
-            ->join(['a' => 'war_accept'], 'a.user_id = u.user_id', 'LEFT', ['a.id', 'a.user_id', 'a.accept', 'a.war_id'])
+            ->join(['a' => 'war_accept'], 'a.user_id = u.user_id', 'LEFT', ['a.id', 'a.user_id', 'a.accept', 'a.war_id', 'a.comment'])
             ->where(['u.group_id' => $groupId, 'a.war_id' => $warId])
             ->execute()
             ->fetchRows();
@@ -70,7 +71,8 @@ class Accept extends \Ilch\Mapper
             $acceptModel->setId($accept['id'])
                 ->setWarId($accept['war_id'])
                 ->setUserId($accept['user_id'])
-                ->setAccept($accept['accept']);
+                ->setAccept($accept['accept'])
+                ->setComment($accept['comment']);
             $accepts[] = $acceptModel;
         }
 
@@ -87,7 +89,8 @@ class Accept extends \Ilch\Mapper
         $fields = [
             'war_id' => $model->getWarId(),
             'user_id' => $model->getUserId(),
-            'accept' => $model->getAccept()
+            'accept' => $model->getAccept(),
+            'comment' => $model->getComment()
         ];
 
         if ($model->getId()) {

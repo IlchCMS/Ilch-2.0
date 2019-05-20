@@ -37,6 +37,13 @@ class Accept extends \Ilch\Model
     protected $accept;
 
     /**
+     * The comment
+     *
+     * @var string
+     */
+    protected $comment;
+
+    /**
      * Gets the id
      *
      * @return int
@@ -124,6 +131,29 @@ class Accept extends \Ilch\Model
     public function setAccept($accept)
     {
         $this->accept = (int)$accept;
+
+        return $this;
+    }
+
+    /**
+     * Gets the comment.
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Sets the comment.
+     *
+     * @param string $comment
+     * @return $this
+     */
+    public function setComment($comment)
+    {
+        $this->comment = (string)$comment;
 
         return $this;
     }
