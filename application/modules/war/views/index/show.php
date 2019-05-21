@@ -146,8 +146,13 @@ $acceptCheckArray = $this->get('acceptCheck');
                                             $class = ' war_drawn';
                                             $text = $this->getTrans('is').' '.$this->getTrans('undecided');
                                         }
+                                        if ($acceptCheck->getComment() != '') {
+                                            $comment = ' -> '.$this->escape($acceptCheck->getComment());
+                                        } else {
+                                            $comment = '';
+                                        }
                                         ?>
-                                        <li class="list-group-item<?=$class ?>"><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: <?=$text ?></li>
+                                        <li class="list-group-item<?=$class ?>"><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: <?=$text ?><?=$comment ?></li>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php endif; ?>
@@ -164,6 +169,10 @@ $acceptCheckArray = $this->get('acceptCheck');
                                             <option value="3"><?=$this->getTrans('undecided') ?></option>
                                         </optgroup>
                                     </select>
+                                    <textarea class="form-control col-lg-3"
+                                              style="resize: vertical"
+                                              name="warComment"
+                                              id="warComment" ></textarea>
                                     <button type="submit" class="btn" name="save" value="save">
                                         <?=$this->getTrans('save') ?>
                                     </button>

@@ -72,7 +72,8 @@ class Index extends \Ilch\Controller\Frontend
                 }
                 $model->setWarId($war->getId())
                     ->setUserId($this->getUser()->getId())
-                    ->setAccept((int)$this->getRequest()->getPost('warAccept'));
+                    ->setAccept((int)$this->getRequest()->getPost('warAccept'))
+                    ->setComment(trim($this->getRequest()->getPost('warComment')));
                 $acceptMapper->save($model);
 
                 $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
