@@ -524,7 +524,12 @@ class Statistic extends \Ilch\Mapper
      * @param  string $version
      * @return string
      */
-    public function getOS($name = null, $version = null) {
+    public function getOS($name = null, $version = null)
+    {
+        if (!isset($_SERVER['HTTP_USER_AGENT'])) {
+            return "";
+        }
+
         $useragent = $_SERVER['HTTP_USER_AGENT'];
         $osArray = [];
 
@@ -594,7 +599,12 @@ class Statistic extends \Ilch\Mapper
      * @param null $version
      * @return null|string
      */
-    public function getBrowser($version = null) {
+    public function getBrowser($version = null)
+    {
+        if (!isset($_SERVER['HTTP_USER_AGENT'])) {
+            return "";
+        }
+
         $useragent = $_SERVER['HTTP_USER_AGENT'];
 
         if ($version != null) {
