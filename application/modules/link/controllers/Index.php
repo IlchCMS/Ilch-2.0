@@ -56,10 +56,12 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $linkModel = $linkMapper->getLinkById($this->getRequest()->getParam('link_id'));
-        $linkModel->setHits($linkModel->getHits() + 1);
-        $linkMapper->save($linkModel);
+        if (!empty($linkModel)) {
+            $linkModel->setHits($linkModel->getHits() + 1);
+            $linkMapper->save($linkModel);
 
-        header("location: ".$linkModel->getLink());
-        exit;
+            header("location: ".$linkModel->getLink());
+            exit;
+        }
     }
 }
