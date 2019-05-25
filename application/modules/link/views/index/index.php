@@ -41,7 +41,7 @@
             <th><?=$this->getTrans('links') ?></th>
             <th class="text-center"><?=$this->getTrans('hits') ?></th>
         </tr>
-        <?php if ($this->get('links') != ''): ?>
+        <?php if (!empty($this->get('links'))): ?>
             <?php foreach ($this->get('links') as $link): ?>
                 <tr>
                     <?php

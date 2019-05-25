@@ -50,7 +50,7 @@
         <br />
     <?php endif; ?>
 
-    <?php if ($this->get('links') != ''): ?>
+    <?php if (!empty($this->get('links'))): ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>

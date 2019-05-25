@@ -14,7 +14,7 @@ class Link extends \Ilch\Mapper
      * Gets links.
      *
      * @param array $where
-     * @return LinkModel[]|null
+     * @return LinkModel[]|[]
      */
     public function getLinks($where = [])
     {
@@ -26,7 +26,7 @@ class Link extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($linkArray)) {
-            return null;
+            return [];
         }
 
         $links = [];
