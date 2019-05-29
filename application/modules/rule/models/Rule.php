@@ -18,7 +18,7 @@ class Rule extends \Ilch\Model
     /**
      * The paragraph of the rule.
      *
-     * @var int
+     * @var string
      */
     protected $paragraph;
 
@@ -42,6 +42,20 @@ class Rule extends \Ilch\Model
      * @var int
      */
     protected $position;
+
+    /**
+     * The parent_id of th rule.
+     *
+     * @var int
+     */
+    protected $parent_id;
+
+    /**
+     * Read access of the item.
+     *
+     * @var string
+     */
+    protected $access;
 
     /**
      * Gets the id of the rule.
@@ -69,7 +83,7 @@ class Rule extends \Ilch\Model
     /**
      * Gets the paragraph of the rule.
      *
-     * @return int
+     * @return string
      */
     public function getParagraph()
     {
@@ -79,12 +93,12 @@ class Rule extends \Ilch\Model
     /**
      * Sets the paragraph of the rule.
      *
-     * @param int $paragraph
+     * @param string $paragraph
      * @return $this
      */
     public function setParagraph($paragraph)
     {
-        $this->paragraph = (int)$paragraph;
+        $this->paragraph = (string)$paragraph;
 
         return $this;
     }
@@ -154,6 +168,52 @@ class Rule extends \Ilch\Model
     public function setPosition($position)
     {
         $this->position = (int)$position;
+
+        return $this;
+    }
+
+    /**
+     * Gets the parent_id of the rule.
+     *
+     * @return int
+     */
+    public function getParent_Id()
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * Sets the parent_id of the rule.
+     *
+     * @param int $parent_id
+     * @return $this
+     */
+    public function setParent_Id($parent_id)
+    {
+        $this->parent_id = (int)$parent_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets the access.
+     *
+     * @return string
+     */
+    public function getAccess()
+    {
+        return $this->access;
+    }
+
+    /**
+     * Sets the access.
+     *
+     * @param string $Access
+     * @return $this
+     */
+    public function setAccess($access)
+    {
+        $this->access = (string) $access;
 
         return $this;
     }

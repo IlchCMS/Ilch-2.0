@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'rule',
-        'version' => '1.3.0',
+        'version' => '1.4.0',
         'icon_small' => 'fa-gavel',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -46,6 +46,8 @@ class Config extends \Ilch\Config\Install
             `title` VARCHAR(100) NOT NULL,
             `text` MEDIUMTEXT NOT NULL,
             `position` INT(11) NOT NULL DEFAULT 0,
+            `parent_id` INT(11) NOT NULL DEFAULT 0,
+            `access` varchar(255) NOT NULL,
             PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
@@ -60,6 +62,18 @@ class Config extends \Ilch\Config\Install
             case "1.2":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_rules` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.3.0":
+                $this->db()->query('ALTER TABLE `[prefix]_rules` ADD COLUMN `parent_id` INT(11) NOT NULL DEFAULT 0;');
+                $this->db()->query('ALTER TABLE `[prefix]_rules` ADD COLUMN `access` varchar(255) NOT NULL;');
+                $rulesArray = $this->db()->select('*')->from('rules')->execute()->fetchAssoc();
+                if (!empty($rulesArray)) {
+                    $this->db()->query('INSERT INTO `[prefix]_rules` (`id`, `paragraph`, `title`, `text`, `position`, `parent_id`, `access`) VALUES (NULL, "1", "All Rules", "", "0", "0", "");');
+                    $result = $this->db()->getLastInsertId();
+                    $this->db()->query('UPDATE `[prefix]_rules` SET `parent_id` = "'.$result.'" WHERE `id` != "'.$result.'"');
+                }
+                unlink(ROOT_PATH.'/application/modules/rule/views/admin/index/treat.php');
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('rule_showallonstart', '1');
         }
     }
 }

@@ -36,8 +36,9 @@ class Rule extends \Ilch\Mapper
                 ->setParagraph($rule['paragraph'])
                 ->setTitle($rule['title'])
                 ->setText($rule['text'])
-                ->setPosition($rule['position']);
-
+                ->setPosition($rule['position'])
+                ->setParent_Id($rule['parent_id'])
+                ->setAccess($rule['access']);
             $rules[] = $ruleModel;
         }
 
@@ -67,9 +68,19 @@ class Rule extends \Ilch\Mapper
             ->setParagraph($ruleRow['paragraph'])
             ->setTitle($ruleRow['title'])
             ->setText($ruleRow['text'])
-            ->setPosition($ruleRow['position']);
+            ->setPosition($ruleRow['position'])
+            ->setParent_Id($ruleRow['parent_id'])
+            ->setAccess($ruleRow['access']);
 
         return $ruleModel;
+    }
+
+    /**
+     * Gets all Rules items by parent item id.
+     */
+    public function getRulesItemsByParent($itemId)
+    {
+        return $this->getRules(['parent_id' => $itemId]);
     }
 
     /**
@@ -96,19 +107,25 @@ class Rule extends \Ilch\Mapper
         $fields = [
             'paragraph' => $rule->getParagraph(),
             'title' => $rule->getTitle(),
-            'text' => $rule->getText()
+            'text' => $rule->getText(),
+            'parent_id' => $rule->getParent_Id(),
+            'position' => $rule->getPosition()   ,
+            'access' => $rule->getAccess()   
         ];
 
         if ($rule->getId()) {
+            $itemId = $rule->getId();
             $this->db()->update('rules')
                 ->values($fields)
                 ->where(['id' => $rule->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('rules')
+            $itemId = $this->db()->insert('rules')
                 ->values($fields)
                 ->execute();
         }
+        
+        return $itemId;
     }
 
     /**
