@@ -32,7 +32,7 @@
         <div class="col-lg-4">
             <select class="form-control" id="cat" name="cat">
                 <?php foreach ($this->get('rulesparents') as $item): ?>
-                    <option value="<?=$item->getId() ?>" <?=($this->get('rule')->getParent_Id() == $item->getId()) ? ' selected': '' ?>><?=$item->getParagraph().'. '.$item->getTitle() ?></option>
+                    <option value="<?=$item->getId() ?>"<?=($this->get('rule')->getParent_Id() == $item->getId()) ? ' selected': '' ?>><?=$item->getParagraph().'. '.$item->getTitle() ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -44,7 +44,7 @@
         <div class="col-lg-4">
             <select class="chosen-select form-control" id="assignedGroupsRead" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>
+                    <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$this->escape($groupList->getName()) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

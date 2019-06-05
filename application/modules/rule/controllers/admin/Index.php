@@ -89,12 +89,14 @@ class Index extends \Ilch\Controller\Admin
         $ruleMapper = new RuleMapper();
         $userGroupMapper = new UserGroupMapper();
 
+        $rule = '';
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('rule', $ruleMapper->getRuleById($this->getRequest()->getParam('id')));
+            $rule = $ruleMapper->getRuleById($this->getRequest()->getParam('id'));
+            $this->getView()->set('rule', $rule);
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
@@ -147,8 +149,15 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        if (!empty($rule)) {
+            $groups = explode(',', $rule->getAccess());
+        } else {
+            $groups = [1,2,3];
+        }
+
         $this->getView()->set('rulesparents', $ruleMapper->getRules(['r.parent_id' => 0]));
         $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
+        $this->getView()->set('groups', $groups);
     }
 
     public function delAction()
