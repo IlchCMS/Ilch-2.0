@@ -15,10 +15,11 @@ return [
     'cat' => 'Category',
     'new' => 'New',
     'create' => 'Create',
-    'missingParagraph' => 'It is required to add a paragraph.',
     'see' => 'see',
     'change' => 'change',
     'menuCats' => 'Categories',
     'noCats' => 'No categories available',
+    'categoryInUse' => 'This category cannot be deleted as it is still assigned with rules.',
+    'OneOrMoreCategoriesInUse' => 'One or more categories couldn\'t be deleted as there where still rules assigned.',
     'showallonstart' => 'Show all on start',
 ];

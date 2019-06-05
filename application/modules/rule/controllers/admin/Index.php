@@ -65,8 +65,20 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
+                $categoryInUse = false;
                 foreach ($this->getRequest()->getPost('check_entries') as $ruleId) {
-                    $ruleMapper->delete($ruleId);
+
+                    if ($ruleMapper->getRulesItemsByParent($ruleId) == '') {
+                        $ruleMapper->delete($ruleId);
+                    } else {
+                        $categoryInUse = true;
+                    }
+                }
+
+                if ($categoryInUse) {
+                    $this->redirect()
+                        ->withMessage('OneOrMoreCategoriesInUse', 'danger')
+                        ->to(['action' => 'index']);
                 }
             }
         }
@@ -164,11 +176,18 @@ class Index extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             $ruleMapper = new RuleMapper();
-            $ruleMapper->delete($this->getRequest()->getParam('id'));
 
-            $this->addMessage('deleteSuccess');
+            if ($ruleMapper->getRulesItemsByParent($this->getRequest()->getParam('id')) == '') {
+                $ruleMapper->delete($this->getRequest()->getParam('id'));
+
+                $this->redirect()
+                    ->withMessage('deleteSuccess')
+                    ->to(['action' => 'index']);
+            } else {
+                $this->redirect()
+                    ->withMessage('categoryInUse', 'danger')
+                    ->to(['action' => 'index']);
+            }
         }
-
-        $this->redirect(['action' => 'index']);
     }
 }
