@@ -37,18 +37,25 @@ class Rule extends \Ilch\Model
     protected $text;
 
     /**
-     * The position of th rule.
+     * The position of the rule.
      *
      * @var int
      */
     protected $position;
 
     /**
-     * The parent_id of th rule.
+     * The parent_id of the rule.
      *
      * @var int
      */
     protected $parent_id;
+
+    /**
+     * The title of the parent rule.
+     *
+     * @var string
+     */
+    protected $parent_title;
 
     /**
      * Read access of the item.
@@ -196,6 +203,28 @@ class Rule extends \Ilch\Model
     }
 
     /**
+     * Gets the title of the parent rule.
+     *
+     * @return string
+     */
+    public function getParentTitle()
+    {
+        return $this->parent_title;
+    }
+
+    /**
+     * Sets the title of the parent rule.
+     *
+     * @param string $parent_title
+     * @return Rule
+     */
+    public function setParentTitle($parent_title)
+    {
+        $this->parent_title = $parent_title;
+        return $this;
+    }
+
+    /**
      * Gets the access.
      *
      * @return string
@@ -208,7 +237,7 @@ class Rule extends \Ilch\Model
     /**
      * Sets the access.
      *
-     * @param string $Access
+     * @param string $access
      * @return $this
      */
     public function setAccess($access)

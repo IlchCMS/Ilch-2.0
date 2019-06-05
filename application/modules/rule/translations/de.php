@@ -18,5 +18,7 @@ return [
     'missingParagraph' => 'Es muss ein Paragraf angegeben werden.',
     'see' => 'sehen',
     'change' => 'ändern',
+    'menuCats' => 'Kategorien',
+    'noCats' => 'Keine Kategorien vorhanden',
     'showallonstart' => 'Zeige alles beim Start',
 ];

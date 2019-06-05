@@ -71,7 +71,7 @@ class Config extends \Ilch\Config\Install
                     $result = $this->db()->getLastInsertId();
                     $this->db()->query('UPDATE `[prefix]_rules` SET `parent_id` = "'.$result.'" WHERE `id` != "'.$result.'"');
                 }
-                unlink(ROOT_PATH.'/application/modules/rule/views/admin/index/treat.php');
+
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('rule_showallonstart', '1');
         }

@@ -18,5 +18,7 @@ return [
     'missingParagraph' => 'It is required to add a paragraph.',
     'see' => 'see',
     'change' => 'change',
+    'menuCats' => 'Categories',
+    'noCats' => 'No categories available',
     'showallonstart' => 'Show all on start',
 ];

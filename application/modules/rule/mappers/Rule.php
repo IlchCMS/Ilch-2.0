@@ -18,8 +18,10 @@ class Rule extends \Ilch\Mapper
      */
     public function getRules($where = [])
     {
-        $rulesArray = $this->db()->select('*')
-            ->from('rules')
+        $rulesArray = $this->db()->select()
+            ->fields(['r.id', 'r.paragraph', 'r.title', 'r.text', 'r.position', 'r.parent_id', 'r.access'])
+            ->from(['r' => 'rules'])
+            ->join(['p' => 'rules'], ['r.parent_id = p.id'], 'LEFT', ['parent_title' => 'p.title'])
             ->where($where)
             ->order(['position' => 'ASC'])
             ->execute()
@@ -38,6 +40,7 @@ class Rule extends \Ilch\Mapper
                 ->setText($rule['text'])
                 ->setPosition($rule['position'])
                 ->setParent_Id($rule['parent_id'])
+                ->setParentTitle($rule['parent_title'])
                 ->setAccess($rule['access']);
             $rules[] = $ruleModel;
         }
@@ -53,9 +56,11 @@ class Rule extends \Ilch\Mapper
      */
     public function getRuleById($id)
     {
-        $ruleRow = $this->db()->select('*')
-            ->from('rules')
-            ->where(['id' => $id])
+        $ruleRow = $this->db()->select()
+            ->fields(['r.id', 'r.paragraph', 'r.title', 'r.text', 'r.position', 'r.parent_id', 'r.access'])
+            ->from(['r' => 'rules'])
+            ->join(['p' => 'rules'], ['r.parent_id = p.id'], 'LEFT', ['parent_title' => 'p.title'])
+            ->where(['r.id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -70,6 +75,7 @@ class Rule extends \Ilch\Mapper
             ->setText($ruleRow['text'])
             ->setPosition($ruleRow['position'])
             ->setParent_Id($ruleRow['parent_id'])
+            ->setParentTitle($ruleRow['parent_title'])
             ->setAccess($ruleRow['access']);
 
         return $ruleModel;
@@ -77,10 +83,12 @@ class Rule extends \Ilch\Mapper
 
     /**
      * Gets all Rules items by parent item id.
+     * @param $itemId
+     * @return array|RuleModel[]
      */
     public function getRulesItemsByParent($itemId)
     {
-        return $this->getRules(['parent_id' => $itemId]);
+        return $this->getRules(['r.parent_id' => $itemId]);
     }
 
     /**
@@ -101,6 +109,7 @@ class Rule extends \Ilch\Mapper
      * Inserts or updates rule model.
      *
      * @param RuleModel $rule
+     * @return int
      */
     public function save(RuleModel $rule)
     {
@@ -109,7 +118,7 @@ class Rule extends \Ilch\Mapper
             'title' => $rule->getTitle(),
             'text' => $rule->getText(),
             'parent_id' => $rule->getParent_Id(),
-            'position' => $rule->getPosition()   ,
+            'position' => $rule->getPosition(),
             'access' => $rule->getAccess()   
         ];
 
