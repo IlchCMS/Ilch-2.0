@@ -26,13 +26,13 @@
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('cat') ? 'has-error' : '' ?>">
-        <label for="parent" class="col-lg-2 control-label">
+        <label for="cat" class="col-lg-2 control-label">
             <?=$this->getTrans('cat') ?>
         </label>
         <div class="col-lg-4">
             <select class="form-control" id="cat" name="cat">
                 <?php foreach ($this->get('rulesparents') as $item): ?>
-                    <option value="<?=$item->getId() ?>"<?=($this->get('rule')->getParent_Id() == $item->getId()) ? ' selected': '' ?>><?=$item->getParagraph().'. '.$item->getTitle() ?></option>
+                    <option value="<?=$item->getId() ?>"<?=(!empty($this->get('rule')) && $this->get('rule')->getParent_Id() == $item->getId()) ? ' selected': '' ?>><?=$item->getParagraph().'. '.$item->getTitle() ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
