@@ -8,6 +8,7 @@ namespace Modules\Rule\Controllers\Admin;
 
 use Modules\Rule\Mappers\Rule as RuleMapper;
 use Modules\Rule\Models\Rule as RuleModel;
+use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
@@ -26,6 +27,18 @@ class Index extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
+            ],
+            [
+                'name' => 'menuCats',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
 
@@ -52,8 +65,20 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
+                $categoryInUse = false;
                 foreach ($this->getRequest()->getPost('check_entries') as $ruleId) {
-                    $ruleMapper->delete($ruleId);
+
+                    if ($ruleMapper->getRulesItemsByParent($ruleId) == '') {
+                        $ruleMapper->delete($ruleId);
+                    } else {
+                        $categoryInUse = true;
+                    }
+                }
+
+                if ($categoryInUse) {
+                    $this->redirect()
+                        ->withMessage('OneOrMoreCategoriesInUse', 'danger')
+                        ->to(['action' => 'index']);
                 }
             }
         }
@@ -71,16 +96,19 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('rules', $ruleMapper->getRules());
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $ruleMapper = new RuleMapper();
+        $userGroupMapper = new UserGroupMapper();
 
+        $rule = '';
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('rule', $ruleMapper->getRuleById($this->getRequest()->getParam('id')));
+            $rule = $ruleMapper->getRuleById($this->getRequest()->getParam('id'));
+            $this->getView()->set('rule', $rule);
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
@@ -91,17 +119,27 @@ class Index extends \Ilch\Controller\Admin
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'paragraph' => 'required',
                 'title' => 'required',
-                'text' => 'required'
+                'text' => 'required',
+                'cat' => 'required|integer|min:0'
             ]);
 
             if ($validation->isValid()) {
                 $model = new RuleModel();
+
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
+
+                $groups = '';
+                if (!empty($this->getRequest()->getPost('groups'))) {
+                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                }
+
                 $model->setParagraph($this->getRequest()->getPost('paragraph'))
                     ->setTitle($this->getRequest()->getPost('title'))
-                    ->setText($this->getRequest()->getPost('text'));
+                    ->setText($this->getRequest()->getPost('text'))
+                    ->SetParent_Id($this->getRequest()->getPost('cat'))
+                    ->setAccess($groups);
                 $ruleMapper->save($model);
 
                 $this->redirect()
@@ -122,17 +160,34 @@ class Index extends \Ilch\Controller\Admin
                     ->to(['action' => 'treat']);
             }
         }
+
+        if (!empty($rule)) {
+            $groups = explode(',', $rule->getAccess());
+        } else {
+            $groups = [1,2,3];
+        }
+
+        $this->getView()->set('rulesparents', $ruleMapper->getRules(['r.parent_id' => 0]));
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
+        $this->getView()->set('groups', $groups);
     }
 
     public function delAction()
     {
         if ($this->getRequest()->isSecure()) {
             $ruleMapper = new RuleMapper();
-            $ruleMapper->delete($this->getRequest()->getParam('id'));
 
-            $this->addMessage('deleteSuccess');
+            if ($ruleMapper->getRulesItemsByParent($this->getRequest()->getParam('id')) == '') {
+                $ruleMapper->delete($this->getRequest()->getParam('id'));
+
+                $this->redirect()
+                    ->withMessage('deleteSuccess')
+                    ->to(['action' => 'index']);
+            } else {
+                $this->redirect()
+                    ->withMessage('categoryInUse', 'danger')
+                    ->to(['action' => 'index']);
+            }
         }
-
-        $this->redirect(['action' => 'index']);
     }
 }

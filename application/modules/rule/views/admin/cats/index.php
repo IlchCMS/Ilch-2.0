@@ -1,5 +1,5 @@
-<h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<h1><?=$this->getTrans('menuCats') ?></h1>
+<form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
@@ -8,41 +8,32 @@
                 <col class="icon_width" />
                 <col class="icon_width" />
                 <col class="icon_width" />
-                <col class="col-lg-2" />
-                <col class="icon_width" />
-                <col class="col-lg-2" />
                 <col />
             </colgroup>
             <thead>
                 <tr>
-                    <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
+                    <th><?=$this->getCheckAllCheckbox('check_cats') ?></th>
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th><?=$this->getTrans('cat') ?></th>
-                    <th>§</th>
                     <th><?=$this->getTrans('title') ?></th>
-                    <th><?=$this->getTrans('text');?></th>
                 </tr>
             </thead>
             <tbody>
-                <?php if ($this->get('rules') != ''): ?>
-                    <?php foreach ($this->get('rules') as $rule): ?>
+                <?php if (!empty($this->get('cats'))): ?>
+                    <?php foreach ($this->get('cats') as $cat): ?>
                         <tr>
-                            <input type="hidden" name="items[]" value="<?=$rule->getId() ?>" />
-                            <td><?=$this->getDeleteCheckbox('check_entries', $rule->getId()) ?></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $rule->getId()]) ?></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $rule->getId()]) ?></td>
+                            <input type="hidden" name="items[]" value="<?=$cat->getId() ?>" />
+                            <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
                             <td><i class="fa fa-sort"></i></td>
-                            <td><?=$this->escape($rule->getParentTitle()) ?></td>
-                            <td><?=$this->escape($rule->getParagraph()) ?></td>
-                            <td><?=$this->escape($rule->getTitle()) ?></td>
-                            <td><?=$rule->getText() ?></td>
+                            <td><?=$this->escape($cat->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="7"><?=$this->getTrans('noRules') ?></td>
+                        <td colspan="5"><?=$this->getTrans('noCats') ?></td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -58,7 +49,7 @@
                 <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
             </ul>
         </div>
-        <button type="submit" class="save_button btn btn-default" name="saveRules" value="save">
+        <button type="submit" class="save_button btn btn-default" name="saveCats" value="save">
             <?=$this->getTrans('saveButton') ?>
         </button>
     </div>
@@ -71,7 +62,7 @@ $('table tbody').sortable({
     placeholder: "table-sort-drop",
     forcePlaceholderSize: true,
     'start': function (event, ui) {
-        ui.placeholder.html("<td colspan='7'></td>");
+        ui.placeholder.html("<td colspan='5'></td>");
         ui.placeholder.height(ui.item.height());
     }
 }).disableSelection();

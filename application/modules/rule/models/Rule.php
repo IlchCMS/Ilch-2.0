@@ -18,7 +18,7 @@ class Rule extends \Ilch\Model
     /**
      * The paragraph of the rule.
      *
-     * @var int
+     * @var string
      */
     protected $paragraph;
 
@@ -37,11 +37,32 @@ class Rule extends \Ilch\Model
     protected $text;
 
     /**
-     * The position of th rule.
+     * The position of the rule.
      *
      * @var int
      */
     protected $position;
+
+    /**
+     * The parent_id of the rule.
+     *
+     * @var int
+     */
+    protected $parent_id;
+
+    /**
+     * The title of the parent rule.
+     *
+     * @var string
+     */
+    protected $parent_title;
+
+    /**
+     * Read access of the item.
+     *
+     * @var string
+     */
+    protected $access;
 
     /**
      * Gets the id of the rule.
@@ -69,7 +90,7 @@ class Rule extends \Ilch\Model
     /**
      * Gets the paragraph of the rule.
      *
-     * @return int
+     * @return string
      */
     public function getParagraph()
     {
@@ -79,12 +100,12 @@ class Rule extends \Ilch\Model
     /**
      * Sets the paragraph of the rule.
      *
-     * @param int $paragraph
+     * @param string $paragraph
      * @return $this
      */
     public function setParagraph($paragraph)
     {
-        $this->paragraph = (int)$paragraph;
+        $this->paragraph = (string)$paragraph;
 
         return $this;
     }
@@ -154,6 +175,74 @@ class Rule extends \Ilch\Model
     public function setPosition($position)
     {
         $this->position = (int)$position;
+
+        return $this;
+    }
+
+    /**
+     * Gets the parent_id of the rule.
+     *
+     * @return int
+     */
+    public function getParent_Id()
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * Sets the parent_id of the rule.
+     *
+     * @param int $parent_id
+     * @return $this
+     */
+    public function setParent_Id($parent_id)
+    {
+        $this->parent_id = (int)$parent_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets the title of the parent rule.
+     *
+     * @return string
+     */
+    public function getParentTitle()
+    {
+        return $this->parent_title;
+    }
+
+    /**
+     * Sets the title of the parent rule.
+     *
+     * @param string $parent_title
+     * @return Rule
+     */
+    public function setParentTitle($parent_title)
+    {
+        $this->parent_title = $parent_title;
+        return $this;
+    }
+
+    /**
+     * Gets the access.
+     *
+     * @return string
+     */
+    public function getAccess()
+    {
+        return $this->access;
+    }
+
+    /**
+     * Sets the access.
+     *
+     * @param string $access
+     * @return $this
+     */
+    public function setAccess($access)
+    {
+        $this->access = (string) $access;
 
         return $this;
     }
