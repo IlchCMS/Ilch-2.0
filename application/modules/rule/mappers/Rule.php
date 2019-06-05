@@ -129,6 +129,27 @@ class Rule extends \Ilch\Mapper
                 ->where(['id' => $rule->getId()])
                 ->execute();
         } else {
+            if ($fields['parent_id'] == 0) {
+                // New category. Add to the end (max+1 position)
+                $lastPosition = $this->db()->select('MAX(`position`) as lastPosition')
+                    ->from('rules')
+                    ->execute()
+                    ->fetchAssoc();
+
+                $fields['position'] = $lastPosition['lastPosition'] + 1;
+            } else {
+                // New rule. Add at the end of it's category.
+                $lastPosition = $this->db()->select('position as lastPosition')
+                    ->from('rules')
+                    ->where(['parent_id' => $fields['parent_id']])
+                    ->order(['position' => 'DESC'])
+                    ->limit(1)
+                    ->execute()
+                    ->fetchAssoc();
+
+                $fields['position'] = $lastPosition['lastPosition'];
+            }
+
             $itemId = $this->db()->insert('rules')
                 ->values($fields)
                 ->execute();

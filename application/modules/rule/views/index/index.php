@@ -68,7 +68,7 @@ function rec($item, $obj)
         <?php endforeach; ?>
     </div>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             <?php if ($this->get('showallonstart')): ?>
             $('#accordion .collapse').collapse('show');
             <?php endif; ?>
@@ -84,15 +84,18 @@ function rec($item, $obj)
 
         function openAnchorAccordion() {
             if (window.location.hash) {
-                var paragraph0 = window.location.hash.split('_');
-                var paragraph1 = paragraph0[0].split('paragraph');
-                var jQuerytarget = jQuery('body').find('#paragraph0_'+paragraph1[1]);
+                let paragraph0 = window.location.hash.split('_');
+                let paragraph1 = paragraph0[0].split('paragraph');
+                let jQuerytarget = jQuery('body').find('#paragraph0_'+paragraph1[1]);
+
                 if (jQuerytarget.hasClass('collapse')) {
+                    let jQuerytargetAccordion;
                     jQuerytarget.collapse('show');
+
                     if (paragraph0.length == 1) {
-                        var jQuerytargetAccordion = jQuery('body').find('#paragraph'+paragraph1[1]);
+                        jQuerytargetAccordion = jQuery('body').find('#paragraph'+paragraph1[1]);
                     } else {
-                        var jQuerytargetAccordion = jQuery('body').find(window.location.hash);
+                        jQuerytargetAccordion = jQuery('body').find(window.location.hash);
                     }
                     ('html, body').animate({ scrollTop: (jQuerytargetAccordion.offset().top)}, 20000);
                 }
