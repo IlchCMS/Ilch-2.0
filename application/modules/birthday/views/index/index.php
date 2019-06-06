@@ -54,7 +54,7 @@ $date = new \Ilch\Date();
         <div class="panel-body">
             <?php if ($monthsUserCount != ''): ?>
                 <?php foreach ($this->get('birthdayList') as $birthdaylist): ?>
-                    <?php if ($this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
+                    <?php if ($birthdaylist->getBirthday() != '' AND $this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
                         <div style="padding: 0 2px 2px 0; float: left;">
                             <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
                                 <img class="thumbnail" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()); ?>" title="<?=$this->escape($birthdaylist->getName()) ?> (<?=date("d.m", strtotime($this->escape($birthdaylist->getBirthday()))) ?>)" width="69" height="69">
