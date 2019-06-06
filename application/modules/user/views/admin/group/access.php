@@ -21,6 +21,8 @@
                 <?php endforeach; ?>
             </select>
         </div>
+    </div>
+    <div class="form-group">
         <label for="accessId" class="control-label col-sm-2">
         <?php
         $accessTypes = $this->get('accessTypes');
