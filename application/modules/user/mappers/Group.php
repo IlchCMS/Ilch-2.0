@@ -247,6 +247,46 @@ class Group extends \Ilch\Mapper
 
         return $accessList;
     }
+    
+    /**
+     * Returns the access access list from the database.
+     *
+     * @param  string $Type
+     * @param  string $Id
+     * @return mixed[]
+     * @throws \Ilch\Database\Exception
+     */
+    public function getAccessAccessList($Type, $Id)
+    {
+        $sqlwhere = '';
+        if ($Type == 'module') {
+            $sqlwhere = 'module_key';
+        } elseif ($Type == 'article') {
+            $sqlwhere = 'article_id';
+        } elseif ($Type == 'page') {
+            $sqlwhere = 'page_id';
+        } elseif ($Type == 'box') {
+            $sqlwhere = 'box_id';
+        }
+
+        if ($sqlwhere == '') return null;
+
+        $sql = 'SELECT g.name AS group_name, ga.*
+                FROM [prefix]_groups_access AS ga
+                INNER JOIN [prefix]_groups AS g ON ga.group_id = g.id
+                WHERE ga.'.$sqlwhere.' = "'.$Id.'"';
+        $accessDbList = $this->db()->queryArray($sql);
+        $accessList = [];
+        $accessList['entries'] = [];
+
+        $accessList['Type'] = $Type;
+        $accessList['Id'] = $Id;
+
+        foreach ($accessDbList as $accessDbListEntry) {
+            $accessList['entries'][$accessDbListEntry['group_id']] = (int)$accessDbListEntry['access_level'];
+        }
+        return $accessList;
+    }
 
     /**
      * Saves or updates an access data entry to the db.

@@ -491,7 +491,24 @@ class User extends \Ilch\Mapper
                 ->execute();
         }
     }
-    
+
+    /**
+     * Delete User to a Group.
+     *
+     * @param int $userId
+     * @param int $groupId
+     */
+    public function deleteUserToGroup($userId, $groupId)
+    {
+        $groupMapper = new GroupMapper();
+
+        if ($this->userWithIdExists($userId) AND $groupMapper->groupWithIdExists($groupId) AND in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
+            $this->db()->delete('users_groups')
+                ->where(['user_id' => $userId, 'group_id' => $groupId])
+                ->execute();
+        }
+    }
+
     /**
      * Selects a specific user or user with the specified ID to delete.
      *
@@ -511,7 +528,7 @@ class User extends \Ilch\Mapper
                 ->where(['id' => $userId])
                 ->execute();
     }
-    
+
     /**
      * Delete all Selects Delete finaly.
      *

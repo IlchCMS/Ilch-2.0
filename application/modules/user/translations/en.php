@@ -35,6 +35,7 @@ return [
     'neverLoggedIn' => 'Not logged in, yet',
     'noGroupsAssigned' => 'No group assigned',
     'assignedGroups' => 'Assigned groups',
+    'assignedUsers' => 'Assigned users',
     'selectAssignedGroups' => 'Select assigned groups',
     'askIfDeleteUser' => 'Are you sure to delete user "%s"?',
     'newUserMsg' => 'User got created successfully.',
@@ -161,7 +162,7 @@ return [
     'confirmedCodeWrong' => 'The activation code is wrong.',
     'incompleteActivationUrl' => 'The url to activate your account is invalid.',
     'cookieStolen' => 'Someone has possibly stolen your cookie. Please check your systems for malware and change your password.',
-    
+
     'userSelectsDelete' => 'User was marked for delete. This process was canceled.',
     'menuDeleteAccount' => 'Delete Account',
     'deleteaccount' => 'Delete Account',
@@ -326,7 +327,7 @@ return [
     'providersNoModuleSelectedOrInstalled' => 'No module selected and/or installed',
     'deactivateAuthProvider' => 'Deactivate authentication provider',
     'providersModuleHelpText' => 'Module that handles the authentication process for the selected provider',
-    
+
     'providerNotFound' => 'Could not find the selected authentication provider.',
     'badRequest' => 'Bad request, please try again.',
     'moduleUpdated' => 'Module updated successfully.',

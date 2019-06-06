@@ -35,6 +35,7 @@ return [
     'neverLoggedIn' => 'Noch nicht eingeloggt',
     'noGroupsAssigned' => 'Keine Gruppe zugewiesen',
     'assignedGroups' => 'Zugewiesene Gruppen',
+    'assignedUsers' => 'Zugewiesene Benutzer',
     'selectAssignedGroups' => 'Zugewiesene Gruppen wählen',
     'askIfDeleteUser' => 'Sind Sie sicher dass der Benutzer "%s" entfernt werden soll?',
     'newUserMsg' => 'Der Benutzer wurde erfolgreich angelegt.',
@@ -326,7 +327,7 @@ return [
     'providersNoModuleSelectedOrInstalled' => 'kein Modul ausgewählt oder keines installiert',
     'deactivateAuthProvider' => 'Authentifizierungsanbieter deaktivieren',
     'providersModuleHelpText' => 'Modul, welches die Authentifizierung über den gewählten Anbieter ausführt.',
-    
+
     'providerNotFound' => 'Der gewählte Authentifizierungsanbieter konnte nicht gefunden werden.',
     'badRequest' => 'Ungültiger Seitenaufruf, bitte versuche es erneut.',
     'moduleUpdated' => 'Modul erfolgreich geändert.',

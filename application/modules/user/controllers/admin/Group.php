@@ -12,6 +12,7 @@ use Modules\Admin\Mappers\Module as ModuleMapper;
 use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Article\Mappers\Article as ArticleMapper;
+use Modules\User\Mappers\User as UserMapper;
 
 /**
  * Handles action for the main admin configuration page.
@@ -127,14 +128,21 @@ class Group extends \Ilch\Controller\Admin
 
         $groupId = $this->getRequest()->getParam('id');
         $groupMapper = new GroupMapper();
+        $userMapper = new UserMapper();
 
         if ($groupMapper->groupWithIdExists($groupId)) {
             $group = $groupMapper->getGroupById($groupId);
-        }
-        else {
+            $groupUsers = $groupMapper->getUsersForGroup($group->getId());
+        } else {
             $group = new GroupModel();
+            $groupUsers = [];
         }
 
+        $users = $userMapper->getUserList();
+
+        $this->getView()->set('userMapper', $userMapper);
+        $this->getView()->set('UsersList', $users);
+        $this->getView()->set('groupUsersList', $groupUsers);
         $this->getView()->set('group', $group);
         $this->getView()->set('groupList', $groupMapper->getGroupList());
     }
@@ -148,10 +156,30 @@ class Group extends \Ilch\Controller\Admin
 
         if (isset($postData['group'])) {
             $groupData = $postData['group'];
-
+            $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
             $groupMapper = new GroupMapper();
             $group = $groupMapper->loadFromArray($groupData);
             $groupId = $groupMapper->save($group);
+
+            //if ($groupId != 1) {
+            $groupUsers = $groupMapper->getUsersForGroup($groupId);
+            $userMapper = new UserMapper();
+            foreach($sortItems as $key => $user_Id) {
+                if (!in_array($user_Id, $groupUsers)){
+                    $userMapper->addUserToGroup($user_Id, $groupId);
+                    $groupUsers[] = $user_Id;
+                }
+            }
+            foreach($groupUsers as $key => $user_Id) {
+                if (!in_array($user_Id, $sortItems)){
+                    if ($groupId != 1 or ($groupId == 1 and count($groupUsers) > 1)) {
+                        $userMapper->deleteUserToGroup($user_Id, $groupId);
+                        unset($groupUsers[$key]);
+                    } elseif ($groupId == 1 and count($groupUsers) <= 1) {
+                        $this->addMessage('delLastAdminProhibited', 'warning');
+                    }
+                }
+            }
 
             if (!empty($groupId) && empty($groupData['id'])) {
                 $this->redirect()
@@ -206,6 +234,8 @@ class Group extends \Ilch\Controller\Admin
         $groups = $groupMapper->getGroupList();
         $this->getView()->set('activeGroupId', 0);
         $this->getView()->set('activeGroup', null);
+        $this->getView()->set('activeaccessId', 0);
+        $this->getView()->set('activeAccess', null);
 
         foreach ($groups as $key => $group) {
             if ($group->getId() == 1) {
@@ -215,11 +245,17 @@ class Group extends \Ilch\Controller\Admin
 
         $this->getView()->set('groups', $groups);
 
-        if (isset($postData['groupId'])) {
+        $groupId = 0;
+        $accessId = 0;
+
+        if (!empty($postData['groupId'])) {
             $groupId = (int)$postData['groupId'];
             $_SESSION['user']['accessGroup'] = $groupId;
-        } else {
-            $groupId = 0;
+            unset($_SESSION['user']['accessAccess']);
+        } elseif (!empty($postData['accessId'])) {
+            $accessId = $postData['accessId'];
+            $_SESSION['user']['accessAccess'] = $accessId;
+            unset($_SESSION['user']['accessGroup']);
         }
 
         if ($groupId) {
@@ -228,6 +264,13 @@ class Group extends \Ilch\Controller\Admin
             $this->getView()->set('groupAccessList', $groupAccessList);
             $this->getView()->set('activeGroupId', $groupId);
             $this->getView()->set('activeGroup', $activeGroup);
+        }
+        
+        if ($accessId) {
+            list($Type, $Id) = explode('_', $accessId);
+            $groupAccessList = $groupMapper->getAccessAccessList($Type, $Id);
+            $this->getView()->set('accessAccessList', $groupAccessList);
+            $this->getView()->set('activeaccessId', $accessId);
         }
 
         $moduleMapper = new ModuleMapper();
@@ -253,7 +296,7 @@ class Group extends \Ilch\Controller\Admin
     }
 
     /**
-     * Saves the group access rights.
+     * Saves the group/access access rights.
      */
     public function saveAccessAction()
     {
@@ -269,6 +312,16 @@ class Group extends \Ilch\Controller\Admin
                         $groupMapper->saveAccessData($_SESSION['user']['accessGroup'], $value, $accessLevel, $type);
                     }
                 }
+            }
+
+            $this->redirect(['action' => 'access']);
+        } elseif (isset($postData['accessAccess'], $postData['accessId'])) {
+            list($Type, $Id) = explode('_', $_SESSION['user']['accessAccess']);
+            $accessAccessData = $postData['accessAccess'];
+            $groupMapper = new GroupMapper();
+
+            foreach ($accessAccessData as $groupId => $accessLevel) {
+                $groupMapper->saveAccessData($groupId, $Id, $accessLevel, $Type);
             }
 
             $this->redirect(['action' => 'access']);
