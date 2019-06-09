@@ -18,6 +18,7 @@ class Shoutbox extends \Ilch\Box
         $shoutboxMapper = new ShoutboxMapper();
         $userMapper = new UserMapper();
         $uniqid = $this->getUniqid();
+        if ($this->getRequest()->getPost('uniqid')) $uniqid = $this->getRequest()->getPost('uniqid');
 
         $userId = null;
         if ($this->getUser()) {

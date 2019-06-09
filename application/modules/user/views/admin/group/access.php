@@ -10,7 +10,7 @@
         <div class="col-sm-10">
             <select class="form-control" id="groupId" name="groupId">
                 <option value="0"
-                        <?=((int)$this->get('activeGroupId') == null) ? 'selected="selected"' : '' ?>>
+                        <?=(empty((int)$this->get('activeGroupId'))) ? 'selected="selected"' : '' ?>>
                         <?=$this->getTrans('chooseAGroup') ?>
                 </option>
                 <?php foreach ($this->get('groups') as $group): ?>
@@ -22,14 +22,60 @@
             </select>
         </div>
     </div>
+    <div class="form-group">
+        <label for="accessId" class="control-label col-sm-2">
+        <?php
+        $accessTypes = $this->get('accessTypes');
+        foreach ($accessTypes as $accessType => $typeData) {
+            reset($accessTypes);
+            if ($accessType !== key($accessTypes))
+                echo ' / ';
+            echo $this->getTrans($accessType);
+        }
+        $activeaccess = '';
+        ?></label>
+        <div class="col-sm-10">
+            <select class="form-control" id="accessId" name="accessId">
+                <option value="0"
+                        <?=(empty((int)$this->get('activeaccessId'))) ? 'selected="selected"' : '' ?>>
+                        <?=$this->getTrans('choose') ?>
+                </option>
+                <?php foreach ($accessTypes as $accessType => $typeData): ?>
+                    <optgroup label="<?=$this->getTrans($accessType) ?>">
+                    <?php foreach ($typeData as $type): ?>
+                        <option value="<?=$accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId()) ?>"
+                            <?=(!empty($this->get('activeaccessId')) and $this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) ? 'selected="selected"' : '' ?>>
+                            <?php
+                            if ($accessType == 'module') {
+                                $content = $type->getContentForLocale($this->getTranslator()->getLocale());
+                                echo $this->escape($content['name']);
+                                if ($this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) $activeaccess = $this->escape($content['name']);
+                            } elseif ($accessType == 'article') {
+                               echo $this->escape($type->getTitle());
+                               if ($this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) $activeaccess = $this->escape($type->getTitle());
+                            } elseif ($accessType == 'page') {
+                                echo $this->escape($type->getTitle());
+                               if ($this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) $activeaccess = $this->escape($type->getTitle());
+                            } elseif ($accessType == 'box') {
+                                echo $this->escape($type->getTitle());
+                               if ($this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) $activeaccess = $this->escape($type->getTitle());
+                            }
+                            ?>
+                        </option>
+                    <?php endforeach; ?>
+                    </optgroup>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
     <?php
+    $accessLevelsTrans = [
+        0 => 'noAccess',
+        1 => 'lookAccess',
+        2 => 'modifyAccess',
+    ];
     if ($this->get('groupAccessList') != ''):
         $groupAccessList = $this->get('groupAccessList');
-        $accessLevelsTrans = [
-            0 => 'noAccess',
-            1 => 'lookAccess',
-            2 => 'modifyAccess',
-        ];
         $activeGroup = $this->get('activeGroup');
 
         foreach ($this->get('accessTypes') as $accessType => $typeData):
@@ -120,12 +166,73 @@
             </div>
         <?php endforeach; ?>
         <?=$this->getSaveBar() ?>
+    <?php elseif ($this->get('accessAccessList') != ''):
+        $accessAccessList = $this->get('accessAccessList');
+            ?>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <colgroup>
+                        <col>
+                        <col class="col-lg-2">
+                        <col class="col-lg-2">
+                        <col class="col-lg-2">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th><?=$activeaccess ?></th>
+                            <?php
+                            foreach ($accessLevelsTrans as $transKey) {
+                                echo '<th class="text-center">'.$this->getTrans($transKey).'</th>';
+                            }
+                            ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($this->get('groups') as $group):
+                        ?>
+                            <tr>
+                                <td style="vertical-align:middle"><?=$this->escape($group->getName()) ?></td>
+                                <?php
+                                $typeAccessLevel = 1;
+
+                                if (isset($accessAccessList['entries'][$group->getId()])) {
+                                    $typeAccessLevel = $accessAccessList['entries'][$group->getId()];
+                                }
+
+                                foreach ($accessLevelsTrans as $accessLevel => $transKey): ?>
+                                    <td class="text-center">
+                                        <input type="radio"
+                                           <?php
+                                            if ($accessType == 'module') {
+                                                echo 'name="accessAccess['.$group->getId().']"';
+                                             } else {
+                                                 echo 'name="accessAccess['.$group->getId().']"';
+                                             }
+                                            ?>
+                                           value="<?=$accessLevel ?>"
+                                           <?=($accessLevel == $typeAccessLevel) ? 'checked' : '' ?> />
+                                    </td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?=$this->getSaveBar() ?>
     <?php endif; ?>
 </form>
-
 <script>
 $('#groupId').on('change', function() {
     if ($(this).val() != 0) {
+        $('#accessId').val(0);
+        $('#groupAccessForm').attr('action', '<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'access']) ?>');
+        $('#groupAccessForm').submit();
+    }
+});
+$('#accessId').on('change', function() {
+    if ($(this).val() != 0) {
+        $('#groupId').val(0);
         $('#groupAccessForm').attr('action', '<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'access']) ?>');
         $('#groupAccessForm').submit();
     }
