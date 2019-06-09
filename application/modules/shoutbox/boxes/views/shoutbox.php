@@ -1,29 +1,26 @@
-<?php 
-$random = mt_rand(1, 10000);
-?>
 <script >
 $(function() {
-    var $shoutboxContainer = $('#shoutbox-container<?=$random?>'),
+    var $shoutboxContainer = $('#shoutbox-container<?=$this->get('uniqid') ?>'),
         showForm = function() {
-            $("#shoutbox-button-container<?=$random?>").slideUp(200, function() {
-                $("#shoutbox-form-container<?=$random?>").slideDown(400);
+            $("#shoutbox-button-container<?=$this->get('uniqid') ?>").slideUp(200, function() {
+                $("#shoutbox-form-container<?=$this->get('uniqid') ?>").slideDown(400);
             });
         },
         hideForm = function(afterHide) {
-            $("#shoutbox-form-container<?=$random?>").slideUp(400, function() {
-                $("#shoutbox-button-container<?=$random?>").slideDown(200, afterHide);
+            $("#shoutbox-form-container<?=$this->get('uniqid') ?>").slideUp(400, function() {
+                $("#shoutbox-button-container<?=$this->get('uniqid') ?>").slideDown(200, afterHide);
             });
         };
 
 
     //slideup-down
-    $shoutboxContainer.on('click', '#shoutbox-slide-down<?=$random?>', showForm);
+    $shoutboxContainer.on('click', '#shoutbox-slide-down<?=$this->get('uniqid') ?>', showForm);
 
     //slideup-down reset on click out
     $(document.body).on('mousedown', function(event) {
         var target = $(event.target);
 
-        if (!target.parents().addBack().is('#shoutbox-container<?=$random?>')) {
+        if (!target.parents().addBack().is('#shoutbox-container<?=$this->get('uniqid') ?>')) {
             hideForm();
         }
     });
@@ -46,7 +43,7 @@ $(function() {
                 data: dataString,
                 cache: false,
                 success: function(html) {
-                    var $htmlWithoutScript = $(html).filter('#shoutbox-container<?=$random?>');
+                    var $htmlWithoutScript = $(html).filter('#shoutbox-container<?=$this->get('uniqid') ?>');
                     hideForm(function() {
                         $shoutboxContainer.html($htmlWithoutScript.html());
                     });
@@ -59,13 +56,13 @@ $(function() {
 
 <?php $config = \Ilch\Registry::get('config'); ?>
 
-<div id="shoutbox-container<?=$random?>">
-    <div id="shoutbox-button-container<?=$random?>" class="form-horizontal">
+<div id="shoutbox-container<?=$this->get('uniqid') ?>">
+    <div id="shoutbox-button-container<?=$this->get('uniqid') ?>" class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-12">
                 <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))): ?>
                     <div class="pull-left">
-                        <button class="btn" id="shoutbox-slide-down<?=$random?>"><?=$this->getTrans('answer') ?></button>
+                        <button class="btn" id="shoutbox-slide-down<?=$this->get('uniqid') ?>"><?=$this->getTrans('answer') ?></button>
                     </div>
                 <?php endif; ?>
                 <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
@@ -78,8 +75,9 @@ $(function() {
     </div>
 
     <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))): ?>
-        <div id="shoutbox-form-container<?=$random?>" style="display: none;">
+        <div id="shoutbox-form-container<?=$this->get('uniqid') ?>" style="display: none;">
             <form class="form-horizontal" method="post">
+                <input type="hidden" name="uniqid" value="<?=$this->get('uniqid') ?>">
                <?=$this->getTokenField() ?>
                 <div class="form-group hidden">
                     <label class="col-lg-2 control-label">
