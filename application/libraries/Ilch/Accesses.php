@@ -136,7 +136,7 @@ class Accesses
             return true;
         }
 
-        if(in_array('1', array_column($entrie, $this->request->getParam('id'))) || in_array('2', array_column($entrie, $this->request->getParam('id')))) {
+        if(in_array('1', array_column($entrie, (int)$this->request->getParam('id'))) || in_array('2', array_column($entrie, (int)$this->request->getParam('id')))) {
             return true;
         } else {
             return false;
