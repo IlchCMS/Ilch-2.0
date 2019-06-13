@@ -70,7 +70,7 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql()
     {
-        return 'CREATE TABLE `[prefix]_forum_groupranking` (
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_forum_groupranking` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `group_id` INT(11) NULL DEFAULT NULL,
                 `rank` INT(11) NULL DEFAULT NULL,
@@ -224,7 +224,7 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('forum_groupAppearance', serialize($appearance));
 
                 // Add table for group ranking, which is needed when deciding which appearance needs to be applied.
-                $this->db()->queryMulti('CREATE TABLE `[prefix]_forum_groupranking` (
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_groupranking` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
                     `group_id` INT(11) NULL DEFAULT NULL,
                     `rank` INT(11) NULL DEFAULT NULL,
