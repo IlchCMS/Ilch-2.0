@@ -166,6 +166,8 @@ function rec($item, $obj, $readAccess, $i)
 
                         <?php if (!empty($idHighestRankedGroup)) : ?>
                             <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><span class="forum appearance<?=$idHighestRankedGroup ?>"><?=$this->escape($user->getName()) ?></span></a></li>
+                        <?php else: ?>
+                            <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><?=$this->escape($user->getName()) ?></a></li>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>

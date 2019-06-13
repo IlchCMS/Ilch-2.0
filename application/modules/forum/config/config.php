@@ -58,6 +58,12 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('forum_floodInterval', '0');
         $databaseConfig->set('forum_excludeFloodProtection', '1');
         $databaseConfig->set('forum_postVoting', '0');
+
+        // Add default appearance for admin group
+        $appearance[0]['active'] = 'on';
+        $appearance[0]['textcolor'] = '#000000';
+        $appearance[0]['bold'] = 'on';
+        $databaseConfig->set('forum_groupAppearance', serialize($appearance));
     }
 
     public function uninstall()
@@ -219,8 +225,9 @@ class Config extends \Ilch\Config\Install
             case "1.17.0":
                 // Add default appearance for admin group
                 $databaseConfig = new \Ilch\Config\Database($this->db());
+                $appearance[0]['active'] = 'on';
                 $appearance[0]['textcolor'] = '#000000';
-                $appearance[0]['bold'] = 1;
+                $appearance[0]['bold'] = 'on';
                 $databaseConfig->set('forum_groupAppearance', serialize($appearance));
 
                 // Add table for group ranking, which is needed when deciding which appearance needs to be applied.

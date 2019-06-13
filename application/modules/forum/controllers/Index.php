@@ -58,7 +58,7 @@ class Index extends \Ilch\Controller\Frontend
         $groupRanking = $groupRankingMapper->getHighestRankOfGroups($groupIds);
 
         $this->getView()->set('groupIdsArray', $groupIds)
-            ->set('idHighestRankedGroup', $groupRanking->getGroupId())
+            ->set('idHighestRankedGroup', (!empty($groupRanking)) ? $groupRanking->getGroupId() : null)
             ->set('forumItems', $forumItems)
             ->set('usersOnlineList', $usersOnline)
             ->set('usersWhoWasOnline', $whoWasOnlineUsers)
