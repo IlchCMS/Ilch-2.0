@@ -142,7 +142,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     </dt>
                     <dd>
                         <?php foreach ($post->getAutor()->getGroups() as $group): ?>
-                            <i><?=$group->getName() ?></i><br>
+                            <i class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></i><br>
                         <?php endforeach; ?>
                         <i><?=$rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle() ?></i>
                     </dd>

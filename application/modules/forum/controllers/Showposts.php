@@ -12,6 +12,7 @@ use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Rank as RankMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
+use Ilch\Layout\Helper\LinkTag\Model as LinkTagModel;
 use Modules\User\Mappers\User as UserMapper;
 use Ilch\Accesses as Accesses;
 use Ilch\Validation;
@@ -100,6 +101,13 @@ class Showposts extends \Ilch\Controller\Frontend
             foreach ($user->getGroups() as $us) {
                 $readAccess[] = $us->getId();
             }
+        }
+
+        if (!empty($this->getConfig()->get('forum_filenameGroupappearanceCSS'))) {
+            $linkTagModel = new LinkTagModel();
+            $linkTagModel->setRel('stylesheet')
+                ->setHref($this->getLayout()->getModuleUrl('static/css/groupappearance/'.$this->getConfig()->get('forum_filenameGroupappearanceCSS')));
+            $this->getLayout()->add('linkTags', 'groupappearance', $linkTagModel);
         }
 
         $this->getView()->set('forumMapper', $forumMapper);

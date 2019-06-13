@@ -7,7 +7,7 @@ $usersOnline = $this->get('usersOnline');
 $guestOnline = $this->get('guestOnline');
 $forumStatistics = $this->get('forumStatics');
 $ins = $usersOnline+$guestOnline;
-
+$idHighestRankedGroup = $this->get('idHighestRankedGroup');
 function rec($item, $obj, $readAccess, $i)
 {
     $subItems = $item->getSubItems();
@@ -164,10 +164,8 @@ function rec($item, $obj, $readAccess, $i)
                         }
                         ?>
 
-                        <?php if ((in_array('Administrator', $groups))): ?>
-                            <li><strong><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><?=$this->escape($user->getName()) ?></a></strong></li>
-                        <?php else: ?>
-                            <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><?=$this->escape($user->getName()) ?></a></li>
+                        <?php if (!empty($idHighestRankedGroup)) : ?>
+                            <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><span class="forum appearance<?=$idHighestRankedGroup ?>"><?=$this->escape($user->getName()) ?></span></a></li>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>
@@ -177,11 +175,7 @@ function rec($item, $obj, $readAccess, $i)
                         <li><?=$this->getTrans('legend') ?>:</li>
                         <?php foreach ($this->get('listGroups') as $group): ?>
                             <?php if ($group->getName() != 'Guest'): ?>
-                                <?php if ($group->getName() == 'Administrator'): ?>
-                                    <li><strong><?=$group->getName() ?></strong></li>
-                                <?php else: ?>
-                                    <li><?=$group->getName() ?></li>
-                                <?php endif; ?>
+                                <li><span class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></span></li>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </ul>

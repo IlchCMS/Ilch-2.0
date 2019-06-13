@@ -142,7 +142,7 @@ class Frontend extends Base
     /**
      * Get the link tag as string.
      *
-     * @param $key
+     * @param string $key
      * @return string
      * @since 2.1.22
      */

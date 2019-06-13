@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.17.0',
+        'version' => '1.18.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -46,7 +46,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.20',
+        'ilchCore' => '2.1.22',
         'phpVersion' => '5.6'
     ];
 
@@ -70,7 +70,14 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql()
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_forum_items` (
+        return 'CREATE TABLE `[prefix]_forum_groupranking` (
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `group_id` INT(11) NULL DEFAULT NULL,
+                `rank` INT(11) NULL DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `sort` INT(11) NOT NULL DEFAULT 0,
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
@@ -203,6 +210,26 @@ class Config extends \Ilch\Config\Install
 
                 // Delete no longer needed file.
                 unlink(ROOT_PATH.'/application/modules/forum/controllers/admin/Base.php');
+            case "1.11.0":
+            case "1.12.0":
+            case "1.13.0":
+            case "1.14.0":
+            case "1.15.0":
+            case "1.16.0":
+            case "1.17.0":
+                // Add default appearance for admin group
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $appearance[0]['textcolor'] = '#000000';
+                $appearance[0]['bold'] = 1;
+                $databaseConfig->set('forum_groupAppearance', serialize($appearance));
+
+                // Add table for group ranking, which is needed when deciding which appearance needs to be applied.
+                $this->db()->queryMulti('CREATE TABLE `[prefix]_forum_groupranking` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `group_id` INT(11) NULL DEFAULT NULL,
+                    `rank` INT(11) NULL DEFAULT NULL,
+                    PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
         }
     }
 }

@@ -7,6 +7,7 @@
 namespace Modules\Forum\Controllers\Admin;
 
 use Modules\User\Mappers\Group as GroupMapper;
+use Modules\Forum\Mappers\GroupRanking as GroupRankingMapper;
 
 class Settings extends \Ilch\Controller\Admin
 {
@@ -27,11 +28,23 @@ class Settings extends \Ilch\Controller\Admin
             ],
             [
                 'name' => 'menuSettings',
-                'active' => true,
+                'active' => false,
                 'icon' => 'fa fa-cogs',
-                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index']),
+                [
+                    'name' => 'menuGroupAppearance',
+                    'active' => false,
+                    'icon' => 'fa fa-cogs',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'groupappearance'])
+                ]
             ]
         ];
+
+        if ($this->getRequest()->getActionName() == 'groupappearance') {
+            $items[2][0]['active'] = true;
+        } else {
+            $items[2]['active'] = true;
+        }
 
         $this->getLayout()->addMenu
         (
@@ -65,5 +78,85 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('postVoting', $this->getConfig()->get('forum_postVoting'));
         $this->getView()->set('boxForumLimit', $this->getConfig()->get('forum_boxForumLimit'));
         $this->getView()->set('groupList', $groupMapper->getGroupList());
+    }
+
+    public function groupappearanceAction()
+    {
+        $groupRankingMapper = new GroupRankingMapper();
+
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('forum'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('settings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGroupAppearance'), ['action' => 'groupappearance']);
+
+        if ($this->getRequest()->isPost()) {
+            $appearances = $this->getRequest()->getPost('appearances');
+            $groups = array_keys($appearances);
+            $groupRankingMapper->saveGroupRanking($groups);
+            $filename = $this->writeCSSFile($appearances);
+
+            if ($filename !== false) {
+                $appearances = serialize($appearances);
+                $this->getConfig()->set('forum_groupAppearance', $appearances);
+                $this->getConfig()->set('forum_filenameGroupappearanceCSS', $filename);
+
+                $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'groupappearance']);
+            } else {
+                $this->addMessage('fail', 'danger');
+                $this->redirect(['action' => 'groupappearance']);
+            }
+        }
+
+        $appearances = unserialize($this->getConfig()->get('forum_groupAppearance'));
+        $this->getView()->set('appearances', $appearances);
+        $this->getView()->set('groupList', $groupRankingMapper->getUserGroupsSortedByRank());
+    }
+
+    /**
+     * Write the CSS file for the appearance of the user groups with a "unique" file name.
+     *
+     * @param array $appearances Appearance settings
+     * @return string Filename of the css file on success
+     */
+    private function writeCSSFile($appearances)
+    {
+        $content = '';
+        foreach($appearances as $key => $value) {
+            if (!isset($value['active'])) {
+                continue;
+            }
+
+            $content .= '#forum .appearance'.$key.' {'.PHP_EOL;
+            $content .= 'color: '.$value['textcolor'].';'.PHP_EOL;
+
+            if (isset($value['bold'])) {
+                $content .= 'font-weight: bold;'.PHP_EOL;
+            }
+
+            if (isset($value['italic'])) {
+                $content .= 'font-style: italic;'.PHP_EOL;
+            }
+            $content .= '}'.PHP_EOL;
+        }
+
+        // Delete old stylesheets
+        $files = glob(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/*');
+        foreach($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+
+        if (empty($content)) {
+            return '';
+        }
+
+        $filename = uniqid().'.css';
+        $returnValue = file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $content);
+        if ($returnValue !== false && $returnValue != 0) {
+            return $filename;
+        }
+        return false;
     }
 }
