@@ -154,16 +154,9 @@ function rec($item, $obj, $readAccess, $i)
         <div class="content ilch-border">
             <h5><i class="fa fa-user"></i> <?=$this->getTrans('activeUser') ?></h5>
             <div class="statistics">
-                <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>" class="ilch-link"><?=$usersOnline+$guestOnline ?> Benutzer online</a>. Registrierte Benutzer: <?=$usersOnline ?>, Gäste: <?=$guestOnline ?><br />
+                <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>" class="ilch-link"><?=$usersOnline+$guestOnline ?> <?=$this->getTrans('usersOnline') ?></a>. <?=$this->getTrans('registeredUsers') ?>: <?=$usersOnline ?>, <?=$this->getTrans('guests') ?>: <?=$guestOnline ?><br />
                 <ul class="user-list">
                     <?php foreach ($usersOnlineList as $user): ?>
-                        <?php
-                        $groups = [];
-                        foreach ($user->getGroups() as $group) {
-                            $groups[] = $group->getName();
-                        }
-                        ?>
-
                         <?php if (!empty($idHighestRankedGroup)) : ?>
                             <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><span class="forum appearance<?=$idHighestRankedGroup ?>"><?=$this->escape($user->getName()) ?></span></a></li>
                         <?php else: ?>
@@ -174,7 +167,7 @@ function rec($item, $obj, $readAccess, $i)
                 <br />
                 <div class="small">
                     <ul class="group-legend">
-                        <li><?=$this->getTrans('legend') ?>:</li>
+                        <li><i class="fas fa-bars"></i> <?=$this->getTrans('legend') ?>:</li>
                         <?php foreach ($this->get('listGroups') as $group): ?>
                             <?php if ($group->getName() != 'Guest'): ?>
                                 <li><span class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></span></li>
@@ -204,7 +197,7 @@ function rec($item, $obj, $readAccess, $i)
             </div>
             <hr />
             <div class="legend">
-                <h5><i class="fa fa-bars"></i> <?=$this->getTrans('legend') ?></h5>
+                <h5><i class="fas fa-bars"></i> <?=$this->getTrans('legend') ?></h5>
                 <ul class="statistics">
                     <li><img src="<?=$this->getModuleUrl('static/img/topic_unread.png') ?>" class="legendIcon"> <?=$this->getTrans('legendNewPost') ?></li>
                     <li><img src="<?=$this->getModuleUrl('static/img/topic_read.png') ?>" class="legendIcon"> <?=$this->getTrans('legendReadPost') ?></li>
