@@ -60,18 +60,31 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('forum_postVoting', '0');
 
         // Add default appearance for admin group
-        $appearance[0]['active'] = 'on';
-        $appearance[0]['textcolor'] = '#000000';
-        $appearance[0]['bold'] = 'on';
+        $appearance[1]['active'] = 'on';
+        $appearance[1]['textcolor'] = '#000000';
+        $appearance[1]['bold'] = 'on';
         $databaseConfig->set('forum_groupAppearance', serialize($appearance));
+
+        $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
+        $filename = uniqid().'.css';
+        file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
+        $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
+
+        $this->db()->query('INSERT INTO `[prefix]_forum_groupranking` (group_id,rank) VALUES(1,0);');
     }
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_forum_topics`;
+        $this->db()->queryMulti("DROP TABLE `[prefix]_forum_topics`;
+            DROP TABLE `[prefix]_forum_groupranking`;
             DROP TABLE `[prefix]_forum_items`;
             DROP TABLE `[prefix]_forum_posts`;
-            DROP TABLE `[prefix]_forum_ranks`');
+            DROP TABLE `[prefix]_forum_ranks`;
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_floodInterval';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_excludeFloodProtection';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_postVoting';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_groupAppearance';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_filenameGroupappearanceCSS';");
     }
 
     public function getInstallSql()
@@ -225,10 +238,17 @@ class Config extends \Ilch\Config\Install
             case "1.17.0":
                 // Add default appearance for admin group
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $appearance[0]['active'] = 'on';
-                $appearance[0]['textcolor'] = '#000000';
-                $appearance[0]['bold'] = 'on';
+                $appearance[1]['active'] = 'on';
+                $appearance[1]['textcolor'] = '#000000';
+                $appearance[1]['bold'] = 'on';
                 $databaseConfig->set('forum_groupAppearance', serialize($appearance));
+
+                $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
+                $filename = uniqid().'.css';
+                file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
+                $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
+
+                $this->db()->query('INSERT INTO `[prefix]_forum_groupranking` (group_id,rank) VALUES(1,0);');
 
                 // Add table for group ranking, which is needed when deciding which appearance needs to be applied.
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_groupranking` (
