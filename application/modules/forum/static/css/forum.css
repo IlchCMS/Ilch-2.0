@@ -360,7 +360,7 @@ legend .forum.fa {
     list-style-type: none;
     display: inline;
 }
-#forum .statistic .content .statistics ul.user-list li:after, #forum .statistic .content .statistics ul.group-legend li:nth-child(2):after {
+#forum .statistic .content .statistics ul.user-list li:after, #forum .statistic .content .statistics ul.group-legend li.group:after {
     content: ", ";
 }
 #forum .statistic .content .statistics ul.user-list li:last-child:after, #forum .statistic .content .statistics ul.group-legend li:last-child:after {

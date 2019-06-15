@@ -170,7 +170,7 @@ function rec($item, $obj, $readAccess, $i)
                         <li><i class="fas fa-bars"></i> <?=$this->getTrans('legend') ?>:</li>
                         <?php foreach ($this->get('listGroups') as $group): ?>
                             <?php if ($group->getName() != 'Guest'): ?>
-                                <li><span class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></span></li>
+                                <li class="group"><span class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></span></li>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </ul>
