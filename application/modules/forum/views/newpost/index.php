@@ -1,7 +1,8 @@
 <?php
 $forumMapper = $this->get('forumMapper');
 $cat = $this->get('cat');
-$topicpost = $this->get('post');
+$topicpost = $this->get('topicPost');
+$postTextAsQuote = $this->get('postTextAsQuote');
 $forum = $this->get('forum');
 
 $forumPrefix = $forumMapper->getForumByTopicId($topicpost->getId());
@@ -44,7 +45,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
                                       name="text"
-                                      toolbar="ilch_bbcode"><?=$this->originalInput('text') ?></textarea>
+                                      toolbar="ilch_bbcode"><?=(!empty($postTextAsQuote)) ? $this->escape($postTextAsQuote) : $this->originalInput('text') ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">

@@ -580,7 +580,7 @@ legend .forum.fa {
     float: right;
 }
 
-#forum .delete, .edit {
+#forum .delete, .edit, .quote {
     float: right;
 }
 

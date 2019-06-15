@@ -19,12 +19,12 @@ class Newpost extends \Ilch\Controller\Frontend
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
+        $postMapper = new PostMapper;
 
         $topicId = (int)$this->getRequest()->getParam('topicid');
         $forum = $forumMapper->getForumByTopicId($topicId);
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
         $topic = $topicMapper->getPostById($topicId);
-        $post = $topicMapper->getPostById($topicId);
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))
@@ -39,8 +39,16 @@ class Newpost extends \Ilch\Controller\Frontend
                 ->add($topic->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId])
                 ->add($this->getTranslator()->trans('newPost'), ['controller' => 'newpost','action' => 'index', 'topicid' => $topicId]);
 
+        $quotePostId = $this->getRequest()->getParam('quote');
+        $postTextAsQuote = '';
+
+        if ($quotePostId && is_numeric($quotePostId) && $quotePostId > 0) {
+            $post = $postMapper->getPostById($quotePostId);
+            $postTextAsQuote = '[quote][b]'.$post->getAutor()->getName().' '.$this->getTranslator()->trans('wrote').':[/b]
+                               '.$post->getText().'[/quote]';
+        }
+
         if ($this->getRequest()->getPost('saveNewPost')) {
-            $postMapper = new PostMapper;
             $dateCreated = $postMapper->getDateOfLastPostByUserId($this->getUser()->getId());
             $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser()->getGroups()), explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
 
@@ -84,7 +92,8 @@ class Newpost extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('forumMapper', $forumMapper);
-        $this->getView()->set('post', $post);
+        $this->getView()->set('topicPost', $topic);
+        $this->getView()->set('postTextAsQuote', $postTextAsQuote);
         $this->getView()->set('cat', $cat);
         $this->getView()->set('forum', $forum);
     }

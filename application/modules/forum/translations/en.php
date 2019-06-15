@@ -27,6 +27,8 @@ return [
     'newPost' => 'New post',
     'editPost' => 'Edit post',
     'add' => 'Create',
+    'quote' => 'Quote',
+    'wrote' => 'wrote',
     'statistics' => 'Statistics',
     'whoWasHere' => 'Who was here?',
     'loginTopic' => 'Login to create',

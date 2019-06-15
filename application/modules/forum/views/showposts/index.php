@@ -151,23 +151,36 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     <dd><b><?=$this->getTrans('joined') ?>:</b> <?=$post->getAutor()->getDateCreated() ?></dd>
                 </dl>
             </div>
-            <?php if ($this->get('postVoting')) : ?>
             <div class="post-footer ilch-bg">
-                <?php
-                $votes = explode(',', $post->getVotes());
-                $countOfVotes = count($votes) - 1;
-                ?>
-                <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $votes) == false) : ?>
-                    <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
-                        <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
-                    </a>
-                <?php else: ?>
-                    <button class="btn btn-sm btn-default btn-success">
-                        <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
-                    </button>
+                <?php if ($this->get('postVoting')) : ?>
+                    <?php
+                    $votes = explode(',', $post->getVotes());
+                    $countOfVotes = count($votes) - 1;
+                    ?>
+                    <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $votes) == false) : ?>
+                        <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
+                            <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                        </a>
+                    <?php else: ?>
+                        <button class="btn btn-sm btn-default btn-success">
+                            <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                        </button>
+                    <?php endif; ?>
                 <?php endif; ?>
+                <div class="quote">
+                <?php if ($this->getUser()): ?>
+                    <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
+                    <p class="quote-post">
+                        <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
+                                            <span class="btn-label">
+                                                <i class="fas fa-quote-left"></i>
+                                            </span><?=$this->getTrans('quote') ?>
+                        </a>
+                    </p>
+                    <?php endif; ?>
+                <?php endif; ?>
+                </div>
             </div>
-            <?php endif; ?>
         <?php endforeach; ?>
         <div class="topic-actions">
             <?php if ($topicpost->getStatus() == 0): ?>

@@ -27,6 +27,8 @@ return [
     'newPost' => 'Neue Antwort',
     'editPost' => 'Beitrag bearbeiten',
     'add' => 'Erstellen',
+    'quote' => 'Zitieren',
+    'wrote' => 'schrieb',
     'statistics' => 'Statistik',
     'whoWasHere' => 'Wer war da?',
     'loginTopic' => 'Anmelden zum Erstellen',
