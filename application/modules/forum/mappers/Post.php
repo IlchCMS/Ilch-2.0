@@ -26,6 +26,7 @@ class Post extends \Ilch\Mapper
         $postModel->setText($fileRow['text']);
         $postModel->setVotes($fileRow['votes']);
         $postModel->setDateCreated($fileRow['date_created']);
+        $postModel->setForumId($fileRow['forum_id']);
         $user = $userMapper->getUserById($fileRow['user_id']);
         if ($user) {
             $postModel->setAutor($user);

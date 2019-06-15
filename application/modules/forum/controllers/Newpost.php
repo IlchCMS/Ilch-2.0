@@ -9,6 +9,7 @@ namespace Modules\Forum\Controllers;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
+use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Config\Config as ForumConfig;
 use Ilch\Validation;
@@ -44,8 +45,39 @@ class Newpost extends \Ilch\Controller\Frontend
 
         if ($quotePostId && is_numeric($quotePostId) && $quotePostId > 0) {
             $post = $postMapper->getPostById($quotePostId);
-            $postTextAsQuote = '[quote][b]'.$post->getAutor()->getName().' '.$this->getTranslator()->trans('wrote').':[/b]
-                               '.$post->getText().'[/quote]';
+
+            // Check if the forum id of the post fits the id of the forum.
+            // If that is not the case then don't even bother checking the rights
+            // as the URL is invalid anyway.
+            if ($post->getForumId() == $forum->getId()) {
+                $userMapper = new UserMapper();
+
+                $userId = null;
+                if ($this->getUser()) {
+                    $userId = $this->getUser()->getId();
+                }
+                $user = $userMapper->getUserById($userId);
+
+                $readAccess = [3];
+                if ($user) {
+                    foreach ($user->getGroups() as $us) {
+                        $readAccess[] = $us->getId();
+                    }
+                }
+
+                if (is_in_array($readAccess, explode(',', $forum->getReadAccess())) || ($this->getUser() && $this->getUser()->isAdmin())) {
+                    $postTextAsQuote = '[quote][b]'.$post->getAutor()->getName().' '.$this->getTranslator()->trans('wrote').':[/b]
+                                       '.$post->getText().'[/quote]';
+                } else {
+                    $this->redirect()
+                        ->withMessage('noAccessForum', 'danger')
+                        ->to(['controller' => 'index', 'action' => 'index']);
+                }
+            } else {
+                $this->redirect()
+                    ->withMessage('noAccessForum', 'danger')
+                    ->to(['controller' => 'index', 'action' => 'index']);
+            }
         }
 
         if ($this->getRequest()->getPost('saveNewPost')) {
