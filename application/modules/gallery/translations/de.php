@@ -53,6 +53,6 @@ return [
     'weekly' => 'wöchentlich',
     'monthly' => 'monatlich',
     'pictureOfXRandom' => 'Zufälliges Bild',
-    'noPictures' => 'Keine Biler vorhanden.',
+    'noPictures' => 'Keine Bilder vorhanden.',
     'pictureMissing' => 'Bild nicht gefunden.',
 ];
