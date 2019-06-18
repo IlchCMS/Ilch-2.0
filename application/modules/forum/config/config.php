@@ -248,8 +248,6 @@ class Config extends \Ilch\Config\Install
                 file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
                 $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
 
-                $this->db()->query('INSERT INTO `[prefix]_forum_groupranking` (group_id,rank) VALUES(1,0);');
-
                 // Add table for group ranking, which is needed when deciding which appearance needs to be applied.
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_groupranking` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -257,6 +255,8 @@ class Config extends \Ilch\Config\Install
                     `rank` INT(11) NULL DEFAULT NULL,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+
+                $this->db()->query('INSERT INTO `[prefix]_forum_groupranking` (group_id,rank) VALUES(1,0);');
         }
     }
 }

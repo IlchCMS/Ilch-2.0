@@ -82,7 +82,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                 }
 
                 if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
-                    <tr>
+                    <tr id="Module_<?=$module->getKey() ?>">
                         <td>
                             <?=$content['name'] ?>
                             <br />

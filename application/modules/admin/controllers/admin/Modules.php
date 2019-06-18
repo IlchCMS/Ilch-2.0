@@ -248,7 +248,7 @@ class Modules extends \Ilch\Controller\Admin
                 $moduleMapper->updateVersion($key, $config->config['version']);
                 $this->addMessage('updateSuccess');
             } finally {
-                $this->redirect(['action' => $this->getRequest()->getParam('from')]);
+                $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_'.$key]);
             }
         }
     }
@@ -267,7 +267,7 @@ class Modules extends \Ilch\Controller\Admin
             $moduleMapper->updateVersion($key, $config->config['version']);
             $this->addMessage('updateSuccess');
         } finally {
-            $this->redirect(['action' => $this->getRequest()->getParam('from')]);
+            $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_'.$key]);
         }
     }
 
