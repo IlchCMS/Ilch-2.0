@@ -67,6 +67,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('forum_floodInterval', $this->getRequest()->getPost('floodInterval'));
             $this->getConfig()->set('forum_excludeFloodProtection', implode(',', ($this->getRequest()->getPost('groups')) ? $this->getRequest()->getPost('groups') : []));
             $this->getConfig()->set('forum_postVoting', $this->getRequest()->getPost('postVoting'));
+            $this->getConfig()->set('forum_topicSubscription', $this->getRequest()->getPost('topicSubscription'));
             $this->getConfig()->set('forum_boxForumLimit', $this->getRequest()->getPost('boxForumLimit'));
             $this->addMessage('saveSuccess');
         }
@@ -76,6 +77,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('floodInterval', $this->getConfig()->get('forum_floodInterval'));
         $this->getView()->set('excludeFloodProtection', explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
         $this->getView()->set('postVoting', $this->getConfig()->get('forum_postVoting'));
+        $this->getView()->set('topicSubscription', $this->getConfig()->get('forum_topicSubscription'));
         $this->getView()->set('boxForumLimit', $this->getConfig()->get('forum_boxForumLimit'));
         $this->getView()->set('groupList', $groupMapper->getGroupList());
     }

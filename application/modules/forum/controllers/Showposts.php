@@ -10,6 +10,7 @@ use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Rank as RankMapper;
+use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Ilch\Layout\Helper\LinkTag\Model as LinkTagModel;
@@ -79,6 +80,8 @@ class Showposts extends \Ilch\Controller\Frontend
         $topicMapper->saveVisits($topicModel);
 
         $userMapper = new UserMapper();
+
+        $isSubscribed = false;
         $userId = null;
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();
@@ -92,6 +95,12 @@ class Showposts extends \Ilch\Controller\Frontend
                 $postModel->setId($lastPost->getId());
                 $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
                 $postMapper->saveRead($postModel);
+            }
+
+            if ($this->getConfig()->get('forum_topicSubscription') == 1) {
+                $topicSubscriptionMapper = new TopicSubscriptionMapper();
+
+                $isSubscribed = $topicSubscriptionMapper->isSubscribedToTopic($topicId, $this->getUser()->getId());
             }
         }
         $user = $userMapper->getUserById($userId);
@@ -120,6 +129,8 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getView()->set('userAccess', new Accesses($this->getRequest()));
         $this->getView()->set('rankMapper', $rankMapper);
         $this->getView()->set('postVoting', $this->getConfig()->get('forum_postVoting'));
+        $this->getView()->set('topicSubscription', $this->getConfig()->get('forum_topicSubscription'));
+        $this->getView()->set('isSubscribed', $isSubscribed);
     }
 
     public function deleteAction()
@@ -238,6 +249,24 @@ class Showposts extends \Ilch\Controller\Frontend
         if ($this->getConfig()->get('forum_postVoting')) {
             $postMapper = new PostMapper();
             $postMapper->saveVotes($this->getRequest()->getParam('id'), $this->getUser()->getId());
+        }
+
+        $this->redirect(['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]);
+    }
+
+    public function subscribeAction()
+    {
+        if ($this->getConfig()->get('forum_topicSubscription') == 1) {
+            $topicSubscriptionMapper = new TopicSubscriptionMapper();
+
+            $topicId = (int)$this->getRequest()->getParam('topicid');
+            $isSubscribed = $topicSubscriptionMapper->isSubscribedToTopic($topicId, $this->getUser()->getId());
+
+            if ($isSubscribed) {
+                $topicSubscriptionMapper->deleteSubscription($topicId, $this->getUser()->getId());
+            } else {
+                $topicSubscriptionMapper->addSubscription($topicId, $this->getUser()->getId());
+            }
         }
 
         $this->redirect(['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]);

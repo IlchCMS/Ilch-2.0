@@ -10,6 +10,8 @@ use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
+use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Config\Config as ForumConfig;
 use Ilch\Validation;
@@ -111,10 +113,69 @@ class Newpost extends \Ilch\Controller\Frontend
                     $postsPerPage = (empty($this->getConfig()->get('forum_postsPerPage'))) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage');
                     $page = floor(($forumMapper->getCountPostsByTopicId($topicId) - 1) / $postsPerPage) + 1;
 
+                    // Notify subscribers
+                    $topicSubscriptionMapper = new TopicSubscriptionMapper();
+                    $subscribers = $topicSubscriptionMapper->getSubscriptionsForTopic($topicId);
+
+                    foreach($subscribers as $subscriber) {
+                        if ($subscriber->getUserId() == $this->getUser()->getId()) {
+                            // Skip if post is from same user.
+                            continue;
+                        }
+
+                        $date = new \Ilch\Date(date('Y-m-d H:i:s', strtotime('-5 minutes')));
+                        if (strtotime($subscriber->getLastActivity()) >= strtotime($date->toDb(true))) {
+                            // Skip if user was active within the last 5 minutes.
+                            continue;
+                        }
+
+                        $date = new \Ilch\Date(date('Y-m-d H:i:s', strtotime('-15 minutes')));
+                        if (strtotime($subscriber->getLastNotification()) >= strtotime($date->toDb(true))) {
+                            // Skip if user received a notification within the last 15 minutes.
+                            continue;
+                        }
+
+                        $emailsMapper = new EmailsMapper();
+
+                        $sitetitle = $this->getConfig()->get('page_title');
+                        $date = new \Ilch\Date();
+                        $mailContent = $emailsMapper->getEmail('user', 'topic_subscription_mail', $this->getTranslator()->getLocale());
+                        $layout = '';
+                        if (isset($_SESSION['layout'])) {
+                            $layout = $_SESSION['layout'];
+                        }
+                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/topicsubscription.php')) {
+                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/topicsubscription.php');
+                        } else {
+                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/forum/layouts/mail/topicsubscription.php');
+                        }
+                        $messageReplace = [
+                            '{content}' => $mailContent->getText(),
+                            '{sitetitle}' => $sitetitle,
+                            '{date}' => $date->format("l, d. F Y", true),
+                            '{name}' => $subscriber->getUsername(),
+                            '{url}' => $this->getLayout()->getURL(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId, 'page' => $page]),
+                            '{topicTitle}' => $topic->getTopicTitle(),
+                            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                        ];
+                        $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+                        $mail = new \Ilch\Mail();
+                        $mail->setFromName($this->getConfig()->get('page_title'))
+                            ->setFromEmail($this->getConfig()->get('standardMail'))
+                            ->setToName($subscriber->getUsername())
+                            ->setToEmail($subscriber->getEmailAddress())
+                            ->setSubject($mailContent->getDesc())
+                            ->setMessage($message)
+                            ->sent();
+
+                        $topicSubscriptionMapper->updateLastNotification($topicId, $subscriber->getId());
+                    }
+
                     $this->redirect()
                         ->withMessage('saveSuccess')
                         ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId, 'page' => $page]);
                 }
+
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
                     ->withInput()

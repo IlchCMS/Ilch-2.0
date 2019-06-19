@@ -10,6 +10,7 @@ use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
 use Ilch\Accesses as Accesses;
 
 class Showtopics extends \Ilch\Controller\Frontend
@@ -80,6 +81,7 @@ class Showtopics extends \Ilch\Controller\Frontend
     public function deleteAction()
     {
         $topicMapper = new TopicMapper();
+        $topicSubscriptionMapper = new TopicSubscriptionMapper();
 
         if ($this->getUser()) {
             $access = new Accesses($this->getRequest());
@@ -87,6 +89,7 @@ class Showtopics extends \Ilch\Controller\Frontend
                 if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicDelete') == 'topicDelete') {
                     foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
                         $topicMapper->deleteById($topicId);
+                        $topicSubscriptionMapper->deleteAllSubscriptionsForTopic($topicId);
                     }
 
                     $this->addMessage('deleteSuccess');

@@ -58,6 +58,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('forum_floodInterval', '0');
         $databaseConfig->set('forum_excludeFloodProtection', '1');
         $databaseConfig->set('forum_postVoting', '0');
+        $databaseConfig->set('forum_topicSubscription', '0');
 
         // Add default appearance for admin group
         $appearance[1]['active'] = 'on';
@@ -80,9 +81,11 @@ class Config extends \Ilch\Config\Install
             DROP TABLE `[prefix]_forum_items`;
             DROP TABLE `[prefix]_forum_posts`;
             DROP TABLE `[prefix]_forum_ranks`;
+            DROP TABLE `[prefix]_forum_topicsubscription`;
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_floodInterval';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_excludeFloodProtection';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_postVoting';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_topicSubscription';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_groupAppearance';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_filenameGroupappearanceCSS';");
     }
@@ -124,6 +127,14 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_topicsubscription` (
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `topic_id` INT(11) NULL DEFAULT NULL,
+                `user_id` INT(11) NULL DEFAULT NULL,
+                `last_notification` DATETIME NOT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_posts` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `topic_id` VARCHAR(150) NOT NULL,
@@ -152,7 +163,10 @@ class Config extends \Ilch\Config\Install
                 (1, 2, "Willkommen bei Ilch!", 0, NOW(), 2);
 
             INSERT INTO `[prefix]_forum_posts` (`id`, `topic_id`, `text`, `user_id`, `date_created`, `forum_id`) VALUES
-                (1, 1, "Willkommen im Ilch 2.0 Forum!\n\nBei Fragen oder Probleme im [url=http://www.ilch.de/forum.html]Ilch Forum[/url] melden.<br /><br />Viel Erfolg<br />Ilch", 0, NOW(), 2);
+                (1, 1, "Willkommen im Ilch 2.0 Forum!\n\nBei Fragen oder Probleme im [url=http://www.ilch.de/forum.html]Ilch Forum[/url] melden.
+
+                        Viel Erfolg
+                        Ilch", 0, NOW(), 2);
 
             INSERT INTO `[prefix]_forum_ranks` (`id`, `title`, `posts`) VALUES
                 (1, "Grünschnabel", 0),
@@ -166,7 +180,25 @@ class Config extends \Ilch\Config\Install
                 (9, "König", 2000),
                 (10, "Kaiser", 5000),
                 (11, "Legende", 7000),
-                (12, "Foren Gott", 10000);';
+                (12, "Foren Gott", 10000);
+
+            INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
+                ("user", "topic_subscription_mail", "Neue Beiträge im abonnierten Thema", "<p>Hallo <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>es sind neue Beiträge in einem Ihrer abonnierten Themen im Forum auf <i>{sitetitle}</i> geschrieben worden.
+                      <p>Um direkt einen Blick auf die neuen Beiträge zu werfen, klicken Sie Bitte auf folgenden Link:</p>
+                      <a href=\"{url}\">{topicTitle}</a>
+                      <p>&nbsp;</p>
+                      <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                      <p>Administrator</p>", "de_DE"),
+                ("user", "topic_subscription_mail", "New posts in your subscribed topic", "<p>Hello <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>there are new posts in one of your subscribed topics in the forum at <i>{sitetitle}</i>.
+                      <p>To take a look at the new posts, please click on the following link:</p>
+                      <a href=\"{url}\">{topicTitle}</a>
+                      <p>&nbsp;</p>
+                      <p>Best regards</p>
+                      <p>Administrator</p>", "en_EN");';
     }
 
     public function getUpdate($installedVersion)
@@ -257,6 +289,34 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
                 $this->db()->query('INSERT INTO `[prefix]_forum_groupranking` (group_id,rank) VALUES(1,0);');
+
+                // Add table for topic subscriptions
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_topicsubscription` (
+                        `id` INT(11) NOT NULL AUTO_INCREMENT,
+                        `topic_id` INT(11) NULL DEFAULT NULL,
+                        `user_id` INT(11) NULL DEFAULT NULL,
+                        `last_notification` DATETIME NOT NULL,
+                        PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+
+                // Add template for topic subscription email.
+                $this->db()->query('INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
+                    ("user", "topic_subscription_mail", "Neue Beiträge im abonnierten Thema", "<p>Hallo <b>{name}</b>,</p>
+                          <p>&nbsp;</p>
+                          <p>es sind neue Beiträge in einem Ihrer abonnierten Themen im Forum auf <i>{sitetitle}</i> geschrieben worden.
+                          <p>Um direkt einen Blick auf die neuen Beiträge zu werfen, klicken Sie Bitte auf folgenden Link:</p>
+                          <a href=\"{url}\">{topicTitle}</a>
+                          <p>&nbsp;</p>
+                          <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                          <p>Administrator</p>", "de_DE"),
+                    ("user", "topic_subscription_mail", "New posts in your subscribed topic", "<p>Hello <b>{name}</b>,</p>
+                          <p>&nbsp;</p>
+                          <p>there are new posts in one of your subscribed topics in the forum at <i>{sitetitle}</i>.
+                          <p>To take a look at the new posts, please click on the following link:</p>
+                          <a href=\"{url}\">{topicTitle}</a>
+                          <p>&nbsp;</p>
+                          <p>Best regards</p>
+                          <p>Administrator</p>", "en_EN");');
         }
     }
 }
