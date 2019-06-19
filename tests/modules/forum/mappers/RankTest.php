@@ -171,7 +171,15 @@ class RankTest extends DatabaseTestCase
      */
     protected static function getSchemaSQLQueries()
     {
+        $installSql = 'CREATE TABLE IF NOT EXISTS `[prefix]_emails` (
+                `moduleKey` VARCHAR(255) NOT NULL,
+                `type` VARCHAR(255) NOT NULL,
+                `desc` VARCHAR(255) NOT NULL,
+                `text` TEXT NOT NULL,
+                `locale` VARCHAR(255) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
+
         $config = new ModuleConfig();
-        return $config->getInstallSql();
+        return $installSql.$config->getInstallSql();
     }
 }
