@@ -47,6 +47,21 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                                     <i class="fa fa-plus"></i>
                                 </span><?=$this->getTrans('createNewPost') ?>
                             </a>
+                            <?php if ($this->get('topicSubscription')) : ?>
+                                <?php if ($this->get('isSubscribed')) : ?>
+                                    <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
+                                    <span class="btn-label">
+                                        <i class="fas fa-bell-slash"></i>
+                                    </span><?=$this->getTrans('unsubscribe') ?>
+                                    </a>
+                                <?php else : ?>
+                                    <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
+                                    <span class="btn-label">
+                                        <i class="fas fa-bell"></i>
+                                    </span><?=$this->getTrans('subscribe') ?>
+                                    </a>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         <?php endif; ?>
                     <?php else: ?>
                         <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
@@ -180,33 +195,6 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     <?php endif; ?>
                 <?php endif; ?>
                 </div>
-                <?php if ($this->get('topicSubscription')) : ?>
-                    <?php if ($this->get('isSubscribed')) : ?>
-                        <div class="unsubscribe">
-                            <?php if ($this->getUser()): ?>
-                                <p class="unsubscribe-topic">
-                                    <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-xs">
-                                    <span class="btn-label">
-                                        <i class="fas fa-bell-slash"></i>
-                                    </span><?=$this->getTrans('unsubscribe') ?>
-                                    </a>
-                                </p>
-                            <?php endif; ?>
-                        </div>
-                    <?php else : ?>
-                        <div class="subscribe">
-                            <?php if ($this->getUser()): ?>
-                                <p class="subscribe-topic">
-                                    <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-xs">
-                                    <span class="btn-label">
-                                        <i class="fas fa-bell"></i>
-                                    </span><?=$this->getTrans('subscribe') ?>
-                                    </a>
-                                </p>
-                            <?php endif; ?>
-                        </div>
-                    <?php endif; ?>
-                <?php endif; ?>
             </div>
         <?php endforeach; ?>
         <div class="topic-actions">
@@ -218,6 +206,21 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                                 <i class="fa fa-plus"></i>
                             </span><?=$this->getTrans('createNewPost') ?>
                         </a>
+                        <?php if ($this->get('topicSubscription')) : ?>
+                            <?php if ($this->get('isSubscribed')) : ?>
+                                <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
+                                    <span class="btn-label">
+                                        <i class="fas fa-bell-slash"></i>
+                                    </span><?=$this->getTrans('unsubscribe') ?>
+                                </a>
+                            <?php else : ?>
+                                <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
+                                    <span class="btn-label">
+                                        <i class="fas fa-bell"></i>
+                                    </span><?=$this->getTrans('subscribe') ?>
+                                </a>
+                            <?php endif; ?>
+                        <?php endif; ?>
                     <?php endif; ?>
                 <?php else: ?>
                     <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>

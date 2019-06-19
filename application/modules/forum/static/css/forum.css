@@ -580,11 +580,11 @@ legend .forum.fa {
     float: right;
 }
 
-#forum .delete, .edit, .quote, .subscribe, .unsubscribe {
+#forum .delete, .edit, .quote {
     float: right;
 }
 
-#forum .edit, .subscribe, .unsubscribe {
+#forum .edit {
     padding-right: 5px;
 }
 #forum .btn-xs .btn-label {

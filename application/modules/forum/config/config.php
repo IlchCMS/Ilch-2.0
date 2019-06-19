@@ -163,7 +163,7 @@ class Config extends \Ilch\Config\Install
                 (1, 2, "Willkommen bei Ilch!", 0, NOW(), 2);
 
             INSERT INTO `[prefix]_forum_posts` (`id`, `topic_id`, `text`, `user_id`, `date_created`, `forum_id`) VALUES
-                (1, 1, "Willkommen im Ilch 2.0 Forum!\n\nBei Fragen oder Probleme im [url=http://www.ilch.de/forum.html]Ilch Forum[/url] melden.
+                (1, 1, "Willkommen im Ilch 2 Forum!\n\nBei Fragen oder Probleme im [url=http://www.ilch.de/forum.html]Ilch Forum[/url] melden.
 
                         Viel Erfolg
                         Ilch", 0, NOW(), 2);

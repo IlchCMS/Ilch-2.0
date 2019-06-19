@@ -123,15 +123,14 @@ class Newpost extends \Ilch\Controller\Frontend
                             continue;
                         }
 
-                        $date = new \Ilch\Date(date('Y-m-d H:i:s', strtotime('-5 minutes')));
-                        if (strtotime($subscriber->getLastActivity()) >= strtotime($date->toDb(true))) {
-                            // Skip if user was active within the last 5 minutes.
+                        if (strtotime($subscriber->getLastActivity()) < strtotime($subscriber->getLastNotification())) {
+                            // Skip if user wasn't active since the last notification.
                             continue;
                         }
 
-                        $date = new \Ilch\Date(date('Y-m-d H:i:s', strtotime('-15 minutes')));
-                        if (strtotime($subscriber->getLastNotification()) >= strtotime($date->toDb(true))) {
-                            // Skip if user received a notification within the last 15 minutes.
+                        $date = new \Ilch\Date(date('Y-m-d H:i:s', strtotime('-5 minutes')));
+                        if (strtotime($subscriber->getLastActivity()) >= strtotime($date->toDb(true))) {
+                            // Skip if user was active within the last 5 minutes.
                             continue;
                         }
 
