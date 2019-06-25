@@ -1,24 +1,24 @@
 <h1><?=$this->getTrans('menuCats') ?></h1>
-<form class="form-horizontal" method="POST">
-    <?=$this->getTokenField() ?>
-    <div class="table-responsive">
-        <table class="table table-hover table-striped">
-            <colgroup>
-                <col class="icon_width" />
-                <col class="icon_width" />
-                <col class="icon_width" />
-                <col />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th><?=$this->getCheckAllCheckbox('check_cats') ?></th>
-                    <th></th>
-                    <th></th>
-                    <th><?=$this->getTrans('title') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($this->get('cats'))): ?>
+<?php if (!empty($this->get('cats'))): ?>
+    <form class="form-horizontal" method="POST">
+        <?=$this->getTokenField() ?>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <colgroup>
+                    <col class="icon_width" />
+                    <col class="icon_width" />
+                    <col class="icon_width" />
+                    <col />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th><?=$this->getCheckAllCheckbox('check_cats') ?></th>
+                        <th></th>
+                        <th></th>
+                        <th><?=$this->getTrans('title') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
                     <?php foreach ($this->get('cats') as $cat): ?>
                         <tr>
                             <input type="hidden" name="items[]" value="<?=$cat->getId() ?>" />
@@ -28,22 +28,20 @@
                             <td><?=$this->escape($cat->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5"><?=$this->getTrans('noCats') ?></td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
-    <div class="content_savebox">
-        <div class="btn-group dropup">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <?=$this->getTrans('selected') ?> <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu listChooser" role="menu">
-                <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
-            </ul>
+                </tbody>
+            </table>
         </div>
-    </div>
-</form>
+        <div class="content_savebox">
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <?=$this->getTrans('selected') ?> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu listChooser" role="menu">
+                    <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+<?php else: ?>
+    <?=$this->getTrans('noCats') ?>
+<?php endif; ?>
