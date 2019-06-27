@@ -148,15 +148,16 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $this->redirect()
-                ->withInput()
-                ->withErrors($validation->getErrorBag());
 
             if ($this->getRequest()->getParam('id')) {
                 $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
                     ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
             } else {
                 $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
                     ->to(['action' => 'treat']);
             }
         }

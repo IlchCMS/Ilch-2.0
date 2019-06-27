@@ -10,7 +10,8 @@
                    class="form-control"
                    id="paragraph"
                    name="paragraph"
-                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getParagraph()) : $this->originalInput('paragraph') ?>" />
+                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getParagraph()) : $this->originalInput('paragraph') ?>"
+                   required />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
@@ -22,7 +23,8 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getTitle()) : $this->originalInput('name') ?>" />
+                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getTitle()) : $this->originalInput('name') ?>"
+                   required />
         </div>
     </div>
     <?=($this->get('cat') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
