@@ -138,7 +138,7 @@ class Newpost extends \Ilch\Controller\Frontend
 
                         $sitetitle = $this->getConfig()->get('page_title');
                         $date = new \Ilch\Date();
-                        $mailContent = $emailsMapper->getEmail('user', 'topic_subscription_mail', $this->getTranslator()->getLocale());
+                        $mailContent = $emailsMapper->getEmail('forum', 'topic_subscription_mail', $this->getTranslator()->getLocale());
                         $layout = '';
                         if (isset($_SESSION['layout'])) {
                             $layout = $_SESSION['layout'];
