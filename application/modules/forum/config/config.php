@@ -87,7 +87,8 @@ class Config extends \Ilch\Config\Install
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_postVoting';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_topicSubscription';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_groupAppearance';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_filenameGroupappearanceCSS';");
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_filenameGroupappearanceCSS';
+            DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'forum' AND `type` = 'topic_subscription_mail';");
     }
 
     public function getInstallSql()
@@ -183,7 +184,7 @@ class Config extends \Ilch\Config\Install
                 (12, "Foren Gott", 10000);
 
             INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
-                ("user", "topic_subscription_mail", "Neue Beiträge im abonnierten Thema", "<p>Hallo <b>{name}</b>,</p>
+                ("forum", "topic_subscription_mail", "Neue Beiträge im abonnierten Thema", "<p>Hallo <b>{name}</b>,</p>
                       <p>&nbsp;</p>
                       <p>es sind neue Beiträge in einem Ihrer abonnierten Themen im Forum auf <i>{sitetitle}</i> geschrieben worden.
                       <p>Um direkt einen Blick auf die neuen Beiträge zu werfen, klicken Sie Bitte auf folgenden Link:</p>
@@ -191,7 +192,7 @@ class Config extends \Ilch\Config\Install
                       <p>&nbsp;</p>
                       <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                       <p>Administrator</p>", "de_DE"),
-                ("user", "topic_subscription_mail", "New posts in your subscribed topic", "<p>Hello <b>{name}</b>,</p>
+                ("forum", "topic_subscription_mail", "New posts in your subscribed topic", "<p>Hello <b>{name}</b>,</p>
                       <p>&nbsp;</p>
                       <p>there are new posts in one of your subscribed topics in the forum at <i>{sitetitle}</i>.
                       <p>To take a look at the new posts, please click on the following link:</p>
@@ -301,7 +302,7 @@ class Config extends \Ilch\Config\Install
 
                 // Add template for topic subscription email.
                 $this->db()->query('INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
-                    ("user", "topic_subscription_mail", "Neue Beiträge im abonnierten Thema", "<p>Hallo <b>{name}</b>,</p>
+                    ("forum", "topic_subscription_mail", "Neue Beiträge im abonnierten Thema", "<p>Hallo <b>{name}</b>,</p>
                           <p>&nbsp;</p>
                           <p>es sind neue Beiträge in einem Ihrer abonnierten Themen im Forum auf <i>{sitetitle}</i> geschrieben worden.
                           <p>Um direkt einen Blick auf die neuen Beiträge zu werfen, klicken Sie Bitte auf folgenden Link:</p>
@@ -309,7 +310,7 @@ class Config extends \Ilch\Config\Install
                           <p>&nbsp;</p>
                           <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                           <p>Administrator</p>", "de_DE"),
-                    ("user", "topic_subscription_mail", "New posts in your subscribed topic", "<p>Hello <b>{name}</b>,</p>
+                    ("forum", "topic_subscription_mail", "New posts in your subscribed topic", "<p>Hello <b>{name}</b>,</p>
                           <p>&nbsp;</p>
                           <p>there are new posts in one of your subscribed topics in the forum at <i>{sitetitle}</i>.
                           <p>To take a look at the new posts, please click on the following link:</p>
