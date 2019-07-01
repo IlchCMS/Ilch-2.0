@@ -6,6 +6,7 @@ $cat = $this->get('cat');
 $topicpost = $this->get('post');
 $readAccess = $this->get('readAccess');
 $forum = $this->get('forum');
+$reportedPostsIds = $this->get('reportedPostsIds');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
@@ -87,8 +88,11 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
             </div>
         </div>
         <?php foreach ($posts as $post): ?>
-            <?php $date = new \Ilch\Date($post->getDateCreated()) ?>
-            <div id="<?=$post->getId() ?>" class="post ilch-bg">
+            <?php
+            $date = new \Ilch\Date($post->getDateCreated());
+            $reported = in_array($post->getId(), $reportedPostsIds);
+            ?>
+            <div id="<?=$post->getId() ?>" class="post ilch-bg <?=($reported) ? 'reported' : '' ?>">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="row">
@@ -195,6 +199,19 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     <?php endif; ?>
                 <?php endif; ?>
                 </div>
+                <?php if ($this->get('reportingPosts') && !$reported) : ?>
+                <div class="report">
+                    <?php if ($this->getUser()): ?>
+                        <p class="report-post">
+                            <a href="<?=$this->getUrl(['action' => 'report','topicid' => $this->getRequest()->getParam('topicid'), 'postid' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
+                        <span class="btn-label">
+                            <i class="fas fa-flag"></i>
+                        </span><?=$this->getTrans('report') ?>
+                            </a>
+                        </p>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
         <div class="topic-actions">

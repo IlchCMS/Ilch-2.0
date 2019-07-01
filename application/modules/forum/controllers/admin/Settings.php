@@ -27,6 +27,12 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index'])
             ],
             [
+                'name' => 'menuReports',
+                'active' => false,
+                'icon' => 'fas fa-flag',
+                'url' => $this->getLayout()->getUrl(['controller' => 'reports', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuSettings',
                 'active' => false,
                 'icon' => 'fa fa-cogs',
@@ -41,9 +47,9 @@ class Settings extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->getActionName() == 'groupappearance') {
-            $items[2][0]['active'] = true;
+            $items[3][0]['active'] = true;
         } else {
-            $items[2]['active'] = true;
+            $items[3]['active'] = true;
         }
 
         $this->getLayout()->addMenu
@@ -69,6 +75,8 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('forum_postVoting', $this->getRequest()->getPost('postVoting'));
             $this->getConfig()->set('forum_topicSubscription', $this->getRequest()->getPost('topicSubscription'));
             $this->getConfig()->set('forum_boxForumLimit', $this->getRequest()->getPost('boxForumLimit'));
+            $this->getConfig()->set('forum_reportingPosts', $this->getRequest()->getPost('reportingPosts'));
+            $this->getConfig()->set('forum_reportNotificationEMail', $this->getRequest()->getPost('reportNotificationEMail'));
             $this->addMessage('saveSuccess');
         }
 
@@ -80,6 +88,8 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('topicSubscription', $this->getConfig()->get('forum_topicSubscription'));
         $this->getView()->set('boxForumLimit', $this->getConfig()->get('forum_boxForumLimit'));
         $this->getView()->set('groupList', $groupMapper->getGroupList());
+        $this->getView()->set('reportingPosts', $this->getConfig()->get('forum_reportingPosts'));
+        $this->getView()->set('reportNotificationEMail', $this->getConfig()->get('forum_reportNotificationEMail'));
     }
 
     public function groupappearanceAction()

@@ -112,6 +112,35 @@
                    value="<?=($this->get('boxForumLimit') != '') ? $this->escape($this->get('boxForumLimit')) : 5 ?>" />
         </div>
     </div>
+    <h2><?=$this->getTrans('reportSettings') ?></h2>
+    <div class="form-group">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('reportingPosts') ?>:
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="reportingPosts-on" name="reportingPosts" value="1" <?php if ($this->get('reportingPosts') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="reportingPosts-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="reportingPosts-off" name="reportingPosts" value="0" <?php if ($this->get('reportingPosts') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="reportingPosts-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('reportNotificationEMail') ?>:
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="reportNotificationEMail-on" name="reportNotificationEMail" value="1" <?php if ($this->get('reportNotificationEMail') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="reportNotificationEMail-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="reportNotificationEMail-off" name="reportNotificationEMail" value="0" <?php if ($this->get('reportNotificationEMail') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="reportNotificationEMail-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 

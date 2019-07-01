@@ -11,10 +11,16 @@ use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Rank as RankMapper;
 use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
+use Modules\Forum\Mappers\Reports as ReportsMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Ilch\Layout\Helper\LinkTag\Model as LinkTagModel;
+use Modules\Forum\Models\Report as ReportModel;
+use Modules\Admin\Models\Notification as NotificationModel;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\Group as GroupMapper;
+use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Ilch\Accesses as Accesses;
 use Ilch\Validation;
 
@@ -28,6 +34,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $topicModel = new ForumTopicModel;
         $pagination = new \Ilch\Pagination();
         $rankMapper = new RankMapper();
+        $reportsMapper = new ReportsMapper();
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
@@ -119,6 +126,12 @@ class Showposts extends \Ilch\Controller\Frontend
             $this->getLayout()->add('linkTags', 'groupappearance', $linkTagModel);
         }
 
+        $reportedPosts = $reportsMapper->getReports();
+        $reportedPostsIds = [];
+        foreach($reportedPosts as $reportedPost) {
+            $reportedPostsIds[] = $reportedPost->getPostId();
+        }
+
         $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('post', $post);
         $this->getView()->set('cat', $cat);
@@ -131,6 +144,8 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getView()->set('postVoting', $this->getConfig()->get('forum_postVoting'));
         $this->getView()->set('topicSubscription', $this->getConfig()->get('forum_topicSubscription'));
         $this->getView()->set('isSubscribed', $isSubscribed);
+        $this->getView()->set('reportingPosts', $this->getConfig()->get('forum_reportingPosts'));
+        $this->getView()->set('reportedPostsIds', $reportedPostsIds);
     }
 
     public function deleteAction()
@@ -270,5 +285,124 @@ class Showposts extends \Ilch\Controller\Frontend
         }
 
         $this->redirect(['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]);
+    }
+
+    public function reportAction()
+    {
+        $topicId = (int)$this->getRequest()->getParam('topicid');
+        $postId = (int)$this->getRequest()->getParam('postid');
+        $reportsMapper = new ReportsMapper();
+
+        $reportedPosts = $reportsMapper->getReports();
+        $reportedPostsIds = [];
+        foreach($reportedPosts as $reportedPost) {
+            $reportedPostsIds[] = $reportedPost->getPostId();
+        }
+
+        if (($this->getConfig()->get('forum_reportingPosts') == 1) && $this->getUser() && !in_array($postId, $reportedPostsIds)) {
+            if ($this->getRequest()->getPost()) {
+                $validation = Validation::create($this->getRequest()->getPost(), [
+                    'reason' => 'required|numeric|min:1|max:4'
+                ]);
+
+                if ($validation->isValid()) {
+                    $notificationsMapper = new NotificationsMapper();
+                    $notificationModel = new NotificationModel();
+                    $reportsMapper = new ReportsMapper();
+                    $reportModel = new ReportModel();
+
+                    $notificationModel->setModule('forum');
+                    $notificationModel->setMessage($this->getTranslator()->trans('reportedPostNotification'));
+                    $notificationModel->setURL($this->getLayout()->getUrl(['module' => 'forum', 'controller' => 'reports', 'action' => 'index'], 'admin'));
+                    $notificationModel->setType('forumReportedPost');
+
+                    $notificationsMapper->addNotification($notificationModel);
+
+                    $reportModel->setPostId($postId);
+                    $reportModel->setUserId($this->getUser()->getId());
+                    $reportModel->setReason($this->getRequest()->getPost('reason'));
+                    $reportModel->setDetails($this->getRequest()->getPost('details'));
+                    $reportsMapper->addReport($reportModel);
+
+                    if ($this->getConfig()->get('forum_reportNotificationEMail') == 1) {
+                        $groupIds = [1];
+                        $users = [];
+                        $groupMapper = new GroupMapper();
+                        $userMapper = new UserMapper();
+
+                        $forumAccessList = $groupMapper->getAccessAccessList('module', 'forum');
+                        foreach ($forumAccessList['entries'] as $groupId => $accessLevel) {
+                            // Access level 2 means right to edit in backend or in other words admin rights for
+                            // that module.
+                            If ($accessLevel == 2) {
+                                $groupIds[] = $groupId;
+                            }
+                        }
+
+                        foreach ($groupIds as $groupId) {
+                            $users = array_merge($users, $userMapper->getUserListByGroupId($groupId, 1));
+                        }
+
+                        $receivedMail = [];
+                        foreach($users as $user) {
+                            if (empty($user)) {
+                                continue;
+                            }
+
+                            if (in_array($user->getId(), $receivedMail)) {
+                                continue;
+                            }
+
+                            $emailsMapper = new EmailsMapper();
+
+                            $sitetitle = $this->getConfig()->get('page_title');
+                            $date = new \Ilch\Date();
+                            $mailContent = $emailsMapper->getEmail('forum', 'post_reportedPost_mail', $this->getTranslator()->getLocale());
+                            $layout = '';
+                            if (isset($_SESSION['layout'])) {
+                                $layout = $_SESSION['layout'];
+                            }
+                            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/reportedPost.php')) {
+                                $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/reportedPost.php');
+                            } else {
+                                $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/forum/layouts/mail/reportedPost.php');
+                            }
+                            $messageReplace = [
+                                '{content}' => $mailContent->getText(),
+                                '{sitetitle}' => $sitetitle,
+                                '{date}' => $date->format("l, d. F Y", true),
+                                '{name}' => $user->getName(),
+                                '{url}' => $this->getLayout()->getUrl(['module' => 'forum', 'controller' => 'reports', 'action' => 'index'], 'admin'),
+                                '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                            ];
+                            $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+                            $mail = new \Ilch\Mail();
+                            $mail->setFromName($this->getConfig()->get('page_title'))
+                                ->setFromEmail($this->getConfig()->get('standardMail'))
+                                ->setToName($user->getName())
+                                ->setToEmail($user->getEmail())
+                                ->setSubject($mailContent->getDesc())
+                                ->setMessage($message)
+                                ->sent();
+
+                            $receivedMail[] = $user->getId();
+                        }
+                    }
+
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+                }
+
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['controller' => 'showposts', 'action' => 'report', 'topicid' => $topicId, 'postid' => $postId]);
+            }
+        } else {
+            $this->redirect()
+                ->withMessage('noAccessForum', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
     }
 }

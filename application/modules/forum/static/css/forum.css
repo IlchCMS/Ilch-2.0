@@ -432,6 +432,10 @@ legend .forum.fa {
     overflow: hidden;
 }
 
+.reported {
+    border: solid 1px #ff0000;
+}
+
 .rowbg {
     margin: 5px 5px 2px 5px;
 }
@@ -580,11 +584,11 @@ legend .forum.fa {
     float: right;
 }
 
-#forum .delete, .edit, .quote {
+#forum .delete, .edit, .quote, .report {
     float: right;
 }
 
-#forum .edit {
+#forum .edit, .report {
     padding-right: 5px;
 }
 #forum .btn-xs .btn-label {

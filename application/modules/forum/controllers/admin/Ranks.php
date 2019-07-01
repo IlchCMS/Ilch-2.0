@@ -34,6 +34,12 @@ class Ranks extends \Ilch\Controller\Admin
                 ]
             ],
             [
+                'name' => 'menuReports',
+                'active' => false,
+                'icon' => 'fas fa-flag',
+                'url' => $this->getLayout()->getUrl(['controller' => 'reports', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuSettings',
                 'active' => false,
                 'icon' => 'fa fa-cogs',

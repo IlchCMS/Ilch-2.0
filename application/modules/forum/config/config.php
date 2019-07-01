@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.18.0',
+        'version' => '1.19.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -59,6 +59,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('forum_excludeFloodProtection', '1');
         $databaseConfig->set('forum_postVoting', '0');
         $databaseConfig->set('forum_topicSubscription', '0');
+        $databaseConfig->set('forum_reportingPosts', '1');
+        $databaseConfig->set('forum_reportNotificationEMail', '0');
 
         // Add default appearance for admin group
         $appearance[1]['active'] = 'on';
@@ -82,13 +84,16 @@ class Config extends \Ilch\Config\Install
             DROP TABLE `[prefix]_forum_posts`;
             DROP TABLE `[prefix]_forum_ranks`;
             DROP TABLE `[prefix]_forum_topicsubscription`;
+            DROP TABLE `[prefix]_forum_reports`;
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_floodInterval';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_excludeFloodProtection';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_postVoting';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_topicSubscription';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_groupAppearance';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_filenameGroupappearanceCSS';
-            DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'forum' AND `type` = 'topic_subscription_mail';");
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_reportingPosts';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_reportNotificationEMail';
+            DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'forum';");
     }
 
     public function getInstallSql()
@@ -156,6 +161,16 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_reports` (
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `date` DATETIME NOT NULL,
+                `post_id` INT(11) NOT NULL,
+                `reason` INT(11) NOT NULL,
+                `details` TEXT NOT NULL,
+                `user_id` INT(11) NOT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
             INSERT INTO `[prefix]_forum_items` (`id`, `sort`, `parent_id`, `type`, `title`, `description`, `read_access`, `replay_access`, `create_access`) VALUES
                 (1, 0, 0, 0, "Meine Kategorie", "Meine erste Kategorie", "", "", ""),
                 (2, 10, 1, 1, "Mein Forum", "Mein erstes Forum", "2,3", 2, 2);
@@ -197,6 +212,24 @@ class Config extends \Ilch\Config\Install
                       <p>there are new posts in one of your subscribed topics in the forum at <i>{sitetitle}</i>.
                       <p>To take a look at the new posts, please click on the following link:</p>
                       <a href=\"{url}\">{topicTitle}</a>
+                      <p>&nbsp;</p>
+                      <p>Best regards</p>
+                      <p>Administrator</p>", "en_EN"),
+                ("forum", "post_reportedPost_mail", "Ein Beitrag wurde gemeldet", "<p>Hallo <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>ein Beitrag im Forum auf <i>{sitetitle}</i> wurde gemeldet.</p>
+                      <p>Sie bekommen diese E-Mail, weil Sie entweder Administrator oder Adminrechte für das Forum haben.</p>
+                      <p>Um direkt einen Blick auf den betreffenden Beitrag zu werfen, klicken Sie bitte auf folgenden Link:</p>
+                      <a href=\"{url}\">Verwalte gemeldete Beiträge</a>
+                      <p>&nbsp;</p>
+                      <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                      <p>Administrator</p>", "de_DE"),
+                ("forum", "post_reportedPost_mail", "A post got reported.", "<p>Hello <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>a post got reported in the forum at <i>{sitetitle}</i>.</p>
+                      <p>You are receiving this email because you are an administrator or have admin rights for the forum.</p>
+                      <p>To take a look at the relevant post, please click on the following link:</p>
+                      <a href=\"{url}\">Manage reported posts</a>
                       <p>&nbsp;</p>
                       <p>Best regards</p>
                       <p>Administrator</p>", "en_EN");';
@@ -318,6 +351,43 @@ class Config extends \Ilch\Config\Install
                           <p>&nbsp;</p>
                           <p>Best regards</p>
                           <p>Administrator</p>", "en_EN");');
+            case "1.18.0":
+                // Add table for reported posts.
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_forum_reports` (
+                        `id` INT(11) NOT NULL AUTO_INCREMENT,
+                        `date` DATETIME NOT NULL,
+                        `post_id` INT(11) NOT NULL,
+                        `reason` INT(11) NOT NULL,
+                        `details` TEXT NOT NULL,
+                        `user_id` INT(11) NOT NULL,
+                        PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+
+                // Add default settings for reporting of posts
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('forum_reportingPosts', '1');
+                $databaseConfig->set('forum_reportNotificationEMail', '0');
+
+                // Add template for the reported post email.
+                $this->db()->query('INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
+                        ("forum", "post_reportedPost_mail", "Ein Beitrag wurde gemeldet", "<p>Hallo <b>{name}</b>,</p>
+                              <p>&nbsp;</p>
+                              <p>ein Beitrag im Forum auf <i>{sitetitle}</i> wurde gemeldet.</p>
+                              <p>Sie bekommen diese E-Mail, weil Sie entweder Administrator oder Adminrechte für das Forum haben.</p>
+                              <p>Um direkt einen Blick auf den betreffenden Beitrag zu werfen, klicken Sie bitte auf folgenden Link:</p>
+                              <a href=\"{url}\">Verwalte gemeldete Beiträge</a>
+                              <p>&nbsp;</p>
+                              <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                              <p>Administrator</p>", "de_DE"),
+                        ("forum", "post_reportedPost_mail", "A post got reported.", "<p>Hello <b>{name}</b>,</p>
+                              <p>&nbsp;</p>
+                              <p>a post got reported in the forum at <i>{sitetitle}</i>.</p>
+                              <p>You are receiving this email because you are an administrator or have admin rights for the forum.</p>
+                              <p>To take a look at the relevant post, please click on the following link:</p>
+                              <a href=\"{url}\">Manage reported posts</a>
+                              <p>&nbsp;</p>
+                              <p>Best regards</p>
+                              <p>Administrator</p>", "en_EN");');
         }
     }
 }
