@@ -266,25 +266,23 @@ class Topic extends \Ilch\Mapper
 
     public function getPostByTopicId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *
-                FROM `[prefix]_forum_topics`
-                WHERE topic_id = '.$id.'
-                LIMIT '.implode(',',$pagination->getLimit());
+        $sql = 'SELECT * 
+                FROM 
+                    (   SELECT DISTINCT(`p`.`topic_id`),`t`.`topic_title` AS `topic_title`,`t`.`forum_id` AS `forum_id`,`p`.`date_created` 
+                        FROM `ilch_forum_posts` AS `p` 
+                        LEFT JOIN `ilch_forum_topics` AS `t` ON `p`.`topic_id` = `t`.`id` 
+                        ORDER BY `p`.`date_created` DESC 
+                    ) AS `innerfrom` 
+                GROUP BY `innerfrom`.`topic_id` 
+                ORDER BY `innerfrom`.`date_created` DESC
+        ';
 
-        $fileArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
-
-        $entry = [];
-
-        foreach ($fileArray as $entries) {
-            $entryModel = new TopicModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setTopicId($id);
-            $entryModel->setTopicTitle($entries['topic_title']);
-            $entry[] = $entryModel;
+        if ($limit !== null) {
+            $sql .= 'LIMIT '.$limit;
         }
 
-        return $entry;
+        $result = $this->db()->queryArray($sql);
+        return $result;
     }
 
     /**
