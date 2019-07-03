@@ -288,23 +288,29 @@ class Topic extends \Ilch\Mapper
     }
 
     /**
-     * Get x topics with latest activity where x is specifified by the limit.
+     * Get x topics with latest activity where x is specified by the limit.
      *
      * @param null|integer $limit
      * @return array[]
      */
     public function getLastActiveTopics($limit = null)
     {
-        $select = $this->db()->select('DISTINCT(p.topic_id)', ['p' => 'forum_posts'])
-            ->join(['t' => 'forum_topics'], 'p.topic_id = t.id', 'LEFT', ['topic_title' => 't.topic_title', 'forum_id' => 't.forum_id'])
-            ->order(['p.id' => 'DESC']);
+        $sql = 'SELECT * 
+                FROM 
+                    (   SELECT DISTINCT(`p`.`topic_id`),`t`.`topic_title` AS `topic_title`,`t`.`forum_id` AS `forum_id`,`p`.`date_created` 
+                        FROM `ilch_forum_posts` AS `p` 
+                        LEFT JOIN `ilch_forum_topics` AS `t` ON `p`.`topic_id` = `t`.`id` 
+                        ORDER BY `p`.`date_created` DESC 
+                    ) AS `innerfrom` 
+                GROUP BY `innerfrom`.`topic_id` 
+                ORDER BY `innerfrom`.`date_created` DESC';
 
         if ($limit !== null) {
-            $select->limit($limit);
+            $sql .= 'LIMIT '.$limit;
         }
 
-        $result = $select->execute();
-        return $result->fetchRows();
+        $result = $this->db()->queryArray($sql);
+        return $result;
     }
 
     public function deleteById($id)
