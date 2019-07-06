@@ -44,11 +44,18 @@ class Statistic extends \Ilch\Model
     protected $site;
 
     /**
-     * The ipAdresse of the Statistic.
+     * The referer.
      *
      * @var string
      */
-    protected $ipAdresse;
+    protected $referer;
+
+    /**
+     * The ip address of the Statistic.
+     *
+     * @var string
+     */
+    protected $ipAddress;
 
     /**
      * The os of the Statistic.
@@ -91,6 +98,13 @@ class Statistic extends \Ilch\Model
      * @var string
      */
     protected $dateLastActivity;
+
+    /**
+     * The date.
+     *
+     * @var string
+     */
+    protected $date;
 
     /**
      * Returns the id of the Statistic.
@@ -154,10 +168,13 @@ class Statistic extends \Ilch\Model
      * Set the php session id of the guest or user.
      *
      * @param string $sessionId
+     * @return Statistic
      */
     public function setSessionId($sessionId)
     {
         $this->sessionId = $sessionId;
+
+        return $this;
     }
 
     /**
@@ -197,7 +214,7 @@ class Statistic extends \Ilch\Model
      * Saves the site.
      *
      * @param string $site
-     * @return Site
+     * @return Statistic
      */
     public function setSite($site)
     {
@@ -220,7 +237,7 @@ class Statistic extends \Ilch\Model
      * Saves the referer.
      *
      * @param string $referer
-     * @return Referer
+     * @return Statistic
      */
     public function setReferer($referer)
     {
@@ -230,24 +247,24 @@ class Statistic extends \Ilch\Model
     }
 
     /**
-     * Returns the ipAdress.
+     * Returns the ip address.
      *
      * @return string
      */
     public function getIPAdress()
     {
-        return $this->ipAdress;
+        return $this->ipAddress;
     }
 
     /**
      * Saves the ipAdress.
      *
-     * @param string $ipAdress
-     * @return IPAdress
+     * @param string $ipAddress
+     * @return Statistic
      */
-    public function setIPAdress($ipAdress)
+    public function setIPAdress($ipAddress)
     {
-        $this->ipAdress = (string)$ipAdress;
+        $this->ipAddress = (string)$ipAddress;
 
         return $this;
     }
@@ -266,7 +283,7 @@ class Statistic extends \Ilch\Model
      * Saves the os.
      *
      * @param string $os
-     * @return OS
+     * @return Statistic
      */
     public function setOS($os)
     {
@@ -289,7 +306,7 @@ class Statistic extends \Ilch\Model
      * Saves the os.
      *
      * @param string $osVersion
-     * @return osVersion
+     * @return Statistic
      */
     public function setOSVersion($osVersion)
     {
@@ -312,7 +329,7 @@ class Statistic extends \Ilch\Model
      * Saves the browser.
      *
      * @param string $browser
-     * @return Browser
+     * @return Statistic
      */
     public function setBrowser($browser)
     {
@@ -335,7 +352,7 @@ class Statistic extends \Ilch\Model
      * Saves the browser version.
      *
      * @param string $browserVersion
-     * @return Browser Version
+     * @return Statistic
      */
     public function setBrowserVersion($browserVersion)
     {
@@ -358,7 +375,7 @@ class Statistic extends \Ilch\Model
      * Saves the lang.
      *
      * @param string $lang
-     * @return Lang
+     * @return Statistic
      */
     public function setLang($lang)
     {
@@ -381,7 +398,7 @@ class Statistic extends \Ilch\Model
      * Saves the Date last Activity.
      *
      * @param string $dateLastActivity
-     * @return User
+     * @return Statistic
      */
     public function setDateLastActivity($dateLastActivity)
     {
@@ -404,7 +421,7 @@ class Statistic extends \Ilch\Model
      * Saves the Date.
      *
      * @param string $date
-     * @return User
+     * @return Statistic
      */
     public function setDate($date)
     {
