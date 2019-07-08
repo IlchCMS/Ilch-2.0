@@ -63,30 +63,32 @@
     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>
 
-<script>
-$(document).ready(function () {
-    let notificationsDiv = $(".ilch--new-message"),
-        messageCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>",
-        openFriendRequestsCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewfriendrequests']); ?>",
-        globalStore = [];
+<?php if ($this->getUser() !== null): ?>
+    <script>
+        $(document).ready(function () {
+            let notificationsDiv = $(".ilch--new-message"),
+                messageCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>",
+                openFriendRequestsCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewfriendrequests']); ?>",
+                globalStore = [];
 
-    function loadNotifications()
-    {
-        $.when(
-            $.get(messageCheckLink, function(newMessages) {
-                globalStore['newMessages'] = newMessages;
-            }),
+            function loadNotifications()
+            {
+                $.when(
+                    $.get(messageCheckLink, function(newMessages) {
+                        globalStore['newMessages'] = newMessages;
+                    }),
 
-            $.get(openFriendRequestsCheckLink, function(newFriendRequests) {
-                globalStore['newFriendRequests'] = newFriendRequests;
-            }),
-        ).then(function() {
-            notificationsDiv.html(globalStore['newMessages']);
-            notificationsDiv.append(globalStore['newFriendRequests'])
+                    $.get(openFriendRequestsCheckLink, function(newFriendRequests) {
+                        globalStore['newFriendRequests'] = newFriendRequests;
+                    }),
+                ).then(function() {
+                    notificationsDiv.html(globalStore['newMessages']);
+                    notificationsDiv.append(globalStore['newFriendRequests'])
+                });
+            }
+
+            loadNotifications();
+            setInterval(loadNotifications, 60000);
         });
-    }
-
-    loadNotifications();
-    setInterval(loadNotifications, 60000);
-});
-</script>
+    </script>
+<?php endif; ?>
