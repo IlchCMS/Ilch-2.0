@@ -726,8 +726,19 @@ class Statistic extends \Ilch\Mapper
         $this->cleanUpOnline();
 
         $sql = 'SELECT id
-                FROM `[prefix]_visits_stats`
-                WHERE `session_id` = "'.$row['session_id'].'" AND YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE()) AND DAY(`date`) = DAY(CURDATE())';
+                FROM `[prefix]_visits_stats`';
+
+        // Order by id and limit of 1 is necessary as because of a previous bug the database might contain multiple rows with the same user_id or ip-address on the same day.
+        if ($row['user_id']) {
+            // Try to identify by session_id first as it should not change while the user is using the site.
+            // If the user returns later (possible new session and re-authenticated with the remember me cookie) try to use the user id.
+            $sql .= ' WHERE (`session_id` = "'.$row['session_id'].'" OR `user_id` = "'.$row['user_id'].'") AND YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE()) AND DAY(`date`) = DAY(CURDATE())
+                      ORDER BY `id` DESC LIMIT 1';
+        } else {
+            // Session id might still be the same. If this returns no result then (in case of guests) fall-back to ip-address to avoid counting every visit with dropped session id.
+            $sql .= ' WHERE (`session_id` = "'.$row['session_id'].'" OR (`ip_address` = "'.$row['ip'].'" AND `user_id` = 0)) AND YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE()) AND DAY(`date`) = DAY(CURDATE())
+                      ORDER BY `id` DESC LIMIT 1';
+        }
 
         $uniqueUser = $this->db()->queryCell($sql);
 
