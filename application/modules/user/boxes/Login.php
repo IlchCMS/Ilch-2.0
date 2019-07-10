@@ -7,6 +7,7 @@
 namespace Modules\User\Boxes;
 
 use Ilch\Accesses as Accesses;
+use Modules\User\Mappers\AuthProvider;
 
 class Login extends \Ilch\Box
 {
@@ -23,6 +24,7 @@ class Login extends \Ilch\Box
             $this->getView()->set('userAccesses', $access->hasAccess('Admin'));
         }
         $this->getView()->setArray([
+            'providers' => $authProvider->getProviders(),
             'regist_accept' => $this->getConfig()->get('regist_accept'),
             'redirectUrl' => $redirectUrl
         ]);
