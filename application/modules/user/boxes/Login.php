@@ -13,6 +13,8 @@ class Login extends \Ilch\Box
 {
     public function render()
     {
+        $authProvider = new AuthProvider();
+
         if (isset($_SESSION['redirect'])) {
             $redirectUrl = $_SESSION['redirect'];
         } else {
