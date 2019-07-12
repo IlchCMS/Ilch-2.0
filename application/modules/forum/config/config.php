@@ -388,6 +388,11 @@ class Config extends \Ilch\Config\Install
                               <p>&nbsp;</p>
                               <p>Best regards</p>
                               <p>Administrator</p>", "en_EN");');
+
+                // Create possibly missing "groupappearance"-directory.
+                if (!file_exists(APPLICATION_PATH.'/modules/forum/static/css/groupappearance')) {
+                    mkdir(APPLICATION_PATH.'/modules/forum/static/css/groupappearance');
+                }
         }
     }
 }
