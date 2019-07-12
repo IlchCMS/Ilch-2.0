@@ -1,4 +1,15 @@
 <?php if ($this->getUser() == null): ?>
+    <script>$(document).ready(function(){
+    $('.providers').on('click', function (e) {
+        e.preventDefault();
+        
+        var myForm = $(this).closest('form')[0];
+        myForm.action = this.href;// the href of the link
+        myForm.method = "POST";
+        myForm.submit();
+        return false; // cancel the actual link
+    });
+    });</script>
     <form class="form-horizontal" method="post">
         <h1><?=$this->getTrans('menuLogin') ?></h1>
         <?=$this->getTokenField() ?>
@@ -51,7 +62,7 @@
                     <?php endif; ?>
                     <?php foreach ($this->get('providers') as $provider): ?>
                         <a 
-                            class="btn btn-link provider-<?= $provider->getKey() ?>"
+                            class="btn btn-link providers provider-<?= $provider->getKey() ?>"
                             href="<?= $this->getUrl([
                                 'module' => $provider->getModule(),
                                 'controller' => $provider->getAuthController(),

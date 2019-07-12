@@ -16,6 +16,17 @@
         <?=$this->getTrans('logout') ?>
     </a>
 <?php else: ?>
+    <script>$(document).ready(function(){
+    $('.providers').on('click', function (e) {
+        e.preventDefault();
+        
+        var myForm = $(this).closest('form')[0];
+        myForm.action = this.href;// the href of the link
+        myForm.method = "POST";
+        myForm.submit();
+        return false; // cancel the actual link
+    });
+    });</script>
     <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="form-horizontal" method="post">
         <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl')) ?>" />
         <?php
@@ -44,17 +55,38 @@
                 </div>
             </div>
         </div>
-        <label>
-            <input type="checkbox"
-                   name="rememberMe"
-                   value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
-        </label>
         <div class="form-group">
-             <div class="col-lg-4">
+            <div class="col-lg-12">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-12">
                 <button type="submit" class="btn" name="login">
                     <?=$this->getTrans('login') ?>
                 </button>
-             </div>
+                <span class="social-logins">
+                    <?php if (count($this->get('providers')) > 0): ?>
+                        <i class="fa fa-fw fa-angle-right"></i>
+                    <?php endif; ?>
+                    <?php foreach ($this->get('providers') as $provider): ?>
+                        <a 
+                            class="btn btn-link providers provider-<?= $provider->getKey() ?>"
+                            href="<?= $this->getUrl([
+                                'module' => $provider->getModule(),
+                                'controller' => $provider->getAuthController(),
+                                'action' => $provider->getAuthAction()
+                            ]) ?>"
+                        >
+                            <i class="fa fa-2x fa-fw <?= $provider->getIcon() ?>"></i>
+                        </a>
+                    <?php endforeach; ?>
+                </span>
+            </div>
         </div>
     </form>
     <?php if ($this->get('regist_accept') == '1'): ?>
