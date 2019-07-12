@@ -55,11 +55,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
-                </label>
+        <div class="form-group">
+            <div class="col-lg-12">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
+                    </label>
+                </div>
             </div>
         </div>
         <div class="form-group">
