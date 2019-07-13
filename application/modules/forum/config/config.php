@@ -389,9 +389,21 @@ class Config extends \Ilch\Config\Install
                               <p>Best regards</p>
                               <p>Administrator</p>", "en_EN");');
 
-                // Create possibly missing "groupappearance"-directory.
+                // Create possibly missing "groupappearance"-directory and default CSS.
                 if (!file_exists(APPLICATION_PATH.'/modules/forum/static/css/groupappearance')) {
                     mkdir(APPLICATION_PATH.'/modules/forum/static/css/groupappearance');
+
+                    // Add default appearance for admin group
+                    $databaseConfig = new \Ilch\Config\Database($this->db());
+                    $appearance[1]['active'] = 'on';
+                    $appearance[1]['textcolor'] = '#000000';
+                    $appearance[1]['bold'] = 'on';
+                    $databaseConfig->set('forum_groupAppearance', serialize($appearance));
+
+                    $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
+                    $filename = uniqid().'.css';
+                    file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
+                    $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
                 }
         }
     }
