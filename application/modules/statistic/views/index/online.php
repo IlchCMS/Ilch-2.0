@@ -59,7 +59,7 @@ if ($this->getUser()) {
                             <td><?=$userOnlineList->getOS() ?> <?=$userOnlineList->getOSVersion() ?> / <?=$userOnlineList->getBrowser() ?> <?=$userOnlineList->getBrowserVersion() ?></td>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <td><a href="<?=$this->getUrl(substr($userOnlineList->getSite(),1)) ?>"><?=$this->escape($moduleName) ?></a></td>
+                    <td><a href="<?=$this->getUrl($this->escape(substr($userOnlineList->getSite(),1))) ?>"><?=$this->escape($moduleName) ?></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
