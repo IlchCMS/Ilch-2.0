@@ -298,8 +298,8 @@ class Topic extends \Ilch\Mapper
         $sql = 'SELECT * 
                 FROM 
                     (   SELECT DISTINCT(`p`.`topic_id`),`t`.`topic_title` AS `topic_title`,`t`.`forum_id` AS `forum_id`,`p`.`date_created` 
-                        FROM `ilch_forum_posts` AS `p` 
-                        LEFT JOIN `ilch_forum_topics` AS `t` ON `p`.`topic_id` = `t`.`id` 
+                        FROM `[prefix]_forum_posts` AS `p` 
+                        LEFT JOIN `[prefix]_forum_topics` AS `t` ON `p`.`topic_id` = `t`.`id` 
                         ORDER BY `p`.`date_created` DESC 
                     ) AS `innerfrom` 
                 GROUP BY `innerfrom`.`topic_id` 
