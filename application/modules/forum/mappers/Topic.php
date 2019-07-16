@@ -306,7 +306,7 @@ class Topic extends \Ilch\Mapper
                 ORDER BY `innerfrom`.`date_created` DESC';
 
         if ($limit !== null) {
-            $sql .= 'LIMIT '.$limit;
+            $sql .= ' LIMIT '.$limit;
         }
 
         $result = $this->db()->queryArray($sql);
