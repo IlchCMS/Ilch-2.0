@@ -94,6 +94,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('rules', $ruleMapper->getRules());
+        $this->getView()->set('ruleMapper', $ruleMapper);
     }
 
     public function treatAction()

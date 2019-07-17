@@ -9,8 +9,8 @@
                     <col class="icon_width" />
                     <col class="icon_width" />
                     <col class="icon_width" />
-                    <col class="col-lg-2" />
                     <col class="icon_width" />
+                    <col class="col-lg-2" />
                     <col class="col-lg-2" />
                     <col />
                 </colgroup>
@@ -20,23 +20,26 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th><?=$this->getTrans('cat') ?></th>
-                        <th>§</th>
+                        <th><?=$this->getTrans('art') ?>  /  <?=$this->getTrans('paragraphsign') ?></th>
                         <th><?=$this->getTrans('title') ?></th>
+                        <th><?=$this->getTrans('cat') ?></th>
                         <th><?=$this->getTrans('text');?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('rules') as $rule): ?>
+                    <?php
+                    $rulesparent = $this->get('ruleMapper')->getRuleById($rule->getParent_Id())
+                    ?>
                         <tr>
                             <input type="hidden" name="items[]" value="<?=$rule->getId() ?>" />
                             <td><?=$this->getDeleteCheckbox('check_entries', $rule->getId()) ?></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $rule->getId()]) ?></td>
+                            <td><?=$this->getEditIcon(array_merge(($rule->getParent_Id()==0?['controller' => 'cats']:[]),['action' => 'treat', 'id' => $rule->getId()])) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $rule->getId()]) ?></td>
                             <td><i class="fa fa-sort"></i></td>
-                            <td><?=$this->escape($rule->getParentTitle()) ?></td>
-                            <td><?=$this->escape($rule->getParagraph()) ?></td>
+                            <td><?=($rulesparent?$this->escape($rulesparent->getParagraph()).' / ':'') ?><?=$this->escape($rule->getParagraph()) ?></td>
                             <td><?=$this->escape($rule->getTitle()) ?></td>
+                            <td><?=$this->escape($rule->getParentTitle()) ?></td>
                             <td><?=$rule->getText() ?></td>
                         </tr>
                     <?php endforeach; ?>

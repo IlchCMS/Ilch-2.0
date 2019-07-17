@@ -8,6 +8,7 @@ namespace Modules\Rule\Controllers\Admin;
 
 use Modules\Rule\Mappers\Rule as RuleMapper;
 use Modules\Rule\Models\Rule as RuleModel;
+use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
 
 class Cats extends \Ilch\Controller\Admin
@@ -89,6 +90,7 @@ class Cats extends \Ilch\Controller\Admin
     public function treatAction() 
     {
         $ruleMapper = new RuleMapper();
+        $userGroupMapper = new UserGroupMapper();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -115,8 +117,15 @@ class Cats extends \Ilch\Controller\Admin
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
+
+                $groups = '';
+                if (!empty($this->getRequest()->getPost('groups'))) {
+                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                }
+
                 $model->setParagraph($this->getRequest()->getPost('paragraph'));
                 $model->setTitle($this->getRequest()->getPost('name'));
+                $model->setAccess($groups);
                 $ruleMapper->save($model);
 
                 $this->redirect()
@@ -130,6 +139,15 @@ class Cats extends \Ilch\Controller\Admin
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'treat']);
         }
+
+        if (!empty($rule)) {
+            $groups = explode(',', $rule->getAccess());
+        } else {
+            $groups = [1,2,3];
+        }
+
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
+        $this->getView()->set('groups', $groups);
     }
 
     public function delCatAction()

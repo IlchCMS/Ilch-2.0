@@ -3,7 +3,7 @@
     <?=$this->getTokenField(); ?>
     <div class="form-group <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
         <label for="paragraph" class="col-lg-2 control-label">
-            <?=$this->getTrans('paragraph') ?>
+            <?=$this->getTrans('art') ?>
         </label>
         <div class="col-lg-1">
             <input type="text"
@@ -27,5 +27,22 @@
                    required />
         </div>
     </div>
+    <div class="form-group">
+        <label for="assignedGroupsRead" class="col-lg-2 control-label">
+            <?=$this->getTrans('see') ?>
+            <a href="#" data-toggle="tooltip" title="<?=$this->getTrans('seetext') ?>"><i class="fa fa-info-circle"></i></a>
+        </label>
+        <div class="col-lg-4">
+            <select class="chosen-select form-control" id="assignedGroupsRead" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+                <?php foreach ($this->get('userGroupList') as $groupList): ?>
+                    <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$this->escape($groupList->getName()) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
     <?=($this->get('cat') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
+
+<script>
+    $('#assignedGroupsRead').chosen();
+</script>

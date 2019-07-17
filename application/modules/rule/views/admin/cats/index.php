@@ -8,6 +8,7 @@
                     <col class="icon_width" />
                     <col class="icon_width" />
                     <col class="icon_width" />
+                    <col class="icon_width" />
                     <col />
                 </colgroup>
                 <thead>
@@ -15,6 +16,7 @@
                         <th><?=$this->getCheckAllCheckbox('check_cats') ?></th>
                         <th></th>
                         <th></th>
+                        <th><?=$this->getTrans('art') ?></th>
                         <th><?=$this->getTrans('title') ?></th>
                     </tr>
                 </thead>
@@ -25,6 +27,7 @@
                             <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
+                            <td><?=$this->escape($cat->getParagraph()) ?></td>
                             <td><?=$this->escape($cat->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
