@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'rule',
-        'version' => '1.4.0',
+        'version' => '1.5.0',
         'icon_small' => 'fa-gavel',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',

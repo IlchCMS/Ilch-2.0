@@ -26,7 +26,7 @@ function rec($item, $obj)
     echo '<div class="card">
     <div class="card-header" id="paragraph'.$item->getParagraph().'">
         <h3 class="mb-0" data-toggle="collapse" data-target="#paragraph0_'.$item->getParagraph().'" aria-expanded="false" aria-controls="paragraph0_'.$item->getParagraph().'">
-            '.$obj->getTrans('art').' '.$item->getParagraph().' : '.$obj->escape($item->getTitle()).'<span class="pull-right glyphicon glyphicon-'.($obj->get('showallonstart')?'minus':'plus').'"></span>
+            <a href="#paragraph'.$item->getParagraph().'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$item->getParagraph().' : '.$obj->escape($item->getTitle()).'<span class="pull-right glyphicon glyphicon-'.($obj->get('showallonstart')?'minus':'plus').'"></span>
         </h3>
     </div>
     <div id="paragraph0_'.$item->getParagraph().'" class="panel-collapse collapse" aria-labelledby="paragraph'.$item->getParagraph().'" data-parent="#accordion">
@@ -49,7 +49,7 @@ function rec($item, $obj)
         echo '
                 <tr id="paragraph'.$obj->escape(($parentItem != ''?$parentItem->getParagraph().'_':'').$item->getParagraph()).'" tabindex="-1">
                     <th>
-                        '.$obj->getTrans('art').' '.$obj->escape($parentItem->getParagraph()).' '.$obj->getTrans('paragraphsign').' '.$obj->escape($item->getParagraph()).' : '.$obj->escape($item->getTitle()).'
+                        <a href="#paragraph'.$parentItem->getParagraph().'_'.$item->getParagraph().'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$obj->escape($parentItem->getParagraph()).' '.$obj->getTrans('paragraphsign').' '.$obj->escape($item->getParagraph()).' : '.$obj->escape($item->getTitle()).'
                     </th>
                 </tr>
                 <tr>
