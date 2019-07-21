@@ -7,6 +7,8 @@
 namespace Ilch;
 
 use Ilch\Config\File;
+use Modules\Admin\Mappers\Box as BoxMapper;
+use Modules\Admin\Models\Box as BoxModel;
 
 class Transfer
 {
@@ -469,12 +471,12 @@ class Transfer
                     $contents = zip_entry_read($aF, zip_entry_filesize($aF));
                     $updateThis = @fopen(ROOT_PATH.'/'.$thisFileName, 'w');
                     $bytesWritten = @fwrite($updateThis, $contents);
-                    $successfull = $updateThis !== false && $bytesWritten !== false;
+                    $successful = $updateThis !== false && $bytesWritten !== false;
                     @fclose($updateThis);
-                    $successfull = $successfull && !($bytesWritten == 0 && $bytesWritten != strlen($contents));
+                    $successful = $successful && !($bytesWritten == 0 && $bytesWritten != strlen($contents));
                     unset($contents);
 
-                    if (!$successfull) {
+                    if (!$successful) {
                         $content[] = 'Error writing new file: '.$thisFileName;
                         unset($aF);
                         return false;
@@ -564,6 +566,17 @@ class Transfer
 
                             $moduleModel->setIconSmall($config->config['icon_small']);
                             $moduleMapper->save($moduleModel);
+
+                            if (isset($config->config['boxes'])) {
+                                $boxMapper = new BoxMapper();
+                                $boxModel = new BoxModel();
+
+                                $boxModel->setModule($config->config['key']);
+                                foreach ($config->config['boxes'] as $key => $value) {
+                                    $boxModel->addContent($key, $value);
+                                }
+                                $boxMapper->install($boxModel);
+                            }
                         }
                     }
                 }
