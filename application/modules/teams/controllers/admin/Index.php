@@ -104,6 +104,10 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost()) {
+            Validation::setCustomFieldAliases([
+                'name' => 'teamName',
+            ]);
+
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required|unique:teams,name,'.$this->getRequest()->getParam('id'),
                 'groupId' => 'required|numeric|integer|min:1',

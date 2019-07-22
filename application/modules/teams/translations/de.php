@@ -7,6 +7,7 @@
 return [
     'menuTeams' => 'Teams',
     'menuTeam' => 'Team',
+    'teamName' => 'Name',
     'img' => 'Bild',
     'leader' => 'Leader',
     'coLeader' => 'CoLeader',

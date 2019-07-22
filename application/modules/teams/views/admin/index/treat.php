@@ -15,7 +15,7 @@
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
-            <?=$this->getTrans('name') ?>
+            <?=$this->getTrans('teamName') ?>
         </label>
         <div class="col-lg-4">
             <input type="text"
