@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'history',
-        'version' => '1.3.0',
+        'version' => '1.4.0',
         'icon_small' => 'fa-history',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -30,11 +30,16 @@ class Config extends \Ilch\Config\Install
 
     public function install()
     {
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('history_desc_order', '0');
+
         $this->db()->queryMulti($this->getInstallSql());
     }
 
     public function uninstall()
     {
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'history_desc_order'");
+
         $this->db()->queryMulti('DROP TABLE `[prefix]_history`');
     }
 
@@ -57,6 +62,10 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_history` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case  "1.3.0":
+                //add order Settings
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('history_desc_order', '0');
         }
     }
 }
