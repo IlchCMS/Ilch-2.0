@@ -19,4 +19,7 @@ return [
     'videoSelect' => 'Video',
     'locationSelect' => 'Location',
     'noHistorys' => 'No history available',
+
+    'desc_order' => 'Sort',
+    'desc_orderText' => 'Sort descending',
 ];

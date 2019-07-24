@@ -17,6 +17,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index']);
 
-        $this->getView()->set('historys', $historyMapper->getEntries());
+        $this->getView()->set('historys', $historyMapper->getHistorysBy([], ['date' => ($this->getConfig()->get('history_desc_order') == 1?'DESC':'ASC')]));
     }
 }
