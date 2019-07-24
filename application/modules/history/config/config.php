@@ -62,8 +62,11 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_history` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
-            case  "1.3.0":
-                //add order Settings
+            case "1.1":
+            case "1.1.0":
+            case "1.2.0":
+            case "1.3.0":
+                // Add sort order setting
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('history_desc_order', '0');
         }
