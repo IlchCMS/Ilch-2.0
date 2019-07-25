@@ -22,12 +22,14 @@ if (!empty($file)) {
     $userMapper = $obj->get('userMapper');
     $fk_comments = $commentMappers->getCommentsByFKId($commentId);
     $user_rep = $userMapper->getUserById($uid);
+    if (!$user_rep) $user_rep = $userMapper->getDummyUser();
     $config = $obj->get('config');
     $nowDate = new \Ilch\Date();
 
     foreach ($fk_comments as $fk_comment) {
         $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
         $user = $userMapper->getUserById($fk_comment->getUserId());
+        if (!$user) $user = $userMapper->getDummyUser();
         $voted = explode(',', $fk_comment->getVoted());
         if ($req >= $config->get('comment_nesting')) {
             $req = $config->get('comment_nesting');

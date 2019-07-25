@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'downloads',
-        'version' => '1.5.0',
+        'version' => '1.6.0',
         'icon_small' => 'fa-arrow-circle-o-down',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
