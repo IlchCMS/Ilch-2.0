@@ -19,16 +19,19 @@ class Box extends \Ilch\Mapper
      */
     public function getBoxList($locale)
     {
-        $sql = 'SELECT * FROM [prefix]_modules_boxes_content
-                WHERE `locale` = "'.$locale.'"';
-        $boxArray = $this->db()->queryArray($sql);
+        $boxRows = $this->db()->select('*')
+            ->from('modules_boxes_content')
+            ->where(['locale' => $locale])
+            ->execute()
+            ->fetchRows();
 
-        if (empty($boxArray)) {
+        if (empty($boxRows)) {
             return [];
         }
 
         $boxes = [];
-        foreach ($boxArray as $boxRow) {
+
+        foreach ($boxRows as $boxRow) {
             $boxModel = new BoxModel();
             $boxModel->setKey($boxRow['key']);
             $boxModel->setModule($boxRow['module']);

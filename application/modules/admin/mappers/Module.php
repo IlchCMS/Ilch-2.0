@@ -116,6 +116,7 @@ class Module extends \Ilch\Mapper
      *
      * @param string $key
      * @param string $locale
+     * @return ModuleModel|void
      */
     public function getModulesByKey($key, $locale)
     {

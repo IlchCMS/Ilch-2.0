@@ -517,6 +517,53 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
+            case "2.1.24":
+                // Add possible missing boxes.
+                $moduleMapper = new \Modules\Admin\Mappers\Module();
+                $boxMapper = new \Modules\Admin\Mappers\Box();
+
+                $installedModules = $moduleMapper->getModules();
+                $boxes = $boxMapper->getBoxList('de_DE');
+                foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+                    $installed = false;
+                    $key = basename($modulesPath);
+                    foreach($installedModules as $installedModule) {
+                        if ($installedModule->getKey() == $key) {
+                            $installed = true;
+                            break;
+                        }
+                    }
+
+                    if (!$installed) {
+                        continue;
+                    }
+
+                    $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+                    if (class_exists($configClass)) {
+                        $config = new $configClass($this->getTranslator());
+                        if (!empty($config->config) && isset($config->config['boxes'])) {
+                            $boxModel = new \Modules\Admin\Models\Box();
+                            $boxModel->setModule($config->config['key']);
+                            foreach ($config->config['boxes'] as $key => $value) {
+                                $boxFound = false;
+                                foreach ($boxes as $box) {
+                                    if ($box->getKey() == $key) {
+                                        $boxFound = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!$boxFound) {
+                                    $boxModel->addContent($key, $value);
+                                }
+                            }
+
+                            if (!empty($boxModel->getContent())) {
+                                $boxMapper->install($boxModel);
+                            }
+                        }
+                    }
+                }
         }
 
         return 'Update function executed.';

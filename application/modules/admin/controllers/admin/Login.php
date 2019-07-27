@@ -6,6 +6,7 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Modules\User\Mappers\AuthToken;
 use Modules\User\Service\Login as LoginService;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 
@@ -73,12 +74,13 @@ class Login extends \Ilch\Controller\Admin
 
         if (!empty($_COOKIE['remember'])) {
             list($selector) = explode(':', $_COOKIE['remember']);
-            $authTokenMapper = new \Modules\User\Mappers\AuthToken();
+            $authTokenMapper = new AuthToken();
             $authTokenMapper->deleteAuthToken($selector);
             setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
         }
 
         $statisticMapper->deleteUserOnline($this->getUser()->getId());
+
         $_SESSION = [];
         \Ilch\Registry::remove('user');
 
