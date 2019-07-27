@@ -8,6 +8,7 @@ namespace Modules\Guestbook\Controllers\Admin;
 
 use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
 use Modules\Guestbook\Models\Entry as GuestbookModel;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -70,8 +71,15 @@ class Index extends \Ilch\Controller\Admin
             $entries = $guestbookMapper->getEntries(['setfree' => 1]);
         }
 
+        $countAwaitingApproval = count($guestbookMapper->getEntries(['setfree' => 0]));
+
+        if ($countAwaitingApproval == 0) {
+            $notificationsMapper = new NotificationsMapper();
+            $notificationsMapper->deleteNotificationsByType('guestbookEntryAwaitingApproval');
+        }
+
         $this->getView()->set('entries', $entries);
-        $this->getView()->set('badge', count($guestbookMapper->getEntries(['setfree' => 0])));
+        $this->getView()->set('badge', $countAwaitingApproval);
     }
 
     public function delAction()

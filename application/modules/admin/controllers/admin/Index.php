@@ -98,14 +98,6 @@ class Index extends \Ilch\Controller\Admin
 
         $moduleLocales = [];
 
-        if (in_array('guestbook', $modules)) {
-            // Check if there are guestbook entries, which need approval
-            $guestbookMapper = new \Modules\Guestbook\Mappers\Guestbook();
-            $moduleLocales['guestbook'] = $moduleMapper->getModulesByKey('guestbook', $this->getTranslator()->getLocale());
-
-            $this->getView()->set('guestbookEntries', $guestbookMapper->getEntries(['setfree' => 0]));
-        }
-
         if (in_array('partner', $modules)) {
             // Check if there are partner entries, which need approval
             $partnerMapper = new \Modules\Partner\Mappers\Partner();

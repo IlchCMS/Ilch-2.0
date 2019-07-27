@@ -18,6 +18,7 @@ return [
     'entry' => 'Neuer Eintrag',
     'text' => 'Text',
     'successful' => 'Erfolgreich',
+    'entryAwaitingApproval' => 'Eintrag wartet auf Freigabe.',
     'settings' => 'Einstellungen',
     'entrySettings' => 'Einträge sofort freigeben',
     'entrys' => 'Einträge',

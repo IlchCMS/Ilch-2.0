@@ -8,6 +8,8 @@ namespace Modules\Guestbook\Controllers;
 
 use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
 use Modules\Guestbook\Models\Entry as GuestbookModel;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Models\Notification as NotificationModel;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
@@ -72,6 +74,15 @@ class Index extends \Ilch\Controller\Frontend
                 $guestbookMapper->save($model);
 
                 if ($this->getConfig()->get('gbook_autosetfree') == 0) {
+                    $notificationsMapper = new NotificationsMapper();
+                    $notificationModel = new NotificationModel();
+
+                    $notificationModel->setModule('guestbook');
+                    $notificationModel->setMessage($this->getTranslator()->trans('entryAwaitingApproval'));
+                    $notificationModel->setURL($this->getLayout()->getUrl(['module' => 'guestbook', 'controller' => 'index', 'action' => 'index', 'showsetfree' => 1], 'admin'));
+                    $notificationModel->setType('guestbookEntryAwaitingApproval');
+                    $notificationsMapper->addNotification($notificationModel);
+
                     $this->addMessage('check', 'info');
                 }
 

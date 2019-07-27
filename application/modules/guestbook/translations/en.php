@@ -18,6 +18,7 @@ return [
     'entry' => 'New Entry',
     'text' => 'Text',
     'successful' => 'Successful',
+    'entryAwaitingApproval' => 'Entry awaiting approval.',
     'settings' => 'Settings',
     'entrySettings' => 'Share entries directly',
     'entrys' => 'Entries',

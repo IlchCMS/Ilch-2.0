@@ -30,7 +30,7 @@
     </div>
     <div class="form-group <?= $this->validation()->hasError('welcomeMessage') ? 'has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
-            <?=$this->getTrans('welcomeMessage') ?>
+            <?=$this->getTrans('welcomeMessage') ?>:
         </label>
         <div class="col-lg-8">
             <textarea class="form-control ckeditor"
