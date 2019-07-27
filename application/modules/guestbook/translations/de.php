@@ -25,4 +25,5 @@ return [
     'setfree' => 'Freischalten ',
     'check' => 'Danke. Eintrag wird geprüft.',
     'entriesPerPage' => 'Einträge pro Seite',
+    'welcomeMessage' => 'Willkommensnachricht',
 ];

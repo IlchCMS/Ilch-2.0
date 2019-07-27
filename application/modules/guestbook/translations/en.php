@@ -25,4 +25,5 @@ return [
     'setfree' => 'Set free ',
     'check' => 'Thanks. Entry is checked.',
     'entriesPerPage' => 'Entries per page',
+    'welcomeMessage' => 'Welcome message',
 ];

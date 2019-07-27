@@ -27,6 +27,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getView()->set('entries', $guestbookMapper->getEntries(['setfree' => 1], $pagination));
         $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('welcomeMessage', $this->getConfig()->get('gbook_welcomeMessage'));
     }
 
     public function newEntryAction()

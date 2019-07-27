@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'version' => '1.5.0',
+        'version' => '1.6.0',
         'icon_small' => 'fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -40,8 +40,10 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_gbook`');
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'gbook_autosetfree'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'gbook_welcomeMessage'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'gbook_entriesPerPage'");
     }
-    
+
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_gbook` (

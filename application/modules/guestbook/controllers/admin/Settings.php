@@ -49,6 +49,7 @@ class Settings extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $this->getConfig()->set('gbook_autosetfree', $this->getRequest()->getPost('entrySettings'));
                 $this->getConfig()->set('gbook_entriesPerPage', $this->getRequest()->getPost('entriesPerPage'));
+                $this->getConfig()->set('gbook_welcomeMessage', $this->getRequest()->getPost('welcomeMessage'));
 
                 $this->addMessage('saveSuccess');
             } else {
@@ -62,5 +63,6 @@ class Settings extends \Ilch\Controller\Admin
 
         $this->getView()->set('setfree', $this->getConfig()->get('gbook_autosetfree'));
         $this->getView()->set('entriesPerPage', $this->getConfig()->get('gbook_entriesPerPage'));
+        $this->getView()->set('welcomeMessage', $this->getConfig()->get('gbook_welcomeMessage'));
     }
 }

@@ -4,6 +4,11 @@
         <a href="<?=$this->getUrl(['action' => 'newentry']) ?>"><?=$this->getTrans('entry') ?></a>
     </div>
 </h1>
+<?php if (!empty($this->get('welcomeMessage'))) : ?>
+<div class="panel panel-default">
+    <div class="panel-body welcomeMessage"><?=nl2br($this->getHtmlFromBBCode($this->escape($this->get('welcomeMessage')))) ?></div>
+</div>
+<?php endif; ?>
 <?php foreach ($this->get('entries') as $entry): ?>
     <?php $date = new \Ilch\Date($entry->getDatetime()); ?>
     <div class="panel panel-default">
