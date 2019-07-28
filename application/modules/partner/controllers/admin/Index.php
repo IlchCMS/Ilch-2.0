@@ -8,6 +8,7 @@ namespace Modules\Partner\Controllers\Admin;
 
 use Modules\Partner\Mappers\Partner as PartnerMapper;
 use Modules\Partner\Models\Partner as PartnerModel;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
@@ -85,8 +86,15 @@ class Index extends \Ilch\Controller\Admin
             $entries = $partnerMapper->getEntries(['setfree' => 1]);
         }
 
+        $badge = count($partnerMapper->getEntries(['setfree' => 0]));
+
+        if ($badge == 0) {
+            $notificationsMapper = new NotificationsMapper();
+            $notificationsMapper->deleteNotificationsByType('partnerEntryAwaitingApproval');
+        }
+
         $this->getView()->set('entries', $entries)
-            ->set('badge', count($partnerMapper->getEntries(['setfree' => 0])));
+            ->set('badge', $badge);
     }
 
     public function delAction()

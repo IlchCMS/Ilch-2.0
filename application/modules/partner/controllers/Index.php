@@ -8,6 +8,8 @@ namespace Modules\Partner\Controllers;
 
 use Modules\Partner\Mappers\Partner as PartnerMapper;
 use Modules\Partner\Models\Partner as PartnerModel;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Models\Notification as NotificationModel;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
@@ -41,6 +43,14 @@ class Index extends \Ilch\Controller\Frontend
                     ->setBanner($this->getRequest()->getPost('banner'))
                     ->setFree(0);
                 $partnerMapper->save($model);
+
+                $notificationsMapper = new NotificationsMapper();
+                $notificationModel = new NotificationModel();
+                $notificationModel->setModule('partner');
+                $notificationModel->setMessage($this->getTranslator()->trans('entryAwaitingApproval'));
+                $notificationModel->setURL($this->getLayout()->getUrl(['module' => 'partner', 'controller' => 'index', 'action' => 'index', 'showsetfree' => 1], 'admin'));
+                $notificationModel->setType('partnerEntryAwaitingApproval');
+                $notificationsMapper->addNotification($notificationModel);
 
                 $this->redirect()
                     ->withMessage('saveSuccess')

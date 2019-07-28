@@ -98,14 +98,6 @@ class Index extends \Ilch\Controller\Admin
 
         $moduleLocales = [];
 
-        if (in_array('partner', $modules)) {
-            // Check if there are partner entries, which need approval
-            $partnerMapper = new \Modules\Partner\Mappers\Partner();
-            $moduleLocales['partner'] = $moduleMapper->getModulesByKey('partner', $this->getTranslator()->getLocale());
-
-            $this->getView()->set('partnerEntries', $partnerMapper->getEntries(['setfree' => 0]));
-        }
-
         // Check if there are users, which need approval
         $userMapper = new \Modules\User\Mappers\User();
         $moduleLocales['user'] = $moduleMapper->getModulesByKey('user', $this->getTranslator()->getLocale());

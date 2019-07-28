@@ -19,7 +19,7 @@ $version = $this->get('version');
 <?=$this->getTokenField() ?>
 <?php endif; ?>
 <div class="row">
-    <?php if ($this->get('partnerEntries') or $this->get('usersNotConfirmed')): ?>
+    <?php if ($this->get('usersNotConfirmed')): ?>
         <div class="col-lg-6 col-md-6">
             <h1><?=$this->getTrans('awaitingUnlocking') ?></h1>
             <div class="table-responsive">
@@ -33,12 +33,6 @@ $version = $this->get('version');
                         <th><?=$this->getTrans('number') ?></th>
                     </thead>
                     <tbody>
-                        <?php if ($this->get('partnerEntries')): ?>
-                            <tr>
-                                <td><a href="<?=$this->getUrl(['module' => 'partner', 'controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>"><?=$this->get('moduleLocales')['partner']->getName() ?></a></td>
-                                <td><?=count($this->get('partnerEntries')) ?></td>
-                            </tr>
-                        <?php endif; ?>
                         <?php if ($this->get('usersNotConfirmed')) : ?>
                             <tr>
                                 <td><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index', 'showsetfree' => 1)) ?>"><?=$this->get('moduleLocales')['user']->getName() ?></a></td>

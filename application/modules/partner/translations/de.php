@@ -18,6 +18,7 @@ return [
     'entrys' => 'Einträge',
     'addButton' => 'Eintragen',
     'httpOrMedia' => 'http:// oder Medien',
+    'entryAwaitingApproval' => 'Eintrag wartet auf Freigabe.',
     'slider' => 'Slider',
     'boxSliderMode' => 'Modus des Sliders',
     'boxSliderSpeed' => 'Geschwindigkeit des Slider in ms',
