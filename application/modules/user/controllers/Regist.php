@@ -11,6 +11,8 @@ use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Models\Notification as NotificationModel;
 use Ilch\Validation;
 
 class Regist extends \Ilch\Controller\Frontend
@@ -99,6 +101,16 @@ class Regist extends \Ilch\Controller\Frontend
 
                 $_SESSION["name"] = $this->getRequest()->getPost('name');
                 $_SESSION["email"] = $this->getRequest()->getPost('email');
+
+                if ($this->getConfig()->get('regist_setfree') == 1) {
+                    $notificationsMapper = new NotificationsMapper();
+                    $notificationModel = new NotificationModel();
+                    $notificationModel->setModule('user');
+                    $notificationModel->setMessage($this->getTranslator()->trans('userAwaitingApproval'));
+                    $notificationModel->setURL($this->getLayout()->getUrl(['module' => 'user', 'controller' => 'index', 'action' => 'index', 'showsetfree' => 1], 'admin'));
+                    $notificationModel->setType('userAwaitingApproval');
+                    $notificationsMapper->addNotification($notificationModel);
+                }
 
                 if ($this->getConfig()->get('regist_confirm') == 1) {
                     $sitetitle = $this->getConfig()->get('page_title');

@@ -283,6 +283,7 @@ return [
     'users' => 'Users',
     'setfree' => 'Set free',
     'unlock' => 'Unlock',
+    'userAwaitingApproval' => 'User awaiting approval.',
 
     'back' => 'Back to mainpage',
     'alreadyLoggedIn' => 'You are already logged in!',

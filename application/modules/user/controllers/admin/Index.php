@@ -18,6 +18,7 @@ use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\User\Mappers\AuthProvider as AuthProvider;
 use Modules\User\Mappers\Friends as FriendsMapper;
 use Modules\User\Mappers\Dialog as DialogMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use \Ilch\Registry as Registry;
 use Ilch\Validation;
 
@@ -119,6 +120,10 @@ class Index extends \Ilch\Controller\Admin
             $entries = $userMapper->getUserList(['selectsdelete >' => 0], $pagination);
         } else if ($this->getRequest()->getParam('showsetfree')) {
             $entries = $userMapper->getUserList(['confirmed' => 0], $pagination);
+            if (empty($entries)) {
+                $notificationsMapper = new NotificationsMapper();
+                $notificationsMapper->deleteNotificationsByType('userAwaitingApproval');
+            }
         } else if ($this->getRequest()->getParam('showlocked')) {
             $entries = $userMapper->getUserList(['locked' => 1], $pagination);
         } else {

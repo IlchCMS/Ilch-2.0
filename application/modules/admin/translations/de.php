@@ -329,8 +329,6 @@ return [
     'noLayoutsAvailable' => 'Entweder es sind keine Layouts verfügbar oder die Liste der Layouts konnte nicht abgefragt werden.',
     'noModulesAvailable' => 'Entweder es sind keine Module verfügbar oder die Liste der Module konnte nicht abgefragt werden.',
 
-    'awaitingUnlocking' => 'Freischaltung erwartet',
-
     'noRights' => 'Keine Berechtigung',
 
     'menuNotifications' => 'Benachrichtigungen',

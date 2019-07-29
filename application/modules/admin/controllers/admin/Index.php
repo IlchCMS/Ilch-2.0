@@ -96,18 +96,10 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('newVersion', $newVersion);
         }
 
-        $moduleLocales = [];
-
-        // Check if there are users, which need approval
-        $userMapper = new \Modules\User\Mappers\User();
-        $moduleLocales['user'] = $moduleMapper->getModulesByKey('user', $this->getTranslator()->getLocale());
-
         // Check if there are notifications, which need to be shown
         $notificationsMapper = new NotificationsMapper();
 
         $this->getView()->set('ilchNewsList', $this->getConfig()->get('updateserver').'ilchNews.php');
-        $this->getView()->set('usersNotConfirmed', $userMapper->getUserList(['confirmed' => 0]));
-        $this->getView()->set('moduleLocales', $moduleLocales);
         $this->getView()->set('version', $this->getConfig()->get('version'));
         $this->getView()->set('notifications', $notificationsMapper->getNotifications());
     }

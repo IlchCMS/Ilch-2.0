@@ -19,31 +19,6 @@ $version = $this->get('version');
 <?=$this->getTokenField() ?>
 <?php endif; ?>
 <div class="row">
-    <?php if ($this->get('usersNotConfirmed')): ?>
-        <div class="col-lg-6 col-md-6">
-            <h1><?=$this->getTrans('awaitingUnlocking') ?></h1>
-            <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <colgroup>
-                        <col class="col-lg-2">
-                        <col>
-                    </colgroup>
-                    <thead>
-                        <th><?=$this->getTrans('modules') ?></th>
-                        <th><?=$this->getTrans('number') ?></th>
-                    </thead>
-                    <tbody>
-                        <?php if ($this->get('usersNotConfirmed')) : ?>
-                            <tr>
-                                <td><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index', 'showsetfree' => 1)) ?>"><?=$this->get('moduleLocales')['user']->getName() ?></a></td>
-                                <td><?=count($this->get('usersNotConfirmed')) ?></td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    <?php endif; ?>
     <div class="col-lg-6 col-md-6">
         <h1>
             <?=$this->getTrans('system') ?>

@@ -283,6 +283,7 @@ return [
     'users' => 'Benutzer',
     'setfree' => 'Freischalten',
     'unlock' => 'Entsperren',
+    'userAwaitingApproval' => 'Benutzer wartet auf Freischaltung.',
 
     'back' => 'Zurück zur Startseite',
     'alreadyLoggedIn' => 'Du bist bereits angemeldet!',
