@@ -796,6 +796,7 @@ class Statistic extends \Ilch\Mapper
      *
      * @param $browser
      * @return bool
+     * @since 2.1.25
      */
     public function browserSeenBefore($browser)
     {
@@ -807,6 +808,7 @@ class Statistic extends \Ilch\Mapper
      *
      * @param $os
      * @return bool
+     * @since 2.1.25
      */
     public function osSeenBefore($os)
     {
@@ -819,6 +821,7 @@ class Statistic extends \Ilch\Mapper
      * @param $column
      * @param $value
      * @return bool
+     * @since 2.1.25
      */
     private function columnWithValueExists($column, $value)
     {

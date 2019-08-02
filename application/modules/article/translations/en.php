@@ -50,6 +50,7 @@ return [
     'menuKeywords' => 'Keywords',
     'keyword' => 'Keyword',
     'noKeywords' => 'No keywords available',
+    'unknownKeyword' => 'Keyword not existing',
     'clock' => 'o\'clock',
     'rssDesc' => 'All articles from %s',
 ];

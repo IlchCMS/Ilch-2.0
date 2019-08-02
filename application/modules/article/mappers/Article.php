@@ -457,6 +457,26 @@ class Article extends \Ilch\Mapper
     }
 
     /**
+     * Check if keyword exists.
+     *
+     * @param $keyword
+     * @return bool
+     * @since 2.1.25
+     */
+    public function keywordExists($keyword)
+    {
+        $keywordsList = [];
+        foreach ($this->getKeywordsList() as $keywords) {
+            $keywordsList[] = $keywords->getKeywords();
+        }
+
+        $keywordsListString = implode(', ', $keywordsList);
+        $keywordsListArray = explode(", ", $keywordsListString);
+
+        return in_array($keyword, $keywordsListArray);
+    }
+
+    /**
      * Returns all article permas.
      *
      * @return array|null
