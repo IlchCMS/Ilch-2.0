@@ -790,4 +790,44 @@ class Statistic extends \Ilch\Mapper
             ->where($where)
             ->execute();
     }
+
+    /**
+     * Check if a specified browser was seen before.
+     *
+     * @param $browser
+     * @return bool
+     */
+    public function browserSeenBefore($browser)
+    {
+        return $this->columnWithValueExists('browser', $browser);
+    }
+
+    /**
+     * Check if a specified OS was seen before.
+     *
+     * @param $os
+     * @return bool
+     */
+    public function osSeenBefore($os)
+    {
+        return $this->columnWithValueExists('os', $os);
+    }
+
+    /**
+     * Check if there is a row with a specified column contains a specific value.
+     *
+     * @param $column
+     * @param $value
+     * @return bool
+     */
+    private function columnWithValueExists($column, $value)
+    {
+        $exists = (bool)$this->db()->select('id')
+            ->from('visits_stats')
+            ->where([$column => $value])
+            ->execute()
+            ->fetchCell();
+
+        return $exists;
+    }
 }
