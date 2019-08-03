@@ -177,7 +177,7 @@ class Index extends \Ilch\Controller\Admin
             $banner = trim($this->getRequest()->getPost('banner'));
             if (!empty($banner)) {
                 if (substr($banner, 0, 11) == 'application') {
-                    $banner = BASE_URL.'/'.$banner;
+                    $banner = BASE_URL.'/'.urlencode($banner);
                 }
             }
 
