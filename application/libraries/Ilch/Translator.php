@@ -72,7 +72,9 @@ class Translator
         $localeShort = $this->shortenLocale($this->locale);
         $transFile = $transDir.'/'.$localeShort.'.php';
 
-        if (is_file($transFile)) {
+        // Suppress warning "is_file() expects parameter 1 to be a valid path, string given"
+        // If it's not a valid path, is_file() will return a falsey value.
+        if (@is_file($transFile)) {
             $this->translations = array_merge($this->translations, require $transFile);
 
             return true;

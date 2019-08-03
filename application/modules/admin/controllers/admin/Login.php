@@ -79,7 +79,9 @@ class Login extends \Ilch\Controller\Admin
             setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
         }
 
-        $statisticMapper->deleteUserOnline($this->getUser()->getId());
+        if ($this->getUser()) {
+            $statisticMapper->deleteUserOnline($this->getUser()->getId());
+        }
 
         $_SESSION = [];
         \Ilch\Registry::remove('user');

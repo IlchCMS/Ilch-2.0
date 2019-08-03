@@ -31,7 +31,12 @@ class AfterDatabaseLoad
         $userId = null;
 
         if (empty($_SESSION['user_id']) && !empty($_COOKIE['remember'])) {
-            list($selector, $authenticator) = explode(':', $_COOKIE['remember']);
+            $remember = explode(':', $_COOKIE['remember']);
+
+            if (count($remember) !== 2) {
+                $remember[1] = '';
+            }
+            list($selector, $authenticator) = $remember;
 
             $authTokenMapper = new AuthTokenMapper();
             $authToken = $authTokenMapper->getAuthToken($selector);
