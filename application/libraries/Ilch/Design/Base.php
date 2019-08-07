@@ -333,6 +333,9 @@ abstract class Base
         $builder = new \JBBCode\CodeDefinitionBuilder('u', '<u>{param}</u>');
         $parser->addCodeDefinition($builder->build());
 
+        $builder = new \JBBCode\CodeDefinitionBuilder('s', '<s>{param}</s>');
+        $parser->addCodeDefinition($builder->build());
+
         $builder = new \JBBCode\CodeDefinitionBuilder('center', '<p style="text-align: center;">{param}</p>');
         $parser->addCodeDefinition($builder->build());
 
