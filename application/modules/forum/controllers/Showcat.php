@@ -55,5 +55,7 @@ class Showcat extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('readAccess', $readAccess);
+        $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
+        $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }
 }

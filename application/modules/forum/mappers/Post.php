@@ -62,11 +62,12 @@ class Post extends \Ilch\Mapper
      * @return array
      * @throws \Ilch\Database\Exception
      */
-    public function getPostsByTopicId($topicId, $pagination = null)
+    public function getPostsByTopicId($topicId, $pagination = null, $descorder = 0)
     {
         $select = $this->db()->select('*')
             ->from('forum_posts')
-            ->where(['topic_id' => $topicId]);
+            ->where(['topic_id' => $topicId])
+            ->order(['date_created' => ($descorder?'DESC':'ASC')]);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())

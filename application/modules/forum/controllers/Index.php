@@ -66,6 +66,9 @@ class Index extends \Ilch\Controller\Frontend
             ->set('guestOnline', $allOnlineUsers - count($usersOnline))
             ->set('forumStatics', $staticsMapper->getForumStatistics())
             ->set('registNewUser', $userMapper->getUserById($visitMapper->getRegistNewUser()))
-            ->set('listGroups', $groupMapper->getGroupList());
+            ->set('listGroups', $groupMapper->getGroupList())
+            ->set('forumMapper', $forumMapper)
+            ->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'))
+            ->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }
 }

@@ -12,12 +12,14 @@ if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
     $userAccess = $this->get('userAccess');
 }
+$DESCPostorder = $this->get('DESCPostorder');
+$postsPerPage = $this->get('postsPerPage');
 ?>
-
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
     <div id="forum">
+    
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
             <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
@@ -104,7 +106,7 @@ if ($this->getUser()) {
                                     <br>
                                     <div class="small">
                                         <?=$this->getTrans('by') ?>
-                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="ilch-link-red">
+                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $topic->getAuthor()->getId()]) ?>" class="ilch-link-red">
                                             <?=$this->escape($topic->getAuthor()->getName()) ?>
                                         </a>
                                         »
@@ -134,7 +136,7 @@ if ($this->getUser()) {
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                             <?=$this->escape($lastPost->getAutor()->getName()) ?>
                                         </a>
-                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId() ?>">
+                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId(), 'page' => ($DESCPostorder?1:ceil($countPosts/$postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
                                             <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
                                         </a>
                                         <br>

@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.20.0',
+        'version' => '1.21.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -61,6 +61,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('forum_topicSubscription', '0');
         $databaseConfig->set('forum_reportingPosts', '1');
         $databaseConfig->set('forum_reportNotificationEMail', '0');
+        $databaseConfig->set('forum_DESCPostorder', '0');
 
         // Add default appearance for admin group
         $appearance[1]['active'] = 'on';
@@ -405,6 +406,10 @@ class Config extends \Ilch\Config\Install
                     file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
                     $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
                 }
+            case "1.19.0":
+            case "1.20.0":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('forum_DESCPostorder', '0');
         }
     }
 }

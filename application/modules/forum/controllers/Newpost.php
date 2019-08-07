@@ -111,7 +111,8 @@ class Newpost extends \Ilch\Controller\Frontend
                     $this->trigger(ForumConfig::EVENT_ADDPOST_AFTER, ['postModel' => $postModel, 'forum' => $forum, 'category' => $cat, 'topic' => $topic, 'request' => $this->getRequest()]);
 
                     $postsPerPage = (empty($this->getConfig()->get('forum_postsPerPage'))) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage');
-                    $page = floor(($forumMapper->getCountPostsByTopicId($topicId) - 1) / $postsPerPage) + 1;
+                    $countPosts = $forumMapper->getCountPostsByTopicId($topicId);
+                    $page = ($this->getConfig()->get('forum_DESCPostorder')?1:ceil($countPosts/$postsPerPage));
 
                     // Notify subscribers
                     $topicSubscriptionMapper = new TopicSubscriptionMapper();
