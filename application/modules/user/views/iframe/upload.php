@@ -28,11 +28,11 @@
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.fileupload.js') ?>"></script>
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/script.js') ?>"></script>
 
-<script language="javascript">
-const allowedExtensions = <?=json_encode(explode(' ',$this->get('allowedExtensions')));?>;
-var maxFileSize = <?=$ilchUpload->returnBytes(ini_get('upload_max_filesize'));?>;
-var fileTooBig = <?=json_encode($this->getTrans('fileTooBig'));?>;
-var extensionNotAllowed = <?=json_encode($this->getTrans('extensionNotAllowed'));?>;
+<script>
+const allowedExtensions = <?=json_encode(explode(' ', $this->get('allowedExtensions'))) ?>;
+var maxFileSize = <?=$ilchUpload->returnBytes(ini_get('upload_max_filesize')) ?>;
+var fileTooBig = <?=json_encode($this->getTrans('fileTooBig')) ?>;
+var extensionNotAllowed = <?=json_encode($this->getTrans('extensionNotAllowed')) ?>;
 $(document).ready(function() {
     $("[rel='tooltip']").tooltip();
 });
