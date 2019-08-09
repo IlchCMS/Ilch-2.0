@@ -86,7 +86,7 @@ return [
     'floodError' => 'You cannot make another post/topic so soon after your last.',
     'postVoting' => 'Enable Like button',
     'topicSubscription' => 'Subscribing to topics (email)',
-    'DESCPostorder' => 'New Posts show first',
+    'DESCPostorder' => 'Show new posts first',
     'boxForumLimit' => 'Number of entries',
     'reportSettings' => 'Reporting of posts',
     'reportingPosts' => 'Reporting of posts',
