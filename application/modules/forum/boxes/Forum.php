@@ -36,5 +36,7 @@ class Forum extends \Ilch\Box
         $this->getView()->set('topicMapper', $topicMapper);
         $this->getView()->set('topics', $topicMapper->getLastActiveTopics($BoxEntryLimit));
         $this->getView()->set('groupIdsArray', $groupIds);
+        $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
+        $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }
 }

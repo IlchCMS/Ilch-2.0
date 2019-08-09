@@ -77,6 +77,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('forum_boxForumLimit', $this->getRequest()->getPost('boxForumLimit'));
             $this->getConfig()->set('forum_reportingPosts', $this->getRequest()->getPost('reportingPosts'));
             $this->getConfig()->set('forum_reportNotificationEMail', $this->getRequest()->getPost('reportNotificationEMail'));
+            $this->getConfig()->set('forum_DESCPostorder', $this->getRequest()->getPost('DESCPostorder'));
             $this->addMessage('saveSuccess');
         }
 
@@ -90,6 +91,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('groupList', $groupMapper->getGroupList());
         $this->getView()->set('reportingPosts', $this->getConfig()->get('forum_reportingPosts'));
         $this->getView()->set('reportNotificationEMail', $this->getConfig()->get('forum_reportNotificationEMail'));
+        $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
     }
 
     public function groupappearanceAction()

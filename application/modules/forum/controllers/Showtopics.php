@@ -76,6 +76,8 @@ class Showtopics extends \Ilch\Controller\Frontend
         $this->getView()->set('groupIdsArray', $groupIds);
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('userAccess', new Accesses($this->getRequest()));
+        $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
+        $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }
 
     public function deleteAction()

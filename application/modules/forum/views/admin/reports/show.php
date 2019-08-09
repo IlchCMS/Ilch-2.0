@@ -16,6 +16,7 @@ $report = $this->get('report');
         </label>
         <div class="col-lg-10">
             <p><?=$report->getDate() ?></p>
+        </div>
     </div>
     <div class="form-group">
         <label for="reason" class="col-lg-2 control-label">
@@ -30,7 +31,7 @@ $report = $this->get('report');
             <?=$this->getTrans('details') ?>:
         </label>
         <div class="col-lg-10">
-            <p><?=$this->escape($report->getDetails()) ?></p>
+            <p><?=$this->escape($report->getDetails()) ?>&nbsp;</p>
         </div>
     </div>
     <div class="form-group">

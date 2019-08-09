@@ -31,9 +31,6 @@ class Shownewposts extends \Ilch\Controller\Frontend
                 $groupIds[] = $groups->getId();
             }
 
-            $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
-            $pagination->setPage($this->getRequest()->getParam('page'));
-
             $this->getLayout()->getTitle()
                     ->add($this->getTranslator()->trans('forum'))
                     ->add($this->getTranslator()->trans('showNewPosts'));
@@ -45,9 +42,10 @@ class Shownewposts extends \Ilch\Controller\Frontend
             $this->getView()->set('forumMapper', $forumMapper);
             $this->getView()->set('topicMapper', $topicMapper);
             $this->getView()->set('postMapper', $postMapper);
-            $this->getView()->set('topics', $topicMapper->getTopics($pagination));
+            $this->getView()->set('topics', $topicMapper->getTopics());
             $this->getView()->set('groupIdsArray', $groupIds);
-            $this->getView()->set('pagination', $pagination);
+            $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
+            $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
         } else {
             $this->addMessage('noAccessForum', 'warning');
             $this->redirect(['module' => 'forum', 'controller' => 'index']);

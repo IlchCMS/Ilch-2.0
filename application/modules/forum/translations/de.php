@@ -86,6 +86,7 @@ return [
     'floodError' => 'Sie können einen Beitrag oder ein Thema nicht so schnell nach Ihrem letzten schreiben.',
     'postVoting' => 'Mag ich-Schaltfläche aktivieren',
     'topicSubscription' => 'Abonnieren von Themen (E-Mail)',
+    'DESCPostorder' => 'Neue Beiträge werden zuerst angezeigt',
     'boxForumLimit' => 'Anzahl an Einträgen',
     'reportSettings' => 'Melden von Beiträgen',
     'reportingPosts' => 'Melden von Beiträgen',

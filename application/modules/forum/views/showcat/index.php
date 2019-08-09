@@ -6,6 +6,9 @@ $readAccess = $this->get('readAccess');
 
 function rec($item, $forumMapper, $obj, $readAccess)
 {
+    $DESCPostorder = $obj->get('DESCPostorder');
+    $postsPerPage = $obj->get('postsPerPage');
+
     $subItems = $forumMapper->getForumItemsByParent($item->getId());
     $topics = $forumMapper->getCountTopicsById($item->getId());
     $lastPost = $forumMapper->getLastPostByTopicId($item->getId());
@@ -72,13 +75,14 @@ function rec($item, $forumMapper, $obj, $readAccess)
                         </dd>
                         <dd class="lastpost small">
                             <?php if ($lastPost): ?>
+                                <?php $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId()) ?>
                                 <div class="pull-left">
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                         <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
                                     </a>
                                 </div>
                                 <div class="pull-left">
-                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId() ?>">
+                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId()]) ?>">
                                         <?=$obj->escape($lastPost->getTopicTitle()) ?>
                                     </a>
                                     <br>
@@ -86,7 +90,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                         <?=$obj->escape($lastPost->getAutor()->getName()) ?>
                                     </a>
-                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId() ?>">
+                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => ($DESCPostorder?1:ceil($countPosts/$postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
                                         <img src="<?=$obj->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$obj->getTrans('viewLastPost') ?>" title="<?=$obj->getTrans('viewLastPost') ?>" height="10" width="12">
                                     </a>
                                     <br>
