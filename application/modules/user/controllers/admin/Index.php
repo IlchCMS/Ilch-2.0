@@ -100,7 +100,7 @@ class Index extends \Ilch\Controller\Admin
             foreach ($this->getRequest()->getPost('check_users') as $userId) {
                 $deleteUser = $userMapper->getUserById($userId);
 
-                if ($deleteUser->getId() != Registry::get('user')->getId()) {
+                if ($deleteUser->getId() != Registry::get('user')->getId() and (($deleteUser->isAdmin() and $this->getUser()->isAdmin()) or !$deleteUser->isAdmin())) {
                     if (!$deleteUser->hasGroup(1) || $userMapper->getAdministratorCount() > 1) {
                         $userMapper->delete($deleteUser->getId());
                         $authTokenMapper->deleteAllAuthTokenOfUser($deleteUser->getId());
@@ -254,6 +254,11 @@ class Index extends \Ilch\Controller\Admin
                 ];
 
             if ($userData['id']) {
+                $userbyid = $userMapper->getUserById($userData['id']);
+
+                if ($userbyid->isAdmin() and !$this->getUser()->isAdmin())
+                    $this->redirect(['action' => 'index']);
+
                 $rules = [
                     'name' => 'required|unique:users,name,'.$userData['id'],
                     'email' => 'required|email|unique:users,email,'.$userData['id']
@@ -287,9 +292,11 @@ class Index extends \Ilch\Controller\Admin
                     $userData['groups'][0] = 2;
                 }
                 foreach ($userData['groups'] as $groupId) {
-                    $group = new GroupModel();
-                    $group->setId($groupId);
-                    $user->addGroup($group);
+                    if (($this->getUser()->isAdmin() and $groupId == 1) or $groupId != 1){
+                        $group = new GroupModel();
+                        $group->setId($groupId);
+                        $user->addGroup($group);
+                    }
                 }
 
                 if (empty($userData['id'])) {
@@ -377,6 +384,9 @@ class Index extends \Ilch\Controller\Admin
 
         if ($userMapper->userWithIdExists($userId)) {
             $user = $userMapper->getUserById($userId);
+
+            if ($user->isAdmin() and !$this->getUser()->isAdmin())
+                $this->redirect(['action' => 'index']);
         } else {
             $user = new UserModel();
             $group = new GroupModel();
@@ -406,6 +416,8 @@ class Index extends \Ilch\Controller\Admin
         if ($userId && $this->getRequest()->isSecure()) {
             $deleteUser = $userMapper->getUserById($userId);
 
+            if ($deleteUser->isAdmin() and !$this->getUser()->isAdmin())
+                $this->redirect(['action' => 'index']);
             /*
              * Admingroup has always id "1" because group is not deletable.
              */

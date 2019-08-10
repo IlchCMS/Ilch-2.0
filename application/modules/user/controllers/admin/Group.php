@@ -130,6 +130,9 @@ class Group extends \Ilch\Controller\Admin
         $groupMapper = new GroupMapper();
         $userMapper = new UserMapper();
 
+        if ($groupId == 1 and !$this->getUser()->isAdmin())
+            $this->redirect(['action' => 'index']);
+
         if ($groupMapper->groupWithIdExists($groupId)) {
             $group = $groupMapper->getGroupById($groupId);
             $groupUsers = $groupMapper->getUsersForGroup($group->getId());
@@ -159,6 +162,10 @@ class Group extends \Ilch\Controller\Admin
             $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
             $groupMapper = new GroupMapper();
             $group = $groupMapper->loadFromArray($groupData);
+
+            if ($group->getId() == 1 and !$this->getUser()->isAdmin())
+                $this->redirect(['action' => 'index']);
+
             $groupId = $groupMapper->save($group);
 
             //if ($groupId != 1) {
