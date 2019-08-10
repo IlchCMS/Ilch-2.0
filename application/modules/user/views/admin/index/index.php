@@ -96,10 +96,10 @@
                             <?php elseif ($this->getRequest()->getParam('showlocked')): ?>
                                 <a href="<?=$this->getUrl(['action' => 'unlock', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('unlock') ?>"><i class="fa fa-check text-success"></i></a>
                             <?php else: ?>
-                                <?=$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]) ?>
+                                <?=((($user->isAdmin() and $this->getUser()->isAdmin()) or !$user->isAdmin())?$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]):'') ?>
                             <?php endif; ?>
                             </td>
-                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]) ?></td>
+                            <td><?=((($user->isAdmin() and $this->getUser()->isAdmin()) or !$user->isAdmin())?$this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]):'') ?></td>
                             <td><?=$this->escape($user->getName()) ?></td>
                             <td><?=$this->escape($user->getEmail()) ?></td>
                             <td><?=$this->escape($user->getDateCreated()) ?></td>

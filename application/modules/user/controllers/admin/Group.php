@@ -102,7 +102,7 @@ class Group extends \Ilch\Controller\Admin
                 }
             }
         }
-        
+
         $groupList = $groupMapper->getGroupList();
         $groupUsers = [];
 
@@ -129,6 +129,10 @@ class Group extends \Ilch\Controller\Admin
         $groupId = $this->getRequest()->getParam('id');
         $groupMapper = new GroupMapper();
         $userMapper = new UserMapper();
+
+        if ($groupId == 1 and !$this->getUser()->isAdmin()) {
+            $this->redirect(['action' => 'index']);
+        }
 
         if ($groupMapper->groupWithIdExists($groupId)) {
             $group = $groupMapper->getGroupById($groupId);
@@ -159,6 +163,11 @@ class Group extends \Ilch\Controller\Admin
             $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
             $groupMapper = new GroupMapper();
             $group = $groupMapper->loadFromArray($groupData);
+
+            if ($group->getId() == 1 and !$this->getUser()->isAdmin()) {
+                $this->redirect(['action' => 'index']);
+            }
+
             $groupId = $groupMapper->save($group);
 
             //if ($groupId != 1) {
@@ -202,9 +211,7 @@ class Group extends \Ilch\Controller\Admin
         $groupId = $this->getRequest()->getParam('id');
 
         if ($groupId && $this->getRequest()->isSecure()) {
-            /*
-             * Admingroup has always id "1" and is not allowed to be deleted.
-             */
+            // Admingroup has always id "1" and is not allowed to be deleted.
             if ($groupId == 1) {
                 $this->addMessage('delAdminGroup', 'warning');
             } elseif ($groupId == 2) {
