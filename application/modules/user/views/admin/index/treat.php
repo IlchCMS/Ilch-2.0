@@ -134,7 +134,7 @@ if ($user->getId()) {
                     multiple>
                 <?php
                 foreach ($this->get('groupList') as $group) {
-                    if (($this->getUser()->isAdmin() and $group->getId() == 1) or $group->getId() != 1){
+                    if (($this->getUser()->isAdmin() and $group->getId() == 1) or $group->getId() != 1) {
                     ?>
                     <option value="<?=$group->getId() ?>"
                             <?php

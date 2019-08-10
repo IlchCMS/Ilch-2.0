@@ -256,8 +256,9 @@ class Index extends \Ilch\Controller\Admin
             if ($userData['id']) {
                 $userbyid = $userMapper->getUserById($userData['id']);
 
-                if ($userbyid->isAdmin() and !$this->getUser()->isAdmin())
+                if ($userbyid->isAdmin() and !$this->getUser()->isAdmin()) {
                     $this->redirect(['action' => 'index']);
+                }
 
                 $rules = [
                     'name' => 'required|unique:users,name,'.$userData['id'],
@@ -292,7 +293,7 @@ class Index extends \Ilch\Controller\Admin
                     $userData['groups'][0] = 2;
                 }
                 foreach ($userData['groups'] as $groupId) {
-                    if (($this->getUser()->isAdmin() and $groupId == 1) or $groupId != 1){
+                    if (($this->getUser()->isAdmin() and $groupId == 1) or $groupId != 1) {
                         $group = new GroupModel();
                         $group->setId($groupId);
                         $user->addGroup($group);
@@ -385,8 +386,9 @@ class Index extends \Ilch\Controller\Admin
         if ($userMapper->userWithIdExists($userId)) {
             $user = $userMapper->getUserById($userId);
 
-            if ($user->isAdmin() and !$this->getUser()->isAdmin())
+            if ($user->isAdmin() and !$this->getUser()->isAdmin()) {
                 $this->redirect(['action' => 'index']);
+            }
         } else {
             $user = new UserModel();
             $group = new GroupModel();
@@ -416,18 +418,16 @@ class Index extends \Ilch\Controller\Admin
         if ($userId && $this->getRequest()->isSecure()) {
             $deleteUser = $userMapper->getUserById($userId);
 
-            if ($deleteUser->isAdmin() and !$this->getUser()->isAdmin())
+            if ($deleteUser->isAdmin() and !$this->getUser()->isAdmin()) {
                 $this->redirect(['action' => 'index']);
-            /*
-             * Admingroup has always id "1" because group is not deletable.
-             */
+            }
+
+            // Admingroup has always id "1" because group is not deletable.
             if ($deleteUser->getId() == Registry::get('user')->getId()) {
                 $this->addMessage('delOwnUserProhibited', 'warning');
             } elseif ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
                 $this->addMessage('delLastAdminProhibited', 'warning');
-                /*
-                 * Delete adminuser only if he is not the last admin.
-                 */
+                // Delete adminuser only if he is not the last admin.
             } else {
                 if ($deleteUser->getAvatar() != 'static/img/noavatar.jpg') {
                     unlink($deleteUser->getAvatar());
