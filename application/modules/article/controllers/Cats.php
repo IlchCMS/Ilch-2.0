@@ -58,7 +58,7 @@ class Cats extends \Ilch\Controller\Frontend
         $pagination = new \Ilch\Pagination();
 
         $id = $this->getRequest()->getParam('id');
-        if (empty($id) || !is_numeric($id) || !is_integer($id)) {
+        if (empty($id) || !is_numeric($id)) {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Category', 'errorText' => 'notFound']);
             return;
         }
