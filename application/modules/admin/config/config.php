@@ -564,6 +564,11 @@ class Config extends \Ilch\Config\Install
                         }
                     }
                 }
+                break;
+            case "2.1.25":
+                removeDir(ROOT_PATH.'/vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                break;
         }
 
         return 'Update function executed.';
