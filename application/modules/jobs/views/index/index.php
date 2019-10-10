@@ -18,7 +18,7 @@
                         <?=$this->escape($jobs->getTitle()) ?>
                     </a>
                 </h1>
-                <?=$jobs->getText() ?>
+                <?=$this->purify($jobs->getText()) ?>
 
                 <?php if ($this->getUser()): ?>
                     <br />

@@ -1,19 +1,19 @@
 <?php if ($this->get('privacy') != ''): ?>
     <?php foreach ($this->get('privacy') as $privacy): ?>
         <h1><b><?=$this->escape($privacy->getTitle()) ?></b></h1>
-        <p><?=$privacy->getText() ?><br /></p>
+        <p><?=$this->purify($privacy->getText()) ?><br /></p>
     <?php endforeach; ?>
 
     <b><?=$this->getTrans('source') ?>:</b>
     <?php
-    $quellen = [];
+    $sources = [];
     foreach ($this->get('privacy') as $privacy) {
         if ($privacy->getUrlTitle() != '' AND $privacy->getShow() == '1') {
-            $quellen[] = '<a href="'.$this->escape($privacy->getUrl()).'" target="_blank">'.$this->escape($privacy->getUrlTitle()).'</a>';
+            $sources[] = '<a href="'.$this->escape($privacy->getUrl()).'" target="_blank">'.$this->escape($privacy->getUrlTitle()).'</a>';
         }
     }
 
-    echo implode(", ", $quellen);
+    echo implode(", ", $sources);
     ?>
 <?php else: ?>
     <?=$this->getTrans('noPrivacy') ?>

@@ -23,7 +23,7 @@ if ($awards != '') {
                    class="form-control"
                    name="date"
                    id="date"
-                   value="<?=($this->get('awards') != '') ? $date : $this->originalInput('date') ?>"
+                   value="<?=($this->get('awards') != '') ? $this->escape($date) : $this->escape($this->originalInput('date')) ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
@@ -41,7 +41,7 @@ if ($awards != '') {
                    name="rank"
                    min="1"
                    placeholder="1"
-                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->originalInput('rank') ?>" />
+                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->escape($this->originalInput('rank')) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
@@ -55,7 +55,7 @@ if ($awards != '') {
                        id="selectedImage"
                        name="image"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getImage()) : $this->originalInput('image') ?>" />
+                       value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
                 <span class="input-group-addon">
                     <span class="fa fa-times"></span>
                 </span>
@@ -105,7 +105,7 @@ if ($awards != '') {
                    class="form-control"
                    id="event"
                    name="event"
-                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getEvent()) : $this->originalInput('event') ?>" />
+                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getEvent()) : $this->escape($this->originalInput('event')) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
@@ -118,7 +118,7 @@ if ($awards != '') {
                    name="page"
                    id="page"
                    placeholder="http://"
-                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getURL()) : $this->originalInput('page') ?>" />
+                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getURL()) : $this->escape($this->originalInput('page')) ?>" />
         </div>
     </div>
     <?php if ($this->get('awards') != ''): ?>

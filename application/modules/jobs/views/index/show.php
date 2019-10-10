@@ -19,7 +19,7 @@ $jobs = $this->get('jobs');
         </div>
         <div class="col-lg-10" style="margin-bottom: 35px;">
             <h1><?=$this->escape($job->getTitle()) ?></h1>
-            <?=$job->getText() ?>
+            <?=$this->purify($job->getText()) ?>
         </div>
     </div>
 <?php endif; ?>

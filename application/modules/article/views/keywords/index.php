@@ -9,7 +9,7 @@ $keywords = $this->get('keywords');
         <?php foreach ($keywords as $keyword => $count): ?>
             <li class="list-group-item">
                 <span class="badge"><?=$count ?></span>
-                <a href="<?=$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]) ?>"><?=$this->escape($keyword) ?></a>
+                <a href="<?=$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => urlencode($keyword)]) ?>"><?=$this->escape($keyword) ?></a>
             </li>
         <?php endforeach; ?>
     </ul>

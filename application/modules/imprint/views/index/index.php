@@ -1,3 +1,2 @@
 <h1><?=$this->getTrans('menuImprint') ?></h1>
-<?=$this->get('imprint')->getImprint() ?>
-
+<?=$this->purify($this->get('imprint')->getImprint()) ?>

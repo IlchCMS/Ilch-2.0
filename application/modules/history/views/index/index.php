@@ -17,7 +17,7 @@
 
                 <div class="cd-timeline-content">
                     <h3><?=$this->escape($history->getTitle()) ?></h3>
-                    <?=$history->getText() ?>
+                    <?=$this->purify($history->getText()) ?>
                     <?php $getDate = new \Ilch\Date($history->getDate()); ?>
                     <span class="cd-date"><?=$getDate->format('d. ', true).$this->getTrans($getDate->format('F', true)).$getDate->format(' Y', true) ?></span>
                 </div>

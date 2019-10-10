@@ -3,6 +3,7 @@
 <?php if (!empty($this->get('keywordsList'))): ?>
     <div class="article-keywords-box">
         <?php foreach ($this->get('keywordsList') as $keyword => $count) {
+            $keyword = $this->escape($keyword);
             if ($count >= 5) {
                 echo '<span style="font-size:'.$this->get('keywordsH5').'px"><a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a></span> ';
             } elseif ($count == 4) {

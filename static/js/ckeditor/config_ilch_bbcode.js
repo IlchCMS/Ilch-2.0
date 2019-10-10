@@ -16,7 +16,7 @@ CKEDITOR.editorConfig = function (config) {
     config.toolbar = 'ilch_bbcode';
     config.toolbar_ilch_bbcode = [
         ['Undo', 'Redo'],
-        ['RemoveFormat', '-', 'Bold', 'Italic', 'Underline', 'FontSize', 'TextColor', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        ['RemoveFormat', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'FontSize', 'TextColor', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
         ['NumberedList', 'BulletedList', 'Blockquote', 'CodeSnippet'],
         ['Link', 'Unlink', 'Image', 'Emojione', 'ilchyoutube'],
         ['Maximize']

@@ -39,7 +39,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getTitle()) : $this->originalInput('title') ?>" />
+                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getTitle()) : $this->escape($this->originalInput('title')) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -63,7 +63,7 @@
                    class="form-control"
                    id="urltitle"
                    name="urltitle"
-                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getUrlTitle()) : $this->originalInput('urltitle') ?>" />
+                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getUrlTitle()) : $this->escape($this->originalInput('urltitle')) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('url') ? 'has-error' : '' ?>">
@@ -76,7 +76,7 @@
                    id="url"
                    name="url"
                    placeholder="http://" 
-                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getUrl()) : $this->originalInput('url') ?>" />
+                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getUrl()) : $this->escape($this->originalInput('url')) ?>" />
         </div>
     </div>
     <?=($this->get('privacy') != '') ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>

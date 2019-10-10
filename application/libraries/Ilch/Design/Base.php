@@ -90,6 +90,44 @@ abstract class Base
     private $modRewrite;
 
     /**
+     * @var \HTMLPurifier_Config default object.
+     */
+    private $purifierConfig;
+
+    /**
+     * @var \HTMLPurifier
+     */
+    private $purifier;
+
+    /**
+     * Get object of HTML Purifier with default configuration.
+     *
+     * @return \HTMLPurifier
+     */
+    public function getPurifier()
+    {
+        return $this->purifier;
+    }
+
+    /**
+     * Use HTMLPurifier to purify the content.
+     * Takes the "disable_purifier" setting into account.
+     *
+     * @param string $content
+     * @return string
+     */
+    public function purify($content)
+    {
+        $config = \Ilch\Registry::get('config');
+
+        if ($config->get('disable_purifier')) {
+            return $content;
+        }
+
+        return $this->getPurifier()->purify($content);
+    }
+
+    /**
      * Injects request and translator to layout/view.
      *
      * @param Request $request
@@ -106,6 +144,15 @@ abstract class Base
             $baseUrl = BASE_URL;
         }
         $this->baseUrl = $baseUrl;
+
+        $this->purifierConfig = \HTMLPurifier_Config::createDefault();
+        $this->purifierConfig->set('Filter.YouTube', true);
+        $this->purifierConfig->set('HTML.SafeIframe', true);
+        $this->purifierConfig->set('URI.SafeIframeRegexp','%^https://(www.youtube.com/embed/|www.youtube-nocookie.com/embed/|player.vimeo.com/video/|)%');
+        $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
+        $this->purifierConfig->set('Attr.EnableID', true);
+        $this->purifierConfig->set('AutoFormat.Linkify', true);
+        $this->purifier = new \HTMLPurifier($this->purifierConfig);
     }
 
     /**

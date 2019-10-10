@@ -44,7 +44,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
+                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getTitle()); } else { echo $this->escape($this->get('post')['title']); } ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -56,7 +56,7 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getText()); } else { echo $this->get('post')['text']; } ?></textarea>
+                      rows="5"><?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getText()); } else { echo $this->escape($this->get('post')['text']); } ?></textarea>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
@@ -64,11 +64,11 @@
             <?=$this->getTrans('email') ?>:
         </label>
         <div class="col-lg-4">
-            <input type="text"
+            <input type="email"
                    class="form-control"
                    id="email"
                    name="email"
-                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getEmail()); } else { echo $this->get('post')['email']; } ?>" />
+                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getEmail()); } else { echo $this->escape($this->get('post')['email']); } ?>" />
         </div>
     </div>
     <?php

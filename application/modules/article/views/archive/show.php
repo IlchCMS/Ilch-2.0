@@ -31,7 +31,7 @@ if ($this->getUser()) {
         $categories = '';
         foreach ($catIds as $catId) {
             $articlesCats = $categoryMapper->getCategoryById($catId);
-            $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$articlesCats->getName().'</a>, ';
+            $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$this->escape($articlesCats->getName()).'</a>, ';
         }
     ?>
         <?php if ($article->getTeaser()): ?>
@@ -50,11 +50,11 @@ if ($this->getUser()) {
 
         <?php if (strpos($content, '[PREVIEWSTOP]') !== false): ?>
             <?php $contentParts = explode('[PREVIEWSTOP]', $content); ?>
-            <?=reset($contentParts) ?>
+            <?=$this->purify(reset($contentParts)) ?>
             <br />
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>" class="pull-right"><?=$this->getTrans('readMore') ?></a>
         <?php else: ?>
-            <?=$content ?>
+            <?=$this->purify($content) ?>
         <?php endif; ?>
         <hr />
         <div>
@@ -92,7 +92,7 @@ if ($this->getUser()) {
                 $keywordsListArray = explode(", ", $keywordsList);
                 $keywordsList = [];
                 foreach ($keywordsListArray as $keyword) {
-                    $keywordsList[] = '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a>';
+                    $keywordsList[] = '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => urlencode($keyword)]).'">'.$this->escape($keyword).'</a>';
                 }
                 echo implode(", ",$keywordsList); ?>
             <?php endif; ?>

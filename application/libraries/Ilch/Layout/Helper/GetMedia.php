@@ -32,6 +32,7 @@ class GetMedia
      * Sets the mediaButton.
      *
      * @param string $mediaButton
+     * @return GetMedia
      */
     public function addMediaButton($mediaButton)
     {
@@ -44,6 +45,7 @@ class GetMedia
      * Sets the actionButton.
      *
      * @param string $actionButton
+     * @return GetMedia
      */
     public function addActionButton($actionButton)
     {
@@ -56,6 +58,7 @@ class GetMedia
      * Sets the uploadController.
      *
      * @param string $uploadController
+     * @return GetMedia
      */
     public function addUploadController($uploadController)
     {
@@ -68,6 +71,7 @@ class GetMedia
      * Sets the inputId.
      *
      * @param string $inputId
+     * @return GetMedia
      */
     public function addInputId($inputId)
     {

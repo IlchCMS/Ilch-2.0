@@ -31,7 +31,7 @@
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $entry->getId()]) ?></td>
                             <td><?=$getDate->format('d.m.Y', true); ?></td>
                             <td><?=$this->escape($entry->getTitle()) ?></td>
-                            <td><?=$entry->getText() ?></td>
+                            <td><?=$this->escape($entry->getText()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
