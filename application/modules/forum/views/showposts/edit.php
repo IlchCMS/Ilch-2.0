@@ -42,7 +42,7 @@ $post = $this->get('post');
                                    class="form-control"
                                    id="topicTitle"
                                    name="topicTitle"
-                                   value="<?=$topic->getTopicTitle() ?>" />
+                                   value="<?=$this->escape($topic->getTopicTitle()) ?>" />
                         </div>
                     </div>
                     <?php endif; ?>
@@ -54,7 +54,7 @@ $post = $this->get('post');
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
                                       name="text"
-                                      toolbar="ilch_bbcode"><?=$post->getText() ?></textarea>
+                                      toolbar="ilch_bbcode"><?=$this->escape($post->getText()) ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">

@@ -4,7 +4,7 @@ $date;
 ?>
 
 <h1><?=$this->getTrans('accountdata') ?></h1>
-<?php if ($this->get('checkout_contact') != '') { echo $this->get('checkout_contact') ; } ?>
+<?php if ($this->get('checkout_contact') != '') { echo $this->purify($this->get('checkout_contact')) ; } ?>
 <br>
 <br>
 <h1><?=$this->getTrans('bankbalance') ?></h1>

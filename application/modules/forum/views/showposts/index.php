@@ -34,9 +34,9 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
-            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$forum->getTitle() ?></a>
-            <i class="fa fa-chevron-right"></i> <?=$prefix.$topicpost->getTopicTitle() ?>
+            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$this->escape($cat->getTitle()) ?></a>
+            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$this->escape($forum->getTitle()) ?></a>
+            <i class="fa fa-chevron-right"></i> <?=$this->escape($prefix.$topicpost->getTopicTitle()) ?>
         </h1>
         <div class="row">
             <div class="col-lg-12">
@@ -83,7 +83,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
             </div>
             <div class="col-lg-12">
                 <div class="posts-head ilch-head">
-                    <?=$prefix.$topicpost->getTopicTitle() ?>
+                    <?=$this->escape($prefix.$topicpost->getTopicTitle()) ?>
                 </div>
             </div>
         </div>
@@ -161,9 +161,9 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     </dt>
                     <dd>
                         <?php foreach ($post->getAutor()->getGroups() as $group): ?>
-                            <i class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></i><br>
+                            <i class="forum appearance<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></i><br>
                         <?php endforeach; ?>
-                        <i><?=$rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle() ?></i>
+                        <i><?=$this->escape($rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle()) ?></i>
                     </dd>
                     <dd>&nbsp;</dd>
                     <dd><b><?=$this->getTrans('posts') ?>:</b> <?=$post->getAutorAllPost() ?></dd>

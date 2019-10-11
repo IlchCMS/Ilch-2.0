@@ -24,13 +24,13 @@ function rec($item, $forumMapper, $obj, $readAccess)
                 <dl class="title ilch-head">
                     <dt>
                         <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>">
-                            <?=$item->getTitle() ?>
+                            <?=$obj->escape($item->getTitle()) ?>
                         </a>
                     </dt>
                 </dl>
                 <?php if ($item->getDesc() != ''): ?>
                     <dl class="desc small">
-                        <?=$item->getDesc() ?>
+                        <?=$obj->escape($item->getDesc()) ?>
                     </dl>
                 <?php endif; ?>
             </li>

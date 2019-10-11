@@ -30,7 +30,7 @@ if (!empty($calendar)) {
             <div class="col-lg-2"><?=$this->getTrans('description') ?></div>
             <div class="col-lg-12">
                 <?php if ($calendar->getText()!= ''): ?>
-                    <?=$calendar->getText() ?>
+                    <?=$this->purify($calendar->getText()) ?>
                 <?php else: ?>
                     <?=$this->getTrans('noDescription') ?>
                 <?php endif; ?>

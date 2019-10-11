@@ -43,11 +43,11 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('receiver'));
-                $subject = $this->getTranslator()->trans('contactWebsite').' | '.$this->getConfig()->get('page_title');
-                $content = $this->getRequest()->getPost('message');
+                $subject = $this->getLayout()->escape($this->getTranslator()->trans('contactWebsite').' | '.$this->getConfig()->get('page_title'));
+                $content = $this->getLayout()->escape($this->getRequest()->getPost('message'));
                 $date = new \Ilch\Date();
                 $senderMail = $this->getRequest()->getPost('senderEmail');
-                $senderName = $this->getRequest()->getPost('senderName');
+                $senderName = $this->getLayout()->escape($this->getRequest()->getPost('senderName'));
 
                 $layout = '';
                 if (isset($_SESSION['layout'])) {

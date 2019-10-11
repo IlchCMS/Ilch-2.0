@@ -18,7 +18,7 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getName()); } else { echo $this->originalInput('name'); } ?>" />
+                   value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getName()); } else { echo $this->escape($this->originalInput('name')); } ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
@@ -26,11 +26,11 @@
                 <?=$this->getTrans('email') ?>:
         </label>
         <div class="col-lg-2">
-            <input type="text"
+            <input type="email"
                    class="form-control"
                    id="email"
                    name="email"
-                   value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getEmail()); } else { echo $this->originalInput('email'); } ?>" />
+                   value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getEmail()); } else { echo $this->escape($this->originalInput('email')); } ?>" />
         </div>
     </div>
     <?php

@@ -23,7 +23,7 @@
                        class="form-control"
                        id="name"
                        name="senderName"
-                       value="<?=$this->originalInput('senderName') ?>" />
+                       value="<?=$this->escape($this->originalInput('senderName')) ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('senderEmail') ? 'has-error' : '' ?>">
@@ -31,7 +31,7 @@
                 <?=$this->getTrans('email') ?>
             </label>
             <div class="col-lg-8">
-                <input type="text"
+                <input type="email"
                        class="form-control"
                        id="email"
                        name="senderEmail"
@@ -46,7 +46,7 @@
                 <textarea class="form-control"
                           id="message"
                           name="message"
-                          rows="5"><?=$this->originalInput('message') ?></textarea>
+                          rows="5"><?=$this->escape($this->originalInput('message')) ?></textarea>
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('privacy') ? 'has-error' : '' ?>">

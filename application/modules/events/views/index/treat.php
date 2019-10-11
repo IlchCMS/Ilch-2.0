@@ -112,7 +112,7 @@ $users = $userMapper->getUserList();
                        class="form-control"
                        id="title"
                        name="title"
-                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getTitle()) : $this->originalInput('title') ?>" />
+                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getTitle()) : $this->escape($this->originalInput('title')) ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
@@ -124,7 +124,7 @@ $users = $userMapper->getUserList();
                        class="form-control"
                        id="place"
                        name="place"
-                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPlace()) : $this->originalInput('place') ?>" />
+                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPlace()) : $this->escape($this->originalInput('place')) ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
@@ -137,7 +137,7 @@ $users = $userMapper->getUserList();
                        id="website"
                        name="website"
                        placeholder="http://"
-                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getWebsite()) : $this->originalInput('website') ?>" />
+                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getWebsite()) : $this->escape($this->originalInput('website')) ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -149,7 +149,7 @@ $users = $userMapper->getUserList();
                           id="ck_1"
                           name="text"
                           toolbar="ilch_bbcode"
-                          rows="5"><?=($this->get('event') != '') ? $this->escape($this->get('event')->getText()) : $this->originalInput('text') ?></textarea>
+                          rows="5"><?=($this->get('event') != '') ? $this->escape($this->get('event')->getText()) : $this->escape($this->originalInput('text')) ?></textarea>
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">

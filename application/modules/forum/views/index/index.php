@@ -8,6 +8,7 @@ $guestOnline = $this->get('guestOnline');
 $forumStatistics = $this->get('forumStatics');
 $ins = $usersOnline+$guestOnline;
 $idHighestRankedGroup = $this->get('idHighestRankedGroup');
+
 function rec($item, $obj, $readAccess, $i)
 {
     $DESCPostorder = $obj->get('DESCPostorder');
@@ -38,13 +39,13 @@ function rec($item, $obj, $readAccess, $i)
                 <dl class="title ilch-head">
                     <dt>
                         <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>">
-                            <?=$item->getTitle() ?>
+                            <?=$obj->escape($item->getTitle()) ?>
                         </a>
                     </dt>
                 </dl>
                 <?php if ($item->getDesc() != ''): ?>
                     <dl class="desc small ilch-bg ilch-border">
-                        <?=$item->getDesc() ?>
+                        <?=$obj->escape($item->getDesc()) ?>
                     </dl>
                 <?php endif; ?>
             </li>
