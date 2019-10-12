@@ -11,7 +11,7 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getName()) : $this->originalInput('name') ?>" />
+                   value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getName()) : $this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -24,7 +24,7 @@
                    id="link"
                    name="link"
                    placeholder="http://"
-                   value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getLink()) : $this->originalInput('link') ?>" />
+                   value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getLink()) : $this->escape($this->originalInput('link')) ?>" />
         </div>
         <div class="col-lg-1">
             <select class="form-control" id="target" name="target">
@@ -44,7 +44,7 @@
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getBanner()) : $this->originalInput('banner') ?>" />
+                       value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getBanner()) : $this->escape($this->originalInput('banner')) ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>

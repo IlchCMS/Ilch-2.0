@@ -11,7 +11,7 @@
                        class="form-control"
                        id="subject"
                        name="subject"
-                       value="<?=$this->originalInput('subject') ?>"
+                       value="<?=$this->escape($this->originalInput('subject')) ?>"
                        required />
             </div>
         </div>
@@ -24,7 +24,7 @@
                           id="ck_1"
                           name="text"
                           toolbar="ilch_html"
-                          rows="5"><?=$this->originalInput('text') ?></textarea>
+                          rows="5"><?=$this->escape($this->originalInput('text')) ?></textarea>
             </div>
         </div>
         <?=$this->getSaveBar('send') ?>

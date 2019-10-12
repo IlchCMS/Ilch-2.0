@@ -19,8 +19,8 @@
                     $banner = $partner->getBanner();
                 }
                 ?>
-                <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="<?=($partner->getTarget() == 0) ? '_blank' : '_self' ?>">
-                    <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" class="img-responsive">
+                <a href="<?=$link ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" target="<?=($partner->getTarget() == 0) ? '_blank' : '_self' ?>">
+                    <img src="<?=$banner ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" class="img-responsive">
                 </a>
                 <br />
             </div>
@@ -41,8 +41,8 @@
                         ?>
 
                         <div class="partner-item">
-                            <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="<?=($partner->getTarget() == 0) ? '_blank' : '_self' ?>">
-                                <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" class="img-responsive">
+                            <a href="<?=$link ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" target="<?=($partner->getTarget() == 0) ? '_blank' : '_self' ?>">
+                                <img src="<?=$banner ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" class="img-responsive">
                             </a>
                         </div>
                     <?php endforeach; ?>

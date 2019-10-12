@@ -96,37 +96,37 @@
                             <td><?=$this->getDeleteCheckbox('check_medias', $media->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $media->getId()]) ?></td>
                             <td><a href="<?=$this->getUrl(['action' => 'refresh', 'id' => $media->getId()]) ?>"><i class="fa fa-refresh" title="<?=$this->getTrans('refreshThumbnail') ?>"></i></a></td>
-                            <td><?=$media->getEnding() ?></td>
+                            <td><?=$this->escape($media->getEnding()) ?></td>
                             <td>
                                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
-                                    <a href="<?=$this->getBaseUrl($media->getUrl()) ?>" title="<?=$media->getName() ?>">
+                                    <a href="<?=$this->getBaseUrl($media->getUrl()) ?>" title="<?=$this->escape($media->getName()) ?>">
                                         <?php if (file_exists($media->getUrlThumb())): ?>
-                                            <img class="img-preview" src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>" alt="<?=$media->getName() ?>">
+                                            <img class="img-preview" src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>" alt="<?=$this->escape($media->getName()) ?>">
                                         <?php else: ?>
-                                            <img class="img-preview" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$media->getName() ?>">
+                                            <img class="img-preview" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$this->escape($media->getName()) ?>">
                                         <?php endif; ?>
                                     </a>
                                 <?php else: ?>
                                     <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                                          class="img-preview"
-                                         alt="<?=$media->getName() ?>"
+                                         alt="<?=$this->escape($media->getName()) ?>"
                                          style="width:50px; height:auto;" />
                                 <?php endif; ?>
                             </td>
-                            <td><a href="<?=$this->getBaseUrl($media->getUrl()) ?>" download="<?=$media->getName().".".$media->getEnding() ?>"><?=$media->getName() ?></a></td>
+                            <td><a href="<?=$this->getBaseUrl($media->getUrl()) ?>" download="<?=$this->escape($media->getName().".".$media->getEnding()) ?>"><?=$this->escape($media->getName()) ?></a></td>
                             <td><?=$media->getDatetime() ?></td>
                             <td>
                                 <div class="btn-group dropdown">
                                     <button type="button"
                                             class="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown"><?=$media->getCatName() ?>
+                                            data-toggle="dropdown"><?=$this->escape($media->getCatName()) ?>
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu listChooser" role="menu">
                                         <?php if ($this->get('catnames') != ''): ?>
                                             <?php foreach ($this->get('catnames') as $name): ?>
                                                 <li>
-                                                    <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$name->getCatName() ?></a>
+                                                    <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$this->escape($name->getCatName()) ?></a>
                                                 </li>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
@@ -148,7 +148,7 @@
                     <div class="modal-body">
                         <ul class="list-unstyled">
                             <?php foreach ($this->get('catnames') as $name): ?>
-                                <li><button name="assignedCategory" class="btn btn-default list-group-item" type="submit" value="<?=$name->getId() ?>"><?=$name->getCatName() ?></button></li>
+                                <li><button name="assignedCategory" class="btn btn-default list-group-item" type="submit" value="<?=$name->getId() ?>"><?=$this->escape($name->getCatName()) ?></button></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>

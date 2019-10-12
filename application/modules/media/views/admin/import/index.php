@@ -34,19 +34,19 @@
                         ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_medias', $media) ?></td>
-                            <td><?=$upload->getEnding() ?></td>
+                            <td><?=$this->escape($upload->getEnding()) ?></td>
                             <td>
                                 <?php if (in_array($upload->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
                                     <img class="img-preview" src="<?=$this->getBaseUrl($media) ?>" alt="">
                                 <?php else: ?>
                                     <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                                          class="img-preview"
-                                         alt="<?=$upload->getName() ?>"
+                                         alt="<?=$this->escape($upload->getName()) ?>"
                                          style="width:50px; height:auto;" />
                                 <?php endif; ?>
                             </td>
                             <td><?=$upload->getSize() ?></td>
-                            <td><?=$upload->getName() ?></td>
+                            <td><?=$this->escape($upload->getName()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

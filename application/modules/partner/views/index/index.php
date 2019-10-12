@@ -11,7 +11,7 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=($this->originalInput('name') != '' ? $this->originalInput('name') : '') ?>" />
+                   value="<?=($this->originalInput('name') != '' ? $this->escape($this->originalInput('name')) : '') ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
@@ -24,7 +24,7 @@
                    id="link"
                    name="link"
                    placeholder="http://"
-                   value="<?=($this->originalInput('link') != '' ? $this->originalInput('link') : '') ?>" />
+                   value="<?=($this->originalInput('link') != '' ? $this->escape($this->originalInput('link')) : '') ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
@@ -37,7 +37,7 @@
                    id="banner"
                    name="banner"
                    placeholder="http://"
-                   value="<?=($this->originalInput('banner') != '' ? $this->originalInput('banner') : '') ?>" />
+                   value="<?=($this->originalInput('banner') != '' ? $this->escape($this->originalInput('banner')) : '') ?>" />
         </div>
     </div>
     <?php if ($this->get('captchaNeeded')) : ?>

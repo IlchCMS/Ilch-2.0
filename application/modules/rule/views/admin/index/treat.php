@@ -10,7 +10,7 @@
                    class="form-control"
                    id="paragraph"
                    name="paragraph"
-                   value="<?=($this->get('rule') != '') ? $this->escape($this->get('rule')->getParagraph()) : $this->originalInput('paragraph') ?>"
+                   value="<?=($this->get('rule') != '') ? $this->escape($this->get('rule')->getParagraph()) : $this->escape($this->originalInput('paragraph')) ?>"
                    required />
         </div>
     </div>
@@ -23,7 +23,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($this->get('rule') != '') ? $this->escape($this->get('rule')->getTitle()) : $this->originalInput('title') ?>"
+                   value="<?=($this->get('rule') != '') ? $this->escape($this->get('rule')->getTitle()) : $this->escape($this->originalInput('title')) ?>"
                    required />
         </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="col-lg-4">
             <select class="form-control" id="cat" name="cat" required>
                 <?php foreach ($this->get('rulesparents') as $item): ?>
-                    <option value="<?=$item->getId() ?>"<?=(!empty($this->get('rule')) && $this->get('rule')->getParent_Id() == $item->getId()) ? ' selected': '' ?>><?=$item->getParagraph().'. '.$item->getTitle() ?></option>
+                    <option value="<?=$item->getId() ?>"<?=(!empty($this->get('rule')) && $this->get('rule')->getParent_Id() == $item->getId()) ? ' selected': '' ?>><?=$this->escape($item->getParagraph().'. '.$item->getTitle()) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -62,7 +62,7 @@
                       name="text"
                       toolbar="ilch_html"
                       rows="5"
-                      required><?=($this->get('rule') != '') ? $this->escape($this->get('rule')->getText()) : $this->originalInput('text') ?></textarea>
+                      required><?=($this->get('rule') != '') ? $this->escape($this->get('rule')->getText()) : $this->escape($this->originalInput('text')) ?></textarea>
         </div>
     </div>
     <?=($this->get('rule') != '') ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>

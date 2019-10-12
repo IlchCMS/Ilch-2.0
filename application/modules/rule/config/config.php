@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'rule',
-        'version' => '1.5.0',
+        'version' => '1.6.0',
         'icon_small' => 'fa-gavel',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can create new rules.',
             ],
         ],
-        'ilchCore' => '2.1.16',
+        'ilchCore' => '2.1.26',
         'phpVersion' => '5.6'
     ];
 

@@ -22,7 +22,7 @@
                    class="form-control"
                    name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
-                   value="<?= $this->originalInput('name') ?>" />
+                   value="<?=$this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
@@ -30,11 +30,11 @@
             <?=$this->getTrans('email') ?>*
         </label>
         <div class="col-lg-8">
-            <input type="text"
+            <input type="email"
                    class="form-control"
                    name="email"
                    placeholder="<?=$this->getTrans('emailVisibleForAdmins') ?>"
-                   value="<?= $this->originalInput('email') ?>" />
+                   value="<?=$this->escape($this->originalInput('email')) ?>" />
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
@@ -46,7 +46,7 @@
                   class="form-control"
                   name="homepage"
                   placeholder="<?=$this->getTrans('page') ?>"
-                  value="<?= $this->originalInput('homepage') ?>" />
+                  value="<?=$this->escape($this->originalInput('homepage')) ?>" />
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -58,7 +58,7 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_bbcode"
-                      required><?= $this->originalInput('text') ?></textarea>
+                      required><?=$this->escape($this->originalInput('text')) ?></textarea>
         </div>
     </div>
     <?php if ($this->get('captchaNeeded')) : ?>

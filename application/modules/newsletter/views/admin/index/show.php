@@ -31,7 +31,7 @@ $date = new \Ilch\Date($newsletter->getDateCreated());
             <div class="col-lg-2">
                 <?=$this->getTrans('text') ?>:
             </div>
-            <div class="col-lg-10"><?=$newsletter->getText() ?></div>
+            <div class="col-lg-10"><?=$this->purify($newsletter->getText()) ?></div>
         </div>
     </div>
     <?=$this->getSaveBar('delete') ?>

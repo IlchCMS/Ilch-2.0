@@ -19,7 +19,7 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getName()); } else { echo $this->get('post')['name']; } ?>" />
+                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getName()); } else { echo $this->escape($this->get('post')['name']); } ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
@@ -32,7 +32,7 @@
                    id="link"
                    name="link"
                    placeholder="http://"
-                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getLink()); } else { echo $this->get('post')['link']; } ?>" />
+                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getLink()); } else { echo $this->escape($this->get('post')['link']); } ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
@@ -46,7 +46,7 @@
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getBanner()); } else { echo $this->get('post')['banner']; } ?>" />
+                       value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getBanner()); } else { echo $this->escape($this->get('post')['banner']); } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
@@ -60,7 +60,7 @@
                       id="desc"
                       name="desc" 
                       cols="45" 
-                      rows="3"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } else { echo $this->get('post')['desc']; } ?></textarea>
+                      rows="3"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } else { echo $this->escape($this->get('post')['desc']); } ?></textarea>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">

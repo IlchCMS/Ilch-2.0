@@ -20,7 +20,7 @@
                                class="form-control"
                                id="imageTitleInput"
                                name="imageTitle"
-                               value="<?=$image->getImageTitle() ?>" />
+                               value="<?=$this->escape($image->getImageTitle()) ?>" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -31,7 +31,7 @@
                         <textarea class="form-control"
                                   id="imageDescInput"
                                   rows="8"
-                                  name="imageDesc"><?=$image->getImageDesc() ?></textarea>
+                                  name="imageDesc"><?=$this->escape($image->getImageDesc()) ?></textarea>
                     </div>
                 </div>
             </div>

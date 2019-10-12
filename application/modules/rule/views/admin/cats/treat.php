@@ -10,7 +10,7 @@
                    class="form-control"
                    id="paragraph"
                    name="paragraph"
-                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getParagraph()) : $this->originalInput('paragraph') ?>"
+                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getParagraph()) : $this->escape($this->originalInput('paragraph')) ?>"
                    required />
         </div>
     </div>
@@ -23,7 +23,7 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getTitle()) : $this->originalInput('name') ?>"
+                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getTitle()) : $this->escape($this->originalInput('name')) ?>"
                    required />
         </div>
     </div>

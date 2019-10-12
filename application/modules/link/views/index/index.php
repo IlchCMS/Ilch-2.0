@@ -58,7 +58,7 @@
                     } elseif (!empty($banner)) {
                         $banner = '<img src="'.$this->escape($banner).'">';
                     } else {
-                        $banner = $link->getName();
+                        $banner = $this->escape($link->getName());
                     }
                     ?>
                     <td>

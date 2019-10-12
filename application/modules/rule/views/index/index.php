@@ -22,14 +22,16 @@ function rec($item, $obj)
         }
     }
 
+    $paragraph = $obj->escape($item->getParagraph());
+
     if ($item->getParent_Id() === 0 and $subItemsFalse == true and ($item->getAccess() == '' || is_in_array($obj->get('groupIdsArray'), explode(',', $item->getAccess())) || $adminAccess == true)) {
     echo '<div class="card">
-    <div class="card-header" id="paragraph'.$item->getParagraph().'">
-        <h3 class="mb-0" data-toggle="collapse" data-target="#paragraph0_'.$item->getParagraph().'" aria-expanded="false" aria-controls="paragraph0_'.$item->getParagraph().'">
-            <a href="#paragraph'.$item->getParagraph().'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$item->getParagraph().' : '.$obj->escape($item->getTitle()).'<span class="pull-right glyphicon glyphicon-'.($obj->get('showallonstart')?'minus':'plus').'"></span>
+    <div class="card-header" id="paragraph'.$paragraph.'">
+        <h3 class="mb-0" data-toggle="collapse" data-target="#paragraph0_'.$paragraph.'" aria-expanded="false" aria-controls="paragraph0_'.$paragraph.'">
+            <a href="#paragraph'.$paragraph.'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$paragraph.' : '.$obj->escape($item->getTitle()).'<span class="pull-right glyphicon glyphicon-'.($obj->get('showallonstart')?'minus':'plus').'"></span>
         </h3>
     </div>
-    <div id="paragraph0_'.$item->getParagraph().'" class="panel-collapse collapse" aria-labelledby="paragraph'.$item->getParagraph().'" data-parent="#accordion">
+    <div id="paragraph0_'.$paragraph.'" class="panel-collapse collapse" aria-labelledby="paragraph'.$paragraph.'" data-parent="#accordion">
         <div class="card-body">
             <table class="table table-striped table-responsive">';
 
@@ -46,15 +48,16 @@ function rec($item, $obj)
 </div>';
     } elseif ($item->getParent_Id() != 0 and ($item->getAccess() == '' || is_in_array($obj->get('groupIdsArray'), explode(',', $item->getAccess())) || $adminAccess == true)) {
         $parentItem = $obj->get('rulesMapper')->getRuleById($item->getParent_Id());
+
         echo '
-                <tr id="paragraph'.$obj->escape(($parentItem != ''?$parentItem->getParagraph().'_':'').$item->getParagraph()).'" tabindex="-1">
+                <tr id="paragraph'.$obj->escape(($parentItem != ''? $obj->escape($parentItem->getParagraph()).'_' : '').$paragraph).'" tabindex="-1">
                     <th>
-                        <a href="#paragraph'.$parentItem->getParagraph().'_'.$item->getParagraph().'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$obj->escape($parentItem->getParagraph()).' '.$obj->getTrans('paragraphsign').' '.$obj->escape($item->getParagraph()).' : '.$obj->escape($item->getTitle()).'
+                        <a href="#paragraph'.$obj->escape($parentItem->getParagraph()).'_'.$paragraph.'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$obj->escape($parentItem->getParagraph()).' '.$obj->getTrans('paragraphsign').' '.$obj->escape($paragraph).' : '.$obj->escape($item->getTitle()).'
                     </th>
                 </tr>
                 <tr>
                     <td>
-                        '.$item->getText().'
+                        '.$obj->purify($item->getText()).'
                     </td>
                 </tr>';
     }

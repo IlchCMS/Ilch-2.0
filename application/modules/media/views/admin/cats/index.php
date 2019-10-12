@@ -23,7 +23,7 @@
                     <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
                     <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                     <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
-                    <td><?=$cat->getCatName() ?></td>
+                    <td><?=$this->escape($cat->getCatName()) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

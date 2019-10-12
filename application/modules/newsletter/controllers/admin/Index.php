@@ -164,8 +164,8 @@ class Index extends \Ilch\Controller\Admin
                         ->setFromEmail($this->getConfig()->get('standardMail'))
                         ->setToName($email->getEmail())
                         ->setToEmail($email->getEmail())
-                        ->setSubject($post['subject'])
-                        ->setMessage($message)
+                        ->setSubject($this->getLayout()->escape($post['subject']))
+                        ->setMessage($this->getLayout()->purify($message))
                         ->sent();
                 }
 
