@@ -78,7 +78,7 @@
                        class="form-control"
                        id="warMapInput"
                        name="warMap"
-                       value="<?=$value ?>" />
+                       value="<?=$this->escape($value) ?>" />
             </div>
         </div>
         <div class="form-group<?=$this->validation()->hasError('warServer') ? ' has-error' : '' ?>">
@@ -98,7 +98,7 @@
                        class="form-control"
                        id="warServerInput"
                        name="warServer"
-                       value="<?=$value ?>" />
+                       value="<?=$this->escape($value) ?>" />
             </div>
         </div>
         <div class="form-group">
@@ -118,7 +118,7 @@
                        class="form-control"
                        id="warPasswordInput"
                        name="warPassword"
-                       value="<?=$value ?>" />
+                       value="<?=$this->escape($value) ?>" />
             </div>
         </div>
         <div class="form-group<?=$this->validation()->hasError('warXonx') ? ' has-error' : '' ?>">
@@ -242,7 +242,7 @@
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="warReport"
-                          toolbar="ilch_html"><?=$value ?></textarea>
+                          toolbar="ilch_html"><?=$this->purify($value) ?></textarea>
             </div>
         </div>
         <div class="form-group">

@@ -170,11 +170,11 @@ class Applications extends \Ilch\Controller\Admin
             $messageReplace = [
                 '{reply}' => $this->getTranslator()->trans('reply'),
                 '{subject}' => $this->getTranslator()->trans('subjectAccept'),
-                '{content}' => $mailContent->getText(),
-                '{sitetitle}' => $sitetitle,
+                '{content}' => $this->getLayout()->purify($mailContent->getText()),
+                '{sitetitle}' => $this->getLayout()->escape($sitetitle),
                 '{date}' => $date->format("l, d. F Y", true),
-                '{name}' => $name,
-                '{teamname}' => $teamname,
+                '{name}' => $this->getLayout()->escape($name),
+                '{teamname}' => $this->getLayout()->escape($teamname),
                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
             ];
 

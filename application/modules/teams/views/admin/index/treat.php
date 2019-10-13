@@ -22,7 +22,7 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=($this->get('team') != '') ? $this->escape($this->get('team')->getName()) : $this->originalInput('name') ?>" />
+                   value="<?=($this->get('team') != '') ? $this->escape($this->get('team')->getName()) : $this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('img') ? 'has-error' : '' ?>">
@@ -125,7 +125,7 @@
                                     <?php $selected = 'selected="selected"'; ?>
                                 <?php endif; ?>
                             <?php endif; ?>
-                            <option <?=$selected ?> value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>
+                            <option <?=$selected ?> value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </optgroup>

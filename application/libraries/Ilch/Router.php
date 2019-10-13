@@ -145,7 +145,7 @@ class Router
     /**
      * Match given route by regular expression.
      *
-     * @todo matchByRegexp not works at the moment.
+     * @todo matchByRegexp not working at the moment.
      * @param string $route
      * @param array $params
      * @throws \Exception
@@ -329,7 +329,7 @@ class Router
     }
 
     /**
-     * Updates the request objext.
+     * Updates the request object.
      *
      * @param $result
      */

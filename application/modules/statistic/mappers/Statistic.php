@@ -547,6 +547,7 @@ class Statistic extends \Ilch\Mapper
             ];
         } elseif ($version != null) {
             $osArray = [
+                '=Android 10.0=' => '10.0',
                 '=Android 9.0=' => '9.0',
                 '=Android 8.1=' => '8.1',
                 '=Android 8.0=' => '8.0',

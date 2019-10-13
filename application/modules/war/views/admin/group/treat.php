@@ -17,7 +17,7 @@ if ($this->get('groups') != '') {
                    class="form-control"
                    id="groupNameInput"
                    name="groupName"
-                   value="<?=($this->get('groups') != '') ? $this->get('groups')->getGroupName() : $this->get('post')['groupName'] ?>" />
+                   value="<?=$this->escape(($this->get('groups') != '') ? $this->get('groups')->getGroupName() : $this->get('post')['groupName']) ?>" />
         </div>
     </div>
     <div class="form-group<?=in_array('groupTag', $this->get('errorFields')) ? ' has-error' : '' ?>">
@@ -29,7 +29,7 @@ if ($this->get('groups') != '') {
                    class="form-control"
                    id="groupTagInput"
                    name="groupTag"
-                   value="<?=($this->get('groups') != '') ? $this->get('groups')->getGroupTag() : $this->get('post')['groupTag'] ?>" />
+                   value="<?=$this->escape(($this->get('groups') != '') ? $this->get('groups')->getGroupTag() : $this->get('post')['groupTag']) ?>" />
         </div>
     </div>
     <div class="form-group<?=in_array('groupImage', $this->get('errorFields')) ? ' has-error' : '' ?>">
@@ -43,7 +43,7 @@ if ($this->get('groups') != '') {
                        id="selectedImage_1"
                        name="groupImage"
                        placeholder="<?=$this->getTrans('groupImage') ?>"
-                       value="<?=($this->get('groups') != '') ? $this->get('groups')->getGroupImage() : $this->get('post')['groupImage'] ?>" />
+                       value="<?=$this->escape(($this->get('groups') != '') ? $this->get('groups')->getGroupImage() : $this->get('post')['groupImage']) ?>" />
                 <span class="input-group-addon">
                     <a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a>
                 </span>
@@ -60,7 +60,7 @@ if ($this->get('groups') != '') {
                           name="groupDesc"
                           cols="50"
                           rows="5"
-                          placeholder="<?=$this->getTrans('groupDesc') ?>"><?=($this->get('groups') != '') ? $this->get('groups')->getGroupDesc() : '' ?></textarea>
+                          placeholder="<?=$this->getTrans('groupDesc') ?>"><?=$this->escape(($this->get('groups') != '') ? $this->get('groups')->getGroupDesc() : '') ?></textarea>
             </div>
         </div>
     </div>
@@ -81,7 +81,7 @@ if ($this->get('groups') != '') {
                         }
                         ?>
                         <?php if ($groupList->getId() != '3'): ?>
-                            <option<?=$selected ?> value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>
+                            <option<?=$selected ?> value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </optgroup>

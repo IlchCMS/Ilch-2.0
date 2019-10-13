@@ -97,7 +97,7 @@ $userMapper = new \Modules\User\Mappers\User();
                         <?php $entrantsUser = $userMapper->getUserById($trainEntrantsUser->getUserId()); ?>
                         <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><?=$this->escape($entrantsUser->getName()) ?></a>
                         <?php if ($trainEntrantsUser->getNote() != ''): ?>
-                            <i class="fa fa-arrow-right"></i> <?=$trainEntrantsUser->getNote() ?>
+                            <i class="fa fa-arrow-right"></i> <?=$this->escape($trainEntrantsUser->getNote()) ?>
                         <?php endif; ?>
                         <br />
                     <?php endforeach; ?>
@@ -110,7 +110,7 @@ $userMapper = new \Modules\User\Mappers\User();
             </div>
             <div class="col-lg-12">
                 <?php if ($training->getText()!= ''): ?>
-                    <?=$training->getText() ?>
+                    <?=$this->purify($training->getText()) ?>
                 <?php else: ?>
                     <?=$this->getTrans('noOtherInfo') ?>
                 <?php endif; ?>

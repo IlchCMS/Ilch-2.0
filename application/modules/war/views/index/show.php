@@ -190,7 +190,7 @@ $acceptCheckArray = $this->get('acceptCheck');
                 <h3 class="panel-title"><?=$this->getTrans('warReport') ?></h3>
             </div>
             <div class="panel-body">
-                <?=$war->getWarReport() ?>
+                <?=$this->purify($war->getWarReport()) ?>
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@
                    class="form-control"
                    id="enemyNameInput"
                    name="enemyName"
-                   value="<?=($this->get('enemy') != '') ? $this->get('enemy')->getEnemyName() : $this->get('post')['enemyName'] ?>" />
+                   value="<?=$this->escape(($this->get('enemy') != '') ? $this->get('enemy')->getEnemyName() : $this->get('post')['enemyName']) ?>" />
         </div>
     </div>
     <div class="form-group<?=in_array('enemyTag', $this->get('errorFields')) ? ' has-error' : '' ?>">
@@ -22,7 +22,7 @@
                    class="form-control"
                    id="enemyTagInput"
                    name="enemyTag"
-                   value="<?=($this->get('enemy') != '') ? $this->get('enemy')->getEnemyTag() : $this->get('post')['enemyTag'] ?>" />
+                   value="<?=$this->escape(($this->get('enemy') != '') ? $this->get('enemy')->getEnemyTag() : $this->get('post')['enemyTag']) ?>" />
         </div>
     </div>
     <div class="form-group<?=in_array('enemyHomepage', $this->get('errorFields')) ? ' has-error' : '' ?>">
@@ -34,7 +34,7 @@
                    class="form-control"
                    id="enemyHomepageInput"
                    name="enemyHomepage"
-                   value="<?=($this->get('enemy') != '') ? $this->get('enemy')->getEnemyHomepage() : $this->get('post')['enemyHomepage'] ?>" />
+                   value="<?=$this->escape(($this->get('enemy') != '') ? $this->get('enemy')->getEnemyHomepage() : $this->get('post')['enemyHomepage']) ?>" />
         </div>
     </div>
     <div class="form-group<?=in_array('enemyImage', $this->get('errorFields')) ? ' has-error' : '' ?>">
@@ -48,7 +48,7 @@
                        id="selectedImage"
                        name="enemyImage"
                        placeholder="<?=$this->getTrans('enemyImageInfo') ?>"
-                       value="<?=($this->get('enemy') != '') ? $this->get('enemy')->getEnemyImage() : $this->get('post')['enemyImage'] ?>" />
+                       value="<?=$this->escape(($this->get('enemy') != '') ? $this->get('enemy')->getEnemyImage() : $this->get('post')['enemyImage']) ?>" />
                 <span class="input-group-addon">
                     <a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a>
                 </span>
@@ -64,7 +64,7 @@
                    class="form-control"
                    id="enemyContactNameInput"
                    name="enemyContactName"
-                   value="<?=($this->get('enemy') != '') ? $this->get('enemy')->getEnemyContactName() : $this->get('post')['enemyContactName'] ?>" />
+                   value="<?=$this->escape(($this->get('enemy') != '') ? $this->get('enemy')->getEnemyContactName() : $this->get('post')['enemyContactName']) ?>" />
         </div>
     </div>
     <div class="form-group<?=in_array('enemyContactEmail', $this->get('errorFields')) ? ' has-error' : '' ?>">
@@ -72,11 +72,11 @@
             <?=$this->getTrans('enemyContactEmail') ?>:
         </label>
         <div class="col-lg-4">
-            <input type="text"
+            <input type="email"
                    class="form-control"
                    id="enemyContactEmailInput"
                    name="enemyContactEmail"
-                   value="<?=($this->get('enemy') != '') ? $this->get('enemy')->getEnemyContactEmail() : $this->get('post')['enemyContactEmail'] ?>" />
+                   value="<?=$this->escape(($this->get('enemy') != '') ? $this->get('enemy')->getEnemyContactEmail() : $this->get('post')['enemyContactEmail']) ?>" />
         </div>
     </div>
     <?=($this->get('enemy') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>

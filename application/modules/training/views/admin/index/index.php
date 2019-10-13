@@ -27,7 +27,7 @@
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $training->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $training->getId()]) ?></td>
                             <td><?=date('d.m.Y - H:i', strtotime($training->getDate())) ?> </td>
-                            <td><?=$training->getTitle() ?></a</td>
+                            <td><?=$this->escape($training->getTitle()) ?></a</td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

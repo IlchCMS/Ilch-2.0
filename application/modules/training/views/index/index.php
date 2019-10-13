@@ -34,8 +34,8 @@ $displayedTrainings = 0;
                     ?>
                     <tr>
                         <td><?=date('d.m.Y', strtotime($training->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($training->getDate())) ?> <?=$this->getTrans('clock') ?></td>    
-                        <td><a href="<?=$this->getUrl('training/index/show/id/' . $training->getId()) ?>"><?=$training->getTitle() ?></a></td>
-                        <td><?=$training->getPlace() ?></td>
+                        <td><a href="<?=$this->getUrl('training/index/show/id/' . $training->getId()) ?>"><?=$this->escape($training->getTitle()) ?></a></td>
+                        <td><?=$this->escape($training->getPlace()) ?></td>
                         <td align="center"><?=count($entrantsMapper->getEntrantsById($training->getId())) ?></td>
                     </tr>
                 <?php endforeach; ?>

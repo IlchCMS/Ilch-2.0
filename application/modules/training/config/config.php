@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'training',
-        'version' => '1.5.0',
+        'version' => '1.6.0',
         'icon_small' => 'fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the training list.',
             ],
         ],
-        'ilchCore' => '2.1.16',
+        'ilchCore' => '2.1.26',
         'phpVersion' => '5.6'
     ];
 

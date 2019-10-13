@@ -33,7 +33,7 @@ $teamsCache = [];
                     $date = new Ilch\Date($join->getDateCreated()); ?>
                     <tr>
                         <td><?=$this->escape($join->getName()) ?></td>
-                        <td><?=$this->escape($team->getName()) ?></td>
+                        <td><?=(!empty($team)) ? $this->escape($team->getName()) : $this->getTrans('noTeam') ?></td>
                         <td><?=$date->format('d.m.Y H:i', true) ?></td>
                         <td><?=($join->getDecision() == 1) ? $this->getTrans('accepted') : $this->getTrans('declined')?></td>
                         <td><a href="<?=$this->getUrl(['action' => 'show', 'id' => $join->getId()]) ?>" title="<?=$this->getTrans('show') ?>"><?=$this->getTrans('show') ?></a></td>

@@ -15,7 +15,7 @@ $teamsMapper = $this->get('teamsMapper');
                 <?=$this->getTrans('name') ?>:
             </label>
             <div class="col-lg-2">
-                <?=$join->getName() ?>
+                <?=$this->escape($join->getName()) ?>
             </div>
         </div>
         <div class="form-group">
@@ -23,7 +23,7 @@ $teamsMapper = $this->get('teamsMapper');
                 <?=$this->getTrans('team') ?>:
             </label>
             <div class="col-lg-2">
-                <?=$team->getName() ?>
+                <?=(!empty($team)) ? $this->escape($team->getName()) : $this->getTrans('noTeam') ?>
             </div>
         </div>
         <div class="form-group">
@@ -31,7 +31,7 @@ $teamsMapper = $this->get('teamsMapper');
                 <?=$this->getTrans('email') ?>:
             </label>
             <div class="col-lg-2">
-                <?=$join->getEMail() ?>
+                <?=$this->escape($join->getEMail()) ?>
             </div>
         </div>
         <div class="form-group">
@@ -72,7 +72,7 @@ $teamsMapper = $this->get('teamsMapper');
                     <?=$this->getTrans('place') ?>:
                 </label>
                 <div class="col-lg-2">
-                    <?=$join->getPlace() ?>
+                    <?=$this->escape($join->getPlace()) ?>
                 </div>
             </div>
         <?php endif; ?>

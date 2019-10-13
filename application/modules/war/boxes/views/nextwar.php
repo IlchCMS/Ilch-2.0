@@ -17,9 +17,9 @@
         $warTime = $war->getWarTime();    
         $gameImg = $this->getBoxUrl('static/img/'.$war->getWarGame().'.png');
         if (file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$war->getWarGame().'.png')) {
-            $gameImg = '<img src="'.$this->getBoxUrl('static/img/'.$war->getWarGame().'.png').'" title="'.$this->escape($war->getWarGame()).'" width="16" height="16">';
+            $gameImg = '<img src="'.$this->getBoxUrl('static/img/'.urlencode($war->getWarGame()).'.png').'" title="'.$this->escape($war->getWarGame()).'" width="16" height="16">';
         } else {
-            $gameImg = '<i class="fa fa-question-circle text-muted" title="'.$war->getWarGame().'"></i>';
+            $gameImg = '<i class="fa fa-question-circle text-muted" title="'.$this->escape($war->getWarGame()).'"></i>';
         }
         ?>
         <div class="nextwar-box">
