@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the calendar.',
             ],
         ],
-        'ilchCore' => '2.1.16',
+        'ilchCore' => '2.1.26',
         'phpVersion' => '5.6'
     ];
 

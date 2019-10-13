@@ -46,6 +46,8 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             if ($validation->isValid()) {
+                $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
+                $jobTitle = $this->getLayout()->escape($post['title']);
                 $date = new \Ilch\Date();
                 $job = $jobsMapper->getJobsById($id);
                 $user = $userMapper->getUserById($this->getUser()->getId());
@@ -62,12 +64,12 @@ class Index extends \Ilch\Controller\Frontend
                 }
 
                 $messageReplace = [
-                    '{applyAs}' => $this->getTranslator()->trans('applyAs').' '.$post['title'],
+                    '{applyAs}' => $this->getTranslator()->trans('applyAs').' '.$jobTitle,
                     '{from}' => $this->getTranslator()->trans('mailFrom'),
-                    '{content}' => $post['text'],
-                    '{senderMail}' => $user->getEmail(),
-                    '{senderName}' => $user->getName(),
-                    '{sitetitle}' => $this->getConfig()->get('page_title'),
+                    '{content}' => $this->getLayout()->escape($post['text']),
+                    '{senderMail}' => $this->getLayout()->escape($user->getEmail()),
+                    '{senderName}' => $this->getLayout()->escape($user->getName()),
+                    '{sitetitle}' => $siteTitle,
                     '{date}' => $date->format("l, d. F Y", true),
                     '{writeBackLink}' => $this->getTranslator()->trans('mailWriteBackLink'),
                     '{reply}' => $this->getTranslator()->trans('reply'),
@@ -76,11 +78,11 @@ class Index extends \Ilch\Controller\Frontend
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                 $mail = new \Ilch\Mail();
-                $mail->setFromName($this->getConfig()->get('page_title'))
-                    ->setFromEmail($this->getConfig()->get('standardMail'))
+                $mail->setFromName($siteTitle)
+                    ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
                     ->setToName('')
-                    ->setToEmail($job->getEmail())
-                    ->setSubject($this->getTranslator()->trans('applyAs').' '.$post['title'])
+                    ->setToEmail($this->getLayout()->escape($job->getEmail()))
+                    ->setSubject($this->getTranslator()->trans('applyAs').' '.$jobTitle)
                     ->setMessage($message)
                     ->sent();
 

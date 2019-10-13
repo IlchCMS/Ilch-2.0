@@ -137,7 +137,8 @@ class Newpost extends \Ilch\Controller\Frontend
 
                         $emailsMapper = new EmailsMapper();
 
-                        $sitetitle = $this->getConfig()->get('page_title');
+                        $sitetitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
+                        $subscriberUsername = $this->getLayout()->escape($subscriber->getUsername());
                         $date = new \Ilch\Date();
                         $mailContent = $emailsMapper->getEmail('forum', 'topic_subscription_mail', $this->getTranslator()->getLocale());
                         $layout = '';
@@ -150,21 +151,21 @@ class Newpost extends \Ilch\Controller\Frontend
                             $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/forum/layouts/mail/topicsubscription.php');
                         }
                         $messageReplace = [
-                            '{content}' => $mailContent->getText(),
+                            '{content}' => $this->getLayout()->purify($mailContent->getText()),
                             '{sitetitle}' => $sitetitle,
                             '{date}' => $date->format("l, d. F Y", true),
-                            '{name}' => $subscriber->getUsername(),
+                            '{name}' => $subscriberUsername,
                             '{url}' => $this->getLayout()->getURL(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId, 'page' => $page]),
-                            '{topicTitle}' => $topic->getTopicTitle(),
+                            '{topicTitle}' => $this->getLayout()->escape($topic->getTopicTitle()),
                             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                         ];
                         $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
                         $mail = new \Ilch\Mail();
-                        $mail->setFromName($this->getConfig()->get('page_title'))
-                            ->setFromEmail($this->getConfig()->get('standardMail'))
-                            ->setToName($subscriber->getUsername())
-                            ->setToEmail($subscriber->getEmailAddress())
-                            ->setSubject($mailContent->getDesc())
+                        $mail->setFromName($sitetitle)
+                            ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
+                            ->setToName($subscriberUsername)
+                            ->setToEmail($this->getLayout()->escape($subscriber->getEmailAddress()))
+                            ->setSubject($this->getLayout()->escape($mailContent->getDesc()))
                             ->setMessage($message)
                             ->sent();
 

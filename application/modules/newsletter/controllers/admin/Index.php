@@ -149,9 +149,9 @@ class Index extends \Ilch\Controller\Admin
                 $emails = $newsletterMapper->getMail();
                 foreach ($emails as $email) {
                     $messageReplace = [
-                        '{subject}' => $post['subject'],
-                        '{content}' => $post['text'],
-                        '{sitetitle}' => $this->getConfig()->get('page_title'),
+                        '{subject}' => $this->getLayout()->escape($post['subject']),
+                        '{content}' => $this->getLayout()->purify($post['text']),
+                        '{sitetitle}' => $this->getLayout()->escape($this->getConfig()->get('page_title')),
                         '{date}' => $date->format("l, d. F Y", true),
                         '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
                         '{unreadable}' => $this->getTranslator()->trans('mailUnreadable', $newsletterMapper->getLastId(), $email->getEmail()),
@@ -165,7 +165,7 @@ class Index extends \Ilch\Controller\Admin
                         ->setToName($email->getEmail())
                         ->setToEmail($email->getEmail())
                         ->setSubject($this->getLayout()->escape($post['subject']))
-                        ->setMessage($this->getLayout()->purify($message))
+                        ->setMessage($message)
                         ->sent();
                 }
 

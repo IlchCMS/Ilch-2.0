@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'The basic version of the checkout-module. Here you can manage your clan cash.',
             ],
         ],
-        'ilchCore' => '2.1.16',
+        'ilchCore' => '2.1.26',
         'phpVersion' => '5.6'
     ];
 

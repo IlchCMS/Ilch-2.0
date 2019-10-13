@@ -355,7 +355,8 @@ class Showposts extends \Ilch\Controller\Frontend
 
                             $emailsMapper = new EmailsMapper();
 
-                            $sitetitle = $this->getConfig()->get('page_title');
+                            $sitetitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
+                            $username = $this->getLayout()->escape($user->getName());
                             $date = new \Ilch\Date();
                             $mailContent = $emailsMapper->getEmail('forum', 'post_reportedPost_mail', $this->getTranslator()->getLocale());
                             $layout = '';
@@ -368,20 +369,20 @@ class Showposts extends \Ilch\Controller\Frontend
                                 $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/forum/layouts/mail/reportedPost.php');
                             }
                             $messageReplace = [
-                                '{content}' => $mailContent->getText(),
+                                '{content}' => $this->getLayout()->purify($mailContent->getText()),
                                 '{sitetitle}' => $sitetitle,
                                 '{date}' => $date->format("l, d. F Y", true),
-                                '{name}' => $user->getName(),
+                                '{name}' => $username,
                                 '{url}' => $this->getLayout()->getUrl(['module' => 'forum', 'controller' => 'reports', 'action' => 'index'], 'admin'),
                                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                             ];
                             $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
                             $mail = new \Ilch\Mail();
-                            $mail->setFromName($this->getConfig()->get('page_title'))
-                                ->setFromEmail($this->getConfig()->get('standardMail'))
-                                ->setToName($user->getName())
-                                ->setToEmail($user->getEmail())
-                                ->setSubject($mailContent->getDesc())
+                            $mail->setFromName($sitetitle)
+                                ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
+                                ->setToName($username)
+                                ->setToEmail($this->getLayout()->escape($user->getEmail()))
+                                ->setSubject($this->getLayout()->escape($mailContent->getDesc()))
                                 ->setMessage($message)
                                 ->sent();
 

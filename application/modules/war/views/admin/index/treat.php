@@ -242,7 +242,7 @@
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="warReport"
-                          toolbar="ilch_html"><?=$this->purify($value) ?></textarea>
+                          toolbar="ilch_html"><?=$this->escape($value) ?></textarea>
             </div>
         </div>
         <div class="form-group">

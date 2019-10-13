@@ -191,9 +191,9 @@ class Login extends \Ilch\Controller\Frontend
                     $userMapper->save($user);
                 }
 
-                $name = $user->getName();
-                $sitetitle = $this->getConfig()->get('page_title');
-                $siteurl = '<a href="'.BASE_URL.'"><i>'.$sitetitle.'</i></a>';
+                $name = $this->getLayout()->escape($user->getName());
+                $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
+                $siteurl = '<a href="'.BASE_URL.'"><i>'.$siteTitle.'</i></a>';
                 $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
                 $date = new \Ilch\Date();
 
@@ -219,8 +219,8 @@ class Login extends \Ilch\Controller\Frontend
                 }
 
                 $messageReplace = [
-                    '{content}' => $mailContent->getText(),
-                    '{sitetitle}' => $sitetitle,
+                    '{content}' => $this->getLayout()->purify($mailContent->getText()),
+                    '{sitetitle}' => $siteTitle,
                     '{date}' => $date->format("l, d. F Y", true),
                     '{name}' => $name,
                     '{siteurl}' => $siteurl,
@@ -231,10 +231,10 @@ class Login extends \Ilch\Controller\Frontend
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                 $mail = new \Ilch\Mail();
-                $mail->setFromName($this->getConfig()->get('page_title'))
-                    ->setFromEmail($this->getConfig()->get('standardMail'))
+                $mail->setFromName($siteTitle)
+                    ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
                     ->setToName($name)
-                    ->setToEmail($email)
+                    ->setToEmail($this->getLayout()->escape($email))
                     ->setSubject($this->getTranslator()->trans('automaticEmail'))
                     ->setMessage($message)
                     ->sent();

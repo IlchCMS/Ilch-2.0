@@ -19,7 +19,7 @@
                    class="form-control"
                    id="boxTitle"
                    name="boxTitle"
-                   value="<?php if ($this->get('box') != '') { echo $this->escape($this->get('box')->getTitle()); } else { echo $this->get('post')['boxTitle']; } ?>" />
+                   value="<?=$this->escape(($this->get('box') != '') ? $this->get('box')->getTitle() : $this->get('post')['boxTitle']) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('boxContent') ? 'has-error' : '' ?>">
@@ -30,7 +30,7 @@
             <textarea class="form-control ckeditor"
                       id="boxContent"
                       name="boxContent"
-                      toolbar="ilch_html"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } else { echo $this->get('post')['boxContent']; } ?></textarea>
+                      toolbar="ilch_html"><?=$this->escape(($this->get('box') != '') ? $this->get('box')->getContent() : $this->get('post')['boxContent']) ?></textarea>
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>

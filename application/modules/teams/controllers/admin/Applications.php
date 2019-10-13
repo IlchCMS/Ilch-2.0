@@ -152,8 +152,7 @@ class Applications extends \Ilch\Controller\Admin
                 $newUser = true;
             }
 
-            $teamname = $team->getName();
-            $sitetitle = $this->getConfig()->get('page_title');
+            $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
             $date = new \Ilch\Date();
 
             $layout = '';
@@ -171,10 +170,10 @@ class Applications extends \Ilch\Controller\Admin
                 '{reply}' => $this->getTranslator()->trans('reply'),
                 '{subject}' => $this->getTranslator()->trans('subjectAccept'),
                 '{content}' => $this->getLayout()->purify($mailContent->getText()),
-                '{sitetitle}' => $this->getLayout()->escape($sitetitle),
+                '{sitetitle}' => $siteTitle,
                 '{date}' => $date->format("l, d. F Y", true),
                 '{name}' => $this->getLayout()->escape($name),
-                '{teamname}' => $this->getLayout()->escape($teamname),
+                '{teamname}' => $this->getLayout()->escape($team->getName()),
                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
             ];
 
@@ -187,10 +186,10 @@ class Applications extends \Ilch\Controller\Admin
             $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
             $mail = new \Ilch\Mail();
-            $mail->setFromName($this->getConfig()->get('page_title'))
-                ->setFromEmail($this->getConfig()->get('standardMail'))
-                ->setToName($name)
-                ->setToEmail($email)
+            $mail->setFromName($siteTitle)
+                ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
+                ->setToName($this->getLayout()->escape($name))
+                ->setToEmail($this->getLayout()->escape($email))
                 ->setSubject($this->getTranslator()->trans('subjectAccept'))
                 ->setMessage($message)
                 ->sent();
@@ -213,10 +212,8 @@ class Applications extends \Ilch\Controller\Admin
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
             $team = $teamsMapper->getTeamById($join->getTeamId());
-            $name = $join->getName();
-            $email = $join->getEmail();
-            $teamname = $team->getName();
-            $sitetitle = $this->getConfig()->get('page_title');
+            $name = $this->getLayout()->escape($join->getName());
+            $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
             $date = new \Ilch\Date();
 
             if ($join->getUserId()) {
@@ -237,20 +234,20 @@ class Applications extends \Ilch\Controller\Admin
                 $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/reject.php');
             }
             $messageReplace = [
-                '{content}' => $mailContent->getText(),
-                '{sitetitle}' => $sitetitle,
+                '{content}' => $this->getLayout()->purify($mailContent->getText()),
+                '{sitetitle}' => $siteTitle,
                 '{date}' => $date->format("l, d. F Y", true),
                 '{name}' => $name,
-                '{teamname}' => $teamname,
+                '{teamname}' => $this->getLayout()->escape($team->getName()),
                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
             ];
             $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
             $mail = new \Ilch\Mail();
-            $mail->setFromName($this->getConfig()->get('page_title'))
-                ->setFromEmail($this->getConfig()->get('standardMail'))
+            $mail->setFromName($siteTitle)
+                ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
                 ->setToName($name)
-                ->setToEmail($email)
+                ->setToEmail($this->getLayout()->escape($join->getEmail()))
                 ->setSubject($this->getTranslator()->trans('subjectReject'))
                 ->setMessage($message)
                 ->sent();

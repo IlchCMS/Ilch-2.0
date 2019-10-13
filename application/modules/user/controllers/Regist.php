@@ -113,10 +113,11 @@ class Regist extends \Ilch\Controller\Frontend
                 }
 
                 if ($this->getConfig()->get('regist_confirm') == 1) {
-                    $sitetitle = $this->getConfig()->get('page_title');
+                    $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
                     $confirmCode = '<a href="'.BASE_URL.'/index.php/user/regist/confirm/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
                     $date = new \Ilch\Date();
                     $mailContent = $emailsMapper->getEmail('user', 'regist_confirm_mail', $this->getTranslator()->getLocale());
+                    $name = $this->getLayout()->escape($this->getRequest()->getPost('name'));
 
                     $layout = '';
                     if (isset($_SESSION['layout'])) {
@@ -129,20 +130,20 @@ class Regist extends \Ilch\Controller\Frontend
                         $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/registconfirm.php');
                     }
                     $messageReplace = [
-                        '{content}' => $mailContent->getText(),
-                        '{sitetitle}' => $sitetitle,
+                        '{content}' => $this->getLayout()->purify($mailContent->getText()),
+                        '{sitetitle}' => $siteTitle,
                         '{date}' => $date->format("l, d. F Y", true),
-                        '{name}' => $this->getRequest()->getPost('name'),
+                        '{name}' => $name,
                         '{confirm}' => $confirmCode,
                         '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                     ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                     $mail = new \Ilch\Mail();
-                    $mail->setFromName($this->getConfig()->get('page_title'))
-                        ->setFromEmail($this->getConfig()->get('standardMail'))
-                        ->setToName($this->getRequest()->getPost('name'))
-                        ->setToEmail($this->getRequest()->getPost('email'))
+                    $mail->setFromName($siteTitle)
+                        ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
+                        ->setToName($name)
+                        ->setToEmail($this->getLayout()->escape($this->getRequest()->getPost('email')))
                         ->setSubject($this->getTranslator()->trans('automaticEmail'))
                         ->setMessage($message)
                         ->sent();
