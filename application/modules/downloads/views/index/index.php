@@ -64,7 +64,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
     
     if ($item->getType() === 0) {
         echo '<div class="page-header">
-              <h4>'.$obj->getTrans('cat').': '.$item->getTitle().'  <small>'.$item->getDesc().'</small>
+              <h4>'.$obj->getTrans('cat').': '.$obj->escape($item->getTitle()).'  <small>'.$obj->escape($item->getDesc()).'</small>
               </h4><hr>';
     }
     if ($item->getType() != 0) {
@@ -84,14 +84,14 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                         <div class="col-md-8">
                             <div class="lib-row lib-header">
                                 <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
-                                    '.$item->getTitle().'
+                                    '.$obj->escape($item->getTitle()).'
                                 </a>
                                 <p class="text-left">'.$obj->getTrans('files').': '. count($fileCount).'</p>
                                 <div class="lib-header-seperator"></div>
                                 
                             </div>
                             <div class="lib-row lib-desc">
-                                '.$item->getDesc().'
+                                '.$obj->escape($item->getDesc()).'
                             </div>
                         </div>
                     </div>

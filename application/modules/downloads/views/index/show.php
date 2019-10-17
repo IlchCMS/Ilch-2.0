@@ -51,11 +51,11 @@
             <div class="panel panel-default">
                 <div class="panel-image thumbnail">
                     <a href="<?=$this->getUrl(['action' => 'showfile', 'id' => $file->getId()]) ?>">
-                        <img src="<?=$image ?>" class="panel-image-preview" alt="<?=$file->getFileTitle() ?>" />
+                        <img src="<?=$image ?>" class="panel-image-preview" alt="<?=$this->escape($file->getFileTitle()) ?>" />
                     </a>
                 </div>
                 <div class="panel-footer text-center">
-                    <i class="fa fa-pencil"></i> <?=$file->getFileTitle() ?><br>
+                    <i class="fa fa-pencil"></i> <?=$this->escape($file->getFileTitle()) ?><br>
                     <i class="fa fa-comment-o"></i> <?=$commentsCount ?>
                     <i class="fa fa-eye"> <?=$file->getVisits() ?></i>
                 </div>

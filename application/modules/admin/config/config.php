@@ -566,6 +566,9 @@ class Config extends \Ilch\Config\Install
                 }
                 break;
             case "2.1.25":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('media_extensionBlacklist', 'html htm xht xhtml php php2 php3 php4 php5 phtml pwml inc asp aspx ascx jsp cfm cfc pl bat exe com dll vbs js reg cgi htaccess asis sh shtml shtm phtm');
+
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;

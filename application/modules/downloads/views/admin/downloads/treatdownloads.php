@@ -48,8 +48,8 @@ tbody tr td {
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $file->getId(), 'downloads' => $this->getRequest()->getParam('id')]) ?></td>
                             <td><img class="file thumbnail img-responsive" src="<?=$image ?>"/>
                             </td>
-                            <td><?=$file->getFileTitle() ?></td>
-                            <td><?=$file->getFileDesc() ?></td>
+                            <td><?=$this->escape($file->getFileTitle()) ?></td>
+                            <td><?=$this->escape($file->getFileDesc()) ?></td>
                         </tr>
                      <?php endforeach; ?>
                 </tbody>

@@ -51,13 +51,31 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost('save')) {
-            $this->getConfig()->set('media_ext_img', strtolower($this->getRequest()->getPost('allowedImages')));
-            $this->getConfig()->set('media_ext_file', strtolower($this->getRequest()->getPost('allowedFiles')));
-            $this->getConfig()->set('media_ext_video', strtolower($this->getRequest()->getPost('allowedVideos')));
+            // Don't allow adding forbidden file extensions.
+            $forbiddenExtensionFound = false;
+            $extensionLists = ['allowedImages', 'allowedFiles', 'allowedVideos'];
+            $extensionBlacklist = explode(' ', $this->getConfig()->get('media_extensionBlacklist'));
+
+            foreach ($extensionLists as $targetList) {
+                $list = explode(' ', strtolower($this->getRequest()->getPost($targetList)));
+                if (is_in_array($extensionBlacklist, $list)) {
+                    $forbiddenExtensionFound = true;
+                    break;
+                }
+            }
+
+            if (!$forbiddenExtensionFound) {
+                $this->getConfig()->set('media_ext_img', strtolower($this->getRequest()->getPost('allowedImages')));
+                $this->getConfig()->set('media_ext_file', strtolower($this->getRequest()->getPost('allowedFiles')));
+                $this->getConfig()->set('media_ext_video', strtolower($this->getRequest()->getPost('allowedVideos')));
+
+                $this->addMessage('success');
+            } else {
+                $this->addMessage('forbiddenExtension', 'danger');
+            }
+
             $this->getConfig()->set('media_mediaPerPage', $this->getRequest()->getPost('mediaPerPage'));
             $this->getConfig()->set('media_directoriesAsCategories', $this->getRequest()->getPost('directoriesAsCategories'));
-
-            $this->addMessage('success');
         }
 
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));

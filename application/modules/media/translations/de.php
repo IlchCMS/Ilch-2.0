@@ -54,6 +54,7 @@ return [
     'noCats' => 'Keine Kategorien vorhanden',
     'treatCat' => 'Kategorie bearbeiten',
 
+    'forbiddenExtension' => 'Sie haben versucht eine unerlaubte Dateiendung einzutragen.',
     'mediaPerPage' => 'Dateien pro Seite',
 
     'assignCategory' => 'Kategorie zuweisen',

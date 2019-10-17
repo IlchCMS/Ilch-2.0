@@ -164,15 +164,15 @@ if (!empty($file)) {
     <div class="row">
         <div class="col-md-6">
             <a href="<?=$this->getUrl().'/'.$file->getFileUrl() ?>">
-                <img class="thumbnail" src="<?=$image ?>" alt="<?=$file->getFileTitle() ?>"/>
+                <img class="thumbnail" src="<?=$image ?>" alt="<?=$this->escape($file->getFileTitle()) ?>"/>
             </a>
         </div>
         <div class="col-md-6">
-            <h3><?=$file->getFileTitle() ?></h3>
-            <p><?=$file->getFileDesc() ?></p>
+            <h3><?=$this->escape($file->getFileTitle()) ?></h3>
+            <p><?=$this->escape($file->getFileDesc()) ?></p>
             <?php $extension = pathinfo($file->getFileUrl(), PATHINFO_EXTENSION);
             $extension = (empty($extension)) ? '': '.'.$extension; ?>
-            <a href="<?=$this->getUrl().'/'.$file->getFileUrl() ?>" class="btn btn-primary pull-right" download="<?=$file->getFileTitle().$extension ?>"><?=$this->getTrans('download') ?></a>
+            <a href="<?=$this->getUrl().'/'.$file->getFileUrl() ?>" class="btn btn-primary pull-right" download="<?=$this->escape($file->getFileTitle()).$extension ?>"><?=$this->getTrans('download') ?></a>
         </div>
     </div>
 </div>

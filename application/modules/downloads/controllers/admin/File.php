@@ -59,7 +59,24 @@ class File extends \Ilch\Controller\Admin
         $id = (int)$this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost()) {
-            $validation = Validation::create($this->getRequest()->getPost(), ['fileTitle' => 'required']);
+            $post = [
+                'fileTitle' => '',
+                'fileImage' => '',
+                'fileDesc' => ''
+            ];
+
+            $fileImage = '';
+            if (!empty($this->getRequest()->getPost('fileImage'))) {
+                $fileImage = BASE_URL.'/'.$this->getRequest()->getPost('fileImage');
+            }
+
+            $post = [
+                'fileTitle' => $this->getRequest()->getPost('fileTitle'),
+                'fileImage' => $fileImage,
+                'fileDesc' => $this->getRequest()->getPost('fileDesc')
+            ];
+
+            $validation = Validation::create($post, ['fileTitle' => 'required', 'fileImage' => 'url']);
 
             if ($validation->isValid()) {
                 $fileImage = $this->getRequest()->getPost('fileImage');

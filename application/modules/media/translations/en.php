@@ -54,6 +54,7 @@ return [
     'noCats' => 'No categories available',
     'treatCat' => 'Treat category',
 
+    'forbiddenExtension' => 'You tried to add an forbidden file extension.',
     'mediaPerPage' => 'Media per page',
 
     'assignCategory' => 'Assign category',

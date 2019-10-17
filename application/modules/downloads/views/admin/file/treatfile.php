@@ -30,7 +30,7 @@ if ($file->getFileImage() != '') {
                                    class="form-control"
                                    id="fileTitleInput"
                                    name="fileTitle"
-                                   value="<?=$file->getFileTitle() ?>" />
+                                   value="<?=$this->escape($file->getFileTitle()) ?>" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -44,7 +44,7 @@ if ($file->getFileImage() != '') {
                                        id="selectedImage"
                                        name="fileImage"
                                        placeholder="<?=$this->getTrans('fileImageInfo'); ?>"
-                                       value="<?=$file->getFileImage() ?>" />
+                                       value="<?=$this->escape($file->getFileImage()) ?>" />
                                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
                             </div>
                         </div>
@@ -57,7 +57,7 @@ if ($file->getFileImage() != '') {
                             <textarea class="form-control"
                                       id="fileDescInput"
                                       name="fileDesc"
-                                      rows="8"><?=$file->getFileDesc() ?></textarea>
+                                      rows="8"><?=$this->escape($file->getFileDesc()) ?></textarea>
                         </div>
                     </div>
                 </div>

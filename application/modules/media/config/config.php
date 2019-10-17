@@ -21,9 +21,7 @@ class Config extends \Ilch\Config\Install
                 'name' => 'Media',
                 'description' => 'Here you can manage your media',
             ],
-        ],
-        'ilchCore' => '2.0.0',
-        'phpVersion' => '5.6'
+        ]
     ];
 
     public function install()
@@ -34,7 +32,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('media_uploadpath', 'application/modules/media/static/upload/');
         $databaseConfig->set('media_ext_img', 'jpg jpeg png gif bmp tiff svg ico');
         $databaseConfig->set('media_ext_video', 'mp3 m4a ac3 aiff mid ogg wav mov mpeg mp4 avi mpg wma flv webm');
-        $databaseConfig->set('media_ext_file', 'zip rar gz tar iso dmg doc docx rtf pdf xls xlsx txt csv html xhtml psd sql log fla xml ade adp mdb accdb ppt pptx odt ots ott odb odg otp otg odf ods odp css ai');
+        $databaseConfig->set('media_ext_file', 'zip rar gz tar iso dmg doc docx rtf pdf xls xlsx txt csv psd sql log fla xml ade adp mdb accdb ppt pptx odt ots ott odb odg otp otg odf ods odp css ai');
+        $databaseConfig->set('media_extensionBlacklist', 'html htm xht xhtml php php2 php3 php4 php5 phtml pwml inc asp aspx ascx jsp cfm cfc pl bat exe com dll vbs js reg cgi htaccess asis sh shtml shtm phtm');
         $databaseConfig->set('media_directoriesAsCategories', '0');
     }
 
