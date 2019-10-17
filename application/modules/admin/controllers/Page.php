@@ -21,13 +21,13 @@ class Page extends \Ilch\Controller\Frontend
             $this->getView()->set('content', 'page not found');
         } else {
             $this->getLayout()->getTitle()
-                    ->add($page->getTitle());
-            $this->getLayout()->set('metaDescription', $page->getDescription());
-            $this->getLayout()->set('metaKeywords', $page->getKeywords());
+                    ->add($this->getLayout()->escape($page->getTitle()));
+            $this->getLayout()->set('metaDescription', $this->getLayout()->escape($page->getDescription()));
+            $this->getLayout()->set('metaKeywords', $this->getLayout()->escape($page->getKeywords()));
             $this->getLayout()->getHmenu()
-                    ->add($page->getTitle(), $page->getPerma());
+                    ->add($this->getLayout()->escape($page->getTitle()), $this->getLayout()->escape($page->getPerma()));
 
-            $this->getView()->set('content', $page->getContent());
+            $this->getView()->set('content', $this->getLayout()->purify($page->getContent()));
         }
     }
 }

@@ -145,11 +145,12 @@ class Model
                     }
                     if ($item->getBoxId()) {
                         $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale);
+                        // purify content of user created box
+                        $contentHtml = $this->layout->purify($box->getContent());
                     } else {
                         $box = $this->loadBoxFromModule($item);
+                        $contentHtml = $box->getContent();
                     }
-
-                    $contentHtml = $box->getContent();
                 } else { //is Menu
                     $subItems = $this->menuMapper->getMenuItems($item->getMenuId());
 
