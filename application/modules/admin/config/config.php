@@ -566,8 +566,19 @@ class Config extends \Ilch\Config\Install
                 }
                 break;
             case "2.1.25":
+                // Add extension blacklist and the "disable purifier" setting to the database.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('media_extensionBlacklist', 'html htm xht xhtml php php2 php3 php4 php5 phtml pwml inc asp aspx ascx jsp cfm cfc pl bat exe com dll vbs js reg cgi htaccess asis sh shtml shtm phtm');
+                $databaseConfig->set('disable_purifier', '0');
+
+                // Remove forbidden file extensions.
+                $targets = ['media_ext_file', 'media_ext_img', 'media_ext_video'];
+                $blacklist = explode(' ', $databaseConfig->get('media_extensionBlacklist'));
+                foreach ($targets as $target) {
+                    $array = explode(' ', $databaseConfig->get($target));
+                    $array = array_diff($array, $blacklist);
+                    $databaseConfig->set($target, implode(' ', $array));
+                }
 
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
