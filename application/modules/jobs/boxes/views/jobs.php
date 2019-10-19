@@ -3,7 +3,7 @@
         <?php foreach ($this->get('jobs') as $job): ?>
             <li>
                 <a href="<?=$this->getUrl('jobs/index/show/id/' . $job->getId()) ?>">
-                    <?=$job->getTitle() ?>
+                    <?=$this->escape($job->getTitle()) ?>
                 </a>
             </li>
         <?php endforeach; ?>
