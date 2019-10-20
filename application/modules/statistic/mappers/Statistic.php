@@ -581,7 +581,8 @@ class Statistic extends \Ilch\Mapper
                 '=Mac OS X 10.11|Mac OS X 10_11=' => '10.11',
                 '=Mac OS X 10.12|Mac OS X 10_12=' => '10.12',
                 '=Mac OS X 10.13|Mac OS X 10_13=' => '10.13',
-                '=Mac OS X 10.14|Mac OS X 10_14=' => '10.14'
+                '=Mac OS X 10.14|Mac OS X 10_14=' => '10.14',
+                '=Mac OS X 10.15|Mac OS X 10_15=' => '10.15'
             ];
         }
 
