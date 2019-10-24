@@ -22,7 +22,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                 <?php if (is_file(ROOT_PATH.'/updates/Master-'.$newVersion.'.zip')): ?>
                     <?php if (!$doSave): ?>
                         <p><?=$this->getTrans('isSave') ?>
-                            <a class="btn btn-primary"
+                            <a class="btn btn-primary showOverlay"
                                href="<?=$this->getUrl(['action' => 'clearCache']) ?>"><?=$this->getTrans('clearCache') ?>
                             </a>
                         </p>
@@ -30,7 +30,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                         <p><?=$this->getTrans('updateSaveSuccess') ?></p>
                     <?php endif; ?>
                     <p><?=$this->getTrans('updateReady') ?>
-                        <a class="btn btn-primary"
+                        <a class="btn btn-primary showOverlay"
                            href="<?=$this->getUrl(['action' => 'update', 'doupdate' => 'true']) ?>"><?=$this->getTrans('installNow') ?>
                         </a>
                     </p>
@@ -42,7 +42,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                         <p><?=$this->getTrans('verificationFailed') ?>
                     <?php endif; ?>
                     <p><?=$this->getTrans('doSave') ?>
-                        <a class="btn btn-primary"
+                        <a class="btn btn-primary showOverlay"
                            href="<?=$this->getUrl(['action' => 'update', 'dosave' => 'true']) ?>"><?=$this->getTrans('doSaveNow') ?>
                         </a>
                     </p>
@@ -71,9 +71,16 @@ $updateSuccessfull = $this->get('updateSuccessfull');
 <?php else: ?>
     <p><?=$this->getTrans('noUpdateFound') ?></p>
 <?php endif; ?>
-
+<script src="<?=$this->getModuleUrl('static/jquery-loading-overlay/js/loadingoverlay.min.js') ?>"></script>
 <script>
 $(document).ready(function() {
+    $(".showOverlay").on('click', function(event){
+        $.LoadingOverlay("show");
+        setTimeout(function(){
+            $.LoadingOverlay("hide");
+        }, 10000);
+    });
+    
     let objDiv = document.getElementById("list-files");
 
     if (objDiv !== null) {

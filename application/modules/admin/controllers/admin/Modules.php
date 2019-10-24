@@ -63,6 +63,9 @@ class Modules extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $gotokey = true;
+        if ($this->getRequest()->getParam('anchor') === "false") $gotokey = false;
+
         $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
@@ -88,11 +91,15 @@ class Modules extends \Ilch\Controller\Admin
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('dependencies', $dependencies)
             ->set('configurations', $configurations)
-            ->set('coreVersion', $this->getConfig()->get('version'));
+            ->set('coreVersion', $this->getConfig()->get('version'))
+            ->set('gotokey', $gotokey);
     }
 
     public function notinstalledAction()
     {
+        $gotokey = true;
+        if ($this->getRequest()->getParam('anchor') === "false") $gotokey = false;
+
         $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
@@ -121,11 +128,15 @@ class Modules extends \Ilch\Controller\Admin
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('modulesNotInstalled', $modulesNotInstalled)
             ->set('dependencies', $dependencies)
-            ->set('coreVersion', $this->getConfig()->get('version'));
+            ->set('coreVersion', $this->getConfig()->get('version'))
+            ->set('gotokey', $gotokey);
     }
 
     public function searchAction()
     {
+        $gotokey = true;
+        if ($this->getRequest()->getParam('anchor') === "false") $gotokey = false;
+
         $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
@@ -160,6 +171,12 @@ class Modules extends \Ilch\Controller\Admin
                 $this->addMessage('downSuccess');
             }
         } finally {
+            if ($this->getRequest()->isSecure()) {
+                if ($this->getRequest()->getPost('gotokey'))
+                    $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_'.$this->getRequest()->getParam('key')]);
+                else
+                    $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
+            }
             $dependencies = [];
             $modulesDir = [];
             foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
@@ -177,12 +194,16 @@ class Modules extends \Ilch\Controller\Admin
                 ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
                 ->set('modules', $modulesDir)
                 ->set('dependencies', $dependencies)
-                ->set('coreVersion', $this->getConfig()->get('version'));
+                ->set('coreVersion', $this->getConfig()->get('version'))
+                ->set('gotokey', $gotokey);
         }
     }
 
     public function updatesAction()
     {
+        $gotokey = true;
+        if ($this->getRequest()->getParam('anchor') === "false") $gotokey = false;
+
         $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
@@ -209,7 +230,8 @@ class Modules extends \Ilch\Controller\Admin
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('dependencies', $dependencies)
             ->set('configurations', $configurations)
-            ->set('coreVersion', $this->getConfig()->get('version'));
+            ->set('coreVersion', $this->getConfig()->get('version'))
+            ->set('gotokey', $gotokey);
     }
 
     public function updateAction()
@@ -248,7 +270,10 @@ class Modules extends \Ilch\Controller\Admin
                 $moduleMapper->updateVersion($key, $config->config['version']);
                 $this->addMessage('updateSuccess');
             } finally {
-                $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_'.$key]);
+                if ($this->getRequest()->getPost('gotokey'))
+                    $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_'.$key]);
+                else
+                    $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
             }
         }
     }
@@ -266,8 +291,13 @@ class Modules extends \Ilch\Controller\Admin
             $config->getUpdate($moduleModel->getVersion());
             $moduleMapper->updateVersion($key, $config->config['version']);
             $this->addMessage('updateSuccess');
+        } catch (\Exception $e) {
+            $this->addMessage('moduleUpdateFailed');
         } finally {
-            $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_'.$key]);
+            if ($this->getRequest()->getPost('gotokey'))
+                $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_'.$key]);
+            else
+                $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
         }
     }
 
@@ -347,7 +377,13 @@ class Modules extends \Ilch\Controller\Admin
             $this->addMessage('installSuccess');
         }
 
-        $this->redirect(['action' => 'notinstalled']);
+        if ($this->getRequest()->getPost('gotokey'))
+            $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_'.$this->getRequest()->getParam('key')]);
+        else
+            if ($this->getRequest()->getParam('from') === 'notinstalled')
+                $this->redirect(['action' => $this->getRequest()->getParam('from')]);
+            else
+                $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
     }
 
     public function uninstallAction()
