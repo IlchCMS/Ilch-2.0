@@ -148,6 +148,7 @@ return [
     'moduleDownload' => 'Modul herunterladen',
     'moduleUpdate' => 'Modul aktualisieren',
     'localModuleUpdate' => 'Modul aus lokaler Quelle aktualisieren',
+    'gotokey' => 'Nach dem Update zum Eintrag springen',
     'rating' => 'Bewertung',
     'hits' => 'Aufrufe',
     'download' => 'Herunterladen',
