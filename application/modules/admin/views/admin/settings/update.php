@@ -71,7 +71,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
 <?php else: ?>
     <p><?=$this->getTrans('noUpdateFound') ?></p>
 <?php endif; ?>
-<script src="<?=$this->getModuleUrl('static/jquery-loading-overlay/js/loadingoverlay.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
 <script>
 $(document).ready(function() {
     $(".showOverlay").on('click', function(event){

@@ -180,7 +180,7 @@
 <?php else: ?>
     <?=$this->getTrans('noNotInstalledModules') ?>
 <?php endif; ?>
-<script src="<?=$this->getModuleUrl('static/jquery-loading-overlay/js/loadingoverlay.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
 <script>
 $(document).ready(function() {
     $(".showOverlay").on('click', function(event){

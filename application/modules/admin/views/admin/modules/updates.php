@@ -239,7 +239,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
         </tbody>
     </table>
 </div>
-<script src="<?=$this->getModuleUrl('static/jquery-loading-overlay/js/loadingoverlay.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
 <script>
 $(document).ready(function() {
     function gotokeyAll() {
