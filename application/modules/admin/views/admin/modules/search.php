@@ -52,6 +52,9 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
 
 <h1><?=$this->getTrans('search') ?></h1>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
+<div class="checkbox">
+    <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')?"checked":"" ?>/><?=$this->getTrans('gotokey') ?></label>
+</div>
 <?php
 if (empty($modulesOnUpdateServer)) {
     echo $this->getTrans('noModulesAvailable');
@@ -91,7 +94,7 @@ if (empty($modulesOnUpdateServer)) {
                     }
                 }
                 ?>
-                <tr>
+                <tr id="Module_<?=$moduleOnUpdateServer->key ?>">
                     <td>
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>"><?=$this->escape($moduleOnUpdateServer->name) ?></a>
                         <br />
@@ -143,17 +146,19 @@ if (empty($modulesOnUpdateServer)) {
                         <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version, 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
+                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
                                 <button type="submit"
-                                        class="btn btn-default"
+                                        class="btn btn-default showOverlay"
                                         title="<?=$this->getTrans('moduleUpdate') ?>">
                                     <i class="fa fa-refresh"></i>
                                 </button>
                             </form>
                         <?php else: ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version]) ?>">
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version, 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
+                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
                                 <button type="submit"
-                                        class="btn btn-default"
+                                        class="btn btn-default showOverlay"
                                         title="<?=$this->getTrans('moduleDownload') ?>">
                                     <i class="fa fa-download"></i>
                                 </button>
@@ -183,10 +188,26 @@ if (empty($modulesOnUpdateServer)) {
         </tbody>
     </table>
 </div>
-
+<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
 <script>
 // search
 $(document).ready(function() {
+    function gotokeyAll() {
+       $("[name='gotokey']").each(function(){
+            if ($("[name='setgotokey']").prop('checked'))
+                $(this).prop('value',"1");
+            else
+                $(this).prop('value',"0");
+       });
+    }
+
+    $(".showOverlay").on('click', function(event){
+        $.LoadingOverlay("show");
+        setTimeout(function(){
+            $.LoadingOverlay("hide");
+        }, 10000);
+    });
+
     // something is entered in search form
     $('#user-search').keyup( function() {
         var that = this,

@@ -148,6 +148,7 @@ return [
     'moduleDownload' => 'Download module',
     'moduleUpdate' => 'Update module',
     'localModuleUpdate' => 'Update module from local source',
+    'gotokey' => 'After update jump to the entry',
     'hits' => 'Hits',
     'download' => 'Download',
     'downloads' => 'Downloads',

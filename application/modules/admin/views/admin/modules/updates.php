@@ -50,6 +50,9 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 
 <h1><?=$this->getTrans('updatesAvailable') ?></h1>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
+<div class="checkbox">
+  <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')?"checked":"" ?>/><?=$this->getTrans('gotokey') ?></label>
+</div>
 <div id="modules" class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
@@ -82,15 +85,13 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                     }
                 }
 
-                // Skip module if no update is available
-                if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))) {
-                    continue;
-                } else {
+                if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()):
+                    if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))): ?>
+                    <tr id="Module_<?=$module->getKey() ?>">
+                    <?php else: 
                     $found = true;
-                }
-
-                if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
-                    <tr>
+                    ?>
+                    <tr id="Module_<?=$module->getKey() ?>">
                         <td>
                             <?=$content['name'] ?>
                             <br />
@@ -159,10 +160,11 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                         <i class="<?=$icon ?>"></i>
                                     </button>
                                 <?php elseif ($source == 'local' && !empty($moduleUpdateInformation)): ?>
-                                    <form method="POST" action="<?=$this->getUrl(['action' => 'localUpdate', 'key' => $moduleUpdateInformation->key, 'from' => 'index']) ?>">
+                                    <form method="POST" action="<?=$this->getUrl(['action' => 'localUpdate', 'key' => $moduleUpdateInformation->key, 'from' => 'updates']) ?>">
                                         <?=$this->getTokenField() ?>
+                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
                                         <button type="submit"
-                                                class="btn btn-default"
+                                                class="btn btn-default showOverlay"
                                                 title="<?=$this->getTrans('localModuleUpdate') ?>">
                                             <i class="<?=$icon ?>"></i>
                                         </button>
@@ -170,8 +172,9 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                 <?php elseif ($source == 'updateserver' && version_compare($versionsOfModules[$moduleUpdateInformation->key]['version'], $moduleUpdateInformation->version, '<')): ?>
                                     <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleUpdateInformation->key, 'version' => $moduleUpdateInformation->version, 'from' => 'updates']) ?>">
                                         <?=$this->getTokenField() ?>
+                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
                                         <button type="submit"
-                                                class="btn btn-default"
+                                                class="btn btn-default showOverlay"
                                                 title="<?=$this->getTrans('moduleUpdate') ?>">
                                             <i class="<?=$icon ?>"></i>
                                         </button>
@@ -196,6 +199,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <?=$content['description'] ?>
                             <?=(!empty($moduleUpdateInformation->official) && $moduleUpdateInformation->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
                         </td>
+                    <?php endif; ?>
                     </tr>
 
                     <?php
@@ -235,3 +239,23 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
         </tbody>
     </table>
 </div>
+<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
+<script>
+$(document).ready(function() {
+    function gotokeyAll() {
+       $("[name='gotokey']").each(function(){
+            if ($("[name='setgotokey']").prop('checked'))
+                $(this).prop('value',"1");
+            else
+                $(this).prop('value',"0");
+       });
+    }
+
+    $(".showOverlay").on('click', function(event){
+        $.LoadingOverlay("show");
+        setTimeout(function(){
+            $.LoadingOverlay("hide");
+        }, 10000);
+    });
+});
+</script>

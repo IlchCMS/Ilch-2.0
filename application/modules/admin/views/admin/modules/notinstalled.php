@@ -1,3 +1,4 @@
+<link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('modulesNotInstalled') ?></h1>
 <?php if (!empty($this->get('modulesNotInstalled'))): ?>
     <?php
@@ -75,7 +76,7 @@
                         $ilchCore = '<font color="#a94442">'.$module->getIlchCore().'</font>';
                     }
                     ?>
-                    <tr>
+                    <tr id="Module_<?=$module->getKey() ?>">
                         <td>
                             <?=$content['name'] ?>
                             <br />
@@ -111,9 +112,14 @@
                                     <i class="fa fa-save"></i>
                                 </button>
                             <?php else: ?>
-                                <a href="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('installModule') ?>">
-                                    <i class="fa fa-save"></i>
-                                </a>
+                                <form method="POST" action="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey(), 'from' => 'notinstalled']) ?>">
+                                    <?=$this->getTokenField() ?>
+                                    <button type="submit"
+                                            class="btn btn-default showOverlay"
+                                            title="<?=$this->getTrans('installModule') ?>">
+                                        <i class="fa fa-save"></i>
+                                    </button>
+                                </form>
                             <?php endif; ?>
                             <?php if ($module->getKey() == $moduleOnUpdateServer->key): ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
@@ -174,3 +180,14 @@
 <?php else: ?>
     <?=$this->getTrans('noNotInstalledModules') ?>
 <?php endif; ?>
+<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
+<script>
+$(document).ready(function() {
+    $(".showOverlay").on('click', function(event){
+        $.LoadingOverlay("show");
+        setTimeout(function(){
+            $.LoadingOverlay("hide");
+        }, 10000);
+    });
+});
+</script>
