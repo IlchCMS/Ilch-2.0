@@ -221,7 +221,7 @@
         <?php endif; ?>
     </div>
 
-    <?php if (empty($preview)): ?>
+    <?php if (empty($preview) && !$article->getCommentsDisabled()): ?>
         <?php $nowDate = new \Ilch\Date(); ?>
         <div class="row">
             <div class="col-lg-12">

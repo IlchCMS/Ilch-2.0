@@ -33,7 +33,7 @@ if ($this->get('article') != '') {
         </div>
     </div>
     <div class="form-group">
-        <label for="title" class="col-lg-2 control-label">
+        <label for="date_created" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
         <div class="col-lg-4 input-group ilch-date date form_datetime">
@@ -129,8 +129,21 @@ if ($this->get('article') != '') {
         <div class="col-lg-4">
             <input type="checkbox"
                    name="topArticle"
+                   id="topArticle"
                    value="1"
                    <?=($this->get('article') && $this->get('article')->getTopArticle()) ? 'checked="checked"' : '' ?> />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="commentsDisabled" class="col-lg-2 control-label">
+            <?=$this->getTrans('commentsDisabled') ?>:
+        </label>
+        <div class="col-lg-4">
+            <input type="checkbox"
+                   name="commentsDisabled"
+                   id="commentsDisabled"
+                   value="1"
+                <?=($this->get('article') && $this->get('article')->getCommentsDisabled() || !$this->get('article') && $this->get('disableComments')) ? 'checked="checked"' : '' ?> />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
@@ -156,6 +169,7 @@ if ($this->get('article') != '') {
             <input type="text"
                    class="form-control"
                    name="imageSource"
+                   id="imageSource"
                    value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getImageSource()); } ?>" />
         </div>
     </div>

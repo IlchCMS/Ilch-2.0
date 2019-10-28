@@ -142,6 +142,7 @@ class Index extends \Ilch\Controller\Admin
                     ->setContent($this->getRequest()->getPost('content'))
                     ->setPerma($this->getRequest()->getPost('permaLink'))
                     ->setTopArticle($this->getRequest()->getPost('topArticle'))
+                    ->setCommentsDisabled($this->getRequest()->getPost('commentsDisabled'))
                     ->setReadAccess($groups)
                     ->setImage($this->getRequest()->getPost('image'))
                     ->setImageSource($this->getRequest()->getPost('imageSource'));
@@ -185,6 +186,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('userGroupList', $groupMapper->getGroupList());
         $this->getView()->set('groups', $groups);
+        $this->getView()->set('disableComments', (bool)$this->getConfig()->get('article_disableComments'));
     }
 
     public function deleteAction()

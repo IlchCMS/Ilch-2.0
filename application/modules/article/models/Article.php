@@ -107,6 +107,13 @@ class Article extends \Ilch\Model
     protected $top;
 
     /**
+     * True/False comments disabled.
+     *
+     * @var boolean
+     */
+    protected $commentsDisabled;
+
+    /**
      * Read access of the article.
      *
      * @var string
@@ -460,6 +467,29 @@ class Article extends \Ilch\Model
     {
         $this->top = $top;
         
+        return $this;
+    }
+
+    /**
+     * Gets the value of commentsDisabled.
+     *
+     * @return boolean
+     */
+    public function getCommentsDisabled()
+    {
+        return $this->commentsDisabled;
+    }
+
+    /**
+     * Sets the value of commentsDisabled.
+     *
+     * @param boolean $disabled
+     * @return $this
+     */
+    public function setCommentsDisabled($disabled)
+    {
+        $this->commentsDisabled = $disabled;
+
         return $this;
     }
 

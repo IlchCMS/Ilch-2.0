@@ -90,6 +90,7 @@ class Config extends \Ilch\Config\Install
                   `cat_id` VARCHAR(255) NOT NULL,
                   `date_created` DATETIME NOT NULL,
                   `top` TINYINT(1) NOT NULL DEFAULT 0,
+                  `commentsDisabled` TINYINT(1) NOT NULL DEFAULT 0,
                   `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\',
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1 ;

@@ -82,46 +82,12 @@ class Index extends \Ilch\Controller\Frontend
         $config = \Ilch\Registry::get('config');
         $hasReadAccess = true;
 
-        if ($this->getRequest()->getPost('saveComment')) {
-            $date = new \Ilch\Date();
-            $commentModel = new CommentModel();
-            $commentKey = sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'));
-            if ($this->getRequest()->getPost('fkId')) {
-                $commentModel->setKey($commentKey.'/id_c/'.$this->getRequest()->getPost('fkId'));
-                $commentModel->setFKId($this->getRequest()->getPost('fkId'));
-            } else {
-                $commentModel->setKey($commentKey);
-            }
-            $commentModel->setText($this->getRequest()->getPost('comment_text'));
-            $commentModel->setDateCreated($date);
-            $commentModel->setUserId($this->getUser()->getId());
-            $commentMapper->save($commentModel);
-            $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
-        }
-
-        if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
-            $id = $this->getRequest()->getParam('id');
-            $commentId = $this->getRequest()->getParam('commentId');
-            $oldComment = $commentMapper->getCommentById($commentId);
-
-            $commentModel = new CommentModel();
-            $commentModel->setId($commentId);
-            if ($this->getRequest()->getParam('key') == 'up') {
-                $commentModel->setUp($oldComment->getUp()+1);
-            } else {
-                $commentModel->setDown($oldComment->getDown()+1);
-            }
-            $commentModel->setVoted($oldComment->getVoted().$this->getUser()->getId().',');
-            $commentMapper->saveLike($commentModel);
-
-            $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
-        }
-
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuArticle'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
 
+        // Preview from creating/editing an article
         if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('preview'));
@@ -142,28 +108,155 @@ class Index extends \Ilch\Controller\Frontend
                 ->setImage($this->getRequest()->getPost('image'))
                 ->setImageSource($this->getRequest()->getPost('imageSource'))
                 ->setVisits(0);
-        } else {
-            $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), $this->locale);
-            if (empty($article)) {
-                $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Article', 'errorText' => 'notFound']);
-                return;
+        }
+
+        $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), $this->locale);
+        if (empty($article)) {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Article', 'errorText' => 'notFound']);
+            return;
+        }
+
+        $user = null;
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+        }
+
+        $readAccess = [3];
+        if ($user) {
+            foreach ($user->getGroups() as $us) {
+                $readAccess[] = $us->getId();
+            }
+        }
+
+        $adminAccess = null;
+        if ($this->getUser()) {
+            $adminAccess = $this->getUser()->isAdmin();
+        }
+
+        $hasReadAccess = (is_in_array($readAccess, explode(',', $article->getReadAccess())) || $adminAccess == true);
+
+        if (!$article->getCommentsDisabled() && $hasReadAccess) {
+            if ($this->getRequest()->getPost('saveComment')) {
+                $date = new \Ilch\Date();
+                $commentModel = new CommentModel();
+                $commentKey = sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'));
+                if ($this->getRequest()->getPost('fkId')) {
+                    $commentModel->setKey($commentKey.'/id_c/'.$this->getRequest()->getPost('fkId'));
+                    $commentModel->setFKId($this->getRequest()->getPost('fkId'));
+                } else {
+                    $commentModel->setKey($commentKey);
+                }
+                $commentModel->setText($this->getRequest()->getPost('comment_text'));
+                $commentModel->setDateCreated($date);
+                $commentModel->setUserId($this->getUser()->getId());
+                $commentMapper->save($commentModel);
+                $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
             }
 
-            $this->getLayout()->header()
-                ->css('static/css/article.css')
-                ->css('../comment/static/css/comment.css');
-            $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuCats'));
-            $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index']);
+            if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
+                $id = $this->getRequest()->getParam('id');
+                $commentId = $this->getRequest()->getParam('commentId');
+                $oldComment = $commentMapper->getCommentById($commentId);
 
-            $catIds = explode(",", $article->getCatId());
-            foreach ($catIds as $catId) {
-                $articlesCats = $categoryMapper->getCategoryById($catId);
-                $this->getLayout()->getTitle()->add($articlesCats->getName());
-                $this->getLayout()->getHmenu()->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $catId]);
+                $commentModel = new CommentModel();
+                $commentModel->setId($commentId);
+                if ($this->getRequest()->getParam('key') == 'up') {
+                    $commentModel->setUp($oldComment->getUp()+1);
+                } else {
+                    $commentModel->setDown($oldComment->getDown()+1);
+                }
+                $commentModel->setVoted($oldComment->getVoted().$this->getUser()->getId().',');
+                $commentMapper->saveLike($commentModel);
+
+                $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
+            }
+        }
+
+        $this->getLayout()->header()
+            ->css('static/css/article.css')
+            ->css('../comment/static/css/comment.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuCats'));
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index']);
+
+        $catIds = explode(",", $article->getCatId());
+        foreach ($catIds as $catId) {
+            $articlesCats = $categoryMapper->getCategoryById($catId);
+            $this->getLayout()->getTitle()->add($articlesCats->getName());
+            $this->getLayout()->getHmenu()->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $catId]);
+        }
+
+        if ($hasReadAccess) {
+            $this->getLayout()->getTitle()->add($article->getTitle());
+            $this->getLayout()->getHmenu()->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
+
+            $this->getLayout()->set('metaDescription', $article->getDescription());
+            $this->getLayout()->set('metaKeywords', $article->getKeywords());
+
+            $metaTagModel = new MetaTagModel();
+            $metaTagModel->setName('og:title')
+                ->setContent($article->getTitle());
+            $this->getLayout()->add('metaTags', 'og:title', $metaTagModel);
+
+            if (!empty($article->getDescription())) {
+                $metaTagModel = new MetaTagModel();
+                $metaTagModel->setName('og:description')
+                    ->setContent($article->getDescription());
+                $this->getLayout()->add('metaTags', 'og:description', $metaTagModel);
             }
 
+            $metaTagModel = new MetaTagModel();
+            $metaTagModel->setName('og:type')
+                ->setContent('article');
+            $this->getLayout()->add('metaTags', 'og:type', $metaTagModel);
+
+            if (!empty($article->getImage())) {
+                $metaTagModel = new MetaTagModel();
+                $metaTagModel->setName('og:image')
+                    ->setContent(BASE_URL.'/'.$article->getImage());
+                $this->getLayout()->add('metaTags', 'og:image', $metaTagModel);
+            }
+
+            if (!empty($article->getLocale())) {
+                $metaTagModel = new MetaTagModel();
+                $metaTagModel->setName('og:locale')
+                    ->setContent($article->getLocale());
+                $this->getLayout()->add('metaTags', 'og:locale', $metaTagModel);
+            }
+        }
+
+        $articleModel = new ArticleModel();
+        $articleModel->setId($article->getId())
+            ->setVisits($article->getVisits() + 1);
+        $articleMapper->saveVisits($articleModel);
+
+        $this->getView()->set('userMapper', $userMapper)
+            ->set(
+                'comments',
+                $commentMapper->getCommentsByKey(
+                    sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'))
+                )
+            );
+
+        $this->getView()->set('categoryMapper', $categoryMapper)
+            ->set('config', $config)
+            ->set('commentMapper', $commentMapper)
+            ->set('article', $article)
+            ->set('hasReadAccess', $hasReadAccess);
+    }
+
+    public function voteAction()
+    {
+        $id = $this->getRequest()->getParam('id');
+
+        if ($this->getConfig()->get('article_articleRating')) {
+            $articleMapper = new ArticleMapper();
+            $userMapper = New UserMapper();
+
+            $article = $articleMapper->getArticleByIdLocale($id, $this->locale);
+
+            // Check readaccess
             $user = null;
             if ($this->getUser()) {
                 $user = $userMapper->getUserById($this->getUser()->getId());
@@ -184,71 +277,10 @@ class Index extends \Ilch\Controller\Frontend
             $hasReadAccess = (is_in_array($readAccess, explode(',', $article->getReadAccess())) || $adminAccess == true);
 
             if ($hasReadAccess) {
-                $this->getLayout()->getTitle()->add($article->getTitle());
-                $this->getLayout()->getHmenu()->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
-
-                $this->getLayout()->set('metaDescription', $article->getDescription());
-                $this->getLayout()->set('metaKeywords', $article->getKeywords());
-
-                $metaTagModel = new MetaTagModel();
-                $metaTagModel->setName('og:title')
-                    ->setContent($article->getTitle());
-                $this->getLayout()->add('metaTags', 'og:title', $metaTagModel);
-
-                if (!empty($article->getDescription())) {
-                    $metaTagModel = new MetaTagModel();
-                    $metaTagModel->setName('og:description')
-                        ->setContent($article->getDescription());
-                    $this->getLayout()->add('metaTags', 'og:description', $metaTagModel);
-                }
-
-                $metaTagModel = new MetaTagModel();
-                $metaTagModel->setName('og:type')
-                    ->setContent('article');
-                $this->getLayout()->add('metaTags', 'og:type', $metaTagModel);
-
-                if (!empty($article->getImage())) {
-                    $metaTagModel = new MetaTagModel();
-                    $metaTagModel->setName('og:image')
-                        ->setContent(BASE_URL.'/'.$article->getImage());
-                    $this->getLayout()->add('metaTags', 'og:image', $metaTagModel);
-                }
-
-                if (!empty($article->getLocale())) {
-                    $metaTagModel = new MetaTagModel();
-                    $metaTagModel->setName('og:locale')
-                        ->setContent($article->getLocale());
-                    $this->getLayout()->add('metaTags', 'og:locale', $metaTagModel);
-                }
+                $articleMapper->saveVotes($id, $this->getUser()->getId());
             }
 
-            $articleModel = new ArticleModel();
-            $articleModel->setId($article->getId())
-                ->setVisits($article->getVisits() + 1);
-            $articleMapper->saveVisits($articleModel);
-
-            $this->getView()->set('userMapper', $userMapper)
-                ->set(
-                    'comments',
-                    $commentMapper->getCommentsByKey(
-                        sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'))
-                    )
-                );
         }
-
-        $this->getView()->set('categoryMapper', $categoryMapper)
-            ->set('config', $config)
-            ->set('commentMapper', $commentMapper)
-            ->set('article', $article)
-            ->set('hasReadAccess', $hasReadAccess);
-    }
-
-    public function voteAction()
-    {
-        $id = $this->getRequest()->getParam('id');
-
-        $articleMapper = new ArticleMapper();
-        $articleMapper->saveVotes($id, $this->getUser()->getId());
 
         $this->redirect(['action' => $this->getRequest()->getParam('from'), 'id' => $id]);
     }

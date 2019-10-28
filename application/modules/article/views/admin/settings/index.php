@@ -28,6 +28,20 @@
             </div>
         </div>
     </div>
+    <div class="form-group <?=$this->validation()->hasError('disableComments') ? 'has-error' : '' ?>">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('disableComments') ?>
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="disableComments-on" name="disableComments" value="1" <?php if ($this->get('disableComments') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="disableComments-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="disableComments-off" name="disableComments" value="0" <?php if ($this->get('disableComments') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="disableComments-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
 
     <h2><?=$this->getTrans('boxSettings') ?></h2>
     <b><?=$this->getTrans('boxArticle') ?></b>

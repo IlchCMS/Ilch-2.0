@@ -583,6 +583,9 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
+            case "2.1.26":
+                // Add commentsDisabled column to table of articles
+                $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `commentsDisabled` TINYINT(1) NOT NULL DEFAULT 0 AFTER `top`;');
         }
 
         return 'Update function executed.';

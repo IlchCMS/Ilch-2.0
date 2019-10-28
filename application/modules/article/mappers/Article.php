@@ -22,7 +22,7 @@ class Article extends \Ilch\Mapper
     public function getArticles($locale = '', $pagination = null)
     {
         $select = $this->db()->select()
-                ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access'])
+                ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'p.read_access'])
                 ->from(['p' => 'articles'])
                 ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
                 ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
@@ -61,6 +61,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
             $articleModel->setTopArticle($articleRow['top']);
+            $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
             $articleModel->setReadAccess($articleRow['read_access']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
@@ -82,7 +83,7 @@ class Article extends \Ilch\Mapper
     public function getArticlesByCats($catId, $locale = '', $pagination = null)
     {
         $select = $this->db()->select()
-            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'read_access'])
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'read_access'])
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
@@ -119,6 +120,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
             $articleModel->setTopArticle($articleRow['top']);
+            $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
             $articleModel->setReadAccess($articleRow['read_access']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
@@ -140,7 +142,7 @@ class Article extends \Ilch\Mapper
     public function getArticlesByKeyword($keyword, $locale = '', $pagination = null)
     {
         $select = $this->db()->select()
-            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'read_access'])
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'read_access'])
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
@@ -177,6 +179,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
             $articleModel->setTopArticle($articleRow['top']);
+            $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
             $articleModel->setReadAccess($articleRow['read_access']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
@@ -206,7 +209,7 @@ class Article extends \Ilch\Mapper
         $dateTo = $dateTo->format($db::FORMAT_DATETIME);
 
         $select = $this->db()->select()
-            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'read_access'])
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'read_access'])
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
@@ -243,6 +246,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
             $articleModel->setTopArticle($articleRow['top']);
+            $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
             $articleModel->setReadAccess($articleRow['read_access']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
@@ -390,7 +394,7 @@ class Article extends \Ilch\Mapper
     public function getArticleByIdLocale($id, $locale = '')
     {
         $select = $this->db()->select()
-                ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access'])
+                ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'p.read_access'])
                 ->from(['p' => 'articles'])
                 ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source', 'pc.votes'])
                 ->where(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)]);
@@ -416,6 +420,7 @@ class Article extends \Ilch\Mapper
         $articleModel->setPerma($articleRow['perma']);
         $articleModel->setDateCreated($articleRow['date_created']);
         $articleModel->setTopArticle($articleRow['top']);
+        $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
         $articleModel->setReadAccess($articleRow['read_access']);
         $articleModel->setImage($articleRow['img']);
         $articleModel->setImageSource($articleRow['img_source']);
@@ -507,7 +512,7 @@ class Article extends \Ilch\Mapper
     public function getTopArticle()
     {
         $articleRow = $this->db()->select('*')
-            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access'])
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'p.read_access'])
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->where(['top' => 1])
@@ -532,6 +537,7 @@ class Article extends \Ilch\Mapper
         $articleModel->setPerma($articleRow['perma']);
         $articleModel->setDateCreated($articleRow['date_created']);
         $articleModel->setTopArticle($articleRow['top']);
+        $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
         $articleModel->setReadAccess($articleRow['read_access']);
         $articleModel->setImage($articleRow['img']);
         $articleModel->setImageSource($articleRow['img_source']);
@@ -586,6 +592,7 @@ class Article extends \Ilch\Mapper
                 $this->db()->update('articles')
                     ->values(['cat_id' => $article->getCatId(),
                               'date_created' => $article->getDateCreated(),
+                              'commentsDisabled' => (bool)$article->getCommentsDisabled(),
                               'read_access' => $article->getReadAccess()])
                     ->where(['id' => $article->getId()])
                     ->execute();
@@ -645,6 +652,7 @@ class Article extends \Ilch\Mapper
                     [
                         'cat_id' => $article->getCatId(),
                         'date_created' => $article->getDateCreated(),
+                        'commentsDisabled' => (bool)$article->getCommentsDisabled(),
                         'read_access' => $article->getReadAccess()
                     ]
                 )

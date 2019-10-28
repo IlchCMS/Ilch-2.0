@@ -50,6 +50,7 @@ class Settings extends \Ilch\Controller\Admin
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'articlesPerPage' => 'numeric|integer|min:1',
                 'articleRating' => 'numeric|integer|min:0|max:1',
+                'disableComments' => 'numeric|integer|min:0|max:1',
                 'boxArticleLimit' => 'numeric|integer|min:1',
                 'boxArchiveLimit' => 'numeric|integer|min:1',
                 'boxKeywordsH2' => 'required|numeric|integer|min:1',
@@ -61,6 +62,7 @@ class Settings extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $this->getConfig()->set('article_articlesPerPage', $this->getRequest()->getPost('articlesPerPage'));
                 $this->getConfig()->set('article_articleRating', $this->getRequest()->getPost('articleRating'));
+                $this->getConfig()->set('article_disableComments', $this->getRequest()->getPost('disableComments'));
                 $this->getConfig()->set('article_box_articleLimit', $this->getRequest()->getPost('boxArticleLimit'));
                 $this->getConfig()->set('article_box_archiveLimit', $this->getRequest()->getPost('boxArchiveLimit'));
                 
@@ -84,6 +86,7 @@ class Settings extends \Ilch\Controller\Admin
         $keywordsFontSizes = explode(',',$this->getConfig()->get('article_box_keywords'));
         $this->getView()->set('articlesPerPage', $this->getConfig()->get('article_articlesPerPage'))
             ->set('articleRating', $this->getConfig()->get('article_articleRating'))
+            ->set('disableComments', $this->getConfig()->get('article_disableComments'))
             ->set('boxArticleLimit', $this->getConfig()->get('article_box_articleLimit'))
             ->set('boxArchiveLimit', $this->getConfig()->get('article_box_archiveLimit'))
             ->set('boxKeywordsH2', $keywordsFontSizes[0])
