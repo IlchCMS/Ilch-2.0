@@ -9,6 +9,7 @@ namespace Modules\Article\Controllers\Admin;
 use Modules\Article\Mappers\Article as ArticleMapper;
 use Modules\Article\Models\Article as ArticleModel;
 use Modules\Article\Mappers\Category as CategoryMapper;
+use Modules\Article\Mappers\Template as TemplateMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\User\Mappers\Group as GroupMapper;
 use Modules\Article\Config\Config as ArticleConfig;
@@ -36,6 +37,12 @@ class Index extends \Ilch\Controller\Admin
                 'active' => false,
                 'icon' => 'fa fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuTemplates',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'templates', 'action' => 'index'])
             ],
             [
                 'name' => 'settings',
@@ -88,19 +95,22 @@ class Index extends \Ilch\Controller\Admin
     {
         $articleMapper = new ArticleMapper();
         $categoryMapper = new CategoryMapper();
+        $templateMapper = new TemplateMapper();
         $groupMapper = new GroupMapper();
 
-        if ($this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->getParam('locale') == '') {
+            $locale = '';
+        } else {
+            $locale = $this->getRequest()->getParam('locale');
+        }
+
+        if ($this->getRequest()->getParam('template')) {
+            $this->getView()->set('template', $this->getRequest()->getParam('template'));
+            $this->getView()->set('article', $templateMapper->getTemplateByIdLocale($this->getRequest()->getParam('template'), $locale));
+        } elseif ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-
-            if ($this->getRequest()->getParam('locale') == '') {
-                $locale = '';
-            } else {
-                $locale = $this->getRequest()->getParam('locale');
-            }
-
             $this->getView()->set('article', $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), $locale));
         } else {
             $this->getLayout()->getAdminHmenu()
@@ -148,6 +158,9 @@ class Index extends \Ilch\Controller\Admin
                     ->setImageSource($this->getRequest()->getPost('imageSource'));
                 $this->trigger(ArticleConfig::EVENT_SAVE_BEFORE, ['model' => $model]);
                 $articleMapper->save($model);
+                if ($this->getRequest()->getPost('saveAsTemplate')) {
+                    $templateMapper->save($model);
+                }
                 $this->trigger(ArticleConfig::EVENT_SAVE_AFTER, ['model' => $model]);
 
                 if ($this->getRequest()->getParam('id')) {
@@ -180,6 +193,7 @@ class Index extends \Ilch\Controller\Admin
             $groups = [1,2,3];
         }
 
+        $this->getView()->set('templates', $templateMapper->getTemplates());
         $this->getView()->set('cats', $categoryMapper->getCategories());
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());

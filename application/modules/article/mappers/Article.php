@@ -738,6 +738,7 @@ class Article extends \Ilch\Mapper
 
     /**
      * Delete an article with all associated comments
+     *
      * @param $id
      * @param CommentMapper|null $commentsMapper
      */
@@ -745,6 +746,9 @@ class Article extends \Ilch\Mapper
     {
         $this->trigger(ArticleConfig::EVENT_DELETE_BEFORE, ['id' => $id]);
         $this->delete($id);
+        // An instance of the comments mapper can be passed as argument to this
+        // function so it doesn't need to be instantiated every time in case
+        // a lot of articles get deleted at once.
         if ($commentsMapper === null) {
             $commentsMapper = new CommentMapper();
         }

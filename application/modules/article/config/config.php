@@ -118,6 +118,20 @@ class Config extends \Ilch\Config\Install
                   `votes` LONGTEXT NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+                CREATE TABLE IF NOT EXISTS `[prefix]_articles_templates` (
+                  `id` INT(11) NOT NULL,
+                  `author_id` INT(11) NOT NULL,
+                  `content` MEDIUMTEXT NOT NULL,
+                  `description` MEDIUMTEXT NOT NULL,
+                  `keywords` VARCHAR(255) NOT NULL,
+                  `locale` VARCHAR(255) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `teaser` VARCHAR(255) NOT NULL,
+                  `perma` VARCHAR(255) NOT NULL,
+                  `img` VARCHAR(255) NOT NULL,
+                  `img_source` VARCHAR(255) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
                 INSERT INTO `[prefix]_articles` (`cat_id`, `date_created`, `top`) VALUES (1, now(), 0);
 
                 INSERT INTO `[prefix]_articles_cats` (`name`) VALUES ("Allgemein");

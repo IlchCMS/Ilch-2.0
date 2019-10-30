@@ -586,6 +586,22 @@ class Config extends \Ilch\Config\Install
             case "2.1.26":
                 // Add commentsDisabled column to table of articles
                 $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `commentsDisabled` TINYINT(1) NOT NULL DEFAULT 0 AFTER `top`;');
+
+                // Add articles_templates table
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_articles_templates` (
+                  `id` INT(11) NOT NULL,
+                  `author_id` INT(11) NOT NULL,
+                  `content` MEDIUMTEXT NOT NULL,
+                  `description` MEDIUMTEXT NOT NULL,
+                  `keywords` VARCHAR(255) NOT NULL,
+                  `locale` VARCHAR(255) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `teaser` VARCHAR(255) NOT NULL,
+                  `perma` VARCHAR(255) NOT NULL,
+                  `img` VARCHAR(255) NOT NULL,
+                  `img_source` VARCHAR(255) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+                break;
         }
 
         return 'Update function executed.';

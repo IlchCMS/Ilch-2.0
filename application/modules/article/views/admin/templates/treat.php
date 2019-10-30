@@ -5,28 +5,9 @@ if ($this->get('article') != '') {
 }
 ?>
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-<h1><?=($this->get('article') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<h1><?=$this->getTrans('editTemplate') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST">
     <?=$this->getTokenField(); ?>
-    <div class="form-group <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">
-        <label for="template" class="col-lg-2 control-label">
-            <?=$this->getTrans('template') ?>:
-        </label>
-        <div class="col-lg-4">
-            <select class="chosen-select form-control"
-                    id="template"
-                    name="template"
-                    data-placeholder="<?=$this->getTrans('selectTemplate') ?>"
-                    <?=(empty($this->get('templates'))) ? 'disabled' : '' ?> >
-                    <option value="0"><?=$this->getTrans('selectTemplate') ?></option>
-                <?php foreach ($this->get('templates') as $template): ?>
-                    <option value="<?=$template->getId() ?>" <?=($this->get('template') == $template->getId()) ? 'selected="selected"' : '' ?>>
-                        <?=$this->escape($template->getTitle()) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-    </div>
     <div class="form-group <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
         <label for="teaser" class="col-lg-2 control-label">
             <?=$this->getTrans('teaser') ?>:
@@ -49,50 +30,6 @@ if ($this->get('article') != '') {
                    id="title"
                    name="title"
                    value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTitle()) : $this->originalInput('title') ?>" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="date_created" class="col-lg-2 control-label">
-            <?=$this->getTrans('date') ?>:
-        </label>
-        <div class="col-lg-4 input-group ilch-date date form_datetime">
-            <input type="text"
-                   class="form-control"
-                   id="date_created"
-                   name="date_created"
-                   value="<?php if ($this->get('article') != '' && $this->get('article')->getDateCreated()) { echo date('d.m.Y H:i', strtotime($this->get('article')->getDateCreated())); } ?>"
-                   readonly>
-            <span class="input-group-addon">
-                <span class="fa fa-calendar"></span>
-            </span>
-        </div>
-    </div>
-    <div class="form-group <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">
-        <label for="cats" class="col-lg-2 control-label">
-            <?=$this->getTrans('cats') ?>:
-        </label>
-        <div class="col-lg-4">
-            <select class="chosen-select form-control"
-                    id="cats"
-                    name="cats[]"
-                    data-placeholder="<?=$this->getTrans('selectCategories') ?>"
-                    multiple>
-                <?php foreach ($this->get('cats') as $cats): ?>
-                    <option value="<?=$cats->getId() ?>"
-                        <?php if ($this->get('article') != '') {
-                            $catIds = explode(',', $this->get('article')->getCatId());
-                            foreach ($catIds as $catId) {
-                                if ($cats->getId() == $catId) {
-                                    echo 'selected="selected"';
-                                    break;
-                                }
-                            }
-                        }
-                        ?>>
-                        <?=$this->escape($cats->getName()) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('content') ? 'has-error' : '' ?>">
@@ -129,54 +66,6 @@ if ($this->get('article') != '') {
         </div>
     <?php endif; ?>
     <h1><?=$this->getTrans('options') ?></h1>
-    <div class="form-group">
-        <label for="access" class="col-lg-2 control-label">
-            <?=$this->getTrans('visibleFor') ?>
-        </label>
-        <div class="col-lg-4">
-            <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
-                <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="topArticle" class="col-lg-2 control-label">
-            <?=$this->getTrans('topArticle') ?>:
-        </label>
-        <div class="col-lg-4">
-            <input type="checkbox"
-                   name="topArticle"
-                   id="topArticle"
-                   value="1"
-                   <?=($this->get('article') && $this->get('article')->getTopArticle()) ? 'checked="checked"' : '' ?> />
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="commentsDisabled" class="col-lg-2 control-label">
-            <?=$this->getTrans('commentsDisabled') ?>:
-        </label>
-        <div class="col-lg-4">
-            <input type="checkbox"
-                   name="commentsDisabled"
-                   id="commentsDisabled"
-                   value="1"
-                <?=($this->get('article') && $this->get('article')->getCommentsDisabled() || !$this->get('article') && $this->get('disableComments')) ? 'checked="checked"' : '' ?> />
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="saveAsTemplate" class="col-lg-2 control-label">
-            <?=$this->getTrans('saveAsTemplate') ?>:
-        </label>
-        <div class="col-lg-4">
-            <input type="checkbox"
-                   name="saveAsTemplate"
-                   id="saveAsTemplate"
-                   value="1"
-            />
-        </div>
-    </div>
     <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
             <?=$this->getTrans('image') ?>:
@@ -202,14 +91,6 @@ if ($this->get('article') != '') {
                    name="imageSource"
                    id="imageSource"
                    value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getImageSource()); } ?>" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="preview" class="col-lg-2 control-label">
-            <?=$this->getTrans('preview') ?>:
-        </label>
-        <div class="col-lg-4">
-            <a id="preview" class="btn btn-default"><?=$this->getTrans('show') ?></a>
         </div>
     </div>
     <h1><?=$this->getTrans('seo') ?></h1>
@@ -248,7 +129,7 @@ if ($this->get('article') != '') {
             </div>
         </div>
     </div>
-    <?=($this->get('article') != '') ?  $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
+    <?=$this->getSaveBar('edit') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
@@ -322,12 +203,5 @@ $('#tags').on('tokenfield:createtoken', function (event) {
         if (token.value === event.attrs.value)
             event.preventDefault();
     });
-});
-$( "#template" ).change(function() {
-    if (<?=($articleID) ? json_encode($articleID) : '""' ?>) {
-        window.location = '<?=$this->getUrl(['id' => $articleID]) ?>/template/'+$(this).val();
-    } else {
-        window.location = '<?=$this->getUrl(['action' => 'treat']) ?>/template/'+$(this).val();
-    }
 });
 </script>

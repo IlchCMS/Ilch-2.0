@@ -26,6 +26,12 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
             ],
             [
+                'name' => 'menuTemplates',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'templates', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuSettings',
                 'active' => true,
                 'icon' => 'fa fa-cogs',
