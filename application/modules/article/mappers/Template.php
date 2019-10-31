@@ -15,7 +15,7 @@ class Template extends \Ilch\Mapper
      *
      * @param string $locale
      * @param null $pagination
-     * @return array|null
+     * @return ArticleModel[]|[]
      */
     public function getTemplates($locale = '', $pagination = null)
     {

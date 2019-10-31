@@ -41,7 +41,8 @@ class Teams extends \Ilch\Mapper
                 ->setCoLeader($entries['coLeader'])
                 ->setGroupId($entries['groupId'])
                 ->setOptShow($entries['optShow'])
-                ->setOptIn($entries['optIn']);
+                ->setOptIn($entries['optIn'])
+                ->setNotifyLeader($entries['notifyLeader']);
             $teams[] = $entryModel;
         }
 
@@ -139,7 +140,8 @@ class Teams extends \Ilch\Mapper
             'coLeader' => $team->getCoLeader(),
             'groupId' => $team->getGroupId(),
             'optShow' => $team->getOptShow(),
-            'optIn' => $team->getOptIn()
+            'optIn' => $team->getOptIn(),
+            'notifyLeader' => $team->getNotifyLeader()
         ];
 
         if ($team->getId()) {

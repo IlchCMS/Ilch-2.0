@@ -11,6 +11,7 @@ use Modules\Teams\Mappers\Joins as JoinsMapper;
 use Modules\Teams\Models\Joins as JoinsModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as GroupMapper;
+use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
@@ -145,6 +146,50 @@ class Index extends \Ilch\Controller\Frontend
                 $notificationModel->setType('teamsNewApplication');
 
                 $notificationsMapper->addNotification($notificationModel);
+
+                // Send mail to team leaders if enabled
+                if ($this->getRequest()->getParam('id')) {
+                    $team = $teamsMapper->getTeamById($this->getRequest()->getParam('id'));
+                    if (!empty($team) && $team->getNotifyLeader()) {
+                        $emailsMapper = new EmailsMapper();
+                        $leadersIds = explode(',', $team->getLeader());
+                        $layout = '';
+                        $subject = $this->getTranslator()->trans('subjectNewApplication');
+                        $content = $this->getLayout()->purify($emailsMapper->getEmail('teams', 'teams_notifyLeader', $this->getTranslator()->getLocale())->getText());
+
+                        if (isset($_SESSION['layout'])) {
+                            $layout = $_SESSION['layout'];
+                        }
+                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/notifyLeader.php')) {
+                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/notifyLeader.php');
+                        } else {
+                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/notifyLeader.php');
+                        }
+
+                        foreach($leadersIds as $leaderId) {
+                            $receiver = $userMapper->getUserById($leaderId);
+                            $date = new \Ilch\Date();
+                            $messageReplace = [
+                                '{subject}' => $subject,
+                                '{content}' => $content,
+                                '{name}' => $this->getLayout()->escape($receiver->getName()),
+                                '{teamname}' => $this->getLayout()->escape($team->getName()),
+                                '{sitetitle}' => $this->getLayout()->escape($this->getConfig()->get('page_title')),
+                                '{date}' => $date->format("l, d. F Y", true),
+                                '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
+                            ];
+                            $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+                            $mail = new \Ilch\Mail();
+                            $mail->setFromName($this->getLayout()->escape($this->getConfig()->get('page_title')))
+                                ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
+                                ->setToName($this->getLayout()->escape($receiver->getName()))
+                                ->setToEmail($this->getLayout()->escape($receiver->getEmail()))
+                                ->setSubject($subject)
+                                ->setMessage($message)
+                                ->sent();
+                        }
+                    }
+                }
 
                 $this->redirect()
                     ->withMessage('saveSuccess')

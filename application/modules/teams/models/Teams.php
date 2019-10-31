@@ -65,6 +65,13 @@ class Teams extends \Ilch\Model
     protected $optIn;
 
     /**
+     * The value of notifyLeader of the Team.
+     *
+     * @var int
+     */
+    protected $notifyLeader;
+
+    /**
      * The Opt Show of the Team.
      *
      * @var int
@@ -265,6 +272,28 @@ class Teams extends \Ilch\Model
     {
         $this->optIn = (int)$optIn;
 
+        return $this;
+    }
+
+    /**
+     * Get value of notifyLeader
+     *
+     * @return int
+     */
+    public function getNotifyLeader()
+    {
+        return $this->notifyLeader;
+    }
+
+    /**
+     * Set value of notifyLeader
+     *
+     * @param int $notifyLeader
+     * @return Teams
+     */
+    public function setNotifyLeader($notifyLeader)
+    {
+        $this->notifyLeader = $notifyLeader;
         return $this;
     }
 }

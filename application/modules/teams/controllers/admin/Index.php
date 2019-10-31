@@ -111,7 +111,8 @@ class Index extends \Ilch\Controller\Admin
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required|unique:teams,name,'.$this->getRequest()->getParam('id'),
                 'groupId' => 'required|numeric|integer|min:1',
-                'optIn' => 'required|numeric|integer|min:0|max:1'
+                'optIn' => 'required|numeric|integer|min:0|max:1',
+                'notifyLeader' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             // No need to check if the leader and coleader are identical if one of them is empty.
@@ -208,7 +209,8 @@ class Index extends \Ilch\Controller\Admin
                     ->setCoLeader($coLeader)
                     ->setGroupId($this->getRequest()->getPost('groupId'))
                     ->setOptShow($this->getRequest()->getPost('optShow'))
-                    ->setOptIn($this->getRequest()->getPost('optIn'));;
+                    ->setOptIn($this->getRequest()->getPost('optIn'))
+                    ->setNotifyLeader($this->getRequest()->getPost('notifyLeader'));
                 $teamsMapper->save($model);
 
                 $this->redirect()

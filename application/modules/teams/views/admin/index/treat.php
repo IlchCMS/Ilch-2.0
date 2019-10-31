@@ -33,7 +33,7 @@
             <div class="row">
                 <?php if ($this->get('team') != '' AND $this->get('team')->getImg() != ''): ?>
                     <div class="col-lg-12">
-                        <img src="<?=$this->getBaseUrl().$this->get('team')->getImg() ?>">
+                        <img src="<?=$this->getBaseUrl().$this->get('team')->getImg() ?>" alt="<?=$this->getTrans('img').' '.$this->escape($this->get('team')->getName()) ?>">
 
                         <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
                             <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('imageDelete') ?>
@@ -48,6 +48,7 @@
                     </span>
                     <input type="text"
                            name="img"
+                           id="img"
                            class="form-control"
                            readonly />
                 </div>
@@ -160,6 +161,20 @@
             </div>
         </div>
     </div>
+    <div class="form-group <?=$this->validation()->hasError('notifyLeader') ? 'has-error' : '' ?>" id="notifyLeader">
+        <label for="notifyLeader" class="col-lg-2 control-label">
+            <?=$this->getTrans('notifyLeader') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="notifyLeader-on" name="notifyLeader" value="1" <?=($this->get('team') != '' AND $this->get('team')->getNotifyLeader() == '1') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('notifyLeader') == 1) ? 'checked="checked"' : '' ?> />
+                <label for="notifyLeader-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="notifyLeader-off" name="notifyLeader" value="0" <?=($this->get('team') != '' AND $this->get('team')->getNotifyLeader() == '0') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('notifyLeader') == 0) ? 'checked="checked"' : '' ?> />
+                <label for="notifyLeader-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <?=($this->get('team') != '') ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
 
@@ -170,7 +185,7 @@ $('#leader').chosen();
 $('#coLeader').chosen();
 
 $(document).on('change', '.btn-file :file', function() {
-    var input = $(this),
+    let input = $(this),
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
         label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
     input.trigger('fileselect', [numFiles, label]);
@@ -178,7 +193,7 @@ $(document).on('change', '.btn-file :file', function() {
 
 $(document).ready( function() {
     $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-        var input = $(this).parents('.input-group').find(':text'),
+        let input = $(this).parents('.input-group').find(':text'),
             log = numFiles > 1 ? numFiles + ' files selected' : label;
 
         if (input.length) {
@@ -187,6 +202,14 @@ $(document).ready( function() {
             if (log) alert(log);
         }
     });
+});
+
+$('#notifyLeader-on').change(function() {
+    $('#optIn-on').prop('checked', true);
+});
+
+$('#optIn-off').change(function() {
+    $('#notifyLeader-off').prop('checked', true);
 });
 </script>
 

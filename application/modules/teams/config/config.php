@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.15.0',
+        'version' => '1.16.0',
         'icon_small' => 'fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -63,6 +63,7 @@ class Config extends \Ilch\Config\Install
                 `groupId` INT(11) NOT NULL,
                 `optShow` TINYINT(1) NOT NULL,
                 `optIn` TINYINT(1) NOT NULL,
+                `notifyLeader` TINYINT(1) NOT NULL,
                 `position` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -128,6 +129,18 @@ class Config extends \Ilch\Config\Install
                   <p>Your application at <i>{sitetitle}</i> in Team <i>{teamname}</i> was unfortunately rejected.</p>
                   <p>&nbsp;</p>
                   <p>Best regards</p>
+                  <p>Administrator</p>", "en_EN"),
+            ("teams", "teams_notifyLeader", "Neue Bewerbung", "<p>Hallo <b>{name}</b>,</p>
+                  <p>&nbsp;</p>
+                  <p>Es ist eine neue Bewerbung auf <i>{sitetitle}</i> für das Team <i>{teamname}</i> vorhanden.</p>
+                  <p>&nbsp;</p>
+                  <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                  <p>Administrator</p>", "de_DE"),
+            ("teams", "teams_notifyLeader", "New application", "<p>Hello <b>{name}</b>,</p>
+                  <p>&nbsp;</p>
+                  <p>There is a new application at <i>{sitetitle}</i> for the team <i>{teamname}</i> available.</p>
+                  <p>&nbsp;</p>
+                  <p>Best regards</p>
                   <p>Administrator</p>", "en_EN");';
     }
 
@@ -154,6 +167,24 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_teams` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.15.0":
+                // Add notifyLeader column
+                $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `notifyLeader` TINYINT(1) NOT NULL AFTER `optIn`;');
+
+                // Add new mails for notifying the leader about new applications.
+                $this->db()->queryMulti('INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
+            ("teams", "teams_notifyLeader", "Neue Bewerbung", "<p>Hallo <b>{name}</b>,</p>
+                  <p>&nbsp;</p>
+                  <p>Es ist eine neue Bewerbung auf <i>{sitetitle}</i> für das Team <i>{teamname}</i> vorhanden.</p>
+                  <p>&nbsp;</p>
+                  <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                  <p>Administrator</p>", "de_DE"),
+            ("teams", "teams_notifyLeader", "New application", "<p>Hello <b>{name}</b>,</p>
+                  <p>&nbsp;</p>
+                  <p>There is a new application at <i>{sitetitle}</i> for the team <i>{teamname}</i> available.</p>
+                  <p>&nbsp;</p>
+                  <p>Best regards</p>
+                  <p>Administrator</p>", "en_EN");');
         }
     }
 }
