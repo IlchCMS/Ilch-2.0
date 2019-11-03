@@ -76,7 +76,7 @@ if ($this->getUser()) {
                 $votes = explode(',', $article->getVotes());
                 $countOfVotes = count($votes) - 1;
                 ?>
-                <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $votes) == false) : ?>
+                <?php if ($this->getUser() && in_array($this->getUser()->getId(), $votes) == false) : ?>
                     <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]) ?>" title="<?=$this->getTrans('iLike') ?>">
                         <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
                     </a>

@@ -162,7 +162,7 @@ if ($this->get('article') != '') {
                    name="commentsDisabled"
                    id="commentsDisabled"
                    value="1"
-                <?=($this->get('article') && $this->get('article')->getCommentsDisabled() || !$this->get('article') && $this->get('disableComments')) ? 'checked="checked"' : '' ?> />
+                <?=(($this->get('article') && $this->get('article')->getCommentsDisabled()) || (!$this->get('article') && $this->get('disableComments'))) ? 'checked="checked"' : '' ?> />
         </div>
     </div>
     <div class="form-group">

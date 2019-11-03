@@ -270,9 +270,7 @@ class Article extends \Ilch\Mapper
                 FROM `[prefix]_articles`
                 WHERE `cat_id` LIKE "%'.$catId.'%"';
 
-        $count = $this->db()->queryCell($sql);
-
-        return $count;
+        return $this->db()->queryCell($sql);
     }
 
     /**
@@ -291,9 +289,7 @@ class Article extends \Ilch\Mapper
             $sql .= ' WHERE YEAR(date_created) = YEAR("'.$date.'") AND MONTH(date_created) = MONTH("'.$date.'")';
         }
 
-        $article = $this->db()->queryCell($sql);
-
-        return $article;
+        return $this->db()->queryCell($sql);
     }
 
     /**

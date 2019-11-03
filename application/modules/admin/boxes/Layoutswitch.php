@@ -6,8 +6,6 @@
 
 namespace Modules\Admin\Boxes;
 
-use Modules\Admin\Models\Layout as LayoutModel;
-
 class Layoutswitch extends \Ilch\Box
 {
     public function render()

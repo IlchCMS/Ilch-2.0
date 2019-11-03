@@ -75,8 +75,8 @@ if ($this->getUser()) {
                 $votes = explode(',', $article->getVotes());
                 $countOfVotes = count($votes) - 1;
                 ?>
-                <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $votes) == false) : ?>
-                    <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'show', 'catId' => $catId]) ?>" title="<?=$this->getTrans('iLike') ?>">
+                <?php if ($this->getUser() && in_array($this->getUser()->getId(), $votes) == false) : ?>
+                    <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'show', 'keyword' => urlencode($keyword)]) ?>" title="<?=$this->getTrans('iLike') ?>">
                         <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
                     </a>
                 <?php else: ?>

@@ -104,4 +104,12 @@ class Keywords extends \Ilch\Controller\Frontend
             ->set('readAccess', $readAccess)
             ->set('pagination', $pagination);
     }
+
+    public function voteAction()
+    {
+        $articleMapper = new ArticleMapper();
+        $articleMapper->saveVotes($this->getRequest()->getParam('id'), $this->getUser()->getId());
+
+        $this->redirect(['action' => $this->getRequest()->getParam('from'), 'keyword' => urlencode($this->getRequest()->getParam('keyword'))]);
+    }
 }

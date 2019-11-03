@@ -52,7 +52,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getControllerName() == 'index' && $this->getRequest()->getActionName() == 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;

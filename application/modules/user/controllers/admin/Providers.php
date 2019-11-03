@@ -7,7 +7,6 @@
 namespace Modules\User\Controllers\Admin;
 
 use Modules\User\Mappers\AuthProvider;
-use Ilch\Validation;
 
 class Providers extends \Ilch\Controller\Admin
 {

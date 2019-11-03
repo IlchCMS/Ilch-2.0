@@ -8,7 +8,6 @@ namespace Modules\Imprint\Controllers\Admin;
 
 use Modules\Imprint\Mappers\Imprint as ImprintMapper;
 use Modules\Imprint\Models\Imprint as ImprintModel;
-use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
