@@ -143,7 +143,7 @@ class Index extends \Ilch\Controller\Admin
                     $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                     $imageInfo = getimagesize($file_tmpe);
 
-                    if (in_array($extension, explode(' ', $allowedFiletypes)) && strpos($imageInfo['mime'], 'image/') === 0) {
+                    if (in_array($extension, explode(' ', $allowedFiletypes)) && strncmp($imageInfo['mime'], 'image/', 6) === 0) {
                         if ($this->getRequest()->getParam('id')) {
                             $teamsMapper->delImageById($this->getRequest()->getParam('id'));
                         }
@@ -151,7 +151,7 @@ class Index extends \Ilch\Controller\Admin
                         $width = $imageInfo[0];
                         $height = $imageInfo[1];
                         do {
-                            $newName = str_replace('.', '', uniqid(rand(), true));
+                            $newName = str_replace('.', '', uniqid(mt_rand(), true));
                             $image = $path.$newName.'.'.$extension;
                         } while (file_exists($image));
 

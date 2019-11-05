@@ -35,7 +35,7 @@ class Same extends Base
 
         $result = $this->getValue() === array_dot($this->getInput(), $this->getParameter(0));
 
-        if (is_null($strict)) {
+        if ($strict === null) {
             $result = $this->getValue() == array_dot($this->getInput(), $this->getParameter(0));
         }
 

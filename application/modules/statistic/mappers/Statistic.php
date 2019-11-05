@@ -628,7 +628,7 @@ class Statistic extends \Ilch\Mapper
                 return "Chrome";
             } elseif (preg_match('=Safari/=', $useragent)) {
                 return "Safari";
-            } elseif (preg_match("=Konqueror=", $useragent)) {
+            } elseif (false !== strpos($useragent, "Konqueror")) {
                 return "Konqueror";
             } elseif (preg_match("=Netscape|Navigator=", $useragent)) {
                 return "Netscape";

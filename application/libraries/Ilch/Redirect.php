@@ -77,7 +77,7 @@ class Redirect
      */
     public function withInput($input = null)
     {
-        if (is_null($input)) {
+        if ($input === null) {
             $input = $this->request->getPost();
         }
 

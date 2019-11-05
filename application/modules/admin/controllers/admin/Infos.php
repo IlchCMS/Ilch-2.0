@@ -91,8 +91,7 @@ class Infos extends \Ilch\Controller\Admin
         $phpinfo = preg_replace('#^.*<div class="center">(.*)</div>.*$#s', '$1', $phpinfo);
 
         # <font> durch <span> ersetzen
-        $phpinfo = str_replace('<font', '<span', $phpinfo);
-        $phpinfo = str_replace('</font>', '</span>', $phpinfo);
+        $phpinfo = str_replace(array('<font', '</font>'), array('<span', '</span>'), $phpinfo);
 
         # <hr> entfernen
         $phpinfo = preg_replace('/<hr \/>/', '', $phpinfo);
@@ -190,8 +189,7 @@ class Infos extends \Ilch\Controller\Admin
         $this->getView()->set('certificate', openssl_x509_parse($certificate));
         // Strip off begin- and end certificate-lines and base64-decode the rest before calling openssl_digest
         // to get the same fingerprint as displayed in e.g. Microsoft Windows.
-        $certificate = str_replace('-----BEGIN CERTIFICATE-----', '', $certificate);
-        $certificate = str_replace('-----END CERTIFICATE-----', '', $certificate);
+        $certificate = str_replace(array('-----BEGIN CERTIFICATE-----', '-----END CERTIFICATE-----'), '', $certificate);
         $this->getView()->set('certificateDigest', openssl_digest(base64_decode($certificate), 'SHA1'));
         $this->getView()->set('certificateDigestSHA256', openssl_digest(base64_decode($certificate), 'SHA256'));
         $this->getView()->set('certificateKeySize', isset($publicKeyArray['bits'])? $publicKeyArray['bits'] : 0);

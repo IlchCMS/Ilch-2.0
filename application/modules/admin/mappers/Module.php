@@ -193,7 +193,8 @@ class Module extends \Ilch\Mapper
         $modulesNotInstalled = $this->getModulesNotInstalled();
 
         foreach ($modulesNotInstalled as $moduleNotInstalled) {
-            $modulesRows[$moduleNotInstalled->getKey()] = array('key' => $moduleNotInstalled->getKey(), 'version' => $moduleNotInstalled->getVersion());
+            $key = $moduleNotInstalled->getKey();
+            $modulesRows[$key] = array('key' => $key, 'version' => $moduleNotInstalled->getVersion());
         }
 
         if (empty($modulesRows)) {

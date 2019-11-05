@@ -162,7 +162,7 @@ function array_dot($data = [], $key = null, $default = null)
  */
 function array_dot_set(&$array, $key, $value)
 {
-    if (is_null($key)) {
+    if ($key === null) {
         return $array = $value;
     }
 
@@ -296,7 +296,7 @@ function var_export_short_syntax($var, $indent = '')
  */
 function loggedIn()
 {
-    return !is_null(\Ilch\Registry::get('user'));
+    return \Ilch\Registry::get('user') !== null;
 }
 
 /**

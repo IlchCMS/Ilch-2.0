@@ -48,7 +48,7 @@ class Exists extends Base
 
         $this->query = Registry::get('db')->select();
 
-        $column = is_null($this->getParameter(1)) ? 'id' : $this->getParameter(1);
+        $column = $this->getParameter(1) === null ? 'id' : $this->getParameter(1);
 
         $this->query->fields($column);
         $this->query->from($this->getParameter(0));

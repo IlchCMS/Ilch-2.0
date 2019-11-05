@@ -198,7 +198,7 @@ class Backup extends \Ilch\Controller\Admin
 
             if (!empty($backup)) {
                 $fullPath = $path.$backup->getName();
-                if ($fd = fopen($fullPath, "r")) {
+                if ($fd = fopen($fullPath, 'rb')) {
                     $path_parts = pathinfo($fullPath);
                     // Remove the random part of the filename as it should not end in e.g. the browser history.
                     $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts["basename"]);

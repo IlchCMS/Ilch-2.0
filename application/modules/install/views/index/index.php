@@ -24,7 +24,7 @@
         <select class="form-control" id="timezone" name="timezone">
             <?php $timezones = $this->get('timezones'); ?>
 
-            <?php for ($i = 0; $i < count($timezones); $i++): ?>
+            <?php for ($i = 0, $iMax = count($timezones); $i < $iMax; $i++): ?>
                 <?php $sel = ''; ?>
                 <?php if ($this->get('timezone') == $timezones[$i]): ?>
                     <?php $sel = 'selected="selected"'; ?>

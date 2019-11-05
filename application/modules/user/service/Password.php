@@ -59,7 +59,7 @@ class Password
      */
     public static function generateSecurePassword($length = 16, $keyspace = null)
     {
-        if (is_null($keyspace)) {
+        if ($keyspace === null) {
             $keyspace = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`-=~!@#$%^&*()_+,./<>?;:[]{}\|";
         }
         $str = '';

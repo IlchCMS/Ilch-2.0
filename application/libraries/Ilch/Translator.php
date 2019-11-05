@@ -106,7 +106,7 @@ class Translator
 
         $arguments = func_get_args();
         $arguments[0] = $translatedText;
-        $translatedText = call_user_func_array('sprintf', $arguments);
+        $translatedText = sprintf(...$arguments);
 
         return $translatedText;
     }

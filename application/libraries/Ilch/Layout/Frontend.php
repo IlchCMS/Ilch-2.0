@@ -223,7 +223,7 @@ class Frontend extends Base
         $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
         $boxObj->render();
 
-        if (! is_null($customView)) {
+        if ($customView !== null) {
             $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$customView.'.php';
         } else {
             if (file_exists(APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php')) {

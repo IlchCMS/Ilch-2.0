@@ -88,7 +88,7 @@ abstract class Base
         $this->setInput($data->input);
         $this->setParameters($data->parameters);
 
-        if ((!is_null($this->minParams) && is_array($this->getParameters()) && count($this->getParameters()) < $this->minParams)) {
+        if (($this->minParams !== null && is_array($this->getParameters()) && count($this->getParameters()) < $this->minParams)) {
             throw new \InvalidArgumentException(get_class($this).' expects at least '.$this->minParams.' parameter(s) given: '
                 .count($this->getParameters()));
         }

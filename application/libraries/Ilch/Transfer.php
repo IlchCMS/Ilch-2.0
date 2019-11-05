@@ -336,12 +336,12 @@ class Transfer
         try {
             $newUpdate = url_get_contents($this->getDownloadUrl(), false, true);
             if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
-            $dlHandler = fopen($this->zipFile, 'w');
+            $dlHandler = fopen($this->zipFile, 'wb');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
 
             $newUpdate = url_get_contents($this->getDownloadSignatureUrl(), false, true);
-            $dlHandler = fopen($this->zipSigFile, 'w');
+            $dlHandler = fopen($this->zipSigFile, 'wb');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
         } finally {
@@ -469,7 +469,7 @@ class Transfer
                 if (!is_dir(ROOT_PATH.'/'.$thisFileName)) {
                     $content[] = 'New file: '.$thisFileName;
                     $contents = zip_entry_read($aF, zip_entry_filesize($aF));
-                    $updateThis = @fopen(ROOT_PATH.'/'.$thisFileName, 'w');
+                    $updateThis = @fopen(ROOT_PATH.'/'.$thisFileName, 'wb');
                     $bytesWritten = @fwrite($updateThis, $contents);
                     $successful = $updateThis !== false && $bytesWritten !== false;
                     @fclose($updateThis);
@@ -486,7 +486,7 @@ class Transfer
                     if ($thisFileName == $thisFileDir.'/config.php') {
                         include $thisFileName;
 
-                        $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $thisFileName)));
+                        $configClass = str_replace(array('.php', 'application', "/"), array('', '', "\\"), $thisFileName);
                         if (class_exists($configClass)) {
                             $config = new $configClass();
 
@@ -527,7 +527,7 @@ class Transfer
                 //If we need to run commands, then do it.
                 if ($thisFileName == $thisFileDir.'/config.php') {
                     include $thisFileName;
-                    $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $thisFileName)));
+                    $configClass = str_replace(array('.php', 'application', "/"), array('', '', "\\"), $thisFileName);
                     if (class_exists($configClass)) {
                         $config = new $configClass();
                         if (method_exists($config, 'install')) {

@@ -26,7 +26,7 @@ class ErrorBag
 
         foreach ($this->getErrors() as $errors) {
             foreach ($errors as $error) {
-                array_push($messages, $error);
+                $messages[] = $error;
             }
         }
 

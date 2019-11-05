@@ -77,7 +77,7 @@ class Base
     {
         $redirector = new \Ilch\Redirect($this->getRequest());
 
-        if (!is_null($url)) {
+        if ($url !== null) {
             $redirector->to($url, $route);
         }
 

@@ -130,7 +130,7 @@ class Joins extends \Ilch\Mapper
      * @return JoinsModel|null
      */
     public function getAge($date) {
-        return intval(date('Y', time() - strtotime($date))) - 1970;
+        return (int)date('Y', time() - strtotime($date)) - 1970;
     }
 
     /**

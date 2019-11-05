@@ -305,7 +305,7 @@ class Router
             $callback = $strategy;
         }
 
-        return call_user_func_array($callback, [$route, $params]);
+        return $callback($route, $params);
     }
 
     /**

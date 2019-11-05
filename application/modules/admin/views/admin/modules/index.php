@@ -8,7 +8,7 @@ $configurations = $this->get('configurations');
 $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
 $cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
 
-if (is_null($modulesOnUpdateServer)) {
+if ($modulesOnUpdateServer === null) {
     $modulesOnUpdateServer = [];
 }
 
