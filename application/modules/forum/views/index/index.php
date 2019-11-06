@@ -6,8 +6,7 @@ $usersWhoWasOnline = $this->get('usersWhoWasOnline');
 $usersOnline = $this->get('usersOnline');
 $guestOnline = $this->get('guestOnline');
 $forumStatistics = $this->get('forumStatics');
-$ins = $usersOnline+$guestOnline;
-$idHighestRankedGroup = $this->get('idHighestRankedGroup');
+$onlineUsersHighestRankedGroup = $this->get('onlineUsersHighestRankedGroup');
 
 function rec($item, $obj, $readAccess, $i)
 {
@@ -165,8 +164,8 @@ function rec($item, $obj, $readAccess, $i)
                 <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>" class="ilch-link"><?=$usersOnline+$guestOnline ?> <?=$this->getTrans('usersOnline') ?></a>. <?=$this->getTrans('registeredUsers') ?>: <?=$usersOnline ?>, <?=$this->getTrans('guests') ?>: <?=$guestOnline ?><br />
                 <ul class="user-list">
                     <?php foreach ($usersOnlineList as $user): ?>
-                        <?php if (!empty($idHighestRankedGroup)) : ?>
-                            <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><span class="forum appearance<?=$idHighestRankedGroup ?>"><?=$this->escape($user->getName()) ?></span></a></li>
+                        <?php if (!empty($onlineUsersHighestRankedGroup[$user->getId()])) : ?>
+                            <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><span class="forum appearance<?=$onlineUsersHighestRankedGroup[$user->getId()] ?>"><?=$this->escape($user->getName()) ?></span></a></li>
                         <?php else: ?>
                             <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><?=$this->escape($user->getName()) ?></a></li>
                         <?php endif; ?>

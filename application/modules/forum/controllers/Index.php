@@ -55,10 +55,22 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->add('linkTags', 'groupappearance', $linkTagModel);
         }
 
-        $groupRanking = $groupRankingMapper->getHighestRankOfGroups($groupIds);
+        $onlineUsersHighestRankedGroup = [];
+        foreach ($usersOnline as $user) {
+            foreach ($groupRankingMapper->getUserGroupsSortedByRank() as $groupRank) {
+                $groupRankId = $groupRank->getId();
+                foreach($user->getGroups() as $group) {
+                    $groupId = $group->getId();
+                    if ($groupRankId == $groupId) {
+                        $onlineUsersHighestRankedGroup[$user->getId()] = $groupId;
+                        break 2;
+                    }
+                }
+            }
+        }
 
         $this->getView()->set('groupIdsArray', $groupIds)
-            ->set('idHighestRankedGroup', (!empty($groupRanking)) ? $groupRanking->getGroupId() : null)
+            ->set('onlineUsersHighestRankedGroup', $onlineUsersHighestRankedGroup)
             ->set('forumItems', $forumItems)
             ->set('usersOnlineList', $usersOnline)
             ->set('usersWhoWasOnline', $whoWasOnlineUsers)
