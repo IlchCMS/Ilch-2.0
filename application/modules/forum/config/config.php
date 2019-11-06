@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.21.0',
+        'version' => '1.22.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -67,7 +67,7 @@ class Config extends \Ilch\Config\Install
         $appearance[1]['active'] = 'on';
         $appearance[1]['textcolor'] = '#000000';
         $appearance[1]['bold'] = 'on';
-        $databaseConfig->set('forum_groupAppearance', serialize($appearance));
+        $databaseConfig->set('forum_groupAppearance', json_encode($appearance));
 
         $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
         $filename = uniqid().'.css';
@@ -410,6 +410,11 @@ class Config extends \Ilch\Config\Install
             case "1.20.0":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('forum_DESCPostorder', '0');
+            case "1.21.0":
+                // convert forum_groupAppearance to new format
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $appearance = unserialize($databaseConfig->get('forum_groupAppearance'));
+                $databaseConfig->set('forum_groupAppearance', json_encode($appearance));
         }
     }
 }

@@ -110,7 +110,7 @@ class Settings extends \Ilch\Controller\Admin
             $filename = $this->writeCSSFile($appearances);
 
             if ($filename !== false) {
-                $appearances = serialize($appearances);
+                $appearances = json_encode($appearances);
                 $this->getConfig()->set('forum_groupAppearance', $appearances);
                 $this->getConfig()->set('forum_filenameGroupappearanceCSS', $filename);
 
@@ -122,7 +122,7 @@ class Settings extends \Ilch\Controller\Admin
             }
         }
 
-        $appearances = unserialize($this->getConfig()->get('forum_groupAppearance'));
+        $appearances = json_decode($this->getConfig()->get('forum_groupAppearance'), true);
         $this->getView()->set('appearances', $appearances);
         $this->getView()->set('groupList', $groupRankingMapper->getUserGroupsSortedByRank());
     }
