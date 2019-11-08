@@ -185,6 +185,12 @@ class Config extends \Ilch\Config\Install
                   <p>&nbsp;</p>
                   <p>Best regards</p>
                   <p>Administrator</p>", "en_EN");');
+
+                // Remove forbidden file extensions.
+                $blacklist = explode(' ', $databaseConfig->get('media_extensionBlacklist'));
+                $imageExtensions = explode(' ', $databaseConfig->get('teams_filetypes'));
+                $imageExtensions = array_diff($imageExtensions, $blacklist);
+                $databaseConfig->set('teams_filetypes', implode(' ', $imageExtensions));
         }
     }
 }

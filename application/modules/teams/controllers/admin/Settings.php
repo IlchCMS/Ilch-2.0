@@ -58,13 +58,22 @@ class Settings extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('teams_height', $this->getRequest()->getPost('image_height'));
-                $this->getConfig()->set('teams_width', $this->getRequest()->getPost('image_width'));
-                $this->getConfig()->set('teams_filetypes', strtolower($this->getRequest()->getPost('image_filetypes')));
+                $extensionBlacklist = explode(' ', $this->getConfig()->get('media_extensionBlacklist'));
+                $imageExtensions = explode(' ', strtolower($this->getRequest()->getPost('image_filetypes')));
 
-                $this->redirect()
-                    ->withMessage('saveSuccess')
+                if (!is_in_array($extensionBlacklist, $imageExtensions)) {
+                    $this->getConfig()->set('teams_height', $this->getRequest()->getPost('image_height'));
+                    $this->getConfig()->set('teams_width', $this->getRequest()->getPost('image_width'));
+                    $this->getConfig()->set('teams_filetypes', strtolower($this->getRequest()->getPost('image_filetypes')));
+
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['action' => 'index']);
+                } else {
+                    $this->redirect()
+                    ->withMessage('forbiddenExtension', 'danger')
                     ->to(['action' => 'index']);
+                }
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()

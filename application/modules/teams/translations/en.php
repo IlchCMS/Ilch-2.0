@@ -26,6 +26,7 @@ return [
     'imageHeight' => 'Maximum image height',
     'imageWidth' => 'Maximum image width',
     'allowedFileExtensions' => 'Allowed file extensions',
+    'forbiddenExtension' => 'You tried to add an forbidden file extension.',
     'failedFiletypes' => 'Image does not contain allowed file format.',
     'failedFilesize' => 'Image has unauthorized width, height or is too big.',
     'leaderCoLeaderIdentic' => 'The leader and co-leader are identic.',

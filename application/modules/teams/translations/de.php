@@ -26,6 +26,7 @@ return [
     'imageHeight' => 'Max. Bild Höhe',
     'imageWidth' => 'Max. Bild Breite',
     'allowedFileExtensions' => 'Erlaubte Dateiendungen',
+    'forbiddenExtension' => 'Sie haben versucht eine unerlaubte Dateiendung einzutragen.',
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
     'leaderCoLeaderIdentic' => 'Der Leader und CoLeader sind identisch.',

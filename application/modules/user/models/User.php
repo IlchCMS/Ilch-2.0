@@ -429,7 +429,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the groups of the user.
+     * Gets the groups of the user.
      *
      * @return Group[]
      */
