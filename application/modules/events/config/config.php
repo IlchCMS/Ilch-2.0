@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.13.0',
+        'version' => '1.14.0',
         'icon_small' => 'fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -37,7 +37,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.20',
+        'ilchCore' => '2.1.26',
         'phpVersion' => '5.6'
     ];
 
@@ -169,6 +169,12 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('event_upcoming_event_limit', '5')
                     ->set('event_current_event_limit', '5')
                     ->set('event_past_event_limit', '5');
+            case "1.13.0":
+                // Remove forbidden file extensions.
+                $blacklist = explode(' ', $databaseConfig->get('media_extensionBlacklist'));
+                $imageExtensions = explode(' ', $databaseConfig->get('event_filetypes'));
+                $imageExtensions = array_diff($imageExtensions, $blacklist);
+                $databaseConfig->set('event_filetypes', implode(' ', $imageExtensions));
         }
     }
 }

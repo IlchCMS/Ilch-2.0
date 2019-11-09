@@ -75,24 +75,32 @@ class Settings extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $groupAccesses = implode(",", $this->getRequest()->getPost('event_add_entries_accesses'));
                 $membersAccesses = implode(",", $this->getRequest()->getPost('event_show_members_accesses'));
+                $extensionBlacklist = explode(' ', $this->getConfig()->get('media_extensionBlacklist'));
+                $imageExtensions = explode(' ', strtolower($this->getRequest()->getPost('event_filetypes')));
 
-                $this->getConfig()->set('event_add_entries_accesses', $groupAccesses)
-                    ->set('event_show_members_accesses', $membersAccesses)
-                    ->set('event_box_event_limit', $this->getRequest()->getPost('event_box_event_limit'))
-                    ->set('event_upcoming_event_limit', $this->getRequest()->getPost('event_upcoming_event_limit'))
-                    ->set('event_current_event_limit', $this->getRequest()->getPost('event_current_event_limit'))
-                    ->set('event_past_event_limit', $this->getRequest()->getPost('event_past_event_limit'))
-                    ->set('event_height', $this->getRequest()->getPost('event_height'))
-                    ->set('event_width', $this->getRequest()->getPost('event_width'))
-                    ->set('event_size', $this->getRequest()->getPost('event_size'))
-                    ->set('event_filetypes', $this->getRequest()->getPost('event_filetypes'))
-                    ->set('event_google_maps_api_key', $this->getRequest()->getPost('event_google_maps_api_key'))
-                    ->set('event_google_maps_map_typ', $this->getRequest()->getPost('event_google_maps_map_typ'))
-                    ->set('event_google_maps_zoom', $this->getRequest()->getPost('event_google_maps_zoom'));
+                if (!is_in_array($extensionBlacklist, $imageExtensions)) {
+                    $this->getConfig()->set('event_add_entries_accesses', $groupAccesses)
+                        ->set('event_show_members_accesses', $membersAccesses)
+                        ->set('event_box_event_limit', $this->getRequest()->getPost('event_box_event_limit'))
+                        ->set('event_upcoming_event_limit', $this->getRequest()->getPost('event_upcoming_event_limit'))
+                        ->set('event_current_event_limit', $this->getRequest()->getPost('event_current_event_limit'))
+                        ->set('event_past_event_limit', $this->getRequest()->getPost('event_past_event_limit'))
+                        ->set('event_height', $this->getRequest()->getPost('event_height'))
+                        ->set('event_width', $this->getRequest()->getPost('event_width'))
+                        ->set('event_size', $this->getRequest()->getPost('event_size'))
+                        ->set('event_filetypes', $this->getRequest()->getPost('event_filetypes'))
+                        ->set('event_google_maps_api_key', $this->getRequest()->getPost('event_google_maps_api_key'))
+                        ->set('event_google_maps_map_typ', $this->getRequest()->getPost('event_google_maps_map_typ'))
+                        ->set('event_google_maps_zoom', $this->getRequest()->getPost('event_google_maps_zoom'));
 
-                $this->redirect()
-                    ->withMessage('saveSuccess')
-                    ->to(['action' => 'index']);
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['action' => 'index']);
+                } else {
+                    $this->redirect()
+                        ->withMessage('forbiddenExtension', 'danger')
+                        ->to(['action' => 'index']);
+                }
             }
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
