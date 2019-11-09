@@ -766,7 +766,7 @@ class User extends \Ilch\Model
      */
     public function isAdmin()
     {
-        if (in_array(1, array_keys($this->getGroups()))) {
+        if (array_key_exists(1, $this->getGroups())) {
             return true;
         }
 

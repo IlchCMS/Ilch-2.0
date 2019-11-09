@@ -42,7 +42,7 @@ class AuthProvider extends \Ilch\Mapper
             ->execute();
 
         while ($obj = $result->fetchObject(Provider::class, [])) {
-            array_push($providers, $obj);
+            $providers[] = $obj;
         }
 
         return $providers;
@@ -76,7 +76,7 @@ class AuthProvider extends \Ilch\Mapper
             ->execute();
 
         while ($obj = $result->fetchObject(AuthProviderModule::class, [])) {
-            array_push($providers, $obj);
+            $providers[] = $obj;
         }
 
         return $providers;

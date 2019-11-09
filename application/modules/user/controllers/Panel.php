@@ -152,7 +152,7 @@ class Panel extends BaseController
             $file_size = $_FILES['avatar']['size'];
             $imageInfo = getimagesize($file_tmpe);
 
-            if (in_array($endung, explode(' ', $avatarAllowedFiletypes)) && strpos($imageInfo['mime'], 'image/') === 0) {
+            if (in_array($endung, explode(' ', $avatarAllowedFiletypes)) && strncmp($imageInfo['mime'], 'image/', 6) === 0) {
                 $width = $imageInfo[0];
                 $height = $imageInfo[1];
 

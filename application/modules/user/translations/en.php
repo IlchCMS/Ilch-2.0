@@ -120,6 +120,7 @@ return [
     'avatarSize' => 'image Size',
     'maxFilesize' => 'Maximum file size',
     'allowedFileExtensions' => 'Allowed file extensions',
+    'forbiddenExtension' => 'You tried to add an forbidden file extension.',
     'avatarDelete' => 'Avatar delete?',
     'avatarSuccessDelete' => 'Avatar successfully deleted',
     'rulesForRegist' => 'Rules for registration',

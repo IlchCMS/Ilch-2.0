@@ -107,7 +107,8 @@ class Group extends \Ilch\Controller\Admin
         $groupUsers = [];
 
         foreach ($groupList as $group) {
-            $groupUsers[$group->getId()] = $groupMapper->getUsersForGroup($group->getId());
+            $groupId = $group->getId();
+            $groupUsers[$groupId] = $groupMapper->getUsersForGroup($groupId);
         }
 
         $this->getView()->set('groupUsersList', $groupUsers);

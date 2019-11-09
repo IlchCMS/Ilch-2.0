@@ -601,6 +601,15 @@ class Config extends \Ilch\Config\Install
                   `img` VARCHAR(255) NOT NULL,
                   `img_source` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // Remove forbidden file extensions.
+                $targets = ['avatar_filetypes', 'usergallery_filetypes'];
+                $blacklist = explode(' ', $databaseConfig->get('media_extensionBlacklist'));
+                foreach ($targets as $target) {
+                    $array = explode(' ', $databaseConfig->get($target));
+                    $array = array_diff($array, $blacklist);
+                    $databaseConfig->set($target, implode(' ', $array));
+                }
                 break;
         }
 

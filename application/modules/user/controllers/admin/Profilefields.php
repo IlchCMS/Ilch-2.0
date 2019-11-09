@@ -90,7 +90,7 @@ class ProfileFields extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
             $positions = explode(',', $postData['hiddenMenu']);
-            for ($x = 0; $x < count($positions); $x++) {
+            for ($x = 0, $xMax = count($positions); $x < $xMax; $x++) {
                 $profileFieldsMapper->updatePositionById($positions[$x], $x);
             }
             $this->addMessage('success');
@@ -126,7 +126,7 @@ class ProfileFields extends \Ilch\Controller\Admin
             $profileField = $profileFieldsMapper->loadFromArray($profileFieldData);
             $profileFieldId = $profileFieldsMapper->save($profileField);
 
-            for ($i = 0; $i < count($postData); $i++) {
+            for ($i = 0, $iMax = count($postData); $i < $iMax; $i++) {
                 if (isset($postData['profileFieldTrans'.$i])) {
                     $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
