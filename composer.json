@@ -23,7 +23,8 @@
         "sphido/events": "^0.3",
         "paragonie/random_compat": ">=1",
         "harvesthq/chosen": "^1.8",
-        "ezyang/htmlpurifier": "^4.11"
+        "ezyang/htmlpurifier": "^4.11",
+        "blueimp/jquery-file-upload": "^10.3.0"
     },
     "require-dev": {
         "maximebf/debugbar": "^1.12",

@@ -614,6 +614,12 @@ class Config extends \Ilch\Config\Install
 
                 removeDir(ROOT_PATH.'/vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+
+                // Remove no longer needed files
+                unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.fileupload.js');
+                unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.iframe-transport.js');
+                unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.ui.widget.js');
+                unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.knob.js');
                 break;
         }
 
