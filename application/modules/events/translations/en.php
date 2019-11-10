@@ -60,6 +60,7 @@ return [
     'imageSize' => 'Image size',
     'maxFilesize' => 'Maximum file size',
     'imageAllowedFileExtensions' => 'Allowed file extensions',
+    'forbiddenExtension' => 'You tried to add an forbidden file extension.',
     'successImage' => 'Image changed successfully',
     'failedFiletypes' => 'Image does not contain allowed file format.',
     'failedFilesize' => 'Image has unauthorized width, height or is too big.',

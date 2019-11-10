@@ -610,6 +610,9 @@ class Config extends \Ilch\Config\Install
                     $array = array_diff($array, $blacklist);
                     $databaseConfig->set($target, implode(' ', $array));
                 }
+
+                removeDir(ROOT_PATH.'/vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
         }
 

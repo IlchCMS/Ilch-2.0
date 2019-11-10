@@ -60,6 +60,7 @@ return [
     'imageSize' => 'Bildgröße',
     'maxFilesize' => 'Maximale Dateigröße',
     'imageAllowedFileExtensions' => 'Erlaubte Dateiendungen',
+    'forbiddenExtension' => 'Sie haben versucht eine unerlaubte Dateiendung einzutragen.',
     'successImage' => 'Bild erfolgreich hochgeladen',
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
