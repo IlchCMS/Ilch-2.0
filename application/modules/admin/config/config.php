@@ -603,6 +603,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
 
                 // Remove forbidden file extensions.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
                 $targets = ['avatar_filetypes', 'usergallery_filetypes'];
                 $blacklist = explode(' ', $databaseConfig->get('media_extensionBlacklist'));
                 foreach ($targets as $target) {
