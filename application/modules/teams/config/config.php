@@ -6,6 +6,8 @@
 
 namespace Modules\Teams\Config;
 
+use\Ilch\Config\Database as IlchDatabase;
+
 class Config extends \Ilch\Config\Install
 {
     public $config = [
@@ -167,6 +169,11 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_teams` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.10.0":
+            case "1.11.0":
+            case "1.12.0":
+            case "1.13.0":
+            case "1.14.0":
             case "1.15.0":
                 // Add notifyLeader column
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `notifyLeader` TINYINT(1) NOT NULL AFTER `optIn`;');
@@ -187,6 +194,7 @@ class Config extends \Ilch\Config\Install
                   <p>Administrator</p>", "en_EN");');
 
                 // Remove forbidden file extensions.
+                $databaseConfig = new IlchDatabase($this->db());
                 $blacklist = explode(' ', $databaseConfig->get('media_extensionBlacklist'));
                 $imageExtensions = explode(' ', $databaseConfig->get('teams_filetypes'));
                 $imageExtensions = array_diff($imageExtensions, $blacklist);

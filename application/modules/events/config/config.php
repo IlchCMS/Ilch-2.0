@@ -169,8 +169,10 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('event_upcoming_event_limit', '5')
                     ->set('event_current_event_limit', '5')
                     ->set('event_past_event_limit', '5');
+            case "1.12.0":
             case "1.13.0":
                 // Remove forbidden file extensions.
+                $databaseConfig = new IlchDatabase($this->db());
                 $blacklist = explode(' ', $databaseConfig->get('media_extensionBlacklist'));
                 $imageExtensions = explode(' ', $databaseConfig->get('event_filetypes'));
                 $imageExtensions = array_diff($imageExtensions, $blacklist);
