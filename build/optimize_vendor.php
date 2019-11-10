@@ -78,6 +78,14 @@ $directories = [
             'bootstrap/README.md',
         ]
     ],
+    'blueimp' => [
+        'keep' => [
+            'jquery-file-upload/js/vendor/jquery.ui.widget.js',
+            'jquery-file-upload/js/jquery.fileupload.js',
+            'jquery-file-upload/js/jquery.iframe-transport.js',
+            'jquery-file-upload/LICENSE.txt',
+        ]
+    ],
 ];
 
 /**
