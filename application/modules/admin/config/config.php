@@ -589,7 +589,7 @@ class Config extends \Ilch\Config\Install
 
                 // Add articles_templates table
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_articles_templates` (
-                  `id` INT(11) NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `author_id` INT(11) NOT NULL,
                   `content` MEDIUMTEXT NOT NULL,
                   `description` MEDIUMTEXT NOT NULL,
@@ -599,8 +599,9 @@ class Config extends \Ilch\Config\Install
                   `teaser` VARCHAR(255) NOT NULL,
                   `perma` VARCHAR(255) NOT NULL,
                   `img` VARCHAR(255) NOT NULL,
-                  `img_source` VARCHAR(255) NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+                  `img_source` VARCHAR(255) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
                 // Remove forbidden file extensions.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
