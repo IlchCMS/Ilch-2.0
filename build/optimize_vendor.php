@@ -78,6 +78,13 @@ $directories = [
             'bootstrap/README.md',
         ]
     ],
+    'ezyang' => [
+        'keep' => [
+            'htmlpurifier/library/',
+            'htmlpurifier/CREDITS',
+            'htmlpurifier/LICENSE',
+        ]
+    ],
     'blueimp' => [
         'keep' => [
             'jquery-file-upload/js/vendor/jquery.ui.widget.js',
