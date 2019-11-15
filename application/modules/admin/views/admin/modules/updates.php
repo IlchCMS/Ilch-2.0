@@ -85,12 +85,14 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                     }
                 }
 
-                if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()):
-                    if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))): ?>
-                    <tr id="Module_<?=$module->getKey() ?>">
-                    <?php else: 
+                // Skip module if no update is available
+                if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))) {
+                    continue;
+                } else {
                     $found = true;
-                    ?>
+                }
+
+                if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
                     <tr id="Module_<?=$module->getKey() ?>">
                         <td>
                             <?=$content['name'] ?>
@@ -199,7 +201,6 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <?=$content['description'] ?>
                             <?=(!empty($moduleUpdateInformation->official) && $moduleUpdateInformation->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
                         </td>
-                    <?php endif; ?>
                     </tr>
 
                     <?php
