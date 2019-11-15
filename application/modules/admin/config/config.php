@@ -613,7 +613,8 @@ class Config extends \Ilch\Config\Install
                     $databaseConfig->set($target, implode(' ', $array));
                 }
 
-                removeDir(ROOT_PATH.'/vendor');
+                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
+                removeDir(ROOT_PATH.'/delete_vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
 
                 // Remove no longer needed files
