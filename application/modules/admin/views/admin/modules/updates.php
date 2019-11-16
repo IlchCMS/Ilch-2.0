@@ -7,7 +7,7 @@ $dependencies = $this->get('dependencies');
 $configurations = $this->get('configurations');
 $found = false;
 $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
-$cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
+$cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 
 if ($modulesOnUpdateServer === null) {
     $modulesOnUpdateServer = [];
@@ -51,10 +51,10 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 <h1><?=$this->getTrans('updatesAvailable') ?></h1>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
 <div class="checkbox">
-  <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')?"checked":"" ?>/><?=$this->getTrans('gotokey') ?></label>
+  <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey') ? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
 </div>
 <div id="modules" class="table-responsive">
-    <table class="table table-hover table-striped">
+    <table class="table withEmptyCells table-hover table-striped">
         <colgroup>
             <col class="col-lg-2" />
             <col class="col-lg-1" />
@@ -79,20 +79,19 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                 }
 
                 foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
-                    if ($moduleOnUpdateServer->key == $module->getKey()) {
+                    if ($moduleOnUpdateServer->key === $module->getKey()) {
                         $moduleUpdate['updateserver'] = $moduleOnUpdateServer;
                         break;
                     }
                 }
 
-                // Skip module if no update is available
-                if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))) {
-                    continue;
-                } else {
+                if (!$module->getSystemModule() && $this->getUser()->hasAccess('module_'.$module->getKey())):
+                    if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))): ?>
+                    <tr id="Module_<?=$module->getKey() ?>"></tr>
+                    <?php continue; ?>
+                    <?php else: 
                     $found = true;
-                }
-
-                if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
+                    ?>
                     <tr id="Module_<?=$module->getKey() ?>">
                         <td>
                             <?=$content['name'] ?>
@@ -111,8 +110,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('administrate') ?>">
                                 <i class="fa fa-pencil text-success"></i>
                             </a>
-                            <?php if ($module->getKey() == $moduleOnUpdateServer->key): ?>
-                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                            <?php if ($module->getKey() === $moduleOnUpdateServer->key): ?>
+                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-default">
                                         <i class="fa fa-info text-info"></i>
                                     </span></a>
@@ -133,8 +132,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                     }
                                 }
 
-                                $icon = ($source == 'local') ? 'fa fa-download': 'fa fa-cloud-download';
-                                if (!empty($moduleUpdateInformation->phpExtensions) AND in_array(false, $extensionCheck)): ?>
+                                $icon = ($source === 'local') ? 'fa fa-download': 'fa fa-cloud-download';
+                                if (!empty($moduleUpdateInformation->phpExtensions) && in_array(false, $extensionCheck)): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('phpExtensionError') ?>">
                                         <i class="<?=$icon ?>"></i>
@@ -161,20 +160,20 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                             title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
-                                <?php elseif ($source == 'local' && !empty($moduleUpdateInformation)): ?>
+                                <?php elseif ($source === 'local' && !empty($moduleUpdateInformation)): ?>
                                     <form method="POST" action="<?=$this->getUrl(['action' => 'localUpdate', 'key' => $moduleUpdateInformation->key, 'from' => 'updates']) ?>">
                                         <?=$this->getTokenField() ?>
-                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
+                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey') ? '1' : '0' ?>" />
                                         <button type="submit"
                                                 class="btn btn-default showOverlay"
                                                 title="<?=$this->getTrans('localModuleUpdate') ?>">
                                             <i class="<?=$icon ?>"></i>
                                         </button>
                                     </form>
-                                <?php elseif ($source == 'updateserver' && version_compare($versionsOfModules[$moduleUpdateInformation->key]['version'], $moduleUpdateInformation->version, '<')): ?>
+                                <?php elseif ($source === 'updateserver' && version_compare($versionsOfModules[$moduleUpdateInformation->key]['version'], $moduleUpdateInformation->version, '<')): ?>
                                     <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleUpdateInformation->key, 'version' => $moduleUpdateInformation->version, 'from' => 'updates']) ?>">
                                         <?=$this->getTokenField() ?>
-                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
+                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey') ? '1' : '0' ?>" />
                                         <button type="submit"
                                                 class="btn btn-default showOverlay"
                                                 title="<?=$this->getTrans('moduleUpdate') ?>">
@@ -202,6 +201,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <?=(!empty($moduleUpdateInformation->official) && $moduleUpdateInformation->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
                         </td>
                     </tr>
+                    <?php endif; ?>
 
                     <?php
                     if ($module->getLink() != '') {
@@ -229,12 +229,12 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 
                     echo $this->getDialog('dependencyInfoModal'.$module->getKey(), $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo);
                     ?>
-                    <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
+                    <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo) ?>
                 <?php endif; ?>
             <?php endforeach; ?>
             <?php if (!$found) : ?>
                 <tr>
-                    <td colspan="3"><?=$this->getTrans('noUpdatesAvailable'); ?></td>
+                    <td colspan="3"><?=$this->getTrans('noUpdatesAvailable') ?></td>
                 </tr>
             <?php endif; ?>
         </tbody>

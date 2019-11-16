@@ -217,6 +217,11 @@ aside nav ul .active > a {
 .table {
     border: 1px solid #ccc;
 }
+
+.withEmptyCells {
+    border-collapse: separate;
+}
+
 .watermark {
     opacity: 0.2;
     position: fixed;
