@@ -35,6 +35,27 @@ class ProfileFieldsContent extends \Ilch\Mapper
     }
 
     /**
+    *Return a ProfileKeyByUserId.
+    *
+    *
+    */
+
+    public function getProfileFieldContentByUserIdAndKey($userId, $key)
+    {
+        $profileFieldContentRow = $this->db()->select('*')
+            ->from('profile_content')
+            ->where(['user_id' => $userId, 'key' => $key])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($profileFieldContentRow)) {
+            return null;
+        }
+
+        return $this->loadFromArray($profileFieldContentRow);
+    }
+
+    /**
      * Returns a ProfileFieldContentModel created using an array with data.
      *
      * @param  mixed[] $profileFieldRow
