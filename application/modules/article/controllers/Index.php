@@ -26,10 +26,8 @@ class Index extends \Ilch\Controller\Frontend
     {
         $locale = '';
 
-        if ((bool)$this->getConfig()->get('multilingual_acp')) {
-            if ($this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
-                $locale = $this->getTranslator()->getLocale();
-            }
+        if ((bool)$this->getConfig()->get('multilingual_acp') && $this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
+            $locale = $this->getTranslator()->getLocale();
         }
 
         $this->locale = $locale;
@@ -81,6 +79,7 @@ class Index extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
         $config = \Ilch\Registry::get('config');
         $hasReadAccess = true;
+        $article = null;
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuArticle'));
@@ -88,7 +87,7 @@ class Index extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
 
         // Preview from creating/editing an article
-        if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
+        if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') === 'true') {
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('preview'));
             $this->getLayout()->getHmenu()
@@ -96,7 +95,7 @@ class Index extends \Ilch\Controller\Frontend
 
             $catIds = '';
             if ($this->getRequest()->getPost('cats')) {
-                $catIds = implode(",", $this->getRequest()->getPost('cats'));
+                $catIds = implode(',', $this->getRequest()->getPost('cats'));
             }
 
             $article = new ArticleModel();
@@ -108,10 +107,11 @@ class Index extends \Ilch\Controller\Frontend
                 ->setImage($this->getRequest()->getPost('image'))
                 ->setImageSource($this->getRequest()->getPost('imageSource'))
                 ->setVisits(0);
+        } else {
+            $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), $this->locale);
         }
 
-        $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), $this->locale);
-        if (empty($article)) {
+        if ($article === null) {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Article', 'errorText' => 'notFound']);
             return;
         }
@@ -133,9 +133,9 @@ class Index extends \Ilch\Controller\Frontend
             $adminAccess = $this->getUser()->isAdmin();
         }
 
-        $hasReadAccess = (is_in_array($readAccess, explode(',', $article->getReadAccess())) || $adminAccess == true);
+        $hasReadAccess = (is_in_array($readAccess, explode(',', $article->getReadAccess())) || $adminAccess === true);
 
-        if (!$article->getCommentsDisabled() && $hasReadAccess) {
+        if ($hasReadAccess && !$article->getCommentsDisabled()) {
             if ($this->getRequest()->getPost('saveComment')) {
                 $date = new \Ilch\Date();
                 $commentModel = new CommentModel();
@@ -153,14 +153,14 @@ class Index extends \Ilch\Controller\Frontend
                 $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
             }
 
-            if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') == 'up' || $this->getRequest()->getParam('key') == 'down')) {
+            if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
                 $id = $this->getRequest()->getParam('id');
                 $commentId = $this->getRequest()->getParam('commentId');
                 $oldComment = $commentMapper->getCommentById($commentId);
 
                 $commentModel = new CommentModel();
                 $commentModel->setId($commentId);
-                if ($this->getRequest()->getParam('key') == 'up') {
+                if ($this->getRequest()->getParam('key') === 'up') {
                     $commentModel->setUp($oldComment->getUp()+1);
                 } else {
                     $commentModel->setDown($oldComment->getDown()+1);
@@ -180,7 +180,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index']);
 
-        $catIds = explode(",", $article->getCatId());
+        $catIds = explode(',', $article->getCatId());
         foreach ($catIds as $catId) {
             $articlesCats = $categoryMapper->getCategoryById($catId);
             $this->getLayout()->getTitle()->add($articlesCats->getName());
@@ -274,12 +274,13 @@ class Index extends \Ilch\Controller\Frontend
                 $adminAccess = $this->getUser()->isAdmin();
             }
 
-            $hasReadAccess = (is_in_array($readAccess, explode(',', $article->getReadAccess())) || $adminAccess == true);
+            if ($article !== null) {
+                $hasReadAccess = (is_in_array($readAccess, explode(',', $article->getReadAccess())) || $adminAccess === true);
 
-            if ($hasReadAccess) {
-                $articleMapper->saveVotes($id, $this->getUser()->getId());
+                if ($hasReadAccess) {
+                    $articleMapper->saveVotes($id, $this->getUser()->getId());
+                }
             }
-
         }
 
         $this->redirect(['action' => $this->getRequest()->getParam('from'), 'id' => $id]);

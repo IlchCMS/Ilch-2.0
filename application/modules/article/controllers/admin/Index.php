@@ -52,7 +52,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'index' && $this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getControllerName() === 'index' && $this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -74,7 +74,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_articles')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_articles')) {
             $commentMapper = new CommentMapper();
             foreach ($this->getRequest()->getPost('check_articles') as $articleId) {
                 $articleMapper->deleteWithComments($articleId, $commentMapper);
@@ -126,7 +126,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $catIds = implode(",", $this->getRequest()->getPost('cats'));
+                $catIds = implode(',', $this->getRequest()->getPost('cats'));
                 $model = new ArticleModel();
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
