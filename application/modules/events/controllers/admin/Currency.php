@@ -42,7 +42,7 @@ class Currency extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[1][0]['active'] = true;
         } else {
             $items[1]['active'] = true;
@@ -65,7 +65,7 @@ class Currency extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('currencies'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
-            if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_currencies')) {
+            if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_currencies')) {
                 foreach ($this->getRequest()->getPost('check_currencies') as $id) {
                     if ($eventMapper->getEntries(['currency' => $this->getRequest()->getParam('id')])) {
                         $this->addMessage('currencyInUse', 'danger');

@@ -63,7 +63,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
 
-        if ($this->getRequest()->getParam('id')) {
+        if ($event !== null && $this->getRequest()->getParam('id')) {
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('menuEvents'))
                 ->add($event->getTitle())
@@ -125,14 +125,14 @@ class Index extends \Ilch\Controller\Frontend
                         if ($file_size <= $imageSize) {
                             $image = $path.time().'.'.$endung;
 
-                            if ($this->getRequest()->getParam('id') AND $event->getImage() != '') {
+                            if ($this->getRequest()->getParam('id') && $event->getImage() != '') {
                                 $eventMapper->delImageById($this->getRequest()->getParam('id'));
                             }
 
                             $eventModel->setImage($image);
 
                             if (move_uploaded_file($file_tmpe, $image)) {
-                                if ($width > $imageWidth OR $height > $imageHeight) {
+                                if ($width > $imageWidth || $height > $imageHeight) {
                                     $upload = new \Ilch\Upload();
 
                                     if (!$upload->enoughFreeMemory($image)) {

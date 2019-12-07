@@ -101,7 +101,7 @@ class Show extends \Ilch\Controller\Frontend
             $showMembersAccess = [3];
         }
 
-        if (is_in_array($readAccess, explode(',', $event->getReadAccess())) OR $this->getUser() AND $this->getUser()->isAdmin()) {
+        if (is_in_array($readAccess, explode(',', $event->getReadAccess())) || ($this->getUser() && $this->getUser()->isAdmin())) {
             $this->getLayout()->getTitle()
                 ->add($event->getTitle());
             $this->getLayout()->getHmenu()

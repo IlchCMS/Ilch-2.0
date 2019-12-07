@@ -32,7 +32,7 @@
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $event->getId()]) ?></td>
                             <td>
                                 <?=date('d.m.Y H:i', strtotime($event->getStart())) ?>
-                                <?php if ($event->getEnd() != '0000-00-00 00:00:00'): ?>
+                                <?php if ($event->getEnd() !== '0000-00-00 00:00:00'): ?>
                                     - <?=date('H:i', strtotime($event->getEnd())) ?>
                                 <?php endif; ?>
                             </td>

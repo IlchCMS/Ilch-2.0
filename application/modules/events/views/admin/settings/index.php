@@ -14,7 +14,7 @@
                     data-placeholder="<?=$this->getTrans('selectGroupAccesses') ?>"
                     multiple>
                 <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <?php if ($groupList->getId() != 1 AND $groupList->getId() != 3): ?>
+                    <?php if ($groupList->getId() != 1 && $groupList->getId() != 3): ?>
                         <option value="<?=$groupList->getId() ?>"
                             <?php $addEntriesAccessesIds = explode(',', $this->get('event_add_entries_accesses'));
                             foreach ($addEntriesAccessesIds as $addEntriesAccessesId) {
@@ -179,10 +179,10 @@
         </label>
         <div class="col-lg-2">
             <select class="form-control" id="event_google_maps_map_typ" name="event_google_maps_map_typ">
-                <option <?php if ($this->get('event_google_maps_map_typ') == 'ROADMAP') { echo 'selected="selected"'; } ?> value="ROADMAP">ROADMAP</option>
-                <option <?php if ($this->get('event_google_maps_map_typ') == 'SATELLITE') { echo 'selected="selected"'; } ?> value="SATELLITE">SATELLITE</option>
-                <option <?php if ($this->get('event_google_maps_map_typ') == 'HYBRID') { echo 'selected="selected"'; } ?> value="HYBRID">HYBRID</option>
-                <option <?php if ($this->get('event_google_maps_map_typ') == 'TERRAIN') { echo 'selected="selected"'; } ?> value="TERRAIN">TERRAIN</option>
+                <option <?php if ($this->get('event_google_maps_map_typ') === 'ROADMAP') { echo 'selected="selected"'; } ?> value="ROADMAP">ROADMAP</option>
+                <option <?php if ($this->get('event_google_maps_map_typ') === 'SATELLITE') { echo 'selected="selected"'; } ?> value="SATELLITE">SATELLITE</option>
+                <option <?php if ($this->get('event_google_maps_map_typ') === 'HYBRID') { echo 'selected="selected"'; } ?> value="HYBRID">HYBRID</option>
+                <option <?php if ($this->get('event_google_maps_map_typ') === 'TERRAIN') { echo 'selected="selected"'; } ?> value="TERRAIN">TERRAIN</option>
             </select>
         </div>
     </div>
@@ -219,7 +219,7 @@
     <?=$this->getSaveBar() ?>
 </form>
 
-<?=$this->getDialog('googleMapsAPIInfoModal', $this->getTrans('createGoogleMapsAPIKey'), $this->getTrans('googleMapsAPIKeyInfoText')); ?>
+<?=$this->getDialog('googleMapsAPIInfoModal', $this->getTrans('createGoogleMapsAPIKey'), $this->getTrans('googleMapsAPIKeyInfoText')) ?>
 
 <script>
     $('#event_add_entries_accesses, #event_show_members_accesses').chosen();

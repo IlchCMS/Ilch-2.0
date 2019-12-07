@@ -13,10 +13,10 @@ $entrantsMapper = $this->get('entrantsMapper');
                     <?php $eventEntrants = $entrantsMapper->getEventEntrantsById($eventlist->getId()) ?>
                     <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
                     <?php $agree = 0; $maybe = 0; ?>
-                    <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND $this->getUser()->hasAccess('module_events')): ?>
+                    <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) || ($this->getUser() && $this->getUser()->hasAccess('module_events'))): ?>
                         <li>
                             <time>
-                                <span class="day"><?=$date->format("j") ?></span>
+                                <span class="day"><?=$date->format('j') ?></span>
                                 <span class="month"><?=$this->getTrans($date->format('M')) ?></span>
                             </time>
                             <div class="info">

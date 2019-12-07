@@ -48,7 +48,7 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
+            if ($this->getRequest()->getPost('action') === 'delete') {
                 foreach ($this->getRequest()->getPost('check_entries') as $eventId) {
                     $eventMapper->delete($eventId);
                 }

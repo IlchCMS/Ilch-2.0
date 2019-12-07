@@ -229,9 +229,7 @@ class Events extends \Ilch\Mapper
      */
     public function existsTable($table)
     {
-        $module = $this->db()->ifTableExists('[prefix]_'.$table);
-
-        return $module;
+        return $this->db()->ifTableExists('[prefix]_'.$table);
     }
 
     /**
@@ -288,11 +286,15 @@ class Events extends \Ilch\Mapper
         $prepAddr = str_replace(' ', '+', $address);
         $geocode = url_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$prepAddr.'&key='.$googleMapsKey);
         $output = json_decode($geocode);
+
+        // "OK" indicates that no errors occurred; the address was successfully parsed and at least one geocode was returned.
+        if (empty($output) || $output->status !== 'OK') {
+            return null;
+        }
+
         $latitude = $output->results[0]->geometry->location->lat;
         $longitude = $output->results[0]->geometry->location->lng;
-        $latlongitude = $latitude.','.$longitude;
-
-        return $latlongitude;
+        return $latitude.','.$longitude;
     }
 
     /**

@@ -73,8 +73,8 @@ class Settings extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $groupAccesses = implode(",", $this->getRequest()->getPost('event_add_entries_accesses'));
-                $membersAccesses = implode(",", $this->getRequest()->getPost('event_show_members_accesses'));
+                $groupAccesses = implode(',', $this->getRequest()->getPost('event_add_entries_accesses'));
+                $membersAccesses = implode(',', $this->getRequest()->getPost('event_show_members_accesses'));
                 $extensionBlacklist = explode(' ', $this->getConfig()->get('media_extensionBlacklist'));
                 $imageExtensions = explode(' ', strtolower($this->getRequest()->getPost('event_filetypes')));
 

@@ -19,17 +19,17 @@ $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
     
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li <?php if ($this->getRequest()->getActionName() == 'index') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']); ?>"><i class="fa fa-list"></i>&nbsp; <?=$this->getTrans('naviEventsAll') ?></a></li>
-                <li <?php if ($this->getRequest()->getActionName() == 'upcoming') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'upcoming']); ?>"><i class="fa fa-history fa-flip-horizontal"></i>&nbsp; <?=$this->getTrans('naviEventsUpcoming') ?></a></li>
-                <li <?php if ($this->getRequest()->getActionName() == 'current') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'current']); ?>"><i class="fa fa-history fa-flip-horizontal"></i>&nbsp; <?=$this->getTrans('naviEventsCurrent') ?></a></li>
-                <li <?php if ($this->getRequest()->getActionName() == 'past') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'past']); ?>"><i class="fa fa-history"></i>&nbsp; <?=$this->getTrans('naviEventsPast') ?></a></li>
+                <li <?php if ($this->getRequest()->getActionName() === 'index') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><i class="fa fa-list"></i>&nbsp; <?=$this->getTrans('naviEventsAll') ?></a></li>
+                <li <?php if ($this->getRequest()->getActionName() === 'upcoming') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'upcoming']) ?>"><i class="fa fa-history fa-flip-horizontal"></i>&nbsp; <?=$this->getTrans('naviEventsUpcoming') ?></a></li>
+                <li <?php if ($this->getRequest()->getActionName() === 'current') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'current']) ?>"><i class="fa fa-history fa-flip-horizontal"></i>&nbsp; <?=$this->getTrans('naviEventsCurrent') ?></a></li>
+                <li <?php if ($this->getRequest()->getActionName() === 'past') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'past']) ?>"><i class="fa fa-history"></i>&nbsp; <?=$this->getTrans('naviEventsPast') ?></a></li>
                 <?php if ($this->getUser()): ?>
-                    <li <?php if ($this->getRequest()->getActionName() == 'participation') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'participation']); ?>"><i class="fa fa-sign-in"></i>&nbsp; <?=$this->getTrans('naviEventsParticipation') ?></a></li>
+                    <li <?php if ($this->getRequest()->getActionName() === 'participation') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'participation']) ?>"><i class="fa fa-sign-in"></i>&nbsp; <?=$this->getTrans('naviEventsParticipation') ?></a></li>
                 <?php endif; ?>
             </ul>
-            <?php if ($this->getUser() AND (in_array($this->getUser()->getId(), $groupAccesses) OR $this->getUser()->hasAccess('module_events'))): ?>
+            <?php if ($this->getUser() && (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->hasAccess('module_events'))): ?>
                 <ul class="nav navbar-nav navbar-right">
-                    <li <?php if ($this->getRequest()->getActionName() == 'treat') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treat']); ?>"><i class="fa fa-plus"></i>&nbsp; <?=$this->getTrans('naviEventsAdd') ?></a></li>
+                    <li <?php if ($this->getRequest()->getActionName() === 'treat') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treat']) ?>"><i class="fa fa-plus"></i>&nbsp; <?=$this->getTrans('naviEventsAdd') ?></a></li>
                 </ul>
             <?php endif; ?>
         </div>

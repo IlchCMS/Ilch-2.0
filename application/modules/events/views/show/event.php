@@ -26,7 +26,7 @@ if (!empty($event)) {
 <?php if (!empty($event)): ?>
     <h1>
         <?=$this->getTrans('event') ?>
-        <?php if ($this->getUser() AND ($event->getUserId() == $this->getUser()->getId() OR $this->getUser()->hasAccess('module_events'))): ?>
+        <?php if ($this->getUser() && ($event->getUserId() == $this->getUser()->getId() || $this->getUser()->hasAccess('module_events'))): ?>
             <div class="pull-right">
                 <?=$this->getEditIcon(['controller' => 'index', 'action' => 'treat', 'id' => $event->getId()]) ?>
                 <?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $event->getId()]) ?>
@@ -43,7 +43,7 @@ if (!empty($event)) {
                     <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>" class="headPic" alt="<?=$this->getTrans('headpic') ?>">
                 <?php endif; ?>
                 <div class="datePic">
-                    <div class="dateDayPic"><?=$start->format("d") ?></div>
+                    <div class="dateDayPic"><?=$start->format('d') ?></div>
                     <div class="dateMonthPic"><?=$this->getTrans($start->format('M')) ?></div>
                 </div>
                 <div class="titlePic"><?=$this->escape($event->getTitle()) ?></div>
@@ -55,7 +55,7 @@ if (!empty($event)) {
                     </div>
                 <?php endif; ?>
                 <div class="naviButtons">
-                    <?php if ($this->getUser() AND $event->getStart() > new \Ilch\Date()): ?>
+                    <?php if ($this->getUser() && $event->getStart() > new \Ilch\Date()): ?>
                         <form class="form-horizontal" method="POST" action="">
                             <?=$this->getTokenField() ?>
                             <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
@@ -82,7 +82,7 @@ if (!empty($event)) {
                                     <?=$this->getTrans('decline') ?>
                                 </button>
                             <?php else: ?>
-                                <?php if ($eventEntrantsCount < $event->getUserLimit() OR $event->getUserLimit() == 0): ?>
+                                <?php if ($eventEntrantsCount < $event->getUserLimit() || $event->getUserLimit() == 0): ?>
                                     <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
                                         <?=$this->getTrans('join') ?>
                                     </button>
@@ -101,17 +101,17 @@ if (!empty($event)) {
             </div>
             <br />
             <div class="eventBoxHead">
-                <?php if ($event->getEnd() != '0000-00-00 00:00:00'): ?>
+                <?php if ($event->getEnd() !== '0000-00-00 00:00:00'): ?>
                     <?php if (strtotime($event->getEnd()) - strtotime($event->getStart()) > 86400 ): ?>
-                        <?php $eventDate = $start->format("H:i").' - '.$this->getTrans($end->format("l")).$end->format(", d. ").$this->getTrans($end->format("F")).$end->format(" Y").' '.$this->getTrans('at').' '.$end->format("H:i"); ?>
+                        <?php $eventDate = $start->format('H:i').' - '.$this->getTrans($end->format('l')).$end->format(', d. ').$this->getTrans($end->format('F')).$end->format(' Y').' '.$this->getTrans('at').' '.$end->format('H:i'); ?>
                     <?php else: ?>
-                        <?php $eventDate = $start->format("H:i").' - '.$end->format("H:i"); ?>
+                        <?php $eventDate = $start->format('H:i').' - '.$end->format('H:i'); ?>
                     <?php endif; ?>
                 <?php else: ?>
-                    <?php $eventDate = $start->format("H:i"); ?>
+                    <?php $eventDate = $start->format('H:i'); ?>
                 <?php endif; ?>
 
-                <i class="fa fa-clock-o"></i> <?=$this->getTrans($start->format("l")).$start->format(", d. ").$this->getTrans($start->format("F")).$start->format(" Y") ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
+                <i class="fa fa-clock-o"></i> <?=$this->getTrans($start->format('l')).$start->format(', d. ').$this->getTrans($start->format('F')).$start->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
             </div>
             <div class="eventBoxBottom">
                 <?php $place = $this->escape($event->getPlace()); ?>
@@ -142,7 +142,7 @@ if (!empty($event)) {
                 </div>
             <?php endif; ?>
 
-            <?php if ($event->getPrice() != '' and $event->getCurrency() >= 1): ?>
+            <?php if ($event->getPrice() != '' && $event->getCurrency() >= 1): ?>
                 <br />
                 <div class="eventBoxHead">
                     <strong><?=$this->getTrans('price') ?></strong>
@@ -192,7 +192,7 @@ if (!empty($event)) {
                 </div>
                 <div style="clear: both;"></div>
             </div>
-            <?php if ($eventEntrantsCount != '' AND is_in_array($this->get('showMembersAccess'), explode(',', $this->get('showMembersAccesses'))) OR $this->getUser() AND $this->getUser()->isAdmin()): ?>
+            <?php if (($eventEntrantsCount != '' && is_in_array($this->get('showMembersAccess'), explode(',', $this->get('showMembersAccesses')))) || ($this->getUser() && $this->getUser()->isAdmin())): ?>
                 <div class="eventBoxBottom">
                     <div style="margin-left: 2px;">
                         <?php if ($eventEntrantsCount != ''): ?>
@@ -219,7 +219,7 @@ if (!empty($event)) {
 
         <div class="col-lg-6">
             <div class="form-horizontal">
-                <?php if ($this->getUser() AND ($eventEntrants != '' AND $eventEntrants->getUserId() == $this->getUser()->getId() OR $event->getUserId() == $this->getUser()->getId())): ?>
+                <?php if ($this->getUser() && (($eventEntrants != '' && $eventEntrants->getUserId() == $this->getUser()->getId()) || $event->getUserId() == $this->getUser()->getId())): ?>
                     <div class="form-group eventCommentSubmit">
                         <form action="" class="form-horizontal" method="POST">
                             <?=$this->getTokenField() ?>
@@ -251,14 +251,14 @@ if (!empty($event)) {
                         <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
                         <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
                             <?php if ($this->getUser()): ?>
-                                <?php if ($event->getUserId() == $this->getUser()->getId() OR $commentUser->getId() == $this->getUser()->getId()): ?>
+                                <?php if ($event->getUserId() == $this->getUser()->getId() || $commentUser->getId() == $this->getUser()->getId()): ?>
                                     <div class="pull-right" style="height: 40px; top: 0px;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
                                 <?php endif; ?>
                             <?php endif; ?>
                             <div class="pull-left"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
                             <div class="userEventInfo">
                                 <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
-                                <span class="small"><?=$commentDate->format("Y.m.d H:i", true) ?></span>
+                                <span class="small"><?=$commentDate->format('Y.m.d H:i', true) ?></span>
                             </div>
                             <div class="commentEventText"><?=nl2br($this->escape($eventComments->getText())) ?></div>
                         </div>

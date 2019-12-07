@@ -9,7 +9,7 @@ if ($this->getUser()) {
 // event entries
 if ($this->get('eventList')) {
     foreach ($this->get('eventList') as $eventList) {
-        if (!is_in_array($this->get('readAccess'), explode(',', $eventList->getReadAccess())) && $adminAccess == false) {
+        if ($adminAccess == false && !is_in_array($this->get('readAccess'), explode(',', $eventList->getReadAccess()))) {
             continue;
         }
         $e = [];

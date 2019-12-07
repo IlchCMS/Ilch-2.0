@@ -51,9 +51,7 @@ class Currency extends \Ilch\Mapper
      */
     public function getCurrencyById($id)
     {
-        $currency = $this->getCurrencies(['id' => $id]);
-
-        return $currency;
+        return $this->getCurrencies(['id' => $id]);
     }
 
     /**
