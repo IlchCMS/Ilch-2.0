@@ -283,8 +283,7 @@ class Events extends \Ilch\Mapper
      */
     public function getLatLongFromAddress($address, $googleMapsKey) 
     {
-        $prepAddr = str_replace(' ', '+', $address);
-        $geocode = url_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$prepAddr.'&key='.$googleMapsKey);
+        $geocode = url_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($address).'&key='.urlencode($googleMapsKey));
         $output = json_decode($geocode);
 
         // "OK" indicates that no errors occurred; the address was successfully parsed and at least one geocode was returned.
