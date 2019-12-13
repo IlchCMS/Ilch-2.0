@@ -111,13 +111,13 @@ if (!empty($event)) {
                     <?php $eventDate = $start->format('H:i'); ?>
                 <?php endif; ?>
 
-                <i class="fa fa-clock-o"></i> <?=$this->getTrans($start->format('l')).$start->format(', d. ').$this->getTrans($start->format('F')).$start->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
+                <i class="far fa-clock"></i> <?=$this->getTrans($start->format('l')).$start->format(', d. ').$this->getTrans($start->format('F')).$start->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
             </div>
             <div class="eventBoxBottom">
                 <?php $place = $this->escape($event->getPlace()); ?>
                 <?php $place = explode(', ', $place, 2); ?>
                 <div class="eventPlaceMarker">
-                    <i class="fa fa-map-marker"></i>
+                    <i class="fas fa-map-marker-alt"></i>
                 </div>
                 <?php
                 if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != '') {
@@ -138,7 +138,7 @@ if (!empty($event)) {
 
             <?php if ($event->getWebsite()): ?>
                 <div class="eventBoxBottom">
-                    <i class="fa fa-globe"></i> <a href="<?=$userMapper->getHomepage($event->getWebsite()) ?>" target="_blank"><?=$this->getTrans('website') ?></a>
+                    <i class="fas fa-globe"></i> <a href="<?=$userMapper->getHomepage($event->getWebsite()) ?>" target="_blank"><?=$this->getTrans('website') ?></a>
                 </div>
             <?php endif; ?>
 
@@ -166,7 +166,7 @@ if (!empty($event)) {
 
             <?php if ($event->getUserLimit() > 0): ?>
                 <div class="eventBoxBottom">
-                    <i class="fa fa-users"></i> <?=$eventEntrantsCount ?> / <?=$event->getUserLimit() ?>
+                    <i class="fas fa-users"></i> <?=$eventEntrantsCount ?> / <?=$event->getUserLimit() ?>
                 </div>
             <?php endif; ?>
             <br />

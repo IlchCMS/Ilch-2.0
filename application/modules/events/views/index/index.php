@@ -48,13 +48,13 @@ $entrantsMapper = $this->get('entrantsMapper');
                                     <ul>
                                         <?php if ($eventlist->getUserLimit() > 0): ?>
                                             <li style="width:25%;"><?=$this->getTrans('guest') ?></li>
-                                            <li style="width:25%;"><?=$agree ?> <i class="fa fa-check"></i></li>
-                                            <li style="width:25%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
-                                            <li style="width:25%;"><?=$eventlist->getUserLimit() ?> <i class="fa fa-users"></i></li>
+                                            <li style="width:25%;"><?=$agree ?> <i class="fas fa-check"></i></li>
+                                            <li style="width:25%;"><?=$maybe ?> <i class="fas fa-question"></i></li>
+                                            <li style="width:25%;"><?=$eventlist->getUserLimit() ?> <i class="fas fa-users"></i></li>
                                         <?php else: ?>
                                             <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
-                                            <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
-                                            <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
+                                            <li style="width:33%;"><?=$agree ?> <i class="fas fa-check"></i></li>
+                                            <li style="width:33%;"><?=$maybe ?> <i class="fas fa-question"></i></li>
                                         <?php endif; ?>
                                     </ul>
                                 </div>
@@ -105,13 +105,13 @@ $entrantsMapper = $this->get('entrantsMapper');
                                 <ul>
                                     <?php if ($eventlist->getUserLimit() > 0): ?>
                                         <li style="width:25%;"><?=$this->getTrans('guest') ?></li>
-                                        <li style="width:25%;"><?=$agree ?> <i class="fa fa-check"></i></li>
-                                        <li style="width:25%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
-                                        <li style="width:25%;"><?=$eventlist->getUserLimit() ?> <i class="fa fa-users"></i></li>
+                                        <li style="width:25%;"><?=$agree ?> <i class="fas fa-check"></i></li>
+                                        <li style="width:25%;"><?=$maybe ?> <i class="fas fa-question"></i></li>
+                                        <li style="width:25%;"><?=$eventlist->getUserLimit() ?> <i class="fas fa-users"></i></li>
                                     <?php else: ?>
                                         <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
-                                        <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
-                                        <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
+                                        <li style="width:33%;"><?=$agree ?> <i class="fas fa-check"></i></li>
+                                        <li style="width:33%;"><?=$maybe ?> <i class="fas fa-question"></i></li>
                                     <?php endif; ?>
                                 </ul>
                             </div>
@@ -159,13 +159,13 @@ $entrantsMapper = $this->get('entrantsMapper');
                                 <ul>
                                     <?php if ($eventlist->getUserLimit() > 0): ?>
                                         <li style="width:25%;"><?=$this->getTrans('guest') ?></li>
-                                        <li style="width:25%;"><?=$agree ?> <i class="fa fa-check"></i></li>
-                                        <li style="width:25%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
-                                        <li style="width:25%;"><?=$eventlist->getUserLimit() ?> <i class="fa fa-users"></i></li>
+                                        <li style="width:25%;"><?=$agree ?> <i class="fas fa-check"></i></li>
+                                        <li style="width:25%;"><?=$maybe ?> <i class="fas fa-question"></i></li>
+                                        <li style="width:25%;"><?=$eventlist->getUserLimit() ?> <i class="fas fa-users"></i></li>
                                     <?php else: ?>
                                         <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
-                                        <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
-                                        <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
+                                        <li style="width:33%;"><?=$agree ?> <i class="fas fa-check"></i></li>
+                                        <li style="width:33%;"><?=$maybe ?> <i class="fas fa-question"></i></li>
                                     <?php endif; ?>
                                 </ul>
                             </div>

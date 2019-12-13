@@ -162,7 +162,7 @@
         <label for="event_google_maps_api_key" class="col-lg-2 control-label">
             <?=$this->getTrans('googleMapsAPIKey') ?>:
             <a class="badge" data-toggle="modal" data-target="#googleMapsAPIInfoModal">
-                <i class="fa fa-info" ></i>
+                <i class="fas fa-info"></i>
             </a>
         </label>
         <div class="col-lg-3">

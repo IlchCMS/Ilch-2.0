@@ -79,7 +79,7 @@ $users = $userMapper->getUserList();
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } elseif ($this->originalInput('start') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('start'))); } ?>"
                        readonly>
                 <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
+                    <span class="far fa-calendar"></span>
                 </span>
             </div>
         </div>
@@ -96,10 +96,10 @@ $users = $userMapper->getUserList();
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getEnd())); } elseif ($this->originalInput('end') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('end'))); } ?>"
                        readonly>
                 <span class="input-group-addon">
-                    <span class="fa fa-times"></span>
+                    <span class="fas fa-times"></span>
                 </span>
                 <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
+                    <span class="far fa-calendar"></span>
                 </span>
             </div>
         </div>
@@ -188,7 +188,7 @@ $users = $userMapper->getUserList();
         </div>
         <div class="form-group <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
             <label for="userLimit" class="col-lg-2 control-label">
-                <?=$this->getTrans('userLimit') ?> <div class="badge" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa fa-info"></i></div>
+                <?=$this->getTrans('userLimit') ?> <div class="badge" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fas fa-info"></i></div>
             </label>
             <div class="col-lg-2">
                 <input type="number"
