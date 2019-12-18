@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "v10.4.0",
+            "version": "v10.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "be9e5d4047f95bbe713736b78201697a182da9f0"
+                "reference": "635c6ba4492cf3d3be9ac994ad988b2461f244fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vkhramtsov/jQuery-File-Upload/zipball/be9e5d4047f95bbe713736b78201697a182da9f0",
-                "reference": "be9e5d4047f95bbe713736b78201697a182da9f0",
+                "url": "https://api.github.com/repos/vkhramtsov/jQuery-File-Upload/zipball/635c6ba4492cf3d3be9ac994ad988b2461f244fa",
+                "reference": "635c6ba4492cf3d3be9ac994ad988b2461f244fa",
                 "shasum": ""
             },
             "type": "library",
@@ -59,7 +59,7 @@
                 "upload",
                 "widget"
             ],
-            "time": "2019-11-25T05:59:13+00:00"
+            "time": "2019-12-18T05:40:29+00:00"
         },
         {
             "name": "ckeditor/ckeditor",
@@ -1056,33 +1056,33 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203"
+                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/f6811d96d97bdf400077a0cc100ae56aa32b9203",
-                "reference": "f6811d96d97bdf400077a0cc100ae56aa32b9203",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
+                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0|^5.0",
-                "sebastian/comparator": "^1.1|^2.0|^3.0",
+                "sebastian/comparator": "^1.2.3|^2.0|^3.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^2.5|^3.2",
+                "phpspec/phpspec": "^2.5 || ^3.2",
                 "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5 || ^7.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.8.x-dev"
+                    "dev-master": "1.10.x-dev"
                 }
             },
             "autoload": {
@@ -1115,7 +1115,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2019-10-03T11:07:50+00:00"
+            "time": "2019-12-17T16:54:23+00:00"
         },
         {
             "name": "phpunit/dbunit",
