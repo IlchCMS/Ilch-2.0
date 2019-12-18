@@ -623,6 +623,10 @@ class Config extends \Ilch\Config\Install
                 unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.ui.widget.js');
                 unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.knob.js');
                 break;
+            case "2.1.27":
+                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
+                removeDir(ROOT_PATH.'/delete_vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
         }
 
         return 'Update function executed.';
