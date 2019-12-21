@@ -180,7 +180,11 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index']);
 
-        $catIds = explode(',', $article->getCatId());
+        $catIds = [];
+        if ($article->getCatId()) {
+            $catIds = explode(',', $article->getCatId());
+        }
+
         foreach ($catIds as $catId) {
             $articlesCats = $categoryMapper->getCategoryById($catId);
             $this->getLayout()->getTitle()->add($articlesCats->getName());
