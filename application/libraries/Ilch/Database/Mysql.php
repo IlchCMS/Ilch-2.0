@@ -134,13 +134,13 @@ class Mysql
         if (preg_match("/^UPDATE `?\[prefix\]_\S+`?\s+SET/is", $sql)) {
             $sql = preg_replace(
                 "/^UPDATE `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i",
-                "UPDATE `" . $this->prefix . "\\1`\\2",
+                'UPDATE `' . $this->prefix . "\\1`\\2",
                 $sql
             );
         } elseif (preg_match("/^INSERT INTO `?\[prefix\]_\S+`?\s+[a-z0-9\s,\)\(]*?VALUES/is", $sql)) {
             $sql = preg_replace(
                 "/^INSERT INTO `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i",
-                "INSERT INTO `" . $this->prefix . "\\1`\\2",
+                'INSERT INTO `' . $this->prefix . "\\1`\\2",
                 $sql
             );
         } else {
@@ -208,11 +208,7 @@ class Mysql
         $sql = "SHOW TABLES LIKE '$table'";
         $result = $this->query($sql);
 
-        if (mysqli_num_rows($result) > 0) {
-            return true;
-        }
-
-        return false;
+        return mysqli_num_rows($result) > 0;
     }
 
     /**
@@ -228,11 +224,7 @@ class Mysql
         $sql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME = '$column' AND TABLE_NAME = '$table'";
         $result = $this->query($sql);
 
-        if (mysqli_num_rows($result) > 0) {
-            return true;
-        }
-
-        return false;
+        return mysqli_num_rows($result) > 0;
     }
 
     /**
@@ -244,9 +236,7 @@ class Mysql
      */
     public function queryRow($sql)
     {
-        $row = mysqli_fetch_assoc($this->query($sql));
-
-        return $row;
+        return mysqli_fetch_assoc($this->query($sql));
     }
 
     /**
@@ -518,7 +508,7 @@ class Mysql
                 flush();
                 break;
             case self::THROW_EXCEPTIONS:
-                $subQueryString = $subQuery !== null ? sprintf("[SubQuery %d]", $subQuery) : '';
+                $subQueryString = $subQuery !== null ? sprintf('[SubQuery %d]', $subQuery) : '';
                 $errorMessage = sprintf("MySQL Error: %s\nin Query%s: %s", $this->conn->error, $subQueryString, $sql);
                 throw new Exception($errorMessage, $this->conn->errno);
                 break;
