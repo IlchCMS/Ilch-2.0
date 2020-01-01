@@ -117,7 +117,7 @@ class Settings extends \Ilch\Controller\Admin
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'groupappearance']);
             } else {
-                $this->addMessage('fail', 'danger');
+                $this->addMessage('errorWritingGroupAppearanceCSSFile', 'danger');
                 $this->redirect(['action' => 'groupappearance']);
             }
         }

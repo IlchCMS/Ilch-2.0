@@ -97,6 +97,7 @@ return [
     'textcolor' => 'textcolor',
     'bold' => 'bold',
     'italic' => 'italic',
+    'errorWritingGroupAppearanceCSSFile' => 'Error while trying to save the group appearance.',
     'currentInfo' => 'Current Information',
     'activeUser' => 'Currently Active Users',
     'usersOnline' => 'User(s) online',

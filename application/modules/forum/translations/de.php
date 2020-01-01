@@ -97,6 +97,7 @@ return [
     'textcolor' => 'Textfarbe',
     'bold' => 'fett',
     'italic' => 'kursiv',
+    'errorWritingGroupAppearanceCSSFile' => 'Speichern des Aussehens der Benutzergruppen fehlgeschlagen.',
     'currentInfo' => 'Aktuelle Informationen',
     'activeUser' => 'Zurzeit aktive Benutzer',
     'usersOnline' => 'Benutzer online',
