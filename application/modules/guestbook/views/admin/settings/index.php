@@ -15,6 +15,20 @@
             </div>
         </div>
     </div>
+    <div class="form-group <?=$this->validation()->hasError('notificationOnNewEntry') ? 'has-error' : '' ?>">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('notificationOnNewEntry') ?>:
+        </div>
+        <div class="col-lg-2">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-yes" name="notificationOnNewEntry" value="1" <?php if ($this->get('notificationOnNewEntry') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="notificationOnNewEntry-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-no" name="notificationOnNewEntry" value="0" <?php if ($this->get('notificationOnNewEntry') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="notificationOnNewEntry-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <div class="form-group <?=$this->validation()->hasError('entriesPerPage') ? 'has-error' : '' ?>">
         <label for="entriesPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('entriesPerPage') ?>:

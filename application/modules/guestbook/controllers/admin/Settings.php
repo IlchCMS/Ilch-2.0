@@ -43,11 +43,13 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'entrySettings' => 'required|numeric|integer|min:0|max:1',
+                'notificationOnNewEntry' => 'required|numeric|integer|min:0|max:1',
                 'entriesPerPage' => 'numeric|integer|min:1'
             ]);
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('gbook_autosetfree', $this->getRequest()->getPost('entrySettings'));
+                $this->getConfig()->set('gbook_notificationOnNewEntry', $this->getRequest()->getPost('notificationOnNewEntry'));
                 $this->getConfig()->set('gbook_entriesPerPage', $this->getRequest()->getPost('entriesPerPage'));
                 $this->getConfig()->set('gbook_welcomeMessage', $this->getRequest()->getPost('welcomeMessage'));
 
@@ -62,6 +64,7 @@ class Settings extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('setfree', $this->getConfig()->get('gbook_autosetfree'));
+        $this->getView()->set('notificationOnNewEntry', $this->getConfig()->get('gbook_notificationOnNewEntry'));
         $this->getView()->set('entriesPerPage', $this->getConfig()->get('gbook_entriesPerPage'));
         $this->getView()->set('welcomeMessage', $this->getConfig()->get('gbook_welcomeMessage'));
     }

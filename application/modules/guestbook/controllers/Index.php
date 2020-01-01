@@ -84,6 +84,15 @@ class Index extends \Ilch\Controller\Frontend
                     $notificationsMapper->addNotification($notificationModel);
 
                     $this->addMessage('check', 'info');
+                } elseif ($this->getConfig()->get('gbook_notificationOnNewEntry') == 1) {
+                    $notificationsMapper = new NotificationsMapper();
+                    $notificationModel = new NotificationModel();
+
+                    $notificationModel->setModule('guestbook');
+                    $notificationModel->setMessage($this->getTranslator()->trans('notificationForNewEntry'));
+                    $notificationModel->setURL($this->getLayout()->getUrl(['module' => 'guestbook', 'controller' => 'index', 'action' => 'index']));
+                    $notificationModel->setType('guestbookNotificationOnNewEntry');
+                    $notificationsMapper->addNotification($notificationModel);
                 }
 
                 $this->redirect()
