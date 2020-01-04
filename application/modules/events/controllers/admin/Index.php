@@ -17,7 +17,13 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'manage',
                 'active' => true,
                 'icon' => 'fas fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                [
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'], '')
+                ]
             ],
             [
                 'name' => 'currencies',
@@ -32,6 +38,12 @@ class Index extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
+
+        if ($this->getRequest()->getControllerName() === 'index' && $this->getRequest()->getActionName() === 'treat') {
+            $items[0][0]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
 
         $this->getLayout()->addMenu
         (
