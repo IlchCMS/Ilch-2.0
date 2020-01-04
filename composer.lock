@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "v10.5.0",
+            "version": "v10.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "635c6ba4492cf3d3be9ac994ad988b2461f244fa"
+                "reference": "4677050d31be2da817e1d23d0bacb81fb4b37cb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vkhramtsov/jQuery-File-Upload/zipball/635c6ba4492cf3d3be9ac994ad988b2461f244fa",
-                "reference": "635c6ba4492cf3d3be9ac994ad988b2461f244fa",
+                "url": "https://api.github.com/repos/vkhramtsov/jQuery-File-Upload/zipball/4677050d31be2da817e1d23d0bacb81fb4b37cb3",
+                "reference": "4677050d31be2da817e1d23d0bacb81fb4b37cb3",
                 "shasum": ""
             },
             "type": "library",
@@ -59,20 +59,20 @@
                 "upload",
                 "widget"
             ],
-            "time": "2019-12-18T05:40:29+00:00"
+            "time": "2020-01-04T05:46:30+00:00"
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.13.0",
+            "version": "4.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor4-releases.git",
-                "reference": "4d6b1722a79009f4627fd338ca872e57914e8235"
+                "reference": "83ca48a5356d10cc7aec6a9e36f327b8bc1b5f2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/4d6b1722a79009f4627fd338ca872e57914e8235",
-                "reference": "4d6b1722a79009f4627fd338ca872e57914e8235",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/83ca48a5356d10cc7aec6a9e36f327b8bc1b5f2a",
+                "reference": "83ca48a5356d10cc7aec6a9e36f327b8bc1b5f2a",
                 "shasum": ""
             },
             "type": "library",
@@ -85,13 +85,14 @@
             "authors": [
                 {
                     "name": "CKSource",
-                    "homepage": "http://cksource.com"
+                    "homepage": "https://cksource.com"
                 }
             ],
             "description": "JavaScript WYSIWYG web text editor.",
-            "homepage": "http://ckeditor.com",
+            "homepage": "https://ckeditor.com/ckeditor-4/",
             "keywords": [
                 "CKEditor",
+                "ckeditor4",
                 "editor",
                 "fckeditor",
                 "html",
@@ -100,7 +101,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2019-09-26T11:04:37+00:00"
+            "time": "2019-12-09T13:24:37+00:00"
         },
         {
             "name": "components/jquery",
@@ -1056,16 +1057,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.10.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682"
+                "reference": "cbe1df668b3fe136bcc909126a0f529a78d4cbbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
-                "reference": "d638ebbb58daba25a6a0dc7969e1358a0e3c6682",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/cbe1df668b3fe136bcc909126a0f529a78d4cbbc",
+                "reference": "cbe1df668b3fe136bcc909126a0f529a78d4cbbc",
                 "shasum": ""
             },
             "require": {
@@ -1115,7 +1116,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2019-12-17T16:54:23+00:00"
+            "time": "2019-12-22T21:05:45+00:00"
         },
         {
             "name": "phpunit/dbunit",
