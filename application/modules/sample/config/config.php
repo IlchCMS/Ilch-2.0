@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'sample',
-        'version' => '1.0',
+        'version' => '1.0.0',
         'icon_small' => '',
         'author' => '',
         'link' => '',
