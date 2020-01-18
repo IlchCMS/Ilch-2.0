@@ -56,7 +56,8 @@ class Config extends \Ilch\Config\Install
             ->set('maintenance_date', $date->format('Y-m-d H:i:s'))
             ->set('maintenance_text', '<p>Die Seite befindet sich im Wartungsmodus</p>')
             ->set('custom_css', '')
-            ->set('emailBlacklist', '');
+            ->set('emailBlacklist', '')
+            ->set('disable_purifier', '0');
     }
 
     public function getInstallSql()
