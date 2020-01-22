@@ -628,6 +628,19 @@ class Config extends \Ilch\Config\Install
                 rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
                 removeDir(ROOT_PATH.'/delete_vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+            case "2.1.28":
+                // Add disable_purifier with default value 0 if not existing.
+                // On new installs it wasn't created before and this lead to confusion on users.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $disablePurifier = $databaseConfig->get('disable_purifier');
+
+                if ($disablePurifier === null) {
+                    $databaseConfig->set('disable_purifier', '0');
+                }
+
+                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
+                removeDir(ROOT_PATH.'/delete_vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
         }
 
         return 'Update function executed.';
