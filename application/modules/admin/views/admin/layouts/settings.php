@@ -12,7 +12,7 @@
                        id="selectedImage_1"
                        name="favicon"
                        placeholder="<?=$this->getTrans('choose') ?>"
-                       value="<?=$this->escape($this->get('favicon')); ?>"
+                       value="<?=$this->escape($this->get('favicon')) ?>"
                        readonly />
                 <span class="input-group-addon">
                     <a href="javascript:eraseValue('selectedImage_1')">
@@ -38,7 +38,7 @@
                        id="selectedImage_2"
                        name="appleIcon"
                        placeholder="<?=$this->getTrans('choose') ?>"
-                       value="<?=$this->escape($this->get('appleIcon')); ?>"
+                       value="<?=$this->escape($this->get('appleIcon')) ?>"
                        readonly />
                 <span class="input-group-addon">
                     <a href="javascript:eraseValue('selectedImage_2')">
@@ -88,7 +88,7 @@
     <?=$this->getSaveBar() ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 <?=$this->getMedia()
         ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))

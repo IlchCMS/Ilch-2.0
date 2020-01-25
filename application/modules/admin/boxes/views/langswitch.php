@@ -15,7 +15,7 @@
 $('.languageInput').change (
     this,
     function () {
-        top.location.href = '<?=$this->escape($this->getCurrentUrl(['language' => '__LANG_PLACEHOLDER__'], false)); ?>'
+        top.location.href = '<?=$this->escape($this->getCurrentUrl(['language' => '__LANG_PLACEHOLDER__'], false)) ?>'
                 .replace('__LANG_PLACEHOLDER__', $(this).val());
     }
 );

@@ -25,7 +25,7 @@ class Index extends \Ilch\Controller\Admin
         $modules = $moduleMapper->getKeysInstalledModules();
 
         // Delete selected notifications
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_notifications')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_notifications')) {
             $notificationsMapper = new NotificationsMapper();
 
             foreach ($this->getRequest()->getPost('check_notifications') as $notificationId) {
@@ -60,10 +60,8 @@ class Index extends \Ilch\Controller\Admin
             $versionsOfModules = $moduleMapper->getVersionsOfModules();
 
             foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
-                if (in_array($moduleOnUpdateServer->key, $modules)) {
-                    if (version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')) {
-                        $countOfUpdatesAvailable += 1;
-                    }
+                if (in_array($moduleOnUpdateServer->key, $modules) && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')) {
+                    ++$countOfUpdatesAvailable;
                 }
             }
 

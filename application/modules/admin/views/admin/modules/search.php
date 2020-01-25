@@ -5,7 +5,7 @@ $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
 $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
-$cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
+$cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 
 // Define the custom sort function
 function custom_sort($a,$b)
@@ -51,9 +51,9 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('search') ?></h1>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true) ?></span></p>
 <div class="checkbox">
-    <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')?"checked":"" ?>/><?=$this->getTrans('gotokey') ?></label>
+    <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
 </div>
 <?php
 if (empty($modulesOnUpdateServer)) {
@@ -61,7 +61,7 @@ if (empty($modulesOnUpdateServer)) {
     return;
 } else {
     // Sort the modules by name
-    usort($modulesOnUpdateServer, "custom_sort");
+    usort($modulesOnUpdateServer, 'custom_sort');
 }
 ?>
 
@@ -96,7 +96,7 @@ if (empty($modulesOnUpdateServer)) {
                 ?>
                 <tr id="Module_<?=$moduleOnUpdateServer->key ?>">
                     <td>
-                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>"><?=$this->escape($moduleOnUpdateServer->name) ?></a>
+                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>"><?=$this->escape($moduleOnUpdateServer->name) ?></a>
                         <br />
                         <small>
                             <?=$this->getTrans('author') ?>: 
@@ -146,7 +146,7 @@ if (empty($modulesOnUpdateServer)) {
                         <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version, 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
-                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
+                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')? '1' : '0' ?>" />
                                 <button type="submit"
                                         class="btn btn-default showOverlay"
                                         title="<?=$this->getTrans('moduleUpdate') ?>">
@@ -156,7 +156,7 @@ if (empty($modulesOnUpdateServer)) {
                         <?php else: ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version, 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
-                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
+                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')? '1' : '0' ?>" />
                                 <button type="submit"
                                         class="btn btn-default showOverlay"
                                         title="<?=$this->getTrans('moduleDownload') ?>">
@@ -165,7 +165,7 @@ if (empty($modulesOnUpdateServer)) {
                             </form>
                         <?php endif; ?>
 
-                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                             <span class="btn btn-default">
                                 <i class="fa fa-info text-info"></i>
                             </span>
@@ -183,7 +183,7 @@ if (empty($modulesOnUpdateServer)) {
                         $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
                     }
                 ?>
-                <?=$this->getDialog('infoModal'.$moduleOnUpdateServer->key, $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo); ?>
+                <?=$this->getDialog('infoModal'.$moduleOnUpdateServer->key, $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo) ?>
             <?php endforeach; ?>
         </tbody>
     </table>

@@ -59,7 +59,7 @@ class Page extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('pageMapper', $pageMapper);
-        $this->getView()->set('pages', $pageMapper->getPageList(''));
+        $this->getView()->set('pages', $pageMapper->getPageList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
     }
@@ -98,15 +98,15 @@ class Page extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             // Create full-url of permaLink.
             $entityMap = [
-                "&" => "",
-                "<" => "",
-                ">" => "",
-                '"' => "",
-                "'" => "",
-                "/" => "",
-                "(" => "",
-                ")" => "",
-                ";" => ""
+                '&' => '',
+                '<' => '',
+                '>' => '',
+                '"' => '',
+                "'" => '',
+                '/' => '',
+                '(' => '',
+                ')' => '',
+                ';' => ''
             ];
 
             $permaLink = strtr($this->getRequest()->getPost('permaLink'), $entityMap);

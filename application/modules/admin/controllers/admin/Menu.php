@@ -87,15 +87,15 @@ class Menu extends \Ilch\Controller\Admin
 
                     foreach ($items as $item) {
                         $entityMap = [
-                            "&" => "",
-                            "<" => "",
-                            ">" => "",
-                            '"' => "",
-                            "'" => "",
-                            "/" => "",
-                            "(" => "",
-                            ")" => "",
-                            ";" => ""
+                            '&' => '',
+                            '<' => '',
+                            '>' => '',
+                            '"' => '',
+                            "'" => '',
+                            '/' => '',
+                            '(' => '',
+                            ')' => '',
+                            ';' => ''
                         ];
 
                         $menuItem = new MenuItem();
@@ -177,10 +177,8 @@ class Menu extends \Ilch\Controller\Admin
 
         $locale = '';
 
-        if ((bool)$this->getConfig()->get('multilingual_acp')) {
-            if ($this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
-                $locale = $this->getTranslator()->getLocale();
-            }
+        if ((bool)$this->getConfig()->get('multilingual_acp') && $this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
+            $locale = $this->getTranslator()->getLocale();
         }
 
         $this->getView()->set('menu', $menu);

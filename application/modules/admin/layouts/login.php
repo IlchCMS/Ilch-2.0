@@ -38,7 +38,7 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                         <form class="form-signin" method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'index']) ?>">
                             <?=$this->getTokenField() ?>
                             <h4><?=$this->getTrans('loginWelcome') ?></h4>
-                            <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; }; ?>">
+                            <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; } ?>">
                                 <div class="input-group">
                                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
                                     <input type="text"
@@ -48,7 +48,7 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                            value="<?=$this->escape($emailname) ?>">
                                 </div>
                             </div>
-                            <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; }; ?>">
+                            <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; } ?>">
                                 <div class="input-group">
                                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
                                     <input type="password"

@@ -6,14 +6,14 @@ $layoutsList = url_get_contents($this->get('updateserver').'layouts.php');
 $layoutsOnUpdateServer = json_decode($layoutsList);
 $versionsOfLayouts = $this->get('versionsOfLayouts');
 $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver').'layouts.php').'.cache';
-$cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
+$cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 
 if (empty($layoutsOnUpdateServer)) {
     echo $this->getTrans('noLayoutsAvailable');
     return;
 }
 ?>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true) ?></span></p>
 
 <?php foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer): ?>
     <div id="layouts" class="col-lg-3 col-sm-6">
@@ -33,7 +33,7 @@ if (empty($layoutsOnUpdateServer)) {
                 </div>
             </div>
             <div class="panel-body">
-                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                     <img src="<?=$this->get('updateserver').'layouts/images/'.$layoutOnUpdateServer->thumbs[0]->img ?>" alt="<?=$this->escape($layoutOnUpdateServer->name) ?>" />
                 </a>
                 <?=(!empty($layoutOnUpdateServer->official) && $layoutOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
@@ -67,7 +67,7 @@ if (empty($layoutsOnUpdateServer)) {
                         <?php endif; ?>
                     </div>
                     <div class="pull-right">
-                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                             <span class="btn btn-default">
                                 <i class="fa fa-info text-info"></i>
                             </span>

@@ -1,7 +1,7 @@
 <?php
     $updateservers = $this->get('updateservers');
     $index = 0;
-    $isHTTPS = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? true : false;
+    $isHTTPS = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
@@ -190,7 +190,7 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="hmenuFixed-on" name="hmenuFixed" value="1" <?php if ($this->get('hmenuFixed') == 'hmenu-fixed') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="hmenuFixed-on" name="hmenuFixed" value="1" <?php if ($this->get('hmenuFixed') === 'hmenu-fixed') { echo 'checked="checked"'; } ?> />
                 <label for="hmenuFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
                 <input type="radio" class="flipswitch-input" id="hmenuFixed-off" name="hmenuFixed" value="0" <?php if ($this->get('hmenuFixed') == '') { echo 'checked="checked"'; } ?> />
                 <label for="hmenuFixed-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>

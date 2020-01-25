@@ -49,7 +49,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('updatesAvailable') ?></h1>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true) ?></span></p>
 <div class="checkbox">
   <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey') ? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
 </div>
@@ -72,10 +72,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
                 $moduleUpdate = [];
 
-                if (!empty($configurations[$module->getKey()]['version'])) {
-                    if (version_compare($module->getVersion(), $configurations[$module->getKey()]['version'], '<')) {
-                        $moduleUpdate['local'] = json_decode(json_encode($configurations[$module->getKey()]));
-                    }
+                if (!empty($configurations[$module->getKey()]['version']) && version_compare($module->getVersion(), $configurations[$module->getKey()]['version'], '<')) {
+                    $moduleUpdate['local'] = json_decode(json_encode($configurations[$module->getKey()]));
                 }
 
                 foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {

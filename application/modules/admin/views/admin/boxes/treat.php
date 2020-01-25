@@ -64,7 +64,7 @@
     <?php endif; ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 <?php $boxID = ''; ?>
 <?php if ($this->get('box') != ''): ?>
@@ -74,7 +74,7 @@
 $('#boxLanguage').change (
     this,
     function () {
-        top.location.href = '<?=$this->getUrl(['id' => $boxID]); ?>/locale/'+$(this).val()
+        top.location.href = '<?=$this->getUrl(['id' => $boxID]) ?>/locale/'+$(this).val()
     }
 );
 </script>

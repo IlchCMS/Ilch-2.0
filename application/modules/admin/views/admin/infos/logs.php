@@ -8,7 +8,7 @@ $userCache = [];
 <?php if ($this->get('logsDate') != ''): ?>
     <?php foreach ($this->get('logsDate') as $logDate): ?>
         <?php $date = new \Ilch\Date($logDate->getDate()); ?>
-        <h4><?=$date->format("d.m.Y"); ?></h4>
+        <h4><?=$date->format('d.m.Y') ?></h4>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -33,7 +33,7 @@ $userCache = [];
                     $user = $userCache[$log->getUserId()];
                     ?>
                     <tr>
-                        <td><?=$time->format("H:i:s"); ?></td>
+                        <td><?=$time->format('H:i:s') ?></td>
                         <td>
                             <?php
                             if ($user != '') {

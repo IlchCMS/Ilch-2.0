@@ -8,7 +8,7 @@ namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Module as ModuleMapper;
 use Modules\Admin\Models\Layout as LayoutModel;
-use Ilch\Transfer as Transfer;
+use Ilch\Transfer;
 
 class Layouts extends \Ilch\Controller\Admin
 {
@@ -35,11 +35,11 @@ class Layouts extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'index') {
+        if ($this->getRequest()->getActionName() === 'index') {
             $items[0]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'search' OR $this->getRequest()->getActionName() == 'show') {
+        } elseif ($this->getRequest()->getActionName() === 'search' || $this->getRequest()->getActionName() === 'show') {
             $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'settings') {
+        } elseif ($this->getRequest()->getActionName() === 'settings') {
             $items[2]['active'] = true;
         } else {
             $items[0]['active'] = true;

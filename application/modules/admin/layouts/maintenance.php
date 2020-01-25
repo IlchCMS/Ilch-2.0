@@ -9,11 +9,11 @@ $date = new \Ilch\Date();
 <!DOCTYPE html>
 <html lang="de">
     <head>
-        <title><?=$config->get('page_title'); ?> - <?=$translator->trans('maintenanceMode') ?></title>
+        <title><?=$config->get('page_title') ?> - <?=$translator->trans('maintenanceMode') ?></title>
 
         <!-- META -->
         <meta charset="utf-8">
-        <meta name="description" content="<?=$config->get('page_title'); ?> - <?=$translator->trans('maintenanceMode') ?>">
+        <meta name="description" content="<?=$config->get('page_title') ?> - <?=$translator->trans('maintenanceMode') ?>">
 
         <!-- FAVICON -->
         <link rel="shortcut icon" type="image/x-icon" href="<?=$this->getStaticUrl('img/favicon.ico') ?>">
@@ -90,14 +90,14 @@ $date = new \Ilch\Date();
                 <div class="progress progress-striped">
                     <div class="progress-bar progress-bar-success active"
                         role="progressbar"
-                        aria-valuenow="<?=$config->get('maintenance_status'); ?>"
+                        aria-valuenow="<?=$config->get('maintenance_status') ?>"
                         aria-valuemin="0"
                         aria-valuemax="100"
-                        style="width: <?=$config->get('maintenance_status'); ?>%;">
+                        style="width: <?=$config->get('maintenance_status') ?>%;">
                     </div>
                 </div>
                 <div class="install_content">
-                    <?=$config->get('maintenance_text'); ?>
+                    <?=$config->get('maintenance_text') ?>
                 </div>
 
                 <div class="save_box">
@@ -111,7 +111,7 @@ $date = new \Ilch\Date();
 </html>
 
 <script>
-$('#countdown').countdown('<?=date("Y/m/d H:i:s", strtotime($maintenanceTime)) ?>').on('update.countdown', function(event) {
+$('#countdown').countdown('<?=date('Y/m/d H:i:s', strtotime($maintenanceTime)) ?>').on('update.countdown', function(event) {
     var $this = $(this).html(event.strftime(''
         + '<div class="countDays">'
             + '<span class="position">'

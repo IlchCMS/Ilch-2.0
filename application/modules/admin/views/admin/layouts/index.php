@@ -6,9 +6,9 @@ $layoutsList = url_get_contents($this->get('updateserver'));
 $layoutsOnUpdateServer = json_decode($layoutsList);
 $versionsOfLayouts = $this->get('versionsOfLayouts');
 $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
-$cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
+$cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 ?>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true) ?></span></p>
 
 <?php foreach ($this->get('layouts') as $layout): ?>
     <div id="layouts" class="col-lg-3 col-sm-6">
@@ -117,10 +117,10 @@ $cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)))
                    <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
                    <b>'.$this->getTrans('desc').':</b><br />'.$this->escape($layout->getDesc());
     ?>
-    <?=$this->getDialog('infoModal'.$layout->getKey(), $this->getTrans('menuLayout').' '.$this->getTrans('info'), $layoutInfo); ?>
+    <?=$this->getDialog('infoModal'.$layout->getKey(), $this->getTrans('menuLayout').' '.$this->getTrans('info'), $layoutInfo) ?>
 <?php endforeach; ?>
 
-<?=$this->getDialog('deleteModal', $this->getTrans('delete'), $this->getTrans('needAcknowledgement'), 1); ?>
+<?=$this->getDialog('deleteModal', $this->getTrans('delete'), $this->getTrans('needAcknowledgement'), 1) ?>
 <script>
 $('.deleteLayout').on('click', function(event) {
     $('#modalButton').data('clickurl', $(this).data('clickurl'));

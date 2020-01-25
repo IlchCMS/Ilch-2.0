@@ -104,7 +104,7 @@
     ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 <?php
 $pageID = '';
@@ -145,7 +145,7 @@ $('#pageTitle').change (
 $('#pageLanguage').change (
     this,
     function () {
-        top.location.href = '<?=$this->getUrl(['id' => $pageID]); ?>/locale/'+$(this).val()
+        top.location.href = '<?=$this->getUrl(['id' => $pageID]) ?>/locale/'+$(this).val()
     }
 );
 

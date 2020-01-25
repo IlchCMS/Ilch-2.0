@@ -32,7 +32,7 @@ foreach ($modules as $module): ?>
                 }
             }
 
-            $phpExtension = implode(", ", $phpExtension);
+            $phpExtension = implode(', ', $phpExtension);
         }
 
         if (!empty($module->depends)) {
@@ -50,7 +50,7 @@ foreach ($modules as $module): ?>
                 }
             }
 
-            $dependency = implode(", ", $dependency);
+            $dependency = implode(', ', $dependency);
         }
 
         if (version_compare(phpversion(), $module->phpVersion, '>=')) {

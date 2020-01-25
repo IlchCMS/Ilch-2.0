@@ -71,4 +71,4 @@
 <?php else : ?>
     <?=$this->getTrans('noNotificationPermissions') ?>
 <?php endif; ?>
-<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('notificationsInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('notificationsInfoText')) ?>

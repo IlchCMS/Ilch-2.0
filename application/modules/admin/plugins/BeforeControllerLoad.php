@@ -7,7 +7,7 @@
 namespace Modules\Admin\Plugins;
 
 use Modules\User\Mappers\User as UserMapper;
-use Ilch\Accesses as Accesses;
+use Ilch\Accesses;
 
 /**
  * Does admin operations before the controller loads.
@@ -39,12 +39,10 @@ class BeforeControllerLoad
             $user = $userMapper->getUserById($userId);
 
             if ($config->get('maintenance_mode') && !$request->isAdmin()) {
-                if (empty($user)) {
+                if ($user === null) {
                     $pluginData['layout']->setFile('modules/admin/layouts/maintenance');
-                } else {
-                    if (!$user->isAdmin()) {
-                        $pluginData['layout']->setFile('modules/admin/layouts/maintenance');
-                    }
+                } elseif (!$user->isAdmin()) {
+                    $pluginData['layout']->setFile('modules/admin/layouts/maintenance');
                 }
                 $_SESSION['messages']['maintenance'] = ['text' => $translator->trans('siteMaintenanceMode'), 'type' => 'danger'];
             }
@@ -52,21 +50,17 @@ class BeforeControllerLoad
 
         $user = \Ilch\Registry::get('user');
 
-        if ($request->isAdmin() && $request->getControllerName() !== 'login' && !\Ilch\Registry::get('user')) {
-            /*
-             * User is not logged in yet but wants to go to the admincenter, redirect him to the login.
-             */
+        if (!$user & $request->isAdmin() && $request->getControllerName() !== 'login') {
+            // User is not logged in yet but wants to go to the admincenter, redirect him to the login.
             $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'login', 'action' => 'index']);
-        } elseif ($request->getModuleName() === 'admin' && $request->getControllerName() === 'login' && $request->getActionName() !== 'logout' && \Ilch\Registry::get('user')) {
-            /*
-             * User is logged in but wants to go to the login, redirect him to the admincenter.
-             */
+        } elseif ($user && $request->getModuleName() === 'admin' && $request->getControllerName() === 'login' && $request->getActionName() !== 'logout') {
+            // User is logged in but wants to go to the login, redirect him to the admincenter.
             $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
-        } elseif ($request->getModuleName() === 'admin' && $request->getControllerName() !== 'login' && $request->getControllerName() !== 'page' && $request->getActionName() !== 'logout' && \Ilch\Registry::get('user') && !$user->isAdmin()) {
+        } elseif ($user && $request->getModuleName() === 'admin' && $request->getControllerName() !== 'login' && $request->getControllerName() !== 'page' && $request->getActionName() !== 'logout' && !$user->isAdmin()) {
             $access = new Accesses($pluginData['request']);
             if (!$access->hasAccess('Admin')) {
                 $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to([], 'frontend');
-            };
+            }
         }
     }
 }

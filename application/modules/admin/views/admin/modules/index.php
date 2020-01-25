@@ -6,7 +6,7 @@ $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
 $configurations = $this->get('configurations');
 $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
-$cacheFileDate = new \Ilch\Date(date("Y-m-d H:i:s.", filemtime($cacheFilename)));
+$cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 
 if ($modulesOnUpdateServer === null) {
     $modulesOnUpdateServer = [];
@@ -48,9 +48,9 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('modulesInstalled') ?></h1>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format("l", true)).$cacheFileDate->format(", d. ", true).$this->getTrans($cacheFileDate->format("F", true)).$cacheFileDate->format(" Y H:i", true) ?></span></p>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true) ?></span></p>
 <div class="checkbox">
-  <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')?"checked":"" ?>/><?=$this->getTrans('gotokey') ?></label>
+  <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
 </div>
 <div id="modules" class="table-responsive">
     <table class="table table-hover table-striped">
@@ -71,10 +71,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
                 $moduleUpdate = [];
 
-                if (!empty($configurations[$module->getKey()]['version'])) {
-                    if (version_compare($module->getVersion(), $configurations[$module->getKey()]['version'], '<')) {
-                        $moduleUpdate['local'] = json_decode(json_encode($configurations[$module->getKey()]));
-                    }
+                if (!empty($configurations[$module->getKey()]['version']) && version_compare($module->getVersion(), $configurations[$module->getKey()]['version'], '<')) {
+                    $moduleUpdate['local'] = json_decode(json_encode($configurations[$module->getKey()]));
                 }
 
                 foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
@@ -104,7 +102,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                 <i class="fa fa-pencil text-success"></i>
                             </a>
                             <?php if (!empty($moduleOnUpdateServer) && $module->getKey() == $moduleOnUpdateServer->key): ?>
-                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-default">
                                         <i class="fa fa-info text-info"></i>
                                     </span></a>
@@ -125,8 +123,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                     }
                                 }
 
-                                $icon = ($source == 'local') ? 'fa fa-download': 'fa fa-cloud-download';
-                                if (!empty($moduleUpdateInformation->phpExtensions) AND in_array(false, $extensionCheck)): ?>
+                                $icon = ($source === 'local') ? 'fa fa-download': 'fa fa-cloud-download';
+                                if (!empty($moduleUpdateInformation->phpExtensions) && in_array(false, $extensionCheck)): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('phpExtensionError') ?>">
                                         <i class="<?=$icon ?>"></i>
@@ -153,20 +151,20 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                             title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
-                                <?php elseif ($source == 'local' && !empty($moduleUpdateInformation)): ?>
+                                <?php elseif ($source === 'local' && !empty($moduleUpdateInformation)): ?>
                                     <form method="POST" action="<?=$this->getUrl(['action' => 'localUpdate', 'key' => $moduleUpdateInformation->key, 'from' => 'index']) ?>">
                                         <?=$this->getTokenField() ?>
-                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
+                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')? '1' : '0' ?>" />
                                         <button type="submit"
                                                 class="btn btn-default showOverlay"
                                                 title="<?=$this->getTrans('localModuleUpdate') ?>">
                                             <i class="<?=$icon ?>"></i>
                                         </button>
                                     </form>
-                                <?php elseif ($source == 'updateserver' && version_compare($versionsOfModules[$moduleUpdateInformation->key]['version'], $moduleUpdateInformation->version, '<')): ?>
+                                <?php elseif ($source === 'updateserver' && version_compare($versionsOfModules[$moduleUpdateInformation->key]['version'], $moduleUpdateInformation->version, '<')): ?>
                                     <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleUpdateInformation->key, 'version' => $moduleUpdateInformation->version, 'from' => 'index']) ?>">
                                         <?=$this->getTokenField() ?>
-                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')?"1":"0" ?>" />
+                                        <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')? '1' : '0' ?>" />
                                         <button type="submit"
                                                 class="btn btn-default showOverlay"
                                                 title="<?=$this->getTrans('moduleUpdate') ?>">
@@ -221,7 +219,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 
                     echo $this->getDialog('dependencyInfoModal'.$module->getKey(), $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo);
                     ?>
-                    <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
+                    <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo) ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         </tbody>

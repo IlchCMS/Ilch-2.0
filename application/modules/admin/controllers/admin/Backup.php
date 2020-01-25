@@ -8,7 +8,7 @@ namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Backup as BackupMapper;
 use Modules\Admin\Models\Backup as BackupModel;
-use Ilch\Config\File as File;
+use Ilch\Config\File;
 use Ifsnop\Mysqldump as IMysqldump;
 
 class Backup extends \Ilch\Controller\Admin
@@ -78,7 +78,7 @@ class Backup extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'create') {
+        if ($this->getRequest()->getActionName() === 'create') {
             $items[4][0]['active'] = true;
         } else {
             $items[4]['active'] = true;
@@ -99,11 +99,9 @@ class Backup extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'settings', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuBackup'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('id')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach ($this->getRequest()->getPost('id') as $backupId) {
-                    $backupMapper->delete($backupId);
-                }
+        if ($this->getRequest()->getPost('id') && $this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('id') as $backupId) {
+                $backupMapper->delete($backupId);
             }
         }
 
@@ -129,7 +127,7 @@ class Backup extends \Ilch\Controller\Admin
             $dbpassword = $fileConfig->get('dbPassword');
             $dbname = $fileConfig->get('dbName');
             $compressFile = '.sql';
-            if ($this->getRequest()->getPost('compress') == 'gzip') {
+            if ($this->getRequest()->getPost('compress') === 'gzip') {
                 $compress = 'GZIP';
                 $compressFile .= '.gz';
             } else {
@@ -196,23 +194,23 @@ class Backup extends \Ilch\Controller\Admin
             $backupMapper = new BackupMapper();
             $backup = $backupMapper->getBackupById($id);
 
-            if (!empty($backup)) {
+            if ($backup !== null) {
                 $fullPath = $path.$backup->getName();
                 if ($fd = fopen($fullPath, 'rb')) {
                     $path_parts = pathinfo($fullPath);
                     // Remove the random part of the filename as it should not end in e.g. the browser history.
-                    $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts["basename"]);
+                    $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
 
-                    if (strtolower($path_parts["extension"]) == "gz") {
-                        header("Content-type: application/x-gzip");
-                        header("Content-Disposition: filename=\"".$publicFileName."\"");
+                    if (strtolower($path_parts['extension']) === 'gz') {
+                        header('Content-type: application/x-gzip');
+                        header('Content-Disposition: filename="' .$publicFileName. '"');
                     } else {
-                        header("Content-type: application/x-sql");
-                        header("Content-Disposition: filename=\"".$publicFileName."\"");
+                        header('Content-type: application/x-sql');
+                        header('Content-Disposition: filename="' .$publicFileName. '"');
                     }
-                    header("Content-length: ".filesize($fullPath));
+                    header('Content-length: ' .filesize($fullPath));
                     // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
-                    header("Cache-control: private");
+                    header('Cache-control: private');
                     while(!feof($fd)) {
                         $buffer = fread($fd, 2048);
                         echo $buffer;

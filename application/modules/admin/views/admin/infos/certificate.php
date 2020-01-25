@@ -81,4 +81,4 @@
     <?=$this->getTrans('certificateMissing') ?>
 <?php endif; ?>
 
-<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('certificateInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('certificateInfoText')) ?>

@@ -14,7 +14,7 @@
 $('.layoutInput').change (
     this,
     function () {
-        top.location.href = '<?=$this->escape($this->getCurrentUrl(['ilch_layout' => '__LAYOUT_PLACEHOLDER__'], false)); ?>'
+        top.location.href = '<?=$this->escape($this->getCurrentUrl(['ilch_layout' => '__LAYOUT_PLACEHOLDER__'], false)) ?>'
                 .replace('__LAYOUT_PLACEHOLDER__', $(this).val());
     }
 );

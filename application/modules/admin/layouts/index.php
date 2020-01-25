@@ -85,7 +85,7 @@
                     <?php endif; ?>
                     <img title="Version <?=$config->get('version') ?>" class="pull-left logo hidden-sm" src="<?=$this->getStaticUrl('img/ilch_logo_2.png') ?>" />
                     <div class="hidden-md hidden-lg hidden-sm">
-                        <a class="<?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') { echo 'active'; }?> home" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
+                        <a class="<?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') { echo 'active'; }?> home" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                             <i class="fa fa-home"></i>
                         </a>
                         <button type="button" class="pull-right navbar-toggle" data-toggle="collapse" data-target="#rightbar">
@@ -97,13 +97,13 @@
                 <!-- TOP NAVBAR RIGHT -->
                 <nav id="rightbar" class="rightbar navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="<?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') { echo 'active'; } ?> visible-md visible-lg">
+                        <li class="<?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') { echo 'active'; } ?> visible-md visible-lg">
                             <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                                 <i class="fa fa-home"></i>
                             </a>
                         </li>
                         <?php if ($this->getUser()->isAdmin()): ?>
-                            <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'menu') { echo 'class="active"'; } ?>>
+                            <li <?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'menu') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'menu', 'action' => 'index']) ?>">
                                     <i class="fa fa-list-ol hidden-sm hidden-md"></i> <?=$this->getTrans('navigation') ?>
                                 </a>
@@ -116,7 +116,7 @@
                         foreach ($this->get('modules') as $module) {
                             if ($user->hasAccess('module_'.$module->getKey())) {
                                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
-                                if (substr($module->getIconSmall(), 0, 3) == 'fa-') {
+                                if (strncmp($module->getIconSmall(), 'fa-', 3) === 0) {
                                     $smallIcon = '<i class="fa '.$module->getIconSmall().'" style="padding-right: 5px;"></i>';
                                 } else {
                                     $smallIcon = '<img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />';
@@ -170,17 +170,17 @@
                             </li>
                         <?php endif; ?>
                         <?php if ($this->getUser()->isAdmin()): ?>
-                            <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'page') { echo 'class="active"'; } ?>>
+                            <li <?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'page') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'page', 'action' => 'index']) ?>">
                                     <i class="fa fa-file-text-o hidden-sm hidden-md"></i> <?=$this->getTrans('menuSites') ?>
                                 </a>
                             </li>
-                            <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'boxes') { echo 'class="active"'; } ?>>
+                            <li <?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'boxes') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'boxes', 'action' => 'index']) ?>">
                                     <i class="fa fa-inbox hidden-sm hidden-md"></i> <?=$this->getTrans('menuBoxes') ?>
                                 </a>
                             </li>
-                            <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'layouts') { echo 'class="active"'; } ?>>
+                            <li <?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'layouts') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'index']) ?>">
                                     <i class="fa fa-picture-o hidden-sm hidden-md"></i> <?=$this->getTrans('menuLayouts') ?>
                                 </a>
@@ -189,7 +189,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <?php if ($this->getUser()->isAdmin()): ?>
-                            <li class="<?php if ($this->getRequest()->getModuleName() == 'admin' && ($this->getRequest()->getControllerName() == 'settings' OR $this->getRequest()->getControllerName() == 'backup' OR $this->getRequest()->getControllerName() == 'emails')) { echo 'active'; } ?>">
+                            <li class="<?php if ($this->getRequest()->getModuleName() === 'admin' && ($this->getRequest()->getControllerName() === 'settings' || $this->getRequest()->getControllerName() === 'backup' || $this->getRequest()->getControllerName() === 'emails')) { echo 'active'; } ?>">
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>">
                                     <i class="fa fa-cogs"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuSettings') ?></span>
                                 </a>
@@ -200,7 +200,7 @@
                                 <i class="fa fa-share"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuFrontend') ?></span>
                             </a>
                         </li>
-                        <li class="dropdown <?php if ($this->getRequest()->getModuleName() == 'admin' &&  $this->getRequest()->getControllerName() == 'infos') { echo 'active'; } ?>">
+                        <li class="dropdown <?php if ($this->getRequest()->getModuleName() === 'admin' &&  $this->getRequest()->getControllerName() === 'infos') { echo 'active'; } ?>">
                             <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
                                 <i class="fa fa-question-circle"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuInfos') ?></span> <b class="caret"></b>
                             </a>
