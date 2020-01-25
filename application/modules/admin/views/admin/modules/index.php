@@ -199,11 +199,13 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                     } else {
                         $author = $this->escape($module->getAuthor());
                     }
+                    $ilchCoreVersion = (!empty($configurations[$module->getKey()]['ilchCore']) ? $configurations[$module->getKey()]['ilchCore'] : '');
+                    $phpVersion = (!empty($configurations[$module->getKey()]['phpVersion']) ? $configurations[$module->getKey()]['phpVersion'] : '');
                     $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$content['name'].'<br />
                                    <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
                                    <b>'.$this->getTrans('author').':</b> '.$author.'<br />
-                                   <b>'.$this->getTrans('ilchCoreVersion').':</b> '.(!empty($configurations[$module->getKey()]['ilchCore'])) ? $configurations[$module->getKey()]['ilchCore'] : ''.'<br />
-                                   <b>'.$this->getTrans('phpVersion').':</b> '.(!empty($configurations[$module->getKey()]['phpVersion'])) ? $configurations[$module->getKey()]['phpVersion'] : ''.'<br />
+                                   <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$ilchCoreVersion.'<br />
+                                   <b>'.$this->getTrans('phpVersion').':</b> '.$phpVersion.'<br />
                                    <b>'.$this->getTrans('dependencies').':</b><br />';
                     $dependenciesForInfo = (!empty($configurations[$module->getKey()]['depends']) ? $configurations[$module->getKey()]['depends'] : []);
                     foreach ($dependenciesForInfo as $key => $value) {
