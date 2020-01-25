@@ -158,7 +158,7 @@ class Notifications extends \Ilch\Mapper
         $notificationPermissionMapper = new NotificationPermissionMapper();
         $permission = $notificationPermissionMapper->getPermissionOfModule($notification->getModule());
 
-        if (empty($permission)) {
+        if ($permission === null) {
             $permission = new NotificationPermissionModel();
             $permission->setModule($notification->getModule());
             $permission->setGranted(1);
@@ -167,7 +167,7 @@ class Notifications extends \Ilch\Mapper
         }
 
         // If granted is 0 then there is no permission for this module. limit = 0 means no limit.
-        if ($permission->getGranted() And ($count < $permission->getLimit() or $permission->getLimit() == 0)) {
+        if ($permission->getGranted() && ($count < $permission->getLimit() || $permission->getLimit() == 0)) {
             $this->db()->insert('admin_notifications')
                 ->values($fields)
                 ->execute();
@@ -197,12 +197,10 @@ class Notifications extends \Ilch\Mapper
             'type' => $notification->getType()
         ];
 
-        $updated = $this->db()->update()->table('admin_notifications')
+        return $this->db()->update()->table('admin_notifications')
             ->values($fields)
             ->where(['id' => $notification->getId()])
             ->execute();
-
-        return $updated;
     }
 
     /**

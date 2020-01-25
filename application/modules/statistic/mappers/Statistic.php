@@ -25,7 +25,7 @@ class Statistic extends \Ilch\Mapper
 
         $sql = 'SELECT *
                 FROM `[prefix]_visits_online`
-                WHERE `date_last_activity` > "'.$date->format("Y-m-d H:i:s", true).'"
+                WHERE `date_last_activity` > "'.$date->format('Y-m-d H:i:s', true).'"
                 AND `user_id` > 0';
 
         $rows = $this->db()->queryArray($sql);
@@ -53,7 +53,7 @@ class Statistic extends \Ilch\Mapper
 
         $sql = 'SELECT *
                 FROM `[prefix]_visits_online`
-                WHERE `date_last_activity` > "'.$date->format("Y-m-d H:i:s", true).'"
+                WHERE `date_last_activity` > "'.$date->format('Y-m-d H:i:s', true).'"
                 ORDER BY date_last_activity DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -91,7 +91,7 @@ class Statistic extends \Ilch\Mapper
     {
         $userMapper = new UserMapper();
         $date = new \Ilch\Date();
-        $date->format("Y-m-d H:i:s", true);
+        $date->format('Y-m-d H:i:s', true);
 
         $sql = 'SELECT `[prefix]_visits_stats`.user_id, `[prefix]_visits_stats`.date, `[prefix]_users`.*
                 FROM `[prefix]_visits_stats`
@@ -115,7 +115,7 @@ class Statistic extends \Ilch\Mapper
                 HOUR(`date`) AS `date_hour`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
-        if ($month != null AND $year != null) {
+        if ($month != null && $year != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } elseif ($year != null) {
@@ -149,7 +149,7 @@ class Statistic extends \Ilch\Mapper
                 WEEKDAY(`date`) AS `date_week`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
-        if ($month != null AND $year != null) {
+        if ($month != null && $year != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } elseif ($year != null) {
@@ -184,7 +184,7 @@ class Statistic extends \Ilch\Mapper
                 MONTH(`date`) AS `date_month`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
-        if ($month != null AND $year != null) {
+        if ($month != null && $year != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } else {
@@ -273,16 +273,16 @@ class Statistic extends \Ilch\Mapper
         $browser = $this->db()->escape($browser);
         $sql = 'SELECT `browser`, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
-        if ($month != null AND $year != null AND $browser != null) {
+        if ($month != null && $year != null && $browser != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'") AND browser = "'.$browser.'"';
-        } elseif ($month == null AND $year != null AND $browser != null) {
+        } elseif ($month == null && $year != null && $browser != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND browser = "'.$browser.'"';
-        } elseif ($month != null AND $year != null) {
+        } elseif ($month != null && $year != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
-        } elseif ($month == null AND $year != null) {
+        } elseif ($month == null && $year != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
@@ -314,10 +314,10 @@ class Statistic extends \Ilch\Mapper
                 `lang`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
-        if ($month != null AND $year != null) {
+        if ($month != null && $year != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
-        } else if ($month == null AND $year != null) {
+        } else if ($month == null && $year != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
@@ -351,16 +351,16 @@ class Statistic extends \Ilch\Mapper
                 `os`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
-        if ($month != null AND $year != null AND $os != null) {
+        if ($month != null && $year != null && $os != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'") AND os = "'.$os.'"';
-        } elseif ($month == null AND $year != null AND $os != null) {
+        } elseif ($month == null && $year != null && $os != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND os = "'.$os.'"';
-        } elseif ($month != null AND $year != null) {
+        } elseif ($month != null && $year != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
-        } elseif ($month == null AND $year != null) {
+        } elseif ($month == null && $year != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
@@ -397,11 +397,9 @@ class Statistic extends \Ilch\Mapper
 
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_online`
-                WHERE `date_last_activity` > "'.$date->format("Y-m-d H:i:s", true).'"';
+                WHERE `date_last_activity` > "'.$date->format('Y-m-d H:i:s', true).'"';
 
-        $visits = $this->db()->queryCell($sql);
-
-        return $visits;
+        return $this->db()->queryCell($sql);
     }
 
     public function getArticlesCount()
@@ -409,9 +407,7 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_articles`';
 
-        $entries = $this->db()->queryCell($sql);
-
-        return $entries;
+        return $this->db()->queryCell($sql);
     }
 
     public function getCommentsCount()
@@ -419,9 +415,7 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_comments`';
 
-        $entries = $this->db()->queryCell($sql);
-
-        return $entries;
+        return $this->db()->queryCell($sql);
     }
 
     public function getModulesCount()
@@ -430,9 +424,7 @@ class Statistic extends \Ilch\Mapper
                 FROM `[prefix]_modules`
                 WHERE `system` = 0';
 
-        $entries = $this->db()->queryCell($sql);
-
-        return $entries;
+        return $this->db()->queryCell($sql);
     }
 
     public function getRegistUserCount()
@@ -441,9 +433,7 @@ class Statistic extends \Ilch\Mapper
                 FROM `[prefix]_users`
                 WHERE `confirmed` = 1';
 
-        $entries = $this->db()->queryCell($sql);
-
-        return $entries;
+        return $this->db()->queryCell($sql);
     }
 
     public function getRegistNewUser()
@@ -452,9 +442,7 @@ class Statistic extends \Ilch\Mapper
                 FROM `[prefix]_users`
                 WHERE `confirmed` = 1';
 
-        $entries = $this->db()->queryCell($sql);
-
-        return $entries;
+        return $this->db()->queryCell($sql);
     }
 
     /**
@@ -468,35 +456,31 @@ class Statistic extends \Ilch\Mapper
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_stats`';
-        if ($month != null AND $year != null) {
+        if ($month != null && $year != null) {
             $date = $year.'-'.$month.'-01 00:00:00';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
-        } elseif ($month == null AND $year != null) {
+        } elseif ($month == null && $year != null) {
             $date = $year.'-01-01 00:00:00';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         } elseif ($date != null) {
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'") AND DAY(`date`) = DAY("'.$date.'")';
         }
 
-        $visits = $this->db()->queryCell($sql);
-
-        return $visits;
+        return $this->db()->queryCell($sql);
     }
 
     public function getVisitsMonthCount($year = null, $month = null)
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_stats`';
-        if ($month != null AND $year != null) {
+        if ($month != null && $year != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } else {
             $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';
         }
 
-        $visits = $this->db()->queryCell($sql);
-
-        return $visits;
+        return $this->db()->queryCell($sql);
     }
 
     public function getVisitsYearCount()
@@ -505,16 +489,12 @@ class Statistic extends \Ilch\Mapper
                 FROM `[prefix]_visits_stats`
                 WHERE YEAR(`date`) = YEAR(CURDATE())';
 
-        $visits = $this->db()->queryCell($sql);
-
-        return $visits;
+        return $this->db()->queryCell($sql);
     }
 
     public function getPercent($count, $totalcount)
     {
-        $percent = round(($count / $totalcount) * 100);
-
-        return $percent;
+        return round(($count / $totalcount) * 100);
     }
 
     /**
@@ -527,7 +507,7 @@ class Statistic extends \Ilch\Mapper
     public function getOS($name = null, $version = null)
     {
         if (!isset($_SERVER['HTTP_USER_AGENT'])) {
-            return "";
+            return '';
         }
 
         $useragent = $_SERVER['HTTP_USER_AGENT'];
@@ -592,7 +572,7 @@ class Statistic extends \Ilch\Mapper
             }
         }
 
-        return "";
+        return '';
     }
 
     /**
@@ -604,36 +584,36 @@ class Statistic extends \Ilch\Mapper
     public function getBrowser($version = null)
     {
         if (!isset($_SERVER['HTTP_USER_AGENT'])) {
-            return "";
+            return '';
         }
 
         $useragent = $_SERVER['HTTP_USER_AGENT'];
 
         if ($version != null) {
             if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent)) {
-                return ("Firefox");
+                return ('Firefox');
             } elseif (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
-                return "Internet Explorer";
+                return 'Internet Explorer';
             } elseif (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
-                return "Internet Explorer";
+                return 'Internet Explorer';
             } elseif (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent)) {
-                return "Opera";
+                return 'Opera';
             } elseif (preg_match("=OPR\/([0-9\.]*)=", $useragent)) {
-                return "Opera";
+                return 'Opera';
             } elseif (preg_match("=Edge/([0-9\.]*)=", $useragent)) {
-                return "Edge";
+                return 'Edge';
             } elseif (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent)) {
-                return "Vivaldi";
+                return 'Vivaldi';
             } elseif (preg_match("=Chrome/([0-9\.]*)=", $useragent)) {
-                return "Chrome";
+                return 'Chrome';
             } elseif (preg_match('=Safari/=', $useragent)) {
-                return "Safari";
-            } elseif (false !== strpos($useragent, "Konqueror")) {
-                return "Konqueror";
-            } elseif (preg_match("=Netscape|Navigator=", $useragent)) {
-                return "Netscape";
+                return 'Safari';
+            } elseif (strpos($useragent, 'Konqueror') !== false) {
+                return 'Konqueror';
+            } elseif (preg_match('=Netscape|Navigator=', $useragent)) {
+                return 'Netscape';
             } else {
-                return "";
+                return '';
             }
         } else {
             if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent, $browser)) {
@@ -672,11 +652,11 @@ class Statistic extends \Ilch\Mapper
                 if (preg_match('=Version/([\.0-9]*)=', $useragent, $browser)) {
                     $version = $browser[1];
                 } else {
-                    return "";
+                    return '';
                 }
                 return $version;
             } else {
-                return "";
+                return '';
             }
         }
     }
@@ -780,7 +760,7 @@ class Statistic extends \Ilch\Mapper
         $date->modify('-1 day');
 
         $where = [
-            'date_last_activity <' => $date->format("Y-m-d H:i:s", true),
+            'date_last_activity <' => $date->format('Y-m-d H:i:s', true),
         ];
 
         if ($keepUsers) {
@@ -827,12 +807,10 @@ class Statistic extends \Ilch\Mapper
      */
     private function columnWithValueExists($column, $value)
     {
-        $exists = (bool)$this->db()->select('id')
+        return (bool)$this->db()->select('id')
             ->from('visits_stats')
             ->where([$column => $value])
             ->execute()
             ->fetchCell();
-
-        return $exists;
     }
 }

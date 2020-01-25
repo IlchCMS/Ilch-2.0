@@ -169,34 +169,6 @@ class Mysql
     }
 
     /**
-     * Create Select Statement Query Builder
-     * @param array|string|null $fields
-     * @param string|null $table table without prefix
-     * @param array|null $where conditions @see QueryBuilder::where()
-     * @param array|null $orderBy
-     * @param array|int|null $limit
-     * @return Mysql\Select
-     */
-    public function select($fields = null, $table = null, $where = null, array $orderBy = null, $limit = null)
-    {
-        return new Mysql\Select($this, $fields, $table, $where, $orderBy, $limit);
-    }
-
-    /**
-     * Select on cell from table.
-     *
-     * @param  string $sql
-     * @return string|int
-     * @throws Exception
-     */
-    public function queryCell($sql)
-    {
-        $row = mysqli_fetch_row($this->query($sql));
-
-        return $row[0];
-    }
-
-    /**
      * Check if table exists.
      *
      * @param  string $table
@@ -225,6 +197,39 @@ class Mysql
         $result = $this->query($sql);
 
         return mysqli_num_rows($result) > 0;
+    }
+
+    /**
+     * Create Select Statement Query Builder
+     * 
+     * @param array|string|null $fields
+     * @param string|null $table table without prefix
+     * @param array|null $where conditions @see QueryBuilder::where()
+     * @param array|null $orderBy
+     * @param array|int|null $limit
+     * @return Mysql\Select
+     */
+    public function select($fields = null, $table = null, $where = null, array $orderBy = null, $limit = null)
+    {
+        return new Mysql\Select($this, $fields, $table, $where, $orderBy, $limit);
+    }
+
+    /**
+     * Select one cell from table.
+     *
+     * @param  string $sql
+     * @return string|int|null
+     * @throws Exception
+     */
+    public function queryCell($sql)
+    {
+        $row = mysqli_fetch_row($this->query($sql));
+
+        if ($row === null) {
+            return null;
+        }
+
+        return $row[0];
     }
 
     /**

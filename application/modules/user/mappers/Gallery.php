@@ -6,7 +6,7 @@
 
 namespace Modules\User\Mappers;
 
-use Modules\User\Models\GalleryItem as GalleryItem;
+use Modules\User\Models\GalleryItem;
 
 class Gallery extends \Ilch\Mapper
 {
@@ -136,9 +136,7 @@ class Gallery extends \Ilch\Mapper
                 FROM `[prefix]_users_gallery_items`
                 WHERE `user_id` = '.$id.' AND `parent_id` = 0';
 
-        $gallery = $this->db()->queryCell($sql);
-
-        return $gallery;
+        return $this->db()->queryCell($sql);
     }
 
     /**

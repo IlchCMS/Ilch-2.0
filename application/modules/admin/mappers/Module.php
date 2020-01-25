@@ -251,7 +251,7 @@ class Module extends \Ilch\Mapper
                 ->execute();
         }
 
-        return (int) $moduleId;
+        return $moduleId;
     }
 
     /**

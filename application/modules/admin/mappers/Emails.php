@@ -126,7 +126,7 @@ class Emails extends \Ilch\Mapper
         } else {
             $result = $this->db()->select('*')
                 ->from('emails')
-                ->where(['moduleKey' => $moduleKey, 'type' => $type, 'locale' => "de_DE"])
+                ->where(['moduleKey' => $moduleKey, 'type' => $type, 'locale' => 'de_DE'])
                 ->execute()
                 ->fetchAssoc();
         }

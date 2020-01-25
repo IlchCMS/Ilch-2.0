@@ -472,7 +472,7 @@ class Article extends \Ilch\Mapper
         }
 
         $keywordsListString = implode(', ', $keywordsList);
-        $keywordsListArray = explode(", ", $keywordsListString);
+        $keywordsListArray = explode(', ', $keywordsListString);
 
         return in_array($keyword, $keywordsListArray);
     }

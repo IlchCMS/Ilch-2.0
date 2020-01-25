@@ -55,7 +55,7 @@ class Backup extends \Ilch\Mapper
         }
 
         $backupModel = new BackupModel();
-        $backupModel->setId($result['id']);;
+        $backupModel->setId($result['id']);
         $backupModel->setName($result['name']);
         $backupModel->setDate($result['date']);
         

@@ -78,13 +78,11 @@ class NotificationPermission extends \Ilch\Mapper
             'granted' => $permission->getGranted(),
             'limit' => $permission->getLimit()
         ];
-        
-        $updated = $this->db()->update()->table('admin_notifications_permission')
+
+        return $this->db()->update()->table('admin_notifications_permission')
             ->values($fields)
             ->where(['module' => $permission->getModule()])
             ->execute();
-
-        return $updated;
     }
 
     /**
@@ -96,12 +94,10 @@ class NotificationPermission extends \Ilch\Mapper
      */
     public function updatePermissionGrantedOfModule($module, $granted)
     {
-        $updated = $this->db()->update()->table('admin_notifications_permission')
+        return $this->db()->update()->table('admin_notifications_permission')
             ->values(['granted' => $granted])
             ->where(['module' => $module])
             ->execute();
-
-        return $updated;
     }
 
     /**
@@ -113,12 +109,10 @@ class NotificationPermission extends \Ilch\Mapper
      */
     public function updateLimitOfModule($module, $limit)
     {
-        $updated = $this->db()->update()->table('admin_notifications_permission')
+        return $this->db()->update()->table('admin_notifications_permission')
             ->values(['limit' => $limit])
             ->where(['module' => $module])
             ->execute();
-
-        return $updated;
     }
 
     /**

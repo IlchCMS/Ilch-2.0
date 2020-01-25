@@ -57,11 +57,13 @@ class Result
                 $row = $this->dbResult->fetch_assoc();
                 if (!isset($row)) {
                     return null;
-                } elseif (isset($row[$name])) {
-                    return $row[$name];
-                } else {
-                    return false;
                 }
+
+                if (isset($row[$name])) {
+                    return $row[$name];
+                }
+
+                return false;
             }
         } else {
             $fieldNumber = 0;
@@ -69,7 +71,9 @@ class Result
         $row = $this->dbResult->fetch_row();
         if (!isset($row)) {
             return null;
-        } elseif (isset($row[$fieldNumber])) {
+        }
+
+        if (isset($row[$fieldNumber])) {
             return $row[$fieldNumber];
         }
 
@@ -126,11 +130,11 @@ class Result
         $this->setCurrentRow(0);
         $results = [];
         if (isset($keyField)) {
-            while (null !== ($row = $this->fetchArray($type))) {
+            while (($row = $this->fetchArray($type)) !== null) {
                 $results[$row[$keyField]] = $row;
             }
         } else {
-            while (null !== ($row = $this->fetchArray($type))) {
+            while (($row = $this->fetchArray($type)) !== null) {
                 $results[] = $row;
             }
         }
@@ -148,7 +152,7 @@ class Result
         $this->setCurrentRow(0);
         $results = [];
 
-        if (null === $field) {
+        if ($field === null) {
             $fetchMethod = 'fetchRow';
             $field = 0;
         } else {
@@ -156,11 +160,11 @@ class Result
         }
 
         if (isset($keyField)) {
-            while (null !== ($row = $this->$fetchMethod())) {
+            while (($row = $this->$fetchMethod()) !== null) {
                 $results[$row[$keyField]] = $row[$field];
             }
         } else {
-            while (null !== ($row = $this->$fetchMethod())) {
+            while (($row = $this->$fetchMethod()) !== null) {
                 $results[] = $row[$field];
             }
         }

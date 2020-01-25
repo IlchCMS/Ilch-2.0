@@ -52,9 +52,8 @@ class GalleryImage extends \Ilch\Mapper
         $sql = 'SELECT *
                 FROM `[prefix]_users_gallery_imgs`
                 WHERE cat = '.$id;
-        $count = $this->db()->queryArray($sql);
 
-        return $count;
+        return $this->db()->queryArray($sql);
     }
 
     /**

@@ -23,10 +23,9 @@ class Menu extends \Ilch\Mapper
         $sql = 'SELECT id
                 FROM `[prefix]_menu`
                 ORDER BY id ASC
-                LIMIT '.(int)($position-1).', 1';
-        $id = $this->db()->queryCell($sql);
+                LIMIT '. ($position-1) .', 1';
 
-        return $id;
+        return $this->db()->queryCell($sql);
     }
 
     /**
@@ -198,26 +197,34 @@ class Menu extends \Ilch\Mapper
         return $itemId;
     }
 
+    /**
+     * Get last menu id.
+     *
+     * @return int|string|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getLastMenuId()
     {
         $sql = 'SELECT MAX(id)
                 FROM `[prefix]_menu`';
 
-        $entry = $this->db()->queryCell($sql);
-
-        return $entry;
+        return $this->db()->queryCell($sql);
     }
 
+    /**
+     * Get last menu item id.
+     *
+     * @return int|string|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getLastMenuItemId()
     {
         $sql = 'SELECT MAX(id)
                 FROM `[prefix]_menu_items`';
 
-        $entry = $this->db()->queryCell($sql);
-
-        return $entry;
+        return $this->db()->queryCell($sql);
     }
-    
+
     /**
      * Save one menu.
      *
@@ -238,7 +245,7 @@ class Menu extends \Ilch\Mapper
 
         return $menuId;
     }
- 
+
     /**
      * Delete the given menu item.
      *
