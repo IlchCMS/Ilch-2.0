@@ -9,10 +9,10 @@
             <i class="fa fa-check-circle text-success" title="<?=$this->getTrans('finish') ?>"></i>
         </div>
         <div class="col-lg-10">
-            <?=$this->getTranslator()->trans('registerThanks', $this->escape($_SESSION["name"])) ?>
+            <?=$this->getTranslator()->trans('registerThanks', $this->escape($_SESSION['name'])) ?>
             <br /><br />
         <?php if ($this->get('regist_confirm') == '1'): ?>
-            <?=$this->getTranslator()->trans('registerMailSent', $this->escape($_SESSION["email"])) ?>
+            <?=$this->getTranslator()->trans('registerMailSent', $this->escape($_SESSION['email'])) ?>
         <?php elseif ($this->get('regist_setfree') == '1'): ?>
             <?=$this->getTrans('registerSetfree') ?>
         <?php else: ?>

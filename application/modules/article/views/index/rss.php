@@ -42,7 +42,7 @@ if ($articles) {
 
         $articleDate = new \Ilch\Date($article->getDateCreated());
         $user = $userMapper->getUserById($article->getAuthorId());
-        $strippedContent = str_replace("&nbsp;", " ", $article->getContent());
+        $strippedContent = str_replace('&nbsp;', ' ', $article->getContent());
 
         $item = $xml->createElement('item');
         $channel->appendChild($item);

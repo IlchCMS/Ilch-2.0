@@ -61,14 +61,16 @@ abstract class Composite implements CompositePart
 
         if (count($this->parts) === 1) {
             return (string) $this->parts[0];
-        } elseif (count($this->parts) > 0) {
+        }
+
+        if (count($this->parts) > 0) {
             $parts = [];
             foreach ($this->parts as $part) {
                 $parts[] = (string) $part;
             }
             return '(' . implode($this->separator, $parts) . ')';
-        } else {
-            return '';
         }
+
+        return '';
     }
 }

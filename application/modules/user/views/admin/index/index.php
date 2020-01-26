@@ -10,21 +10,21 @@
         <?php if ($this->get('badge') > 0): ?>
             <li <?php if ($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
-                    <?=$this->getTrans('setfree'); ?> <span class="badge"><?=$this->get('badge') ?></span>
+                    <?=$this->getTrans('setfree') ?> <span class="badge"><?=$this->get('badge') ?></span>
                 </a>
             </li>
         <?php endif; ?>
         <?php if ($this->get('badgeLocked') > 0): ?>
             <li <?php if ($this->getRequest()->getParam('showlocked')) { echo 'class="active"'; } ?>>
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showlocked' => 1]) ?>">
-                    <?=$this->getTrans('unlock'); ?> <span class="badge"><?=$this->get('badgeLocked') ?></span>
+                    <?=$this->getTrans('unlock') ?> <span class="badge"><?=$this->get('badgeLocked') ?></span>
                 </a>
             </li>
         <?php endif; ?>
         <?php if ($this->get('badgeSelectsDelete') > 0): ?>
             <li <?php if ($this->getRequest()->getParam('showselectsdelete')) { echo 'class="active"'; } ?>>
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showselectsdelete' => 1]) ?>">
-                    <?=$this->getTrans('selectsdelete'); ?> <span class="badge"><?=$this->get('badgeSelectsDelete') ?></span>
+                    <?=$this->getTrans('selectsdelete') ?> <span class="badge"><?=$this->get('badgeSelectsDelete') ?></span>
                 </a>
             </li>
         <?php endif; ?>
@@ -130,7 +130,7 @@
     </div>
     <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>
-<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('selectsdeletetimeInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('selectsdeletetimeInfoText')) ?>
 <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showselectsdelete' => 1]) ?>
 <?php elseif ($this->getRequest()->getParam('showsetfree')): ?>

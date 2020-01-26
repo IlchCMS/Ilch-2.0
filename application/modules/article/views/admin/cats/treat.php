@@ -1,6 +1,6 @@
 <h1><?=($this->get('cat') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST">
-    <?=$this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:

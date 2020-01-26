@@ -31,7 +31,7 @@ class Min extends Base
      */
     public function run()
     {
-        $numberString = $this->getParameter(1) === 'string' ? true : false;
+        $numberString = $this->getParameter(1) === 'string';
 
         $this->setIsValid($this->getValue() === '' || $this->getSize($this->getValue(), $numberString) >= (int) $this->getParameter(0));
         $this->setErrorParameters([$this->getParameter(0)]);
@@ -51,14 +51,14 @@ class Min extends Base
     {
         if (is_numeric($value) && !$numberString) {
             return (int) $value;
-        } elseif (is_array($value)) {
-            $this->setErrorKey('validation.errors.min.array');
+        }
 
+        if (is_array($value)) {
+            $this->setErrorKey('validation.errors.min.array');
             return count($value);
         }
 
         $this->setErrorKey('validation.errors.min.string');
-
         return mb_strlen($value);
     }
 }

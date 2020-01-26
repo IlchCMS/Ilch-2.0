@@ -1,7 +1,7 @@
 <?php if ($this->get('inbox') != ''): ?>
     <?php foreach ($this->get('inbox') as $inbox): ?>
         <?php $date = new \Ilch\Date($inbox->getTime()); ?>
-        <li class="<?=$inbox->getId() == ($this->getUser()->getId()) ? 'right' : 'left'; ?>">
+        <li class="<?=$inbox->getId() == ($this->getUser()->getId()) ? 'right' : 'left' ?>">
             <div class="body">
                 <div data-crid="<?=$inbox->getCrId() ?>" class="message well well-sm">
                     <?=nl2br($this->getHtmlFromBBCode($this->escape($inbox->getText()))) ?>
@@ -17,7 +17,7 @@
                     echo $this->getTrans('profileYesterday').' '.$date->format('H:i', true);
                 } else {
                     echo $date->format('H:i', true);
-                };
+                }
                 ?>
             </small>
         </li>
@@ -26,7 +26,7 @@
 
 <script>
     $(".message").click(function() {
-        let deleteDialog = '<div class="deletedialog" data-crid="'+$(this).attr("data-crid")+'"><?=$this->getTrans("delete") ?></div>';
+        let deleteDialog = '<div class="deletedialog" data-crid="'+$(this).attr("data-crid")+'"><?=$this->getTrans('delete') ?></div>';
         let sel = getSelection().toString();
 
         $("#deletedialogcode").html(deleteDialog);

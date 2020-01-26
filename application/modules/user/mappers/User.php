@@ -466,13 +466,11 @@ class User extends \Ilch\Mapper
      */
     public function userWithIdExists($userId)
     {
-        $userExists = (bool)$this->db()->select('id')
+        return (bool)$this->db()->select('id')
             ->from('users')
             ->where(['id' => $userId])
             ->execute()
             ->fetchCell();
-
-        return $userExists;
     }
 
     /**

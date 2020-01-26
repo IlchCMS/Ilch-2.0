@@ -62,7 +62,7 @@
     </div>
 </div>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 // Set a variable to later display a translated message. Used in ../application/modules/admin/static/js/functions.js
 var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries')) ?>;

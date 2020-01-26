@@ -15,11 +15,11 @@ use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
-use Modules\User\Mappers\AuthProvider as AuthProvider;
+use Modules\User\Mappers\AuthProvider;
 use Modules\User\Mappers\Friends as FriendsMapper;
 use Modules\User\Mappers\Dialog as DialogMapper;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
-use \Ilch\Registry as Registry;
+use \Ilch\Registry;
 use Ilch\Validation;
 
 /**
@@ -68,7 +68,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -96,11 +96,11 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_users')) {
             foreach ($this->getRequest()->getPost('check_users') as $userId) {
                 $deleteUser = $userMapper->getUserById($userId);
 
-                if ($deleteUser->getId() != Registry::get('user')->getId() and (($deleteUser->isAdmin() and $this->getUser()->isAdmin()) or !$deleteUser->isAdmin())) {
+                if ($deleteUser->getId() != Registry::get('user')->getId() && (($deleteUser->isAdmin() && $this->getUser()->isAdmin()) || !$deleteUser->isAdmin())) {
                     if (!$deleteUser->hasGroup(1) || $userMapper->getAdministratorCount() > 1) {
                         $userMapper->delete($deleteUser->getId());
                         $authTokenMapper->deleteAllAuthTokenOfUser($deleteUser->getId());
@@ -164,7 +164,7 @@ class Index extends \Ilch\Controller\Admin
 
             $model = new UserModel();
             $model->setId($this->getRequest()->getParam('id'));
-            $model->setDateConfirmed($date->format("Y-m-d H:i:s", true));
+            $model->setDateConfirmed($date->format('Y-m-d H:i:s', true));
             $model->setConfirmed(1);
             $userMapper->save($model);
 
@@ -187,7 +187,7 @@ class Index extends \Ilch\Controller\Admin
             $messageReplace = [
                 '{content}' => $this->getLayout()->purify($mailContent->getText()),
                 '{sitetitle}' => $siteTitle,
-                '{date}' => $date->format("l, d. F Y", true),
+                '{date}' => $date->format('l, d. F Y', true),
                 '{name}' => $username,
                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
             ];
@@ -258,7 +258,7 @@ class Index extends \Ilch\Controller\Admin
             if ($userData['id']) {
                 $userbyid = $userMapper->getUserById($userData['id']);
 
-                if ($userbyid->isAdmin() and !$this->getUser()->isAdmin()) {
+                if ($userbyid->isAdmin() && !$this->getUser()->isAdmin()) {
                     $this->redirect(['action' => 'index']);
                 }
 
@@ -279,14 +279,12 @@ class Index extends \Ilch\Controller\Admin
                 $generated = false;
                 if (!empty($userData['password'])) {
                     $userData['password'] = (new PasswordService())->hash($userData['password']);
-                } else {
-                    if (empty($userData['id'])) {
-                        $pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-                        $password = PasswordService::generateSecurePassword(10, $pool);
-                        $userData['password'] = (new PasswordService())->hash($password);
+                } elseif (empty($userData['id'])) {
+                    $pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+                    $password = PasswordService::generateSecurePassword(10, $pool);
+                    $userData['password'] = (new PasswordService())->hash($password);
 
-                        $generated = true;
-                    }
+                    $generated = true;
                 }
 
                 $user = $userMapper->loadFromArray($userData);
@@ -295,7 +293,7 @@ class Index extends \Ilch\Controller\Admin
                     $userData['groups'][0] = 2;
                 }
                 foreach ($userData['groups'] as $groupId) {
-                    if (($this->getUser()->isAdmin() and $groupId == 1) or $groupId != 1) {
+                    if (($this->getUser()->isAdmin() && $groupId == 1) || $groupId != 1) {
                         $group = new GroupModel();
                         $group->setId($groupId);
                         $user->addGroup($group);
@@ -333,7 +331,7 @@ class Index extends \Ilch\Controller\Admin
                     $messageReplace = [
                         '{content}' => $this->getLayout()->purify($mailContent->getText()),
                         '{sitetitle}' => $siteTitle,
-                        '{date}' => $date->format("l, d. F Y", true),
+                        '{date}' => $date->format('l, d. F Y', true),
                         '{name}' => $name,
                         '{confirm}' => $confirmCode,
                         '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
@@ -387,7 +385,7 @@ class Index extends \Ilch\Controller\Admin
         if ($userMapper->userWithIdExists($userId)) {
             $user = $userMapper->getUserById($userId);
 
-            if ($user->isAdmin() and !$this->getUser()->isAdmin()) {
+            if ($user->isAdmin() && !$this->getUser()->isAdmin()) {
                 $this->redirect(['action' => 'index']);
             }
         } else {
@@ -419,7 +417,7 @@ class Index extends \Ilch\Controller\Admin
         if ($userId && $this->getRequest()->isSecure()) {
             $deleteUser = $userMapper->getUserById($userId);
 
-            if ($deleteUser->isAdmin() and !$this->getUser()->isAdmin()) {
+            if ($deleteUser->isAdmin() && !$this->getUser()->isAdmin()) {
                 $this->redirect(['action' => 'index']);
             }
 
@@ -430,7 +428,7 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('delLastAdminProhibited', 'warning');
                 // Delete adminuser only if he is not the last admin.
             } else {
-                if ($deleteUser->getAvatar() != 'static/img/noavatar.jpg') {
+                if ($deleteUser->getAvatar() !== 'static/img/noavatar.jpg') {
                     unlink($deleteUser->getAvatar());
                 }
 

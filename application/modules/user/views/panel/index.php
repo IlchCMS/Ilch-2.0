@@ -10,7 +10,7 @@ $openFriendRequests = $this->get('openFriendRequests');
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <h1><?=$this->getTrans('welcome'); ?> <?=$this->escape($profil->getName()) ?></h1>
+            <h1><?=$this->getTrans('welcome') ?> <?=$this->escape($profil->getName()) ?></h1>
 
             <?php if(!empty($openFriendRequests)): ?>
                 <h1><?=$this->getTrans('friendRequests') ?></h1>

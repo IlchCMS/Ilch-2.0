@@ -52,7 +52,7 @@
                                                                         echo $this->getTrans('profileYesterday').' '.$date->format('H:i', true);
                                                                     } else {
                                                                         echo $date->format('H:i', true);
-                                                                    };
+                                                                    }
                                                                     ?>
                                                                 </small>
                                                                 <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>"><i class="fas fa-eye-slash"></i></a>

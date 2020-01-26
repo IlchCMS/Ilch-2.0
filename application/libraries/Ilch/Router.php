@@ -148,7 +148,7 @@ class Router
      * @todo matchByRegexp not working at the moment.
      * @param string $route
      * @param array $params
-     * @throws \Exception
+     * @throws \RuntimeException
      * @return array
      */
     public function matchByRegexp($route, array $params = [])
@@ -163,7 +163,7 @@ class Router
         );
 
         if (count($matches) === 0) {
-            throw new \Exception(sprintf('Expected route "%s" does not match with pattern "%s"', $route, $pattern));
+            throw new \RuntimeException(sprintf('Expected route "%s" does not match with pattern "%s"', $route, $pattern));
         }
 
         return $matches;
@@ -254,10 +254,8 @@ class Router
         $config = \Ilch\Registry::get('config');
         $locale = '';
 
-        if ((bool)$config->get('multilingual_acp')) {
-            if ($translator->getLocale() != $config->get('content_language')) {
-                $locale = $translator->getLocale();
-            }
+        if ((bool)$config->get('multilingual_acp') && $translator->getLocale() != $config->get('content_language')) {
+            $locale = $translator->getLocale();
         }
 
         if (strpos($startPage, 'module_') !== false) {
@@ -335,7 +333,7 @@ class Router
      */
     public function updateRequest($result)
     {
-        if (array_key_exists('admin', $result) && strlen($result['admin']) > 0) {
+        if (array_key_exists('admin', $result) && $result['admin'] != '') {
             $this->request->setIsAdmin(true);
         }
 

@@ -163,22 +163,20 @@ class Page
 
         if (($this->fileConfig->get('dbUser')) !== null) {
             // Always allow access to registration (previously no access for guests to the user module lead to them being unable to register)
-            $accesses = $this->request->getModuleName() == 'user' && ($this->request->getControllerName()  == 'regist' || $this->request->getControllerName()  == 'login') || $accesses = $this->accesses->hasAccess('Module');
+            $accesses = ($this->request->getModuleName() === 'user' && ($this->request->getControllerName() === 'regist' || $this->request->getControllerName() === 'login')) || $accesses = $this->accesses->hasAccess('Module');
         } else {
             $accesses = true;
         }
 
         if (!empty($viewOutput)) {
-            if (!$this->request->isAdmin()) {
-                if ($accesses) {
-                    $controller->getLayout()->setContent($viewOutput);
-                } else {
-                    $this->translator->load(APPLICATION_PATH.'/modules/user/translations/');
-
-                    $controller->getLayout()->setContent($this->accesses->getErrorPage($this->translator->trans('noAccessPage')));
-                }
-            } else {
+            if ($this->request->isAdmin()) {
                 $controller->getLayout()->setContent($viewOutput);
+            } elseif ($accesses) {
+                $controller->getLayout()->setContent($viewOutput);
+            } else {
+                $this->translator->load(APPLICATION_PATH.'/modules/user/translations/');
+
+                $controller->getLayout()->setContent($this->accesses->getErrorPage($this->translator->trans('noAccessPage')));
             }
         }
 

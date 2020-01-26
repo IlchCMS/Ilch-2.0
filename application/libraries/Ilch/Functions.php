@@ -62,7 +62,7 @@ function debug_backtrace_html($skipEntries = 1)
 
         $r .= $t['function'];
 
-        if (isset($t['args']) && sizeof($t['args']) > 0) {
+        if (isset($t['args']) && count($t['args']) > 0) {
             $r .= '(...)';
         } else {
             $r .= '()';
@@ -99,10 +99,12 @@ function removeDir($dir)
         $dircontent = scandir($dir);
 
         foreach ($dircontent as $c) {
-            if ($c != '.' && $c != '..' && is_dir($dir.'/'.$c)) {
-                removeDir($dir.'/'.$c);
-            } elseif ($c != '.' && $c != '..') {
-                unlink($dir.'/'.$c);
+            if ($c !== '.' && $c !== '..') {
+                if (is_dir($dir.'/'.$c)) {
+                    removeDir($dir.'/'.$c);
+                } else {
+                    unlink($dir.'/'.$c);
+                }
             }
         }
 
@@ -219,7 +221,7 @@ function url_get_contents($url, $write_cache = true, $ignoreCache = false, $cach
 
     // settings
     $cachetime = $cache_time; //Default 6 hours
-    $where = "cache";
+    $where = 'cache';
     if (!is_dir($where)) {
         mkdir($where);
     }
@@ -235,7 +237,7 @@ function url_get_contents($url, $write_cache = true, $ignoreCache = false, $cach
     $filetimemod = $mtime + $cachetime;
 
     // if the renewal date is smaller than now, return true; else false (no need for update)
-    if ($filetimemod < time() || $ignoreCache) {
+    if ($ignoreCache || $filetimemod < time()) {
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => TRUE,
@@ -271,19 +273,19 @@ function url_get_contents($url, $write_cache = true, $ignoreCache = false, $cach
 function var_export_short_syntax($var, $indent = '')
 {
     switch (gettype($var)) {
-        case "string":
+        case 'string':
             return '"' . addcslashes($var, "\\\$\"\r\n\t\v\f") . '"';
-        case "array":
+        case 'array':
             $indexed = array_keys($var) === range(0, count($var) - 1);
             $r = [];
             foreach ($var as $key => $value) {
                 $r[] = "$indent    "
-                    . ($indexed ? "" : var_export_short_syntax($key) . " => ")
+                    . ($indexed ? '' : var_export_short_syntax($key) . ' => ')
                     . var_export_short_syntax($value, "$indent    ");
             }
-            return "[\n" . implode(",\n", $r) . "\n" . $indent . "]";
-        case "boolean":
-            return $var ? "TRUE" : "FALSE";
+            return "[\n" . implode(",\n", $r) . "\n" . $indent . ']';
+        case 'boolean':
+            return $var ? 'TRUE' : 'FALSE';
         default:
             return var_export($var, true);
     }

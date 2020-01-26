@@ -136,11 +136,7 @@ class Request
      */
     public function isAjax()
     {
-        if ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest") || $this->isAjax) {
-            return true;
-        }
-
-        return false;
+        return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') || $this->isAjax;
     }
 
     /**
@@ -296,11 +292,13 @@ class Request
     {
         if ($key === '') {
             return $_GET;
-        } elseif (isset($_GET[$key])) {
-            return $_GET[$key];
-        } else {
-            return null;
         }
+
+        if (isset($_GET[$key])) {
+            return $_GET[$key];
+        }
+
+        return null;
     }
 
     /**
@@ -316,10 +314,8 @@ class Request
             if (empty($this->getPost('ilch_token')) || !is_string($this->getPost('ilch_token'))) {
                 return false;
             }
-        } else {
-            if (empty($this->getParam('ilch_token'))) {
-                return false;
-            }
+        } elseif (empty($this->getParam('ilch_token'))) {
+            return false;
         }
 
         $returnValue = false;

@@ -25,7 +25,7 @@
                         <td>
                             <?php if (empty($provider->getModule())): ?>
                                 <span class="text-danger">
-                                    <i class="fa fa-remove fa-fw"></i> <?= $this->getTrans('providersNoModuleSelectedOrInstalled'); ?>
+                                    <i class="fa fa-remove fa-fw"></i> <?= $this->getTrans('providersNoModuleSelectedOrInstalled') ?>
                                 </span>
                             <?php else: ?>
                                 <span class="text-success">

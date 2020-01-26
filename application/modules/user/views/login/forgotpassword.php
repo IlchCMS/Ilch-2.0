@@ -1,4 +1,4 @@
-<h1><?=$this->getTrans('newPassword'); ?></h1>
+<h1><?=$this->getTrans('newPassword') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">

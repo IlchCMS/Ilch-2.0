@@ -59,7 +59,7 @@ class Mail extends \Ilch\Controller\Frontend
                     '{subject}' => $subject,
                     '{content}' => $this->getLayout()->escape($message),
                     '{sitetitle}' => $siteTitle,
-                    '{date}' => $date->format("l, d. F Y", true),
+                    '{date}' => $date->format('l, d. F Y', true),
                     '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                 ];
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);

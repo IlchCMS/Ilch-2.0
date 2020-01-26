@@ -129,10 +129,8 @@ class Model
         $html = '';
         $locale = '';
 
-        if ((bool)$config->get('multilingual_acp')) {
-            if ($this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
-                $locale = $this->layout->getTranslator()->getLocale();
-            }
+        if ((bool)$config->get('multilingual_acp') && $this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
+            $locale = $this->layout->getTranslator()->getLocale();
         }
 
         /** @var MenuItem $item */
@@ -241,13 +239,11 @@ class Model
                     // find childitems recursively
                     $subItemsHtml = $this->buildMenu($itemId, $menuData, $locale, $options, $menuData['items'][$itemId]->getType());
 
-                    if (!empty($subItemsHtml)) {
-                        if (array_dot($options, 'menus.allow-nesting') === true) {
-                            $liClasses[] = array_dot($options, 'menus.li-class-root-nesting');
-                            $contentHtml .= '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-child'))
-                                . '>' . $subItemsHtml . '</ul>';
-                            $subItemsHtml = '';
-                        }
+                    if (!empty($subItemsHtml) && array_dot($options, 'menus.allow-nesting') === true) {
+                        $liClasses[] = array_dot($options, 'menus.li-class-root-nesting');
+                        $contentHtml .= '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-child'))
+                            . '>' . $subItemsHtml . '</ul>';
+                        $subItemsHtml = '';
                     }
 
                     $html .= '<li' . $this->createClassAttribute($liClasses) . '>' . $contentHtml . '</li>' . $subItemsHtml;

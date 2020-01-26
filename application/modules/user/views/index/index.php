@@ -43,7 +43,7 @@ $groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape
                                     <?=substr($this->getTrans($ilchDate->format('l')), 0, 2).', '.$ilchDate->format('d. ').$this->getTrans($ilchDate->format('M')).$ilchDate->format(' Y') ?>
                                 </td>
                                 <td>
-                                    <?=(!empty($ilchLastDate)) ? substr($this->getTrans($ilchLastDate->format('l')), 0, 2).', '.$ilchLastDate->format('d. ').$this->getTrans($ilchLastDate->format('M')).$ilchLastDate->format(' Y') : ''; ?>
+                                    <?=(!empty($ilchLastDate)) ? substr($this->getTrans($ilchLastDate->format('l')), 0, 2).', '.$ilchLastDate->format('d. ').$this->getTrans($ilchLastDate->format('M')).$ilchLastDate->format(' Y') : '' ?>
                                 </td>
                                 <td>
                                     <?php if ($this->getUser() AND $this->getUser()->getId() != $this->escape($userlist->getID())): ?>

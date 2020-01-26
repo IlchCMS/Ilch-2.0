@@ -10,7 +10,7 @@ $browser = $this->getRequest()->getParam('browser');
 <link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
-<?php if ($this->get('statisticOSVersionList') != '' AND $os != ''): ?>
+<?php if ($this->get('statisticOSVersionList') != '' && $os != ''): ?>
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
@@ -47,7 +47,7 @@ $browser = $this->getRequest()->getParam('browser');
             </div>
         </div>
     </div>
-<?php elseif ($this->get('statisticBrowserVersionList') != '' AND $browser != ''): ?>
+<?php elseif ($this->get('statisticBrowserVersionList') != '' && $browser != ''): ?>
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('browserStatistic') ?> - <?=$this->escape($browser) ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
@@ -84,7 +84,7 @@ $browser = $this->getRequest()->getParam('browser');
             </div>
         </div>
     </div>
-<?php elseif ($this->get('statisticYearMonthDayList') != '' AND $year != '' AND $month != ''): ?>
+<?php elseif ($this->get('statisticYearMonthDayList') != '' && $year != '' && $month != ''): ?>
     <?php $date = new \Ilch\Date($year.'-'.$month.'-01'); ?>
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans($date->format('F', true)).$date->format(' Y', true) ?></i></h1>
     <div class="row">
@@ -124,7 +124,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <strong><?=$this->getTrans($date->format("l")) ?></strong>
+                                <strong><?=$this->getTrans($date->format('l')) ?></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -145,7 +145,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <strong><?=$date->format("Y-m-d", true) ?></strong>
+                                <strong><?=$date->format('Y-m-d', true) ?></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -166,7 +166,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)]) ?>"><?=$date->format("Y", true) ?></a></strong>
+                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true)]) ?>"><?=$date->format('Y', true) ?></a></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -282,7 +282,7 @@ $browser = $this->getRequest()->getParam('browser');
             </div>
         </div>
     </div>
-<?php elseif ($this->get('statisticYearMonthList') != '' AND $year != '' AND $month == '' AND $os == ''): ?>
+<?php elseif ($this->get('statisticYearMonthList') != '' && $year != '' && $month == '' && $os == ''): ?>
     <?php $date = new \Ilch\Date($year.'-01-01'); ?>
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$date->format('Y', true) ?></i></h1>
     <div class="row">
@@ -322,7 +322,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <strong><?=$this->getTrans($date->format("l")) ?></strong>
+                                <strong><?=$this->getTrans($date->format('l')) ?></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -343,7 +343,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>"><?=$date->format("Y - ", true).$this->getTrans($date->format("F", true)) ?></a></strong>
+                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true), 'month' => $date->format('m', true)]) ?>"><?=$date->format('Y - ', true).$this->getTrans($date->format('F', true)) ?></a></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -364,7 +364,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)]) ?>"><?=$date->format("Y", true) ?></a></strong>
+                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true)]) ?>"><?=$date->format('Y', true) ?></a></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">

@@ -20,10 +20,8 @@ class Archive extends \Ilch\Controller\Frontend
     {
         $locale = '';
 
-        if ((bool)$this->getConfig()->get('multilingual_acp')) {
-            if ($this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
-                $locale = $this->getTranslator()->getLocale();
-            }
+        if ((bool)$this->getConfig()->get('multilingual_acp') && $this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
+            $locale = $this->getTranslator()->getLocale();
         }
 
         $this->locale = $locale;

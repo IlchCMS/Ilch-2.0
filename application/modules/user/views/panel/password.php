@@ -5,12 +5,12 @@
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <h1><?=$this->getTrans('settingsPassword'); ?></h1>
+            <h1><?=$this->getTrans('settingsPassword') ?></h1>
             <form class="form-horizontal" method="POST">
-                <?=$this->getTokenField(); ?>
+                <?=$this->getTokenField() ?>
                 <div class="form-group <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileNewPassword'); ?>*
+                        <?=$this->getTrans('profileNewPassword') ?>*
                     </label>
                     <div class="col-lg-8">
                         <input type="password"
@@ -19,12 +19,12 @@
                                name="password"
                                value=""
                                required />
-                        <?=$this->getTrans('profilePasswordInfo'); ?>
+                        <?=$this->getTrans('profilePasswordInfo') ?>
                     </div>
                 </div>
                 <div class="form-group <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileNewPasswordRetype'); ?>*
+                        <?=$this->getTrans('profileNewPasswordRetype') ?>*
                     </label>
                     <div class="col-lg-8">
                         <input type="password"
@@ -47,7 +47,7 @@
     </div>
 </div>
 
-<script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
+<script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js') ?>"></script>
 <script>
 $(document).ready(function() {
     $('#password').pStrength({

@@ -184,10 +184,8 @@ class Template extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $deleted = $this->db()->delete('articles_templates')
+        return $this->db()->delete('articles_templates')
             ->where(['id' => $id])
             ->execute();
-
-        return $deleted;
     }
 }

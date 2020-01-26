@@ -168,7 +168,7 @@
     <?=$this->getSaveBar() ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 $('[name="regist_accept"]').click(function () {
     if ($(this).val() == "1") {

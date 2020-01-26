@@ -399,23 +399,21 @@ class Dialog extends \Ilch\Mapper
             'user_two' => $model->getUserTwo()
         ];
 
-        if (!empty($fields['user_one']) or !empty($fields['user_two'])) {
+        if (!empty($fields['user_one']) || !empty($fields['user_two'])) {
             $this->db()->insert('users_dialog')
                 ->values($fields)
                 ->execute();
             return;
-        }  else {
-            $this->db()->insert('users_dialog_reply')
-                ->values($fields)
-                ->execute();
-
-            $this->db()->update('users_dialog')
-                ->values(['time' => $model->getTime()])
-                ->where(['c_id' => $model->getCId()])
-                ->execute();
         }
 
-        return;
+        $this->db()->insert('users_dialog_reply')
+            ->values($fields)
+            ->execute();
+
+        $this->db()->update('users_dialog')
+            ->values(['time' => $model->getTime()])
+            ->where(['c_id' => $model->getCId()])
+            ->execute();
     }
 
     /**
@@ -434,7 +432,5 @@ class Dialog extends \Ilch\Mapper
                 ->values($fields)
                 ->where(['cr_id' => $model->getCrId()])
                 ->execute();
-
-        return;
     }
 }

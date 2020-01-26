@@ -13,11 +13,11 @@ $settingMapper = $this->get('settingMapper');
             <h1><?=$this->getTrans('menuAvatar') ?></h1>
             <form class="form-horizontal" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <?=$this->getTokenField(); ?>
+                    <?=$this->getTokenField() ?>
                     <div class="col-lg-2 col-sm-2 col-2">
                         <img class="panel-profile-image" src="<?=$this->getBaseUrl().$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
                         
-                        <?php if ($profil->getAvatar() != 'static/img/noavatar.jpg'): ?>
+                        <?php if ($profil->getAvatar() !== 'static/img/noavatar.jpg'): ?>
                             <label for="avatar_delete" style="margin-left: 10px; margin-top: 10px;">
                                 <input type="checkbox" id="avatar_delete" name="avatar_delete"> <?=$this->getTrans('avatarDelete') ?>
                             </label>

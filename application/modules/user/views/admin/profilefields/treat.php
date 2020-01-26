@@ -59,14 +59,14 @@ function addIndex(index) {
         <div class="col-lg-2">
             <select class="form-control fontawesome-select" id="profileFieldIcon" name="profileField[icon]">
                 <option value="" <?php if ($profileField->getIcon() == '') { echo 'selected="selected"'; } ?> disabled><?=$this->getTrans('pleaseSelect') ?></option>
-                <option value="fa-globe" <?php if ($profileField->getIcon() == 'fa-globe') { echo 'selected="selected"'; } ?>>&#xf0ac; fa-globe</option>
-                <option value="fa-facebook" <?php if ($profileField->getIcon() == 'fa-facebook') { echo 'selected="selected"'; } ?>>&#xf09a; fa-facebook</option>
-                <option value="fa-twitter" <?php if ($profileField->getIcon() == 'fa-twitter') { echo 'selected="selected"'; } ?>>&#xf099; fa-twitter</option>
-                <option value="fa-google-plus" <?php if ($profileField->getIcon() == 'fa-google-plus') { echo 'selected="selected"'; } ?>>&#xf0d5; fa-google-plus</option>
-                <option value="fa-steam-square" <?php if ($profileField->getIcon() == 'fa-steam-square') { echo 'selected="selected"'; } ?>>&#xf1b7; fa-steam-square</option>
-                <option value="fa-twitch" <?php if ($profileField->getIcon() == 'fa-twitch') { echo 'selected="selected"'; } ?>>&#xf1e8; fa-twitch</option>
-                <option value="fa-headphones" <?php if ($profileField->getIcon() == 'fa-headphones') { echo 'selected="selected"'; } ?>>&#xf025; fa-headphones</option>
-                <option value="fa-microphone" <?php if ($profileField->getIcon() == 'fa-microphone') { echo 'selected="selected"'; } ?>>&#xf130; fa-microphone</option>
+                <option value="fa-globe" <?php if ($profileField->getIcon() === 'fa-globe') { echo 'selected="selected"'; } ?>>&#xf0ac; fa-globe</option>
+                <option value="fa-facebook" <?php if ($profileField->getIcon() === 'fa-facebook') { echo 'selected="selected"'; } ?>>&#xf09a; fa-facebook</option>
+                <option value="fa-twitter" <?php if ($profileField->getIcon() === 'fa-twitter') { echo 'selected="selected"'; } ?>>&#xf099; fa-twitter</option>
+                <option value="fa-google-plus" <?php if ($profileField->getIcon() === 'fa-google-plus') { echo 'selected="selected"'; } ?>>&#xf0d5; fa-google-plus</option>
+                <option value="fa-steam-square" <?php if ($profileField->getIcon() === 'fa-steam-square') { echo 'selected="selected"'; } ?>>&#xf1b7; fa-steam-square</option>
+                <option value="fa-twitch" <?php if ($profileField->getIcon() === 'fa-twitch') { echo 'selected="selected"'; } ?>>&#xf1e8; fa-twitch</option>
+                <option value="fa-headphones" <?php if ($profileField->getIcon() === 'fa-headphones') { echo 'selected="selected"'; } ?>>&#xf025; fa-headphones</option>
+                <option value="fa-microphone" <?php if ($profileField->getIcon() === 'fa-microphone') { echo 'selected="selected"'; } ?>>&#xf130; fa-microphone</option>
             </select>
         </div>
     </div>
@@ -131,7 +131,7 @@ function addIndex(index) {
     <?=$this->getSaveBar() ?>
 </form>
 
-<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('profileFieldTransInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('profileFieldTransInfoText')) ?>
 
 <script>
 var index = <?=$i ?>;

@@ -140,7 +140,7 @@ class AuthProvider extends \Ilch\Mapper
 
     public function getUserIdByProvider($provider, $identifier)
     {
-        $result = $this->db()->select()
+        return $this->db()->select()
             ->fields('user_id')
             ->from($this->default_table)
             ->where([
@@ -150,13 +150,11 @@ class AuthProvider extends \Ilch\Mapper
             ->limit(1)
             ->execute()
             ->fetchCell('user_id');
-
-        return $result;
     }
 
     public function getLinkedProviderDetails($provider, $user_id)
     {
-        $result = $this->db()->select()
+        return $this->db()->select()
             ->fields(['user_id', 'provider', 'screen_name', 'identifier', 'oauth_token', 'oauth_token_secret', 'created_at'])
             ->from($this->default_table)
             ->where([
@@ -166,21 +164,17 @@ class AuthProvider extends \Ilch\Mapper
             ->limit(1)
             ->execute()
             ->fetchObject(AuthProviderUser::class, []);
-
-        return $result;
     }
 
     public function unlinkUser($provider, $user_id)
     {
-        $result = $this->db()->delete()
+        return $this->db()->delete()
             ->from($this->default_table)
             ->where([
                 'user_id' => $user_id,
                 'provider' => $provider,
             ])
             ->execute();
-
-        return $result;
     }
 
     /**
@@ -193,12 +187,10 @@ class AuthProvider extends \Ilch\Mapper
      */
     public function deleteUser($user_id)
     {
-        $result = $this->db()->delete()
+        return $this->db()->delete()
             ->from($this->default_table)
             ->where(['user_id' => $user_id])
             ->execute();
-
-        return $result;
     }
 
     public function authProvidersModuleExistsForProvider($provider, $module)

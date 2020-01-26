@@ -100,7 +100,7 @@ class Pagination
         }
 
         for ($i = $start; $i <= $end; $i++) {
-            $class  = ( $this->page == $i ) ? "active" : "";
+            $class  = ( $this->page == $i ) ? 'active' : '';
             $urlArray['page'] = $i;
             $html .= '<li class="'.$class.'"><a href="'.$view->getUrl($urlArray).'">'.$i.'</a></li>';
         }

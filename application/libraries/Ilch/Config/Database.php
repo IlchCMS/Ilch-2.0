@@ -39,22 +39,22 @@ class Database
     {
         if (isset($this->configData[$key]['value']) && !$alwaysLoad) {
             return $this->configData[$key]['value'];
-        } else {
-            $configRow = $this->db->select(['value', 'key', 'autoload'])
-                ->from('config')
-                ->where(['key' => $key])
-                ->execute()
-                ->fetchAssoc();
-
-            if (empty($configRow)) {
-                return null;
-            }
-
-            $this->configData[$key]['value'] = $configRow['value'];
-            $this->configData[$key]['autoload'] = $configRow['autoload'];
-
-            return $configRow['value'];
         }
+
+        $configRow = $this->db->select(['value', 'key', 'autoload'])
+            ->from('config')
+            ->where(['key' => $key])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($configRow)) {
+            return null;
+        }
+
+        $this->configData[$key]['value'] = $configRow['value'];
+        $this->configData[$key]['autoload'] = $configRow['autoload'];
+
+        return $configRow['value'];
     }
 
     /**

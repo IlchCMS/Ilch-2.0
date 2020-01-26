@@ -37,7 +37,7 @@ function getTransKey($usermenuId) {
                     $class = 'active';
                 }
 
-                if ($usermenu->getKey() == 'user/panel/gallery' AND ($this->get('galleryAllowed') == 0 OR $profil->getOptGallery() == 0)) {
+                if ($usermenu->getKey() === 'user/panel/gallery' && ($this->get('galleryAllowed') == 0 || $profil->getOptGallery() == 0)) {
                 } else {
                     echo '<li class="'.$class.'"><a href="'.$this->getUrl($usermenu->getKey()).'">'.$this->getTrans(getTransKey($usermenu->getId())).' <i class="fa '.$usermenu->getIcon().' pull-right"></i></a></li>';
                 }

@@ -80,7 +80,7 @@ return [
     'Feb' => 'Feb.',
     'Mar' => 'Mrz.',
     'Apr' => 'Apr.',
-    'May' => 'Mai',
+    //'May' => 'Mai',
     'Jun' => 'Jun.',
     'Jul' => 'Jul.',
     'Aug' => 'Aug.',

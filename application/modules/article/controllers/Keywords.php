@@ -22,10 +22,8 @@ class Keywords extends \Ilch\Controller\Frontend
     {
         $locale = '';
 
-        if ((bool)$this->getConfig()->get('multilingual_acp')) {
-            if ($this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
-                $locale = $this->getTranslator()->getLocale();
-            }
+        if ((bool)$this->getConfig()->get('multilingual_acp') && $this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
+            $locale = $this->getTranslator()->getLocale();
         }
 
         $this->locale = $locale;
@@ -48,7 +46,7 @@ class Keywords extends \Ilch\Controller\Frontend
         }
 
         $keywordsListString = implode(', ', $keywordsList);
-        $keywordsListArray = explode(", ", $keywordsListString);
+        $keywordsListArray = explode(', ', $keywordsListString);
         $keywordsList = array_count_values($keywordsListArray);
 
         $this->getView()->set('articleMapper', $articleMapper)

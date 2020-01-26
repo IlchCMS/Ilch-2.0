@@ -76,11 +76,10 @@ class Translator
         // If it's not a valid path, is_file() will return a falsey value.
         if (@is_file($transFile)) {
             $this->translations = array_merge($this->translations, require $transFile);
-
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -197,7 +196,7 @@ class Translator
             $numberFormatter = new \NumberFormatter($this->getLocale(), \NumberFormatter::DECIMAL); 
             $numberFormatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, 2); 
             $numberFormatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS, 2);
-            $returnValue = $numberFormatter->format($amount)." ".$currencyCode;
+            $returnValue = $numberFormatter->format($amount). ' ' .$currencyCode;
         }
 
         return $returnValue;

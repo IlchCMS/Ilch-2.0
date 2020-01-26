@@ -30,10 +30,8 @@ class BeforeControllerLoad
 
         $request = $pluginData['request'];
 
-        if (!$userId) {
-            if ($request->getModuleName() == 'user' && !in_array($request->getControllerName(), ['index', 'login', 'regist'])) {
-                $pluginData['controller']->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
-            }
+        if (!$userId && $request->getModuleName() === 'user' && !in_array($request->getControllerName(), ['index', 'login', 'regist'])) {
+            $pluginData['controller']->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
         }
 
         $userMapper = new UserMapper();
@@ -55,7 +53,7 @@ class BeforeControllerLoad
             /*
              * Not admins have only access to modules.
              */
-            if ($request->getModuleName() == 'admin' && !in_array($request->getControllerName(), ['index', 'login'])) {
+            if ($request->getModuleName() === 'admin' && !in_array($request->getControllerName(), ['index', 'login'])) {
                 $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
 

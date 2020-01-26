@@ -284,7 +284,7 @@ class Upload extends \Ilch\Controller\Base
 
         if ($bytes > 0)
         {
-            $unit = intval(log($bytes, 1024));
+            $unit = (int)log($bytes, 1024);
             $units = ['B', 'KB', 'MB', 'GB'];
 
             if (array_key_exists($unit, $units) === true)
@@ -344,13 +344,11 @@ class Upload extends \Ilch\Controller\Base
         $this->setUrl($this->path.$hash.'.'.$this->getEnding());
         $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
 
-        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path.$hash.'.'.$this->getEnding())) {
-            if (in_array($this->getEnding() , explode(' ', $this->types))) {
-                if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
-                    return;
-                }
-                $this->createThumbnail();
+        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $this->getEnding()) && in_array($this->getEnding(), explode(' ', $this->types))) {
+            if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
+                return;
             }
+            $this->createThumbnail();
         }
     }
 

@@ -58,7 +58,9 @@ if ($group->getId()) {
                             <ol id="assigned_users" class="sortable connectedSortable">
                             <?php foreach ($this->get('groupUsersList') as $user_Id): ?>
                                 <?php $user = $userMapper->getUserById($user_Id); ?>
-                                <?php if (!$user) $user = $userMapper->getDummyUser(); ?>
+                                <?php if (!$user) {
+                                    $user = $userMapper->getDummyUser();
+                                } ?>
                                 <li class="handle_li" value="<?=$user_Id ?>"><div><span class="fa fa-sort"></span> <?=$user->getName() ?></div></li>
                             <?php endforeach; ?>
                             </ol>

@@ -53,22 +53,35 @@ class Frontend extends Base
                             $url[$paramKey] = '';
                         }
 
-                        if ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName() and $url[$paramKey] == $this->getRequest()->getParam($paramKey)) {
-                            $layoutFile = $layoutKeyConfig;
-                            break;
-                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName() and empty($url[$paramKey])) {
-                            $layoutFile = $layoutKeyConfig;
-                            break;
-                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and empty($url['action']) and empty($url[$paramKey])) {
-                            $layoutFile = $layoutKeyConfig;
-                            break;
-                        } elseif ($url['module'] == $this->getRequest()->getModuleName() and empty($url['controller']) and empty($url['action']) and empty($url[$paramKey])) {
-                            $layoutFile = $layoutKeyConfig;
-                            break;
+                        if ($url['module'] == $this->getRequest()->getModuleName()) {
+                            if ($url['controller'] == $this->getRequest()->getControllerName()) {
+                                if ($url['action'] == $this->getRequest()->getActionName()) {
+                                    if ($url[$paramKey] == $this->getRequest()->getParam($paramKey)) {
+                                        $layoutFile = $layoutKeyConfig;
+                                        break;
+                                    }
+
+                                    if (empty($url[$paramKey])) {
+                                        $layoutFile = $layoutKeyConfig;
+                                        break;
+                                    }
+                                }
+
+                                if (empty($url['action']) && empty($url[$paramKey])) {
+                                    $layoutFile = $layoutKeyConfig;
+                                    break;
+                                }
+                            }
+
+                            if (empty($url['controller']) && empty($url['action']) && empty($url[$paramKey])) {
+                                $layoutFile = $layoutKeyConfig;
+                                break;
+                            }
                         }
                     }
                 }
             }
+
             if (empty($layoutFile)) {
                 $layoutFile = 'index';
             }

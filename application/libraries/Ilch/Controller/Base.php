@@ -165,10 +165,8 @@ class Base
     {
         if ($validationError == true) {
             $_SESSION['messages'][] = ['text' => $message, 'type' => $type, 'validationError' => $validationError];
-        } else {
-            if (!is_array($message)) {
-                $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans($message), 'type' => $type];
-            }
+        } elseif (!is_array($message)) {
+            $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans($message), 'type' => $type];
         }
     }
 

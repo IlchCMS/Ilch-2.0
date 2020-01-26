@@ -132,11 +132,13 @@ class Frontend extends Base
         // If either name or http-equiv is specified, then the content attribute must also be specified. Otherwise, it must be omitted.
         if ($metaTagModel->getName()) {
             return sprintf('<meta name="%s" content="%s">', $this->escape($metaTagModel->getName()), $this->escape($metaTagModel->getContent()));
-        } elseif ($metaTagModel->getHTTPEquiv()){
-            return sprintf('<meta http-equiv="%s" content="%s">', $this->escape($metaTagModel->getHTTPEquiv()), $this->escape($metaTagModel->getContent()));
-        } else {
-            return sprintf('<meta charset="%s">', $this->escape($metaTagModel->getCharset()));
         }
+
+        if ($metaTagModel->getHTTPEquiv()) {
+            return sprintf('<meta http-equiv="%s" content="%s">', $this->escape($metaTagModel->getHTTPEquiv()), $this->escape($metaTagModel->getContent()));
+        }
+
+        return sprintf('<meta charset="%s">', $this->escape($metaTagModel->getCharset()));
     }
 
     /**
@@ -155,33 +157,33 @@ class Frontend extends Base
         // The href attribute must be present and must contain a valid non-empty URL potentially surrounded by spaces.
         // If the href attribute is absent, then the element does not define a link.
         if (empty($linkTagModel->getRel()) || empty($linkTagModel->getHref())) {
-            return "";
+            return '';
         }
 
         $linkTagString = sprintf('<link rel="%s" href="%s"', $this->escape($linkTagModel->getRel()), $this->escape($linkTagModel->getHref()));
 
         if ($linkTagModel->getCrossorigin()) {
-            $linkTagString = $linkTagString . sprintf(' crossorigin="%s"', $this->escape($linkTagModel->getCrossorigin()));
+            $linkTagString .= sprintf(' crossorigin="%s"', $this->escape($linkTagModel->getCrossorigin()));
         }
 
         if ($linkTagModel->getHreflang()) {
-            $linkTagString = $linkTagString . sprintf(' hreflang="%s"', $this->escape($linkTagModel->getHreflang()));
+            $linkTagString .= sprintf(' hreflang="%s"', $this->escape($linkTagModel->getHreflang()));
         }
 
         if ($linkTagModel->getSizes()) {
-            $linkTagString = $linkTagString . sprintf(' sizes="%s"', $this->escape($linkTagModel->getSizes()));
+            $linkTagString .= sprintf(' sizes="%s"', $this->escape($linkTagModel->getSizes()));
         }
 
         if ($linkTagModel->getType()) {
-            $linkTagString = $linkTagString . sprintf(' type="%s"', $this->escape($linkTagModel->getType()));
+            $linkTagString .= sprintf(' type="%s"', $this->escape($linkTagModel->getType()));
         }
 
         if ($linkTagModel->getMedia()) {
-            $linkTagString = $linkTagString . sprintf(' media="%s"', $this->escape($linkTagModel->getMedia()));
+            $linkTagString .= sprintf(' media="%s"', $this->escape($linkTagModel->getMedia()));
         }
 
         if ($linkTagModel->getTitle()) {
-            $linkTagString = $linkTagString . sprintf(' title="%s"', $this->escape($linkTagModel->getTitle()));
+            $linkTagString .= sprintf(' title="%s"', $this->escape($linkTagModel->getTitle()));
         }
 
         return $linkTagString . '>';
@@ -225,12 +227,10 @@ class Frontend extends Base
 
         if ($customView !== null) {
             $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$customView.'.php';
+        } elseif (file_exists(APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php')) {
+            $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
         } else {
-            if (file_exists(APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php')) {
-                $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
-            } else {
-                $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
-            }
+            $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
         }
 
         $view->setLayoutKey($this->getLayoutKey());
@@ -328,9 +328,7 @@ class Frontend extends Base
     public function getCustomCSS()
     {
         if ($this->getConfigKey('custom_css') != '') {
-            $html = '<style>'.$this->getConfigKey('custom_css').'</style>';
-
-            return $html;
+            return '<style>'.$this->getConfigKey('custom_css').'</style>';
         }
         return '';
     }

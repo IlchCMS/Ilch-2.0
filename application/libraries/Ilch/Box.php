@@ -44,10 +44,10 @@ abstract class Box extends Controller\Base
         parent::__construct($layout, $view, $request, $router, $translator);
         $this->db = Registry::get('db');
 
-        if (!isset(Box::$staticBoxUniqid)) {
-            Box::$staticBoxUniqid = 0;
-        } else {
+        if (isset(Box::$staticBoxUniqid)) {
             Box::$staticBoxUniqid++;
+        } else {
+            Box::$staticBoxUniqid = 0;
         }
 
         $this->boxUniqid = Box::$staticBoxUniqid;

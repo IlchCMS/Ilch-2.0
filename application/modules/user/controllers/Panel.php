@@ -28,7 +28,7 @@ use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
-use Modules\User\Mappers\AuthProvider as AuthProvider;
+use Modules\User\Mappers\AuthProvider;
 
 class Panel extends BaseController
 {
@@ -144,63 +144,65 @@ class Panel extends BaseController
             ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
             ->add($this->getTranslator()->trans('menuAvatar'), ['controller' => 'panel', 'action' => 'avatar']);
 
-        if ($this->getRequest()->isPost() && !empty($_FILES['avatar']['name'])) {
-            $path = $this->getConfig()->get('avatar_uploadpath');
-            $file = $_FILES['avatar']['name'];
-            $file_tmpe = $_FILES['avatar']['tmp_name'];
-            $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-            $file_size = $_FILES['avatar']['size'];
-            $imageInfo = getimagesize($file_tmpe);
+        if ($this->getRequest()->isPost()) {
+            if (!empty($_FILES['avatar']['name'])) {
+                $path = $this->getConfig()->get('avatar_uploadpath');
+                $file = $_FILES['avatar']['name'];
+                $file_tmpe = $_FILES['avatar']['tmp_name'];
+                $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                $file_size = $_FILES['avatar']['size'];
+                $imageInfo = getimagesize($file_tmpe);
 
-            if (in_array($endung, explode(' ', $avatarAllowedFiletypes)) && strncmp($imageInfo['mime'], 'image/', 6) === 0) {
-                $width = $imageInfo[0];
-                $height = $imageInfo[1];
+                if (in_array($endung, explode(' ', $avatarAllowedFiletypes)) && strncmp($imageInfo['mime'], 'image/', 6) === 0) {
+                    $width = $imageInfo[0];
+                    $height = $imageInfo[1];
 
-                if ($file_size <= $avatarSize) {
-                    $avatar = $path.$this->getUser()->getId().'.'.$endung;
+                    if ($file_size <= $avatarSize) {
+                        $avatar = $path.$this->getUser()->getId().'.'.$endung;
 
-                    if ($this->getUser()->getAvatar() != '') {
-                        $settingMapper = new SettingMapper();
-                        $settingMapper->delAvatarById($this->getUser()->getId());
-                    }
+                        if ($this->getUser()->getAvatar() != '') {
+                            $settingMapper = new SettingMapper();
+                            $settingMapper->delAvatarById($this->getUser()->getId());
+                        }
 
-                    if (move_uploaded_file($file_tmpe, $avatar)) {
-                        if ($width > $avatarWidth OR $height > $avatarHeight) {
-                            $upload = new \Ilch\Upload();
+                        if (move_uploaded_file($file_tmpe, $avatar)) {
+                            if ($width > $avatarWidth OR $height > $avatarHeight) {
+                                $upload = new \Ilch\Upload();
 
-                            if (!$upload->enoughFreeMemory($avatar)) {
-                                unlink($avatar);
-                                $this->addMessage('failedFilesize', 'warning');
-                            } else {
-                                $thumb = new \Thumb\Thumbnail();
-                                $thumb -> Thumbsize = ($avatarWidth <= $avatarHeight) ? $avatarWidth : $avatarHeight;
-                                $thumb -> Square = true;
-                                $thumb -> Thumblocation = $path;
-                                $thumb -> Cropimage = [3,1,50,50,50,50];
-                                $thumb -> Createthumb($avatar, 'file');
-                                $this->addMessage('successAvatar');
+                                if (!$upload->enoughFreeMemory($avatar)) {
+                                    unlink($avatar);
+                                    $this->addMessage('failedFilesize', 'warning');
+                                } else {
+                                    $thumb = new \Thumb\Thumbnail();
+                                    $thumb -> Thumbsize = ($avatarWidth <= $avatarHeight) ? $avatarWidth : $avatarHeight;
+                                    $thumb -> Square = true;
+                                    $thumb -> Thumblocation = $path;
+                                    $thumb -> Cropimage = [3,1,50,50,50,50];
+                                    $thumb -> Createthumb($avatar, 'file');
+                                    $this->addMessage('successAvatar');
+                                }
                             }
                         }
+
+                        $model = new UserModel();
+                        $model->setId($this->getUser()->getId())
+                            ->setAvatar($avatar);
+                        $profilMapper->save($model);
+                    } else {
+                        $this->addMessage('failedFilesize', 'warning');
                     }
-
-                    $model = new UserModel();
-                    $model->setId($this->getUser()->getId())
-                        ->setAvatar($avatar);
-                    $profilMapper->save($model);
                 } else {
-                    $this->addMessage('failedFilesize', 'warning');
+                    $this->addMessage('failedFiletypes', 'warning');
                 }
-            } else {
-                $this->addMessage('failedFiletypes', 'warning');
+
+                $this->redirect(['action' => 'avatar']);
+            } elseif ($this->getRequest()->getPost('avatar_delete') != '') {
+                $settingMapper = new SettingMapper();
+                $settingMapper->delAvatarById($this->getUser()->getId());
+
+                $this->addMessage('avatarSuccessDelete');
+                $this->redirect(['action' => 'avatar']);
             }
-
-            $this->redirect(['action' => 'avatar']);
-        } elseif ($this->getRequest()->isPost() && $this->getRequest()->getPost('avatar_delete') != '') {
-            $settingMapper = new SettingMapper();
-            $settingMapper->delAvatarById($this->getUser()->getId());
-
-            $this->addMessage('avatarSuccessDelete');
-            $this->redirect(['action' => 'avatar']);
         }
 
         $this->getView()->set('settingMapper', $settingMapper)
@@ -329,56 +331,54 @@ class Panel extends BaseController
             if ($this->getUser()->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
                 $this->addMessage('delLastAdminProhibited', 'warning');
                 $this->redirect(['controller' => 'panel', 'action' => 'deleteaccount']);
-            } else {
-                if ($this->getConfig()->get('userdeletetime') == 0) {
-                    if ($this->getUser()->getAvatar() != 'static/img/noavatar.jpg') {
-                        unlink($this->getUser()->getAvatar());
-                    }
-
-                    if (is_dir(APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId)) {
-                        $path = APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId;
-                        $files = array_diff(scandir($path), ['.', '..']);
-
-                        foreach ($files as $file) {
-                            unlink(realpath($path).'/'.$file);
-                        }
-
-                        rmdir($path);
-                    }
-
-                    $profileFieldsContentMapper->deleteProfileFieldContentByUserId($userId);
-                    $authProviderMapper->deleteUser($userId);
-                    if ($userMapper->delete($userId)) {
-                        $authTokenMapper->deleteAllAuthTokenOfUser($userId);
-                        $statisticMapper->deleteUserOnline($userId);
-                        $friendsMapper->deleteFriendsByUserId($userId);
-                        $friendsMapper->deleteFriendByFriendUserId($userId);
-                        $dialogMapper->unhideAllDialogsByUser($userId);
-                    }
-
-                    if (!empty($_COOKIE['remember'])) {
-                        list($selector) = explode(':', $_COOKIE['remember']);
-                        $authTokenMapper->deleteAuthToken($selector);
-                        setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
-                    }
-
-                    $_SESSION = [];
-                    \Ilch\Registry::remove('user');
-
-                    if (ini_get("session.use_cookies")) {
-                        $params = session_get_cookie_params();
-                        setcookie(session_name(), '', time() - 42000, $params["path"],
-                            $params["domain"], $params["secure"], $params["httponly"]
-                        );
-                    }
-
-                    session_destroy();
-
-                    $this->redirect([]);
-                } else {
-                    $userMapper->selectsdelete($userId, new \Ilch\Date());
-                    $this->redirect(['module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1]);
+            } elseif ($this->getConfig()->get('userdeletetime') == 0) {
+                if ($this->getUser()->getAvatar() !== 'static/img/noavatar.jpg') {
+                    unlink($this->getUser()->getAvatar());
                 }
+
+                if (is_dir(APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId)) {
+                    $path = APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId;
+                    $files = array_diff(scandir($path), ['.', '..']);
+
+                    foreach ($files as $file) {
+                        unlink(realpath($path).'/'.$file);
+                    }
+
+                    rmdir($path);
+                }
+
+                $profileFieldsContentMapper->deleteProfileFieldContentByUserId($userId);
+                $authProviderMapper->deleteUser($userId);
+                if ($userMapper->delete($userId)) {
+                    $authTokenMapper->deleteAllAuthTokenOfUser($userId);
+                    $statisticMapper->deleteUserOnline($userId);
+                    $friendsMapper->deleteFriendsByUserId($userId);
+                    $friendsMapper->deleteFriendByFriendUserId($userId);
+                    $dialogMapper->unhideAllDialogsByUser($userId);
+                }
+
+                if (!empty($_COOKIE['remember'])) {
+                    list($selector) = explode(':', $_COOKIE['remember']);
+                    $authTokenMapper->deleteAuthToken($selector);
+                    setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
+                }
+
+                $_SESSION = [];
+                \Ilch\Registry::remove('user');
+
+                if (ini_get('session.use_cookies')) {
+                    $params = session_get_cookie_params();
+                    setcookie(session_name(), '', time() - 42000, $params['path'],
+                        $params['domain'], $params['secure'], $params['httponly']
+                    );
+                }
+
+                session_destroy();
+
+                $this->redirect([]);
+            } else {
+                $userMapper->selectsdelete($userId, new \Ilch\Date());
+                $this->redirect(['module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1]);
             }
         }
 
@@ -457,7 +457,7 @@ class Panel extends BaseController
                 $dialogMapper->hideDialog($c_id, $this->getUser()->getId());
 
                 $this->redirect()
-                    ->withMessage('hideDialogSuccess', 'success')
+                    ->withMessage('hideDialogSuccess')
                     ->to(['action' => 'dialog']);
             }
         }
@@ -675,7 +675,7 @@ class Panel extends BaseController
             ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery'])
             ->add($gallery->getTitle(), ['controller' => 'panel', 'action' => 'treatgallery', 'id' => $id]);
 
-        if ($this->getRequest()->getPost('action') == 'delete') {
+        if ($this->getRequest()->getPost('action') === 'delete') {
             $mediaMapper = new MediaMapper();
             
             foreach ($this->getRequest()->getPost('check_gallery') as $imageId) {

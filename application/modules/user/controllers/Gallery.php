@@ -111,14 +111,14 @@ class Gallery extends \Ilch\Controller\Frontend
             $commentMapper->save($commentModel);
             $this->redirect(['action' => 'showImage', 'user' => $userId, 'id' => $id]);
         }
-        if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
+        if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') === 'up' OR $this->getRequest()->getParam('key') === 'down')) {
             $id = $this->getRequest()->getParam('id');
             $commentId = $this->getRequest()->getParam('commentId');
             $oldComment = $commentMapper->getCommentById($commentId);
 
             $commentModel = new CommentModel();
             $commentModel->setId($commentId);
-            if ($this->getRequest()->getParam('key') == 'up') {
+            if ($this->getRequest()->getParam('key') === 'up') {
                 $commentModel->setUp($oldComment->getUp()+1);
             } else {
                 $commentModel->setDown($oldComment->getDown()+1);

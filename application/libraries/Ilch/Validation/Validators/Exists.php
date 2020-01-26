@@ -40,7 +40,7 @@ class Exists extends Base
      */
     public function run()
     {
-        if (empty($this->getValue()) && $this->getValue() !== 0 && $this->getValue() !== "0") {
+        if (empty($this->getValue()) && $this->getValue() !== 0 && $this->getValue() !== '0') {
             $this->setIsValid(true);
 
             return $this;

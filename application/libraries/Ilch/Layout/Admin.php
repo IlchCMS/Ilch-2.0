@@ -95,6 +95,6 @@ class Admin extends Base
      */
     public function hasSidebar()
     {
-        return (bool)$this->showSidebar;
+        return $this->showSidebar;
     }
 }

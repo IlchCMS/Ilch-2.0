@@ -49,7 +49,7 @@ class Login extends \Ilch\Controller\Frontend
                     $cookieStolenMapper = new CookieStolenMapper();
 
                     if (!$cookieStolenMapper->containsCookieStolen($result->getUser()->getId())) {
-                        $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
+                        $this->addMessage($this->getTranslator()->trans('loginSuccessful'));
                     } else {
                         // The user receives a strongly worded warning that his cookie might be stolen.
                         $cookieStolenMapper->deleteCookieStolen($result->getUser()->getId());
@@ -69,13 +69,15 @@ class Login extends \Ilch\Controller\Frontend
                         $authTokenModel->setUserid($result->getUser()->getId());
                         $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
 
-                        setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
+                        setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
 
                         $authTokenMapper = new AuthTokenMapper();
                         $authTokenMapper->addAuthToken($authTokenModel);
                     }
                     
-                    if ($result->getError() != '') $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
+                    if ($result->getError() != '') {
+                        $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
+                    }
                 } else {
                     $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
                     $redirectUrl = ['module' => 'user', 'controller' => 'login', 'action' => 'index'];
@@ -221,7 +223,7 @@ class Login extends \Ilch\Controller\Frontend
                 $messageReplace = [
                     '{content}' => $this->getLayout()->purify($mailContent->getText()),
                     '{sitetitle}' => $siteTitle,
-                    '{date}' => $date->format("l, d. F Y", true),
+                    '{date}' => $date->format('l, d. F Y', true),
                     '{name}' => $name,
                     '{siteurl}' => $siteurl,
                     '{remoteaddr}' => $_SERVER['REMOTE_ADDR'],

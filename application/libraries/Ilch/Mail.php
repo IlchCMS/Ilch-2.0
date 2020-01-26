@@ -272,13 +272,13 @@ class Mail
                 $mail->addAddress($to);
             }
             if ($this->getBccEmail() != '') {
-                $indiBCC = explode(" ", $this->getBccEmail());
+                $indiBCC = explode(' ', $this->getBccEmail());
                 foreach ($indiBCC as $key => $value) {
                     $mail->addBCC($value);
                 }
             }
             if ($this->getCcEmail() != '') {
-                $indiCC = explode(" ", $this->getCcEmail());
+                $indiCC = explode(' ', $this->getCcEmail());
                 foreach ($indiCC as $key => $value) {
                     $mail->addCC($value);
                 }

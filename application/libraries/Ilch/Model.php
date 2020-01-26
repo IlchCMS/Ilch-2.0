@@ -36,16 +36,14 @@ class Model
         $action = substr($name, 0, 3);
         $property = lcfirst(substr($name, 3));
 
-        if ($action == 'get' || $action == 'set') {
+        if ($action === 'get' || $action === 'set') {
             if (property_exists($this, $property)) {
-                if ($action == 'get') {
+                if ($action === 'get') {
                     return $this->$property;
-                } else {
-                    /*
-                     * @todo implement more arguments.
-                     */
-                    $this->$property = $arguments[0];
                 }
+
+                // @todo implement more arguments.
+                $this->$property = $arguments[0];
             } else {
                 throw new \BadMethodCallException('property "' . $property . '" not defined');
             }

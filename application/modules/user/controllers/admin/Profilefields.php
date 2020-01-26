@@ -54,7 +54,7 @@ class ProfileFields extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[2][0]['active'] = true;
         } else {
             $items[2]['active'] = true;
@@ -79,7 +79,7 @@ class ProfileFields extends \Ilch\Controller\Admin
         $this->getView()->set('profileFields', $profileFieldsMapper->getProfileFields())
             ->set('profileFieldsTranslation', $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale()));
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_users')) {
             foreach ($this->getRequest()->getPost('check_users') as $id) {
                 $profileFieldsMapper->deleteProfileField($id);
                 $profileFieldsContentMapper->deleteProfileFieldContentByFieldId($id);

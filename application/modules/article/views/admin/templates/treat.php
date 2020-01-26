@@ -7,7 +7,7 @@ if ($this->get('article') != '') {
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('editTemplate') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST">
-    <?=$this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
         <label for="teaser" class="col-lg-2 control-label">
             <?=$this->getTrans('teaser') ?>:
@@ -132,9 +132,9 @@ if ($this->get('article') != '') {
     <?=$this->getSaveBar('edit') ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>

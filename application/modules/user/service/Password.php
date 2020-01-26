@@ -20,7 +20,7 @@ class Password
      */
     public function __construct($algorithm = null)
     {
-        if (null === $algorithm) {
+        if ($algorithm === null) {
             $algorithm = PASSWORD_DEFAULT;
         }
         $this->algorithm = $algorithm;
@@ -34,7 +34,7 @@ class Password
     public function hash($password)
     {
         $hash = password_hash($password, $this->algorithm);
-        if (false === $hash) {
+        if ($hash === false) {
             throw new \RuntimeException('Password could not be hashed');
         }
         return $hash;
@@ -65,7 +65,7 @@ class Password
         $str = '';
         $max = strlen($keyspace) - 1;
         if ($max < 1) {
-            throw new \Exception('$keyspace must be at least two characters long');
+            throw new \RuntimeException('$keyspace must be at least two characters long');
         }
         for ($i = 0; $i < $length; ++$i) {
             $str .= $keyspace[random_int(0, $max)];

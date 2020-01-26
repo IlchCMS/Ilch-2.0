@@ -52,7 +52,7 @@ class Factory
         $db->connect(reset($hostParts), $dbData['dbUser'], $dbData['dbPassword'], $port);
         if (!$db->setDatabase($dbData['dbName'])) {
             throw new \RuntimeException('Unable to select database ' . $dbData['dbName']);
-        };
+        }
         $db->setPrefix($dbData['dbPrefix']);
 
         if ($addDebugCollector) {
@@ -71,8 +71,6 @@ class Factory
     public function getInstanceByEngine($engine)
     {
         $engine = '\\Ilch\\Database\\'.$engine;
-        $db = new $engine();
-
-        return $db;
+        return new $engine();
     }
 }

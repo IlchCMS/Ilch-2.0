@@ -409,11 +409,11 @@ class Select extends QueryBuilder
             if (strpos($fields, '(') !== false) {
                 $fields = [new Expression\Expression($fields)];
                 //single field
-            } elseif (strpos($fields, ' ') === false) {
-                $fields = [$fields];
-            } else {
+            } elseif (strpos($fields, ' ') !== false) {
                 // Added to support for example "DISTINCT c1, c2, c3"
                 $fields = [new Expression\Expression($fields)];
+            } else {
+                $fields = [$fields];
             }
         } elseif ($fields instanceof Expression\Expression) {
             $fields = [$fields];

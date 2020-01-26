@@ -18,7 +18,7 @@ $osStatistic = $this->get('osStatistic');
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuStatistic') ?></h1>
-<?php if (!$siteStatistic And !$visitsStatistic And !$browserStatistic And !$osStatistic) : ?>
+<?php if (!$siteStatistic && !$visitsStatistic && !$browserStatistic && !$osStatistic) : ?>
 <?=$this->getTrans('everythingDisabled') ?>
 <?php endif; ?>
 
@@ -33,10 +33,10 @@ $osStatistic = $this->get('osStatistic');
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-lg-4">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('siteOnlineSince') ?>: <?=$dateCmsInstalled->format("d.m.Y", true) ?>">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('siteOnlineSince') ?>: <?=$dateCmsInstalled->format('d.m.Y', true) ?>">
                             <div class="panel-heading">
                                 <span class="panel-title text-center">
-                                    <?=$dateCmsInstalled->format("d.m.Y", true) ?>
+                                    <?=$dateCmsInstalled->format('d.m.Y', true) ?>
                                 </span>
                             </div>
                             <div class="panel-body text-center">
@@ -144,7 +144,7 @@ $osStatistic = $this->get('osStatistic');
                     <?php foreach ($this->get('modules') as $modules):
                         if (!$modules->getSystemModule()):
                             $module = $modulesMapper->getModulesByKey($modules->getKey(), $this->getTranslator()->getLocale());
-                            if (substr($modules->getIconSmall(), 0, 3) == 'fa-') {
+                            if (strncmp($modules->getIconSmall(), 'fa-', 3) === 0) {
                                 $smallIcon = '<i class="fa '.$modules->getIconSmall().'"></i>';
                             } else {
                                 $smallIcon = '<img src="'.$this->getStaticUrl('../application/modules/'.$modules->getKey().'/config/'.$modules->getIconSmall()).'" />';
@@ -198,7 +198,7 @@ $osStatistic = $this->get('osStatistic');
                         <div class="panel stats panel-default" title="<?=$this->getTrans('statMonth') ?>: <?=$this->get('visitsMonth') ?>">
                             <div class="panel-heading">
                                 <span class="panel-title text-center">
-                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>">
+                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true), 'month' => $date->format('m', true)]) ?>">
                                         <?=$this->get('visitsMonth') ?>
                                     </a>
                                 </span>
@@ -213,7 +213,7 @@ $osStatistic = $this->get('osStatistic');
                         <div class="panel stats panel-default" title="<?=$this->getTrans('statYear') ?>: <?=$this->get('visitsYear') ?>">
                             <div class="panel-heading">
                                 <span class="panel-title text-center">
-                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)]) ?>">
+                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true)]) ?>">
                                         <?=$this->get('visitsYear') ?>
                                     </a>
                                 </span>
@@ -266,7 +266,7 @@ $osStatistic = $this->get('osStatistic');
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
-                            <strong><?=$this->getTrans($date->format("l")) ?></strong>
+                            <strong><?=$this->getTrans($date->format('l')) ?></strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                             <div class="radio">
                                 <div class="progress" style="margin-bottom: 0px;">
@@ -287,7 +287,7 @@ $osStatistic = $this->get('osStatistic');
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
-                            <strong><?=$date->format("Y-m-d", true) ?></strong>
+                            <strong><?=$date->format('Y-m-d', true) ?></strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                             <div class="radio">
                                 <div class="progress" style="margin-bottom: 0px;">
@@ -308,7 +308,7 @@ $osStatistic = $this->get('osStatistic');
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
-                            <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>"><?=$date->format("Y - ", true).$this->getTrans($date->format("F", true)) ?></a></strong>
+                            <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true), 'month' => $date->format('m', true)]) ?>"><?=$date->format('Y - ', true).$this->getTrans($date->format('F', true)) ?></a></strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                             <div class="radio">
                                 <div class="progress" style="margin-bottom: 0px;">
@@ -329,7 +329,7 @@ $osStatistic = $this->get('osStatistic');
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
-                            <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)]) ?>"><?=$date->format("Y", true) ?></a></strong>
+                            <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true)]) ?>"><?=$date->format('Y', true) ?></a></strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                             <div class="radio">
                                 <div class="progress" style="margin-bottom: 0px;">
@@ -366,7 +366,7 @@ $osStatistic = $this->get('osStatistic');
                                 <?php if (!$statisticList->getBrowser()): ?>
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
-                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'browser' => $statisticList->getBrowser()]) ?>"><?=$statisticList->getBrowser() ?></a>
+                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true), 'browser' => $statisticList->getBrowser()]) ?>"><?=$statisticList->getBrowser() ?></a>
                                 <?php endif; ?>
                             </strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
@@ -432,7 +432,7 @@ $osStatistic = $this->get('osStatistic');
                                 <?php if (!$statisticList->getOS()): ?>
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
-                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS().' '.$statisticList->getOSVersion() ?></a>
+                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true), 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS().' '.$statisticList->getOSVersion() ?></a>
                                 <?php endif; ?>
                             </strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>

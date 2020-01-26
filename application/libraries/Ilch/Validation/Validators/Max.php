@@ -31,7 +31,7 @@ class Max extends Base
      */
     public function run()
     {
-        $numberString = $this->getParameter(1) === 'string' ? true : false;
+        $numberString = $this->getParameter(1) === 'string';
 
         $this->setIsValid(
             $this->getValue() === '' ||
@@ -54,14 +54,14 @@ class Max extends Base
     {
         if (is_numeric($value) && !$numberString) {
             return (int) $value;
-        } elseif (is_array($value)) {
-            $this->setErrorKey('validation.errors.max.array');
+        }
 
+        if (is_array($value)) {
+            $this->setErrorKey('validation.errors.max.array');
             return count($value);
         }
 
         $this->setErrorKey('validation.errors.max.string');
-
         return mb_strlen($value);
     }
 }

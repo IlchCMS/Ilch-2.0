@@ -19,7 +19,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 <?=$this->getTokenField() ?>
                 <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileEmail'); ?>*
+                        <?=$this->getTrans('profileEmail') ?>*
                     </label>
                     <div class="col-lg-8">
                         <input type="text"
@@ -32,7 +32,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileFirstName'); ?>
+                        <?=$this->getTrans('profileFirstName') ?>
                     </label>
                     <div class="col-lg-8">
                         <input type="text"
@@ -44,7 +44,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileLastName'); ?>
+                        <?=$this->getTrans('profileLastName') ?>
                     </label>
                     <div class="col-lg-8">
                         <input type="text"
@@ -56,7 +56,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileGender'); ?>
+                        <?=$this->getTrans('profileGender') ?>
                     </label>
                     <div class="col-lg-2">
                         <select class="form-control" id="gender" name="gender">
@@ -69,7 +69,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileCity'); ?>
+                        <?=$this->getTrans('profileCity') ?>
                     </label>
                     <div class="col-lg-8">
                        <input type="text"
@@ -81,7 +81,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('profileBirthday'); ?>
+                        <?=$this->getTrans('profileBirthday') ?>
                     </label>
                     <div class="col-lg-2 input-group ilch-date date form_datetime">
                         <input type="text"
@@ -156,7 +156,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
 </div>
 
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>

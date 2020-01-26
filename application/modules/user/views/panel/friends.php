@@ -9,7 +9,7 @@ $friends = $this->get('friends');
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <h1><?=$this->getTrans('friends'); ?></h1>
+            <h1><?=$this->getTrans('friends') ?></h1>
             <?php foreach ($friends as $friend) : ?>
             <div class="col-xs-6 col-md-2">
                 <div class="friend panel panel-default">

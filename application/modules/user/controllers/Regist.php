@@ -81,7 +81,7 @@ class Regist extends \Ilch\Controller\Frontend
 
                 $model = new UserModel();
                 if ($this->getConfig()->get('regist_confirm') == 0 AND $this->getConfig()->get('regist_setfree') == 0) {
-                    $model->setDateConfirmed($currentDate->format("Y-m-d H:i:s", true));
+                    $model->setDateConfirmed($currentDate->format('Y-m-d H:i:s', true));
                 } else {
                     $selector = bin2hex(openssl_random_pseudo_bytes(9));
                     // 33 bytes instead of 32 bytes just that the confirmedCode to confirm a registration
@@ -95,12 +95,12 @@ class Regist extends \Ilch\Controller\Frontend
                     ->setPassword((new PasswordService())->hash($this->getRequest()->getPost('password')))
                     ->setEmail($this->getRequest()->getPost('email'))
                     ->setLocale($this->getTranslator()->getLocale())
-                    ->setDateCreated($currentDate->format("Y-m-d H:i:s", true))
+                    ->setDateCreated($currentDate->format('Y-m-d H:i:s', true))
                     ->addGroup($userGroup);
                 $registMapper->save($model);
 
-                $_SESSION["name"] = $this->getRequest()->getPost('name');
-                $_SESSION["email"] = $this->getRequest()->getPost('email');
+                $_SESSION['name'] = $this->getRequest()->getPost('name');
+                $_SESSION['email'] = $this->getRequest()->getPost('email');
 
                 if ($this->getConfig()->get('regist_setfree') == 1) {
                     $notificationsMapper = new NotificationsMapper();
@@ -132,7 +132,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $messageReplace = [
                         '{content}' => $this->getLayout()->purify($mailContent->getText()),
                         '{sitetitle}' => $siteTitle,
-                        '{date}' => $date->format("l, d. F Y", true),
+                        '{date}' => $date->format('l, d. F Y', true),
                         '{name}' => $name,
                         '{confirm}' => $confirmCode,
                         '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
@@ -198,7 +198,7 @@ class Regist extends \Ilch\Controller\Frontend
                 $userMapper->save($user);
 
                 $this->redirect()
-                    ->withMessage('accountApproved', 'success')
+                    ->withMessage('accountApproved')
                     ->to([]);
             } else {
                 $this->redirect()

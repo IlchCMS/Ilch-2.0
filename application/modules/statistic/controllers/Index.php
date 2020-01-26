@@ -78,7 +78,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->to(['action' => 'index']);
         }
 
-        if ($year != '' AND $month != '' AND $os != '') {
+        if ($year != '' && $month != '' && $os != '') {
             $date = new \Ilch\Date($year.'-'.$month.'-01');
 
             $this->getLayout()->getHmenu()
@@ -87,7 +87,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($os, ['action' => 'show', 'year' => $year, 'month' => $month, 'os' => $os]);
         }
-        if ($year != '' AND $os != '') {
+        if ($year != '' && $os != '') {
             $date = new \Ilch\Date($year.'-01-01');
 
             $this->getLayout()->getHmenu()
@@ -95,7 +95,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($os, ['action' => 'show', 'year' => $year, 'os' => $os]);
         }
-        if ($year != '' AND $month != '' AND $browser != '') {
+        if ($year != '' && $month != '' && $browser != '') {
             $date = new \Ilch\Date($year.'-'.$month.'-01');
 
             $this->getLayout()->getHmenu()
@@ -104,7 +104,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($browser, ['action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $browser]);
         }
-        if ($month == '' AND $year != '' AND $browser != '') {
+        if ($month == '' && $year != '' && $browser != '') {
             $date = new \Ilch\Date($year.'-01-01');
 
             $this->getLayout()->getHmenu()
@@ -112,7 +112,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($browser, ['action' => 'show', 'year' => $year, 'browser' => $browser]);
         }
-        if ($year != '' AND $month != '') {
+        if ($year != '' && $month != '') {
             $date = new \Ilch\Date($year.'-'.$month.'-01');
 
             $this->getLayout()->getHmenu()
@@ -128,19 +128,19 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year]);
         }
 
-        if ($month != '' AND $year != '' AND $os != '') {
+        if ($month != '' && $year != '' && $os != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year, $month));
             $this->getView()->set('statisticOSVersionList', $statisticMapper->getVisitsOS($year, $month, $os));
-        } elseif ($year != '' AND $os != '') {
+        } elseif ($year != '' && $os != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
             $this->getView()->set('statisticOSVersionList', $statisticMapper->getVisitsOS($year, '', $os));
-        } elseif ($month != '' AND $year != '' AND $browser != '') {
+        } elseif ($month != '' && $year != '' && $browser != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year, $month));
             $this->getView()->set('statisticBrowserVersionList', $statisticMapper->getVisitsBrowser($year, $month, $browser));
-        } elseif ($year != '' AND $browser != '') {
+        } elseif ($year != '' && $browser != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
             $this->getView()->set('statisticBrowserVersionList', $statisticMapper->getVisitsBrowser($year, '', $browser));
-        } elseif ($year != '' AND $month != '') {
+        } elseif ($year != '' && $month != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsMonthCount($year, $month));
             $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour($year, $month));
             $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay($year, $month));
@@ -149,7 +149,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser($year, $month));
             $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($year, $month));
             $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($year, $month));
-        } elseif ($month == '' AND $year != '') {
+        } elseif ($month == '' && $year != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
             $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour($year));
             $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay($year));

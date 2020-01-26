@@ -45,8 +45,7 @@ class Model
     public function __toString()
     {
         if (empty($this->data)) {
-            $html = '<ol class="breadcrumb">&raquo; <li><a href="'.$this->layout->getUrl('admin/admin/index/index').'">Admincenter</a></li></ol>';
-            return $html;
+            return '<ol class="breadcrumb">&raquo; <li><a href="'.$this->layout->getUrl('admin/admin/index/index').'">Admincenter</a></li></ol>';
         }
         $html = '<ol class="breadcrumb">&raquo; <li><a href="'.$this->layout->getUrl('admin/admin/index/index').'">Admincenter</a></li>';
         foreach ($this->data as $key => $value) {

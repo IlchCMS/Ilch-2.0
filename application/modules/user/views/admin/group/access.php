@@ -28,8 +28,9 @@
         $accessTypes = $this->get('accessTypes');
         foreach ($accessTypes as $accessType => $typeData) {
             reset($accessTypes);
-            if ($accessType !== key($accessTypes))
+            if ($accessType !== key($accessTypes)) {
                 echo ' / ';
+            }
             echo $this->getTrans($accessType);
         }
         $activeaccess = '';
@@ -43,22 +44,30 @@
                 <?php foreach ($accessTypes as $accessType => $typeData): ?>
                     <optgroup label="<?=$this->getTrans($accessType) ?>">
                     <?php foreach ($typeData as $type): ?>
-                        <option value="<?=$accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId()) ?>"
-                            <?=(!empty($this->get('activeaccessId')) and $this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) ? 'selected="selected"' : '' ?>>
+                        <option value="<?=$accessType.'_'.($accessType === 'module'?$type->getKey():$type->getId()) ?>"
+                            <?=(!empty($this->get('activeaccessId')) and $this->get('activeaccessId') == $accessType.'_'.($accessType === 'module'?$type->getKey():$type->getId())) ? 'selected="selected"' : '' ?>>
                             <?php
-                            if ($accessType == 'module') {
+                            if ($accessType === 'module') {
                                 $content = $type->getContentForLocale($this->getTranslator()->getLocale());
                                 echo $this->escape($content['name']);
-                                if ($this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) $activeaccess = $this->escape($content['name']);
-                            } elseif ($accessType == 'article') {
+                                if ($this->get('activeaccessId') == $accessType.'_'.($accessType === 'module'?$type->getKey():$type->getId())) {
+                                    $activeaccess = $this->escape($content['name']);
+                                }
+                            } elseif ($accessType === 'article') {
                                echo $this->escape($type->getTitle());
-                               if ($this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) $activeaccess = $this->escape($type->getTitle());
-                            } elseif ($accessType == 'page') {
+                               if ($this->get('activeaccessId') == $accessType.'_'.($accessType === 'module'?$type->getKey():$type->getId())) {
+                                   $activeaccess = $this->escape($type->getTitle());
+                               }
+                            } elseif ($accessType === 'page') {
                                 echo $this->escape($type->getTitle());
-                               if ($this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) $activeaccess = $this->escape($type->getTitle());
-                            } elseif ($accessType == 'box') {
+                               if ($this->get('activeaccessId') == $accessType.'_'.($accessType === 'module'?$type->getKey():$type->getId())) {
+                                   $activeaccess = $this->escape($type->getTitle());
+                               }
+                            } elseif ($accessType === 'box') {
                                 echo $this->escape($type->getTitle());
-                               if ($this->get('activeaccessId') == $accessType.'_'.($accessType == 'module'?$type->getKey():$type->getId())) $activeaccess = $this->escape($type->getTitle());
+                               if ($this->get('activeaccessId') == $accessType.'_'.($accessType === 'module'?$type->getKey():$type->getId())) {
+                                   $activeaccess = $this->escape($type->getTitle());
+                               }
                             }
                             ?>
                         </option>
@@ -104,20 +113,20 @@
                     <tbody>
                         <?php
                         foreach ($typeData as $type):
-                            if ($accessType == 'module') {
+                            if ($accessType === 'module') {
                                 $content = $type->getContentForLocale($this->getTranslator()->getLocale());
                             }
                         ?>
                             <tr>
                                 <td style="vertical-align:middle">
                                     <?php
-                                    if ($accessType == 'module') {
+                                    if ($accessType === 'module') {
                                         echo $this->escape($content['name']);
-                                    } elseif ($accessType == 'article') {
+                                    } elseif ($accessType === 'article') {
                                        echo $this->escape($type->getTitle());
-                                    } elseif ($accessType == 'page') {
+                                    } elseif ($accessType === 'page') {
                                         echo $this->escape($type->getTitle());
-                                    } elseif ($accessType == 'box') {
+                                    } elseif ($accessType === 'box') {
                                         echo $this->escape($type->getTitle());
                                     }
                                     ?>
@@ -134,14 +143,12 @@
                                 $typeAccessLevel = 1;
 
                                 if ($groupHasEntries) {
-                                    if ($accessType == 'module') {
+                                    if ($accessType === 'module') {
                                         if (isset($typeEntries[$type->getKey()])) {
                                             $typeAccessLevel = (int)$typeEntries[$type->getKey()];
                                         }
-                                    } else {
-                                        if (isset($typeEntries[$type->getId()])) {
-                                            $typeAccessLevel = (int)$typeEntries[$type->getId()];
-                                        }
+                                    } elseif (isset($typeEntries[$type->getId()])) {
+                                        $typeAccessLevel = (int)$typeEntries[$type->getId()];
                                     }
                                 }
 
@@ -149,7 +156,7 @@
                                     <td class="text-center">
                                         <input type="radio"
                                            <?php
-                                            if ($accessType == 'module') {
+                                            if ($accessType === 'module') {
                                                 echo 'name="groupAccess['.$accessType.']['.$type->getKey().']"';
                                              } else {
                                                  echo 'name="groupAccess['.$accessType.']['.$type->getId().']"';
@@ -204,7 +211,7 @@
                                     <td class="text-center">
                                         <input type="radio"
                                            <?php
-                                            if ($accessType == 'module') {
+                                            if ($accessType === 'module') {
                                                 echo 'name="accessAccess['.$group->getId().']"';
                                              } else {
                                                  echo 'name="accessAccess['.$group->getId().']"';

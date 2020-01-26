@@ -32,7 +32,7 @@ $displayedArticles = 0;
                         <?=$this->getTrans('by') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $article->getAuthorId()]) ?>"><?=$this->escape($article->getAuthorName()) ?></a>
                         <?php endif; ?>
                         <br>
-                        <small><?=$date->format("d.m.y - H:i", true) ?> <?=$this->getTrans('clock') ?></small>
+                        <small><?=$date->format('d.m.y - H:i', true) ?> <?=$this->getTrans('clock') ?></small>
                     </span>
                 </li>
             <?php endforeach; ?>

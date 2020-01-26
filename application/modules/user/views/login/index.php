@@ -13,7 +13,7 @@
     <form class="form-horizontal" method="post">
         <h1><?=$this->getTrans('menuLogin') ?></h1>
         <?=$this->getTokenField() ?>
-        <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl'));?>" />
+        <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl')) ?>" />
         <div class="form-group <?=$this->validation()->hasError('login_emailname') ? 'has-error' : '' ?>">
             <label for="login_emailname" class="col-lg-2 control-label">
                 <?=$this->getTrans('nameEmail') ?>:

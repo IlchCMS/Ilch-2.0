@@ -57,11 +57,18 @@ class Login
 
         if ($user == null || !$this->passwordService->verify($password, $user->getPassword())) {
             return new LoginResult(false, $user, LoginResult::LOGIN_FAILED);
-        } elseif (!$user->getConfirmed()) {
+        }
+
+        if (!$user->getConfirmed()) {
             return new LoginResult(false, $user, LoginResult::USER_NOT_ACTIVATED);
-        } elseif ($user->getLocked()) {
+        }
+
+        if ($user->getLocked()) {
             return new LoginResult(false, $user, LoginResult::USER_LOCKED);
-        } elseif ($user->getSelectsDelete() != '' AND $user->getSelectsDelete() != '0000-00-00 00:00:00') {
+        }
+
+        $selectsDelete = $user->getSelectsDelete();
+        if ($selectsDelete != '' && $selectsDelete != '0000-00-00 00:00:00') {
             $this->mapper->selectsdelete($user->getId());
             $_SESSION['user_id'] = $user->getId();
             return new LoginResult(true, $user, LoginResult::USER_SELECTSDELETE);

@@ -55,7 +55,7 @@ class AfterDatabaseLoad
                     $authTokenModel->setUserid($_SESSION['user_id']);
                     $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
 
-                    setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
+                    setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
                     $authTokenMapper->updateAuthToken($authTokenModel);
                 } else {
                     // If the series is present but the token does not match, a theft is assumed.
@@ -85,20 +85,20 @@ class AfterDatabaseLoad
             $_SESSION = [];
             \Ilch\Registry::remove('user');
 
-            if (ini_get("session.use_cookies")) {
+            if (ini_get('session.use_cookies')) {
                 $params = session_get_cookie_params();
-                setcookie(session_name(), '', time() - 42000, $params["path"],
-                    $params["domain"], $params["secure"], $params["httponly"]
+                setcookie(session_name(), '', time() - 42000, $params['path'],
+                    $params['domain'], $params['secure'], $params['httponly']
                 );
             }
 
             session_destroy();
         }
 
-        if (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) && preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER["HTTP_X_FORWARDED_FOR"])) {
-            $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-        } elseif (preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER["REMOTE_ADDR"])) {
-            $ip = $_SERVER["REMOTE_ADDR"];
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER['REMOTE_ADDR'])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
         } else {
             $ip = '128.0.0.1';
         }
@@ -109,25 +109,23 @@ class AfterDatabaseLoad
             $site = $_SERVER['PATH_INFO'];
         }
 
-        if (empty($_SERVER["HTTP_REFERER"])) {
+        if (empty($_SERVER['HTTP_REFERER'])) {
             $referer = '';
         }  else {
-            $referer = $_SERVER["HTTP_REFERER"];
+            $referer = $_SERVER['HTTP_REFERER'];
         }
 
-        if (empty($_SERVER["HTTP_ACCEPT_LANGUAGE"])) {
+        if (empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $lang = '';
         } else {
-            $lang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
+            $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
         }
 
         $request = $pluginData['request'];
 
-        if (!$request->isAdmin()) {
-            if ((strpos($site, 'user/ajax/checknewmessage') == false) && (strpos($site, 'user/ajax/checknewfriendrequests') == false)) {
-                $statisticMapper = new Statistic();
-                $statisticMapper->saveVisit(['user_id' => $userId, 'session_id' => session_id(), 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
-            }
+        if (!$request->isAdmin() && (strpos($site, 'user/ajax/checknewmessage') == false) && (strpos($site, 'user/ajax/checknewfriendrequests') == false)) {
+            $statisticMapper = new Statistic();
+            $statisticMapper->saveVisit(['user_id' => $userId, 'session_id' => session_id(), 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
         }
 
         if ($pluginData['request']->getParam('language')) {

@@ -30,7 +30,7 @@
                                     <?=$obj->escape($user->getName()) ?>
                                 </a>
                                 <p class="text-muted small">
-                                    <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?>
+                                    <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format('d.m.Y - H:i', true) ?>
                                 </p>
                             </div>
                             <div class="pull-right text-muted small">
@@ -66,12 +66,12 @@
                         </div>
                         <hr>
                     </div>
-                    <?php $req = $req + 1; ?>
+                    <?php ++$req; ?>
 
                     <?php if ($obj->getUser()): ?>
                         <div class="replyHidden" id="reply_<?=$fk_comment->getId() ?>">
                             <form class="form-horizontal" method="POST">
-                                <?=$obj->getTokenField(); ?>
+                                <?=$obj->getTokenField() ?>
                                 <div>
                                     <div class="media-block">
                                         <a class="media-left col-md-offset-<?=$req ?> col-sm-offset-<?=$req ?> hidden-xs" href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]) ?>" title="<?=$obj->escape($obj->getUser()->getName()) ?>">
@@ -84,7 +84,7 @@
                                                         <?=$obj->escape($obj->getUser()->getName()) ?>
                                                     </a>
                                                     <p class="text-muted small">
-                                                        <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?>
+                                                        <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format('d.m.Y - H:i', true) ?>
                                                     </p>
                                                 </div>
                                                 <div class="pull-right text-muted small">
@@ -117,7 +117,7 @@
         </article>
 
         <?php
-        $req = $req-1;
+        --$req;
         $fkk_comments = $commentMappers->getCommentsByFKId($fk_comment->getId());
         if (count($fkk_comments) > 0) {
             $req++;
@@ -151,7 +151,7 @@
     $date = new \Ilch\Date($article->getDateCreated());
     $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
 
-    $catIds = explode(",", $article->getCatId());
+    $catIds = explode(',', $article->getCatId());
     $categories = '';
     foreach ($catIds as $catId) {
         if ($catId) {
@@ -186,9 +186,9 @@
                 <i class="fa fa-user" title="<?=$this->getTrans('author') ?>"></i> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a>&nbsp;&nbsp;
             <?php endif; ?>
         <?php endif; ?>
-        <i class="fa fa-calendar" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(['controller' => 'archive', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>"><?=$date->format('d.', true) ?> <?=$this->getTrans($date->format('F', true)) ?> <?=$date->format('Y', true) ?></a>
+        <i class="fa fa-calendar" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(['controller' => 'archive', 'action' => 'show', 'year' => $date->format('Y', true), 'month' => $date->format('m', true)]) ?>"><?=$date->format('d.', true) ?> <?=$this->getTrans($date->format('F', true)) ?> <?=$date->format('Y', true) ?></a>
         &nbsp;&nbsp;<i class="fa fa-clock-o" title="<?=$this->getTrans('time') ?>"></i> <?=$date->format('H:i', true) ?>
-        &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('cats') ?>"></i> <?=rtrim($categories, ', '); ?>
+        &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('cats') ?>"></i> <?=rtrim($categories, ', ') ?>
         &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId().'#comment']) ?>"><?=$commentsCount ?></a>
         &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('hits') ?>"></i> <?=$article->getVisits() ?>
         <?php if ($article->getTopArticle()) : ?>
@@ -212,12 +212,12 @@
         <?php if ($article->getKeywords() != ''): ?>
             <br /><i class="fa fa-hashtag"></i>
             <?php $keywordsList = $article->getKeywords();
-            $keywordsListArray = explode(", ", $keywordsList);
+            $keywordsListArray = explode(', ', $keywordsList);
             $keywordsList = [];
             foreach ($keywordsListArray as $keyword) {
                 $keywordsList[] = '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => urlencode($keyword)]).'">'.$this->escape($keyword).'</a>';
             }
-            echo implode(", ",$keywordsList); ?>
+            echo implode(', ',$keywordsList); ?>
         <?php endif; ?>
     </div>
 
@@ -243,7 +243,7 @@
                                                         <?=$this->escape($this->getUser()->getName()) ?>
                                                     </a>
                                                     <p class="text-muted small">
-                                                        <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?>
+                                                        <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format('d.m.Y - H:i', true) ?>
                                                     </p>
                                                 </div>
                                                 <p>
@@ -286,7 +286,7 @@
                                                     <?=$this->escape($user->getName()) ?>
                                                 </a>
                                                 <p class="text-muted small">
-                                                    <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?>
+                                                    <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format('d.m.Y - H:i', true) ?>
                                                 </p>
                                             </div>
                                             <p><?=nl2br($this->escape($comment->getText())) ?></p>
@@ -334,7 +334,7 @@
                                                                                 <?=$this->escape($this->getUser()->getName()) ?>
                                                                             </a>
                                                                             <p class="text-muted small">
-                                                                                <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?>
+                                                                                <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format('d.m.Y - H:i', true) ?>
                                                                             </p>
                                                                         </div>
                                                                         <div class="pull-right text-muted small">

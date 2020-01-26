@@ -17,7 +17,7 @@
                             <?=$this->getTrans('providers.linkedToAccount',
                                 '<b>'.$accountDetails->getScreenName().'</b>',
                                 '<i>'.$accountDetails->getCreatedAt().'</i>'
-                            ); ?>
+                            ) ?>
                         </li>
                         <li class="list-group-item">
                             <form method="POST" 
@@ -25,7 +25,7 @@
                                     'module' => $provider->getModule(),
                                     'controller' => $provider->getUnlinkController(),
                                     'action' => $provider->getUnlinkAction()
-                                ]); ?>"
+                                ]) ?>"
                             >
                                 <?=$this->getTokenField() ?>
                                 <button type="submit" class="btn btn-xs btn-default">

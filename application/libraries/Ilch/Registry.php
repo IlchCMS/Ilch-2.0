@@ -29,9 +29,9 @@ abstract class Registry
             self::$registry[$key] = $value;
 
             return true;
-        } else {
-            throw new \Exception('Unable to set variable `' . $key . '`. It was already set.');
         }
+
+        throw new \RuntimeException('Unable to set variable `' . $key . '`. It was already set.');
     }
 
     /**
@@ -97,7 +97,5 @@ abstract class Registry
     public static function removeAll()
     {
         self::$registry = [];
-
-        return;
     }
 }

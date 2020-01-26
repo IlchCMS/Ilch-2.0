@@ -201,7 +201,7 @@ class Mysql
 
     /**
      * Create Select Statement Query Builder
-     * 
+     *
      * @param array|string|null $fields
      * @param string|null $table table without prefix
      * @param array|null $where conditions @see QueryBuilder::where()

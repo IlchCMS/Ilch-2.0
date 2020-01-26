@@ -107,7 +107,7 @@ $errors = $this->get('errors');
     </div>
 </form>
 
-<script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
+<script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js') ?>"></script>
 <script>
 $(document).ready(function() {
     $('#password').pStrength({

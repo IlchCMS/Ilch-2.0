@@ -6,7 +6,7 @@
 
 namespace Modules\User\Boxes;
 
-use Ilch\Accesses as Accesses;
+use Ilch\Accesses;
 use Modules\User\Mappers\AuthProvider;
 
 class Login extends \Ilch\Box

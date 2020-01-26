@@ -90,7 +90,7 @@
         </div>
     </form>
     <?php if ($this->get('regist_accept') == '1'): ?>
-        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']); ?>"><?=$this->getTrans('register'); ?></a><br />
+        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']) ?>"><?=$this->getTrans('register') ?></a><br />
     <?php endif; ?>
     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>
@@ -99,8 +99,8 @@
     <script>
         $(document).ready(function () {
             let notificationsDiv = $(".ilch--new-message"),
-                messageCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>",
-                openFriendRequestsCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewfriendrequests']); ?>",
+                messageCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']) ?>",
+                openFriendRequestsCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewfriendrequests']) ?>",
                 globalStore = [];
 
             function loadNotifications()

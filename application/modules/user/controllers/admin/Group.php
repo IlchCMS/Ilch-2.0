@@ -66,9 +66,9 @@ class Group extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[1][0]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'access') {
+        } elseif ($this->getRequest()->getActionName() === 'access') {
             $items[1][1]['active'] = true;
         } else {
             $items[1]['active'] = true;
@@ -92,7 +92,7 @@ class Group extends \Ilch\Controller\Admin
 
         $groupMapper = new GroupMapper();
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_groups')) {
             foreach ($this->getRequest()->getPost('check_groups') as $groupId) {
                 if ($groupId != 1 && $groupId != 2 && $groupId != 3) {
                     $groupMapper->delete($groupId);
@@ -131,7 +131,7 @@ class Group extends \Ilch\Controller\Admin
         $groupMapper = new GroupMapper();
         $userMapper = new UserMapper();
 
-        if ($groupId == 1 and !$this->getUser()->isAdmin()) {
+        if ($groupId == 1 && !$this->getUser()->isAdmin()) {
             $this->redirect(['action' => 'index']);
         }
 
@@ -165,7 +165,7 @@ class Group extends \Ilch\Controller\Admin
             $groupMapper = new GroupMapper();
             $group = $groupMapper->loadFromArray($groupData);
 
-            if ($group->getId() == 1 and !$this->getUser()->isAdmin()) {
+            if ($group->getId() == 1 && !$this->getUser()->isAdmin()) {
                 $this->redirect(['action' => 'index']);
             }
 
@@ -182,10 +182,10 @@ class Group extends \Ilch\Controller\Admin
             }
             foreach($groupUsers as $key => $user_Id) {
                 if (!in_array($user_Id, $sortItems)){
-                    if ($groupId != 1 or ($groupId == 1 and count($groupUsers) > 1)) {
+                    if ($groupId != 1 || ($groupId == 1 && count($groupUsers) > 1)) {
                         $userMapper->deleteUserToGroup($user_Id, $groupId);
                         unset($groupUsers[$key]);
-                    } elseif ($groupId == 1 and count($groupUsers) <= 1) {
+                    } elseif ($groupId == 1 && count($groupUsers) <= 1) {
                         $this->addMessage('delLastAdminProhibited', 'warning');
                     }
                 }
@@ -219,10 +219,8 @@ class Group extends \Ilch\Controller\Admin
                 $this->addMessage('delUserGroup', 'warning');
             } elseif ($groupId == 3) {
                 $this->addMessage('delGuestGroup', 'warning');
-            } else {
-                if ($groupMapper->delete($groupId)) {
-                    $this->addMessage('delGroupMsg');
-                }
+            } elseif ($groupMapper->delete($groupId)) {
+                $this->addMessage('delGroupMsg');
             }
         }
 

@@ -78,15 +78,15 @@ class MysqlCollector extends DataCollector implements Renderable, AssetProvider
     public function getWidgets()
     {
         return [
-            "database" => [
-                "icon" => "inbox",
-                "widget" => "PhpDebugBar.Widgets.SQLQueriesWidget",
-                "map" => "database",
-                "default" => "[]"
+            'database' => [
+                'icon' => 'inbox',
+                'widget' => 'PhpDebugBar.Widgets.SQLQueriesWidget',
+                'map' => 'database',
+                'default' => '[]'
             ],
-            "database:badge" => [
-                "map" => "database.nb_statements",
-                "default" => 0
+            'database:badge' => [
+                'map' => 'database.nb_statements',
+                'default' => 0
             ]
         ];
     }

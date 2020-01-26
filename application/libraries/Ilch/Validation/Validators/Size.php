@@ -31,7 +31,7 @@ class Size extends Base
      */
     public function run()
     {
-        $numberString = $this->getParameter(1) === 'string' ? true : false;
+        $numberString = $this->getParameter(1) === 'string';
 
         $this->setIsValid(
             $this->value === '' || $this->getSize($this->getValue(), $numberString) === (int) $this->getParameter(0)
@@ -53,7 +53,9 @@ class Size extends Base
     {
         if (is_numeric($value) && !$numberString) {
             return (int) $value;
-        } elseif (is_array($value)) {
+        }
+
+        if (is_array($value)) {
             $this->setErrorKey('validation.errors.size.array');
 
             return count($value);

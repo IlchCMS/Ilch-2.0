@@ -5,7 +5,7 @@
     </a>
 </h1>
 <form class="form-horizontal" id="downloadsForm" method="POST">
-    <?=$this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -95,7 +95,7 @@
     </div>
 </form>
 
-<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('profileFieldInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('profileFieldInfoText')) ?>
 
 <script>
 $(function() {

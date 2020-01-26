@@ -803,15 +803,15 @@ class User extends \Ilch\Model
         } elseif (strpos($key, 'page_') !== false) {
             $pageId = (int)substr($key, 5);
             $sqlJoin = ' INNER JOIN `[prefix]_pages` AS p ON ga.page_id = p.id';
-            $sqlWhere = ' WHERE p.id = ' . (int)$pageId;
+            $sqlWhere = ' WHERE p.id = ' . $pageId;
         } elseif (strpos($key, 'article_') !== false) {
             $articleId = (int)substr($key, 8);
             $sqlJoin = ' INNER JOIN [prefix]_articles AS a ON ga.article_id = a.id';
-            $sqlWhere = ' WHERE a.id = ' . (int)$articleId;
+            $sqlWhere = ' WHERE a.id = ' . $articleId;
         } elseif (strpos($key, 'box_') !== false) {
             $boxId = (int)substr($key, 4);
             $sqlJoin = ' INNER JOIN [prefix]_boxes AS b ON ga.box_id = b.id';
-            $sqlWhere = ' WHERE b.id = ' . (int)$boxId;
+            $sqlWhere = ' WHERE b.id = ' . $boxId;
         }
 
         $sql .= $sqlJoin . $sqlWhere . '
@@ -821,10 +821,6 @@ class User extends \Ilch\Model
         $db = \Ilch\Registry::get('db');
         $accessLevel = (int)$db->queryCell($sql);
 
-        if (($isInAdmin && $accessLevel === 2) || (!$isInAdmin && $accessLevel >= 1)) {
-            return true;
-        } else {
-            return false;
-        }
+        return ($isInAdmin && $accessLevel === 2) || (!$isInAdmin && $accessLevel >= 1);
     }
 }

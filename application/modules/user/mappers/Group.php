@@ -68,9 +68,7 @@ class Group extends \Ilch\Mapper
             ->fetchRows();
 
         if (!empty($groupRows)) {
-            $groups = array_map([$this, 'loadFromArray'], $groupRows);
-
-            return $groups;
+            return array_map([$this, 'loadFromArray'], $groupRows);
         }
 
         return false;
@@ -105,11 +103,9 @@ class Group extends \Ilch\Mapper
      */
     public function getUsersForGroup($groupId)
     {
-        $userIds = $this->db()->select('user_id', 'users_groups', ['group_id' => $groupId])
+        return $this->db()->select('user_id', 'users_groups', ['group_id' => $groupId])
             ->execute()
             ->fetchList();
-
-        return $userIds;
     }
 
     /**
@@ -259,17 +255,19 @@ class Group extends \Ilch\Mapper
     public function getAccessAccessList($Type, $Id)
     {
         $sqlwhere = '';
-        if ($Type == 'module') {
+        if ($Type === 'module') {
             $sqlwhere = 'module_key';
-        } elseif ($Type == 'article') {
+        } elseif ($Type === 'article') {
             $sqlwhere = 'article_id';
-        } elseif ($Type == 'page') {
+        } elseif ($Type === 'page') {
             $sqlwhere = 'page_id';
-        } elseif ($Type == 'box') {
+        } elseif ($Type === 'box') {
             $sqlwhere = 'box_id';
         }
 
-        if ($sqlwhere == '') return null;
+        if ($sqlwhere == '') {
+            return null;
+        }
 
         $sql = 'SELECT g.name AS group_name, ga.*
                 FROM [prefix]_groups_access AS ga
@@ -302,7 +300,7 @@ class Group extends \Ilch\Mapper
             'group_id' => (int)$groupId,
         ];
 
-        if ($type == 'module') {
+        if ($type === 'module') {
             $rec['module_key'] = $value;
         } else {
             $rec[$type.'_id'] = (int)$value;

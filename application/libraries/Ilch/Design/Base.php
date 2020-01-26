@@ -140,7 +140,7 @@ abstract class Base
         $this->request = $request;
         $this->translator = $translator;
         $this->router = $router;
-        if (null === $baseUrl) {
+        if ($baseUrl === null) {
             $baseUrl = BASE_URL;
         }
         $this->baseUrl = $baseUrl;
@@ -163,7 +163,7 @@ abstract class Base
      * @param mixed $value
      *
      * @return bool
-     * @throws \Exception
+     * @throws \RuntimeException
      * @since 2.1.0
      */
     public function add($key, $objectKey, $value)
@@ -176,9 +176,9 @@ abstract class Base
             $this->data[$key][$objectKey] = $value;
 
             return true;
-        } else {
-            throw new \Exception('Unable to add value. The value of `' . $key . '` is not an array.');
         }
+
+        throw new \RuntimeException('Unable to add value. The value of `' . $key . '` is not an array.');
     }
 
     /**
@@ -476,25 +476,25 @@ abstract class Base
         if (is_array($url)) {
             $urlParts = [];
 
-            if (!isset($url['module'])) {
-                $urlParts[] = $this->getRequest()->getModuleName();
-            } else {
+            if (isset($url['module'])) {
                 $urlParts[] = $url['module'];
                 unset($url['module']);
+            } else {
+                $urlParts[] = $this->getRequest()->getModuleName();
             }
 
-            if (!isset($url['controller'])) {
-                $urlParts[] = $this->getRequest()->getControllerName();
-            } else {
+            if (isset($url['controller'])) {
                 $urlParts[] = $url['controller'];
                 unset($url['controller']);
+            } else {
+                $urlParts[] = $this->getRequest()->getControllerName();
             }
 
-            if (!isset($url['action'])) {
-                $urlParts[] = $this->getRequest()->getActionName();
-            } else {
+            if (isset($url['action'])) {
                 $urlParts[] = $url['action'];
                 unset($url['action']);
+            } else {
+                $urlParts[] = $this->getRequest()->getActionName();
             }
 
             foreach ($url as $key => $value) {
@@ -512,7 +512,7 @@ abstract class Base
 
             $url = implode('/', $urlParts);
 
-            if (($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route == 'admin')) {
+            if (($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route === 'admin')) {
                 $url = 'admin/' . $url;
                 $rewrite = false;
             }
@@ -583,9 +583,7 @@ abstract class Base
      */
     public function getCaptchaField()
     {
-        $html = '<img src="'.$this->getUrl().'/application/libraries/Captcha/Captcha.php" id="captcha" />';
-
-        return $html;
+        return '<img src="'.$this->getUrl().'/application/libraries/Captcha/Captcha.php" id="captcha" />';
     }
 
     /**
@@ -637,9 +635,9 @@ abstract class Base
     {
         if (strlen($str) <= $length) {
             return $str;
-        } else {
-            return preg_replace("/[^ ]*$/", '', substr($str, 0, $length)).'...';
         }
+
+        return preg_replace('/[^ ]*$/', '', substr($str, 0, $length)).'...';
     }
 
     /**

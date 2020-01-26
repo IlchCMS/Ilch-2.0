@@ -20,7 +20,7 @@ class Keywords extends \Ilch\Box
         }
 
         $keywordsListString = implode(', ', $keywordsList);
-        $keywordsListArray = explode(", ", $keywordsListString);
+        $keywordsListArray = explode(', ', $keywordsListString);
         $keywordsList = array_count_values($keywordsListArray);
 
         $keywordsFontSizes = explode(',',$this->getConfig()->get('article_box_keywords'));

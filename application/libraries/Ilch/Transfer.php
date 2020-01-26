@@ -279,10 +279,8 @@ class Transfer
      */
     public function checkRequirements($requirements)
     {
-        if (!empty($requirements['phpVersion'])) {
-            if (!version_compare(phpversion(), $requirements['phpVersion'], '>=')) {
-                $this->missingRequirements['phpVersion'] = $requirements['phpVersion'];
-            }
+        if (!empty($requirements['phpVersion']) && !version_compare(phpversion(), $requirements['phpVersion'], '>=')) {
+            $this->missingRequirements['phpVersion'] = $requirements['phpVersion'];
         }
 
         if (!empty($requirements['mysqlVersion']) || !empty($requirements['mariadbVersion'])) {
@@ -296,10 +294,8 @@ class Transfer
                 if (!version_compare(mysqli_get_server_info($dbLinkIdentifier), $requirements['mariadbVersion'], '>=')) {
                     $this->missingRequirements['mariadbVersion'] = $requirements['mariadbVersion'];
                 }
-            } else {
-                if (!version_compare(mysqli_get_server_info($dbLinkIdentifier), $requirements['mysqlVersion'], '>=')) {
-                    $this->missingRequirements['mysqlVersion'] = $requirements['mysqlVersion'];
-                }
+            } elseif (!version_compare(mysqli_get_server_info($dbLinkIdentifier), $requirements['mysqlVersion'], '>=')) {
+                $this->missingRequirements['mysqlVersion'] = $requirements['mysqlVersion'];
             }
         }
 
@@ -335,7 +331,9 @@ class Transfer
     {
         try {
             $newUpdate = url_get_contents($this->getDownloadUrl(), false, true);
-            if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
+            if (!is_dir($this->getZipSavePath())) {
+                mkdir($this->getZipSavePath());
+            }
             $dlHandler = fopen($this->zipFile, 'wb');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
@@ -370,10 +368,7 @@ class Transfer
         $pubkey = openssl_pkey_get_public(file_get_contents($pubKeyfile));
         openssl_public_decrypt($signature, $decrypted_digest, $pubkey);
 
-        if ($digest == $decrypted_digest) {
-            return true;
-        }
-        return false;
+        return $digest == $decrypted_digest;
     }
 
     /**
@@ -457,7 +452,9 @@ class Transfer
                 $thisFileDir = dirname($thisFileName);
 
                 //Continue if its not a file
-                if (substr($thisFileName,-1,1) == '/') continue;
+                if (substr($thisFileName,-1,1) === '/') {
+                    continue;
+                }
 
                 //Make the directory if we need to...
                 if (!is_dir (ROOT_PATH.'/'.$thisFileDir)) {
@@ -486,7 +483,7 @@ class Transfer
                     if ($thisFileName == $thisFileDir.'/config.php') {
                         include $thisFileName;
 
-                        $configClass = str_replace(array('.php', 'application', "/"), array('', '', "\\"), $thisFileName);
+                        $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
                         if (class_exists($configClass)) {
                             $config = new $configClass();
 
@@ -527,7 +524,7 @@ class Transfer
                 //If we need to run commands, then do it.
                 if ($thisFileName == $thisFileDir.'/config.php') {
                     include $thisFileName;
-                    $configClass = str_replace(array('.php', 'application', "/"), array('', '', "\\"), $thisFileName);
+                    $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
                     if (class_exists($configClass)) {
                         $config = new $configClass();
                         if (method_exists($config, 'install')) {

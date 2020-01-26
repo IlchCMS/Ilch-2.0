@@ -61,10 +61,10 @@ class Redirect
     public function withMessage($message, $type = 'success')
     {
         if (!is_string($message)) {
-            throw new \Exception("Wrong parameter type: expected string, got ".gettype($message));
+            throw new \RuntimeException('Wrong parameter type: expected string, got ' .gettype($message));
         }
 
-        array_push($this->messages, ['text' => $message, 'type' => $type]);
+        $this->messages[] = ['text' => $message, 'type' => $type];
 
         return $this;
     }
@@ -187,25 +187,25 @@ class Redirect
 
         $urlParts = [];
 
-        if (!isset($url['module'])) {
-            $urlParts[] = $this->request->getModuleName();
-        } else {
+        if (isset($url['module'])) {
             $urlParts[] = $url['module'];
             unset($url['module']);
+        } else {
+            $urlParts[] = $this->request->getModuleName();
         }
 
-        if (!isset($url['controller'])) {
-            $urlParts[] = $this->request->getControllerName();
-        } else {
+        if (isset($url['controller'])) {
             $urlParts[] = $url['controller'];
             unset($url['controller']);
+        } else {
+            $urlParts[] = $this->request->getControllerName();
         }
 
-        if (!isset($url['action'])) {
-            $urlParts[] = $this->request->getActionName();
-        } else {
+        if (isset($url['action'])) {
             $urlParts[] = $url['action'];
             unset($url['action']);
+        } else {
+            $urlParts[] = $this->request->getActionName();
         }
 
         foreach ($url as $key => $value) {
@@ -213,7 +213,7 @@ class Redirect
         }
 
         if ($this->request->isAdmin() && $route === null) {
-            $route = "admin";
+            $route = 'admin';
         }
 
         $prefix = '';
@@ -224,8 +224,8 @@ class Redirect
 
         if ($modRewrite) {
             return BASE_URL.'/'.$prefix.implode('/', $urlParts);
-        } else {
-            return BASE_URL.'/index.php/'.$prefix.implode('/', $urlParts);
         }
+
+        return BASE_URL.'/index.php/'.$prefix.implode('/', $urlParts);
     }
 }

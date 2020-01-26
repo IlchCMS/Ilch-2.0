@@ -79,7 +79,7 @@ class Accesses
 
         $this->setGroupIds($groupIds);
 
-        if ($getAccessTo == 'Module') {
+        if ($getAccessTo === 'Module') {
             $getAccessTo = $this->getAccessModule($groupAccessList);
         } else {
             $getAccessTo = $this->getAccessAdmin($groupAccessList);
@@ -100,8 +100,8 @@ class Accesses
             }
         }
 
-        if ($this->request->getModuleName() == 'admin' || empty($entrie)) {
-            if($this->request->getControllerName() == 'page') {
+        if ($this->request->getModuleName() === 'admin' || empty($entrie)) {
+            if($this->request->getControllerName() === 'page') {
                 return $this->getAccessPage($array);
             }
             return true;
@@ -113,7 +113,7 @@ class Accesses
 
         if ($entrie[$this->request->getModuleName()] == '1' ||
             $entrie[$this->request->getModuleName()] == '2' ||
-            is_in_array($this->getGroupIds(), ['1']) == 'true') {
+            is_in_array($this->getGroupIds(), ['1']) === 'true') {
             return true;
         }
     }
@@ -132,15 +132,11 @@ class Accesses
             }
         }
 
-        if (is_in_array($this->getGroupIds(), ['1']) == 'true') {
+        if (is_in_array($this->getGroupIds(), ['1']) === 'true') {
             return true;
         }
 
-        if(in_array('1', array_column($entrie, (int)$this->request->getParam('id'))) || in_array('2', array_column($entrie, (int)$this->request->getParam('id')))) {
-            return true;
-        } else {
-            return false;
-        }
+        return in_array('1', array_column($entrie, (int)$this->request->getParam('id'))) || in_array('2', array_column($entrie, (int)$this->request->getParam('id')));
     }
 
     /**
@@ -167,12 +163,11 @@ class Accesses
      */
     public function getErrorPage($text = '')
     {
-        $html = '<div class="centering text-center error-container">
+        return '<div class="centering text-center error-container">
                     <div class="text-center">
                         <h2 class="without-margin"><span class="text-warning">403</span> Access denied.</h2>
                         <h4 class="text-warning">'.$text.'</h4>
                     </div>
                  </div>';
-        return $html;
     }
 }

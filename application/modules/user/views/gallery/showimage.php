@@ -14,14 +14,18 @@ $config = $this->get('config');
     $userMapper = $obj->get('userMapper');
     $fk_comments = $commentMappers->getCommentsByFKId($commentId);
     $user_rep = $userMapper->getUserById($uid);
-    if (!$user_rep) $user_rep = $userMapper->getDummyUser();
+    if (!$user_rep) {
+        $user_rep = $userMapper->getDummyUser();
+    }
     $config = $obj->get('config');
     $nowDate = new \Ilch\Date();
 
     foreach ($fk_comments as $fk_comment) {
         $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
         $user = $userMapper->getUserById($fk_comment->getUserId());
-        if (!$user) $user = $userMapper->getDummyUser();
+        if (!$user) {
+            $user = $userMapper->getDummyUser();
+        }
         $voted = explode(',', $fk_comment->getVoted());
         if ($req >= $config->get('comment_nesting')) {
             $req = $config->get('comment_nesting');
@@ -41,7 +45,7 @@ $config = $this->get('config');
                                     <?=$obj->escape($user->getName()) ?>
                                 </a>
                                 <p class="text-muted small">
-                                    <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?>
+                                    <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format('d.m.Y - H:i', true) ?>
                                 </p>
                             </div>
                             <div class="pull-right text-muted small">
@@ -77,12 +81,12 @@ $config = $this->get('config');
                         </div>
                         <hr>
                     </div>
-                    <?php $req = $req + 1; ?>
+                    <?php ++$req; ?>
 
                     <?php if ($obj->getUser()): ?>
                         <div class="replyHidden" id="reply_<?=$fk_comment->getId() ?>">
                             <form class="form-horizontal" method="POST">
-                                <?=$obj->getTokenField(); ?>
+                                <?=$obj->getTokenField() ?>
                                 <div>
                                     <div class="media-block">
                                         <a class="media-left col-md-offset-<?=$req ?> col-sm-offset-<?=$req ?> hidden-xs" href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]) ?>" title="<?=$obj->escape($obj->getUser()->getName()) ?>">
@@ -95,7 +99,7 @@ $config = $this->get('config');
                                                         <?=$obj->escape($obj->getUser()->getName()) ?>
                                                     </a>
                                                     <p class="text-muted small">
-                                                        <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?>
+                                                        <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format('d.m.Y - H:i', true) ?>
                                                     </p>
                                                 </div>
                                                 <div class="pull-right text-muted small">
@@ -128,7 +132,7 @@ $config = $this->get('config');
         </article>
 
         <?php
-        $req = $req-1;
+        --$req;
         $fkk_comments = $commentMappers->getCommentsByFKId($fk_comment->getId());
         if (count($fkk_comments) > 0) {
             $req++;
@@ -186,7 +190,7 @@ $config = $this->get('config');
                                                 <?=$this->escape($this->getUser()->getName()) ?>
                                             </a>
                                             <p class="text-muted small">
-                                                <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?>
+                                                <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format('d.m.Y - H:i', true) ?>
                                             </p>
                                         </div>
                                         <p>
@@ -229,7 +233,7 @@ $config = $this->get('config');
                                             <?=$this->escape($user->getName()) ?>
                                         </a>
                                         <p class="text-muted small">
-                                            <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?>
+                                            <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format('d.m.Y - H:i', true) ?>
                                         </p>
                                     </div>
                                     <p><?=nl2br($this->escape($comment->getText())) ?></p>
@@ -277,7 +281,7 @@ $config = $this->get('config');
                                                                         <?=$this->escape($this->getUser()->getName()) ?>
                                                                     </a>
                                                                     <p class="text-muted small">
-                                                                        <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?>
+                                                                        <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format('d.m.Y - H:i', true) ?>
                                                                     </p>
                                                                 </div>
                                                                 <div class="pull-right text-muted small">
