@@ -36,7 +36,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -58,11 +58,9 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('check_entries')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach ($this->getRequest()->getPost('check_entries') as $newsletterId) {
-                    $newsletterMapper->delete($newsletterId);
-                }
+        if ($this->getRequest()->getPost('check_entries') && $this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('check_entries') as $newsletterId) {
+                $newsletterMapper->delete($newsletterId);
             }
         }
 
@@ -152,7 +150,7 @@ class Index extends \Ilch\Controller\Admin
                         '{subject}' => $this->getLayout()->escape($post['subject']),
                         '{content}' => $this->getLayout()->purify($post['text']),
                         '{sitetitle}' => $this->getLayout()->escape($this->getConfig()->get('page_title')),
-                        '{date}' => $date->format("l, d. F Y", true),
+                        '{date}' => $date->format('l, d. F Y', true),
                         '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
                         '{unreadable}' => $this->getTranslator()->trans('mailUnreadable', $newsletterMapper->getLastId(), $email->getEmail()),
                         '{unsubscribe}' => $this->getTranslator()->trans('mailUnsubscribe', $email->getSelector(), $email->getConfirmCode()),

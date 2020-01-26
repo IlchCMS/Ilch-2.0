@@ -13,7 +13,7 @@ $date = new \Ilch\Date($newsletter->getDateCreated());
             <div class="col-lg-2">
                 <?=$this->getTrans('date') ?>:
             </div>
-            <div class="col-lg-4"><?=$date->format("d.m.Y H:i", true) ?></div>
+            <div class="col-lg-4"><?=$date->format('d.m.Y H:i', true) ?></div>
         </div>
         <div class="form-group">
             <div class="col-lg-2">

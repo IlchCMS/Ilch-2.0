@@ -43,7 +43,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -64,11 +64,9 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('check_teams')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach ($this->getRequest()->getPost('check_teams') as $teamId) {
-                    $teamsMapper->delete($teamId);
-                }
+        if ($this->getRequest()->getPost('check_teams') && $this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('check_teams') as $teamId) {
+                $teamsMapper->delete($teamId);
             }
         }
 
@@ -116,7 +114,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             // No need to check if the leader and coleader are identical if one of them is empty.
-            if (!empty($this->getRequest()->getPost('leader')) And !empty($this->getRequest()->getPost('coLeader'))) {
+            if (!empty($this->getRequest()->getPost('leader')) && !empty($this->getRequest()->getPost('coLeader'))) {
                 if (count(array_intersect($this->getRequest()->getPost('leader'), $this->getRequest()->getPost('coLeader')))) {
                     $validation->getErrorBag()->addError('coLeader', $this->getTranslator()->trans('leaderCoLeaderIdentic'));
                 }
@@ -143,7 +141,7 @@ class Index extends \Ilch\Controller\Admin
                     $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                     $imageInfo = getimagesize($file_tmpe);
 
-                    if (in_array($extension, explode(' ', $allowedFiletypes)) && strncmp($imageInfo['mime'], 'image/', 6) === 0) {
+                    if (strncmp($imageInfo['mime'], 'image/', 6) === 0 && in_array($extension, explode(' ', $allowedFiletypes))) {
                         if ($this->getRequest()->getParam('id')) {
                             $teamsMapper->delImageById($this->getRequest()->getParam('id'));
                         }
@@ -156,13 +154,10 @@ class Index extends \Ilch\Controller\Admin
                         } while (file_exists($image));
 
                         if (move_uploaded_file($file_tmpe, $image)) {
-                            if ($width > $imageMaxWidth OR $height > $imageMaxHeight) {
+                            if ($width > $imageMaxWidth || $height > $imageMaxHeight) {
                                 $upload = new \Ilch\Upload();
 
-                                if (!$upload->enoughFreeMemory($image)) {
-                                    unlink($image);
-                                    $this->addMessage('failedFilesize', 'warning');
-                                } else {
+                                if ($upload->enoughFreeMemory($image)) {
                                     $thumb = new \Thumb\Thumbnail();
                                     $calcHeight = $height;
                                     $calcWidth = $width;
@@ -183,6 +178,9 @@ class Index extends \Ilch\Controller\Admin
                                     $thumb -> Thumbwidth = $calcWidth;
                                     $thumb -> Thumblocation = $path;
                                     $thumb -> Createthumb($image, 'file');
+                                } else {
+                                    unlink($image);
+                                    $this->addMessage('failedFilesize', 'warning');
                                 }
                             }
 
@@ -197,11 +195,11 @@ class Index extends \Ilch\Controller\Admin
                 $coLeader = '';
 
                 if (!empty($this->getRequest()->getPost('leader'))) {
-                    $leader = implode(",", $this->getRequest()->getPost('leader'));
+                    $leader = implode(',', $this->getRequest()->getPost('leader'));
                 }
 
                 if (!empty($this->getRequest()->getPost('coLeader'))) {
-                    $coLeader = implode(",", $this->getRequest()->getPost('coLeader'));
+                    $coLeader = implode(',', $this->getRequest()->getPost('coLeader'));
                 }
 
                 $model->setName($this->getRequest()->getPost('name'))

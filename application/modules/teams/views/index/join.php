@@ -28,9 +28,9 @@ if ($this->getUser()) {
                             $coLeaderIds = explode(',', $teamList->getCoLeader());
                             $groupList = array_unique(array_merge($leaderIds, $coLeaderIds, $groupList));
 
-                            if ($teamList->getOptIn() == 1 AND (!in_array($userId, $groupList) OR $userId == 0)) {
+                            if ($teamList->getOptIn() == 1 && (!in_array($userId, $groupList) || $userId == 0)) {
                                 $selected = '';
-                                if ($this->originalInput('teamId') == $teamList->getGroupId() OR $this->getRequest()->getParam('id') == $teamList->getId()) {
+                                if ($this->originalInput('teamId') == $teamList->getGroupId() || $this->getRequest()->getParam('id') == $teamList->getId()) {
                                     $selected = 'selected="selected"';
                                 }
                                 echo '<option '.$selected.' value="'.$teamList->getId().'">'.$teamList->getName().'</option>';
@@ -84,7 +84,7 @@ if ($this->getUser()) {
         </div>
         <div class="form-group">
             <label class="col-lg-2 control-label">
-                <?=$this->getTrans('gender'); ?>
+                <?=$this->getTrans('gender') ?>
             </label>
             <div class="col-lg-2">
                 <?php if ($this->getUser()): ?>
@@ -95,9 +95,9 @@ if ($this->getUser()) {
                     </select>
                 <?php else: ?>
                     <select class="form-control" id="gender" name="gender">
-                        <option value="1" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
-                        <option value="2" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
-                        <option value="3" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderNonBinary') ?></option>
+                        <option value="1" <?=($this->originalInput('gender') != '' && $this->originalInput('gender') == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
+                        <option value="2" <?=($this->originalInput('gender') != '' && $this->originalInput('gender') == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
+                        <option value="3" <?=($this->originalInput('gender') != '' && $this->originalInput('gender') == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderNonBinary') ?></option>
                     </select>
                 <?php endif; ?>
             </div>
@@ -106,7 +106,7 @@ if ($this->getUser()) {
             <label for="age" class="col-lg-2 control-label">
                 <?=$this->getTrans('birthday') ?>
             </label>
-            <?php if ($this->getUser() AND $this->getUser()->getBirthday() != '0000-00-00'): ?>
+            <?php if ($this->getUser() && $this->getUser()->getBirthday() != '0000-00-00'): ?>
                 <div class="col-lg-2 input-group ilch-date">
                     <?php $birthday = new \Ilch\Date($this->getUser()->getBirthday()); ?>
                     <input type="text"
@@ -208,7 +208,7 @@ if ($this->getUser()) {
 <?php endif; ?>
 
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>

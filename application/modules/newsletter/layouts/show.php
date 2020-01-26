@@ -11,7 +11,7 @@ $translator->load(APPLICATION_PATH.'/modules/newsletter/translations/');
     <head>
         <meta name="viewport" content="width=device-width" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><?=$config->get('page_title'); ?></title>
+        <title><?=$config->get('page_title') ?></title>
         <style>
         /* -------------------------------------
             GLOBAL

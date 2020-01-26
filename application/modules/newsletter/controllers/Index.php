@@ -54,7 +54,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $newsletter = $newsletterMapper->getNewsletterById($this->getRequest()->getParam('id'));
-        if ($newsletter != '') {
+        if ($newsletter !== null) {
             $this->getView()->set('newsletter', $newsletter);
         } else {
             $this->redirect(['action' => 'index']);
@@ -66,13 +66,13 @@ class Index extends \Ilch\Controller\Frontend
         $selector = $this->getRequest()->getParam('selector');
         $confirmCode = $this->getRequest()->getParam('code');
 
-        if (empty($confirmCode) or empty($selector)) {
+        if (empty($confirmCode) || empty($selector)) {
             $this->addMessage('incompleteUnsubscribeUrl', 'danger');
         } else {
             $newsletterMapper = new NewsletterMapper();
 
             $subscriber = $newsletterMapper->getSubscriberBySelector($selector);
-            if (!empty($subscriber) and hash_equals($subscriber->getConfirmCode(), $confirmCode)) {
+            if (!empty($subscriber) && hash_equals($subscriber->getConfirmCode(), $confirmCode)) {
                 $countEmail = $newsletterMapper->countEmails($subscriber->getEmail());
                 if ($countEmail == 1) {
                     $newsletterMapper->deleteEmail($subscriber->getEmail());

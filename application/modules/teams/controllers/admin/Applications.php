@@ -84,10 +84,8 @@ class Applications extends \Ilch\Controller\Admin
         $userDeleted = false;
         $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
 
-        if ($join->getUserId()) {
-            if (!$userMapper->userWithIdExists($join->getUserId())) {
-                $userDeleted = true;
-            }
+        if ($join->getUserId() && !$userMapper->userWithIdExists($join->getUserId())) {
+            $userDeleted = true;
         }
 
         $this->getLayout()->getAdminHmenu()
@@ -171,7 +169,7 @@ class Applications extends \Ilch\Controller\Admin
                 '{subject}' => $this->getTranslator()->trans('subjectAccept'),
                 '{content}' => $this->getLayout()->purify($mailContent->getText()),
                 '{sitetitle}' => $siteTitle,
-                '{date}' => $date->format("l, d. F Y", true),
+                '{date}' => $date->format('l, d. F Y', true),
                 '{name}' => $this->getLayout()->escape($name),
                 '{teamname}' => $this->getLayout()->escape($team->getName()),
                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
@@ -236,7 +234,7 @@ class Applications extends \Ilch\Controller\Admin
             $messageReplace = [
                 '{content}' => $this->getLayout()->purify($mailContent->getText()),
                 '{sitetitle}' => $siteTitle,
-                '{date}' => $date->format("l, d. F Y", true),
+                '{date}' => $date->format('l, d. F Y', true),
                 '{name}' => $name,
                 '{teamname}' => $this->getLayout()->escape($team->getName()),
                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')

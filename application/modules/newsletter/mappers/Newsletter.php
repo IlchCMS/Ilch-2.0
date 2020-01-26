@@ -129,9 +129,7 @@ class Newsletter extends \Ilch\Mapper
         $sql = 'SELECT MAX(id)
                 FROM `[prefix]_newsletter`';
 
-        $entry = $this->db()->queryCell($sql);
-
-        return $entry;
+        return $this->db()->queryCell($sql);
     }
 
     /**
@@ -174,9 +172,7 @@ class Newsletter extends \Ilch\Mapper
                 FROM `[prefix]_newsletter_mails`
                 WHERE `email` = "' . $email . '"';
 
-        $entry = $this->db()->queryCell($sql);
-
-        return $entry;
+        return $this->db()->queryCell($sql);
     }
 
     /**

@@ -1,4 +1,11 @@
-<?= ($this->get('success') == "") ? '' : (($this->get('success') == 'false') ? '<div class="alert alert-danger">'.$this->getTrans('subscribeFailed').'</div>' : '<div class="alert alert-success">'.$this->getTrans('subscribeSuccess').'</div>'); ?>
+<?php if ($this->get('success') !== '') : ?>
+    <?php if ($this->get('success') === 'false') :?>
+        <?='<div class="alert alert-danger">'.$this->getTrans('subscribeFailed').'</div>' ?>
+    <?php else : ?>
+        <?='<div class="alert alert-success">'.$this->getTrans('subscribeSuccess').'</div>' ?>
+    <?php endif ?>
+<?php endif; ?>
+
 <form class="form-horizontal" action="" method="post">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">

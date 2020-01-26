@@ -33,4 +33,4 @@
     <?=$this->getTrans('noEmails') ?>
 <?php endif; ?>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>

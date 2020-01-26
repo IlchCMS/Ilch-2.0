@@ -36,7 +36,7 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                             <tbody>
                             <?php foreach ($groupList as $userId): ?>
                                 <?php $user = $userMapper->getUserById($userId); ?>
-                                <?php if ($user AND $user->getConfirmed() == 1): ?>
+                                <?php if ($user && $user->getConfirmed() == 1): ?>
                                     <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($user->getId()); ?>
                                     <tr>
                                         <td>
@@ -56,17 +56,17 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                                             ?>
                                         </td>
                                         <td class="contact-links">
-                                            <?php if ($this->getUser() AND $this->getUser()->getId() != $this->escape($user->getId())): ?>
+                                            <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($user->getId())): ?>
                                                 <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $user->getId()]) ?>" class="fa fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
                                             <?php endif; ?>
-                                            <?php if ($user->getOptMail() == 1 AND $this->getUser() AND $this->getUser()->getId() != $user->getID()): ?>
+                                            <?php if ($user->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $user->getID()): ?>
                                                 <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'mail', 'action' => 'index', 'user' => $user->getId()]) ?>" class="fa fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
                                             <?php endif; ?>
 
                                             <?php foreach ($profileIconFields as $profileIconField) {
                                                 if ($profileIconField->getShow()) {
                                                     foreach ($profileFieldsContent as $profileFieldContent) {
-                                                        if ($profileFieldContent->getValue() AND $profileIconField->getId() == $profileFieldContent->getFieldId()) {
+                                                        if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
                                                             $profileFieldName = $profileIconField->getKey();
                                                             foreach ($profileFieldsTranslation as $profileFieldTrans) {
                                                                 if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
@@ -88,7 +88,7 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                             <?php endforeach; ?>
 
                             <?php ($this->getUser()) ? $userId = $this->getUser()->getId() : $userId = 0 ?>
-                            <?php  if ($team->getOptIn() == 1 AND (!in_array($userId, $groupList) OR $userId == 0)): ?>
+                            <?php  if ($team->getOptIn() == 1 && (!in_array($userId, $groupList) || $userId == 0)): ?>
                                 <tr>
                                     <td colspan="3"><a href="<?=$this->getUrl(['action' => 'join', 'id' => $team->getId()]) ?>"><?=$this->getTrans('apply') ?></a></td>
                                 </tr>

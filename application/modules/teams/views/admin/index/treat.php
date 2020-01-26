@@ -31,7 +31,7 @@
         </label>
         <div class="col-lg-4">
             <div class="row">
-                <?php if ($this->get('team') != '' AND $this->get('team')->getImg() != ''): ?>
+                <?php if ($this->get('team') != '' && $this->get('team')->getImg() != ''): ?>
                     <div class="col-lg-12">
                         <img src="<?=$this->getBaseUrl().$this->get('team')->getImg() ?>" alt="<?=$this->getTrans('img').' '.$this->escape($this->get('team')->getName()) ?>">
 
@@ -139,9 +139,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="optShow-on" name="optShow" value="1" <?=($this->get('team') != '' AND $this->get('team')->getOptShow() == '1') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('optShow') == 1) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="optShow-on" name="optShow" value="1" <?=(($this->get('team') != '' && $this->get('team')->getOptShow() == '1') || $this->originalInput('optShow') == 1) ? 'checked="checked"' : '' ?> />
                 <label for="optShow-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="optShow-off" name="optShow" value="0" <?=($this->get('team') != '' AND $this->get('team')->getOptShow() == '0') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('optShow') == 0) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="optShow-off" name="optShow" value="0" <?=(($this->get('team') != '' && $this->get('team')->getOptShow() == '0') || $this->originalInput('optShow') == 0) ? 'checked="checked"' : '' ?> />
                 <label for="optShow-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -153,9 +153,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="optIn-on" name="optIn" value="1" <?=($this->get('team') != '' AND $this->get('team')->getOptIn() == '1') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('optIn') == 1) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="optIn-on" name="optIn" value="1" <?=(($this->get('team') != '' && $this->get('team')->getOptIn() == '1') || $this->originalInput('optIn') == 1) ? 'checked="checked"' : '' ?> />
                 <label for="optIn-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="optIn-off" name="optIn" value="0" <?=($this->get('team') != '' AND $this->get('team')->getOptIn() == '0') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('optIn') == 0) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="optIn-off" name="optIn" value="0" <?=(($this->get('team') != '' && $this->get('team')->getOptIn() == '0') || $this->originalInput('optIn') == 0) ? 'checked="checked"' : '' ?> />
                 <label for="optIn-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -167,9 +167,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="notifyLeader-on" name="notifyLeader" value="1" <?=($this->get('team') != '' AND $this->get('team')->getNotifyLeader() == '1') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('notifyLeader') == 1) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="notifyLeader-on" name="notifyLeader" value="1" <?=(($this->get('team') != '' && $this->get('team')->getNotifyLeader() == '1') || $this->originalInput('notifyLeader') == 1) ? 'checked="checked"' : '' ?> />
                 <label for="notifyLeader-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="notifyLeader-off" name="notifyLeader" value="0" <?=($this->get('team') != '' AND $this->get('team')->getNotifyLeader() == '0') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('notifyLeader') == 0) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="notifyLeader-off" name="notifyLeader" value="0" <?=(($this->get('team') != '' && $this->get('team')->getNotifyLeader() == '0') || $this->originalInput('notifyLeader') == 0) ? 'checked="checked"' : '' ?> />
                 <label for="notifyLeader-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -178,7 +178,7 @@
     <?=($this->get('team') != '') ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
 
-<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('teamUsersInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('teamUsersInfoText')) ?>
 
 <script>
 $('#leader').chosen();

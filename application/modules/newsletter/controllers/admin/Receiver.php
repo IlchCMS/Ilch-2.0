@@ -46,11 +46,9 @@ class Receiver extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $newsletterModel = new NewsletterModel();
 
-            if ($this->getRequest()->getPost('check_entries')) {
-                if ($this->getRequest()->getPost('action') == 'delete') {
-                    foreach ($this->getRequest()->getPost('check_entries') as $email) {
-                        $newsletterMapper->deleteEmail($email);
-                    }
+            if ($this->getRequest()->getPost('check_entries') && $this->getRequest()->getPost('action') === 'delete') {
+                foreach ($this->getRequest()->getPost('check_entries') as $email) {
+                    $newsletterMapper->deleteEmail($email);
                 }
             }
 

@@ -175,7 +175,7 @@ class Index extends \Ilch\Controller\Frontend
                                 '{name}' => $this->getLayout()->escape($receiver->getName()),
                                 '{teamname}' => $this->getLayout()->escape($team->getName()),
                                 '{sitetitle}' => $this->getLayout()->escape($this->getConfig()->get('page_title')),
-                                '{date}' => $date->format("l, d. F Y", true),
+                                '{date}' => $date->format('l, d. F Y', true),
                                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
                             ];
                             $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
