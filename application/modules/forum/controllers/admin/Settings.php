@@ -46,7 +46,7 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'groupappearance') {
+        if ($this->getRequest()->getActionName() === 'groupappearance') {
             $items[3][0]['active'] = true;
         } else {
             $items[3]['active'] = true;

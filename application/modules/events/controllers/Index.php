@@ -135,17 +135,17 @@ class Index extends \Ilch\Controller\Frontend
                                 if ($width > $imageWidth || $height > $imageHeight) {
                                     $upload = new \Ilch\Upload();
 
-                                    if (!$upload->enoughFreeMemory($image)) {
-                                        unlink($image);
-                                        $imageError = true;
-                                        $this->addMessage('failedFilesize', 'warning');
-                                    } else {
+                                    if ($upload->enoughFreeMemory($image)) {
                                         $thumb = new \Thumb\Thumbnail();
                                         $thumb -> Thumbsize = ($imageWidth <= $imageHeight) ? $imageWidth : $imageHeight;
                                         $thumb -> Square = true;
                                         $thumb -> Thumblocation = $path;
                                         $thumb -> Cropimage = [3,1,50,50,50,50];
                                         $thumb -> Createthumb($image, 'file');
+                                    } else {
+                                        unlink($image);
+                                        $imageError = true;
+                                        $this->addMessage('failedFilesize', 'warning');
                                     }
                                 }
                             }

@@ -7,7 +7,7 @@ $forum = $this->get('forum');
 
 $forumPrefix = $forumMapper->getForumByTopicId($topicpost->getId());
 $prefix = '';
-if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
+if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
     $prefix = explode(',', $forumPrefix->getPrefix());
     array_unshift($prefix, '');
 
@@ -53,7 +53,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                             <input type="submit"
                                    class="btn btn-primary"
                                    name="saveNewPost"
-                                   value="<?php echo $this->getTrans('add'); ?>" />
+                                   value="<?=$this->getTrans('add') ?>" />
                         </div>
                     </div>
                 </form>

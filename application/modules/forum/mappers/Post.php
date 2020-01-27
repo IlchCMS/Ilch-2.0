@@ -91,7 +91,9 @@ class Post extends \Ilch\Mapper
             $entryModel->setText($entries['text']);
             $entryModel->setVotes($entries['votes']);
             $entryModel->setDateCreated($entries['date_created']);
-            if (!array_key_exists($entries['user_id'], $userCache)) {
+            if (array_key_exists($entries['user_id'], $userCache)) {
+                $entryModel->setAutor($userCache[$entries['user_id']]);
+            } else {
                 $user = $userMapper->getUserById($entries['user_id']);
                 if ($user) {
                     $userCache[$entries['user_id']] = $user;
@@ -102,8 +104,6 @@ class Post extends \Ilch\Mapper
                     }
                     $entryModel->setAutor($dummyUser);
                 }
-            } else {
-                $entryModel->setAutor($userCache[$entries['user_id']]);
             }
             $entryModel->setAutorAllPost($this->getAllPostsByUserId($entries['user_id']));
             $postEntry[] = $entryModel;

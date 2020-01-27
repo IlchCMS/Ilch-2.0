@@ -13,13 +13,13 @@ $users = $userMapper->getUserList();
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 
 <h1><?=($this->get('event') != '' ? $this->getTrans('edit') : $this->getTrans('add')) ?></h1>
-<?php if ($this->getUser() AND (in_array($this->getUser()->getId(), $groupAccesses) OR $this->getUser()->hasAccess('module_events'))): ?>
+<?php if ($this->getUser() && (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->hasAccess('module_events'))): ?>
     <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
         <div class="form-group">
             <div class="col-lg-2 control-label"><?=$this->getTrans('image') ?></div>
             <div class="col-lg-10">
-                <?php if ($this->get('event') != '' AND $this->escape($this->get('event')->getImage()) != ''): ?>
+                <?php if ($this->get('event') != '' && $this->escape($this->get('event')->getImage()) != ''): ?>
                     <div class="col-lg-7 col-sm-7 col-7">
                         <div class="row">
                             <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>">
@@ -28,7 +28,7 @@ $users = $userMapper->getUserList();
                 <?php endif; ?>
                 <div class="col-lg-7">
                     <div class="row">
-                        <?php if ($this->get('event') != '' AND $this->get('event')->getImage() != ''): ?>
+                        <?php if ($this->get('event') != '' && $this->get('event')->getImage() != ''): ?>
                             <label style="margin-left: 10px; margin-top: 10px;">
                                 <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('deleteImage') ?>
                             </label>
@@ -61,7 +61,7 @@ $users = $userMapper->getUserList();
                 <select class="form-control" name="creator" id="creator">
                     <option selected="selected"><?=$this->getTrans('noSelection') ?></option>
                     <?php foreach ($users as $user): ?>
-                        <option value="<?=$user->getId() ?>" <?php if ($this->get('event') != '' AND $this->get('event')->getUserId() == $user->getId() OR $this->originalInput('creator') == $user->getId()) { echo 'selected="selected"'; } ?>><?=$user->getName() ?></option>
+                        <option value="<?=$user->getId() ?>" <?php if (($this->get('event') != '' && $this->get('event')->getUserId() == $user->getId()) || $this->originalInput('creator') == $user->getId()) { echo 'selected="selected"'; } ?>><?=$user->getName() ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -158,9 +158,9 @@ $users = $userMapper->getUserList();
             </label>
             <div class="col-lg-2">
                 <select class="form-control" id="priceArt" name="priceArt">
-                    <option <?php if ($this->get('event') != '' AND $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
-                    <option <?php if ($this->get('event') != '' AND $this->get('event')->getPriceArt() == 1) { echo 'selected="selected"'; } ?> value="1"><?=$this->getTrans('ticket') ?></option>
-                    <option <?php if ($this->get('event') != '' AND $this->get('event')->getPriceArt() == 2) { echo 'selected="selected"'; } ?> value="2"><?=$this->getTrans('entry') ?></option>
+                    <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
+                    <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 1) { echo 'selected="selected"'; } ?> value="1"><?=$this->getTrans('ticket') ?></option>
+                    <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 2) { echo 'selected="selected"'; } ?> value="2"><?=$this->getTrans('entry') ?></option>
                 </select>
             </div>
             <div class="col-lg-4">
@@ -174,9 +174,9 @@ $users = $userMapper->getUserList();
             </div>
             <div class="col-lg-2">
                 <select class="form-control" id="currency" name="currency">
-                    <option <?php if ($this->get('event') != '' AND $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
+                    <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
                     <?php foreach ($this->get('currencies') as $currency) {
-                        if ($this->get('event') != '' AND $this->get('event')->getCurrency() == $currency->getId()) {
+                        if ($this->get('event') != '' && $this->get('event')->getCurrency() == $currency->getId()) {
                             echo '<option value="'.$currency->getId().'" selected="selected">'.$this->escape($currency->getName()).'</option>';
                         } else {
                             echo '<option value="'.$currency->getId().'">'.$this->escape($currency->getName()).'</option>';
@@ -221,7 +221,7 @@ $users = $userMapper->getUserList();
                            id="calendarShow"
                            name="calendarShow"
                            value="1"
-                           <?php if (($this->get('event') != '' AND $this->get('event')->getShow() == 1) OR $this->originalInput('calendarShow') == 1) { echo 'checked'; } ?> />
+                           <?php if (($this->get('event') != '' && $this->get('event')->getShow() == 1) || $this->originalInput('calendarShow') == 1) { echo 'checked'; } ?> />
                     <label for="calendarShow">
                         <?=$this->getTrans('calendarShow') ?>
                     </label>

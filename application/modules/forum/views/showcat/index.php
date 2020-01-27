@@ -37,12 +37,12 @@ function rec($item, $forumMapper, $obj, $readAccess)
         </ul>
     <?php endif; ?>
 
-    <?php if (is_in_array($readAccess, explode(',', $item->getReadAccess())) || $adminAccess == true): ?>
+    <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
         <?php if ($item->getType() != 0): ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
-                        <?php if ($obj->getUser() && $lastPost): ?>
+                        <?php if ($lastPost && $obj->getUser()): ?>
                             <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                                 topic-read
                             <?php else: ?>
@@ -126,7 +126,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
     }
     $subItemsFalse = false;
         foreach ($forumItems as $subItem) {
-            if (is_in_array($readAccess, explode(',', $subItem->getReadAccess())) || $adminAccess == true) {
+            if ($adminAccess == true || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
                 $subItemsFalse = true;
             }
         }
@@ -156,7 +156,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
             ?>
         </div>
     <?php else: ?>
-        <?php header("location: ".$this->getUrl(['controller' => 'index', 'action' => 'index']));
+        <?php header('location: ' .$this->getUrl(['controller' => 'index', 'action' => 'index']));
         exit; ?>
     <?php endif; ?>
 </div>

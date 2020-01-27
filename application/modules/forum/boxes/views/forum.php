@@ -14,7 +14,7 @@ $postsPerPage = $this->get('postsPerPage');
     <ul class="list-unstyled">
         <?php foreach ($this->get('topics') as $topic): ?>
             <?php $forum = $forumMapper->getForumById($topic['forum_id']); ?>
-            <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
+            <?php if ($adminAccess == true || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
                 <?php $lastPost = $topicMapper->getLastPostByTopicId($topic['topic_id']) ?>
                 <?php $date = new \Ilch\Date($lastPost->getDateCreated()); ?>
                 <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic['topic_id']) ?>
@@ -34,7 +34,7 @@ $postsPerPage = $this->get('postsPerPage');
                     <br />
                     <small>
                         <?=$this->getTrans('by') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>"><?=$this->escape($lastPost->getAutor()->getName()) ?></a><br>
-                        <?=$date->format("d.m.y - H:i", true) ?> <?=$this->getTrans('clock') ?>
+                        <?=$date->format('d.m.y - H:i', true) ?> <?=$this->getTrans('clock') ?>
                     </small>
                 </li>
             <?php endif; ?>

@@ -21,7 +21,7 @@ use Modules\Admin\Models\Notification as NotificationModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as GroupMapper;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
-use Ilch\Accesses as Accesses;
+use Ilch\Accesses;
 use Ilch\Validation;
 
 class Showposts extends \Ilch\Controller\Frontend
@@ -46,7 +46,7 @@ class Showposts extends \Ilch\Controller\Frontend
         }
 
         $forumId = $forumMapper->getForumByTopicId($topicId);
-        if (empty($forumId)) {
+        if ($forumId === null) {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Topic', 'errorText' => 'notFound']);
             return;
         }
@@ -58,7 +58,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $post = $topicMapper->getPostById($topicId);
 
         $prefix = '';
-        if ($forumId->getPrefix() != '' AND $post->getTopicPrefix() > 0) {
+        if ($forumId->getPrefix() != '' && $post->getTopicPrefix() > 0) {
             $prefix = explode(',', $forumId->getPrefix());
             array_unshift($prefix, '');
 
@@ -158,16 +158,14 @@ class Showposts extends \Ilch\Controller\Frontend
         $topicId = (int)$this->getRequest()->getParam('topicid');
         $forumId = (int)$this->getRequest()->getParam('forumid');
         $countPosts = $forumMapper->getCountPostsByTopicId($topicId);
-        if ($this->getUser()) {
-            if ($this->getUser()->isAdmin()) {
-                $postMapper->deleteById($postId);
-                if ($countPosts === '1') {
-                    $topicMapper->deleteById($topicId);
-                    $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId]);
-                }
-
-                $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+        if ($this->getUser() && $this->getUser()->isAdmin()) {
+            $postMapper->deleteById($postId);
+            if ($countPosts === '1') {
+                $topicMapper->deleteById($topicId);
+                $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId]);
             }
+
+            $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
         }
 
         $this->addMessage('noAccess', 'danger');
@@ -188,7 +186,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $post = $postMapper->getPostById($postId);
 
         if ($this->getUser()) {
-            if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum')) {
+            if ($this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum') || $this->getUser()->getId() == $post->getAutor()->getId()) {
                 $this->getLayout()->getTitle()
                     ->add($this->getTranslator()->trans('forum'))
                     ->add($cat->getTitle())
@@ -299,7 +297,7 @@ class Showposts extends \Ilch\Controller\Frontend
             $reportedPostsIds[] = $reportedPost->getPostId();
         }
 
-        if (($this->getConfig()->get('forum_reportingPosts') == 1) && $this->getUser() && !in_array($postId, $reportedPostsIds)) {
+        if (($this->getUser() && $this->getConfig()->get('forum_reportingPosts') == 1) && !in_array($postId, $reportedPostsIds)) {
             if ($this->getRequest()->getPost()) {
                 $validation = Validation::create($this->getRequest()->getPost(), [
                     'reason' => 'required|numeric|min:1|max:4'
@@ -371,7 +369,7 @@ class Showposts extends \Ilch\Controller\Frontend
                             $messageReplace = [
                                 '{content}' => $this->getLayout()->purify($mailContent->getText()),
                                 '{sitetitle}' => $sitetitle,
-                                '{date}' => $date->format("l, d. F Y", true),
+                                '{date}' => $date->format('l, d. F Y', true),
                                 '{name}' => $username,
                                 '{url}' => $this->getLayout()->getUrl(['module' => 'forum', 'controller' => 'reports', 'action' => 'index'], 'admin'),
                                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')

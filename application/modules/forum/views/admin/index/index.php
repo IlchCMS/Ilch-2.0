@@ -45,9 +45,9 @@ function rec($item, $forumMapper, $obj)
 }
 ?>
 
-<form class="form-horizontal" id="forumForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]); ?>">
-    <?=$this->getTokenField(); ?>
-    <h1><?=$this->getTrans('forum'); ?></h1>
+<form class="form-horizontal" id="forumForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+    <?=$this->getTokenField() ?>
+    <h1><?=$this->getTrans('forum') ?></h1>
     <div class="col-lg-6">
         <ol id="sortable" class="sortable">
             <?php
@@ -61,7 +61,7 @@ function rec($item, $forumMapper, $obj)
         <input type="hidden" id="id" value="" />
         <div class="form-group">
             <label for="title" class="col-lg-3 control-label">
-                <?=$this->getTrans('title'); ?>
+                <?=$this->getTrans('title') ?>
             </label>
             <div class="col-lg-6">
                 <input type="text" class="form-control" id="title" />
@@ -69,7 +69,7 @@ function rec($item, $forumMapper, $obj)
         </div>
         <div class="form-group">
             <label for="desc" class="col-lg-3 control-label">
-                <?=$this->getTrans('description'); ?>
+                <?=$this->getTrans('description') ?>
             </label>
             <div class="col-lg-6">
                 <textarea class="form-control"
@@ -81,12 +81,12 @@ function rec($item, $forumMapper, $obj)
         </div>
         <div class="form-group">
             <label for="type" class="col-lg-3 control-label">
-                <?=$this->getTrans('type'); ?>
+                <?=$this->getTrans('type') ?>
             </label>
             <div class="col-lg-6">
                 <select class="form-control" id="type">
-                    <option value="0"><?=$this->getTrans('cat'); ?></option>
-                    <option value="1"><?=$this->getTrans('forum'); ?></option>
+                    <option value="0"><?=$this->getTrans('cat') ?></option>
+                    <option value="1"><?=$this->getTrans('forum') ?></option>
                 </select>
             </div>
         </div>
@@ -154,7 +154,7 @@ $(document).ready (
             });
 
             if (options == '' && ($(this).val() == '1')) {
-                alert('<?=$this->getTrans('infoCat'); ?>');
+                alert('<?=$this->getTrans('infoCat') ?>');
                 $(this).val(0);
                 return;
             }

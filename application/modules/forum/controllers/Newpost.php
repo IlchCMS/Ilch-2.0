@@ -153,7 +153,7 @@ class Newpost extends \Ilch\Controller\Frontend
                         $messageReplace = [
                             '{content}' => $this->getLayout()->purify($mailContent->getText()),
                             '{sitetitle}' => $sitetitle,
-                            '{date}' => $date->format("l, d. F Y", true),
+                            '{date}' => $date->format('l, d. F Y', true),
                             '{name}' => $subscriberUsername,
                             '{url}' => $this->getLayout()->getURL(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId, 'page' => $page]),
                             '{topicTitle}' => $this->getLayout()->escape($topic->getTopicTitle()),

@@ -45,7 +45,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
         
         if ($this->getRequest()->getPost('check_entries')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
+            if ($this->getRequest()->getPost('action') === 'delete') {
                 foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
                     $guestbookMapper->delete($entryId);
                 }
@@ -53,7 +53,7 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            if ($this->getRequest()->getPost('action') == 'setfree') {
+            if ($this->getRequest()->getPost('action') === 'setfree') {
                 foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
                     $model = new GuestbookModel();
                     $model->setId($entryId);

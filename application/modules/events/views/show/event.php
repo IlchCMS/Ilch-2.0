@@ -192,7 +192,7 @@ if (!empty($event)) {
                 </div>
                 <div style="clear: both;"></div>
             </div>
-            <?php if (($eventEntrantsCount != '' && is_in_array($this->get('showMembersAccess'), explode(',', $this->get('showMembersAccesses')))) || ($this->getUser() && $this->getUser()->isAdmin())): ?>
+            <?php if (($this->getUser() && $this->getUser()->isAdmin()) || ($eventEntrantsCount != '' && is_in_array($this->get('showMembersAccess'), explode(',', $this->get('showMembersAccesses'))))): ?>
                 <div class="eventBoxBottom">
                     <div style="margin-left: 2px;">
                         <?php if ($eventEntrantsCount != ''): ?>

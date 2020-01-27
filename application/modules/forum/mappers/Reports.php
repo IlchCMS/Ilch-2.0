@@ -66,9 +66,9 @@ class Reports extends \Ilch\Mapper
 
         if (!empty($report)) {
             return reset($report);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -99,9 +99,8 @@ class Reports extends \Ilch\Mapper
      */
     public function deleteReport($id)
     {
-        $returnValue = $this->db()->delete('forum_reports')
+        return $this->db()->delete('forum_reports')
             ->where(['id' => $id])
             ->execute();
-        return $returnValue;
     }
 }

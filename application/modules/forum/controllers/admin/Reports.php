@@ -55,7 +55,7 @@ class Reports extends \Ilch\Controller\Admin
 
         $reportMapper = new ReportMapper();
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_forumReports')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_forumReports')) {
             foreach ($this->getRequest()->getPost('check_forumReports') as $reportId) {
                 $reportMapper->deleteReport($reportId);
             }

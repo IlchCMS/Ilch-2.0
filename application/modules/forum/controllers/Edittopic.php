@@ -12,7 +12,7 @@ use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Models\ForumTopic as TopicModel;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Models\ForumPost as PostModel;
-use Ilch\Accesses as Accesses;
+use Ilch\Accesses;
 
 class Edittopic extends \Ilch\Controller\Frontend
 {
@@ -95,7 +95,7 @@ class Edittopic extends \Ilch\Controller\Frontend
         if ($this->getUser()) {
             $access = new Accesses($this->getRequest());
             if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
-                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicChangeStatus') == 'topicChangeStatus') {
+                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicChangeStatus') === 'topicChangeStatus') {
                     foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
                         $topicMapper->updateStatus($topicId);
                     }
@@ -115,7 +115,7 @@ class Edittopic extends \Ilch\Controller\Frontend
         if ($this->getUser()) {
             $access = new Accesses($this->getRequest());
             if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
-                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicChangeType') == 'topicChangeType') {
+                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicChangeType') === 'topicChangeType') {
                     foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
                         $topicMapper->updateType($topicId);
                     }

@@ -17,7 +17,7 @@ $postsPerPage = $this->get('postsPerPage');
 ?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
+<?php if ($adminAccess == true || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
     <div id="forum">
     
         <h1>
@@ -40,11 +40,11 @@ $postsPerPage = $this->get('postsPerPage');
                     </span><?=$this->getTrans('loginTopic') ?>
                 </a>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]); ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>
         <?php if ($forumEdit): ?>
             <form class="form-horizontal" name="editForm" method="POST">
-                <?=$this->getTokenField(); ?>
+                <?=$this->getTokenField() ?>
         <?php endif; ?>
         <div class="forabg">
             <ul class="topiclist">
@@ -69,9 +69,9 @@ $postsPerPage = $this->get('postsPerPage');
                         <li class="row ilch-border ilch-bg--hover <?php if ($topic->getType() == '1') { echo 'tack'; } ?>">
                             <dl class="icon
                                 <?php if ($this->getUser()): ?>
-                                    <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 0): ?>
+                                    <?php if ($topic->getStatus() == 0 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                                         topic-read
-                                    <?php elseif (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 1): ?>
+                                    <?php elseif ($topic->getStatus() == 1 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                                         topic-read-locked
                                     <?php elseif ($topic->getStatus() == 1): ?>
                                         topic-unread-locked
@@ -86,7 +86,7 @@ $postsPerPage = $this->get('postsPerPage');
                             ">
                                 <dt>
                                     <?php
-                                    if ($forumPrefix->getPrefix() != '' AND $topic->getTopicPrefix() > 0) {
+                                    if ($forumPrefix->getPrefix() != '' && $topic->getTopicPrefix() > 0) {
                                         $prefix = explode(',', $forumPrefix->getPrefix());
                                         array_unshift($prefix, '');
 
@@ -172,7 +172,7 @@ $postsPerPage = $this->get('postsPerPage');
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>
         <div class="topic-actions">
-            <?php if ($adminAccess || (!empty($userAccess) AND $userAccess->hasAccess('forum'))): ?>
+            <?php if ($adminAccess || (!empty($userAccess) && $userAccess->hasAccess('forum'))): ?>
                 <?php if (!$forumEdit): ?>
                     <form method="post">
                         <?=$this->getTokenField() ?>
@@ -210,7 +210,7 @@ $postsPerPage = $this->get('postsPerPage');
     </div>
 <?php else: ?>
     <?php
-    header("location: ".$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
+    header('location: ' .$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
     exit;
     ?>
 <?php endif; ?>

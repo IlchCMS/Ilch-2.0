@@ -45,7 +45,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('entry'), ['action' => 'newentry']);
 
-        if ($this->getRequest()->getPost('saveGuestbook') and ($this->getRequest()->getPost('bot') === '')) {
+        if ($this->getRequest()->getPost('saveGuestbook') && ($this->getRequest()->getPost('bot') === '')) {
             Validation::setCustomFieldAliases([
                 'homepage' => 'page',
             ]);

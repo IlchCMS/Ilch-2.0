@@ -23,7 +23,7 @@ class Showcat extends \Ilch\Controller\Frontend
         }
 
         $cat = $forumMapper->getForumById($catId);
-        if (empty($cat)) {
+        if ($cat === null) {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Category', 'errorText' => 'notFound']);
             return;
         }

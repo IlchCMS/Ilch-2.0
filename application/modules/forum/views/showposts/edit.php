@@ -62,7 +62,7 @@ $post = $this->get('post');
                             <input type="submit"
                                    class="btn btn-primary"
                                    name="editPost"
-                                   value="<?=$this->getTrans('edit'); ?>" />
+                                   value="<?=$this->getTrans('edit') ?>" />
                         </div>
                     </div>
                 </form>

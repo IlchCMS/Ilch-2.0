@@ -14,7 +14,7 @@ class AfterDatabaseLoad
     {
         $request = $pluginData['request'];
 
-        if ($request->getModuleName() == 'forum') {
+        if ($request->getModuleName() === 'forum') {
             $router = $pluginData['router'];
 
             $forumMapper = new ForumMapper();

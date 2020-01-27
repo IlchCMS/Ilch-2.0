@@ -4,7 +4,7 @@ $entrantsMapper = $this->get('entrantsMapper');
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 
-<?php if ($this->get('eventListUpcoming') == '' AND $this->get('eventListCurrent') == '' AND $this->get('getEventList') == '' AND $this->get('eventListPast') == ''): ?>
+<?php if ($this->get('eventListUpcoming') == '' && $this->get('eventListCurrent') == '' && $this->get('getEventList') == '' && $this->get('eventListPast') == ''): ?>
     <h1><?=$this->getTrans('menuEventAll') ?></h1>
     <div class="row">
         <div class="col-lg-12"><?=$this->getTrans('noEvent') ?></div>
@@ -21,7 +21,7 @@ $entrantsMapper = $this->get('entrantsMapper');
                         <?php $eventEntrants = $entrantsMapper->getEventEntrantsById($eventlist->getId()) ?>
                         <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
                         <?php $agree = 0; $maybe = 0; ?>
-                        <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND $this->getUser()->hasAccess('module_events')): ?>
+                        <?php if (($this->getUser() && $this->getUser()->hasAccess('module_events')) || is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess()))): ?>
                             <li>
                                 <time>
                                     <span class="day"><?=$date->format('j') ?></span>
@@ -78,7 +78,7 @@ $entrantsMapper = $this->get('entrantsMapper');
                     <?php $eventEntrants = $entrantsMapper->getEventEntrantsById($eventlist->getId()) ?>
                     <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
                     <?php $agree = 0; $maybe = 0; ?>
-                    <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND $this->getUser()->hasAccess('module_events')): ?>
+                    <?php if (($this->getUser() && $this->getUser()->hasAccess('module_events')) || is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess()))): ?>
                         <li>
                             <time>
                                 <span class="day"><?=$date->format('j', true) ?></span>
@@ -132,7 +132,7 @@ $entrantsMapper = $this->get('entrantsMapper');
                     <?php $eventEntrants = $entrantsMapper->getEventEntrantsById($eventlist->getId()) ?>
                     <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
                     <?php $agree = 0; $maybe = 0; ?>
-                    <?php if (is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess())) OR $this->getUser() AND $this->getUser()->hasAccess('module_events')): ?>
+                    <?php if (($this->getUser() && $this->getUser()->hasAccess('module_events')) || is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess()))): ?>
                         <li>
                             <time>
                                 <span class="day"><?=$date->format('j', true) ?></span>

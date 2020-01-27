@@ -22,17 +22,15 @@ function rec($item, $obj, $readAccess, $i)
         $adminAccess = $obj->getUser()->isAdmin();
     }
     $subItemsFalse = false;
-    if ($item->getType() === 0) {
-        if (!empty($subItems)) {
-            foreach ($subItems as $subItem) {
-                if (is_in_array($readAccess, explode(',', $subItem->getReadAccess())) || $adminAccess == true) {
-                     $subItemsFalse = true;
-                }
+    if (!empty($subItems) && ($item->getType() === 0)) {
+        foreach ($subItems as $subItem) {
+            if ($adminAccess == true || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
+                 $subItemsFalse = true;
             }
         }
     }
 ?>
-    <?php if ($item->getType() === 0 && $subItemsFalse == true): ?>
+    <?php if ($subItemsFalse == true && $item->getType() === 0): ?>
         <ul class="forenlist">
             <li class="header">
                 <dl class="title ilch-head">
@@ -51,12 +49,12 @@ function rec($item, $obj, $readAccess, $i)
         </ul>
     <?php endif; ?>
 
-    <?php if (is_in_array($readAccess, explode(',', $item->getReadAccess())) || $adminAccess == true): ?>
+    <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
         <?php if ($item->getType() != 0): ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
-                        <?php if ($obj->getUser() && $lastPost): ?>
+                        <?php if ($lastPost && $obj->getUser()): ?>
                             <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                                 topic-read
                             <?php else: ?>
@@ -176,7 +174,7 @@ function rec($item, $obj, $readAccess, $i)
                     <ul class="group-legend">
                         <li><i class="fas fa-bars"></i> <?=$this->getTrans('legend') ?>:</li>
                         <?php foreach ($this->get('listGroups') as $group): ?>
-                            <?php if ($group->getName() != 'Guest'): ?>
+                            <?php if ($group->getName() !== 'Guest'): ?>
                                 <li class="group"><span class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></span></li>
                             <?php endif; ?>
                         <?php endforeach; ?>

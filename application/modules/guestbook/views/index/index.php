@@ -15,7 +15,7 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-sm-6 col-lg-5">
-                    <?=$this->getTrans('from'); ?>: <?=$this->escape($entry->getName()) ?>
+                    <?=$this->getTrans('from') ?>: <?=$this->escape($entry->getName()) ?>
                 </div>
                 <div class="col-sm-6 col-lg-3">
                     <?php if ($this->getUser() && $this->getUser()->isAdmin()) : ?>
@@ -30,7 +30,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="col-sm-12 col-lg-4">
-                    <?=$this->getTrans('date') ?>: <?=$date->format("H:i d.m.Y", true) ?>
+                    <?=$this->getTrans('date') ?>: <?=$date->format('H:i d.m.Y', true) ?>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ if ($this->getUser()) {
 
 $forumPrefix = $forumMapper->getForumByTopicId($topicpost->getId());
 $prefix = '';
-if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
+if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
     $prefix = explode(',', $forumPrefix->getPrefix());
     array_unshift($prefix, '');
 
@@ -30,7 +30,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<?php if (is_in_array($readAccess, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
+<?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReadAccess()))): ?>
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
@@ -42,7 +42,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
             <div class="col-lg-12">
                 <?php if ($topicpost->getStatus() == 0): ?>
                     <?php if ($this->getUser()): ?>
-                        <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
+                        <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
                             <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                 <span class="btn-label">
                                     <i class="fa fa-plus"></i>
@@ -79,7 +79,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                         </span><?=$this->getTrans('lockPost') ?>
                     </div>
                 <?php endif; ?>
-                <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]); ?>
+                <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>
             </div>
             <div class="col-lg-12">
                 <div class="posts-head ilch-head">
@@ -104,7 +104,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" class="ilch-link-red"><?=$this->escape($post->getAutor()->getName()) ?></a>
                                     </strong>
                                     »
-                                    <?=$date->format("d.m.Y H:i:s", true) ?>
+                                    <?=$date->format('d.m.Y H:i:s', true) ?>
                                 </p>
                             </div>
                             <div class="col-lg-6 pull-right">
@@ -123,7 +123,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                                 </div>
                                 <div class="edit">
                                     <?php if ($this->getUser()): ?>
-                                        <?php if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum')): ?>
+                                        <?php if ($this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum') || $this->getUser()->getId() == $post->getAutor()->getId()): ?>
                                             <p class="edit-post">
                                                 <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-xs">
                                                     <span class="btn-label">
@@ -176,7 +176,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     $votes = explode(',', $post->getVotes());
                     $countOfVotes = count($votes) - 1;
                     ?>
-                    <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $votes) == false) : ?>
+                    <?php if ($this->getUser() && in_array($this->getUser()->getId(), $votes) == false) : ?>
                         <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
                             <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
                         </a>
@@ -188,7 +188,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                 <?php endif; ?>
                 <div class="quote">
                 <?php if ($this->getUser()): ?>
-                    <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
+                    <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
                     <p class="quote-post">
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
                             <span class="btn-label">
@@ -199,7 +199,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     <?php endif; ?>
                 <?php endif; ?>
                 </div>
-                <?php if ($this->get('reportingPosts') && !$reported) : ?>
+                <?php if (!$reported && $this->get('reportingPosts')) : ?>
                 <div class="report">
                     <?php if ($this->getUser()): ?>
                         <p class="report-post">
@@ -217,7 +217,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
         <div class="topic-actions">
             <?php if ($topicpost->getStatus() == 0): ?>
                 <?php if ($this->getUser()): ?>
-                    <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
+                    <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                             <span class="btn-label">
                                 <i class="fa fa-plus"></i>
@@ -254,12 +254,12 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     </span><?=$this->getTrans('lockPost') ?>
                 </div>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]); ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>
         </div>
     </div>
 <?php else: ?>
     <?php
-    header("location: ".$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
+    header('location: ' .$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
     exit;
     ?>
 <?php endif; ?>

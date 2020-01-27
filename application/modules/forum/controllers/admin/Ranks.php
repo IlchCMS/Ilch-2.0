@@ -47,7 +47,7 @@ class Ranks extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[1][0]['active'] = true;
         } else {
             $items[1]['active'] = true;
@@ -68,7 +68,7 @@ class Ranks extends \Ilch\Controller\Admin
 
         $rankMapper = new RankMapper();
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_forumRanks')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_forumRanks')) {
             foreach ($this->getRequest()->getPost('check_forumRanks') as $rankId) {
                 $rankMapper->delete($rankId);
             }

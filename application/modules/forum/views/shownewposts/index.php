@@ -35,15 +35,15 @@ $postsPerPage = $this->get('postsPerPage');
                 <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
                 <?php $firstPost = $postMapper->getFirstPostByTopicId($topic->getId()) ?>
                 <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
-                <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
+                <?php if ($adminAccess == true || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
                     <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
                     <?php if (!in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                         <li class="row ilch-border ilch-bg--hover">
                             <dl class="icon 
                                 <?php if ($this->getUser()): ?>
-                                    <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 0): ?>
+                                    <?php if ($topic->getStatus() == 0 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                                         topic-read
-                                    <?php elseif (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 1): ?>
+                                    <?php elseif ($topic->getStatus() == 1 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                                         topic-read-locked
                                     <?php elseif ($topic->getStatus() == 1): ?>
                                         topic-unread-locked
@@ -58,7 +58,7 @@ $postsPerPage = $this->get('postsPerPage');
                             ">
                                 <dt>
                                     <?php
-                                    if ($forumPrefix->getPrefix() != '' AND $topic->getTopicPrefix() > 0) {
+                                    if ($forumPrefix->getPrefix() != '' && $topic->getTopicPrefix() > 0) {
                                         $prefix = explode(',', $forumPrefix->getPrefix());
                                         array_unshift($prefix, '');
 

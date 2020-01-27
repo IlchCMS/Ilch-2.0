@@ -6,7 +6,7 @@
 
 namespace Modules\Forum\Mappers;
 
-use Modules\Forum\Models\ForumItem as ForumItem;
+use Modules\Forum\Models\ForumItem;
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
@@ -289,7 +289,7 @@ class Forum extends \Ilch\Mapper
      */
     public function getCountPostsById($id)
     {
-        $select = $this->db()->select('*')
+        return $this->db()->select('*')
             ->fields(['p.id', 'p.topic_id', 't.id', 't.topic_id'])
             ->from(['t' => 'forum_topics'])
             ->join(['p' => 'forum_posts'], 'p.topic_id = t.id', 'LEFT', ['p.id', 'p.topic_id'])
@@ -297,8 +297,6 @@ class Forum extends \Ilch\Mapper
             ->group(['t.id', 't.topic_id', 'p.id', 'p.topic_id'])
             ->execute()
             ->getFoundRows();
-
-        return $select;
     }
 
     /**

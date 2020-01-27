@@ -11,7 +11,7 @@ use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
-use Ilch\Accesses as Accesses;
+use Ilch\Accesses;
 
 class Showtopics extends \Ilch\Controller\Frontend
 {
@@ -30,7 +30,7 @@ class Showtopics extends \Ilch\Controller\Frontend
         }
 
         $forum = $forumMapper->getForumById($forumId);
-        if (empty($forum)) {
+        if ($forum === null) {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Forum', 'errorText' => 'notFound']);
             return;
         }
@@ -88,7 +88,7 @@ class Showtopics extends \Ilch\Controller\Frontend
         if ($this->getUser()) {
             $access = new Accesses($this->getRequest());
             if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
-                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicDelete') == 'topicDelete') {
+                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicDelete') === 'topicDelete') {
                     foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
                         $topicMapper->deleteById($topicId);
                         $topicSubscriptionMapper->deleteAllSubscriptionsForTopic($topicId);

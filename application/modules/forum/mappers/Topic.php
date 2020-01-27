@@ -44,7 +44,9 @@ class Topic extends \Ilch\Mapper
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
 
-            if (!array_key_exists($entries['creator_id'], $userCache)) {
+            if (array_key_exists($entries['creator_id'], $userCache)) {
+                $entryModel->setAuthor($userCache[$entries['creator_id']]);
+            } else {
                 $user = $userMapper->getUserById($entries['creator_id']);
                 if ($user) {
                     $userCache[$entries['creator_id']] = $user;
@@ -55,8 +57,6 @@ class Topic extends \Ilch\Mapper
                     }
                     $entryModel->setAuthor($dummyUser);
                 }
-            } else {
-                $entryModel->setAuthor($userCache[$entries['creator_id']]);
             }
 
             $entryModel->setTopicPrefix($entries['topic_prefix']);
@@ -101,7 +101,9 @@ class Topic extends \Ilch\Mapper
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
 
-            if (!array_key_exists($entries['creator_id'], $userCache)) {
+            if (array_key_exists($entries['creator_id'], $userCache)) {
+                $entryModel->setAuthor($userCache[$entries['creator_id']]);
+            } else {
                 $user = $userMapper->getUserById($entries['creator_id']);
                 if ($user) {
                     $userCache[$entries['creator_id']] = $user;
@@ -112,8 +114,6 @@ class Topic extends \Ilch\Mapper
                     }
                     $entryModel->setAuthor($dummyUser);
                 }
-            } else {
-                $entryModel->setAuthor($userCache[$entries['creator_id']]);
             }
 
             $entryModel->setTopicPrefix($entries['topic_prefix']);
@@ -309,8 +309,7 @@ class Topic extends \Ilch\Mapper
             $sql .= ' LIMIT '.$limit;
         }
 
-        $result = $this->db()->queryArray($sql);
-        return $result;
+        return $this->db()->queryArray($sql);
     }
 
     public function deleteById($id)

@@ -20,11 +20,9 @@ class BeforeControllerLoad
     {
         $request = $pluginData['request'];
 
-        if ($request->getModuleName() == 'forum') {
-            if ($request->getParam('access')) {
-                $translator = new \Ilch\Translator();
-                $_SESSION['messages'][] = ['text' => $translator->trans('noAccessForum'), 'type' => 'danger'];
-            }
+        if (($request->getModuleName() === 'forum') && $request->getParam('access')) {
+            $translator = new \Ilch\Translator();
+            $_SESSION['messages'][] = ['text' => $translator->trans('noAccessForum'), 'type' => 'danger'];
         }
     }
 }
