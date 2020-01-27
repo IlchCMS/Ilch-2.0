@@ -24,4 +24,5 @@ return [
     'httpOrMedia' => 'http:// oder Medien',
     'deleteFailed' => 'Es befinden sich noch Einträge in der Kategorie',
     'linkInfoText' => 'Die Links einer Kategorie können innerhalb der Kategorie bearbeitet werden. Links und Kategorien können durch ziehen und ablegen sortiert werden.',
+    'categoryNotFound' => 'Kategorie nicht gefunden.',
 ];

@@ -78,7 +78,7 @@
                             $desc = '';
                         }
 
-                        if (substr($banner, 0, 11) == 'application') {
+                        if (strncmp($banner, 'application', 11) === 0) {
                             $banner = '<img src="'.$this->getBaseUrl($banner).'">';
                         } elseif (!empty($banner)) {
                             $banner = '<img src="'.$this->escape($banner).'">';
@@ -117,7 +117,7 @@
     </div>
 </form>
 
-<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('linkInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('linkInfoText')) ?>
 
 <script>
 $(function() {

@@ -37,9 +37,9 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treatLink') {
+        if ($this->getRequest()->getActionName() === 'treatLink') {
             $items[0][0]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'treatCat') {
+        } elseif ($this->getRequest()->getActionName() === 'treatCat') {
             $items[0][1]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -60,13 +60,13 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_cats')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_cats')) {
             foreach ($this->getRequest()->getPost('check_cats') as $catId) {
                 $categoryMapper->delete($catId);
             }
         }
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_links')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_links')) {
             foreach ($this->getRequest()->getPost('check_links') as $linkId) {
                 $linkMapper->delete($linkId);
             }
@@ -86,15 +86,15 @@ class Index extends \Ilch\Controller\Admin
             if (isset($postData['hiddenMenu'])) {
                 $positions = explode(',', $postData['hiddenMenu']);
 
-                for($x = 0; $x < count($positions); $x++) {
-                    $linkMapper->updatePositionById($positions[$x], $x);
+                foreach ($positions as $x => $xValue) {
+                    $linkMapper->updatePositionById($xValue, $x);
                 }
             }
             if (isset($postData['hiddenMenuCat'])) {
                 $positionsCat = explode(',', $postData['hiddenMenuCat']);
 
-                for($x = 0; $x < count($positionsCat); $x++) {
-                    $categoryMapper->updatePositionById($positionsCat[$x], $x);
+                foreach ($positionsCat as $x => $xValue) {
+                    $categoryMapper->updatePositionById($xValue, $x);
                 }
             }
             
@@ -112,7 +112,7 @@ class Index extends \Ilch\Controller\Admin
         $linkModel = $linkMapper->getLinkById($this->getRequest()->getParam('link_id'));
         $linkModel->setHits($linkModel->getHits() + 1);
         $linkMapper->save($linkModel);
-        header("location: ".$linkModel->getLink());
+        header('location: ' .$linkModel->getLink());
         exit;
     }
 
@@ -175,10 +175,8 @@ class Index extends \Ilch\Controller\Admin
 
             // Add BASE_URL if banner starts with application to get a complete URL for validation
             $banner = trim($this->getRequest()->getPost('banner'));
-            if (!empty($banner)) {
-                if (substr($banner, 0, 11) == 'application') {
-                    $banner = BASE_URL.'/'.urlencode($banner);
-                }
+            if (!empty($banner) && strncmp($banner, 'application', 11) === 0) {
+                $banner = BASE_URL.'/'.urlencode($banner);
             }
 
             $post = [

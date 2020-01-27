@@ -52,16 +52,25 @@ class Category extends \Ilch\Mapper
     /**
      * Returns user model found by the id or false if none found.
      *
-     * @param  int              $id
-     * @return false|CategoryModel
+     * @param int $id
+     * @return CategoryModel|null
      */
     public function getCategoryById($id)
     {
         $cats = $this->getCategories(['id' => $id]);
 
+        if ($cats === null) {
+            return null;
+        }
+
         return reset($cats);
     }
 
+    /**
+     * @param $models
+     * @param int $id
+     * @return array|null
+     */
     public function getCategoriesForParentRec($models, $id)
     {
         $categoryRow = $this->db()->select('*')
@@ -92,20 +101,19 @@ class Category extends \Ilch\Mapper
     /**
      * Returns user model found by the name or false if none found.
      *
-     * @param  string           $name
+     * @param  string $name
      * @return false|CategoryModel
      */
     public function getCategoriesForParent($id)
     {
-        $models = $this->getCategoriesForParentRec([], $id);
-
-        return $models;
+        return $this->getCategoriesForParentRec([], $id);
     }
 
     /**
      * Updates the position of a category in the database.
      *
-     * @param int $id, int $position
+     * @param int $id
+     * @param int $position
      *
      */
     public function updatePositionById($id, $position) {

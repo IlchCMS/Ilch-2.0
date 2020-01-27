@@ -18,26 +18,35 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->getParam('cat_id')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('cat_id'));
+
+            if (empty($category)) {
+                $this->redirect()
+                    ->withMessage('categoryNotFound', 'warning')
+                    ->to(['action' => 'index']);
+            }
+        }
+
+        if (!empty($category)) {
             $parentCategories = $categoryMapper->getCategoriesForParent($category->getParentId());
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
 
             if (!empty($parentCategories)) {
                 foreach ($parentCategories as $parent) {
                     $this->getLayout()->getHmenu()
-                            ->add($parent->getName(), ['action' => 'index', 'cat_id' => $parent->getId()]);
+                        ->add($parent->getName(), ['action' => 'index', 'cat_id' => $parent->getId()]);
                 }
             }
 
             $this->getLayout()->getHmenu()
-                    ->add($category->getName(), ['action' => 'index', 'cat_id' => $this->getRequest()->getParam('cat_id')]);
+                ->add($category->getName(), ['action' => 'index', 'cat_id' => $this->getRequest()->getParam('cat_id')]);
 
             $links = $linkMapper->getLinks(['cat_id' => $this->getRequest()->getParam('cat_id')]);
             $categorys = $categoryMapper->getCategories(['parent_id' => $this->getRequest()->getParam('cat_id')]);
         } else {
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
 
             $links = $linkMapper->getLinks(['cat_id' => 0]);
             $categorys = $categoryMapper->getCategories(['parent_id' => 0]);
@@ -60,7 +69,7 @@ class Index extends \Ilch\Controller\Frontend
             $linkModel->setHits($linkModel->getHits() + 1);
             $linkMapper->save($linkModel);
 
-            header("location: ".$linkModel->getLink());
+            header('location: ' .$linkModel->getLink());
             exit;
         }
     }
