@@ -11,7 +11,7 @@ if (!version_compare(phpversion(), '5.6.0', '>=')) {
 @ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
-session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
+session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 $serverTimeZone = @date_default_timezone_get();
@@ -35,7 +35,7 @@ $rewriteBaseParts = explode('index.php', str_replace('Index.php', 'index.php', $
 $rewriteBaseParts = rtrim(reset($rewriteBaseParts), '/');
 
 define('REWRITE_BASE', $rewriteBaseParts);
-$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 define('BASE_URL', $protocol.'://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 
 //register autoloaders

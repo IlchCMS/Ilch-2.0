@@ -641,6 +641,9 @@ class Config extends \Ilch\Config\Install
                 rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
                 removeDir(ROOT_PATH.'/delete_vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+
+                // Remove no longer needed file
+                unlink(APPLICATION_PATH.'/libraries/Ilch/Session.php');
         }
 
         return 'Update function executed.';
