@@ -166,13 +166,10 @@ class Panel extends BaseController
                         }
 
                         if (move_uploaded_file($file_tmpe, $avatar)) {
-                            if ($width > $avatarWidth OR $height > $avatarHeight) {
+                            if ($width > $avatarWidth || $height > $avatarHeight) {
                                 $upload = new \Ilch\Upload();
 
-                                if (!$upload->enoughFreeMemory($avatar)) {
-                                    unlink($avatar);
-                                    $this->addMessage('failedFilesize', 'warning');
-                                } else {
+                                if ($upload->enoughFreeMemory($avatar)) {
                                     $thumb = new \Thumb\Thumbnail();
                                     $thumb -> Thumbsize = ($avatarWidth <= $avatarHeight) ? $avatarWidth : $avatarHeight;
                                     $thumb -> Square = true;
@@ -180,6 +177,9 @@ class Panel extends BaseController
                                     $thumb -> Cropimage = [3,1,50,50,50,50];
                                     $thumb -> Createthumb($avatar, 'file');
                                     $this->addMessage('successAvatar');
+                                } else {
+                                    unlink($avatar);
+                                    $this->addMessage('failedFilesize', 'warning');
                                 }
                             }
                         }
@@ -426,7 +426,7 @@ class Panel extends BaseController
                 $this->getView()->set('inbox', $dialogMapper->getDialogMessage($c_id));
 
                 $dialog = $dialogMapper->getReadLastOneDialog($c_id);
-                if ($dialog AND $dialog->getUserOne() != $this->getUser()->getId()) {
+                if ($dialog && $dialog->getUserOne() != $this->getUser()->getId()) {
                     $model = new DialogModel();
                     $model->setCrId($dialog->getCrId())
                         ->setRead(1);
@@ -472,7 +472,7 @@ class Panel extends BaseController
             $c_id = $this->getRequest()->getParam('id');
 
             $dialog = $dialogMapper->getReadLastOneDialog($c_id);
-            if ($dialog and $dialog->getUserOne() != $this->getUser()->getId()) {
+            if ($dialog && $dialog->getUserOne() != $this->getUser()->getId()) {
                 $model = new DialogModel();
                 $model->setCrId($dialog->getCrId())
                     ->setRead(1);

@@ -54,7 +54,7 @@ $config = $this->get('config');
                         </div>
                         <p><?=nl2br($fk_comment->getText()) ?></p>
                         <div>
-                            <?php if ($obj->getUser() AND in_array($obj->getUser()->getId(), $voted) == false): ?>
+                            <?php if ($obj->getUser() && in_array($obj->getUser()->getId(), $voted) == false): ?>
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-default btn-hover-success" href="<?=$obj->getUrl(['id' => $id, 'user' => $user->getId(), 'commentId' => $fk_comment->getId(), 'key' => 'up']) ?>" title="<?=$obj->getTrans('iLike') ?>">
                                         <i class="fa fa-thumbs-up"></i> <?=$obj->escape($fk_comment->getUp()) ?>
@@ -73,7 +73,7 @@ $config = $this->get('config');
                                     </button>
                                 </div>
                             <?php endif; ?>
-                            <?php if ($obj->getUser() AND $config->get('comment_reply') == 1 AND $req < $config->get('comment_nesting')-1): ?>
+                            <?php if ($obj->getUser() && $config->get('comment_reply') == 1 && $req < $config->get('comment_nesting')-1): ?>
                                 <a href="javascript:slideReply('reply_<?=$fk_comment->getId() ?>');" class="btn btn-sm btn-default btn-hover-primary">
                                     <i class="fa fa-reply"></i> <?=$obj->getTrans('reply') ?>
                                 </a>
@@ -238,7 +238,7 @@ $config = $this->get('config');
                                     </div>
                                     <p><?=nl2br($this->escape($comment->getText())) ?></p>
                                     <div>
-                                        <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $voted) == false): ?>
+                                        <?php if ($this->getUser() && in_array($this->getUser()->getId(), $voted) == false): ?>
                                             <div class="btn-group">
                                                 <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $this->getRequest()->getParam('id'), 'user' => $this->getRequest()->getParam('user'), 'commentId' => $comment->getId(), 'key' => 'up']) ?>" title="<?=$this->getTrans('iLike') ?>">
                                                     <i class="fa fa-thumbs-up"></i> <?=$this->escape($comment->getUp()) ?>
@@ -257,7 +257,7 @@ $config = $this->get('config');
                                                 </button>
                                             </div>
                                         <?php endif; ?>
-                                        <?php if ($this->getUser() AND $config->get('comment_reply') == 1 AND $config->get('comment_nesting') > 0): ?>
+                                        <?php if ($this->getUser() && $config->get('comment_reply') == 1 && $config->get('comment_nesting') > 0): ?>
                                             <a href="javascript:slideReply('reply_<?=$comment->getId() ?>');" class="btn btn-sm btn-default btn-hover-primary">
                                                 <i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?>
                                             </a>

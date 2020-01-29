@@ -48,12 +48,12 @@ class Login extends \Ilch\Controller\Frontend
                 if ($result->isSuccessful()) {
                     $cookieStolenMapper = new CookieStolenMapper();
 
-                    if (!$cookieStolenMapper->containsCookieStolen($result->getUser()->getId())) {
-                        $this->addMessage($this->getTranslator()->trans('loginSuccessful'));
-                    } else {
+                    if ($cookieStolenMapper->containsCookieStolen($result->getUser()->getId())) {
                         // The user receives a strongly worded warning that his cookie might be stolen.
                         $cookieStolenMapper->deleteCookieStolen($result->getUser()->getId());
                         $this->addMessage($this->getTranslator()->trans('cookieStolen'), 'danger');
+                    } else {
+                        $this->addMessage($this->getTranslator()->trans('loginSuccessful'));
                     }
 
                     if ($this->getRequest()->getPost('rememberMe')) {
@@ -117,14 +117,14 @@ class Login extends \Ilch\Controller\Frontend
             $confirmedCode = $this->getRequest()->getParam('code');
             $selector = $this->getRequest()->getParam('selector');
 
-            if (empty($confirmedCode) or empty($selector)) {
+            if (empty($confirmedCode) || empty($selector)) {
                 $this->addMessage('incompleteNewPasswordUrl', 'danger');
             } else {
                 $userMapper = new UserMapper();
                 $user = $userMapper->getUserBySelector($selector);
 
                 // Compare confirmedCode from the database with the one provided as parameter in the url
-                if (!empty($user) && (strtotime($user->getExpires()) >= time()) && hash_equals($user->getConfirmedCode(), $confirmedCode)) {
+                if ($user !== null && (empty($user->getExpires()) || (($user->getExpires() && (strtotime($user->getExpires()) >= time())) && hash_equals($user->getConfirmedCode(), $confirmedCode)))) {
                     Validation::setCustomFieldAliases([
                         'password' => 'profileNewPassword',
                         'password2' => 'profileNewPasswordRetype',
@@ -152,7 +152,7 @@ class Login extends \Ilch\Controller\Frontend
                             ->to(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
                     }
                 } else {
-                    $this->addMessage('newPasswordFailed', 'danger');                    
+                    $this->addMessage('newPasswordFailed', 'danger');
                 }
             }
         }

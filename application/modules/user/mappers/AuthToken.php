@@ -95,7 +95,7 @@ class AuthToken extends \Ilch\Mapper
     public function deleteExpiredAuthTokens() {
         $delete = $this->db()->delete();
         return $delete->from('auth_tokens')
-            ->where(['expires <' => date('Y-m-d\TH:i:s', time())])
+            ->where(['expires <' => date('Y-m-d\TH:i:s')])
             ->execute();
     }
 }

@@ -483,7 +483,7 @@ class User extends \Ilch\Mapper
     {
         $groupMapper = new GroupMapper();
 
-        if ($this->userWithIdExists($userId) AND $groupMapper->groupWithIdExists($groupId) AND !in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
+        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && !in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
             $this->db()->insert('users_groups')
                 ->values(['user_id' => $userId, 'group_id' => $groupId])
                 ->execute();
@@ -500,7 +500,7 @@ class User extends \Ilch\Mapper
     {
         $groupMapper = new GroupMapper();
 
-        if ($this->userWithIdExists($userId) AND $groupMapper->groupWithIdExists($groupId) AND in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
+        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
             $this->db()->delete('users_groups')
                 ->where(['user_id' => $userId, 'group_id' => $groupId])
                 ->execute();

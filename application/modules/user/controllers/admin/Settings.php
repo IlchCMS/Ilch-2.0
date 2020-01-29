@@ -68,7 +68,9 @@ class Settings extends \Ilch\Controller\Admin
                 }
             }
 
-            if (!$forbiddenExtensionFound) {
+            if ($forbiddenExtensionFound) {
+                $this->addMessage('forbiddenExtension', 'danger');
+            } else {
                 if ($this->getRequest()->getPost('regist_confirm') == 1) {
                     $this->getConfig()->set('regist_setfree', 0);
                 } else {
@@ -91,8 +93,6 @@ class Settings extends \Ilch\Controller\Admin
                     ->set('regist_rules', $this->getRequest()->getPost('regist_rules'))
                     ->set('user_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
                 $this->addMessage('saveSuccess');
-            } else {
-                $this->addMessage('forbiddenExtension', 'danger');
             }
         }
 

@@ -58,7 +58,7 @@ class Regist extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('step2to3'), ['action' => 'input']);
 
-        if ($this->getRequest()->getPost('saveRegist') AND $this->getRequest()->getPost('bot') === '') {
+        if ($this->getRequest()->getPost('saveRegist') && $this->getRequest()->getPost('bot') === '') {
             $validationRules = [
                 'name' => 'required|unique:users,name',
                 'password' => 'required|min:6,string|max:30,string',
@@ -80,7 +80,7 @@ class Regist extends \Ilch\Controller\Frontend
                 $emailsMapper = new EmailsMapper();
 
                 $model = new UserModel();
-                if ($this->getConfig()->get('regist_confirm') == 0 AND $this->getConfig()->get('regist_setfree') == 0) {
+                if ($this->getConfig()->get('regist_confirm') == 0 && $this->getConfig()->get('regist_setfree') == 0) {
                     $model->setDateConfirmed($currentDate->format('Y-m-d H:i:s', true));
                 } else {
                     $selector = bin2hex(openssl_random_pseudo_bytes(9));
@@ -187,8 +187,8 @@ class Regist extends \Ilch\Controller\Frontend
         $confirmedCode = $this->getRequest()->getParam('code');
         $user = $userMapper->getUserBySelector($selector);
 
-        if (!empty($confirmedCode) and !empty($selector)) {
-            if (!empty($user) and hash_equals($user->getConfirmedCode(), $confirmedCode)) {
+        if (!empty($confirmedCode) && !empty($selector)) {
+            if (!empty($user) && hash_equals($user->getConfirmedCode(), $confirmedCode)) {
                 $currentDate = new \Ilch\Date();
                 $user->setDateConfirmed($currentDate);
                 $user->setConfirmed(1);

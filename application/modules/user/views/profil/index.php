@@ -29,10 +29,10 @@ foreach ($profil->getGroups() as $group) {
                 <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
                 <?php if ($profil->getId() != $this->getUser()->getId()) : ?>
                 <div style="margin-top: 5px">
-                    <?php if (!$this->get('isFriend')) : ?>
-                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'sendFriendRequest', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('sendFriendRequest') ?>"><?=$this->getTrans('sendFriendRequest') ?></a>
-                    <?php else : ?>
+                    <?php if ($this->get('isFriend')) : ?>
                         <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'removeFriend', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('removeFriend') ?>"><?=$this->getTrans('removeFriend') ?></a>
+                    <?php else : ?>
+                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'sendFriendRequest', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('sendFriendRequest') ?>"><?=$this->getTrans('sendFriendRequest') ?></a>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
@@ -48,20 +48,20 @@ foreach ($profil->getGroups() as $group) {
                 </div>
             </div>
             <div class="col-lg-4 hidden-xs concatLinks-lg">
-                <?php if ($this->getUser() AND $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
+                <?php if ($this->getUser() && $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
                     <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId()]) ?>" class="fa fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
                 <?php endif; ?>
-                <?php if ($this->getUser() AND $profil->getOptMail() == 1 AND $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
+                <?php if ($this->getUser() && $profil->getOptMail() == 1 && $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
                     <a href="<?=$this->getUrl(['controller' => 'mail', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
                 <?php endif; ?>
-                <?php if ($this->get('gallery') != 0 AND $profil->getOptGallery() != 0 AND $this->get('galleryAllowed') != 0): ?>
+                <?php if ($this->get('gallery') != 0 && $profil->getOptGallery() != 0 && $this->get('galleryAllowed') != 0): ?>
                     <a href="<?=$this->getUrl(['controller' => 'gallery', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa fa-picture-o" title="<?=$this->getTrans('gallery') ?>"></a>
                 <?php endif; ?>
 
                 <?php foreach ($profileIconFields as $profileIconField) {
                     if ($profileIconField->getShow()) {
                         foreach ($profileFieldsContent as $profileFieldContent) {
-                            if ($profileFieldContent->getValue() AND $profileIconField->getId() == $profileFieldContent->getFieldId()) {
+                            if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
                                 $profileFieldName = $profileIconField->getKey();
                                 foreach ($profileFieldsTranslation as $profileFieldTrans) {
                                     if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
@@ -141,7 +141,7 @@ foreach ($profil->getGroups() as $group) {
             if (!$profileField->getType()) {
                 $value = '';
                 foreach ($profileFieldsContent as $profileFieldContent) {
-                    if ($profileFieldContent->getValue() AND $profileField->getId() == $profileFieldContent->getFieldId()) {
+                    if ($profileFieldContent->getValue() && $profileField->getId() == $profileFieldContent->getFieldId()) {
                         $value = $profileFieldContent->getValue();
                     }
                 }

@@ -90,8 +90,8 @@ class ProfileFields extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
             $positions = explode(',', $postData['hiddenMenu']);
-            for ($x = 0, $xMax = count($positions); $x < $xMax; $x++) {
-                $profileFieldsMapper->updatePositionById($positions[$x], $x);
+            foreach ($positions as $x => $xValue) {
+                $profileFieldsMapper->updatePositionById($xValue, $x);
             }
             $this->addMessage('success');
             $this->redirect(['action' => 'index']);

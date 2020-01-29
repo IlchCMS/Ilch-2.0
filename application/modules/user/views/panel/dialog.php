@@ -24,7 +24,7 @@
                                                 <?php
                                                 $date = new \Ilch\Date($dialog->getTime());
 
-                                                if ($dialog->getRead() != '' AND $dialog->getCId() == $this->getRequest()->getParam('id')) {
+                                                if ($dialog->getRead() != '' && $dialog->getCId() == $this->getRequest()->getParam('id')) {
                                                     $class = 'new active';
                                                 } elseif ($dialog->getRead() != '') {
                                                     $class = 'new';
@@ -46,7 +46,7 @@
                                                                     <?php
                                                                     if (strtotime($date) <= strtotime('-7 day')) {
                                                                         echo $date->format('d.m.Y', true);
-                                                                    } elseif (strtotime($date) <= strtotime('-2 day') AND strtotime($date) >= strtotime('-6 day') ) {
+                                                                    } elseif (strtotime($date) <= strtotime('-2 day') && strtotime($date) >= strtotime('-6 day') ) {
                                                                         echo $this->getTrans($date->format('l', true));
                                                                     } elseif (strtotime($date) <= strtotime('-1 day')) {
                                                                         echo $this->getTrans('profileYesterday').' '.$date->format('H:i', true);

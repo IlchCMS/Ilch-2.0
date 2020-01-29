@@ -46,17 +46,17 @@ $groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape
                                     <?=(!empty($ilchLastDate)) ? substr($this->getTrans($ilchLastDate->format('l')), 0, 2).', '.$ilchLastDate->format('d. ').$this->getTrans($ilchLastDate->format('M')).$ilchLastDate->format(' Y') : '' ?>
                                 </td>
                                 <td>
-                                    <?php if ($this->getUser() AND $this->getUser()->getId() != $this->escape($userlist->getID())): ?>
+                                    <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($userlist->getID())): ?>
                                         <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $userlist->getId()]) ?>" class="fa fa-comment fa-lg user-link" title="<?=$this->getTrans('privateMessage') ?>"></a>
                                     <?php endif; ?>
-                                    <?php if ($userlist->getOptMail() == 1 AND $this->getUser() AND $this->getUser()->getId() != $userlist->getID()): ?>
+                                    <?php if ($userlist->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $userlist->getID()): ?>
                                         <a href="<?=$this->getUrl(['controller' => 'mail', 'action' => 'index', 'user' => $userlist->getId()]) ?>" class="fa fa-envelope fa-lg user-link" title="<?=$this->getTrans('email') ?>"></a>
                                     <?php endif; ?>
 
                                     <?php foreach ($profileIconFields as $profileIconField) {
                                         if ($profileIconField->getShow()) {
                                             foreach ($profileFieldsContent as $profileFieldContent) {
-                                                if ($profileFieldContent->getValue() AND $profileIconField->getId() == $profileFieldContent->getFieldId()) {
+                                                if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
                                                     $profileFieldName = $profileIconField->getKey();
                                                     foreach ($profileFieldsTranslation as $profileFieldTrans) {
                                                         if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {

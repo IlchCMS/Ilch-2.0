@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div id="registSetfree" <?php if ($this->get('regist_accept') == '1' AND $this->get('regist_confirm') == '1') { echo 'class="hidden"'; } ?>>
+    <div id="registSetfree" <?php if ($this->get('regist_accept') == '1' && $this->get('regist_confirm') == '1') { echo 'class="hidden"'; } ?>>
         <div class="form-group">
             <div class="col-lg-2 control-label">
                 <?=$this->getTrans('setfreeRegistration') ?>:
