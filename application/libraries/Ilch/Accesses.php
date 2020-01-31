@@ -132,7 +132,7 @@ class Accesses
             }
         }
 
-        if (is_in_array($this->getGroupIds(), ['1']) === 'true') {
+        if (is_in_array($this->getGroupIds(), ['1']) === true) {
             return true;
         }
 
