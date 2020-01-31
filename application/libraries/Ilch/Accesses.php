@@ -113,7 +113,7 @@ class Accesses
 
         if ($entrie[$this->request->getModuleName()] == '1' ||
             $entrie[$this->request->getModuleName()] == '2' ||
-            is_in_array($this->getGroupIds(), ['1']) === 'true') {
+            is_in_array($this->getGroupIds(), ['1']) === true) {
             return true;
         }
     }
