@@ -1,1 +1,1 @@
-<?=$this->get('content')
+<?=$this->get('content');
