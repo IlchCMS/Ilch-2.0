@@ -1,17 +1,17 @@
 users:
   -
     id: 1
-    name: admin
-    password: top
-    email: admin@admin.admin
-    date_created: 2020-02-01 15:00:00
+    name: "admin"
+    password: "top"
+    email: "admin@admin.admin"
+    date_created: "2020-02-01 15:00:00"
 
   -
     id: 2
-    name: user
-    password: secret
-    email: user@user.user
-    date_created: 2020-02-01 15:00:00
+    name: "user"
+    password: "secret"
+    email: "user@user.user"
+    date_created: "2020-02-01 15:00:00"
 
 users_groups:
   -
@@ -30,7 +30,7 @@ groups_access:
   -
     group_id: 2
     page_id: 0
-    module_key: article
+    module_key: "article"
     article_id: 0
     box_id: 0
     access_level: 2
@@ -38,7 +38,7 @@ groups_access:
   -
     group_id: 2
     page_id: 0
-    module_key: checkout
+    module_key: "checkout"
     article_id: 0
     box_id: 0
     access_level: 1
@@ -46,7 +46,7 @@ groups_access:
   -
     group_id: 2
     page_id: 0
-    module_key: forum
+    module_key: "forum"
     article_id: 0
     box_id: 0
     access_level: 0
