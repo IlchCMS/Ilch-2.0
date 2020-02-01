@@ -1,9 +1,15 @@
 users:
   -
     id: 1
+    name: admin
+    password: top
+    email: admin@admin.admin
 
   -
     id: 2
+    name: user
+    password: secret
+    email: user@user.user
 
 users_groups:
   -
