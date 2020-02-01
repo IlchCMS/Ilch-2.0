@@ -43,9 +43,11 @@ class Accesses
     }
 
     /**
+     * Check access rights for modules, pages and more.
+     *
      * @todo expansion and more functions
      * @param $getAccessTo string Module, Admin
-     * @return bool|string $groupAccessList
+     * @return bool
      */
     public function hasAccess($getAccessTo = '')
     {
@@ -63,7 +65,7 @@ class Accesses
         if ($userId) {
             $user = $userMapper->getUserById($userId);
 
-            if (!empty($user)) {
+            if ($user !== null) {
                 $groupIds = [];
                 foreach ($user->getGroups() as $groups) {
                     $groupIds[] = $groups->getId();
@@ -88,6 +90,8 @@ class Accesses
     }
 
     /**
+     * Check if user has the rights to access the module.
+     *
      * @param $array
      * @return bool
      */
@@ -100,25 +104,20 @@ class Accesses
             }
         }
 
-        if ($this->request->getModuleName() === 'admin' || empty($entrie)) {
-            if($this->request->getControllerName() === 'page') {
+        if (!isset($entrie[$this->request->getModuleName()]) || empty($entrie) || $this->request->getModuleName() === 'admin') {
+            if ($this->request->getControllerName() === 'page') {
                 return $this->getAccessPage($array);
             }
+
             return true;
         }
 
-        if (!isset($entrie[$this->request->getModuleName()])) {
-            return true;
-        }
-
-        if ($entrie[$this->request->getModuleName()] == '1' ||
-            $entrie[$this->request->getModuleName()] == '2' ||
-            is_in_array($this->getGroupIds(), ['1']) === true) {
-            return true;
-        }
+        return ($entrie[$this->request->getModuleName()] == '1' || $entrie[$this->request->getModuleName()] == '2' || is_in_array($this->getGroupIds(), ['1']));
     }
 
     /**
+     * Check if user has the rights to access the page.
+     *
      * @param $array
      * @return bool
      */
@@ -132,7 +131,7 @@ class Accesses
             }
         }
 
-        if (is_in_array($this->getGroupIds(), ['1']) === true) {
+        if (is_in_array($this->getGroupIds(), ['1'])) {
             return true;
         }
 
@@ -152,9 +151,7 @@ class Accesses
             }
         }
 
-        if (in_array('2', $entrie)) {
-            return true;
-        }
+        return in_array('2', $entrie);
     }
 
     /**
