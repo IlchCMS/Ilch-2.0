@@ -4,12 +4,14 @@ users:
     name: admin
     password: top
     email: admin@admin.admin
+    date_created: 2020-02-01 15:00:00
 
   -
     id: 2
     name: user
     password: secret
     email: user@user.user
+    date_created: 2020-02-01 15:00:00
 
 users_groups:
   -
