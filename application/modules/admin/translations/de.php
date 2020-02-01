@@ -130,11 +130,14 @@ return [
     'menuSettings' => 'Einstellungen',
     'menuMaintenance' => 'Wartungsarbeiten',
     'menuBackup' => 'Backup',
+    'createBackupInfoText' => '<p>"CREATE DATABASE-Befehl hinzufügen" möchte man aktiviert haben, wenn beim Import die Datenbank mit gleicher Bezeichnung erstellt werden soll.
+                               Die Einstellung sollte deaktiviert sein, wenn die Datenbank danach eine andere Bezeichnung haben soll.</p>
+                               <p>"DROP TABLE-Befehle hinzufügen" löscht beim Import bereits vorhandene Tabellen, um diese dann neu zu erstellen.</p>',
     'compress' => 'Komprimierung',
     'compressNone' => 'keine',
-    'skipComments' => 'Kommentare anzeige',
+    'skipComments' => 'Kommentare anzeigen',
     'addDatabases' => 'CREATE DATABASE-Befehl hinzufügen',
-    'dropTable' => 'DROP TABLE-Befehl hinzufügen',
+    'dropTable' => 'DROP TABLE-Befehle hinzufügen',
     'noBackups' => 'Keine Backups vorhanden',
     'backupNotFound' => 'Das Backup wurde nicht gefunden oder konnte nicht geöffnet werden.',
     'menuCustomCSS' => 'Benutzerdefinierte CSS',

@@ -130,11 +130,14 @@ return [
     'menuSettings' => 'Settings',
     'menuMaintenance' => 'Maintenance',
     'menuBackup' => 'Backup',
+    'createBackupInfoText' => '<p>Enable "Add CREATE DATABASE statement" to create the database with the previous name on import.
+                               Disable this if the database should have a different name.</p>
+                               <p>"Add DROP TABLE statements" should be enabled if you wish to drop/delete existing tables on import.</p>',
     'compress' => 'Compression',
     'compressNone' => 'None',
     'skipComments' => 'Display comments',
     'addDatabases' => 'Add CREATE DATABASE statement',
-    'dropTable' => 'Add DROP TABLE statement',
+    'dropTable' => 'Add DROP TABLE statements',
     'noBackups' => 'No backups available',
     'backupNotFound' => 'The backup was not found or could not be opened.',
     'menuCustomCSS' => 'Custom CSS',
