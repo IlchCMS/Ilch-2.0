@@ -6,9 +6,9 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if Vagrant.has_plugin?("vagrant-vbguest")
-    config.vm.box = "debian/jessie64"
+    config.vm.box = "generic/debian10"
   else
-    config.vm.box = "debian/contrib-jessie64"
+    config.vm.box = "debian/contrib-buster64"
   end
 
   config.vm.network "forwarded_port", guest: 80, host: 8080
