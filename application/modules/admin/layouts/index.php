@@ -219,7 +219,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="http://www.ilch.de/redmine/projects/dev2/wiki" target="_blank">
+                                    <a href="https://github.com/IlchCMS/Ilch-2.0/wiki" target="_blank">
                                         <i class="fa fa-book"></i>
                                         <?=$this->getTrans('documentationFAQ') ?>
                                     </a>

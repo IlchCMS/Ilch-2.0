@@ -26,5 +26,5 @@ Ilch 2 ist der direkte Nachfolger der Ilch Versionen 1.1.
 
 ### Support/Dokumentation
 - https://www.ilch.de
-- http://www.ilch.de/redmine/projects/dev2/wiki
+- https://github.com/IlchCMS/Ilch-2.0/wiki
 
