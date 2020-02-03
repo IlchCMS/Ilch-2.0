@@ -2,15 +2,19 @@
 $articles = $this->get('articles');
 $categoryMapper = $this->get('categoryMapper');
 $commentMapper = $this->get('commentMapper');
-$date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
 
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
 }
+
+$date = null;
+if ($this->get('date')) {
+    $date = $this->get('date');
+}
 ?>
 
-<h1><?=$this->getTrans('monthArchives') ?>: <i><?=$this->getTrans($date->format('F', true)).$date->format(' Y', true) ?></i></h1>
+<h1><?=$this->getTrans('monthArchives') ?><?=($date) ? ': <i>'.$this->getTrans($date->format('F', true)).$date->format(' Y', true).'</i>' : '' ?></h1>
 <?php if ($articles != ''): ?>
     <?php
     $displayedArticles = 0;

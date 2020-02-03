@@ -75,41 +75,53 @@ class Archive extends \Ilch\Controller\Frontend
         $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
         $pagination = new \Ilch\Pagination();
-
-        $date = new \Ilch\Date($this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
+        $datestring = $this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01';
+        $articles = null;
+        $date = null;
 
         $this->getLayout()->header()
             ->css('static/css/article.css');
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuArticle'))
-            ->add($this->getTranslator()->trans('menuArchives'))
-            ->add($this->getTranslator()->trans($date->format('F', true)).$date->format(' Y', true));
+            ->add($this->getTranslator()->trans('menuArchives'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index'])
-            ->add($this->getTranslator()->trans($date->format('F', true)).$date->format(' Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
+            ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index']);
 
-        $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        if (validateDate($datestring, 'Y-m-d')) {
+            $date = new \Ilch\Date($datestring);
 
-        $user = null;
-        if ($this->getUser()) {
-            $user = $userMapper->getUserById($this->getUser()->getId());
-        }
+            $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans($date->format('F', true)).$date->format(' Y', true));
+            $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans($date->format('F', true)).$date->format(' Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
 
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
+            $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
+            $pagination->setPage($this->getRequest()->getParam('page'));
+
+            $user = null;
+            if ($this->getUser()) {
+                $user = $userMapper->getUserById($this->getUser()->getId());
             }
+
+            $readAccess = [3];
+            if ($user) {
+                foreach ($user->getGroups() as $us) {
+                    $readAccess[] = $us->getId();
+                }
+            }
+
+            $articles = $articleMapper->getArticlesByDate($date, $pagination, $this->locale);
+
+            $this->getView()->set('readAccess', $readAccess)
+                ->set('pagination', $pagination);
         }
 
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
-            ->set('articles', $articleMapper->getArticlesByDate($date, $pagination, $this->locale))
-            ->set('readAccess', $readAccess)
-            ->set('pagination', $pagination);
+            ->set('articles', $articles)
+            ->set('date', $date);
     }
 
     public function voteAction()
@@ -120,7 +132,7 @@ class Archive extends \Ilch\Controller\Frontend
         $articleMapper = new ArticleMapper();
         $articleMapper->saveVotes($id, $this->getUser()->getId());
 
-        if ($from == 'show') {
+        if ($from === 'show') {
             $this->redirect(['action' => $from, 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
         } else {
             $this->redirect(['action' => $from, 'id' => $id]);
