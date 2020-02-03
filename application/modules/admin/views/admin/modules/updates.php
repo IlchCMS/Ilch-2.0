@@ -254,7 +254,7 @@ $(document).ready(function() {
         $.LoadingOverlay("show");
         setTimeout(function(){
             $.LoadingOverlay("hide");
-        }, 10000);
+        }, 30000);
     });
 });
 </script>
