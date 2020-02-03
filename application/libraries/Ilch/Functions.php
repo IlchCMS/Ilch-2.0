@@ -438,3 +438,18 @@ function group($file)
     $grouparray = posix_getgrgid($gid);
     return $grouparray['name'];
 }
+
+/**
+ * Check if date string is valid.
+ *
+ * @since 2.1.30
+ *
+ * @param $date
+ * @param string $format
+ * @return bool
+ */
+function validateDate($date, $format = 'Y-m-d H:i:s')
+{
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) === $date;
+}
