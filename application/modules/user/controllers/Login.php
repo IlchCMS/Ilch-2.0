@@ -69,8 +69,19 @@ class Login extends \Ilch\Controller\Frontend
                         $authTokenModel->setUserid($result->getUser()->getId());
                         $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
 
-                        setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
-
+                        if (PHP_VERSION_ID >= 70300) {
+                            setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), [
+                                'expires' => strtotime('+30 days'),
+                                'path' => '/',
+                                'domain' => $_SERVER['SERVER_NAME'],
+                                'samesite' => 'Lax',
+                                'secure' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+                                'httponly' => true,
+                            ]);
+                        } else {
+                            // workaround syntax to set the SameSite attribute in PHP < 7.3
+                            setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'), '/; samesite=Lax', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
+                        }
                         $authTokenMapper = new AuthTokenMapper();
                         $authTokenMapper->addAuthToken($authTokenModel);
                     }

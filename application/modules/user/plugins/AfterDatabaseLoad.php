@@ -41,7 +41,7 @@ class AfterDatabaseLoad
             $authTokenMapper = new AuthTokenMapper();
             $authToken = $authTokenMapper->getAuthToken($selector);
 
-            if (!empty($authToken) && strtotime($authToken->getExpires()) >= time()) {
+            if ($authToken !== null && strtotime($authToken->getExpires()) >= time()) {
                 if (hash_equals($authToken->getToken(), hash('sha256', base64_decode($authenticator)))) {
                     $_SESSION['user_id'] = $authToken->getUserid();
                     // A new token is generated, a new hash for the token is stored over the old record, and a new login cookie is issued to the user.
@@ -55,7 +55,19 @@ class AfterDatabaseLoad
                     $authTokenModel->setUserid($_SESSION['user_id']);
                     $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
 
-                    setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
+                    if (PHP_VERSION_ID >= 70300) {
+                        setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), [
+                            'expires' => strtotime('+30 days'),
+                            'path' => '/',
+                            'domain' => $_SERVER['SERVER_NAME'],
+                            'samesite' => 'Lax',
+                            'secure' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+                            'httponly' => true,
+                        ]);
+                    } else {
+                        // workaround syntax to set the SameSite attribute in PHP < 7.3
+                        setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'), '/; samesite=Lax', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
+                    }
                     $authTokenMapper->updateAuthToken($authTokenModel);
                 } else {
                     // If the series is present but the token does not match, a theft is assumed.
