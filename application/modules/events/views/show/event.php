@@ -138,7 +138,7 @@ if (!empty($event)) {
 
             <?php if ($event->getWebsite()): ?>
                 <div class="eventBoxBottom">
-                    <i class="fas fa-globe"></i> <a href="<?=$userMapper->getHomepage($event->getWebsite()) ?>" target="_blank"><?=$this->getTrans('website') ?></a>
+                    <i class="fas fa-globe"></i> <a href="<?=$userMapper->getHomepage($event->getWebsite()) ?>" target="_blank" rel="noopener"><?=$this->getTrans('website') ?></a>
                 </div>
             <?php endif; ?>
 
@@ -279,17 +279,15 @@ if (!empty($event)) {
                         <h4 class="modal-title"><?=$this->getTrans('entrant') ?></h4>
                     </div>
                     <div class="modal-body">
-                        <?php if ($eventEntrantsCount != ''): ?>
-                            <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
-                                <div class="entrants-user">
-                                    <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>
-                                    <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" class="entrants-user-link">
-                                        <img class="events-thumbnail <?=($eventEntrantsUser->getStatus() == 1) ? 'events-thumbnail-agree' : 'events-thumbnail-maybe' ?>" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
-                                        <?=$entrantsUser->getName() ?>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                        <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
+                            <div class="entrants-user">
+                                <?php $entrantsUser = $userDetails[$eventEntrantsUser->getUserId()]; ?>
+                                <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" class="entrants-user-link">
+                                    <img class="events-thumbnail <?=($eventEntrantsUser->getStatus() == 1) ? 'events-thumbnail-agree' : 'events-thumbnail-maybe' ?>" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
+                                    <?=$entrantsUser->getName() ?>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -366,7 +364,7 @@ if (!empty($event)) {
                 <?php $place = $this->escape($event->getPlace()); ?>
                 <?php $infoPlace = str_replace(', ', '<br />', $place); ?>
                 <?php $infoRoutePlace = str_replace(' ', '+', $place); ?>
-                var infoWindowContent = '<div class="poi-info-window"><div class="title"><?=$this->escape($event->getTitle()) ?></div><div class="address"><?=$infoPlace ?><br /><a href="http://maps.google.com?daddr=<?=$infoRoutePlace ?>" target="_blank"><?=$this->getTrans('googleMapsPlanRoute') ?></a></div></div>';
+                var infoWindowContent = '<div class="poi-info-window"><div class="title"><?=$this->escape($event->getTitle()) ?></div><div class="address"><?=$infoPlace ?><br /><a href="http://maps.google.com?daddr=<?=$infoRoutePlace ?>" target="_blank" rel="noopener"><?=$this->getTrans('googleMapsPlanRoute') ?></a></div></div>';
                 var infowindow = new google.maps.InfoWindow({
                     content: infoWindowContent
                 });

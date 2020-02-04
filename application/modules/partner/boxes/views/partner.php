@@ -13,13 +13,13 @@
                 <?php
                 $userMapper = new Modules\User\Mappers\User();
                 $link = $userMapper->getHomepage($partner->getLink());
-                if (substr($partner->getBanner(), 0, 11) == 'application') {
+                if (strncmp($partner->getBanner(), 'application', 11) === 0) {
                     $banner = $this->getBaseUrl($partner->getBanner());
                 } else {
                     $banner = $partner->getBanner();
                 }
                 ?>
-                <a href="<?=$link ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" target="<?=($partner->getTarget() == 0) ? '_blank' : '_self' ?>">
+                <a href="<?=$link ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" target=<?=($partner->getTarget() == 0) ? '"_blank" rel="noopener"' : '"_self"' ?>>
                     <img src="<?=$banner ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" class="img-responsive">
                 </a>
                 <br />
@@ -28,12 +28,12 @@
     <?php else: ?>
         <?php if (!empty($this->get('partners'))) : ?>
             <div class="partnersslider">
-                <div class="bxslider<?=($this->get('sliderMode') == 'horizontal' ? ' h-slide' : '') ?>">
+                <div class="bxslider<?=($this->get('sliderMode') === 'horizontal' ? ' h-slide' : '') ?>">
                     <?php
                     foreach ($this->get('partners') as $partner):
                         $userMapper = new Modules\User\Mappers\User();
                         $link = $userMapper->getHomepage($partner->getLink());
-                        if (substr($partner->getBanner(), 0, 11) == 'application') {
+                        if (strncmp($partner->getBanner(), 'application', 11) === 0) {
                             $banner = $this->getBaseUrl($partner->getBanner());
                         } else {
                             $banner = $partner->getBanner();
@@ -41,7 +41,7 @@
                         ?>
 
                         <div class="partner-item">
-                            <a href="<?=$link ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" target="<?=($partner->getTarget() == 0) ? '_blank' : '_self' ?>">
+                            <a href="<?=$link ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" target=<?=($partner->getTarget() == 0) ? '"_blank" rel="noopener"' : '"_self"' ?>>
                                 <img src="<?=$banner ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" class="img-responsive">
                             </a>
                         </div>

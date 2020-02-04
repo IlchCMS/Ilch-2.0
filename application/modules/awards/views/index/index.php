@@ -47,18 +47,20 @@ $teamsMapper = $this->get('teamsMapper');
                         <?php endif; ?>
                         <br />
                         <?=date('d.m.Y', strtotime($awards->getDate())) ?><br />
-                        
-                        <?php if ($awards->getEvent() != '' AND $awards->getURL() != ''): ?>
-                            <a href="<?=$this->escape($awards->getURL()) ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank"><?=$this->escape($awards->getEvent()) ?></a>
-                        <?php elseif ($awards->getEvent() != '' AND $awards->getURL() == ''): ?>
-                            <?=$this->escape($awards->getEvent()) ?>
+
+                        <?php if ($awards->getEvent() != ''): ?>
+                            <?php if ($awards->getURL() != ''): ?>
+                                <a href="<?=$this->escape($awards->getURL()) ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank" rel="noopener"><?=$this->escape($awards->getEvent()) ?></a>
+                            <?php else: ?>
+                                <?=$this->escape($awards->getEvent()) ?>
+                            <?php endif; ?>
                         <?php else: ?>
                             <br />
                         <?php endif; ?>
                     </div>
                     <?php if ($awards->getImage() != ''): ?>
                         <div class="rank_image">
-                            <img src="<?=(substr($awards->getImage(), 0, 11) == 'application') ? $this->getBaseUrl($awards->getImage()) : $this->escape($awards->getImage()) ?>" alt="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" />
+                            <img src="<?=(strncmp($awards->getImage(), 'application', 11) === 0) ? $this->getBaseUrl($awards->getImage()) : $this->escape($awards->getImage()) ?>" alt="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" />
                         </div>
                     <?php endif; ?>
                 </div>

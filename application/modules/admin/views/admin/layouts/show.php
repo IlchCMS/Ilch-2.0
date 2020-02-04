@@ -74,7 +74,7 @@ foreach ($layouts as $layout): ?>
                         </div>
                         <div class="col-sm-9 col-xs-6">
                             <?php if ($layout->link != ''): ?>
-                                <a href="<?=$layout->link ?>" alt="<?=$this->escape($layout->author) ?>" title="<?=$this->escape($layout->author) ?>" target="_blank">
+                                <a href="<?=$layout->link ?>" alt="<?=$this->escape($layout->author) ?>" title="<?=$this->escape($layout->author) ?>" target="_blank" rel="noopener">
                                     <i><?=$this->escape($layout->author) ?></i>
                                 </a>
                             <?php else: ?>

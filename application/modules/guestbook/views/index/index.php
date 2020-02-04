@@ -24,7 +24,7 @@
                         </a>
                     <?php endif; ?>
                     <?php if ($entry->getHomepage() != ''): ?>
-                        <a target="_blank" href="<?=$this->escape($entry->getHomepage()) ?>">
+                        <a target="_blank" rel="noopener" href="<?=$this->escape($entry->getHomepage()) ?>">
                             <i class="fa fa-home"></i>
                         </a>
                     <?php endif; ?>

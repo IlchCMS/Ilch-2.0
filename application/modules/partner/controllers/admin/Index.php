@@ -36,7 +36,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -57,13 +57,13 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
+            if ($this->getRequest()->getPost('action') === 'delete') {
                 foreach ($this->getRequest()->getPost('check_entries') as $partnerId) {
                     $partnerMapper->delete($partnerId);
                 }
             }
 
-            if ($this->getRequest()->getPost('action') == 'setfree') {
+            if ($this->getRequest()->getPost('action') === 'setfree') {
                 foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
                     $model = new PartnerModel();
                     $model->setId($entryId)
@@ -151,10 +151,8 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $banner = trim($this->getRequest()->getPost('banner'));
-            if (!empty($banner)) {
-                if (substr($banner, 0, 11) == 'application') {
-                    $banner = BASE_URL.'/'.$banner;
-                }
+            if (!empty($banner) && strncmp($banner, 'application', 11) === 0) {
+                $banner = BASE_URL.'/'.$banner;
             }
 
             $post = [

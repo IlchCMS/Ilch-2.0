@@ -35,7 +35,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -56,11 +56,9 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('check_linkus')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach ($this->getRequest()->getPost('check_linkus') as $linkusId) {
-                    $linkusMapper->delete($linkusId);
-                }
+        if ($this->getRequest()->getPost('check_linkus') && $this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('check_linkus') as $linkusId) {
+                $linkusMapper->delete($linkusId);
             }
         }
 

@@ -85,7 +85,7 @@ $version = $this->get('version');
                             <?php $date = new \Ilch\Date($news->date); ?>
                             <tr>
                                 <td><?=$date->format('d.m.Y', true) ?></td>
-                                <td><a href="<?=$news->link ?>" target="_blank" title="<?=$this->escape($news->title) ?>"><?=$this->escape($news->title) ?></a></td>
+                                <td><a href="<?=$news->link ?>" target="_blank" rel="noopener" title="<?=$this->escape($news->title) ?>"><?=$this->escape($news->title) ?></a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -120,7 +120,7 @@ $version = $this->get('version');
                                 <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $notification->getId()]) ?></td>
                                 <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermission') ?>"><i class="fa fa-check text-success"></i></a></td>
                                 <td><?=$date->format('d.m.Y', true) ?></td>
-                                <td><a href="<?=$notification->getURL() ?>" target="_blank" title="<?=$this->escape($notification->getModule()) ?>"><?=$this->escape($notification->getModule()) ?></a></td>
+                                <td><a href="<?=$notification->getURL() ?>" target="_blank" rel="noopener" title="<?=$this->escape($notification->getModule()) ?>"><?=$this->escape($notification->getModule()) ?></a></td>
                                 <td><?=$this->escape($notification->getMessage()) ?></td>
                             </tr>
                         <?php endforeach; ?>

@@ -83,7 +83,7 @@
                             <small>
                                 <?=$this->getTrans('author') ?>:
                                 <?php if ($module->getLink() != ''): ?>
-                                    <a href="<?=$module->getLink() ?>" alt="<?=$this->escape($module->getAuthor()) ?>" title="<?=$this->escape($module->getAuthor()) ?>" target="_blank">
+                                    <a href="<?=$module->getLink() ?>" alt="<?=$this->escape($module->getAuthor()) ?>" title="<?=$this->escape($module->getAuthor()) ?>" target="_blank" rel="noopener">
                                         <i><?=$this->escape($module->getAuthor()) ?></i>
                                     </a>
                                 <?php else: ?>
@@ -150,7 +150,7 @@
 
                     <?php
                     if ($module->getLink() != '') {
-                        $author = '<a href="'.$module->getLink().'" alt="'.$this->escape($module->getAuthor()).'" title="'.$this->escape($module->getAuthor()).'" target="_blank">'.$this->escape($module->getAuthor()).'</a>';
+                        $author = '<a href="'.$module->getLink().'" alt="'.$this->escape($module->getAuthor()).'" title="'.$this->escape($module->getAuthor()).'" target="_blank" rel="noopener">'.$this->escape($module->getAuthor()).'</a>';
                     } else {
                         $author = $this->escape($module->getAuthor());
                     }

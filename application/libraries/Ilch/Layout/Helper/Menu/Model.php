@@ -213,6 +213,7 @@ class Model
                 }
 
                 $target = '';
+                $noopener = '';
                 if ($menuData['items'][$itemId]->isPageLink()) {
                     $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId(), $locale);
                     $href = $this->layout->getUrl($page->getPerma());
@@ -223,6 +224,9 @@ class Model
                 } elseif ($menuData['items'][$itemId]->isLink()) {
                     $href = $menuData['items'][$itemId]->getHref();
                     $target = ' target="'.$menuData['items'][$itemId]->getTarget().'"';
+                    if ($menuData['items'][$itemId]->getTarget() === '_blank') {
+                        $noopener = ' rel="noopener"';
+                    }
                 } else {
                     return '';
                 }
@@ -233,7 +237,7 @@ class Model
                 }
 
                 if (!is_in_array($groupIds, explode(',', $menuData['items'][$itemId]->getAccess())) || $adminAccess) {
-                    $contentHtml = '<a href="' . $href . '"' . $target . '>' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
+                    $contentHtml = '<a href="' . $href . '"' . $target . $noopener . '>' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
                     $subItemsHtml = '';
 
                     // find childitems recursively

@@ -2,10 +2,10 @@
 
 <h1><?=$this->getTrans('settings') ?></h1>
 <?php
-if (!$this->validation()->hasErrors()) {
-    $slider = (bool)$this->get('slider') == '1';
-} else {
+if ($this->validation()->hasErrors()) {
     $slider = (bool)$this->originalInput('slider') == '1';
+} else {
+    $slider = (bool)$this->get('slider') == '1';
 }
 ?>
 <form class="form-horizontal" method="POST">
@@ -31,8 +31,8 @@ if (!$this->validation()->hasErrors()) {
             </label>
             <div class="col-lg-2">
                 <select class="form-control" name="boxSliderMode">
-                    <option <?php if ($this->get('boxSliderMode') == 'vertical') { echo 'selected="selected"'; } ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
-                    <option <?php if ($this->get('boxSliderMode') == 'horizontal') { echo 'selected="selected"'; } ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
+                    <option <?php if ($this->get('boxSliderMode') === 'vertical') { echo 'selected="selected"'; } ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
+                    <option <?php if ($this->get('boxSliderMode') === 'horizontal') { echo 'selected="selected"'; } ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
                 </select>
             </div>
         </div>

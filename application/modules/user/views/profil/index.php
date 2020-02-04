@@ -70,7 +70,7 @@ foreach ($profil->getGroups() as $group) {
                                     }
                                 }
 
-                                echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" class="fa '.$profileIconField->getIcon().'" title="'.$profileFieldName.'"></a>';
+                                echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" rel="noopener" class="fa '.$profileIconField->getIcon().'" title="'.$profileFieldName.'"></a>';
                                 break;
                             }
                         }

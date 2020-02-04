@@ -10,7 +10,7 @@ $config = \Ilch\Registry::get('config');
             <div class="col-lg-12">
                 <h4><?=$this->escape($linkus->getTitle()) ?></h4>
                 <div class="col-lg-12 text-center">
-                    <a href="<?=$this->getUrl() ?>" target="_blank"><img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" alt="<?=$this->escape($linkus->getTitle()) ?>" title="<?=$this->escape($linkus->getTitle()) ?>" border="0"></a>
+                    <a href="<?=$this->getUrl() ?>" target="_blank" rel="noopener"><img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" alt="<?=$this->escape($linkus->getTitle()) ?>" title="<?=$this->escape($linkus->getTitle()) ?>" border="0"></a>
                     <br /><br />
                 </div>
 
@@ -21,7 +21,7 @@ $config = \Ilch\Registry::get('config');
                                   style="resize: vertical"
                                   name="text"
                                   rows="4"
-                                  readonly><a href="<?=$this->getUrl() ?>" target="_blank"><img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" border="0"></a></textarea>
+                                  readonly><a href="<?=$this->getUrl() ?>" target="_blank" rel="noopener"><img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" border="0"></a></textarea>
                     </div>
                 <?php endif; ?>
 

@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'linkus',
-        'version' => '1.3.0',
+        'version' => '1.4.0',
         'icon_small' => 'fa-link',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -46,12 +46,12 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql()
     {
-        return "CREATE TABLE IF NOT EXISTS `[prefix]_linkus` (
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_linkus` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `title` VARCHAR(100) NOT NULL,
                   `banner` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1';
     }
 
     public function getUpdate($installedVersion)

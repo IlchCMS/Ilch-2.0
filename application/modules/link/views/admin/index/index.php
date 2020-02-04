@@ -90,7 +90,7 @@
                             <td><?=$this->getDeleteCheckbox('check_links', $link->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treatLink', 'id' => $link->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'deleteLink', 'id' => $link->getId()]) ?></td>
-                            <td><a href="<?=$this->escape($link->getLink()) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$banner ?></a><br /><?=$desc ?></td>
+                            <td><a href="<?=$this->escape($link->getLink()) ?>" target="_blank" rel="noopener" title="<?=$this->escape($link->getName()) ?>"><?=$banner ?></a><br /><?=$desc ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

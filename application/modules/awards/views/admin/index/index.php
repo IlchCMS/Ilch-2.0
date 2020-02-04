@@ -54,10 +54,12 @@ $teamsMapper = $this->get('teamsMapper');
                                 <?php endif; ?>
                             <?php endif; ?>
 
-                            <?php if ($awards->getEvent() != '' AND $awards->getURL() != ''): ?>
-                                <td><a href="<?=$this->escape($awards->getURL()) ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank"><?=$this->escape($awards->getEvent()) ?></a></td>
-                            <?php elseif ($awards->getEvent() != '' AND $awards->getURL() == ''): ?>
-                                <td><?=$this->escape($awards->getEvent()) ?></td>
+                            <?php if ($awards->getEvent() != ''): ?>
+                                <?php if ($awards->getURL() != ''): ?>
+                                    <td><a href="<?=$this->escape($awards->getURL()) ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank" rel="noopener"><?=$this->escape($awards->getEvent()) ?></a></td>
+                                <?php else: ?>
+                                    <td><?=$this->escape($awards->getEvent()) ?></td>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>

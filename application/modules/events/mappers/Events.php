@@ -238,7 +238,7 @@ class Events extends \Ilch\Mapper
      * @param int $start
      * @param int $end
      *
-     * @return EventModel[]|array
+     * @return EventModel[]|array|null
      * @throws \Ilch\Database\Exception
      */
     public function getEntriesForJson($start, $end)

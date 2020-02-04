@@ -31,7 +31,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -57,11 +57,9 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('check_entries')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach ($this->getRequest()->getPost('check_entries') as $awardsId) {
-                    $awardsMapper->delete($awardsId);
-                }
+        if ($this->getRequest()->getPost('check_entries') && $this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('check_entries') as $awardsId) {
+                $awardsMapper->delete($awardsId);
             }
         }
 
@@ -97,10 +95,8 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             // Add BASE_URL if image starts with application to get a complete URL for validation
             $image = trim($this->getRequest()->getPost('image'));
-            if (!empty($image)) {
-                if (substr($image, 0, 11) == 'application') {
-                    $image = BASE_URL.'/'.$image;
-                }
+            if (!empty($image) && strncmp($image, 'application', 11) === 0) {
+                $image = BASE_URL.'/'.$image;
             }
 
             $post = [

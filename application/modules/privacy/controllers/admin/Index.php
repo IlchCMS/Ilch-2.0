@@ -29,7 +29,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -50,11 +50,9 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuPrivacy'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('check_privacys')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach ($this->getRequest()->getPost('check_privacys') as $privacyId) {
-                    $privacyMapper->delete($privacyId);
-                }
+        if ($this->getRequest()->getPost('check_privacys') && $this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('check_privacys') as $privacyId) {
+                $privacyMapper->delete($privacyId);
             }
         }
 

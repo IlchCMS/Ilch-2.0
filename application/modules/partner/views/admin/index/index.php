@@ -11,7 +11,7 @@
             <?php if ($this->get('badge') > 0): ?>
                 <li <?php if ($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
                     <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
-                        <?=$this->getTrans('setfree'); ?> <span class="badge"><?=$this->get('badge') ?></span>
+                        <?=$this->getTrans('setfree') ?> <span class="badge"><?=$this->get('badge') ?></span>
                     </a>
                 </li>
             <?php endif; ?>
@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('entries') as $entry): ?>
-                        <?php if (substr($entry->getBanner(), 0, 11) == 'application'): ?>
+                        <?php if (strncmp($entry->getBanner(), 'application', 11) === 0): ?>
                             <?php $banner = $this->getBaseUrl($entry->getBanner()); ?>
                         <?php else: ?>
                             <?php $banner = $entry->getBanner(); ?>
@@ -61,7 +61,7 @@
                                     ?>
                                 </td>
                             <?php endif; ?>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]); ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]) ?></td>
                             <td>
                                 <?php
                                 $deleteArray = ['action' => 'del', 'id' => $entry->getId()];
@@ -72,7 +72,7 @@
                                 ?>
                             </td>
                             <td><?=$this->escape($entry->getName()) ?></td>
-                            <td><a href='<?=$this->escape($entry->getLink()) ?>' target="_blank"><img src='<?=$banner ?>'></a></td>
+                            <td><a href='<?=$this->escape($entry->getLink()) ?>' target="_blank" rel="noopener"><img src='<?=$banner ?>'></a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

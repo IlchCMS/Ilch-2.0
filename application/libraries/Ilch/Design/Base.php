@@ -392,11 +392,11 @@ abstract class Base
         $builder = new \JBBCode\CodeDefinitionBuilder('justify', '<p style="text-align: justify;">{param}</p>');
         $parser->addCodeDefinition($builder->build());
 
-        $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a target="_blank" href="{param}">{param}</a>');
+        $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a target="_blank" href="{param}" rel="noopener">{param}</a>');
         $builder->setParseContent(false)->setBodyValidator($urlValidator);
         $parser->addCodeDefinition($builder->build());
 
-        $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a target="_blank" href="{option}">{param}</a>');
+        $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a target="_blank" href="{option}" rel="noopener">{param}</a>');
         $builder->setUseOption(true)->setParseContent(true)->setOptionValidator($urlValidator);
         $parser->addCodeDefinition($builder->build());
 

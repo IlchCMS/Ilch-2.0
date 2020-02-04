@@ -8,12 +8,12 @@
     <?php
     $sources = [];
     foreach ($this->get('privacy') as $privacy) {
-        if ($privacy->getUrlTitle() != '' AND $privacy->getShow() == '1') {
-            $sources[] = '<a href="'.$this->escape($privacy->getUrl()).'" target="_blank">'.$this->escape($privacy->getUrlTitle()).'</a>';
+        if ($privacy->getUrlTitle() != '' && $privacy->getShow() == '1') {
+            $sources[] = '<a href="'.$this->escape($privacy->getUrl()).'" target="_blank" rel="noopener">'.$this->escape($privacy->getUrlTitle()).'</a>';
         }
     }
 
-    echo implode(", ", $sources);
+    echo implode(', ', $sources);
     ?>
 <?php else: ?>
     <?=$this->getTrans('noPrivacy') ?>

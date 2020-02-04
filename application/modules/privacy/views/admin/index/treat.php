@@ -15,14 +15,14 @@
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="show-on" name="show" value="1" 
-                    <?php if ($this->get('privacy') != '' AND $this->get('privacy')->getShow() == 1): ?>
+                    <?php if ($this->get('privacy') != '' && $this->get('privacy')->getShow() == 1): ?>
                         checked="checked"
                     <?php else: ?>
                         checked="checked"
                     <?php endif; ?> />
                 <label for="show-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
                 <input type="radio" class="flipswitch-input" id="show-off" name="show" value="0" 
-                    <?php if ($this->get('privacy') != '' AND $this->get('privacy')->getShow() == 0): ?>
+                    <?php if ($this->get('privacy') != '' && $this->get('privacy')->getShow() == 0): ?>
                         checked="checked"
                     <?php endif; ?> />
                 <label for="show-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>

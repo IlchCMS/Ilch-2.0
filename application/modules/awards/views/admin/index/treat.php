@@ -74,18 +74,18 @@ if ($awards != '') {
                 <optgroup label="<?=$this->getTrans('user') ?>">
                     <?php foreach ($this->get('users') as $user) {
                             $selected = '';
-                            if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $user->getId() AND $this->get('awards')->getTyp() == 1 OR $this->originalInput('utId') == '1_'.$user->getId()) {
+                            if (($this->get('awards') != '' && $this->get('awards')->getUTId() == $user->getId() && $this->get('awards')->getTyp() == 1) || $this->originalInput('utId') == '1_'.$user->getId()) {
                                 $selected = 'selected="selected"';
                             }
                             echo '<option '.$selected.' value="1_'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
                         }
                     ?>
                 </optgroup>
-                <?php if ($awardsMapper->existsTable('teams') == true AND $this->get('teams') != ''): ?>
+                <?php if ($awardsMapper->existsTable('teams') == true && $this->get('teams') != ''): ?>
                     <optgroup label="<?=$this->getTrans('team') ?>">
                         <?php foreach ($this->get('teams') as $team) {
                             $selected = '';
-                            if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $team->getId() AND $this->get('awards')->getTyp() == 2 OR $this->originalInput('utId') == '2_'.$team->getId()) {
+                            if (($this->get('awards') != '' && $this->get('awards')->getUTId() == $team->getId() && $this->get('awards')->getTyp() == 2) || $this->originalInput('utId') == '2_'.$team->getId()) {
                                 $selected = 'selected="selected"';
                             }
                             echo '<option '.$selected.' value="2_'.$team->getId().'">'.$this->escape($team->getName()).'</option>';
@@ -128,9 +128,9 @@ if ($awards != '') {
     <?php endif; ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>

@@ -108,9 +108,7 @@ class Awards extends \Ilch\Mapper
 
     public function existsTable($table)
     {
-        $check = $this->db()->ifTableExists('[prefix]_'.$table);
-
-        return $check;
+        return $this->db()->ifTableExists('[prefix]_'.$table);
     }
 
     /**

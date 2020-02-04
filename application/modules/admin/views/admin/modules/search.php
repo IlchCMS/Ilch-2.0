@@ -59,10 +59,10 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
 if (empty($modulesOnUpdateServer)) {
     echo $this->getTrans('noModulesAvailable');
     return;
-} else {
-    // Sort the modules by name
-    usort($modulesOnUpdateServer, 'custom_sort');
 }
+
+// Sort the modules by name
+usort($modulesOnUpdateServer, 'custom_sort');
 ?>
 
 <div id="modules" class="table-responsive">
@@ -101,7 +101,7 @@ if (empty($modulesOnUpdateServer)) {
                         <small>
                             <?=$this->getTrans('author') ?>: 
                             <?php if ($moduleOnUpdateServer->link != ''): ?>
-                                <a href="<?=$moduleOnUpdateServer->link ?>" alt="<?=$this->escape($moduleOnUpdateServer->author) ?>" title="<?=$this->escape($moduleOnUpdateServer->author) ?>" target="_blank"><i><?=$this->escape($moduleOnUpdateServer->author) ?></i></a>
+                                <a href="<?=$moduleOnUpdateServer->link ?>" alt="<?=$this->escape($moduleOnUpdateServer->author) ?>" title="<?=$this->escape($moduleOnUpdateServer->author) ?>" target="_blank" rel="noopener"><i><?=$this->escape($moduleOnUpdateServer->author) ?></i></a>
                             <?php else: ?>
                                 <i><?=$this->escape($moduleOnUpdateServer->author) ?></i>
                             <?php endif; ?>
