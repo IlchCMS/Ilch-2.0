@@ -592,73 +592,91 @@ class Statistic extends \Ilch\Mapper
         if ($version != null) {
             if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent)) {
                 return ('Firefox');
-            } elseif (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
+            }
+            if (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
                 return 'Internet Explorer';
-            } elseif (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
+            }
+            if (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
                 return 'Internet Explorer';
-            } elseif (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent)) {
+            }
+            if (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent)) {
                 return 'Opera';
-            } elseif (preg_match("=OPR\/([0-9\.]*)=", $useragent)) {
+            }
+            if (preg_match("=OPR\/([0-9\.]*)=", $useragent)) {
                 return 'Opera';
-            } elseif (preg_match("=Edge/([0-9\.]*)=", $useragent)) {
+            }
+            if (preg_match("=Edge/([0-9\.]*)=", $useragent)) {
                 return 'Edge';
-            } elseif (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent)) {
+            }
+            if (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent)) {
                 return 'Vivaldi';
-            } elseif (preg_match("=Chrome/([0-9\.]*)=", $useragent)) {
+            }
+            if (preg_match("=Chrome/([0-9\.]*)=", $useragent)) {
                 return 'Chrome';
-            } elseif (preg_match('=Safari/=', $useragent)) {
+            }
+            if (preg_match('=Safari/=', $useragent)) {
                 return 'Safari';
-            } elseif (strpos($useragent, 'Konqueror') !== false) {
+            }
+            if (strpos($useragent, 'Konqueror') !== false) {
                 return 'Konqueror';
-            } elseif (preg_match('=Netscape|Navigator=', $useragent)) {
+            }
+            if (preg_match('=Netscape|Navigator=', $useragent)) {
                 return 'Netscape';
-            } else {
-                return '';
             }
-        } else {
-            if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent, $browser)) {
-                return $browser[1];
-            } elseif (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
-                return $browser[1];
-            } elseif (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
-                return $browser[1];
-            } elseif (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent, $browser)) {
-                return $browser[1];
-            } elseif (preg_match("=OPR\/([0-9\.]*)=", $useragent, $browser)) {
-                $tmp = explode('.', $browser[1]);
-                if (count($tmp) > 2) {
-                    $browser[1] = $tmp[0] . '.' . $tmp[1];
-                }
-                return $browser[1];
-            } elseif (preg_match("=Edge/([0-9\.]*)=", $useragent, $browser)) {
-                $tmp = explode('.', $browser[1]);
-                if (count($tmp) > 2) {
-                    $browser[1] = $tmp[0] . '.' . $tmp[1];
-                }
-                return $browser[1];
-            } elseif (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent, $browser)) {
-                $tmp = explode('.', $browser[1]);
-                if (count($tmp) > 2) {
-                    $browser[1] = $tmp[0] . '.' . $tmp[1];
-                }
-                return $browser[1];
-            } elseif (preg_match("=Chrome/([0-9\.]*)=", $useragent, $browser)) {
-                $tmp = explode('.', $browser[1]);
-                if (count($tmp) > 2) {
-                    $browser[1] = $tmp[0] . '.' . $tmp[1];
-                }
-                return $browser[1];
-            } elseif (preg_match('=Safari/=', $useragent)) {
-                if (preg_match('=Version/([\.0-9]*)=', $useragent, $browser)) {
-                    $version = $browser[1];
-                } else {
-                    return '';
-                }
-                return $version;
-            } else {
-                return '';
-            }
+
+            return '';
         }
+
+        if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent, $browser)) {
+            return $browser[1];
+        }
+        if (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
+            return $browser[1];
+        }
+        if (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
+            return $browser[1];
+        }
+        if (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent, $browser)) {
+            return $browser[1];
+        }
+        if (preg_match("=OPR\/([0-9\.]*)=", $useragent, $browser)) {
+            $tmp = explode('.', $browser[1]);
+            if (count($tmp) > 2) {
+                $browser[1] = $tmp[0] . '.' . $tmp[1];
+            }
+            return $browser[1];
+        }
+        if (preg_match("=Edge/([0-9\.]*)=", $useragent, $browser)) {
+            $tmp = explode('.', $browser[1]);
+            if (count($tmp) > 2) {
+                $browser[1] = $tmp[0] . '.' . $tmp[1];
+            }
+            return $browser[1];
+        }
+        if (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent, $browser)) {
+            $tmp = explode('.', $browser[1]);
+            if (count($tmp) > 2) {
+                $browser[1] = $tmp[0] . '.' . $tmp[1];
+            }
+            return $browser[1];
+        }
+        if (preg_match("=Chrome/([0-9\.]*)=", $useragent, $browser)) {
+            $tmp = explode('.', $browser[1]);
+            if (count($tmp) > 2) {
+                $browser[1] = $tmp[0] . '.' . $tmp[1];
+            }
+            return $browser[1];
+        }
+        if (preg_match('=Safari/=', $useragent)) {
+            if (preg_match('=Version/([\.0-9]*)=', $useragent, $browser)) {
+                $version = $browser[1];
+            } else {
+                return '';
+            }
+            return $version;
+        }
+
+        return '';
     }
 
     /**

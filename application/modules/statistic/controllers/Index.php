@@ -77,55 +77,76 @@ class Index extends \Ilch\Controller\Frontend
             $this->redirect()
                 ->to(['action' => 'index']);
         }
+        if ($year == '') {
+            $this->redirect()
+                ->to(['action' => 'index']);
+        }
 
-        if ($year != '' && $month != '' && $os != '') {
-            $date = new \Ilch\Date($year.'-'.$month.'-01');
+        $dateformat = 'Y';
+        $datestring = $year;
+        if ($month != '') {
+            $dateformat = 'Y-m';
+            $datestring .= '-' . $month;
+        }
+        if (!validateDate($datestring, $dateformat)) {
+            $this->addMessage('invalidDate', 'danger');
+            $this->redirect()
+                ->to(['action' => 'index']);
+        }
 
-            $this->getLayout()->getHmenu()
+        if ($os != '') {
+            if ($month != '') {
+                $date = new \Ilch\Date($year.'-'.$month.'-01');
+
+                $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans($date->format('F', true)), ['action' => 'show', 'year' => $year, 'month' => $month])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($os, ['action' => 'show', 'year' => $year, 'month' => $month, 'os' => $os]);
-        }
-        if ($year != '' && $os != '') {
-            $date = new \Ilch\Date($year.'-01-01');
+            } else {
+                $date = new \Ilch\Date($year.'-01-01');
 
-            $this->getLayout()->getHmenu()
+                $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($os, ['action' => 'show', 'year' => $year, 'os' => $os]);
+            }
         }
-        if ($year != '' && $month != '' && $browser != '') {
-            $date = new \Ilch\Date($year.'-'.$month.'-01');
 
-            $this->getLayout()->getHmenu()
+        if ($browser != '') {
+            if ($month != '') {
+                $date = new \Ilch\Date($year.'-'.$month.'-01');
+
+                $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans($date->format('F', true)), ['action' => 'show', 'year' => $year, 'month' => $month])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($browser, ['action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $browser]);
-        }
-        if ($month == '' && $year != '' && $browser != '') {
-            $date = new \Ilch\Date($year.'-01-01');
+            } elseif ($month == '') {
+                $date = new \Ilch\Date($year.'-01-01');
 
-            $this->getLayout()->getHmenu()
+                $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($browser, ['action' => 'show', 'year' => $year, 'browser' => $browser]);
+            }
         }
-        if ($year != '' && $month != '') {
-            $date = new \Ilch\Date($year.'-'.$month.'-01');
 
-            $this->getLayout()->getHmenu()
+        if ($browser == '' && $os == '') {
+            if ($month != '') {
+                $date = new \Ilch\Date($year.'-'.$month.'-01');
+
+                $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans($date->format('F', true)), ['action' => 'show', 'year' => $year, 'month' => $month])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year]);
-        }
-        if ($year != '') {
-            $date = new \Ilch\Date($year.'-01-01');
+            } else {
+                $date = new \Ilch\Date($year.'-01-01');
 
-            $this->getLayout()->getHmenu()
+                $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year]);
+            }
         }
 
         if ($month != '' && $year != '' && $os != '') {

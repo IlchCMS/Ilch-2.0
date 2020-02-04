@@ -41,6 +41,7 @@ return [
     'unknownOrUnseenBrowser' => 'Unbekannter oder bisher nie gesehener Browser.',
     'osStatistic' => 'OS-Statistik',
     'unknownOrUnseenOS' => 'Unbekanntes oder bisher nie gesehenes Betriebssystem.',
+    'invalidDate' => 'Ungültiges Datum.',
     'hour' => 'Stunde',
     'clock' => 'Uhr',
     'day' => 'Tag',
