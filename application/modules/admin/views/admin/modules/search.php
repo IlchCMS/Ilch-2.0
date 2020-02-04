@@ -191,11 +191,12 @@ if (empty($modulesOnUpdateServer)) {
 <script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
 <script>
 function gotokeyAll() {
-   $("[name='gotokey']").each(function(){
-        if ($("[name='setgotokey']").prop('checked'))
+   $("[name='gotokey']").each(function() {
+        if ($("[name='setgotokey']").prop('checked')) {
             $(this).prop('value',"1");
-        else
+        } else {
             $(this).prop('value',"0");
+        }
    });
 }
 // search
