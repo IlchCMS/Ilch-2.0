@@ -117,7 +117,7 @@ $osStatistic = $this->get('osStatistic');
                     <?php if ($ilchVersionStatistic) : ?>
                     <div class="col-xs-12 col-md-6 col-lg-3">
                         <div class="panel stats panel-default" title="<?=$this->getTrans('IlchCMSVersion') ?>: <?=$this->get('CMSVersion') ?>">
-                            <a href="http://ilch.de" target="_blank">
+                            <a href="http://ilch.de" target="_blank" rel="noopener">
                                 <div class="ilch-logo">
                                     <div class="panel-heading panel-ilch">
                                         <span class="panel-title ilch-title text-center">

@@ -206,20 +206,20 @@
                             </a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
-                                    <a href="http://www.ilch.de" target="_blank">
+                                    <a href="http://www.ilch.de" target="_blank" rel="noopener">
                                         <i class="fa fa-home"></i>
                                         <?=$this->getTrans('officialSite') ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="http://www.ilch.de/forum.html" target="_blank">
+                                    <a href="http://www.ilch.de/forum.html" target="_blank" rel="noopener">
                                         <i class="fa fa-comments-o"></i>
                                         <?=$this->getTrans('officialSupportForum') ?>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="https://github.com/IlchCMS/Ilch-2.0/wiki" target="_blank">
+                                    <a href="https://github.com/IlchCMS/Ilch-2.0/wiki" target="_blank" rel="noopener">
                                         <i class="fa fa-book"></i>
                                         <?=$this->getTrans('documentationFAQ') ?>
                                     </a>
