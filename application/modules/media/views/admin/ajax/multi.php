@@ -88,7 +88,7 @@
         window.top.reload();
     });
 
-    $(document).live("click", "img.image", function() {
+    $(document).on("click", "img.image", function() {
         $(this).closest('div').find('input[type="checkbox"]').click();
         elem = $(this).closest('div').find('img');
         if (elem.hasClass('chacked')) {
@@ -106,7 +106,7 @@
         window.top.reload();
     });
 
-    $(document).live("click", "img.image", function() {
+    $(document).on("click", "img.image", function() {
         $(this).closest('div').find('input[type="checkbox"]').click();
         elem = $(this).closest('div').find('img');
         if (elem.hasClass('chacked')) {

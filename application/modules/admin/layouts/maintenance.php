@@ -20,7 +20,8 @@ $date = new \Ilch\Date();
 
         <!-- STYLES -->
         <link href="<?=$this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
         <link href="<?=$this->getBaseUrl('application/modules/admin/static/css/maintenance.css') ?>" rel="stylesheet">
         <link href="<?=$this->getVendorUrl('components/jqueryui/themes/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
