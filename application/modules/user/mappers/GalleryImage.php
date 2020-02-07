@@ -10,6 +10,11 @@ use Modules\User\Models\GalleryImage as GalleryImageModel;
 
 class GalleryImage extends \Ilch\Mapper
 {
+    /**
+     * @param $id
+     * @return GalleryImageModel|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getImageById($id)
     {
         $sql = 'SELECT g.image_id, g.cat, g.id as imgid, g.visits, g.image_title, g.image_description, m.url, m.id, m.url_thumb
@@ -17,6 +22,10 @@ class GalleryImage extends \Ilch\Mapper
                 LEFT JOIN `[prefix]_users_media` m ON g.image_id = m.id
                 WHERE g.id = '.$id;
         $imageRow = $this->db()->queryRow($sql);
+
+        if (empty($imageRow)) {
+            return null;
+        }
 
         $entryModel = new GalleryImageModel();
         $entryModel->setImageId($imageRow['image_id']);
@@ -29,6 +38,11 @@ class GalleryImage extends \Ilch\Mapper
         return $entryModel;
     }
 
+    /**
+     * @param $id
+     * @return GalleryImageModel|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getLastImageByGalleryId($id)
     {
         $sql = 'SELECT g.image_id, g.cat, g.id as imgid, g.visits, g.image_title, g.image_description, m.url, m.id, m.url_thumb
@@ -36,6 +50,10 @@ class GalleryImage extends \Ilch\Mapper
                 LEFT JOIN `[prefix]_users_media` m ON g.image_id = m.id
                 WHERE g.cat = '.$id.' ORDER by g.id DESC LIMIT 1';
         $imageRow = $this->db()->queryRow($sql);
+
+        if (empty($imageRow)) {
+            return null;
+        }
 
         $entryModel = new GalleryImageModel();
         $entryModel->setImageId($imageRow['image_id']);
@@ -47,13 +65,16 @@ class GalleryImage extends \Ilch\Mapper
         return $entryModel;
     }
 
+    /**
+     * @param $id
+     * @return false|string|null
+     */
     public function getCountImageById($id)
     {
-        $sql = 'SELECT *
-                FROM `[prefix]_users_gallery_imgs`
-                WHERE cat = '.$id;
-
-        return $this->db()->queryArray($sql);
+        return $this->db()->select('COUNT(*)', 'users_gallery_imgs')
+            ->where(['cat' => $id])
+            ->execute()
+            ->fetchCell();
     }
 
     /**

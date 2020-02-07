@@ -6,7 +6,7 @@
 
 namespace Modules\Gallery\Mappers;
 
-use Modules\Gallery\Models\GalleryItem as GalleryItem;
+use Modules\Gallery\Models\GalleryItem;
 
 class Gallery extends \Ilch\Mapper
 {

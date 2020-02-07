@@ -6,7 +6,6 @@ $imageMapper = $this->get('imageMapper');
 function rec($item, $galleryMapper, $obj, $imageMapper)
 {
     $subItems = $galleryMapper->getGalleryItemsByParent($item->getUserId(), $item->getId());
-    $image = $imageMapper->getCountImageById($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (empty($subItems)) {
@@ -37,7 +36,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                         <i class="fa fa-eye"></i>
                     </a>
                 </span>
-                <span class="count" style="float:right; margin-right: 6px;">'.count($image).'</span>
+                <span class="count" style="float:right; margin-right: 6px;">'.$imageMapper->getCountImageById($item->getId()).'</span>
             </div>';
 
     if (!empty($subItems)) {

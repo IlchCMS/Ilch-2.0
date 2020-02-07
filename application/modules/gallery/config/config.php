@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.11.0',
+        'version' => '1.12.0',
         'icon_small' => 'fa-picture-o',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -92,7 +92,7 @@ class Config extends \Ilch\Config\Install
                 $boxes = $boxMapper->getBoxList('de_DE');
                 $alreadyInstalled = false;
                 foreach ($boxes as $box) {
-                    if ($box->getKey() == 'pictureofx' && $box->getModule() == 'gallery') {
+                    if ($box->getKey() === 'pictureofx' && $box->getModule() === 'gallery') {
                         $alreadyInstalled = true;
                         break;
                     }

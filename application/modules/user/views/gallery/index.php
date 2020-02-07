@@ -6,7 +6,6 @@ $imageMapper = $this->get('imageMapper');
 function rec($item, $galleryMapper, $obj, $imageMapper)
 {
     $subItems = $galleryMapper->getGalleryItemsByParent($item->getUserId(), $item->getId());
-    $imageCount = $imageMapper->getCountImageById($item->getId());
 
     if ($item->getType() === 0) {
         echo '<div class="page-header">
@@ -16,8 +15,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
     if ($item->getType() != 0) {
         $lastImage = $imageMapper->getLastImageByGalleryId($item->getId());
-
-        if (file_exists($lastImage->getImageThumb())) {
+        if ($lastImage !== null && file_exists($lastImage->getImageThumb())) {
             $image = $obj->getBaseUrl($lastImage->getImageThumb());
         } else {
             $image = $obj->getBaseUrl('application/modules/media/static/img/nomedia.png');
@@ -36,7 +34,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 <a href="'.$obj->getUrl(['action' => 'show', 'user' => $item->getUserId(), 'id' => $item->getId()]).'" >
                                     '.$obj->escape($item->getTitle()).'
                                 </a>
-                                <p class="text-left">'.$obj->getTrans('images').': '. count($imageCount).'</p>
+                                <p class="text-left">'.$obj->getTrans('images').': '. $imageMapper->getCountImageById($item->getId()) .'</p>
                                 <div class="lib-header-seperator"></div>
                                 
                             </div>
@@ -46,7 +44,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                         </div>
                     </div>
                 </div>
-            </div>';        
+            </div>';
     }
 
     if (!empty($subItems)) {

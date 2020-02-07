@@ -9,7 +9,7 @@ $catID = $catTitle = '';
 function recCategory($item, $galleryMapper, $obj, $imageMapper)
 {   
     $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
-    $imageCount = $imageMapper->getCountImageById($item->getId());
+
     if ($item->getType() === 0) {
         echo '<li>
                 <a href="#filter" data-filter=".X'.$obj->escape($item->getId()).'X"><i class="fa fa-image"></i> '.$obj->escape($item->getTitle()).'</a>
@@ -25,14 +25,15 @@ function recCategory($item, $galleryMapper, $obj, $imageMapper)
 function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle)
 {
     $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
-    $imageCount = $imageMapper->getCountImageById($item->getId());
+
     if ($item->getType() === 0) {
         $catID = $obj->escape($item->getId());
         $catTitle = $obj->escape($item->getTitle());
     }
     if ($item->getType() != 0) {
         $lastImage = $imageMapper->getLastImageByGalleryId($item->getId());
-        if ($lastImage->getImageThumb() != '') {
+
+        if ($lastImage !== null && $lastImage->getImageThumb() != '') {
             $image = $obj->getBaseUrl($lastImage->getImageThumb());
         } else {
             $image = $obj->getBaseUrl('application/modules/media/static/img/nomedia.png');
@@ -51,7 +52,7 @@ function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle
                                     '.$obj->escape($item->getTitle()).'
                                 </a>
                                 <p class="text-left">'.$obj->getTrans('cat').': '.$catTitle.'
-                                <br />'.$obj->getTrans('images').': '.count($imageCount).'</p>
+                                <br />'.$obj->getTrans('images').': '.$imageMapper->getCountImageById($item->getId()).'</p>
                                 <div class="lib-header-seperator"></div>
                             </div>
                             <div class="lib-row lib-desc">
@@ -60,7 +61,7 @@ function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle
                         </div>
                     </div>
                 </div>
-            </div>';        
+            </div>';
     }
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {

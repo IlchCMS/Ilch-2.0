@@ -12,17 +12,21 @@ class Image extends \Ilch\Mapper
 {
     /**
      * @param $id
-     * @return ImageModel
+     * @return ImageModel|null
      * @throws \Ilch\Database\Exception
      */
     public function getImageById($id)
     {
         $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
-                           FROM `[prefix]_gallery_imgs` AS g
-                           LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-
-                           WHERE g.id = '.$id;
+                       FROM `[prefix]_gallery_imgs` AS g
+                       LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
+                       WHERE g.id = '.$id;
         $imageRow = $this->db()->queryRow($sql);
+
+        if (empty($imageRow)) {
+            return null;
+        }
+
         $entryModel = new ImageModel();
         $entryModel->setId($imageRow['imgid']);
         $entryModel->setImageId($imageRow['image_id']);
@@ -38,17 +42,21 @@ class Image extends \Ilch\Mapper
 
     /**
      * @param $id
-     * @return ImageModel
+     * @return ImageModel|null
      * @throws \Ilch\Database\Exception
      */
     public function getLastImageByGalleryId($id)
     {
         $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
-                           FROM `[prefix]_gallery_imgs` AS g
-                           LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-
-                           WHERE g.cat = '.$id.' ORDER by g.id DESC LIMIT 1';
+                       FROM `[prefix]_gallery_imgs` AS g
+                       LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
+                       WHERE g.cat = '.$id.' ORDER by g.id DESC LIMIT 1';
         $imageRow = $this->db()->queryRow($sql);
+
+        if (empty($imageRow)) {
+            return null;
+        }
+
         $entryModel = new ImageModel();
         $entryModel->setImageId($imageRow['image_id']);
         $entryModel->setImageThumb($imageRow['url_thumb']);
@@ -60,19 +68,18 @@ class Image extends \Ilch\Mapper
     }
 
     /**
-     * @param $id
-     * @return array
+     * Get count of images by id of category.
+     *
+     * @param int $id
+     * @return int
      * @throws \Ilch\Database\Exception
      */
     public function getCountImageById($id)
     {
-        $sql = 'SELECT *
-                FROM `[prefix]_gallery_imgs`
-                
-                WHERE cat = '.$id;
-        $count = $this->db()->queryArray($sql);
-
-        return $count;
+        return $this->db()->select('COUNT(*)', 'gallery_imgs')
+            ->where(['cat' => $id])
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -105,7 +112,6 @@ class Image extends \Ilch\Mapper
         $sql = 'SELECT SQL_CALC_FOUND_ROWS g.image_id,g.cat,g.id as imgid,g.image_title,g.image_description,g.visits, m.url, m.id, m.url_thumb
                            FROM `[prefix]_gallery_imgs` AS g
                            LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-
                            WHERE g.cat = '.$id.' ORDER BY g.id DESC
                            LIMIT '.implode(',',$pagination->getLimit());
 

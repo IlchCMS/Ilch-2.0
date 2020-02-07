@@ -14,14 +14,18 @@ $config = $this->get('config');
     $userMapper = $obj->get('userMapper');
     $fk_comments = $commentMappers->getCommentsByFKId($commentId);
     $user_rep = $userMapper->getUserById($uid);
-    if (!$user_rep) $user_rep = $userMapper->getDummyUser();
+    if (!$user_rep) {
+        $user_rep = $userMapper->getDummyUser();
+    }
     $config = $obj->get('config');
     $nowDate = new \Ilch\Date();
 
     foreach ($fk_comments as $fk_comment) {
         $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
         $user = $userMapper->getUserById($fk_comment->getUserId());
-        if (!$user) $user = $userMapper->getDummyUser();
+        if (!$user) {
+            $user = $userMapper->getDummyUser();
+        }
         $voted = explode(',', $fk_comment->getVoted());
         if ($req >= $config->get('comment_nesting')) {
             $req = $config->get('comment_nesting');
@@ -41,7 +45,7 @@ $config = $this->get('config');
                                     <?=$obj->escape($user->getName()) ?>
                                 </a>
                                 <p class="text-muted small">
-                                    <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?>
+                                    <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format('d.m.Y - H:i', true) ?>
                                 </p>
                             </div>
                             <div class="pull-right text-muted small">
@@ -50,7 +54,7 @@ $config = $this->get('config');
                         </div>
                         <p><?=nl2br($fk_comment->getText()) ?></p>
                         <div>
-                            <?php if ($obj->getUser() AND in_array($obj->getUser()->getId(), $voted) == false): ?>
+                            <?php if ($obj->getUser() && in_array($obj->getUser()->getId(), $voted) == false): ?>
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-default btn-hover-success" href="<?=$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'up']) ?>" title="<?=$obj->getTrans('iLike') ?>">
                                         <i class="fa fa-thumbs-up"></i> <?=$obj->escape($fk_comment->getUp()) ?>
@@ -69,7 +73,7 @@ $config = $this->get('config');
                                     </button>
                                 </div>
                             <?php endif; ?>
-                            <?php if ($obj->getUser() AND $config->get('comment_reply') == 1 AND $req < $config->get('comment_nesting')-1): ?>
+                            <?php if ($obj->getUser() && $config->get('comment_reply') == 1 && $req < $config->get('comment_nesting')-1): ?>
                                 <a href="javascript:slideReply('reply_<?=$fk_comment->getId() ?>');" class="btn btn-sm btn-default btn-hover-primary">
                                     <i class="fa fa-reply"></i> <?=$obj->getTrans('reply') ?>
                                 </a>
@@ -77,12 +81,12 @@ $config = $this->get('config');
                         </div>
                         <hr>
                     </div>
-                    <?php $req = $req + 1; ?>
+                    <?php ++$req; ?>
 
                     <?php if ($obj->getUser()): ?>
                         <div class="replyHidden" id="reply_<?=$fk_comment->getId() ?>">
                             <form class="form-horizontal" method="POST">
-                                <?=$obj->getTokenField(); ?>
+                                <?=$obj->getTokenField() ?>
                                 <div>
                                     <div class="media-block">
                                         <a class="media-left col-md-offset-<?=$req ?> col-sm-offset-<?=$req ?> hidden-xs" href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]) ?>" title="<?=$obj->escape($obj->getUser()->getName()) ?>">
@@ -95,7 +99,7 @@ $config = $this->get('config');
                                                         <?=$obj->escape($obj->getUser()->getName()) ?>
                                                     </a>
                                                     <p class="text-muted small">
-                                                        <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?>
+                                                        <i class="fa fa-clock-o" title="<?=$obj->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format('d.m.Y - H:i', true) ?>
                                                     </p>
                                                 </div>
                                                 <div class="pull-right text-muted small">
@@ -128,7 +132,7 @@ $config = $this->get('config');
         </article>
 
         <?php
-        $req = $req-1;
+        --$req;
         $fkk_comments = $commentMappers->getCommentsByFKId($fk_comment->getId());
         if (count($fkk_comments) > 0) {
             $req++;
@@ -185,7 +189,7 @@ $config = $this->get('config');
                                                 <?=$this->escape($this->getUser()->getName()) ?>
                                             </a>
                                             <p class="text-muted small">
-                                                <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?>
+                                                <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format('d.m.Y - H:i', true) ?>
                                             </p>
                                         </div>
                                         <p>
@@ -230,12 +234,12 @@ $config = $this->get('config');
                                             <?=$this->escape($user->getName()) ?>
                                         </a>
                                         <p class="text-muted small">
-                                            <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?>
+                                            <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format('d.m.Y - H:i', true) ?>
                                         </p>
                                     </div>
                                     <p><?=nl2br($this->escape($comment->getText())) ?></p>
                                     <div>
-                                        <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $voted) == false): ?>
+                                        <?php if ($this->getUser() && in_array($this->getUser()->getId(), $voted) == false): ?>
                                             <div class="btn-group">
                                                 <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $this->getRequest()->getParam('id'), 'commentId' => $comment->getId(), 'key' => 'up']) ?>" title="<?=$this->getTrans('iLike') ?>">
                                                     <i class="fa fa-thumbs-up"></i> <?=$this->escape($comment->getUp()) ?>
@@ -254,7 +258,7 @@ $config = $this->get('config');
                                                 </button>
                                             </div>
                                         <?php endif; ?>
-                                        <?php if ($this->getUser() AND $config->get('comment_reply') == 1 AND $config->get('comment_nesting') > 0): ?>
+                                        <?php if ($this->getUser() && $config->get('comment_reply') == 1 && $config->get('comment_nesting') > 0): ?>
                                             <a href="javascript:slideReply('reply_<?=$comment->getId() ?>');" class="btn btn-sm btn-default btn-hover-primary">
                                                 <i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?>
                                             </a>
@@ -278,7 +282,7 @@ $config = $this->get('config');
                                                                         <?=$this->escape($this->getUser()->getName()) ?>
                                                                     </a>
                                                                     <p class="text-muted small">
-                                                                        <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?>
+                                                                        <i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format('d.m.Y - H:i', true) ?>
                                                                     </p>
                                                                 </div>
                                                                 <div class="pull-right text-muted small">

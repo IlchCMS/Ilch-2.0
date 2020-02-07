@@ -20,16 +20,16 @@ class Pictureofx extends \Ilch\Box
             $currentPicOfX = explode(',', $this->getConfig()->get('gallery_currentPicOfX'));
 
             switch($this->getConfig()->get('gallery_pictureOfXInterval')) {
-                case "1":
+                case '1':
                     $add = 'PT1H';
                     break;
-                case "2":
+                case '2':
                     $add = 'P1D';
                     break;
-                case "3":
+                case '3':
                     $add = 'P7D';
                     break;
-                case "4":
+                case '4':
                     $add = 'P1M';
                     break;
                 default:

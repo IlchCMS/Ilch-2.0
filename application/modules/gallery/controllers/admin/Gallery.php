@@ -59,7 +59,7 @@ class Gallery extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('gallery'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans($galleryTitle->getTitle()), ['action' => 'treatgallery', 'id' => $id]);
 
-        if ($this->getRequest()->getPost('action') == 'delete') {
+        if ($this->getRequest()->getPost('action') === 'delete') {
                 foreach ($this->getRequest()->getPost('check_gallery') as $imageId) {
                     $imageMapper->deleteById($imageId);
                 }

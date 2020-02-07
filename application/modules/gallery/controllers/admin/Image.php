@@ -33,7 +33,7 @@ class Image extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treatgallery') {
+        if ($this->getRequest()->getActionName() === 'treatgallery') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
