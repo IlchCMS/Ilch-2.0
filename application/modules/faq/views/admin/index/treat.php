@@ -11,7 +11,7 @@
         <?=$this->getTokenField() ?>
         <div class="form-group <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
             <label for="catId" class="col-lg-2 control-label">
-                <?=$this->getTrans('cat'); ?>:
+                <?=$this->getTrans('cat') ?>:
             </label>
             <div class="col-lg-2">
                 <select class="form-control" id="catId" name="catId">
@@ -66,4 +66,4 @@
     <?=$this->getTrans('noCategory') ?>
 <?php endif; ?>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>

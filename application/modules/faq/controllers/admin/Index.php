@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -36,7 +36,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -57,7 +57,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_faqs')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_faqs')) {
             foreach ($this->getRequest()->getPost('check_faqs') as $faqId) {
                 $faqMapper->delete($faqId);
             }
@@ -85,6 +85,10 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost()) {
+            Validation::setCustomFieldAliases([
+                'catId' => 'cat',
+            ]);
+
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'catId' => 'required|numeric|integer|min:1',
                 'question' => 'required',

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -11,7 +11,7 @@ use Modules\Faq\Models\Category as CategoryModel;
 class Category extends \Ilch\Mapper
 {
     /**
-     * Gets categorys.
+     * Gets categories.
      *
      * @param array $where
      * @return CategoryModel[]|[]
@@ -28,54 +28,34 @@ class Category extends \Ilch\Mapper
             return [];
         }
 
-        $categorys = [];
+        $categories = [];
         foreach ($categoryArray as $categoryRow) {
             $categoryModel = new CategoryModel();
             $categoryModel->setId($categoryRow['id']);
             $categoryModel->setTitle($categoryRow['title']);
+            $categoryModel->setReadAccess($categoryRow['read_access']);
 
-            $categorys[] = $categoryModel;
+            $categories[] = $categoryModel;
         }
 
-        return $categorys;
+        return $categories;
     }
 
     /**
-     * Returns user model found by the id or false if none found.
+     * Returns category by the id.
      *
      * @param int $id
-     * @return false|CategoryModel
+     * @return null|CategoryModel
      */
     public function getCategoryById($id)
     {
-        $cats = $this->getCategories(['id' => $id]);
-        return reset($cats);
-    }
+        $category = $this->getCategories(['id' => $id]);
 
-    /**
-     * Returns first non-empty category.
-     *
-     * @return null|CategoryModel
-     */
-    public function getCategoryMinId()
-    {
-        $categoryRow = $this->db()->select('*')
-            ->fields(['c.id', 'c.title', 'faqs' => 'f.cat_id'])
-            ->from(['c' => 'faqs_cats'])
-            ->join(['f' => 'faqs'], 'c.id = f.cat_id')
-            ->order(['c.id' => 'ASC'])
-            ->limit('1')
-            ->execute()
-            ->fetchAssoc();
-
-        if (empty($categoryRow)) {
+        if (!$category) {
             return null;
         }
 
-        $categoryModel = new CategoryModel();
-        $categoryModel->setId($categoryRow['id']);
-
-        return $categoryModel;
+        return reset($category);
     }
 
     /**
@@ -87,12 +67,18 @@ class Category extends \Ilch\Mapper
     {
         if ($category->getId()) {
             $this->db()->update('faqs_cats')
-                ->values(['title' => $category->getTitle()])
+                ->values([
+                    'title' => $category->getTitle(),
+                    'read_access' => $category->getReadAccess()
+                ])
                 ->where(['id' => $category->getId()])
                 ->execute();
         } else {
             $this->db()->insert('faqs_cats')
-                ->values(['title' => $category->getTitle()])
+                ->values([
+                    'title' => $category->getTitle(),
+                    'read_access' => $category->getReadAccess()
+                ])
                 ->execute();
         }
     }

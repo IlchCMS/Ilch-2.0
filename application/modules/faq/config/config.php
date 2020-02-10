@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'faq',
-        'version' => '1.5.0',
+        'version' => '1.6.0',
         'icon_small' => 'fa-question-circle',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -52,6 +52,7 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_faqs_cats` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `title` VARCHAR(100) NOT NULL,
+                  `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\',
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
@@ -65,6 +66,11 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_faqs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.3.0":
+            case "1.4.0":
+            case "1.5.0":
+                // Add read_access column
+                $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
         }
     }
 }

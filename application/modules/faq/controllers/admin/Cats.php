@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -9,6 +9,7 @@ namespace Modules\Faq\Controllers\Admin;
 use Modules\Faq\Mappers\Category as CategoryMapper;
 use Modules\Faq\Models\Category as CategoryModel;
 use Modules\Faq\Mappers\Faq as FaqMapper;
+use Modules\User\Mappers\Group as GroupMapper;
 
 class Cats extends \Ilch\Controller\Admin
 {
@@ -35,7 +36,7 @@ class Cats extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[1][0]['active'] = true;
         } else {
             $items[1]['active'] = true;
@@ -73,6 +74,7 @@ class Cats extends \Ilch\Controller\Admin
     public function treatAction() 
     {
         $categoryMapper = new CategoryMapper();
+        $groupMapper = new GroupMapper();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -97,10 +99,16 @@ class Cats extends \Ilch\Controller\Admin
 
             $title = trim($this->getRequest()->getPost('title'));
 
+            $groups = '';
+            if (!empty($this->getRequest()->getPost('groups'))) {
+                $groups = implode(',', $this->getRequest()->getPost('groups'));
+            }
+
             if (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
             } else {
                 $model->setTitle($title);
+                $model->setReadAccess($groups);
                 $categoryMapper->save($model);
 
                 $this->addMessage('saveSuccess');
@@ -108,6 +116,15 @@ class Cats extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
         }
+
+        if ($this->getRequest()->getParam('id')) {
+            $groups = explode(',', $categoryMapper->getCategoryById($this->getRequest()->getParam('id'))->getReadAccess());
+        } else {
+            $groups = [1,2,3];
+        }
+
+        $this->getView()->set('groups', $groups);
+        $this->getView()->set('userGroupList', $groupMapper->getGroupList());
     }
 
     public function delCatAction()

@@ -1,7 +1,9 @@
 <?php
-$categories = $this->get('categorys');
+$categories = $this->get('categories');
 $faqs = $this->get('faqs');
 $faqMapper = $this->get('faqMapper');
+$readAccess = $this->get('readAccess');
+$adminAccess = $this->get('adminAccess');
 ?>
 
 <h1><?=$this->getTrans('faqFrequentlyAskedQuestions') ?></h1>
@@ -21,8 +23,12 @@ $faqMapper = $this->get('faqMapper');
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <?php foreach ($categories as $category):
+                        if (!($adminAccess == true || is_in_array($readAccess, explode(',', $category->getReadAccess())))) {
+                            continue;
+                        }
+
                         $countFaqs = count($faqMapper->getFaqs(['cat_id' => $category->getId()]));
-                        if ($category->getId() == $this->getRequest()->getParam('catId') OR $category->getId() == $this->get('firstCatId')) {
+                        if ($category->getId() == $this->get('firstCatId') || $category->getId() == $this->getRequest()->getParam('catId')) {
                             $active = 'class="active"';
                         } else {
                             $active = '';

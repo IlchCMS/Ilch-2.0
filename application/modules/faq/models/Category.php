@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -16,20 +16,6 @@ class Category extends \Ilch\Mapper
     private $id;
 
     /**
-     * The parentId of the category.
-     *
-     * @var int
-     */
-    private $parentId;
-
-    /**
-     * The parentId of the category.
-     *
-     * @var int
-     */
-    private $childId;
-
-    /**
      * The title of the category.
      *
      * @var string
@@ -37,11 +23,11 @@ class Category extends \Ilch\Mapper
     private $title;
 
     /**
-     * The text of the category.
+     * Value for read_access.
      *
      * @var string
      */
-    private $text;
+    private $read_access;
 
     /**
      * Gets the category id.
@@ -61,46 +47,6 @@ class Category extends \Ilch\Mapper
     public function setId($id)
     {
         $this->id = (int)$id;
-    }
-
-    /**
-     * Gets the category parentId.
-     *
-     * @return int
-     */
-    public function getParentId()
-    {
-        return $this->parentId;
-    }
-
-    /**
-     * Sets the parentId of the category.
-     *
-     * @param int $childId
-     */
-    public function setParentId($parentId)
-    {
-        $this->parentId = (int)$parentId;
-    }
-
-    /**
-     * Gets the category parentId.
-     *
-     * @return int
-     */
-    public function getChildId()
-    {
-        return $this->childId;
-    }
-
-    /**
-     * Sets the parentId of the category.
-     *
-     * @param int $id
-     */
-    public function setChildId($childId)
-    {
-        $this->childId = (int)$childId;
     }
 
     /**
@@ -124,25 +70,24 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Gets the text of the category.
+     * Get the value for read_access.
      *
      * @return string
      */
-    public function getText()
+    public function getReadAccess()
     {
-        return $this->text;
+        return $this->read_access;
     }
 
     /**
-     * Sets the text of the category.
+     * Set the value for read_access.
      *
-     * @param string $text
-     * @return this
+     * @param string $read_access
+     * @return $this
      */
-    public function setText($text)
+    public function setReadAccess($read_access)
     {
-        $this->text = (string)$text;
-
+        $this->read_access = $read_access;
         return $this;
     }
 }

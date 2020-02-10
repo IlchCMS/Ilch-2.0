@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -11,6 +11,7 @@ return [
     'faqFrequentlyAskedQuestions' => 'FAQ - Häufig gestellte Fragen',
     'cat' => 'Kategorie',
     'title' => 'Titel',
+    'visibleFor' => 'Sichtbar für',
     'question' => 'Frage',
     'answer' => 'Antwort',
     'entries' => 'Einträge',
