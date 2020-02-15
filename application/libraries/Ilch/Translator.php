@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -27,6 +27,16 @@ class Translator
     private $translations = [];
 
     /**
+     * Holds the translations for each loaded translation file of a layout.
+     *
+     * Key as the short locale, value as the translations array from the
+     * translations file.
+     *
+     * @var array
+     */
+    private $translationsLayout = [];
+
+    /**
      * Holds the loaded translation directories
      *
      * @var array
@@ -47,9 +57,7 @@ class Translator
      */
     public function __construct($locale = null)
     {
-        /*
-         * If a setting is given, set the locale to the given one.
-         */
+        // If a setting is given, set the locale to the given one.
         if ($locale !== null) {
             $this->locale = $locale;
         }
@@ -75,7 +83,11 @@ class Translator
         // Suppress warning "is_file() expects parameter 1 to be a valid path, string given"
         // If it's not a valid path, is_file() will return a falsey value.
         if (@is_file($transFile)) {
-            $this->translations = array_merge($this->translations, require $transFile);
+            if (strpos($transDir, 'application/layouts') !== false) {
+                $this->translationsLayout = array_merge($this->translationsLayout, require $transFile);
+            } else {
+                $this->translations = array_merge($this->translations, require $transFile);
+            }
             return true;
         }
 
@@ -94,13 +106,14 @@ class Translator
      */
     public function trans($key)
     {
-        if (isset($this->translations[$key])) {
-            $translatedText = $this->translations[$key];
-        } else {
-            /*
-             * If no translation exists, return the key as fallback.
-             */
-            $translatedText = $key;
+        $translatedText = $key;
+
+        if (!$this->isCallFromLayout()) {
+            if (isset($this->translations[$key])) {
+                $translatedText = $this->translations[$key];
+            }
+        } elseif (isset($this->translationsLayout[$key])) {
+            $translatedText = $this->translationsLayout[$key];
         }
 
         $arguments = func_get_args();
@@ -200,5 +213,23 @@ class Translator
         }
 
         return $returnValue;
+    }
+
+    /**
+     * Check if called from a layout.
+     *
+     * @return bool
+     */
+    private function isCallFromLayout()
+    {
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,4);
+
+        foreach ($backtrace as $entry) {
+            if ($entry['function'] === 'getTrans' && (strpos($entry['file'], 'application/layouts') !== false)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
