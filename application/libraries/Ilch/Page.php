@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -68,7 +68,7 @@ class Page
 
         if ($this->request->isPost() && !$this->request->isSecure()) {
             $message = 'No valid secure token given, add function getTokenField() to formular.';
-            if (!(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')) {
+            if (!(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')) {
                 $message .= ' If you previously visited this website over HTTPS, try again accessing this site over HTTPS or clear cookies and restart your browser.';
             }
             throw new \InvalidArgumentException($message);
@@ -88,9 +88,7 @@ class Page
         $this->fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
 
         if (($this->fileConfig->get('dbUser')) !== null) {
-            /*
-             * Cms is installed
-             */
+            // Cms is installed
             if ($this->fileConfig->get('debugModus') === false) {
                 @ini_set('display_errors', 'off');
                 error_reporting(0);
@@ -108,9 +106,7 @@ class Page
             $this->plugin->execute('AfterDatabaseLoad');
             $this->router->defineStartPage($databaseConfig->get('start_page'), $this->translator);
         } else {
-            /*
-             * Cms not installed yet.
-             */
+            // Cms not installed yet.
             $this->request->setModuleName('install');
 
             if (!empty($_SESSION['language'])) {
@@ -131,8 +127,8 @@ class Page
         $this->translator->load(APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/translations');
 
         Registry::set('translator', $this->translator);
-        
         $controller = $this->loadController();
+        $this->translator->load(APPLICATION_PATH.'/'.dirname($controller->getLayout()->getFile()).'/translations');
         $controllerName = $this->request->getControllerName();
         $findSub = strpos($controllerName, '_');
         $dir = '';
@@ -210,9 +206,7 @@ class Page
             $controller = '\\Modules\\'.ucfirst($this->request->getModuleName()).'\\Controllers\\'.$dir.ucfirst($controllerName);
         }
 
-        /*
-         * Check if module exists.
-         */
+        // Check if module exists.
         if (!is_dir(APPLICATION_PATH.'/modules/'.$this->request->getModuleName())) {
             $errorModule = $this->request->getModuleName();
 
@@ -220,9 +214,7 @@ class Page
             $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Module', 'errorText' => $errorModule]);
         }
 
-        /*
-         * Check if controller exists.
-         */
+        // Check if controller exists.
         if (!class_exists($controller)) {
             $errorController = $this->request->getControllerName();
 
