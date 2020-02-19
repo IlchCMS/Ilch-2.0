@@ -225,7 +225,7 @@ class Translator
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,4);
 
         foreach ($backtrace as $entry) {
-            if ($entry['function'] === 'getTrans' && (strpos($entry['file'], 'application/layouts') !== false)) {
+            if ($entry['function'] === 'getTrans' && (strpos($entry['file'], 'application/layouts') !== false || strpos($entry['file'], 'application\layouts') !== false)) {
                 return true;
             }
         }
