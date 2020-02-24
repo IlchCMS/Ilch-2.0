@@ -152,6 +152,8 @@ abstract class Base
         $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
         $this->purifierConfig->set('Attr.EnableID', true);
         $this->purifierConfig->set('AutoFormat.Linkify', true);
+        $def = $this->purifierConfig->getHTMLDefinition(true);
+        $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
         $this->purifier = new \HTMLPurifier($this->purifierConfig);
     }
 
