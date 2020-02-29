@@ -29,6 +29,8 @@ class LayoutAdvSettings extends \Ilch\Model
     private $value;
 
     /**
+     * Get the id.
+     *
      * @return int
      */
     public function getId()
@@ -37,6 +39,8 @@ class LayoutAdvSettings extends \Ilch\Model
     }
 
     /**
+     * Set the id.
+     * 
      * @param int $id
      * @return LayoutAdvSettings
      */
@@ -47,6 +51,8 @@ class LayoutAdvSettings extends \Ilch\Model
     }
 
     /**
+     * Get the layout key.
+     *
      * @return string
      */
     public function getLayoutKey()
@@ -55,6 +61,8 @@ class LayoutAdvSettings extends \Ilch\Model
     }
 
     /**
+     * Set the layout key.
+     *
      * @param string $layoutKey
      * @return LayoutAdvSettings
      */
@@ -65,6 +73,8 @@ class LayoutAdvSettings extends \Ilch\Model
     }
 
     /**
+     * Get the key.
+     *
      * @return string
      */
     public function getKey()
@@ -73,6 +83,8 @@ class LayoutAdvSettings extends \Ilch\Model
     }
 
     /**
+     * Set the key.
+     *
      * @param string $key
      * @return LayoutAdvSettings
      */
@@ -83,6 +95,8 @@ class LayoutAdvSettings extends \Ilch\Model
     }
 
     /**
+     * Get the value.
+     *
      * @return string
      */
     public function getValue()
@@ -91,6 +105,8 @@ class LayoutAdvSettings extends \Ilch\Model
     }
 
     /**
+     * Set the value.
+     *
      * @param string $value
      * @return LayoutAdvSettings
      */

@@ -6,7 +6,6 @@
 
 namespace Ilch\Layout;
 
-use http\Exception\RuntimeException;
 use Ilch\Request;
 use Ilch\Router;
 use Ilch\Translator;
@@ -375,6 +374,8 @@ class Frontend extends Base
 
     /**
      * Load settings made by an administrator if they exist or load default ones from layout.
+     *
+     * @since 2.1.31
      */
     public function loadSettings()
     {
@@ -405,6 +406,7 @@ class Frontend extends Base
      *
      * @param string $key name of setting
      * @return string
+     * @since 2.1.31
      */
     public function getLayoutSetting($key)
     {
