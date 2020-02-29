@@ -178,6 +178,14 @@ class Config extends \Ilch\Config\Install
                 `info` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
+            CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutAdvSettings` (
+                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `layoutKey` VARCHAR(255) NOT NULL,
+                `key` VARCHAR(255) NOT NULL,
+                `value` TEXT NOT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+            
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_notifications` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -644,6 +652,14 @@ class Config extends \Ilch\Config\Install
 
                 // Remove no longer needed file
                 unlink(APPLICATION_PATH.'/libraries/Ilch/Session.php');
+            case "2.1.30":
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutAdvSettings` (
+                    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                    `layoutKey` VARCHAR(255) NOT NULL,
+                    `key` VARCHAR(255) NOT NULL,
+                    `value` TEXT NOT NULL,
+                    PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
         }
 
         return 'Update function executed.';

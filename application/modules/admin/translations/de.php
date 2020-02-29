@@ -367,4 +367,8 @@ return [
     'smtp_pass' => 'Passwort',
     'emailBlacklist' => 'E-Mail Sperrliste',
     'editEmailBlacklist' => 'E-Mail Sperrliste bearbeiten',
+
+    'menuAdvSettings' => 'Erweiterte Einstellungen',
+    'menuAdvSettingsShow' => 'Anzeige',
+    'noLayouts' => 'Keine Layouts mit erweiterten Einstellungen gefunden.',
 ];

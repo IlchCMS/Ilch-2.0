@@ -7,7 +7,9 @@
 namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Module as ModuleMapper;
+use Modules\Admin\Mappers\LayoutAdvSettings as LayoutAdvSettingsMapper;
 use Modules\Admin\Models\Layout as LayoutModel;
+use Modules\Admin\Models\LayoutAdvSettings as LayoutAdvSettingsModel;
 use Ilch\Transfer;
 
 class Layouts extends \Ilch\Controller\Admin
@@ -31,7 +33,13 @@ class Layouts extends \Ilch\Controller\Admin
                 'name' => 'menuSettings',
                 'active' => false,
                 'icon' => 'fa fa-cogs',
-                'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'settings'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'settings']),
+                [
+                    'name' => 'menuAdvSettings',
+                    'active' => false,
+                    'icon' => 'fa fa-cogs',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'advSettings'])
+                ]
             ]
         ];
 
@@ -41,6 +49,8 @@ class Layouts extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'settings') {
             $items[2]['active'] = true;
+        } elseif ($this->getRequest()->getActionName() === 'advSettings' || $this->getRequest()->getActionName() === 'advSettingsShow') {
+            $items[2][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }
@@ -60,7 +70,7 @@ class Layouts extends \Ilch\Controller\Admin
         $layouts = [];
         $versionsOfLayouts = [];
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
-            if (is_dir($layoutPath)){
+            if (is_dir($layoutPath)) {
                 $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
                 $model = new LayoutModel();
@@ -74,6 +84,9 @@ class Layouts extends \Ilch\Controller\Admin
                 $model->setDesc($config->config['desc']);
                 if (!empty($config->config['modulekey'])) {
                     $model->setModulekey($config->config['modulekey']);
+                }
+                if (!empty($config->config['settings'])) {
+                    $model->setSettings($config->config['settings']);
                 }
                 $layouts[] = $model;
                 $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
@@ -129,7 +142,7 @@ class Layouts extends \Ilch\Controller\Admin
             $layoutsDir = [];
             $versionsOfLayouts = [];
             foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
-                if (is_dir($layoutPath)){
+                if (is_dir($layoutPath)) {
                     $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
                     $config = new $configClass($this->getTranslator());
                     $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
@@ -186,7 +199,7 @@ class Layouts extends \Ilch\Controller\Admin
 
         $layoutsDir = [];
         foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
-            if (is_dir($layoutPath)){
+            if (is_dir($layoutPath)) {
                 $layoutsDir[] = basename($layoutPath);
             }
         }
@@ -218,6 +231,105 @@ class Layouts extends \Ilch\Controller\Admin
             ->set('description', $this->getConfig()->get('description'));
     }
 
+    public function advSettingsAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings'])
+            ->add($this->getTranslator()->trans('menuAdvSettings'), ['action' => 'advSettings']);
+
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_layouts')) {
+            $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
+
+            foreach ($this->getRequest()->getPost('check_layouts') as $advSettingsLayoutKey) {
+                $layoutAdvSettingsMapper->deleteSettings($advSettingsLayoutKey);
+            }
+        }
+
+        $layouts = [];
+        foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
+            if (is_dir($layoutPath)) {
+                $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                if (empty($config->config['modulekey']) && empty($config->config['settings'])) {
+                    continue;
+                }
+                $model = new LayoutModel();
+                $model->setKey(basename($layoutPath));
+                $model->setName($config->config['name']);
+                $model->setAuthor($config->config['author']);
+                if (!empty($config->config['modulekey'])) {
+                    $model->setModulekey($config->config['modulekey']);
+                }
+                $layouts[] = $model;
+            }
+        }
+
+        $this->getView()->set('layouts', $layouts);
+    }
+
+    public function advSettingsShowAction()
+    {
+        $layoutKey = $this->getRequest()->getParam('layoutKey');
+
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings'])
+            ->add($this->getTranslator()->trans('menuAdvSettings'), ['action' => 'advSettings'])
+            ->add($this->getTranslator()->trans('menuAdvSettingsShow'), ['action' => 'advSettings', 'layoutKey' => $layoutKey]);
+
+        $settings = [];
+        $layoutPath = APPLICATION_PATH.'/layouts/'.$layoutKey;
+        if (is_dir($layoutPath)) {
+            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+            $config = new $configClass($this->getTranslator());
+            if (!empty($config->config['settings'])) {
+                $settings = $config->config['settings'];
+            }
+
+            // TODO: Translations won't be used as isCallFromLayout() returns false?
+            $this->getLayout()->getTranslator()->load($layoutPath.'/translations/');
+        }
+
+        $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
+
+        if ($this->getRequest()->isPost()) {
+            $postedSettings = [];
+            foreach($this->getRequest()->getPost() as $key => $value) {
+                $layoutAdvSettingsModel = new LayoutAdvSettingsModel();
+                $layoutAdvSettingsModel->setLayoutKey($layoutKey);
+                $layoutAdvSettingsModel->setKey($key);
+                $layoutAdvSettingsModel->setValue($value);
+                $postedSettings[] = $layoutAdvSettingsModel;
+            }
+
+            $layoutAdvSettingsMapper->save($postedSettings);
+        }
+
+        $settingsValues = null;
+
+        if (empty($settings)) {
+            $layoutAdvSettingsMapper->deleteSettings($layoutKey);
+        } else {
+            $settingsValues = $layoutAdvSettingsMapper->getSettings($layoutKey);
+        }
+
+        $this->getView()->set('settings', $settings);
+        $this->getView()->set('settingsValues', $settingsValues);
+    }
+
+    public function deleteAdvSettingsAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
+            $layoutAdvSettingsMapper->deleteSettings($this->getRequest()->getParam('layoutKey'));
+
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'advSettings']);
+        }
+    }
+
     public function deleteAction()
     {
         if ($this->getConfig()->get('default_layout') == $this->getRequest()->getParam('key')) {
@@ -242,6 +354,10 @@ class Layouts extends \Ilch\Controller\Admin
 
                 removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
             }
+
+            // Delete advanced layout settings
+            $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
+            $layoutAdvSettingsMapper->deleteSettings($this->getRequest()->getParam('key'));
 
             $this->addMessage('deleteSuccess');
         }

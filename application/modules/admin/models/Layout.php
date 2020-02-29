@@ -65,6 +65,13 @@ class Layout extends \Ilch\Model
     protected $modulekey;
 
     /**
+     * Settings of the layout.
+     *
+     * @var array
+     */
+    protected $settings;
+
+    /**
      * Gets the key.
      *
      * @return string
@@ -222,5 +229,27 @@ class Layout extends \Ilch\Model
     public function setModulekey($modulekey)
     {
         $this->modulekey = (string)$modulekey;
+    }
+
+    /**
+     * Get the settings.
+     *
+     * @return array
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
+
+    /**
+     * Set the settings.
+     *
+     * @param array $settings
+     * @return Layout
+     */
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+        return $this;
     }
 }

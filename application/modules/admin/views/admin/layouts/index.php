@@ -75,6 +75,10 @@ $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)))
                         <a href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
                             <i class="fa fa-cogs"></i>
                         </a>
+                    <?php elseif (!empty($layout->getSettings())): ?>
+                        <a href="<?=$this->getUrl(['action' => 'advSettingsShow', 'layoutKey' => $layout->getKey()]) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
+                            <i class="fa fa-cogs"></i>
+                        </a>
                     <?php endif; ?>
                     </div>
                     <div class="pull-right">

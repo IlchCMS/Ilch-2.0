@@ -53,10 +53,10 @@ class Frontend extends Base
                             $url[$paramKey] = '';
                         }
 
-                        if ($url['module'] == $this->getRequest()->getModuleName()) {
-                            if ($url['controller'] == $this->getRequest()->getControllerName()) {
-                                if ($url['action'] == $this->getRequest()->getActionName()) {
-                                    if ($url[$paramKey] == $this->getRequest()->getParam($paramKey)) {
+                        if ($url['module'] === $this->getRequest()->getModuleName()) {
+                            if ($url['controller'] === $this->getRequest()->getControllerName()) {
+                                if ($url['action'] === $this->getRequest()->getActionName()) {
+                                    if ($url[$paramKey] === $this->getRequest()->getParam($paramKey)) {
                                         $layoutFile = $layoutKeyConfig;
                                         break;
                                     }
@@ -87,6 +87,8 @@ class Frontend extends Base
             }
 
             $this->getLayout()->setFile('layouts/'.$layoutKey.'/'.$layoutFile, $layoutKey);
+
+            $this->getLayout()->loadSettings();
         }
     }
 }
