@@ -23,3 +23,25 @@ admin_notifications_permission:
     module: "awards"
     granted: 1
     limit: 5
+
+admin_layoutAdvSettings:
+  -
+    id: 1
+    layoutKey: 'testLayoutKey1'
+    key: 'testKey1'
+    value: 'testValue1'
+  -
+    id: 2
+    layoutKey: 'testLayoutKey1'
+    key: 'testKey2'
+    value: 'testValue2'
+  -
+    id: 3
+    layoutKey: 'testLayoutKey2'
+    key: 'testKey3'
+    value: 'testValue3'
+  -
+    id: 4
+    layoutKey: 'testLayoutKey2'
+    key: 'testKey4'
+    value: 'testValue4'
