@@ -33,7 +33,23 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(['delete' => 'delete']) ?>
+
+        <div class="content_savebox">
+            <input type="hidden" class="content_savebox_hidden" name="action" value="delete" />
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <?=$this->getTrans('selected') ?> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu listChooser" role="menu">
+                    <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+                </ul>
+            </div>
+            <?php if ($this->get('orphanedSettingsExist')) : ?>
+                <button type="submit" class="save_button btn btn-default" name="deleteOrphanedSettings" value="deleteOrphanedSettings">
+                    <?=$this->getTrans('deleteOrphanedSettings') ?>
+                </button>
+            <?php endif; ?>
+        </div>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noLayouts') ?>

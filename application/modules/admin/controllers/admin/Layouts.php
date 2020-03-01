@@ -233,14 +233,14 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function advSettingsAction()
     {
+        $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
+
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings'])
             ->add($this->getTranslator()->trans('menuAdvSettings'), ['action' => 'advSettings']);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_layouts')) {
-            $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
-
             foreach ($this->getRequest()->getPost('check_layouts') as $advSettingsLayoutKey) {
                 $layoutAdvSettingsMapper->deleteSettings($advSettingsLayoutKey);
             }
@@ -249,22 +249,42 @@ class Layouts extends \Ilch\Controller\Admin
         $layouts = [];
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
             if (is_dir($layoutPath)) {
-                $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                $key = basename($layoutPath);
+                $configClass = '\\Layouts\\'.ucfirst($key).'\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
                 if (empty($config->config['modulekey']) && empty($config->config['settings'])) {
                     continue;
                 }
                 $model = new LayoutModel();
-                $model->setKey(basename($layoutPath));
+                $model->setKey($key);
                 $model->setName($config->config['name']);
                 $model->setAuthor($config->config['author']);
                 if (!empty($config->config['modulekey'])) {
                     $model->setModulekey($config->config['modulekey']);
                 }
-                $layouts[] = $model;
+                $layouts[$key] = $model;
             }
         }
 
+        $layoutKeys = $layoutAdvSettingsMapper->getListOfLayoutKeys();
+        $orphanedSettings = [];
+        foreach ($layoutKeys as $layoutKey) {
+            if (!isset($layouts[$layoutKey])) {
+                $orphanedSettings[] = $layoutKey;
+            }
+        }
+
+        if ($this->getRequest()->getPost('deleteOrphanedSettings')) {
+            foreach($orphanedSettings as $layoutKey) {
+                $layoutAdvSettingsMapper->deleteSettings($layoutKey);
+            }
+            $orphanedSettings = [];
+        }
+        if (!empty($orphanedSettings)) {
+            $this->addMessage('orphanedSettings', 'info');
+        }
+
+        $this->getView()->set('orphanedSettingsExist', (!empty($orphanedSettings)));
         $this->getView()->set('layouts', $layouts);
     }
 

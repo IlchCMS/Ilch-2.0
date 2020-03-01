@@ -371,4 +371,6 @@ return [
     'menuAdvSettings' => 'Advanced Settings',
     'menuAdvSettingsShow' => 'Show',
     'noLayouts' => 'No layouts with advanced settings found.',
+    'orphanedSettings' => 'Settings have been found for not existing layouts. These can be deleted below.',
+    'deleteOrphanedSettings' => 'Delete orphaned settings',
 ];

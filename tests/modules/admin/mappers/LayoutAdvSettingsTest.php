@@ -81,6 +81,17 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
         $this->assertSame($layoutSetting['testKey2']->getValue(), 'testValue2');
     }
 
+    /**
+     * Test if getListOfLayoutKeys() returns the expected layout keys.
+     */
+    public function testGetListOfLayoutKeys()
+    {
+        $layoutKeyList = $this->out->getListOfLayoutKeys();
+
+        $this->assertCount(2, $layoutKeyList);
+        $this->assertSame($layoutKeyList[0], 'testLayoutKey1');
+        $this->assertSame($layoutKeyList[1], 'testLayoutKey2');
+    }
 
     /**
      * Test if hasSettings() returns true for existing settings.

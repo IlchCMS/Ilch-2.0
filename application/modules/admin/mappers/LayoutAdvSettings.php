@@ -70,6 +70,25 @@ class LayoutAdvSettings extends \Ilch\Mapper
     }
 
     /**
+     * Get list of existing layout keys.
+     *
+     * @return array|string[]
+     */
+    public function getListOfLayoutKeys()
+    {
+        $layoutKeys = $this->db()->select('DISTINCT layoutKey')
+            ->from('admin_layoutAdvSettings')
+            ->execute()
+            ->fetchList();
+
+        if (empty($layoutKeys)) {
+            return [];
+        }
+
+        return $layoutKeys;
+    }
+
+    /**
      * Save settings.
      *
      * @param LayoutAdvSettingsModel[] $model
