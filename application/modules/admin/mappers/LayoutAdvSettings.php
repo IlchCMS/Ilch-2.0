@@ -126,9 +126,17 @@ class LayoutAdvSettings extends \Ilch\Mapper
      */
     public function deleteSetting($layoutKey, $key)
     {
-        $this->db()->delete('admin_layoutAdvSettings')
-            ->where(['layoutKey' => $layoutKey, 'key' => $key])
-            ->execute();
+        $this->deleteBy(['layoutKey' => $layoutKey, 'key' => $key]);
+    }
+
+    /**
+     * Delete setting by it's id.
+     *
+     * @param int $id
+     */
+    public function deleteSettingById($id)
+    {
+        $this->deleteBy(['id' => $id]);
     }
 
     /**
@@ -139,8 +147,18 @@ class LayoutAdvSettings extends \Ilch\Mapper
      */
     public function deleteSettings($layoutKey)
     {
+        $this->deleteBy(['layoutKey' => $layoutKey]);
+    }
+
+    /**
+     * Delete setting/settings by specified where clause.
+     *
+     * @param array $where
+     */
+    private function deleteBy($where)
+    {
         $this->db()->delete('admin_layoutAdvSettings')
-            ->where(['layoutKey' => $layoutKey])
+            ->where($where)
             ->execute();
     }
 }

@@ -52,7 +52,6 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
 
     /**
      * Test if getSetting() returns the expected setting.
-     *
      */
     public function testGetSetting()
     {
@@ -66,7 +65,6 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
 
     /**
      * Test if getSettings() returns the expected settings.
-     *
      */
     public function testGetSettings()
     {
@@ -86,7 +84,6 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
 
     /**
      * Test if hasSettings() returns true for existing settings.
-     *
      */
     public function testHasSettings()
     {
@@ -95,7 +92,6 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
 
     /**
      * Test if hasSettings() returns false for non existing settings.
-     *
      */
     public function testHasSettingsNotExisting()
     {
@@ -104,9 +100,8 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
 
     /**
      * Test if save() saves the setting correctly.
-     *
      */
-    public function testSave()
+    public function testSaveSingleOne()
     {
         $layoutSettingModel = new LayoutAdvSettingsModel();
         $layoutSettingModel->setLayoutKey('testLayoutKey3');
@@ -123,8 +118,38 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     }
 
     /**
+     * Test if save() saves the settings correctly.
+     */
+    public function testSaveMultiple()
+    {
+        $layoutSettingModel = new LayoutAdvSettingsModel();
+        $layoutSettingModel->setLayoutKey('testLayoutKey3');
+        $layoutSettingModel->setKey('testKey5');
+        $layoutSettingModel->setValue('testValue5');
+        $layoutSettingsArray[] = $layoutSettingModel;
+
+        $layoutSettingModel = new LayoutAdvSettingsModel();
+        $layoutSettingModel->setLayoutKey('testLayoutKey3');
+        $layoutSettingModel->setKey('testKey6');
+        $layoutSettingModel->setValue('testValue6');
+        $layoutSettingsArray[] = $layoutSettingModel;
+
+        $this->out->save($layoutSettingsArray);
+
+        $layoutSetting = $this->out->getSettings('testLayoutKey3');
+        $this->assertEquals($layoutSetting['testKey5']->getId(), 5);
+        $this->assertSame($layoutSetting['testKey5']->getLayoutKey(), 'testLayoutKey3');
+        $this->assertSame($layoutSetting['testKey5']->getKey(), 'testKey5');
+        $this->assertSame($layoutSetting['testKey5']->getValue(), 'testValue5');
+
+        $this->assertEquals($layoutSetting['testKey6']->getId(), 6);
+        $this->assertSame($layoutSetting['testKey6']->getLayoutKey(), 'testLayoutKey3');
+        $this->assertSame($layoutSetting['testKey6']->getKey(), 'testKey6');
+        $this->assertSame($layoutSetting['testKey6']->getValue(), 'testValue6');
+    }
+
+    /**
      * Test if deleteSetting() successfully deletes a specific setting.
-     *
      */
     public function testDeleteSetting()
     {
@@ -133,8 +158,16 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     }
 
     /**
+     * Test if deleteSettingById() successfully deletes the setting with a specific id.
+     */
+    public function testDeleteSettingById()
+    {
+        $this->out->deleteSettingById(2);
+        $this->assertEmpty($this->out->getSetting('testLayoutKey1','testKey2'));
+    }
+
+    /**
      * Test if deleteSettings() successfully deletes all settings with a specific layoutKey.
-     *
      */
     public function testDeleteSettings()
     {
