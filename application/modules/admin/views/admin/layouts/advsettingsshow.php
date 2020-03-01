@@ -6,6 +6,12 @@ function getInput($name, $value, $settingsValues, $obj)
     $input = '';
     switch($value['type'])
     {
+        case 'bscolorpicker':
+            $input = sprintf('<input class="form-control color {hash:true}"
+                               id="%s"
+                               name="%s"
+                               value="%s">', $name, $name, $settingsValue);
+            break;
         case 'ckeditorbbcode':
             $input = sprintf('<textarea class="form-control ckeditor"
                                name="%s"
@@ -80,3 +86,4 @@ function getInput($name, $value, $settingsValues, $obj)
         ->addUploadController($this->getUrl('admin/media/index/upload'))
     ?>
 </script>
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
