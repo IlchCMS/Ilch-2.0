@@ -5,6 +5,8 @@
 
 namespace Ilch\Controller;
 
+use Ilch\Registry;
+
 class Frontend extends Base
 {
     public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)
@@ -88,7 +90,10 @@ class Frontend extends Base
 
             $this->getLayout()->setFile('layouts/'.$layoutKey.'/'.$layoutFile, $layoutKey);
 
-            $this->getLayout()->loadSettings();
+            if (Registry::has('db')) {
+                // CMS is installed. Load possibly existing layout settings.
+                $this->getLayout()->loadSettings();
+            }
         }
     }
 }
