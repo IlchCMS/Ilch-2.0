@@ -114,6 +114,9 @@ class Translator
             }
         } elseif (isset($this->translationsLayout[$key])) {
             $translatedText = $this->translationsLayout[$key];
+        } else {
+            // Call from layout, but no translation found. Fallback to other translations.
+            $translatedText = $this->translations[$key];
         }
 
         $arguments = func_get_args();
@@ -225,7 +228,7 @@ class Translator
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,4);
 
         foreach ($backtrace as $entry) {
-            if ($entry['function'] === 'getTrans' && (strpos($entry['file'], 'application/layouts') !== false || strpos($entry['file'], 'application\layouts') !== false)) {
+            if ($entry['function'] === 'getTrans' && (strpos($entry['file'], 'application'.DIRECTORY_SEPARATOR.'layouts') !== false)) {
                 return true;
             }
         }
