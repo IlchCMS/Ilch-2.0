@@ -307,7 +307,6 @@ class Layouts extends \Ilch\Controller\Admin
                 $settings = $config->config['settings'];
             }
 
-            // TODO: Translations won't be used as isCallFromLayout() returns false?
             $this->getLayout()->getTranslator()->load($layoutPath.'/translations/');
         }
 
@@ -334,6 +333,7 @@ class Layouts extends \Ilch\Controller\Admin
             $settingsValues = $layoutAdvSettingsMapper->getSettings($layoutKey);
         }
 
+        $this->getView()->set('layoutKey', $layoutKey);
         $this->getView()->set('settings', $settings);
         $this->getView()->set('settingsValues', $settingsValues);
     }

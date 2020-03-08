@@ -67,7 +67,7 @@ function getInput($name, $value, $settingsValues, $obj)
     <?php foreach ($this->get('settings') as $key => $value) : ?>
         <div class="form-group">
             <label for="<?=$key ?>>" class="col-lg-2 control-label">
-                <?=$this->getTrans($key) ?>:
+                <?=$this->getOtherLayoutTrans($this->get('layoutKey'), $key) ?>:
             </label>
             <div class="col-lg-10">
                 <?=getInput($key, $value, $this->get('settingsValues'), $this) ?>
