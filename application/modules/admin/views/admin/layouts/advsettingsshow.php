@@ -41,7 +41,8 @@ function getInput($name, $value, $settingsValues, $obj)
                                                type="text"
                                                name="%s"
                                                id="%s"
-                                               value="%s" />
+                                               value="%s"
+                                               readonly />
                                         <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
                                     </div>', $name, $name, $settingsValue);
             break;
@@ -71,7 +72,7 @@ function getInput($name, $value, $settingsValues, $obj)
             <div class="col-lg-10">
                 <?=getInput($key, $value, $this->get('settingsValues'), $this) ?>
                 <?php if (!empty($value['description'])) : ?>
-                    <div class="text-right"><small><?=$this->escape($value['description']) ?></small><p></p></div>
+                    <div class="text-right"><small><?=$this->getTrans($value['description']) ?></small><p></p></div>
                 <?php endif; ?>
             </div>
         </div>
@@ -79,7 +80,7 @@ function getInput($name, $value, $settingsValues, $obj)
 
     <?=$this->getSaveBar() ?>
 </form>
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
     <?=$this->getMedia()
         ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
