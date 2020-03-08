@@ -114,7 +114,7 @@ class Translator
             }
         } elseif (isset($this->translationsLayout[$key])) {
             $translatedText = $this->translationsLayout[$key];
-        } else {
+        } elseif (isset($this->translations[$key])) {
             // Call from layout, but no translation found. Fallback to other translations.
             $translatedText = $this->translations[$key];
         }
