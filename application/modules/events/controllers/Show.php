@@ -27,6 +27,11 @@ class Show extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper;
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
+
+        if ($event === null) {
+            return;
+        }
+
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'));
         $this->getLayout()->getHmenu()

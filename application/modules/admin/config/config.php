@@ -636,6 +636,7 @@ class Config extends \Ilch\Config\Install
                 rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
                 removeDir(ROOT_PATH.'/delete_vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                break;
             case "2.1.28":
                 // Add disable_purifier with default value 0 if not existing.
                 // On new installs it wasn't created before and this lead to confusion on users.
@@ -652,7 +653,13 @@ class Config extends \Ilch\Config\Install
 
                 // Remove no longer needed file
                 unlink(APPLICATION_PATH.'/libraries/Ilch/Session.php');
+                break;
             case "2.1.30":
+                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
+                removeDir(ROOT_PATH.'/delete_vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                break;
+            case "2.1.31":
                 $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutAdvSettings` (
                     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                     `layoutKey` VARCHAR(255) NOT NULL,
@@ -660,6 +667,7 @@ class Config extends \Ilch\Config\Install
                     `value` TEXT NOT NULL,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+                break;
         }
 
         return 'Update function executed.';
