@@ -62,17 +62,17 @@ function getInput($name, $value, $settingsValues, $obj)
 ?>
 
 <h1><?=$this->getTrans('menuAdvSettings') ?></h1>
-<form id="advsettings_form" class="form-horizontal" method="POST" action="">
+<form id="advsettings_form" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <?php foreach ($this->get('settings') as $key => $value) : ?>
         <div class="form-group">
-            <label for="<?=$key ?>>" class="col-lg-2 control-label">
+            <label for="<?=$key ?>" class="col-lg-2 control-label">
                 <?=$this->getOtherLayoutTrans($this->get('layoutKey'), $key) ?>:
             </label>
             <div class="col-lg-10">
                 <?=getInput($key, $value, $this->get('settingsValues'), $this) ?>
                 <?php if (!empty($value['description'])) : ?>
-                    <div class="text-right"><small><?=$this->getTrans($value['description']) ?></small><p></p></div>
+                    <div class="text-right"><small><?=$this->getOtherLayoutTrans($this->get('layoutKey'), $value['description']) ?></small><p></p></div>
                 <?php endif; ?>
             </div>
         </div>
