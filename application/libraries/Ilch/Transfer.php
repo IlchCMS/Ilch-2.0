@@ -255,18 +255,24 @@ class Transfer
     }
 
     /**
-     * @return true/false
+     * Gets the versionslist and checks if there is a new version available.
+     *
+     * @return bool
      */
     public function newVersionFound()
     {
-        foreach ($this->getVersionsList() as $version => $requirements) {
-            if (version_compare(preg_replace('/\s+/', '', $version), $this->getVersionNow(), '>')) {
-                $this->setNewVersion(trim(preg_replace('/\s\s+/','', $version)));
-                $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
-                $this->checkRequirements($requirements);
-                return true;
+        $versionsList = $this->getVersionsList();
+        if ($versionsList !== null) {
+            foreach ($this->getVersionsList() as $version => $requirements) {
+                if (version_compare(preg_replace('/\s+/', '', $version), $this->getVersionNow(), '>')) {
+                    $this->setNewVersion(trim(preg_replace('/\s\s+/','', $version)));
+                    $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
+                    $this->checkRequirements($requirements);
+                    return true;
+                }
             }
         }
+
         return false;
     }
 
