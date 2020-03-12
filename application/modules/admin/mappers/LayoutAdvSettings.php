@@ -125,10 +125,11 @@ class LayoutAdvSettings extends \Ilch\Mapper
      * Update an existing setting.
      *
      * @param LayoutAdvSettingsModel $model
+     * @return int affected rows
      */
     private function updateSetting($model)
     {
-        $affectedRows = $this->db()->update('admin_layoutAdvSettings')
+        return $this->db()->update('admin_layoutAdvSettings')
             ->values([
                 'layoutKey' => $model->getLayoutKey(),
                 'key' => $model->getKey(),

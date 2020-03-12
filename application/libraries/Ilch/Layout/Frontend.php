@@ -379,7 +379,6 @@ class Frontend extends Base
      */
     public function loadSettings()
     {
-        file_put_contents('php://stderr', print_r('Call of loadSettings'.PHP_EOL, TRUE));
         $advSettingsMapper = new LayoutAdvSettings();
 
         $settings = $advSettingsMapper->getSettings($this->getLayoutKey());
@@ -390,7 +389,6 @@ class Frontend extends Base
                 $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
                 if (!empty($config->config['settings'])) {
-                    file_put_contents('php://stderr', print_r('Expensive call of loadSettings'.PHP_EOL, TRUE));
                     foreach($config->config['settings'] as $key => $value) {
                         $this->settings[$key] = $value['default'];
                     }
