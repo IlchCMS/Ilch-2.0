@@ -8,13 +8,18 @@ namespace Modules\Admin\Mappers;
 
 use Modules\Admin\Models\LayoutAdvSettings as LayoutAdvSettingsModel;
 
+/**
+ * Class LayoutAdvSettings
+ * @package Modules\Admin\Mappers
+ * @since 2.1.32
+ */
 class LayoutAdvSettings extends \Ilch\Mapper
 {
     /**
      * Get specific setting of a layout.
      *
-     * @param $layoutKey
-     * @param $key
+     * @param string $layoutKey
+     * @param string $key
      * @return LayoutAdvSettingsModel|null
      */
     public function getSetting($layoutKey, $key)
@@ -41,7 +46,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
     /**
      * Get all settings of a layout.
      *
-     * @param $layoutKey
+     * @param string $layoutKey
      * @return array
      */
     public function getSettings($layoutKey)
@@ -95,31 +100,62 @@ class LayoutAdvSettings extends \Ilch\Mapper
      */
     public function save($models)
     {
-        if (!empty($models) && $this->hasSettings($models[0]->getLayoutKey())) {
-            foreach($models as $model) {
-                $this->db()->update('admin_layoutAdvSettings')
-                    ->values([
-                        'layoutKey' => $model->getLayoutKey(),
-                        'key' => $model->getKey(),
-                        'value' => $model->getValue(),
-                        ])
-                    ->where(['layoutKey' => $model->getLayoutKey(), 'key' => $model->getKey()])
-                    ->execute();
-            }
-        } else {
-            foreach($models as $model) {
-                if ($model->getKey() === 'ilch_token' || $model->getKey() === 'save') {
-                    continue;
+        if (!empty($models)) {
+            if ($this->hasSettings($models[0]->getLayoutKey())) {
+                foreach($models as $model) {
+                    if ($model->getKey() === 'ilch_token' || $model->getKey() === 'save') {
+                        continue;
+                    }
+
+                    if ($this->updateSetting($model) === 0) {
+                        // This might be the case if a new setting was added to the layout later.
+                        // Should be relatively rare.
+                        $this->insertSetting($model);
+                    }
                 }
-                $this->db()->insert('admin_layoutAdvSettings')
-                    ->values([
-                        'layoutKey' => $model->getLayoutKey(),
-                        'key' => $model->getKey(),
-                        'value' => $model->getValue(),
-                    ])
-                    ->execute();
+            } else {
+                foreach($models as $model) {
+                    $this->insertSetting($model);
+                }
             }
         }
+    }
+
+    /**
+     * Update an existing setting.
+     *
+     * @param LayoutAdvSettingsModel $model
+     */
+    private function updateSetting($model)
+    {
+        $affectedRows = $this->db()->update('admin_layoutAdvSettings')
+            ->values([
+                'layoutKey' => $model->getLayoutKey(),
+                'key' => $model->getKey(),
+                'value' => $model->getValue(),
+            ])
+            ->where(['layoutKey' => $model->getLayoutKey(), 'key' => $model->getKey()])
+            ->execute();
+    }
+
+    /**
+     * Insert a new setting.
+     *
+     * @param LayoutAdvSettingsModel $model
+     */
+    private function insertSetting($model)
+    {
+        if ($model->getKey() === 'ilch_token' || $model->getKey() === 'save') {
+            return;
+        }
+
+        $this->db()->insert('admin_layoutAdvSettings')
+            ->values([
+                'layoutKey' => $model->getLayoutKey(),
+                'key' => $model->getKey(),
+                'value' => $model->getValue(),
+            ])
+            ->execute();
     }
 
     /**
@@ -140,8 +176,8 @@ class LayoutAdvSettings extends \Ilch\Mapper
     /**
      * Delete specific setting of a layout.
      *
-     * @param $layoutKey
-     * @param $key
+     * @param string $layoutKey
+     * @param string $key
      */
     public function deleteSetting($layoutKey, $key)
     {
@@ -162,7 +198,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
      * Delete all settings of a layout.
      * Call this when the layout gets deleted.
      *
-     * @param $layoutKey
+     * @param string $layoutKey
      */
     public function deleteSettings($layoutKey)
     {

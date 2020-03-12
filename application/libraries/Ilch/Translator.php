@@ -137,6 +137,7 @@ class Translator
      * @param string $key
      * @param [, mixed $args [, mixed $... ]]
      * @return string
+     * @since 2.1.32
      */
     public function transOtherLayout($layoutKey, $key)
     {
@@ -249,6 +250,7 @@ class Translator
      * Check if called from a layout.
      *
      * @return bool
+     * @since 2.1.31
      */
     private function isCallFromLayout()
     {

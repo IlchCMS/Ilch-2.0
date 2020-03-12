@@ -375,7 +375,7 @@ class Frontend extends Base
     /**
      * Load settings made by an administrator if they exist or load default ones from layout.
      *
-     * @since 2.1.31
+     * @since 2.1.32
      */
     public function loadSettings()
     {
@@ -406,7 +406,7 @@ class Frontend extends Base
      *
      * @param string $key name of setting
      * @return string
-     * @since 2.1.31
+     * @since 2.1.32
      */
     public function getLayoutSetting($key)
     {

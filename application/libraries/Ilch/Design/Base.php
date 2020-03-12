@@ -283,6 +283,7 @@ abstract class Base
      * @param string $key
      * @param [, mixed $args [, mixed $... ]]
      * @return string
+     * @since 2.1.32
      */
     public function getOtherLayoutTrans($layoutKey, $key)
     {
