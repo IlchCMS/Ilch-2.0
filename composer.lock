@@ -63,16 +63,16 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.13.1",
+            "version": "4.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor4-releases.git",
-                "reference": "83ca48a5356d10cc7aec6a9e36f327b8bc1b5f2a"
+                "reference": "998e43cd6305bca24304b9538a682da123ac5b73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/83ca48a5356d10cc7aec6a9e36f327b8bc1b5f2a",
-                "reference": "83ca48a5356d10cc7aec6a9e36f327b8bc1b5f2a",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor4-releases/zipball/998e43cd6305bca24304b9538a682da123ac5b73",
+                "reference": "998e43cd6305bca24304b9538a682da123ac5b73",
                 "shasum": ""
             },
             "type": "library",
@@ -101,7 +101,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2019-12-09T13:24:37+00:00"
+            "time": "2020-03-04T13:19:40+00:00"
         },
         {
             "name": "components/jquery",
