@@ -58,24 +58,6 @@
         }
 
         /* -------------------------------------
-            FOOTER
-        ------------------------------------- */
-        table.footer-wrap {
-            width: 100%;
-            clear: both!important;
-        }
-
-        .footer-wrap .container p {
-            font-size: 12px;
-            color: #666;
-
-        }
-
-        table.footer-wrap a {
-            color: #999;
-        }
-
-        /* -------------------------------------
             TYPOGRAPHY
         ------------------------------------- */
         h1, h2, h3 {
@@ -158,7 +140,7 @@
                                     <p>{senderName} {writes}:</p>
                                     <p>{content}</p>
                                     <p>&nbsp;</p>
-                                    <p>{writeBackLink}: <a href="mailto:{senderMail}?subject=Re: {subject}" target="_top">{reply}</a></p>
+                                    <p>{writeBackLink}: <a href="mailto:{senderMail}?subject=Re: {subject}&body={encodedContent}" target="_top">{reply}</a></p>
                                 </td>
                             </tr>
                         </table>
@@ -169,19 +151,5 @@
             </tr>
         </table>
         <!-- /body -->
-
-        <!-- footer -->
-        <table class="footer-wrap">
-            <tr>
-                <td></td>
-                <td class="container">
-                    <div class="content" align="center">
-                        <p>{footer}</p>
-                    </div>
-                </td>
-                <td></td>
-            </tr>
-        </table>
-        <!-- /footer -->
     </body>
 </html>
