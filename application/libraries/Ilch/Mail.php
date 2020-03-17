@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -11,42 +11,51 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Mail
 {
     /**
-     * @var
+     * @var string
      */
     protected $fromName;
 
     /**
-     * @var
+     * @var string
      */
     protected $fromEmail;
 
     /**
-     * @var
+     * @var string
      */
     protected $toName;
 
     /**
-     * @var
+     * @var string
      */
     protected $toEmail;
 
     /**
-     * @var
+     * @var string
      */
     protected $ccEmail;
 
     /**
-     * @var
+     * @var string
      */
     protected $bccEmail;
 
     /**
-     * @var
+     * The "Reply-To:" field as described in RFC 5322 section 3.6.2
+     * The reply field indicates the address(es) to which the author of
+     * the message suggests that replies be sent.
+     *
+     * @var string
+     */
+    protected $replyTo;
+
+    /**
+     * @var string
      */
     protected $subject;
 
     /**
-     * @var
+     * @var string
      */
     protected $message;
 
@@ -61,7 +70,9 @@ class Mail
     }
 
     /**
-     * @return mixed
+     * Get the name of the author (from field)
+     *
+     * @return string
      */
     public function getFromName()
     {
@@ -69,7 +80,9 @@ class Mail
     }
 
     /**
-     * @param mixed $fromName
+     * Set the name of the author (from field)
+     *
+     * @param string $fromName
      * @return $this
      */
     public function setFromName($fromName)
@@ -79,7 +92,9 @@ class Mail
     }
 
     /**
-     * @return mixed
+     * Get the mail address of the author (from field)
+     *
+     * @return string
      */
     public function getFromEmail()
     {
@@ -87,7 +102,9 @@ class Mail
     }
 
     /**
-     * @param mixed $fromEmail
+     * Set the mail address of the author (from field)
+     *
+     * @param string $fromEmail
      * @return $this
      */
     public function setFromEmail($fromEmail)
@@ -97,7 +114,9 @@ class Mail
     }
 
     /**
-     * @return mixed
+     * Get the name of the receiver.
+     *
+     * @return string
      */
     public function getToName()
     {
@@ -105,7 +124,9 @@ class Mail
     }
 
     /**
-     * @param mixed $toName
+     * Set the name of the receiver.
+     *
+     * @param string $toName
      * @return $this
      */
     public function setToName($toName)
@@ -115,7 +136,9 @@ class Mail
     }
 
     /**
-     * @return mixed
+     * Get the mail address of the receiver.
+     *
+     * @return string
      */
     public function getToEmail()
     {
@@ -123,7 +146,9 @@ class Mail
     }
 
     /**
-     * @param mixed $toEmail
+     * Set the mail address of the receiver.
+     *
+     * @param string $toEmail
      * @return $this
      */
     public function setToEmail($toEmail)
@@ -133,7 +158,10 @@ class Mail
     }
 
     /**
-     * @return mixed
+     * Get the mail addresses of the cc field (carbon copy).
+     * It can contain multiply mail addresses seperated by whitespaces.
+     *
+     * @return string
      */
     public function getCcEmail()
     {
@@ -141,7 +169,10 @@ class Mail
     }
 
     /**
-     * @param mixed $ccEmail
+     * Set the mail addresses of the cc field (carbon copy).
+     * It can contain multiply mail addresses seperated by whitespaces.
+     *
+     * @param string $ccEmail
      * @return $this
      */
     public function setCcEmail($ccEmail)
@@ -151,7 +182,10 @@ class Mail
     }
 
     /**
-     * @return mixed
+     * Get the mail addresses of the bcc field (blank carbon copy).
+     * It can contain multiply mail addresses seperated by whitespaces.
+     *
+     * @return string
      */
     public function getBccEmail()
     {
@@ -159,7 +193,10 @@ class Mail
     }
 
     /**
-     * @param mixed $bccEmail
+     * Get the mail addresses of the bcc field (blank carbon copy).
+     * It can contain multiply mail addresses seperated by whitespaces.
+     *
+     * @param string $bccEmail
      * @return $this
      */
     public function setBccEmail($bccEmail)
@@ -169,7 +206,35 @@ class Mail
     }
 
     /**
-     * @return mixed
+     * Get the mail addresses of the "Reply-To:" field.
+     * It can contain multiply mail addresses seperated by whitespaces.
+     *
+     * @return string
+     * @since 2.1.32
+     */
+    public function getReplyTo()
+    {
+        return $this->replyTo;
+    }
+
+    /**
+     * Set the Get the mail addresses of the "Reply-To:" field.
+     * It can contain multiply mail addresses seperated by whitespaces.
+     *
+     * @param string $replyTo
+     * @return Mail
+     * @since 2.1.32
+     */
+    public function setReplyTo($replyTo)
+    {
+        $this->replyTo = $replyTo;
+        return $this;
+    }
+
+    /**
+     * Get the subject of the message.
+     *
+     * @return string
      */
     public function getSubject()
     {
@@ -177,7 +242,9 @@ class Mail
     }
 
     /**
-     * @param mixed $subject
+     * Set the subject of the message.
+     *
+     * @param string $subject
      * @return $this
      */
     public function setSubject($subject)
@@ -187,7 +254,9 @@ class Mail
     }
 
     /**
-     * @return mixed
+     * Get the body of the message.
+     *
+     * @return string
      */
     public function getMessage()
     {
@@ -195,7 +264,9 @@ class Mail
     }
 
     /**
-     * @param mixed $message
+     * Set the body of the message.
+     *
+     * @param string $message
      * @return $this
      */
     public function setMessage($message)
@@ -205,6 +276,9 @@ class Mail
     }
 
     /**
+     * Get the type of the message.
+     * This is phpmailer specific.
+     *
      * @return string
      */
     public function getType()
@@ -213,6 +287,9 @@ class Mail
     }
 
     /**
+     * Set the type of the message.
+     * This is phpmailer specific.
+     *
      * @param string $type
      * @return $this
      */
@@ -222,6 +299,12 @@ class Mail
         return $this;
     }
 
+    /**
+     * Send an email.
+     * Various fields of this class must be set for this to work.
+     *
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
     public function sent()
     {
         $config = \Ilch\Registry::get('config');
@@ -259,43 +342,46 @@ class Mail
         }
 
         try {
-            if ($this->getFromName() != '') {
-                $mail->addReplyTo($this->getFromEmail(), $this->getFromName());
-                $mail->setFrom($this->getFromEmail(), $this->getFromName());
-            } else {
-                $mail->addReplyTo($this->getFromEmail());
-                $mail->setFrom($this->getFromEmail(), $this->getFromEmail());
+            $mail->setFrom($this->getFromEmail(), $this->getFromName());
+            if (!empty($this->getReplyTo())) {
+                $mail->addReplyTo($this->getReplyTo());
             }
-            if ($this->getToName() != '') {
+            if (!empty($this->getToName())) {
                 $mail->addAddress($to, $this->getToName());
             } else {
                 $mail->addAddress($to);
             }
-            if ($this->getBccEmail() != '') {
+            if (!empty($this->getBccEmail())) {
                 $indiBCC = explode(' ', $this->getBccEmail());
                 foreach ($indiBCC as $key => $value) {
                     $mail->addBCC($value);
                 }
             }
-            if ($this->getCcEmail() != '') {
+            if (!empty($this->getCcEmail())) {
                 $indiCC = explode(' ', $this->getCcEmail());
                 foreach ($indiCC as $key => $value) {
                     $mail->addCC($value);
                 }
             }
-        } catch (\phpmailerException $e) { //Catch all kinds of bad addressing
+            if (!empty($this->getReplyTo())) {
+                $indiReplyTo = explode(' ', $this->getReplyTo());
+                foreach ($indiReplyTo as $key => $value) {
+                    $mail->addReplyTo($value);
+                }
+            }
+        } catch (\phpmailerException $e) { // Catch all kinds of bad addressing
             throw new \phpmailerException($e->getMessage());
         }
         $mail->isHTML();
         $mail->CharSet = 'UTF-8';
         $mail->Subject = $this->getSubject();
-        if ($this->getMessage() == '') {
+        if (empty($this->getMessage())) {
             $body = '';
         } else {
             $body = $this->getMessage();
         }
-        $mail->WordWrap = 78; // set word wrap to the RFC2822 limit
-        $mail->Body = $body; //Create message bodies and embed images
+        $mail->WordWrap = 78; // Set word wrap to the RFC2822 limit
+        $mail->Body = $body; // Create message bodies and embed images
         //$mail->addAttachment('images/phpmailer_mini.png', 'phpmailer_mini.png'); // optional name
         //$mail->addAttachment('images/phpmailer.png', 'phpmailer.png'); // optional name
         try {

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -60,18 +60,19 @@ class Index extends \Ilch\Controller\Frontend
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/contact/layouts/mail/contact.php');
                 }
 
+                // $content gets encoded with rawurlencode() for "encodedContent" to later add it to the mailto URI.
                 $messageReplace = [
                     '{subject}' => $subject,
                     '{content}' => $content,
+                    '{encodedContent}' => rawurlencode($content),
                     '{sitetitle}' => $this->getConfig()->get('page_title'),
-                    '{date}' => $date->format("l, d. F Y", true),
+                    '{date}' => $date->format('l, d. F Y', true),
                     '{senderMail}' => $senderMail,
                     '{senderName}' => $senderName,
                     '{from}' => $this->getTranslator()->trans('mailFrom'),
                     '{writes}' => $this->getTranslator()->trans('writes'),
-                    '{writeBackLink}' => $this->getTranslator()->trans('mailWriteBackLink'),
+                    '{writeBackLink}' => $this->getTranslator()->trans('directOrReplyLink'),
                     '{reply}' => $this->getTranslator()->trans('reply'),
-                    '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
                 ];
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
@@ -80,6 +81,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->setFromEmail($this->getConfig()->get('standardMail'))
                     ->setToName($receiver->getName())
                     ->setToEmail($receiver->getEmail())
+                    ->setReplyTo($senderMail)
                     ->setSubject($subject)
                     ->setMessage($message)
                     ->sent();
