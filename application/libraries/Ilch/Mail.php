@@ -343,27 +343,27 @@ class Mail
 
         try {
             $mail->setFrom($this->getFromEmail(), $this->getFromName());
-            if ($this->getReplyTo() != '') {
+            if (!empty($this->getReplyTo())) {
                 $mail->addReplyTo($this->getReplyTo());
             }
-            if ($this->getToName() != '') {
+            if (!empty($this->getToName())) {
                 $mail->addAddress($to, $this->getToName());
             } else {
                 $mail->addAddress($to);
             }
-            if ($this->getBccEmail() != '') {
+            if (!empty($this->getBccEmail())) {
                 $indiBCC = explode(' ', $this->getBccEmail());
                 foreach ($indiBCC as $key => $value) {
                     $mail->addBCC($value);
                 }
             }
-            if ($this->getCcEmail() != '') {
+            if (!empty($this->getCcEmail())) {
                 $indiCC = explode(' ', $this->getCcEmail());
                 foreach ($indiCC as $key => $value) {
                     $mail->addCC($value);
                 }
             }
-            if ($this->getReplyTo() != '') {
+            if (!empty($this->getReplyTo())) {
                 $indiReplyTo = explode(' ', $this->getReplyTo());
                 foreach ($indiReplyTo as $key => $value) {
                     $mail->addReplyTo($value);
@@ -375,7 +375,7 @@ class Mail
         $mail->isHTML();
         $mail->CharSet = 'UTF-8';
         $mail->Subject = $this->getSubject();
-        if ($this->getMessage() == '') {
+        if (empty($this->getMessage())) {
             $body = '';
         } else {
             $body = $this->getMessage();
