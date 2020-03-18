@@ -109,7 +109,7 @@ foreach ($layouts as $layout): ?>
                         </div>
                     </div>
                     <br />
-                    <?php if (!empty($module->ilchCore)): ?>
+                    <?php if (!empty($layout->ilchCore)): ?>
                         <div class="row">
                             <div class="col-xs-12">
                                 <b><?=$this->getTrans('requirements') ?>:</b>
