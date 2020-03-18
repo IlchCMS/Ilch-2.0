@@ -100,7 +100,7 @@ class Translator
      * Works with an argument list like sprintf does
      * to replace placholders in the translated text.
      *
-     * @param string  $key
+     * @param string $key
      * @param [, mixed $args [, mixed $... ]]
      * @return string
      */
@@ -120,6 +120,34 @@ class Translator
         }
 
         $arguments = func_get_args();
+        $arguments[0] = $translatedText;
+        $translatedText = sprintf(...$arguments);
+
+        return $translatedText;
+    }
+
+    /**
+     * Returns the translated text for a specific key of a specific layout.
+     * Added for usage in the advanced layout settings feature.
+     *
+     * Works with an argument list like sprintf does
+     * to replace placholders in the translated text.
+     *
+     * @param string $layoutKey
+     * @param string $key
+     * @param [, mixed $args [, mixed $... ]]
+     * @return string
+     * @since 2.1.32
+     */
+    public function transOtherLayout($layoutKey, $key)
+    {
+        $translatedText = $key;
+
+        if (isset($this->translationsLayout[$key])) {
+            $translatedText = $this->translationsLayout[$key];
+        }
+
+        $arguments = array_slice(func_get_args(), 1);
         $arguments[0] = $translatedText;
         $translatedText = sprintf(...$arguments);
 
@@ -222,10 +250,11 @@ class Translator
      * Check if called from a layout.
      *
      * @return bool
+     * @since 2.1.31
      */
     private function isCallFromLayout()
     {
-        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,4);
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
 
         foreach ($backtrace as $entry) {
             if ($entry['function'] === 'getTrans' && (strpos($entry['file'], 'application'.DIRECTORY_SEPARATOR.'layouts') !== false)) {

@@ -272,7 +272,23 @@ abstract class Base
     public function getTrans($key)
     {
       $args = func_get_args();
-      return call_user_func_array([$this->getTranslator(), 'trans'], $args);
+      return $this->getTranslator()->trans(...$args);
+    }
+
+    /**
+     * Returns the translated text for a specific key of a specific layout.
+     * Added for usage in the advanced layout settings feature.
+     *
+     * @param string $layoutKey
+     * @param string $key
+     * @param [, mixed $args [, mixed $... ]]
+     * @return string
+     * @since 2.1.32
+     */
+    public function getOtherLayoutTrans($layoutKey, $key)
+    {
+        $args = func_get_args();
+        return $this->getTranslator()->transOtherLayout(...$args);
     }
 
     /**
@@ -284,8 +300,7 @@ abstract class Base
      */
     public function getFormattedCurrency($amount, $currencyCode)
     {
-      $args = func_get_args();
-      return call_user_func_array([$this->getTranslator(), 'getFormattedCurrency'], $args);
+        return $this->getTranslator()->getFormattedCurrency($amount, $currencyCode);
     }
 
     /**

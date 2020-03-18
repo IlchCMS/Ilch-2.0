@@ -367,4 +367,10 @@ return [
     'smtp_pass' => 'Passwort',
     'emailBlacklist' => 'E-Mail Sperrliste',
     'editEmailBlacklist' => 'E-Mail Sperrliste bearbeiten',
+
+    'menuAdvSettings' => 'Erweiterte Einstellungen',
+    'menuAdvSettingsShow' => 'Anzeige',
+    'noLayouts' => 'Keine Layouts mit erweiterten Einstellungen gefunden.',
+    'orphanedSettings' => 'Es wurden Einstellungen für nicht vorhandene Layouts gefunden. Diese können unten gelöscht werden.',
+    'deleteOrphanedSettings' => 'Lösche verwaiste Einstellungen',
 ];

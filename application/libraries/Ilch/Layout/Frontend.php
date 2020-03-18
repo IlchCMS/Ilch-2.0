@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -9,6 +9,8 @@ namespace Ilch\Layout;
 use Ilch\Request;
 use Ilch\Router;
 use Ilch\Translator;
+use Modules\Admin\Mappers\LayoutAdvSettings;
+use Modules\Admin\Models\LayoutAdvSettings as LayoutAdvSettingsModel;
 
 /**
  * Class Frontend
@@ -22,6 +24,8 @@ use Ilch\Translator;
  */
 class Frontend extends Base
 {
+    private $settings = [];
+
     /**
      * Adds layout helper.
      *
@@ -327,7 +331,7 @@ class Frontend extends Base
      */
     public function getCustomCSS()
     {
-        if ($this->getConfigKey('custom_css') != '') {
+        if ($this->getConfigKey('custom_css') !== '') {
             return '<style>'.$this->getConfigKey('custom_css').'</style>';
         }
         return '';
@@ -363,7 +367,55 @@ class Frontend extends Base
             $this->getRouter());
         $layout->setArray($data);
         $layout->setFile($this->getFile(), $this->getLayoutKey());
+        $this->loadSettings();
 
         echo $layout->loadScript(APPLICATION_PATH.'/'.dirname($this->getFile()).'/'.$file);
+    }
+
+    /**
+     * Load settings made by an administrator if they exist or load default ones from layout.
+     *
+     * @since 2.1.32
+     */
+    public function loadSettings()
+    {
+        $advSettingsMapper = new LayoutAdvSettings();
+
+        $settings = $advSettingsMapper->getSettings($this->getLayoutKey());
+        if (empty($settings)) {
+            // load default values
+            $layoutPath = APPLICATION_PATH.'/layouts/'.$this->getLayoutKey();
+            if (is_dir($layoutPath)) {
+                $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                if (!empty($config->config['settings'])) {
+                    foreach($config->config['settings'] as $key => $value) {
+                        $this->settings[$key] = $value['default'];
+                    }
+                }
+            }
+        } else {
+            $this->settings = $settings;
+        }
+    }
+
+    /**
+     * Get value of setting specified by key.
+     *
+     * @param string $key name of setting
+     * @return string
+     * @since 2.1.32
+     */
+    public function getLayoutSetting($key)
+    {
+        if (empty($this->settings[$key])) {
+            throw new \InvalidArgumentException('A setting with this key doesn\'t exist for this layout.');
+        }
+
+        if ($this->settings[$key] instanceof LayoutAdvSettingsModel) {
+            return $this->settings[$key]->getValue();
+        }
+
+        return $this->settings[$key];
     }
 }

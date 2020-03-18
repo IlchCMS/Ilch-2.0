@@ -367,4 +367,10 @@ return [
     'smtp_pass' => 'Password',
     'emailBlacklist' => 'E-mail blacklist',
     'editEmailBlacklist' => 'Edit e-mail blacklist',
+
+    'menuAdvSettings' => 'Advanced Settings',
+    'menuAdvSettingsShow' => 'Show',
+    'noLayouts' => 'No layouts with advanced settings found.',
+    'orphanedSettings' => 'Settings have been found for not existing layouts. These can be deleted below.',
+    'deleteOrphanedSettings' => 'Delete orphaned settings',
 ];
