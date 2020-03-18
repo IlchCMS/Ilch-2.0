@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -20,24 +20,24 @@ class Layouts extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fas fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSearch',
                 'active' => false,
-                'icon' => 'fa fa-search',
+                'icon' => 'fas fa-search',
                 'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'search'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fas fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'settings']),
                 [
                     'name' => 'menuAdvSettings',
                     'active' => false,
-                    'icon' => 'fa fa-cogs',
+                    'icon' => 'fas fa-cogs',
                     'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'advSettings'])
                 ]
             ]
@@ -69,6 +69,7 @@ class Layouts extends \Ilch\Controller\Admin
 
         $layouts = [];
         $versionsOfLayouts = [];
+        $modulesNotInstalled = [];
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
             if (is_dir($layoutPath)) {
                 $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
@@ -83,10 +84,17 @@ class Layouts extends \Ilch\Controller\Admin
                 }
                 $model->setDesc($config->config['desc']);
                 if (!empty($config->config['modulekey'])) {
+                    $moduleMapper = new ModuleMapper();
+                    if ($moduleMapper->getModuleByKey($config->config['modulekey']) === null) {
+                        $modulesNotInstalled[$config->config['modulekey']] = $config->config['modulekey'];
+                    }
                     $model->setModulekey($config->config['modulekey']);
                 }
                 if (!empty($config->config['settings'])) {
                     $model->setSettings($config->config['settings']);
+                }
+                if (!empty($config->config['ilchCore'])) {
+                    $model->setIlchCore($config->config['ilchCore']);
                 }
                 $layouts[] = $model;
                 $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
@@ -96,12 +104,17 @@ class Layouts extends \Ilch\Controller\Admin
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'layouts.php')
             ->set('defaultLayout', $this->getConfig()->get('default_layout'))
             ->set('layouts', $layouts)
+            ->set('modulesNotInstalled', $modulesNotInstalled)
+            ->set('coreVersion', $this->getConfig()->get('version'))
             ->set('versionsOfLayouts', $versionsOfLayouts);
     }
 
     public function defaultAction()
     {
-        $this->getConfig()->set('default_layout', $this->getRequest()->getParam('key'));
+        if ($this->getRequest()->isSecure()) {
+            $this->getConfig()->set('default_layout', $this->getRequest()->getParam('key'));
+        }
+
         $this->redirect(['action' => 'index']);
     }
 
@@ -151,6 +164,7 @@ class Layouts extends \Ilch\Controller\Admin
             }
 
             $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'))
+                ->set('coreVersion', $this->getConfig()->get('version'))
                 ->set('versionsOfLayouts', $versionsOfLayouts)
                 ->set('layouts', $layoutsDir);
         }
@@ -352,34 +366,36 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if ($this->getConfig()->get('default_layout') == $this->getRequest()->getParam('key')) {
-            $this->addMessage('cantDeleteDefaultLayout', 'info');
-        } else {
-            $configClass = '\\Layouts\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
-            $config = new $configClass();
-
-            if (method_exists($config, 'uninstall')) {
-                $config->uninstall();
-            }
-            removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
-
-            // Call uninstall() of module related to the layout
-            if (is_dir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'))) {
-                $modules = new ModuleMapper();
-
-                $configClass = '\\Modules\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
+        if ($this->getRequest()->isSecure()) {
+            if ($this->getConfig()->get('default_layout') === $this->getRequest()->getParam('key')) {
+                $this->addMessage('cantDeleteDefaultLayout', 'info');
+            } else {
+                $configClass = '\\Layouts\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
                 $config = new $configClass();
-                $config->uninstall();
-                $modules->delete($this->getRequest()->getParam('key'));
 
-                removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
+                if (method_exists($config, 'uninstall')) {
+                    $config->uninstall();
+                }
+                removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
+
+                // Call uninstall() of module related to the layout
+                if (is_dir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'))) {
+                    $modules = new ModuleMapper();
+
+                    $configClass = '\\Modules\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
+                    $config = new $configClass();
+                    $config->uninstall();
+                    $modules->delete($this->getRequest()->getParam('key'));
+
+                    removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
+                }
+
+                // Delete advanced layout settings
+                $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
+                $layoutAdvSettingsMapper->deleteSettings($this->getRequest()->getParam('key'));
+
+                $this->addMessage('deleteSuccess');
             }
-
-            // Delete advanced layout settings
-            $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
-            $layoutAdvSettingsMapper->deleteSettings($this->getRequest()->getParam('key'));
-
-            $this->addMessage('deleteSuccess');
         }
 
         $this->redirect(['action' => 'index']);

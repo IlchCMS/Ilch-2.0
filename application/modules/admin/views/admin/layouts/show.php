@@ -109,6 +109,20 @@ foreach ($layouts as $layout): ?>
                         </div>
                     </div>
                     <br />
+                    <?php if (!empty($module->ilchCore)): ?>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <b><?=$this->getTrans('requirements') ?>:</b>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <b><?=$this->getTrans('ilchCoreVersion') ?>:</b>
+                            </div>
+                            <div class="col-sm-9 col-xs-6">
+                                <?=$this->escape($layout->ilchCore) ?>
+                            </div>
+                        </div>
+                        <br />
+                    <?php endif; ?>
                     <div class="row">
                         <div class="col-xs-12">
                             <b><?=$this->getTrans('desc') ?>:</b>

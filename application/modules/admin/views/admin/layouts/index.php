@@ -7,6 +7,8 @@ $layoutsOnUpdateServer = json_decode($layoutsList);
 $versionsOfLayouts = $this->get('versionsOfLayouts');
 $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
 $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
+$coreVersion = $this->get('coreVersion');
+$modulesNotInstalled = $this->get('modulesNotInstalled');
 ?>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('updateNow') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true) ?></span></p>
 
@@ -41,6 +43,8 @@ $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)))
                 <div class="clearfix">
                     <div class="pull-left">
                         <?php
+                        $ilchCoreTooOld = version_compare($coreVersion, $layout->getIlchCore(), '<');
+                        $moduleNotInstalled = ($layout->getModulekey() != '' && isset($modulesNotInstalled[$layout->getModulekey()]));
                         $layoutOnUpdateServerFound = null;
                         $layoutsOnUpdateServer = (empty($layoutsOnUpdateServer)) ? [] : $layoutsOnUpdateServer;
                         foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer) {
@@ -51,51 +55,82 @@ $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)))
                         }
 
                         if (!empty($layoutOnUpdateServerFound) && version_compare($versionsOfLayouts[$layoutOnUpdateServerFound->key], $layoutOnUpdateServerFound->version, '<')): ?>
+                            <?php if (version_compare($coreVersion, $layoutOnUpdateServerFound->ilchCore, '<')): ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('ilchCoreError') ?>">
+                                    <i class="fas fa-sync"></i>
+                                </button>
+                            <?php else: ?>
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServerFound->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServerFound->key], 'newVersion' => $layoutOnUpdateServerFound->version, 'from' => 'index']) ?>">
                                     <?=$this->getTokenField() ?>
                                     <button type="submit"
                                             class="btn btn-default"
                                             title="<?=$this->getTrans('layoutUpdate') ?>">
-                                        <i class="fa fa-refresh"></i>
+                                        <i class="fas fa-sync"></i>
                                     </button>
                                 </form>
+                            <?php endif; ?>
                         <?php else: ?>
-                            <?php if ($this->get('defaultLayout') == $layout->getKey()): ?>
+                            <?php if ($this->get('defaultLayout') === $layout->getKey()): ?>
                                 <span class="btn disabled" title="<?=$this->getTrans('isDefault') ?>">
-                                    <i class="fa fa-check text-success"></i>
+                                    <i class="fas fa-check text-success"></i>
                                 </span>
                             <?php else: ?>
-                                <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()]) ?>" class="btn btn-default unchecked" title="<?=$this->getTrans('setDefault') ?>">
-                                    <i class="fa"></i>
-                                </a>
+                                <?php if ($ilchCoreTooOld) : ?>
+                                    <button class="btn btn-default unchecked disabled"
+                                            title="<?=$this->getTrans('ilchCoreError') ?>">
+                                        <i class="fa"></i>
+                                    </button>
+                                <?php elseif ($moduleNotInstalled) : ?>
+                                    <button class="btn btn-default unchecked disabled"
+                                            title="<?=$this->getTrans('layoutModuleNotInstalled') ?>">
+                                        <i class="fa"></i>
+                                    </button>
+                                <?php else: ?>
+                                    <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()], null, true) ?>" class="btn btn-default unchecked" title="<?=$this->getTrans('setDefault') ?>">
+                                        <i class="fa"></i>
+                                    </a>
+                                <?php endif; ?>
                             <?php endif; ?>
                         <?php endif; ?>
 
-                    <?php if ($layout->getModulekey() != ''): ?>
-                        <a href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
-                            <i class="fa fa-cogs"></i>
-                        </a>
-                    <?php elseif (!empty($layout->getSettings())): ?>
-                        <a href="<?=$this->getUrl(['action' => 'advSettingsShow', 'layoutKey' => $layout->getKey()]) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
-                            <i class="fa fa-cogs"></i>
-                        </a>
-                    <?php endif; ?>
+                        <?php if ($ilchCoreTooOld) : ?>
+                            <button class="btn btn-default disabled"
+                                    title="<?=$this->getTrans('ilchCoreError') ?>">
+                                <i class="fas fa-cogs"></i>
+                            </button>
+                        <?php elseif ($moduleNotInstalled) : ?>
+                            <button class="btn btn-default disabled"
+                                    title="<?=$this->getTrans('layoutModuleNotInstalled') ?>">
+                                <i class="fas fa-cogs"></i>
+                            </button>
+                        <?php else: ?>
+                            <?php if ($layout->getModulekey() != ''): ?>
+                                <a href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
+                                    <i class="fas fa-cogs"></i>
+                                </a>
+                            <?php elseif (!empty($layout->getSettings())): ?>
+                                <a href="<?=$this->getUrl(['action' => 'advSettingsShow', 'layoutKey' => $layout->getKey()]) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
+                                    <i class="fas fa-cogs"></i>
+                                </a>
+                            <?php endif; ?>
+                        <?php endif; ?>
                     </div>
                     <div class="pull-right">
                         <span class="btn btn-default"
                               data-toggle="modal"
                               data-target="#infoModal<?=$layout->getKey() ?>"
                               title="<?=$this->getTrans('info') ?>">
-                            <i class="fa fa-info text-info"></i>
+                            <i class="fas fa-info text-info"></i>
                         </span>
-                        <?php if ($this->get('defaultLayout') != $layout->getKey()): ?>
+                        <?php if ($this->get('defaultLayout') !== $layout->getKey()): ?>
                             <span class="btn btn-default deleteLayout"
-                                  data-clickurl="<?=$this->getUrl(['action' => 'delete', 'key' => $layout->getKey()]) ?>"
+                                  data-clickurl="<?=$this->getUrl(['action' => 'delete', 'key' => $layout->getKey()], null, true) ?>"
                                   data-toggle="modal"
                                   data-target="#deleteModal"
                                   data-modaltext="<?=$this->escape($this->getTrans('askIfDeleteLayout', $layout->getKey())) ?>"
                                   title="<?=$this->getTrans('delete') ?>">
-                                <i class="fa fa-trash-o text-danger"></i>
+                                <i class="far fa-trash-alt text-danger"></i>
                             </span>
                         <?php endif; ?>
                     </div>
@@ -119,6 +154,8 @@ $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)))
                    <b>'.$this->getTrans('name').':</b> '.$this->escape($layout->getName()).'<br />
                    <b>'.$this->getTrans('version').':</b> '.$this->escape($layout->getVersion()).'<br />
                    <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
+                   <b>'.$this->getTrans('requirements').':</b><br />
+                   <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$this->escape($layout->getIlchCore()).'<br /><br />
                    <b>'.$this->getTrans('desc').':</b><br />'.$this->escape($layout->getDesc());
     ?>
     <?=$this->getDialog('infoModal'.$layout->getKey(), $this->getTrans('menuLayout').' '.$this->getTrans('info'), $layoutInfo) ?>

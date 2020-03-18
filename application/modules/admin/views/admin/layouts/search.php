@@ -7,6 +7,7 @@ $layoutsOnUpdateServer = json_decode($layoutsList);
 $versionsOfLayouts = $this->get('versionsOfLayouts');
 $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver').'layouts.php').'.cache';
 $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
+$coreVersion = $this->get('coreVersion');
 
 if (empty($layoutsOnUpdateServer)) {
     echo $this->getTrans('noLayoutsAvailable');
@@ -42,26 +43,41 @@ if (empty($layoutsOnUpdateServer)) {
                 <div class="clearfix">
                     <div class="pull-left">
                         <?php
-                        if (in_array($layoutOnUpdateServer->key, $this->get('layouts')) && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '>=')): ?>
+                        $layoutExists = in_array($layoutOnUpdateServer->key, $this->get('layouts'));
+                        $ilchCoreRequirement = empty($layoutOnUpdateServer->ilchCore) ? $coreVersion : $layoutOnUpdateServer->ilchCore;
+                        $ilchCoreTooOld = version_compare($coreVersion, $ilchCoreRequirement, '<');
+                        if ($layoutExists && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '>=')): ?>
                             <span class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
-                                <i class="fa fa-check text-success"></i>
+                                <i class="fas fa-check text-success"></i>
                             </span>
-                        <?php elseif (in_array($layoutOnUpdateServer->key, $this->get('layouts')) && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '<')): ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServer->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServer->key], 'newVersion' => $layoutOnUpdateServer->version, 'from' => 'search']) ?>">
-                                <?=$this->getTokenField() ?>
-                                <button type="submit"
-                                        class="btn btn-default"
-                                        title="<?=$this->getTrans('layoutUpdate') ?>">
-                                    <i class="fa fa-refresh"></i>
+                        <?php elseif ($layoutExists && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '<')): ?>
+                            <?php if ($ilchCoreTooOld): ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('ilchCoreError') ?>">
+                                    <i class="fas fa-sync"></i>
                                 </button>
-                            </form>
+                            <?php else: ?>
+                                <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServer->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServer->key], 'newVersion' => $layoutOnUpdateServer->version, 'from' => 'search']) ?>">
+                                    <?=$this->getTokenField() ?>
+                                    <button type="submit"
+                                            class="btn btn-default"
+                                            title="<?=$this->getTrans('layoutUpdate') ?>">
+                                        <i class="fas fa-sync"></i>
+                                    </button>
+                                </form>
+                            <?php endif; ?>
+                        <?php elseif ($ilchCoreTooOld): ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('ilchCoreError') ?>">
+                                <i class="fas fa-download"></i>
+                            </button>
                         <?php else: ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $layoutOnUpdateServer->key, 'version' => $layoutOnUpdateServer->version]) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"
                                         title="<?=$this->getTrans('layoutDownload') ?>">
-                                    <i class="fa fa-download"></i>
+                                    <i class="fas fa-download"></i>
                                 </button>
                             </form>
                         <?php endif; ?>
@@ -69,7 +85,7 @@ if (empty($layoutsOnUpdateServer)) {
                     <div class="pull-right">
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                             <span class="btn btn-default">
-                                <i class="fa fa-info text-info"></i>
+                                <i class="fas fa-info text-info"></i>
                             </span>
                         </a>
                     </div>
