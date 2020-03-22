@@ -378,14 +378,17 @@ class Layouts extends \Ilch\Controller\Admin
                 }
                 removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
 
-                // Call uninstall() of module related to the layout
+                // Call uninstall() of module related to the layout if it is installed. Delete folder of module.
                 if (is_dir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'))) {
                     $modules = new ModuleMapper();
 
-                    $configClass = '\\Modules\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
-                    $config = new $configClass();
-                    $config->uninstall();
-                    $modules->delete($this->getRequest()->getParam('key'));
+                    $isInstalled = $modules->getModuleByKey($this->getRequest()->getParam('key'));
+                    if ($isInstalled) {
+                        $configClass = '\\Modules\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
+                        $config = new $configClass();
+                        $config->uninstall();
+                        $modules->delete($this->getRequest()->getParam('key'));
+                    }
 
                     removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
                 }
