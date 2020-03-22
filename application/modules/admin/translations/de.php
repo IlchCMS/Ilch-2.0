@@ -210,6 +210,7 @@ return [
     'noPages' => 'Keine Seiten vorhanden',
     'choose' => 'Auswählen',
     'lastUpdateOn' => 'Zuletzt geprüft am',
+    'layoutModuleNotInstalled' => 'Das dazugehörige Modul ist nicht installiert.',
 
     'menuInfos' => 'Informationen',
     'menuPHPInfo' => 'PHP Info',

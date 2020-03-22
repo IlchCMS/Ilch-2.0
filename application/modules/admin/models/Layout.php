@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -70,6 +70,14 @@ class Layout extends \Ilch\Model
      * @var array
      */
     protected $settings;
+
+
+    /**
+     * The required ilch version if needed.
+     *
+     * @var string
+     */
+    protected $ilchCore;
 
     /**
      * Gets the key.
@@ -252,4 +260,28 @@ class Layout extends \Ilch\Model
         $this->settings = $settings;
         return $this;
     }
+
+    /**
+     * Get the required ilch version if needed.
+     *
+     * @return string
+     */
+    public function getIlchCore()
+    {
+        return $this->ilchCore;
+    }
+
+    /**
+     * Set the required ilch version if needed.
+     *
+     * @param string $ilchCore
+     * @return Layout
+     */
+    public function setIlchCore($ilchCore)
+    {
+        $this->ilchCore = $ilchCore;
+        return $this;
+    }
+
+
 }

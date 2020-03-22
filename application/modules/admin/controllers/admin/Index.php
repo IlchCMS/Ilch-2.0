@@ -88,7 +88,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        if ($update->newVersionFound() === true) {
+        if ($update->newVersionFound() == true) {
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);

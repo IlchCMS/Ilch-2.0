@@ -47,6 +47,8 @@ class Module extends \Ilch\Mapper
 
     /**
      * Gets all not installed modules.
+     *
+     * @return ModuleModel[]|Array[]
      */
     public function getModulesNotInstalled()
     {
@@ -140,8 +142,7 @@ class Module extends \Ilch\Mapper
      * Get module with given key.
      *
      * @param string $key
-     *
-     * @return ModuleModel
+     * @return ModuleModel|null
      */
     public function getModuleByKey($key) {
         $moduleRow = $this->db()->select('*')
@@ -151,7 +152,7 @@ class Module extends \Ilch\Mapper
             ->fetchAssoc();
 
         if (empty($moduleRow)) {
-            return;
+            return null;
         }
 
         $moduleModel = new ModuleModel();
@@ -169,6 +170,8 @@ class Module extends \Ilch\Mapper
 
     /**
      * Gets an array of keys of the installed modules.
+     *
+     * @return array|string[]
      */
     public function getKeysInstalledModules()
     {
@@ -222,7 +225,6 @@ class Module extends \Ilch\Mapper
      * Inserts a module model in the database.
      *
      * @param ModuleModel $module
-     *
      * @return int
      */
     public function save(ModuleModel $module)
