@@ -78,12 +78,22 @@ class Index extends \Ilch\Controller\Admin
                     $this->redirect(['action' => 'index']);
                 }
             }
+        } elseif ($this->getRequest()->getPost('save') && $this->getRequest()->getPost('positions')) {
+            $postData = $this->getRequest()->getPost('positions');
+            $positions = explode(',', $postData);
+
+            foreach ($positions as $x => $xValue) {
+                $partnerMapper->updatePositionById($xValue, $x);
+            }
+
+            $this->addMessage('saveSuccess');
+            $this->redirect(['action' => 'index']);
         }
 
         if ($this->getRequest()->getParam('showsetfree')) {
             $entries = $partnerMapper->getEntries(['setfree' => 0]);
         } else {
-            $entries = $partnerMapper->getEntries(['setfree' => 1]);
+            $entries = $partnerMapper->getPartnersBy(['setfree' => 1], ['pos' => 'ASC', 'id' => 'ASC']);
         }
 
         $badge = count($partnerMapper->getEntries(['setfree' => 0]));
@@ -175,6 +185,8 @@ class Index extends \Ilch\Controller\Admin
                 $model = new PartnerModel();
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
+                } else {
+                    $model->setFree(1);
                 }
                 $model->setName($post['name'])
                     ->setLink($post['link'])

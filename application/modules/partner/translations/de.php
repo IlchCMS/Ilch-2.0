@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -9,6 +9,7 @@ return [
     'menuPartnerAdd' => 'Partner hinzufügen',
     'name' => 'Name',
     'banner' => 'Banner',
+    'partnerInfoText' => 'Partner können durch ziehen und ablegen sortiert werden.',
     'link' => 'Link',
     'send' => 'Absenden',
     'sendSuccess' => 'Partner erfolgreich eingetragen',
@@ -25,6 +26,6 @@ return [
     'boxSliderHeight' => 'Höhe der Slider Box',
     'boxSliderModeVertical' => 'vertikal',
     'boxSliderModeHorizontal' => 'horizontal',
-    'targetBlank' => '_blank',
-    'targetSelf' => '_self',
+    'targetBlank' => 'neuer Tab oder Fenster',
+    'targetSelf' => '(Standardwert) gleicher Tab oder Fenster',
 ];

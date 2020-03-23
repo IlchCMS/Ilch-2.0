@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -9,6 +9,7 @@ return [
     'menuPartnerAdd' => 'Partner add',
     'name' => 'Name',
     'banner' => 'Banner',
+    'partnerInfoText' => 'Partners can be sorted by drag and drop.',
     'link' => 'Link',
     'send' => 'Send',
     'sendSuccess' => 'Partner successfull entry',
@@ -25,6 +26,6 @@ return [
     'boxSliderHeight' => 'Height of Slider Box',
     'boxSliderModeVertical' => 'vertical',
     'boxSliderModeHorizontal' => 'horizontal',
-    'targetBlank' => '_blank',
-    'targetSelf' => '_self',
+    'targetBlank' => 'new tab or window',
+    'targetSelf' => '(default) same tab or window',
 ];

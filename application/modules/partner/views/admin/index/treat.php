@@ -5,7 +5,7 @@
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <input type="text"
                    class="form-control"
                    id="name"
@@ -26,7 +26,7 @@
                    placeholder="http://"
                    value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getLink()) : $this->escape($this->originalInput('link')) ?>" />
         </div>
-        <div class="col-lg-1">
+        <div class="col-lg-3">
             <select class="form-control" id="target" name="target">
                 <option value="0"<?=($this->get('partner') != '' AND $this->get('partner')->getTarget() == 0) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetBlank') ?></option>
                 <option value="1"<?=($this->get('partner') != '' AND $this->get('partner')->getTarget() == 1) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetSelf') ?></option>
@@ -37,7 +37,7 @@
         <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <div class="input-group">
                 <input type="text"
                        class="form-control"

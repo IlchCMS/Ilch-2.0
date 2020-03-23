@@ -18,30 +18,7 @@ class Partner extends \Ilch\Mapper
      */
     public function getEntries($where = [])
     {
-        $entryArray = $this->db()->select('*')
-            ->from('partners')
-            ->where($where)
-            ->order(['id' => 'DESC'])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($entryArray)) {
-            return [];
-        }
-
-        $entry = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new PartnerModel();
-            $entryModel->setId($entries['id'])
-                ->setName($entries['name'])
-                ->setLink($entries['link'])
-                ->setBanner($entries['banner'])
-                ->setTarget($entries['target'])
-                ->setFree($entries['setfree']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
+        return $this->getPartnersBy($where, ['id' => 'DESC']);
     }
 
     /**
@@ -49,7 +26,7 @@ class Partner extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @return PartnerModel[]|null
+     * @return PartnerModel[]|array
      */
     public function getPartnersBy($where = [], $orderBy = ['id' => 'ASC'])
     {
@@ -71,7 +48,8 @@ class Partner extends \Ilch\Mapper
                 ->setName($partnerRow['name'])
                 ->setLink($partnerRow['link'])
                 ->setBanner($partnerRow['banner'])
-                ->setTarget($partnerRow['target']);
+                ->setTarget($partnerRow['target'])
+                ->setFree($entries['setfree']);
             $partners[] = $partnerModel;
         }
 
@@ -131,6 +109,19 @@ class Partner extends \Ilch\Mapper
                 ->values($fields)
                 ->execute();
         }
+    }
+
+    /**
+     * Updates the position of a partner in the database.
+     *
+     * @param int $id
+     * @param int $position
+     */
+    public function updatePositionById($id, $position) {
+        $this->db()->update('partners')
+            ->values(['pos' => $position])
+            ->where(['id' => $id])
+            ->execute();
     }
 
     /**

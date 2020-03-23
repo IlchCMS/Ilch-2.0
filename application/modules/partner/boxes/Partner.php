@@ -18,6 +18,6 @@ class Partner extends \Ilch\Box
             ->set('sliderMode', $this->getConfig()->get('partners_slider_mode'))
             ->set('sliderSpeed', $this->getConfig()->get('partners_slider_speed'))
             ->set('boxHeight', $this->getConfig()->get('partners_box_height'))
-            ->set('partners', $partnerMapper->getPartnersBy(['setfree' => 1]));
+            ->set('partners', $partnerMapper->getPartnersBy(['setfree' => 1], ['pos' => 'ASC', 'id' => 'ASC']));
     }
 }

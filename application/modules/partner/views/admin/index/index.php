@@ -1,6 +1,11 @@
-<h1><?=$this->getTrans('manage') ?></h1>
+<h1>
+    <?=$this->getTrans('manage') ?>
+    <a class="badge" data-toggle="modal" data-target="#infoModal">
+        <i class="fa fa-info"></i>
+    </a>
+</h1>
 <?php if ($this->get('entries') != ''): ?>
-    <form class="form-horizontal" method="POST">
+    <form class="form-horizontal" id="partnerIndexForm" method="POST">
         <?=$this->getTokenField() ?>
         <ul class="nav nav-tabs">
             <li <?php if (!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
@@ -41,14 +46,14 @@
                         <th><?=$this->getTrans('banner') ?></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="sortable">
                     <?php foreach ($this->get('entries') as $entry): ?>
                         <?php if (strncmp($entry->getBanner(), 'application', 11) === 0): ?>
                             <?php $banner = $this->getBaseUrl($entry->getBanner()); ?>
                         <?php else: ?>
                             <?php $banner = $entry->getBanner(); ?>
                         <?php endif; ?>
-                        <tr>
+                        <tr id="<?=$entry->getId() ?>">
                             <td><?=$this->getDeleteCheckbox('check_entries', $entry->getId()) ?></td>
                             <?php if ($this->getRequest()->getParam('showsetfree')): ?>
                                 <td>
@@ -77,17 +82,55 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <input type="hidden" id="positions" name="positions" value="" />
         </div>
         <?php
         $actions = ['delete' => 'delete'];
 
         if ($this->getRequest()->getParam('showsetfree')) {
             $actions += ['setfree' => 'setfree'];
+            echo $this->getListBar($actions);
         }
-
-        echo $this->getListBar($actions);
         ?>
+        <?php if (!$this->getRequest()->getParam('showsetfree')) : ?>
+            <div class="content_savebox">
+                <button type="submit" class="btn btn-default" name="save" value="save">
+                    <?=$this->getTrans('saveButton') ?>
+                </button>
+                <input type="hidden" class="content_savebox_hidden" name="action" value="" />
+                <div class="btn-group dropup">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <?=$this->getTrans('selected') ?> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu listChooser" role="menu">
+                        <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+                    </ul>
+                </div>
+            </div>
+        <?php endif; ?>
     </form>
+
+    <script>
+        $(function() {
+            $( "#sortable" ).sortable();
+            $( "#sortable" ).disableSelection();
+        });
+        $('#partnerIndexForm').submit (
+            function () {
+                var items = $("#sortable tr");
+                var partnerIDs = [items.length];
+                var index = 0;
+                items.each(
+                    function(intIndex) {
+                        partnerIDs[index] = $(this).attr("id");
+                        index++;
+                    });
+                $('#positions').val(partnerIDs.join(","));
+            }
+        );
+    </script>
 <?php else: ?>
     <?=$this->getTrans('noPartners') ?>
 <?php endif; ?>
+
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('partnerInfoText')) ?>
