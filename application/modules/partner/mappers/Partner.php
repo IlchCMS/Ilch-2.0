@@ -49,7 +49,7 @@ class Partner extends \Ilch\Mapper
                 ->setLink($partnerRow['link'])
                 ->setBanner($partnerRow['banner'])
                 ->setTarget($partnerRow['target'])
-                ->setFree($entries['setfree']);
+                ->setFree($partnerRow['setfree']);
             $partners[] = $partnerModel;
         }
 
