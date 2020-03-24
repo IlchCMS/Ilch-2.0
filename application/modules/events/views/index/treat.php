@@ -139,7 +139,7 @@ $types = $this->get('types');
                         <?php if (empty($type)) {
                             continue;
                         } ?>
-                        <option value="<?=$type?>"<?=(($this->get('event') != '' && $this->get('event')->getType() == $type) || $this->originalInput('type') == $type) ? ' selected="selected"' : '' ?>><?=$this->escape($type) ?></option>
+                        <option value="<?=$this->escape($type) ?>"<?=(($this->get('event') != '' && $this->get('event')->getType() == $type) || $this->originalInput('type') == $type) ? ' selected="selected"' : '' ?>><?=$this->escape($type) ?></option>
                     <?php endforeach; ?>
                 </select>
                 <input type="text"
