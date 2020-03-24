@@ -12,10 +12,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.18.0',
+        'version' => '1.19.0',
         'icon_small' => 'fa-ticket',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'official' => true,
         'languages' => [
             'de_DE' => [
@@ -99,6 +99,7 @@ class Config extends \Ilch\Config\Install
                 `end` DATETIME NOT NULL,
                 `title` VARCHAR(100) NOT NULL,
                 `place` VARCHAR(150) NOT NULL,
+                `type` VARCHAR(255) NOT NULL,
                 `website` VARCHAR(255) NOT NULL,
                 `lat_long` VARCHAR(100) NULL DEFAULT NULL,
                 `image` VARCHAR(255) NULL DEFAULT NULL,
@@ -177,6 +178,9 @@ class Config extends \Ilch\Config\Install
                 $imageExtensions = explode(' ', $databaseConfig->get('event_filetypes'));
                 $imageExtensions = array_diff($imageExtensions, $blacklist);
                 $databaseConfig->set('event_filetypes', implode(' ', $imageExtensions));
+            case "1.18.0":
+                // Add new type column.
+                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `type` VARCHAR(255) NOT NULL AFTER `place`;');
         }
     }
 }

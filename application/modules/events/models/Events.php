@@ -51,6 +51,13 @@ class Events extends \Ilch\Model
     protected $place;
 
     /**
+     * The type of the event like concert, karaoke evening, ...
+     *
+     * @var string
+     */
+    protected $type;
+
+    /**
      * The website of the event.
      *
      * @var string
@@ -261,6 +268,28 @@ class Events extends \Ilch\Model
     {
         $this->place = (string)$place;
 
+        return $this;
+    }
+
+    /**
+     * Get the type of the event.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set the type of the event.
+     *
+     * @param string $type
+     * @return Events
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
         return $this;
     }
 

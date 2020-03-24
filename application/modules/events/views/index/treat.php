@@ -4,6 +4,7 @@ $userMapper = $this->get('userMapper');
 $config = \Ilch\Registry::get('config');
 $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
 $users = $userMapper->getUserList();
+$types = $this->get('types');
 ?>
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
@@ -125,6 +126,28 @@ $users = $userMapper->getUserList();
                        id="place"
                        name="place"
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPlace()) : $this->escape($this->originalInput('place')) ?>" />
+            </div>
+        </div>
+        <div class="form-group <?=$this->validation()->hasError('type') ? 'has-error' : '' ?>">
+            <label for="place" class="col-lg-2 control-label">
+                <?=$this->getTrans('type') ?>
+            </label>
+            <div class="col-lg-6">
+                <select class="form-control typeselection" name="typeselection" id="typeselection">
+                    <option value=""><?=$this->getTrans('otherOrNone') ?></option>
+                    <?php foreach ($types as $type) : ?>
+                        <?php if (empty($type)) {
+                            continue;
+                        } ?>
+                        <option value="<?=$type?>"<?=(($this->get('event') != '' && $this->get('event')->getType() == $type) || $this->originalInput('type') == $type) ? ' selected="selected"' : '' ?>><?=$this->escape($type) ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <input type="text"
+                       class="form-control type"
+                       id="type"
+                       name="type"
+                       placeholder="<?=$this->getTrans('typePlaceholder') ?>"
+                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getType()) : $this->escape($this->originalInput('type')) ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
@@ -291,6 +314,29 @@ $(function () {
         container: 'body',
         trigger: 'hover'
     })
+});
+
+$(document).ready(function() {
+    $( ".typeselection" ).change(function() {
+        $( ".type" ).val(this.value);
+    });
+
+    $( ".type" ).change(function() {
+        let found = false;
+        let typeselection = $(".typeselection");
+
+        for (var i = 0; i < typeselection[0].options.length; ++i) {
+            if (this.value === typeselection[0].options[i].value) {
+                found = true;
+                typeselection.val(this.value);
+                break;
+            }
+        }
+
+        if (!found) {
+            typeselection.val($("#typeselection option:first").val());
+        }
+    });
 });
 
 <?php if ($this->get('event_google_maps_api_key') != ''): ?>

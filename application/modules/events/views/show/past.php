@@ -27,6 +27,9 @@ $entrantsMapper = $this->get('entrantsMapper');
                                     <?php if (!empty($place[1])): ?>
                                         <br /><span class="text-muted"><?=$place[1] ?></span>
                                     <?php endif; ?>
+                                    <?php if (!empty($eventlist->getType())): ?>
+                                        <br><?=$this->escape($eventlist->getType()) ?>
+                                    <?php endif; ?>
                                 </p>
                                 <?php if ($eventEntrants != ''): ?>
                                     <?php foreach ($eventEntrants as $eventEntrantsUser): ?>

@@ -177,6 +177,7 @@ class Index extends \Ilch\Controller\Frontend
                         ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
                         ->setEnd(new \Ilch\Date($this->getRequest()->getPost('end')))
                         ->setPlace($this->getRequest()->getPost('place'))
+                        ->setType($this->getRequest()->getPost('type'))
                         ->setWebsite($this->getRequest()->getPost('website'))
                         ->setText($this->getRequest()->getPost('text'))
                         ->setCurrency($this->getRequest()->getPost('currency'))
@@ -230,6 +231,7 @@ class Index extends \Ilch\Controller\Frontend
             ->set('image_size', $imageSize)
             ->set('image_filetypes', $imageAllowedFiletypes)
             ->set('currencies', $currencyMapper->getCurrencies())
+            ->set('types', $eventMapper->getListOfTypes())
             ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
             ->set('userGroupList', $groupMapper->getGroupList())
             ->set('groups', $groups);

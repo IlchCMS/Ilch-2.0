@@ -15,7 +15,6 @@ class Events extends \Ilch\Mapper
      * Gets the Event entries.
      *
      * @param array $where
-     *
      * @return EventModel[]|array
      */
     public function getEntries($where = [])
@@ -40,6 +39,7 @@ class Events extends \Ilch\Mapper
                 ->setEnd($entries['end'])
                 ->setTitle($entries['title'])
                 ->setPlace($entries['place'])
+                ->setType($entries['type'])
                 ->setWebsite($entries['website'])
                 ->setLatLong($entries['lat_long'])
                 ->setImage($entries['image'])
@@ -82,6 +82,7 @@ class Events extends \Ilch\Mapper
             ->setEnd($eventRow['end'])
             ->setTitle($eventRow['title'])
             ->setPlace($eventRow['place'])
+            ->setType($eventRow['type'])
             ->setWebsite($eventRow['website'])
             ->setLatLong($eventRow['lat_long'])
             ->setImage($eventRow['image'])
@@ -297,6 +298,19 @@ class Events extends \Ilch\Mapper
     }
 
     /**
+     * Returns a list of all existing types.
+     *
+     * @return string[]
+     */
+    public function getListOfTypes()
+    {
+        return $this->db()->select('type')
+            ->from('events')
+            ->execute()
+            ->fetchList();
+    }
+
+    /**
      * Inserts or updates event model.
      *
      * @param EventModel $event
@@ -309,6 +323,7 @@ class Events extends \Ilch\Mapper
             'end' => $event->getEnd(),
             'title' => $event->getTitle(),
             'place' => $event->getPlace(),
+            'type' => $event->getType(),
             'website' => $event->getWebsite(),
             'lat_long' => $event->getLatLong(),
             'image' => $event->getImage(),

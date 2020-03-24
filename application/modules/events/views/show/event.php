@@ -114,6 +114,9 @@ if (!empty($event)) {
                 <i class="far fa-clock"></i> <?=$this->getTrans($start->format('l')).$start->format(', d. ').$this->getTrans($start->format('F')).$start->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
             </div>
             <div class="eventBoxBottom">
+                <?=$this->escape($event->getType()) ?>
+            </div>
+            <div class="eventBoxBottom">
                 <?php $place = $this->escape($event->getPlace()); ?>
                 <?php $place = explode(', ', $place, 2); ?>
                 <div class="eventPlaceMarker">
