@@ -8,15 +8,11 @@
         <?php foreach ($historys as $history): ?>
             <div class="cd-timeline-block">
                 <div class="cd-timeline-img" style="background: <?=$history->getColor() ?>;">
-                    <?php 
-                    if ($history->getType() != '') {
-                        echo '<img src="'.$this->getModuleUrl('static/img/'.$history->getType().'.png').'" alt="">';
-                    }
-                    ?>
+                    <?=($history->getType() != '') ? '<i class="'.$history->getType().' fa-2x"></i>' : '' ?>
                 </div>
 
                 <div class="cd-timeline-content">
-                    <h3><?=$this->escape($history->getTitle()) ?></h3>
+                    <h3 id="history-<?=$history->getId() ?>"><a href="<?=$this->getUrl(['action' => 'index']) ?>#history-<?=$history->getId() ?>"><?=$this->escape($history->getTitle()) ?></a></h3>
                     <?=$this->purify($history->getText()) ?>
                     <?php $getDate = new \Ilch\Date($history->getDate()); ?>
                     <span class="cd-date"><?=$getDate->format('d. ', true).$this->getTrans($getDate->format('F', true)).$getDate->format(' Y', true) ?></span>

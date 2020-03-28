@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'history',
-        'version' => '1.5.0',
+        'version' => '1.6.0',
         'icon_small' => 'fa-history',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -69,6 +69,15 @@ class Config extends \Ilch\Config\Install
                 // Add sort order setting
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('history_desc_order', '0');
+            case "1.4.0":
+            case "1.5.0":
+                // convert type to new icons
+                $this->db()->queryMulti("UPDATE `[prefix]_history` SET `type` = 'fas fa-globe' WHERE `type` = 'globe';
+                                              UPDATE `[prefix]_history` SET `type` = 'far fa-lightbulb' WHERE `type` = 'idea';
+                                              UPDATE `[prefix]_history` SET `type` = 'fas fa-graduation-cap' WHERE `type` = 'cap';
+                                              UPDATE `[prefix]_history` SET `type` = 'fas fa-camera' WHERE `type` = 'picture';
+                                              UPDATE `[prefix]_history` SET `type` = 'fas fa-video' WHERE `type` = 'video';
+                                              UPDATE `[prefix]_history` SET `type` = 'fas fa-map-marker' WHERE `type` = 'location';");
         }
     }
 }

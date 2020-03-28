@@ -65,16 +65,19 @@ if ($history != '') {
         <label for="type" class="col-lg-2 control-label">
             <?=$this->getTrans('symbol') ?>:
         </label>
-        <div class="col-lg-2">
-            <select class="form-control fontawesome-select" id="type" name="type">
-                <option value="" <?php if ($history != '' AND $history->getType() == '') { echo 'selected="selected"'; } ?>><?=$this->getTrans('noSelect') ?></option>
-                <option value="globe" <?php if ($history != '' AND $history->getType() == 'globe') { echo 'selected="selected"'; } ?>>&#xf0ac; <?=$this->getTrans('globeSelect') ?></option>
-                <option value="idea" <?php if ($history != '' AND $history->getType() == 'idea') { echo 'selected="selected"'; } ?>>&#xf0eb; <?=$this->getTrans('ideaSelect') ?></option>
-                <option value="cap" <?php if ($history != '' AND $history->getType() == 'cap') { echo 'selected="selected"'; } ?>>&#xf19d; <?=$this->getTrans('capSelect') ?></option>
-                <option value="picture" <?php if ($history != '' AND $history->getType() == 'picture') { echo 'selected="selected"'; } ?>>&#xf030; <?=$this->getTrans('pictureSelect') ?></option>
-                <option value="video" <?php if ($history != '' AND $history->getType() == 'video') { echo 'selected="selected"'; } ?>>&#xf03d; <?=$this->getTrans('videoSelect') ?></option>
-                <option value="location" <?php if ($history != '' AND $history->getType() == 'location') { echo 'selected="selected"'; } ?>>&#xf041; <?=$this->getTrans('locationSelect') ?></option>
-            </select>
+        <div class="col-lg-2 input-group ilch-date">
+            <span class="input-group-addon">
+                <span id="chosensymbol" class="<?=($history != '') ? $this->escape($history->getType()) : $this->get('post')['symbol'] ?>"></span>
+            </span>
+            <input type="text"
+                   class="form-control"
+                   id="symbol"
+                   name="symbol"
+                   value="<?=($history != '') ? $this->escape($history->getType()) : $this->get('post')['symbol'] ?>"
+                   readonly />
+            <span class="input-group-addon">
+                <span class="fas fa-mouse-pointer" data-toggle="modal" data-target="#exampleModalLong"></span>
+            </span>
         </div>
     </div>
     <div class="form-group">
@@ -99,10 +102,29 @@ if ($history != '') {
     ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
@@ -113,6 +135,38 @@ $(document).ready(function() {
         language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
         minView: 2,
         todayHighlight: true
+    });
+
+    $("#exampleModalLong").on('shown.bs.modal', function (e) {
+        let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH.'/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
+        let icons = [];
+
+        $.each(content, function(index, icon) {
+            if (icon.styles == 'brands') {
+                icons.push('fab fa-' + index);
+            } else if (icon.styles == 'solid') {
+                icons.push('fas fa-' + index);
+            } else if (icon.styles == 'regular') {
+                icons.push('far fa-' + index);
+            }
+        })
+
+        for (var x = 0; x < icons.length;) {
+            div = '<div class="row">';
+            for (var y = x; y < x+6; y++) {
+                div += '<div class="icon col-lg-2"><i id="'+icons[y]+'" class="faicon '+icons[y]+'"></i></div>';
+            }
+            div += '</div>';
+            x = y;
+
+            $("#exampleModalLong .modal-content .modal-body").append(div);
+        }
+
+        $(".faicon").click(function (e) {
+            $("#symbol").val($(this).closest("i").attr('id'));
+            $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
+            $("#exampleModalLong").modal('hide')
+        });
     });
 });
 </script>

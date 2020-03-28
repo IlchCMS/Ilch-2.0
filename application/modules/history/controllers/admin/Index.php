@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -35,7 +35,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -56,11 +56,9 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('check_entries')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach ($this->getRequest()->getPost('check_entries') as $historyId) {
-                    $historyMapper->delete($historyId);
-                }
+        if ($this->getRequest()->getPost('check_entries') && $this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('check_entries') as $historyId) {
+                $historyMapper->delete($historyId);
             }
         }
 
@@ -86,7 +84,7 @@ class Index extends \Ilch\Controller\Admin
         $post = [
             'date' => '',
             'title' => '',
-            'type' => '',
+            'symbol' => '',
             'color' => '',
             'text' => ''
         ];
@@ -95,7 +93,7 @@ class Index extends \Ilch\Controller\Admin
             $post = [
                 'date' => new \Ilch\Date(trim($this->getRequest()->getPost('date'))),
                 'title' => trim($this->getRequest()->getPost('title')),
-                'type' => trim($this->getRequest()->getPost('type')),
+                'symbol' => trim($this->getRequest()->getPost('symbol')),
                 'color' => trim($this->getRequest()->getPost('color')),
                 'text' => trim($this->getRequest()->getPost('text'))
             ];
@@ -115,7 +113,7 @@ class Index extends \Ilch\Controller\Admin
 
                 $model->setDate($post['date']);
                 $model->setTitle($post['title']);
-                $model->setType($post['type']);
+                $model->setType($post['symbol']);
                 $model->setColor($post['color']);
                 $model->setText($post['text']);
                 $historyMapper->save($model);

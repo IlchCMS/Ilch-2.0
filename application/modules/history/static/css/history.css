@@ -78,6 +78,9 @@ Main components
 }
 
 .cd-timeline-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 0;
     left: 0;
@@ -86,15 +89,8 @@ Main components
     border-radius: 50%;
     box-shadow: 0 0 0 4px #eeeeee;
 }
-.cd-timeline-img img {
-    display: block;
-    width: 24px;
-    height: 24px;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    margin-left: -12px;
-    margin-top: -12px;
+.cd-timeline-img i {
+    margin: auto;
 }
 @media only screen and (min-width: 1170px) {
     .cd-timeline-img {

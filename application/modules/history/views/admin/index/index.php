@@ -29,7 +29,7 @@
                             <td><?=$this->getDeleteCheckbox('check_entries', $entry->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $entry->getId()]) ?></td>
-                            <td><?=$getDate->format('d.m.Y', true); ?></td>
+                            <td><?=$getDate->format('d.m.Y', true) ?></td>
                             <td><?=$this->escape($entry->getTitle()) ?></td>
                             <td><?=$this->escape($entry->getText()) ?></td>
                         </tr>
