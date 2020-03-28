@@ -78,6 +78,8 @@ class Config extends \Ilch\Config\Install
                                               UPDATE `[prefix]_history` SET `type` = 'fas fa-camera' WHERE `type` = 'picture';
                                               UPDATE `[prefix]_history` SET `type` = 'fas fa-video' WHERE `type` = 'video';
                                               UPDATE `[prefix]_history` SET `type` = 'fas fa-map-marker' WHERE `type` = 'location';");
+                // remove no longer needed images
+                removeDir(APPLICATION_PATH.'/modules/history/static/img');
         }
     }
 }

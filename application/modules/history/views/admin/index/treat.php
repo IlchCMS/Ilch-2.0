@@ -12,12 +12,7 @@ if ($history != '') {
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <h1>
-    <?php if ($history != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
+    <?=($history != '') ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -76,7 +71,7 @@ if ($history != '') {
                    value="<?=($history != '') ? $this->escape($history->getType()) : $this->get('post')['symbol'] ?>"
                    readonly />
             <span class="input-group-addon">
-                <span class="fas fa-mouse-pointer" data-toggle="modal" data-target="#exampleModalLong"></span>
+                <span class="fas fa-mouse-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
             </span>
         </div>
     </div>
@@ -94,20 +89,14 @@ if ($history != '') {
             </span>
         </div>
     </div>
-    <?php if ($history != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?=($history != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="symbolDialog" tabindex="-1" role="dialog" aria-labelledby="symbolDialogTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <h5 class="modal-title" id="symbolDialogTitle"><?=$this->getTrans('chooseIcon') ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -115,7 +104,7 @@ if ($history != '') {
             <div class="modal-body">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><?=$this->getTrans('close') ?></button>
             </div>
         </div>
     </div>
@@ -137,7 +126,7 @@ $(document).ready(function() {
         todayHighlight: true
     });
 
-    $("#exampleModalLong").on('shown.bs.modal', function (e) {
+    $("#symbolDialog").on('shown.bs.modal', function (e) {
         let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH.'/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
         let icons = [];
 
@@ -154,18 +143,18 @@ $(document).ready(function() {
         for (var x = 0; x < icons.length;) {
             div = '<div class="row">';
             for (var y = x; y < x+6; y++) {
-                div += '<div class="icon col-lg-2"><i id="'+icons[y]+'" class="faicon '+icons[y]+'"></i></div>';
+                div += '<div class="icon col-lg-2"><i id="'+icons[y]+'" class="faicon '+icons[y]+' fa-2x"></i></div>';
             }
             div += '</div>';
             x = y;
 
-            $("#exampleModalLong .modal-content .modal-body").append(div);
+            $("#symbolDialog .modal-content .modal-body").append(div);
         }
 
         $(".faicon").click(function (e) {
             $("#symbol").val($(this).closest("i").attr('id'));
             $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
-            $("#exampleModalLong").modal('hide')
+            $("#symbolDialog").modal('hide')
         });
     });
 });

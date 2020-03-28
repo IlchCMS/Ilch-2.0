@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,6 +10,7 @@ return [
     'title' => 'Title',
     'text' => 'Text',
     'symbol' => 'Symbol',
+    'chooseIcon' => 'Choose a symbol',
     'color' => 'Color',
     'noSelect' => 'None',
     'globeSelect' => 'Globe',
