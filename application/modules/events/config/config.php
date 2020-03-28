@@ -178,6 +178,10 @@ class Config extends \Ilch\Config\Install
                 $imageExtensions = explode(' ', $databaseConfig->get('event_filetypes'));
                 $imageExtensions = array_diff($imageExtensions, $blacklist);
                 $databaseConfig->set('event_filetypes', implode(' ', $imageExtensions));
+            case "1.14.0":
+            case "1.15.0":
+            case "1.16.0":
+            case "1.17.0":
             case "1.18.0":
                 // Add new type column.
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `type` VARCHAR(255) NOT NULL AFTER `place`;');
