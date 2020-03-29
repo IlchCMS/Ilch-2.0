@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +10,9 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\AuthToken as AuthTokenMapper;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
+use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
 use Modules\User\Service\Password as PasswordService;
@@ -68,7 +70,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() === 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat' || $this->getRequest()->getActionName() === 'treatProfilefields') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -235,6 +237,7 @@ class Index extends \Ilch\Controller\Admin
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
         $emailsMapper = new EmailsMapper();
+        $profileFieldContentMapper = new ProfileFieldsContentMapper();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
@@ -396,7 +399,53 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('user', $user)
+            ->set('hasProfileField', $profileFieldContentMapper->hasProfileFieldContent($user->getId()))
             ->set('groupList', $groupMapper->getGroupList());
+    }
+
+    public function treatProfilefieldsAction()
+    {
+        $userMapper = new UserMapper();
+        $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+        $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
+
+        $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
+        $profileFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
+        $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getRequest()->getParam('user'));
+        $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
+
+        if ($profil) {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat'])
+                ->add($this->getTranslator()->trans('editUserProfileFields'), ['action' => 'treatProfilefields', 'user' => $this->getRequest()->getParam('user')]);
+
+
+            $this->getView()->set('userMapper', $userMapper);
+            $this->getView()->set('profil', $profil);
+            $this->getView()->set('profileFields', $profileFields);
+            $this->getView()->set('profileFieldsContent', $profileFieldsContent);
+            $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
+        } else {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'User', 'errorText' => 'notFound']);
+        }
+    }
+
+    public function deleteProfileFieldAction()
+    {
+        $profileFieldContentMapper = new ProfileFieldsContentMapper();
+        $userId = $this->getRequest()->getParam('user');
+        $profileFieldId = $this->getRequest()->getParam('id');
+
+        if ($userId && $profileFieldId && $this->getRequest()->isSecure()) {
+            $profileFieldContentMapper->deleteProfileFieldContentByUserAndFieldId($userId, $profileFieldId);
+
+            $this->addMessage('success');
+            $this->redirect(['action' => 'treatProfilefields', 'user' => $userId]);
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 
     /**

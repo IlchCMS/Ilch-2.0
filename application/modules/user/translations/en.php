@@ -47,6 +47,9 @@ return [
     'usergalleryNotAllowed' => 'Gallery disabled by the administrator',
     'lockUser' => 'Lock user?',
     'locked' => 'locked',
+    'userProfileFields' => 'Profilefields',
+    'editUserProfileFields' => 'Edit profilefields',
+    'editUserProfileFieldsInfoText' => 'Here you can delete user profile fields which might contain inappropriate texts.',
 
     'groupName' => 'Groupname',
     'groupAssignedUsers' => 'Number "Assigned users"',

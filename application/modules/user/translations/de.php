@@ -47,6 +47,9 @@ return [
     'usergalleryNotAllowed' => 'Galerie wurde vom Administrator deaktiviert',
     'lockUser' => 'Benutzer sperren?',
     'locked' => 'gesperrt',
+    'userProfileFields' => 'Profilfelder',
+    'editUserProfileFields' => 'Profilfelder bearbeiten',
+    'editUserProfileFieldsInfoText' => 'Hier können Profilfelder gelöscht werden, die möglicherweise unangemessene Inhalte haben.',
 
     'groupName' => 'Gruppenname',
     'groupAssignedUsers' => 'Anzahl "Zugeordnete Benutzer"',

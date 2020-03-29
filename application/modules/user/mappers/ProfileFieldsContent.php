@@ -60,10 +60,25 @@ class ProfileFieldsContent extends \Ilch\Mapper
     }
 
     /**
+     * Check if there are (non empty) profile fields for a specific user
+     *
+     * @param int $userId
+     * @return bool
+     * @since 2.1.32
+     */
+    public function hasProfileFieldContent($userId)
+    {
+        return (bool)$this->db()->select('user_id')
+            ->from('profile_content')
+            ->where(['user_id' => $userId, 'value !=' => ''])
+            ->execute()
+            ->fetchCell();
+    }
+
+    /**
      * Deletes the profile-content for a user with the given id.
      *
      * @param  int $userId
-     *
      * @return boolean True if success, otherwise false.
      */
     public function deleteProfileFieldContentByUserId($userId) {
@@ -76,12 +91,26 @@ class ProfileFieldsContent extends \Ilch\Mapper
      * Deletes the profile-content with a given field-id.
      *
      * @param  int $fieldId
-     *
      * @return boolean True if success, otherwise false.
      */
     public function deleteProfileFieldContentByFieldId($fieldId) {
         return $this->db()->delete('profile_content')
             ->where(['field_id' => $fieldId])
+            ->execute();
+    }
+
+    /**
+     * Delete the value of a specific profile field for a specific user.
+     *
+     * @param $userId
+     * @param $fieldId
+     * @return \Ilch\Database\Mysql\Result|int
+     * @since 2.1.32
+     */
+    public function deleteProfileFieldContentByUserAndFieldId($userId, $fieldId)
+    {
+        return $this->db()->delete('profile_content')
+            ->where(['user_id' => $userId, 'field_id' => $fieldId])
             ->execute();
     }
 
