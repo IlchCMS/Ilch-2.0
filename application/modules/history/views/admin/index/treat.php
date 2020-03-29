@@ -97,6 +97,7 @@ if ($history != '') {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="symbolDialogTitle"><?=$this->getTrans('chooseIcon') ?></h5>
+                <button type="button" class="btn" id="noIcon" data-dismiss="modal"><?=$this->getTrans('noIcon') ?></button>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -155,6 +156,10 @@ $(document).ready(function() {
             $("#symbol").val($(this).closest("i").attr('id'));
             $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
             $("#symbolDialog").modal('hide')
+        });
+
+        $("#noIcon").click(function (e) {
+            $("#symbol").val("");
         });
     });
 });

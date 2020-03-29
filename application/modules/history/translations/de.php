@@ -11,6 +11,7 @@ return [
     'text' => 'Text',
     'symbol' => 'Symbol',
     'chooseIcon' => 'Wählen Sie ein Symbol',
+    'noIcon' => 'Kein Symbol',
     'color' => 'Farbe',
     'noSelect' => 'Keins',
     'globeSelect' => 'Globus',
