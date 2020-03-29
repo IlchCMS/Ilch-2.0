@@ -49,6 +49,7 @@ return [
     'locked' => 'locked',
     'userProfileFields' => 'Profilefields',
     'editUserProfileFields' => 'Edit profilefields',
+    'editUserProfileFieldsOf' => 'Edit profilefields of %s',
     'editUserProfileFieldsInfoText' => 'Here you can delete user profile fields which might contain inappropriate texts.',
 
     'groupName' => 'Groupname',

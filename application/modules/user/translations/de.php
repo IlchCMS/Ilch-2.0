@@ -49,6 +49,7 @@ return [
     'locked' => 'gesperrt',
     'userProfileFields' => 'Profilfelder',
     'editUserProfileFields' => 'Profilfelder bearbeiten',
+    'editUserProfileFieldsOf' => 'Profilfelder von %s bearbeiten',
     'editUserProfileFieldsInfoText' => 'Hier können Profilfelder gelöscht werden, die möglicherweise unangemessene Inhalte haben.',
 
     'groupName' => 'Gruppenname',

@@ -1,5 +1,5 @@
 <h1>
-    <?=$this->getTrans('editUserProfileFields') ?>
+    <?=$this->getTrans('editUserProfileFieldsOf', $this->get('username')) ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fas fa-info"></i>
     </a>
@@ -37,10 +37,10 @@ foreach ($profileFields as $profileField) {
         <div class="col-lg-2">
             <b><?=$this->escape($profileFieldName) ?></b>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-10">
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'id' => $profileField->getId()], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
             <?=$this->escape($value) ?>
         </div>
-        <div class="col-lg-2"><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'id' => $profileField->getId()], null, true) ?>"><i class="far fa-trash-alt"></i></a></div>
     </div>
     <?php endif;
 }

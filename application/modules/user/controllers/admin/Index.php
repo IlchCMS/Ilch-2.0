@@ -410,20 +410,19 @@ class Index extends \Ilch\Controller\Admin
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
-        $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
-        $profileFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
-        $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getRequest()->getParam('user'));
-        $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
+        $user = $userMapper->getUserById($this->getRequest()->getParam('user'));
 
-        if ($profil) {
+        if ($user) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat'])
                 ->add($this->getTranslator()->trans('editUserProfileFields'), ['action' => 'treatProfilefields', 'user' => $this->getRequest()->getParam('user')]);
 
+            $profileFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
+            $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getRequest()->getParam('user'));
+            $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
 
-            $this->getView()->set('userMapper', $userMapper);
-            $this->getView()->set('profil', $profil);
+            $this->getView()->set('username', $user->getName());
             $this->getView()->set('profileFields', $profileFields);
             $this->getView()->set('profileFieldsContent', $profileFieldsContent);
             $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
