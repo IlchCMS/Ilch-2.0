@@ -216,9 +216,14 @@ $config = $this->get('config');
             </div>
         <?php endif; ?>
         <?php foreach ($comments as $comment): ?>
-            <?php $user = $userMapper->getUserById($comment->getUserId()); ?>
-            <?php $commentDate = new \Ilch\Date($comment->getDateCreated()); ?>
-            <?php $voted = explode(',', $comment->getVoted()); ?>
+            <?php
+            $user = $userMapper->getUserById($comment->getUserId());
+            if (!$user) {
+                $user = $userMapper->getDummyUser();
+            }
+            $commentDate = new \Ilch\Date($comment->getDateCreated());
+            $voted = explode(',', $comment->getVoted());
+            ?>
             <section class="comment-list">
                 <article id="comment_<?=$comment->getId() ?>">
                     <div class="panel">
