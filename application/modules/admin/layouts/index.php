@@ -1,7 +1,8 @@
+<?php $config = \Ilch\Registry::get('config'); ?>
 <!DOCTYPE html>
 <html lang="de">
     <head>
-        <title>Ilch - <?=$this->getTrans('admincenter') ?></title>
+        <title><?=$config->get('page_title') ?> - Ilch - <?=$this->getTrans('admincenter') ?></title>
 
         <!-- META -->
         <meta charset="utf-8">
@@ -72,7 +73,6 @@
         <!-- HEADER -->
         <header id="header">
             <!-- TOP NAVBAR -->
-            <?php $config = \Ilch\Registry::get('config'); ?>
             <nav class="navbar navbar-default topnavbar navbar-fixed-top">
                 <!-- TOP NAVBAR LEFT -->
                 <div class="navbar-header leftbar">
