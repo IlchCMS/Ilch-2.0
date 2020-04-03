@@ -24,8 +24,13 @@
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('event') as $event): ?>
-                        <?php $userMapper = new \Modules\User\Mappers\User() ?>
-                        <?php $user = $userMapper->getUserById($event->getUserId()) ?>
+                        <?php
+                        $userMapper = new \Modules\User\Mappers\User();
+                        $user = $userMapper->getUserById($event->getUserId());
+                        if (!$user) {
+                            $user = $userMapper->getDummyUser();
+                        }
+                        ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_entries', $event->getId()) ?></td>
                             <td><a href="<?=$this->getURL('events/index/treat/id/'.$event->getId()) ?>" target="_blank" title="<?=$this->getTrans('edit') ?>"><i class="fas fa-edit text-success"></i></a></td>
