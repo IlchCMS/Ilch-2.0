@@ -60,22 +60,6 @@ class ProfileFieldsContent extends \Ilch\Mapper
     }
 
     /**
-     * Check if there are (non empty) profile fields for a specific user
-     *
-     * @param int $userId
-     * @return bool
-     * @since 2.1.32
-     */
-    public function hasProfileFieldContent($userId)
-    {
-        return (bool)$this->db()->select('user_id')
-            ->from('profile_content')
-            ->where(['user_id' => $userId, 'value !=' => ''])
-            ->execute()
-            ->fetchCell();
-    }
-
-    /**
      * Deletes the profile-content for a user with the given id.
      *
      * @param  int $userId

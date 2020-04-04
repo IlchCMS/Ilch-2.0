@@ -237,7 +237,6 @@ class Index extends \Ilch\Controller\Admin
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
         $emailsMapper = new EmailsMapper();
-        $profileFieldContentMapper = new ProfileFieldsContentMapper();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
@@ -399,11 +398,10 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('user', $user)
-            ->set('hasProfileField', $profileFieldContentMapper->hasProfileFieldContent($user->getId()))
             ->set('groupList', $groupMapper->getGroupList());
     }
 
-    public function treatProfilefieldsAction()
+    public function treatProfileAction()
     {
         $userMapper = new UserMapper();
         $profileFieldsMapper = new ProfileFieldsMapper();
@@ -416,13 +414,13 @@ class Index extends \Ilch\Controller\Admin
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat'])
-                ->add($this->getTranslator()->trans('editUserProfileFields'), ['action' => 'treatProfilefields', 'user' => $this->getRequest()->getParam('user')]);
+                ->add($this->getTranslator()->trans('editUserProfile'), ['action' => 'treatProfile', 'user' => $this->getRequest()->getParam('user')]);
 
             $profileFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
             $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getRequest()->getParam('user'));
             $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
 
-            $this->getView()->set('username', $user->getName());
+            $this->getView()->set('user', $user);
             $this->getView()->set('profileFields', $profileFields);
             $this->getView()->set('profileFieldsContent', $profileFieldsContent);
             $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
@@ -436,12 +434,33 @@ class Index extends \Ilch\Controller\Admin
         $profileFieldContentMapper = new ProfileFieldsContentMapper();
         $userId = $this->getRequest()->getParam('user');
         $profileFieldId = $this->getRequest()->getParam('id');
+        $default = $this->getRequest()->getParam('default');
 
         if ($userId && $profileFieldId && $this->getRequest()->isSecure()) {
             $profileFieldContentMapper->deleteProfileFieldContentByUserAndFieldId($userId, $profileFieldId);
 
             $this->addMessage('success');
-            $this->redirect(['action' => 'treatProfilefields', 'user' => $userId]);
+            $this->redirect(['action' => 'treatProfile', 'user' => $userId]);
+        } elseif ($default) {
+            $userMapper = new UserMapper();
+            $user = $userMapper->getUserById($userId);
+
+            if ($user) {
+                switch($default) {
+                    case 'firstname':
+                        $user->setFirstName('');
+                        break;
+                    case 'lastname':
+                        $user->setLastName('');
+                        break;
+                    case 'city':
+                        $user->setCity('');
+                }
+                $userMapper->save($user);
+
+                $this->addMessage('success');
+                $this->redirect(['action' => 'treatProfile', 'user' => $userId]);
+            }
         }
 
         $this->redirect(['action' => 'index']);

@@ -154,16 +154,14 @@ if ($user->getId()) {
             </select>
         </div>
     </div>
-    <?php if ($this->get('hasProfileField')) : ?>
     <div class="form-group">
         <label for="assignedGroups" class="col-lg-3 control-label">
-            <?=$this->getTrans('userProfileFields') ?>
+            <?=$this->getTrans('userProfile') ?>
         </label>
         <div class="col-lg-4">
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treatProfilefields', 'user' => $user->getId()]) ?>" class="btn"><?=$this->getTrans('editUserProfileFields') ?></a>
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treatProfile', 'user' => $user->getId()]) ?>" class="btn"><?=$this->getTrans('editUserProfile') ?></a>
         </div>
     </div>
-    <?php endif; ?>
     <?=$this->getSaveBar() ?>
 </form>
 
