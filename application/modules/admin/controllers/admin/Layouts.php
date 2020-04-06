@@ -101,7 +101,7 @@ class Layouts extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'layouts.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'layouts2.php')
             ->set('defaultLayout', $this->getConfig()->get('default_layout'))
             ->set('layouts', $layouts)
             ->set('modulesNotInstalled', $modulesNotInstalled)

@@ -2,10 +2,10 @@
 
 <h1><?=$this->getTrans('search') ?></h1>
 <?php
-$layoutsList = url_get_contents($this->get('updateserver').'layouts.php');
+$layoutsList = url_get_contents($this->get('updateserver').'layouts2.php');
 $layoutsOnUpdateServer = json_decode($layoutsList);
 $versionsOfLayouts = $this->get('versionsOfLayouts');
-$cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver').'layouts.php').'.cache';
+$cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver').'layouts2.php').'.cache';
 $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 $coreVersion = $this->get('coreVersion');
 
