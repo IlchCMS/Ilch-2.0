@@ -667,6 +667,10 @@ class Config extends \Ilch\Config\Install
                     `value` TEXT NOT NULL,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+
+                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
+                removeDir(ROOT_PATH.'/delete_vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
         }
 
