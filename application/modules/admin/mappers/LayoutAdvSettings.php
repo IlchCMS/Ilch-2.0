@@ -129,7 +129,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
      */
     private function updateSetting($model)
     {
-        return $this->db()->update('admin_layoutAdvSettings')
+        $affectedRows = $this->db()->update('admin_layoutAdvSettings')
             ->values([
                 'layoutKey' => $model->getLayoutKey(),
                 'key' => $model->getKey(),
@@ -137,6 +137,18 @@ class LayoutAdvSettings extends \Ilch\Mapper
             ])
             ->where(['layoutKey' => $model->getLayoutKey(), 'key' => $model->getKey()])
             ->execute();
+
+        if ($affectedRows === 0) {
+            // If the value was unchanged then affected rows will be 0, even though it was existing.
+            // Therefore check if the specific setting exists in this case.
+            return $this->db()->select('COUNT(*)')
+                ->from('admin_layoutAdvSettings')
+                ->where(['layoutKey' => $model->getLayoutKey(), 'key' => $model->getKey()])
+                ->execute()
+                ->fetchCell();
+        }
+
+        return $affectedRows;
     }
 
     /**
