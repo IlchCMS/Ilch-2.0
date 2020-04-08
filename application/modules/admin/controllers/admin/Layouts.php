@@ -337,6 +337,10 @@ class Layouts extends \Ilch\Controller\Admin
             }
 
             $layoutAdvSettingsMapper->save($postedSettings);
+
+            $this->redirect()
+                ->withMessage('saveSuccess')
+                ->to(['action' => 'advSettingsShow', 'layoutKey' => $layoutKey]);
         }
 
         $settingsValues = null;
