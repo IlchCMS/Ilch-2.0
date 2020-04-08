@@ -390,7 +390,9 @@ class Frontend extends Base
                 $config = new $configClass($this->getTranslator());
                 if (!empty($config->config['settings'])) {
                     foreach($config->config['settings'] as $key => $value) {
-                        $this->settings[$key] = $value['default'];
+                        if ($value['type'] !== 'separator') {
+                            $this->settings[$key] = $value['default'];
+                        }
                     }
                 }
             }
