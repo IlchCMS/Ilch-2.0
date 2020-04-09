@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "v10.9.0",
+            "version": "v10.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "b8a45b705375b329a07fb255a08ca08e97dc412f"
+                "reference": "2d4d556c31996a4a0ca57bebce4b4e0bbbea0b83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vkhramtsov/jQuery-File-Upload/zipball/b8a45b705375b329a07fb255a08ca08e97dc412f",
-                "reference": "b8a45b705375b329a07fb255a08ca08e97dc412f",
+                "url": "https://api.github.com/repos/vkhramtsov/jQuery-File-Upload/zipball/2d4d556c31996a4a0ca57bebce4b4e0bbbea0b83",
+                "reference": "2d4d556c31996a4a0ca57bebce4b4e0bbbea0b83",
                 "shasum": ""
             },
             "type": "library",
@@ -65,7 +65,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-03-27T06:22:29+00:00"
+            "time": "2020-04-06T06:14:40+00:00"
         },
         {
             "name": "ckeditor/ckeditor",

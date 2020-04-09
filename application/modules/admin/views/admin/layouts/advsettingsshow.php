@@ -41,7 +41,7 @@ function getInput($name, $value, $settingsValues, $obj)
                                                type="text"
                                                name="%s"
                                                id="selectedImage_%s"
-                                               value="%s" 
+                                               value="%s"
                                                readonly />
                                         <span class="input-group-addon"><a id="media_%s" href="javascript:media_%s()"><i class="fas fa-image"></i></a></span>
                                     </div>', $name, $name, $settingsValue, $name, $name);
