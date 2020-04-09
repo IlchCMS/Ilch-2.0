@@ -40,11 +40,16 @@ function getInput($name, $value, $settingsValues, $obj)
                                         <input class="form-control"
                                                type="text"
                                                name="%s"
-                                               id="%s"
-                                               value="%s"
+                                               id="selectedImage_%s"
+                                               value="%s" 
                                                readonly />
-                                        <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
-                                    </div>', $name, $name, $settingsValue);
+                                        <span class="input-group-addon"><a id="media_%s" href="javascript:media_%s()"><i class="fas fa-image"></i></a></span>
+                                    </div>', $name, $name, $settingsValue, $name, $name);
+            $input .= '<script>'.$obj->getMedia()
+                            ->addMediaButton($obj->getUrl('admin/media/iframe/index/type/single/input/_'.$name.'/'))
+                            ->addInputId('_'.$name)
+                            ->addUploadController($obj->getUrl('admin/media/index/upload')).
+                      '</script>';
             break;
         case 'text':
             $input = sprintf('<input class="form-control"
@@ -85,10 +90,4 @@ function getInput($name, $value, $settingsValues, $obj)
     <?=$this->getSaveBar() ?>
 </form>
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script>
-    <?=$this->getMedia()
-        ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
-        ->addUploadController($this->getUrl('admin/media/index/upload'))
-    ?>
-</script>
 <script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
