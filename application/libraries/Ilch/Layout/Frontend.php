@@ -411,7 +411,7 @@ class Frontend extends Base
     public function getLayoutSetting($key)
     {
         if (empty($this->settings[$key])) {
-            throw new \InvalidArgumentException('A setting with this key doesn\'t exist for this layout.');
+            throw new \InvalidArgumentException('A setting with the key "'.$key.'" doesn\'t exist for this layout.');
         }
 
         if ($this->settings[$key] instanceof LayoutAdvSettingsModel) {
