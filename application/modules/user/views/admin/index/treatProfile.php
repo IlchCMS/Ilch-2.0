@@ -7,33 +7,39 @@
 </h1>
 
 <div class="profil-content">
-    <div class="row">
-        <div class="col-lg-2 detail bold">
-            <b><?=$this->getTrans('profileFirstName') ?></b>
+    <?php if (!empty($user->getFirstName())) : ?>
+        <div class="row">
+            <div class="col-lg-2 detail bold">
+                <b><?=$this->getTrans('profileFirstName') ?></b>
+            </div>
+            <div class="col-lg-10 detail">
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'firstname'], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
+                <?=$this->escape($user->getFirstName()) ?>
+            </div>
         </div>
-        <div class="col-lg-10 detail">
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'firstname'], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
-            <?=$this->escape($user->getFirstName()) ?>
+    <?php endif; ?>
+    <?php if (!empty($user->getLastName())) : ?>
+        <div class="row">
+            <div class="col-lg-2 detail bold">
+                <b><?=$this->getTrans('profileLastName') ?></b>
+            </div>
+            <div class="col-lg-10 detail">
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'lastname'], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
+                <?=$this->escape($user->getLastName()) ?>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2 detail bold">
-            <b><?=$this->getTrans('profileLastName') ?></b>
+    <?php endif; ?>
+    <?php if (!empty($user->getCity())) : ?>
+        <div class="row">
+            <div class="col-lg-2 detail bold">
+                <b><?=$this->getTrans('profileCity') ?></b>
+            </div>
+            <div class="col-lg-10 detail">
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'city'], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
+                <?=$this->escape($user->getCity()) ?>
+            </div>
         </div>
-        <div class="col-lg-10 detail">
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'lastname'], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
-            <?=$this->escape($user->getLastName()) ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2 detail bold">
-            <b><?=$this->getTrans('profileCity') ?></b>
-        </div>
-        <div class="col-lg-10 detail">
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'city'], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
-            <?=$this->escape($user->getCity()) ?>
-        </div>
-    </div>
+    <?php endif; ?>
 </div>
 <?php
 $profileFields = $this->get('profileFields');
