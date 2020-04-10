@@ -20,6 +20,7 @@ $directories = [
         'keep' => [
             'font-awesome/css/all.min.css',
             'font-awesome/css/v4-shims.min.css',
+            'font-awesome/metadata/icons.json',
             'font-awesome/webfonts/',
             'font-awesome/README.md',
         ],

@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can create a history for your site.',
             ],
         ],
-        'ilchCore' => '2.1.26',
+        'ilchCore' => '2.1.32',
         'phpVersion' => '5.6'
     ];
 
