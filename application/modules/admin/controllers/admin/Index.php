@@ -51,7 +51,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($update->getVersions() == '') {
             $this->getView()->set('curlErrorOccured', true);
-            $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
+            $this->addMessage($this->getTranslator()->trans('versionQueryFailedWith', curl_error($update->getTransferUrl())), 'danger');
         } else {
             // If check for an ilch update didn't already failed then check for module updates
             $countOfUpdatesAvailable = 0;

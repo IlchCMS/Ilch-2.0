@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -176,6 +176,7 @@ return [
     'desc' => 'Description',
     'author' => 'Author',
     'updateNow' => 'Update Now',
+    'versionQueryFailedWith' => 'The version query failed with the following error: "%s". Try to change the updateserver if this problem is not temporary.',
     'system' => 'System',
     'upToDate' => 'up to date',
     'notUpToDate' => 'not up to date',
@@ -210,6 +211,8 @@ return [
     'noPages' => 'No pages available',
     'choose' => 'Choose',
     'lastUpdateOn' => 'Last checked on',
+    'lastUpdateUnknown' => 'unknown',
+    'lastUpdateError' => 'Querying the updateserver failed.',
     'layoutModuleNotInstalled' => 'The associated module is not installed.',
 
     'menuInfos' => 'Information',

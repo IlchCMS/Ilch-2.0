@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -433,10 +433,14 @@ class Modules extends \Ilch\Controller\Admin
 
     public function refreshURLAction()
     {
-        url_get_contents($this->getConfig()->get('updateserver').'modules.php', true, true);
+        if (!empty(url_get_contents($this->getConfig()->get('updateserver').'modules.php', true, true))) {
+            $this->redirect()
+                ->withMessage('updateSuccess')
+                ->to(['action' => $this->getRequest()->getParam('from')]);
+        }
 
         $this->redirect()
-            ->withMessage('updateSuccess')
+            ->withMessage('lastUpdateError', 'danger')
             ->to(['action' => $this->getRequest()->getParam('from')]);
     }
 }

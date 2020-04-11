@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -176,6 +176,7 @@ return [
     'desc' => 'Beschreibung',
     'author' => 'Autor',
     'updateNow' => 'Jetzt aktualisieren',
+    'versionQueryFailedWith' => 'Versionsabfrage ist mit folgenden Fehler fehlgeschlagen: "%s". Versuchen Sie den Updateserver zu wechseln, sollte dieses Problem nicht temporär sein.',
     'system' => 'System',
     'upToDate' => 'aktuell',
     'notUpToDate' => 'nicht aktuell',
@@ -210,6 +211,8 @@ return [
     'noPages' => 'Keine Seiten vorhanden',
     'choose' => 'Auswählen',
     'lastUpdateOn' => 'Zuletzt geprüft am',
+    'lastUpdateUnknown' => 'unbekannt',
+    'lastUpdateError' => 'Abfrage des Updateservers fehlgeschlagen.',
     'layoutModuleNotInstalled' => 'Das dazugehörige Modul ist nicht installiert.',
 
     'menuInfos' => 'Informationen',
