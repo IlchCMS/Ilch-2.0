@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -54,7 +54,6 @@ class Mapper
      * Gets the menu for the given id.
      *
      * @param int $menuId
-     *
      * @return \Ilch\Layout\Helper\Menu\Model
      */
     public function getMenu($menuId)
@@ -67,8 +66,10 @@ class Mapper
             ->execute()
             ->fetchAssoc();
 
-        $menu->setId($menuRow['id']);
-        $menu->setTitle($menuRow['title']);
+        if (!empty($menuRow)) {
+            $menu->setId($menuRow['id']);
+            $menu->setTitle($menuRow['title']);
+        }
 
         return $menu;
     }
