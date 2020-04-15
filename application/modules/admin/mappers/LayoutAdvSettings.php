@@ -25,7 +25,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
     public function getSetting($layoutKey, $key)
     {
         $result = $this->db()->select('*')
-            ->from('admin_layoutAdvSettings')
+            ->from('admin_layoutadvsettings')
             ->where(['layoutKey' => $layoutKey, 'key' => $key])
             ->execute()
             ->fetchAssoc();
@@ -52,7 +52,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
     public function getSettings($layoutKey)
     {
         $array = $this->db()->select('*')
-            ->from('admin_layoutAdvSettings')
+            ->from('admin_layoutadvsettings')
             ->where(['layoutKey' => $layoutKey])
             ->execute()
             ->fetchRows();
@@ -82,7 +82,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
     public function getListOfLayoutKeys()
     {
         $layoutKeys = $this->db()->select('DISTINCT layoutKey')
-            ->from('admin_layoutAdvSettings')
+            ->from('admin_layoutadvsettings')
             ->execute()
             ->fetchList();
 
@@ -129,7 +129,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
      */
     private function updateSetting($model)
     {
-        $affectedRows = $this->db()->update('admin_layoutAdvSettings')
+        $affectedRows = $this->db()->update('admin_layoutadvsettings')
             ->values([
                 'layoutKey' => $model->getLayoutKey(),
                 'key' => $model->getKey(),
@@ -142,7 +142,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
             // If the value was unchanged then affected rows will be 0, even though it was existing.
             // Therefore check if the specific setting exists in this case.
             return $this->db()->select('COUNT(*)')
-                ->from('admin_layoutAdvSettings')
+                ->from('admin_layoutadvsettings')
                 ->where(['layoutKey' => $model->getLayoutKey(), 'key' => $model->getKey()])
                 ->execute()
                 ->fetchCell();
@@ -162,7 +162,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
             return;
         }
 
-        $this->db()->insert('admin_layoutAdvSettings')
+        $this->db()->insert('admin_layoutadvsettings')
             ->values([
                 'layoutKey' => $model->getLayoutKey(),
                 'key' => $model->getKey(),
@@ -180,7 +180,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
     public function hasSettings($layoutKey)
     {
         return (bool)$this->db()->select('COUNT(*)')
-            ->from('admin_layoutAdvSettings')
+            ->from('admin_layoutadvsettings')
             ->where(['layoutKey' => $layoutKey])
             ->execute()
             ->fetchCell();
@@ -225,7 +225,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
      */
     private function deleteBy($where)
     {
-        $this->db()->delete('admin_layoutAdvSettings')
+        $this->db()->delete('admin_layoutadvsettings')
             ->where($where)
             ->execute();
     }

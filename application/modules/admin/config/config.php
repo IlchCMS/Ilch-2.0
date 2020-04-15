@@ -178,7 +178,7 @@ class Config extends \Ilch\Config\Install
                 `info` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
-            CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutAdvSettings` (
+            CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutadvsettings` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `layoutKey` VARCHAR(255) NOT NULL,
                 `key` VARCHAR(255) NOT NULL,
@@ -660,7 +660,7 @@ class Config extends \Ilch\Config\Install
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
             case "2.1.31":
-                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutAdvSettings` (
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutadvsettings` (
                     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                     `layoutKey` VARCHAR(255) NOT NULL,
                     `key` VARCHAR(255) NOT NULL,
@@ -672,6 +672,9 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/delete_vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
+            case "2.1.32":
+                // Lowercase table name as it caused problems on different os (case sensitive or insensitive)
+                $this->db()->query('ALTER TABLE `[prefix]_admin_layoutAdvSettings` RENAME TO `[prefix]_admin_layoutadvsettings`;');
         }
 
         return 'Update function executed.';
