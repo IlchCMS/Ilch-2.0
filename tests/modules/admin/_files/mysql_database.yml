@@ -24,7 +24,7 @@ admin_notifications_permission:
     granted: 1
     limit: 5
 
-admin_layoutAdvSettings:
+admin_layoutadvsettings:
   -
     id: 1
     layoutKey: 'testLayoutKey1'
