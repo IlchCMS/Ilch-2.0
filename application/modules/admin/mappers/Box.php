@@ -77,6 +77,34 @@ class Box extends \Ilch\Mapper
     }
 
     /**
+     * Returns box model with specific locale found by the key.
+     *
+     * @param string $key
+     * @param string $locale
+     * @return BoxModel|null
+     */
+    public function getBoxByIdLocale($key, $locale)
+    {
+        $boxRow = $this->db()->select('*')
+            ->from('modules_boxes_content')
+            ->where(['key' => $key, 'locale' => $locale])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($boxRow)) {
+            return null;
+        }
+
+        $boxModel = new BoxModel();
+        $boxModel->setKey($boxRow['key']);
+        $boxModel->setModule($boxRow['module']);
+        $boxModel->setLocale($boxRow['locale']);
+        $boxModel->setName($boxRow['name']);
+
+        return $boxModel;
+    }
+
+    /**
      * Returns box model found by the key.
      *
      * @param string $id
