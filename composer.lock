@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "v10.12.0",
+            "version": "v10.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "40b12fa004ac4edb5ccbe02f20c36b3a66d75fa3"
+                "reference": "ea0eaf9ad26a573d50f1664f9d49f09dcc867324"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vkhramtsov/jQuery-File-Upload/zipball/40b12fa004ac4edb5ccbe02f20c36b3a66d75fa3",
-                "reference": "40b12fa004ac4edb5ccbe02f20c36b3a66d75fa3",
+                "url": "https://api.github.com/repos/vkhramtsov/jQuery-File-Upload/zipball/ea0eaf9ad26a573d50f1664f9d49f09dcc867324",
+                "reference": "ea0eaf9ad26a573d50f1664f9d49f09dcc867324",
                 "shasum": ""
             },
             "type": "library",
@@ -59,7 +59,13 @@
                 "upload",
                 "widget"
             ],
-            "time": "2020-04-10T07:57:56+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/blueimp",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-04-22T15:12:54+00:00"
         },
         {
             "name": "ckeditor/ckeditor",
@@ -2442,16 +2448,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.7.0",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "aed98a490f9a8f78468232db345ab9cf606cf598"
+                "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/aed98a490f9a8f78468232db345ab9cf606cf598",
-                "reference": "aed98a490f9a8f78468232db345ab9cf606cf598",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
+                "reference": "ab2cb0b3b559010b75981b1bdce728da3ee90ad6",
                 "shasum": ""
             },
             "require": {
@@ -2459,7 +2465,7 @@
                 "symfony/polyfill-ctype": "^1.8"
             },
             "conflict": {
-                "vimeo/psalm": "<3.6.0"
+                "vimeo/psalm": "<3.9.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8.36 || ^7.5.13"
@@ -2486,7 +2492,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2020-02-14T12:15:55+00:00"
+            "time": "2020-04-18T12:12:48+00:00"
         }
     ],
     "aliases": [],
