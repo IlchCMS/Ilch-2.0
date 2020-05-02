@@ -121,6 +121,11 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                                 ]
                     },
                     {
+                        type: 'checkbox',
+                        id: 'videoautoplay',
+                        label: editor.lang.ilchmedia.videoAutoplay,
+                    },
+                    {
                         type: 'button',
                         label: editor.lang.ilchmedia.selectFromServer,
                         labelStyle: 'font-weight: bold',
@@ -193,7 +198,12 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                     let custlink = CKEDITOR.dom.element.createFromHtml('<div class="ckeditor-bbcode--youtube"><iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/' + param + '" frameborder="0" allowfullscreen width="' + width + '" height="' + height + '" ></iframe></div>');
                     editor.insertElement(custlink);
                 } else {
-                    let custlink = CKEDITOR.dom.element.createFromHtml('<video controls autoplay preload="auto" width="' + width + '" height="' + height + '" src="' + link + '"></video>');
+                    let custlink;
+                    if (dialog.getValueOf('tab-mov', 'videoautoplay')) {
+                        custlink = CKEDITOR.dom.element.createFromHtml('<video controls autoplay preload="auto" width="' + width + '" height="' + height + '" src="' + link + '"></video>');
+                    } else {
+                        custlink = CKEDITOR.dom.element.createFromHtml('<video controls preload="auto" width="' + width + '" height="' + height + '" src="' + link + '"></video>');
+                    }
                     editor.insertElement(custlink);
                 }
             }

@@ -10,4 +10,5 @@ CKEDITOR.plugins.setLang('ilchmedia', 'de', {
     selectFromServer: 'Vom Server auswählen',
     widthLabel: 'Breite (optional)',
     heightLabel: 'Höhe (optional)',
+    videoAutoplay: 'Video automatisch abspielen',
 });

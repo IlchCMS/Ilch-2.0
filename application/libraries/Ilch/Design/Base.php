@@ -155,11 +155,10 @@ abstract class Base
         $def = $this->purifierConfig->getHTMLDefinition(true);
         $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
         $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
+            'autoplay' => 'Bool',
             'src' => 'URI',
-            'type' => 'Text',
             'width' => 'Length',
             'height' => 'Length',
-            'poster' => 'URI',
             'preload' => 'Enum#auto,metadata,none',
             'controls' => 'Bool',
         ));
