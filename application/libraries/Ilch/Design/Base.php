@@ -154,6 +154,19 @@ abstract class Base
         $this->purifierConfig->set('AutoFormat.Linkify', true);
         $def = $this->purifierConfig->getHTMLDefinition(true);
         $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
+        $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
+            'src' => 'URI',
+            'type' => 'Text',
+            'width' => 'Length',
+            'height' => 'Length',
+            'poster' => 'URI',
+            'preload' => 'Enum#auto,metadata,none',
+            'controls' => 'Bool',
+        ));
+        $def->addElement('source', 'Block', 'Flow', 'Common', array(
+            'src' => 'URI',
+            'type' => 'Text',
+        ));
         $this->purifier = new \HTMLPurifier($this->purifierConfig);
     }
 
