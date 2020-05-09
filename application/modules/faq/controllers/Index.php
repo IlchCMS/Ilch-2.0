@@ -35,7 +35,14 @@ class Index extends \Ilch\Controller\Frontend
             $adminAccess = $this->getUser()->isAdmin();
         }
 
-        $categories = $categoryMapper->getCategories();
+        $sortCategoriesAlphabetically = ($this->getConfig()->get('faq_sortCategoriesAlphabetically') === '1');
+        $sortQuestionsAlphabetically = ($this->getConfig()->get('faq_sortQuestionsAlphabetically') === '1');
+
+        if ($sortCategoriesAlphabetically) {
+            $categories = $categoryMapper->getCategories([], ['title' => 'ASC']);
+        } else {
+            $categories = $categoryMapper->getCategories();
+        }
 
         if ($this->getRequest()->getParam('catId')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
@@ -54,7 +61,11 @@ class Index extends \Ilch\Controller\Frontend
                 $this->redirect(['action' => 'index']);
             }
 
-            $faqs = $faqMapper->getFaqs(['cat_id' => $this->getRequest()->getParam('catId')]);
+            if ($sortQuestionsAlphabetically) {
+                $faqs = $faqMapper->getFaqs(['cat_id' => $this->getRequest()->getParam('catId')], ['question' => 'ASC']);
+            } else {
+                $faqs = $faqMapper->getFaqs(['cat_id' => $this->getRequest()->getParam('catId')]);
+            }
         } else {
             $firstAllowedCategory = null;
 
@@ -70,13 +81,21 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
                     ->add($firstAllowedCategory->getTitle(), ['action' => 'index', 'catId' => $firstAllowedCategory->getId()]);
 
-                $faqs = $faqMapper->getFaqs(['cat_id' => $firstAllowedCategory->getId()]);
+                if ($sortQuestionsAlphabetically) {
+                    $faqs = $faqMapper->getFaqs(['cat_id' => $firstAllowedCategory->getId()], ['question' => 'ASC']);
+                } else {
+                    $faqs = $faqMapper->getFaqs(['cat_id' => $firstAllowedCategory->getId()]);
+                }
 
                 $this->getView()->set('firstCatId', $firstAllowedCategory->getId());
             } else {
                 $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
 
-                $faqs = $faqMapper->getFaqs();
+                if ($sortQuestionsAlphabetically) {
+                    $faqs = $faqMapper->getFaqs([], ['question' => 'ASC']);
+                } else {
+                    $faqs = $faqMapper->getFaqs();
+                }
             }
         }
 

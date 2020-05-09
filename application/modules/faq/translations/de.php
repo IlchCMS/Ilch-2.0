@@ -7,6 +7,7 @@
 return [
     'menuFaqs' => 'FAQ',
     'menuCats' => 'Kategorien',
+    'menuSettings' => 'Einstellungen',
     'faqs' => 'FAQ',
     'faqFrequentlyAskedQuestions' => 'FAQ - Häufig gestellte Fragen',
     'cat' => 'Kategorie',
@@ -19,4 +20,6 @@ return [
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'noFaqs' => 'Keine FAQ vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',
+    'sortCategoriesAlphabetically' => 'Kategorien alphabetisch sortieren',
+    'sortQuestionsAlphabetically' => 'Fragen alphabetisch sortieren',
 ];

@@ -14,13 +14,15 @@ class Faq extends \Ilch\Mapper
      * Gets faqs.
      *
      * @param array $where
+     * @param array $orderBy
      * @return FaqModel[]|[]
      */
-    public function getFaqs($where = [])
+    public function getFaqs($where = [], $orderBy = ['id' => 'ASC'])
     {
         $faqArray = $this->db()->select('*')
             ->from('faqs')
             ->where($where)
+            ->order($orderBy)
             ->execute()
             ->fetchRows();
 

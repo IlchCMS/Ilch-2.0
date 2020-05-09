@@ -10,10 +10,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'faq',
-        'version' => '1.6.0',
+        'version' => '1.7.0',
         'icon_small' => 'fa-question-circle',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'F.A.Q.',
@@ -31,12 +31,18 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('faq_sortCategoriesAlphabetically', '0');
+        $databaseConfig->set('faq_sortQuestionsAlphabetically', '0');
     }
 
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_faqs`;
                                  DROP TABLE `[prefix]_faqs_cats`;');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'faq_sortCategoriesAlphabetically';
+             DELETE FROM `[prefix]_config` WHERE `key` = 'faq_sortQuestionsAlphabetically'");
     }
 
     public function getInstallSql()

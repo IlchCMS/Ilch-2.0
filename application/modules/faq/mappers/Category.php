@@ -14,13 +14,15 @@ class Category extends \Ilch\Mapper
      * Gets categories.
      *
      * @param array $where
+     * @param array $orderBy
      * @return CategoryModel[]|[]
      */
-    public function getCategories($where = [])
+    public function getCategories($where = [], $orderBy = ['id' => 'ASC'])
     {
         $categoryArray = $this->db()->select('*')
             ->from('faqs_cats')
             ->where($where)
+            ->order($orderBy)
             ->execute()
             ->fetchRows();
 
