@@ -141,7 +141,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
         if ($affectedRows === 0) {
             // If the value was unchanged then affected rows will be 0, even though it was existing.
             // Therefore check if the specific setting exists in this case.
-            return $this->db()->select('COUNT(*)')
+            return (int)$this->db()->select('COUNT(*)')
                 ->from('admin_layoutadvsettings')
                 ->where(['layoutKey' => $model->getLayoutKey(), 'key' => $model->getKey()])
                 ->execute()

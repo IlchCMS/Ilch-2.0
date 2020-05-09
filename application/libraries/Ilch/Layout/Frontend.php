@@ -411,7 +411,22 @@ class Frontend extends Base
     public function getLayoutSetting($key)
     {
         if (empty($this->settings[$key])) {
-            throw new \InvalidArgumentException('A setting with the key "'.$key.'" doesn\'t exist for this layout.');
+            // That specific setting seems to be not loaded. Try to load default value.
+            $layoutPath = APPLICATION_PATH.'/layouts/'.$this->getLayoutKey();
+            if (is_dir($layoutPath)) {
+                $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+
+                if (empty($config->config['settings'][$key])) {
+                    throw new \InvalidArgumentException('A setting with the key "'.$key.'" doesn\'t exist for this layout.');
+                }
+
+                if ($config->config['settings'][$key]['type'] === 'separator') {
+                    throw new \InvalidArgumentException($key.'" is a seperator and not a setting with a value.');
+                }
+
+                $this->settings[$key] = $config->config['settings'][$key]['default'];
+            }
         }
 
         if ($this->settings[$key] instanceof LayoutAdvSettingsModel) {
