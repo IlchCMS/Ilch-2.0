@@ -675,6 +675,12 @@ class Config extends \Ilch\Config\Install
             case "2.1.32":
                 // Lowercase table name as it caused problems on different os (case sensitive or insensitive)
                 $this->db()->query('ALTER TABLE `[prefix]_admin_layoutAdvSettings` RENAME TO `[prefix]_admin_layoutadvsettings`;');
+                break;
+            case "2.1.33":
+                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
+                removeDir(ROOT_PATH.'/delete_vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                break;
         }
 
         return 'Update function executed.';
