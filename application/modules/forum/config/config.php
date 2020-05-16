@@ -21,7 +21,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'forum',
-        'version' => '1.23.0',
+        'version' => '1.24.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',
@@ -74,7 +74,7 @@ class Config extends \Ilch\Config\Install
         file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
         $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
 
-        $this->db()->query('INSERT INTO `[prefix]_forum_groupranking` (group_id,rank) VALUES(1,0);');
+        $this->db()->query('INSERT INTO `[prefix]_forum_groupranking` (`group_id`,`rank`) VALUES(1,0);');
     }
 
     public function uninstall()
