@@ -112,6 +112,13 @@ class Index extends \Ilch\Controller\Frontend
     public function connectAction()
     {
         $errors = [];
+
+        if (!extension_loaded('mysqli')) {
+            $this->addMessage('mysqliExtensionMissing', 'danger');
+            $errors['mysqliExtensionMissing'] = true;
+            return;
+        }
+
         if ($this->getRequest()->isPost()) {
             $_SESSION['install']['dbEngine'] = $this->getRequest()->getPost('dbEngine');
             $_SESSION['install']['dbHost'] = $this->getRequest()->getPost('dbHost');

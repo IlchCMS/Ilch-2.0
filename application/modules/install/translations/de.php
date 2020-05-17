@@ -25,6 +25,7 @@ return [
     'available' => 'Vorhanden',
     'phpVersion' => 'PHP Version',
     'dbVersion' => 'Datenbank-Software Version',
+    'mysqliExtensionMissing' => 'Die Erweiterung mysqli fehlt. Es kann somit keine Verbindung zur Datenbank hergestellt werden.',
     'dbEngine' => 'Engine',
     'dbHost' => 'Host',
     'dbUser' => 'Benutzername',

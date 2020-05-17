@@ -25,6 +25,7 @@ return [
     'available' => 'Available',
     'phpVersion' => 'PHP Version',
     'dbVersion' => 'Database software version',
+    'mysqliExtensionMissing' => 'The mysqli extension is missing. Therefore it is impossible to connect to the database.',
     'dbEngine' => 'engine',
     'dbHost' => 'host',
     'dbUser' => 'username',
