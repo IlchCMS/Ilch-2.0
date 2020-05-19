@@ -1,4 +1,17 @@
 
+v3.10.2 (2020-05-13)
+--------------------
+
+Compatibilty with jQuery 3.5.0 (#5391, #5348)
+
+
+v3.10.1 (2019-08-10)
+--------------------
+
+Released solely to change the [package description text](https://www.npmjs.com/package/fullcalendar)
+to reference v4 packages.
+
+
 v3.10.0 (2019-01-10)
 --------------------
 
