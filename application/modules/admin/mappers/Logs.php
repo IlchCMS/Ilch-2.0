@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -62,6 +62,37 @@ class Logs extends \Ilch\Mapper
         foreach ($entriesArray as $entry) {
             $model = new LogsModel();
             $model->setDate($entry['date_full']);
+            $logs[] = $model;
+        }
+
+        return $logs;
+    }
+
+    /**
+     * Get the logs by an optionally provided where-clause.
+     *
+     * @param array $where
+     * @return array|LogsModel[]
+     */
+    public function getLogsBy($where = [])
+    {
+        $entriesArray = $this->db()->select('*')
+            ->from('logs')
+            ->where($where)
+            ->order(['date' => 'DESC'])
+            ->execute()
+            ->fetchRows();
+
+        if (empty($entriesArray)) {
+            return [];
+        }
+
+        $logs = [];
+        foreach ($entriesArray as $entry) {
+            $model = new LogsModel();
+            $model->setUserId($entry['user_id']);
+            $model->setDate($entry['date']);
+            $model->setInfo($entry['info']);
             $logs[] = $model;
         }
 

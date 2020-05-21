@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -53,15 +53,15 @@ class Infos extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'phpextensions') {
+        if ($this->getRequest()->getActionName() === 'phpextensions') {
             $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'folderrights' || $this->getRequest()->getActionName() == 'allrights') {
+        } elseif ($this->getRequest()->getActionName() === 'folderrights' || $this->getRequest()->getActionName() === 'allrights') {
             $items[2]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'logs') {
+        } elseif ($this->getRequest()->getActionName() === 'logs') {
             $items[3]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'certificate') {
+        } elseif ($this->getRequest()->getActionName() === 'certificate') {
             $items[4]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'shortcuts') {
+        } elseif ($this->getRequest()->getActionName() === 'shortcuts') {
             $items[5]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -142,18 +142,31 @@ class Infos extends \Ilch\Controller\Admin
     {
         $logsMapper = new LogsMapper();
         $userMapper = new UserMapper();
+        $where = ['date >' => date('Y-m-d', strtotime( '-7 days' )), 'date <=' => date('Y-m-d 23:59:59')];
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('hmenuLogs'), ['action' => 'logs']);
 
         if ($this->getRequest()->isPost()) {
-            $logsMapper->clearLog();
+            if ($this->getRequest()->getPost('clearLog')) {
+                $logsMapper->clearLog();
+            }
+            if ($this->getRequest()->getPost('filterLog')) {
+                $where = ['date >' => date('Y-m-d', strtotime($this->getRequest()->getPost('startDate'))), 'date <=' => date('Y-m-d', strtotime($this->getRequest()->getPost('endDate')))];
+            }
         }
 
-        $this->getView()->set('logsMapper', $logsMapper);
+        $logs = $logsMapper->getLogsBy($where);
+        $logsByDay = [];
+        foreach($logs as $log) {
+            $date = new \Ilch\Date($log->getDate());
+            $date = $date->format('d.m.Y');
+            $logsByDay[$date][] = $log;
+        }
+
         $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('logsDate', $logsMapper->getLogsDate());
+        $this->getView()->set('logsDate', $logsByDay);
     }
 
     public function phpextensionsAction()

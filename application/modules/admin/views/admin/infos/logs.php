@@ -1,14 +1,58 @@
 <?php
-$logsMapper = $this->get('logsMapper');
 $userMapper = $this->get('userMapper');
 $userCache = [];
 ?>
-
+<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('logs') ?></h1>
+<p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <i class="fas fa-filter"></i> <?=$this->getTrans('filter') ?>
+    </a>
+</p>
+<div class="panel panel-default collapse" id="collapseExample">
+    <div class="panel-body">
+        <div class="form-group">
+            <label for="startDate" class="col-lg-2 control-label">
+                <?=$this->getTrans('startDate') ?>:
+            </label>
+            <div class="col-lg-4 input-group ilch-date date form_datetime">
+                <input type="text"
+                       class="form-control"
+                       id="startDate"
+                       name="startDate"
+                       value="<?=date('d.m.Y 00:00', strtotime( '-7 days' )) ?>"
+                       readonly>
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="endDate" class="col-lg-2 control-label">
+                <?=$this->getTrans('endDate') ?>:
+            </label>
+            <div class="col-lg-4 input-group ilch-date date form_datetime">
+                <input type="text"
+                       class="form-control"
+                       id="endDate"
+                       name="endDate"
+                       value="<?=date('d.m.Y 23:59') ?>"
+                       readonly>
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" method="POST">
+        <?=$this->getTokenField() ?>
+        <button type="submit" name="filterLog" class="btn btn-primary"><?=$this->getTrans('filterLog') ?></button>
+    </form>
+</div>
+
 <?php if ($this->get('logsDate') != ''): ?>
-    <?php foreach ($this->get('logsDate') as $logDate): ?>
-        <?php $date = new \Ilch\Date($logDate->getDate()); ?>
-        <h4><?=$date->format('d.m.Y') ?></h4>
+    <?php foreach ($this->get('logsDate') as $date => $logs): ?>
+        <h4><?=$date ?></h4>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -24,14 +68,13 @@ $userCache = [];
                 </tr>
                 </thead>
                 <tbody>
-                <?php $logs = $logsMapper->getLogs($logDate->getDate()); ?>
-                <?php foreach ($logs as $log): ?>
-                    <?php $time = new \Ilch\Date($log->getDate()); ?>
-                    <?php if (!array_key_exists($log->getUserId(), $userCache)) {
-                        $userCache[$log->getUserId()] = $userMapper->getUserById($log->getUserId());
-                    }
-                    $user = $userCache[$log->getUserId()];
-                    ?>
+        <?php foreach($logs as $log) : ?>
+            <?php $time = new \Ilch\Date($log->getDate()); ?>
+            <?php if (!array_key_exists($log->getUserId(), $userCache)) {
+                $userCache[$log->getUserId()] = $userMapper->getUserById($log->getUserId());
+            }
+            $user = $userCache[$log->getUserId()];
+            ?>
                     <tr>
                         <td><?=$time->format('H:i:s') ?></td>
                         <td>
@@ -45,7 +88,7 @@ $userCache = [];
                         </td>
                         <td><?=$log->getInfo() ?></td>
                     </tr>
-                <?php endforeach; ?>
+        <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -58,3 +101,21 @@ $userCache = [];
         <button type="submit" name="clearLog" class="btn btn-default"><?=$this->getTrans('clearLog') ?></button>
     </form>
 </div>
+
+<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
+    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<?php endif; ?>
+<script>
+$(document).ready(function() {
+    $(".form_datetime").datetimepicker({
+        format: "dd.mm.yyyy hh:ii",
+        todayBtn: true,
+        startDate: new Date('01.06.2017 00:00'),
+        autoclose: true,
+        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        minuteStep: 15,
+        todayHighlight: true
+    });
+});
+</script>
