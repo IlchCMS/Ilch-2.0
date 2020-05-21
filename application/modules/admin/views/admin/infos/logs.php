@@ -10,43 +10,44 @@ $userCache = [];
     </a>
 </p>
 <div class="panel panel-default collapse" id="collapseExample">
-    <div class="panel-body">
-        <div class="form-group">
-            <label for="startDate" class="col-lg-2 control-label">
-                <?=$this->getTrans('startDate') ?>:
-            </label>
-            <div class="col-lg-4 input-group ilch-date date form_datetime">
-                <input type="text"
-                       class="form-control"
-                       id="startDate"
-                       name="startDate"
-                       value="<?=date('d.m.Y 00:00', strtotime( '-7 days' )) ?>"
-                       readonly>
-                <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
-                </span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="endDate" class="col-lg-2 control-label">
-                <?=$this->getTrans('endDate') ?>:
-            </label>
-            <div class="col-lg-4 input-group ilch-date date form_datetime">
-                <input type="text"
-                       class="form-control"
-                       id="endDate"
-                       name="endDate"
-                       value="<?=date('d.m.Y 23:59') ?>"
-                       readonly>
-                <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
-        <button type="submit" name="filterLog" class="btn btn-primary"><?=$this->getTrans('filterLog') ?></button>
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="startDate" class="col-lg-2 control-label">
+                    <?=$this->getTrans('startDate') ?>:
+                </label>
+                <div class="col-lg-4 input-group ilch-date date form_datetime">
+                    <input type="text"
+                           class="form-control"
+                           id="startDate"
+                           name="startDate"
+                           value="<?=date('d.m.Y 00:00', strtotime( '-7 days' )) ?>"
+                           readonly>
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="endDate" class="col-lg-2 control-label">
+                    <?=$this->getTrans('endDate') ?>:
+                </label>
+                <div class="col-lg-4 input-group ilch-date date form_datetime">
+                    <input type="text"
+                           class="form-control"
+                           id="endDate"
+                           name="endDate"
+                           value="<?=date('d.m.Y 23:59') ?>"
+                           readonly>
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" name="filterLog" class="btn btn-primary" value="1"><?=$this->getTrans('filterLog') ?></button>
     </form>
 </div>
 
@@ -98,7 +99,7 @@ $userCache = [];
 <div class="content_savebox">
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
-        <button type="submit" name="clearLog" class="btn btn-default"><?=$this->getTrans('clearLog') ?></button>
+        <button type="submit" name="clearLog" class="btn btn-default" value="1"><?=$this->getTrans('clearLog') ?></button>
     </form>
 </div>
 

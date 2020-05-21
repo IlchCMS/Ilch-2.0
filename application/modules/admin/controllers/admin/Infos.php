@@ -153,7 +153,7 @@ class Infos extends \Ilch\Controller\Admin
                 $logsMapper->clearLog();
             }
             if ($this->getRequest()->getPost('filterLog')) {
-                $where = ['date >' => date('Y-m-d', strtotime($this->getRequest()->getPost('startDate'))), 'date <=' => date('Y-m-d', strtotime($this->getRequest()->getPost('endDate')))];
+                $where = ['date >' => date('Y-m-d H:i:s', strtotime($this->getRequest()->getPost('startDate'))), 'date <=' => date('Y-m-d H:i:s', strtotime($this->getRequest()->getPost('endDate')))];
             }
         }
 
