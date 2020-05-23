@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -74,17 +74,17 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'maintenance') {
+        if ($this->getRequest()->getActionName() === 'maintenance') {
             $items[1]['active'] = true;  
-        } elseif ($this->getRequest()->getActionName() == 'customcss') {
+        } elseif ($this->getRequest()->getActionName() === 'customcss') {
             $items[2]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'htaccess') {
+        } elseif ($this->getRequest()->getActionName() === 'htaccess') {
             $items[3]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'update') {
+        } elseif ($this->getRequest()->getActionName() === 'update') {
             $items[5]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'notifications') {
+        } elseif ($this->getRequest()->getActionName() === 'notifications') {
             $items[6]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'mail') {
+        } elseif ($this->getRequest()->getActionName() === 'mail') {
             $items[8]['active'] = true;
         } else {
             $items[0]['active'] = true; 
@@ -369,7 +369,7 @@ HTACCESS;
 
         $notificationPermissionMapper = new NotificationPermissionMapper();
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_notificationPermissions')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_notificationPermissions')) {
             foreach ($this->getRequest()->getPost('check_notificationPermissions') as $notificationPermissionKey) {
                 $notificationPermissionMapper->deletePermissionOfModule($notificationPermissionKey);
             }
@@ -421,7 +421,7 @@ HTACCESS;
             $notificationPermissionMapper = new NotificationPermissionMapper();
             $notificationsMapper = new NotificationsMapper();
 
-            if ($this->getRequest()->getParam('revoke') == 'true') {
+            if ($this->getRequest()->getParam('revoke') === 'true') {
                 $notificationPermissionMapper->updatePermissionGrantedOfModule($this->getRequest()->getParam('key'), 0);
                 $notificationsMapper->deleteNotificationsByModule($this->getRequest()->getParam('key'));
 

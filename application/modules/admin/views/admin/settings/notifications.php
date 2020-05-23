@@ -32,11 +32,11 @@
                     <?php foreach ($notificationPermissions as $notificationPermission): ?>
                         <?php
                         if ($notificationPermission->getGranted()) {
-                            $test = 'true';
+                            $value = 'true';
                             $translation = 'revokePermission';
                             $icon = 'fa fa-check text-success';
                         } else {
-                            $test = 'false';
+                            $value = 'false';
                             $translation = 'grantPermission';
                             $icon = 'fa fa-square-o';
                         }
@@ -45,7 +45,7 @@
                             <input type="hidden" class="form-control" name="data[<?=$index ?>][key]" value="<?=$notificationPermission->getModule() ?>">
                             <td><?=$this->getDeleteCheckbox('check_notificationPermissions', $notificationPermission->getModule()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'deletePermission', 'key' => $notificationPermission->getModule()]) ?></td>
-                            <td><a href="<?=$this->getUrl(['action' => 'changePermission', 'key' => $notificationPermission->getModule(), 'revoke' => $test], null, true) ?>" title="<?=$this->getTrans($translation) ?>"><i class="<?=$icon ?>"></i></a></td>
+                            <td><a href="<?=$this->getUrl(['action' => 'changePermission', 'key' => $notificationPermission->getModule(), 'revoke' => $value], null, true) ?>" title="<?=$this->getTrans($translation) ?>"><i class="<?=$icon ?>"></i></a></td>
                             <td><?=$this->escape($notificationPermission->getModule()) ?></td>
                             <td class="<?=$this->validation()->hasError('limit') ? 'has-error' : '' ?>"><input type="number" class="form-control" name="data[<?=$index ?>][limit]" min="0" max="5" value="<?=$notificationPermission->getLimit() ?>"></td>
                         </tr>
