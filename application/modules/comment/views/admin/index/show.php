@@ -33,7 +33,9 @@ $modules = $modulesMapper->getModulesByKey($this->getRequest()->getParam('key'),
                     <?php foreach ($this->get('comments') as $comment): ?>
                         <?php 
                         $user = $userMapper->getUserById($comment->getUserId());
-                        if (!$user) $user = $userMapper->getDummyUser();
+                        if (!$user) {
+                            $user = $userMapper->getDummyUser();
+                        }
                         ?>
                         <?php $date = new \Ilch\Date($comment->getDateCreated()) ?>
                         <?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>

@@ -32,7 +32,21 @@
                    value="<?=$this->get('comment_nesting') ?>">
         </div>
     </div>
+    <h2><?=$this->getTrans('boxSettings') ?></h2>
+    <div class="form-group">
+        <label for="boxCommentsLimit" class="col-lg-2 control-label">
+            <?=$this->getTrans('boxCommentsLimit') ?>
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="boxCommentsLimit"
+                   name="boxCommentsLimit"
+                   min="1"
+                   value="<?=($this->get('boxCommentsLimit') != '') ? $this->escape($this->get('boxCommentsLimit')) : 5 ?>" />
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 
-<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('CommentCommentInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('CommentCommentInfoText')) ?>

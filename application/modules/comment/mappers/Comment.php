@@ -167,9 +167,7 @@ class Comment extends \Ilch\Mapper
                 FROM `[prefix]_comments`
                 WHERE `key` LIKE "'.$key.'%"';
 
-        $count = $this->db()->queryCell($sql);
-
-        return $count;
+        return $this->db()->queryCell($sql);
     }
 
     /**

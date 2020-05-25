@@ -73,7 +73,7 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('manage'), ['action' => 'index'])
             ->add($modules->getName(), ['action' => 'show', 'module' => $module]);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_comments')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_comments')) {
             foreach ($this->getRequest()->getPost('check_comments') as $commentId) {
                 $commentMapper->delete($commentId);
             }

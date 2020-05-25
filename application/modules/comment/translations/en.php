@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -15,4 +15,5 @@ return [
     'nesting' => 'Reply nesting',
     'acceptReply' => 'Allow replies on comments?',
     'CommentCommentInfoText' => 'A too deep nesting of comments may result in comments displayed too small.',
+    'boxCommentsLimit' => 'Number of entries',
 ];

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -48,7 +48,8 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $post = [
                 'reply' => $this->getRequest()->getPost('reply'),
-                'nesting' => $this->getRequest()->getPost('nesting')
+                'nesting' => $this->getRequest()->getPost('nesting'),
+                'boxCommentsLimit' => $this->getRequest()->getPost('boxCommentsLimit'),
             ];
 
             Validation::setCustomFieldAliases([
@@ -57,12 +58,14 @@ class Settings extends \Ilch\Controller\Admin
 
             $validation = Validation::create($post, [
                 'reply' => 'required|numeric|integer|min:0|max:1',
-                'nesting' => 'required|numeric|integer|min:0'
+                'nesting' => 'required|numeric|integer|min:0',
+                'boxCommentsLimit' => 'required|numeric|integer|min:1'
             ]);
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('comment_reply', $post['reply']);
                 $this->getConfig()->set('comment_nesting', $post['nesting']);
+                $this->getConfig()->set('comment_box_comments_limit', $post['boxCommentsLimit']);
                 $this->addMessage('saveSuccess');
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
@@ -71,5 +74,6 @@ class Settings extends \Ilch\Controller\Admin
 
         $this->getView()->set('comment_reply', $this->getConfig()->get('comment_reply'));
         $this->getView()->set('comment_nesting', $this->getConfig()->get('comment_nesting'));
+        $this->getView()->set('boxCommentsLimit', $this->getConfig()->get('comment_box_comments_limit'));
     }
 }
