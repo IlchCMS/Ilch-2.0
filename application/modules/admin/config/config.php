@@ -681,6 +681,11 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/delete_vendor');
                 rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
                 break;
+            case "2.1.34":
+                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
+                removeDir(ROOT_PATH.'/delete_vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                break;
         }
 
         return 'Update function executed.';
