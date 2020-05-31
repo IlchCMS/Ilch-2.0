@@ -20,6 +20,7 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->isPost()) {
             $searchTerm = trim($this->getRequest()->getPost('search'));
+            $this->getView()->set('searchExecuted', true);
 
             if (!empty($searchTerm)) {
                 $this->getView()->set('searchresult', $faqMapper->search(['question LIKE' => '%'.$searchTerm.'%']));

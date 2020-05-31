@@ -25,4 +25,5 @@ return [
     'mightAnswerYourQuestion' => 'Folgende Frage(n) könnten Ihre Frage beantworten:',
     'placeHolderSearch' => 'Geben Sie einen Suchbegriff ein',
     'search' => 'Suche',
+    'noSearchResult' => 'Leider kein Suchergebnis.',
 ];
