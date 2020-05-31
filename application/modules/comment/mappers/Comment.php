@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -157,17 +157,17 @@ class Comment extends \Ilch\Mapper
     }
     
     /**
-     * Gets the counter of all comments with given $key.
+     * Gets the count of all comments with given $key.
      *
      * @return integer
      */
     public function getCountComments($key)
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_comments`
-                WHERE `key` LIKE "'.$key.'%"';
-
-        return $this->db()->queryCell($sql);
+        return $this->db()->select('COUNT(*)')
+            ->from('comments')
+            ->where(['key' => $key])
+            ->execute()
+            ->fetchCell();
     }
 
     /**
