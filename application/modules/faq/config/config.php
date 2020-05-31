@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'faq',
-        'version' => '1.7.0',
+        'version' => '1.8.0',
         'icon_small' => 'fa-question-circle',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',

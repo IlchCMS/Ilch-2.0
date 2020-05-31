@@ -22,4 +22,8 @@ return [
     'noCategory' => 'Keine Kategorie vorhanden',
     'sortCategoriesAlphabetically' => 'Kategorien alphabetisch sortieren',
     'sortQuestionsAlphabetically' => 'Fragen alphabetisch sortieren',
+    'mightAnswerYourQuestion' => 'Folgende Frage(n) könnten Ihre Frage beantworten:',
+    'placeHolderSearch' => 'Geben Sie einen Suchbegriff ein',
+    'search' => 'Suche',
+    'noSearchResult' => 'Leider kein Suchergebnis.',
 ];

@@ -11,6 +11,38 @@ use Modules\Faq\Models\Faq as FaqModel;
 class Faq extends \Ilch\Mapper
 {
     /**
+     * Full-text search of a question.
+     *
+     * @param array $where
+     * @return array
+     */
+    public function search($where = [])
+    {
+        $faqArray = $this->db()->select('*')
+            ->from('faqs')
+            ->where($where)
+            ->execute()
+            ->fetchRows();
+
+        if (empty($faqArray)) {
+            return [];
+        }
+
+        $faqs = [];
+        foreach ($faqArray as $faqRow) {
+            $faqModel = new FaqModel();
+            $faqModel->setId($faqRow['id']);
+            $faqModel->setCatId($faqRow['cat_id']);
+            $faqModel->setQuestion($faqRow['question']);
+            $faqModel->setAnswer($faqRow['answer']);
+
+            $faqs[] = $faqModel;
+        }
+
+        return $faqs;
+    }
+
+    /**
      * Gets faqs.
      *
      * @param array $where

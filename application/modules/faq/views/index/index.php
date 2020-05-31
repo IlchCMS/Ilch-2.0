@@ -4,10 +4,34 @@ $faqs = $this->get('faqs');
 $faqMapper = $this->get('faqMapper');
 $readAccess = $this->get('readAccess');
 $adminAccess = $this->get('adminAccess');
+$searchresult = $this->get('searchresult');
+$searchExecuted = $this->get('searchExecuted');
 ?>
 
 <h1><?=$this->getTrans('faqFrequentlyAskedQuestions') ?></h1>
+
+<?php if (!empty($searchresult)) : ?>
+    <?=$this->getTrans('mightAnswerYourQuestion') ?>
+    <ul>
+    <?php foreach ($searchresult as $result) : ?>
+        <li><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $result->getId()]) ?>"><b><?=$this->escape($result->getQuestion()) ?></b></a></li>
+    <?php endforeach; ?>
+    </ul>
+<?php elseif ($searchExecuted) : ?>
+    <p><?=$this->getTrans('noSearchResult') ?></p>
+<?php endif; ?>
+
 <?php if (!empty($faqs)): ?>
+    <form class="form-horizontal" role="search" method="POST">
+        <?=$this->getTokenField() ?>
+        <div class="form-group">
+            <div class="col-lg-6">
+                <input type="text" class="form-control" placeholder="<?=$this->getTrans('placeHolderSearch') ?>" name="search" id="search">
+            </div>
+            <button type="submit" class="btn btn-default"><?=$this->getTrans('search') ?></button>
+        </div>
+    </form>
+
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">

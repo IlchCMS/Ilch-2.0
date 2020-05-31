@@ -18,6 +18,15 @@ class Index extends \Ilch\Controller\Frontend
         $faqMapper = new FaqMapper();
         $userMapper = new UserMapper();
 
+        if ($this->getRequest()->isPost()) {
+            $searchTerm = trim($this->getRequest()->getPost('search'));
+            $this->getView()->set('searchExecuted', true);
+
+            if (!empty($searchTerm)) {
+                $this->getView()->set('searchresult', $faqMapper->search(['question LIKE' => '%'.$searchTerm.'%']));
+            }
+        }
+
         $user = null;
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
