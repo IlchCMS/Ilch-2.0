@@ -22,4 +22,7 @@ return [
     'noCategory' => 'No category available',
     'sortCategoriesAlphabetically' => 'Sort categories alphabetically',
     'sortQuestionsAlphabetically' => 'Sort questions alphabetically',
+    'mightAnswerYourQuestion' => 'The following question(s) could answer your question:',
+    'placeHolderSearch' => 'Enter a search term',
+    'search' => 'Search',
 ];
