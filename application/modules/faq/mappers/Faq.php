@@ -10,13 +10,38 @@ use Modules\Faq\Models\Faq as FaqModel;
 
 class Faq extends \Ilch\Mapper
 {
-    /**
-     * Gets faqs.
-     *
-     * @param array $where
-     * @param array $orderBy
-     * @return FaqModel[]|[]
-     */
+
+  public function suche($where = [])
+  {
+      $faqArray = $this->db()->select('*')
+          ->from('faqs')
+          ->where($where)
+          ->execute()
+          ->fetchRows();
+
+      if (empty($faqArray)) {
+          return [];
+      }
+
+      $faqs = [];
+      foreach ($faqArray as $faqRow) {
+          $faqModel = new FaqModel();
+          $faqModel->setId($faqRow['id']);
+          $faqModel->setCatId($faqRow['cat_id']);
+          $faqModel->setQuestion($faqRow['question']);
+          $faqModel->setAnswer($faqRow['answer']);
+
+          $faqs[] = $faqModel;
+      }
+
+      return $faqs;
+  }
+
+
+
+
+
+
     public function getFaqs($where = [], $orderBy = ['id' => 'ASC'])
     {
         $faqArray = $this->db()->select('*')
@@ -104,4 +129,5 @@ class Faq extends \Ilch\Mapper
             ->where(['id' => $id])
             ->execute();
     }
+
 }

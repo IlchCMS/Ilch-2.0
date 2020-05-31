@@ -14,9 +14,23 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
+
         $categoryMapper = new CategoryMapper();
         $faqMapper = new FaqMapper();
         $userMapper = new UserMapper();
+
+
+
+        if ($this->getRequest()->isPost()){
+          $suchbegriff = trim ($this->getRequest()->getPost('suche'));
+
+          $result = $faqMapper->suche(['question LIKE' => '%'.$suchbegriff.'%']);
+
+          $this->getView()->set('suchergebnis', $result);
+
+
+        }
+
 
         $user = null;
         if ($this->getUser()) {

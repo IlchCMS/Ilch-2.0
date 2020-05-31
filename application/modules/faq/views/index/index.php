@@ -4,9 +4,44 @@ $faqs = $this->get('faqs');
 $faqMapper = $this->get('faqMapper');
 $readAccess = $this->get('readAccess');
 $adminAccess = $this->get('adminAccess');
+$suchergebnis = $this->get('suchergebnis');
 ?>
 
+
+
+
+
 <h1><?=$this->getTrans('faqFrequentlyAskedQuestions') ?></h1>
+
+
+<!--Bereich Suchformular -->
+<div class="row container">
+<form class="form-horizontal" role="search" method="POST">
+  <?=$this->getTokenField();?>
+        <div class="form-group col-lg-4">
+          <input type="text" class="form-control" placeholder="Suchen" name="suche" id="suche">
+        </div>
+        <button type="submit" class="btn btn-default">Volltextsuche</button>
+      </form>
+</div>
+<!--Bereich Ende -->
+
+<?php
+if(!empty($suchergebnis)){
+
+  echo "Folgende Fragen könnten Ihre Suche beantworten:";
+  foreach ($suchergebnis as $inhalt){
+
+
+    echo "<ul><li>";
+    ?>
+    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $inhalt->getId()]); ?>"><?=$inhalt->getQuestion()?></a>
+    <?php echo "</li></ul>";
+  }
+}
+?>
+
+
 <?php if (!empty($faqs)): ?>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
