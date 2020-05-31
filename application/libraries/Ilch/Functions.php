@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -452,4 +452,22 @@ function validateDate($date, $format = 'Y-m-d H:i:s')
 {
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
+}
+
+/**
+ * Replace the vendor directory with the new one.
+ *
+ * @since 2.1.36
+ *
+ * @param string $tmpName temporary name of new vendor directory. Usually '_vendor'.
+ * @return bool
+ */
+function replaceVendorDirectory($tmpName = '_vendor')
+{
+    if (file_exists(ROOT_PATH . '/' . $tmpName) && rename(ROOT_PATH . '/vendor', ROOT_PATH . '/backup_vendor') && rename(ROOT_PATH . '/' . $tmpName, ROOT_PATH . '/vendor')) {
+        removeDir(ROOT_PATH.'/backup_vendor');
+        return true;
+    }
+
+    return false;
 }

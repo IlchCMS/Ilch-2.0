@@ -228,8 +228,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `top` TINYINT(1) NOT NULL DEFAULT 0;');
                 $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
 
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.1":
                 // Remove no longer needed gallery_id column.
@@ -239,8 +238,7 @@ class Config extends \Ilch\Config\Install
                 // Add new votes column for the article rating feature
                 $this->db()->query('ALTER TABLE `[prefix]_articles_content` ADD COLUMN `votes` LONGTEXT NOT NULL;');
 
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.3":
                 $this->db()->query('ALTER TABLE `[prefix]_menu_items` MODIFY COLUMN `access` VARCHAR(255) NOT NULL DEFAULT "";');
@@ -254,8 +252,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `discord` VARCHAR(255) NOT NULL;');
                 break;
             case "2.1.5":
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.7":
                 // Create statistic_visibleStats and convert old settings into new format
@@ -467,8 +464,7 @@ class Config extends \Ilch\Config\Install
                     $boxMapper->install($boxModel);
                 }
 
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.17":
                 removeDir(ROOT_PATH.'/vendor');
@@ -483,8 +479,7 @@ class Config extends \Ilch\Config\Install
                 // Add "expires" column to let the confirm code expire after a specific time.
                 $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `expires` DATETIME AFTER `selector`;');
 
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.19":
                 // Remove no longer used column.
@@ -494,15 +489,13 @@ class Config extends \Ilch\Config\Install
                 $this->db()->truncate('[prefix]_visits_online');
                 $this->db()->query('ALTER TABLE `[prefix]_visits_online` ADD COLUMN `session_id` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `user_id`;');
 
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.20":
                 // Add target column to menu_items
                 $this->db()->query('ALTER TABLE `[prefix]_menu_items` ADD COLUMN `target` VARCHAR(50) NULL DEFAULT NULL  AFTER `href`;');
 
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.21":
                 // Convert old value of smtp_secure (phpmailer) to a valid one if neccessary.
@@ -519,12 +512,10 @@ class Config extends \Ilch\Config\Install
                     }
                 }
 
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.23":
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.24":
                 // Add possible missing boxes.
@@ -589,8 +580,7 @@ class Config extends \Ilch\Config\Install
                     $databaseConfig->set($target, implode(' ', $array));
                 }
 
-                removeDir(ROOT_PATH.'/vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.26":
                 // Add commentsDisabled column to table of articles
@@ -622,9 +612,7 @@ class Config extends \Ilch\Config\Install
                     $databaseConfig->set($target, implode(' ', $array));
                 }
 
-                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
-                removeDir(ROOT_PATH.'/delete_vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
 
                 // Remove no longer needed files
                 unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.fileupload.js');
@@ -633,9 +621,7 @@ class Config extends \Ilch\Config\Install
                 unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.knob.js');
                 break;
             case "2.1.27":
-                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
-                removeDir(ROOT_PATH.'/delete_vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.28":
                 // Add disable_purifier with default value 0 if not existing.
@@ -647,17 +633,13 @@ class Config extends \Ilch\Config\Install
                     $databaseConfig->set('disable_purifier', '0');
                 }
 
-                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
-                removeDir(ROOT_PATH.'/delete_vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
 
                 // Remove no longer needed file
                 unlink(APPLICATION_PATH.'/libraries/Ilch/Session.php');
                 break;
             case "2.1.30":
-                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
-                removeDir(ROOT_PATH.'/delete_vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.31":
                 $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutadvsettings` (
@@ -668,23 +650,17 @@ class Config extends \Ilch\Config\Install
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
-                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
-                removeDir(ROOT_PATH.'/delete_vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.32":
                 // Lowercase table name as it caused problems on different os (case sensitive or insensitive)
                 $this->db()->query('ALTER TABLE `[prefix]_admin_layoutAdvSettings` RENAME TO `[prefix]_admin_layoutadvsettings`;');
                 break;
             case "2.1.33":
-                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
-                removeDir(ROOT_PATH.'/delete_vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
             case "2.1.34":
-                rename(ROOT_PATH.'/vendor', ROOT_PATH.'/delete_vendor');
-                removeDir(ROOT_PATH.'/delete_vendor');
-                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
+                replaceVendorDirectory();
                 break;
         }
 
