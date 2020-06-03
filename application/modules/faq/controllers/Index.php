@@ -18,15 +18,6 @@ class Index extends \Ilch\Controller\Frontend
         $faqMapper = new FaqMapper();
         $userMapper = new UserMapper();
 
-        if ($this->getRequest()->isPost()) {
-            $searchTerm = trim($this->getRequest()->getPost('search'));
-            $this->getView()->set('searchExecuted', true);
-
-            if (!empty($searchTerm)) {
-                $this->getView()->set('searchresult', $faqMapper->search(['question LIKE' => '%'.$searchTerm.'%']));
-            }
-        }
-
         $user = null;
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
@@ -42,6 +33,35 @@ class Index extends \Ilch\Controller\Frontend
         $adminAccess = null;
         if ($this->getUser()) {
             $adminAccess = $this->getUser()->isAdmin();
+        }
+
+        if ($this->getRequest()->isPost()) {
+            $searchTerm = trim($this->getRequest()->getPost('search'));
+            $this->getView()->set('searchExecuted', true);
+
+            if (!empty($searchTerm)) {
+                $tmpSearchResult = $faqMapper->search(['question LIKE' => '%'.$searchTerm.'%']);
+                $categoriesReadAccessCache = [];
+
+                foreach ($tmpSearchResult as $result) {
+                    if (!isset($categoriesReadAccessCache[$result->getCatId()])) {
+                        $category = $categoryMapper->getCategoryById($result->getCatId());
+                        if ($category !== null) {
+                            $categoriesReadAccessCache[$result->getCatId()] = $category->getReadAccess();
+                        } else {
+                            $categoriesReadAccessCache[$result->getCatId()] = '';
+                        }
+                    }
+
+                    if (!($adminAccess == true || is_in_array($readAccess, explode(',', $categoriesReadAccessCache[$result->getCatId()])))) {
+                        continue;
+                    }
+
+                    $searchResult[] = $result;
+                }
+
+                $this->getView()->set('searchresult', $searchResult);
+            }
         }
 
         $sortCategoriesAlphabetically = ($this->getConfig()->get('faq_sortCategoriesAlphabetically') === '1');
