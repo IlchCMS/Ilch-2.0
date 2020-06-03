@@ -12,7 +12,6 @@ use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\User\Mappers\User as UserMapper;
-use Modules\Forum\Config\Config as ForumConfig;
 use Ilch\Validation;
 
 class Newtopic extends \Ilch\Controller\Frontend
@@ -65,9 +64,7 @@ class Newtopic extends \Ilch\Controller\Frontend
                         ->setCreatorId($this->getUser()->getId())
                         ->setType($this->getRequest()->getPost('fix'))
                         ->setDateCreated($dateTime);
-                    $this->trigger(ForumConfig::EVENT_SAVETOPIC_BEFORE, ['model' => $topicModel]);
                     $topicMapper->save($topicModel);
-                    $this->trigger(ForumConfig::EVENT_SAVETOPIC_AFTER, ['model' => $topicModel]);
 
                     $lastid = $topicMapper->getLastInsertId();
 
@@ -78,7 +75,6 @@ class Newtopic extends \Ilch\Controller\Frontend
                         ->setForumId($id)
                         ->setDateCreated($dateTime);
                     $postMapper->save($postModel);
-                    $this->trigger(ForumConfig::EVENT_ADDTOPIC_AFTER, ['topicModel' => $topicModel, 'postModel' => $postModel, 'request' => $this->getRequest()]);
 
                     $this->redirect()
                         ->withMessage('saveSuccess')

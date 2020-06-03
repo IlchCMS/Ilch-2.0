@@ -12,7 +12,6 @@ use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Article\Mappers\Template as TemplateMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\User\Mappers\Group as GroupMapper;
-use Modules\Article\Config\Config as ArticleConfig;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
@@ -156,17 +155,9 @@ class Index extends \Ilch\Controller\Admin
                     ->setReadAccess($groups)
                     ->setImage($this->getRequest()->getPost('image'))
                     ->setImageSource($this->getRequest()->getPost('imageSource'));
-                $this->trigger(ArticleConfig::EVENT_SAVE_BEFORE, ['model' => $model]);
                 $articleMapper->save($model);
                 if ($this->getRequest()->getPost('saveAsTemplate')) {
                     $templateMapper->save($model);
-                }
-                $this->trigger(ArticleConfig::EVENT_SAVE_AFTER, ['model' => $model]);
-
-                if ($this->getRequest()->getParam('id')) {
-                    $this->trigger(ArticleConfig::EVENT_EDITARTICLE_AFTER, ['model' => $model, 'request' => $this->getRequest()]);
-                } else {
-                    $this->trigger(ArticleConfig::EVENT_ADDARTICLE_AFTER, ['model' => $model, 'request' => $this->getRequest()]);
                 }
 
                 $this->redirect()

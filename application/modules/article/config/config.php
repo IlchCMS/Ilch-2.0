@@ -8,19 +8,6 @@ namespace Modules\Article\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    const EVENT_SAVE_BEFORE = 'article_save_before';
-    const EVENT_SAVE_AFTER = 'article_save_after';
-    const EVENT_DELETE_BEFORE = 'article_delete_before';
-    const EVENT_DELETE_AFTER = 'article_delete_after';
-    const EVENT_EDITARTICLE_AFTER = 'article_editArticle_after';
-    const EVENT_ADDARTICLE_AFTER = 'article_addArticle_after';
-    const EVENT_SAVECATEGORY_BEFORE = 'article_saveCategory_before';
-    const EVENT_SAVECATEGORY_AFTER = 'article_saveCategory_after';
-    const EVENT_DELETECATEGORY_BEFORE = 'article_deleteCategory_before';
-    const EVENT_DELETECATEGORY_AFTER = 'article_deleteCategory_after';
-    const EVENT_EDITCATEGORY_AFTER = 'article_editCategory_after';
-    const EVENT_ADDCATEGORY_AFTER = 'article_addCategory_after';
-
     const COMMENT_KEY_TPL = 'article/index/show/id/%d';
 
     public $config = [

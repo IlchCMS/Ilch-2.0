@@ -8,20 +8,9 @@ namespace Modules\Forum\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    const EVENT_SAVETOPIC_BEFORE = 'forum_saveTopic_before';
-    const EVENT_SAVETOPIC_AFTER = 'forum_saveTopic_after';
-    const EVENT_ADDTOPIC_AFTER = 'forum_addTopic_after';
-    const EVENT_SAVEPOST_BEFORE = 'forum_savePost_before';
-    const EVENT_SAVEPOST_AFTER = 'forum_savePost_after';
-    const EVENT_ADDPOST_AFTER = 'forum_addPost_after';
-    const EVENT_DELETEPOST_BEFORE = 'forum_deletePost_before';
-    const EVENT_DELETEPOST_AFTER = 'forum_deletePost_after';
-    const EVENT_DELETETOPIC_BEFORE = 'forum_deleteTopic_before';
-    const EVENT_DELETETOPIC_AFTER = 'forum_deleteTopic_after';
-
     public $config = [
         'key' => 'forum',
-        'version' => '1.24.0',
+        'version' => '1.25.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'http://ilch.de',

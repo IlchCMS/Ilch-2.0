@@ -740,7 +740,6 @@ class Article extends \Ilch\Mapper
      */
     public function deleteWithComments($id, CommentMapper $commentsMapper = null)
     {
-        $this->trigger(ArticleConfig::EVENT_DELETE_BEFORE, ['id' => $id]);
         $this->delete($id);
         // An instance of the comments mapper can be passed as argument to this
         // function so it doesn't need to be instantiated every time in case
@@ -749,6 +748,5 @@ class Article extends \Ilch\Mapper
             $commentsMapper = new CommentMapper();
         }
         $commentsMapper->deleteByKey(sprintf(ArticleConfig::COMMENT_KEY_TPL, $id));
-        $this->trigger(ArticleConfig::EVENT_DELETE_AFTER, ['id' => $id]);
     }
 }

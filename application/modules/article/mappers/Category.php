@@ -7,7 +7,6 @@
 namespace Modules\Article\Mappers;
 
 use Modules\Article\Models\Category as CategoryModel;
-use Modules\Article\Config\Config as ArticleConfig;
 
 class Category extends \Ilch\Mapper
 {
@@ -100,12 +99,8 @@ class Category extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->trigger(ArticleConfig::EVENT_DELETECATEGORY_BEFORE, ['id' => $id]);
-
         $this->db()->delete('articles_cats')
             ->where(['id' => $id])
             ->execute();
-
-        $this->trigger(ArticleConfig::EVENT_DELETECATEGORY_AFTER, ['id' => $id]);
     }
 }

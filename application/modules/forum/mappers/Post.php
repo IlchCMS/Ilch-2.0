@@ -8,7 +8,6 @@ namespace Modules\Forum\Mappers;
 
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\User\Mappers\User as UserMapper;
-use Modules\Forum\Config\Config as ForumConfig;
 
 class Post extends \Ilch\Mapper
 {
@@ -257,11 +256,9 @@ class Post extends \Ilch\Mapper
 
     public function deleteById($id)
     {
-        $this->trigger(ForumConfig::EVENT_DELETEPOST_BEFORE, ['id' => $id]);
         $returnValue = $this->db()->delete('forum_posts')
             ->where(['id' => $id])
             ->execute();
-        $this->trigger(ForumConfig::EVENT_DELETEPOST_AFTER, ['id' => $id]);
         return $returnValue;
     }
 

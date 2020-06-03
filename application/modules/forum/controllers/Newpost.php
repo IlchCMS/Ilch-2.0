@@ -13,7 +13,6 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
-use Modules\Forum\Config\Config as ForumConfig;
 use Ilch\Validation;
 
 class Newpost extends \Ilch\Controller\Frontend
@@ -105,10 +104,7 @@ class Newpost extends \Ilch\Controller\Frontend
                         ->setText($this->getRequest()->getPost('text'))
                         ->setForumId($forum->getId())
                         ->setDateCreated($dateTime);
-                    $this->trigger(ForumConfig::EVENT_SAVEPOST_BEFORE, ['model' => $postModel]);
                     $postMapper->save($postModel);
-                    $this->trigger(ForumConfig::EVENT_SAVEPOST_AFTER, ['model' => $postModel]);
-                    $this->trigger(ForumConfig::EVENT_ADDPOST_AFTER, ['postModel' => $postModel, 'forum' => $forum, 'category' => $cat, 'topic' => $topic, 'request' => $this->getRequest()]);
 
                     $postsPerPage = (empty($this->getConfig()->get('forum_postsPerPage'))) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage');
                     $countPosts = $forumMapper->getCountPostsByTopicId($topicId);
