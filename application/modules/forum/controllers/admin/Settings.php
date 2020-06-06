@@ -71,7 +71,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('forum_threadsPerPage', $this->getRequest()->getPost('threadsPerPage'));
             $this->getConfig()->set('forum_postsPerPage', $this->getRequest()->getPost('postsPerPage'));
             $this->getConfig()->set('forum_floodInterval', $this->getRequest()->getPost('floodInterval'));
-            $this->getConfig()->set('forum_excludeFloodProtection', implode(',', ($this->getRequest()->getPost('groups')) ? $this->getRequest()->getPost('groups') : []));
+            $this->getConfig()->set('forum_excludeFloodProtection', implode(',', ($this->getRequest()->getPost('groups')) ?: []));
             $this->getConfig()->set('forum_postVoting', $this->getRequest()->getPost('postVoting'));
             $this->getConfig()->set('forum_topicSubscription', $this->getRequest()->getPost('topicSubscription'));
             $this->getConfig()->set('forum_boxForumLimit', $this->getRequest()->getPost('boxForumLimit'));

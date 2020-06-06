@@ -338,8 +338,9 @@ class Showposts extends \Ilch\Controller\Frontend
                         }
 
                         foreach ($groupIds as $groupId) {
-                            $users = array_merge($users, $userMapper->getUserListByGroupId($groupId, 1));
+                            $users[] = $userMapper->getUserListByGroupId($groupId, 1);
                         }
+                        $users = array_merge([], ...$users);
 
                         $receivedMail = [];
                         foreach($users as $user) {
