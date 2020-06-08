@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -28,6 +28,18 @@ return [
     'editPost' => 'Edit post',
     'add' => 'Create',
     'quote' => 'Quote',
+    'remember' => 'Remember',
+    'rememberDialogTitle' => 'Remember post or show previously remembered posts',
+    'viewRememberedPosts' => 'Show remembered posts',
+    'noteRememberedPost' => 'Optional note for the post',
+    'rememberPost' => 'Remember post',
+    'rememberedPosts' => 'Remembered posts',
+    'topicTitleNote' => 'Title of topic',
+    'rememberedPostNote' => 'Note of the entry',
+    'selected' => 'selected...',
+    'noRememberedPosts' => 'There are no remembered posts.',
+    'editRememberedPost' => 'Edit note for the entry',
+    'saveNoteRememberedPost' => 'Save',
     'report' => 'Report',
     'reportPost' => 'Reporting of a post',
     'reason' => 'Reason',

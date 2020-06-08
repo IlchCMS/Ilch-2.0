@@ -584,11 +584,11 @@ legend .forum.fa {
     float: right;
 }
 
-#forum .delete, .edit, .quote, .report {
+#forum .delete, .edit, .quote, .report, .remember {
     float: right;
 }
 
-#forum .edit, .report {
+#forum .edit, .report, .remember {
     padding-right: 5px;
 }
 #forum .btn-xs .btn-label {
@@ -623,4 +623,27 @@ legend .forum.fa {
 }
 #forum .post .postbody .hr-top {
     margin-top: 0;
+}
+
+/* remembered posts */
+#forum .icon_width {
+    width: 15px;
+}
+#forum .table {
+    border: 1px solid #ccc;
+}
+#editRememberedPost {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    direction: ltr;
+    overflow-x: hidden;
+}
+#editRememberedPost .form-horizontal .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+#editRememberedPost .form-horizontal .form-group .control-label {
+    text-align: left;
 }

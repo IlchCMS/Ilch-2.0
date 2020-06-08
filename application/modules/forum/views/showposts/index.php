@@ -138,8 +138,6 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         </div>
                     </div>
                 </div>
-
-
                 <div class="postbody">
                     <hr class="hr-top" />
                     <div class="content">
@@ -212,6 +210,17 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
+                <div class="remember">
+                    <?php if ($this->getUser()): ?>
+                        <p class="remember-post">
+                            <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
+                                <span class="btn-label">
+                                    <i class="fas fa-bookmark"></i>
+                                </span><?=$this->getTrans('remember') ?>
+                            </button>
+                        </p>
+                    <?php endif; ?>
+                </div>
             </div>
         <?php endforeach; ?>
         <div class="topic-actions">
@@ -257,6 +266,38 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>
         </div>
     </div>
+
+    <form id="rememberDialog_form" class="form-horizontal" method="POST" action="<?=$this->getUrl(['controller' => 'rememberedPosts', 'action' => 'remember']) ?>">
+        <?=$this->getTokenField() ?>
+        <div class="modal fade" id="rememberDialog" tabindex="-1" role="dialog" aria-labelledby="rememberDialogTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rememberDialogTitle"><?=$this->getTrans('rememberDialogTitle') ?></h5>
+                    </div>
+                    <div class="modal-body">
+                        <a href="<?=$this->getUrl(['controller' => 'rememberedposts', 'action' => 'index']) ?>"><?=$this->getTrans('viewRememberedPosts') ?></a>
+                        <hr>
+                        <p><?=$this->getTrans('noteRememberedPost') ?>:</p>
+                        <input type="text"
+                               class="form-control"
+                               id="note"
+                               name="note"
+                               maxlength="255" />
+                        <input type="hidden"
+                               id="postId"
+                               name="postId"
+                               value="" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="submitRememberDialog" data-dismiss="modal" tabindex="0"><?=$this->getTrans('rememberPost') ?></button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><?=$this->getTrans('close') ?></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
 <?php else: ?>
     <?php
     header('location: ' .$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
@@ -271,6 +312,28 @@ $(document).ready(function() {
 
         var target = this.hash;
         var $target = $(target);
+    });
+
+    $("#rememberDialog").on('shown.bs.modal', function (e) {
+        // let topicId = $(e.relatedTarget).data('topic-id');
+        let postId = $(e.relatedTarget).data('post-id');
+
+        // $(e.currentTarget).find('input[name="topicId"]').val(topicId);
+        $(e.currentTarget).find('input[name="postId"]').val(postId);
+
+        $('#rememberDialog_form').submit(function (e) {
+            // prevent form submit
+            e.preventDefault();
+
+            let formData = $(this).serializeArray();
+            let action   = $(this).attr('action');
+
+            $.post(action, {ilch_token: formData[0]['value'], note: formData[1]['value'], postId: formData[2]['value']} );
+        });
+
+        $('#submitRememberDialog').click(function(){
+            $('#rememberDialog_form').submit();
+        });
     });
 });
 </script>

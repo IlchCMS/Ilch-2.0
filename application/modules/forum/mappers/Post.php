@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -256,10 +256,9 @@ class Post extends \Ilch\Mapper
 
     public function deleteById($id)
     {
-        $returnValue = $this->db()->delete('forum_posts')
+        return $this->db()->delete('forum_posts')
             ->where(['id' => $id])
             ->execute();
-        return $returnValue;
     }
 
     /**

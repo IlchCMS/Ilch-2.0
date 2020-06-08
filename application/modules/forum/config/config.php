@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -74,6 +74,7 @@ class Config extends \Ilch\Config\Install
             DROP TABLE `[prefix]_forum_posts`;
             DROP TABLE `[prefix]_forum_ranks`;
             DROP TABLE `[prefix]_forum_topicsubscription`;
+            DROP TABLE `[prefix]_forum_remember`;
             DROP TABLE `[prefix]_forum_reports`;
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_floodInterval';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_excludeFloodProtection';
@@ -148,6 +149,15 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `title` TEXT NOT NULL,
                 `posts` INT(11) NOT NULL DEFAULT 0,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_remember` (
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `post_id` INT(11) NOT NULL,
+                `note` VARCHAR(255) NOT NULL DEFAULT \'\',
+                `user_id` INT(11) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -404,6 +414,18 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $appearance = unserialize($databaseConfig->get('forum_groupAppearance'));
                 $databaseConfig->set('forum_groupAppearance', json_encode($appearance));
+            case "1.22.0":
+            case "1.23.0":
+            case "1.24.0":
+                // Add table for remembered posts.
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_forum_remember` (
+                            `id` INT(11) NOT NULL AUTO_INCREMENT,
+                            `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                            `post_id` INT(11) NOT NULL,
+                            `note` VARCHAR(255) NOT NULL DEFAULT \'\',
+                            `user_id` INT(11) NOT NULL,
+                            PRIMARY KEY (`id`)
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
         }
     }
 }

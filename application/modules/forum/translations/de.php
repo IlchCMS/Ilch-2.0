@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -28,6 +28,18 @@ return [
     'editPost' => 'Beitrag bearbeiten',
     'add' => 'Erstellen',
     'quote' => 'Zitieren',
+    'remember' => 'Merken',
+    'rememberDialogTitle' => 'Beitrag merken oder zuvor gemerkte Beiträge anzeigen',
+    'viewRememberedPosts' => 'Gemerkte Beiträge anzeigen',
+    'noteRememberedPost' => 'Optionale Notiz zum Beitrag',
+    'rememberPost' => 'Beitrag merken',
+    'rememberedPosts' => 'Gemerkte Beiträge',
+    'topicTitleNote' => 'Titel des Themas',
+    'rememberedPostNote' => 'Notiz zum Eintrag',
+    'selected' => 'markierte...',
+    'noRememberedPosts' => 'Keine gemerkten Beiträge vorhanden.',
+    'editRememberedPost' => 'Notiz zum Eintrag bearbeiten',
+    'saveNoteRememberedPost' => 'Speichern',
     'report' => 'Melden',
     'reportPost' => 'Melden eines Beitrags',
     'reason' => 'Grund',
