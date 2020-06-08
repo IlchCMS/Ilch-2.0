@@ -8,6 +8,7 @@ namespace Modules\Forum\Mappers;
 
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\Forum\Mappers\Remember as RememberMapper;
 
 class Post extends \Ilch\Mapper
 {
@@ -254,8 +255,17 @@ class Post extends \Ilch\Mapper
         }
     }
 
+    /**
+     * Delete post by id.
+     *
+     * @param int $id
+     * @return \Ilch\Database\Mysql\Result|int
+     */
     public function deleteById($id)
     {
+        $rememberMapper = new RememberMapper();
+        $rememberMapper->deleteByPostId($id);
+
         return $this->db()->delete('forum_posts')
             ->where(['id' => $id])
             ->execute();

@@ -83,6 +83,17 @@ class Remember extends \Ilch\Mapper
     }
 
     /**
+     * Get entries by post id.
+     *
+     * @param int $postId
+     * @return array|RememberModel[]
+     */
+    public function getRememberedPostsByPostId($postId)
+    {
+        return $this->getBy(['r.post_id' => $postId]);
+    }
+
+    /**
      * Check if there is an specific entry.
      *
      * @param array $where
@@ -134,15 +145,28 @@ class Remember extends \Ilch\Mapper
     }
 
     /**
-     * Delete remember by id.
+     * Delete entry by id for a specific user.
      *
-     * @param $id
+     * @param int $id
      * @return \Ilch\Database\Mysql\Result|int
      */
     public function delete($id, $userId)
     {
         return $this->db()->delete('forum_remember')
             ->where(['id' => $id, 'user_id' => $userId])
+            ->execute();
+    }
+
+    /**
+     * Delete entries for deleted post.
+     *
+     * @param int $postId
+     * @return \Ilch\Database\Mysql\Result|int
+     */
+    public function deleteByPostId($postId)
+    {
+        return $this->db()->delete('forum_remember')
+            ->where(['post_id' => $postId])
             ->execute();
     }
 }

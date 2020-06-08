@@ -311,6 +311,12 @@ class Topic extends \Ilch\Mapper
         return $this->db()->queryArray($sql);
     }
 
+    /**
+     * Delete topic by id.
+     *
+     * @param int $id
+     * @throws \Ilch\Database\Exception
+     */
     public function deleteById($id)
     {
         $postMapper = new PostMapper();
