@@ -186,44 +186,40 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         </button>
                     <?php endif; ?>
                 <?php endif; ?>
-                <div class="quote">
                 <?php if ($this->getUser()): ?>
-                    <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
-                    <p class="quote-post">
-                        <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
-                            <span class="btn-label">
-                                <i class="fas fa-quote-left"></i>
-                            </span><?=$this->getTrans('quote') ?>
-                        </a>
-                    </p>
-                    <?php endif; ?>
-                <?php endif; ?>
-                </div>
-                <?php if (!$reported && $this->get('reportingPosts')) : ?>
-                <div class="report">
-                    <?php if ($this->getUser()): ?>
-                        <p class="report-post">
-                            <a href="<?=$this->getUrl(['action' => 'report','topicid' => $this->getRequest()->getParam('topicid'), 'postid' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
+                    <div class="quote">
+                        <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
+                            <p class="quote-post">
+                                <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
                         <span class="btn-label">
-                            <i class="fas fa-flag"></i>
-                        </span><?=$this->getTrans('report') ?>
-                            </a>
-                        </p>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
-                <?php if (!$remembered) : ?>
-                    <div class="remember">
-                        <?php if ($this->getUser()): ?>
-                            <p class="remember-post">
-                                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
-                                <span class="btn-label">
-                                    <i class="fas fa-bookmark"></i>
-                                </span><?=$this->getTrans('remember') ?>
-                                </button>
+                            <i class="fas fa-quote-left"></i>
+                        </span><?=$this->getTrans('quote') ?>
+                                </a>
                             </p>
                         <?php endif; ?>
                     </div>
+                    <?php if (!$reported && $this->get('reportingPosts')) : ?>
+                        <div class="report">
+                                <p class="report-post">
+                                    <a href="<?=$this->getUrl(['action' => 'report','topicid' => $this->getRequest()->getParam('topicid'), 'postid' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
+                        <span class="btn-label">
+                            <i class="fas fa-flag"></i>
+                        </span><?=$this->getTrans('report') ?>
+                                    </a>
+                                </p>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!$remembered) : ?>
+                        <div class="remember">
+                            <p class="remember-post">
+                                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
+                            <span class="btn-label">
+                                <i class="fas fa-bookmark"></i>
+                            </span><?=$this->getTrans('remember') ?>
+                                </button>
+                            </p>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
@@ -294,7 +290,8 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                value="" />
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="submitRememberDialog" data-dismiss="modal" tabindex="0"><?=$this->getTrans('rememberPost') ?></button>
+                        <div id="rememberPostStatus"></div>
+                        <button type="submit" class="btn btn-primary" id="submitRememberDialog" tabindex="0"><?=$this->getTrans('rememberPost') ?></button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><?=$this->getTrans('close') ?></button>
                     </div>
                 </div>
@@ -319,10 +316,8 @@ $(document).ready(function() {
     });
 
     $("#rememberDialog").on('shown.bs.modal', function (e) {
-        // let topicId = $(e.relatedTarget).data('topic-id');
         let postId = $(e.relatedTarget).data('post-id');
 
-        // $(e.currentTarget).find('input[name="topicId"]').val(topicId);
         $(e.currentTarget).find('input[name="postId"]').val(postId);
 
         $('#rememberDialog_form').submit(function (e) {
@@ -331,13 +326,30 @@ $(document).ready(function() {
 
             let formData = $(this).serializeArray();
             let action   = $(this).attr('action');
+            let rememberPostStatus = $('#rememberPostStatus');
 
-            $.post(action, {ilch_token: formData[0]['value'], note: formData[1]['value'], postId: formData[2]['value']} );
+            $.post(action, {ilch_token: formData[0]['value'], note: formData[1]['value'], postId: formData[2]['value']}, function() {
+                rememberPostStatus.append("<?=$this->getTrans('rememberPostSuccess') ?>");
+                rememberPostStatus.addClass("alert alert-success");
+            }).fail(function() {
+                rememberPostStatus.append("<?=$this->getTrans('rememberPostFail') ?>");
+                rememberPostStatus.addClass("alert alert-danger");
+            });
         });
 
         $('#submitRememberDialog').click(function(){
-            $('#rememberDialog_form').submit();
+            $('#rememberDialog').delay(1000).fadeOut(450);
+
+            setTimeout(function(){
+                $('#rememberDialog').modal("hide");
+            }, 1500);
         });
+    });
+
+    $("#rememberDialog").on('hidden.bs.modal', function (e) {
+        $('#rememberPostStatus').empty();
+        $('#rememberPostStatus').removeAttr("class");
+        $('#note').val("");
     });
 });
 </script>

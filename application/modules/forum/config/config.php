@@ -35,7 +35,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.26',
+        'ilchCore' => '2.1.36',
         'phpVersion' => '5.6'
     ];
 

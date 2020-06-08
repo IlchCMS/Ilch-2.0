@@ -33,6 +33,8 @@ return [
     'viewRememberedPosts' => 'Show remembered posts',
     'noteRememberedPost' => 'Optional note for the post',
     'rememberPost' => 'Remember post',
+    'rememberPostSuccess' => 'Successfully added a reminder for this post.',
+    'rememberPostFail' => 'Failed to add a reminder for this post.',
     'rememberedPosts' => 'Remembered posts',
     'topicTitleNote' => 'Title of topic',
     'rememberedPostNote' => 'Note of the entry',

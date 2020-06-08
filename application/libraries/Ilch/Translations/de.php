@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  */
 
 return [
@@ -35,6 +35,7 @@ return [
     'delete' => 'Löschen',
     'edit' => 'Bearbeiten',
     'add' => 'Erstellen',
+    'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
 
     // e-mail
     'mailFrom' => 'Von',

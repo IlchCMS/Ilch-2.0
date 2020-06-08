@@ -33,6 +33,8 @@ return [
     'viewRememberedPosts' => 'Gemerkte Beiträge anzeigen',
     'noteRememberedPost' => 'Optionale Notiz zum Beitrag',
     'rememberPost' => 'Beitrag merken',
+    'rememberPostSuccess' => 'Beitrag erfolgreich gemerkt.',
+    'rememberPostFail' => 'Merken des Beitrags fehlgeschlagen.',
     'rememberedPosts' => 'Gemerkte Beiträge',
     'topicTitleNote' => 'Titel des Themas',
     'rememberedPostNote' => 'Notiz zum Eintrag',

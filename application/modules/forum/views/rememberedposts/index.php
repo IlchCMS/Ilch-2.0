@@ -46,3 +46,7 @@ $rememberedPosts = $this->get('rememberedPosts');
 <?php else: ?>
     <p><?=$this->getTrans('noRememberedPosts') ?></p>
 <?php endif; ?>
+
+<script>
+    var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries')) ?>;
+</script>

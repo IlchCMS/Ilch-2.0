@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  */
 
 return [
@@ -35,6 +35,7 @@ return [
     'delete' => 'Delete',
     'edit' => 'Edit',
     'add' => 'Add',
+    'deleteSelectedEntries' => 'Delete the selected entries?',
 
     // e-mail
     'mailFrom' => 'From',
