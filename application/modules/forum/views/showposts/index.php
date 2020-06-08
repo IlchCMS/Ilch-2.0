@@ -7,6 +7,7 @@ $topicpost = $this->get('post');
 $readAccess = $this->get('readAccess');
 $forum = $this->get('forum');
 $reportedPostsIds = $this->get('reportedPostsIds');
+$rememberedPostIds = $this->get('rememberedPostIds');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
@@ -91,6 +92,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             <?php
             $date = new \Ilch\Date($post->getDateCreated());
             $reported = in_array($post->getId(), $reportedPostsIds);
+            $remembered = in_array($post->getId(), $rememberedPostIds);
             ?>
             <div id="<?=$post->getId() ?>" class="post ilch-bg <?=($reported) ? 'reported' : '' ?>">
                 <div class="row">
@@ -210,17 +212,19 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
-                <div class="remember">
-                    <?php if ($this->getUser()): ?>
-                        <p class="remember-post">
-                            <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
+                <?php if (!$remembered) : ?>
+                    <div class="remember">
+                        <?php if ($this->getUser()): ?>
+                            <p class="remember-post">
+                                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
                                 <span class="btn-label">
                                     <i class="fas fa-bookmark"></i>
                                 </span><?=$this->getTrans('remember') ?>
-                            </button>
-                        </p>
-                    <?php endif; ?>
-                </div>
+                                </button>
+                            </p>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
         <div class="topic-actions">

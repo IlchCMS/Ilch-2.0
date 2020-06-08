@@ -12,6 +12,7 @@ use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Rank as RankMapper;
 use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
 use Modules\Forum\Mappers\Reports as ReportsMapper;
+use Modules\Forum\Mappers\Remember as RememberMapper;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
@@ -35,6 +36,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $pagination = new \Ilch\Pagination();
         $rankMapper = new RankMapper();
         $reportsMapper = new ReportsMapper();
+        $rememberMapper = new RememberMapper();
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
@@ -88,6 +90,7 @@ class Showposts extends \Ilch\Controller\Frontend
 
         $userMapper = new UserMapper();
 
+        $rememberedPostIds = [];
         $isSubscribed = false;
         $userId = null;
         if ($this->getUser()) {
@@ -108,6 +111,11 @@ class Showposts extends \Ilch\Controller\Frontend
                 $topicSubscriptionMapper = new TopicSubscriptionMapper();
 
                 $isSubscribed = $topicSubscriptionMapper->isSubscribedToTopic($topicId, $this->getUser()->getId());
+            }
+
+            $rememberedPosts = $rememberMapper->getRememberedPostsByTopicId($topicId, $userId);
+            foreach($rememberedPosts as $rememberedPost) {
+                $rememberedPostIds[] = $rememberedPost->getPostId();
             }
         }
         $user = $userMapper->getUserById($userId);
@@ -146,6 +154,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getView()->set('isSubscribed', $isSubscribed);
         $this->getView()->set('reportingPosts', $this->getConfig()->get('forum_reportingPosts'));
         $this->getView()->set('reportedPostsIds', $reportedPostsIds);
+        $this->getView()->set('rememberedPostIds', $rememberedPostIds);
     }
 
     public function deleteAction()

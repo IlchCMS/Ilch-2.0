@@ -36,6 +36,7 @@ return [
     'rememberedPosts' => 'Remembered posts',
     'topicTitleNote' => 'Title of topic',
     'rememberedPostNote' => 'Note of the entry',
+    'rememberedPostAddedOn' => 'Added on',
     'selected' => 'selected...',
     'noRememberedPosts' => 'There are no remembered posts.',
     'editRememberedPost' => 'Edit note for the entry',

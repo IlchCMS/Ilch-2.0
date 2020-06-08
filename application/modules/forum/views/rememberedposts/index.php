@@ -15,6 +15,7 @@ $rememberedPosts = $this->get('rememberedPosts');
                     <col class="icon_width" />
                     <col>
                     <col>
+                    <col class="col-lg-2">
                 </colgroup>
                 <thead>
                 <tr class="ilch-head">
@@ -23,6 +24,7 @@ $rememberedPosts = $this->get('rememberedPosts');
                     <th></th>
                     <th><?=$this->getTrans('topicTitleNote') ?></th>
                     <th><?=$this->getTrans('rememberedPostNote') ?></th>
+                    <th><?=$this->getTrans('rememberedPostAddedOn') ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,6 +35,7 @@ $rememberedPosts = $this->get('rememberedPosts');
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $post->getId()]) ?></td>
                             <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $post->getTopicId().'#'.$post->getPostId()], '') ?>" target="_blank"><?=$this->escape($post->getTopicTitle()) ?></a></td>
                             <td><?=$this->escape($post->getNote()) ?></td>
+                            <td><?=$post->getDate() ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -72,14 +72,14 @@ class Remember extends \Ilch\Mapper
     }
 
     /**
-     * Get all remembered posts of a topic.
+     * Get all remembered posts of a topic of a user.
      *
      * @param int $topicId
      * @return array|RememberModel[]
      */
-    public function getRememberedPostsByTopicId($topicId)
+    public function getRememberedPostsByTopicId($topicId, $userId)
     {
-        return $this->getBy(['p.topic_id' => $topicId]);
+        return $this->getBy(['p.topic_id' => $topicId, 'r.user_id' => $userId]);
     }
 
     /**
