@@ -197,9 +197,9 @@ class Index extends \Ilch\Controller\Admin
 
             $mail = new \Ilch\Mail();
             $mail->setFromName($siteTitle)
-                ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
+                ->setFromEmail($this->getConfig()->get('standardMail'))
                 ->setToName($username)
-                ->setToEmail($this->getLayout()->escape($user->getEmail()))
+                ->setToEmail($user->getEmail())
                 ->setSubject($this->getTranslator()->trans('automaticEmail'))
                 ->setMessage($message)
                 ->sent();
@@ -342,9 +342,9 @@ class Index extends \Ilch\Controller\Admin
 
                     $mail = new \Ilch\Mail();
                     $mail->setFromName($siteTitle)
-                        ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
+                        ->setFromEmail($this->getConfig()->get('standardMail'))
                         ->setToName($name)
-                        ->setToEmail($this->getLayout()->escape($user->getEmail()))
+                        ->setToEmail($user->getEmail())
                         ->setSubject($this->getTranslator()->trans('automaticEmail'))
                         ->setMessage($message)
                         ->sent();

@@ -141,9 +141,9 @@ class Regist extends \Ilch\Controller\Frontend
 
                     $mail = new \Ilch\Mail();
                     $mail->setFromName($siteTitle)
-                        ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
+                        ->setFromEmail($this->getConfig()->get('standardMail'))
                         ->setToName($name)
-                        ->setToEmail($this->getLayout()->escape($this->getRequest()->getPost('email')))
+                        ->setToEmail($this->getRequest()->getPost('email'))
                         ->setSubject($this->getTranslator()->trans('automaticEmail'))
                         ->setMessage($message)
                         ->sent();

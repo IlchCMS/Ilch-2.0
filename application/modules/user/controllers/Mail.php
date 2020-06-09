@@ -66,9 +66,9 @@ class Mail extends \Ilch\Controller\Frontend
 
                 $mail = new \Ilch\Mail();
                 $mail->setFromName($siteTitle)
-                    ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
+                    ->setFromEmail($this->getConfig()->get('standardMail'))
                     ->setToName($this->getLayout()->escape($user->getName()))
-                    ->setToEmail($this->getLayout()->escape($user->getEmail()))
+                    ->setToEmail($user->getEmail())
                     ->setSubject($subject)
                     ->setMessage($message)
                     ->sent();
