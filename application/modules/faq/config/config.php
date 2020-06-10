@@ -17,11 +17,11 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'F.A.Q.',
-                'description' => 'Hier können die FAQ - Häufig gestellte Fragen verwaltet werden.',
+                'description' => 'Ein FAQ-Modul (Häufig gestellte Fragen) mit Kategorien, Optionen zur Sortierung und einer Suchfunktion.',
             ],
             'en_EN' => [
                 'name' => 'F.A.Q.',
-                'description' => 'Here you can manage your FAQ - Frequently Asked Questions.',
+                'description' => 'A FAQ module (frequently asked questions) with categories, options regarding the sorting and a search function.',
             ],
         ],
         'ilchCore' => '2.1.16',
@@ -77,6 +77,12 @@ class Config extends \Ilch\Config\Install
             case "1.5.0":
                 // Add read_access column
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
+            case "1.6.0":
+            case "1.7.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'faq' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }

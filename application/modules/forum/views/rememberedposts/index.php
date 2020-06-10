@@ -7,7 +7,7 @@ $rememberedPosts = $this->get('rememberedPosts');
 <?php if (!empty($rememberedPosts)): ?>
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
-        <div id="forum" class="table-responsive">
+        <div id="rememberedPosts" class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
                     <col class="icon_width" />

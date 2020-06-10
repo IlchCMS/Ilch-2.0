@@ -626,10 +626,10 @@ legend .forum.fa {
 }
 
 /* remembered posts */
-#forum .icon_width {
+#rememberedPosts .icon_width {
     width: 15px;
 }
-#forum .table {
+#rememberedPosts .table {
     border: 1px solid #ccc;
 }
 #editRememberedPost {

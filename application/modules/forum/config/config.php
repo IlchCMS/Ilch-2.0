@@ -13,16 +13,16 @@ class Config extends \Ilch\Config\Install
         'version' => '1.25.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'official' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Forum',
-                'description' => 'Hier kann das Forum verwaltet werden.',
+                'description' => 'Das ab Werk ausgelieferte Forum-Modul mit vielen typischen Funktionen eines Forums.',
             ],
             'en_EN' => [
                 'name' => 'Forum',
-                'description' => 'Here you can manage the forum.',
+                'description' => 'The by factory distributed forum module with many typical features of a forum.',
             ],
         ],
         'boxes' => [
@@ -426,6 +426,11 @@ class Config extends \Ilch\Config\Install
                             `user_id` INT(11) NOT NULL,
                             PRIMARY KEY (`id`)
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+
+            // Update description
+            foreach($this->config['languages'] as $key => $value) {
+                $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'forum' AND `locale` = '%s';", $value['description'], $key));
+            }
         }
     }
 }
