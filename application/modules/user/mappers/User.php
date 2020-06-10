@@ -515,7 +515,7 @@ class User extends \Ilch\Mapper
      *
      * @return boolean True of success, otherwise false.
      */
-     public function selectsdelete($userId, $deletedate = '')
+     public function selectsdelete($userId, $deletedate = '0000-00-00 00:00:00')
      {
         if (is_a($userId, '\Modules\User\Models\User')) {
             $userId = $userId->getId();
@@ -539,7 +539,7 @@ class User extends \Ilch\Mapper
         $date = new \Ilch\Date();
         $date->modify('-'.$timetodelete.' days');
 
-        $entries = $this->getUserList(['selectsdelete >' => 0, 'selectsdelete <=' => $date]);
+        $entries = $this->getUserList(['selectsdelete >' => '0000-00-00 00:00:00', 'selectsdelete <=' => $date]);
 
         foreach ($entries as $user) {
             if ($user->getSelectsDelete() != '') {

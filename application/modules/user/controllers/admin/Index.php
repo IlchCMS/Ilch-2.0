@@ -119,7 +119,7 @@ class Index extends \Ilch\Controller\Admin
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         if ($this->getRequest()->getParam('showselectsdelete')) {
-            $entries = $userMapper->getUserList(['selectsdelete >' => 0], $pagination);
+            $entries = $userMapper->getUserList(['selectsdelete >' => '0000-00-00 00:00:00'], $pagination);
         } else if ($this->getRequest()->getParam('showsetfree')) {
             $entries = $userMapper->getUserList(['confirmed' => 0], $pagination);
             if (empty($entries)) {
@@ -137,7 +137,7 @@ class Index extends \Ilch\Controller\Admin
             ->set('errorMsg', $this->getRequest()->getParam('errorMsg'))
             ->set('badge', count($userMapper->getUserList(['confirmed' => 0])))
             ->set('badgeLocked', count($userMapper->getUserList(['locked' => 1])))
-            ->set('badgeSelectsDelete', count($userMapper->getUserList(['selectsdelete >' => 0])))
+            ->set('badgeSelectsDelete', count($userMapper->getUserList(['selectsdelete >' => '0000-00-00 00:00:00'])))
             ->set('timetodelete', $this->getConfig()->get('userdeletetime'))
             ->set('pagination', $pagination);
     }
