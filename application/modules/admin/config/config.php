@@ -668,7 +668,7 @@ class Config extends \Ilch\Config\Install
                 // updateservers with own certificate.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 if ($databaseConfig->get('updateserver') === 'https://ilch2.de/development/updateserver/stable/') {
-                    $disablePurifier = $databaseConfig->set('updateserver', 'https://www.blackcoder.de/ilch-us/stable/');
+                    $databaseConfig->set('updateserver', 'https://www.blackcoder.de/ilch-us/stable/');
                 }
                 break;
         }
