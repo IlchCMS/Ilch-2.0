@@ -29,7 +29,7 @@ header('Content-Type: text/html; charset=utf-8');
 $serverTimeZone = @date_default_timezone_get();
 date_default_timezone_set('UTC');
 
-define('VERSION', '2.1.35');
+define('VERSION', '2.1.36');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
 define('DEFAULT_LAYOUT', 'index');
