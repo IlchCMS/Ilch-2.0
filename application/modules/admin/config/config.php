@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -37,7 +37,7 @@ class Config extends \Ilch\Config\Install
         $date = new \Ilch\Date();
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('version', VERSION, 1)
-            ->set('updateserver', 'https://www.blackcoder.de/ilch-us/stable/')
+            ->set('updateserver', 'https://ilch2.de/development/updateserver/stable/')
             ->set('locale', $this->getTranslator()->getLocale(), 1)
             ->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1)
             ->set('timezone', $_SESSION['install']['timezone'])
@@ -661,15 +661,6 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.34":
                 replaceVendorDirectory();
-                break;
-            case "2.1.35":
-                // Change updateserver to the one from blackcoder if the current one is corians.
-                // Don't change the server if that is not the case to avoid problems with maybe the rare case of an own
-                // updateservers with own certificate.
-                $databaseConfig = new \Ilch\Config\Database($this->db());
-                if ($databaseConfig->get('updateserver') === 'https://ilch2.de/development/updateserver/stable/') {
-                    $databaseConfig->set('updateserver', 'https://www.blackcoder.de/ilch-us/stable/');
-                }
                 break;
         }
 
