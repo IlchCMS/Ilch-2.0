@@ -146,7 +146,6 @@ function rec($item, $obj, $readAccess, $i)
                 <li><a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showNewPosts') ?></a></li>
             <?php endif; ?>
             <li><a href="<?=$this->getUrl(['controller' => 'showactivetopics', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showActiveTopics') ?></a></li>
-
             <?php if ($this->getUser()): ?>
                 <li><a href="<?=$this->getUrl(['controller' => 'rememberedposts', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showRememberedPosts') ?></a></li>
             <?php endif; ?>
