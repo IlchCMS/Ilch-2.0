@@ -267,7 +267,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
         </div>
     </div>
 
-    <form id="rememberDialog_form" class="form-horizontal" method="POST" action="<?=$this->getUrl(['controller' => 'rememberedPosts', 'action' => 'remember']) ?>">
+    <form id="rememberDialog_form" class="form-horizontal" method="POST" action="<?=$this->getUrl(['controller' => 'rememberedposts', 'action' => 'remember']) ?>">
         <?=$this->getTokenField() ?>
         <div class="modal fade" id="rememberDialog" tabindex="-1" role="dialog" aria-labelledby="rememberDialogTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">

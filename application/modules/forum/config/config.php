@@ -154,7 +154,7 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_remember` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `date` DATETIME NOT NULL,
                 `post_id` INT(11) NOT NULL,
                 `note` VARCHAR(255) NOT NULL DEFAULT \'\',
                 `user_id` INT(11) NOT NULL,
@@ -420,7 +420,7 @@ class Config extends \Ilch\Config\Install
                 // Add table for remembered posts.
                 $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_forum_remember` (
                             `id` INT(11) NOT NULL AUTO_INCREMENT,
-                            `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                            `date` DATETIME NOT NULL,
                             `post_id` INT(11) NOT NULL,
                             `note` VARCHAR(255) NOT NULL DEFAULT \'\',
                             `user_id` INT(11) NOT NULL,

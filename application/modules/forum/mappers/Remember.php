@@ -136,6 +136,7 @@ class Remember extends \Ilch\Mapper
         } else {
             $this->db()->insert('forum_remember')
                 ->values([
+                    'date' => new \Ilch\Date(),
                     'post_id' => $remember->getPostId(),
                     'note' => $remember->getNote(),
                     'user_id' => $remember->getUserId()
