@@ -39,6 +39,7 @@ return [
     'topicTitleNote' => 'Titel des Themas',
     'rememberedPostNote' => 'Notiz zum Eintrag',
     'rememberedPostAddedOn' => 'Hinzugefügt am',
+    'showRememberedPosts' => 'Gemerkte Beiträge',
     'selected' => 'markierte...',
     'noRememberedPosts' => 'Keine gemerkten Beiträge vorhanden.',
     'editRememberedPost' => 'Notiz zum Eintrag bearbeiten',
