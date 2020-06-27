@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
 namespace Ilch\Database\Mysql;
 
-class InsertTest extends \PHPUnit_Framework_TestCase
+class InsertTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Object under test

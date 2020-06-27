@@ -120,7 +120,7 @@ class UserTest extends DatabaseTestCase
 {
     public function getDataSet()
     {
-        return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet
+        return new \PHPUnit\DbUnit\DataSet\YamlDataSet
         (
             __DIR__.'/_files/users.yml'
         );

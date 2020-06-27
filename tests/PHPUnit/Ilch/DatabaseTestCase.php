@@ -16,7 +16,7 @@ use Ilch\Database\Factory as Factory;
  *
  * @package ilch_phpunit
  */
-abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
+abstract class DatabaseTestCase extends \PHPUnit\DbUnit\TestCase
 {
     /** @var int don't automatically provision - for individual proovsioning */
     const PROVISION_DISABLED = 0;
@@ -201,13 +201,13 @@ abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
     {
         if (static::$fillDbOnSetUp === self::PROVISION_ON_SETUP_BEFORE_CLASS) {
             if ($this->dbProvisioned) {
-                return \PHPUnit_Extensions_Database_Operation_Factory::NONE();
+                return \PHPUnit\DbUnit\Operation\Factory::NONE();
             }
             $this->dbProvisioned = true;
         } elseif (static::$fillDbOnSetUp === self::PROVISION_DISABLED) {
-            return \PHPUnit_Extensions_Database_Operation_Factory::NONE();
+            return \PHPUnit\DbUnit\Operation\Factory::NONE();
         }
 
-        return \PHPUnit_Extensions_Database_Operation_Factory::CLEAN_INSERT();
+        return \PHPUnit\DbUnit\Operation\Factory::CLEAN_INSERT();
     }
 }

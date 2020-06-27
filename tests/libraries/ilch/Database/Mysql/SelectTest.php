@@ -8,7 +8,7 @@ namespace Ilch\Database\Mysql;
 
 use Ilch\Database\Mysql\Expression\Expression;
 
-class SelectTest extends \PHPUnit_Framework_TestCase
+class SelectTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Object under test
@@ -38,7 +38,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
     public function testGenerateSqlWithoutTable()
     {
-        $this->setExpectedException('RuntimeException', 'table must be set');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('table must be set');
 
         $this->out->generateSql();
     }

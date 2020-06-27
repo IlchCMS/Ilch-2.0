@@ -7,7 +7,7 @@
 namespace Ilch\Database\Mysql;
 
 
-class UpdateTest extends \PHPUnit_Framework_TestCase
+class UpdateTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Object under test
@@ -38,7 +38,8 @@ class UpdateTest extends \PHPUnit_Framework_TestCase
 
     public function testGenerateSqlWithoutTable()
     {
-        $this->setExpectedException('RuntimeException', 'table must be set');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('table must be set');
 
         $this->out->generateSql();
     }
@@ -47,8 +48,8 @@ class UpdateTest extends \PHPUnit_Framework_TestCase
     {
         $this->out->table('Test');
 
-        $this->setExpectedException('RuntimeException', 'no valid values for update');
-
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('no valid values for update');
         $this->out->generateSql();
     }
 

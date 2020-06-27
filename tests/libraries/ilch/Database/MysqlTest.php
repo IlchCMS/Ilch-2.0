@@ -23,7 +23,7 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
      */
     protected function getDataSet()
     {
-        return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet(
+        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(
             __DIR__ . '/../_files/mysql_database.yml'
         );
     }

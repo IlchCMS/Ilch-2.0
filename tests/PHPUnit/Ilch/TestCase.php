@@ -10,7 +10,7 @@ namespace PHPUnit\Ilch;
  *
  * @package ilch_phpunit
  */
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
      * A data array which will be used to create a config object for the registry.

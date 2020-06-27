@@ -76,7 +76,7 @@ class CookieStolenTest extends DatabaseTestCase
      */
     protected function getDataSet()
     {
-        return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet(__DIR__ . '/../_files/mysql_database.yml');
+        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/../_files/mysql_database.yml');
     }
 
     /**
