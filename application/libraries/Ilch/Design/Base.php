@@ -599,7 +599,7 @@ abstract class Base
      * @return string
      */
     public function generateToken() {
-        $token = bin2hex(openssl_random_pseudo_bytes(32));
+        $token = bin2hex(random_bytes(32));
         $_SESSION['token'][$token] = $token;
 
         return $token;

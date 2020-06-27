@@ -49,7 +49,7 @@ class AfterDatabaseLoad
 
                     $authTokenModel->setSelector($selector);
                     // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
-                    $authenticator = openssl_random_pseudo_bytes(33);
+                    $authenticator = random_bytes(33);
                     // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
                     $authTokenModel->setToken(hash('sha256', $authenticator));
                     $authTokenModel->setUserid($_SESSION['user_id']);

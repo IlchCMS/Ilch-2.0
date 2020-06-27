@@ -30,8 +30,8 @@ class Index extends \Ilch\Controller\Frontend
                 $countEmails = $newsletterMapper->countEmails($this->getRequest()->getPost('email'));
                 if ($countEmails == 0) {
                     $newsletterModel = new NewsletterModel();
-                    $newsletterModel->setSelector(bin2hex(openssl_random_pseudo_bytes(9)));
-                    $newsletterModel->setConfirmCode(bin2hex(openssl_random_pseudo_bytes(32)));
+                    $newsletterModel->setSelector(bin2hex(random_bytes(9)));
+                    $newsletterModel->setConfirmCode(bin2hex(random_bytes(32)));
                     $newsletterModel->setEmail($this->getRequest()->getPost('email'));
                     $newsletterMapper->saveEmail($newsletterModel);
                 }
@@ -103,8 +103,8 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $newsletterModel = new NewsletterModel();
-                $newsletterModel->setSelector(bin2hex(openssl_random_pseudo_bytes(9)));
-                $newsletterModel->setConfirmCode(bin2hex(openssl_random_pseudo_bytes(32)));
+                $newsletterModel->setSelector(bin2hex(random_bytes(9)));
+                $newsletterModel->setConfirmCode(bin2hex(random_bytes(32)));
                 $newsletterModel->setId($this->getUser()->getId());
                 $newsletterModel->setNewsletter($this->getRequest()->getPost('acceptNewsletter'));
                 $newsletterMapper->saveUserEmail($newsletterModel);

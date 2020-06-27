@@ -83,10 +83,10 @@ class Regist extends \Ilch\Controller\Frontend
                 if ($this->getConfig()->get('regist_confirm') == 0 && $this->getConfig()->get('regist_setfree') == 0) {
                     $model->setDateConfirmed($currentDate->format('Y-m-d H:i:s', true));
                 } else {
-                    $selector = bin2hex(openssl_random_pseudo_bytes(9));
+                    $selector = bin2hex(random_bytes(9));
                     // 33 bytes instead of 32 bytes just that the confirmedCode to confirm a registration
                     // is different from the one to change a password and therefore can only be used for this purpose.
-                    $confirmedCode = bin2hex(openssl_random_pseudo_bytes(33));
+                    $confirmedCode = bin2hex(random_bytes(33));
                     $model->setSelector($selector)
                         ->setConfirmedCode($confirmedCode)
                         ->setConfirmed(0);

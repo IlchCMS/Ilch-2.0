@@ -125,8 +125,8 @@ class Applications extends \Ilch\Controller\Admin
             } else {
                 $mailContent = $emailsMapper->getEmail('teams', 'teams_accept_mail', $this->getTranslator()->getLocale());
                 $userGroup = $groupMapper->getGroupById($team->getGroupId());
-                $selector = bin2hex(openssl_random_pseudo_bytes(9));
-                $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
+                $selector = bin2hex(random_bytes(9));
+                $confirmedCode = bin2hex(random_bytes(32));
                 $password_string = '!@#$%*&abcdefghijklmnpqrstuwxyzABCDEFGHJKLMNPQRSTUWXYZ23456789';
                 $password = substr(str_shuffle($password_string), 0, 12);
 

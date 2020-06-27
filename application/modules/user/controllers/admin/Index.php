@@ -309,8 +309,8 @@ class Index extends \Ilch\Controller\Admin
                 }
 
                 if ($generated && empty($userData['id'])) {
-                    $selector = bin2hex(openssl_random_pseudo_bytes(9));
-                    $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
+                    $selector = bin2hex(random_bytes(9));
+                    $confirmedCode = bin2hex(random_bytes(32));
                     $user->setSelector($selector);
                     $user->setConfirmedCode($confirmedCode);
 

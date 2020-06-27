@@ -26,8 +26,8 @@ class Newsletter extends \Ilch\Box
                 $countEmails = $newsletterMapper->countEmails($this->getRequest()->getPost('email'));
                 if ($countEmails == 0) {
                     $newsletterModel = new NewsletterModel();
-                    $newsletterModel->setSelector(bin2hex(openssl_random_pseudo_bytes(9)));
-                    $newsletterModel->setConfirmCode(bin2hex(openssl_random_pseudo_bytes(32)));
+                    $newsletterModel->setSelector(bin2hex(random_bytes(9)));
+                    $newsletterModel->setConfirmCode(bin2hex(random_bytes(32)));
                     $newsletterModel->setEmail($this->getRequest()->getPost('email'));
                     $newsletterMapper->saveEmail($newsletterModel);
                 }

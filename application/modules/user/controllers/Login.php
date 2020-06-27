@@ -61,9 +61,9 @@ class Login extends \Ilch\Controller\Frontend
 
                         // 9 bytes of random data (base64 encoded to 12 characters) for the selector.
                         // This provides 72 bits of keyspace and therefore 236 bits of collision resistance (birthday attacks)
-                        $authTokenModel->setSelector(base64_encode(openssl_random_pseudo_bytes(9)));
+                        $authTokenModel->setSelector(base64_encode(random_bytes(9)));
                         // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
-                        $authenticator = openssl_random_pseudo_bytes(33);
+                        $authenticator = random_bytes(33);
                         // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
                         $authTokenModel->setToken(hash('sha256', $authenticator));
                         $authTokenModel->setUserid($result->getUser()->getId());
@@ -194,8 +194,8 @@ class Login extends \Ilch\Controller\Frontend
                     $user = $dummy;
                 }
 
-                $selector = bin2hex(openssl_random_pseudo_bytes(9));
-                $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
+                $selector = bin2hex(random_bytes(9));
+                $confirmedCode = bin2hex(random_bytes(32));
                 $user->setSelector($selector);
                 $user->setConfirmedCode($confirmedCode);
                 $user->setExpires(date('Y-m-d\TH:i:s', strtotime( '+1 day' )));
