@@ -62,14 +62,6 @@ $directories = [
             'bootstrap-star-rating/README.md',
         ],
     ],
-    'sphido' => [
-        'keep' => [
-            'events/src/',
-            'events/composer.json',
-            'events/LICENSE',
-            'events/README.md',
-        ],
-    ],
     'twbs' => [
         'keep' => [
             'bootstrap/dist/css/bootstrap.min.css',

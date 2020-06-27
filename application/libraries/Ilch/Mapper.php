@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -51,14 +51,5 @@ class Mapper
     public function setDatabase($db)
     {
         $this->db = $db;
-    }
-
-    /**
-     * Simple helper for triggering events
-     * @param string $event
-     * @param array $args
-     */
-    protected function trigger($event, array $args) {
-        trigger($event, new Event($event, $args));
     }
 }
