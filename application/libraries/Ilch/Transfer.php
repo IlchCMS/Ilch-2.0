@@ -285,7 +285,7 @@ class Transfer
      */
     public function checkRequirements($requirements)
     {
-        if (!empty($requirements['phpVersion']) && !version_compare(phpversion(), $requirements['phpVersion'], '>=')) {
+        if (!empty($requirements['phpVersion']) && !version_compare(PHP_VERSION, $requirements['phpVersion'], '>=')) {
             $this->missingRequirements['phpVersion'] = $requirements['phpVersion'];
         }
 

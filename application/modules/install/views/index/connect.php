@@ -10,7 +10,7 @@
         </select>
     </div>
 </div>
-<div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
+<div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; } ?>">
     <label for="dbHost" class="col-lg-3 control-label">
         <?=$this->getTrans('dbHost') ?>:
     </label>
@@ -26,7 +26,7 @@
         <span class="col-lg-offset-3 col-lg-9 help-block"><?=$this->getTrans($errors['dbConnection']) ?></span>
     <?php endif; ?>
 </div>
-<div class="form-group <?php if (!empty($errors['dbConnection']) OR !empty($errors['dbUser'])) { echo 'has-error'; }; ?>">
+<div class="form-group <?php if (!empty($errors['dbConnection']) OR !empty($errors['dbUser'])) { echo 'has-error'; } ?>">
     <label for="dbUser" class="col-lg-3 control-label">
         <?=$this->getTrans('dbUser') ?>:
     </label>
@@ -42,7 +42,7 @@
         <span class="col-lg-offset-3 col-lg-9 help-block"><?=$this->getTrans($errors['dbUser']) ?></span>
     <?php endif; ?>
 </div>
-<div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
+<div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; } ?>">
     <label for="dbPassword" class="col-lg-3 control-label">
         <?=$this->getTrans('dbPassword') ?>:
     </label>

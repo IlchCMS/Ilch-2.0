@@ -179,7 +179,7 @@ class Group extends \Ilch\Mapper
      */
     public function delete($groupId)
     {
-        if (is_a($groupId, '\Modules\User\Models\Group')) {
+        if (is_a($groupId, GroupModel::class)) {
             $groupId = $groupId->getId();
         }
 

@@ -141,11 +141,7 @@ class Translator
      */
     public function transOtherLayout($layoutKey, $key)
     {
-        $translatedText = $key;
-
-        if (isset($this->translationsLayout[$key])) {
-            $translatedText = $this->translationsLayout[$key];
-        }
+        $translatedText = $this->translationsLayout[$key] ?? $key;
 
         $arguments = array_slice(func_get_args(), 1);
         $arguments[0] = $translatedText;

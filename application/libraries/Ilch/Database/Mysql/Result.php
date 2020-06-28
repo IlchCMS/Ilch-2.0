@@ -59,11 +59,7 @@ class Result
                     return null;
                 }
 
-                if (isset($row[$name])) {
-                    return $row[$name];
-                }
-
-                return false;
+                return $row[$name] ?? false;
             }
         } else {
             $fieldNumber = 0;
@@ -73,11 +69,7 @@ class Result
             return null;
         }
 
-        if (isset($row[$fieldNumber])) {
-            return $row[$fieldNumber];
-        }
-
-        return false;
+        return $row[$fieldNumber] ?? false;
     }
 
     /**

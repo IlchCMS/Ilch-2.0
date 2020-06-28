@@ -517,7 +517,7 @@ class User extends \Ilch\Mapper
      */
      public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00')
      {
-        if (is_a($userId, '\Modules\User\Models\User')) {
+        if (is_a($userId, UserModel::class)) {
             $userId = $userId->getId();
         }
         
@@ -562,7 +562,7 @@ class User extends \Ilch\Mapper
      */
     public function delete($userId)
     {
-        if (is_a($userId, '\Modules\User\Models\User')) {
+        if (is_a($userId, UserModel::class)) {
             $userId = $userId->getId();
         }
 

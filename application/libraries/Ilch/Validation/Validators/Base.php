@@ -292,10 +292,6 @@ abstract class Base
      */
     public function getParameter($key)
     {
-        if (isset($this->parameters[$key])) {
-            return $this->parameters[$key];
-        }
-
-        return null;
+        return $this->parameters[$key] ?? null;
     }
 }

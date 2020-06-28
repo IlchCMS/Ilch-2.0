@@ -21,11 +21,7 @@ class File
      */
     public function get($key)
     {
-        if (isset($this->configData[$key])) {
-            return $this->configData[$key];
-        }
-
-        return null;
+        return $this->configData[$key] ?? null;
 
     }
 

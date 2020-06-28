@@ -297,7 +297,7 @@ class Media extends \Ilch\Mapper
                 ->where(['id' => $id])
                 ->execute();
         } else {
-            $catId = ($model->getCatId()) ? $model->getCatId() : 0;
+            $catId = ($model->getCatId()) ?: 0;
             $this->db()->insert('media')
                 ->values([
                     'url' => $model->getUrl(),

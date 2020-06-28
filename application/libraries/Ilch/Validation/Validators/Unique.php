@@ -36,10 +36,10 @@ class Unique extends Base
         $db = Registry::get('db');
 
         $table = $this->getParameter(0);
-        $column = $this->getParameter(1) === null ? $this->getField() : $this->getParameter(1);
+        $column = $this->getParameter(1) ?? $this->getField();
 
         $ignoreId = $this->getParameter(2);
-        $ignoreIdColumn = $this->getParameter(3) === null ? 'id' : $this->getParameter(3);
+        $ignoreIdColumn = $this->getParameter(3) ?? 'id';
 
         $whereLeft = 'LOWER(`'.$column.'`)';
         $whereMiddle = '=';

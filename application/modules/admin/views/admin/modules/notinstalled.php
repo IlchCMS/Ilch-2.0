@@ -64,7 +64,7 @@
                         $phpExtension = implode(', ', $phpExtension);
                     }
 
-                    if (version_compare(phpversion(), $module->getPHPVersion(), '>=')) {
+                    if (version_compare(PHP_VERSION, $module->getPHPVersion(), '>=')) {
                         $phpVersion = '<font color="#3c763d">'.$module->getPHPVersion().'</font>';
                     } else {
                         $phpVersion = '<font color="#a94442">'.$module->getPHPVersion().'</font>';
@@ -96,7 +96,7 @@
                                         title="<?=$this->getTrans('phpExtensionError') ?>">
                                     <i class="fa fa-save"></i>
                                 </button>
-                            <?php elseif (!version_compare(phpversion(), $module->getPHPVersion(), '>=')): ?>
+                            <?php elseif (!version_compare(PHP_VERSION, $module->getPHPVersion(), '>=')): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('phpVersionError') ?>">
                                     <i class="fa fa-save"></i>

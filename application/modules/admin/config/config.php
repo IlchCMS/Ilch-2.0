@@ -451,7 +451,7 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.16":
                 // Add comments box to list of boxes.
-                $configClass = '\\Modules\\Comment\\Config\\Config';
+                $configClass = \Modules\Comment\Config\Config::class;
                 $config = new $configClass($this->getTranslator());
                 $boxMapper = new \Modules\Admin\Mappers\Box();
 

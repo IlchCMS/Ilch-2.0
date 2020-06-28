@@ -217,11 +217,7 @@ class Request
      */
     public function getParam($key)
     {
-        if (isset($this->params[$key])) {
-            return $this->params[$key];
-        }
-
-        return null;
+        return $this->params[$key] ?? null;
     }
 
     /**
@@ -294,11 +290,7 @@ class Request
             return $_GET;
         }
 
-        if (isset($_GET[$key])) {
-            return $_GET[$key];
-        }
-
-        return null;
+        return $_GET[$key] ?? null;
     }
 
     /**

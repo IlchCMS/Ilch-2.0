@@ -166,7 +166,7 @@ class Index extends \Ilch\Controller\Frontend
     public function systemcheckAction()
     {
         $errors = [];
-        if (!version_compare(phpversion(), '7.0', '>=')) {
+        if (!version_compare(PHP_VERSION, '7.0', '>=')) {
             $errors['version'] = true;
         }
 
@@ -268,7 +268,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('errors', $errors);
         }
 
-        $this->getView()->set('phpVersion', phpversion());
+        $this->getView()->set('phpVersion', PHP_VERSION);
     }
 
     public function databaseAction()
