@@ -77,7 +77,7 @@ class AccessesTest extends DatabaseTestCase
                 (3, "Guest");';
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

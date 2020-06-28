@@ -18,7 +18,7 @@ use \Modules\Forum\Config\Config as ModuleConfig;
  */
 class RankTest extends DatabaseTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
