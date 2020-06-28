@@ -97,7 +97,7 @@ class Model
      * @param string $href
      * @return Model
      */
-    public function setHref($href)
+    public function setHref($href): Model
     {
         $this->href = $href;
         return $this;
@@ -107,7 +107,7 @@ class Model
      * Get href for the link tag.
      * @return string
      */
-    public function getHref()
+    public function getHref(): string
     {
         return $this->href;
     }
@@ -119,7 +119,7 @@ class Model
      * @param string $crossorigin
      * @return Model
      */
-    public function setCrossorigin($crossorigin)
+    public function setCrossorigin($crossorigin): Model
     {
         $this->crossorigin = $crossorigin;
         return $this;
@@ -130,7 +130,7 @@ class Model
      *
      * @return string
      */
-    public function getCrossorigin()
+    public function getCrossorigin(): string
     {
         return $this->crossorigin;
     }
@@ -142,7 +142,7 @@ class Model
      * @param string $rel
      * @return Model
      */
-    public function setRel($rel)
+    public function setRel($rel): Model
     {
         $this->rel = $rel;
         return $this;
@@ -153,7 +153,7 @@ class Model
      *
      * @return string
      */
-    public function getRel()
+    public function getRel(): string
     {
         return $this->rel;
     }
@@ -166,7 +166,7 @@ class Model
      * @param string $media
      * @return Model
      */
-    public function setMedia($media)
+    public function setMedia($media): Model
     {
         $this->media = $media;
         return $this;
@@ -177,7 +177,7 @@ class Model
      *
      * @return string
      */
-    public function getMedia()
+    public function getMedia(): string
     {
         return $this->media;
     }
@@ -190,7 +190,7 @@ class Model
      * @param string $hreflang
      * @return Model
      */
-    public function setHreflang($hreflang)
+    public function setHreflang($hreflang): Model
     {
         $this->hreflang = $hreflang;
         return $this;
@@ -201,7 +201,7 @@ class Model
      *
      * @return string
      */
-    public function getHreflang()
+    public function getHreflang(): string
     {
         return $this->hreflang;
     }
@@ -214,7 +214,7 @@ class Model
      * @param string $type
      * @return Model
      */
-    public function setType($type)
+    public function setType($type): Model
     {
         $this->type = $type;
         return $this;
@@ -225,7 +225,7 @@ class Model
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -237,7 +237,7 @@ class Model
      * @param string $sizes
      * @return Model
      */
-    public function setSizes($sizes)
+    public function setSizes($sizes): Model
     {
         $this->sizes = $sizes;
         return $this;
@@ -248,7 +248,7 @@ class Model
      *
      * @return string
      */
-    public function getSizes()
+    public function getSizes(): string
     {
         return $this->sizes;
     }
@@ -259,7 +259,7 @@ class Model
      * @param string $title
      * @return Model
      */
-    public function setTitle($title)
+    public function setTitle($title): Model
     {
         $this->title = $title;
         return $this;
@@ -270,7 +270,7 @@ class Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }

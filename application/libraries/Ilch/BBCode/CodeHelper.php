@@ -15,6 +15,10 @@ class CodeHelper extends \JBBCode\CodeDefinition
         $this->setParseContent(false);
     }
 
+    /**
+     * @param \JBBCode\ElementNode $el
+     * @return string
+     */
     public function asHtml(\JBBCode\ElementNode $el)
     {
         $content = $this->getContent($el);

@@ -68,7 +68,7 @@ class Factory
      * @param  string           $engine
      * @return \Ilch\Database\MySql
      */
-    public function getInstanceByEngine($engine)
+    public function getInstanceByEngine($engine): MySql
     {
         $engine = '\\Ilch\\Database\\'.$engine;
         return new $engine();

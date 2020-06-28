@@ -28,7 +28,7 @@ class Mapper
      *
      * @return \Ilch\Database\Mysql
      */
-    public function getDatabase()
+    public function getDatabase(): Database\Mysql
     {
         return $this->db;
     }
@@ -38,7 +38,7 @@ class Mapper
      *
      * @return \Ilch\Database\Mysql
      */
-    public function db()
+    public function db(): Database\Mysql
     {
         return $this->getDatabase();
     }

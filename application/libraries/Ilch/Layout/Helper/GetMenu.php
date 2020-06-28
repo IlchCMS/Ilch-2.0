@@ -48,7 +48,7 @@ class GetMenu
      * @param array $options
      * @return string
      */
-    public function getMenu($menuId, $tpl = '', array $options = [])
+    public function getMenu($menuId, $tpl = '', array $options = []): string
     {
         $helperMapper = new MapperHelper($this->layout);
         $menuMapper = new MenuMapper();

@@ -29,7 +29,7 @@ class GetMenus
      *
      * @return \Ilch\Layout\Helper\Menu\Model[]
      */
-    public function getMenus()
+    public function getMenus(): array
     {
         $helperMapper = new Mapper($this->layout);
 

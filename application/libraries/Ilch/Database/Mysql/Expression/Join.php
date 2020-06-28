@@ -70,7 +70,7 @@ class Join
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -79,7 +79,7 @@ class Join
      * @param array $fields
      * @return Join
      */
-    public function setFields($fields)
+    public function setFields($fields): Join
     {
         $this->fields = $fields;
         return $this;
@@ -88,7 +88,7 @@ class Join
     /**
      * @return array
      */
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
@@ -98,7 +98,7 @@ class Join
      * @param string|null $type 'and' or 'or'
      * @return Join
      */
-    public function setConditions(array $conditions, $type = null)
+    public function setConditions(array $conditions, $type = null): Join
     {
         $this->conditions = $conditions;
         if (isset($type) && in_array($type, ['and', 'or'])) {
@@ -110,7 +110,7 @@ class Join
     /**
      * @return array
      */
-    public function getConditions()
+    public function getConditions(): array
     {
         return $this->conditions;
     }
@@ -118,7 +118,7 @@ class Join
     /**
      * @return string
      */
-    public function getConditionsType()
+    public function getConditionsType(): string
     {
         return $this->conditionsType;
     }

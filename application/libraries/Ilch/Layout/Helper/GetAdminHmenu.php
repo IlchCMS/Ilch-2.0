@@ -27,7 +27,7 @@ class GetAdminHmenu
      * Gets the hmenu
      * @return \Ilch\Layout\Helper\AdminHmenu\Model
      */
-    public function getAdminHmenu()
+    public function getAdminHmenu(): AdminHmenu\Model
     {
         return $this->model;
     }

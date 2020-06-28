@@ -37,7 +37,7 @@ class Result
      * Returns mysqli_result f.e. to use the Iterator interface
      * @return \mysqli_result
      */
-    public function getMysqliResult()
+    public function getMysqliResult(): \mysqli_result
     {
         return $this->dbResult;
     }
@@ -59,11 +59,7 @@ class Result
                     return null;
                 }
 
-                if (isset($row[$name])) {
-                    return $row[$name];
-                }
-
-                return false;
+                return $row[$name] ?? false;
             }
         } else {
             $fieldNumber = 0;
@@ -73,11 +69,7 @@ class Result
             return null;
         }
 
-        if (isset($row[$fieldNumber])) {
-            return $row[$fieldNumber];
-        }
-
-        return false;
+        return $row[$fieldNumber] ?? false;
     }
 
     /**
@@ -125,7 +117,7 @@ class Result
      * @param integer $type type of returned array
      * @return array[]
      */
-    public function fetchRows($keyField = null, $type = self::ASSOC)
+    public function fetchRows($keyField = null, $type = self::ASSOC): array
     {
         $this->setCurrentRow(0);
         $results = [];
@@ -147,7 +139,7 @@ class Result
      * @param string $keyField
      * @return string[]
      */
-    public function fetchList($field = null, $keyField = null)
+    public function fetchList($field = null, $keyField = null): array
     {
         $this->setCurrentRow(0);
         $results = [];
@@ -176,7 +168,7 @@ class Result
      * Returns number of rows in the result
      * @return integer
      */
-    public function getNumRows()
+    public function getNumRows(): int
     {
         return $this->dbResult->num_rows;
     }
@@ -185,7 +177,7 @@ class Result
      * Returns number of fields in the result
      * @return integer
      */
-    public function getFieldCount()
+    public function getFieldCount(): int
     {
         return $this->dbResult->field_count;
     }
@@ -194,7 +186,7 @@ class Result
      * Für eine Select Query, die mit useFoundRows aufgerufen wurde, kann so die FOUND_ROWS() aufgerufen werden
      * @return integer
      */
-    public function getFoundRows()
+    public function getFoundRows(): int
     {
         return (int) $this->db->queryCell('SELECT FOUND_ROWS()');
     }
@@ -204,7 +196,7 @@ class Result
      * @param int $position
      * @return bool
      */
-    public function setCurrentRow($position)
+    public function setCurrentRow($position): bool
     {
         return $this->dbResult->data_seek($position);
     }

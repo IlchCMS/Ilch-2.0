@@ -51,7 +51,7 @@ class Frontend extends Base
      *
      * @return string
      */
-    public function getFavicon()
+    public function getFavicon(): string
     {
         $config = \Ilch\Registry::get('config');
         $favicon = $config->get('favicon');
@@ -68,7 +68,7 @@ class Frontend extends Base
      *
      * @return string
      */
-    public function getAppleIcon()
+    public function getAppleIcon(): string
     {
         $config = \Ilch\Registry::get('config');
         $appleIcon = $config->get('apple_icon');
@@ -85,7 +85,7 @@ class Frontend extends Base
      *
      * @return string
      */
-    public function getKeywords()
+    public function getKeywords(): string
     {
         $config = \Ilch\Registry::get('config');
         $metaKeywords = $this->get('metaKeywords');
@@ -106,7 +106,7 @@ class Frontend extends Base
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         $config = \Ilch\Registry::get('config');
         $metaDescription = $this->get('metaDescription');
@@ -129,7 +129,7 @@ class Frontend extends Base
      * @return string
      * @since 2.1.0
      */
-    public function getMetaTagString($key)
+    public function getMetaTagString($key): string
     {
         $metaTagModel = $this->get('metaTags')[$key];
 
@@ -152,7 +152,7 @@ class Frontend extends Base
      * @return string
      * @since 2.1.22
      */
-    public function getLinkTagString($key)
+    public function getLinkTagString($key): string
     {
         $linkTagModel = $this->get('linkTags')[$key];
 
@@ -199,7 +199,7 @@ class Frontend extends Base
      * @param $key
      * @return string
      */
-    public function getConfigKey($key)
+    public function getConfigKey($key): string
     {
         $config = \Ilch\Registry::get('config');
 
@@ -217,7 +217,7 @@ class Frontend extends Base
      * @param string $boxKey
      * @return string
      */
-    public function getBox($moduleKey, $boxKey = '', $customView = null)
+    public function getBox($moduleKey, $boxKey = '', $customView = null): string
     {
         if (empty($boxKey)) {
             $boxKey = $moduleKey;
@@ -249,7 +249,7 @@ class Frontend extends Base
      * //TODO: rework loading of css and jss to be more dynamic!!!
      * @return string
      */
-    public function getHeader()
+    public function getHeader(): string
     {
         $html = '<meta charset="utf-8">
                 <title>'.$this->escape($this->getTitle()).'</title>
@@ -329,7 +329,7 @@ class Frontend extends Base
      *
      * @return string
      */
-    public function getCustomCSS()
+    public function getCustomCSS(): string
     {
         if ($this->getConfigKey('custom_css') !== '') {
             return '<style>'.$this->getConfigKey('custom_css').'</style>';
@@ -342,7 +342,7 @@ class Frontend extends Base
      *
      * @return string
      */
-    public function getFooter()
+    public function getFooter(): string
     {
         $html = '';
 
@@ -408,7 +408,7 @@ class Frontend extends Base
      * @return string
      * @since 2.1.32
      */
-    public function getLayoutSetting($key)
+    public function getLayoutSetting($key): string
     {
         if (empty($this->settings[$key])) {
             // That specific setting seems to be not loaded. Try to load default value.

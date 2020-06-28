@@ -34,7 +34,7 @@ class Mapper
      *
      * @return \Ilch\Layout\Helper\Menu\Model[]
      */
-    public function getMenus()
+    public function getMenus(): array
     {
         $menus = [];
         $menuRows = $this->db->select(['id'])
@@ -56,7 +56,7 @@ class Mapper
      * @param int $menuId
      * @return \Ilch\Layout\Helper\Menu\Model
      */
-    public function getMenu($menuId)
+    public function getMenu($menuId): Model
     {
         $menu = new \Ilch\Layout\Helper\Menu\Model($this->layout);
 

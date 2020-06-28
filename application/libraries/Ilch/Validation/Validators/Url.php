@@ -51,7 +51,7 @@ class Url extends Base
      *
      * @return string
      */
-    protected static function getRegExp()
+    protected static function getRegExp(): string
     {
         if (!isset(static::$regExp)) {
             static::$regExp = '_^'

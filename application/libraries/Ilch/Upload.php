@@ -77,7 +77,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * Resets
      */
-    public function reset()
+    public function reset(): Upload
     {
         $this->file = null;
         $this->ending = null;
@@ -106,7 +106,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }
@@ -126,7 +126,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getEnding()
+    public function getEnding(): string
     {
         $this->ending = strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
 
@@ -148,7 +148,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         $this->name = pathinfo($this->file, PATHINFO_FILENAME);
 
@@ -170,7 +170,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
@@ -190,7 +190,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -210,7 +210,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getTypes()
+    public function getTypes(): string
     {
         return $this->types;
     }
@@ -230,7 +230,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getAllowedExtensions()
+    public function getAllowedExtensions(): string
     {
         return $this->allowedExtensions;
     }
@@ -250,7 +250,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -270,7 +270,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getUrlThumb()
+    public function getUrlThumb(): string
     {
         return $this->urlThumb;
     }
@@ -278,7 +278,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getSize()
+    public function getSize(): string
     {
         $bytes = sprintf('%u', filesize($this->file));
 
@@ -322,7 +322,8 @@ class Upload extends \Ilch\Controller\Base
      * @return bool
      * @since 2.1.20
      */
-    public function enoughFreeMemory($imageFilePath) {
+    public function enoughFreeMemory($imageFilePath): bool
+    {
         $memoryLimit = ini_get('memory_limit');
         if ($memoryLimit == '-1') {
             return true;
@@ -357,7 +358,7 @@ class Upload extends \Ilch\Controller\Base
      *
      * @return bool
      */
-    public function isAllowedExtension()
+    public function isAllowedExtension(): bool
     {
         return in_array($this->getEnding(), explode(' ', $this->getAllowedExtensions()));
     }
@@ -402,7 +403,7 @@ class Upload extends \Ilch\Controller\Base
      *
      * @return bool
      */
-    public function createThumbnail()
+    public function createThumbnail(): bool
     {
         if (!$this->enoughFreeMemory($this->getUrl())) {
             return false;

@@ -38,7 +38,7 @@ class Update extends QueryBuilder
      * @param array $values
      * @return Update
      */
-    public function values(array $values)
+    public function values(array $values): Update
     {
         $this->values = $values;
         return $this;
@@ -48,7 +48,7 @@ class Update extends QueryBuilder
      * @param $table
      * @return Update
      */
-    public function table($table)
+    public function table($table): Update
     {
         $this->table = (string) $table;
         return $this;
@@ -60,7 +60,7 @@ class Update extends QueryBuilder
      * @param array $values
      * @return Update
      */
-    public function fields(array $values)
+    public function fields(array $values): Update
     {
         return $this->values($values);
     }

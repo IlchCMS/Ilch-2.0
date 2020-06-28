@@ -73,7 +73,7 @@ class Mysql
      * @param string $db
      * @return bool success
      */
-    public function setDatabase($db)
+    public function setDatabase($db): bool
     {
         if ($this->conn->connect_error) {
             return false;
@@ -129,7 +129,7 @@ class Mysql
      * @param string $sql
      * @return string
      */
-    public function getSqlWithPrefix($sql)
+    public function getSqlWithPrefix($sql): string
     {
         if (preg_match("/^UPDATE `?\[prefix\]_\S+`?\s+SET/is", $sql)) {
             $sql = preg_replace(
@@ -154,7 +154,7 @@ class Mysql
      * Returns number of affected rows of the last query
      * @return integer
      */
-    public function getAffectedRows()
+    public function getAffectedRows(): int
     {
         return (int) $this->conn->affected_rows;
     }
@@ -175,7 +175,7 @@ class Mysql
      * @return true|false
      * @throws Exception
      */
-    public function ifTableExists($table)
+    public function ifTableExists($table): bool
     {
         $sql = "SHOW TABLES LIKE '$table'";
         $result = $this->query($sql);
@@ -191,7 +191,7 @@ class Mysql
      * @return true|false
      * @throws Exception
      */
-    public function ifColumnExists($table, $column)
+    public function ifColumnExists($table, $column): bool
     {
         $sql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME = '$column' AND TABLE_NAME = '$table'";
         $result = $this->query($sql);
@@ -209,7 +209,7 @@ class Mysql
      * @param array|int|null $limit
      * @return Mysql\Select
      */
-    public function select($fields = null, $table = null, $where = null, array $orderBy = null, $limit = null)
+    public function select($fields = null, $table = null, $where = null, array $orderBy = null, $limit = null): Mysql\Select
     {
         return new Mysql\Select($this, $fields, $table, $where, $orderBy, $limit);
     }
@@ -251,7 +251,7 @@ class Mysql
      * @return array
      * @throws Exception
      */
-    public function queryArray($sql)
+    public function queryArray($sql): array
     {
         $rows = [];
         $result = $this->query($sql);
@@ -270,7 +270,7 @@ class Mysql
      * @return array
      * @throws Exception
      */
-    public function queryList($sql)
+    public function queryList($sql): array
     {
         $list = [];
         $result = $this->query($sql);
@@ -291,7 +291,7 @@ class Mysql
      *
      * @return \Ilch\Database\Mysql\Update
      */
-    public function update($table = null, $values = null, $where = null)
+    public function update($table = null, $values = null, $where = null): Mysql\Update
     {
         return new Mysql\Update($this, $table, $values, $where);
     }
@@ -304,7 +304,7 @@ class Mysql
      *
      * @return \Ilch\Database\Mysql\Insert
      */
-    public function insert($into = null, $values = null)
+    public function insert($into = null, $values = null): Mysql\Insert
     {
         return new Mysql\Insert($this, $into, $values);
     }
@@ -317,7 +317,7 @@ class Mysql
      *
      * @return \Ilch\Database\Mysql\Delete
      */
-    public function delete($from = null, $where = null)
+    public function delete($from = null, $where = null): Mysql\Delete
     {
         return new Mysql\Delete($this, $from, $where);
     }
@@ -331,7 +331,7 @@ class Mysql
      * @return \mysqli_result
      * @throws Exception
      */
-    public function drop($table)
+    public function drop($table): \mysqli_result
     {
         $sql = 'DROP TABLE `' . $table . '`';
 
@@ -345,7 +345,7 @@ class Mysql
      * @return \mysqli_result
      * @throws Exception
      */
-    public function truncate($table)
+    public function truncate($table): \mysqli_result
     {
         $sql = 'TRUNCATE TABLE `' . $table . '`';
         $sql = $this->getSqlWithPrefix($sql);
@@ -374,7 +374,7 @@ class Mysql
      * @param  array $where
      * @return string
      */
-    protected function getWhereSql($where)
+    protected function getWhereSql($where): string
     {
         $sql = '';
 
@@ -394,7 +394,7 @@ class Mysql
      * @return string
      * @throws \InvalidArgumentException for invalid field expressions
      */
-    public function quote($field, $complete = false)
+    public function quote($field, $complete = false): string
     {
         if ($complete || strpos($field, '.') === false) {
             return '`' . $field . '`';
@@ -413,7 +413,7 @@ class Mysql
      * @param  boolean $andQuote [default: false] add quotes around
      * @return string
      */
-    public function escape($value, $andQuote = false)
+    public function escape($value, $andQuote = false): string
     {
         $escaped = mysqli_real_escape_string($this->conn, $value);
 
@@ -430,7 +430,7 @@ class Mysql
      * @param bool $andQuote [default: false] add quotes around each value
      * @return array
      */
-    public function escapeArray(array $array, $andQuote = false)
+    public function escapeArray(array $array, $andQuote = false): array
     {
         foreach ($array as &$value) {
             $value = $this->escape($value, $andQuote);
@@ -445,7 +445,7 @@ class Mysql
      * @return boolean false if the first statement failed. Otherwise true.
      * @throws Exception
      */
-    public function queryMulti($sql)
+    public function queryMulti($sql): bool
     {
         $result = false;
         $sql = $this->getSqlWithPrefix($sql);

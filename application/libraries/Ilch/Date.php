@@ -71,7 +71,7 @@ class Date extends \DateTime
      * @param  boolean $localTimezone
      * @return string  A formatted date string.
      */
-    public function toDb($localTimezone = false)
+    public function toDb($localTimezone = false): string
     {
         return $this->ownFormat($this->dbFormat, $localTimezone);
     }
@@ -95,7 +95,7 @@ class Date extends \DateTime
      * @param  boolean $local
      * @return string
      */
-    public function format($format = null, $local = false)
+    public function format($format = null, $local = false): string
     {
         if ($format === null) {
             $format = $this->defaultFormat;
@@ -111,7 +111,7 @@ class Date extends \DateTime
      * @param  boolean $localTimezone
      * @return string
      */
-    protected function ownFormat($format, $localTimezone)
+    protected function ownFormat($format, $localTimezone): string
     {
         if ($localTimezone) {
             $this->setTimezone($this->timeZoneLocal);

@@ -50,7 +50,7 @@ class Max extends Base
      *
      * @return int The size of the value
      */
-    protected function getSize($value, $numberString)
+    protected function getSize($value, $numberString): int
     {
         if (is_numeric($value) && !$numberString) {
             return (int) $value;

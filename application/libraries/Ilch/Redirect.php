@@ -58,7 +58,7 @@ class Redirect
      * @return self
      * @throws \Exception
      */
-    public function withMessage($message, $type = 'success')
+    public function withMessage($message, $type = 'success'): self
     {
         if (!is_string($message)) {
             throw new \RuntimeException('Wrong parameter type: expected string, got ' .gettype($message));
@@ -75,7 +75,7 @@ class Redirect
      * @param array|null $input Input data
      * @return self
      */
-    public function withInput($input = null)
+    public function withInput($input = null): self
     {
         if ($input === null) {
             $input = $this->request->getPost();
@@ -93,7 +93,7 @@ class Redirect
      *
      * @return self
      */
-    public function withErrors(\Ilch\Validation\ErrorBag $errorBag)
+    public function withErrors(\Ilch\Validation\ErrorBag $errorBag): self
     {
         $this->errors = array_merge($this->errors, $errorBag->getErrors());
 
@@ -167,7 +167,7 @@ class Redirect
      *
      * @return string
      */
-    public function getUrl($url = [], $route = null)
+    public function getUrl($url = [], $route = null): string
     {
         $config = \Ilch\Registry::get('config');
 

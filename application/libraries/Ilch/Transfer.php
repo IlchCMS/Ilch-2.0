@@ -52,7 +52,7 @@ class Transfer
      * Gets the TransferUrl.
      * @return string
      */
-    public function getTransferUrl()
+    public function getTransferUrl(): string
     {
         return $this->transferUrl;
     }
@@ -62,7 +62,7 @@ class Transfer
      * @var string $path
      * @return string
      */
-    public function setZipFile($path)
+    public function setZipFile($path): string
     {
         return $this->zipFile = $path;
     }
@@ -71,7 +71,7 @@ class Transfer
      * Gets the ZipFile.
      * @return string
      */
-    public function getZipFile()
+    public function getZipFile(): string
     {
         return $this->zipFile;
     }
@@ -81,7 +81,7 @@ class Transfer
      * @var string $name
      * @return string
      */
-    public function setZipFileName($name)
+    public function setZipFileName($name): string
     {
         return $this->zipFileName = $name;
     }
@@ -90,7 +90,7 @@ class Transfer
      * Gets the ZipFileName.
      * @return string
      */
-    public function getZipFileName()
+    public function getZipFileName(): string
     {
         return $this->zipFileName;
     }
@@ -100,7 +100,7 @@ class Transfer
      * @var string $path
      * @return string
      */
-    public function setZipSavePath($path)
+    public function setZipSavePath($path): string
     {
         return $this->zipSavePath = $path;
     }
@@ -109,7 +109,7 @@ class Transfer
      * Gets the ZipSavePath.
      * @return string
      */
-    public function getZipSavePath()
+    public function getZipSavePath(): string
     {
         return $this->zipSavePath;
     }
@@ -136,7 +136,7 @@ class Transfer
      * Gets the DownloadUrl.
      * @return string
      */
-    public function getDownloadUrl()
+    public function getDownloadUrl(): string
     {
         return $this->downloadUrl;
     }
@@ -161,7 +161,7 @@ class Transfer
      * Gets the DownloadSignatureUrl.
      * @return string
      */
-    public function getDownloadSignatureUrl()
+    public function getDownloadSignatureUrl(): string
     {
         return $this->downloadSignatureUrl;
     }
@@ -170,7 +170,7 @@ class Transfer
      * Gets the Version.
      * @return string
      */
-    public function getVersions()
+    public function getVersions(): string
     {
         $result = curl_exec($this->transferUrl);
         if ($result == false) {
@@ -183,7 +183,7 @@ class Transfer
      * Gets the VersionList.
      * @return string[]
      */
-    public function getVersionsList()
+    public function getVersionsList(): array
     {
         return json_decode($this->getVersions(), true);
     }
@@ -192,7 +192,7 @@ class Transfer
      * Gets the VersionNow.
      * @return string
      */
-    public function getVersionNow()
+    public function getVersionNow(): string
     {
         return $this->versionNow;
     }
@@ -201,7 +201,7 @@ class Transfer
      * Gets the NewVersion.
      * @return string
      */
-    public function getNewVersion()
+    public function getNewVersion(): string
     {
         return $this->newVersion;
     }
@@ -211,7 +211,7 @@ class Transfer
      * @var string $content
      * @return string
      */
-    public function setContent($content)
+    public function setContent($content): string
     {
         return $this->content = $content;
     }
@@ -220,7 +220,7 @@ class Transfer
      * Gets the Content.
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -229,7 +229,7 @@ class Transfer
      * Gets the content of missingRequirements.
      * @return array
      */
-    public function getMissingRequirements()
+    public function getMissingRequirements(): array
     {
         return $this->missingRequirements;
     }
@@ -239,7 +239,7 @@ class Transfer
      * @var string $version
      * @return string
      */
-    public function setNewVersion($version)
+    public function setNewVersion($version): string
     {
         return $this->newVersion = $version;
     }
@@ -249,30 +249,24 @@ class Transfer
      * @var string $versionNow
      * @return string
      */
-    public function setVersionNow($versionNow)
+    public function setVersionNow($versionNow): string
     {
         return $this->versionNow = $versionNow;
     }
 
     /**
-     * Gets the versionslist and checks if there is a new version available.
-     *
-     * @return bool
+     * @return true/false
      */
-    public function newVersionFound()
+    public function newVersionFound(): bool
     {
-        $versionsList = $this->getVersionsList();
-        if ($versionsList !== null) {
-            foreach ($this->getVersionsList() as $version => $requirements) {
-                if (version_compare(preg_replace('/\s+/', '', $version), $this->getVersionNow(), '>')) {
-                    $this->setNewVersion(trim(preg_replace('/\s\s+/','', $version)));
-                    $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
-                    $this->checkRequirements($requirements);
-                    return true;
-                }
+        foreach ($this->getVersionsList() as $version => $requirements) {
+            if (version_compare(preg_replace('/\s+/', '', $version), $this->getVersionNow(), '>')) {
+                $this->setNewVersion(trim(preg_replace('/\s\s+/','', $version)));
+                $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
+                $this->checkRequirements($requirements);
+                return true;
             }
         }
-
         return false;
     }
 
@@ -283,9 +277,9 @@ class Transfer
      * @param $requirements
      * @return bool
      */
-    public function checkRequirements($requirements)
+    public function checkRequirements($requirements): bool
     {
-        if (!empty($requirements['phpVersion']) && !version_compare(phpversion(), $requirements['phpVersion'], '>=')) {
+        if (!empty($requirements['phpVersion']) && !version_compare(PHP_VERSION, $requirements['phpVersion'], '>=')) {
             $this->missingRequirements['phpVersion'] = $requirements['phpVersion'];
         }
 
@@ -367,7 +361,7 @@ class Transfer
      * @param string $signature
      * @return true
      */
-    public function verifyFile($pubKeyfile, $file, $signature)
+    public function verifyFile($pubKeyfile, $file, $signature): bool
     {
         $digest = hash_file('sha512', $file);
 
@@ -381,7 +375,7 @@ class Transfer
      * @param string $certificate
      * @return true
      */
-    public function validateCert($certificate)
+    public function validateCert($certificate): bool
     {
         if (!is_file($certificate)) {
             return false;

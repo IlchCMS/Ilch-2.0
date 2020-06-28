@@ -58,7 +58,7 @@ abstract class Box extends Controller\Base
      *
      * @return string
      */
-    public function getUniqid()
+    public function getUniqid(): string
     {
         return 'box_' . $this->boxUniqid;
     }
@@ -68,7 +68,7 @@ abstract class Box extends Controller\Base
      *
      * @return \Ilch\Database\Mysql
      */
-    public function db()
+    public function db(): Database\Mysql
     {
         return $this->db;
     }

@@ -19,7 +19,7 @@ class Model
      * @param string $value
      * @return \Ilch\Layout\Helper\Title\Model
      */
-    public function add($value)
+    public function add($value): Model
     {
         $this->data[] = $value;
 

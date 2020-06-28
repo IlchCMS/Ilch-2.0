@@ -209,7 +209,7 @@ class Validation
      *
      * @return bool
      */
-    protected function checkResult(Base $validator)
+    protected function checkResult(Base $validator): bool
     {
         if ($validator->isValid() === false) {
             $this->handleError($validator);
@@ -259,7 +259,7 @@ class Validation
      *
      * @return Base
      */
-    protected function validate($validator, stdClass $data)
+    protected function validate($validator, stdClass $data): Base
     {
         $validatorClass = $this->getValidator($validator);
         /** @var Base $validator */
@@ -274,7 +274,7 @@ class Validation
      *
      * @return array An array with translated error messages
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->getErrorBag()->getErrors();
     }
@@ -287,7 +287,7 @@ class Validation
      *
      * @return \Ilch\Validation A new Validation Object
      */
-    public static function create(array $input, array $rules)
+    public static function create(array $input, array $rules): Validation
     {
         return new self($input, $rules);
     }
@@ -297,7 +297,7 @@ class Validation
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         return !$this->getErrorBag()->hasErrors();
     }
@@ -309,7 +309,7 @@ class Validation
      *
      * @return bool
      */
-    public function hasError($field)
+    public function hasError($field): bool
     {
         return $this->getErrorBag()->hasError($field);
     }
@@ -319,7 +319,7 @@ class Validation
      *
      * @return array
      */
-    public function getFieldsWithError()
+    public function getFieldsWithError(): array
     {
         return $this->getErrorBag()->getErrorFields();
     }
@@ -349,7 +349,7 @@ class Validation
      *
      * @return Base[] All Validators known at this time during runtime
      */
-    public static function getValidators()
+    public static function getValidators(): array
     {
         return self::$validators + self::$builtInValidators;
     }
@@ -379,7 +379,7 @@ class Validation
      *
      * @return \Ilch\Validation\ErrorBag
      */
-    public function getErrorBag()
+    public function getErrorBag(): ErrorBag
     {
         return $this->errorBag;
     }
@@ -389,7 +389,7 @@ class Validation
      *
      * @return \Ilch\Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }

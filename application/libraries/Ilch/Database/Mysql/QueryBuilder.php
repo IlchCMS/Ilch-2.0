@@ -43,7 +43,7 @@ abstract class QueryBuilder
      * @return $this|\Ilch\Database\Mysql\QueryBuilder
      * @throws \InvalidArgumentException
      */
-    public function where($where, $type = 'and')
+    public function where($where, $type = 'and'): self
     {
         if (is_array($where)) {
             if (!in_array($type, ['and', 'or'])) {
@@ -66,7 +66,7 @@ abstract class QueryBuilder
      * @return $this|\Ilch\Database\Mysql\QueryBuilder
      * @throws \InvalidArgumentException
      */
-    public function orWhere($where)
+    public function orWhere($where): self
     {
         return $this->addWhere('or', $where);
     }
@@ -78,7 +78,7 @@ abstract class QueryBuilder
      * @return $this|\Ilch\Database\Mysql\QueryBuilder
      * @throws \InvalidArgumentException
      */
-    public function andWhere($where)
+    public function andWhere($where): self
     {
         return $this->addWhere('and', $where);
     }
@@ -117,7 +117,7 @@ abstract class QueryBuilder
      * @param mixed $value
      * @return Expression\Comparison
      */
-    public function comp($fieldAndOperator, $value)
+    public function comp($fieldAndOperator, $value): Expression\Comparison
     {
         return $this->createComparisonExpression($fieldAndOperator, $value);
     }
@@ -127,7 +127,7 @@ abstract class QueryBuilder
      * @param $content
      * @return Expression\Expression
      */
-    public function expr($content)
+    public function expr($content): Expression\Expression
     {
         return new Expression\Expression($content);
     }
@@ -151,7 +151,7 @@ abstract class QueryBuilder
      *
      * @return string
      */
-    protected function generateWhereSql()
+    protected function generateWhereSql(): string
     {
         $sql = '';
         if (isset($this->where)) {
@@ -171,7 +171,7 @@ abstract class QueryBuilder
      * @return $this|QueryBuilder
      * @throws \InvalidArgumentException
      */
-    protected function addWhere($type, $where)
+    protected function addWhere($type, $where): self
     {
         $oppositeType = $type === 'and' ? 'or' : 'and';
         // add to existing or
@@ -203,7 +203,7 @@ abstract class QueryBuilder
      * @param string $type 'and' or 'or'
      * @return Expression\Composite
      */
-    protected function createCompositeExpression(array $where, $type)
+    protected function createCompositeExpression(array $where, $type): Expression\Composite
     {
         $compositeClass = __NAMESPACE__ . '\Expression\\' . ucfirst($type) . 'X';
         return new $compositeClass($this->createCompositePartArray($where));
@@ -214,7 +214,7 @@ abstract class QueryBuilder
      * @param $where
      * @return Expression\CompositePart[]
      */
-    protected function createCompositePartArray($where)
+    protected function createCompositePartArray($where): array
     {
         $parts = [];
         foreach ($where as $key => $value) {
@@ -235,7 +235,7 @@ abstract class QueryBuilder
      * @return Expression\Comparison
      * @throws \InvalidArgumentException
      */
-    protected function createComparisonExpression($key, $value)
+    protected function createComparisonExpression($key, $value): Expression\Comparison
     {
         $singleComparisonOperators =  ['=', '<=', '>=', '<', '>', '!=', '<>', 'LIKE'];
 

@@ -30,7 +30,7 @@ class Admin extends Base
     /**
      * @return array
      */
-    public function getMenus()
+    public function getMenus(): array
     {
         return $this->menus;
     }
@@ -75,7 +75,7 @@ class Admin extends Base
     /**
      * @return array
      */
-    public function getMenuAction()
+    public function getMenuAction(): array
     {
         return $this->menuActions;
     }
@@ -93,7 +93,7 @@ class Admin extends Base
      *
      * @return boolean
      */
-    public function hasSidebar()
+    public function hasSidebar(): bool
     {
         return $this->showSidebar;
     }

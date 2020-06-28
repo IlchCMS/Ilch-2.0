@@ -30,7 +30,7 @@ class GetHmenu
      * Gets the hmenu
      * @return Model
      */
-    public function getHmenu()
+    public function getHmenu(): Model
     {
         return $this->model;
     }

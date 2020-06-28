@@ -49,7 +49,7 @@ class Accesses
      * @param $getAccessTo string Module, Admin
      * @return bool
      */
-    public function hasAccess($getAccessTo = '')
+    public function hasAccess($getAccessTo = ''): bool
     {
         $userId = '';
         $groupAccessList = [];
@@ -95,7 +95,7 @@ class Accesses
      * @param $array
      * @return bool
      */
-    private function getAccessModule($array)
+    private function getAccessModule($array): bool
     {
         foreach ($array as $kay => $value) {
             $entries[] = $value['entries'];
@@ -121,7 +121,7 @@ class Accesses
      * @param $array
      * @return bool
      */
-    private function getAccessPage($array)
+    private function getAccessPage($array): bool
     {
         $entrie = [];
         foreach ($array as $kay => $value) {
@@ -142,7 +142,7 @@ class Accesses
      * @param $array
      * @return bool
      */
-    private function getAccessAdmin($array)
+    private function getAccessAdmin($array): bool
     {
         foreach ($array as $kay => $value) {
             $entries[] = $value['entries'];
@@ -158,7 +158,7 @@ class Accesses
      * @param string $text
      * @return string
      */
-    public function getErrorPage($text = '')
+    public function getErrorPage($text = ''): string
     {
         return '<div class="centering text-center error-container">
                     <div class="text-center">

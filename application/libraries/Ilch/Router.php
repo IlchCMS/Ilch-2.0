@@ -82,7 +82,7 @@ class Router
      * @param string $routeName
      * @return boolean
      */
-    public function hasConfigItem($routeName)
+    public function hasConfigItem($routeName): bool
     {
         return (bool)$this->config->offsetExists($routeName);
     }
@@ -94,7 +94,7 @@ class Router
      * @param array $value
      * @return boolean
      */
-    public function addConfigItem($routeName, array $value)
+    public function addConfigItem($routeName, array $value): bool
     {
         if (!$this->hasConfigItem($routeName)) {
             $this->config->offsetSet($routeName, $value);
@@ -119,7 +119,7 @@ class Router
      *
      * @return string
      */
-    public function getQuery()
+    public function getQuery(): string
     {
         return $this->query;
     }
@@ -151,7 +151,7 @@ class Router
      * @throws \RuntimeException
      * @return array
      */
-    public function matchByRegexp($route, array $params = [])
+    public function matchByRegexp($route, array $params = []): array
     {
         $matches = [];
         $pattern = !array_key_exists('pattern', $params) ? self::DEFAULT_REGEX_PATTERN : $params['pattern'];
@@ -176,7 +176,7 @@ class Router
      * @param string $query
      * @return array
      */
-    public function matchByQuery($query)
+    public function matchByQuery($query): array
     {
         $result = [];
         $queryParts = explode('/', $query);
@@ -220,7 +220,7 @@ class Router
      * @param $string
      * @return array
      */
-    public function convertParamStringIntoArray($string)
+    public function convertParamStringIntoArray($string): array
     {
         $array = explode('/', $string);
         $result = [];
@@ -312,7 +312,7 @@ class Router
      * @param string $route
      * @return array
      */
-    public function match($route)
+    public function match($route): array
     {
         $results = [];
 

@@ -72,7 +72,7 @@ class Model
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -92,7 +92,7 @@ class Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -104,7 +104,7 @@ class Model
      * @param array $options
      * @return string
      */
-    public function getItems($tpl = '', $options = [])
+    public function getItems($tpl = '', $options = []): string
     {
         $groupIds = [3];
         $adminAccess = '';
@@ -185,7 +185,7 @@ class Model
      * @param int|null $parentType
      * @return string
      */
-    protected function buildMenu($parentId, $menuData, $locale, $options = [], $parentType = null)
+    protected function buildMenu($parentId, $menuData, $locale, $options = [], $parentType = null): string
     {
         $html = '';
         $groupIds = [3];
@@ -262,7 +262,7 @@ class Model
      * @param array|string $classes
      * @return string
      */
-    private function createClassAttribute($classes)
+    private function createClassAttribute($classes): string
     {
         if (is_array($classes)) {
             $classes = array_filter($classes);
@@ -283,7 +283,7 @@ class Model
      * @param MenuItem $item
      * @return \Modules\Admin\Models\Box
      */
-    protected function loadBoxFromModule($item)
+    protected function loadBoxFromModule($item): \Modules\Admin\Models\Box
     {
         $parts = explode('_', $item->getBoxKey());
         $moduleKey = $parts[0];

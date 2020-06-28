@@ -69,7 +69,7 @@ class Translator
      * @param  string  $transDir The directory where the translation resides.
      * @return boolean True if the translations got loaded, false if not.
      */
-    public function load($transDir)
+    public function load($transDir): bool
     {
         if (!is_dir($transDir)) {
             return false;
@@ -104,7 +104,7 @@ class Translator
      * @param [, mixed $args [, mixed $... ]]
      * @return string
      */
-    public function trans($key)
+    public function trans($key): string
     {
         $translatedText = $key;
 
@@ -139,13 +139,9 @@ class Translator
      * @return string
      * @since 2.1.32
      */
-    public function transOtherLayout($layoutKey, $key)
+    public function transOtherLayout($layoutKey, $key): string
     {
-        $translatedText = $key;
-
-        if (isset($this->translationsLayout[$key])) {
-            $translatedText = $this->translationsLayout[$key];
-        }
+        $translatedText = $this->translationsLayout[$key] ?? $key;
 
         $arguments = array_slice(func_get_args(), 1);
         $arguments[0] = $translatedText;
@@ -166,7 +162,7 @@ class Translator
     /**
      * Returns the translation array.
      */
-    public function getTranslations()
+    public function getTranslations(): array
     {
         return $this->translations;
     }
@@ -176,7 +172,7 @@ class Translator
      *
      * @return array
      */
-    public function getLocaleList()
+    public function getLocaleList(): array
     {
         return [
             'en_EN' => 'English',
@@ -190,7 +186,7 @@ class Translator
      * @param  string $locale
      * @return string
      */
-    public function shortenLocale($locale)
+    public function shortenLocale($locale): string
     {
         return substr($locale, 0, 2);
     }
@@ -200,7 +196,7 @@ class Translator
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -229,7 +225,7 @@ class Translator
      * @param string $currencyCode (ISO 4217)
      * @return string
      */
-    public function getFormattedCurrency($amount, $currencyCode)
+    public function getFormattedCurrency($amount, $currencyCode): string
     {
         $numberFormatter = new \NumberFormatter($this->getLocale(), \NumberFormatter::CURRENCY);
         $returnValue = $numberFormatter->formatCurrency($amount, $currencyCode);
@@ -252,7 +248,7 @@ class Translator
      * @return bool
      * @since 2.1.31
      */
-    private function isCallFromLayout()
+    private function isCallFromLayout(): bool
     {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
 

@@ -56,7 +56,7 @@ class Insert extends QueryBuilder
      * @param array $values
      * @return Update
      */
-    public function fields(array $values)
+    public function fields(array $values): Update
     {
         return $this->values($values);
     }

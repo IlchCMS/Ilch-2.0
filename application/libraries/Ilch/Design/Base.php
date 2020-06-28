@@ -104,7 +104,7 @@ abstract class Base
      *
      * @return \HTMLPurifier
      */
-    public function getPurifier()
+    public function getPurifier(): \HTMLPurifier
     {
         return $this->purifier;
     }
@@ -116,7 +116,7 @@ abstract class Base
      * @param string $content
      * @return string
      */
-    public function purify($content)
+    public function purify($content): string
     {
         $config = \Ilch\Registry::get('config');
 
@@ -180,7 +180,7 @@ abstract class Base
      * @throws \RuntimeException
      * @since 2.1.0
      */
-    public function add($key, $objectKey, $value)
+    public function add($key, $objectKey, $value): bool
     {
         if (empty($this->data[$key])) {
             $this->data[$key] = [];
@@ -203,11 +203,7 @@ abstract class Base
      */
     public function get($key)
     {
-        if (isset($this->data[$key])) {
-            return $this->data[$key];
-        }
-
-        return null;
+        return $this->data[$key] ?? null;
     }
 
     /**
@@ -217,7 +213,7 @@ abstract class Base
      * @param mixed $value
      * @return $this
      */
-    public function set($key, $value)
+    public function set($key, $value): self
     {
         $this->data[$key] = $value;
 
@@ -239,7 +235,7 @@ abstract class Base
      *
      * @return Request
      */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }
@@ -249,7 +245,7 @@ abstract class Base
      *
      * @return Router
      */
-    public function getRouter()
+    public function getRouter(): Router
     {
         return $this->router;
     }
@@ -259,7 +255,7 @@ abstract class Base
      *
      * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
@@ -269,7 +265,7 @@ abstract class Base
      *
      * @return \Modules\User\Models\User
      */
-    public function getUser()
+    public function getUser(): \Modules\User\Models\User
     {
         return \Ilch\Registry::get('user');
     }
@@ -281,7 +277,7 @@ abstract class Base
      * @param [, mixed $args [, mixed $... ]]
      * @return string
      */
-    public function getTrans($key)
+    public function getTrans($key): string
     {
       $args = func_get_args();
       return $this->getTranslator()->trans(...$args);
@@ -297,7 +293,7 @@ abstract class Base
      * @return string
      * @since 2.1.32
      */
-    public function getOtherLayoutTrans($layoutKey, $key)
+    public function getOtherLayoutTrans($layoutKey, $key): string
     {
         $args = func_get_args();
         return $this->getTranslator()->transOtherLayout(...$args);
@@ -310,7 +306,7 @@ abstract class Base
      * @param string $currencyCode (ISO 4217)
      * @return string
      */
-    public function getFormattedCurrency($amount, $currencyCode)
+    public function getFormattedCurrency($amount, $currencyCode): string
     {
         return $this->getTranslator()->getFormattedCurrency($amount, $currencyCode);
     }
@@ -321,7 +317,7 @@ abstract class Base
      * @param  string  $url
      * @return string
      */
-    public function getBaseUrl($url = '')
+    public function getBaseUrl($url = ''): string
     {
         return $this->baseUrl . '/' . $url;
     }
@@ -332,7 +328,7 @@ abstract class Base
      * @param string $url
      * @return string
      */
-    public function getLayoutUrl($url = '')
+    public function getLayoutUrl($url = ''): string
     {
         return $this->getBaseUrl('application/layouts/'.$this->getLayoutKey().'/'.$url);
     }
@@ -343,7 +339,7 @@ abstract class Base
      * @param string $url
      * @return string
      */
-    public function getModuleUrl($url = '')
+    public function getModuleUrl($url = ''): string
     {
         if (!empty($url)) {
             $url = '/' . $url;
@@ -358,7 +354,7 @@ abstract class Base
      * @param  string $url
      * @return string
      */
-    public function getStaticUrl($url = '')
+    public function getStaticUrl($url = ''): string
     {
         return $this->getBaseUrl('static/' . $url);
     }
@@ -369,7 +365,7 @@ abstract class Base
      * @param  string $url
      * @return string
      */
-    public function getVendorUrl($url = '')
+    public function getVendorUrl($url = ''): string
     {
         return $this->getBaseUrl('vendor/' . $url);
     }
@@ -380,7 +376,7 @@ abstract class Base
      * @param  string $string
      * @return string
      */
-    public function escape($string)
+    public function escape($string): string
     {
         return htmlspecialchars($string, ENT_QUOTES, 'UTF-8', false);
     }
@@ -391,7 +387,7 @@ abstract class Base
      * @param string $bbcode
      * @return string
      */
-    public function getHtmlFromBBCode($bbcode)
+    public function getHtmlFromBBCode($bbcode): string
     {
         $parser = new \JBBCode\Parser();
         //test without default
@@ -486,7 +482,7 @@ abstract class Base
      * @param  boolean $secure
      * @return string
      */
-    public function getUrl($url = [], $route = null, $secure = false)
+    public function getUrl($url = [], $route = null, $secure = false): string
     {
         if ($this->modRewrite === null) {
             $config = \Ilch\Registry::get('config');
@@ -561,7 +557,7 @@ abstract class Base
      * @param bool $secure
      * @return string
      */
-    public function getCurrentUrl(array $urlParts = [], $resetParams = true, $secure = false)
+    public function getCurrentUrl(array $urlParts = [], $resetParams = true, $secure = false): string
     {
         $currentUrlParts = [
             'module' => $this->request->getModuleName(),
@@ -588,7 +584,7 @@ abstract class Base
      *
      * @return string
      */
-    public function getTokenField()
+    public function getTokenField(): string
     {
         return '<input type="hidden" name="ilch_token" value="'.$this->generateToken().'" />'."\n";
     }
@@ -598,7 +594,8 @@ abstract class Base
      *
      * @return string
      */
-    public function generateToken() {
+    public function generateToken(): string
+    {
         $token = bin2hex(random_bytes(32));
         $_SESSION['token'][$token] = $token;
 
@@ -610,7 +607,7 @@ abstract class Base
      *
      * @return string
      */
-    public function getCaptchaField()
+    public function getCaptchaField(): string
     {
         return '<img src="'.$this->getUrl().'/application/libraries/Captcha/Captcha.php" id="captcha" />';
     }
@@ -634,7 +631,7 @@ abstract class Base
      *
      * @return float
      */
-    public function loadTime()
+    public function loadTime(): float
     {
         $startTime = \Ilch\Registry::get('startTime');
 
@@ -646,7 +643,7 @@ abstract class Base
      *
      * @return integer
      */
-    public function queryCount()
+    public function queryCount(): int
     {
         $db = \Ilch\Registry::get('db');
 
@@ -660,7 +657,7 @@ abstract class Base
      * @param  integer $length
      * @return string
      */
-    public function limitString($str, $length)
+    public function limitString($str, $length): string
     {
         if (strlen($str) <= $length) {
             return $str;
@@ -674,7 +671,7 @@ abstract class Base
      *
      * @return string
      */
-    public function getLayoutKey()
+    public function getLayoutKey(): string
     {
         return $this->layoutKey;
     }
@@ -695,7 +692,7 @@ abstract class Base
      * @param string $url
      * @return string
      */
-    public function getBoxUrl($url = '')
+    public function getBoxUrl($url = ''): string
     {
         if (empty($url)) {
             return $this->getUrl().'/'.$this->boxUrl;
@@ -723,7 +720,7 @@ abstract class Base
      * @param null $submit
      * @return string
      */
-    public function getDialog($id, $name, $content, $submit = null)
+    public function getDialog($id, $name, $content, $submit = null): string
     {
         $html = '<div class="modal fade" id="'.$id.'">
             <div class="modal-dialog">

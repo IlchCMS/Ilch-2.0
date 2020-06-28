@@ -32,7 +32,7 @@ abstract class Composite implements CompositePart
      * @param CompositePart $part
      * @return $this
      */
-    public function add(CompositePart $part)
+    public function add(CompositePart $part): self
     {
         $this->parts[] = $part;
         return $this;
@@ -42,7 +42,7 @@ abstract class Composite implements CompositePart
      * @param array $parts
      * @return $this
      */
-    public function addParts(array $parts)
+    public function addParts(array $parts): self
     {
         foreach ($parts as $part) {
             $this->add($part);

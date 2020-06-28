@@ -58,7 +58,7 @@ class Pagination
     /**
      * @return array
      */
-    public function getLimit()
+    public function getLimit(): array
     {
         return [($this->page - 1) * $this->rowsPerPage, $this->rowsPerPage];
     }
@@ -70,7 +70,7 @@ class Pagination
      * @param $urlArray
      * @return string
      */
-    public function getHtml($view, $urlArray)
+    public function getHtml($view, $urlArray): string
     {
         if (empty($this->rows)) {
             return '';
