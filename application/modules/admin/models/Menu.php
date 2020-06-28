@@ -37,7 +37,7 @@ class Menu extends \Ilch\Model
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -57,7 +57,7 @@ class Menu extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }

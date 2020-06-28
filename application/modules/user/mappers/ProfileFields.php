@@ -16,7 +16,7 @@ class ProfileFields extends \Ilch\Mapper
      * @param  array $where
      * @return array()|\Modules\User\Models\ProfileField
      */
-    public function getProfileFields($where = [])
+    public function getProfileFields($where = []): array
     {
         $profileFieldRows = $this->db()->select('*')
             ->from('profile_fields')
@@ -98,7 +98,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @return int The id of the updated or inserted profile-field.
      */
-    public function save(ProfileFieldModel $profileField)
+    public function save(ProfileFieldModel $profileField): int
     {
         $fields = [];
         $key = $profileField->getKey();
@@ -171,7 +171,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @return boolean True if success, otherwise false.
      */
-    public function deleteProfileField($id)
+    public function deleteProfileField($id): bool
     {
         return $this->db()->delete('profile_fields')
             ->where(['id' => $id])
@@ -185,7 +185,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @return boolean True if a profile-field with this id exists, false otherwise.
      */
-    public function profileFieldWithIdExists($id)
+    public function profileFieldWithIdExists($id): bool
     {
         return (boolean) $this->db()->select('COUNT(*)', 'profile_fields', ['id' => (int)$id])
             ->execute()
@@ -198,7 +198,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @return int The count of profile-fields.
      */
-    public function getCountOfProfileFields()
+    public function getCountOfProfileFields(): int
     {
         return $this->db()->select('*')
             ->from('profile_fields')
@@ -212,7 +212,7 @@ class ProfileFields extends \Ilch\Mapper
      * @param  mixed[] $profileFieldRow
      * @return ProfileFieldModel
      */
-    public function loadFromArray($profileFieldRow = [])
+    public function loadFromArray($profileFieldRow = []): ProfileFieldModel
     {
         $profileField = new ProfileFieldModel();
 

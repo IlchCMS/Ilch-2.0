@@ -58,7 +58,7 @@ class Dialog extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
 
@@ -69,7 +69,7 @@ class Dialog extends \Ilch\Model
      * Get the ID of the message
      * @return ID
      */
-    public function getId()
+    public function getId(): ID
     {
         return $this->id;
     }
@@ -79,7 +79,7 @@ class Dialog extends \Ilch\Model
      * @param int $cid
      * @return $this
      */
-    public function setCId($cid)
+    public function setCId($cid): self
     {
         $this->c_id = $cid;
 
@@ -90,7 +90,7 @@ class Dialog extends \Ilch\Model
      * Get the CONVERSATION_ID of the dialog
      * @return int
      */
-    public function getCId()
+    public function getCId(): int
     {
         return $this->c_id;
     }
@@ -100,7 +100,7 @@ class Dialog extends \Ilch\Model
      * @param int $crid
      * @return $this
      */
-    public function setCrId($crid)
+    public function setCrId($crid): self
     {
         $this->cr_id = $crid;
 
@@ -111,7 +111,7 @@ class Dialog extends \Ilch\Model
      * Get the CONVERSATION_REPLY_ID of the dialog
      * @return int
      */
-    public function getCrId()
+    public function getCrId(): int
     {
         return $this->cr_id;
     }
@@ -121,7 +121,7 @@ class Dialog extends \Ilch\Model
      * @param int $time
      * @return $this
      */
-    public function setTime($time)
+    public function setTime($time): self
     {
         $this->time = $time;
 
@@ -132,7 +132,7 @@ class Dialog extends \Ilch\Model
      * Get the senttime of the message
      * @return int
      */
-    public function getTime()
+    public function getTime(): int
     {
         return $this->time;
     }
@@ -142,7 +142,7 @@ class Dialog extends \Ilch\Model
      * @param int $userone
      * @return $this
      */
-    public function setUserOne($userone)
+    public function setUserOne($userone): self
     {
         $this->user_one = $userone;
 
@@ -163,7 +163,7 @@ class Dialog extends \Ilch\Model
      * @param int $usertwo
      * @return $this
      */
-    public function setUserTwo($usertwo)
+    public function setUserTwo($usertwo): self
     {
         $this->user_two = $usertwo;
 
@@ -184,7 +184,7 @@ class Dialog extends \Ilch\Model
      * @param String $text
      * @return $this
      */
-    public function setText($text)
+    public function setText($text): self
     {
         $this->text = $text;
 
@@ -195,7 +195,7 @@ class Dialog extends \Ilch\Model
      * Get the text of the dialog
      * @return text
      */
-    public function getText()
+    public function getText(): text
     {
         return $this->text;
     }
@@ -204,7 +204,7 @@ class Dialog extends \Ilch\Model
      * Get the avatar of the user.
      * @return $this
      */
-    public function getAvatar()
+    public function getAvatar(): self
     {
         return $this->avatar;
     }
@@ -214,7 +214,7 @@ class Dialog extends \Ilch\Model
      * @param $avatar
      * @return $this
      */
-    public function setAvatar($avatar)
+    public function setAvatar($avatar): self
     {
         $this->avatar = (string)$avatar;
 
@@ -237,7 +237,7 @@ class Dialog extends \Ilch\Model
      * Get the NAME of the user
      * @return $this
      */
-    public function getName()
+    public function getName(): self
     {
         return $this->name;
     }
@@ -247,7 +247,7 @@ class Dialog extends \Ilch\Model
      * @param string $read
      * @return $this
      */
-    public function setRead($read)
+    public function setRead($read): self
     {
         $this->read = $read;
 
@@ -258,7 +258,7 @@ class Dialog extends \Ilch\Model
      * Get the read
      * @return int
      */
-    public function getRead()
+    public function getRead(): int
     {
         return $this->read;
     }

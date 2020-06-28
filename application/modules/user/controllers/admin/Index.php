@@ -175,10 +175,7 @@ class Index extends \Ilch\Controller\Admin
             $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
             $username = $this->getLayout()->escape($user->getName());
 
-            $layout = '';
-            if (isset($_SESSION['layout'])) {
-                $layout = $_SESSION['layout'];
-            }
+            $layout = $_SESSION['layout'] ?? '';
 
             if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php')) {
                 $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php');

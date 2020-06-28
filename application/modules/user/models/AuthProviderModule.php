@@ -37,7 +37,7 @@ class AuthProviderModule extends \Ilch\Model
      *
      * @return self
      */
-    public function setProvider($provider)
+    public function setProvider($provider): self
     {
         $this->provider = $provider;
 
@@ -61,7 +61,7 @@ class AuthProviderModule extends \Ilch\Model
      *
      * @return self
      */
-    public function setModule($module)
+    public function setModule($module): self
     {
         $this->module = $module;
 
@@ -85,7 +85,7 @@ class AuthProviderModule extends \Ilch\Model
      *
      * @return self
      */
-    public function setAuthController($auth_controller)
+    public function setAuthController($auth_controller): self
     {
         $this->auth_controller = $auth_controller;
 
@@ -109,7 +109,7 @@ class AuthProviderModule extends \Ilch\Model
      *
      * @return self
      */
-    public function setAuthAction($auth_action)
+    public function setAuthAction($auth_action): self
     {
         $this->auth_action = $auth_action;
 
@@ -133,7 +133,7 @@ class AuthProviderModule extends \Ilch\Model
      *
      * @return self
      */
-    public function setUnlinkController($unlink_controller)
+    public function setUnlinkController($unlink_controller): self
     {
         $this->unlink_controller = $unlink_controller;
 
@@ -157,7 +157,7 @@ class AuthProviderModule extends \Ilch\Model
      *
      * @return self
      */
-    public function setUnlinkAction($unlink_action)
+    public function setUnlinkAction($unlink_action): self
     {
         $this->unlink_action = $unlink_action;
 

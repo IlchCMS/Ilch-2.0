@@ -16,7 +16,7 @@ class Teams extends \Ilch\Mapper
      * @param array $where
      * @return TeamsModel[]|array
      */
-    public function getTeams($where = [])
+    public function getTeams($where = []): array
     {
         $entryArray = $this->db()->select('*')
             ->from('teams')

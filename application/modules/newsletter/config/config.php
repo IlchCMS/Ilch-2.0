@@ -50,7 +50,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'newsletter/index/settings'");
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_newsletter` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,

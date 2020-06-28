@@ -15,7 +15,7 @@ class Updateservers extends \Ilch\Mapper
      *
      * @return UpdateserverModel[]|[]
      */
-    public function getUpdateservers()
+    public function getUpdateservers(): array
     {
         $array = $this->db()->select('*')
                 ->from('admin_updateservers')

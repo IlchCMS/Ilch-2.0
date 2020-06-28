@@ -73,7 +73,7 @@ class Provider extends \Ilch\Model
      *
      * @return self
      */
-    protected function setKey($key)
+    protected function setKey($key): self
     {
         $this->key = $key;
 
@@ -97,7 +97,7 @@ class Provider extends \Ilch\Model
      *
      * @return self
      */
-    protected function setName($name)
+    protected function setName($name): self
     {
         $this->name = $name;
 
@@ -121,7 +121,7 @@ class Provider extends \Ilch\Model
      *
      * @return self
      */
-    protected function setIcon($icon)
+    protected function setIcon($icon): self
     {
         $this->icon = $icon;
 
@@ -145,7 +145,7 @@ class Provider extends \Ilch\Model
      *
      * @return self
      */
-    protected function setModule($module)
+    protected function setModule($module): self
     {
         $this->module = $module;
 
@@ -169,7 +169,7 @@ class Provider extends \Ilch\Model
      *
      * @return self
      */
-    protected function setAuthController($auth_controller)
+    protected function setAuthController($auth_controller): self
     {
         $this->auth_controller = $auth_controller;
 
@@ -193,7 +193,7 @@ class Provider extends \Ilch\Model
      *
      * @return self
      */
-    protected function setAuthAction($auth_action)
+    protected function setAuthAction($auth_action): self
     {
         $this->auth_action = $auth_action;
 
@@ -217,7 +217,7 @@ class Provider extends \Ilch\Model
      *
      * @return self
      */
-    protected function setUnlinkController($unlink_controller)
+    protected function setUnlinkController($unlink_controller): self
     {
         $this->unlink_controller = $unlink_controller;
 
@@ -241,7 +241,7 @@ class Provider extends \Ilch\Model
      *
      * @return self
      */
-    protected function setUnlinkAction($unlink_action)
+    protected function setUnlinkAction($unlink_action): self
     {
         $this->unlink_action = $unlink_action;
 

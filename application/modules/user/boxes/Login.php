@@ -15,11 +15,7 @@ class Login extends \Ilch\Box
     {
         $authProvider = new AuthProvider();
 
-        if (isset($_SESSION['redirect'])) {
-            $redirectUrl = $_SESSION['redirect'];
-        } else {
-            $redirectUrl = $this->getRouter()->getQuery();
-        }
+        $redirectUrl = $_SESSION['redirect'] ?? $this->getRouter()->getQuery();
 
         if ($this->getUser()) {
             $access = new Accesses($this->getRequest());

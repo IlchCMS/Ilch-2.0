@@ -60,7 +60,7 @@ class Config extends \Ilch\Config\Install
             ->set('disable_purifier', '0');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_config` (
                 `key` VARCHAR(191) NOT NULL,
@@ -214,7 +214,7 @@ class Config extends \Ilch\Config\Install
             INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://www.blackcoder.de/ilch-us/stable/", "blackcoder (ilch-Team)", "Germany");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate($installedVersion): string
     {
         switch ($installedVersion) {
             case "2.0.1":
@@ -451,7 +451,7 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.16":
                 // Add comments box to list of boxes.
-                $configClass = '\\Modules\\Comment\\Config\\Config';
+                $configClass = \Modules\Comment\Config\Config::class;
                 $config = new $configClass($this->getTranslator());
                 $boxMapper = new \Modules\Admin\Mappers\Box();
 

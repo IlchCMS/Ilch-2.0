@@ -76,7 +76,7 @@ class Newsletter extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -99,7 +99,7 @@ class Newsletter extends \Ilch\Model
      *
      * @return integer
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -145,7 +145,7 @@ class Newsletter extends \Ilch\Model
      *
      * @return string
      */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -168,7 +168,7 @@ class Newsletter extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -191,7 +191,7 @@ class Newsletter extends \Ilch\Model
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -214,7 +214,7 @@ class Newsletter extends \Ilch\Model
      *
      * @return string
      */
-    public function getSelector()
+    public function getSelector(): string
     {
         return $this->selector;
     }
@@ -237,7 +237,7 @@ class Newsletter extends \Ilch\Model
      *
      * @return string
      */
-    public function getConfirmCode()
+    public function getConfirmCode(): string
     {
         return $this->confirmCode;
     }

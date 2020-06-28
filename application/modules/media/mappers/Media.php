@@ -174,7 +174,7 @@ class Media extends \Ilch\Mapper
      *
      * @return MediaModel[]|array
      */
-    public function getCatList() 
+    public function getCatList(): array
     {
         $mediaArray = $this->db()->select('*')
             ->from('media_cats')
@@ -297,7 +297,7 @@ class Media extends \Ilch\Mapper
                 ->where(['id' => $id])
                 ->execute();
         } else {
-            $catId = ($model->getCatId()) ? $model->getCatId() : 0;
+            $catId = ($model->getCatId()) ?: 0;
             $this->db()->insert('media')
                 ->values([
                     'url' => $model->getUrl(),
@@ -340,7 +340,7 @@ class Media extends \Ilch\Mapper
      * @param MediaModel $model
      * @return int id
      */
-    public function saveCat(MediaModel $model)
+    public function saveCat(MediaModel $model): int
     {
         $this->db()->insert('media_cats')
             ->values([

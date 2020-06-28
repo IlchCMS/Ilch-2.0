@@ -280,7 +280,7 @@ class Article extends \Ilch\Mapper
      * @return int
      * @throws \Ilch\Database\Exception
      */
-    public function getCountArticlesByMonthYear($date = null)
+    public function getCountArticlesByMonthYear($date = null): int
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_articles`';
@@ -300,7 +300,7 @@ class Article extends \Ilch\Mapper
      * @throws \Ilch\Database\Exception
      * @todo: Remove the group (aggregate) function MAX() workaround, which avoids duplicated entries in the archive-box if possible.
      */
-    public function getArticleDateList($limit = null)
+    public function getArticleDateList($limit = null): array
     {
         $sql = 'SELECT MAX(`date_created`) AS `date_created`
                 FROM `[prefix]_articles`
@@ -432,7 +432,7 @@ class Article extends \Ilch\Mapper
      * @return ArticleModel[]|array
      * @throws \Ilch\Database\Exception
      */
-    public function getKeywordsList($limit = null)
+    public function getKeywordsList($limit = null): array
     {
         $sql = 'SELECT `keywords`
                 FROM `[prefix]_articles_content`';
@@ -464,7 +464,7 @@ class Article extends \Ilch\Mapper
      * @return bool
      * @since 2.1.25
      */
-    public function keywordExists($keyword)
+    public function keywordExists($keyword): bool
     {
         $keywordsList = [];
         foreach ($this->getKeywordsList() as $keywords) {
@@ -577,7 +577,7 @@ class Article extends \Ilch\Mapper
      * @param ArticleModel $article
      * @return int $id
      */
-    public function save(ArticleModel $article)
+    public function save(ArticleModel $article): int
     {
         $id = 0;
 
@@ -719,7 +719,7 @@ class Article extends \Ilch\Mapper
      * @param int $id
      * @return int
      */
-    public function delete($id)
+    public function delete($id): int
     {
         $deleted = $this->db()->delete('articles')
             ->where(['id' => $id])

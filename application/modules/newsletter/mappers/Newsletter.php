@@ -166,7 +166,7 @@ class Newsletter extends \Ilch\Mapper
      * @param $email
      * @return integer
      */
-    public function countEmails($email)
+    public function countEmails($email): int
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_newsletter_mails`
@@ -256,7 +256,7 @@ class Newsletter extends \Ilch\Mapper
      * @param array $where
      * @return NewsletterModel[]|array
      */
-    public function getSendMailUser()
+    public function getSendMailUser(): array
     {
         return $this->db()->select()
                 ->fields(['nm.email', 'nm.selector'])

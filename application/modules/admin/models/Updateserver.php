@@ -41,7 +41,7 @@ class Updateserver extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -61,7 +61,7 @@ class Updateserver extends \Ilch\Model
      *
      * @return string
      */
-    public function getURL()
+    public function getURL(): string
     {
         return $this->url;
     }
@@ -81,7 +81,7 @@ class Updateserver extends \Ilch\Model
      *
      * @return string
      */
-    public function getOperator()
+    public function getOperator(): string
     {
         return $this->operator;
     }
@@ -101,7 +101,7 @@ class Updateserver extends \Ilch\Model
      *
      * @return string
      */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
     }

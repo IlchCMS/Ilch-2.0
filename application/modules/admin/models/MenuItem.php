@@ -110,7 +110,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -130,7 +130,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getSort()
+    public function getSort(): int
     {
         return $this->sort;
     }
@@ -150,7 +150,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
@@ -170,7 +170,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getSiteId()
+    public function getSiteId(): int
     {
         return $this->siteId;
     }
@@ -190,7 +190,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getBoxId()
+    public function getBoxId(): int
     {
         return $this->boxId;
     }
@@ -210,7 +210,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return string
      */
-    public function getBoxKey()
+    public function getBoxKey(): string
     {
         return $this->boxKey;
     }
@@ -230,7 +230,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return string
      */
-    public function getModuleKey()
+    public function getModuleKey(): string
     {
         return $this->moduleKey;
     }
@@ -250,7 +250,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getMenuId()
+    public function getMenuId(): int
     {
         return $this->menuId;
     }
@@ -270,7 +270,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getParentId()
+    public function getParentId(): int
     {
         return $this->parentId;
     }
@@ -290,7 +290,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -310,7 +310,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return string
      */
-    public function getHref()
+    public function getHref(): string
     {
         return $this->href;
     }
@@ -330,7 +330,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return $this->target;
     }
@@ -350,7 +350,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return boolean
      */
-    public function isLink()
+    public function isLink(): bool
     {
         return in_array($this->getType(), [self::TYPE_LINK, self::TYPE_PAGE_LINK, self::TYPE_MODULE_LINK]);
     }
@@ -360,7 +360,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return boolean
      */
-    public function isModuleLink()
+    public function isModuleLink(): bool
     {
         return $this->getType() === self::TYPE_MODULE_LINK;
     }
@@ -370,7 +370,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return boolean
      */
-    public function isPageLink()
+    public function isPageLink(): bool
     {
         return $this->getType() === self::TYPE_PAGE_LINK;
     }
@@ -380,7 +380,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return boolean
      */
-    public function isBox()
+    public function isBox(): bool
     {
         return $this->getType() === self::TYPE_BOX;
     }
@@ -390,7 +390,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return boolean
      */
-    public function isMenu()
+    public function isMenu(): bool
     {
         return $this->getType() === self::TYPE_MENU;
     }
@@ -400,7 +400,7 @@ class MenuItem extends \Ilch\Model
      *
      * @return string
      */
-    public function getAccess()
+    public function getAccess(): string
     {
         return $this->access;
     }

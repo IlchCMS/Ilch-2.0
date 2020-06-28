@@ -55,7 +55,7 @@ class Privacy extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -78,7 +78,7 @@ class Privacy extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -101,7 +101,7 @@ class Privacy extends \Ilch\Model
      *
      * @return string
      */
-    public function getUrlTitle()
+    public function getUrlTitle(): string
     {
         return $this->urltitle;
     }
@@ -124,7 +124,7 @@ class Privacy extends \Ilch\Model
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -147,7 +147,7 @@ class Privacy extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -170,7 +170,7 @@ class Privacy extends \Ilch\Model
      *
      * @return int
      */
-    public function getShow()
+    public function getShow(): int
     {
         return $this->show;
     }

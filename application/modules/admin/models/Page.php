@@ -69,7 +69,7 @@ class Page extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -89,7 +89,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getPerma()
+    public function getPerma(): string
     {
         return $this->perma;
     }
@@ -109,7 +109,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -129,7 +129,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -149,7 +149,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -169,7 +169,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getKeywords()
+    public function getKeywords(): string
     {
         return $this->keywords;
     }
@@ -189,7 +189,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -209,7 +209,7 @@ class Page extends \Ilch\Model
      *
      * @return DateTime
      */
-    public function getDateCreated()
+    public function getDateCreated(): DateTime
     {
         return $this->dateCreated;
     }

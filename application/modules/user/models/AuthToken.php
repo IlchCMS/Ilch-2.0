@@ -21,7 +21,7 @@ class AuthToken extends \Ilch\Model
      *
      * @return string
      */
-    public function getSelector()
+    public function getSelector(): string
     {
         return $this->selector;
     }
@@ -34,7 +34,7 @@ class AuthToken extends \Ilch\Model
      * @param string $selector
      * @return AuthToken
      */
-    public function setSelector($selector)
+    public function setSelector($selector): AuthToken
     {
         $this->selector = $selector;
 
@@ -47,7 +47,7 @@ class AuthToken extends \Ilch\Model
      *
      * @return string
      */
-    public function getToken()
+    public function getToken(): string
     {
         return $this->token;
     }
@@ -60,7 +60,7 @@ class AuthToken extends \Ilch\Model
      * @param string $token
      * @return AuthToken
      */
-    public function setToken($token)
+    public function setToken($token): AuthToken
     {
         $this->token = $token;
 
@@ -72,7 +72,7 @@ class AuthToken extends \Ilch\Model
      *
      * @return int
      */
-    public function getUserid()
+    public function getUserid(): int
     {
         return $this->userid;
     }
@@ -83,7 +83,7 @@ class AuthToken extends \Ilch\Model
      * @param int $id
      * @return AuthToken
      */
-    public function setUserid($userid)
+    public function setUserid($userid): AuthToken
     {
         $this->userid = (int)$userid;
 
@@ -95,7 +95,7 @@ class AuthToken extends \Ilch\Model
      *
      * @return string
      */
-    public function getExpires()
+    public function getExpires(): string
     {
         return $this->expires;
     }
@@ -106,7 +106,7 @@ class AuthToken extends \Ilch\Model
      * @param string $expires
      * @return AuthToken
      */
-    public function setExpires($expires)
+    public function setExpires($expires): AuthToken
     {
         $this->expires = $expires;
 

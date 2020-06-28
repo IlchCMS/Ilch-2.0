@@ -80,7 +80,7 @@ class Group extends \Ilch\Mapper
      * @param  mixed[]    $groupRow
      * @return GroupModel
      */
-    public function loadFromArray($groupRow = [])
+    public function loadFromArray($groupRow = []): GroupModel
     {
         $group = new GroupModel();
 
@@ -101,7 +101,7 @@ class Group extends \Ilch\Mapper
      * @param int $groupId
      * @return string[]
      */
-    public function getUsersForGroup($groupId)
+    public function getUsersForGroup($groupId): array
     {
         return $this->db()->select('user_id', 'users_groups', ['group_id' => $groupId])
             ->execute()
@@ -114,7 +114,7 @@ class Group extends \Ilch\Mapper
      * @param GroupModel $group
      * @return int
      */
-    public function save(GroupModel $group)
+    public function save(GroupModel $group): int
     {
         $fields = [];
         $name = $group->getName();
@@ -163,7 +163,7 @@ class Group extends \Ilch\Mapper
      * @param  int $groupId
      * @return boolean
      */
-    public function groupWithIdExists($groupId)
+    public function groupWithIdExists($groupId): bool
     {
         return (boolean) $this->db()->select('COUNT(*)', 'groups', ['id' => (int)$groupId])
             ->execute()
@@ -177,9 +177,9 @@ class Group extends \Ilch\Mapper
      *
      * @return boolean True of success, otherwise false.
      */
-    public function delete($groupId)
+    public function delete($groupId): bool
     {
-        if (is_a($groupId, '\Modules\User\Models\Group')) {
+        if (is_a($groupId, GroupModel::class)) {
             $groupId = $groupId->getId();
         }
 
@@ -199,7 +199,7 @@ class Group extends \Ilch\Mapper
      * @return mixed[]
      * @throws \Ilch\Database\Exception
      */
-    public function getGroupAccessList($groupId)
+    public function getGroupAccessList($groupId): array
     {
         $sql = 'SELECT g.name AS group_name, ga.*
                 FROM [prefix]_groups_access AS ga

@@ -15,7 +15,7 @@ class Module extends \Ilch\Mapper
      *
      * @return array|ModuleModel[]
      */
-    public function getModules()
+    public function getModules(): array
     {
         $modulesRows = $this->db()->select()
             ->fields(['m.key', 'm.system', 'm.layout', 'm.hide_menu', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
@@ -50,7 +50,7 @@ class Module extends \Ilch\Mapper
      *
      * @return ModuleModel[]|Array[]
      */
-    public function getModulesNotInstalled()
+    public function getModulesNotInstalled(): array
     {
         foreach (glob(APPLICATION_PATH.'/modules/*') as $modulePath) {
             if (is_dir($modulePath)) {
@@ -173,7 +173,7 @@ class Module extends \Ilch\Mapper
      *
      * @return array|string[]
      */
-    public function getKeysInstalledModules()
+    public function getKeysInstalledModules(): array
     {
         $modulesRows = $this->db()->select('key')
             ->from('modules')
@@ -227,7 +227,7 @@ class Module extends \Ilch\Mapper
      * @param ModuleModel $module
      * @return int
      */
-    public function save(ModuleModel $module)
+    public function save(ModuleModel $module): int
     {
         $moduleId = $this->db()->insert('modules')
             ->values([

@@ -49,7 +49,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
      * @param string $layoutKey
      * @return array
      */
-    public function getSettings($layoutKey)
+    public function getSettings($layoutKey): array
     {
         $array = $this->db()->select('*')
             ->from('admin_layoutadvsettings')
@@ -79,7 +79,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
      *
      * @return array|string[]
      */
-    public function getListOfLayoutKeys()
+    public function getListOfLayoutKeys(): array
     {
         $layoutKeys = $this->db()->select('DISTINCT layoutKey')
             ->from('admin_layoutadvsettings')
@@ -127,7 +127,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
      * @param LayoutAdvSettingsModel $model
      * @return int affected rows
      */
-    private function updateSetting($model)
+    private function updateSetting($model): int
     {
         $affectedRows = $this->db()->update('admin_layoutadvsettings')
             ->values([
@@ -177,7 +177,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
      * @param string $layoutKey
      * @return bool
      */
-    public function hasSettings($layoutKey)
+    public function hasSettings($layoutKey): bool
     {
         return (bool)$this->db()->select('COUNT(*)')
             ->from('admin_layoutadvsettings')

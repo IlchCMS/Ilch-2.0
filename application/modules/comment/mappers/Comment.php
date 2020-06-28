@@ -13,7 +13,7 @@ class Comment extends \Ilch\Mapper
     /**
      * @return CommentModel[]
      */
-    public function getCommentsByKey($key)
+    public function getCommentsByKey($key): array
     {
         $commentsArray = $this->db()->select('*')
             ->from('comments')
@@ -40,7 +40,7 @@ class Comment extends \Ilch\Mapper
         return $comments;
     }
 
-    public function getCommentsLikeKey($key)
+    public function getCommentsLikeKey($key): array
     {
         $sql = 'SELECT *
                 FROM `[prefix]_comments`
@@ -93,7 +93,7 @@ class Comment extends \Ilch\Mapper
         return $commentModel;
     }
 	
-    public function getCommentsByFKid($key)
+    public function getCommentsByFKid($key): array
     {
         $commentsArray = $this->db()->select('*')
             ->from('comments')
@@ -125,7 +125,7 @@ class Comment extends \Ilch\Mapper
      *
      * @return CommentModel[]
      */
-    public function getComments($limit = null)
+    public function getComments($limit = null): array
     {
         $select = $this->db()->select('*')
             ->from('comments')
@@ -161,7 +161,7 @@ class Comment extends \Ilch\Mapper
      *
      * @return integer
      */
-    public function getCountComments($key)
+    public function getCountComments($key): int
     {
         return $this->db()->select('COUNT(*)')
             ->from('comments')
@@ -240,7 +240,8 @@ class Comment extends \Ilch\Mapper
      * @param integer $fk_id
      * @return integer $id
      */
-    public function getCommentIdbyFKid($fk_id) {
+    public function getCommentIdbyFKid($fk_id): int
+    {
         return $this->db()->select('id', 'comments', ['fk_id' => $fk_id])
             ->execute()
             ->fetchCell();

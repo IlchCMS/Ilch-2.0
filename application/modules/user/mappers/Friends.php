@@ -17,7 +17,7 @@ class Friends extends \Ilch\Mapper
      * @return array|FriendModel[]
      * @since 2.1.20
      */
-    public function getFriendsByUserId($userId)
+    public function getFriendsByUserId($userId): array
     {
         $friendsRows = $this->db()->select()
             ->fields(['f.id', 'f.user_id', 'f.friend_user_id', 'f.approved'])
@@ -52,7 +52,7 @@ class Friends extends \Ilch\Mapper
      * @return array|FriendModel[]
      * @since 2.1.20
      */
-    public function getOpenFriendRequests($userId)
+    public function getOpenFriendRequests($userId): array
     {
         $friendsRows = $this->db()->select()
             ->fields(['f.id', 'f.user_id', 'f.friend_user_id', 'f.approved'])
@@ -112,7 +112,7 @@ class Friends extends \Ilch\Mapper
      * @return boolean
      * @since 2.1.20
      */
-    public function hasFriend($userId, $friendUserId)
+    public function hasFriend($userId, $friendUserId): bool
     {
         return (boolean) $this->db()->select('COUNT(*)')
             ->from('user_friends')

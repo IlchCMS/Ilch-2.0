@@ -15,7 +15,7 @@ class NotificationPermission extends \Ilch\Mapper
      *
      * @return NotificationPermissionModel[]|[]
      */
-    public function getPermissions()
+    public function getPermissions(): array
     {
         $array = $this->db()->select('*')
                 ->from('admin_notifications_permission')
@@ -71,7 +71,7 @@ class NotificationPermission extends \Ilch\Mapper
      * @param NotificationPermissionModel $permission
      * @return int
      */
-    public function updatePermissionOfModule(NotificationPermissionModel $permission)
+    public function updatePermissionOfModule(NotificationPermissionModel $permission): int
     {
         $fields = [
             'module' => $permission->getModule(),
@@ -92,7 +92,7 @@ class NotificationPermission extends \Ilch\Mapper
      * @param bool $granted
      * @return int
      */
-    public function updatePermissionGrantedOfModule($module, $granted)
+    public function updatePermissionGrantedOfModule($module, $granted): int
     {
         return $this->db()->update()->table('admin_notifications_permission')
             ->values(['granted' => $granted])
@@ -107,7 +107,7 @@ class NotificationPermission extends \Ilch\Mapper
      * @param int $limit
      * @return int
      */
-    public function updateLimitOfModule($module, $limit)
+    public function updateLimitOfModule($module, $limit): int
     {
         return $this->db()->update()->table('admin_notifications_permission')
             ->values(['limit' => $limit])

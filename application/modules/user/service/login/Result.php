@@ -49,7 +49,7 @@ class Result
     /**
      * @return bool
      */
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return $this->success;
     }

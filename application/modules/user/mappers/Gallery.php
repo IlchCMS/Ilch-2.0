@@ -145,7 +145,7 @@ class Gallery extends \Ilch\Mapper
      * @param  GalleryItem $galleryItem
      * @return integer
      */
-    public function saveItem(GalleryItem $galleryItem)
+    public function saveItem(GalleryItem $galleryItem): int
     {
         $fields = [
             'user_id' => $galleryItem->getUserId(),

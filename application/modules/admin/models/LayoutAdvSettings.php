@@ -33,7 +33,7 @@ class LayoutAdvSettings extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -44,7 +44,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * @param int $id
      * @return LayoutAdvSettings
      */
-    public function setId($id)
+    public function setId($id): LayoutAdvSettings
     {
         $this->id = $id;
         return $this;
@@ -55,7 +55,7 @@ class LayoutAdvSettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getLayoutKey()
+    public function getLayoutKey(): string
     {
         return $this->layoutKey;
     }
@@ -66,7 +66,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * @param string $layoutKey
      * @return LayoutAdvSettings
      */
-    public function setLayoutKey($layoutKey)
+    public function setLayoutKey($layoutKey): LayoutAdvSettings
     {
         $this->layoutKey = $layoutKey;
         return $this;
@@ -77,7 +77,7 @@ class LayoutAdvSettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -88,7 +88,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * @param string $key
      * @return LayoutAdvSettings
      */
-    public function setKey($key)
+    public function setKey($key): LayoutAdvSettings
     {
         $this->key = $key;
         return $this;
@@ -99,7 +99,7 @@ class LayoutAdvSettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -110,7 +110,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * @param string $value
      * @return LayoutAdvSettings
      */
-    public function setValue($value)
+    public function setValue($value): LayoutAdvSettings
     {
         $this->value = $value;
         return $this;

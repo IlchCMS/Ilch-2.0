@@ -78,7 +78,7 @@ class Usermenusettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -98,7 +98,7 @@ class Usermenusettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -118,7 +118,7 @@ class Usermenusettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -138,7 +138,7 @@ class Usermenusettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getIcon()
+    public function getIcon(): string
     {
         return $this->icon;
     }

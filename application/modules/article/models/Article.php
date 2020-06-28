@@ -153,7 +153,7 @@ class Article extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -164,7 +164,7 @@ class Article extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = (int) $id;
 
@@ -187,7 +187,7 @@ class Article extends \Ilch\Model
      * @param string $catId
      * @return $this
      */
-    public function setCatId($catId)
+    public function setCatId($catId): self
     {
         $this->catId = (string) $catId;
 
@@ -199,7 +199,7 @@ class Article extends \Ilch\Model
      *
      * @return int
      */
-    public function getAuthorId()
+    public function getAuthorId(): int
     {
         return $this->authorId;
     }
@@ -210,7 +210,7 @@ class Article extends \Ilch\Model
      * @param int $authorId
      * @return $this
      */
-    public function setAuthorId($authorId)
+    public function setAuthorId($authorId): self
     {
         $this->authorId = (int) $authorId;
 
@@ -222,7 +222,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getAuthorName()
+    public function getAuthorName(): string
     {
         return $this->authorName;
     }
@@ -233,7 +233,7 @@ class Article extends \Ilch\Model
      * @param $authorName
      * @return $this
      */
-    public function setAuthorName($authorName)
+    public function setAuthorName($authorName): self
     {
         $this->authorName = $authorName;
 
@@ -245,7 +245,7 @@ class Article extends \Ilch\Model
      *
      * @return int
      */
-    public function getVisits()
+    public function getVisits(): int
     {
         return $this->visits;
     }
@@ -256,7 +256,7 @@ class Article extends \Ilch\Model
      * @param int $visits
      * @return $this
      */
-    public function setVisits($visits)
+    public function setVisits($visits): self
     {
         $this->visits = (int) $visits;
 
@@ -268,7 +268,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getPerma()
+    public function getPerma(): string
     {
         return $this->perma;
     }
@@ -279,7 +279,7 @@ class Article extends \Ilch\Model
      * @param int $perma
      * @return $this
      */
-    public function setPerma($perma)
+    public function setPerma($perma): self
     {
         $this->perma = $perma;
 
@@ -291,7 +291,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -302,7 +302,7 @@ class Article extends \Ilch\Model
      * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = (string) $title;
 
@@ -314,7 +314,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getTeaser()
+    public function getTeaser(): string
     {
         return $this->teaser;
     }
@@ -325,7 +325,7 @@ class Article extends \Ilch\Model
      * @param string $teaser
      * @return $this
      */
-    public function setTeaser($teaser)
+    public function setTeaser($teaser): self
     {
         $this->teaser = (string)$teaser;
 
@@ -337,7 +337,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -348,7 +348,7 @@ class Article extends \Ilch\Model
      * @param string $content
      * @return $this
      */
-    public function setContent($content)
+    public function setContent($content): self
     {
         $this->content = (string) $content;
 
@@ -360,7 +360,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -371,7 +371,7 @@ class Article extends \Ilch\Model
      * @param string $description
      * @return $this
      */
-    public function setDescription($description)
+    public function setDescription($description): self
     {
         $this->description = (string)$description;
 
@@ -383,7 +383,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getKeywords()
+    public function getKeywords(): string
     {
         return $this->keywords;
     }
@@ -394,7 +394,7 @@ class Article extends \Ilch\Model
      * @param string $keywords
      * @return $this
      */
-    public function setKeywords($keywords)
+    public function setKeywords($keywords): self
     {
         $this->keywords = (string)$keywords;
 
@@ -406,7 +406,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -417,7 +417,7 @@ class Article extends \Ilch\Model
      * @param string $locale
      * @return $this
      */
-    public function setLocale($locale)
+    public function setLocale($locale): self
     {
         $this->locale = (string)$locale;
 
@@ -429,7 +429,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getDateCreated()
+    public function getDateCreated(): string
     {
         return $this->dateCreated;
     }
@@ -440,7 +440,7 @@ class Article extends \Ilch\Model
      * @param string $dateCreated
      * @return $this
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated($dateCreated): self
     {
         $this->dateCreated = $dateCreated;
 
@@ -452,7 +452,7 @@ class Article extends \Ilch\Model
      *
      * @return boolean
      */
-    public function getTopArticle()
+    public function getTopArticle(): bool
     {
         return $this->top;
     }
@@ -463,7 +463,7 @@ class Article extends \Ilch\Model
      * @param boolean $top
      * @return $this
      */
-    public function setTopArticle($top)
+    public function setTopArticle($top): self
     {
         $this->top = $top;
         
@@ -475,7 +475,7 @@ class Article extends \Ilch\Model
      *
      * @return boolean
      */
-    public function getCommentsDisabled()
+    public function getCommentsDisabled(): bool
     {
         return $this->commentsDisabled;
     }
@@ -486,7 +486,7 @@ class Article extends \Ilch\Model
      * @param boolean $disabled
      * @return $this
      */
-    public function setCommentsDisabled($disabled)
+    public function setCommentsDisabled($disabled): self
     {
         $this->commentsDisabled = $disabled;
 
@@ -498,7 +498,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getReadAccess()
+    public function getReadAccess(): string
     {
         return $this->readAccess;
     }
@@ -509,7 +509,7 @@ class Article extends \Ilch\Model
      * @param integer $readAccess
      * @return $this
      */
-    public function setReadAccess($readAccess)
+    public function setReadAccess($readAccess): self
     {
         $this->readAccess = (string) $readAccess;
 
@@ -521,7 +521,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->image;
     }
@@ -532,7 +532,7 @@ class Article extends \Ilch\Model
      * @param string $image
      * @return $this
      */
-    public function setImage($image)
+    public function setImage($image): self
     {
         $this->image = $image;
 
@@ -544,7 +544,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getImageThumb()
+    public function getImageThumb(): string
     {
         return $this->imageThumb;
     }
@@ -555,7 +555,7 @@ class Article extends \Ilch\Model
      * @param string $imageThumb
      * @return $this
      */
-    public function setImageThumb($imageThumb)
+    public function setImageThumb($imageThumb): self
     {
         $this->imageThumb = $imageThumb;
 
@@ -567,7 +567,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getImageSource()
+    public function getImageSource(): string
     {
         return $this->imageSource;
     }
@@ -578,7 +578,7 @@ class Article extends \Ilch\Model
      * @param string $imageSource
      * @return $this
      */
-    public function setImageSource($imageSource)
+    public function setImageSource($imageSource): self
     {
         $this->imageSource = $imageSource;
 
@@ -590,7 +590,7 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getVotes()
+    public function getVotes(): string
     {
         return $this->votes;
     }
@@ -601,7 +601,7 @@ class Article extends \Ilch\Model
      * @param string $votes
      * @return $this
      */
-    public function setVotes($votes)
+    public function setVotes($votes): self
     {
         $this->votes = $votes;
 

@@ -52,7 +52,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('statistic_visibleStats', '1,1,1,1,1,1');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_visits_online` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
