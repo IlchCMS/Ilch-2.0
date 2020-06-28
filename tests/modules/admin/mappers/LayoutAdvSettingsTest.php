@@ -23,7 +23,7 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
      */
     protected $out;
 
-    public function setUp(): void
+    public function setUp()
     {
         parent::setUp();
         $this->out = new LayoutAdvSettings();

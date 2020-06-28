@@ -104,7 +104,7 @@ abstract class DatabaseTestCase extends \PHPUnit\DbUnit\TestCase
     /**
      * Filling the config object with individual testcase data.
      */
-    protected function setUp(): void
+    protected function setUp()
     {
         $this->db = Registry::get('db');
 
