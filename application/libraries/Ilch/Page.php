@@ -246,7 +246,7 @@ class Page
      *
      * @return \Ilch\View
      */
-    public function getView(): View
+    public function getView()
     {
         return $this->view;
     }
@@ -256,7 +256,7 @@ class Page
      *
      * @return \Ilch\Request
      */
-    public function getRequest(): Request
+    public function getRequest()
     {
         return $this->request;
     }

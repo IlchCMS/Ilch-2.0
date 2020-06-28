@@ -37,7 +37,7 @@ class Model
      * @param string $value
      * @return \Ilch\Layout\Helper\Hmenu\Model
      */
-    public function add($key, $value = ''): Model
+    public function add($key, $value = '')
     {
         $this->data[$key] = $value;
 

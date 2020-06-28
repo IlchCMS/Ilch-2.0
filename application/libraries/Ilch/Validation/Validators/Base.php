@@ -108,7 +108,7 @@ abstract class Base
      *
      * @return string
      */
-    public function getField(): string
+    public function getField()
     {
         return $this->field;
     }
@@ -120,7 +120,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setField($field): self
+    public function setField($field)
     {
         $this->field = $field;
 
@@ -132,7 +132,7 @@ abstract class Base
      *
      * @return string
      */
-    public function getValue(): string
+    public function getValue()
     {
         return $this->value;
     }
@@ -144,7 +144,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setValue($value): self
+    public function setValue($value)
     {
         $this->value = $value;
 
@@ -156,7 +156,7 @@ abstract class Base
      *
      * @return array
      */
-    public function getInput(): array
+    public function getInput()
     {
         return $this->input;
     }
@@ -168,7 +168,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setInput(array $input): self
+    public function setInput(array $input)
     {
         $this->input = $input;
 
@@ -192,7 +192,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setParameters($parameters): self
+    public function setParameters($parameters)
     {
         $this->parameters = $parameters;
 
@@ -204,7 +204,7 @@ abstract class Base
      *
      * @return bool
      */
-    public function isValid(): bool
+    public function isValid()
     {
         return $this->result;
     }
@@ -216,7 +216,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setIsValid($result): self
+    public function setIsValid($result)
     {
         $this->result = $result;
 
@@ -228,7 +228,7 @@ abstract class Base
      *
      * @return string
      */
-    public function getErrorKey(): string
+    public function getErrorKey()
     {
         return $this->errorKey;
     }
@@ -240,7 +240,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setErrorKey($errorKey): self
+    public function setErrorKey($errorKey)
     {
         $this->errorKey = $errorKey;
 
@@ -252,7 +252,7 @@ abstract class Base
      *
      * @return array
      */
-    public function getErrorParameters(): array
+    public function getErrorParameters()
     {
         return $this->errorParameters;
     }
@@ -264,7 +264,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setErrorParameters(array $errorParameters): self
+    public function setErrorParameters(array $errorParameters)
     {
         $this->errorParameters = $errorParameters;
 
@@ -276,7 +276,7 @@ abstract class Base
      *
      * @return string Class name (without namespace) in lowercase
      */
-    public function getName(): string
+    public function getName()
     {
         $class = explode('\\', get_class($this));
 
@@ -292,6 +292,10 @@ abstract class Base
      */
     public function getParameter($key)
     {
-        return $this->parameters[$key] ?? null;
+        if (isset($this->parameters[$key])) {
+            return $this->parameters[$key];
+        }
+
+        return null;
     }
 }

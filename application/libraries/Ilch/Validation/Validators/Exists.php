@@ -48,7 +48,7 @@ class Exists extends Base
 
         $this->query = Registry::get('db')->select();
 
-        $column = $this->getParameter(1) ?? 'id';
+        $column = $this->getParameter(1) === null ? 'id' : $this->getParameter(1);
 
         $this->query->fields($column);
         $this->query->from($this->getParameter(0));
@@ -89,7 +89,7 @@ class Exists extends Base
      *
      * @return boolean
      */
-    protected function hasConditions(): bool
+    protected function hasConditions()
     {
         return count($this->getParameters()) > 2;
     }
@@ -99,7 +99,7 @@ class Exists extends Base
      *
      * @return array
      */
-    protected function getConditions(): array
+    protected function getConditions()
     {
         return array_slice($this->getParameters(), 2);
     }

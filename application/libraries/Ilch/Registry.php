@@ -23,7 +23,7 @@ abstract class Registry
      * @return boolean
      * @throws Exception
      */
-    public static function set($key, $value): bool
+    public static function set($key, $value)
     {
         if (!self::has($key)) {
             self::$registry[$key] = $value;
@@ -40,7 +40,7 @@ abstract class Registry
      * @param  string  $key
      * @return boolean
      */
-    public static function has($key): bool
+    public static function has($key)
     {
         if (isset(self::$registry[$key])) {
             return true;
@@ -69,7 +69,7 @@ abstract class Registry
      *
      * @return array
      */
-    public static function getAll(): array
+    public static function getAll()
     {
         return self::$registry;
     }
@@ -80,7 +80,7 @@ abstract class Registry
      * @param  string  $key
      * @return boolean
      */
-    public static function remove($key): bool
+    public static function remove($key)
     {
         if (self::has($key)) {
             unset(self::$registry[$key]);

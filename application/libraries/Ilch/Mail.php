@@ -64,7 +64,7 @@ class Mail
      */
     protected $type;
 
-    public function PHPMailer(): PHPMailer
+    public function PHPMailer()
     {
         return new PHPMailer;
     }
@@ -74,7 +74,7 @@ class Mail
      *
      * @return string
      */
-    public function getFromName(): string
+    public function getFromName()
     {
         return $this->fromName;
     }
@@ -85,7 +85,7 @@ class Mail
      * @param string $fromName
      * @return $this
      */
-    public function setFromName($fromName): self
+    public function setFromName($fromName)
     {
         $this->fromName = $fromName;
         return $this;
@@ -96,7 +96,7 @@ class Mail
      *
      * @return string
      */
-    public function getFromEmail(): string
+    public function getFromEmail()
     {
         return $this->fromEmail;
     }
@@ -107,7 +107,7 @@ class Mail
      * @param string $fromEmail
      * @return $this
      */
-    public function setFromEmail($fromEmail): self
+    public function setFromEmail($fromEmail)
     {
         $this->fromEmail = $fromEmail;
         return $this;
@@ -118,7 +118,7 @@ class Mail
      *
      * @return string
      */
-    public function getToName(): string
+    public function getToName()
     {
         return $this->toName;
     }
@@ -129,7 +129,7 @@ class Mail
      * @param string $toName
      * @return $this
      */
-    public function setToName($toName): self
+    public function setToName($toName)
     {
         $this->toName = $toName;
         return $this;
@@ -140,7 +140,7 @@ class Mail
      *
      * @return string
      */
-    public function getToEmail(): string
+    public function getToEmail()
     {
         return $this->toEmail;
     }
@@ -151,7 +151,7 @@ class Mail
      * @param string $toEmail
      * @return $this
      */
-    public function setToEmail($toEmail): self
+    public function setToEmail($toEmail)
     {
         $this->toEmail = $toEmail;
         return $this;
@@ -163,7 +163,7 @@ class Mail
      *
      * @return string
      */
-    public function getCcEmail(): string
+    public function getCcEmail()
     {
         return $this->ccEmail;
     }
@@ -175,7 +175,7 @@ class Mail
      * @param string $ccEmail
      * @return $this
      */
-    public function setCcEmail($ccEmail): self
+    public function setCcEmail($ccEmail)
     {
         $this->ccEmail = $ccEmail;
         return $this;
@@ -187,7 +187,7 @@ class Mail
      *
      * @return string
      */
-    public function getBccEmail(): string
+    public function getBccEmail()
     {
         return $this->bccEmail;
     }
@@ -199,7 +199,7 @@ class Mail
      * @param string $bccEmail
      * @return $this
      */
-    public function setBccEmail($bccEmail): self
+    public function setBccEmail($bccEmail)
     {
         $this->bccEmail = $bccEmail;
         return $this;
@@ -212,7 +212,7 @@ class Mail
      * @return string
      * @since 2.1.32
      */
-    public function getReplyTo(): string
+    public function getReplyTo()
     {
         return $this->replyTo;
     }
@@ -225,7 +225,7 @@ class Mail
      * @return Mail
      * @since 2.1.32
      */
-    public function setReplyTo($replyTo): Mail
+    public function setReplyTo($replyTo)
     {
         $this->replyTo = $replyTo;
         return $this;
@@ -236,7 +236,7 @@ class Mail
      *
      * @return string
      */
-    public function getSubject(): string
+    public function getSubject()
     {
         return $this->subject;
     }
@@ -247,7 +247,7 @@ class Mail
      * @param string $subject
      * @return $this
      */
-    public function setSubject($subject): self
+    public function setSubject($subject)
     {
         $this->subject = $subject;
         return $this;
@@ -258,7 +258,7 @@ class Mail
      *
      * @return string
      */
-    public function getMessage(): string
+    public function getMessage()
     {
         return $this->message;
     }
@@ -269,7 +269,7 @@ class Mail
      * @param string $message
      * @return $this
      */
-    public function setMessage($message): self
+    public function setMessage($message)
     {
         $this->message = $message;
         return $this;
@@ -281,7 +281,7 @@ class Mail
      *
      * @return string
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
@@ -293,7 +293,7 @@ class Mail
      * @param string $type
      * @return $this
      */
-    public function setType(string $type): self
+    public function setType(string $type)
     {
         $this->type = $type;
         return $this;

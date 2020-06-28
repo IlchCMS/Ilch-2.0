@@ -34,7 +34,7 @@ class GetMedia
      * @param string $mediaButton
      * @return GetMedia
      */
-    public function addMediaButton($mediaButton): GetMedia
+    public function addMediaButton($mediaButton)
     {
         $this->mediaButton = $mediaButton;
 
@@ -47,7 +47,7 @@ class GetMedia
      * @param string $actionButton
      * @return GetMedia
      */
-    public function addActionButton($actionButton): GetMedia
+    public function addActionButton($actionButton)
     {
         $this->actionButton = $actionButton;
 
@@ -60,7 +60,7 @@ class GetMedia
      * @param string $uploadController
      * @return GetMedia
      */
-    public function addUploadController($uploadController): GetMedia
+    public function addUploadController($uploadController)
     {
         $this->uploadController = $uploadController;
 
@@ -73,7 +73,7 @@ class GetMedia
      * @param string $inputId
      * @return GetMedia
      */
-    public function addInputId($inputId): GetMedia
+    public function addInputId($inputId)
     {
         $this->inputId = $inputId;
 

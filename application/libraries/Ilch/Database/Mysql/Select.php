@@ -91,7 +91,7 @@ class Select extends QueryBuilder
      * @param string|array $table table without prefix (as array with alias as key)
      * @return \Ilch\Database\Mysql\Select
      */
-    public function from($table): Select
+    public function from($table)
     {
         $this->table = $table;
 
@@ -107,7 +107,7 @@ class Select extends QueryBuilder
      * @return \Ilch\Database\Mysql\Select
      * @throws \InvalidArgumentException for invalid $fields parameter
      */
-    public function fields($fields, $replace = true): Select
+    public function fields($fields, $replace = true)
     {
         if ($fields === '*') {
             return $this;
@@ -130,7 +130,7 @@ class Select extends QueryBuilder
      * @param array $order [field => direction]
      * @return \Ilch\Database\Mysql\Select
      */
-    public function order(array $order): Select
+    public function order(array $order)
     {
         $this->order = $order;
 
@@ -142,7 +142,7 @@ class Select extends QueryBuilder
      * @param int $page
      * @return \Ilch\Database\Mysql\Select
      */
-    public function page($page): Select
+    public function page($page)
     {
         $this->page = (int) $page;
         return $this;
@@ -154,7 +154,7 @@ class Select extends QueryBuilder
      * @param array|integer $limit if array -> [offset, limit]
      * @return \Ilch\Database\Mysql\Select
      */
-    public function limit($limit): Select
+    public function limit($limit)
     {
         if (is_array($limit)) {
             $limitCount = count($limit);
@@ -177,7 +177,7 @@ class Select extends QueryBuilder
      * @param int $offset
      * @return \Ilch\Database\Mysql\Select
      */
-    public function offset($offset): Select
+    public function offset($offset)
     {
         $this->offset = (int) $offset;
         return $this;
@@ -189,7 +189,7 @@ class Select extends QueryBuilder
      * @param Expression\Join $join
      * @return \Ilch\Database\Mysql\Select
      */
-    public function addJoin(Expression\Join $join): Select
+    public function addJoin(Expression\Join $join)
     {
         $this->joins[] = $join;
         return $this;
@@ -200,7 +200,7 @@ class Select extends QueryBuilder
      * @param string $type
      * @return Expression\Join
      */
-    public function createJoin($table, $type = Expression\Join::INNER): Expression\Join
+    public function createJoin($table, $type = Expression\Join::INNER)
     {
         return new Expression\Join($table, $type);
     }
@@ -214,7 +214,7 @@ class Select extends QueryBuilder
      * @param array $fields
      * @return \Ilch\Database\Mysql\Select
      */
-    public function join($table, $conditions, $type = Expression\Join::INNER, array $fields = null): Select
+    public function join($table, $conditions, $type = Expression\Join::INNER, array $fields = null)
     {
         $join = $this->createJoin($table, $type);
         if (is_string($conditions)) {
@@ -235,7 +235,7 @@ class Select extends QueryBuilder
      *
      * @return \Ilch\Database\Mysql\Select
      */
-    public function group(array $fields, $replace = true): Select
+    public function group(array $fields, $replace = true)
     {
         if ($replace) {
             $this->groupByFields = $fields;
@@ -250,7 +250,7 @@ class Select extends QueryBuilder
      * @param $useFoundRows
      * @return \Ilch\Database\Mysql\Select
      */
-    public function useFoundRows($useFoundRows = true): Select
+    public function useFoundRows($useFoundRows = true)
     {
         $this->useFoundRows = (bool) $useFoundRows;
         return $this;
@@ -348,7 +348,7 @@ class Select extends QueryBuilder
      * @param  array $fields
      * @return string
      */
-    protected function getFieldsSql($fields): string
+    protected function getFieldsSql($fields)
     {
         if (empty($fields)) {
             return '*';
@@ -377,7 +377,7 @@ class Select extends QueryBuilder
      *
      * @return string
      */
-    protected function getTableSql($table): string
+    protected function getTableSql($table)
     {
         if (is_array($table)) {
             $tableName = reset($table);
@@ -429,7 +429,7 @@ class Select extends QueryBuilder
      * @return string
      * @throws \InvalidArgumentException
      */
-    protected function generateGroupBySql(): string
+    protected function generateGroupBySql()
     {
         $sql = '';
         // add GROUP BY to sql

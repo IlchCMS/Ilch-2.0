@@ -30,7 +30,7 @@ class Header
      * Gets the header
      * @return Model
      */
-    public function header(): Model
+    public function header()
     {
         return $this->model;
     }

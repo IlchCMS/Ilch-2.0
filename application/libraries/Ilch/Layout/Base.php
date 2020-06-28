@@ -62,7 +62,7 @@ abstract class Base extends \Ilch\Design\Base
      *
      * @return boolean
      */
-    public function getDisabled(): bool
+    public function getDisabled()
     {
         return $this->disabled;
     }
@@ -82,7 +82,7 @@ abstract class Base extends \Ilch\Design\Base
      *
      * @return string
      */
-    public function getContent(): string
+    public function getContent()
     {
         $html = '';
         $messages = [];
@@ -145,7 +145,7 @@ abstract class Base extends \Ilch\Design\Base
      *
      * @return string
      */
-    public function getFile(): string
+    public function getFile()
     {
         return $this->file;
     }

@@ -53,7 +53,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-http-equiv
      * @return string
      */
-    public function getHTTPEquiv(): string
+    public function getHTTPEquiv()
     {
         return $this->httpEquiv;
     }
@@ -65,7 +65,7 @@ class Model
      * @param string $httpEquiv
      * @return $this
      */
-    public function setHTTPEquiv($httpEquiv): self
+    public function setHTTPEquiv($httpEquiv)
     {
         $this->httpEquiv = $httpEquiv;
 
@@ -78,7 +78,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-name
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -90,7 +90,7 @@ class Model
      * @param string $name
      * @return $this
      */
-    public function setName($name): self
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -103,7 +103,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-content
      * @return string
      */
-    public function getContent(): string
+    public function getContent()
     {
         return $this->content;
     }
@@ -115,7 +115,7 @@ class Model
      * @param string $content
      * @return $this
      */
-    public function setContent($content): self
+    public function setContent($content)
     {
         $this->content = $content;
 
@@ -128,7 +128,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-charset
      * @return string
      */
-    public function getCharset(): string
+    public function getCharset()
     {
         return $this->charset;
     }
@@ -140,7 +140,7 @@ class Model
      * @param string $charset
      * @return $this
      */
-    public function setCharset($charset): self
+    public function setCharset($charset)
     {
         $this->charset = $charset;
 

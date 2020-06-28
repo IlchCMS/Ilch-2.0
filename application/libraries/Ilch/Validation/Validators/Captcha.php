@@ -29,7 +29,7 @@ class Captcha extends Base
      *
      * @return self
      */
-    public function run(): Captcha
+    public function run()
     {
         $result = false;
 

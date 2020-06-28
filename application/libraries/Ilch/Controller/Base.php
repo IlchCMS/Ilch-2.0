@@ -71,7 +71,7 @@ class Base
      * @param string $route
      * @return \Ilch\Redirect
      */
-    public function redirect($url = null, $route = null): \Ilch\Redirect
+    public function redirect($url = null, $route = null)
     {
         $redirector = new \Ilch\Redirect($this->getRequest());
 
@@ -87,7 +87,7 @@ class Base
      *
      * @return \Ilch\Request
      */
-    public function getRequest(): \Ilch\Request
+    public function getRequest()
     {
         return $this->request;
     }
@@ -97,7 +97,7 @@ class Base
      *
      * @return \Ilch\Router
      */
-    public function getRouter(): \Ilch\Router
+    public function getRouter()
     {
         return $this->router;
     }
@@ -107,7 +107,7 @@ class Base
      *
      * @return \Ilch\Config\Database
      */
-    public function getConfig(): \Ilch\Config\Database
+    public function getConfig()
     {
         return \Ilch\Registry::get('config');
     }
@@ -117,7 +117,7 @@ class Base
      *
      * @return \Ilch\Translator
      */
-    public function getTranslator(): \Ilch\Translator
+    public function getTranslator()
     {
         return $this->translator;
     }
@@ -127,7 +127,7 @@ class Base
      *
      * @return \Ilch\Layout\Base
      */
-    public function getLayout(): \Ilch\Layout\Base
+    public function getLayout()
     {
         return $this->layout;
     }
@@ -137,7 +137,7 @@ class Base
      *
      * @return \Ilch\View
      */
-    public function getView(): \Ilch\View
+    public function getView()
     {
         return $this->view;
     }
@@ -147,7 +147,7 @@ class Base
      *
      * @return \Modules\User\Models\User
      */
-    public function getUser(): \Modules\User\Models\User
+    public function getUser()
     {
         return \Ilch\Registry::get('user');
     }

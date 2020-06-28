@@ -36,7 +36,7 @@ class Model
      * @param string $value
      * @return Model
      */
-    public function css($value): Model
+    public function css($value)
     {
         $this->data[] = '<link href="'.$this->layout->getModuleUrl($value).'" rel="stylesheet">';
 
@@ -49,7 +49,7 @@ class Model
      * @param string $value
      * @return Model
      */
-    public function js($value): Model
+    public function js($value)
     {
         $this->data[] = '<script src="'.$this->layout->getModuleUrl($value).'"></script>';
 

@@ -20,7 +20,7 @@ class ErrorBag
         $this->errors = [];
     }
 
-    public function getErrorMessages(): array
+    public function getErrorMessages()
     {
         $messages = [];
 
@@ -33,7 +33,7 @@ class ErrorBag
         return $messages;
     }
 
-    public function hasErrors(): bool
+    public function hasErrors()
     {
         return count($this->getErrors()) > 0;
     }
@@ -43,7 +43,7 @@ class ErrorBag
      * @param string $message
      * @return $this
      */
-    public function addError($field, $message): self
+    public function addError($field, $message)
     {
         $this->errors[$field][] = $message;
 
@@ -54,7 +54,7 @@ class ErrorBag
      * Get the field names of where errors occurred
      * @return array
      */
-    public function getErrorFields(): array
+    public function getErrorFields()
     {
         return array_keys($this->getErrors());
     }
@@ -66,7 +66,7 @@ class ErrorBag
      *
      * @return boolean
      */
-    public function hasError($field): bool
+    public function hasError($field)
     {
         return !empty($this->errors[$field]);
     }
@@ -76,7 +76,7 @@ class ErrorBag
      *
      * @return array
      */
-    public function getErrors(): array
+    public function getErrors()
     {
         return $this->errors;
     }
@@ -88,7 +88,7 @@ class ErrorBag
      *
      * @return self
      */
-    public function setErrors(array $errors): self
+    public function setErrors(array $errors)
     {
         $this->errors = $errors;
 

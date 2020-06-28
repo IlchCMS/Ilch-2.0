@@ -79,7 +79,7 @@ class MysqlDebug extends Mysql
      *
      * @return int
      */
-    public function getAccumulatedStatementsDuration(): int
+    public function getAccumulatedStatementsDuration()
     {
         return array_reduce($this->executedStatements, function ($v, $s) { return $v + $s->getDuration(); });
     }
@@ -89,7 +89,7 @@ class MysqlDebug extends Mysql
      *
      * @return int
      */
-    public function getMemoryUsage(): int
+    public function getMemoryUsage()
     {
         return array_reduce($this->executedStatements, function ($v, $s) { return $v + $s->getMemoryUsage(); });
     }
@@ -99,7 +99,7 @@ class MysqlDebug extends Mysql
      *
      * @return int
      */
-    public function getPeakMemoryUsage(): int
+    public function getPeakMemoryUsage()
     {
         return array_reduce($this->executedStatements, function ($v, $s) { $m = $s->getEndMemory(); return $m > $v ? $m : $v; });
     }
@@ -109,7 +109,7 @@ class MysqlDebug extends Mysql
      *
      * @return array
      */
-    public function getExecutedStatements(): array
+    public function getExecutedStatements()
     {
         return $this->executedStatements;
     }
@@ -119,7 +119,7 @@ class MysqlDebug extends Mysql
      *
      * @return array
      */
-    public function getFailedExecutedStatements(): array
+    public function getFailedExecutedStatements()
     {
         return array_filter($this->executedStatements, function ($s) { return !$s->isSuccess(); });
     }

@@ -14,7 +14,7 @@ class View extends Design\Base
      * @param  string $viewScript
      * @return string
      */
-    public function loadScript($viewScript): string
+    public function loadScript($viewScript)
     {
         ob_start();
 
@@ -50,7 +50,7 @@ class View extends Design\Base
      * @param string $deleteKey
      * @return string
      */
-    public function getSaveBar($saveKey = 'saveButton', $nameKey = null, $deleteKey = ''): string
+    public function getSaveBar($saveKey = 'saveButton', $nameKey = null, $deleteKey = '')
     {
         $html = '<div class="content_savebox">
                     <button type="submit" class="save_button btn btn-default" name="save'.$nameKey.'" value="save">
@@ -74,7 +74,7 @@ class View extends Design\Base
      * @param array $actions
      * @return string
      */
-    public function getListBar($actions = []): string
+    public function getListBar($actions = [])
     {
         $html = '<div class="content_savebox">
                     <input type="hidden" class="content_savebox_hidden" name="action" value="" />
@@ -97,7 +97,7 @@ class View extends Design\Base
      * @param array $url
      * @return string
      */
-    public function getEditIcon($url): string
+    public function getEditIcon($url)
     {
         return '<a href="'.$this->getUrl($url).'" title="'.$this->getTrans('edit').'"><span class="fa fa-edit text-success"></span></a>';
     }
@@ -108,7 +108,7 @@ class View extends Design\Base
      * @param array $url
      * @return string
      */
-    public function getDeleteIcon($url): string
+    public function getDeleteIcon($url)
     {
         return '<a href="'.$this->getUrl($url, null, true).'" title="'.$this->getTrans('delete').'" class="delete_button"><span class="fa fa-trash-o text-danger"></span></a>';
     }
@@ -131,7 +131,7 @@ class View extends Design\Base
      * @param string $childs
      * @return string
      */
-    public function getCheckAllCheckbox($childs): string
+    public function getCheckAllCheckbox($childs)
     {
         return '<input type="checkbox" class="check_all" data-childs="'.$childs.'" />';
     }
@@ -154,7 +154,7 @@ class View extends Design\Base
      *
      * @return \Ilch\Validation\ErrorBag
      */
-    public function validation(): Validation\ErrorBag
+    public function validation()
     {
         return $this->getRequest()->getErrors();
     }

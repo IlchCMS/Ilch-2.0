@@ -66,7 +66,7 @@ class Database
      *
      * @return $this
      */
-    public function set($key, $value, $autoload = 0): self
+    public function set($key, $value, $autoload = 0)
     {
         $oldValue = $this->db->select('value')
             ->from('config')

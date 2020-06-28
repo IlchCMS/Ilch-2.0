@@ -29,7 +29,7 @@ class GetTitle
      * Gets the title
      * @return \Ilch\Layout\Helper\Title\Model
      */
-    public function getTitle(): Title\Model
+    public function getTitle()
     {
         return $this->model;
     }

@@ -104,7 +104,7 @@ class Request
      *
      * @return \Ilch\Validation\ErrorBag
      */
-    public function getErrors(): Validation\ErrorBag
+    public function getErrors()
     {
         return $this->validationErrors;
     }
@@ -134,7 +134,7 @@ class Request
      *
      * @return boolean
      */
-    public function isAjax(): bool
+    public function isAjax()
     {
         return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') || $this->isAjax;
     }
@@ -154,7 +154,7 @@ class Request
      *
      * @return string
      */
-    public function getModuleName(): string
+    public function getModuleName()
     {
         return $this->moduleName;
     }
@@ -174,7 +174,7 @@ class Request
      *
      * @return string
      */
-    public function getControllerName(): string
+    public function getControllerName()
     {
         return $this->controllerName;
     }
@@ -194,7 +194,7 @@ class Request
      *
      * @return string
      */
-    public function getActionName(): string
+    public function getActionName()
     {
         return $this->actionName;
     }
@@ -217,7 +217,11 @@ class Request
      */
     public function getParam($key)
     {
-        return $this->params[$key] ?? null;
+        if (isset($this->params[$key])) {
+            return $this->params[$key];
+        }
+
+        return null;
     }
 
     /**
@@ -236,7 +240,7 @@ class Request
      *
      * @return array
      */
-    public function getParams(): array
+    public function getParams()
     {
         return $this->params;
     }
@@ -256,7 +260,7 @@ class Request
      *
      * @return boolean
      */
-    public function isPost(): bool
+    public function isPost()
     {
         return !empty($_POST);
     }
@@ -290,7 +294,11 @@ class Request
             return $_GET;
         }
 
-        return $_GET[$key] ?? null;
+        if (isset($_GET[$key])) {
+            return $_GET[$key];
+        }
+
+        return null;
     }
 
     /**
@@ -298,7 +306,7 @@ class Request
      *
      * @return boolean
      */
-    public function isSecure(): bool
+    public function isSecure()
     {
         // Return false if ilch_token is empty or not a string.
         // Fixes "Illegal offset type in isset or empty"

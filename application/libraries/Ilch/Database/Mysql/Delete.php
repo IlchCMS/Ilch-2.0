@@ -31,7 +31,7 @@ class Delete extends QueryBuilder
      * @param string $table table without prefix
      * @return Delete
      */
-    public function from($table): Delete
+    public function from($table)
     {
         $this->table = (string) $table;
         return $this;
@@ -42,7 +42,7 @@ class Delete extends QueryBuilder
      *
      * @return integer number of deleted rows
      */
-    public function execute(): int
+    public function execute()
     {
         $this->db->query($this->generateSql());
         return $this->db->getAffectedRows();
@@ -53,7 +53,7 @@ class Delete extends QueryBuilder
      *
      * @return string
      */
-    public function generateSql(): string
+    public function generateSql()
     {
         $sql = 'DELETE  FROM ' . $this->db->quote('[prefix]_' . $this->table);
 

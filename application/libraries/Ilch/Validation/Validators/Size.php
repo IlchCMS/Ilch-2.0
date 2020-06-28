@@ -49,7 +49,7 @@ class Size extends Base
      *
      * @return int The size of the value
      */
-    protected function getSize($value, $numberString): int
+    protected function getSize($value, $numberString)
     {
         if (is_numeric($value) && !$numberString) {
             return (int) $value;
