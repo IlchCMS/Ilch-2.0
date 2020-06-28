@@ -45,7 +45,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('comment_box_comments_limit', '5');
     }
 
-    public function getInstallSql(): string
+    public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_comments` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,

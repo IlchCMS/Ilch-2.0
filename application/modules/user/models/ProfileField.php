@@ -69,7 +69,7 @@ class ProfileField extends \Ilch\Model
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -80,7 +80,7 @@ class ProfileField extends \Ilch\Model
      * @param int $id
      * @return ProfileField
      */
-    public function setId($id): ProfileField
+    public function setId($id)
     {
         $this->id = (int)$id;
 
@@ -92,7 +92,7 @@ class ProfileField extends \Ilch\Model
      *
      * @return string
      */
-    public function getKey(): string
+    public function getKey()
     {
         return $this->key;
     }
@@ -103,7 +103,7 @@ class ProfileField extends \Ilch\Model
      * @param string $key
      * @return ProfileField
      */
-    public function setKey($key): ProfileField
+    public function setKey($key)
     {
         $this->key = $key;
 
@@ -115,7 +115,7 @@ class ProfileField extends \Ilch\Model
      *
      * @return int
      */
-    public function getType(): int
+    public function getType()
     {
         return $this->type;
     }
@@ -126,7 +126,7 @@ class ProfileField extends \Ilch\Model
      * @param int $type
      * @return ProfileField
      */
-    public function setType($type): ProfileField
+    public function setType($type)
     {
         $this->type = (int)$type;
 
@@ -138,7 +138,7 @@ class ProfileField extends \Ilch\Model
      *
      * @return string
      */
-    public function getIcon(): string
+    public function getIcon()
     {
         return $this->icon;
     }
@@ -149,7 +149,7 @@ class ProfileField extends \Ilch\Model
      * @param string $icon
      * @return ProfileField
      */
-    public function setIcon($icon): ProfileField
+    public function setIcon($icon)
     {
         $this->icon = $icon;
 
@@ -161,7 +161,7 @@ class ProfileField extends \Ilch\Model
      *
      * @return string
      */
-    public function getAddition(): string
+    public function getAddition()
     {
         return $this->addition;
     }
@@ -172,7 +172,7 @@ class ProfileField extends \Ilch\Model
      * @param string $addition
      * @return ProfileField
      */
-    public function setAddition($addition): ProfileField
+    public function setAddition($addition)
     {
         $this->addition = $addition;
 
@@ -184,7 +184,7 @@ class ProfileField extends \Ilch\Model
      *
      * @return int
      */
-    public function getShow(): int
+    public function getShow()
     {
         return $this->show;
     }
@@ -195,7 +195,7 @@ class ProfileField extends \Ilch\Model
      * @param int $show
      * @return ProfileField
      */
-    public function setShow($show): ProfileField
+    public function setShow($show)
     {
         $this->show = (int)$show;
 
@@ -207,7 +207,7 @@ class ProfileField extends \Ilch\Model
      *
      * @return int
      */
-    public function getHidden(): int
+    public function getHidden()
     {
         return $this->hidden;
     }
@@ -218,7 +218,7 @@ class ProfileField extends \Ilch\Model
      * @param int $hidden
      * @return ProfileField
      */
-    public function setHidden($hidden): ProfileField
+    public function setHidden($hidden)
     {
         $this->hidden = (int)$hidden;
 
@@ -230,7 +230,7 @@ class ProfileField extends \Ilch\Model
      *
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition()
     {
         return $this->position;
     }
@@ -241,7 +241,7 @@ class ProfileField extends \Ilch\Model
      * @param int $position
      * @return ProfileField
      */
-    public function setPosition($position): ProfileField
+    public function setPosition($position)
     {
         $this->position = (int)$position;
 

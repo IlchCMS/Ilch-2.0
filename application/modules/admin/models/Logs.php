@@ -34,7 +34,7 @@ class Logs extends \Ilch\Model
      *
      * @return int
      */
-    public function getUserId(): int
+    public function getUserId()
     {
         return $this->userId;
     }
@@ -54,7 +54,7 @@ class Logs extends \Ilch\Model
      *
      * @return DateTime
      */
-    public function getDate(): DateTime
+    public function getDate()
     {
         return $this->date;
     }
@@ -74,7 +74,7 @@ class Logs extends \Ilch\Model
      *
      * @return string
      */
-    public function getInfo(): string
+    public function getInfo()
     {
         return $this->info;
     }

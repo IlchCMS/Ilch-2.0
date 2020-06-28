@@ -160,7 +160,7 @@ class Dialog extends \Ilch\Mapper
     * @param int $user_id
     * @return int
     */
-    public function getCountOfUnreadMessagesByUser($user_id): int
+    public function getCountOfUnreadMessagesByUser($user_id)
     {
         $result = $this->db()->select('COUNT(*)')
             ->from(['r' => 'users_dialog_reply', 'u' => 'users_dialog'])
@@ -220,7 +220,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId
      * @return bool
      */
-    public function isMessageOfUser($cr_id, $userId): bool
+    public function isMessageOfUser($cr_id, $userId)
     {
         $messageRow = $this->db()->select(['cr_id', 'user_id_fk'])
             ->from('users_dialog_reply')
@@ -274,7 +274,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId
      * @return bool
      */
-    public function hasHiddenDialog($userId): bool
+    public function hasHiddenDialog($userId)
     {
         $dialogHiddenRow = $this->db()->select('user_id')
             ->from('users_dialog_hidden')
@@ -292,7 +292,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId
      * @return int count of affected rows.
      */
-    public function unhideDialog($c_id, $userId): int
+    public function unhideDialog($c_id, $userId)
     {
         return $this->db()->delete('users_dialog_hidden', ['c_id' => $c_id, 'user_id' => $userId])->execute();
     }
@@ -304,7 +304,7 @@ class Dialog extends \Ilch\Mapper
      * @param $userId
      * @return int
      */
-    public function unhideAllDialogsByUser($userId): int
+    public function unhideAllDialogsByUser($userId)
     {
         return $this->db()->delete('users_dialog_hidden', ['user_id' => $userId])->execute();
     }

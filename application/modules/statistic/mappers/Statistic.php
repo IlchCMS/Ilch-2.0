@@ -17,7 +17,7 @@ class Statistic extends \Ilch\Mapper
      * @return array []|\Modules\User\Models\User[]
      * @throws \Ilch\Database\Exception
      */
-    public function getVisitsOnlineUser(): array
+    public function getVisitsOnlineUser()
     {
         $userMapper = new UserMapper();
         $date = new \Ilch\Date();
@@ -87,7 +87,7 @@ class Statistic extends \Ilch\Mapper
      * @throws \Ilch\Database\Exception
      * @since 2.1.20
      */
-    public function getWhoWasOnline(): array
+    public function getWhoWasOnline()
     {
         $userMapper = new UserMapper();
         $date = new \Ilch\Date();
@@ -390,7 +390,7 @@ class Statistic extends \Ilch\Mapper
      * @return integer
      * @throws \Ilch\Database\Exception
      */
-    public function getVisitsCountOnline(): int
+    public function getVisitsCountOnline()
     {
         $date = new \Ilch\Date();
         $date->modify('-5 minutes');
@@ -452,7 +452,7 @@ class Statistic extends \Ilch\Mapper
      * @return integer
      * @throws \Ilch\Database\Exception
      */
-    public function getVisitsCount($date = null, $year = null, $month = null): int
+    public function getVisitsCount($date = null, $year = null, $month = null)
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_stats`';
@@ -504,7 +504,7 @@ class Statistic extends \Ilch\Mapper
      * @param  string $version
      * @return string
      */
-    public function getOS($name = null, $version = null): string
+    public function getOS($name = null, $version = null)
     {
         if (!isset($_SERVER['HTTP_USER_AGENT'])) {
             return '';
@@ -798,7 +798,7 @@ class Statistic extends \Ilch\Mapper
      * @return bool
      * @since 2.1.25
      */
-    public function browserSeenBefore($browser): bool
+    public function browserSeenBefore($browser)
     {
         return $this->columnWithValueExists('browser', $browser);
     }
@@ -810,7 +810,7 @@ class Statistic extends \Ilch\Mapper
      * @return bool
      * @since 2.1.25
      */
-    public function osSeenBefore($os): bool
+    public function osSeenBefore($os)
     {
         return $this->columnWithValueExists('os', $os);
     }
@@ -823,7 +823,7 @@ class Statistic extends \Ilch\Mapper
      * @return bool
      * @since 2.1.25
      */
-    private function columnWithValueExists($column, $value): bool
+    private function columnWithValueExists($column, $value)
     {
         return (bool)$this->db()->select('id')
             ->from('visits_stats')

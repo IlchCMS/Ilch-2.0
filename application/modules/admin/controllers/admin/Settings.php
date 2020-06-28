@@ -124,7 +124,7 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
                 $this->getConfig()->set('locale', $this->getRequest()->getPost('locale'));
                 $this->getConfig()->set('defaultPaginationObjects', $this->getRequest()->getPost('defaultPaginationObjects'));
-                $this->getConfig()->set('hideCaptchaFor', implode(',', ($this->getRequest()->getPost('groups')) ?: []));
+                $this->getConfig()->set('hideCaptchaFor', implode(',', ($this->getRequest()->getPost('groups')) ? $this->getRequest()->getPost('groups') : []));
                 if ($this->getRequest()->getPost('hmenuFixed') === '1') {
                     $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
                 } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {

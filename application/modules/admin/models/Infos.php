@@ -34,7 +34,7 @@ class Infos extends \Ilch\Model
      *
      * @return string
      */
-    public function getKey(): string
+    public function getKey()
     {
         return $this->key;
     }
@@ -57,7 +57,7 @@ class Infos extends \Ilch\Model
      *
      * @return string
      */
-    public function getFolder(): string
+    public function getFolder()
     {
         return $this->folder;
     }
@@ -80,7 +80,7 @@ class Infos extends \Ilch\Model
      *
      * @return string
      */
-    public function getExtension(): string
+    public function getExtension()
     {
         return $this->extension;
     }

@@ -53,7 +53,7 @@ foreach ($modules as $module): ?>
             $dependency = implode(', ', $dependency);
         }
 
-        if (version_compare(PHP_VERSION, $module->phpVersion, '>=')) {
+        if (version_compare(phpversion(), $module->phpVersion, '>=')) {
             $phpVersion = '<font color="#3c763d">'.$module->phpVersion.'</font>';
         } else {
             $phpVersion = '<font color="#a94442">'.$module->phpVersion.'</font>';
@@ -218,7 +218,7 @@ foreach ($modules as $module): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
                     <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
-            <?php elseif (!version_compare(PHP_VERSION, $module->phpVersion, '>=')): ?>
+            <?php elseif (!version_compare(phpversion(), $module->phpVersion, '>=')): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpVersionError') ?>">
                     <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>

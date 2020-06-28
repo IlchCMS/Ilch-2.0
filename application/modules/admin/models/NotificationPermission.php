@@ -34,7 +34,7 @@ class NotificationPermission extends \Ilch\Model
      *
      * @return string
      */
-    public function getModule(): string
+    public function getModule()
     {
         return $this->module;
     }
@@ -74,7 +74,7 @@ class NotificationPermission extends \Ilch\Model
      *
      * @return int
      */
-    public function getLimit(): int
+    public function getLimit()
     {
         return $this->limit;
     }

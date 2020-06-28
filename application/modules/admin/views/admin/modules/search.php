@@ -119,7 +119,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                                     title="<?=$this->getTrans('phpExtensionError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif (version_compare(PHP_VERSION, $moduleOnUpdateServer->phpVersion, '<')): ?>
+                        <?php elseif (version_compare(phpversion(), $moduleOnUpdateServer->phpVersion, '<')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('phpVersionError') ?>">
                                 <i class="<?=$iconClass ?>"></i>

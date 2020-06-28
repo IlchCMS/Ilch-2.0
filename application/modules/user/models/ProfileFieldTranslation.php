@@ -34,7 +34,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      *
      * @return int
      */
-    public function getFieldId(): int
+    public function getFieldId()
     {
         return $this->fieldId;
     }
@@ -45,7 +45,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      * @param int $fieldId
      * @return ProfileFieldTranslation
      */
-    public function setFieldId($fieldId): ProfileFieldTranslation
+    public function setFieldId($fieldId)
     {
         $this->fieldId = (int)$fieldId;
 
@@ -57,7 +57,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale(): string
+    public function getLocale()
     {
         return $this->locale;
     }
@@ -68,7 +68,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      * @param string $locale
      * @return ProfileFieldTranslation
      */
-    public function setLocale($locale): ProfileFieldTranslation
+    public function setLocale($locale)
     {
         $this->locale = $locale;
 
@@ -80,7 +80,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -91,7 +91,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      * @param string $name
      * @return ProfileFieldTranslation
      */
-    public function setName($name): ProfileFieldTranslation
+    public function setName($name)
     {
         $this->name = $name;
 

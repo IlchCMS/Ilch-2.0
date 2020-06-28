@@ -16,7 +16,7 @@ class ProfileFieldsContent extends \Ilch\Mapper
      * @param  int $userId
      * @return array()|\Modules\User\Models\ProfileFieldContent
      */
-    public function getProfileFieldContentByUserId($userId): array
+    public function getProfileFieldContentByUserId($userId)
     {
         $profileFieldContentRows = $this->db()->select('*')
             ->from('profile_content')
@@ -40,7 +40,7 @@ class ProfileFieldsContent extends \Ilch\Mapper
      * @param  mixed[] $profileFieldRow
      * @return ProfileFieldContentModel
      */
-    public function loadFromArray($profileFieldRow = []): ProfileFieldContentModel
+    public function loadFromArray($profileFieldRow = [])
     {
         $profileFieldContent = new ProfileFieldContentModel();
 
@@ -65,8 +65,7 @@ class ProfileFieldsContent extends \Ilch\Mapper
      * @param  int $userId
      * @return boolean True if success, otherwise false.
      */
-    public function deleteProfileFieldContentByUserId($userId): bool
-    {
+    public function deleteProfileFieldContentByUserId($userId) {
         return $this->db()->delete('profile_content')
             ->where(['user_id' => $userId])
             ->execute();
@@ -78,8 +77,7 @@ class ProfileFieldsContent extends \Ilch\Mapper
      * @param  int $fieldId
      * @return boolean True if success, otherwise false.
      */
-    public function deleteProfileFieldContentByFieldId($fieldId): bool
-    {
+    public function deleteProfileFieldContentByFieldId($fieldId) {
         return $this->db()->delete('profile_content')
             ->where(['field_id' => $fieldId])
             ->execute();

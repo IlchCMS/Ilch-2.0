@@ -33,7 +33,7 @@ class Menu extends \Ilch\Mapper
      * 
      * @return \Modules\Admin\Models\Menu[]
      */
-    public function getMenus(): array
+    public function getMenus()
     {
         $menus = [];
         $menuRows = $this->db()->select(['id'])
@@ -55,7 +55,7 @@ class Menu extends \Ilch\Mapper
      * @param $menuId
      * @return \Modules\Admin\Models\Menu
      */
-    public function getMenu($menuId): MenuModel
+    public function getMenu($menuId)
     {
         $menu = new MenuModel();
         
@@ -76,7 +76,7 @@ class Menu extends \Ilch\Mapper
      * @param $menuId
      * @return array|[]
      */
-    public function getMenuItems($menuId): array
+    public function getMenuItems($menuId)
     {
         $items = [];
         $itemRows = $this->db()->select('*')
@@ -156,7 +156,7 @@ class Menu extends \Ilch\Mapper
      * @param MenuItem $menuItem
      * @return integer
      */
-    public function saveItem(MenuItem $menuItem): int
+    public function saveItem(MenuItem $menuItem)
     {
         $fields = [
             'href' => $menuItem->getHref(),
@@ -231,7 +231,7 @@ class Menu extends \Ilch\Mapper
      * @param MenuModel $menu
      * @return integer
      */
-    public function save(MenuModel $menu): int
+    public function save(MenuModel $menu)
     {
         $menuId = (int)$this->db()->select('id', 'menu', ['id' => $menu->getId()])
             ->execute()

@@ -16,7 +16,7 @@ class Imprint extends \Ilch\Mapper
      * @param array $where
      * @return ImprintModel[]|array
      */
-    public function getImprint($where = []): array
+    public function getImprint($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('imprint')

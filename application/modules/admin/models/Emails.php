@@ -48,7 +48,7 @@ class Emails extends \Ilch\Model
      *
      * @return string
      */
-    public function getModuleKey(): string
+    public function getModuleKey()
     {
         return $this->moduleKey;
     }
@@ -59,7 +59,7 @@ class Emails extends \Ilch\Model
      * @param int $moduleKey
      * @return $this
      */
-    public function setModuleKey($moduleKey): self
+    public function setModuleKey($moduleKey)
     {
         $this->moduleKey = (string)$moduleKey;
 
@@ -71,7 +71,7 @@ class Emails extends \Ilch\Model
      *
      * @return string
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
@@ -82,7 +82,7 @@ class Emails extends \Ilch\Model
      * @param string $type
      * @return $this
      */
-    public function setType($type): self
+    public function setType($type)
     {
         $this->type = (string)$type;
 
@@ -94,7 +94,7 @@ class Emails extends \Ilch\Model
      **
      * @return string
      */
-    public function getDesc(): string
+    public function getDesc()
     {
         return $this->desc;
     }
@@ -105,7 +105,7 @@ class Emails extends \Ilch\Model
      * @param string $desc
      * @return $this
      */
-    public function setDesc($desc): self
+    public function setDesc($desc)
     {
         $this->desc = (string)$desc;
 
@@ -117,7 +117,7 @@ class Emails extends \Ilch\Model
      **
      * @return string
      */
-    public function getText(): string
+    public function getText()
     {
         return $this->text;
     }
@@ -128,7 +128,7 @@ class Emails extends \Ilch\Model
      * @param string $text
      * @return $this
      */
-    public function setText($text): self
+    public function setText($text)
     {
         $this->text = (string)$text;
 
@@ -140,7 +140,7 @@ class Emails extends \Ilch\Model
      **
      * @return string
      */
-    public function getLocale(): string
+    public function getLocale()
     {
         return $this->locale;
     }
@@ -151,7 +151,7 @@ class Emails extends \Ilch\Model
      * @param string $locale
      * @return $this
      */
-    public function setLocale($locale): self
+    public function setLocale($locale)
     {
         $this->locale = (string)$locale;
 

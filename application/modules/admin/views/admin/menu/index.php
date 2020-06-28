@@ -3,6 +3,8 @@ use Ilch\View;
 use Modules\Admin\Mappers\Menu as MenuMapper;
 use Modules\Admin\Models\MenuItem;
 
+/* @var View $this */
+
 $menuItems = $this->get('menuItems');
 $menuMapper = $this->get('menuMapper');
 $pages = $this->get('pages');

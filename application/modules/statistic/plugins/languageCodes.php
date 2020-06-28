@@ -8,7 +8,7 @@ namespace Modules\Statistic\Plugins;
 
 class LanguageCodes
 {
-    public function statisticLanguage($language, $locale): string
+    public function statisticLanguage($language, $locale)
     {
         $languageDEArray = [
             'aa' => 'Fern',

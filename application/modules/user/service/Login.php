@@ -47,7 +47,7 @@ class Login
      * @return LoginResult
      * @throws \Ilch\Database\Exception
      */
-    public function perform($userNameOrEmail, $password): LoginResult
+    public function perform($userNameOrEmail, $password)
     {
         $user = $this->mapper->getUserByEmail($userNameOrEmail);
 

@@ -27,7 +27,7 @@ class Imprint extends \Ilch\Model
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -38,7 +38,7 @@ class Imprint extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id): self
+    public function setId($id)
     {
         $this->id = (int)$id;
 
@@ -50,7 +50,7 @@ class Imprint extends \Ilch\Model
      *
      * @return string
      */
-    public function getImprint(): string
+    public function getImprint()
     {
         return $this->imprint;
     }
@@ -61,7 +61,7 @@ class Imprint extends \Ilch\Model
      * @param string $imprint
      * @return $this
      */
-    public function setImprint($imprint): self
+    public function setImprint($imprint)
     {
         $this->imprint = (string)$imprint;
 

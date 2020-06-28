@@ -56,7 +56,7 @@ class Friend extends \Ilch\Model
      * @param integer $id
      * @return $this
      */
-    public function setId($id): self
+    public function setId($id)
     {
         $this->id = (int)$id;
 
@@ -68,7 +68,7 @@ class Friend extends \Ilch\Model
      *
      * @return integer
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -79,7 +79,7 @@ class Friend extends \Ilch\Model
      * @param integer $userId
      * @return $this
      */
-    public function setUserId($userId): self
+    public function setUserId($userId)
     {
         $this->userId = $userId;
 
@@ -91,7 +91,7 @@ class Friend extends \Ilch\Model
      *
      * @return integer
      */
-    public function getUserId(): int
+    public function getUserId()
     {
         return $this->userId;
     }
@@ -102,7 +102,7 @@ class Friend extends \Ilch\Model
      * @param integer $friendUserId
      * @return $this
      */
-    public function setFriendUserId($friendUserId): self
+    public function setFriendUserId($friendUserId)
     {
         $this->friendUserId = $friendUserId;
 
@@ -114,7 +114,7 @@ class Friend extends \Ilch\Model
      *
      * @return integer
      */
-    public function getFriendUserId(): int
+    public function getFriendUserId()
     {
         return $this->friendUserId;
     }
@@ -124,7 +124,7 @@ class Friend extends \Ilch\Model
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -135,7 +135,7 @@ class Friend extends \Ilch\Model
      * @param string $name
      * @return $this
      */
-    public function setName($name): self
+    public function setName($name)
     {
         $this->name = $name;
 
@@ -158,7 +158,7 @@ class Friend extends \Ilch\Model
      * @param mixed $avatar
      * @return $this
      */
-    public function setAvatar($avatar): self
+    public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
 
@@ -177,7 +177,7 @@ class Friend extends \Ilch\Model
      * @param mixed $approved
      * @return $this
      */
-    public function setApproved($approved): self
+    public function setApproved($approved)
     {
         $this->approved = $approved;
 

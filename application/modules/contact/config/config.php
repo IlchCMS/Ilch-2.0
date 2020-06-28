@@ -36,7 +36,7 @@ class Config extends \Ilch\Config\Install
         $receiverMapper->save($receiverModel);
     }
 
-    public function getInstallSql(): string
+    public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_contact_receivers` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,

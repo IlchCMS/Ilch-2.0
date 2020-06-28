@@ -54,7 +54,7 @@ class Config extends \Ilch\Config\Install
              DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'teams'");
     }
 
-    public function getInstallSql(): string
+    public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_teams` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,

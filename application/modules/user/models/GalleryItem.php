@@ -62,7 +62,7 @@ class GalleryItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -73,7 +73,7 @@ class GalleryItem extends \Ilch\Model
      * @param integer $id
      * @return GalleryItem
      */
-    public function setId($id): GalleryItem
+    public function setId($id)
     {
         $this->id = (int) $id;
 
@@ -85,7 +85,7 @@ class GalleryItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getSort(): int
+    public function getSort()
     {
         return $this->sort;
     }
@@ -96,7 +96,7 @@ class GalleryItem extends \Ilch\Model
      * @param integer $sort
      * @return GalleryItem
      */
-    public function setSort($sort): GalleryItem
+    public function setSort($sort)
     {
         $this->sort = (int)$sort;
 
@@ -108,7 +108,7 @@ class GalleryItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getType(): int
+    public function getType()
     {
         return $this->type;
     }
@@ -119,7 +119,7 @@ class GalleryItem extends \Ilch\Model
      * @param integer $type
      * @return GalleryItem
      */
-    public function setType($type): GalleryItem
+    public function setType($type)
     {
         $this->type = (int)$type;
 
@@ -131,7 +131,7 @@ class GalleryItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getUserId(): int
+    public function getUserId()
     {
         return $this->userId;
     }
@@ -142,7 +142,7 @@ class GalleryItem extends \Ilch\Model
      * @param integer $userId
      * @return GalleryItem
      */
-    public function setUserId($userId): GalleryItem
+    public function setUserId($userId)
     {
         $this->userId = (int) $userId;
 
@@ -154,7 +154,7 @@ class GalleryItem extends \Ilch\Model
      *
      * @return integer
      */
-    public function getParentId(): int
+    public function getParentId()
     {
         return $this->parentId;
     }
@@ -165,7 +165,7 @@ class GalleryItem extends \Ilch\Model
      * @param integer $id
      * @return GalleryItem
      */
-    public function setParentId($id): GalleryItem
+    public function setParentId($id)
     {
         $this->parentId = (int) $id;
 
@@ -177,7 +177,7 @@ class GalleryItem extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -188,7 +188,7 @@ class GalleryItem extends \Ilch\Model
      * @param string $title
      * @return GalleryItem
      */
-    public function setTitle($title): GalleryItem
+    public function setTitle($title)
     {
         $this->title = (string) $title;
 
@@ -200,7 +200,7 @@ class GalleryItem extends \Ilch\Model
      *
      * @return string
      */
-    public function getDesc(): string
+    public function getDesc()
     {
         return $this->desc;
     }
@@ -211,7 +211,7 @@ class GalleryItem extends \Ilch\Model
      * @param string $desc
      * @return GalleryItem
      */
-    public function setDesc($desc): GalleryItem
+    public function setDesc($desc)
     {
         $this->desc = (string)$desc;
 

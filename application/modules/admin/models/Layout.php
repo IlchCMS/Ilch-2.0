@@ -84,7 +84,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getKey(): string
+    public function getKey()
     {
         return $this->key;
     }
@@ -104,7 +104,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -124,7 +124,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getVersion(): string
+    public function getVersion()
     {
         return $this->version;
     }
@@ -144,7 +144,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getAuthor(): string
+    public function getAuthor()
     {
         return $this->author;
     }
@@ -164,7 +164,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getLink(): string
+    public function getLink()
     {
         return $this->link;
     }
@@ -184,7 +184,7 @@ class Layout extends \Ilch\Model
      *
      * @return bool
      */
-    public function getOfficial(): bool
+    public function getOfficial()
     {
         return $this->official;
     }
@@ -204,7 +204,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getDesc(): string
+    public function getDesc()
     {
         return $this->desc;
     }
@@ -224,7 +224,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getModulekey(): string
+    public function getModulekey()
     {
         return $this->modulekey;
     }
@@ -244,7 +244,7 @@ class Layout extends \Ilch\Model
      *
      * @return array
      */
-    public function getSettings(): array
+    public function getSettings()
     {
         return $this->settings;
     }
@@ -255,7 +255,7 @@ class Layout extends \Ilch\Model
      * @param array $settings
      * @return Layout
      */
-    public function setSettings($settings): Layout
+    public function setSettings($settings)
     {
         $this->settings = $settings;
         return $this;
@@ -266,7 +266,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getIlchCore(): string
+    public function getIlchCore()
     {
         return $this->ilchCore;
     }
@@ -277,7 +277,7 @@ class Layout extends \Ilch\Model
      * @param string $ilchCore
      * @return Layout
      */
-    public function setIlchCore($ilchCore): Layout
+    public function setIlchCore($ilchCore)
     {
         $this->ilchCore = $ilchCore;
         return $this;

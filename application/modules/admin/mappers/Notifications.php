@@ -48,7 +48,7 @@ class Notifications extends \Ilch\Mapper
      * @param array $where
      * @return array
      */
-    public function getNotificationsBy($where = []): array
+    public function getNotificationsBy($where = [])
     {
         $array = $this->db()->select('*')
             ->from('admin_notifications')
@@ -80,7 +80,7 @@ class Notifications extends \Ilch\Mapper
      *
      * @return NotificationModel[]|[]
      */
-    public function getNotifications(): array
+    public function getNotifications()
     {
         return $this->getNotificationsBy();
     }
@@ -91,7 +91,7 @@ class Notifications extends \Ilch\Mapper
      * @param string $module
      * @return NotificationModel[]|[]
      */
-    public function getNotificationsByModule($module): array
+    public function getNotificationsByModule($module)
     {
         return $this->getNotificationsBy(['module' => $module]);
     }
@@ -102,7 +102,7 @@ class Notifications extends \Ilch\Mapper
      * @param $type
      * @return array
      */
-    public function getNotificationsByType($type): array
+    public function getNotificationsByType($type)
     {
         return $this->getNotificationsBy(['type' => $type]);
     }
@@ -113,7 +113,7 @@ class Notifications extends \Ilch\Mapper
      * @param NotificationModel $notification
      * @return bool true|false
      */
-    public function isValidNotification(NotificationModel $notification): bool
+    public function isValidNotification(NotificationModel $notification)
     {
         $fields = [
             'module' => $notification->getModule(),
@@ -136,7 +136,7 @@ class Notifications extends \Ilch\Mapper
      * @param NotificationModel $notification
      * @return int
      */
-    public function addNotification(NotificationModel $notification): int
+    public function addNotification(NotificationModel $notification)
     {
         if (!$this->isValidNotification($notification)) {
             return 0;
@@ -184,7 +184,7 @@ class Notifications extends \Ilch\Mapper
      * @param NotificationModel $notification
      * @return int
      */
-    public function updateNotificationById(NotificationModel $notification): int
+    public function updateNotificationById(NotificationModel $notification)
     {
         if (!$this->isValidNotification($notification)) {
             return 0;

@@ -153,7 +153,7 @@ class Joins extends \Ilch\Mapper
      * @param JoinsModel $join
      * @return int
      */
-    public function save(JoinsModel $join): int
+    public function save(JoinsModel $join)
     {
         $fields = [
             'userId' => $join->getUserId(),

@@ -56,7 +56,7 @@ class Notification extends \Ilch\Model
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -75,7 +75,7 @@ class Notification extends \Ilch\Model
      * Get the timestamp of the notification
      *
      */
-    public function getTimestamp(): int
+    public function getTimestamp()
     {
         return $this->timestamp;
     }
@@ -95,7 +95,7 @@ class Notification extends \Ilch\Model
      *
      * @return string
      */
-    public function getModule(): string
+    public function getModule()
     {
         return $this->module;
     }
@@ -115,7 +115,7 @@ class Notification extends \Ilch\Model
      *
      * @return string
      */
-    public function getMessage(): string
+    public function getMessage()
     {
         return $this->message;
     }
@@ -135,7 +135,7 @@ class Notification extends \Ilch\Model
      *
      * @return string
      */
-    public function getURL(): string
+    public function getURL()
     {
         return $this->url;
     }
@@ -155,7 +155,7 @@ class Notification extends \Ilch\Model
      *
      * @return string
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }

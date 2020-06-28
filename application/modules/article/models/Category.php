@@ -27,7 +27,7 @@ class Category extends \Ilch\Mapper
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -38,7 +38,7 @@ class Category extends \Ilch\Mapper
      * @param int $id
      * @return $this
      */
-    public function setId($id): self
+    public function setId($id)
     {
         $this->id = (int) $id;
 
@@ -50,7 +50,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -60,7 +60,7 @@ class Category extends \Ilch\Mapper
      * @param string $name
      * @return $this
      */
-    public function setName($name): self
+    public function setName($name)
     {
         $this->name = (string) $name;
 

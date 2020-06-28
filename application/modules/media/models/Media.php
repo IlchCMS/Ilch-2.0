@@ -70,7 +70,7 @@ class Media extends \Ilch\Model
      * @return integer
      */
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -80,7 +80,7 @@ class Media extends \Ilch\Model
      *
      * @return string
      */
-    public function getUrl(): string
+    public function getUrl()
     {
         return $this->url;
     }
@@ -90,7 +90,7 @@ class Media extends \Ilch\Model
      *
      * @return string
      */
-    public function getUrlThumb(): string
+    public function getUrlThumb()
     {
         return $this->urlthumb;
     }
@@ -100,7 +100,7 @@ class Media extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnding(): string
+    public function getEnding()
     {
         return $this->ending;
     }
@@ -110,7 +110,7 @@ class Media extends \Ilch\Model
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -120,7 +120,7 @@ class Media extends \Ilch\Model
      *
      * @return string
      */
-    public function getDatetime(): string
+    public function getDatetime()
     {
         return $this->datetime;
     }
@@ -130,7 +130,7 @@ class Media extends \Ilch\Model
      *
      * @return integer
      */
-    public function getCatName(): int
+    public function getCatName()
     {
         return $this->catname;
     }
@@ -140,7 +140,7 @@ class Media extends \Ilch\Model
      *
      * @return integer
      */
-    public function getCatId(): int
+    public function getCatId()
     {
         return $this->catid;
     }

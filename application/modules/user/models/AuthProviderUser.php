@@ -65,7 +65,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setUserId($user_id): self
+    public function setUserId($user_id)
     {
         $this->user_id = $user_id;
 
@@ -89,7 +89,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setProvider($provider): self
+    public function setProvider($provider)
     {
         $this->provider = $provider;
 
@@ -113,7 +113,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setIdentifier($identifier): self
+    public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;
 
@@ -137,7 +137,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setOauthToken($oauth_token): self
+    public function setOauthToken($oauth_token)
     {
         $this->oauth_token = $oauth_token;
 
@@ -161,7 +161,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setOauthTokenSecret($oauth_token_secret): self
+    public function setOauthTokenSecret($oauth_token_secret)
     {
         $this->oauth_token_secret = $oauth_token_secret;
 
@@ -185,7 +185,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setScreenName($screen_name): self
+    public function setScreenName($screen_name)
     {
         $this->screen_name = $screen_name;
 
@@ -209,7 +209,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setCreatedAt($created_at): self
+    public function setCreatedAt($created_at)
     {
         $this->created_at = $created_at;
 

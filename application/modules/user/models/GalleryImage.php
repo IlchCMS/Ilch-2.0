@@ -76,7 +76,7 @@ class GalleryImage extends \Ilch\Model
      *
      * @return integer
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -86,7 +86,7 @@ class GalleryImage extends \Ilch\Model
      *
      * @return integer
      */
-    public function getUserId(): int
+    public function getUserId()
     {
         return $this->userId;
     }
@@ -96,7 +96,7 @@ class GalleryImage extends \Ilch\Model
      *
      * @return string
      */
-    public function getImageId(): string
+    public function getImageId()
     {
         return $this->imageId;
     }
@@ -106,7 +106,7 @@ class GalleryImage extends \Ilch\Model
      *
      * @return string
      */
-    public function getImageThumb(): string
+    public function getImageThumb()
     {
         return $this->thumb;
     }
@@ -116,7 +116,7 @@ class GalleryImage extends \Ilch\Model
      *
      * @return string
      */
-    public function getImageTitle(): string
+    public function getImageTitle()
     {
         return $this->title;
     }
@@ -126,7 +126,7 @@ class GalleryImage extends \Ilch\Model
      *
      * @return string
      */
-    public function getImageDesc(): string
+    public function getImageDesc()
     {
         return $this->desc;
     }
@@ -136,7 +136,7 @@ class GalleryImage extends \Ilch\Model
      *
      * @return string
      */
-    public function getCat(): string
+    public function getCat()
     {
         return $this->cat;
     }
@@ -146,7 +146,7 @@ class GalleryImage extends \Ilch\Model
      *
      * @return string
      */
-    public function getVisits(): string
+    public function getVisits()
     {
         return $this->visits;
     }
@@ -156,7 +156,7 @@ class GalleryImage extends \Ilch\Model
      *
      * @return string
      */
-    public function getImageUrl(): string
+    public function getImageUrl()
     {
         return $this->url;
     }

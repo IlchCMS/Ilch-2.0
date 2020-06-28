@@ -34,7 +34,7 @@ class Backup extends \Ilch\Model
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -54,7 +54,7 @@ class Backup extends \Ilch\Model
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -74,7 +74,7 @@ class Backup extends \Ilch\Model
      **
      * @return string
      */
-    public function getDate(): string
+    public function getDate()
     {
         return $this->date;
     }

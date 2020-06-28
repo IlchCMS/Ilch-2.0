@@ -180,7 +180,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -191,7 +191,7 @@ class User extends \Ilch\Model
      * @param int $id
      * @return User
      */
-    public function setId($id): User
+    public function setId($id)
     {
         $this->id = (int)$id;
 
@@ -203,7 +203,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -214,7 +214,7 @@ class User extends \Ilch\Model
      * @param string $username
      * @return User
      */
-    public function setName($username): User
+    public function setName($username)
     {
         $this->name = (string)$username;
 
@@ -226,7 +226,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -237,7 +237,7 @@ class User extends \Ilch\Model
      * @param string $email
      * @return User
      */
-    public function setEmail($email): User
+    public function setEmail($email)
     {
         $this->email = (string)$email;
 
@@ -249,7 +249,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -260,7 +260,7 @@ class User extends \Ilch\Model
      * @param string $password
      * @return User
      */
-    public function setPassword($password): User
+    public function setPassword($password)
     {
         $this->password = (string)$password;
 
@@ -272,7 +272,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale(): string
+    public function getLocale()
     {
         return $this->locale;
     }
@@ -283,7 +283,7 @@ class User extends \Ilch\Model
      * @param string $locale
      * @return User
      */
-    public function setLocale($locale): User
+    public function setLocale($locale)
     {
         $this->locale = (string)$locale;
 
@@ -295,7 +295,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getOptMail(): int
+    public function getOptMail()
     {
         return $this->opt_mail;
     }
@@ -306,7 +306,7 @@ class User extends \Ilch\Model
      * @param int $opt_mail
      * @return User
      */
-    public function setOptMail($opt_mail): User
+    public function setOptMail($opt_mail)
     {
         $this->opt_mail = (string)$opt_mail;
 
@@ -318,7 +318,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getOptGallery(): int
+    public function getOptGallery()
     {
         return $this->opt_gallery;
     }
@@ -329,7 +329,7 @@ class User extends \Ilch\Model
      * @param int $opt_gallery
      * @return User
      */
-    public function setOptGallery($opt_gallery): User
+    public function setOptGallery($opt_gallery)
     {
         $this->opt_gallery = (string)$opt_gallery;
 
@@ -341,7 +341,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getConfirmed(): int
+    public function getConfirmed()
     {
         return $this->confirmed;
     }
@@ -352,7 +352,7 @@ class User extends \Ilch\Model
      * @param int $confirmed
      * @return User
      */
-    public function setConfirmed($confirmed): User
+    public function setConfirmed($confirmed)
     {
         $this->confirmed = (int)$confirmed;
 
@@ -364,7 +364,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getConfirmedCode(): string
+    public function getConfirmedCode()
     {
         return $this->confirmedCode;
     }
@@ -375,7 +375,7 @@ class User extends \Ilch\Model
      * @param string $confirmedCode
      * @return User
      */
-    public function setConfirmedCode($confirmedCode): User
+    public function setConfirmedCode($confirmedCode)
     {
         $this->confirmedCode = (string)$confirmedCode;
 
@@ -387,7 +387,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getSelector(): string
+    public function getSelector()
     {
         return $this->selector;
     }
@@ -398,7 +398,7 @@ class User extends \Ilch\Model
      * @param string $selector
      * @return User
      */
-    public function setSelector($selector): User
+    public function setSelector($selector)
     {
         $this->selector = (string)$selector;
 
@@ -410,7 +410,7 @@ class User extends \Ilch\Model
      *
      * @return \Ilch\Date
      */
-    public function getExpires(): \Ilch\Date
+    public function getExpires()
     {
         return $this->expires;
     }
@@ -421,7 +421,7 @@ class User extends \Ilch\Model
      * @param $expires
      * @return User
      */
-    public function setExpires($expires): User
+    public function setExpires($expires)
     {
         $this->expires = $expires;
 
@@ -433,7 +433,7 @@ class User extends \Ilch\Model
      *
      * @return Group[]
      */
-    public function getGroups(): array
+    public function getGroups()
     {
         return $this->groups;
     }
@@ -444,7 +444,7 @@ class User extends \Ilch\Model
      * @param Group[] $groups
      * @return User
      */
-    public function setGroups($groups): User
+    public function setGroups($groups)
     {
         $this->groups = $groups;
 
@@ -457,7 +457,7 @@ class User extends \Ilch\Model
      * @param Group $group
      * @return User
      */
-    public function addGroup(Group $group): User
+    public function addGroup(Group $group)
     {
         if (!isset($this->groups[$group->getId()])) {
             $this->groups[$group->getId()] = $group;
@@ -472,7 +472,7 @@ class User extends \Ilch\Model
      * @param integer $groupId
      * @return boolean
      */
-    public function hasGroup($groupId): bool
+    public function hasGroup($groupId)
     {
         if (!isset($this->groups[$groupId])) {
             return false;
@@ -486,7 +486,7 @@ class User extends \Ilch\Model
      *
      * @return \Ilch\Date
      */
-    public function getDateCreated(): \Ilch\Date
+    public function getDateCreated()
     {
         return $this->dateCreated;
     }
@@ -497,7 +497,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $dateCreated
      * @return User
      */
-    public function setDateCreated($dateCreated): User
+    public function setDateCreated($dateCreated)
     {
         $this->dateCreated = $dateCreated;
 
@@ -509,7 +509,7 @@ class User extends \Ilch\Model
      *
      * @return \Ilch\Date
      */
-    public function getDateConfirmed(): \Ilch\Date
+    public function getDateConfirmed()
     {
         return $this->dateConfirmed;
     }
@@ -520,7 +520,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $dateConfirmed
      * @return User
      */
-    public function setDateConfirmed($dateConfirmed): User
+    public function setDateConfirmed($dateConfirmed)
     {
         $this->dateConfirmed = $dateConfirmed;
 
@@ -532,7 +532,7 @@ class User extends \Ilch\Model
      *
      * @return \Ilch\Date
      */
-    public function getDateLastActivity(): \Ilch\Date
+    public function getDateLastActivity()
     {
         return $this->dateLastActivity;
     }
@@ -543,7 +543,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $dateLastActivity
      * @return User
      */
-    public function setDateLastActivity($dateLastActivity): User
+    public function setDateLastActivity($dateLastActivity)
     {
         $this->dateLastActivity = $dateLastActivity;
 
@@ -555,7 +555,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName()
     {
         return $this->firstname;
     }
@@ -566,7 +566,7 @@ class User extends \Ilch\Model
      * @param string $firstname
      * @return User
      */
-    public function setFirstName($firstname): User
+    public function setFirstName($firstname)
     {
         $this->firstname = (string)$firstname;
 
@@ -578,7 +578,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName()
     {
         return $this->lastname;
     }
@@ -589,7 +589,7 @@ class User extends \Ilch\Model
      * @param string $lastname
      * @return User
      */
-    public function setLastName($lastname): User
+    public function setLastName($lastname)
     {
         $this->lastname = (string)$lastname;
 
@@ -601,7 +601,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getGender(): int
+    public function getGender()
     {
         return $this->gender;
     }
@@ -612,7 +612,7 @@ class User extends \Ilch\Model
      * @param int $gender
      * @return User
      */
-    public function setGender($gender): User
+    public function setGender($gender)
     {
         $this->gender = (int)$gender;
 
@@ -624,7 +624,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getAvatar(): string
+    public function getAvatar()
     {
         return $this->avatar;
     }
@@ -635,7 +635,7 @@ class User extends \Ilch\Model
      * @param string $avatar
      * @return User
      */
-    public function setAvatar($avatar): User
+    public function setAvatar($avatar)
     {
         $this->avatar = (string)$avatar;
 
@@ -647,7 +647,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getSignature(): string
+    public function getSignature()
     {
         return $this->signature;
     }
@@ -658,7 +658,7 @@ class User extends \Ilch\Model
      * @param string $signature
      * @return User
      */
-    public function setSignature($signature): User
+    public function setSignature($signature)
     {
         $this->signature = (string)$signature;
 
@@ -670,7 +670,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getCity(): string
+    public function getCity()
     {
         return $this->city;
     }
@@ -681,7 +681,7 @@ class User extends \Ilch\Model
      * @param string $city
      * @return User
      */
-    public function setCity($city): User
+    public function setCity($city)
     {
         $this->city = (string)$city;
 
@@ -707,7 +707,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $birthday
      * @return User
      */
-    public function setBirthday($birthday): User
+    public function setBirthday($birthday)
     {
         $this->birthday = $birthday;
 
@@ -730,7 +730,7 @@ class User extends \Ilch\Model
      * @param mixed $locked
      * @return User
      */
-    public function setLocked($locked): User
+    public function setLocked($locked)
     {
         $this->locked = $locked;
         
@@ -742,7 +742,7 @@ class User extends \Ilch\Model
      *
      * @return \Ilch\Date
      */
-    public function getSelectsDelete(): \Ilch\Date
+    public function getSelectsDelete()
     {
         return $this->selectsdelete;
     }
@@ -753,7 +753,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $selectsdelete
      * @return User
      */
-    public function setSelectsDelete($selectsdelete): User
+    public function setSelectsDelete($selectsdelete)
     {
         $this->selectsdelete = $selectsdelete;
         return $this;
@@ -764,7 +764,7 @@ class User extends \Ilch\Model
      *
      * @return boolean
      */
-    public function isAdmin(): bool
+    public function isAdmin()
     {
         if (array_key_exists(1, $this->getGroups())) {
             return true;
@@ -784,7 +784,7 @@ class User extends \Ilch\Model
      *
      * @todo refactor -> kein Abhängigkeiten zu anderen Klassen, die keine Models sind
      */
-    public function hasAccess($key, $isInAdmin = true): bool
+    public function hasAccess($key, $isInAdmin = true)
     {
         if ($this->isAdmin()) {
             /*

@@ -49,7 +49,7 @@ E-Mail: mustermann@musterfirma.de</p>
 ', 1);
     }
 
-    public function getInstallSql(): string
+    public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_imprint` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,

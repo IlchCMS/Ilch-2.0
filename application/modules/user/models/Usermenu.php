@@ -42,7 +42,7 @@ class Usermenu extends \Ilch\Model
      * @param integer $id
      * @return $this
      */
-    public function setId($id): self
+    public function setId($id)
     {
         $this->id = (int)$id;
 
@@ -54,7 +54,7 @@ class Usermenu extends \Ilch\Model
      *
      * @return integer
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -65,7 +65,7 @@ class Usermenu extends \Ilch\Model
      * @param int $key
      * @return $this
      */
-    public function setKey($key): self
+    public function setKey($key)
     {
         $this->key = (string)$key;
 
@@ -88,7 +88,7 @@ class Usermenu extends \Ilch\Model
      * @param string $icon
      * @return $this
      */
-    public function setIcon($icon): self
+    public function setIcon($icon)
     {
         $this->icon = $icon;
 
@@ -100,7 +100,7 @@ class Usermenu extends \Ilch\Model
      *
      * @return string
      */
-    public function getIcon(): string
+    public function getIcon()
     {
         return $this->icon;
     }
@@ -111,7 +111,7 @@ class Usermenu extends \Ilch\Model
      * @param int $position
      * @return $this
      */
-    public function setPosition($position): self
+    public function setPosition($position)
     {
         $this->position = $position;
 
@@ -123,7 +123,7 @@ class Usermenu extends \Ilch\Model
      *
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition()
     {
         return $this->position;
     }

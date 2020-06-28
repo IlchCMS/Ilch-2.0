@@ -109,7 +109,7 @@ class User extends \Ilch\Mapper
      * @return array
      * @since 2.1.20
      */
-    public function getUserListByGroupId($groupId, $confirmed = 0, $pagination = null): array
+    public function getUserListByGroupId($groupId, $confirmed = 0, $pagination = null)
     {
         $select = $this->db()->select()
             ->fields(['u.id', 'u.name', 'u.opt_mail', 'u.date_created', 'u.date_last_activity', 'u.confirmed'])
@@ -197,7 +197,7 @@ class User extends \Ilch\Mapper
      * @param  mixed[] $userRow
      * @return UserModel
      */
-    public function loadFromArray($userRow = []): UserModel
+    public function loadFromArray($userRow = [])
     {
         $user = new UserModel();
 
@@ -309,7 +309,7 @@ class User extends \Ilch\Mapper
      *
      * @return int The userId of the updated or inserted user.
      */
-    public function save(UserModel $user): int
+    public function save(UserModel $user)
     {
         $fields = [];
         $name = $user->getName();
@@ -437,7 +437,7 @@ class User extends \Ilch\Mapper
      *
      * @return integer
      */
-    public function getAdministratorCount(): int
+    public function getAdministratorCount()
     {
         return $this->db()->select('COUNT(*)', 'users_groups', ['group_id' => 1])
             ->execute()
@@ -464,7 +464,7 @@ class User extends \Ilch\Mapper
      *
      * @return boolean True if a user with this id exists, false otherwise.
      */
-    public function userWithIdExists($userId): bool
+    public function userWithIdExists($userId)
     {
         return (bool)$this->db()->select('id')
             ->from('users')
@@ -515,9 +515,9 @@ class User extends \Ilch\Mapper
      *
      * @return boolean True of success, otherwise false.
      */
-     public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00'): bool
+     public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00')
      {
-        if (is_a($userId, UserModel::class)) {
+        if (is_a($userId, '\Modules\User\Models\User')) {
             $userId = $userId->getId();
         }
         
@@ -534,7 +534,7 @@ class User extends \Ilch\Mapper
      *
      * @return boolean True of success, otherwise false.
      */
-     public function deleteselectsdelete($timetodelete = 5): bool
+     public function deleteselectsdelete($timetodelete = 5)
      {
         $date = new \Ilch\Date();
         $date->modify('-'.$timetodelete.' days');
@@ -560,9 +560,9 @@ class User extends \Ilch\Mapper
      *
      * @return boolean True of success, otherwise false.
      */
-    public function delete($userId): bool
+    public function delete($userId)
     {
-        if (is_a($userId, UserModel::class)) {
+        if (is_a($userId, '\Modules\User\Models\User')) {
             $userId = $userId->getId();
         }
 
@@ -591,7 +591,7 @@ class User extends \Ilch\Mapper
             ->execute();
     }
 
-    public function getDummyUser(): UserModel
+    public function getDummyUser()
     {
         $user = new UserModel();
         $groups = new GroupMapper();

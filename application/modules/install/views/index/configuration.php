@@ -17,7 +17,7 @@
     <div id="modulesContent" class="col-lg-offset-1 col-lg-11"></div>
 </div>
 
-<div class="form-group <?php if (!empty($errors['adminName'])) { echo 'has-error'; } ?>">
+<div class="form-group <?php if (!empty($errors['adminName'])) { echo 'has-error'; }; ?>">
     <label for="adminName" class="control-label col-lg-3">
         <?=$this->getTrans('adminName') ?>:
     </label>
@@ -32,7 +32,7 @@
         <?php endif; ?>
     </div>
 </div>
-<div class="form-group <?php if (!empty($errors['adminPassword'])) { echo 'has-error'; } ?>">
+<div class="form-group <?php if (!empty($errors['adminPassword'])) { echo 'has-error'; }; ?>">
     <label for="adminPassword" class="control-label col-lg-3">
         <?=$this->getTrans('adminPassword') ?>:
     </label>
@@ -47,7 +47,7 @@
         <?php endif; ?>
     </div>
 </div>
-<div class="form-group <?php if (!empty($errors['adminPassword2'])) { echo 'has-error'; } ?>">
+<div class="form-group <?php if (!empty($errors['adminPassword2'])) { echo 'has-error'; }; ?>">
     <label for="adminPassword2" class="control-label col-lg-3">
         <?=$this->getTrans('adminPassword2') ?>:
     </label>
@@ -62,7 +62,7 @@
         <?php endif; ?>
     </div>
 </div>
-<div class="form-group <?php if (!empty($errors['adminEmail'])) { echo 'has-error'; } ?>">
+<div class="form-group <?php if (!empty($errors['adminEmail'])) { echo 'has-error'; }; ?>">
     <label for="adminEmail" class="control-label col-lg-3">
         <?=$this->getTrans('adminEmail') ?>:
     </label>

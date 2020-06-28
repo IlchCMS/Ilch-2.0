@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-if (!version_compare(PHP_VERSION, '7.0', '>=')) {
+if (!version_compare(phpversion(), '7.0', '>=')) {
     die('Ilch CMS 2 needs at least php version 7.0');
 }
 

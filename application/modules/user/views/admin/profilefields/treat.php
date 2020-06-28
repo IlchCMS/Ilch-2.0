@@ -102,7 +102,7 @@ function addIndex(index) {
                 <button type="button" class="btn" onclick="deleteTranslation(<?=$i ?>)">-</button>
                 <label for="profileFieldName"
                        class="control-label">
-                    <?= $localeList[$profileFieldTranslation->getLocale()] ?? $profileFieldTranslation->getLocale() ?>
+                    <?=(isset($localeList[$profileFieldTranslation->getLocale()])) ? $localeList[$profileFieldTranslation->getLocale()] : $profileFieldTranslation->getLocale() ?>
                 </label>
             </div>
             <input type="hidden"

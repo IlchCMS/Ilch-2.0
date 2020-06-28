@@ -17,7 +17,7 @@ class Template extends \Ilch\Mapper
      * @param null $pagination
      * @return ArticleModel[]|[]
      */
-    public function getTemplates($locale = '', $pagination = null): array
+    public function getTemplates($locale = '', $pagination = null)
     {
         $select = $this->db()->select()
             ->fields(['id', 'author_id', 'description', 'keywords', 'title', 'teaser', 'perma', 'content', 'locale', 'img', 'img_source'])
@@ -101,7 +101,7 @@ class Template extends \Ilch\Mapper
      * @param ArticleModel $article
      * @return int id
      */
-    public function save(ArticleModel $article): int
+    public function save(ArticleModel $article)
     {
         if ($article->getId()) {
             // Existing template
@@ -182,7 +182,7 @@ class Template extends \Ilch\Mapper
      * @param int $id
      * @return int
      */
-    public function delete($id): int
+    public function delete($id)
     {
         return $this->db()->delete('articles_templates')
             ->where(['id' => $id])

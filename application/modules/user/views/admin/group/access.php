@@ -201,7 +201,11 @@
                             <tr>
                                 <td style="vertical-align:middle"><?=$this->escape($group->getName()) ?></td>
                                 <?php
-                                $typeAccessLevel = $accessAccessList['entries'][$group->getId()] ?? 1;
+                                $typeAccessLevel = 1;
+
+                                if (isset($accessAccessList['entries'][$group->getId()])) {
+                                    $typeAccessLevel = $accessAccessList['entries'][$group->getId()];
+                                }
 
                                 foreach ($accessLevelsTrans as $accessLevel => $transKey): ?>
                                     <td class="text-center">

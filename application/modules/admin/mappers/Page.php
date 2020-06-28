@@ -16,7 +16,7 @@ class Page extends \Ilch\Mapper
      * @param string $locale
      * @return PageModel[]|array
      */
-    public function getPageList($locale = ''): array
+    public function getPageList($locale = '')
     {
         $sql = 'SELECT pc.title, pc.perma, p.id FROM `[prefix]_pages` as p
                 LEFT JOIN `[prefix]_pages_content` as pc ON p.id = pc.page_id

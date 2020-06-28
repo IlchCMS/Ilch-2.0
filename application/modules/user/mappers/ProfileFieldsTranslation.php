@@ -16,7 +16,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      * @param  string $locale
      * @return array()|\Modules\User\Models\ProfileFieldTranslation
      */
-    public function getProfileFieldTranslationByLocale($locale): array
+    public function getProfileFieldTranslationByLocale($locale)
     {
         $profileFieldTranslationRows = $this->db()->select('*')
             ->from('profile_trans')
@@ -40,7 +40,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      * @param  int $fieldId
      * @return array()|\Modules\User\Models\ProfileFieldTranslation
      */
-    public function getProfileFieldTranslationByFieldId($fieldId): array
+    public function getProfileFieldTranslationByFieldId($fieldId)
     {
         $profileFieldTranslationRows = $this->db()->select('*')
             ->from('profile_trans')
@@ -64,7 +64,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      * @param  mixed[] $profileFieldRow
      * @return ProfileFieldTranslationModel
      */
-    public function loadFromArray($profileFieldRow = []): ProfileFieldTranslationModel
+    public function loadFromArray($profileFieldRow = [])
     {
         $profileFieldTranslation = new ProfileFieldTranslationModel();
 
@@ -92,8 +92,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      *
      * @return boolean True if success, otherwise false.
      */
-    public function deleteProfileFieldTranslationsByFieldId($fieldId): bool
-    {
+    public function deleteProfileFieldTranslationsByFieldId($fieldId) {
         return $this->db()->delete('profile_trans')
             ->where(['field_id' => $fieldId])
             ->execute();
@@ -107,8 +106,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      *
      * @return boolean True if success, otherwise false.
      */
-    public function deleteProfileFieldTranslation($locale, $fieldId): bool
-    {
+    public function deleteProfileFieldTranslation($locale, $fieldId) {
         return $this->db()->delete('profile_trans')
             ->where(['locale' => $locale, 'field_id' => $fieldId])
             ->execute();

@@ -31,7 +31,7 @@ class Password
      * @return string hashed password
      * @throws \RuntimeException
      */
-    public function hash($password): string
+    public function hash($password)
     {
         $hash = password_hash($password, $this->algorithm);
         if ($hash === false) {
@@ -45,7 +45,7 @@ class Password
      * @param string $hash password hash
      * @return bool
      */
-    public function verify($password, $hash): bool
+    public function verify($password, $hash)
     {
         return password_verify($password, $hash);
     }
@@ -57,7 +57,7 @@ class Password
      * @return string
      * @throws \Exception
      */
-    public static function generateSecurePassword($length = 16, $keyspace = null): string
+    public static function generateSecurePassword($length = 16, $keyspace = null)
     {
         if ($keyspace === null) {
             $keyspace = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`-=~!@#$%^&*()_+,./<>?;:[]{}\|";

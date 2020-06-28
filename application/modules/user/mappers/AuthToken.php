@@ -40,8 +40,7 @@ class AuthToken extends \Ilch\Mapper
      * @param string Modules\User\Models\AuthToken
      * @return int
      */
-    public function addAuthToken($authToken): int
-    {
+    public function addAuthToken($authToken) {
         $insert = $this->db()->insert();
         return $insert->into('auth_tokens')
             ->values(['selector' => $authToken->getSelector(), 'token' => $authToken->getToken(), 'userid' => $authToken->getUserid(), 'expires' => $authToken->getExpires()])

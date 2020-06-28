@@ -205,7 +205,7 @@ class Infos extends \Ilch\Controller\Admin
         $certificate = str_replace(array('-----BEGIN CERTIFICATE-----', '-----END CERTIFICATE-----'), '', $certificate);
         $this->getView()->set('certificateDigest', openssl_digest(base64_decode($certificate), 'SHA1'));
         $this->getView()->set('certificateDigestSHA256', openssl_digest(base64_decode($certificate), 'SHA256'));
-        $this->getView()->set('certificateKeySize', $publicKeyArray['bits'] ?? 0);
+        $this->getView()->set('certificateKeySize', isset($publicKeyArray['bits'])? $publicKeyArray['bits'] : 0);
         $this->getView()->set('certificateKeyType', $keyType);
     }
 

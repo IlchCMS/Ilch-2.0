@@ -11,7 +11,7 @@
             <tr>
                 <td><?=$this->getTrans('phpVersion') ?></td>
                 <td class="text-success">>= 7.0</td>
-                <td class="<?php if (version_compare(PHP_VERSION, '7.0', '>=')): ?>
+                <td class="<?php if (version_compare(phpversion(), '7.0', '>=')): ?>
                                 text-success
                             <?php else: ?>
                                 text-danger

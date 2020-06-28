@@ -87,7 +87,7 @@ class Module extends \Ilch\Model
      *
      * @return string
      */
-    public function getKey(): string
+    public function getKey()
     {
         return $this->key;
     }
@@ -107,7 +107,7 @@ class Module extends \Ilch\Model
      *
      * @return string
      */
-    public function getAuthor(): string
+    public function getAuthor()
     {
         return $this->author;
     }
@@ -127,7 +127,7 @@ class Module extends \Ilch\Model
      *
      * @return string
      */
-    public function getIconSmall(): string
+    public function getIconSmall()
     {
         return $this->iconSmall;
     }
@@ -147,7 +147,7 @@ class Module extends \Ilch\Model
      *
      * @return boolean
      */
-    public function getSystemModule(): bool
+    public function getSystemModule()
     {
         return $this->systemModule;
     }
@@ -167,7 +167,7 @@ class Module extends \Ilch\Model
      *
      * @return boolean
      */
-    public function getLayoutModule(): bool
+    public function getLayoutModule()
     {
         return $this->layoutModule;
     }
@@ -187,7 +187,7 @@ class Module extends \Ilch\Model
      *
      * @return boolean
      */
-    public function getHideMenu(): bool
+    public function getHideMenu()
     {
         return $this->hideMenu;
     }
@@ -232,7 +232,7 @@ class Module extends \Ilch\Model
      *
      * @return array
      */
-    public function getContent(): array
+    public function getContent()
     {
         return $this->content;
     }
@@ -242,7 +242,7 @@ class Module extends \Ilch\Model
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -262,7 +262,7 @@ class Module extends \Ilch\Model
      *
      * @return string
      */
-    public function getVersion(): string
+    public function getVersion()
     {
         return $this->version;
     }
@@ -282,7 +282,7 @@ class Module extends \Ilch\Model
      *
      * @return string
      */
-    public function getLink(): string
+    public function getLink()
     {
         return $this->link;
     }
@@ -302,7 +302,7 @@ class Module extends \Ilch\Model
      *
      * @return bool
      */
-    public function getOfficial(): bool
+    public function getOfficial()
     {
         return $this->official;
     }
@@ -322,7 +322,7 @@ class Module extends \Ilch\Model
      *
      * @return string
      */
-    public function getIlchCore(): string
+    public function getIlchCore()
     {
         return $this->ilchCore;
     }
@@ -342,7 +342,7 @@ class Module extends \Ilch\Model
      *
      * @return string
      */
-    public function getPHPVersion(): string
+    public function getPHPVersion()
     {
         return $this->phpVersion;
     }

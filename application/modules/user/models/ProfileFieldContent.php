@@ -34,7 +34,7 @@ class ProfileFieldContent extends \Ilch\Model
      *
      * @return int
      */
-    public function getFieldId(): int
+    public function getFieldId()
     {
         return $this->fieldId;
     }
@@ -45,7 +45,7 @@ class ProfileFieldContent extends \Ilch\Model
      * @param int $fieldId
      * @return ProfileFieldContent
      */
-    public function setFieldId($fieldId): ProfileFieldContent
+    public function setFieldId($fieldId)
     {
         $this->fieldId = (int)$fieldId;
 
@@ -57,7 +57,7 @@ class ProfileFieldContent extends \Ilch\Model
      *
      * @return int
      */
-    public function getUserId(): int
+    public function getUserId()
     {
         return $this->userId;
     }
@@ -68,7 +68,7 @@ class ProfileFieldContent extends \Ilch\Model
      * @param int $userId
      * @return ProfileFieldContent
      */
-    public function setUserId($userId): ProfileFieldContent
+    public function setUserId($userId)
     {
         $this->userId = (int)$userId;
 
@@ -80,7 +80,7 @@ class ProfileFieldContent extends \Ilch\Model
      *
      * @return string
      */
-    public function getValue(): string
+    public function getValue()
     {
         return $this->value;
     }
@@ -91,7 +91,7 @@ class ProfileFieldContent extends \Ilch\Model
      * @param string $value
      * @return ProfileFieldContent
      */
-    public function setValue($value): ProfileFieldContent
+    public function setValue($value)
     {
         $this->value = $value;
 

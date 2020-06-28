@@ -27,7 +27,7 @@ class Group extends \Ilch\Mapper
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -47,7 +47,7 @@ class Group extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }

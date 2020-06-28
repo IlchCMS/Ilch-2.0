@@ -84,7 +84,7 @@ class Teams extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id): self
+    public function setId($id)
     {
         $this->id = (int)$id;
 
@@ -96,7 +96,7 @@ class Teams extends \Ilch\Model
      *
      * @return int
      */
-    public function getPosition(): int
+    public function getPosition()
     {
         return $this->position;
     }
@@ -107,7 +107,7 @@ class Teams extends \Ilch\Model
      * @param int $position
      * @return $this
      */
-    public function setPosition($position): self
+    public function setPosition($position)
     {
         $this->position = (int)$position;
 
@@ -119,7 +119,7 @@ class Teams extends \Ilch\Model
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -130,7 +130,7 @@ class Teams extends \Ilch\Model
      * @param string $name
      * @return $this
      */
-    public function setName($name): self
+    public function setName($name)
     {
         $this->name = (string)$name;
 
@@ -142,7 +142,7 @@ class Teams extends \Ilch\Model
      *
      * @return string
      */
-    public function getImg(): string
+    public function getImg()
     {
         return $this->img;
     }
@@ -153,7 +153,7 @@ class Teams extends \Ilch\Model
      * @param string $img
      * @return $this
      */
-    public function setImg($img): self
+    public function setImg($img)
     {
         $this->img = (string)$img;
 
@@ -176,7 +176,7 @@ class Teams extends \Ilch\Model
      * @param string $leader
      * @return $this
      */
-    public function setLeader($leader): self
+    public function setLeader($leader)
     {
         $this->leader = (string)$leader;
 
@@ -199,7 +199,7 @@ class Teams extends \Ilch\Model
      * @param string $coLeader
      * @return $this
      */
-    public function setCoLeader($coLeader): self
+    public function setCoLeader($coLeader)
     {
         $this->coLeader = (string)$coLeader;
 
@@ -211,7 +211,7 @@ class Teams extends \Ilch\Model
      *
      * @return int
      */
-    public function getGroupId(): int
+    public function getGroupId()
     {
         return $this->groupId;
     }
@@ -222,7 +222,7 @@ class Teams extends \Ilch\Model
      * @param int $groupId
      * @return $this
      */
-    public function setGroupId($groupId): self
+    public function setGroupId($groupId)
     {
         $this->groupId = (int)$groupId;
 
@@ -234,7 +234,7 @@ class Teams extends \Ilch\Model
      *
      * @return int
      */
-    public function getOptShow(): int
+    public function getOptShow()
     {
         return $this->optShow;
     }
@@ -245,7 +245,7 @@ class Teams extends \Ilch\Model
      * @param int $optShow
      * @return $this
      */
-    public function setOptShow($optShow): self
+    public function setOptShow($optShow)
     {
         $this->optShow = (int)$optShow;
 
@@ -257,7 +257,7 @@ class Teams extends \Ilch\Model
      *
      * @return int
      */
-    public function getOptIn(): int
+    public function getOptIn()
     {
         return $this->optIn;
     }
@@ -268,7 +268,7 @@ class Teams extends \Ilch\Model
      * @param int $optIn
      * @return $this
      */
-    public function setOptIn($optIn): self
+    public function setOptIn($optIn)
     {
         $this->optIn = (int)$optIn;
 
@@ -280,7 +280,7 @@ class Teams extends \Ilch\Model
      *
      * @return int
      */
-    public function getNotifyLeader(): int
+    public function getNotifyLeader()
     {
         return $this->notifyLeader;
     }
@@ -291,7 +291,7 @@ class Teams extends \Ilch\Model
      * @param int $notifyLeader
      * @return Teams
      */
-    public function setNotifyLeader($notifyLeader): Teams
+    public function setNotifyLeader($notifyLeader)
     {
         $this->notifyLeader = $notifyLeader;
         return $this;

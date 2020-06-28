@@ -17,7 +17,7 @@ class Box extends \Ilch\Mapper
      * @return BoxModel[]|array
      * @throws \Ilch\Database\Exception
      */
-    public function getBoxList($locale): array
+    public function getBoxList($locale)
     {
         $boxRows = $this->db()->select('*')
             ->from('modules_boxes_content')
@@ -51,7 +51,7 @@ class Box extends \Ilch\Mapper
      * @return BoxModel[]|array
      * @throws \Ilch\Database\Exception
      */
-    public function getSelfBoxList($locale): array
+    public function getSelfBoxList($locale)
     {
         $sql = 'SELECT bc.title, b.id FROM [prefix]_boxes as b
                 LEFT JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
@@ -192,7 +192,7 @@ class Box extends \Ilch\Mapper
      * @return bool
      * @since 2.1.19
      */
-    public function modulesBoxExists($key, $module): bool
+    public function modulesBoxExists($key, $module)
     {
         return (boolean)$this->db()->select('COUNT(*)')
             ->from('modules_boxes_content')

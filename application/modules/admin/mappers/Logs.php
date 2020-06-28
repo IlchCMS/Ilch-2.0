@@ -74,7 +74,7 @@ class Logs extends \Ilch\Mapper
      * @param array $where
      * @return array|LogsModel[]
      */
-    public function getLogsBy($where = []): array
+    public function getLogsBy($where = [])
     {
         $entriesArray = $this->db()->select('*')
             ->from('logs')

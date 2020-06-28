@@ -139,7 +139,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                             title="<?=$this->getTrans('phpExtensionError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
-                                <?php elseif (version_compare(PHP_VERSION, $moduleUpdateInformation->phpVersion, '<')): ?>
+                                <?php elseif (version_compare(phpversion(), $moduleUpdateInformation->phpVersion, '<')): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('phpVersionError') ?>">
                                         <i class="<?=$icon ?>"></i>

@@ -29,7 +29,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
     }
 
-    public function getInstallSql(): string
+    public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_privacy` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
