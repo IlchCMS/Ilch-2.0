@@ -236,16 +236,9 @@ class Index extends \Ilch\Controller\Frontend
         $articleMapper->saveVisits($articleModel);
 
         $this->getView()->set('userMapper', $userMapper)
-            ->set(
-                'comments',
-                $commentMapper->getCommentsByKey(
-                    sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'))
-                )
-            );
-
-        $this->getView()->set('categoryMapper', $categoryMapper)
+            ->set('commentsCount', $commentMapper->getCountComments(sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'))))
+            ->set('categoryMapper', $categoryMapper)
             ->set('config', $config)
-            ->set('commentMapper', $commentMapper)
             ->set('article', $article)
             ->set('hasReadAccess', $hasReadAccess);
     }
