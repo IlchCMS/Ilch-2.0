@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,10 +10,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.13.0',
+        'version' => '1.14.0',
         'icon_small' => 'fa-picture-o',
         'author' => 'Stantin, Thomas',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'official' => true,
         'languages' => [
             'de_DE' => [
@@ -35,7 +35,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.16',
+        'ilchCore' => '2.1.37',
         'phpVersion' => '5.6'
     ];
 

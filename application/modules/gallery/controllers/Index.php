@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -59,8 +59,6 @@ class Index extends \Ilch\Controller\Frontend
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
         $commentMapper = new CommentMapper;
-        $userMapper = new UserMapper();
-        $config = \Ilch\Registry::get('config');
 
         $id = $this->getRequest()->getParam('id');
         $image = $imageMapper->getImageById($id);
@@ -114,10 +112,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->redirect(['action' => 'showimage', 'id' => $id.'#comment_'.$commentId]);
         }
 
-        $this->getView()->set('commentMapper', $commentMapper);
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('config', $config);
         $this->getView()->set('image', $imageMapper->getImageById($id));
-        $this->getView()->set('comments', $commentMapper->getCommentsByKey('gallery/index/showimage/id/'.$id));
+        $this->getView()->set('commentsKey', 'gallery/index/showimage/id/'.$id);
     }
 }
