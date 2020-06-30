@@ -70,7 +70,6 @@ class Gallery extends \Ilch\Controller\Frontend
         $imageMapper = new GalleryImageMapper();
         $commentMapper = new CommentMapper;
         $userMapper = new UserMapper();
-        $config = \Ilch\Registry::get('config');
 
         $id = $this->getRequest()->getParam('id');
         $userId = $this->getRequest()->getParam('user');
@@ -129,10 +128,7 @@ class Gallery extends \Ilch\Controller\Frontend
             $this->redirect(['action' => 'showimage', 'user' => $userId, 'id' => $id.'#comment_'.$commentId]);
         }
 
-        $this->getView()->set('commentMapper', $commentMapper);
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('config', $config);
         $this->getView()->set('image', $imageMapper->getImageById($id));
-        $this->getView()->set('comments', $commentMapper->getCommentsByKey('user/gallery/showimage/user/'.$userId.'/id/'.$id));
+        $this->getView()->set('commentsKey', 'user/gallery/showimage/user/'.$userId.'/id/'.$id);
     }
 }
