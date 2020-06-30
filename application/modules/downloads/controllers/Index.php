@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -68,8 +68,6 @@ class Index extends \Ilch\Controller\Frontend
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
         $commentMapper = new CommentMapper;
-        $userMapper = new UserMapper();
-        $config = \Ilch\Registry::get('config');
 
         $id = $this->getRequest()->getParam('id');
         $file = $fileMapper->getFileById($id);
@@ -130,10 +128,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->redirect(['action' => 'showFile', 'id' => $id.'#comment_'.$commentId]);
         }
 
-        $this->getView()->set('commentMapper', $commentMapper);
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('config', $config);
         $this->getView()->set('file', $file);
-        $this->getView()->set('comments', $commentMapper->getCommentsByKey('downloads/index/showfile/id/'.$id));
+        $this->getView()->set('commentsKey', 'downloads/index/showfile/id/'.$id);
     }
 }
