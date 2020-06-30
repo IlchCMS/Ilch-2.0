@@ -6,8 +6,8 @@
 
 namespace Ilch;
 
-use Modules\User\Mappers\User as userMapper;
-use Modules\Comment\Mappers\Comment as commentMapper;
+use Modules\User\Mappers\User as UserMapper;
+use Modules\Comment\Mappers\Comment as CommentMapper;
 
 class Comments
 {
@@ -21,14 +21,14 @@ class Comments
      */
     private function rec($id, $commentId, $uid, $req, $obj): string
     {
-        $commentMappers = $obj->get('commentMapper');
-        $userMapper = $obj->get('userMapper');
+        $commentMappers = new CommentMapper();
+        $userMapper = new UserMapper();
         $fk_comments = $commentMappers->getCommentsByFKId($commentId);
         $user_rep = $userMapper->getUserById($uid);
         if (!$user_rep) {
             $user_rep = $userMapper->getDummyUser();
         }
-        $config = $obj->get('config');
+        $config = \Ilch\Registry::get('config');
         $nowDate = new \Ilch\Date();
         $commentsHtml = '';
 
@@ -188,11 +188,11 @@ class Comments
      */
     public function getComments($key, $object, $layout): string
     {
-        $userMapper = new userMapper();
-        $commentMapper = new commentMapper();
+        $userMapper = new UserMapper();
+        $commentMapper = new CommentMapper();
         $comments = $commentMapper->getCommentsByKey($key);
         $commentsCount = $commentMapper->getCountComments($key);
-        $config = $layout->get('config');
+        $config = \Ilch\Registry::get('config');
         $nowDate = new \Ilch\Date();
 
         $commentsHtml = '
@@ -266,8 +266,6 @@ class Comments
                                 </div>
                                 <p>'.nl2br($layout->escape($comment->getText())).'</p>
                                 <div>';
-
-//            $commentsHtml .= '<div>';
 
             if ($layout->getUser() && in_array($layout->getUser()->getId(), $voted) == false) {
                 $commentsHtml .= '
