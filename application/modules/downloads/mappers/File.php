@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -60,9 +60,7 @@ class File extends \Ilch\Mapper
                 FROM `[prefix]_downloads_files`
                 
                 WHERE cat = '.$id;
-        $count = $this->db()->queryArray($sql);
-
-        return $count;
+        return $this->db()->queryArray($sql);
     }
 
     /**

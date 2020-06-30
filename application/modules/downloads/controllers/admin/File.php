@@ -35,7 +35,7 @@ class File extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treatdownloads') {
+        if ($this->getRequest()->getActionName() === 'treatdownloads') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;

@@ -60,7 +60,7 @@ class Downloads extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('downloads'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans($downloadsTitle->getTitle()), ['action' => 'treatdownloads', 'id' => $id]);
 
-        if ($this->getRequest()->getPost('action') == 'delete') {
+        if ($this->getRequest()->getPost('action') === 'delete') {
                 foreach ($this->getRequest()->getPost('check_downloads') as $fileId) {
                     $fileMapper->deleteById($fileId);
                 }

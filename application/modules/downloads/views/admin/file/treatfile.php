@@ -43,7 +43,7 @@ if ($file->getFileImage() != '') {
                                        class="form-control"
                                        id="selectedImage"
                                        name="fileImage"
-                                       placeholder="<?=$this->getTrans('fileImageInfo'); ?>"
+                                       placeholder="<?=$this->getTrans('fileImageInfo') ?>"
                                        value="<?=$this->escape($file->getFileImage()) ?>" />
                                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
                             </div>
@@ -69,7 +69,7 @@ if ($file->getFileImage() != '') {
     <?=$this->getTrans('noFile') ?>
 <?php endif; ?>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 <?=$this->getMedia()
         ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
