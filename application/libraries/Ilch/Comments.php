@@ -198,7 +198,10 @@ class Comments
         $commentsHtml = '
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header" id="comment">'.$layout->getTrans('comments').'('.$commentsCount.')</h1>
+        <h1 class="page-header" id="comment">'.$layout->getTrans('comments').'('.$commentsCount.')</h1>';
+
+        if ($layout->getUser()) {
+            $commentsHtml = '
         <div class="reply">
             <form class="form-horizontal" method="POST">'.
                 $layout->getTokenField().'
@@ -212,7 +215,7 @@ class Comments
                                 <div class="media-body">
                                     <div>
                                         <a href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">'.
-                                            $layout->escape($layout->getUser()->getName()).'
+                $layout->escape($layout->getUser()->getName()).'
                                         </a>
                                         <p class="text-muted small">
                                             <i class="fa fa-clock-o" title="'.$layout->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
@@ -227,7 +230,7 @@ class Comments
                                     <div>
                                         <div class="content_savebox">
                                             <button type="submit" class="btn btn-default btn-sm" name="saveComment" value="save">'.
-                                                $layout->getTrans('submit').'
+                $layout->getTrans('submit').'
                                             </button>
                                         </div>
                                     </div>
@@ -239,6 +242,7 @@ class Comments
                 </section>
             </form>
         </div>';
+        }
 
         foreach($comments as $comment) {
             $user = $userMapper->getUserById($comment->getUserId());
