@@ -662,6 +662,40 @@ class Config extends \Ilch\Config\Install
             case "2.1.34":
                 replaceVendorDirectory();
                 break;
+            case "2.1.36":
+                // Update comment keys in the comments table to end with a slash.
+                $sqlCommands = '';
+                $counter = 0;
+                $commentKeys = $this->db()->select(['id', 'key'])
+                    ->from('comments')
+                    ->execute()
+                    ->fetchAssoc();
+
+                foreach($commentKeys as $id => $key) {
+                    if (!(strlen($key) - (strrpos($key, '/')) === 0)) {
+                        // Add missing slash at the end to usually terminate the id.
+                        // This is needed for example so that id 11 doesn't get counted as id 1.
+                        $key .= '/';
+                    }
+
+                    // Run commands if we already have 50. This is done to limit the size of the sql command string.
+                    // There might be limits defined by for example in case of mysql in "max_allowed_packet".
+                    if (($counter === 50) && !empty($sqlCommands)) {
+                        $this->db()->queryMulti($sqlCommands);
+                        $counter = 0;
+                        $sqlCommands = '';
+                    }
+
+                    $sqlCommands .= 'UPDATE TABLE `[prefix]_comments` SET `key` = '.$key.' WHERE `id` = '.$id.';';
+                    $counter++;
+                }
+
+                if (!empty($sqlCommands)) {
+                    $this->db()->queryMulti($sqlCommands);
+                }
+
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
