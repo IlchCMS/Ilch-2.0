@@ -138,11 +138,11 @@ $commentsClass = new Ilch\Comments();
                                         <?php
                                         if ($acceptCheck->getAccept() == '1') {
                                             $class = ' war_win';
-                                            $text = $this->getTrans('has').' '.$this->getTrans('accept');
+                                            $text = $this->getTrans('has').' '.$this->getTrans('accepted');
                                         }
                                         if ($acceptCheck->getAccept() == '2') {
                                             $class = ' war_lost';
-                                            $text = $this->getTrans('has').' '.$this->getTrans('cancel');
+                                            $text = $this->getTrans('has').' '.$this->getTrans('declined');
                                         }
                                         if ($acceptCheck->getAccept() == '3') {
                                             $class = ' war_drawn';
@@ -167,7 +167,7 @@ $commentsClass = new Ilch\Comments();
                                     <select class="form-control col-lg-3" id="warAccept" name="warAccept">
                                         <optgroup label="<?=$this->getTrans('choose') ?>">
                                             <option value="1"><?=$this->getTrans('accept') ?></option>
-                                            <option value="2"><?=$this->getTrans('cancel') ?></option>
+                                            <option value="2"><?=$this->getTrans('decline') ?></option>
                                             <option value="3"><?=$this->getTrans('undecided') ?></option>
                                         </optgroup>
                                     </select>

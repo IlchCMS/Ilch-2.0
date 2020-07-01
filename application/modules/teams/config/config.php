@@ -20,11 +20,11 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'Teams',
-                'description' => 'Hier kannst du deine Teams erstellen und bearbeiten.',
+                'description' => 'Es können Teams erstellt und bearbeitet werden, sowie Bewerbungen für diese verwaltet werden.',
             ],
             'en_EN' => [
                 'name' => 'Teams',
-                'description' => 'Here you can add and change your Teams.',
+                'description' => 'You can add or edit teams and manage applications for these teams.',
             ],
         ],
         'ilchCore' => '2.1.26',
@@ -199,6 +199,13 @@ class Config extends \Ilch\Config\Install
                 $imageExtensions = explode(' ', $databaseConfig->get('teams_filetypes'));
                 $imageExtensions = array_diff($imageExtensions, $blacklist);
                 $databaseConfig->set('teams_filetypes', implode(' ', $imageExtensions));
+            case "1.16.0":
+            case "1.17.0":
+            case "1.18.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'teams' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }

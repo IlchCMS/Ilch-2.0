@@ -18,11 +18,11 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'Galerie',
-                'description' => 'Hier kann die Galerie verwaltet werden.',
+                'description' => 'Hiermit können Galerien angelegt werden, welche in Kategorien sortiert werden können.',
             ],
             'en_EN' => [
                 'name' => 'Gallery',
-                'description' => 'Here you can manage the gallery.',
+                'description' => 'Here you can create galleries, which can be sorted in categories.',
             ],
         ],
         'boxes' => [
@@ -109,6 +109,18 @@ class Config extends \Ilch\Config\Install
                         $boxModel->addContent($key, $value);
                     }
                     $boxMapper->install($boxModel);
+                }
+            case "1.6.0":
+            case "1.7.0":
+            case "1.8.0":
+            case "1.9.0":
+            case "1.10.0":
+            case "1.11.0":
+            case "1.12.0":
+            case "1.13.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'gallery' AND `locale` = '%s';", $value['description'], $key));
                 }
         }
     }

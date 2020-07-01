@@ -17,11 +17,11 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'Downloads',
-                'description' => 'Hier können die Downloads verwaltet werden.',
+                'description' => 'Es können Downloads angelegt werden und Informationen ergänzt werden, sowie Kategorien zugeordnet werden.',
             ],
             'en_EN' => [
                 'name' => 'Downloads',
-                'description' => 'Here you can manage the downloads.',
+                'description' => 'You can create downloads and add information to them. Further you can add them to categories.',
             ],
         ],
         'ilchCore' => '2.1.37',
@@ -74,6 +74,15 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_downloads_files` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_downloads_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.4.0":
+            case "1.5.0":
+            case "1.6.0":
+            case "1.7.0":
+            case "1.8.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'downloads' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }

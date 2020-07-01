@@ -18,11 +18,11 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'War',
-                'description' => 'Hier können die Wars verwaltet werden.',
+                'description' => 'Modul zum Verwalten von Wars. Es können eigene Gruppen und Gegner angelegt werden.',
             ],
             'en_EN' => [
                 'name' => 'War',
-                'description' => 'Here you can manage the wars.',
+                'description' => 'Module to manage wars. You can add own groups and opponents.',
             ],
         ],
         'boxes' => [
@@ -157,8 +157,18 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_war` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_war_played` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_war_accept` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.4.0":
+            case "1.5.0":
+            case "1.6.0":
             case "1.7.0":
                 $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD COLUMN `comment` MEDIUMTEXT;');
+            case "1.8.0":
+            case "1.9.0":
+            case "1.10.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'war' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }
