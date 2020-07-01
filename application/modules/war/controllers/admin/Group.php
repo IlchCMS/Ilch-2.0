@@ -48,7 +48,7 @@ class Group extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[2][0]['active'] = true;
         } else {
             $items[2]['active'] = true;
@@ -69,7 +69,7 @@ class Group extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_groups')) {
             foreach ($this->getRequest()->getPost('check_groups') as $groupId) {
                 $groupMapper->delete($groupId);
             }
@@ -153,7 +153,7 @@ class Group extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('post', $post)
-            ->set('errorFields', (isset($errorFields) ? $errorFields : []));
+            ->set('errorFields', ($errorFields ?? []));
     }
 
     public function delAction()

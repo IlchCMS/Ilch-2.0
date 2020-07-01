@@ -52,7 +52,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -73,7 +73,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_war')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_war')) {
             foreach ($this->getRequest()->getPost('check_war') as $warId) {
                 $warMapper->delete($warId);
             }
@@ -82,7 +82,7 @@ class Index extends \Ilch\Controller\Admin
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        if ($this->getRequest()->getPost('filter') == 'filter' and $this->getRequest()->getPost('filterLastNext') != '0') {
+        if ($this->getRequest()->getPost('filter') === 'filter' && $this->getRequest()->getPost('filterLastNext') != '0') {
             $this->getView()->set('war', $warMapper->getWarListByStatus($this->getRequest()->getPost('filterLastNext'), $pagination));
         } else {
             $this->getView()->set('war', $warMapper->getWarList($pagination));
@@ -120,19 +120,19 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getParam('id')) {
                 $warModel->setId($this->getRequest()->getParam('id'));
             }
-            if ($this->getRequest()->getPost('warXonx') == 'neu') {
+            if ($this->getRequest()->getPost('warXonx') === 'neu') {
                 $post['warXonx'] = $this->getRequest()->getPost('warXonxNew');
             } else {
                 $post['warXonx'] = $this->getRequest()->getPost('warXonx');
             }
 
-            if ($this->getRequest()->getPost('warGame') == 'neu') {
+            if ($this->getRequest()->getPost('warGame') === 'neu') {
                 $post['warGame'] = $this->getRequest()->getPost('warGameNew');
             } else {
                 $post['warGame'] = $this->getRequest()->getPost('warGame');
             }
 
-            if ($this->getRequest()->getPost('warMatchtype') == 'neu') {
+            if ($this->getRequest()->getPost('warMatchtype') === 'neu') {
                 $post['warMatchtype'] = $this->getRequest()->getPost('warMatchtypeNew');
             } else {
                 $post['warMatchtype'] = $this->getRequest()->getPost('warMatchtype');
@@ -173,8 +173,9 @@ class Index extends \Ilch\Controller\Admin
                     $maps = $this->getRequest()->getPost('warMapPlayed');
                     $groupPoints = $this->getRequest()->getPost('warErgebnisGroup');
                     $enemyPoints = $this->getRequest()->getPost('warErgebnisEnemy');
+                    $mapCount = count($maps);
 
-                    for ($i = 0; $i < count($maps); $i++) {
+                    for ($i = 0; $i < $mapCount; $i++) {
                         $gameModel->setId($ids[$i])
                             ->setWarId($warId)
                             ->setMap($maps[$i])

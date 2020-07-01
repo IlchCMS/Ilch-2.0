@@ -468,8 +468,9 @@ class War extends \Ilch\Mapper
         $today = strtotime($date);
 
         $difference = $the_countdown_date - $today;
-        if ($difference < 0)
+        if ($difference < 0) {
             $difference = 0;
+        }
 
         $days_left = floor($difference / 60 / 60 / 24);
         $hours_left = floor(($difference - $days_left * 60 * 60 * 24) / 60 / 60);
@@ -477,9 +478,9 @@ class War extends \Ilch\Mapper
 
         // OUTPUT
         if ($days_left == '0') {
-            if ($hours_left == '0' AND $minutes_left > '0') {
+            if ($hours_left == '0' && $minutes_left > '0') {
                 echo $minutes_left.'m';
-            } elseif ($hours_left == '0' AND $minutes_left == '0') {
+            } elseif ($hours_left == '0' && $minutes_left == '0') {
                 echo 'live';
             } else  {
                 echo $hours_left.'h '.$minutes_left.'m';
@@ -498,8 +499,6 @@ class War extends \Ilch\Mapper
      */
     public function existsTable($table)
     {
-        $module = $this->db()->ifTableExists('[prefix]_'.$table);
-
-        return $module;
+        return $this->db()->ifTableExists('[prefix]_'.$table);
     }
 }

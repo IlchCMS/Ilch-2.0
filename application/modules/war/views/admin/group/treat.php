@@ -74,10 +74,8 @@ if ($this->get('groups') != '') {
                     <?php foreach ($this->get('userGroupList') as $groupList): ?>
                         <?php
                         $selected = '';
-                        if ($this->get('groups') != '') {
-                            if ($this->get('groups')->getGroupMember() == $groupList->getId()) {
-                                $selected = ' selected="selected"';
-                            }
+                        if (($this->get('groups') != '') && $this->get('groups')->getGroupMember() == $groupList->getId()) {
+                            $selected = ' selected="selected"';
                         }
                         ?>
                         <?php if ($groupList->getId() != '3'): ?>

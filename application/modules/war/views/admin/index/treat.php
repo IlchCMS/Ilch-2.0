@@ -1,7 +1,7 @@
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <h1><?=($this->getRequest()->getParam('id') == '') ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
-<?php if ($this->get('group') != '' and $this->get('enemy') != ''): ?>
+<?php if ($this->get('group') != '' && $this->get('enemy') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="form-group<?=$this->validation()->hasError('warEnemy') ? ' has-error' : '' ?>">
@@ -14,7 +14,7 @@
                         <?php foreach ($this->get('enemy') as $enemy): ?>
                             <?php
                             $selected = '';
-                            if ($this->get('war') != '' AND $this->get('war')->getWarEnemy() == $enemy->getId()) {
+                            if ($this->get('war') != '' && $this->get('war')->getWarEnemy() == $enemy->getId()) {
                                 $selected = ' selected="selected"';
                             }
                             ?>
@@ -34,7 +34,7 @@
                         <?php foreach ($this->get('group') as $group): ?>
                             <?php
                             $selected = '';
-                            if ($this->get('war') != '' AND $this->get('war')->getWarGroup() == $group->getId()) {
+                            if ($this->get('war') != '' && $this->get('war')->getWarGroup() == $group->getId()) {
                                 $selected = ' selected="selected"';
                             }
                             ?>
@@ -133,7 +133,7 @@
                             <?php foreach ($this->get('warOptXonx') as $opt): ?>
                                 <?php
                                 $selected = '';
-                                if ($this->get('war') != '' AND $this->get('war')->getWarXonx() == $opt->getWarXonx()) {
+                                if ($this->get('war') != '' && $this->get('war')->getWarXonx() == $opt->getWarXonx()) {
                                     $selected = ' selected="selected"';
                                 }
                                 ?>
@@ -154,7 +154,7 @@
         </div>
         <div class="form-group<?=$this->validation()->hasError('warGame') ? ' has-error' : '' ?>">
             <label for="warGame" class="col-lg-2 control-label">
-                <?=$this->getTrans('warGame'); ?>:
+                <?=$this->getTrans('warGame') ?>:
             </label>
             <div class="col-lg-2">
                 <select class="form-control" id="warGame" name="warGame" onchange="diasableGame()">
@@ -164,7 +164,7 @@
                             <?php foreach ($this->get('warOptGame') as $opt): ?>
                                 <?php
                                 $selected = '';
-                                if ($this->get('war') != '' and $this->get('war')->getWarGame() == $opt->getWarGame()) {
+                                if ($this->get('war') != '' && $this->get('war')->getWarGame() == $opt->getWarGame()) {
                                     $selected = ' selected="selected"';
                                 }
                                 ?>
@@ -195,7 +195,7 @@
                             <?php foreach ($this->get('warOptMatchtype') as $opt): ?>
                                 <?php
                                 $selected = '';
-                                if ($this->get('war') != '' and $this->get('war')->getWarMatchtype() == $opt->getWarMatchtype()) {
+                                if ($this->get('war') != '' && $this->get('war')->getWarMatchtype() == $opt->getWarMatchtype()) {
                                     $selected = ' selected="selected"';
                                 }
                                 ?>
@@ -295,7 +295,7 @@
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>

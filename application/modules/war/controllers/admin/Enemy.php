@@ -47,7 +47,7 @@ class Enemy extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[1][0]['active'] = true;
         } else {
             $items[1]['active'] = true;
@@ -68,7 +68,7 @@ class Enemy extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_enemy')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_enemy')) {
             foreach ($this->getRequest()->getPost('check_enemy') as $enemyId) {
                 $enemyMapper->delete($enemyId);
             }
@@ -153,7 +153,7 @@ class Enemy extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('post', $post)
-            ->set('errorFields', (isset($errorFields) ? $errorFields : []));
+            ->set('errorFields', ($errorFields ?? []));
     }
 
     public function delAction()

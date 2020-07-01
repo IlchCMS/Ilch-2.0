@@ -201,7 +201,7 @@ class Comments
         <h1 class="page-header" id="comment">'.$layout->getTrans('comments').'('.$commentsCount.')</h1>';
 
         if ($layout->getUser()) {
-            $commentsHtml = '
+            $commentsHtml .= '
         <div class="reply">
             <form class="form-horizontal" method="POST">'.
                 $layout->getTokenField().'

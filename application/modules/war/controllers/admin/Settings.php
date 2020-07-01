@@ -94,7 +94,7 @@ class Settings extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('post', $post)
-            ->set('errorFields', (isset($errorFields) ? $errorFields : []))
+            ->set('errorFields', ($errorFields ?? []))
             ->set('warsPerPage', $this->getConfig()->get('war_warsPerPage'))
             ->set('enemiesPerPage', $this->getConfig()->get('war_enemiesPerPage'))
             ->set('groupsPerPage', $this->getConfig()->get('war_groupsPerPage'))

@@ -7,9 +7,11 @@ $userMapper = $this->get('userMapper');
 $userGroupMapper = $this->get('userGroupMapper');
 $acceptArray = $this->get('accept');
 $acceptCheckArray = $this->get('acceptCheck');
+$commentsClass = new Ilch\Comments();
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/style.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('warPlay') ?></h1>
 <div class="row">
@@ -195,3 +197,5 @@ $acceptCheckArray = $this->get('acceptCheck');
         </div>
     </div>
 </div>
+
+<?= $commentsClass->getComments($this->get('commentsKey'), $war, $this) ?>
