@@ -59,7 +59,7 @@ class Comment extends \Ilch\Mapper
             ->from('comments')
             ->where(['key LIKE' => $key.'%'])
             ->execute()
-            ->fetchArray();
+            ->fetchRows();
 
         $comments = [];
         foreach ($commentsArray as $commentRow) {
