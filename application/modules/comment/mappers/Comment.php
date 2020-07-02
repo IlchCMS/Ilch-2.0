@@ -228,7 +228,7 @@ class Comment extends \Ilch\Mapper
             ->values
             (
                 [
-                    'key' => $comment->getKey(),
+                    'key' => $this->addMissingSlashIfNeeded($comment->getKey()),
                     'text' => $comment->getText(),
                     'date_created' => $comment->getDateCreated(),
                     'user_id' => $comment->getUserId(),

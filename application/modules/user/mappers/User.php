@@ -591,6 +591,11 @@ class User extends \Ilch\Mapper
             ->execute();
     }
 
+    /**
+     * Get the dummy user.
+     *
+     * @return UserModel
+     */
     public function getDummyUser()
     {
         $user = new UserModel();

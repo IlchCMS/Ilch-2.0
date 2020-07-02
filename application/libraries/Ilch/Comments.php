@@ -8,9 +8,33 @@ namespace Ilch;
 
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
+use Modules\User\Models\User;
 
 class Comments
 {
+    private $userCache = [];
+
+    /**
+     * Get the user or the dummy user if not existing.
+     * Either from cache or fetched from the database.
+     *
+     * @param int $userId
+     * @return User|null
+     */
+    private function getUser($userId)
+    {
+        if (!isset($this->userCache[$userId])) {
+            $userMapper = new UserMapper();
+            $this->userCache[$userId] = $userMapper->getUserById($userId);
+        }
+
+        if (!isset($this->userCache[$userId])) {
+            return $userMapper->getDummyUser();
+        }
+
+        return $this->userCache[$userId];
+    }
+
     /**
      * @param integer $id
      * @param integer $commentId
@@ -24,20 +48,14 @@ class Comments
         $commentMappers = new CommentMapper();
         $userMapper = new UserMapper();
         $fk_comments = $commentMappers->getCommentsByFKId($commentId);
-        $user_rep = $userMapper->getUserById($uid);
-        if (!$user_rep) {
-            $user_rep = $userMapper->getDummyUser();
-        }
+        $user_rep = $this->getUser($uid);
         $config = \Ilch\Registry::get('config');
         $nowDate = new \Ilch\Date();
         $commentsHtml = '';
 
         foreach ($fk_comments as $fk_comment) {
             $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
-            $user = $userMapper->getUserById($fk_comment->getUserId());
-            if (!$user) {
-                $user = $userMapper->getDummyUser();
-            }
+            $user = $this->getUser($fk_comment->getUserId());
             $voted = explode(',', $fk_comment->getVoted());
             if ($req >= $config->get('comment_nesting')) {
                 $req = $config->get('comment_nesting');
@@ -245,10 +263,7 @@ class Comments
         }
 
         foreach($comments as $comment) {
-            $user = $userMapper->getUserById($comment->getUserId());
-            if (!$user) {
-                $user = $userMapper->getDummyUser();
-            }
+            $user = $this->getUser($comment->getUserId());
             $commentDate = new \Ilch\Date($comment->getDateCreated());
             $voted = explode(',', $comment->getVoted());
 
