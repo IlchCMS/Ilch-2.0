@@ -60,6 +60,21 @@ class Mail
     protected $message;
 
     /**
+     * Files that should be attached to the email.
+     *
+     * @var array
+     */
+    protected $attachments = [];
+
+    /**
+     * A string that should be attached to the email as attachment
+     * (e.g. data stored in a database).
+     *
+     * @var array
+     */
+    protected $stringAttachments = [];
+
+    /**
      * @var string
      */
     protected $type;
@@ -276,6 +291,58 @@ class Mail
     }
 
     /**
+     * Get the attachments.
+     *
+     * @return array
+     * @since 2.1.37
+     */
+    public function getAttachments(): array
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * Add a file as an attachment.
+     *
+     * @param string $path Path to the file.
+     * @param string $name Optional name like "myfile.pdf" if it should differ from the filename.
+     * @return $this
+     * @since 2.1.37
+     */
+    public function addAttachment($path, $name = '')
+    {
+        if (file_exists($path)) {
+            $this->attachments[] = ['path' => $path, 'name' => $name];
+        }
+        return $this;
+    }
+
+    /**
+     * Get the string attachments.
+     *
+     * @return array
+     * @since 2.1.37
+     */
+    public function getStringAttachments(): array
+    {
+        return $this->stringAttachments;
+    }
+
+    /**
+     * Add data as attachment (e.g. something only stored in database and not as actual file).
+     *
+     * @param string $string The data as string.
+     * @param string $filename A filename like "myfile.pdf". The data needs a filename to be able to attach it to an email.
+     * @return $this
+     * @since 2.1.37
+     */
+    public function addStringAttachment($string, $filename)
+    {
+        $this->stringAttachments[] = ['string' => $path, 'filename' => $name];
+        return $this;
+    }
+
+    /**
      * Get the type of the message.
      * This is phpmailer specific.
      *
@@ -304,8 +371,9 @@ class Mail
      * Various fields of this class must be set for this to work.
      *
      * @throws \PHPMailer\PHPMailer\Exception
+     * @since 2.1.37
      */
-    public function sent()
+    public function send()
     {
         $config = \Ilch\Registry::get('config');
         $mail = $this->PHPMailer();
@@ -382,13 +450,30 @@ class Mail
         }
         $mail->WordWrap = 78; // Set word wrap to the RFC2822 limit
         $mail->Body = $body; // Create message bodies and embed images
-        //$mail->addAttachment('images/phpmailer_mini.png', 'phpmailer_mini.png'); // optional name
-        //$mail->addAttachment('images/phpmailer.png', 'phpmailer.png'); // optional name
+        foreach($this->attachments as $attachment) {
+            $mail->addAttachment($attachment['path'], $attachment['name']);
+        }
+        foreach($this->stringAttachments as $attachment) {
+            $mail->addStringAttachment($attachment['string'], $attachment['filename']);
+        }
+
         try {
             $mail->send();
             //exit(var_dump($mail->ErrorInfo));
         } catch (\phpmailerException $e) {
             throw new \phpmailerException($mail->ErrorInfo);
         }
+    }
+
+    /**
+     * Deprecated function to send an email.
+     * Various fields of this class must be set for this to work.
+     *
+     * @deprecated This function name is a typo. Use send() instead.
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
+    public function sent()
+    {
+        $this->send();
     }
 }
