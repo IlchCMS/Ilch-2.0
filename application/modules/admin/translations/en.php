@@ -57,6 +57,11 @@ return [
     'standardMail' => 'Standard E-Mail sender',
     'defaultPaginationObjects' => 'Default count of objects per page',
     'hideCaptchaFor' => 'Hide captcha for',
+    'htmlPurifier' => 'HTMLPurifier',
+    'htmlPurifierDescription' => '<p>For security reasons entered code for example in articles or own boxes/pages will be outputted filtered.
+                                  This can cause the output to not work or look different than expected.<br>
+                                  <a href="https://github.com/IlchCMS/Ilch-2.0/wiki/Doku-Benutzer-Inhalt-eigene-Boxen-Seiten">See documentation for further information.</a></p>
+                                  <p><strong>It is not recommended to disable this security measure.</strong></p>',
     'timezone' => 'timezone',
     'home' => 'Start',
     'updateserver' => 'Updateserver',

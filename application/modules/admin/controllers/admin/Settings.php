@@ -113,6 +113,7 @@ class Settings extends \Ilch\Controller\Admin
                 'standardMail' => 'required|email',
                 'defaultPaginationObjects' => 'numeric|integer|min:1',
                 'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
+                'htmlPurifier' => 'required|numeric|integer|min:0|max:1',
                 'updateserver' => 'required|url'
             ]);
 
@@ -130,6 +131,7 @@ class Settings extends \Ilch\Controller\Admin
                 } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
                     $this->getConfig()->set('admin_layout_hmenu', '');
                 }
+                $this->getConfig()->set('disable_purifier', !$this->getRequest()->getPost('htmlPurifier'));
                 $this->getConfig()->set('updateserver', $this->getRequest()->getPost('updateserver'));
 
                 $this->addMessage('saveSuccess');
@@ -153,6 +155,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('pages', $pageMapper->getPageList());
         $this->getView()->set('hmenuFixed', $this->getConfig()->get('admin_layout_hmenu'));
+        $this->getView()->set('htmlPurifier', !$this->getConfig()->get('disable_purifier'));
         $this->getView()->set('defaultPaginationObjects', $this->getConfig()->get('defaultPaginationObjects'));
         $this->getView()->set('hideCaptchaFor', explode(',', $this->getConfig()->get('hideCaptchaFor')));
         $this->getView()->set('groupList', $groupMapper->getGroupList());

@@ -183,6 +183,23 @@
         </div>
     </div>
 
+    <h1><?=$this->getTrans('htmlPurifier') ?></h1>
+    <p><?=$this->getTrans('htmlPurifierDescription') ?></p>
+    <div id="htmlPurifier" class="form-group">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('htmlPurifier') ?>:
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="htmlPurifier-on" name="htmlPurifier" value="1" <?= ($this->get('htmlPurifier')) ? 'checked="checked"' : '' ?> />
+                <label for="htmlPurifier-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="htmlPurifier-off" name="htmlPurifier" value="0" <?= (!$this->get('htmlPurifier')) ? 'checked="checked"' : '' ?> />
+                <label for="htmlPurifier-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+
     <h1><?=$this->getTrans('backendFunctions') ?></h1>
     <div id="hmenuFixed" class="form-group">
         <div class="col-lg-2 control-label">
