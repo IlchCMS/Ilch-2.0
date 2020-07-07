@@ -76,7 +76,7 @@ class Login extends \Ilch\Controller\Admin
             list($selector) = explode(':', $_COOKIE['remember']);
             $authTokenMapper = new AuthToken();
             $authTokenMapper->deleteAuthToken($selector);
-            setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off'), true);
+            setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
         }
 
         if ($this->getUser()) {

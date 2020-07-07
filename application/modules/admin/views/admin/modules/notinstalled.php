@@ -91,7 +91,7 @@
                                 <?php endif; ?>
                             </small>
                             <br /><br />
-                            <?php if ($module->getPHPExtension() != '' AND in_array(false, $extensionCheck)): ?>
+                            <?php if ($module->getPHPExtension() != '' && in_array(false, $extensionCheck)): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('phpExtensionError') ?>">
                                     <i class="fa fa-save"></i>

@@ -114,7 +114,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                         $isInstalled = in_array($moduleOnUpdateServer->key, $this->get('modules'));
                         $iconClass = ($isInstalled) ? 'fa fa-refresh' : 'fa fa-download';
 
-                        if (!empty($moduleOnUpdateServer->phpExtensions) AND in_array(false, $extensionCheck)): ?>
+                        if (!empty($moduleOnUpdateServer->phpExtensions) && in_array(false, $extensionCheck)): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('phpExtensionError') ?>">
                                 <i class="<?=$iconClass ?>"></i>

@@ -32,7 +32,7 @@ class AfterDatabaseLoad
         $logsMapper = new LogsMapper();
         $currentUrl = $_SERVER['REQUEST_URI'];
 
-        if (strpos($currentUrl, '/admin/') == true AND !empty($_SESSION['user_id'])) {
+        if (strpos($currentUrl, '/admin/') == true && !empty($_SESSION['user_id'])) {
             $userId = (int) $_SESSION['user_id'];
 
             $logsMapper->saveLog($userId, $currentUrl);

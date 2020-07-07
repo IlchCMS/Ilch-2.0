@@ -214,7 +214,7 @@ foreach ($modules as $module): ?>
         </div>
 
         <div class="content_savebox">
-            <?php if (!empty($module->phpextensions) AND in_array(false, $extensionCheck)): ?>
+            <?php if (!empty($module->phpextensions) && in_array(false, $extensionCheck)): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
                     <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>

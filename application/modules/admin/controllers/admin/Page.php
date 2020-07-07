@@ -30,7 +30,7 @@ class Page extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -51,7 +51,7 @@ class Page extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_pages')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_pages')) {
             foreach ($this->getRequest()->getPost('check_pages') as $pageId) {
                 $pageMapper->delete($pageId);
                 $menuMapper->deleteItemByPageId($pageId);

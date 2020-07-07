@@ -41,7 +41,7 @@
                 <tr>
                     <td><?=$this->getTrans('certificateKeyType') ?></td>
                     <td>
-                        <?php if ($this->get('certificateKeyType') == 'RSA'): ?>
+                        <?php if ($this->get('certificateKeyType') === 'RSA'): ?>
                             <span class="text-success"><?=$this->get('certificateKeyType') ?></span>
                         <?php else: ?>
                             <span class="text-danger"><?=$this->get('certificateKeyType') ?></span>
@@ -51,7 +51,7 @@
                 <tr>
                     <td><?=$this->getTrans('certificateKeySize') ?></td>
                     <td>
-                        <?php if ($this->get('certificateKeyType') == 'RSA' && $this->get('certificateKeySize') >= 2048): ?>
+                        <?php if ($this->get('certificateKeyType') === 'RSA' && $this->get('certificateKeySize') >= 2048): ?>
                             <span class="text-success"><?=$this->get('certificateKeySize').$this->getTrans('bit') ?></span>
                         <?php else: ?>
                             <span class="text-danger"><?=$this->get('certificateKeySize').$this->getTrans('bit') ?></span>
