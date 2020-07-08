@@ -663,6 +663,9 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
                 break;
             case "2.1.36":
+                // Remove no longer needed file
+                unlink(APPLICATION_PATH.'/libraries/Ilch/Event.php');
+
                 // Update comment keys in the comments table to end with a slash.
                 $sqlCommands = '';
                 $counter = 0;
