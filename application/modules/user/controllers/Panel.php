@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -86,6 +86,11 @@ class Panel extends BaseController
 
             foreach ($profileFields as $profileField) {
                 $index = 'profileField'.$profileField->getId();
+                if ($this->getRequest()->getPost($index) === null) {
+                    // This is for example the case if an external module added a profile field.
+                    // Skip this profile field so the value doesn't get deleted.
+                    continue;
+                }
                 $post[$index] = trim($this->getRequest()->getPost($index));
             }
 
