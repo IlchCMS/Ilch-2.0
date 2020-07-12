@@ -6,6 +6,7 @@
 
 namespace Ilch;
 
+use Modules\Comment\Models\Comment as CommentModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\User\Models\User;
@@ -391,5 +392,62 @@ function slideReply(thechosenone) {
 </script>';
 
         return $commentsHtml;
+    }
+
+    /**
+     * Save a comment.
+     *
+     * @param string $key key for the comment e.g. "article/index/show/id/1"
+     * @param string $text text of the comment
+     * @param int $userId id of the user.
+     * @since 2.1.37
+     */
+    public function saveComment($key, $text, $userId)
+    {
+        $splittedKey = explode('/', $key);
+        $fkId = null;
+
+        foreach ($splittedKey as $x => $xValue) {
+            if (($xValue === 'id_c') && isset($splittedKey[$x + 1])) {
+                $fkId = $splittedKey[$x+1];
+            }
+        }
+
+        $commentMapper = new CommentMapper();
+        $date = new \Ilch\Date();
+        $commentModel = new CommentModel();
+        if ($fkId) {
+            $commentModel->setKey($key);
+            $commentModel->setFKId($fkId);
+        } else {
+            $commentModel->setKey($key);
+        }
+        $commentModel->setText($text);
+        $commentModel->setDateCreated($date);
+        $commentModel->setUserId($userId);
+        $commentMapper->save($commentModel);
+    }
+
+    /**
+     * Save a vote for a comment.
+     *
+     * @param int $id id of the comment
+     * @param int $userId id of the user
+     * @param bool $upVote true if an upvote, false if downvote.
+     * @since 2.1.37
+     */
+    public function saveVote($id, $userId, $upVote)
+    {
+        $oldComment = $commentMapper->getCommentById($id);
+
+        $commentModel = new CommentModel();
+        $commentModel->setId($id);
+        if ($upVote) {
+            $commentModel->setUp($oldComment->getUp()+1);
+        } else {
+            $commentModel->setDown($oldComment->getDown()+1);
+        }
+        $commentModel->setVoted($oldComment->getVoted().$userId.',');
+        $commentMapper->saveLike($commentModel);
     }
 }

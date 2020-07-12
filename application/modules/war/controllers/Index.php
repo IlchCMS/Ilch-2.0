@@ -14,8 +14,7 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Modules\War\Models\Accept as AcceptModel;
 use Modules\War\Mappers\Accept as AcceptMapper;
-use Modules\Comment\Mappers\Comment as CommentMapper;
-use Modules\Comment\Models\Comment as CommentModel;
+use Ilch\Comments;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -81,40 +80,24 @@ class Index extends \Ilch\Controller\Frontend
 
                     $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
                 } elseif ($this->getRequest()->getPost('saveComment')) {
-                    $commentMapper = new CommentMapper();
-                    $date = new \Ilch\Date();
-                    $commentModel = new CommentModel();
+                    $comments = new Comments();
+                    $key = 'war/index/show/id/'.$this->getRequest()->getParam('id');
+
                     if ($this->getRequest()->getPost('fkId')) {
-                        $commentModel->setKey('war/index/show/id/'.$this->getRequest()->getParam('id').'/id_c/'.$this->getRequest()->getPost('fkId'));
-                        $commentModel->setFKId($this->getRequest()->getPost('fkId'));
-                    } else {
-                        $commentModel->setKey('war/index/show/id/'.$this->getRequest()->getParam('id'));
+                        $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
                     }
-                    $commentModel->setText($this->getRequest()->getPost('comment_text'));
-                    $commentModel->setDateCreated($date);
-                    $commentModel->setUserId($this->getUser()->getId());
-                    $commentMapper->save($commentModel);
+
+                    $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
                     $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
                 }
             }
 
             if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
-                $commentMapper = new CommentMapper();
-                $id = $this->getRequest()->getParam('id');
                 $commentId = $this->getRequest()->getParam('commentId');
-                $oldComment = $commentMapper->getCommentById($commentId);
+                $comments = new Comments();
 
-                $commentModel = new CommentModel();
-                $commentModel->setId($commentId);
-                if ($this->getRequest()->getParam('key') === 'up') {
-                    $commentModel->setUp($oldComment->getUp()+1);
-                } else {
-                    $commentModel->setDown($oldComment->getDown()+1);
-                }
-                $commentModel->setVoted($oldComment->getVoted().$this->getUser()->getId().',');
-                $commentMapper->saveLike($commentModel);
-
-                $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
+                $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
+                $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id').'#comment_'.$commentId]);
             }
 
             $this->getLayout()->getHmenu()

@@ -1,16 +1,16 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\User\Controllers;
 
+use Ilch\Comments;
 use Modules\User\Mappers\Gallery as GalleryMapper;
 use Modules\User\Mappers\GalleryImage as GalleryImageMapper;
 use Modules\User\Models\GalleryImage as GalleryImageModel;
 use Modules\Comment\Mappers\Comment as CommentMapper;
-use Modules\Comment\Models\Comment as CommentModel;
 use Modules\User\Mappers\User as UserMapper;
 
 class Gallery extends \Ilch\Controller\Frontend
@@ -96,35 +96,21 @@ class Gallery extends \Ilch\Controller\Frontend
         $imageMapper->saveVisits($model);
 
         if ($this->getRequest()->getPost('saveComment')) {
-            $date = new \Ilch\Date();
-            $commentModel = new CommentModel();
+            $comments = new Comments();
+            $key = 'user/gallery/showimage/user/'.$userId;
+
             if ($this->getRequest()->getPost('fkId')) {
-                $commentModel->setKey('user/gallery/showimage/user/'.$userId.'/id/'.$id.'/id_c/'.$this->getRequest()->getPost('fkId'));
-                $commentModel->setFKId($this->getRequest()->getPost('fkId'));
-            } else {
-                $commentModel->setKey('user/gallery/showimage/user/'.$userId.'/id/'.$id);
+                $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
             }
-            $commentModel->setText($this->getRequest()->getPost('comment_text'));
-            $commentModel->setDateCreated($date);
-            $commentModel->setUserId($this->getUser()->getId());
-            $commentMapper->save($commentModel);
+
+            $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
             $this->redirect(['action' => 'showImage', 'user' => $userId, 'id' => $id]);
         }
         if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
-            $id = $this->getRequest()->getParam('id');
             $commentId = $this->getRequest()->getParam('commentId');
-            $oldComment = $commentMapper->getCommentById($commentId);
+            $comments = new Comments();
 
-            $commentModel = new CommentModel();
-            $commentModel->setId($commentId);
-            if ($this->getRequest()->getParam('key') === 'up') {
-                $commentModel->setUp($oldComment->getUp()+1);
-            } else {
-                $commentModel->setDown($oldComment->getDown()+1);
-            }
-            $commentModel->setVoted($oldComment->getVoted().$this->getUser()->getId().',');
-            $commentMapper->saveLike($commentModel);
-
+            $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
             $this->redirect(['action' => 'showimage', 'user' => $userId, 'id' => $id.'#comment_'.$commentId]);
         }
 

@@ -1,16 +1,16 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Article\Controllers;
 
+use Ilch\Comments;
 use Modules\Article\Mappers\Article as ArticleMapper;
 use Modules\Article\Models\Article as ArticleModel;
 use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
-use Modules\Comment\Models\Comment as CommentModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Article\Config\Config as ArticleConfig;
 use Ilch\Layout\Helper\MetaTag\Model as MetaTagModel;
@@ -137,37 +137,22 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($hasReadAccess && !$article->getCommentsDisabled()) {
             if ($this->getRequest()->getPost('saveComment')) {
-                $date = new \Ilch\Date();
-                $commentModel = new CommentModel();
-                $commentKey = sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'));
+                $comments = new Comments();
+                $key = sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'));
+
                 if ($this->getRequest()->getPost('fkId')) {
-                    $commentModel->setKey($commentKey.'/id_c/'.$this->getRequest()->getPost('fkId'));
-                    $commentModel->setFKId($this->getRequest()->getPost('fkId'));
-                } else {
-                    $commentModel->setKey($commentKey);
+                    $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
                 }
-                $commentModel->setText($this->getRequest()->getPost('comment_text'));
-                $commentModel->setDateCreated($date);
-                $commentModel->setUserId($this->getUser()->getId());
-                $commentMapper->save($commentModel);
+
+                $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
                 $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
             }
 
             if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
-                $id = $this->getRequest()->getParam('id');
                 $commentId = $this->getRequest()->getParam('commentId');
-                $oldComment = $commentMapper->getCommentById($commentId);
+                $comments = new Comments();
 
-                $commentModel = new CommentModel();
-                $commentModel->setId($commentId);
-                if ($this->getRequest()->getParam('key') === 'up') {
-                    $commentModel->setUp($oldComment->getUp()+1);
-                } else {
-                    $commentModel->setDown($oldComment->getDown()+1);
-                }
-                $commentModel->setVoted($oldComment->getVoted().$this->getUser()->getId().',');
-                $commentMapper->saveLike($commentModel);
-
+                $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
                 $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
             }
         }
