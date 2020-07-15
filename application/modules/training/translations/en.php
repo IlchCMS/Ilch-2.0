@@ -34,5 +34,5 @@ return [
     'contactPerson' => 'Contact person',
     
     'noTrainings' => 'No Trainings',
-    'nextTrainingLimit' => 'Next Trainings Limit',
+    'boxNexttrainingLimit' => 'Next Trainings Limit',
 ];

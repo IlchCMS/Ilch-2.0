@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
         'version' => '1.7.0',
         'icon_small' => 'fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'official' => true,
         'languages' => [
             'de_DE' => [
@@ -110,6 +110,9 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_training` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_training_entrants` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.3.0":
+            case "1.4.0":
+            case "1.5.0":
             case "1.6.0":
                 $boxMapper = new \Modules\Admin\Mappers\Box();
                 $boxModel = new \Modules\Admin\Models\Box();

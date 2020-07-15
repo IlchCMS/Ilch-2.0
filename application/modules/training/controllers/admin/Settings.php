@@ -40,21 +40,13 @@ class Settings extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
-        $post = [
-            'boxNexttrainingLimit' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'boxNexttrainingLimit' => $this->getRequest()->getPost('boxNexttrainingLimit')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'boxNexttrainingLimit' => 'numeric|integer|min:1'
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('training_boxNexttrainingLimit', $post['boxNexttrainingLimit']);
+                $this->getConfig()->set('training_boxNexttrainingLimit', $this->getRequest()->getPost('boxNexttrainingLimit'));
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
@@ -62,11 +54,12 @@ class Settings extends \Ilch\Controller\Admin
             }
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('post', $post)
-            ->set('errorFields', (isset($errorFields) ? $errorFields : []))
-            ->set('boxNexttrainingLimit', $this->getConfig()->get('training_boxNexttrainingLimit'));
+        $this->getView()->set('boxNexttrainingLimit', $this->getConfig()->get('training_boxNexttrainingLimit'));
     }
 }
