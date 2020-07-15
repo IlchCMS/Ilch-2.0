@@ -1,0 +1,36 @@
+/* Box */
+.nexttraining-box {
+    margin: 0 15px;
+}
+.nexttraining-box [class*="col-"] {
+    padding: 0;
+}
+.nexttraining-box i {
+    padding-right: 4px;
+}
+.nexttraining-box .ellipsis {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+.nexttraining-box .ellipsis-item {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.nexttraining-box .nexttraining-vs {
+    display: flex;
+    align-items: flex-end;
+    padding: 0 5px;
+    min-height: 20px;
+}
+.nexttraining-box .nexttraining-date {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-left: 5px;
+    min-height: 20px;
+}

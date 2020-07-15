@@ -32,4 +32,7 @@ return [
     'gameServerPW' => 'Gameserver password',
     'note' => 'Note',
     'contactPerson' => 'Contact person',
+    
+    'noTrainings' => 'No Trainings',
+    'nextTrainingLimit' => 'Next Trainings Limit',
 ];

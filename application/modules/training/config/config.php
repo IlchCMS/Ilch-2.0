@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'training',
-        'version' => '1.6.0',
+        'version' => '1.7.0',
         'icon_small' => 'fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -25,6 +25,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the training list.',
             ],
         ],
+        'boxes' => [
+            'nexttraining' => [
+                'de_DE' => [
+                    'name' => 'Next Training'
+                ],
+                'en_EN' => [
+                    'name' => 'Next Training'
+                ]
+            ]
+        ],
         'ilchCore' => '2.1.26',
         'phpVersion' => '5.6'
     ];
@@ -32,6 +42,9 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('training_boxNexttrainingLimit', '5');
     }
 
     public function uninstall()
@@ -42,6 +55,8 @@ class Config extends \Ilch\Config\Install
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $this->db()->queryMulti('DELETE FROM `[prefix]_calendar_events` WHERE `url` = \'training/trainings/index/\';');
         }
+
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'training_boxNexttrainingLimit'");
     }
 
     public function getInstallSql()
@@ -95,6 +110,17 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_training` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_training_entrants` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.6.0":
+                $boxMapper = new \Modules\Admin\Mappers\Box();
+                $boxModel = new \Modules\Admin\Models\Box();
+                $boxModel->setModule($this->config['key']);
+                foreach ($this->config['boxes'] as $key => $value) {
+                    $boxModel->addContent($key, $value);
+                }
+                $boxMapper->install($boxModel);
+
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('training_boxNexttrainingLimit', '5');
         }
     }
 }
