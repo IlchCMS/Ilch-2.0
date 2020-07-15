@@ -143,7 +143,7 @@ class Regist extends \Ilch\Controller\Frontend
                         ->setToEmail($this->getRequest()->getPost('email'))
                         ->setSubject($this->getTranslator()->trans('automaticEmail'))
                         ->setMessage($message)
-                        ->sent();
+                        ->send();
                 }
 
                 $this->redirect()

@@ -164,7 +164,7 @@ class Index extends \Ilch\Controller\Admin
                         ->setToEmail($email->getEmail())
                         ->setSubject($this->getLayout()->escape($post['subject']))
                         ->setMessage($message)
-                        ->sent();
+                        ->send();
                 }
 
                 $this->redirect()

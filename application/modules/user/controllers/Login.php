@@ -250,7 +250,7 @@ class Login extends \Ilch\Controller\Frontend
                     ->setToEmail($this->getLayout()->escape($email))
                     ->setSubject($this->getTranslator()->trans('automaticEmail'))
                     ->setMessage($message)
-                    ->sent();
+                    ->send();
 
                 $this->addMessage('newPasswordEMailSuccess');
                 $this->redirect()

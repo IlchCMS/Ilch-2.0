@@ -199,7 +199,7 @@ class Index extends \Ilch\Controller\Admin
                 ->setToEmail($user->getEmail())
                 ->setSubject($this->getTranslator()->trans('automaticEmail'))
                 ->setMessage($message)
-                ->sent();
+                ->send();
 
             $this->addMessage('freeSuccess');
         }
@@ -344,7 +344,7 @@ class Index extends \Ilch\Controller\Admin
                         ->setToEmail($user->getEmail())
                         ->setSubject($this->getTranslator()->trans('automaticEmail'))
                         ->setMessage($message)
-                        ->sent();
+                        ->send();
                 }
 
                 $userId = $userMapper->save($user);

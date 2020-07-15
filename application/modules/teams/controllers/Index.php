@@ -186,7 +186,7 @@ class Index extends \Ilch\Controller\Frontend
                                 ->setToEmail($this->getLayout()->escape($receiver->getEmail()))
                                 ->setSubject($subject)
                                 ->setMessage($message)
-                                ->sent();
+                                ->send();
                         }
                     }
                 }

@@ -81,7 +81,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->setReplyTo($senderMail)
                     ->setSubject($subject)
                     ->setMessage($message)
-                    ->sent();
+                    ->send();
 
                 $this->redirect()
                     ->withMessage('sendSuccess')

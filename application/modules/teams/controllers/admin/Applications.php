@@ -190,7 +190,7 @@ class Applications extends \Ilch\Controller\Admin
                 ->setToEmail($this->getLayout()->escape($email))
                 ->setSubject($this->getTranslator()->trans('subjectAccept'))
                 ->setMessage($message)
-                ->sent();
+                ->send();
 
             $joinsMapper->updateDecision($this->getRequest()->getParam('id'), 1);
 
@@ -248,7 +248,7 @@ class Applications extends \Ilch\Controller\Admin
                 ->setToEmail($this->getLayout()->escape($join->getEmail()))
                 ->setSubject($this->getTranslator()->trans('subjectReject'))
                 ->setMessage($message)
-                ->sent();
+                ->send();
 
             $joinsMapper->updateDecision($this->getRequest()->getParam('id'), 2);
 

@@ -68,7 +68,7 @@ class Mail extends \Ilch\Controller\Frontend
                     ->setToEmail($user->getEmail())
                     ->setSubject($subject)
                     ->setMessage($message)
-                    ->sent();
+                    ->send();
 
                 $this->redirect()
                     ->withMessage('emailSuccess')
