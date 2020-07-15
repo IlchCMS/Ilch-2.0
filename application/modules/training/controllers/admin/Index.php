@@ -37,7 +37,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -57,11 +57,9 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('check_training')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach ($this->getRequest()->getPost('check_training') as $trainingId) {
-                    $trainingMapper->delete($trainingId);
-                }
+        if ($this->getRequest()->getPost('check_training') && $this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('check_training') as $trainingId) {
+                $trainingMapper->delete($trainingId);
             }
         }
 

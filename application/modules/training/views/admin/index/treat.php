@@ -11,7 +11,7 @@
     ?>
 </h1>
 <form class="form-horizontal" method="POST" action="">
-    <?=$this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
@@ -74,7 +74,7 @@
                 <?php
                 foreach ($this->get('users') as $user) {
                     $selected = '';
-                    if ($this->get('training') != '' AND $this->get('training')->getContact() == $user->getId()) {
+                    if ($this->get('training') != '' && $this->get('training')->getContact() == $user->getId()) {
                         $selected = 'selected="selected"';
                     }
                     echo '<option '.$selected.' value="'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
@@ -93,7 +93,7 @@
                    name="voiceServer"
                    value="1"
                    onclick="showMe('voiceServerInfo', this)"
-                   <?php if ($this->get('training') != '' AND $this->get('training')->getVoiceServer() == 1) { echo 'checked="checked"';} ?>>
+                   <?php if ($this->get('training') != '' && $this->get('training')->getVoiceServer() == 1) { echo 'checked="checked"';} ?>>
         </div>
     </div>
     <?php
@@ -145,7 +145,7 @@
                    name="gameServer"
                    value="1"
                    onclick="showMe('gameServerInfo', this)"
-                   <?php if ($this->get('training') != '' AND $this->get('training')->getGameServer() == 1) { echo 'checked="checked"';} ?>>
+                   <?php if ($this->get('training') != '' && $this->get('training')->getGameServer() == 1) { echo 'checked="checked"';} ?>>
         </div>
     </div>
     <?php
@@ -220,7 +220,7 @@
                        id="calendarShow"
                        name="calendarShow"
                        value="1"
-                    <?php if (($this->get('training') != '' AND $this->get('training')->getShow() == 1) OR $this->originalInput('calendarShow') == 1) { echo 'checked'; } ?> />
+                    <?php if (($this->get('training') != '' && $this->get('training')->getShow() == 1) || $this->originalInput('calendarShow') == 1) { echo 'checked'; } ?> />
                 <label for="calendarShow">
                     <?=$this->getTrans('calendarShow') ?>
                 </label>
@@ -236,9 +236,9 @@
     ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>

@@ -33,7 +33,7 @@ class Nexttraining extends \Ilch\Box
 
         $this->getView()->set('trainingMapper', $trainingMapper)
             ->set('entrantsMapper', $entrantsMapper)
-            ->set('training', $trainingMapper->getTrainingsListWithLimt($config->get('training_boxNexttrainingLimit')?$config->get('training_boxNexttrainingLimit'):5))
+            ->set('training', $trainingMapper->getTrainingsListWithLimt($config->get('training_boxNexttrainingLimit')?:5))
             ->set('readAccess', $readAccess);
     }
 }

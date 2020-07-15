@@ -174,7 +174,9 @@ class Training extends \Ilch\Mapper
         $difference = $countdown_date->getTimestamp() - $datenow->getTimestamp();
 
         if ($difference < 0) {
-            if ($difference <= (60*$countdown_time)) return false;
+            if ($difference <= (60*$countdown_time)) {
+                return false;
+            }
             $difference = 0;
         }
 
@@ -184,16 +186,18 @@ class Training extends \Ilch\Mapper
 
         // OUTPUT
         if ($days_left == '0') {
-            if ($hours_left == '0' AND $minutes_left > '0') {
+            if ($hours_left == '0' && $minutes_left > '0') {
                 return $minutes_left.'m';
-            } elseif ($hours_left == '0' AND $minutes_left == '0') {
-                return 'live';
-            } else  {
-                return $hours_left.'h '.$minutes_left.'m';
             }
-        } else {
-            return $days_left.'d '.$hours_left.'h';
+
+            if ($hours_left == '0' && $minutes_left == '0') {
+                return 'live';
+            }
+
+            return $hours_left.'h '.$minutes_left.'m';
         }
+
+        return $days_left.'d '.$hours_left.'h';
     }
 
     /**
@@ -241,9 +245,7 @@ class Training extends \Ilch\Mapper
      */
     public function existsTable($table)
     {
-        $module = $this->db()->ifTableExists('[prefix]_'.$table);
-
-        return $module;
+        return $this->db()->ifTableExists('[prefix]_'.$table);
     }
 
     /**
