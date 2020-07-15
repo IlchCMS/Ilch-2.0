@@ -148,7 +148,7 @@ class Training extends \Ilch\Mapper
                 ->setDate($entries['date'])
                 ->setTime($entries['time'])
                 ->setTitle($entries['title'])
-                ->setShow($entries['show'])
+                ->setPlace($entries['place'])
                 ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
@@ -164,22 +164,19 @@ class Training extends \Ilch\Mapper
      * @param int $day
      * @param int $hour
      * @param int $minute
-     * @return string
+     * @return bool|string
      */
-    public function countdown($year, $month, $day, $hour, $minute)
+    public function countdown($countdown_date, $countdown_time = 60)
     {
         $date = new \Ilch\Date();
-        $date = $date->format(null, true);
+        $datenow = new \Ilch\Date($date->format("Y-m-d H:i:s",true));
 
-        // make a unix timestamp for the given date
-        $the_countdown_date = mktime($hour, $minute, 0, $month, $day, $year);
+        $difference = $countdown_date->getTimestamp() - $datenow->getTimestamp();
 
-        // get current unix timestamp
-        $today = strtotime($date);
-
-        $difference = $the_countdown_date - $today;
-        if ($difference < 0)
+        if ($difference < 0) {
+            if ($difference <= (60*$countdown_time)) return false;
             $difference = 0;
+        }
 
         $days_left = floor($difference / 60 / 60 / 24);
         $hours_left = floor(($difference - $days_left * 60 * 60 * 24) / 60 / 60);
@@ -188,14 +185,14 @@ class Training extends \Ilch\Mapper
         // OUTPUT
         if ($days_left == '0') {
             if ($hours_left == '0' AND $minutes_left > '0') {
-                echo $minutes_left.'m';
+                return $minutes_left.'m';
             } elseif ($hours_left == '0' AND $minutes_left == '0') {
-                echo 'live';
+                return 'live';
             } else  {
-                echo $hours_left.'h '.$minutes_left.'m';
+                return $hours_left.'h '.$minutes_left.'m';
             }
         } else {
-            echo $days_left.'d '.$hours_left.'h';
+            return $days_left.'d '.$hours_left.'h';
         }
     }
 

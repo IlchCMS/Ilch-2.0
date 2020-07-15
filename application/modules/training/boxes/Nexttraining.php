@@ -17,7 +17,6 @@ class Nexttraining extends \Ilch\Box
         $trainingMapper = new TrainingMapper();
         $entrantsMapper = new EntrantsMapper();
         $userMapper = new UserMapper();
-        $date = new \Ilch\Date();
         $config = \Ilch\Registry::get('config');
 
         $user = null;
@@ -34,7 +33,6 @@ class Nexttraining extends \Ilch\Box
 
         $this->getView()->set('trainingMapper', $trainingMapper)
             ->set('entrantsMapper', $entrantsMapper)
-            ->set('date', $date->format(null, true))
             ->set('training', $trainingMapper->getTrainingsListWithLimt($config->get('training_boxNexttrainingLimit')?$config->get('training_boxNexttrainingLimit'):5))
             ->set('readAccess', $readAccess);
     }

@@ -19,13 +19,8 @@
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.nexttraining-box .nexttraining-vs {
-    display: flex;
     align-items: flex-end;
-    padding: 0 5px;
-    min-height: 20px;
+    white-space: nowrap;
 }
 .nexttraining-box .nexttraining-date {
     display: flex;

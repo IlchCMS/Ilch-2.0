@@ -6,21 +6,23 @@
     if ($this->getUser()) {
         $adminAccess = $this->getUser()->isAdmin();
     }
+    $trainingMapper = $this->get('trainingMapper');
+    $entrantsMapper = $this->get('entrantsMapper'); 
 
     foreach ($this->get('training') as $training):
         if (!is_in_array($this->get('readAccess'), explode(',', $training->getReadAccess())) && $adminAccess == false) {
             continue;
         }
+        $countdown = $trainingMapper->countdown(new \Ilch\Date($training->getDate()), $training->getTime());
+        if ($countdown === false) {
+            continue;
+        }
         $displayed++;
-
-        $trainingMapper = $this->get('trainingMapper');
-        $entrantsMapper = $this->get('entrantsMapper');
-        $trainingTime = $training->getDate();    
         ?>
         <div class="nexttraining-box">
             <div class="row">
                 <a href="<?=$this->getUrl('training/index/show/id/' . $training->getId()) ?>">
-                    <div class="col-xs-4 ellipsis">
+                    <div class="col-xs-4 ellipsis" title="<?=$this->escape($training->getPlace()) ?>">
                         <div class="ellipsis-item">
                             <?=$this->escape($training->getTitle()) ?>
                         </div>
@@ -32,8 +34,8 @@
                     </div>
                 </a>
                 <div class="col-xs-3 small nexttraining-date">
-                    <div class="ellipsis-item text-right" title="<?=$trainingMapper->countdown(date("Y", strtotime($trainingTime)), date("m", strtotime($trainingTime)), date("d", strtotime($trainingTime)), date("H", strtotime($trainingTime)), date("i", strtotime($trainingTime))) ?>">
-                        <i><?=$trainingMapper->countdown(date("Y", strtotime($trainingTime)), date("m", strtotime($trainingTime)), date("d", strtotime($trainingTime)), date("H", strtotime($trainingTime)), date("i", strtotime($trainingTime))) ?></i>
+                    <div class="ellipsis-item text-right" title="<?=$countdown ?>">
+                        <i><?=$countdown ?></i>
                     </div>
                 </div>
             </div>
