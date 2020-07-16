@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,9 +13,10 @@ class Entrants extends \Ilch\Mapper
     /**
      * Gets the Event entrants.
      *
-     * @param $trainId
-     * @param $userId
+     * @param integer $trainId
+     * @param integer $userId
      * @return EntrantsModel|null
+     * @throws \Ilch\Database\Exception
      */
     public function getEntrants($trainId, $userId)
     {
@@ -87,7 +88,8 @@ class Entrants extends \Ilch\Mapper
     /**
      * Deletes user from training with given userId.
      *
-     * @param integer $trainId, $userId
+     * @param integer $trainId
+     * @param integer $userId
      */
     public function deleteUserFromTrain($trainId, $userId)
     {

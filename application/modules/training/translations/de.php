@@ -32,4 +32,7 @@ return [
     'gameServerPW' => 'Gameserver Passwort',
     'note' => 'Notiz',
     'contactPerson' => 'Ansprechpartner',
+    
+    'noTrainings' => 'Keine Trainings vorhanden',
+    'boxNexttrainingLimit' => 'Next Trainings Limit',
 ];

@@ -4,19 +4,20 @@
  * @package ilch
  */
 
-namespace Modules\Training\Controllers;
+namespace Modules\Training\Boxes;
 
 use Modules\Training\Mappers\Training as TrainingMapper;
+use Modules\Training\Mappers\Entrants as EntrantsMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Trainings extends \Ilch\Controller\Frontend
+class Nexttraining extends \Ilch\Box
 {
-    public function indexAction()
+    public function render()
     {
         $trainingMapper = new TrainingMapper();
+        $entrantsMapper = new EntrantsMapper();
         $userMapper = new UserMapper();
-
-        $this->getLayout()->setFile('modules/calendar/layouts/events');
+        $config = \Ilch\Registry::get('config');
 
         $user = null;
         if ($this->getUser()) {
@@ -30,7 +31,9 @@ class Trainings extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('trainingList', $trainingMapper->getTrainingsForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')))
+        $this->getView()->set('trainingMapper', $trainingMapper)
+            ->set('entrantsMapper', $entrantsMapper)
+            ->set('training', $trainingMapper->getTrainingsListWithLimt($config->get('training_boxNexttrainingLimit')?:5))
             ->set('readAccess', $readAccess);
     }
 }

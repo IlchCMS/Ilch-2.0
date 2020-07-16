@@ -52,7 +52,7 @@ $userMapper = new \Modules\User\Mappers\User();
                         <?=$this->getTrans('voiceServerPW') ?>:
                     </div>
                     <div class="col-lg-9">
-                        <?php if ($this->getUser() AND $this->get('trainEntrantUser') != ''): ?>
+                        <?php if ($this->getUser() && $this->get('trainEntrantUser') != ''): ?>
                             <?=$this->escape($training->getVoiceServerPW()) ?>
                         <?php else: ?>
                             <?=str_repeat('&bull;', strlen($this->escape($training->getVoiceServerPW()))) ?>
@@ -76,7 +76,7 @@ $userMapper = new \Modules\User\Mappers\User();
                         <?=$this->getTrans('gameServerPW') ?>:
                     </div>
                     <div class="col-lg-9">
-                        <?php if ($this->getUser() AND $this->get('trainEntrantUser') != ''): ?>
+                        <?php if ($this->getUser() && $this->get('trainEntrantUser') != ''): ?>
                             <?=$this->escape($training->getGameServerPW()) ?>
                         <?php else: ?>
                             <?=str_repeat('&bull;', strlen($this->escape($training->getGameServerPW()))) ?>

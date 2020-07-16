@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -15,6 +15,7 @@ class Training extends \Ilch\Mapper
      *
      * @param array $where
      * @return TrainingModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getTraining($where = [])
     {
@@ -54,10 +55,11 @@ class Training extends \Ilch\Mapper
     }
 
     /**
-     * Gets training.
+     * Gets training by ID.
      *
      * @param integer $id
      * @return TrainingModel|null
+     * @throws \Ilch\Database\Exception
      */
     public function getTrainingById($id)
     {
@@ -107,6 +109,87 @@ class Training extends \Ilch\Mapper
     }
 
     /**
+     * Gets Trainings by limit
+     *
+     * @param int $limit
+     * @param mixed $where
+     * @return TrainingModel[]|null
+     * @throws \Ilch\Database\Exception
+     */
+    public function getTrainingsListWithLimt($limit = NULL, $order = 'ASC')
+    {
+        $entryArray = $this->db()->select('*')
+            ->from('training')
+            ->order(['date' => $order])
+            ->limit($limit)
+            ->execute()
+            ->fetchRows();
+
+        if (empty($entryArray)) {
+            return [];
+        }
+
+        $entry = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new TrainingModel();
+            $entryModel->setId($entries['id'])
+                ->setDate($entries['date'])
+                ->setTime($entries['time'])
+                ->setTitle($entries['title'])
+                ->setPlace($entries['place'])
+                ->setReadAccess($entries['read_access']);
+            $entry[] = $entryModel;
+        }
+
+        return $entry;
+    }
+
+    /**
+     * Gets the calculated Countdown
+     *
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @param int $hour
+     * @param int $minute
+     * @return bool|string
+     */
+    public function countdown($countdown_date, $countdown_time = 60)
+    {
+        $date = new \Ilch\Date();
+        $datenow = new \Ilch\Date($date->format("Y-m-d H:i:s",true));
+
+        $difference = $countdown_date->getTimestamp() - $datenow->getTimestamp();
+
+        if ($difference < 0) {
+            if ($difference <= (60*$countdown_time)) {
+                return false;
+            }
+            $difference = 0;
+        }
+
+        $days_left = floor($difference / 60 / 60 / 24);
+        $hours_left = floor(($difference - $days_left * 60 * 60 * 24) / 60 / 60);
+        $minutes_left = floor(($difference - $days_left * 60 * 60 * 24 - $hours_left * 60 * 60) / 60);
+
+        // OUTPUT
+        if ($days_left == '0') {
+            if ($hours_left == '0' && $minutes_left > '0') {
+                return $minutes_left.'m';
+            }
+
+            if ($hours_left == '0' && $minutes_left == '0') {
+                return 'live';
+            }
+
+            return $hours_left.'h '.$minutes_left.'m';
+        }
+
+        return $days_left.'d '.$hours_left.'h';
+    }
+
+    /**
      * Inserts or updates training model.
      *
      * @param TrainingModel $training
@@ -151,9 +234,7 @@ class Training extends \Ilch\Mapper
      */
     public function existsTable($table)
     {
-        $module = $this->db()->ifTableExists('[prefix]_'.$table);
-
-        return $module;
+        return $this->db()->ifTableExists('[prefix]_'.$table);
     }
 
     /**
