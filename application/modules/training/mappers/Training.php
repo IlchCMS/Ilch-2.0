@@ -129,17 +129,6 @@ class Training extends \Ilch\Mapper
             return [];
         }
 
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS t.id as training_id,t.title,t.date,t.place,t.read_access
-                FROM `[prefix]_training` as t
-                ORDER by t.date '.$order.'
-                LIMIT '.$limit;
-
-        $warArray = $this->db()->queryArray($sql);
-
-        if (empty($warArray)) {
-            return null;
-        }
-
         $entry = [];
 
         foreach ($entryArray as $entries) {
