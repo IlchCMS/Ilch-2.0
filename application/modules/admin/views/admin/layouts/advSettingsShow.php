@@ -59,6 +59,13 @@ function getInput($name, $value, $settingsValues, $obj)
                                maxlength="40" 
                                value="%s" />', $name, $name, $settingsValue);
             break;
+        case 'url':
+            $input = sprintf('<input class="form-control"
+                               type="url"
+                               name="%s"
+                               id="%s"
+                               value="%s" />', $name, $name, $settingsValue);
+            break;
         default:
     }
 
