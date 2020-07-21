@@ -18,11 +18,11 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'Training',
-                'description' => 'Hier kann die Trainingsliste verwaltet werden.',
+                'description' => 'Hiermit können Trainings geplant werden und auf Wunsch auch in den Kalender eingetragen werden. Über einer Box können die nächsten Trainings angezeigt werden.',
             ],
             'en_EN' => [
                 'name' => 'Training',
-                'description' => 'Here you can manage the training list.',
+                'description' => 'Can be used to plan trainings, which optionally can be added to the calendar. The next trainings can be shown with a box.',
             ],
         ],
         'boxes' => [
@@ -124,6 +124,11 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('training_boxNexttrainingLimit', '5');
+
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'training' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }
