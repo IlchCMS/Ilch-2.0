@@ -131,23 +131,7 @@ class Mysql
      */
     public function getSqlWithPrefix($sql)
     {
-        if (preg_match("/^UPDATE `?\[prefix\]_\S+`?\s+SET/is", $sql)) {
-            $sql = preg_replace(
-                "/^UPDATE `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i",
-                'UPDATE `' . $this->prefix . "\\1`\\2",
-                $sql
-            );
-        } elseif (preg_match("/^INSERT INTO `?\[prefix\]_\S+`?\s+[a-z0-9\s,\)\(]*?VALUES/is", $sql)) {
-            $sql = preg_replace(
-                "/^INSERT INTO `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i",
-                'INSERT INTO `' . $this->prefix . "\\1`\\2",
-                $sql
-            );
-        } else {
-            $sql = preg_replace("/\[prefix\]_(\S+?)([\s\.,]|$)/", $this->prefix . "\\1\\2", $sql);
-        }
-
-        return $sql;
+        return preg_replace("/\[prefix\]_(\S+?)([\s\.,]|$)/", $this->prefix . "\\1\\2", $sql);
     }
 
     /**

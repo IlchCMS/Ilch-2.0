@@ -691,7 +691,7 @@ class Config extends \Ilch\Config\Install
                             $sqlCommands = '';
                         }
 
-                        $sqlCommands .= 'UPDATE TABLE `[prefix]_comments` SET `key` = \''.$key.'\' WHERE `id` = \''.$comment['id'].'\';';
+                        $sqlCommands .= 'UPDATE `[prefix]_comments` SET `key` = \''.$key.'\' WHERE `id` = '.$comment['id'].';';
                         $counter++;
                     }
 
