@@ -669,17 +669,18 @@ class Config extends \Ilch\Config\Install
                 // Update comment keys in the comments table to end with a slash.
                 $sqlCommands = '';
                 $counter = 0;
-                $commentKeys = $this->db()->select(['id', 'key'])
+                $comments = $this->db()->select(['id', 'key'])
                     ->from('comments')
                     ->execute()
-                    ->fetchAssoc();
+                    ->fetchRows();
 
-                if (!empty($commentKeys)) {
-                    foreach($commentKeys as $id => $key) {
-                        if (!(strlen($key) - (strrpos($key, '/')) === 0)) {
+                if (!empty($comments)) {
+                    foreach($comments as $comment) {
+                        $key = '';
+                        if (!(strlen($comment['key']) - (strrpos($comment['key'], '/')) === 0)) {
                             // Add missing slash at the end to usually terminate the id.
                             // This is needed for example so that id 11 doesn't get counted as id 1.
-                            $key .= '/';
+                            $key = $comment['key'] . '/';
                         }
 
                         // Run commands if we already have 50. This is done to limit the size of the sql command string.
@@ -690,7 +691,7 @@ class Config extends \Ilch\Config\Install
                             $sqlCommands = '';
                         }
 
-                        $sqlCommands .= 'UPDATE TABLE `[prefix]_comments` SET `key` = '.$key.' WHERE `id` = '.$id.';';
+                        $sqlCommands .= 'UPDATE TABLE `[prefix]_comments` SET `key` = \''.$key.'\' WHERE `id` = \''.$comment['id'].'\';';
                         $counter++;
                     }
 
