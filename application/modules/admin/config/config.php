@@ -333,7 +333,7 @@ class Config extends \Ilch\Config\Install
                 // Delete unneeded files and folders
                 unlink(ROOT_PATH.'/application/modules/imprint/controllers/admin/Settings.php');
                 removeDir(ROOT_PATH.'/application/modules/imprint/views/admin/settings');
-                
+
                 // Privacy module
                 // Insert new templates
                 $this->db()->query('INSERT INTO `[prefix]_privacy` (`title`, `urltitle`, `url`, `text`, `show`) VALUES
@@ -356,7 +356,7 @@ class Config extends \Ilch\Config\Install
                 if (empty($visibilitySettings)) {
                     $databaseConfig->set('statistic_visibleStats', '1,1,1,1,1,1', 0);
                 }
-                
+
                 // Remove the no longer needed settings of the statistic module
                 $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_site';
                              DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_visits';
@@ -691,7 +691,7 @@ class Config extends \Ilch\Config\Install
                             $sqlCommands = '';
                         }
 
-                        $sqlCommands .= 'UPDATE `[prefix]_comments` SET `key` = \''.$key.'\' WHERE `id` = '.$comment['id'].';';
+                        $sqlCommands .= 'UPDATE `'.$this->db()->getPrefix().'comments` SET `key` = \''.$key.'\' WHERE `id` = '.$comment['id'].';';
                         $counter++;
                     }
 
