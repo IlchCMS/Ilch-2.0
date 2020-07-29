@@ -44,9 +44,13 @@ class Panel extends BaseController
 
     public function settingsAction()
     {
+        $authProviderMapper = new AuthProvider();
+
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings']);
+
+		$this->getView()->set('providers', $authProviderMapper->getProviders());
     }
 
     public function profileAction()
