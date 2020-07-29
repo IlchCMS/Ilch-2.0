@@ -60,6 +60,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php if (count($this->get('providers')) > 0): ?>
                     <div class="col-xs-12 col-md-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -70,6 +71,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <?php if ($this->get('usermenusettingslinks') != ''): ?>
                         <?php
