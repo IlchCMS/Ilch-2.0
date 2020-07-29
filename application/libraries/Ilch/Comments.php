@@ -438,6 +438,7 @@ function slideReply(thechosenone) {
      */
     public function saveVote($id, $userId, $upVote)
     {
+        $commentMapper = new CommentMapper();
         $oldComment = $commentMapper->getCommentById($id);
 
         $commentModel = new CommentModel();
