@@ -96,7 +96,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
     /**
      * Save settings.
      *
-     * @param LayoutAdvSettingsModel[] $model
+     * @param LayoutAdvSettingsModel[] $models
      */
     public function save($models)
     {
