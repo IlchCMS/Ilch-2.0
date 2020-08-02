@@ -18,7 +18,7 @@ return [
     'setfree' => 'Set free',
     'entrys' => 'Entries',
     'addButton' => 'Entry',
-    'httpOrMedia' => 'http:// or Media',
+    'httpOrMedia' => 'URL or Media',
     'entryAwaitingApproval' => 'Entry awaiting approval.',
     'slider' => 'Slider',
     'boxSliderMode' => 'Mode of the slider',

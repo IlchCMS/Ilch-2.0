@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,18 +10,18 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'partner',
-        'version' => '1.8.0',
+        'version' => '1.9.0',
         'icon_small' => 'fa-handshake-o',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Partner',
-                'description' => 'Hier können neue Partner erstellt werden.',
+                'description' => 'Es können Partner erstellt werden, welche auf einer Seite oder in einer Box dargestellt werden.',
             ],
             'en_EN' => [
                 'name' => 'Partner',
-                'description' => 'Here you can create new partners.',
+                'description' => 'You can create new partners, which can be shown on a site or inside of a box.',
             ],
         ],
         'boxes' => [
@@ -72,7 +72,7 @@ class Config extends \Ilch\Config\Install
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
         INSERT INTO `[prefix]_partners` (`id`, `name`, `banner`, `link`, `target`, `setfree`) VALUES
-        (1, "ilch", "http://www.ilch.de/include/images/linkus/88x31.png", "http://ilch.de", "0", "1");';
+        (1, "ilch", "https://www.ilch.de/include/images/linkus/88x31.png", "https://ilch.de", "0", "1");';
     }
 
     public function getUpdate($installedVersion)
@@ -87,6 +87,18 @@ class Config extends \Ilch\Config\Install
             case "1.3":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_partners` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.4.0":
+            case "1.5.0":
+            case "1.6.0":
+            case "1.7.0":
+            case "1.8.0":
+                // Update possible existing entry for ilch to use HTTPS.
+                $this->db()->query('UPDATE `[prefix]_partners` SET `banner` = \'https://www.ilch.de/include/images/linkus/88x31.png\', `link` = \'https://ilch.de\' WHERE `id` = \'1\' AND `banner` = \'http://www.ilch.de/include/images/linkus/88x31.png\'');
+
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'partner' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }
