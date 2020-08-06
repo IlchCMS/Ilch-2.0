@@ -70,7 +70,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $listGroups = $groupMapper->getGroupList();
-        if ($this->get('sortUsergroupsAlphabetically')) {
+        if ($this->getConfig()->get('forum_sortUsergroupsAlphabetically')) {
             uasort($listGroups, static function ($a, $b)
             {
                 return strcmp($a->getName(), $b->getName());
