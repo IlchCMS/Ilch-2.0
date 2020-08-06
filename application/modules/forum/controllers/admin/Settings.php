@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -78,6 +78,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('forum_reportingPosts', $this->getRequest()->getPost('reportingPosts'));
             $this->getConfig()->set('forum_reportNotificationEMail', $this->getRequest()->getPost('reportNotificationEMail'));
             $this->getConfig()->set('forum_DESCPostorder', $this->getRequest()->getPost('DESCPostorder'));
+            $this->getConfig()->set('forum_sortUsergroupsAlphabetically', $this->getRequest()->getPost('sortUsergroupsAlphabetically'));
             $this->addMessage('saveSuccess');
         }
 
@@ -92,6 +93,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('reportingPosts', $this->getConfig()->get('forum_reportingPosts'));
         $this->getView()->set('reportNotificationEMail', $this->getConfig()->get('forum_reportNotificationEMail'));
         $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
+        $this->getView()->set('sortUsergroupsAlphabetically', $this->getConfig()->get('forum_sortUsergroupsAlphabetically'));
     }
 
     public function groupappearanceAction()

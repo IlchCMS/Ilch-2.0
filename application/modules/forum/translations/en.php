@@ -103,6 +103,7 @@ return [
     'postVoting' => 'Enable Like button',
     'topicSubscription' => 'Subscribing to topics (email)',
     'DESCPostorder' => 'Show new posts first',
+    'sortUsergroupsAlphabetically' => 'Sort user groups alphabetically',
     'boxForumLimit' => 'Number of entries',
     'reportSettings' => 'Reporting of posts',
     'reportingPosts' => 'Reporting of posts',

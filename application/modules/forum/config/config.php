@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.25.0',
+        'version' => '1.26.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -51,6 +51,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('forum_reportingPosts', '1');
         $databaseConfig->set('forum_reportNotificationEMail', '0');
         $databaseConfig->set('forum_DESCPostorder', '0');
+        $databaseConfig->set('forum_sortUsergroupsAlphabetically', '0');
 
         // Add default appearance for admin group
         $appearance[1]['active'] = 'on';
@@ -84,6 +85,8 @@ class Config extends \Ilch\Config\Install
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_filenameGroupappearanceCSS';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_reportingPosts';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_reportNotificationEMail';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_DESCPostorder';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'forum_sortUsergroupsAlphabetically';
             DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'forum';");
     }
 
@@ -431,6 +434,9 @@ class Config extends \Ilch\Config\Install
             foreach($this->config['languages'] as $key => $value) {
                 $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'forum' AND `locale` = '%s';", $value['description'], $key));
             }
+            case "1.25.0":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('forum_sortUsergroupsAlphabetically', '0');
         }
     }
 }

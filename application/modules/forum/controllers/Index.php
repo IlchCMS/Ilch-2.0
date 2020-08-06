@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -81,6 +81,7 @@ class Index extends \Ilch\Controller\Frontend
             ->set('listGroups', $groupMapper->getGroupList())
             ->set('forumMapper', $forumMapper)
             ->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'))
+            ->set('sortUsergroupsAlphabetically', $this->getConfig()->get('forum_sortUsergroupsAlphabetically'))
             ->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }
 }
