@@ -69,6 +69,14 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
+        $listGroups = $groupMapper->getGroupList();
+        if ($this->get('sortUsergroupsAlphabetically')) {
+            uasort($listGroups, static function ($a, $b)
+            {
+                return strcmp($a->getName(), $b->getName());
+            });
+        }
+
         $this->getView()->set('groupIdsArray', $groupIds)
             ->set('onlineUsersHighestRankedGroup', $onlineUsersHighestRankedGroup)
             ->set('forumItems', $forumItems)
@@ -78,10 +86,9 @@ class Index extends \Ilch\Controller\Frontend
             ->set('guestOnline', $allOnlineUsers - count($usersOnline))
             ->set('forumStatics', $staticsMapper->getForumStatistics())
             ->set('registNewUser', $userMapper->getUserById($visitMapper->getRegistNewUser()))
-            ->set('listGroups', $groupMapper->getGroupList())
+            ->set('listGroups', $listGroups)
             ->set('forumMapper', $forumMapper)
             ->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'))
-            ->set('sortUsergroupsAlphabetically', $this->getConfig()->get('forum_sortUsergroupsAlphabetically'))
             ->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }
 }

@@ -136,7 +136,7 @@ class GroupRanking extends \Ilch\Mapper
                 // Existing entry
                 $this->db()->update('forum_groupranking')
                     ->values(['rank' => $rank])
-                    ->where(['id' => $group_id])
+                    ->where(['group_id' => $group_id])
                     ->execute();
             }
         }

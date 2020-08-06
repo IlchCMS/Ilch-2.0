@@ -176,19 +176,7 @@ function rec($item, $obj, $readAccess, $i)
                 <div class="small">
                     <ul class="group-legend">
                         <li><i class="fas fa-bars"></i> <?=$this->getTrans('legend') ?>:</li>
-                        <?php
-                        $groups = $this->get('listGroups');
-
-                        if ($this->get('sortUsergroupsAlphabetically')) {
-                            function cmp($a, $b)
-                            {
-                                return strcmp($a->getName(), $b->getName());
-                            }
-
-                            uasort($groups, 'cmp');
-                        }
-                        ?>
-                        <?php foreach ($groups as $group): ?>
+                        <?php foreach ($this->get('listGroups') as $group): ?>
                             <?php if ($group->getName() !== 'Guest'): ?>
                                 <li class="group"><span class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></span></li>
                             <?php endif; ?>
