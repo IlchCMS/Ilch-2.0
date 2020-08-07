@@ -15,11 +15,12 @@ class Topic extends \Ilch\Mapper
 {
     public function getTopicsByForumId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *
-                FROM `[prefix]_forum_topics`
-                WHERE forum_id = '.$id.'
-                GROUP by type, `id`, `topic_id`, `topic_prefix`, `topic_title`, `visits`, `creator_id`, `date_created`, `forum_id`, `status`
-                ORDER by type DESC, id DESC';
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS *, MAX(posts.date_created) AS latest_post
+                FROM `[prefix]_forum_topics` AS topics
+                LEFT JOIN `[prefix]_forum_posts` AS posts ON topics.id = posts.topic_id
+                WHERE topics.forum_id = '.$id.'
+                GROUP by topics.type, topics.id, topics.topic_id, topics.topic_prefix, topics.topic_title, topics.visits, topics.creator_id, topics.date_created, topics.forum_id, topics.status
+                ORDER by topics.type DESC, latest_post DESC';
 
         if (!empty($pagination)) {
             $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
@@ -65,6 +66,27 @@ class Topic extends \Ilch\Mapper
         }
 
         return $entry;
+    }
+
+    /**
+     * Get a list of topic ids of topics in a forum.
+     *
+     * @param integer $id
+     * @return array array of topic ids
+     */
+    public function getTopicsListByForumId($id)
+    {
+        $result = $this->db()->select('id')
+            ->from('forum_topics')
+            ->where(['forum_id' => $id])
+            ->execute()
+            ->fetchArray();
+
+        if (empty($result)) {
+            return [];
+        }
+
+        return $result;
     }
 
     public function getTopics($pagination = NULL, $limit = NULL)

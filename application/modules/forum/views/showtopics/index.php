@@ -5,7 +5,6 @@ $forumEdit = $this->get('forumEdit');
 $topics = $this->get('topics');
 $topicMapper = $this->get('topicMapper');
 $forumMapper = $this->get('forumMapper');
-$postMapper = $this->get('postMapper');
 $groupIdsArray = $this->get('groupIdsArray');
 $adminAccess = null;
 if ($this->getUser()) {
@@ -62,7 +61,6 @@ $postsPerPage = $this->get('postsPerPage');
             <ul class="topiclist topics">
                 <?php if (!empty($topics)): ?>
                     <?php foreach ($topics as $topic): ?>
-                        <?php $firstPost = $postMapper->getFirstPostByTopicId($topic->getId()) ?>
                         <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                         <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
                         <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
