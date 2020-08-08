@@ -16,12 +16,12 @@ use Modules\User\Models\AuthToken as AuthTokenModel;
 class Remember
 {
     /**
-     * Generate and store authtoken and write remember me cookie.
+     * Generate and store authtoken and write "remember" cookie.
      *
      * @param Modules\User\Service\Login\Result $result
      * @throws \Exception
      */
-    public function setRememberMe($result)
+    public function rememberMe($result)
     {
         $authTokenModel = new AuthTokenModel();
 
@@ -52,6 +52,11 @@ class Remember
         $authTokenMapper->addAuthToken($authTokenModel);
     }
 
+    /**
+     * Reauthenticate user with the existing "remember" cookie.
+     *
+     * @throws \Exception
+     */
     public function reauthenticate()
     {
         $remember = explode(':', $_COOKIE['remember']);
