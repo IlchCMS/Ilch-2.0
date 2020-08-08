@@ -18,10 +18,11 @@ class Remember
     /**
      * Generate and store authtoken and write "remember" cookie.
      *
-     * @param Modules\User\Service\Login\Result $result
+     * @param int $userId
      * @throws \Exception
+     * @since 2.1.38
      */
-    public function rememberMe($result)
+    public function rememberMe($userId)
     {
         $authTokenModel = new AuthTokenModel();
 
@@ -32,7 +33,7 @@ class Remember
         $authenticator = random_bytes(33);
         // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
         $authTokenModel->setToken(hash('sha256', $authenticator));
-        $authTokenModel->setUserid($result->getUser()->getId());
+        $authTokenModel->setUserid($userId);
         $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
 
         if (PHP_VERSION_ID >= 70300) {
@@ -56,6 +57,7 @@ class Remember
      * Reauthenticate user with the existing "remember" cookie.
      *
      * @throws \Exception
+     * @since 2.1.38
      */
     public function reauthenticate()
     {

@@ -56,7 +56,7 @@ class Login extends \Ilch\Controller\Frontend
 
                     if ($this->getRequest()->getPost('rememberMe')) {
                         $rememberMe = new RememberMe();
-                        $rememberMe->rememberMe($result);
+                        $rememberMe->rememberMe($result->getUser()->getId());
                     }
 
                     if ($result->getError() != '') {
