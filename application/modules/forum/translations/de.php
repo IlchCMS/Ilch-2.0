@@ -103,7 +103,6 @@ return [
     'postVoting' => 'Mag ich-Schaltfläche aktivieren',
     'topicSubscription' => 'Abonnieren von Themen (E-Mail)',
     'DESCPostorder' => 'Neue Beiträge werden zuerst angezeigt',
-    'sortUsergroupsAlphabetically' => 'Benutzergruppen alphabetisch sortieren',
     'boxForumLimit' => 'Anzahl an Einträgen',
     'reportSettings' => 'Melden von Beiträgen',
     'reportingPosts' => 'Melden von Beiträgen',

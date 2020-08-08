@@ -152,7 +152,6 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getView()->set('postVoting', $this->getConfig()->get('forum_postVoting'));
         $this->getView()->set('topicSubscription', $this->getConfig()->get('forum_topicSubscription'));
         $this->getView()->set('isSubscribed', $isSubscribed);
-        $this->getView()->set('sortUsergroupsAlphabetically', $this->getConfig()->get('forum_sortUsergroupsAlphabetically'));
         $this->getView()->set('reportingPosts', $this->getConfig()->get('forum_reportingPosts'));
         $this->getView()->set('reportedPostsIds', $reportedPostsIds);
         $this->getView()->set('rememberedPostIds', $rememberedPostIds);

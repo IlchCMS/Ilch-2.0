@@ -160,19 +160,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         </a>
                     </dt>
                     <dd>
-                        <?php
-                        $groups = $post->getAutor()->getGroups();
-
-                        if ($this->get('sortUsergroupsAlphabetically')) {
-                            function cmp($a, $b)
-                            {
-                                return strcmp($a->getName(), $b->getName());
-                            }
-
-                            uasort($groups, 'cmp');
-                        }
-                        ?>
-                        <?php foreach ($groups as $group): ?>
+                        <?php foreach ($post->getAutor()->getGroups() as $group): ?>
                             <i class="forum appearance<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></i><br>
                         <?php endforeach; ?>
                         <i><?=$this->escape($rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle()) ?></i>
