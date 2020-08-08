@@ -1,21 +1,19 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\User\Controllers;
 
+use Modules\User\Mappers\AuthProvider;
 use Modules\User\Mappers\User as UserMapper;
-use Modules\User\Mappers\AuthToken as AuthTokenMapper;
 use Modules\User\Mappers\CookieStolen as CookieStolenMapper;
-use Modules\User\Models\AuthToken as AuthTokenModel;
 use Modules\User\Service\Password as PasswordService;
+use Modules\User\Service\Remember as RememberMe;
 use Modules\User\Service\Login as LoginService;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Ilch\Validation;
-
-use Modules\User\Mappers\AuthProvider;
 
 class Login extends \Ilch\Controller\Frontend
 {
@@ -42,7 +40,7 @@ class Login extends \Ilch\Controller\Frontend
             if ($validation->isValid()) {
                 $userMapper = new UserMapper();
                 $userMapper->deleteselectsdelete(($this->getConfig()->get('userdeletetime')));
-                
+
                 $result  = LoginService::factory()->perform($this->getRequest()->getPost('login_emailname'), $this->getRequest()->getPost('login_password'));
 
                 if ($result->isSuccessful()) {
@@ -57,35 +55,10 @@ class Login extends \Ilch\Controller\Frontend
                     }
 
                     if ($this->getRequest()->getPost('rememberMe')) {
-                        $authTokenModel = new AuthTokenModel();
-
-                        // 9 bytes of random data (base64 encoded to 12 characters) for the selector.
-                        // This provides 72 bits of keyspace and therefore 236 bits of collision resistance (birthday attacks)
-                        $authTokenModel->setSelector(base64_encode(random_bytes(9)));
-                        // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
-                        $authenticator = random_bytes(33);
-                        // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
-                        $authTokenModel->setToken(hash('sha256', $authenticator));
-                        $authTokenModel->setUserid($result->getUser()->getId());
-                        $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
-
-                        if (PHP_VERSION_ID >= 70300) {
-                            setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), [
-                                'expires' => strtotime('+30 days'),
-                                'path' => '/',
-                                'domain' => $_SERVER['SERVER_NAME'],
-                                'samesite' => 'Lax',
-                                'secure' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
-                                'httponly' => true,
-                            ]);
-                        } else {
-                            // workaround syntax to set the SameSite attribute in PHP < 7.3
-                            setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'), '/; samesite=Lax', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
-                        }
-                        $authTokenMapper = new AuthTokenMapper();
-                        $authTokenMapper->addAuthToken($authTokenModel);
+                        $rememberMe = new RememberMe();
+                        $rememberMe->setRememberMe($result);
                     }
-                    
+
                     if ($result->getError() != '') {
                         $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
                     }
