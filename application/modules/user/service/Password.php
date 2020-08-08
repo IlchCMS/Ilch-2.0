@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -11,12 +11,12 @@ namespace Modules\User\Service;
  */
 class Password
 {
-    /** @var int */
+    /** @var mixed */
     private $algorithm;
 
     /**
      * Password constructor
-     * @param int|null $algorithm if not set the default for the php version will be used
+     * @param mixed|null $algorithm if not set the default for the php version will be used
      */
     public function __construct($algorithm = null)
     {

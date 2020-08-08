@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -21,6 +21,7 @@ class Result
 
     /** @var string */
     const USER_LOCKED = 'userLocked';
+
     /** @var string */
     const USER_SELECTSDELETE = 'userSelectsDelete';
 
