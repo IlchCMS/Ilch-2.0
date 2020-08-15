@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -102,9 +102,7 @@ class Vote extends \Ilch\Mapper
         $sql = 'SELECT MAX(id)
                 FROM `[prefix]_poll`';
 
-        $entry = $this->db()->queryCell($sql);
-
-        return $entry;
+        return $this->db()->queryCell($sql);
     }
 
     /**

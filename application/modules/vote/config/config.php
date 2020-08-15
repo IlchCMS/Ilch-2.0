@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,10 +10,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'vote',
-        'version' => '1.8.0',
+        'version' => '1.9.0',
         'icon_small' => 'fa-tasks',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Umfrage',

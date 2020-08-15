@@ -48,13 +48,13 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                             <?php $ip = $ipMapper->getIP($groupVote->getId(), $clientIP); ?>
                             <?php $votedUser = $ipMapper->getVotedUser($groupVote->getId(), $userId); ?>
                             <?php (in_array('0', explode(',', $groupVote->getGroups()))) ? $groupIds[] = 0 : ''; ?>
-                            <?php if ($ip != '' OR $votedUser != '' OR $groupVote->getStatus() != 0 OR !is_in_array(explode(',', $groupVote->getGroups()), $groupIds)): ?>
+                            <?php if ($ip != '' || $votedUser != '' || $groupVote->getStatus() != 0 || !is_in_array(explode(',', $groupVote->getGroups()), $groupIds)): ?>
                                 <div class="vote-body">
                                     <div class="list-group">
                                         <?php foreach ($voteRes as $voteRes): ?>
                                             <?php $result = $resultMapper->getResultByIdAndReply($groupVote->getId(), $voteRes->getReply()); ?>
                                             <?php $totalResult = $resultMapper->getResultById($groupVote->getId()); ?>
-                                            <?php if ($result != 0 AND $totalResult != 0): ?>
+                                            <?php if ($result != 0 && $totalResult != 0): ?>
                                                 <?php $percent = $resultMapper->getPercent($result, $totalResult); ?>
                                             <?php else: ?>
                                                 <?php $percent = 0; ?>

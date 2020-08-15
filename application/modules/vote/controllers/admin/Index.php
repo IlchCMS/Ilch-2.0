@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -32,7 +32,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -52,11 +52,9 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('check_vote')) {
-            if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_vote') as $voteId) {
-                    $voteMapper->delete($voteId);
-                }
+        if ($this->getRequest()->getPost('check_vote') && $this->getRequest()->getPost('action') === 'delete') {
+            foreach($this->getRequest()->getPost('check_vote') as $voteId) {
+                $voteMapper->delete($voteId);
             }
         }
 
@@ -131,6 +129,7 @@ class Index extends \Ilch\Controller\Admin
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'index']);
             }
+
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
                 ->withInput()

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -39,9 +39,7 @@ class Result extends \Ilch\Mapper
                 WHERE poll_id = '.$pollId.'
                 GROUP BY poll_id';
 
-        $result = $this->db()->queryCell($sql);
-
-        return $result;
+        return $this->db()->queryCell($sql);
     }
 
     public function getResultByIdAndReply($pollId, $reply)
@@ -69,9 +67,7 @@ class Result extends \Ilch\Mapper
 
     public function getPercent($count, $totalcount)
     {
-        $percent = round(($count / $totalcount) * 100);
-
-        return $percent;
+        return round(($count / $totalcount) * 100);
     }
 
     /**
