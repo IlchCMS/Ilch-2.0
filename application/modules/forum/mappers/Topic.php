@@ -39,7 +39,7 @@ class Topic extends \Ilch\Mapper
             $entryModel = new TopicModel();
             $userMapper = new UserMapper();
             $entryModel->setId($entries['id']);
-            $entryModel->setTopicId($id);
+            $entryModel->setTopicId($entries['topic_id']);
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
@@ -174,28 +174,31 @@ class Topic extends \Ilch\Mapper
 
     public function getLastPostByTopicId($id)
     {
-        $sql = 'SELECT p.id, p.topic_id, p.date_created, p.user_id, p.read
-                FROM [prefix]_forum_posts as p 
-                WHERE p.topic_id = '.$id.'
-                ORDER BY p.date_created DESC';
-        $fileRow = $this->db()->queryRow($sql);
+        $lastPostRow = $this->db()->select()
+            ->fields(['id', 'topic_id', 'date_created', 'user_id', 'read'])
+            ->from('forum_posts')
+            ->where(['topic_id' => $id])
+            ->order(['date_created' => 'DESC'])
+            ->limit(1)
+            ->execute()
+            ->fetchAssoc();
 
-        if (empty($fileRow)) {
+        if (empty($lastPostRow)) {
             return null;
         }
 
         $entryModel = new PostModel();
         $userMapper = new UserMapper();
-        $entryModel->setId($fileRow['id']);
-        $user = $userMapper->getUserById($fileRow['user_id']);
+        $entryModel->setId($lastPostRow['id']);
+        $user = $userMapper->getUserById($lastPostRow['user_id']);
         if ($user) {
             $entryModel->setAutor($user);
         } else {
             $entryModel->setAutor($userMapper->getDummyUser());
         }
-        $entryModel->setDateCreated($fileRow['date_created']);
-        $entryModel->setTopicId($fileRow['topic_id']);
-        $entryModel->setRead($fileRow['read']);
+        $entryModel->setDateCreated($lastPostRow['date_created']);
+        $entryModel->setTopicId($lastPostRow['topic_id']);
+        $entryModel->setRead($lastPostRow['read']);
 
         return $entryModel;
     }

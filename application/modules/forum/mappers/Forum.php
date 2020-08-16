@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -96,30 +96,28 @@ class Forum extends \Ilch\Mapper
      */
     public function getForumByTopicId($topicId)
     {
-        $select = $this->db()->select();
-        $result = $select->fields(['t.id', 't.topic_id'])
+        $itemRow = $this->db()->select()
+            ->fields(['t.id', 't.topic_id'])
             ->from(['t' => 'forum_topics'])
             ->join(['i' => 'forum_items'], 'i.id = t.topic_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.prefix', 'i.parent_id', 'i.read_access', 'i.replay_access', 'i.create_access'])
-            ->where(['t.id' => $topicId]);
+            ->where(['t.id' => $topicId])
+            ->execute()
+            ->fetchAssoc();
 
-        $items = $result->execute();
-
-        $itemRows = $items->fetchAssoc();
-
-        if (empty($itemRows)) {
+        if (empty($itemRow)) {
             return null;
         }
 
         $itemModel = new ForumItem();
-        $itemModel->setId($itemRows['id']);
-        $itemModel->setType($itemRows['type']);
-        $itemModel->setTitle($itemRows['title']);
-        $itemModel->setDesc($itemRows['description']);
-        $itemModel->setParentId($itemRows['parent_id']);
-        $itemModel->setPrefix($itemRows['prefix']);
-        $itemModel->setReadAccess($itemRows['read_access']);
-        $itemModel->setReplayAccess($itemRows['replay_access']);
-        $itemModel->setCreateAccess($itemRows['create_access']);
+        $itemModel->setId($itemRow['id']);
+        $itemModel->setType($itemRow['type']);
+        $itemModel->setTitle($itemRow['title']);
+        $itemModel->setDesc($itemRow['description']);
+        $itemModel->setParentId($itemRow['parent_id']);
+        $itemModel->setPrefix($itemRow['prefix']);
+        $itemModel->setReadAccess($itemRow['read_access']);
+        $itemModel->setReplayAccess($itemRow['replay_access']);
+        $itemModel->setCreateAccess($itemRow['create_access']);
 
         return $itemModel;
     }
@@ -300,15 +298,15 @@ class Forum extends \Ilch\Mapper
     }
 
     /**
-     * @param int $id
+     * @param int $topicId
      * @return int|string
      * @throws \Ilch\Database\Exception
      */
-    public function getCountPostsByTopicId($id)
+    public function getCountPostsByTopicId($topicId)
     {
         $sql = 'SELECT COUNT(id)
                 FROM [prefix]_forum_posts
-                WHERE topic_id = '.$id;
+                WHERE topic_id = '.$topicId;
         $topics = $this->db()->queryCell($sql);
 
         if (empty($topics)) {

@@ -61,9 +61,9 @@ $postsPerPage = $this->get('postsPerPage');
             <ul class="topiclist topics">
                 <?php if (!empty($topics)): ?>
                     <?php foreach ($topics as $topic): ?>
-                        <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
-                        <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
-                        <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
+                        <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getTopicId()) ?>
+                        <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getTopicId()) ?>
+                        <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getTopicId()) ?>
                         <li class="row ilch-border ilch-bg--hover <?php if ($topic->getType() == '1') { echo 'tack'; } ?>">
                             <dl class="icon
                                 <?php if ($this->getUser()): ?>
