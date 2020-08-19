@@ -76,8 +76,6 @@ class Shownewposts extends \Ilch\Controller\Frontend
                 $lastPost = $topicMapper->getLastPostByTopicId($topic->getId());
                 if ($adminAccess == true || is_in_array($groupIds, explode(',', $forum->getReadAccess()))) {
                     if (!in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))) {
-                        echo $topic->getId(). ' (' .$topic->getTopicTitle(). ')<br>';
-
                         $lastRead = $lastPost->getRead();
                         if (in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
                             $postModel->setId($lastPost->getId());
