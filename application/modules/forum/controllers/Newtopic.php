@@ -58,6 +58,7 @@ class Newtopic extends \Ilch\Controller\Frontend
                     $topicModel = new ForumTopicModel();
                     $topicModel->setTopicPrefix($this->getRequest()->getPost('topicPrefix'))
                         ->setTopicTitle($this->getRequest()->getPost('topicTitle'))
+                        ->setTopicId($id)
                         ->setForumId($id)
                         ->setCat($id)
                         ->setCreatorId($this->getUser()->getId())

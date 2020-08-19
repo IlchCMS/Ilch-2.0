@@ -113,6 +113,7 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_topics` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `topic_id` INT(11) NOT NULL,
                 `topic_prefix` INT(11) NOT NULL DEFAULT 0,
                 `topic_title` VARCHAR(255) NOT NULL,
                 `visits` INT(11) NOT NULL DEFAULT 0,
@@ -431,9 +432,6 @@ class Config extends \Ilch\Config\Install
             foreach($this->config['languages'] as $key => $value) {
                 $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'forum' AND `locale` = '%s';", $value['description'], $key));
             }
-
-            // Remove pointless column in forum_topics table.
-            $this->db()->query('ALTER TABLE `[prefix]_forum_topics` DROP COLUMN `topic_id`;');
         }
     }
 }
