@@ -35,7 +35,6 @@ $postsPerPage = $this->get('postsPerPage');
             <?php foreach ($topics as $topic): ?>
                 <?php $forum = $forumMapper->getForumById($topic->getTopicId()); ?>
                 <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
-                <?php $firstPost = $postMapper->getFirstPostByTopicId($topic->getId()) ?>
                 <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                 <?php if ($adminAccess == true || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
                     <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
