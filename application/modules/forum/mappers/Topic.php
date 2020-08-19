@@ -15,7 +15,7 @@ class Topic extends \Ilch\Mapper
 {
     public function getTopicsByForumId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *, MAX(posts.date_created) AS latest_post
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS *, topics.id, MAX(posts.date_created) AS latest_post
                 FROM `[prefix]_forum_topics` AS topics
                 LEFT JOIN `[prefix]_forum_posts` AS posts ON topics.id = posts.topic_id
                 WHERE topics.forum_id = '.$id.'
