@@ -39,7 +39,6 @@ class Topic extends \Ilch\Mapper
             $entryModel = new TopicModel();
             $userMapper = new UserMapper();
             $entryModel->setId($entries['id']);
-            $entryModel->setTopicId($entries['topic_id']);
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
@@ -117,7 +116,6 @@ class Topic extends \Ilch\Mapper
             $userMapper = new UserMapper();
             $entryModel->setId($entries['id']);
             $entryModel->setForumId($entries['forum_id']);
-            $entryModel->setTopicId($entries['topic_id']);
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
@@ -212,7 +210,7 @@ class Topic extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('forum_topics')
-                ->values(['topic_id' => $model->getTopicId(), 'forum_id' => $model->getForumId()])
+                ->values(['forum_id' => $model->getForumId()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
@@ -220,7 +218,6 @@ class Topic extends \Ilch\Mapper
                 ->values([
                     'topic_prefix' => $model->getTopicPrefix(),
                     'topic_title' => $model->getTopicTitle(),
-                    'topic_id' => $model->getTopicId(),
                     'forum_id' => $model->getForumId(),
                     'creator_id' => $model->getCreatorId(),
                     'type' => $model->getType(),
@@ -286,29 +283,6 @@ class Topic extends \Ilch\Mapper
     public function getLastInsertId()
     {
         return $this->last_insert_id;
-    }
-
-    public function getPostByTopicId($id, $pagination = NULL)
-    {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *
-                FROM `[prefix]_forum_topics`
-                WHERE topic_id = '.$id.'
-                LIMIT '.implode(',',$pagination->getLimit());
-
-        $fileArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
-
-        $entry = [];
-
-        foreach ($fileArray as $entries) {
-            $entryModel = new TopicModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setTopicId($id);
-            $entryModel->setTopicTitle($entries['topic_title']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
     }
 
     /**

@@ -23,13 +23,6 @@ class ForumTopic extends \Ilch\Model
     protected $last_insert_id;
 
     /**
-     * The topic id of the topic.
-     *
-     * @var string
-     */
-    protected $topic_id;
-
-    /**
      * The Prefix of the topic.
      *
      * @var integer
@@ -138,16 +131,6 @@ class ForumTopic extends \Ilch\Model
     public function getLastInsertId()
     {
         return $this->last_insert_id;
-    }
-
-    /**
-     * Gets the id of the topic.
-     *
-     * @return string
-     */
-    public function getTopicId()
-    {
-        return $this->topic_id;
     }
 
     /**
@@ -302,19 +285,6 @@ class ForumTopic extends \Ilch\Model
     public function setLastInsertId($lastInsertId)
     {
         $this->last_insert_id = (int) $lastInsertId;
-
-        return $this;
-    }
-
-    /**
-     * Sets the id of the topic.
-     *
-     * @param string $topic_id
-     * @return $this
-     */
-    public function setTopicId($topic_id)
-    {
-        $this->topic_id = (string) $topic_id;
 
         return $this;
     }
