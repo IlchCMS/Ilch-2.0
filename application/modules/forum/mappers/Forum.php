@@ -158,6 +158,8 @@ class Forum extends \Ilch\Mapper
     }
 
     /**
+     * Get category by parent id.
+     *
      * @param int $id
      * @return ForumItem|null
      */
@@ -298,42 +300,47 @@ class Forum extends \Ilch\Mapper
     }
 
     /**
+     * Get the count of posts in a topic by the topic id.
+     *
      * @param int $topicId
      * @return int|string
      * @throws \Ilch\Database\Exception
      */
     public function getCountPostsByTopicId($topicId)
     {
-        $sql = 'SELECT COUNT(id)
-                FROM [prefix]_forum_posts
-                WHERE topic_id = '.intval($topicId);
-        $topics = $this->db()->queryCell($sql);
+        $countOfPosts = $this->db()->select('COUNT(id)')
+            ->from('forum_posts')
+            ->where(['topic_id' => intval($topicId)])
+            ->execute()
+            ->fetchCell();
 
-        if (empty($topics)) {
+        if (empty($countOfPosts)) {
             return '0';
         }
 
-        return $topics;
+        return $countOfPosts;
     }
 
     /**
+     * Get count of topics by id.
+     *
      * @param int $id
      * @return int|string
      * @throws \Ilch\Database\Exception
      */
     public function getCountTopicsById($id)
     {
-        $sql = 'SELECT COUNT(`topic_id`)
-                FROM `[prefix]_forum_topics`
-                WHERE `topic_id` ='.intval($id);
+        $countOfTopics = $this->db()->select('COUNT(topic_id)')
+            ->from('forum_topics')
+            ->where(['topic_id' => intval($id)])
+            ->execute()
+            ->fetchCell();
 
-        $topics = $this->db()->queryCell($sql);
-
-        if (empty($topics)) {
+        if (empty($countOfTopics)) {
             return '0';
         }
 
-        return $topics;
+        return $countOfTopics;
     }
 
     /**
@@ -342,8 +349,11 @@ class Forum extends \Ilch\Mapper
      */
     public function getForumPermas()
     {
-        $sql = 'SELECT * FROM `[prefix]_forum_items`';
-        $permas = $this->db()->queryArray($sql);
+        $parmas = $this->db()->select('*')
+            ->from('forum_items')
+            ->execute()
+            ->fetchRows();
+
         $permaArray = [];
 
         if (empty($permas)) {

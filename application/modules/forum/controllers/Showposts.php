@@ -57,7 +57,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
         $posts = $postMapper->getPostsByTopicId($topicId, $pagination, $this->getConfig()->get('forum_DESCPostorder'));
-        $post = $topicMapper->getPostById($topicId);
+        $post = $topicMapper->getTopicById($topicId);
 
         $prefix = '';
         if ($forumId->getPrefix() != '' && $post->getTopicPrefix() > 0) {
@@ -191,7 +191,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $topicId = (int)$this->getRequest()->getParam('topicid');
         $forum = $forumMapper->getForumByTopicId($topicId);
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
-        $topic = $topicMapper->getPostById($topicId);
+        $topic = $topicMapper->getTopicById($topicId);
         $post = $postMapper->getPostById($postId);
 
         if ($this->getUser()) {

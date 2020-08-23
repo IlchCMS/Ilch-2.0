@@ -26,7 +26,7 @@ class Newpost extends \Ilch\Controller\Frontend
         $topicId = (int)$this->getRequest()->getParam('topicid');
         $forum = $forumMapper->getForumByTopicId($topicId);
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
-        $topic = $topicMapper->getPostById($topicId);
+        $topic = $topicMapper->getTopicById($topicId);
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))

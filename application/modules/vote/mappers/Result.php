@@ -34,12 +34,12 @@ class Result extends \Ilch\Mapper
 
     public function getResultById($pollId)
     {
-        $sql = 'SELECT SUM(`result`)
-                FROM `[prefix]_poll_res`
-                WHERE poll_id = '.intval($pollId).'
-                GROUP BY poll_id';
-
-        return $this->db()->queryCell($sql);
+        return $this->db()->select('SUM(result)')
+            ->from('poll_res')
+            ->where(['poll_id' => intval($pollId)])
+            ->group(['poll_id'])
+            ->execute()
+            ->fetchCell();
     }
 
     public function getResultByIdAndReply($pollId, $reply)

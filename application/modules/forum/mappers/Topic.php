@@ -146,28 +146,39 @@ class Topic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getPostById($id)
+    /**
+     * Get topic by id.
+     *
+     * @param integer $id
+     * @return TopicModel
+     */
+    public function getTopicById($id)
     {
-        $sql = 'SELECT *
-                FROM `[prefix]_forum_topics`
-                WHERE id = '.intval($id);
-        $fileRow = $this->db()->queryRow($sql);
+        $topic = $this->db()->select('*')
+            ->from('forum_topics')
+            ->where(['id' => intval($id)])
+            ->execute();
+            ->fetchAssoc();
+
+        if (empty($topic)) {
+            return null;
+        }
 
         $entryModel = new TopicModel();
         $userMapper = new UserMapper();
-        $entryModel->setId($fileRow['id']);
-        $entryModel->setTopicPrefix($fileRow['topic_prefix']);
-        $entryModel->setTopicTitle($fileRow['topic_title']);
-        $entryModel->setCreatorId($fileRow['creator_id']);
-        $entryModel->setVisits($fileRow['visits']);
-        $user = $userMapper->getUserById($fileRow['creator_id']);
+        $entryModel->setId($topic['id']);
+        $entryModel->setTopicPrefix($topic['topic_prefix']);
+        $entryModel->setTopicTitle($topic['topic_title']);
+        $entryModel->setCreatorId($topic['creator_id']);
+        $entryModel->setVisits($topic['visits']);
+        $user = $userMapper->getUserById($topic['creator_id']);
         if ($user) {
             $entryModel->setAuthor($user);
         } else {
             $entryModel->setAuthor($userMapper->getDummyUser());
         }
-        $entryModel->setDateCreated($fileRow['date_created']);
-        $entryModel->setStatus($fileRow['status']);
+        $entryModel->setDateCreated($topic['date_created']);
+        $entryModel->setStatus($topic['status']);
 
         return $entryModel;
     }

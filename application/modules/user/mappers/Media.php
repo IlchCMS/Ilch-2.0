@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -58,21 +58,21 @@ class Media extends \Ilch\Mapper
      */
     public function getMediaListScroll($lastId = NULL) 
     {
-        $sql = 'SELECT *
-                FROM `[prefix]_users_media`
-                WHERE id < '.intval($lastId).'
-                ORDER by id DESC
-                LIMIT 40';
+        $mediaRows = $this->db()->select('*')
+            ->from('users_media')
+            ->where(['id <' => intval($lastId]))
+            ->order(['id' => 'DESC'])
+            ->limit(40)
+            ->execute()
+            ->fetchRows();
 
-        $mediaArray = $this->db()->query($sql);
-
-        if (empty($mediaArray)) {
+        if (empty($mediaRows)) {
             return null;
         }
 
         $media = [];
 
-        foreach ($mediaArray as $medias) {
+        foreach ($mediaRows as $medias) {
             $entryModel = new MediaModel();
             $entryModel->setId($medias['id']);
             $entryModel->setUrl($medias['url']);

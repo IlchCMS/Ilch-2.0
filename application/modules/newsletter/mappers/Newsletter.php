@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -124,12 +124,17 @@ class Newsletter extends \Ilch\Mapper
         return $entryModel;
     }
 
+    /**
+     * Get id of last added newletter (biggest id).
+     *
+     * @return integer
+     */
     public function getLastId()
     {
-        $sql = 'SELECT MAX(id)
-                FROM `[prefix]_newsletter`';
-
-        return $this->db()->queryCell($sql);
+        return $this->db()->select('MAX(id)')
+                ->from('newsletter')
+                ->execute()
+                ->fetchCell();
     }
 
     /**
@@ -163,16 +168,16 @@ class Newsletter extends \Ilch\Mapper
     /**
      * Gets the Newsletter mail entries.
      *
-     * @param $email
+     * @param string $email
      * @return integer
      */
     public function countEmails($email)
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_newsletter_mails`
-                WHERE `email` = "' . $this->db()->escape($email) . '"';
-
-        return $this->db()->queryCell($sql);
+        return $this->db()->select('COUNT(*)')
+                ->from('newsletter_mails')
+                ->where(['email' => $email])
+                ->execute()
+                ->fetchCell();
     }
 
     /**
