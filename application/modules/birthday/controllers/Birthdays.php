@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -16,6 +16,10 @@ class Birthdays extends \Ilch\Controller\Frontend
 
         $this->getLayout()->setFile('modules/calendar/layouts/events');
 
-        $this->getView()->set('birthdayList', $birthdayMapper->getEntriesForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')));
+        if ($this->getUser() || $this->getConfig()->get('bday_visibleForGuest')) {
+            $this->getView()->set('birthdayList', $birthdayMapper->getEntriesForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')));
+        } else {
+            $this->getView()->set('birthdayList', '[]');
+        }
     }
 }

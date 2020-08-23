@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -15,7 +15,9 @@ class Birthday extends \Ilch\Box
         $date = new \Ilch\Date();
         $birthdayMapper = new BirthdayMapper();
 
-        $this->getView()->set('birthdayDateNowYMD', $date->format('Ymd'));
-        $this->getView()->set('birthdayListNOW', $birthdayMapper->getBirthdayUserList($this->getConfig()->get('bday_boxShow')));
+        if ($this->getUser() || $this->getConfig()->get('bday_visibleForGuest')) {
+            $this->getView()->set('birthdayDateNowYMD', $date->format('Ymd'));
+            $this->getView()->set('birthdayListNOW', $birthdayMapper->getBirthdayUserList($this->getConfig()->get('bday_boxShow')));
+        }
     }
 }

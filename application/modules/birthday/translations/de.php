@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,6 +13,7 @@ return [
     'upcomingBirthday' => 'Bevorstehende Geburtstage',
     'writeCongratulations' => 'Glückwünsche schreiben',
     'numberOfBirthdaysShow' => 'Anzahl angezeigter Geburtstage',
+    'visibleForGuest' => 'Geburtstage sichtbar für Gäste',
     'otherBirthday' => 'weitere Geburtstage',
     'will' => 'wird',
     'yearsOld' => 'Jahre alt',

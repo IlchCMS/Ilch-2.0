@@ -18,13 +18,13 @@ $date = new \Ilch\Date();
                 <div class="col-lg-12">
                     <div class="col-lg-2 confetti">
                         <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
-                            <img class="thumbnail center-block" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()); ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69">
+                            <img class="thumbnail center-block" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69">
                         </a>
                     </div>
                     <div class="col-lg-10">
                         <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><strong><?=$this->escape($birthdaylist->getName()) ?></strong></a><br />
                         <?=$this->getTrans('will') ?> <?=floor(($date->format('Ymd') - str_replace("-", "", $this->escape($birthdaylist->getBirthday()))) / 10000) ?> <?=$this->getTrans('yearsOld') ?><br />
-                        <?php if ($this->getUser() AND $this->getUser()->getId() != $this->escape($birthdaylist->getID())): ?>
+                        <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($birthdaylist->getID())): ?>
                             <a href="<?=$this->getUrl('user/panel/dialognew/id/' . $birthdaylist->getId()) ?>"><?=$this->getTrans('writeCongratulations') ?></a>
                         <?php endif; ?>
                     </div>
@@ -35,37 +35,39 @@ $date = new \Ilch\Date();
     <br />
 <?php endif; ?>
 
-<?php $monthsUserCount = 0; ?>
-<?php for ($x = 1; $x < 13; $x++): ?>
-    <?php foreach ($this->get('birthdayList') as $birthdaylist): ?>
-        <?php if ($birthdaylist->getBirthday() != '' AND $this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
-             <?php $monthsUserCount++; ?>
-        <?php endif; ?>
-    <?php endforeach; ?>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <?php $month = date('F', mktime(0, 0, 0, +$x, 1, 1)); ?>
-            <strong><?=$this->getTrans($month) ?></strong>
-            <span class="pull-right">
-                <strong><?=$monthsUserCount; ?> <?=$this->getTrans('people') ?></strong>
-            </span>
-        </div>
-        <div class="panel-body">
-            <?php if ($monthsUserCount != ''): ?>
-                <?php foreach ($this->get('birthdayList') as $birthdaylist): ?>
-                    <?php if ($birthdaylist->getBirthday() != '' AND $this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
-                        <div style="padding: 0 2px 2px 0; float: left;">
-                            <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
-                                <img class="thumbnail" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()); ?>" title="<?=$this->escape($birthdaylist->getName()) ?> (<?=date("d.m", strtotime($this->escape($birthdaylist->getBirthday()))) ?>)" width="69" height="69">
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <?=$this->getTrans('noBirthdayMonth') ?>
-            <?php endif; ?>
-        </div>
-    </div>
+<?php if ($this->get('birthdayList') != ''): ?>
     <?php $monthsUserCount = 0; ?>
-<?php endfor; ?>
+    <?php for ($x = 1; $x < 13; $x++): ?>
+        <?php foreach ($this->get('birthdayList') as $birthdaylist): ?>
+            <?php if ($birthdaylist->getBirthday() != '' && $this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
+                <?php $monthsUserCount++; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <?php $month = date('F', mktime(0, 0, 0, +$x, 1, 1)); ?>
+                <strong><?=$this->getTrans($month) ?></strong>
+                <span class="pull-right">
+                <strong><?=$monthsUserCount ?> <?=$this->getTrans('people') ?></strong>
+            </span>
+            </div>
+            <div class="panel-body">
+                <?php if ($monthsUserCount != ''): ?>
+                    <?php foreach ($this->get('birthdayList') as $birthdaylist): ?>
+                        <?php if ($birthdaylist->getBirthday() != '' && $this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
+                            <div style="padding: 0 2px 2px 0; float: left;">
+                                <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
+                                    <img class="thumbnail" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" title="<?=$this->escape($birthdaylist->getName()) ?> (<?=date("d.m", strtotime($this->escape($birthdaylist->getBirthday()))) ?>)" width="69" height="69">
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?=$this->getTrans('noBirthdayMonth') ?>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php $monthsUserCount = 0; ?>
+    <?php endfor; ?>
+<?php endif; ?>

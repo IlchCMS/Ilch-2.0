@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,18 +10,18 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'birthday',
-        'version' => '1.3.0',
+        'version' => '1.4.0',
         'icon_small' => 'fa-birthday-cake',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Geburtstag',
-                'description' => 'Hier kannst du die Geburtstags-Box verwalten.',
+                'description' => 'Stellt eine Übersichtsseite der Geburtstage und eine Geburtstags-Box zur Verfügung.',
             ],
             'en_EN' => [
                 'name' => 'Birthday',
-                'description' => 'Here you can manage the birthday-box.',
+                'description' => 'Provides an overview page of birthdays and a birthday-box.',
             ],
         ],
         'boxes' => [
@@ -59,6 +59,15 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case '1.0':
+            case '1.1':
+            case '1.2.0':
+            case '1.3.0':
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'birthday' AND `locale` = '%s';", $value['description'], $key));
+                }
+        }
     }
 }

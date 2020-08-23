@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -19,8 +19,10 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuBirthdayList'), ['controller' => 'index']);
 
-        $this->getView()->set('birthdayListNOW', $birthdayMapper->getBirthdayUserList());
-        $this->getView()->set('birthdayList', $userMapper->getUserList());
+        if ($this->getUser() || $this->getConfig()->get('bday_visibleForGuest')) {
+            $this->getView()->set('birthdayListNOW', $birthdayMapper->getBirthdayUserList());
+            $this->getView()->set('birthdayList', $userMapper->getUserList());
+        }
     }
 }
 

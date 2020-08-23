@@ -5,7 +5,7 @@ $events = [];
 if ($this->get('birthdayList')) {
     $year = new Ilch\Date($this->getRequest()->getQuery('start'));
     foreach ($this->get('birthdayList') as $birthdayList) {
-        if ($birthdayList->getBirthday() != '' AND $birthdayList->getBirthday() != '0000-00-00') {
+        if ($birthdayList->getBirthday() != '' && $birthdayList->getBirthday() != '0000-00-00') {
             $e = [];
             $e['title'] = $this->escape($birthdayList->getName());
             $e['start'] = $year->format('Y').'-'.date('m-d', strtotime($birthdayList->getBirthday()));

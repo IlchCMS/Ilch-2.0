@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -36,11 +36,13 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'numberOfBirthdaysShow' => 'required|numeric|integer|min:1'
+                'numberOfBirthdaysShow' => 'required|numeric|integer|min:1',
+                'visibleForGuest' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('bday_boxShow', $this->getRequest()->getPost('numberOfBirthdaysShow'));
+                $this->getConfig()->set('bday_visibleForGuest', $this->getRequest()->getPost('visibleForGuest'));
                 $this->addMessage('saveSuccess');
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
@@ -48,5 +50,6 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('numberOfBirthdaysShow', $this->getConfig()->get('bday_boxShow'));
+        $this->getView()->set('visibleForGuest', $this->getConfig()->get('bday_visibleForGuest'));
     }
 }
