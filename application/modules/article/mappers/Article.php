@@ -266,11 +266,11 @@ class Article extends \Ilch\Mapper
      */
     public function getCountArticlesByCatId($catId)
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_articles`
-                WHERE `cat_id` LIKE '. $this->db()->escape('%' . $catId . '%', true);
-
-        return $this->db()->queryCell($sql);
+        return $this->db()->select('COUNT(*)')
+            ->from('articles')
+            ->where(['cat_id LIKE' => $this->db()->escape('%' . $catId . '%', true)])
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -486,8 +486,10 @@ class Article extends \Ilch\Mapper
      */
     public function getArticlePermas()
     {
-        $sql = 'SELECT article_id, locale, perma FROM `[prefix]_articles_content`';
-        $permas = $this->db()->queryArray($sql);
+        $permas = $this->db()->select(['article_id', 'locale', 'perma'])
+            ->from('articles_content')
+            ->execute()
+            ->fetchRows();
 
         if (empty($permas)) {
             return null;

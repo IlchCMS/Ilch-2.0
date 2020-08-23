@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -20,12 +20,12 @@ class Menu extends \Ilch\Mapper
      */
     public function getMenuIdForPosition($position)
     {
-        $sql = 'SELECT id
-                FROM `[prefix]_menu`
-                ORDER BY id ASC
-                LIMIT '. intval($position-1) .', 1';
-
-        return $this->db()->queryCell($sql);
+        return $this->db()->select(['id'])
+            ->from('menu')
+            ->limit(intval($position-1), 1)
+            ->order(['id' => 'ASC'])
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -205,10 +205,10 @@ class Menu extends \Ilch\Mapper
      */
     public function getLastMenuId()
     {
-        $sql = 'SELECT MAX(id)
-                FROM `[prefix]_menu`';
-
-        return $this->db()->queryCell($sql);
+        return $this->db()->select('MAX(id)')
+            ->from('menu')
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -219,10 +219,10 @@ class Menu extends \Ilch\Mapper
      */
     public function getLastMenuItemId()
     {
-        $sql = 'SELECT MAX(id)
-                FROM `[prefix]_menu_items`';
-
-        return $this->db()->queryCell($sql);
+        return $this->db()->select('MAX(id)')
+            ->from('menu_items')
+            ->execute()
+            ->fetchCell();
     }
 
     /**
