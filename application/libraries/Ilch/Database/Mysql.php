@@ -100,7 +100,17 @@ class Mysql
 
         $this->conn->set_charset('utf8mb4');
 
-        $mode = "SET SESSION sql_mode = (SELECT REPLACE(REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', ''), 'STRICT_TRANS_TABLES', ''))";
+        $mode = "SET SESSION sql_mode = (
+            SELECT REPLACE(
+                REPLACE(
+                    REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', ''),
+                    'STRICT_TRANS_TABLES',
+                    ''
+                ),
+                'STRICT_ALL_TABLES',
+                ''
+            )
+        )";
         mysqli_query($this->conn, $mode);
     }
 

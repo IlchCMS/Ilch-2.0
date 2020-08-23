@@ -272,7 +272,7 @@ class Group extends \Ilch\Mapper
         $sql = 'SELECT g.name AS group_name, ga.*
                 FROM [prefix]_groups_access AS ga
                 INNER JOIN [prefix]_groups AS g ON ga.group_id = g.id
-                WHERE ga.'.$sqlwhere.' = "'.$Id.'"';
+                WHERE ga.'.$sqlwhere.' = "'.$this->db()->escape($Id).'"';
         $accessDbList = $this->db()->queryArray($sql);
         $accessList = [];
         $accessList['entries'] = [];

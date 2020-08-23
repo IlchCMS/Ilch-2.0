@@ -21,7 +21,7 @@ class Logs extends \Ilch\Mapper
     {
         $sql = 'SELECT *
                 FROM `[prefix]_logs`
-                WHERE `date` LIKE "'.$date.'%"
+                WHERE `date` LIKE "'. $this->db()->escape($date . '%').'"
                 ORDER BY `date` DESC';
         $entriesArray = $this->db()->queryArray($sql);
 
@@ -112,7 +112,7 @@ class Logs extends \Ilch\Mapper
 
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_logs`
-                WHERE user_id = '.$userId.' AND info = "'.$info.'" AND date > "'.$date->toDb(true).'"';
+                WHERE user_id = '.intval($userId).' AND info = "'.$this->db()->escape($info).'" AND date > "'.$date->toDb(true).'"';
         $count = $this->db()->queryCell($sql);
 
         if ($count == 0) {

@@ -22,7 +22,7 @@ class Birthday extends \Ilch\Mapper
             $sql = 'SELECT *
                     FROM `[prefix]_users`
                     WHERE DAY(birthday) = DAY(CURDATE()) AND MONTH(birthday) = MONTH(CURDATE())
-                    LIMIT '.$limit;
+                    LIMIT ' . intval($limit);
         } else {
             $sql = 'SELECT *
                     FROM `[prefix]_users`
@@ -45,9 +45,9 @@ class Birthday extends \Ilch\Mapper
     /**
      * Gets the Users by start and end.
      *
-     * @param integer $start
-     * @param integer $end
-     * @return UserModel|null
+     * @param string $start
+     * @param string $end
+     * @return UserModel[]|null
      */
     public function getEntriesForJson($start, $end)
     {
@@ -55,7 +55,9 @@ class Birthday extends \Ilch\Mapper
 
             $sql = 'SELECT *
                     FROM `[prefix]_users`
-                    WHERE DayOfYear(`birthday`) BETWEEN DayOfYear("'.$start.'") AND DayOfYear("'.$end.'")';
+                    WHERE DayOfYear(`birthday`)
+                        BETWEEN DayOfYear("' . $this->db()->escape($start) .'")
+                        AND DayOfYear("' .  $this->db()->escape($end) . '")';
         } else {
             return null;
         }

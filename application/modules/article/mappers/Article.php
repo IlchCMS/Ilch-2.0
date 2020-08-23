@@ -268,7 +268,7 @@ class Article extends \Ilch\Mapper
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_articles`
-                WHERE `cat_id` LIKE "%'.$catId.'%"';
+                WHERE `cat_id` LIKE '. $this->db()->escape('%' . $catId . '%', true);
 
         return $this->db()->queryCell($sql);
     }
@@ -286,7 +286,8 @@ class Article extends \Ilch\Mapper
                 FROM `[prefix]_articles`';
 
         if ($date != null) {
-            $sql .= ' WHERE YEAR(date_created) = YEAR("'.$date.'") AND MONTH(date_created) = MONTH("'.$date.'")';
+            $sql .= ' WHERE YEAR(date_created) = YEAR("'.$this->db()->escape($date)
+                .'") AND MONTH(date_created) = MONTH("'.$this->db()->escape($date).'")';
         }
 
         return $this->db()->queryCell($sql);

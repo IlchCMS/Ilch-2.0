@@ -21,7 +21,9 @@ class Media extends \Ilch\Mapper
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
                 FROM `[prefix]_users_media`
-                WHERE user_id = '.$userId.' AND ending IN ("'.implode(',', [str_replace(' ', '","', $ending)]).'")
+                WHERE user_id = '.$userId.' AND ending IN ('
+                    .implode(',',  $this->db()->escapeArray(explode(' ', $ending), true))
+                    .')
                 ORDER by id DESC
                 LIMIT '.implode(',',$pagination->getLimit());
 
@@ -58,7 +60,7 @@ class Media extends \Ilch\Mapper
     {
         $sql = 'SELECT *
                 FROM `[prefix]_users_media`
-                WHERE id < '.$lastId.'
+                WHERE id < '.intval($lastId).'
                 ORDER by id DESC
                 LIMIT 40';
 

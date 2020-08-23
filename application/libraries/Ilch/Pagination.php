@@ -32,7 +32,7 @@ class Pagination
             $page = 1;
         }
 
-        $this->page = $page;
+        $this->page = intval($page);
     }
 
     /**
@@ -40,7 +40,7 @@ class Pagination
      */
     public function setRows($rows)
     {
-        $this->rows = $rows;
+        $this->rows = intval($rows);
     }
 
     /**
@@ -52,11 +52,11 @@ class Pagination
         if ($rowsPerPage == null) {
             $rowsPerPage = 20;
         }
-        $this->rowsPerPage = $rowsPerPage;
+        $this->rowsPerPage = intval($rowsPerPage);
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getLimit()
     {

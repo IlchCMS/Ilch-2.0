@@ -36,7 +36,7 @@ class Result extends \Ilch\Mapper
     {
         $sql = 'SELECT SUM(`result`)
                 FROM `[prefix]_poll_res`
-                WHERE poll_id = '.$pollId.'
+                WHERE poll_id = '.intval($pollId).'
                 GROUP BY poll_id';
 
         return $this->db()->queryCell($sql);

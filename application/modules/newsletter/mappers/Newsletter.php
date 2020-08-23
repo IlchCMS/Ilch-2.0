@@ -170,7 +170,7 @@ class Newsletter extends \Ilch\Mapper
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_newsletter_mails`
-                WHERE `email` = "' . $email . '"';
+                WHERE `email` = "' . $this->db()->escape($email) . '"';
 
         return $this->db()->queryCell($sql);
     }

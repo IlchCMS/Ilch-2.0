@@ -6,6 +6,7 @@
 
 namespace Modules\Birthday\Controllers;
 
+use Ilch\Validation;
 use Modules\Birthday\Mappers\Birthday as BirthdayMapper;
 
 class Birthdays extends \Ilch\Controller\Frontend
@@ -16,10 +17,22 @@ class Birthdays extends \Ilch\Controller\Frontend
 
         $this->getLayout()->setFile('modules/calendar/layouts/events');
 
+        $birthdayList = '[]';
+
         if ($this->getUser() || $this->getConfig()->get('bday_visibleForGuest')) {
-            $this->getView()->set('birthdayList', $birthdayMapper->getEntriesForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')));
-        } else {
-            $this->getView()->set('birthdayList', '[]');
+            $input = $this->getRequest()->getQuery();
+            $validation = Validation::create(
+                $input, [
+                    'start' => 'required|date',
+                    'end'   => 'required|date',
+                ]
+            );
+
+            if ($validation->isValid()) {
+                $birthdayList = $birthdayMapper->getEntriesForJson($input['start'], $input['end']);
+            }
         }
+
+        $this->getView()->set('birthdayList', $birthdayList);
     }
 }

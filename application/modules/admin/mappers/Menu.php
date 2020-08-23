@@ -23,7 +23,7 @@ class Menu extends \Ilch\Mapper
         $sql = 'SELECT id
                 FROM `[prefix]_menu`
                 ORDER BY id ASC
-                LIMIT '. ($position-1) .', 1';
+                LIMIT '. intval($position-1) .', 1';
 
         return $this->db()->queryCell($sql);
     }
