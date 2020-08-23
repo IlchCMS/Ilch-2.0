@@ -157,7 +157,7 @@ class Topic extends \Ilch\Mapper
         $topic = $this->db()->select('*')
             ->from('forum_topics')
             ->where(['id' => intval($id)])
-            ->execute();
+            ->execute()
             ->fetchAssoc();
 
         if (empty($topic)) {
