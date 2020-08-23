@@ -17,11 +17,11 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'Umfrage',
-                'description' => 'Hier kann man die Umfragen verwalten.',
+                'description' => 'Zum Erstellen und Verwalten von Umfragen, welche auf einer Seite oder in einer Box angezeigt werden können.',
             ],
             'en_EN' => [
                 'name' => 'Vote',
-                'description' => 'Here you can manage the Vote.',
+                'description' => 'Enables you to create and manage votes, which can be shown on a page or inside of a box.',
             ]
         ],
         'boxes' => [
@@ -92,6 +92,12 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_poll` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_poll_res` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_poll_ip` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case '1.7.0':
+            case '1.8.0':
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'vote' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }
