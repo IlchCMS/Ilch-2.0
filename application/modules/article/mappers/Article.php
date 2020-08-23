@@ -268,7 +268,7 @@ class Article extends \Ilch\Mapper
     {
         return $this->db()->select('COUNT(*)')
             ->from('articles')
-            ->where(['cat_id LIKE' => $this->db()->escape('%' . $catId . '%', true)])
+            ->where(['cat_id LIKE' => '%' . $catId . '%'])
             ->execute()
             ->fetchCell();
     }

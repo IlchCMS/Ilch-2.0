@@ -21,7 +21,7 @@ class Logs extends \Ilch\Mapper
     {
         $entriesArray = $this->db()->select('*')
             ->from('logs')
-            ->where(['date LIKE' => $this->db()->escape($date . '%')])
+            ->where(['date LIKE' => $date . '%'])
             ->order(['date' => 'DESC'])
             ->execute()
             ->fetchRows();
@@ -113,7 +113,7 @@ class Logs extends \Ilch\Mapper
 
         $count = $this->db()->select('COUNT(*)')
             ->from('logs')
-            ->where(['user_id' => intval($userId), 'info' => $this->db()->escape($info), 'date >' => $date->toDb(true)])
+            ->where(['user_id' => intval($userId), 'info' => $info, 'date >' => $date->toDb(true)])
             ->execute()
             ->fetchCell();
 
