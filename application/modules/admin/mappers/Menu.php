@@ -22,8 +22,8 @@ class Menu extends \Ilch\Mapper
     {
         return $this->db()->select(['id'])
             ->from('menu')
-            ->limit(intval($position-1), 1)
             ->order(['id' => 'ASC'])
+            ->limit(1, intval($position-1))
             ->execute()
             ->fetchCell();
     }
