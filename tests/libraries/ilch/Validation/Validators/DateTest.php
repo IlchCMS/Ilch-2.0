@@ -8,7 +8,7 @@ namespace Ilch\Validation\Validators;
 
 use PHPUnit\Ilch\TestCase;
 
-class MinTest extends TestCase
+class DateTest extends TestCase
 {
     /**
      * @dataProvider dpForTestValidator
