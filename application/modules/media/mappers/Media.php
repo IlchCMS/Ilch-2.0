@@ -100,7 +100,7 @@ class Media extends \Ilch\Mapper
         $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
                 FROM `[prefix]_media` as m
                 LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
-                WHERE m.ending IN ("'.implode(',', [str_replace(' ', '","', $ending)]).'")
+                WHERE m.ending IN ('.implode(',',  $this->db()->escapeArray(explode(' ', $ending), true)).')
                 ORDER by m.id DESC
                 LIMIT '.implode(',',$pagination->getLimit());
 
@@ -141,7 +141,7 @@ class Media extends \Ilch\Mapper
         $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
                 FROM `[prefix]_media` as m
                 LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
-                WHERE m.id < '.$lastId.'
+                WHERE m.id < '.intval($lastId).'
                 ORDER by m.id DESC
                 LIMIT 40';
 

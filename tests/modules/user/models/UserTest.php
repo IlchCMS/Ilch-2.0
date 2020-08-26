@@ -143,7 +143,10 @@ class UserTest extends TestCase
         $user->setId(123);
         $user->addGroup($group);
 
-        $dbMock = $this->createPartialMock(Mysql::class, ['queryCell']);
+        $dbMock = $this->createPartialMock(Mysql::class, ['queryCell', 'escape']);
+        $dbMock->expects($this->once())
+            ->method('escape')
+            ->willReturnArgument(0);
         $dbMock->expects($this->once())
             ->method('queryCell')
             ->with(

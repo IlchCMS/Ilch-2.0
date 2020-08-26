@@ -53,7 +53,7 @@ class Group extends \Ilch\Controller\Frontend
             $this->getView()->set('warMapper', $warMapper)
                 ->set('gamesMapper', $gamesMapper)
                 ->set('group', $group)
-                ->set('war', $warMapper->getWarsByWhere('group ='.$id, $pagination))
+                ->set('war', $warMapper->getWarsByWhere('group ='.intval($id), $pagination))
                 ->set('pagination', $pagination);
         } else {
             $this->redirect()

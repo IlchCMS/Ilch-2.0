@@ -9,6 +9,7 @@ return [
     'validation.errors.required.fieldIsRequired' => '%s muss ausgefüllt werden.',
     'validation.errors.same.fieldsDontMatch' => '%s muss mit %s übereinstimmen.',
     'validation.errors.captcha.wrongCaptcha' => '%s entspricht nicht der gezeigten Zeichenkombination',
+    'validation.errors.date.mustBeDate' => '%s ist kein gültiges Datum.',
     'validation.errors.url.noValidUrl' => '%s muss eine gültige URL sein.',
     'validation.errors.email.noValidEmail' => '%s muss eine gültige E-Mail-Adresse sein.',
     'validation.errors.unique.valueExists' => '%s `%s` ist bereits in Verwendung.',

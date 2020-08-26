@@ -793,13 +793,16 @@ class User extends \Ilch\Model
             return true;
         }
 
+        /** @var \Ilch\Database\Mysql $db */
+        $db = \Ilch\Registry::get('db');
+
         $sql = 'SELECT ga.access_level
                 FROM [prefix]_groups_access AS ga';
 
         if (strpos($key, 'module_') !== false) {
             $moduleKey = substr($key, 7);
             $sqlJoin = ' INNER JOIN `[prefix]_modules` AS m ON ga.module_key = m.key';
-            $sqlWhere = ' WHERE m.key = "' . $moduleKey . '"';
+            $sqlWhere = ' WHERE m.key = "' . $db->escape($moduleKey) . '"';
         } elseif (strpos($key, 'page_') !== false) {
             $pageId = (int)substr($key, 5);
             $sqlJoin = ' INNER JOIN `[prefix]_pages` AS p ON ga.page_id = p.id';
@@ -818,7 +821,7 @@ class User extends \Ilch\Model
                 AND ga.group_id IN (' . implode(',', array_keys($this->getGroups())) . ')
                 ORDER BY access_level DESC
                 LIMIT 1';
-        $db = \Ilch\Registry::get('db');
+
         $accessLevel = (int)$db->queryCell($sql);
 
         return ($isInAdmin && $accessLevel === 2) || (!$isInAdmin && $accessLevel >= 1);

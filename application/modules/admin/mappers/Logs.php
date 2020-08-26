@@ -19,11 +19,12 @@ class Logs extends \Ilch\Mapper
      */
     public function getLogs($date)
     {
-        $sql = 'SELECT *
-                FROM `[prefix]_logs`
-                WHERE `date` LIKE "'.$date.'%"
-                ORDER BY `date` DESC';
-        $entriesArray = $this->db()->queryArray($sql);
+        $entriesArray = $this->db()->select('*')
+            ->from('logs')
+            ->where(['date LIKE' => $date . '%'])
+            ->order(['date' => 'DESC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($entriesArray)) {
             return null;
@@ -110,10 +111,11 @@ class Logs extends \Ilch\Mapper
         $date = new IlchDate();
         $date->modify('-1 minutes');
 
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_logs`
-                WHERE user_id = '.$userId.' AND info = "'.$info.'" AND date > "'.$date->toDb(true).'"';
-        $count = $this->db()->queryCell($sql);
+        $count = $this->db()->select('COUNT(*)')
+            ->from('logs')
+            ->where(['user_id' => intval($userId), 'info' => $info, 'date >' => $date->toDb(true)])
+            ->execute()
+            ->fetchCell();
 
         if ($count == 0) {
             $fields = [
