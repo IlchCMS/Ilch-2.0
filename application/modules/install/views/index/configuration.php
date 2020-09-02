@@ -7,7 +7,7 @@
     <div class="col-lg-9 input-group">
         <select class="form-control" id="usage" name="usage">
             <option value="private"><?=$this->getTrans('private') ?></option>
-            <option value="clan" <?php if ($this->get('usage') == 'clan') { echo 'selected="selected"'; } ?>><?=$this->getTrans('clan') ?></option>
+            <option value="clan" <?php if ($this->get('usage') === 'clan') { echo 'selected="selected"'; } ?>><?=$this->getTrans('clan') ?></option>
         </select>
         <div class="input-group-addon custom" data-toggle="collapse" data-target="#modules" title="<?=$this->getTrans('custom') ?>"><i class="fa fa-info-circle"></i> <?=$this->getTrans('custom') ?></div>
     </div>
@@ -78,7 +78,7 @@
     </div>
 </div>
 
-<script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
+<script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js') ?>"></script>
 <script>
 $('#usage').change(function() {
     $('#modulesContent').load('<?=$this->getUrl(['action' => 'ajaxconfig']) ?>/type/'+$('#usage').val());

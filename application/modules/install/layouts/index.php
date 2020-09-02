@@ -18,11 +18,11 @@
     <body>
         <div class="container">
             <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12 install_container">
-                <div class="logo" title="<?=$this->getTrans('ilchInstall', (string)VERSION) ?>"></div>
-                <div class="installVersion" title="<?=$this->getTrans('ilchInstall', (string)VERSION) ?>">
-                    <?=$this->getTrans('ilchInstallVersion', (string)VERSION) ?>
+                <div class="logo" title="<?=$this->getTrans('ilchInstall', VERSION) ?>"></div>
+                <div class="installVersion" title="<?=$this->getTrans('ilchInstall', VERSION) ?>">
+                    <?=$this->getTrans('ilchInstallVersion', VERSION) ?>
                 </div>
-                <form autocomplete="off" class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+                <form autocomplete="off" class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => urlencode($this->getRequest()->getActionName())]) ?>">
                     <?=$this->getTokenField() ?>
                     <div class="col-lg-4 col-md-3 col-sm-3 hidden-xs verticalLine install_step">
                         <?php $done = 1; ?>
@@ -58,11 +58,11 @@
                             </a>
                         <?php endif; ?>
 
-                        <?php if ($this->getRequest()->getActionName() != 'finish'): ?>
+                        <?php if ($this->getRequest()->getActionName() !== 'finish'): ?>
                             <button type="submit" class="btn btn-primary pull-right" name="save">
                                 <?php $buttonTrans = 'nextButton'; ?>
 
-                                <?php if ($this->getRequest()->getActionName() == 'configuration'): ?>
+                                <?php if ($this->getRequest()->getActionName() === 'configuration'): ?>
                                     <?php $buttonTrans = 'installButton'; ?>
                                 <?php endif; ?>
 
@@ -70,7 +70,7 @@
                             </button>
                         <?php endif; ?>
 
-                        <?php if ($this->getRequest()->getActionName() == 'finish'): ?>
+                        <?php if ($this->getRequest()->getActionName() === 'finish'): ?>
                             <div class="pull-right">
                                 <a target="_blank" href="<?=$this->getUrl() ?>" class="btn btn-success">
                                     Frontend

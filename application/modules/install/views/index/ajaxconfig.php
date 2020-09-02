@@ -5,7 +5,7 @@
             <div class="col-lg-4 col-md-3 col-sm-3">
                 <input type="checkbox" id="module_<?=$key ?>" name="modulesToInstall[]" disabled="disabled" checked="checked" value="<?=$key ?>">
                 <label for="module_<?=$key ?>">
-                    <?=$module['config']->config['languages'][$this->getTranslator()->getLocale()]['name']; ?>
+                    <?=$module['config']->config['languages'][$this->getTranslator()->getLocale()]['name'] ?>
                 </label>
             </div>
         <?php endif; ?>
@@ -21,7 +21,7 @@
                         echo 'checked="checked"';
                     } ?>>
                 <label for="module_<?=$key ?>">
-                    <?=$module['config']->config['languages'][$this->getTranslator()->getLocale()]['name']; ?>
+                    <?=$module['config']->config['languages'][$this->getTranslator()->getLocale()]['name'] ?>
                 </label>
             </div>
         <?php endif; ?>

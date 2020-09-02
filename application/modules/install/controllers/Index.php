@@ -1,11 +1,11 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  */
 
 namespace Modules\Install\Controllers;
 
-use Ilch\Config\File as File;
+use Ilch\Config\File;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -16,7 +16,7 @@ class Index extends \Ilch\Controller\Frontend
         }
         $fileConfig = new File();
         $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
-        if ($fileConfig->get('dbUser') !== null and $this->getRequest()->getActionName() !== 'finish') {
+        if ($fileConfig->get('dbUser') !== null && $this->getRequest()->getActionName() !== 'finish') {
             /*
              * Cms is installed
              */
@@ -287,7 +287,7 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($result !== false) {
             while ($row = mysqli_fetch_row($result)) {
-                if (($row[0] != 'information_schema') && ($row[0] != 'performance_schema') && ($row[0] != 'mysql')) {
+                if (($row[0] !== 'information_schema') && ($row[0] !== 'performance_schema') && ($row[0] !== 'mysql')) {
                     $dbList[] = $row[0];
                 }
             }
@@ -412,7 +412,7 @@ class Index extends \Ilch\Controller\Frontend
                     $config->install();
 
                     if (!empty($config->config)) {
-                        if ($config->config['key'] != 'admin') {
+                        if ($config->config['key'] !== 'admin') {
                             $moduleModel = new \Modules\Admin\Models\Module();
                             $moduleModel->setKey($config->config['key']);
                             if (isset($config->config['author'])) {
