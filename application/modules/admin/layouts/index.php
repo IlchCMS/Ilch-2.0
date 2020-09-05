@@ -51,7 +51,7 @@
         $.key('alt+s', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>'; });
         $.key('alt+h', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'index']) ?>'; });
         $.key('alt+k', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts']) ?>'; });
-        $.key('alt+i', function() { window.open('http://ilch.de/', '_blank'); });
+        $.key('alt+i', function() { window.open('https://ilch.de/', '_blank'); });
         </script>
         <?php
             if (\Ilch\DebugBar::isInitialized()) {
@@ -206,14 +206,14 @@
                             </a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
-                                    <a href="http://www.ilch.de" target="_blank" rel="noopener">
+                                    <a href="https://www.ilch.de" target="_blank" rel="noopener">
                                         <i class="fa fa-home"></i>
                                         <?=$this->getTrans('officialSite') ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="http://www.ilch.de/forum.html" target="_blank" rel="noopener">
+                                    <a href="https://www.ilch.de/forum.html" target="_blank" rel="noopener">
                                         <i class="fa fa-comments-o"></i>
                                         <?=$this->getTrans('officialSupportForum') ?>
                                     </a>
