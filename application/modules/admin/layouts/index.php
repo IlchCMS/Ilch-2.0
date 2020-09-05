@@ -237,7 +237,6 @@
                         </li>
                         <?php if (!empty($this->getUser()->getFirstName())): ?>
                             <?php $name = $this->getUser()->getFirstName().' '.$this->getUser()->getLastName(); ?>
-                            <?php $nameInfo = $this->getUser()->getFirstName().'<br />'.$this->getUser()->getLastName(); ?>
                         <?php else: ?>
                             <?php $name = $this->getUser()->getName(); ?>
                         <?php endif; ?>
