@@ -113,7 +113,7 @@ class Events extends \Ilch\Mapper
                 WHERE start > NOW()
                 ORDER BY start ASC';
 
-        if ($limit !== null) { $sql .= ' LIMIT '.intval($limit); }
+        if ($limit !== null) { $sql .= ' LIMIT '.(int)$limit; }
 
         $rows = $this->db()->queryArray($sql);
 
@@ -173,7 +173,7 @@ class Events extends \Ilch\Mapper
                 WHERE end < NOW()
                 ORDER BY start DESC';
 
-        if ($limit !== null) { $sql .= ' LIMIT '.intval($limit); }
+        if ($limit !== null) { $sql .= ' LIMIT '.(int)$limit; }
 
         $rows = $this->db()->queryArray($sql);
 
@@ -205,7 +205,7 @@ class Events extends \Ilch\Mapper
                 WHERE start < NOW() AND end > NOW()
                 ORDER BY start DESC';
 
-        if ($limit !== null) { $sql .= ' LIMIT '.intval($limit); }
+        if ($limit !== null) { $sql .= ' LIMIT '.(int)$limit; }
 
         $rows = $this->db()->queryArray($sql);
 

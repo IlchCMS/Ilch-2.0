@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'vote',
-        'version' => '1.9.0',
+        'version' => '1.10.0',
         'icon_small' => 'fa-tasks',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',

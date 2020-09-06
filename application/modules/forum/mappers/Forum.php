@@ -132,7 +132,7 @@ class Forum extends \Ilch\Mapper
         $sql = 'SELECT `t`.`id`, `t`.`topic_id`, `t`.`topic_title`, `p`.`read`, `p`.`id`, `p`.`topic_id`, `p`.`date_created`, `p`.`user_id`
                 FROM `[prefix]_forum_topics` AS `t`
                 LEFT JOIN `[prefix]_forum_posts` AS `p` ON `t`.`id` = `p`.`topic_id`
-                WHERE `t`.`topic_id` = '.intval($topicId).'
+                WHERE `t`.`topic_id` = '.(int)$topicId.'
                 ORDER BY `p`.`id` DESC';
 
         $fileRow = $this->db()->queryRow($sql);
@@ -310,7 +310,7 @@ class Forum extends \Ilch\Mapper
     {
         $countOfPosts = $this->db()->select('COUNT(id)')
             ->from('forum_posts')
-            ->where(['topic_id' => intval($topicId)])
+            ->where(['topic_id' => (int)$topicId])
             ->execute()
             ->fetchCell();
 
@@ -332,7 +332,7 @@ class Forum extends \Ilch\Mapper
     {
         $countOfTopics = $this->db()->select('COUNT(topic_id)')
             ->from('forum_topics')
-            ->where(['topic_id' => intval($id)])
+            ->where(['topic_id' => (int)$id])
             ->execute()
             ->fetchCell();
 

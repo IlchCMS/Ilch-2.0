@@ -22,7 +22,7 @@ class Birthday extends \Ilch\Mapper
             $sql = 'SELECT *
                     FROM `[prefix]_users`
                     WHERE DAY(birthday) = DAY(CURDATE()) AND MONTH(birthday) = MONTH(CURDATE())
-                    LIMIT ' . intval($limit);
+                    LIMIT ' . (int)$limit;
         } else {
             $sql = 'SELECT *
                     FROM `[prefix]_users`

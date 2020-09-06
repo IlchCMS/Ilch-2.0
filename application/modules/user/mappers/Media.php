@@ -60,7 +60,7 @@ class Media extends \Ilch\Mapper
     {
         $mediaRows = $this->db()->select('*')
             ->from('users_media')
-            ->where(['id <' => intval($lastId]))
+            ->where(['id <' => (int)$lastId])
             ->order(['id' => 'DESC'])
             ->limit(40)
             ->execute()

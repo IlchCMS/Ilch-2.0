@@ -87,7 +87,7 @@ $userCache = [];
                             }
                             ?>
                         </td>
-                        <td><?=$log->getInfo() ?></td>
+                        <td><?=$this->escape($log->getInfo()) ?></td>
                     </tr>
         <?php endforeach; ?>
                 </tbody>

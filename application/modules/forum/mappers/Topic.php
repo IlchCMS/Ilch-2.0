@@ -18,7 +18,7 @@ class Topic extends \Ilch\Mapper
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *, topics.id, MAX(posts.date_created) AS latest_post
                 FROM `[prefix]_forum_topics` AS topics
                 LEFT JOIN `[prefix]_forum_posts` AS posts ON topics.id = posts.topic_id
-                WHERE topics.forum_id = '.intval($id).'
+                WHERE topics.forum_id = '.(int)$id.'
                 GROUP by topics.type, topics.id, topics.topic_id, topics.topic_prefix, topics.topic_title, topics.visits, topics.creator_id, topics.date_created, topics.forum_id, topics.status
                 ORDER by topics.type DESC, latest_post DESC';
 
@@ -98,7 +98,7 @@ class Topic extends \Ilch\Mapper
         if ($pagination != null) {
             $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
         } elseif ($limit != null) {
-            $sql .= ' LIMIT '.intval($limit);
+            $sql .= ' LIMIT '.(int)$limit;
         }
 
         $fileArray = $this->db()->queryArray($sql);
@@ -156,7 +156,7 @@ class Topic extends \Ilch\Mapper
     {
         $topic = $this->db()->select('*')
             ->from('forum_topics')
-            ->where(['id' => intval($id)])
+            ->where(['id' => (int)$id])
             ->execute()
             ->fetchAssoc();
 
@@ -303,7 +303,7 @@ class Topic extends \Ilch\Mapper
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
                 FROM `[prefix]_forum_topics`
-                WHERE topic_id = '.intval($id).'
+                WHERE topic_id = '.(int)$id.'
                 LIMIT '.implode(',',$pagination->getLimit());
 
         $fileArray = $this->db()->queryArray($sql);
@@ -341,7 +341,7 @@ class Topic extends \Ilch\Mapper
                 ORDER BY `innerfrom`.`date_created` DESC';
 
         if ($limit !== null) {
-            $sql .= ' LIMIT '.intval($limit);
+            $sql .= ' LIMIT '.(int)$limit;
         }
 
         return $this->db()->queryArray($sql);

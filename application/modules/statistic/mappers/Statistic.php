@@ -117,10 +117,10 @@ class Statistic extends \Ilch\Mapper
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null) {
-            $date = intval($year).'-'.intval($month).'-01';
+            $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } elseif ($year != null) {
-            $date = intval($year).'-01-01';
+            $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
         $sql .= ' GROUP BY HOUR(`date`)
@@ -151,10 +151,10 @@ class Statistic extends \Ilch\Mapper
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null) {
-            $date = intval($year).'-'.intval($month).'-01';
+            $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } elseif ($year != null) {
-            $date = intval($year).'-01-01';
+            $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
         $sql .= ' GROUP BY WEEKDAY(`date`)
@@ -186,7 +186,7 @@ class Statistic extends \Ilch\Mapper
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null) {
-            $date = intval($year).'-'.intval($month).'-01';
+            $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } else {
             $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';
@@ -216,7 +216,7 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT YEAR(`date`) AS `date_year`, MONTH(`date`) AS `date_month`, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($year != null) {
-            $date = intval($year).'-01-01';
+            $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         } else {
             $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE())';
@@ -246,7 +246,7 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT YEAR(`date`) AS `year_full`, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($year != null) {
-            $date = intval($year).'-01-01';
+            $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
         $sql .= ' GROUP BY YEAR(`date`)
@@ -275,16 +275,16 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT `browser`, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null && $browser != null) {
-            $date = intval($year).'-'.intval($month).'-01';
+            $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'") AND browser = "'.$browser.'"';
         } elseif ($month == null && $year != null && $browser != null) {
-            $date = intval($year).'-01-01';
+            $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND browser = "'.$browser.'"';
         } elseif ($month != null && $year != null) {
-            $date = intval($year).'-'.intval($month).'-01';
+            $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } elseif ($month == null && $year != null) {
-            $date = intval($year).'-01-01';
+            $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
 
@@ -316,10 +316,10 @@ class Statistic extends \Ilch\Mapper
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null) {
-            $date = intval($year).'-'.intval($month).'-01';
+            $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } else if ($month == null && $year != null) {
-            $date = intval($year).'-01-01';
+            $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
 
@@ -353,16 +353,16 @@ class Statistic extends \Ilch\Mapper
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null && $os != null) {
-            $date = intval($year).'-'.intval($month).'-01';
+            $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'") AND os = "'.$os.'"';
         } elseif ($month == null && $year != null && $os != null) {
-            $date = intval($year).'-01-01';
+            $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND os = "'.$os.'"';
         } elseif ($month != null && $year != null) {
-            $date = intval($year).'-'.intval($month).'-01';
+            $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } elseif ($month == null && $year != null) {
-            $date = intval($year).'-01-01';
+            $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
 
@@ -458,10 +458,10 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null) {
-            $date = intval($year).'-'.intval($month).'-01 00:00:00';
+            $date = (int)$year.'-'.(int)$month.'-01 00:00:00';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } elseif ($month == null && $year != null) {
-            $date = intval($year).'-01-01 00:00:00';
+            $date = (int)$year.'-01-01 00:00:00';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         } elseif ($date != null) {
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'") AND DAY(`date`) = DAY("'.$date.'")';
@@ -475,7 +475,7 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null) {
-            $date = intval($year).'-'.intval($month).'-01';
+            $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } else {
             $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';

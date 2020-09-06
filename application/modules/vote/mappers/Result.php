@@ -36,7 +36,7 @@ class Result extends \Ilch\Mapper
     {
         return $this->db()->select('SUM(result)')
             ->from('poll_res')
-            ->where(['poll_id' => intval($pollId)])
+            ->where(['poll_id' => (int)$pollId])
             ->group(['poll_id'])
             ->execute()
             ->fetchCell();

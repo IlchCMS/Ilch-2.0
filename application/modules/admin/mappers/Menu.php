@@ -24,7 +24,7 @@ class Menu extends \Ilch\Mapper
             ->from('menu')
             ->order(['id' => 'ASC'])
             ->limit(1)
-            ->offset(intval($position-1))
+            ->offset((int)$position-1)
             ->execute()
             ->fetchCell();
     }

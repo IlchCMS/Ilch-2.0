@@ -16,7 +16,7 @@ class File extends \Ilch\Mapper
                            FROM `[prefix]_downloads_files` AS g
                            LEFT JOIN `[prefix]_media` m ON g.file_id = m.id
 
-                           WHERE g.id = '.intval($id);
+                           WHERE g.id = '.(int)$id;
         $fileRow = $this->db()->queryRow($sql);
 
         if (empty($fileRow)) {
@@ -41,7 +41,7 @@ class File extends \Ilch\Mapper
                            FROM `[prefix]_downloads_files` AS g
                            LEFT JOIN `[prefix]_media` m ON g.file_id = m.id
 
-                           WHERE g.cat = '.intval($id).' ORDER by g.id DESC LIMIT 1';
+                           WHERE g.cat = '.(int)$id.' ORDER by g.id DESC LIMIT 1';
         $fileRow = $this->db()->queryRow($sql);
         $entryModel = new FileModel();
         $entryModel->setFileId($fileRow['file_id']);
@@ -59,7 +59,7 @@ class File extends \Ilch\Mapper
         $sql = 'SELECT *
                 FROM `[prefix]_downloads_files`
                 
-                WHERE cat = '.intval($id);
+                WHERE cat = '.(int)$id;
         return $this->db()->queryArray($sql);
     }
 
@@ -88,7 +88,7 @@ class File extends \Ilch\Mapper
                            FROM `[prefix]_downloads_files` AS g
                            LEFT JOIN `[prefix]_media` m ON g.file_image = m.url
 
-                           WHERE g.cat = '.intval($id).' ORDER BY g.id DESC
+                           WHERE g.cat = '.(int)$id.' ORDER BY g.id DESC
                            LIMIT '.implode(',',$pagination->getLimit());
 
         $fileArray = $this->db()->queryArray($sql);

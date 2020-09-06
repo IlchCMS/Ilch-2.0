@@ -20,7 +20,7 @@ class Image extends \Ilch\Mapper
         $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
                        FROM `[prefix]_gallery_imgs` AS g
                        LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-                       WHERE g.id = '.intval($id);
+                       WHERE g.id = '.(int)$id;
         $imageRow = $this->db()->queryRow($sql);
 
         if (empty($imageRow)) {
@@ -50,7 +50,7 @@ class Image extends \Ilch\Mapper
         $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
                        FROM `[prefix]_gallery_imgs` AS g
                        LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-                       WHERE g.cat = '.intval($id).' ORDER by g.id DESC LIMIT 1';
+                       WHERE g.cat = '.(int)$id.' ORDER by g.id DESC LIMIT 1';
         $imageRow = $this->db()->queryRow($sql);
 
         if (empty($imageRow)) {
@@ -112,7 +112,7 @@ class Image extends \Ilch\Mapper
         $sql = 'SELECT SQL_CALC_FOUND_ROWS g.image_id,g.cat,g.id as imgid,g.image_title,g.image_description,g.visits, m.url, m.id, m.url_thumb
                            FROM `[prefix]_gallery_imgs` AS g
                            LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-                           WHERE g.cat = '.intval($id).' ORDER BY g.id DESC
+                           WHERE g.cat = '.(int)$id.' ORDER BY g.id DESC
                            LIMIT '.implode(',',$pagination->getLimit());
 
         $imageArray = $this->db()->queryArray($sql);
