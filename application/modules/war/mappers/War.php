@@ -356,7 +356,7 @@ class War extends \Ilch\Mapper
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
                 WHERE status = "'.$this->db()->escape($status).'"
                 ORDER by w.time '.$order.'
-                LIMIT '.inval($limit);
+                LIMIT '.(int)$limit;
 
         $warArray = $this->db()->queryArray($sql);
 
