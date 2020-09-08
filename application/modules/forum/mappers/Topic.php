@@ -15,7 +15,7 @@ class Topic extends \Ilch\Mapper
 {
     public function getTopicsByForumId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *, topics.id, MAX(posts.date_created) AS latest_post
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS *, topics.id, topics.visits, MAX(posts.date_created) AS latest_post
                 FROM `[prefix]_forum_topics` AS topics
                 LEFT JOIN `[prefix]_forum_posts` AS posts ON topics.id = posts.topic_id
                 WHERE topics.forum_id = '.(int)$id.'
@@ -24,10 +24,10 @@ class Topic extends \Ilch\Mapper
 
         if (!empty($pagination)) {
             $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
-            $fileArray = $this->db()->queryArray($sql);
+            $topicArray = $this->db()->queryArray($sql);
             $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
         } else {
-            $fileArray = $this->db()->queryArray($sql);
+            $topicArray = $this->db()->queryArray($sql);
         }
         
         $entry = [];
@@ -35,7 +35,7 @@ class Topic extends \Ilch\Mapper
         $dummyUser = null;
         $userCache = [];
 
-        foreach ($fileArray as $entries) {
+        foreach ($topicArray as $entries) {
             $entryModel = new TopicModel();
             $userMapper = new UserMapper();
             $entryModel->setId($entries['id']);
