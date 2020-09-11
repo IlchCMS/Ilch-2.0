@@ -35,7 +35,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.36',
+        'ilchCore' => '2.1.40',
         'phpVersion' => '5.6'
     ];
 
@@ -428,10 +428,13 @@ class Config extends \Ilch\Config\Install
                             PRIMARY KEY (`id`)
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
-            // Update description
-            foreach($this->config['languages'] as $key => $value) {
-                $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'forum' AND `locale` = '%s';", $value['description'], $key));
-            }
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'forum' AND `locale` = '%s';", $value['description'], $key));
+                }
+            case "1.25.0":
+            case "1.26.0":
+                // TODO: Convert old posts and signatures to html with getHtmlFromBBCode()
         }
     }
 }
