@@ -434,7 +434,7 @@ class Config extends \Ilch\Config\Install
                 }
             case "1.25.0":
             case "1.26.0":
-                // TODO: Convert old posts and signatures to html with getHtmlFromBBCode()
+                // TODO: Convert old posts to html with getHtmlFromBBCode()
         }
     }
 }

@@ -148,7 +148,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
 
                     <?php if ($post->getAutor()->getSignature()): ?>
                         <hr />
-                        <?=$this->purify($post->getAutor()->getSignature()) ?>
+                        <?=nl2br($this->getHtmlFromBBCode($this->escape($post->getAutor()->getSignature()))) ?>
                     <?php endif; ?>
                 </div>
                 <dl class="postprofile">
