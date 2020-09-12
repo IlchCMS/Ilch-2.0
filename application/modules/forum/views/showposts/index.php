@@ -143,7 +143,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                 <div class="postbody">
                     <hr class="hr-top" />
                     <div class="content">
-                        <?=$this->purify($post->getText()) ?>
+                        <?=$this->alwaysPurify($post->getText()) ?>
                     </div>
 
                     <?php if ($post->getAutor()->getSignature()): ?>

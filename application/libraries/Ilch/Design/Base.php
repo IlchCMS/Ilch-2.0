@@ -164,7 +164,7 @@ abstract class Base
     {
         $config = \Ilch\Registry::get('config');
 
-        if ($backend && $config->get('disable_purifier')) {
+        if ($config->get('disable_purifier')) {
             return $content;
         }
 
