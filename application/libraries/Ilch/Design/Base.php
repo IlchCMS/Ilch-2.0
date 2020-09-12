@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -100,34 +100,6 @@ abstract class Base
     private $purifier;
 
     /**
-     * Get object of HTML Purifier with default configuration.
-     *
-     * @return \HTMLPurifier
-     */
-    public function getPurifier()
-    {
-        return $this->purifier;
-    }
-
-    /**
-     * Use HTMLPurifier to purify the content.
-     * Takes the "disable_purifier" setting into account.
-     *
-     * @param string $content
-     * @return string
-     */
-    public function purify($content)
-    {
-        $config = \Ilch\Registry::get('config');
-
-        if ($config->get('disable_purifier')) {
-            return $content;
-        }
-
-        return $this->getPurifier()->purify($content);
-    }
-
-    /**
      * Injects request and translator to layout/view.
      *
      * @param Request $request
@@ -167,6 +139,51 @@ abstract class Base
             'type' => 'Text',
         ));
         $this->purifier = new \HTMLPurifier($this->purifierConfig);
+    }
+
+    /**
+     * Get object of HTML Purifier with default configuration.
+     *
+     * @return \HTMLPurifier
+     * @since 2.1.26
+     */
+    public function getPurifier()
+    {
+        return $this->purifier;
+    }
+
+    /**
+     * Use HTMLPurifier to purify the content.
+     * Takes the "disable_purifier" setting into account.
+     *
+     * @param string $content
+     * @return string
+     * @since 2.1.26
+     */
+    public function purify($content)
+    {
+        $config = \Ilch\Registry::get('config');
+
+        if ($backend && $config->get('disable_purifier')) {
+            return $content;
+        }
+
+        return $this->getPurifier()->purify($content);
+    }
+
+    /**
+     * Use HTMLPurifier to always purify the content.
+     * Isn't affected by the "disable_purifier" setting.
+     * Use this function if you want to make sure that the
+     * content always gets purified.
+     *
+     * @param string $content
+     * @return string
+     * @since 2.1.40
+     */
+    public function alwaysPurify($content)
+    {
+        return $this->getPurifier()->purify($content);
     }
 
     /**
