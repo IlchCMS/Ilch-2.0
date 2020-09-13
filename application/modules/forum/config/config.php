@@ -434,7 +434,37 @@ class Config extends \Ilch\Config\Install
                 }
             case "1.25.0":
             case "1.26.0":
-                // TODO: Convert old posts to html with getHtmlFromBBCode()
+                // Convert existing posts to html with getHtmlFromBBCode()
+                $sqlCommands = '';
+                $counter = 0;
+                $frontend = new \Ilch\Layout\Frontend();
+                $posts = $this->db()->select(['id', 'text'])
+                    ->from('forum_posts')
+                    ->where(['text LIKE' => '%[%]%'])
+                    ->andWhere(['text LIKE' => '%[\%]%'])
+                    ->execute()
+                    ->fetchRows();
+
+                if (!empty($posts)) {
+                    foreach($posts as $post) {
+                        $text = $frontend->getHtmlFromBBCode($post['text']);
+
+                        // Run commands if we already have 50. This is done to limit the size of the sql command string.
+                        // There might be limits defined by for example in case of mysql in "max_allowed_packet".
+                        if (($counter === 5) && !empty($sqlCommands)) {
+                            $this->db()->queryMulti($sqlCommands);
+                            $counter = 0;
+                            $sqlCommands = '';
+                        }
+
+                        $sqlCommands .= 'UPDATE `'.$this->db()->getPrefix().'forum_posts` SET `text` = \''.$text.'\' WHERE `id` = '.$post['id'].';';
+                        $counter++;
+                    }
+
+                    if (!empty($sqlCommands)) {
+                        $this->db()->queryMulti($sqlCommands);
+                    }
+                }
         }
     }
 }
