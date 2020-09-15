@@ -165,7 +165,10 @@ class Validation
                     continue;
                 }
 
+                $validator = str_replace('\\'.'\\', "\0\0\0_doub", $validator);
+                $validator = str_replace('\\'.':', "\0\0\0_esc", $validator);
                 $parts = explode(':', $validator);
+                $parts[1] = str_replace(["\0\0\0_doub", "\0\0\0_esc"], ['\\', ':'], $parts[1]);
 
                 $validator = $parts[0];
                 $params = explode(',', $parts[1]);
