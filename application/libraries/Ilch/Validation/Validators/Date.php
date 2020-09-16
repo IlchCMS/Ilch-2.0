@@ -28,7 +28,7 @@ class Date extends Base
 
         $d = \DateTime::createFromFormat($format, $this->getValue());
 
-        $this->setIsValid($d && $d->format($format) == $this->getValue());
+        $this->setIsValid($d && $d->format($format) === $this->getValue());
 
         return $this;
     }
