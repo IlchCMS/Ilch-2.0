@@ -26,9 +26,8 @@ class Date extends Base
     {
         $format = $this->getParameter(0) ?? 'Y-m-d';
 
-        $d = \DateTime::createFromFormat($format, $this->getValue());
-
-        $this->setIsValid($d && $d->format($format) === $this->getValue());
+        $this->setErrorParameters([$format]);
+        $this->setIsValid(validateDate($this->getValue(), $format));
 
         return $this;
     }
