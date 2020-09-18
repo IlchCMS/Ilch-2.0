@@ -210,8 +210,7 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
-            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://ilch2.de/development/updateserver/stable/", "corian (ilch-Team)", "Germany");
-            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://www.blackcoder.de/ilch-us/stable/", "blackcoder (ilch-Team)", "Germany");';
+            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://ilch2.de/development/updateserver/stable/", "corian (ilch-Team)", "Germany");';
     }
 
     public function getUpdate($installedVersion)
@@ -701,6 +700,18 @@ class Config extends \Ilch\Config\Install
                 }
 
                 replaceVendorDirectory();
+                break;
+            case "2.1.39":
+                // Change updateserver to the first one if the current one is the second one.
+                // Don't change the server if that is not the case to avoid problems with maybe the rare case of an own
+                // updateservers with own certificate.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                if ($databaseConfig->get('updateserver') === 'https://www.blackcoder.de/ilch-us/stable/') {
+                    $databaseConfig->set('updateserver', 'https://ilch2.de/development/updateserver/stable/');
+                }
+
+                // Remove the second updateserver.
+                $this->db()->query("DELETE FROM `[prefix]_admin_updateservers` WHERE `url` = 'https://www.blackcoder.de/ilch-us/stable/';");
                 break;
         }
 
