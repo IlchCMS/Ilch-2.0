@@ -21,7 +21,7 @@ Ilch 2 ist der direkte Nachfolger der Ilch Versionen 1.1.
 - Den Bildschirmanweisungen folgen
 
 ### Voraussetzungen
-- PHP Version 5.6 oder neuer
+- PHP Version 7.0 oder neuer
 - MySQL (5.5.3), MariaDB (5.5) oder Equivalent
 
 ### Support/Dokumentation
