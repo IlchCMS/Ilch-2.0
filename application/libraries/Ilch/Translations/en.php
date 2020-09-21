@@ -9,7 +9,7 @@ return [
     'validation.errors.required.fieldIsRequired' => '%s was not filled out.',
     'validation.errors.same.fieldsDontMatch' => '%s must be equal %s.',
     'validation.errors.captcha.wrongCaptcha' => '%s is the wrong character combination.',
-    'validation.errors.date.mustBeDate' => '%s is no valid date.',
+    'validation.errors.date.mustBeDate' => '%s is no valid date or wrong Format (%s).',
     'validation.errors.url.noValidUrl' => '%s must be a valid URL.',
     'validation.errors.email.noValidEmail' => '%s must be a valid email address.',
     'validation.errors.unique.valueExists' => '%s `%s` is already in use.',
