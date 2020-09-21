@@ -24,12 +24,10 @@ class Date extends Base
      */
     public function run()
     {
-        $dateIsValid = preg_match('~^(\d{4})-(\d\d)-(\d\d)$~', $this->getValue(), $matches) === 1;
-        if ($dateIsValid) {
-            $dateIsValid = checkdate($matches[2], $matches[3], $matches[1]);
-        }
+        $format = $this->getParameter(0) ?? 'Y-m-d';
 
-        $this->setIsValid($this->getValue() === '' || $dateIsValid);
+        $this->setErrorParameters([$format]);
+        $this->setIsValid(validateDate($this->getValue(), $format));
 
         return $this;
     }
