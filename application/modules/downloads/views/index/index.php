@@ -70,7 +70,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
     if ($item->getType() != 0) {
         $lastFile = $fileMapper->getLastFileByDownloadsId($item->getId()) ;
         $image = $obj->getBaseUrl('application/modules/media/static/img/nomedia.png');
-        if ($lastFile !== NULL && $lastFile->getFileImage() != '') {
+        if ($lastFile && $lastFile->getFileImage() != '') {
             $image = $obj->getBaseUrl($lastFile->getFileImage()) ;
         }
         echo '<div class="col-md-12 no-padding lib-item" data-category="view">
