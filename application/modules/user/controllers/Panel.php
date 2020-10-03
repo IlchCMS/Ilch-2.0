@@ -89,13 +89,15 @@ class Panel extends BaseController
             ];
 
             foreach ($profileFields as $profileField) {
-                $index = 'profileField'.$profileField->getId();
-                if ($this->getRequest()->getPost($index) === null) {
-                    // This is for example the case if an external module added a profile field.
-                    // Skip this profile field so the value doesn't get deleted.
-                    continue;
+                if ($profileField->getType() != 1) {
+                    $index = 'profileField'.$profileField->getId();
+                    if ($this->getRequest()->getPost($index) === null) {
+                        // This is for example the case if an external module added a profile field.
+                        // Skip this profile field so the value doesn't get deleted.
+                        continue;
+                    }
+                    $post[$index] = trim($this->getRequest()->getPost($index));
                 }
-                $post[$index] = trim($this->getRequest()->getPost($index));
             }
 
             $validation = Validation::create($post, [
@@ -119,12 +121,14 @@ class Panel extends BaseController
                 $profilMapper->save($model);
 
                 foreach ($profileFields as $profileField) {
-                    $index = 'profileField'.$profileField->getId();
-                    $profileFieldsContent = new ProfileFieldContentModel();
-                    $profileFieldsContent->setFieldId($profileField->getId())
-                        ->setUserId($this->getUser()->getId())
-                        ->setValue($post[$index]);
-                    $profileFieldsContentMapper->save($profileFieldsContent);
+                    if ($profileField->getType() != 1) {
+                        $index = 'profileField'.$profileField->getId();
+                        $profileFieldsContent = new ProfileFieldContentModel();
+                        $profileFieldsContent->setFieldId($profileField->getId())
+                            ->setUserId($this->getUser()->getId())
+                            ->setValue($post[$index]);
+                        $profileFieldsContentMapper->save($profileFieldsContent);
+                    }
                 }
 
                 $this->redirect(['action' => 'profile']);
