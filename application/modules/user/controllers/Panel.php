@@ -67,7 +67,7 @@ class Panel extends BaseController
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getUser()->getId());
-        $profileFields = $profileFieldsMapper->getProfileFields();
+        $profileFields = $profileFieldsMapper->getProfileFields(['hidden' => 0]);
         $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
 
         $this->getView()->set('profileFieldsContent', $profileFieldsContent)
