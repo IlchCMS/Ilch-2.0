@@ -94,7 +94,6 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                     </div>
                 </div>
                 <?php foreach ($profileFields as $profileField):
-                    if ($profileField->getHidden() == 0):
                         $profileFieldName = $profileField->getKey();
                         foreach ($profileFieldsTranslation as $profileFieldTranslation) {
                             if ($profileField->getId() == $profileFieldTranslation->getFieldId()) {
@@ -140,7 +139,6 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         <?php else: ?>
                             <h1><?=$this->escape($profileFieldName) ?></h1>
                         <?php endif;
-                     endif;
                 endforeach; ?>
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
