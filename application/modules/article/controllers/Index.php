@@ -153,7 +153,7 @@ class Index extends \Ilch\Controller\Frontend
                 $comments = new Comments();
 
                 $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-                $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
+                $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id').'#comment_'.$commentId]);
             }
         }
 
