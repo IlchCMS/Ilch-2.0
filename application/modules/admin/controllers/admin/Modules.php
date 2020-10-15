@@ -12,6 +12,7 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
+use Modules\User\Mappers\Group as GroupMapper;
 
 class Modules extends \Ilch\Controller\Admin
 {
@@ -144,6 +145,9 @@ class Modules extends \Ilch\Controller\Admin
         }
 
         $moduleMapper = new ModuleMapper();
+        $groupMapper = new GroupMapper();
+
+        $groups = $groupMapper->getGroupList();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
@@ -172,6 +176,14 @@ class Modules extends \Ilch\Controller\Admin
                 if (!$transfer->install()) {
                     $this->addMessage('moduleInstallationFailed', 'danger');
                     return;
+                }
+
+                if (!$model->getId()) {
+                    foreach ($groups as $key => $group) {
+                        if ($group->getId() !== 1) {
+                            $groupMapper->saveAccessData($group->getId(), $this->getRequest()->getParam('key'), 1, 'module');
+                        }
+                    }
                 }
 
                 $this->addMessage('downSuccess');
@@ -337,6 +349,9 @@ class Modules extends \Ilch\Controller\Admin
     {
         $moduleMapper = new ModuleMapper();
         $boxMapper = new BoxMapper();
+        $groupMapper = new GroupMapper();
+
+        $groups = $groupMapper->getGroupList();
         $key = $this->getRequest()->getParam('key');
 
         if ($this->getRequest()->isSecure()) {
@@ -382,6 +397,14 @@ class Modules extends \Ilch\Controller\Admin
                         $boxModel->addContent($key, $value);
                     }
                     $boxMapper->install($boxModel);
+                }
+
+                if (!$model->getId()) {
+                    foreach ($groups as $key => $group) {
+                        if ($group->getId() !== 1) {
+                            $groupMapper->saveAccessData($group->getId(), $key, 1, 'module');
+                        }
+                    }
                 }
             }
 

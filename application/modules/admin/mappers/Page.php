@@ -96,6 +96,7 @@ class Page extends \Ilch\Mapper
      * Inserts or updates a page model in the database.
      *
      * @param PageModel $page
+     * @return int
      */
     public function save(PageModel $page)
     {
@@ -127,6 +128,7 @@ class Page extends \Ilch\Mapper
                     ])
                     ->execute();
             }
+            return $page->getId();
         } else {
             $date = new \Ilch\Date();
             $pageId = $this->db()->insert('pages')
@@ -144,6 +146,7 @@ class Page extends \Ilch\Mapper
                     'locale' => $page->getLocale()
                 ])
                 ->execute();
+            return $pageId;
         }
     }
 

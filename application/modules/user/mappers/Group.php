@@ -187,6 +187,10 @@ class Group extends \Ilch\Mapper
             ->where(['group_id' => $groupId])
             ->execute();
 
+        $this->db()->delete('groups_access')
+            ->where(['group_id' => $groupId])
+            ->execute();
+
         return $this->db()->delete('groups')
             ->where(['id' => $groupId])
             ->execute();

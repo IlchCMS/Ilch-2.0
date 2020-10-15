@@ -10,6 +10,7 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
 use Modules\Admin\Mappers\Menu as MenuMapper;
 use Ilch\Validation;
+use Modules\User\Mappers\Group as GroupMapper;
 
 class Boxes extends \Ilch\Controller\Admin
 {
@@ -79,6 +80,9 @@ class Boxes extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
+        $groupMapper = new GroupMapper();
+
+        $groups = $groupMapper->getGroupList();
         $boxMapper = new BoxMapper();
 
         if ($this->getRequest()->getParam('id')) {
@@ -135,7 +139,15 @@ class Boxes extends \Ilch\Controller\Admin
                 } else {
                     $model->setLocale('');
                 }
-                $boxMapper->save($model);
+                $boxId = $boxMapper->save($model);
+
+                if (!$model->getId()) {
+                    foreach ($groups as $key => $group) {
+                        if ($group->getId() !== 1) {
+                            $groupMapper->saveAccessData($group->getId(), $boxId, 1, 'box');
+                        }
+                    }
+                }
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);

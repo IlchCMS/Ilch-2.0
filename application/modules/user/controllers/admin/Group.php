@@ -171,7 +171,6 @@ class Group extends \Ilch\Controller\Admin
 
             $groupId = $groupMapper->save($group);
 
-            //if ($groupId != 1) {
             $groupUsers = $groupMapper->getUsersForGroup($groupId);
             $userMapper = new UserMapper();
             foreach($sortItems as $key => $user_Id) {
@@ -192,6 +191,36 @@ class Group extends \Ilch\Controller\Admin
             }
 
             if (!empty($groupId) && empty($groupData['id'])) {
+                $moduleMapper = new ModuleMapper();
+                $modules = $moduleMapper->getModules();
+
+                $pageMapper = new PageMapper();
+                $pages = $pageMapper->getPageList();
+
+                $articleMapper = new ArticleMapper();
+                $articles = $articleMapper->getArticles();
+
+                $boxMapper = new BoxMapper();
+                $boxes = $boxMapper->getSelfBoxList('');
+
+                $accessTypes = [
+                    'module' => $modules,
+                    'page' => $pages,
+                    'article' => $articles,
+                    'box' => $boxes,
+                ];
+
+                foreach ($accessTypes as $type => $TypeData) {
+                    foreach ($TypeData as $TypeDataModel) {
+                        if ($type === 'module') {
+                            $value = $TypeDataModel->getKey();
+                        } else {
+                            $value = $TypeDataModel->getId();
+                        }
+                        $groupMapper->saveAccessData($groupId, $value, 1, $type);
+                    }
+                }
+
                 $this->redirect()
                     ->withMessage('newGroupMsg')
                     ->to(['action' => 'treat', 'id' => $groupId]);

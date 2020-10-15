@@ -10,6 +10,7 @@ use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Admin\Models\Page as PageModel;
 use Modules\Admin\Mappers\Menu as MenuMapper;
 use Ilch\Validation;
+use Modules\User\Mappers\Group as GroupMapper;
 
 class Page extends \Ilch\Controller\Admin
 {
@@ -67,6 +68,9 @@ class Page extends \Ilch\Controller\Admin
     public function treatAction()
     {
         $pageMapper = new PageMapper();
+        $groupMapper = new GroupMapper();
+
+        $groups = $groupMapper->getGroupList();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -150,7 +154,15 @@ class Page extends \Ilch\Controller\Admin
                     $model->setLocale('');
                 }
                 $model->setPerma($permaLink);
-                $pageMapper->save($model);
+                $pageId = $pageMapper->save($model);
+
+                if (!$model->getId()) {
+                    foreach ($groups as $key => $group) {
+                        if ($group->getId() !== 1) {
+                            $groupMapper->saveAccessData($group->getId(), $pageId, 1, 'page');
+                        }
+                    }
+                }
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
