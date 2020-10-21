@@ -237,17 +237,31 @@ abstract class QueryBuilder
      */
     protected function createComparisonExpression($key, $value)
     {
-        $singleComparisonOperators =  ['=', '<=', '>=', '<', '>', '!=', '<>', 'LIKE'];
+        $singleComparisonOperators =  ['=', '<=', '>=', '<', '>', '!=', '<>', 'LIKE', 'NOT LIKE', 'IS', 'IS NOT'];
 
         // expect comparison of 2 fields -> don't escape (f.e. join conditions)
         if (is_int($key)) {
             $conditionParts = explode(' ', $value);
-            if (count($conditionParts) != 3 || !in_array($conditionParts[1], $singleComparisonOperators)) {
+            if (count($conditionParts) < 3 || ( count($conditionParts) == 3 && !in_array($conditionParts[1], $singleComparisonOperators) ) ||  ( count($conditionParts) == 4 && !in_array($conditionParts[1].' '.$conditionParts[2], $singleComparisonOperators) ) ) {
                 throw new \InvalidArgumentException('Invalid comparison expression');
             }
+
             $left = $this->db->quote($conditionParts[0]);
-            $operator = $conditionParts[1];
-            $right = $this->db->quote($conditionParts[2]);
+            if (count($conditionParts) == 4) {
+                $operator = $conditionParts[1].' '.$conditionParts[2];
+            } else {
+                $operator = $conditionParts[1];
+            }
+
+            if (in_array($operator, ['IS', 'IS NOT'])) {
+                $right = 'NULL';
+            } else {
+                if (count($conditionParts) == 4) {
+                    $right = $this->db->quote($conditionParts[3]);
+                } else {
+                    $right = $this->db->quote($conditionParts[2]);
+                }
+            }
         } else {
             // string key -> comparison with value(s)
             $keyParts = explode(' ', $key);
@@ -272,7 +286,11 @@ abstract class QueryBuilder
                 if (!in_array($operator, $singleComparisonOperators)) {
                     throw new \InvalidArgumentException('invalid operator for single value comparison');
                 }
-                $right = $this->db->escape($value, true);
+                if (in_array($operator, ['IS', 'IS NOT'])) {
+                    $right = 'NULL';
+                } else {
+                    $right = $this->db->escape($value, true);
+                }
             }
         }
 
