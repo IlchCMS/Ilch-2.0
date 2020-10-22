@@ -13,7 +13,6 @@ use Modules\Article\Mappers\Template as TemplateMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\User\Mappers\Group as GroupMapper;
 use Ilch\Validation;
-use Modules\User\Mappers\Group as GroupMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
