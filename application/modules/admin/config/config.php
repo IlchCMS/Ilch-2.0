@@ -713,6 +713,51 @@ class Config extends \Ilch\Config\Install
                 // Remove the second updateserver.
                 $this->db()->query("DELETE FROM `[prefix]_admin_updateservers` WHERE `url` = 'https://www.blackcoder.de/ilch-us/stable/';");
                 break;
+            case "2.1.40":
+                $groupMapper = new \Modules\User\Mappers\Group();
+                $groups = $groupMapper->getGroupList();
+                
+                $moduleMapper = new \Modules\Admin\Mappers\Module();
+                $modules = $moduleMapper->getModules();
+
+                $pageMapper = new \Modules\Admin\Mappers\Page();
+                $pages = $pageMapper->getPageList();
+
+                $articleMapper = new \Modules\Article\Mappers\Article();
+                $articles = $articleMapper->getArticles();
+
+                $boxMapper = new \Modules\Admin\Mappers\Box();
+                $boxes = $boxMapper->getSelfBoxList('');
+
+                $accessTypes = [
+                    'module' => $modules,
+                    'page' => $pages,
+                    'article' => $articles,
+                    'box' => $boxes,
+                ];
+
+                foreach ($groups as $key => $group) {
+                    if ($group->getId() !== 1) {
+                        $groupAccessList[$group->getId()] = $groupMapper->getGroupAccessList($group->getId());
+                    }
+                }
+
+                foreach($groupAccessList as $groupid => $groupData) {
+                    foreach ($groupData['entries'] as $type => $accessData) {
+                        $TypeData = $accessTypes[$type];
+                        foreach ($TypeData as $TypeDataModel) {
+                            if ($type === 'module') {
+                                $value = $TypeDataModel->getKey();
+                            } else {
+                                $value = $TypeDataModel->getId();
+                            }
+                            if (!isset($accessData[$value])) {
+                                $groupMapper->saveAccessData($groupid, $value, 1, $type);
+                            }
+                        }
+                    }
+                }
+                break;
         }
 
         return 'Update function executed.';

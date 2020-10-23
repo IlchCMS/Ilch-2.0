@@ -5,6 +5,7 @@ $birthday = '';
 if ($profil->getBirthday()) {
     $birthday = new \Ilch\Date($profil->getBirthday());
 }
+$date = new \Ilch\Date();
 $profileIconFields = $this->get('profileIconFields');
 $profileFields = $this->get('profileFields');
 $profileFieldsContent = $this->get('profileFieldsContent');
@@ -128,7 +129,7 @@ foreach ($profil->getGroups() as $group) {
                 <?=$this->getTrans('profileBirthday') ?>
             </div>
             <div class="col-lg-10 detail">
-                <?php if ($profil->getBirthday() != '') { echo $birthday->format('d-m-Y', true); } ?>
+                <?php if ($profil->getBirthday() != '') { echo $birthday->format('d-m-Y', true).' ('.floor(($date->format('Ymd') - str_replace("-", "", $this->escape($profil->getBirthday()))) / 10000).')'; } ?>
             </div>
         </div>
 

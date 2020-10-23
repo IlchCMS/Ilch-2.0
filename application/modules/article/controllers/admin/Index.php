@@ -97,6 +97,8 @@ class Index extends \Ilch\Controller\Admin
         $templateMapper = new TemplateMapper();
         $groupMapper = new GroupMapper();
 
+        $groupsList = $groupMapper->getGroupList();
+
         if ($this->getRequest()->getParam('locale') == '') {
             $locale = '';
         } else {
@@ -155,9 +157,17 @@ class Index extends \Ilch\Controller\Admin
                     ->setReadAccess($groups)
                     ->setImage($this->getRequest()->getPost('image'))
                     ->setImageSource($this->getRequest()->getPost('imageSource'));
-                $articleMapper->save($model);
+                $articleId = $articleMapper->save($model);
                 if ($this->getRequest()->getPost('saveAsTemplate')) {
                     $templateMapper->save($model);
+                }
+
+                if (!$model->getId()) {
+                    foreach ($groups as $key => $group) {
+                        if ($group->getId() !== 1) {
+                            $groupMapper->saveAccessData($group->getId(), $articleId, 1, 'article');
+                        }
+                    }
                 }
 
                 $this->redirect()
@@ -189,7 +199,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
-        $this->getView()->set('userGroupList', $groupMapper->getGroupList());
+        $this->getView()->set('userGroupList', $groupsList);
         $this->getView()->set('groups', $groups);
         $this->getView()->set('disableComments', (bool)$this->getConfig()->get('article_disableComments'));
     }

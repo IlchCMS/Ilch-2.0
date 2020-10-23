@@ -158,6 +158,7 @@ class Box extends \Ilch\Mapper
      *
      * @param BoxModel $box
      * @throws \Ilch\Database\Exception
+     * @return int
      */
     public function save(BoxModel $box)
     {
@@ -172,6 +173,7 @@ class Box extends \Ilch\Mapper
                     ->values(['box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()])
                     ->execute();
             }
+            return $box->getId();
         } else {
             $date = new \Ilch\Date();
             $boxId = $this->db()->insert('boxes')
@@ -181,6 +183,7 @@ class Box extends \Ilch\Mapper
             $this->db()->insert('boxes_content')
                 ->values(['box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()])
                 ->execute();
+            return $boxId;
         }
     }
 

@@ -100,7 +100,11 @@ class Accesses
         foreach ($array as $kay => $value) {
             $entries[] = $value['entries'];
             foreach ($entries as $value) {
-                $entrie = $value['module'];
+                foreach ($value['module'] as $key => $Access) {
+                    if (!isset($entrie[$key]) || (int)$Access > (int)$entrie[$key]) {
+                        $entrie[$key] = $Access;
+                    }
+                }
             }
         }
 
@@ -144,10 +148,15 @@ class Accesses
      */
     private function getAccessAdmin($array)
     {
+        $entrie = [];
         foreach ($array as $kay => $value) {
             $entries[] = $value['entries'];
             foreach ($entries as $value) {
-                $entrie = $value['module'];
+                foreach ($value['module'] as $key => $Access) {
+                    if (!isset($entrie[$key]) || (int)$Access > (int)$entrie[$key]) {
+                        $entrie[$key] = $Access;
+                    }
+                }
             }
         }
 
