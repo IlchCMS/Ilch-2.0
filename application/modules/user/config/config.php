@@ -17,6 +17,11 @@ class Config extends \Ilch\Config\Install
         'key' => 'user',
         'icon_small' => 'fa-user',
         'system_module' => true,
+
+        'depends' => [
+            'awards' => '>=,1.0.0',
+
+        ],
         'languages' => [
             'de_DE' => [
                 'name' => 'Benutzer',

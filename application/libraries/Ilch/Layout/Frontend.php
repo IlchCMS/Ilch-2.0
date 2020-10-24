@@ -279,7 +279,7 @@ class Frontend extends Base
                 <link href="'.$this->getVendorUrl('components/jqueryui/themes/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
                 <script src="'.$this->getVendorUrl('components/jquery/jquery.min.js').'"></script>
                 <script src="'.$this->getVendorUrl('components/jqueryui/jquery-ui.min.js').'"></script>
-                <script src="'.$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js').'"></script>
+                <script src="'.$this->getVendorUrl('node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js').'"></script>
                 <script src="'.$this->getStaticUrl('js/ilch.js').'"></script>
                 <script src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
                 <script src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';
@@ -344,11 +344,9 @@ class Frontend extends Base
      */
     public function getFooter()
     {
-        $html = '';
+        $html = '<script src="'.$this->getStaticUrl('js/config_cke5.js').'"></script>';
 
-        if (\Ilch\DebugBar::isInitialized()) {
-            $html .= \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->render();
-        }
+
 
         return $html;
     }

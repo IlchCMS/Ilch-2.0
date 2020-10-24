@@ -12,6 +12,7 @@ use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 use Modules\User\Mappers\Friends as FriendsMapper;
+use Modules\Awards\Mappers\Awards as AwardMapper;
 
 class Profil extends \Ilch\Controller\Frontend
 {
@@ -23,6 +24,9 @@ class Profil extends \Ilch\Controller\Frontend
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
         $friendsMapper = new FriendsMapper();
+
+        $awardMapper = new AwardMapper();
+        $award = $awardMapper->getAwardsById($this->getRequest()->getParam('user'));
 
         $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
         $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
@@ -37,6 +41,7 @@ class Profil extends \Ilch\Controller\Frontend
 
             $this->getView()->set('userMapper', $userMapper);
             $this->getView()->set('profil', $profil);
+            $this->getView()->set('award', $award);
             $this->getView()->set('profileIconFields', $profileIconFields);
             $this->getView()->set('profileFields', $profileFields);
             $this->getView()->set('profileFieldsContent', $profileFieldsContent);

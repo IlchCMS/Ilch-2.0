@@ -52,9 +52,9 @@ $post = $this->get('post');
                         </label>
                         <div class="col-lg-10">
                             <textarea class="form-control ckeditor"
-                                      id="ck_1"
+                                      id="editor"
                                       name="text"
-                                      toolbar="ilch_bbcode"><?=$this->escape($post->getText()) ?></textarea>
+                                      ><?=$this->escape($post->getText()) ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">

@@ -43,9 +43,9 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
                         <div class="col-lg-12">
                             <textarea class="form-control ckeditor"
-                                      id="ck_1"
+                                      id="editor"
                                       name="text"
-                                      toolbar="ilch_bbcode"><?=(!empty($postTextAsQuote)) ? $this->escape($postTextAsQuote) : $this->originalInput('text') ?></textarea>
+                                      ><?=(!empty($postTextAsQuote)) ? $this->escape($postTextAsQuote) : $this->originalInput('text') ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">

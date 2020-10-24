@@ -1,4 +1,6 @@
-<?php 
+<?php
+$award = $this->get('award');
+
 $userMapper = $this->get('userMapper');
 $profil = $this->get('profil');
 $birthday = '';
@@ -25,27 +27,48 @@ foreach ($profil->getGroups() as $group) {
 
 <div class="profil">
     <div class="profil-header">
+
+
+
+
+
         <div class="row">
-            <div class="col-lg-2">
-                <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
-                <?php if ($profil->getId() != $this->getUser()->getId()) : ?>
-                <div style="margin-top: 5px">
-                    <?php if ($this->get('isFriend')) : ?>
-                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'removeFriend', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('removeFriend') ?>"><?=$this->getTrans('removeFriend') ?></a>
-                    <?php else : ?>
-                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'sendFriendRequest', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('sendFriendRequest') ?>"><?=$this->getTrans('sendFriendRequest') ?></a>
+            <div class="container">
+                <div class="row">
+                <div class="col-lg-6">
+                    <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
+                    <?php if ($profil->getId() != $this->getUser()->getId()) : ?>
+                        <div style="margin-top: 5px">
+                            <?php if ($this->get('isFriend')) : ?>
+                                <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'removeFriend', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('removeFriend') ?>"><?=$this->getTrans('removeFriend') ?></a>
+                            <?php else : ?>
+                                <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'sendFriendRequest', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('sendFriendRequest') ?>"><?=$this->getTrans('sendFriendRequest') ?></a>
+                            <?php endif; ?>
+                        </div>
                     <?php endif; ?>
+
                 </div>
-                <?php endif; ?>
+                    <div class="col-lg-6">
+                        <h4>Auszeichnungen</h4>
+
+
+
+
+                    </div>
             </div>
+            </div>
+
+
             <div class="col-lg-5 col-xs-12">
                 <h3><?=$this->escape($profil->getName()) ?></h3>
+
                 <div class="detail">
                     <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
                     <?php $dateLastActivity = $profil->getDateLastActivity(); ?>
                     <?php if ($dateLastActivity != ''): ?>
                         <i class="fa fa-eye" title="<?=$this->getTrans('dateLastVisited') ?>"></i> <?=$this->escape($profil->getDateLastActivity()) ?>
                     <?php endif; ?>
+
                 </div>
             </div>
             <div class="col-lg-4 hidden-xs concatLinks-lg">
