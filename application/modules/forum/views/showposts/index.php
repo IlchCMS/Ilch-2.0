@@ -143,12 +143,12 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                 <div class="postbody">
                     <hr class="hr-top" />
                     <div class="content">
-                        <?=nl2br($this->purify($this->escape($post->getText()))) ?>
+                        <?=nl2br($post->getText()) ?>
                     </div>
 
                     <?php if ($post->getAutor()->getSignature()): ?>
                         <hr />
-                        <?=nl2br($this->getHtmlFromBBCode($this->escape($post->getAutor()->getSignature()))) ?>
+                        <?=nl2br($post->getAutor()->getSignature()) ?>
                     <?php endif; ?>
                 </div>
                 <dl class="postprofile">
@@ -156,14 +156,14 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>"><img src="<?=$this->getBaseUrl($post->getAutor()->getAvatar()) ?>" alt="User avatar" height="100" width="100"></a>
                         <br>
                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" class="ilch-link-red">
-                            <?=$this->escape($post->getAutor()->getName()) ?>
+                            <?=($post->getAutor()->getName()) ?>
                         </a>
                     </dt>
                     <dd>
                         <?php foreach ($post->getAutor()->getGroups() as $group): ?>
                             <i class="forum appearance<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></i><br>
                         <?php endforeach; ?>
-                        <i><?=$this->escape($rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle()) ?></i>
+                        <i><?=($rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle()) ?></i>
                     </dd>
                     <dd>&nbsp;</dd>
                     <dd><b><?=$this->getTrans('posts') ?>:</b> <?=$post->getAutorAllPost() ?></dd>

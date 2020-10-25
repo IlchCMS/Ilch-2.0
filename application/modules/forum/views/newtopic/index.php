@@ -66,8 +66,7 @@ if ($this->getUser()) {
                                     <div class="col-lg-10">
                                     <textarea class="form-control ckeditor"
                                               id="editor"
-                                              name="text"
-                                              ><?=$this->originalInput('text') ?></textarea>
+                                              name="text"><?=$this->originalInput('text') ?></textarea>
                                     </div>
                                 </div>
                                 <?php if ($this->getUser()->isAdmin()): ?>
