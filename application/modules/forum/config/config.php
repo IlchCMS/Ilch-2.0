@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.27.0',
+        'version' => '1.28.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -432,6 +432,15 @@ class Config extends \Ilch\Config\Install
             foreach($this->config['languages'] as $key => $value) {
                 $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'forum' AND `locale` = '%s';", $value['description'], $key));
             }
+
+            case "1.25.0":
+            case "1.26.0":
+            case "1.27.0":
+
+                case "1.28.0":
+                //
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` CHANGE `text` `text` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL ;');
+
         }
     }
 }

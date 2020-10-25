@@ -189,7 +189,7 @@ class Post extends \Ilch\Mapper
             $this->db()->update('forum_posts')
                 ->values([
                     'topic_id' => $model->getTopicId(),
-                    'text' => $model->getText()
+                    'text' => htmlentities($model->getText())
                 ])
                 ->where(['id' => $model->getId()])
                 ->execute();

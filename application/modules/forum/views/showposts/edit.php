@@ -54,7 +54,7 @@ $post = $this->get('post');
                             <textarea class="form-control ckeditor"
                                       id="editor"
                                       name="text"
-                                      ><?=$this->escape($post->getText()) ?></textarea>
+                                      ><?=($post->getText()) ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
