@@ -330,7 +330,7 @@ class ForumPost extends \Ilch\Model
      */
     public function setText($text)
     {
-        $this->text = (string) $text;
+        $this->text = (string) html_entity_decode($text);
 
         return $this;
     }

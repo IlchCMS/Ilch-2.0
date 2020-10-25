@@ -196,7 +196,7 @@ class Post extends \Ilch\Mapper
         } else {
             $this->db()->insert('forum_posts')
                 ->values([
-                    'text' => $model->getText(),
+                    'text' => htmlentities($model->getText()),
                     'topic_id' => $model->getTopicId(),
                     'user_id' => $model->getUserId(),
                     'forum_id' => $model->getForumId(),
