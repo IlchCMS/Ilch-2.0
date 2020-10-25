@@ -43,8 +43,14 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
                         <div class="col-lg-12">
                             <textarea class="form-control ckeditor"
+<<<<<<< HEAD
                                       id="editor"
                                       name="text"><?=(!empty($postTextAsQuote)) ? $this->escape($postTextAsQuote) : $this->originalInput('text') ?></textarea>
+=======
+                                      id="ck_1"
+                                      name="text"
+                                      toolbar="ilch_bbcode"><?=(!empty($postTextAsQuote)) ? $this->escape($postTextAsQuote) : $this->originalInput('text') ?></textarea>
+>>>>>>> parent of b1283a63... Integration CKEditor Version 5
                         </div>
                     </div>
                     <div class="form-group">

@@ -143,7 +143,11 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                 <div class="postbody">
                     <hr class="hr-top" />
                     <div class="content">
+<<<<<<< HEAD
                         <?=nl2br($post->getText()) ?>
+=======
+                        <?=nl2br($this->getHtmlFromBBCode($this->escape($post->getText()))) ?>
+>>>>>>> parent of b1283a63... Integration CKEditor Version 5
                     </div>
 
                     <?php if ($post->getAutor()->getSignature()): ?>

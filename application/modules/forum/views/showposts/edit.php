@@ -52,9 +52,13 @@ $post = $this->get('post');
                         </label>
                         <div class="col-lg-10">
                             <textarea class="form-control ckeditor"
-                                      id="editor"
+                                      id="ck_1"
                                       name="text"
+<<<<<<< HEAD
                                       ><?=($post->getText()) ?></textarea>
+=======
+                                      toolbar="ilch_bbcode"><?=$this->escape($post->getText()) ?></textarea>
+>>>>>>> parent of b1283a63... Integration CKEditor Version 5
                         </div>
                     </div>
                     <div class="form-group">

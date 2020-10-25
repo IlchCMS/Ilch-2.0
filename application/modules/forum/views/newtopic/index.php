@@ -65,8 +65,14 @@ if ($this->getUser()) {
                                     </label>
                                     <div class="col-lg-10">
                                     <textarea class="form-control ckeditor"
+<<<<<<< HEAD
                                               id="editor"
                                               name="text"><?=$this->originalInput('text') ?></textarea>
+=======
+                                              id="ck_1"
+                                              name="text"
+                                              toolbar="ilch_bbcode"><?=$this->originalInput('text') ?></textarea>
+>>>>>>> parent of b1283a63... Integration CKEditor Version 5
                                     </div>
                                 </div>
                                 <?php if ($this->getUser()->isAdmin()): ?>
@@ -107,5 +113,3 @@ if ($this->getUser()) {
     exit;
     ?>
 <?php endif; ?>
-
-

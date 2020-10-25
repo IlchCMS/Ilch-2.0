@@ -147,7 +147,7 @@ class Newpost extends \Ilch\Controller\Frontend
                             $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/forum/layouts/mail/topicsubscription.php');
                         }
                         $messageReplace = [
-                            '{content}' => $this->getLayout()->$mailContent->getText(),
+                            '{content}' => $this->getLayout()->purify($mailContent->getText()),
                             '{sitetitle}' => $sitetitle,
                             '{date}' => $date->format('l, d. F Y', true),
                             '{name}' => $subscriberUsername,
