@@ -163,7 +163,7 @@ class Index extends \Ilch\Controller\Admin
                 }
 
                 if (!$model->getId()) {
-                    foreach ($groups as $key => $group) {
+                    foreach ($groupsList as $key => $group) {
                         if ($group->getId() !== 1) {
                             $groupMapper->saveAccessData($group->getId(), $articleId, 1, 'article');
                         }
