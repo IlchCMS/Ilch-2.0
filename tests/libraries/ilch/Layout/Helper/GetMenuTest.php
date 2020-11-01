@@ -84,8 +84,8 @@ class GetMenuTest extends DatabaseTestCase
                     ],
                 ],
                 'expected' => $menuTitle . '<ul class="root-ul">'
-                    . '<li class="root-li active"><a href="/index.php/article/index/index">Artikel</a></li>'
-                    . '<li class="root-li"><a href="/index.php/user/index/index">Benutzer</a>'
+                    . '<li class="root-li active"><a class="ilch_menu_a" href="/index.php/article/index/index">Artikel</a></li>'
+                    . '<li class="root-li"><a class="ilch_menu_a" href="/index.php/user/index/index">Benutzer</a>'
                     . '<ul class="child-ul">'
                         . '<li class="child-li"><a class="ilch_menu_a" href="/index.php/jobs/index/index">Jobs</a></li>'
                         . '<li class="child-li"><a class="ilch_menu_a" href="/index.php/birthday/index/index">Geburtstag</a></li>'
@@ -99,8 +99,8 @@ class GetMenuTest extends DatabaseTestCase
 
                 ],
                 'expected' => $menuTitle . '<ul class="list-unstyled ilch_menu_ul">'
-                    . '<li><a href="/index.php/article/index/index">Artikel</a></li>'
-                    . '<li class="li-has-children"><a href="/index.php/user/index/index">Benutzer</a>'
+                    . '<li><a class="ilch_menu_a" href="/index.php/article/index/index">Artikel</a></li>'
+                    . '<li class="li-has-children"><a class="ilch_menu_a" href="/index.php/user/index/index">Benutzer</a>'
                     . '<ul class="list-unstyled ilch_menu_ul">'
                     . '<li><a class="ilch_menu_a" href="/index.php/jobs/index/index">Jobs</a></li>'
                     . '<li><a class="ilch_menu_a" href="/index.php/birthday/index/index">Geburtstag</a></li>'
