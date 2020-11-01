@@ -20,7 +20,7 @@ class GetMenu
             'li-class-root-nesting' => '',
             'li-class-child' => '',
             'li-class-active' => '',
-            'a-class'          => 'ilch_menu_a',
+            'a-class'          => '',
             'allow-nesting' => true,
         ],
         'boxes' => [
