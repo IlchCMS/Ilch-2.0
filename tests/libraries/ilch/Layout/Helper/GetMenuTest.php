@@ -89,7 +89,7 @@ class GetMenuTest extends DatabaseTestCase
                     . '<ul class="child-ul">'
                         . '<li class="child-li"><a class="ilch_menu_a" href="/index.php/jobs/index/index">Jobs</a></li>'
                         . '<li class="child-li"><a class="ilch_menu_a" href="/index.php/birthday/index/index">Geburtstag</a></li>'
-                    . '</ul></li><li class="root-li"><a href="/index.php/testseite">Seite</a></li></ul>' . $testBox
+                    . '</ul></li><li class="root-li"><a class="ilch_menu_a" href="/index.php/testseite">Seite</a></li></ul>' . $testBox
             ],
             'test li-class-root-nesting option' => [
                 'options' => [
@@ -99,11 +99,11 @@ class GetMenuTest extends DatabaseTestCase
 
                 ],
                 'expected' => $menuTitle . '<ul class="list-unstyled ilch_menu_ul">'
-                    . '<li><a class="ilch_menu_a" href="/index.php/article/index/index">Artikel</a></li>'
-                    . '<li class="li-has-children"><a class="ilch_menu_a" href="/index.php/user/index/index">Benutzer</a>'
+                    . '<li><a href="/index.php/article/index/index">Artikel</a></li>'
+                    . '<li class="li-has-children"><a href="/index.php/user/index/index">Benutzer</a>'
                     . '<ul class="list-unstyled ilch_menu_ul">'
-                    . '<li><a class="ilch_menu_a" href="/index.php/jobs/index/index">Jobs</a></li>'
-                    . '<li><a class="ilch_menu_a" href="/index.php/birthday/index/index">Geburtstag</a></li>'
+                    . '<li><a href="/index.php/jobs/index/index">Jobs</a></li>'
+                    . '<li><a href="/index.php/birthday/index/index">Geburtstag</a></li>'
                     . '</ul></li><li><a href="/index.php/testseite">Seite</a></li></ul>' . $testBox
             ],
             'nesting disabled' => [
