@@ -20,12 +20,15 @@ class GetMenu
             'li-class-root-nesting' => '',
             'li-class-child' => '',
             'li-class-active' => '',
+            'a-class'          => '',
             'allow-nesting' => true,
         ],
         'boxes' => [
             'render' => true,
         ],
     ];
+
+
 
     /** @var Layout */
     private $layout;
@@ -58,4 +61,7 @@ class GetMenu
 
         return $menu->getItems($tpl, array_replace_recursive(self::DEFAULT_OPTIONS, $options));
     }
+
+
+
 }
