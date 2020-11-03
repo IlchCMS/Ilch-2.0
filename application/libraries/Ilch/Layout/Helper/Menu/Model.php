@@ -205,15 +205,26 @@ class Model
         if (isset($menuData['parents'][$parentId])) {
             foreach ($menuData['parents'][$parentId] as $itemId) {
                 $liClasses = [];
+                $aClasses = [];
 
+                // Listen Klassen
                 if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.allow-nesting') === false) {
                     $liClasses[] = array_dot($options, 'menus.li-class-root');
                 } else {
                     $liClasses[] = array_dot($options, 'menus.li-class-child');
                 }
 
+                // Link Klassen
+                if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.a-class')) {
+                    $aClasses[] = array_dot($options, 'menus.a-class');
+                } else {
+                    $aClasses[] = array_dot($options, 'menus.a-class');
+                }
+
+
                 $target = '';
                 $noopener = '';
+
                 if ($menuData['items'][$itemId]->isPageLink()) {
                     $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId(), $locale);
                     $href = $this->layout->getUrl($page->getPerma());
@@ -237,7 +248,7 @@ class Model
                 }
 
                 if (!is_in_array($groupIds, explode(',', $menuData['items'][$itemId]->getAccess())) || $adminAccess) {
-                    $contentHtml = '<a href="' . $href . '"' . $target . $noopener . '>' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
+                    $contentHtml = '<a' .$this->createClassAttribute(array_dot($options, 'menus.a-class')) .' href="' . $href . '"' . $target . $noopener . '>' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
                     $subItemsHtml = '';
 
                     // find childitems recursively
@@ -249,6 +260,8 @@ class Model
                             . '>' . $subItemsHtml . '</ul>';
                         $subItemsHtml = '';
                     }
+
+
 
                     $html .= '<li' . $this->createClassAttribute($liClasses) . '>' . $contentHtml . '</li>' . $subItemsHtml;
                 }
