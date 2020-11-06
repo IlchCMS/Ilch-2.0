@@ -68,7 +68,7 @@ class Login
         }
 
         $selectsDelete = $user->getSelectsDelete();
-        if ($selectsDelete != '' && $selectsDelete != '0000-00-00 00:00:00') {
+        if ($selectsDelete != '' && $selectsDelete != '1000-01-01 00:00:00') {
             $this->mapper->selectsdelete($user->getId());
             $_SESSION['user_id'] = $user->getId();
             return new LoginResult(true, $user, LoginResult::USER_SELECTSDELETE);
