@@ -16,12 +16,18 @@ class Index extends \Ilch\Controller\Frontend
         $receiverMapper = new ReceiverMapper();
         $captchaNeeded = captchaNeeded();
 
+        if ($captchaNeeded) {
+            if ($this->getConfig()->get('grecaptcha')) {
+                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('grecaptcha_apikey'));
+                $this->getView()->set('googlecaptcha', $googlecaptcha);
+            }
+        }
+
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuContact'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuContact'), ['action' => 'index']);
-
-        if ($this->getRequest()->getPost('saveContact')) {
+        if ($this->getRequest()->getPost()) {
             Validation::setCustomFieldAliases([
                 'senderName' => 'name',
                 'senderEmail' => 'email'
@@ -36,7 +42,11 @@ class Index extends \Ilch\Controller\Frontend
             ];
 
             if ($captchaNeeded) {
-                $validationRules['captcha'] = 'captcha';
+                if ($this->getConfig()->get('grecaptcha')) {
+                    $validationRules['token'] = 'grecaptcha:saveContact';
+                } else {
+                    $validationRules['captcha'] = 'captcha';
+                }
             }
 
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);

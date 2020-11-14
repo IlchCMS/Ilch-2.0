@@ -108,16 +108,28 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validationRules = [
                 'multilingualAcp' => 'required|numeric|integer|min:0|max:1',
                 'standardMail' => 'required|email',
                 'defaultPaginationObjects' => 'numeric|integer|min:1',
                 'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
                 'htmlPurifier' => 'required|numeric|integer|min:0|max:1',
-                'updateserver' => 'required|url'
-            ]);
+                'updateserver' => 'required|url',
+                'grecaptcha' => 'required|numeric|integer|min:0|max:1'
+            ];
+            
+            if ($this->getRequest()->getPost('grecaptcha')){
+                $validationRules['grecaptcha_apikey'] = 'required';
+                $validationRules['grecaptcha_seckey'] = 'required';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
+                $this->getConfig()->set('grecaptcha', $this->getRequest()->getPost('grecaptcha'));
+                $this->getConfig()->set('grecaptcha_apikey', $this->getRequest()->getPost('grecaptcha_apikey'));
+                $this->getConfig()->set('grecaptcha_seckey', $this->getRequest()->getPost('grecaptcha_seckey'));
+
                 $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
                 $this->getConfig()->set('content_language', $this->getRequest()->getPost('contentLanguage'));
                 $this->getConfig()->set('start_page', $this->getRequest()->getPost('startPage'));
@@ -145,6 +157,9 @@ class Settings extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
+        $this->getView()->set('grecaptcha', $this->getConfig()->get('grecaptcha'));
+        $this->getView()->set('grecaptcha_apikey', $this->getConfig()->get('grecaptcha_apikey'));
+        $this->getView()->set('grecaptcha_seckey', $this->getConfig()->get('grecaptcha_seckey'));
         $this->getView()->set('multilingualAcp', $this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('startPage', $this->getConfig()->get('start_page'));

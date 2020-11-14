@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('menuContact') ?></h1>
 <?php if ($this->get('receivers') != ''): ?>
-    <form method="POST" class="form-horizontal">
+    <form id="contactForm" method="POST" class="form-horizontal">
         <?=$this->getTokenField() ?>
         <div class="form-group <?=$this->validation()->hasError('receiver') ? 'has-error' : '' ?>">
             <label for="receiver" class="col-lg-2 control-label">
@@ -56,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <?php if ($this->get('captchaNeeded')) : ?>
+        <?php if ($this->get('captchaNeeded') && !$this->get('googlecaptcha')) : ?>
             <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
                 <label class="col-lg-2 control-label">
                     <?=$this->getTrans('captcha') ?>
@@ -85,7 +85,15 @@
             </div>
         <?php endif; ?>
         <div class="col-lg-10" align="right">
-            <?=$this->getSaveBar('addButton', 'Contact') ?>
+            <?php 
+                if ($this->get('captchaNeeded')) {
+                    if ($this->get('googlecaptcha')) {
+                        echo $this->get('googlecaptcha')->getCaptcha(true, '#contactForm', 'saveContact', $this->getTrans('addButton'));
+                    } else {
+                        echo $this->getSaveBar('addButton', 'Contact');
+                    }
+                }
+            ?>
         </div>
     </form>
 <?php endif; ?>

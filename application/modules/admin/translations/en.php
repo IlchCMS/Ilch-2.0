@@ -57,6 +57,10 @@ return [
     'standardMail' => 'Standard E-Mail sender',
     'defaultPaginationObjects' => 'Default count of objects per page',
     'hideCaptchaFor' => 'Hide captcha for',
+    'grecaptcha' => 'Google Captcha?',
+    'grecaptcha_apikey' => 'Site key',
+    'grecaptcha_seckey' => 'Secret key',
+    'grecaptcha_apikey_info' => 'The enter the following fields you first need to create an app on %s.',
     'htmlPurifier' => 'HTMLPurifier',
     'htmlPurifierDescription' => '<p>For security reasons entered code for example in articles or own boxes/pages will be outputted filtered.
                                   This can cause the output to not work or look different than expected.<br>

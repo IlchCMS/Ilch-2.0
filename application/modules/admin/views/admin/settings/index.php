@@ -182,6 +182,53 @@
             </select>
         </div>
     </div>
+    <div class="form-group">
+        <div for="grecaptcha" class="col-lg-2 control-label">
+            <?=$this->getTrans('grecaptcha') ?>:
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="grecaptcha-yes" name="grecaptcha" value="1" <?php if ($this->get('grecaptcha') == '1') { echo 'checked="checked"'; } ?> />  
+                <label for="grecaptcha-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="grecaptcha-no" name="grecaptcha" value="0" <?php if ($this->get('grecaptcha') != '1') { echo 'checked="checked"'; } ?> />  
+                <label for="grecaptcha-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+    <div id="grecaptcha_apikey_info" class="form-group" <?php if ($this->get('grecaptcha') != '1') { echo 'class="hidden"'; } ?>>
+        <div class="col-lg-6 alert alert-info">
+            <?=$this->getTrans('grecaptcha_apikey_info', '<a href="https://www.google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>') ?>
+        </div>
+    </div>
+    <div id="grecaptcha_apikey" <?php if ($this->get('grecaptcha') != '1') { echo 'class="hidden"'; } ?>>
+        <div class="form-group">
+            <label for="grecaptcha_apikey" class="col-lg-2 control-label">
+                    <?=$this->getTrans('grecaptcha_apikey') ?>:
+            </label>
+            <div class="col-lg-4">
+                <input class="form-control"
+                       type="text"
+                       id="grecaptchaapikey"
+                       name="grecaptcha_apikey"
+                       value="<?=$this->get('grecaptcha_apikey') ?>" />
+            </div>
+        </div>
+    </div>
+    <div id="grecaptcha_seckey" <?php if ($this->get('grecaptcha') != '1') { echo 'class="hidden"'; } ?>>
+        <div class="form-group">
+            <label for="grecaptcha_seckey" class="col-lg-2 control-label">
+                    <?=$this->getTrans('grecaptcha_seckey') ?>:
+            </label>
+            <div class="col-lg-4">
+                <input class="form-control"
+                       type="text"
+                       id="grecaptchaseckey"
+                       name="grecaptcha_seckey"
+                       value="<?=$this->get('grecaptcha_seckey') ?>" />
+            </div>
+        </div>
+    </div>
 
     <h1><?=$this->getTrans('htmlPurifier') ?></h1>
     <p><?=$this->getTrans('htmlPurifierDescription') ?></p>
@@ -253,6 +300,17 @@
 </form>
 
 <script>
+$('[name="grecaptcha"]').click(function () {
+    if ($(this).val() == "1") {
+        $('#grecaptcha_apikey').removeClass('hidden');
+        $('#grecaptcha_seckey').removeClass('hidden');
+        $('#grecaptcha_apikey_info').removeClass('hidden');
+    } else {
+        $('#grecaptcha_apikey').addClass('hidden');
+        $('#grecaptcha_seckey').addClass('hidden');
+        $('#grecaptcha_apikey_info').addClass('hidden');
+    }
+});
 $('[name="multilingualAcp"]').click(function () {
     if ($(this).val() == "1") {
         $('#contentLanguage').removeClass('hidden');

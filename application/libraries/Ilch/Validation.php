@@ -7,6 +7,7 @@ namespace Ilch;
 
 use Ilch\Validation\Validators\Base;
 use Ilch\Validation\Validators\Captcha;
+use Ilch\Validation\Validators\Grecaptcha;
 use Ilch\Validation\Validators\Date;
 use Ilch\Validation\Validators\Email;
 use Ilch\Validation\Validators\Integer;
@@ -35,6 +36,7 @@ class Validation
     protected static $builtInValidators = [
         'captcha' => Captcha::class,
         'date' => Date::class,
+        'grecaptcha' => Grecaptcha::class,
         'email' => Email::class,
         'exists' => Exists::class,
         'integer' => Integer::class,
