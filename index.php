@@ -11,18 +11,21 @@ if (!version_compare(PHP_VERSION, '7.0', '>=')) {
 @ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
+$isHttps = $_SERVER['HTTPS'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? null;
+$isHttps = $isHttps && ( strcasecmp('on', $isHttps) == 0 || strcasecmp('https', $isHttps) == 0);
+
 if (PHP_VERSION_ID >= 70300) {
     session_set_cookie_params([
         'lifetime' => 0,
         'path' => '/',
         'domain' => $_SERVER['SERVER_NAME'],
         'samesite' => 'Lax',
-        'secure' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+        'secure' => $isHttps,
         'httponly' => true,
     ]);
 } else {
     // workaround syntax to set the SameSite attribute in PHP < 7.3
-    session_set_cookie_params(0, '/; SameSite=Lax', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
+    session_set_cookie_params(0, '/; SameSite=Lax', $_SERVER['SERVER_NAME'], $isHttps, true);
 }
 session_start();
 header('Content-Type: text/html; charset=utf-8');
@@ -44,7 +47,7 @@ $rewriteBaseParts = explode('index.php', str_replace('Index.php', 'index.php', $
 $rewriteBaseParts = rtrim(reset($rewriteBaseParts), '/');
 
 define('REWRITE_BASE', $rewriteBaseParts);
-$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$protocol = $isHttps ? 'https' : 'http';
 define('BASE_URL', $protocol.'://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 
 // register autoloaders
