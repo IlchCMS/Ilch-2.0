@@ -16,6 +16,10 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
+        if ($this->getUser()) {
+            $this->redirect(['action' => 'settings']);
+        }
+        
         $newsletterMapper = new NewsletterMapper();
 
         $this->getLayout()->getHmenu()
@@ -40,6 +44,7 @@ class Index extends \Ilch\Controller\Frontend
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
+            $this->redirect(['action' => 'index']);
         }
     }
 
