@@ -6,7 +6,7 @@
 
 namespace Modules\Events\Config;
 
-use\Ilch\Config\Database as IlchDatabase;
+use \Ilch\Config\Database as IlchDatabase;
 
 class Config extends \Ilch\Config\Install
 {

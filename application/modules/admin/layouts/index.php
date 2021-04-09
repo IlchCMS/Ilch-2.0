@@ -144,7 +144,7 @@
                                     <i class="fa fa-puzzle-piece hidden-sm hidden-md"></i> <?=$this->getTrans('modules') ?>
                                     <b class="caret"></b>
                                 </a>
-                                <ul role="menu" class="dropdown-menu full">
+                                <ul role="menu" class="dropdown-menu full pre-scrollable">
                                     <?php if ($this->getUser()->isAdmin()): ?>
                                         <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'index']) ?>">
                                             <i class="fa fa-list-ol"></i> <?=$this->getTrans('overview') ?>

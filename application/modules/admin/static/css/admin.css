@@ -668,10 +668,13 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
 }
 #ilch_dropdown .full {
     left: auto;
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
 }
 #ilch_dropdown .full a {
     color: #777;
-    width: 33.3333%;
+    width: 25%;
 }
 #ilch_dropdown .full a:hover, #ilch_dropdown .full a:hover:focus {
     color: #000;
@@ -800,7 +803,7 @@ table tbody i.fa.fa-sort {
 
 @media (min-width: 768px) {
     #ilch_dropdown .full {
-        width: 65%;
+        width: 70%;
     }
     .changeBox {
         margin-top: 0;
@@ -830,17 +833,38 @@ table tbody i.fa.fa-sort {
 }
 @media (min-width: 992px) {
     #ilch_dropdown .full {
-        width: 50%;
+        width: 55%;
     }
 }
 @media (min-width: 1200px) {
     #ilch_dropdown .full {
-        width: 40%;
+        width: 45%;
     }
 }
 @media (min-width: 1600px) {
     #ilch_dropdown .full {
-        width: 30%;
+        width: 35%;
+    }
+}
+
+@media (min-height: 768px) {
+    #ilch_dropdown .full {
+        max-height: 708px;
+    }
+}
+@media (min-height: 900px) {
+    #ilch_dropdown .full {
+        max-height: 840px;
+    }
+}
+@media (min-height: 1080px) {
+    #ilch_dropdown .full {
+        max-height: 1020px;
+    }
+}
+@media (min-height: 1200px) {
+    #ilch_dropdown .full {
+        max-height: 1140px;
     }
 }
 
