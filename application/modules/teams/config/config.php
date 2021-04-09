@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.19.0',
+        'version' => '1.19.1',
         'icon_small' => 'fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
