@@ -92,8 +92,6 @@ class Login extends \Ilch\Controller\Admin
 
         session_destroy();
 
-        session_destroy();
-
         if ($this->getRequest()->getParam('from_frontend')) {
             $this->redirect([]);
         } else {
