@@ -32,7 +32,7 @@ class Mysql
      */
     public function __destruct()
     {
-        if ($this->conn !== null) {
+        if ($this->conn !== null && ($this->conn->connect_errno === 0)) {
             @$this->conn->close();
         }
     }

@@ -36,19 +36,8 @@ class Remember
         $authTokenModel->setUserid($userId);
         $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
 
-        if (PHP_VERSION_ID >= 70300) {
-            setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), [
-                'expires' => strtotime('+30 days'),
-                'path' => '/',
-                'domain' => $_SERVER['SERVER_NAME'],
-                'samesite' => 'Lax',
-                'secure' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
-                'httponly' => true,
-            ]);
-        } else {
-            // workaround syntax to set the SameSite attribute in PHP < 7.3
-            setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'), '/; samesite=Lax', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
-        }
+        setcookieIlch('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'));
+
         $authTokenMapper = new AuthTokenMapper();
         $authTokenMapper->addAuthToken($authTokenModel);
     }
@@ -85,19 +74,8 @@ class Remember
                 $authTokenModel->setUserid($_SESSION['user_id']);
                 $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
 
-                if (PHP_VERSION_ID >= 70300) {
-                    setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), [
-                        'expires' => strtotime('+30 days'),
-                        'path' => '/',
-                        'domain' => $_SERVER['SERVER_NAME'],
-                        'samesite' => 'Lax',
-                        'secure' => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
-                        'httponly' => true,
-                    ]);
-                } else {
-                    // workaround syntax to set the SameSite attribute in PHP < 7.3
-                    setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'), '/; samesite=Lax', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
-                }
+                setcookieIlch('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'));
+
                 $authTokenMapper->updateAuthToken($authTokenModel);
             } else {
                 // If the series is present but the token does not match, a theft is assumed.

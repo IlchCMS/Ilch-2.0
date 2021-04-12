@@ -471,3 +471,35 @@ function replaceVendorDirectory($tmpName = '_vendor')
 
     return false;
 }
+
+/**
+ * SetCookie Handling.
+ *
+ * @since 2.1.43
+ *
+ * @param string $name
+ * @param string $value
+ * @param int $expires
+ * @param array $params
+ * @return bool
+ */
+function setcookieIlch(string $name, string $value = '', int $expires = 0, $params = null)
+{
+    $params = $params ?? session_get_cookie_params();
+    
+    $params['expires'] = $expires;
+
+    $allows = ['expires' => true, 'path' => true, 'domain' => true, 'secure' => true, 'httponly' => true, 'samesite' => true];
+    foreach(array_keys($params) as $key) {
+        if (!isset($allows[$key]) || !$allows[$key]) {
+            unset($params[$key]);
+        }
+    }
+
+    if (PHP_VERSION_ID >= 70300) {
+        return setcookie($name, $value, $params);
+    } else {
+        // workaround syntax to set the SameSite attribute in PHP < 7.3
+        return setcookie($name, $value, $params['expires'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+    }
+}

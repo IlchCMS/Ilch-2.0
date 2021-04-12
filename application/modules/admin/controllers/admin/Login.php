@@ -76,7 +76,7 @@ class Login extends \Ilch\Controller\Admin
             list($selector) = explode(':', $_COOKIE['remember']);
             $authTokenMapper = new AuthToken();
             $authTokenMapper->deleteAuthToken($selector);
-            setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'), true);
+            setcookieIlch('remember', '', strtotime('-1 hours'));
         }
 
         if ($this->getUser()) {
@@ -87,10 +87,7 @@ class Login extends \Ilch\Controller\Admin
         \Ilch\Registry::remove('user');
 
         if (ini_get('session.use_cookies')) {
-            $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000, $params['path'],
-                $params['domain'], $params['secure'], $params['httponly']
-            );
+            setcookieIlch(session_name(), '', strtotime('-12 hours'));
         }
 
         session_destroy();

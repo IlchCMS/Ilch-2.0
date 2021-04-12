@@ -10,10 +10,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'checkoutbasic',
-        'version' => '1.4.0',
+        'version' => '1.4.1',
         'icon_small' => 'fa-credit-card',
         'author' => 'Stantin, Thomas',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Kasse',
@@ -78,6 +78,8 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_checkoutbasic_currencies` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.4.0":
+                $this->db()->update('modules')->values(['link' => $this->config['link']])->where(['key' => $this->config['key']])->execute();
         }
     }
 }
