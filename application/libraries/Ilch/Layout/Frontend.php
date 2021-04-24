@@ -244,6 +244,19 @@ class Frontend extends Base
     }
 
     /**
+     * Gets the self box with the given id.
+     *
+     * @param string $id
+     * @return object $boxMapper
+     * @throws \Ilch\Database\Exception
+     */
+    public function getSelfBoxById($id)
+    {
+        $boxMapper = new BoxMapper();
+        return $boxMapper->getSelfBoxByIdLocale($id);
+    }
+
+    /**
      * Gets the header.
      *
      * //TODO: rework loading of css and jss to be more dynamic!!!
