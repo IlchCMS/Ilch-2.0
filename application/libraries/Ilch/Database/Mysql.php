@@ -407,13 +407,18 @@ class Mysql
     public function quote($field, $complete = false)
     {
         if ($complete || strpos($field, '.') === false) {
-            return '`' . $field . '`';
+            if ($field === '*') {
+                return $field;
+            } else {
+                return '`' . $field . '`';
+            }
         }
         $parts = explode('.', $field);
         if (count($parts) > 2) {
             throw new \InvalidArgumentException('Invalid field expression: ' . $field);
         }
-        return '`' . $parts[0] . '`.`' . $parts[1] . '`';
+        
+        return $this->quote($parts[0], true) . '.' . $this->quote($parts[1], true);
     }
 
     /**

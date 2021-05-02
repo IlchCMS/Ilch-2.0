@@ -311,15 +311,7 @@ class Select extends QueryBuilder
         $sql .= $this->generateWhereSql();
         $sql .= $this->generateGroupBySql();
 
-        // add ORDER BY to sql
-        if (!empty($this->order)) {
-            $sql .= ' ORDER BY ';
-            $fields = [];
-            foreach ($this->order as $column => $direction) {
-                $fields[] = $this->db->quote($column) . ' ' . $direction;
-            }
-            $sql .= implode(',', $fields);
-        }
+        $sql .= $this->generateOrderBySql();
 
         // add LIMIT to sql
         if (isset($this->offset) && !isset($this->limit)) {
@@ -358,7 +350,11 @@ class Select extends QueryBuilder
 
         foreach ($fields as $key => $value) {
             if (!$value instanceof Expression\Expression) {
-                $value = $this->db->quote($value);
+                if (strpos($value, '(') !== false) {
+                    $value = $value;
+                } else {
+                    $value = $this->db->quote($value);
+                }
             }
             //non int key -> alias
             if (!is_int($key)) {
@@ -450,4 +446,29 @@ class Select extends QueryBuilder
         }
         return $sql;
     }
+
+    /**
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    protected function generateOrderBySql()
+    {
+        $sql = '';
+        // add ORDER BY to sql
+        if (!empty($this->order)) {
+            $sql .= ' ORDER BY ';
+            $fields = [];
+            foreach ($this->order as $column => $direction) {
+                //function with ( )
+                if (strpos($column, '(') !== false) {
+                    $fields[] = $column . ' ' . $direction;
+                } else {
+                    $fields[] = $this->db->quote($column) . ' ' . $direction;
+                }
+            }
+            $sql .= implode(',', $fields);
+        }
+        return $sql;
+    }
+
 }
