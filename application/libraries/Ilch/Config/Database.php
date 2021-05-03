@@ -23,7 +23,7 @@ class Database
      *
      * @param \Ilch\Database\Mysql $db
      */
-    public function __construct($db)
+    public function __construct(\Ilch\Database\Mysql $db)
     {
         $this->db = $db;
     }
@@ -35,7 +35,7 @@ class Database
      * @param  boolean    $alwaysLoad
      * @return mixed|null
      */
-    public function get($key, $alwaysLoad = false)
+    public function get(string $key, bool $alwaysLoad = false)
     {
         if (isset($this->configData[$key]['value']) && !$alwaysLoad) {
             return $this->configData[$key]['value'];
@@ -66,7 +66,7 @@ class Database
      *
      * @return $this
      */
-    public function set($key, $value, $autoload = 0)
+    public function set(string $key, $value, int $autoload = 0)
     {
         $oldValue = $this->db->select('value')
             ->from('config')
@@ -113,5 +113,43 @@ class Database
             $this->configData[$config['key']]['value'] = $config['value'];
             $this->configData[$config['key']]['autoload'] = 1;
         }
+    }
+
+    /**
+     * delete the config for given key.
+     *
+     * @param string|array $key
+     *
+     * @return boolean
+     */
+    private function delete($keys)
+    {
+        if (is_array($keys)) {
+            foreach($keys as $key) {
+                $this->deleteKey($key);
+            }
+        } else {
+            $this->deleteKey($keys);
+        }
+
+        return $this;
+    }
+
+    /**
+     * delete the config for given key.
+     *
+     * @param string         $key
+     *
+     * @return boolean
+     */
+    private function deleteKey(string $key)
+    {
+        if (isset($this->configData[$key]['value'])) {
+            unset($this->configData[$key]);
+        }
+
+        return (bool)$this->db()->delete('config')
+            ->where(['key' => $key])
+            ->execute();
     }
 }

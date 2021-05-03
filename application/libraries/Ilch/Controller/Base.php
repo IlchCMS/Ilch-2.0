@@ -155,13 +155,13 @@ class Base
     /**
      * Adds a flash message.
      *
-     * @param string $message
+     * @param string|array $message
      * @param string|null $type
      * @param bool|false|string $validationError
      */
     public function addMessage($message, $type = 'success', $validationError = false)
     {
-        if ($validationError == true) {
+        if ($validationError == true && is_array($message)) {
             $_SESSION['messages'][] = ['text' => $message, 'type' => $type, 'validationError' => $validationError];
         } elseif (!is_array($message)) {
             $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans($message), 'type' => $type];
