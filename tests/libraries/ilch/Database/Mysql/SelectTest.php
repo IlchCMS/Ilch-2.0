@@ -102,6 +102,10 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     public function dpForFields()
     {
         return [
+            'string all' => [
+                'fields'          => new Expression('a.*'),
+                'expectedSqlPart' => 'a.*'
+            ],
             'string field' => [
                 'fields'          => 'field',
                 'expectedSqlPart' => '`field`'
@@ -109,6 +113,10 @@ class SelectTest extends \PHPUnit\Framework\TestCase
             'array multiple fields' => [
                 'fields'          => ['field1', 'field2'],
                 'expectedSqlPart' => '`field1`,`field2`'
+            ],
+            'array multiple fields all' => [
+                'fields'          => [new Expression('a.*'), 'field2'],
+                'expectedSqlPart' => 'a.*,`field2`'
             ],
             'array multiple fields with alias' => [
                 'fields'          => ['name' => 'field1', 'super' => 'field2'],
@@ -219,6 +227,15 @@ class SelectTest extends \PHPUnit\Framework\TestCase
                 'where'           => ['field NOT IN' => [5, 6]],
                 'expectedSqlPart' => '`field` NOT IN ("5", "6")'
             ],
+            //IS Function
+            'IS null' => [
+                'where'           => ['field IS' => 'NULL'],
+                'expectedSqlPart' => '`field` IS NULL'
+            ],
+            'IS NOT null' => [
+                'where'           => ['field IS NOT' => 'NULL'],
+                'expectedSqlPart' => '`field` IS NOT NULL'
+            ],
         ];
     }
 
@@ -244,7 +261,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      */
     public function dpOperators()
     {
-        return [['='], ['<='], ['>='], ['<'], ['>'], ['!='], ['<>']];
+        return [['='], ['<='], ['>='], ['<'], ['>'], ['!='], ['<>'], ['LIKE'], ['NOT LIKE']];
     }
 
     /**

@@ -175,8 +175,21 @@ class RouterTest extends TestCase
         $result = $this->router->matchByRegexp($route);
         $this->router->updateRequest($result);
 
+        $this->assertSame(false, $this->request->isAdmin());
+        $this->assertSame('page', $this->request->getModuleName());
+        $this->assertSame('index', $this->request->getControllerName());
+        $this->assertSame('show', $this->request->getActionName());
+        $this->assertSame(['param1' => 'value1', 'param2' => 'value2'], $this->request->getParams());
+
+
         $route = 'admin/page/index/show/param1/value1/param2/value2';
         $result = $this->router->matchByRegexp($route);
         $this->router->updateRequest($result);
+
+        $this->assertSame(true, $this->request->isAdmin());
+        $this->assertSame('page', $this->request->getModuleName());
+        $this->assertSame('index', $this->request->getControllerName());
+        $this->assertSame('show', $this->request->getActionName());
+        $this->assertSame(['param1' => 'value1', 'param2' => 'value2'], $this->request->getParams());
     }
 }

@@ -187,7 +187,8 @@ class Mysql
      */
     public function ifTableExists($table)
     {
-        $sql = "SHOW TABLES LIKE '$table'";
+        $table = str_replace('[prefix]_', '', $table);
+        $sql = 'SHOW TABLES LIKE \'[prefix]_' . $table . '\'';
         $result = $this->query($sql);
 
         return mysqli_num_rows($result) > 0;
@@ -196,14 +197,15 @@ class Mysql
     /**
      * Check if column in table exists.
      *
-     * @param  string $table
+     * @param  string $table table without prefix
      * @param  string $column
      * @return true|false
      * @throws Exception
      */
     public function ifColumnExists($table, $column)
     {
-        $sql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME = '$column' AND TABLE_NAME = '$table'";
+        $table = str_replace('[prefix]_', '', $table);
+        $sql = 'SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME = \'' . $column . '\' AND TABLE_NAME = \'[prefix]_' . $table . '\'';
         $result = $this->query($sql);
 
         return mysqli_num_rows($result) > 0;
@@ -295,7 +297,7 @@ class Mysql
     /**
      * Create Update Query Builder
      *
-     * @param string|null $table
+     * @param string|null $table table without prefix
      * @param array|null $values values as [name => value]
      * @param array|null $where conditions @see QueryBuilder::where()
      *
@@ -333,31 +335,51 @@ class Mysql
     }
 
     /**
+     * Create Create Query Builder
+     * @todo add Option?
+     *
+     * @param string|null $table table without prefix
+     * @param array|null $column conditions
+     * @param bool $checkExists
+     *
+     * @return \Ilch\Database\Mysql\Delete
+     */
+    //public function create($table = null, $column = null, $checkExists = false)
+    //{
+    //    return new Mysql\Create($this, $table, $column, $checkExists);
+    //}
+
+    /**
      * Drops the table from database.
      *
-     * @todo why no prefix usage?? at least as option
-     *
-     * @param string $table
+     * @param string $table table without prefix
+     * @param bool $checkExists
      * @return \mysqli_result
      * @throws Exception
      */
-    public function drop($table)
+    public function drop($table, $checkExists = false)
     {
-        $sql = 'DROP TABLE `' . $table . '`';
-
+        $table = str_replace('[prefix]_', '', $table);
+        $sql = 'DROP TABLE';
+        if ($checkExists) {
+            $sql .= ' IF EXISTS';
+        }
+        $sql .= $this->quote('[prefix]_' . $table);
+        $sql = $this->getSqlWithPrefix($sql);
         return $this->query($sql);
     }
 
     /**
      * Truncate the table.
      *
-     * @param string $table
+     * @param string $table table without prefix
      * @return \mysqli_result
      * @throws Exception
      */
     public function truncate($table)
     {
-        $sql = 'TRUNCATE TABLE `' . $table . '`';
+        $table = str_replace('[prefix]_', '', $table);
+        $sql = 'TRUNCATE TABLE ' . $this->quote('[prefix]_' . $table);
         $sql = $this->getSqlWithPrefix($sql);
 
         return $this->query($sql);
@@ -407,13 +429,18 @@ class Mysql
     public function quote($field, $complete = false)
     {
         if ($complete || strpos($field, '.') === false) {
-            return '`' . $field . '`';
+            if ($field === '*') {
+                return $field;
+            } else {
+                return '`' . $field . '`';
+            }
         }
         $parts = explode('.', $field);
         if (count($parts) > 2) {
             throw new \InvalidArgumentException('Invalid field expression: ' . $field);
         }
-        return '`' . $parts[0] . '`.`' . $parts[1] . '`';
+        
+        return $this->quote($parts[0], true) . '.' . $this->quote($parts[1], true);
     }
 
     /**
