@@ -20,6 +20,20 @@ class Unique extends Base
     protected $errorKey = 'validation.errors.unique.valueExists';
 
     /**
+     * defines whether logic can be negated .
+     *
+     * @var bool
+     */
+    protected $hasInvertLogic = true;
+
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
+    protected $invertErrorKey = 'validation.errors.required.valueNotExists';
+
+    /**
      * Minimum parameter count needed.
      *
      * @var int

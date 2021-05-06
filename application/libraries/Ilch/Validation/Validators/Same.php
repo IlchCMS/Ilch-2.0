@@ -18,6 +18,20 @@ class Same extends Base
     protected $errorKey = 'validation.errors.same.fieldsDontMatch';
 
     /**
+     * defines whether logic can be negated .
+     *
+     * @var bool
+     */
+    protected $hasInvertLogic = true;
+
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
+    protected $invertErrorKey = 'validation.errors.required.fieldsMatch';
+
+    /**
      * Minimum parameter count needed.
      *
      * @var int

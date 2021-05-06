@@ -49,6 +49,20 @@ abstract class Base
     protected $parameters;
 
     /**
+     * Invert the Result for this validator.
+     *
+     * @var bool
+     */
+    protected $invertResult = false;
+
+    /**
+     * defines whether logic can be negated .
+     *
+     * @var string
+     */
+    protected $hasInvertLogic = false;
+
+    /**
      * The validation result.
      *
      * @var bool
@@ -70,6 +84,13 @@ abstract class Base
     protected $errorKey;
 
     /**
+     * Default inverted error key for this validator.
+     *
+     * @var string
+     */
+    protected $invertErrorKey;
+
+    /**
      * Number of parameters a validator needs at all cost.
      *
      * @var int
@@ -87,6 +108,10 @@ abstract class Base
         $this->setValue(array_dot($data->input, $data->field, ''));
         $this->setInput($data->input);
         $this->setParameters($data->parameters);
+
+        if ($this->hasInvertLogic) {
+            $this->setInvertResult($data->invertResult);
+        }
 
         if (($this->minParams !== null && is_array($this->getParameters()) && count($this->getParameters()) < $this->minParams)) {
             throw new \InvalidArgumentException(get_class($this).' expects at least '.$this->minParams.' parameter(s) given: '
@@ -200,13 +225,37 @@ abstract class Base
     }
 
     /**
+     * Get the value of Invert Result for this validator.
+     *
+     * @return bool
+     */
+    public function getInvertResult()
+    {
+        return $this->invertResult;
+    }
+
+    /**
+     * Set the value of Invert Result for this validator.
+     *
+     * @param bool $invertResult
+     *
+     * @return self
+     */
+    public function setInvertResult(bool $invertResult)
+    {
+        $this->invertResult = $invertResult;
+
+        return $this;
+    }
+
+    /**
      * Get the value of The validation result.
      *
      * @return bool
      */
     public function isValid()
     {
-        return $this->result;
+        return ($this->invertResult ? !$this->result : $this->result);
     }
 
     /**
@@ -243,6 +292,30 @@ abstract class Base
     public function setErrorKey($errorKey)
     {
         $this->errorKey = $errorKey;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of inverted Error Key.
+     *
+     * @return string
+     */
+    public function getInvertErrorKey()
+    {
+        return $this->invertErrorKey;
+    }
+
+    /**
+     * Set the value of inverted Error Key.
+     *
+     * @param string $invertErrorKey
+     *
+     * @return self
+     */
+    public function setInvertErrorKey($invertErrorKey)
+    {
+        $this->invertErrorKey = $invertErrorKey;
 
         return $this;
     }
