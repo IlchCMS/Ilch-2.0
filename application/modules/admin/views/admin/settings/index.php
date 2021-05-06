@@ -152,6 +152,53 @@
                    value="<?=$this->escape($this->get('defaultPaginationObjects')) ?>" />
         </div>
     </div>
+
+    <h1><?=$this->getTrans('captcha') ?></h1>
+    <div class="form-group">
+        <div for="captcha" class="col-lg-2 control-label">
+            <?=$this->getTrans('captcha') ?>:
+        </div>
+        <div class="col-lg-4">
+            <select class="form-control" id="captcha" name="captcha">
+                <option <?=($this->get('captcha') == 0 || !$this->get('captcha') ? 'selected="selected"' : '') ?> value="0"><?=$this->getTrans('default') ?></option>
+                <option <?=($this->get('captcha') == 2 ? 'selected="selected"' : '') ?> value="2"><?=$this->getTrans('grecaptcha') ?> V2</option>
+                <option <?=($this->get('captcha') == 3 ? 'selected="selected"' : '') ?> value="3"><?=$this->getTrans('grecaptcha') ?> V3</option>
+            </select>
+        </div>
+    </div>
+    <div id="captcha_apikey_info" class="form-group">
+        <div class="col-lg-6 alert alert-info">
+            <?=$this->getTrans('captcha_apikey_info', '<a href="https://www.google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>') ?>
+        </div>
+    </div>
+    <div id="captcha_apikey" class="">
+        <div class="form-group">
+            <label for="captcha_apikey" class="col-lg-2 control-label">
+                    <?=$this->getTrans('captcha_apikey') ?>:
+            </label>
+            <div class="col-lg-4">
+                <input class="form-control"
+                       type="text"
+                       id="captcha_apikey"
+                       name="captcha_apikey"
+                       value="<?=$this->get('captcha_apikey') ?>" />
+            </div>
+        </div>
+    </div>
+    <div id="captcha_seckey" class="">
+        <div class="form-group">
+            <label for="captcha_seckey" class="col-lg-2 control-label">
+                    <?=$this->getTrans('captcha_seckey') ?>:
+            </label>
+            <div class="col-lg-4">
+                <input class="form-control"
+                       type="text"
+                       id="captcha_seckey"
+                       name="captcha_seckey"
+                       value="<?=$this->get('captcha_seckey') ?>" />
+            </div>
+        </div>
+    </div>
     <div class="form-group">
         <label for="hideCaptchaFor" class="col-lg-2 control-label">
             <?=$this->getTrans('hideCaptchaFor') ?>:
@@ -260,6 +307,19 @@ $('[name="multilingualAcp"]').click(function () {
         $('#contentLanguage').addClass('hidden');
     }
 });
+
+$('[name="captcha"]').change(function () {
+    if ($(this).val() == "2" || $(this).val() == "3") {
+        $('#captcha_apikey').removeClass('hidden');
+        $('#captcha_seckey').removeClass('hidden');
+        $('#captcha_apikey_info').removeClass('hidden');
+    } else {
+        $('#captcha_apikey').addClass('hidden');
+        $('#captcha_seckey').addClass('hidden');
+        $('#captcha_apikey_info').addClass('hidden');
+    }
+});
+$('[name="captcha"]').change();
 
 $('#hideCaptchaFor').chosen();
 </script>

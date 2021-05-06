@@ -108,14 +108,22 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validationRules = [
                 'multilingualAcp' => 'required|numeric|integer|min:0|max:1',
                 'standardMail' => 'required|email',
                 'defaultPaginationObjects' => 'numeric|integer|min:1',
                 'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
                 'htmlPurifier' => 'required|numeric|integer|min:0|max:1',
-                'updateserver' => 'required|url'
-            ]);
+                'updateserver' => 'required|url',
+                'captcha' => 'required|numeric|integer|min:0|max:3'
+            ];
+
+            if ((int)$this->getRequest()->getPost('captcha') >= 1){
+                $validationRules['captcha_apikey'] = 'required';
+                $validationRules['captcha_seckey'] = 'required';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
@@ -126,6 +134,9 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('locale', $this->getRequest()->getPost('locale'));
                 $this->getConfig()->set('defaultPaginationObjects', $this->getRequest()->getPost('defaultPaginationObjects'));
                 $this->getConfig()->set('hideCaptchaFor', implode(',', ($this->getRequest()->getPost('groups')) ?: []));
+                $this->getConfig()->set('captcha', $this->getRequest()->getPost('captcha'));
+                $this->getConfig()->set('captcha_apikey', $this->getRequest()->getPost('captcha_apikey'));
+                $this->getConfig()->set('captcha_seckey', $this->getRequest()->getPost('captcha_seckey'));
                 if ($this->getRequest()->getPost('hmenuFixed') === '1') {
                     $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
                 } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
@@ -158,6 +169,9 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('htmlPurifier', !$this->getConfig()->get('disable_purifier'));
         $this->getView()->set('defaultPaginationObjects', $this->getConfig()->get('defaultPaginationObjects'));
         $this->getView()->set('hideCaptchaFor', explode(',', $this->getConfig()->get('hideCaptchaFor')));
+        $this->getView()->set('captcha', (int)$this->getConfig()->get('captcha'));
+        $this->getView()->set('captcha_apikey', $this->getConfig()->get('captcha_apikey'));
+        $this->getView()->set('captcha_seckey', $this->getConfig()->get('captcha_seckey'));
         $this->getView()->set('groupList', $groupMapper->getGroupList());
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
         $this->getView()->set('updateservers', $updateserversMapper->getUpdateservers());

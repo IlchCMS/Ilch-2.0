@@ -57,6 +57,12 @@ return [
     'standardMail' => 'Standard E-Mail Absender',
     'defaultPaginationObjects' => 'Standardanzahl Objekte pro Seite',
     'hideCaptchaFor' => 'Captcha ausblenden für',
+    'captcha' => 'Captcha',
+    'default' => 'Standard',
+    'grecaptcha' => 'Google ReCaptcha',
+    'captcha_apikey' => 'Websiteschlüssel',
+    'captcha_seckey' => 'Geheimen Schlüssel',
+    'captcha_apikey_info' => 'Um die folgenden Felder auszuf&uuml;llen, musst du zun&auml;chst eine App auf %s erstellen.',
     'htmlPurifier' => 'HTMLPurifier',
     'htmlPurifierDescription' => '<p>Aus Sicherheitsgründen wird eingegebener Code z.B. in Artikeln oder selbst erstellen Boxen/Seiten "gefiltert" ausgegeben.
                                   Dies wird in einigen Fällen dazu führen, dass die Ausgabe nicht mehr funktioniert oder anders aussieht als erwartet.<br>

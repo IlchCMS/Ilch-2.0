@@ -58,7 +58,11 @@ class Regist extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('step2to3'), ['action' => 'input']);
 
-        if ($this->getRequest()->getPost('saveRegist') && $this->getRequest()->getPost('bot') === '') {
+        if ($this->getRequest()->isPost() && $this->getRequest()->getPost('bot') === '') {
+            Validation::setCustomFieldAliases([
+                'grecaptcha' => 'token',
+            ]);
+
             $validationRules = [
                 'name' => 'required|unique:users,name',
                 'password' => 'required|min:6,string|max:30,string',
@@ -67,7 +71,11 @@ class Regist extends \Ilch\Controller\Frontend
             ];
 
             if ($captchaNeeded) {
-                $validationRules['captcha'] = 'captcha';
+                if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+                    $validationRules['token'] = 'required|grecaptcha:saveRegist';
+                } else {
+                    $validationRules['captcha'] = 'required|captcha';
+                }
             }
 
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
@@ -160,6 +168,15 @@ class Regist extends \Ilch\Controller\Frontend
             }
         }
 
+        if ($captchaNeeded) {
+            if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $this->getView()->set('googlecaptcha', $googlecaptcha);
+            } else {
+                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $this->getView()->set('defaultcaptcha', $defaultcaptcha);
+            }
+        }
         $this->getView()->set('captchaNeeded', $captchaNeeded);
     }
 
