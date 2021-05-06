@@ -91,7 +91,11 @@ class Index extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuJoin'), ['action' => 'join']);
 
-        if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->isPost() && $this->getRequest()->getPost('bot') === '') {
+            Validation::setCustomFieldAliases([
+                'grecaptcha' => 'token',
+            ]);
+
             $validationRules = [
                 'name' => 'required|unique:teams_joins,name,0,undecided',
                 'email' => 'required|email|unique:teams_joins,email,0,undecided',
@@ -102,7 +106,11 @@ class Index extends \Ilch\Controller\Frontend
             ];
 
             if ($captchaNeeded) {
-                $validationRules['captcha'] = 'captcha';
+                if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+                    $validationRules['token'] = 'required|grecaptcha:savejoin';
+                } else {
+                    $validationRules['captcha'] = 'required|captcha';
+                }
             }
 
             if ($this->getUser()) {
@@ -212,7 +220,16 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('teamsMapper', $teamsMapper)
             ->set('userMapper', $userMapper)
             ->set('groupMapper', $groupMapper)
-            ->set('teams', $teamsMapper->getTeams())
-            ->set('captchaNeeded', $captchaNeeded);
+            ->set('teams', $teamsMapper->getTeams());
+        if ($captchaNeeded) {
+            if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $this->getView()->set('googlecaptcha', $googlecaptcha);
+            } else {
+                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $this->getView()->set('defaultcaptcha', $defaultcaptcha);
+            }
+        }
+        $this->getView()->set('captchaNeeded', $captchaNeeded);
     }
 }

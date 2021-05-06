@@ -502,6 +502,9 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('userdeletetime', '5');
                 break;
+            case "2.1.42":
+                // update Captcha
+                break;
         }
     }
 }

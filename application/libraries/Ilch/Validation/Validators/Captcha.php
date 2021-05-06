@@ -31,15 +31,8 @@ class Captcha extends Base
      */
     public function run()
     {
-        $result = false;
-
-        if (isset($_SESSION[$this->sessionKey])) {
-            $result = $this->getValue() == $_SESSION[$this->sessionKey];
-
-            unset($_SESSION['captcha']);
-        }
-
-        $this->setIsValid($result);
+        $defaultcaptcha = new \Captcha\DefaultCaptcha();
+        $this->setIsValid($defaultcaptcha->validate($this->getValue(), $this->sessionKey));
 
         return $this;
     }

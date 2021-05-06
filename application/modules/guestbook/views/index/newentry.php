@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('menuGuestbook') ?></h1>
 
-<form class="form-horizontal" method="POST">
+<form id="guestbookForm" name="guestbookForm" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group hidden">
         <label class="col-lg-2 control-label">
@@ -61,37 +61,20 @@
                       required><?=$this->escape($this->originalInput('text')) ?></textarea>
         </div>
     </div>
-    <?php if ($this->get('captchaNeeded')) : ?>
-    <div class="form-group <?= $this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
-        <label class="col-lg-2 control-label">
-            <?=$this->getTrans('captcha') ?>
-        </label>
-        <div class="col-lg-8">
-            <?=$this->getCaptchaField() ?>
-        </div>
-    </div>
-    <div class="form-group <?= $this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
-        <div class="col-lg-offset-2 col-lg-8 input-group captcha">
-            <input type="text"
-                  id="captcha-form"
-                  class="form-control"
-                  autocomplete="off"
-                  name="captcha"
-                  placeholder="<?=$this->getTrans('captcha') ?>" />
-            <span class="input-group-addon">
-                <a href="javascript:void(0)" onclick="
-                    document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
-                    document.getElementById('captcha-form').focus();"
-                    id="change-image">
-                    <i class="fa fa-refresh"></i>
-                </a>
-            </span>
-        </div>
-    </div>
+    <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
+        <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
     <?php endif; ?>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
-            <?=$this->getSaveBar('addButton', 'Guestbook') ?>
+            <?php 
+                if ($this->get('captchaNeeded')) {
+                    if ($this->get('googlecaptcha')) {
+                        echo $this->get('googlecaptcha')->setForm('guestbookForm')->getCaptcha($this, 'addButton', 'Guestbook');
+                    } else {
+                        echo $this->getSaveBar('addButton', 'Guestbook');
+                    }
+                }
+            ?>
         </div>
     </div>
 </form>

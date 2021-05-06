@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'version' => '1.9.0',
+        'version' => '1.10.0',
         'icon_small' => 'fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'http://ilch.de',
@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage your guestbook entries.',
             ],
         ],
-        'ilchCore' => '2.1.16',
+        'ilchCore' => '2.1.42',
         'phpVersion' => '5.6'
     ];
 
@@ -66,6 +66,8 @@ class Config extends \Ilch\Config\Install
             case "1.1":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_gbook` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.9.0":
+                // update Captcha
         }
     }
 }

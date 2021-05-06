@@ -21,10 +21,11 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuContact'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('saveContact')) {
+        if ($this->getRequest()->isPost() && $this->getRequest()->getPost('bot') === '') {
             Validation::setCustomFieldAliases([
                 'senderName' => 'name',
-                'senderEmail' => 'email'
+                'senderEmail' => 'email',
+                'grecaptcha' => 'token',
             ]);
 
             $validationRules = [
@@ -36,7 +37,11 @@ class Index extends \Ilch\Controller\Frontend
             ];
 
             if ($captchaNeeded) {
-                $validationRules['captcha'] = 'captcha';
+                if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+                    $validationRules['token'] = 'required|grecaptcha:saveContact';
+                } else {
+                    $validationRules['captcha'] = 'required|captcha';
+                }
             }
 
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
@@ -95,6 +100,15 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('receivers', $receiverMapper->getReceivers());
+        if ($captchaNeeded) {
+            if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $this->getView()->set('googlecaptcha', $googlecaptcha);
+            } else {
+                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $this->getView()->set('defaultcaptcha', $defaultcaptcha);
+            }
+        }
         $this->getView()->set('captchaNeeded', $captchaNeeded);
     }
 }

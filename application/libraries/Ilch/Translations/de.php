@@ -9,6 +9,7 @@ return [
     'validation.errors.required.fieldIsRequired' => '%s muss ausgefüllt werden.',
     'validation.errors.same.fieldsDontMatch' => '%s muss mit %s übereinstimmen.',
     'validation.errors.captcha.wrongCaptcha' => '%s entspricht nicht der gezeigten Zeichenkombination',
+    'validation.errors.grecaptcha.wrongCaptcha' => '%s ist Fehlgeschlagen.',
     'validation.errors.date.mustBeDate' => '%s ist kein gültiges Datum oder verwendet ein falsches Format (%s).',
     'validation.errors.url.noValidUrl' => '%s muss eine gültige URL sein.',
     'validation.errors.email.noValidEmail' => '%s muss eine gültige E-Mail-Adresse sein.',
@@ -37,6 +38,7 @@ return [
     'edit' => 'Bearbeiten',
     'add' => 'Erstellen',
     'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
+    'grecaptcha_info' => 'This site is protected by reCAPTCHA and the Google <a href="%s">Privacy Policy</a> and <a href="%s">Terms of Service</a> apply.',
 
     // e-mail
     'mailFrom' => 'Von',

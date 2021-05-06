@@ -761,6 +761,13 @@ class Config extends \Ilch\Config\Install
             case "2.1.41":
                 replaceVendorDirectory();
                 break;
+            case "2.1.42":
+                // update Captcha
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('captcha', '0');
+                $databaseConfig->set('captcha_apikey', '');
+                $databaseConfig->set('captcha_seckey', '');
+                break;
         }
 
         return 'Update function executed.';
