@@ -62,6 +62,7 @@
                                                             </p>
                                                         </div>
                                                     </a>
+                                                    <?=$this->getDeleteIcon(['action' => 'deletedialog', 'id' => $dialog->getCId()]) ?>
                                                 </li>
                                             <?php endforeach; ?>
                                         <?php else: ?>
@@ -134,12 +135,20 @@
 
 <script src="<?=$this->getModuleUrl('static/js/jquery.nicescroll.js') ?>"></script>
 <script>
+    let urlPathArray = window.location.pathname.split('/');
+
     $(function(){
         $(".chat-list-wrapper, .message-list-wrapper").niceScroll();
     });
 
-    $("ul.chat-list li").click(function(){
+    $("ul.chat-list li").click(function() {
         location.href = $(this).find("a.dialog-link").attr("href");
+    });
+
+    $('ul.chat-list li .delete_button').click(function(event) {
+        if (!confirm("Soll der Eintrag wirklich gelöscht werden?")) {
+            event.preventDefault();
+        }
     });
 
     CKEDITOR.on('instanceReady', function(e) {
@@ -152,11 +161,11 @@
         });
     });
 
-    if (<?=$this->getRequest()->getParam('id') ?>) {
+    if (urlPathArray[urlPathArray.length - 2] === 'id' && Number.isInteger(parseInt(urlPathArray[urlPathArray.length - 1]))) {
         let old_data = '';
         $(document).ready(function() {
             let token = document.body.querySelector('[name="ilch_token"]').value;
-            let id = <?=$this->getRequest()->getParam('id') ?>;
+            let id = urlPathArray[urlPathArray.length - 1];
             let load_data = {'fetch':1, 'ilch_token':token};
 
             window.setInterval(function() {

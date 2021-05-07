@@ -168,6 +168,35 @@
     width: 100%;
     padding: 25px;
 }
+
+.chat .chat-wrapper .chat-list li {
+    position: relative;
+}
+.chat .chat-wrapper .chat-list li .delete_button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cccccc;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    opacity: 0;
+}
+.chat .chat-wrapper .chat-list li .delete_button:hover {
+    background-color: #a94442;
+}
+.chat .chat-wrapper .chat-list li .delete_button:hover .fa {
+    color: #fff;
+}
+
+.chat .chat-wrapper .chat-list li:hover .delete_button {
+    opacity: 1;
+}
+
 .chat .chat-wrapper .message-list-wrapper .message-list {
     padding: 0;
 }
@@ -243,6 +272,7 @@
 }
 .chat .chat-wrapper .message-list-wrapper .message-list li.left .body .message.well,
 .chat .chat-wrapper .message-list-wrapper .message-list li.right .body .message.well {
+    background-color: #e3e3e3;
     margin-bottom: 5px;
 }
 .chat .chat-wrapper .message-list-wrapper .message-list li.left:last-child,
@@ -252,12 +282,12 @@
     margin-bottom: 0;
     padding-bottom: 0;
 }
-.chat .chat-wrapper .message-list-wrapper .message-list li.right .body .message {
+.chat .chat-wrapper .message-list-wrapper .message-list li.right .body .message.well {
     font-size: 12px;
     line-height: 16px;
     display: inline-block;
     text-align: left;
-    background: #3498db;
+    background-color: #3498db;
 }
 .chat .chat-wrapper .message-list-wrapper .message-list li.right .body .message:after {
     content: '';

@@ -248,6 +248,23 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
+     * Delete dialog.
+     *
+     * @param int $c_id
+     */
+    public function deleteDialog($c_id)
+    {
+        $this->db()->delete('users_dialog', ['c_id' => $c_id])
+            ->execute();
+
+        $this->db()->delete('users_dialog_hidden', ['c_id' => $c_id])
+            ->execute();
+
+        $this->db()->delete('users_dialog_reply', ['c_id_fk' => $c_id])
+            ->execute();
+    }
+
+    /**
      * Add dialog to list of hidden dialogs.
      *
      * @param int $c_id
