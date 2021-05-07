@@ -34,6 +34,9 @@ class Config extends \Ilch\Config\Install
         $user = $userMapper->getUserById(1);
         $receiverModel->setName('Webmaster')->setEmail($user->getEmail());
         $receiverMapper->save($receiverModel);
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('contact_welcomeMessage', '');
     }
 
     public function getInstallSql()
@@ -48,6 +51,10 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "2.1.42":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('contact_welcomeMessage', '');
+                break;
     }
 }

@@ -27,10 +27,11 @@ class ValidationTest extends TestCase
      *
      * @param array $params
      * @param bool $expected
+     * @param bool $expected
      */
-    public function testValidationWithSingleValidator(array $params, $expected)
+    public function testValidationWithSingleValidator(array $params, $expected, $inverted)
     {
-        $validation = Validation::create($params, ['testField' => 'integer']);
+        $validation = Validation::create($params, ['testField' => ($inverted ? 'NOT' : '').'integer']);
 
         $this->assertSame($expected, $validation->isValid());
         if (!$expected) {
@@ -44,11 +45,13 @@ class ValidationTest extends TestCase
     public function dpForTestValidationWithSingleValidator()
     {
         return [
-            'int'                     => ['params' => ['testField' => 5], 'expected' => true],
-            'string with only digits' => ['params' => ['testField' => '15'], 'expected' => true],
-            'int string with prefix'  => ['params' => ['testField' => 'pre15'], 'expected' => false],
-            'string'                  => ['params' => ['testField' => 'test'], 'expected' => false],
-            'int string with postfix' => ['params' => ['testField' => '15post'], 'expected' => false],
+            'int'                            => ['params' => ['testField' => 5], 'expected' => true, 'inverted' => false],
+            'string with only digits'        => ['params' => ['testField' => '15'], 'expected' => true, 'inverted' => false],
+            'int string with prefix'         => ['params' => ['testField' => 'pre15'], 'expected' => false, 'inverted' => false],
+            'string'                         => ['params' => ['testField' => 'test'], 'expected' => false, 'inverted' => false],
+            'int string with postfix'        => ['params' => ['testField' => '15post'], 'expected' => false, 'inverted' => false],
+            'invert int string with prefix'  => ['params' => ['testField' => 'pre15'], 'expected' => true, 'inverted' => true],
+            'invert int'                     => ['params' => ['testField' => 15], 'expected' => false, 'inverted' => true],
         ];
     }
 

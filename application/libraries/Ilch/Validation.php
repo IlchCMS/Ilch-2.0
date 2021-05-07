@@ -200,6 +200,12 @@ class Validation
                 $data->parameters = $parameters;
                 $data->input = $this->input;
 
+                $data->invertResult = false;
+                if (strtolower(substr($validator, 0, 3)) === 'not') {
+                    $validator = substr($validator, 3);
+                    $data->invertResult = true;
+                }
+
                 $result = $this->checkResult($this->validate($validator, $data));
 
                 if (self::$breakChain && !$result) {
@@ -235,12 +241,17 @@ class Validation
         $field = $validator->getField();
         $rawField = $validator->getField();
         $errorKey = $validator->getErrorKey();
+        $invertResult = $validator->getInvertResult();
+        $invertErrorKey = $validator->getInvertErrorKey();
         $errorParameters = $validator->getErrorParameters();
 
         if (isset(self::$customFieldAliases[$field])) {
             $field = self::$customFieldAliases[$field];
         }
 
+        if ($invertResult) {
+            $errorKey = $invertErrorKey;
+        }
         if (isset(self::$customErrorKeys[$field][$validator->getName()][$errorKey])) {
             $errorKey = self::$customErrorKeys[$field][$validator->getName()][$errorKey];
         }

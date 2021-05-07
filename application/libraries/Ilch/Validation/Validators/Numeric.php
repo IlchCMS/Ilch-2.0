@@ -18,6 +18,20 @@ class Numeric extends Base
     protected $errorKey = 'validation.errors.numeric.mustBeNumeric';
 
     /**
+     * defines whether logic can be negated .
+     *
+     * @var bool
+     */
+    protected $hasInvertLogic = true;
+
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
+    protected $invertErrorKey = 'validation.errors.required.dontBeNumeric';
+
+    /**
      * Runs the validation.
      *
      * @return self

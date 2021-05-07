@@ -18,6 +18,20 @@ class Required extends Base
     protected $errorKey = 'validation.errors.required.fieldIsRequired';
 
     /**
+     * defines whether logic can be negated .
+     *
+     * @var bool
+     */
+    protected $hasInvertLogic = true;
+
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
+    protected $invertErrorKey = 'validation.errors.required.fieldIsNotRequired';
+
+    /**
      * Runs the validation.
      *
      * @return self
