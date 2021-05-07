@@ -110,5 +110,6 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
         $this->getView()->set('captchaNeeded', $captchaNeeded);
+        $this->getView()->set('welcomeMessage', $this->getConfig()->get('contact_welcomeMessage'));
     }
 }
