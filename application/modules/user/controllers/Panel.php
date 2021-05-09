@@ -531,7 +531,7 @@ class Panel extends BaseController
         $userId = $this->getUser()->getId();
 
         if ($id && $userId && $this->getRequest()->isSecure()) {
-            $dialogMapper->deleteMessagesOfUser($id, $userId);
+            $dialogMapper->deleteMessagesOfUserInDialog($id, $userId);
         }
 
         $this->redirect(['action' => 'dialog']);

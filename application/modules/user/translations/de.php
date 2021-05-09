@@ -205,6 +205,7 @@ return [
     'hideDialogSuccess' => 'Dialog wurde ausgeblendet.',
     'unhideDialogSuccess' => 'Dialog wurde wieder eingeblendet.',
     'dialogsHidden' => 'Einige Dialoge sind ausgeblendet. Hier klicken um sie anzuzeigen.',
+    'deleteDialogConfirm' => 'Soll der Dialog wirklich gelöscht werden?',
     'noDialog' => 'Keine Nachrichten vorhanden.',
     'menuPanel' => 'User Panel',
     'menuSetting' => 'Einstellung',

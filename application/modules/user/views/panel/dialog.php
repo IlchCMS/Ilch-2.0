@@ -150,7 +150,7 @@
     });
 
     $('ul.chat-list li .delete_button').click(function(event) {
-        if (!confirm("Soll der Eintrag wirklich gelöscht werden?")) {
+        if (!confirm(<?=json_encode($this->getTrans('deleteDialogConfirm')) ?>)) {
             event.preventDefault();
         }
     });

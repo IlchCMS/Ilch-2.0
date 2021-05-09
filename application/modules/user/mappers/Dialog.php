@@ -251,11 +251,11 @@ class Dialog extends \Ilch\Mapper
      * Delete all messages of a user within a conversation/dialog.
      * This also clears hidden dialogs for that user.
      *
-     * @param int $c_id
-     * @param int $userId
+     * @param int $c_id id of the conversation/dialog
+     * @param int $userId id of the user
      * @since 2.1.43
      */
-    public function deleteMessagesOfUser(int $c_id, int $userId)
+    public function deleteMessagesOfUserInDialog(int $c_id, int $userId)
     {
         // TODO: Don't delete the entire dialog for the other user too.
         $this->db()->delete('users_dialog', ['c_id' => $c_id])
@@ -265,6 +265,19 @@ class Dialog extends \Ilch\Mapper
             ->execute();
 
         $this->db()->delete('users_dialog_reply', ['c_id_fk' => $c_id, 'user_id_fk' => $userId])
+            ->execute();
+    }
+
+    /**
+     * Delete all messages of a user.
+     * Call this for example when the user gets deleted.
+     *
+     * @param int $userId id of the user
+     * @since 2.1.43
+     */
+    public function deleteAllMessagesOfUser(int $userId)
+    {
+        $this->db()->delete('users_dialog_reply', ['user_id_fk' => $userId])
             ->execute();
     }
 

@@ -205,6 +205,7 @@ return [
     'hideDialogSuccess' => 'Dialog hidden.',
     'unhideDialogSuccess' => 'Dialog unhidden.',
     'dialogsHidden' => 'Some dialogs are hidden. Click here to show them.',
+    'deleteDialogConfirm' => 'Delete this conversation?',
     'noDialog' => 'No Messages available.',
     'menuPanel' => 'User Panel',
     'menuSetting' => 'Setting',
