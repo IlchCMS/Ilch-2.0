@@ -69,6 +69,13 @@ class Dialog extends \Ilch\Mapper
         return $mails;
     }
 
+    /**
+     * Get dialog by dialog id.
+     *
+     * @param int $cId
+     * @return DialogModel|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getDialogByCId($cId)
     {
         $sql = 'SELECT u.id, u.avatar, u.name
@@ -99,11 +106,12 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-    * Get the last dialog
-    * @param int $c_id
-    * @return null|\Modules\User\Models\Dialog
-    */
-    public function getLastOneDialog( $c_id )
+     * Get the last dialog
+     *
+     * @param int $c_id
+     * @return null|\Modules\User\Models\Dialog
+     */
+    public function getLastOneDialog($c_id)
     {
         $sql = 'SELECT R.cr_id,R.time,R.reply,U.id,U.name,U.avatar
                 FROM [prefix]_users U, [prefix]_users_dialog_reply R 
@@ -126,10 +134,11 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-    * Get the last dialog read or not
-    * @param int $c_id
-    * @return null|dialogModel
-    */
+     * Get the last dialog read or not
+     *
+     * @param int $c_id
+     * @return null|dialogModel
+     */
     public function getReadLastOneDialog($c_id)
     {
         $sql = 'SELECT R.cr_id,R.time,R.reply,R.read,R.user_id_fk,U.id,U.name,U.avatar
@@ -156,10 +165,11 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-    * Get the count of unread messages for a user
-    * @param int $user_id
-    * @return int
-    */
+     * Get the count of unread messages for a user
+     *
+     * @param int $user_id
+     * @return int
+     */
     public function getCountOfUnreadMessagesByUser($user_id)
     {
         $result = $this->db()->select('COUNT(*)')
@@ -173,11 +183,12 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-    * Get the dialog message
-    * @param int $c_id the user
-    * @return null|\Modules\User\Models\Dialog
-    */
-    public function getDialogMessage( $c_id )
+     * Get the dialog message
+     *
+     * @param int $c_id the user
+     * @return null|\Modules\User\Models\Dialog
+     */
+    public function getDialogMessage($c_id)
     {
         $sql = 'SELECT R.cr_id,R.time,R.reply,U.id,U.name,U.avatar
                 FROM [prefix]_users U, [prefix]_users_dialog_reply R 
@@ -257,13 +268,6 @@ class Dialog extends \Ilch\Mapper
      */
     public function deleteMessagesOfUserInDialog(int $c_id, int $userId)
     {
-        // TODO: Don't delete the entire dialog for the other user too.
-        $this->db()->delete('users_dialog', ['c_id' => $c_id])
-            ->execute();
-
-        $this->db()->delete('users_dialog_hidden', ['c_id' => $c_id, 'user_id' => $userId])
-            ->execute();
-
         $this->db()->delete('users_dialog_reply', ['c_id_fk' => $c_id, 'user_id_fk' => $userId])
             ->execute();
     }
@@ -279,6 +283,118 @@ class Dialog extends \Ilch\Mapper
     {
         $this->db()->delete('users_dialog_reply', ['user_id_fk' => $userId])
             ->execute();
+    }
+
+    /**
+     * Delete dialog if both users are no longer existing or one of them if the other is specified.
+     *
+     * @param int $c_id
+     * @param int|null $userId
+     * @return int
+     * @since 2.1.43
+     */
+    public function deleteDialog(int $c_id, int $userId = null)
+    {
+        $dialog = $this->db()->select()
+            ->fields(['d.c_id', 'd.user_one', 'd.user_two'])
+            ->from(['d' => 'users_dialog'])
+            ->join(['fu' => 'users'], 'd.user_one = fu.id', 'LEFT', ['id_user_one' => 'fu.id'])
+            ->join(['su' => 'users'], 'd.user_two = su.id', 'LEFT', ['id_user_two' => 'su.id'])
+            ->where(['d.c_id' => $c_id])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($dialog['id_user_one']) && empty($dialog['id_user_two'])) {
+            // Delete dialog if both users are not existing.
+            return $this->db()->delete('users_dialog', ['c_id' => $c_id])
+                ->execute();
+        }
+
+        if ($userId) {
+            if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two']))
+                || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
+                // Delete dialog if other user is not existing.
+                return $this->db()->delete('users_dialog', ['c_id' => $c_id])
+                    ->execute();
+            }
+        }
+    }
+
+    /**
+     * Delete all dialogs of a user.
+     *
+     * @param int $userId
+     * @since 2.1.43
+     */
+    public function deleteAllDialogsOfUser(int $userId)
+    {
+        $dialogs = $this->db()->select()
+            ->fields(['d.c_id', 'd.user_one', 'd.user_two'])
+            ->from(['d' => 'users_dialog'])
+            ->join(['fu' => 'users'], 'd.user_one = fu.id', 'LEFT', ['id_user_one' => 'fu.id'])
+            ->join(['su' => 'users'], 'd.user_two = su.id', 'LEFT', ['id_user_two' => 'su.id'])
+            ->where(['d.user_one' => $userId, 'd.user_two' => $userId], 'or')
+            ->execute()
+            ->fetchRows();
+
+        foreach ($dialogs as $dialog) {
+            if (empty($dialog['id_user_one']) && empty($dialog['id_user_two'])) {
+                // Delete dialog if both users are not existing.
+                $this->db()->delete('users_dialog', ['c_id' => $dialog['c_id']])
+                    ->execute();
+                continue;
+            }
+
+            if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two']))
+                || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
+                // Delete dialog if other user is not existing.
+                $this->db()->delete('users_dialog', ['c_id' => $dialog['c_id']])
+                    ->execute();
+            }
+        }
+    }
+
+    /**
+     * "Delete" or permantly hide dialog for user.
+     *
+     * @param int $c_id
+     * @param int $userId
+     * @return int
+     * @since 2.1.43
+     */
+    public function permanentlyHideOrDeleteDialog(int $c_id, int $userId)
+    {
+        $this->deleteMessagesOfUserInDialog($c_id, $userId);
+        $affectedRows = $this->deleteDialog($c_id, $userId);
+
+        if ($affectedRows) {
+            // Dialog was deleted completely. Get rid of possibly existing hidden dialog entries.
+            $this->unhideDialogById($c_id);
+            return $affectedRows;
+        }
+
+        // Dialog couldn't be really deleted as other user still uses it.
+        // Hide the dialog and set it as permanently hidden (to make it later look like deleted).
+        $this->hideDialog($c_id, $userId);
+
+        $this->db()->update('users_dialog_hidden')
+            ->values(['permanent' => 1])
+            ->where(['c_id' => $c_id, 'user_id' => $userId])
+            ->execute();
+    }
+
+    /**
+     * Delete all messages of the user and (hidden) dialogs as possible.
+     * Call this if the user gets deleted.
+     *
+     * @param int $userId
+     * @since 2.1.43
+     */
+    public function deleteAllOfUser(int $userId)
+    {
+        $this->deleteAllMessagesOfUser($userId);
+        $this->deleteAllDialogsOfUser($userId);
+        $this->unhideAllDialogsByUser($userId);
     }
 
     /**
@@ -306,13 +422,15 @@ class Dialog extends \Ilch\Mapper
      * Check if user has hidden a dialog.
      *
      * @param int $userId
+     * @param null|bool $includePermanent
      * @return bool
+     * @since $includePermanent since 2.1.43
      */
-    public function hasHiddenDialog($userId)
+    public function hasHiddenDialog($userId, $includePermanent = null)
     {
         $dialogHiddenRow = $this->db()->select('user_id')
             ->from('users_dialog_hidden')
-            ->where(['user_id' => $userId])
+            ->where(['user_id' => $userId, 'permanent' => $includePermanent])
             ->execute()
             ->fetchRow();
 
@@ -335,7 +453,7 @@ class Dialog extends \Ilch\Mapper
      * Unhide all dialogs of a specific user.
      * This can be called too, when the user gets deleted to get rid of then orphaned entries.
      *
-     * @param $userId
+     * @param int $userId
      * @return int
      */
     public function unhideAllDialogsByUser($userId)
@@ -344,11 +462,24 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
+     * Unhide a dialog for everyone.
+     * Call this when the dialog gets finally deleted.
+     *
+     * @param int $c_id
+     * @return int
+     */
+    public function unhideDialogById(int $c_id)
+    {
+        return $this->db()->delete('users_dialog_hidden', ['c_id' => $c_id])->execute();
+    }
+
+    /**
     * Check is exist dialog by $c_id
+     *
     * @param int $c_id
     * @return null|\Modules\User\Models\Dialog
     */
-    public function getDialogCheckByCId( $c_id )
+    public function getDialogCheckByCId($c_id)
     {
         $sql = 'SELECT user_one, user_two
                 FROM [prefix]_users_dialog
@@ -368,11 +499,14 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-    * Check is exist dialog by $user_one and $user_two
-    * @param int $user_one, $user_two
-    * @return
-    */
-    public function getDialogCheck( $user_one, $user_two )
+     * Check is exist dialog by $user_one and $user_two
+     *
+     * @param int $user_one
+     * @param int $user_two
+     * @return DialogModel|null
+     * @throws \Ilch\Database\Exception
+     */
+    public function getDialogCheck($user_one, $user_two)
     {
         $sql = 'SELECT c_id, user_one, user_two
                 FROM [prefix]_users_dialog
@@ -395,10 +529,11 @@ class Dialog extends \Ilch\Mapper
 
      /**
     * Get the dialog id
+      *
     * @param int $user_one
     * @return null|\Modules\User\Models\Dialog
     */
-    public function getDialogId( $user_one )
+    public function getDialogId($user_one)
     {
         $sql = 'SELECT c_id
                 FROM [prefix]_users_dialog

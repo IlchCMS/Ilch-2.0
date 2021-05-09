@@ -367,7 +367,7 @@ class Panel extends BaseController
                     $statisticMapper->deleteUserOnline($userId);
                     $friendsMapper->deleteFriendsByUserId($userId);
                     $friendsMapper->deleteFriendByFriendUserId($userId);
-                    $dialogMapper->unhideAllDialogsByUser($userId);
+                    $dialogMapper->deleteAllOfUser($userId);
                 }
 
                 if (!empty($_COOKIE['remember'])) {
@@ -531,7 +531,7 @@ class Panel extends BaseController
         $userId = $this->getUser()->getId();
 
         if ($id && $userId && $this->getRequest()->isSecure()) {
-            $dialogMapper->deleteMessagesOfUserInDialog($id, $userId);
+            $dialogMapper->permanentlyHideOrDeleteDialog($id, $userId);
         }
 
         $this->redirect(['action' => 'dialog']);
