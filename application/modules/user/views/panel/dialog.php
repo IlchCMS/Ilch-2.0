@@ -55,13 +55,17 @@
                                                                     }
                                                                     ?>
                                                                 </small>
-                                                                <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>"><i class="fas fa-eye-slash"></i></a>
                                                             </div>
                                                             <p>
                                                                 <?=nl2br($this->getHtmlFromBBCode($this->escape($dialog->getText()))) ?>
                                                             </p>
                                                         </div>
                                                     </a>
+                                                    <?php if ($this->getRequest()->getParam('showhidden') == 1) : ?>
+                                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'unhidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('unhideDialog') ?>" class="hide_button"><span class="fas fa-eye"></span></a>
+                                                    <?php else : ?>
+                                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>" class="hide_button"><span class="fas fa-eye-slash"></span></a>
+                                                    <?php endif; ?>
                                                     <?=$this->getDeleteIcon(['action' => 'deletedialog', 'id' => $dialog->getCId()]) ?>
                                                 </li>
                                             <?php endforeach; ?>

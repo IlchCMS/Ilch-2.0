@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -214,7 +214,7 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-     * Check if a user is the autor of a message.
+     * Check if a user is the author of a message.
      *
      * @param int $cr_id
      * @param int $userId
@@ -248,19 +248,23 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-     * Delete dialog.
+     * Delete all messages of a user within a conversation/dialog.
+     * This also clears hidden dialogs for that user.
      *
      * @param int $c_id
+     * @param int $userId
+     * @since 2.1.43
      */
-    public function deleteDialog($c_id)
+    public function deleteMessagesOfUser(int $c_id, int $userId)
     {
+        // TODO: Don't delete the entire dialog for the other user too.
         $this->db()->delete('users_dialog', ['c_id' => $c_id])
             ->execute();
 
-        $this->db()->delete('users_dialog_hidden', ['c_id' => $c_id])
+        $this->db()->delete('users_dialog_hidden', ['c_id' => $c_id, 'user_id' => $userId])
             ->execute();
 
-        $this->db()->delete('users_dialog_reply', ['c_id_fk' => $c_id])
+        $this->db()->delete('users_dialog_reply', ['c_id_fk' => $c_id, 'user_id_fk' => $userId])
             ->execute();
     }
 

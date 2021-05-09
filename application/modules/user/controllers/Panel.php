@@ -476,6 +476,24 @@ class Panel extends BaseController
         $this->redirect(['action' => 'dialog']);
     }
 
+    public function unhideDialogAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $c_id = $this->getRequest()->getParam('id');
+
+            $dialogMapper = new DialogMapper();
+            $dialog = $dialogMapper->getDialogCheckByCId($c_id);
+
+            $dialogMapper->unhideDialog($c_id, $this->getUser()->getId());
+
+            $this->redirect()
+                ->withMessage('unhideDialogSuccess')
+                ->to(['action' => 'dialog']);
+        }
+
+        $this->redirect(['action' => 'dialog']);
+    }
+
     public function dialogmessageAction()
     {
         if ($this->getRequest()->isPost('fetch')) {
@@ -509,9 +527,11 @@ class Panel extends BaseController
     {
         $dialogMapper = new DialogMapper();
         $id = $this->getRequest()->getParam('id');
+        // Get current user to delete messages of that user within a dialog.
+        $userId = $this->getUser()->getId();
 
-        if ($id && $this->getRequest()->isSecure()) {
-            $dialogMapper->deleteDialog($id);
+        if ($id && $userId && $this->getRequest()->isSecure()) {
+            $dialogMapper->deleteMessagesOfUser($id, $userId);
         }
 
         $this->redirect(['action' => 'dialog']);

@@ -197,6 +197,31 @@
     opacity: 1;
 }
 
+.chat .chat-wrapper .chat-list li .hide_button {
+    position: absolute;
+    right: 50px;
+    bottom: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cccccc;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    opacity: 0;
+}
+.chat .chat-wrapper .chat-list li .hide_button:hover {
+    background-color: #3c763d;
+}
+.chat .chat-wrapper .chat-list li .hide_button:hover .fas {
+    color: #fff;
+}
+
+.chat .chat-wrapper .chat-list li:hover .hide_button {
+    opacity: 1;
+}
+
 .chat .chat-wrapper .message-list-wrapper .message-list {
     padding: 0;
 }
