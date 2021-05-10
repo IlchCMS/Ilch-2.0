@@ -260,13 +260,12 @@ class Dialog extends \Ilch\Mapper
 
     /**
      * Delete all messages of a user within a conversation/dialog.
-     * This also clears hidden dialogs for that user.
      *
      * @param int $c_id id of the conversation/dialog
      * @param int $userId id of the user
      * @since 2.1.43
      */
-    public function deleteMessagesOfUserInDialog(int $c_id, int $userId)
+    private function deleteMessagesOfUserInDialog(int $c_id, int $userId)
     {
         $this->db()->delete('users_dialog_reply', ['c_id_fk' => $c_id, 'user_id_fk' => $userId])
             ->execute();
@@ -279,7 +278,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId id of the user
      * @since 2.1.43
      */
-    public function deleteAllMessagesOfUser(int $userId)
+    private function deleteAllMessagesOfUser(int $userId)
     {
         $this->db()->delete('users_dialog_reply', ['user_id_fk' => $userId])
             ->execute();
@@ -289,31 +288,34 @@ class Dialog extends \Ilch\Mapper
      * Delete dialog if both users are no longer existing or one of them if the other is specified.
      *
      * @param int $c_id
-     * @param int|null $userId
+     * @param int $userId
      * @return int
      * @since 2.1.43
      */
-    public function deleteDialog(int $c_id, int $userId = null)
+    public function deleteDialog(int $c_id, int $userId)
     {
-        $dialog = $this->db()->select()
-            ->fields(['d.c_id', 'd.user_one', 'd.user_two'])
-            ->from(['d' => 'users_dialog'])
-            ->join(['fu' => 'users'], 'd.user_one = fu.id', 'LEFT', ['id_user_one' => 'fu.id'])
-            ->join(['su' => 'users'], 'd.user_two = su.id', 'LEFT', ['id_user_two' => 'su.id'])
-            ->where(['d.c_id' => $c_id])
-            ->execute()
-            ->fetchAssoc();
+        if ($c_id && $userId) {
+            $dialog = $this->db()->select()
+                ->fields(['d.c_id', 'd.user_one', 'd.user_two'])
+                ->from(['d' => 'users_dialog'])
+                ->join(['firstuser' => 'users'], 'd.user_one = firstuser.id', 'LEFT', ['id_user_one' => 'firstuser.id'])
+                ->join(['seconduser' => 'users'], 'd.user_two = seconduser.id', 'LEFT', ['id_user_two' => 'seconduser.id'])
+                ->join(['dhotheruser' => 'users_dialog_hidden'], ['dhotheruser.permanent' => 1, 'dhotheruser.c_id = d.c_id', 'dhotheruser.user_id !=' => $userId], 'LEFT', ['id_other_user_permanent' => 'dhotheruser.user_id'])
+                ->where(['d.c_id' => $c_id])
+                ->execute()
+                ->fetchAssoc();
 
-        if (empty($dialog['id_user_one']) && empty($dialog['id_user_two'])) {
-            // Delete dialog if both users are not existing.
-            return $this->db()->delete('users_dialog', ['c_id' => $c_id])
-                ->execute();
-        }
+//            file_put_contents('php://stderr', print_r($dialog, TRUE));
 
-        if ($userId) {
             if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two']))
                 || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
                 // Delete dialog if other user is not existing.
+                return $this->db()->delete('users_dialog', ['c_id' => $c_id])
+                    ->execute();
+            }
+
+            if ($dialog['id_other_user_permanent']) {
+                // Delete dialog if other user has already "deleted" it.
                 return $this->db()->delete('users_dialog', ['c_id' => $c_id])
                     ->execute();
             }
@@ -326,13 +328,14 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId
      * @since 2.1.43
      */
-    public function deleteAllDialogsOfUser(int $userId)
+    private function deleteAllDialogsOfUser(int $userId)
     {
         $dialogs = $this->db()->select()
             ->fields(['d.c_id', 'd.user_one', 'd.user_two'])
             ->from(['d' => 'users_dialog'])
-            ->join(['fu' => 'users'], 'd.user_one = fu.id', 'LEFT', ['id_user_one' => 'fu.id'])
-            ->join(['su' => 'users'], 'd.user_two = su.id', 'LEFT', ['id_user_two' => 'su.id'])
+            ->join(['firstuser' => 'users'], 'd.user_one = firstuser.id', 'LEFT', ['id_user_one' => 'firstuser.id'])
+            ->join(['seconduser' => 'users'], 'd.user_two = seconduser.id', 'LEFT', ['id_user_two' => 'seconduser.id'])
+            ->join(['dhotheruser' => 'users_dialog_hidden'], ['dhotheruser.permanent' => 1, 'dhotheruser.c_id = d.c_id', 'dhotheruser.user_id !=' => $userId], 'LEFT', ['id_other_user_permanent' => 'dhotheruser.user_id'])
             ->where(['d.user_one' => $userId, 'd.user_two' => $userId], 'or')
             ->execute()
             ->fetchRows();
@@ -349,6 +352,13 @@ class Dialog extends \Ilch\Mapper
                 || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
                 // Delete dialog if other user is not existing.
                 $this->db()->delete('users_dialog', ['c_id' => $dialog['c_id']])
+                    ->execute();
+                continue;
+            }
+
+            if ($dialog['id_other_user_permanent']) {
+                // Delete dialog if other user has already "deleted" it.
+                return $this->db()->delete('users_dialog', ['c_id' => $c_id])
                     ->execute();
             }
         }
