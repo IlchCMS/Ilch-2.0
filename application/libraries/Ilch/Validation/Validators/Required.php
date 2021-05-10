@@ -18,7 +18,7 @@ class Required extends Base
     protected $errorKey = 'validation.errors.required.fieldIsRequired';
 
     /**
-     * defines whether logic can be negated .
+     * Defines whether logic can be negated.
      *
      * @var bool
      */
