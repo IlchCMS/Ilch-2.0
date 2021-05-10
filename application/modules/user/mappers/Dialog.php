@@ -292,7 +292,7 @@ class Dialog extends \Ilch\Mapper
      * @return int
      * @since 2.1.43
      */
-    public function deleteDialog(int $c_id, int $userId)
+    private function deleteDialog(int $c_id, int $userId)
     {
         if ($c_id && $userId) {
             $dialog = $this->db()->select()
@@ -304,8 +304,6 @@ class Dialog extends \Ilch\Mapper
                 ->where(['d.c_id' => $c_id])
                 ->execute()
                 ->fetchAssoc();
-
-//            file_put_contents('php://stderr', print_r($dialog, TRUE));
 
             if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two']))
                 || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
@@ -358,7 +356,7 @@ class Dialog extends \Ilch\Mapper
 
             if ($dialog['id_other_user_permanent']) {
                 // Delete dialog if other user has already "deleted" it.
-                return $this->db()->delete('users_dialog', ['c_id' => $c_id])
+                $this->db()->delete('users_dialog', ['c_id' => $c_id])
                     ->execute();
             }
         }
