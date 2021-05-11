@@ -18,7 +18,7 @@ class Same extends Base
     protected $errorKey = 'validation.errors.same.fieldsDontMatch';
 
     /**
-     * Defines whether logic can be negated.
+     * defines whether logic can be negated .
      *
      * @var bool
      */

@@ -49,14 +49,14 @@ abstract class Base
     protected $parameters;
 
     /**
-     * Invert the result for this validator.
+     * Invert the Result for this validator.
      *
      * @var bool
      */
     protected $invertResult = false;
 
     /**
-     * Defines whether logic can be negated.
+     * defines whether logic can be negated .
      *
      * @var string
      */
@@ -88,7 +88,7 @@ abstract class Base
      *
      * @var string
      */
-    protected $invertErrorKey = '';
+    protected $invertErrorKey;
 
     /**
      * Number of parameters a validator needs at all cost.
@@ -235,7 +235,7 @@ abstract class Base
     }
 
     /**
-     * Set the value of invertResult for this validator.
+     * Set the value of Invert Result for this validator.
      *
      * @param bool $invertResult
      *

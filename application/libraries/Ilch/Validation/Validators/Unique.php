@@ -20,7 +20,7 @@ class Unique extends Base
     protected $errorKey = 'validation.errors.unique.valueExists';
 
     /**
-     * Defines whether logic can be negated.
+     * defines whether logic can be negated .
      *
      * @var bool
      */
