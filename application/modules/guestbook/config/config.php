@@ -66,6 +66,13 @@ class Config extends \Ilch\Config\Install
             case "1.1":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_gbook` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.2.0":
+            case "1.3.0":
+            case "1.4.0":
+            case "1.5.0":
+            case "1.6.0":
+            case "1.7.0":
+            case "1.8.0":
             case "1.9.0":
                 // Update description
                 foreach($this->config['languages'] as $key => $value) {
