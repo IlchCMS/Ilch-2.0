@@ -12,6 +12,7 @@ class Dialog extends \Ilch\Mapper
 {
     /**
      * Get users dialog
+     *
      * @param int $userid the user
      * @param bool $showHidden
      * @return null|\Modules\User\Models\Dialog
@@ -19,9 +20,9 @@ class Dialog extends \Ilch\Mapper
      */
     public function getDialog($userid, $showHidden = true)
     {
-        $sql = 'SELECT u.id, u.avatar, c.c_id, u.name, c.time
+        $sql = 'SELECT u.id, u.avatar, c.c_id, u.name, c.time, h.c_id AS hidden
         FROM [prefix]_users u, [prefix]_users_dialog c
-        LEFT JOIN [prefix]_users_dialog_hidden AS h ON h.c_id = c.c_id and h.user_id = '.$userid.'
+        LEFT JOIN [prefix]_users_dialog_hidden AS h ON h.c_id = c.c_id AND h.user_id = '.$userid.' AND h.permanent != 1
         WHERE CASE
         WHEN c.user_one = '.$userid.'
         THEN c.user_two = u.id
@@ -29,7 +30,7 @@ class Dialog extends \Ilch\Mapper
         THEN c.user_one = u.id
         END
         AND
-        (c.user_one = '.$userid.' or c.user_two = '.$userid.')';
+        (c.user_one = '.$userid.' OR c.user_two = '.$userid.')';
         $sql .= ($showHidden) ? '' : ' AND h.c_id IS NULL ';
         $sql .= ' ORDER BY c.time DESC';
 
@@ -61,7 +62,7 @@ class Dialog extends \Ilch\Mapper
                 $mailModel->setText('');
                 $mailModel->setTime('');
             }
-
+            $mailModel->setHidden(!empty($mail['hidden']));
             $mails[] = $mailModel;
 
         }
@@ -482,18 +483,18 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-    * Check is exist dialog by $c_id
+     * Check is exist dialog by $c_id
      *
-    * @param int $c_id
-    * @return null|\Modules\User\Models\Dialog
-    */
+     * @param int $c_id
+     * @return null|\Modules\User\Models\Dialog
+     */
     public function getDialogCheckByCId($c_id)
     {
-        $sql = 'SELECT user_one, user_two
-                FROM [prefix]_users_dialog
-                WHERE c_id='.$c_id;
-
-        $row = $this->db()->queryRow($sql);
+        $row = $this->db()->select(['user_one', 'user_two'])
+            ->from('users_dialog')
+            ->where(['c_id' => $c_id])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($row)) {
             return null;
@@ -516,12 +517,12 @@ class Dialog extends \Ilch\Mapper
      */
     public function getDialogCheck($user_one, $user_two)
     {
-        $sql = 'SELECT c_id, user_one, user_two
-                FROM [prefix]_users_dialog
-                WHERE (user_one='.$user_one.' AND user_two='.$user_two.') OR
-                    (user_one='.$user_two.' AND user_two='.$user_one.')';
-
-        $row = $this->db()->queryRow($sql);
+        $row = $this->db()->select(['c_id', 'user_one', 'user_two'])
+            ->from('users_dialog')
+            ->where(['user_one' => $user_one, 'user_two' => $user_two])
+            ->orWhere(['user_one' => $user_two, 'user_two' => $user_one])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($row)) {
             return null;
@@ -543,12 +544,13 @@ class Dialog extends \Ilch\Mapper
     */
     public function getDialogId($user_one)
     {
-        $sql = 'SELECT c_id
-                FROM [prefix]_users_dialog
-                WHERE user_one='.$user_one.' 
-                ORDER BY c_id DESC limit 1';
-
-        $row = $this->db()->queryRow($sql);
+        $row = $this->db()->select(['c_id'])
+            ->from('users_dialog')
+            ->where(['user_one' => $user_one])
+            ->order(['c_id' => 'DESC'])
+            ->limit(1)
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($row)) {
             return null;

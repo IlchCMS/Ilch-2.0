@@ -44,6 +44,13 @@ class Dialog extends \Ilch\Model
     private $time;
 
     /**
+     * Indicates if conversation/dialog is hidden or not.
+     *
+     * @var bool
+     */
+    private $hidden;
+
+    /**
      * NAME of the user
      */
     private $name;
@@ -135,6 +142,29 @@ class Dialog extends \Ilch\Model
     public function getTime()
     {
         return $this->time;
+    }
+
+    /**
+     * Get the value of hidden. If true the conversation is hidden.
+     *
+     * @return bool
+     */
+    public function getHidden(): bool
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * Set the value of hidden. True for hidden, false for not.
+     *
+     * @param bool $hidden
+     * @return $this
+     */
+    public function setHidden(bool $hidden): Dialog
+    {
+        $this->hidden = $hidden;
+
+        return $this;
     }
 
     /**

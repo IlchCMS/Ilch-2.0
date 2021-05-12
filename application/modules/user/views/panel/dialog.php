@@ -55,13 +55,16 @@
                                                                     }
                                                                     ?>
                                                                 </small>
+                                                                <?php if ($this->getRequest()->getParam('showhidden') == 1 && $dialog->getHidden()) : ?>
+                                                                    <i class="fas fa-eye-slash" title="<?=$this->getTrans('dialogIsHidden') ?>"></i>
+                                                                <?php endif; ?>
                                                             </div>
                                                             <p>
                                                                 <?=nl2br($this->getHtmlFromBBCode($this->escape($dialog->getText()))) ?>
                                                             </p>
                                                         </div>
                                                     </a>
-                                                    <?php if ($this->getRequest()->getParam('showhidden') == 1) : ?>
+                                                    <?php if ($this->getRequest()->getParam('showhidden') == 1 && $dialog->getHidden()) : ?>
                                                         <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'unhidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('unhideDialog') ?>" class="hide_button"><span class="fas fa-eye"></span></a>
                                                     <?php else : ?>
                                                         <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>" class="hide_button"><span class="fas fa-eye-slash"></span></a>
