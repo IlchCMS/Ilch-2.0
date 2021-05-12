@@ -41,7 +41,7 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-5 col-xs-12">
                 <h3><?=$this->escape($profil->getName()) ?></h3>
                 <div class="detail">
-                    <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
+                    <i class="fas fa-sign-in-alt" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
                     <?php $dateLastActivity = $profil->getDateLastActivity(); ?>
                     <?php if ($dateLastActivity != ''): ?>
                         <i class="fa fa-eye" title="<?=$this->getTrans('dateLastVisited') ?>"></i> <?=$this->escape($profil->getDateLastActivity()) ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  */
 
 namespace Ilch\Validation\Validators;
@@ -49,14 +49,14 @@ abstract class Base
     protected $parameters;
 
     /**
-     * Invert the Result for this validator.
+     * Invert the result for this validator.
      *
      * @var bool
      */
     protected $invertResult = false;
 
     /**
-     * defines whether logic can be negated .
+     * Defines whether logic can be negated.
      *
      * @var string
      */
@@ -88,7 +88,7 @@ abstract class Base
      *
      * @var string
      */
-    protected $invertErrorKey;
+    protected $invertErrorKey = '';
 
     /**
      * Number of parameters a validator needs at all cost.
@@ -225,7 +225,7 @@ abstract class Base
     }
 
     /**
-     * Get the value of Invert Result for this validator.
+     * Get the value of invertResult for this validator.
      *
      * @return bool
      */

@@ -13,16 +13,16 @@ class Config extends \Ilch\Config\Install
         'version' => '1.10.0',
         'icon_small' => 'fa-book',
         'author' => 'Stantin, Thomas',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'official' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Gästebuch',
-                'description' => 'Hier kann das Gästebuch verwaltet werden.',
+                'description' => 'Ein Gästebuch mit optionaler Willkommensnachricht. Neue Einträge können auf Wunsch erst nach Freischaltung angezeigt werden.',
             ],
             'en_EN' => [
                 'name' => 'Guestbook',
-                'description' => 'Here you can manage your guestbook entries.',
+                'description' => 'A guestbook with optional welcome message. New entries can be shown only after approval if wished. ',
             ],
         ],
         'ilchCore' => '2.1.42',
@@ -67,7 +67,10 @@ class Config extends \Ilch\Config\Install
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_gbook` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
             case "1.9.0":
-                // update Captcha
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'vote' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }
