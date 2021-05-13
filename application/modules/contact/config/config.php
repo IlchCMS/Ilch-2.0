@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -56,5 +56,6 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('contact_welcomeMessage', '');
                 break;
+        }
     }
 }
