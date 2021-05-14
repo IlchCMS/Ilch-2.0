@@ -18,20 +18,18 @@ class Integer extends Base
     protected $errorKey = 'validation.errors.integer.mustBeInteger';
 
     /**
-     * defines whether logic can be negated.
-     *
-     * @since Version 2.1.43
+     * Defines whether logic can be negated.
      *
      * @var bool
+     * @since 2.1.43
      */
     protected $hasInvertLogic = true;
 
     /**
      * Default error key for this validator.
      *
-     * @since Version 2.1.43
-     *
      * @var string
+     * @since 2.1.43
      */
     protected $invertErrorKey = 'validation.errors.required.dontBeInteger';
 

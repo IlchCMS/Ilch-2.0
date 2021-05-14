@@ -448,11 +448,9 @@ class Select extends QueryBuilder
     }
 
     /**
-     *
-     * @since Version 2.1.43
-     *
      * @return string
      * @throws \InvalidArgumentException
+     * @since 2.1.43
      */
     protected function generateOrderBySql()
     {

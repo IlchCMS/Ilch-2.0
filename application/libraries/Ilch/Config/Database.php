@@ -118,11 +118,9 @@ class Database
     /**
      * delete the config for given key.
      *
-     * @since Version 2.1.43
-     *
      * @param string|array $key
-     *
      * @return boolean
+     * @since 2.1.43
      */
     private function delete($keys)
     {
@@ -140,11 +138,9 @@ class Database
     /**
      * delete the config for given key.
      *
-     * @since Version 2.1.43
-     *
      * @param string         $key
-     *
      * @return boolean
+     * @since 2.1.43
      */
     private function deleteKey(string $key)
     {
