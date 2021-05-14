@@ -1,4 +1,9 @@
 <?php
+/**
+ * @copyright Ilch 2
+ * @since Version 2.1.43
+ */
+
 namespace Captcha;
 
 class DefaultCaptcha

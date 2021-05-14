@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -448,6 +448,9 @@ class Select extends QueryBuilder
     }
 
     /**
+     *
+     * @since Version 2.1.43
+     *
      * @return string
      * @throws \InvalidArgumentException
      */

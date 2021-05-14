@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -118,6 +118,8 @@ class Database
     /**
      * delete the config for given key.
      *
+     * @since Version 2.1.43
+     *
      * @param string|array $key
      *
      * @return boolean
@@ -137,6 +139,8 @@ class Database
 
     /**
      * delete the config for given key.
+     *
+     * @since Version 2.1.43
      *
      * @param string         $key
      *

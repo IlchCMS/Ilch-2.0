@@ -27,7 +27,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'You can add or edit teams and manage applications for these teams.',
             ],
         ],
-        'ilchCore' => '2.1.42',
+        'ilchCore' => '2.1.43',
         'phpVersion' => '5.6'
     ];
 

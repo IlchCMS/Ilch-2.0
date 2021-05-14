@@ -51,12 +51,16 @@ abstract class Base
     /**
      * Invert the result for this validator.
      *
+     * @since Version 2.1.43
+     *
      * @var bool
      */
     protected $invertResult = false;
 
     /**
      * Defines whether logic can be negated.
+     *
+     * @since Version 2.1.43
      *
      * @var string
      */
@@ -85,6 +89,8 @@ abstract class Base
 
     /**
      * Default inverted error key for this validator.
+     *
+     * @since Version 2.1.43
      *
      * @var string
      */
@@ -227,6 +233,8 @@ abstract class Base
     /**
      * Get the value of invertResult for this validator.
      *
+     * @since Version 2.1.43
+     *
      * @return bool
      */
     public function getInvertResult()
@@ -236,6 +244,8 @@ abstract class Base
 
     /**
      * Set the value of Invert Result for this validator.
+     *
+     * @since Version 2.1.43
      *
      * @param bool $invertResult
      *
@@ -299,6 +309,8 @@ abstract class Base
     /**
      * Get the value of inverted Error Key.
      *
+     * @since Version 2.1.43
+     *
      * @return string
      */
     public function getInvertErrorKey()
@@ -308,6 +320,8 @@ abstract class Base
 
     /**
      * Set the value of inverted Error Key.
+     *
+     * @since Version 2.1.43
      *
      * @param string $invertErrorKey
      *

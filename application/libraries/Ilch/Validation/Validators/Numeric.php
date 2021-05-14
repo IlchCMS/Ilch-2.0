@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  */
 
 namespace Ilch\Validation\Validators;
@@ -18,7 +18,9 @@ class Numeric extends Base
     protected $errorKey = 'validation.errors.numeric.mustBeNumeric';
 
     /**
-     * defines whether logic can be negated .
+     * defines whether logic can be negated.
+     *
+     * @since Version 2.1.43
      *
      * @var bool
      */
@@ -26,6 +28,8 @@ class Numeric extends Base
 
     /**
      * Default error key for this validator.
+     *
+     * @since Version 2.1.43
      *
      * @var string
      */
