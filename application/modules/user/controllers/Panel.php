@@ -488,10 +488,10 @@ class Panel extends BaseController
 
             $this->redirect()
                 ->withMessage('unhideDialogSuccess')
-                ->to(['action' => 'dialog']);
+                ->to(['action' => 'dialog', 'showhidden' => 1]);
         }
 
-        $this->redirect(['action' => 'dialog']);
+        $this->redirect(['action' => 'dialog', 'showhidden' => 1]);
     }
 
     public function dialogmessageAction()

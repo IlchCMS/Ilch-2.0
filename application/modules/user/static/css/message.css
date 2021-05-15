@@ -45,6 +45,12 @@
     font-size: 16px;
     display: none;
 }
+.chat .chat-wrapper .chat-textarea.disabled * {
+    cursor: not-allowed;
+}
+.chat .chat-wrapper .chat-textarea.disabled:active * {
+    pointer-events: none;
+}
 
 .chat .chat-wrapper .chat-list-wrapper {
     border: 1px solid #ddd;

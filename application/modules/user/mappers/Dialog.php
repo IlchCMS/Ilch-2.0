@@ -21,53 +21,59 @@ class Dialog extends \Ilch\Mapper
     public function getDialog($userid, $showHidden = true)
     {
         $sql = 'SELECT u.id, u.avatar, c.c_id, u.name, c.time, h.c_id AS hidden
-        FROM [prefix]_users u, [prefix]_users_dialog c
-        LEFT JOIN [prefix]_users_dialog_hidden AS h ON h.c_id = c.c_id AND h.user_id = '.$userid.' AND h.permanent != 1
-        WHERE CASE
+        FROM [prefix]_users_dialog c
+        LEFT JOIN [prefix]_users_dialog_hidden AS h ON h.c_id = c.c_id AND h.user_id = '.$userid.'
+        LEFT JOIN [prefix]_users AS u ON
+        CASE
         WHEN c.user_one = '.$userid.'
         THEN c.user_two = u.id
         WHEN c.user_two = '.$userid.'
         THEN c.user_one = u.id
         END
-        AND
+        WHERE
         (c.user_one = '.$userid.' OR c.user_two = '.$userid.')';
-        $sql .= ($showHidden) ? '' : ' AND h.c_id IS NULL ';
+        $sql .= ($showHidden) ? ' AND h.permanent = 0' : ' AND h.c_id IS NULL';
         $sql .= ' ORDER BY c.time DESC';
 
-        $mailArray = $this->db()->queryArray($sql);
+        $dialogsArray = $this->db()->queryArray($sql);
 
-        if (empty($mailArray)) {
+        if (empty($dialogsArray)) {
             return null;
         }
 
-        $mails = [];
+        $dialogs = [];
 
-        foreach ($mailArray as $mail) {
-            $mailModel = new DialogModel();
-            $mailModel->setId($mail['id']);
-            $mailModel->setCId($mail['c_id']);
-            $mailModel->setName($mail['name']);
-            $dialog = $this->getReadLastOneDialog($mail['c_id']);
-            $mailModel->setRead($dialog);
-            if (file_exists($mail['avatar'])) {
-                $mailModel->setAvatar($mail['avatar']);
-            }  else {
-                $mailModel->setAvatar('static/img/noavatar.jpg');
-            }
-            $last = $this->getLastOneDialog($mail['c_id']);
-            if ($last != null) {
-                $mailModel->setText($last->getText());
-                $mailModel->setTime($last->getTime());
+        foreach ($dialogsArray as $dialog) {
+            $dialogModel = new DialogModel();
+            $dialogModel->setId($dialog['id']);
+            $dialogModel->setCId($dialog['c_id']);
+
+            if (!empty($dialog['name'])) {
+                $dialogModel->setName($dialog['name']);
             } else {
-                $mailModel->setText('');
-                $mailModel->setTime('');
+                $dialogModel->setName('No longer exists');
             }
-            $mailModel->setHidden(!empty($mail['hidden']));
-            $mails[] = $mailModel;
+            $readLastOneDialog = $this->getReadLastOneDialog($dialog['c_id']);
+            $dialogModel->setRead($readLastOneDialog);
+            if (file_exists($dialog['avatar'])) {
+                $dialogModel->setAvatar($dialog['avatar']);
+            }  else {
+                $dialogModel->setAvatar('static/img/noavatar.jpg');
+            }
+            $last = $this->getLastOneDialog($dialog['c_id']);
+            if ($last != null) {
+                $dialogModel->setText($last->getText());
+                $dialogModel->setTime($last->getTime());
+            } else {
+                $dialogModel->setText('');
+                $dialogModel->setTime('');
+            }
+            $dialogModel->setHidden(!empty($dialog['hidden']));
+            $dialogs[] = $dialogModel;
 
         }
 
-        return $mails;
+        return $dialogs;
     }
 
     /**
@@ -80,8 +86,9 @@ class Dialog extends \Ilch\Mapper
     public function getDialogByCId($cId)
     {
         $sql = 'SELECT u.id, u.avatar, u.name
-        FROM [prefix]_users u, [prefix]_users_dialog c
-        WHERE CASE
+        FROM [prefix]_users_dialog c
+        LEFT JOIN [prefix]_users u ON
+        CASE
         WHEN c.user_two = '.$cId.'
         THEN c.user_two = u.id
         WHEN c.user_one = '.$cId.'
@@ -121,17 +128,17 @@ class Dialog extends \Ilch\Mapper
                 R.c_id_fk='.$c_id.'
                 ORDER BY R.cr_id DESC';
 
-        $mail = $this->db()->queryRow($sql);
+        $dialog = $this->db()->queryRow($sql);
 
-        if (empty($mail)) {
+        if (empty($dialog)) {
             return null;
         }
 
-        $mailModel = new DialogModel();
-        $mailModel->setText($mail['reply']);
-        $mailModel->setTime($mail['time']);
+        $dialogModel = new DialogModel();
+        $dialogModel->setText($dialog['reply']);
+        $dialogModel->setTime($dialog['time']);
 
-        return $mailModel;
+        return $dialogModel;
     }
 
     /**
@@ -149,18 +156,18 @@ class Dialog extends \Ilch\Mapper
                 AND R.read = 0
                 ORDER BY R.cr_id DESC';
 
-        $mail = $this->db()->queryRow($sql);
+        $dialog = $this->db()->queryRow($sql);
 
-        if (empty($mail)) {
+        if (empty($dialog)) {
             return null;
         }
 
         $dialogModel = new DialogModel();
-        $dialogModel->setText($mail['reply']);
-        $dialogModel->setTime($mail['time']);
-        $dialogModel->setCrId($mail['cr_id']);
-        $dialogModel->setUserOne($mail['user_id_fk']);
-        $dialogModel->setRead($mail['read']);
+        $dialogModel->setText($dialog['reply']);
+        $dialogModel->setTime($dialog['time']);
+        $dialogModel->setCrId($dialog['cr_id']);
+        $dialogModel->setUserOne($dialog['user_id_fk']);
+        $dialogModel->setRead($dialog['read']);
 
         return $dialogModel;
     }
@@ -198,31 +205,31 @@ class Dialog extends \Ilch\Mapper
                 R.c_id_fk='.$c_id.'
                 ORDER BY R.cr_id DESC LIMIT 20';
 
-        $mailArray = $this->db()->queryArray($sql);
+        $dialogArray = $this->db()->queryArray($sql);
 
-        if (empty($mailArray)) {
+        if (empty($dialogArray)) {
             return null;
         }
 
-        $mails = [];
+        $dialogModels = [];
 
-        foreach ($mailArray as $mail) {
-            $mailModel = new DialogModel();
-            $mailModel->setId($mail['id']);
-            $mailModel->setCrId($mail['cr_id']);
-            $mailModel->setName($mail['name']);
-            $mailModel->setText($mail['reply']);
-            $mailModel->setTime($mail['time']);
-            if (file_exists($mail['avatar'])) {
-                $mailModel->setAvatar($mail['avatar']);
+        foreach ($dialogArray as $dialog) {
+            $dialogModel = new DialogModel();
+            $dialogModel->setId($dialog['id']);
+            $dialogModel->setCrId($dialog['cr_id']);
+            $dialogModel->setName($dialog['name']);
+            $dialogModel->setText($dialog['reply']);
+            $dialogModel->setTime($dialog['time']);
+            if (file_exists($dialog['avatar'])) {
+                $dialogModel->setAvatar($dialog['avatar']);
             }  else {
-                $mailModel->setAvatar('static/img/noavatar.jpg');
+                $dialogModel->setAvatar('static/img/noavatar.jpg');
             }
-            $mails[] = $mailModel;
+            $dialogModels[] = $dialogModel;
 
         }
 
-        return array_reverse($mails);
+        return array_reverse($dialogModels);
     }
 
     /**
@@ -422,7 +429,7 @@ class Dialog extends \Ilch\Mapper
 
         if (empty($dialogHiddenRow)) {
             $this->db()->insert('users_dialog_hidden')
-                ->values(['c_id' => $c_id, 'user_id' => $userId])
+                ->values(['c_id' => $c_id, 'user_id' => $userId, 'permanent' => 0])
                 ->execute();
         }
     }

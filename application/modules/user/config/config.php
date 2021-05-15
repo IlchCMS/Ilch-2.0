@@ -504,11 +504,8 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('userdeletetime', '5');
                 break;
             case "2.1.42":
-                // update Captcha
-
                 // Add new 'permanent' column to users_dialog_hidden
                 $this->db()->query('ALTER TABLE `[prefix]_users_dialog_hidden` ADD COLUMN `permanent` TINYINT(1) UNSIGNED NOT NULL;');
-                break;
                 break;
         }
     }

@@ -5,7 +5,11 @@
     <div class="col-lg-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
         <div class="profile-content active">
-            <h1><?=$this->getTrans('dialog') ?></h1>
+            <?php if ($this->getRequest()->getParam('showhidden') != 1) : ?>
+                <h1><?=$this->getTrans('dialog') ?></h1>
+            <?php else : ?>
+                <h1><?=$this->getTrans('dialogHiddenDialogs') ?></h1>
+            <?php endif; ?>
             <?=(($this->getRequest()->getParam('showhidden') != 1) && !empty($this->get('dialogsHidden'))) ? '<a href="'.$this->getUrl(['controller' => 'panel', 'action' => 'dialog', 'showhidden' => 1]).'"><i class="fas fa-eye-slash"></i> '.$this->getTrans('dialogsHidden').'</a>' : '' ?>
             <div id="uMessenger">
                 <div class="chat">
@@ -55,16 +59,13 @@
                                                                     }
                                                                     ?>
                                                                 </small>
-                                                                <?php if ($this->getRequest()->getParam('showhidden') == 1 && $dialog->getHidden()) : ?>
-                                                                    <i class="fas fa-eye-slash" title="<?=$this->getTrans('dialogIsHidden') ?>"></i>
-                                                                <?php endif; ?>
                                                             </div>
                                                             <p>
                                                                 <?=nl2br($this->getHtmlFromBBCode($this->escape($dialog->getText()))) ?>
                                                             </p>
                                                         </div>
                                                     </a>
-                                                    <?php if ($this->getRequest()->getParam('showhidden') == 1 && $dialog->getHidden()) : ?>
+                                                    <?php if ($this->getRequest()->getParam('showhidden') == 1) : ?>
                                                         <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'unhidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('unhideDialog') ?>" class="hide_button"><span class="fas fa-eye"></span></a>
                                                     <?php else : ?>
                                                         <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>" class="hide_button"><span class="fas fa-eye-slash"></span></a>
@@ -117,12 +118,12 @@
                             <?php if ($this->get('dialog')): ?>
                                 <div class="compose-box">
                                     <div class="row">
-                                        <div class="col-xs-12 chat-textarea">
+                                        <div class="col-xs-12 chat-textarea<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>">
                                             <?=$this->getTokenField() ?>
                                             <textarea class="form-control input-sm ckeditor"
                                                       id="ck_1"
                                                       name="ilch_bbcode"
-                                                      toolbar="ilch_bbcode"></textarea>
+                                                      toolbar="ilch_bbcode"<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>></textarea>
                                             <button class="btn btn-primary btn-sm pull-right" id="chatSendBtn">
                                                 <i class="fa fa-location-arrow"></i>
                                             </button>
