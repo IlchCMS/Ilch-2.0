@@ -118,11 +118,11 @@ class Database
     /**
      * delete the config for given key.
      *
-     * @param string|array $key
-     * @return boolean
-     * @since 2.1.43
+     * @param   string|array    $keys
+     * @return  $this
+     * @since   2.1.43
      */
-    private function delete($keys)
+    public function delete($keys)
     {
         if (is_array($keys)) {
             foreach($keys as $key) {
@@ -138,17 +138,17 @@ class Database
     /**
      * delete the config for given key.
      *
-     * @param string         $key
-     * @return boolean
-     * @since 2.1.43
+     * @param   string  $key
+     * @return  boolean
+     * @since   2.1.43
      */
-    private function deleteKey(string $key)
+    protected function deleteKey(string $key)
     {
         if (isset($this->configData[$key]['value'])) {
             unset($this->configData[$key]);
         }
 
-        return (bool)$this->db()->delete('config')
+        return (bool)$this->db->delete('config')
             ->where(['key' => $key])
             ->execute();
     }
