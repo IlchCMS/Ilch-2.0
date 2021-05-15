@@ -121,14 +121,13 @@ class Dialog extends \Ilch\Mapper
      */
     public function getLastOneDialog($c_id)
     {
-        $sql = 'SELECT R.cr_id,R.time,R.reply,U.id,U.name,U.avatar
-                FROM [prefix]_users U, [prefix]_users_dialog_reply R 
-                WHERE R.user_id_fk=U.id
-                AND
-                R.c_id_fk='.$c_id.'
-                ORDER BY R.cr_id DESC';
-
-        $dialog = $this->db()->queryRow($sql);
+        $dialog = $this->db()->select(['R.time', 'R.reply'])
+            ->from(['R' => 'users_dialog_reply'])
+            ->join(['U' => 'users'], 'R.user_id_fk = U.id')
+            ->where(['R.c_id_fk' => $c_id])
+            ->order(['R.cr_id' => 'DESC'])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($dialog)) {
             return null;
@@ -149,14 +148,13 @@ class Dialog extends \Ilch\Mapper
      */
     public function getReadLastOneDialog($c_id)
     {
-        $sql = 'SELECT R.cr_id,R.time,R.reply,R.read,R.user_id_fk,U.id,U.name,U.avatar
-                FROM [prefix]_users U, [prefix]_users_dialog_reply R
-                WHERE R.user_id_fk=U.id
-                AND R.c_id_fk='.$c_id.'
-                AND R.read = 0
-                ORDER BY R.cr_id DESC';
-
-        $dialog = $this->db()->queryRow($sql);
+        $dialog = $this->db()->select(['R.cr_id', 'R.time', 'R.reply', 'R.read', 'R.user_id_fk'])
+            ->from(['R' => 'users_dialog_reply'])
+            ->join(['U' => 'users'], 'R.user_id_fk = U.id')
+            ->where(['R.c_id_fk' => $c_id, 'R.read =' => 0])
+            ->order(['R.cr_id' => 'DESC'])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($dialog)) {
             return null;
@@ -198,14 +196,14 @@ class Dialog extends \Ilch\Mapper
      */
     public function getDialogMessage($c_id)
     {
-        $sql = 'SELECT R.cr_id,R.time,R.reply,U.id,U.name,U.avatar
-                FROM [prefix]_users U, [prefix]_users_dialog_reply R 
-                WHERE R.user_id_fk=U.id
-                AND
-                R.c_id_fk='.$c_id.'
-                ORDER BY R.cr_id DESC LIMIT 20';
-
-        $dialogArray = $this->db()->queryArray($sql);
+        $dialogArray = $this->db()->select(['R.cr_id', 'R.time', 'R.reply', 'U.id', 'U.name', 'U.avatar'])
+            ->from(['R' => 'users_dialog_reply'])
+            ->join(['U' => 'users'], 'U.id = R.user_id_fk')
+            ->where(['R.c_id_fk' => $c_id])
+            ->order(['R.cr_id' => 'DESC'])
+            ->limit(20)
+            ->execute()
+            ->fetchRows();
 
         if (empty($dialogArray)) {
             return null;
@@ -241,7 +239,7 @@ class Dialog extends \Ilch\Mapper
      */
     public function isMessageOfUser($cr_id, $userId)
     {
-        $messageRow = $this->db()->select(['cr_id', 'user_id_fk'])
+        $messageRow = $this->db()->select(['cr_id'])
             ->from('users_dialog_reply')
             ->where(['cr_id' => $cr_id, 'user_id_fk' => $userId])
             ->execute()
@@ -490,7 +488,7 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-     * Check is exist dialog by $c_id
+     * Check if a dialog exists by $c_id
      *
      * @param int $c_id
      * @return null|\Modules\User\Models\Dialog
@@ -515,7 +513,7 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-     * Check is exist dialog by $user_one and $user_two
+     * Check if a dialog exists by $user_one and $user_two
      *
      * @param int $user_one
      * @param int $user_two
@@ -524,11 +522,11 @@ class Dialog extends \Ilch\Mapper
      */
     public function getDialogCheck($user_one, $user_two)
     {
-        $row = $this->db()->select(['c_id', 'user_one', 'user_two'])
+        $select = $this->db()->select(['c_id', 'user_one', 'user_two'])
             ->from('users_dialog')
-            ->where(['user_one' => $user_one, 'user_two' => $user_two])
-            ->orWhere(['user_one' => $user_two, 'user_two' => $user_one])
-            ->execute()
+            ->where(['user_one' => $user_one, 'user_two' => $user_two]);
+        $select->orWhere($select->andX(['user_one' => $user_two, 'user_two' => $user_one]));
+        $row = $select->execute()
             ->fetchAssoc();
 
         if (empty($row)) {

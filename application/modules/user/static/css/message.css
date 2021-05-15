@@ -374,7 +374,7 @@
     .chat .chat-wrapper .message-list-scroll.noscroll {
         height: 500px;
     }
-    .chat .chat-wrapper .hidden-list-massage {
+    .chat .chat-wrapper .hidden-list-message {
         display: none;
     }
     .chat .chat-wrapper .chat-list-wrapper {

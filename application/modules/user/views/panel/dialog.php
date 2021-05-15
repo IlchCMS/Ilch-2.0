@@ -14,7 +14,7 @@
             <div id="uMessenger">
                 <div class="chat">
                     <div class="row chat-wrapper">
-                        <div class="col-xs-12 col-md-5 col-lg-4 <?=$this->get('dialog') ? 'hidden-list-massage' : '' ?>">
+                        <div class="col-xs-12 col-md-5 col-lg-4 <?=$this->get('dialog') ? 'hidden-list-message' : '' ?>">
                             <div class="chat-list-info">
                                 <span class="avatar">
                                     <img src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" class="img-circle" alt="<?=$this->escape($this->getUser()->getName()) ?>" title="<?=$this->escape($this->getUser()->getName()) ?>">
@@ -85,7 +85,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-md-7 col-lg-8 <?=$this->get('dialog') ? '' : 'hidden-list-massage' ?>">
+                        <div class="col-xs-12 col-md-7 col-lg-8 <?=$this->get('dialog') ? '' : 'hidden-list-message' ?>">
                             <?php if ($this->get('dialog')): ?>
                                 <div class="message-info">
                                     <span class="back-chat-list">

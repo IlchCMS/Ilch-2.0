@@ -420,7 +420,6 @@ class Panel extends BaseController
 
             if ($this->getUser()->getId() == $user_two) {
                 if ($this->getRequest()->isPost()) {
-
                     $u_id_fk = $this->getUser()->getId();
                     $text = trim($this->getRequest()->getPost('text'));
 
