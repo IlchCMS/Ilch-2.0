@@ -139,8 +139,6 @@
     </div>
 </div>
 
-<div id="deletedialogcode"></div>
-
 <script src="<?=$this->getModuleUrl('static/js/jquery.nicescroll.js') ?>"></script>
 <script>
     let urlPathArray = window.location.pathname.split('/');
