@@ -47,7 +47,7 @@ class Base
      * @param \Ilch\View        $view
      * @param \Ilch\Request     $request
      * @param \Ilch\Router      $router
-     * @param \Ilch\Translator   $translator
+     * @param \Ilch\Translator  $translator
      */
     public function __construct(
         \Ilch\Layout\Base $layout,
@@ -67,8 +67,8 @@ class Base
     /**
      * Redirect to given url or url params.
      *
-     * @param array|string $url
-     * @param string $route
+     * @param array|string  $url
+     * @param string        $route
      * @return \Ilch\Redirect
      */
     public function redirect($url = null, $route = null)
@@ -155,8 +155,8 @@ class Base
     /**
      * Adds a flash message.
      *
-     * @param string|array $message
-     * @param string|null $type
+     * @param string|array      $message
+     * @param string|null       $type
      * @param bool|false|string $validationError
      */
     public function addMessage($message, $type = 'success', $validationError = false)
@@ -166,5 +166,23 @@ class Base
         } elseif (!is_array($message)) {
             $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans($message), 'type' => $type];
         }
+    }
+
+    /**
+     * Gets the Default Url.
+     *
+     * @param string|null $page
+     * @return string
+     * @since 2.1.43
+     */
+    public function getDefaultUrl($page = null)
+    {
+        if (!$page) {
+            $page = $this->getConfig()->get('start_page');
+        }
+        $newRouter = new \Ilch\Router(new \Ilch\Request());
+        $newRouter->defineStartPage($page, $this->getTranslator());
+        $newRedirect = new \Ilch\Redirect($newRouter->getRequest());
+        return substr($newRedirect->getUrl(['#']), 0, -4);
     }
 }
