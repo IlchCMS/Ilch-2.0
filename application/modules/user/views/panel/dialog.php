@@ -168,21 +168,68 @@
     });
 
     if (urlPathArray[urlPathArray.length - 2] === 'id' && Number.isInteger(parseInt(urlPathArray[urlPathArray.length - 1]))) {
+        const normalPollingRate = 3000, lowActivityPollingRate = 10000, lowActivityTreshold = 20;
         let old_data = '';
+
         $(document).ready(function() {
             let token = document.body.querySelector('[name="ilch_token"]').value;
             let id = urlPathArray[urlPathArray.length - 1];
             let load_data = {'fetch':1, 'ilch_token':token};
+            let hidden, visibilityChange;
+            let getMessageTimer = null;
+            let counterNothingNew = 0;
 
-            window.setInterval(function() {
+            function getNewMessages()
+            {
                 $.post('<?=$this->getUrl('user/panel/dialogmessage/id/') ?>'+id, load_data,
                     function(data) {
                         if (old_data !== data) {
                             $('.message_box').html(data);
+                            counterNothingNew = 0;
+                        } else {
+                            counterNothingNew += 1;
                         }
                         old_data = data;
                     });
-            }, 1000);
+
+                if (document[hidden]) {
+                    clearTimeout(getMessageTimer);
+                } else if (counterNothingNew >= lowActivityTreshold) {
+                    // Switches to the lower polling rate if chat seems inactive for ~(normalPollingRate * lowActivityTreshold) ms.
+                    getMessageTimer = window.setTimeout(getNewMessages, lowActivityPollingRate);
+                } else {
+                    getMessageTimer = window.setTimeout(getNewMessages, normalPollingRate);
+                }
+            }
+
+            getMessageTimer = window.setTimeout(getNewMessages, normalPollingRate);
+
+            // Set the name of the hidden property and the change event for visibility
+            if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+                hidden = "hidden";
+                visibilityChange = "visibilitychange";
+            } else if (typeof document.msHidden !== "undefined") {
+                hidden = "msHidden";
+                visibilityChange = "msvisibilitychange";
+            } else if (typeof document.webkitHidden !== "undefined") {
+                hidden = "webkitHidden";
+                visibilityChange = "webkitvisibilitychange";
+            }
+
+            function handleVisibilityChange() {
+                if (document[hidden]) {
+                    clearTimeout(getMessageTimer);
+                } else {
+                    getNewMessages()
+                }
+            }
+
+            if (typeof document.addEventListener === "undefined" || hidden === undefined) {
+                // Browser doesn't support addEventListener or the Page Visibility API
+            } else {
+                // Handle page visibility change
+                document.addEventListener(visibilityChange, handleVisibilityChange, false);
+            }
 
             document.getElementById("chatSendBtn").onclick = function () {
                 let token = document.body.querySelector('[name="ilch_token"]').value;
