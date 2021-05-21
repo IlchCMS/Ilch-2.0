@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -184,7 +184,8 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_hidden` (
                 `c_id` INT(11) UNSIGNED NOT NULL,
-                `user_id` INT(11) UNSIGNED NOT NULL
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                `permanent` TINYINT(1) UNSIGNED NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
@@ -503,7 +504,8 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('userdeletetime', '5');
                 break;
             case "2.1.42":
-                // update Captcha
+                // Add new 'permanent' column to users_dialog_hidden
+                $this->db()->query('ALTER TABLE `[prefix]_users_dialog_hidden` ADD COLUMN `permanent` TINYINT(1) UNSIGNED NOT NULL;');
                 break;
         }
     }

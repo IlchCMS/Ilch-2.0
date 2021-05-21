@@ -367,7 +367,7 @@ class Panel extends BaseController
                     $statisticMapper->deleteUserOnline($userId);
                     $friendsMapper->deleteFriendsByUserId($userId);
                     $friendsMapper->deleteFriendByFriendUserId($userId);
-                    $dialogMapper->unhideAllDialogsByUser($userId);
+                    $dialogMapper->deleteAllOfUser($userId);
                 }
 
                 if (!empty($_COOKIE['remember'])) {
@@ -420,7 +420,6 @@ class Panel extends BaseController
 
             if ($this->getUser()->getId() == $user_two) {
                 if ($this->getRequest()->isPost()) {
-
                     $u_id_fk = $this->getUser()->getId();
                     $text = trim($this->getRequest()->getPost('text'));
 
@@ -476,6 +475,24 @@ class Panel extends BaseController
         $this->redirect(['action' => 'dialog']);
     }
 
+    public function unhideDialogAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $c_id = $this->getRequest()->getParam('id');
+
+            $dialogMapper = new DialogMapper();
+            $dialog = $dialogMapper->getDialogCheckByCId($c_id);
+
+            $dialogMapper->unhideDialog($c_id, $this->getUser()->getId());
+
+            $this->redirect()
+                ->withMessage('unhideDialogSuccess')
+                ->to(['action' => 'dialog', 'showhidden' => 1]);
+        }
+
+        $this->redirect(['action' => 'dialog', 'showhidden' => 1]);
+    }
+
     public function dialogmessageAction()
     {
         if ($this->getRequest()->isPost('fetch')) {
@@ -509,9 +526,11 @@ class Panel extends BaseController
     {
         $dialogMapper = new DialogMapper();
         $id = $this->getRequest()->getParam('id');
+        // Get current user to delete messages of that user within a dialog.
+        $userId = $this->getUser()->getId();
 
-        if ($id && $this->getRequest()->isSecure()) {
-            $dialogMapper->deleteDialog($id);
+        if ($id && $userId && $this->getRequest()->isSecure()) {
+            $dialogMapper->permanentlyHideOrDeleteDialog($id, $userId);
         }
 
         $this->redirect(['action' => 'dialog']);

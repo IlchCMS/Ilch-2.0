@@ -5,12 +5,16 @@
     <div class="col-lg-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
         <div class="profile-content active">
-            <h1><?=$this->getTrans('dialog') ?></h1>
+            <?php if ($this->getRequest()->getParam('showhidden') != 1) : ?>
+                <h1><?=$this->getTrans('dialog') ?></h1>
+            <?php else : ?>
+                <h1><?=$this->getTrans('dialogHiddenDialogs') ?></h1>
+            <?php endif; ?>
             <?=(($this->getRequest()->getParam('showhidden') != 1) && !empty($this->get('dialogsHidden'))) ? '<a href="'.$this->getUrl(['controller' => 'panel', 'action' => 'dialog', 'showhidden' => 1]).'"><i class="fas fa-eye-slash"></i> '.$this->getTrans('dialogsHidden').'</a>' : '' ?>
             <div id="uMessenger">
                 <div class="chat">
                     <div class="row chat-wrapper">
-                        <div class="col-xs-12 col-md-5 col-lg-4 <?=$this->get('dialog') ? 'hidden-list-massage' : '' ?>">
+                        <div class="col-xs-12 col-md-5 col-lg-4 <?=$this->get('dialog') ? 'hidden-list-message' : '' ?>">
                             <div class="chat-list-info">
                                 <span class="avatar">
                                     <img src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" class="img-circle" alt="<?=$this->escape($this->getUser()->getName()) ?>" title="<?=$this->escape($this->getUser()->getName()) ?>">
@@ -55,13 +59,17 @@
                                                                     }
                                                                     ?>
                                                                 </small>
-                                                                <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>"><i class="fas fa-eye-slash"></i></a>
                                                             </div>
                                                             <p>
                                                                 <?=nl2br($this->getHtmlFromBBCode($this->escape($dialog->getText()))) ?>
                                                             </p>
                                                         </div>
                                                     </a>
+                                                    <?php if ($this->getRequest()->getParam('showhidden') == 1) : ?>
+                                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'unhidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('unhideDialog') ?>" class="hide_button"><span class="fas fa-eye"></span></a>
+                                                    <?php else : ?>
+                                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>" class="hide_button"><span class="fas fa-eye-slash"></span></a>
+                                                    <?php endif; ?>
                                                     <?=$this->getDeleteIcon(['action' => 'deletedialog', 'id' => $dialog->getCId()]) ?>
                                                 </li>
                                             <?php endforeach; ?>
@@ -77,7 +85,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-md-7 col-lg-8 <?=$this->get('dialog') ? '' : 'hidden-list-massage' ?>">
+                        <div class="col-xs-12 col-md-7 col-lg-8 <?=$this->get('dialog') ? '' : 'hidden-list-message' ?>">
                             <?php if ($this->get('dialog')): ?>
                                 <div class="message-info">
                                     <span class="back-chat-list">
@@ -110,12 +118,12 @@
                             <?php if ($this->get('dialog')): ?>
                                 <div class="compose-box">
                                     <div class="row">
-                                        <div class="col-xs-12 chat-textarea">
+                                        <div class="col-xs-12 chat-textarea<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>">
                                             <?=$this->getTokenField() ?>
                                             <textarea class="form-control input-sm ckeditor"
                                                       id="ck_1"
                                                       name="ilch_bbcode"
-                                                      toolbar="ilch_bbcode"></textarea>
+                                                      toolbar="ilch_bbcode"<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>></textarea>
                                             <button class="btn btn-primary btn-sm pull-right" id="chatSendBtn">
                                                 <i class="fa fa-location-arrow"></i>
                                             </button>
@@ -131,8 +139,6 @@
     </div>
 </div>
 
-<div id="deletedialogcode"></div>
-
 <script src="<?=$this->getModuleUrl('static/js/jquery.nicescroll.js') ?>"></script>
 <script>
     let urlPathArray = window.location.pathname.split('/');
@@ -146,7 +152,7 @@
     });
 
     $('ul.chat-list li .delete_button').click(function(event) {
-        if (!confirm("Soll der Eintrag wirklich gelöscht werden?")) {
+        if (!confirm(<?=json_encode($this->getTrans('deleteDialogConfirm')) ?>)) {
             event.preventDefault();
         }
     });
@@ -162,21 +168,68 @@
     });
 
     if (urlPathArray[urlPathArray.length - 2] === 'id' && Number.isInteger(parseInt(urlPathArray[urlPathArray.length - 1]))) {
+        const normalPollingRate = 3000, lowActivityPollingRate = 10000, lowActivityTreshold = 20;
         let old_data = '';
+
         $(document).ready(function() {
             let token = document.body.querySelector('[name="ilch_token"]').value;
             let id = urlPathArray[urlPathArray.length - 1];
             let load_data = {'fetch':1, 'ilch_token':token};
+            let hidden, visibilityChange;
+            let getMessageTimer = null;
+            let counterNothingNew = 0;
 
-            window.setInterval(function() {
+            function getNewMessages()
+            {
                 $.post('<?=$this->getUrl('user/panel/dialogmessage/id/') ?>'+id, load_data,
                     function(data) {
                         if (old_data !== data) {
                             $('.message_box').html(data);
+                            counterNothingNew = 0;
+                        } else {
+                            counterNothingNew += 1;
                         }
                         old_data = data;
                     });
-            }, 1000);
+
+                if (document[hidden]) {
+                    clearTimeout(getMessageTimer);
+                } else if (counterNothingNew >= lowActivityTreshold) {
+                    // Switches to the lower polling rate if chat seems inactive for ~(normalPollingRate * lowActivityTreshold) ms.
+                    getMessageTimer = window.setTimeout(getNewMessages, lowActivityPollingRate);
+                } else {
+                    getMessageTimer = window.setTimeout(getNewMessages, normalPollingRate);
+                }
+            }
+
+            getMessageTimer = window.setTimeout(getNewMessages, normalPollingRate);
+
+            // Set the name of the hidden property and the change event for visibility
+            if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+                hidden = "hidden";
+                visibilityChange = "visibilitychange";
+            } else if (typeof document.msHidden !== "undefined") {
+                hidden = "msHidden";
+                visibilityChange = "msvisibilitychange";
+            } else if (typeof document.webkitHidden !== "undefined") {
+                hidden = "webkitHidden";
+                visibilityChange = "webkitvisibilitychange";
+            }
+
+            function handleVisibilityChange() {
+                if (document[hidden]) {
+                    clearTimeout(getMessageTimer);
+                } else {
+                    getNewMessages()
+                }
+            }
+
+            if (typeof document.addEventListener === "undefined" || hidden === undefined) {
+                // Browser doesn't support addEventListener or the Page Visibility API
+            } else {
+                // Handle page visibility change
+                document.addEventListener(visibilityChange, handleVisibilityChange, false);
+            }
 
             document.getElementById("chatSendBtn").onclick = function () {
                 let token = document.body.querySelector('[name="ilch_token"]').value;

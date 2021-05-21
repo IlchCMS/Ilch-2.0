@@ -94,6 +94,7 @@ class Index extends \Ilch\Controller\Admin
         $statisticMapper = new StatisticMapper();
         $authProviderMapper = new AuthProvider();
         $friendsMapper = new FriendsMapper();
+        $dialogMapper = new DialogMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
@@ -110,6 +111,7 @@ class Index extends \Ilch\Controller\Admin
                         $authProviderMapper->deleteUser($userId);
                         $friendsMapper->deleteFriendsByUserId($userId);
                         $friendsMapper->deleteFriendByFriendUserId($userId);
+                        $dialogMapper->deleteAllOfUser($userId);
                     }
                 }
             }
@@ -514,7 +516,7 @@ class Index extends \Ilch\Controller\Admin
                     $statisticMapper->deleteUserOnline($userId);
                     $friendsMapper->deleteFriendsByUserId($userId);
                     $friendsMapper->deleteFriendByFriendUserId($userId);
-                    $dialogMapper->unhideAllDialogsByUser($userId);
+                    $dialogMapper->deleteAllOfUser($userId);
                     $this->addMessage('delUserMsg');
                 }
             }

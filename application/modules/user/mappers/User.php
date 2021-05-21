@@ -6,6 +6,10 @@
 
 namespace Modules\User\Mappers;
 
+use Modules\Statistic\Mappers\Statistic as StatisticMapper;
+use Modules\User\Mappers\AuthToken as AuthTokenMapper;
+use Modules\User\Mappers\Dialog as DialogMapper;
+use Modules\User\Mappers\Friends as FriendsMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Mappers\Group as GroupMapper;
 use Ilch\Date as IlchDate;
@@ -419,7 +423,7 @@ class User extends \Ilch\Mapper
         return $userId;
     }
 
-    /*
+    /**
      * @param string $homepage
      * @return string
      */
@@ -461,7 +465,6 @@ class User extends \Ilch\Mapper
      * Returns whether a user exists.
      *
      * @param  int $userId
-     *
      * @return boolean True if a user with this id exists, false otherwise.
      */
     public function userWithIdExists($userId)
@@ -512,8 +515,7 @@ class User extends \Ilch\Mapper
      *
      * @param  int|UserModel $userId
      * @param  string $deletedate
-     *
-     * @return boolean True of success, otherwise false.
+     * @return int affected rows
      */
      public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00')
      {
@@ -528,17 +530,20 @@ class User extends \Ilch\Mapper
     }
 
     /**
-     * Delete all Selects Delete finaly.
+     * Delete all Selects Delete finally.
      *
      * @param  int $timetodelete
-     *
-     * @return boolean True of success, otherwise false.
+     * @return boolean True if success, otherwise false.
      */
      public function deleteselectsdelete($timetodelete = 5)
      {
         $date = new \Ilch\Date();
-        $date->modify('-'.$timetodelete.' days');
+        $authTokenMapper = new AuthTokenMapper();
+        $statisticMapper = new StatisticMapper();
+        $friendsMapper = new FriendsMapper();
+        $dialogMapper = new DialogMapper();
 
+        $date->modify('-'.$timetodelete.' days');
         $entries = $this->getUserList(['selectsdelete >' => '1000-01-01 00:00:00', 'selectsdelete <=' => $date]);
 
         foreach ($entries as $user) {
@@ -546,6 +551,11 @@ class User extends \Ilch\Mapper
                 $dateuser = new \Ilch\Date($user->getSelectsDelete());
                 if ($dateuser->getTimestamp() <= $date->getTimestamp()) {
                     $this->delete($user->getId());
+                    $authTokenMapper->deleteAllAuthTokenOfUser($userId);
+                    $statisticMapper->deleteUserOnline($userId);
+                    $friendsMapper->deleteFriendsByUserId($userId);
+                    $friendsMapper->deleteFriendByFriendUserId($userId);
+                    $dialogMapper->deleteAllOfUser($userId);
                 }
             }
         }
@@ -557,7 +567,6 @@ class User extends \Ilch\Mapper
      * Deletes a given user or a user with the given id.
      *
      * @param  int|UserModel $userId
-     *
      * @return boolean True of success, otherwise false.
      */
     public function delete($userId)
