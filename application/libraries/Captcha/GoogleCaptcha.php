@@ -1,4 +1,9 @@
 <?php
+/**
+ * @copyright Ilch 2
+ * @since 2.1.43
+ */
+
 namespace Captcha;
 
 // Get your Keys from https://www.google.com/recaptcha/admin/create

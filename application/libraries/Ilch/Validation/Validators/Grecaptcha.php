@@ -1,6 +1,7 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
+ * @since 2.1.43
  */
 
 namespace Ilch\Validation\Validators;

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -450,6 +450,7 @@ class Select extends QueryBuilder
     /**
      * @return string
      * @throws \InvalidArgumentException
+     * @since 2.1.43
      */
     protected function generateOrderBySql()
     {
