@@ -22,7 +22,7 @@
     </div>
     <div class="panel-footer clearfix">
         <div class="pull-right">
-            <a href="<?=$this->get('finish_url') ?>" class="btn btn-success" role="button"><?=$this->getTrans('nextButton') ?></a>
+            <a href="<?=$this->getUrl() ?>" class="btn btn-success" role="button"><?=$this->getTrans('back') ?></a>
         </div>
     </div>
 </div>

@@ -187,8 +187,7 @@ class Regist extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('step3to3'), ['action' => 'finish']);
 
         $this->getView()->set('regist_confirm', $this->getConfig()->get('regist_confirm'))
-            ->set('regist_setfree', $this->getConfig()->get('regist_setfree'))
-            ->set('finish_url', $this->getDefaultUrl());
+            ->set('regist_setfree', $this->getConfig()->get('regist_setfree'));
     }
 
     public function confirmAction()
