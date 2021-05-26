@@ -335,21 +335,6 @@ class Mysql
     }
 
     /**
-     * Create Create Query Builder
-     * @todo add Option?
-     *
-     * @param string|null $table table without prefix
-     * @param array|null $column conditions
-     * @param bool $checkExists
-     *
-     * @return \Ilch\Database\Mysql\Delete
-     */
-    //public function create($table = null, $column = null, $checkExists = false)
-    //{
-    //    return new Mysql\Create($this, $table, $column, $checkExists);
-    //}
-
-    /**
      * Drops the table from database.
      *
      * @param string $table table without prefix
