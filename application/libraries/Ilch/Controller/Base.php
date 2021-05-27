@@ -167,4 +167,30 @@ class Base
             $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans($message), 'type' => $type];
         }
     }
+
+    /**
+     * Gets the default URL.
+     *
+     * @param string|null $page
+     * @return string
+     * @since 2.1.43
+     */
+    public function getDefaultUrl($page = null)
+    {
+        if (!$page) {
+            $page = $this->getConfig()->get('start_page');
+        }
+
+        $newRouter = new \Ilch\Router(new \Ilch\Request());
+        $newRouter->defineStartPage($page, $this->getTranslator());
+
+        $newRedirect = new \Ilch\Redirect($newRouter->getRequest());
+        if ($newRouter->getRequest()->getControllerName() === 'page') {
+            $pageMapper = new \Modules\Admin\Mappers\Page();
+            $pageModel = $pageMapper->getPageByIdLocale($newRouter->getRequest()->getParam('id'), $newRouter->getRequest()->getParam('locale'));
+            return $newRedirect->getUrl($pageModel->getPerma());
+        } else {
+            return substr($newRedirect->getUrl(['#']), 0, -4);
+        }
+    }
 }
