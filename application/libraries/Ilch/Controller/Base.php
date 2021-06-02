@@ -169,7 +169,7 @@ class Base
     }
 
     /**
-     * Gets the Default Url.
+     * Gets the default URL.
      *
      * @param string|null $page
      * @return string
@@ -180,9 +180,17 @@ class Base
         if (!$page) {
             $page = $this->getConfig()->get('start_page');
         }
+
         $newRouter = new \Ilch\Router(new \Ilch\Request());
         $newRouter->defineStartPage($page, $this->getTranslator());
+
         $newRedirect = new \Ilch\Redirect($newRouter->getRequest());
-        return substr($newRedirect->getUrl(['#']), 0, -4);
+        if ($newRouter->getRequest()->getControllerName() === 'page') {
+            $pageMapper = new \Modules\Admin\Mappers\Page();
+            $pageModel = $pageMapper->getPageByIdLocale($newRouter->getRequest()->getParam('id'), $newRouter->getRequest()->getParam('locale'));
+            return $newRedirect->getUrl($pageModel->getPerma());
+        } else {
+            return substr($newRedirect->getUrl(['#']), 0, -4);
+        }
     }
 }

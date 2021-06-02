@@ -76,6 +76,7 @@ return [
     'country' => 'Country',
     'navigation' => 'Navigation',
     'modules' => 'Modules',
+    'layouts' => 'Layouts',
     'module' => 'Module',
     'address' => 'Address',
     'page' => 'Page',
