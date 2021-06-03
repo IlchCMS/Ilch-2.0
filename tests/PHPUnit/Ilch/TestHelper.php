@@ -5,7 +5,7 @@
 
 namespace PHPUnit\Ilch;
 
-use Ilch\Registry as Registry;
+use Ilch\Registry;
 use Ilch\Config\File as Config;
 
 /**
@@ -29,14 +29,12 @@ class TestHelper
      */
     public static function setConfigInRegistry(array $configData)
     {
-        if (static::$config === null) {
-            if (!Registry::has('config') && file_exists(CONFIG_PATH . '/config.php')) {
-                static::$config = new Config();
-                static::$config->loadConfigFromFile(CONFIG_PATH . '/config.php');
+        if ((static::$config === null) && !Registry::has('config') && file_exists(CONFIG_PATH . '/config.php')) {
+            static::$config = new Config();
+            static::$config->loadConfigFromFile(CONFIG_PATH . '/config.php');
 
-                foreach ($configData as $configKey => $configValue) {
-                    static::$config->set($configKey, $configValue);
-                }
+            foreach ($configData as $configKey => $configValue) {
+                static::$config->set($configKey, $configValue);
             }
         }
 

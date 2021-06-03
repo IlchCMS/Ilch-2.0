@@ -24,14 +24,13 @@ class SelectTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->setMethods(['escape'])
             ->getMockForAbstractClass();
-        $db->expects($this->any())
-            ->method('escape')
-            ->will($this->returnCallback(function ($value, $addQuotes = false) {
+        $db->method('escape')
+            ->willReturnCallback(function ($value, $addQuotes = false) {
                 if ($addQuotes) {
                     $value = '"' . $value . '"';
                 }
                 return $value;
-            }));
+            });
 
         $this->out = new Select($db);
     }
@@ -56,7 +55,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
 
         $expected = 'SELECT * FROM ' . $expectedSqlPart;
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -93,7 +92,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
 
         $expected = 'SELECT ' . $expectedSqlPart . ' FROM `[prefix]_Test`';
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -149,7 +148,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      */
     public function testGenerateSqlForWhere($where, $expectedSqlPart, $type = null)
     {
-        if (is_callable($where)) {
+        if (\is_callable($where)) {
             $where = $where($this->out);
         }
 
@@ -163,7 +162,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $expected = 'SELECT * FROM `[prefix]_Test`'
             . ' WHERE ' . $expectedSqlPart;
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -252,7 +251,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $expected = 'SELECT * FROM `[prefix]_Test`'
             . ' WHERE `field1` ' . $operator . ' "5"';
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -283,7 +282,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $expected = 'SELECT * FROM `[prefix]_Test`'
             . ' WHERE ' . $expectedSqlPart;
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -332,7 +331,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
 
         $expected = 'SELECT * FROM `[prefix]_Test` ' . $expectedSqlPart;
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -366,7 +365,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $expected = 'SELECT * FROM `[prefix]_Test`'
             . ' LIMIT ' . $expectedSqlPart;
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -395,7 +394,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $expected = 'SELECT * FROM `[prefix]_Test`'
             . ' LIMIT 5, 10';
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -413,7 +412,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $expected = 'SELECT * FROM `[prefix]_Test`'
             . ' LIMIT ' . $expectedOffset . ', 10';
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -447,7 +446,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $expected = 'SELECT * FROM `[prefix]_Test`'
             . ' GROUP BY ' . $expectedSqlPart;
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     /**
@@ -485,7 +484,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $expectedSql = 'SELECT * FROM `[prefix]_Test` AS `a`'
             . ' INNER JOIN `[prefix]_Table2` AS `b` ON ' . $expectedSqlPart;
 
-        $this->assertEquals($expectedSql, $this->out->generateSql());
+        self::assertEquals($expectedSql, $this->out->generateSql());
     }
 
     /**

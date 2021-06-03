@@ -9,6 +9,7 @@ namespace libraries\ilch;
 use Ilch\Request;
 use Ilch\Accesses;
 use PHPUnit\Ilch\DatabaseTestCase;
+use PHPUnit\Ilch\PhpunitDataset;
 
 class AccessesTest extends DatabaseTestCase
 {
@@ -20,6 +21,8 @@ class AccessesTest extends DatabaseTestCase
     protected $request;
 
     protected $_SESSION;
+
+    protected $phpunitDataset;
 
     protected static function getSchemaSQLQueries()
     {
@@ -80,19 +83,10 @@ class AccessesTest extends DatabaseTestCase
     public function setUp()
     {
         parent::setUp();
-
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/_files/mysql_accesses.yml');
         $this->request = new Request();
         $_SESSION = [];
-    }
-
-    /**
-     * Returns the test dataset.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_IDataSet
-     */
-    protected function getDataSet()
-    {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/_files/mysql_accesses.yml');
     }
 
     public function testHasAccessModule()
@@ -101,7 +95,7 @@ class AccessesTest extends DatabaseTestCase
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Module');
-        $this->assertTrue($result, 'User 1 should have access.');
+        self::assertTrue($result, 'User 1 should have access.');
     }
 
     /**
@@ -114,7 +108,7 @@ class AccessesTest extends DatabaseTestCase
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Module');
-        $this->assertTrue($result, 'User 2 should have access to the article module.');
+        self::assertTrue($result, 'User 2 should have access to the article module.');
     }
 
     /**
@@ -127,7 +121,7 @@ class AccessesTest extends DatabaseTestCase
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Module');
-        $this->assertTrue($result, 'User 2 should have access to the checkout module.');
+        self::assertTrue($result, 'User 2 should have access to the checkout module.');
     }
 
     /**
@@ -140,7 +134,7 @@ class AccessesTest extends DatabaseTestCase
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Module');
-        $this->assertFalse($result, 'User 2 should not have access to the forum module.');
+        self::assertFalse($result, 'User 2 should not have access to the forum module.');
     }
 
     public function testHasAccessAdmin()
@@ -149,7 +143,7 @@ class AccessesTest extends DatabaseTestCase
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Admin');
-        $this->assertTrue($result, 'An admin should have access.');
+        self::assertTrue($result, 'An admin should have access.');
     }
 
     /**
@@ -164,7 +158,7 @@ class AccessesTest extends DatabaseTestCase
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Module');
-        $this->assertTrue($result, 'User 2 should have access to the page.');
+        self::assertTrue($result, 'User 2 should have access to the page.');
     }
 
     /**
@@ -180,6 +174,6 @@ class AccessesTest extends DatabaseTestCase
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Module');
-        $this->assertFalse($result, 'User 2 should not have access to the page.');
+        self::assertFalse($result, 'User 2 should not have access to the page.');
     }
 }

@@ -36,7 +36,7 @@ class ConfigTest extends TestCase
     public function testSetAndGetConfig()
     {
         $this->config->set('email', 'testuser@testmail.com');
-        $this->assertEquals(
+        self::assertEquals(
             'testuser@testmail.com',
             $this->config->get('email'),
             'Config value got manipulated unexpectedly.'
@@ -57,7 +57,7 @@ class ConfigTest extends TestCase
 
         $this->config->loadConfigFromFile(__DIR__ . '/_files/config.php');
 
-        $this->assertEquals(
+        self::assertEquals(
             $configArray,
             [
                 'dbHost'     => $this->config->get('dbHost'),

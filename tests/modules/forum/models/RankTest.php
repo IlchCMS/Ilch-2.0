@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -24,7 +24,7 @@ class RankTest extends TestCase
         $model = new RankModel();
         $model->setId(1);
 
-        $this->assertEquals(1, $model->getId(), 'The rank id was not saved correctly.');
+        self::assertEquals(1, $model->getId(), 'The rank id was not saved correctly.');
     }
 
     /**
@@ -35,7 +35,7 @@ class RankTest extends TestCase
         $model = new RankModel();
         $model->setTitle('TestTitle');
 
-        $this->assertEquals('TestTitle', $model->getTitle(), 'The rank title was not saved correctly.');
+        self::assertEquals('TestTitle', $model->getTitle(), 'The rank title was not saved correctly.');
     }
 
     /**
@@ -46,6 +46,6 @@ class RankTest extends TestCase
         $model = new RankModel();
         $model->setPosts(100);
 
-        $this->assertEquals(100, $model->getPosts(), 'The rank posts was not saved correctly.');
+        self::assertEquals(100, $model->getPosts(), 'The rank posts was not saved correctly.');
     }
 }

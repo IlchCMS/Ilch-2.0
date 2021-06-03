@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -9,8 +9,9 @@ namespace Modules\User\Mappers;
 use PHPUnit\Ilch\DatabaseTestCase;
 use Modules\User\Config\Config as ModuleConfig;
 use Modules\Admin\Config\Config as AdminConfig;
-use \Modules\User\Mappers\AuthToken as AuthTokenMapper;
-use \Modules\User\Models\AuthToken as AuthTokenModel;
+use Modules\User\Mappers\AuthToken as AuthTokenMapper;
+use Modules\User\Models\AuthToken as AuthTokenModel;
+use PHPUnit\Ilch\PhpunitDataset;
 
 /**
  * Tests the auth token mapper class.
@@ -19,6 +20,15 @@ use \Modules\User\Models\AuthToken as AuthTokenModel;
  */
 class AuthTokenTest extends DatabaseTestCase
 {
+    protected $phpunitDataset;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+    }
+
     /**
      * Tests if an auth token model is returned with that selector and the expected content.
      */
@@ -27,10 +37,10 @@ class AuthTokenTest extends DatabaseTestCase
         $mapper = new AuthTokenMapper();
 
         $authToken = $mapper->getAuthToken('selector');
-        $this->assertInstanceOf(AuthTokenModel::class, $authToken);
-        $this->assertEquals('token', $authToken->getToken());
-        $this->assertEquals(1, $authToken->getUserid());
-        $this->assertEquals('2014-01-01 12:12:12', $authToken->getExpires());
+        self::assertInstanceOf(AuthTokenModel::class, $authToken);
+        self::assertEquals('token', $authToken->getToken());
+        self::assertEquals(1, $authToken->getUserid());
+        self::assertEquals('2014-01-01 12:12:12', $authToken->getExpires());
     }
 
     /**
@@ -41,7 +51,7 @@ class AuthTokenTest extends DatabaseTestCase
         $mapper = new AuthTokenMapper();
 
         $authToken = $mapper->getAuthToken('invalid');
-        $this->assertNull($authToken);
+        self::assertNull($authToken);
     }
 
     /**
@@ -57,12 +67,12 @@ class AuthTokenTest extends DatabaseTestCase
         $model->setUserid(3);
         $model->setExpires('2014-01-02 10:10:10');
 
-        $this->assertEquals(3, $mapper->AddAuthToken($model));
+        self::assertEquals(3, $mapper->AddAuthToken($model));
         $authToken = $mapper->getAuthToken('selector3');
-        $this->assertInstanceOf(AuthTokenModel::class, $authToken);
-        $this->assertEquals('token3', $authToken->getToken());
-        $this->assertEquals(3, $authToken->getUserid());
-        $this->assertEquals('2014-01-02 10:10:10', $authToken->getExpires());
+        self::assertInstanceOf(AuthTokenModel::class, $authToken);
+        self::assertEquals('token3', $authToken->getToken());
+        self::assertEquals(3, $authToken->getUserid());
+        self::assertEquals('2014-01-02 10:10:10', $authToken->getExpires());
     }
 
     /**
@@ -78,12 +88,12 @@ class AuthTokenTest extends DatabaseTestCase
         $model->setUserid(4);
         $model->setExpires('2014-01-02 10:10:10');
 
-        $this->assertEquals(1, $mapper->updateAuthToken($model));
+        self::assertEquals(1, $mapper->updateAuthToken($model));
         $authToken = $mapper->getAuthToken('selector2');
-        $this->assertInstanceOf(AuthTokenModel::class, $authToken);
-        $this->assertEquals('token2', $authToken->getToken());
-        $this->assertEquals(4, $authToken->getUserid());
-        $this->assertEquals('2014-01-02 10:10:10', $authToken->getExpires());
+        self::assertInstanceOf(AuthTokenModel::class, $authToken);
+        self::assertEquals('token2', $authToken->getToken());
+        self::assertEquals(4, $authToken->getUserid());
+        self::assertEquals('2014-01-02 10:10:10', $authToken->getExpires());
     }
 
     /**
@@ -99,7 +109,7 @@ class AuthTokenTest extends DatabaseTestCase
         $model->setUserid(4);
         $model->setExpires('2014-01-02 10:10:10');
 
-        $this->assertEquals(0, $mapper->updateAuthToken($model));
+        self::assertEquals(0, $mapper->updateAuthToken($model));
     }
 
     /**
@@ -109,7 +119,7 @@ class AuthTokenTest extends DatabaseTestCase
     {
         $mapper = new AuthTokenMapper();
 
-        $this->assertEquals(1, $mapper->deleteAuthToken('selector2'));
+        self::assertEquals(1, $mapper->deleteAuthToken('selector2'));
     }
 
     /**
@@ -119,7 +129,7 @@ class AuthTokenTest extends DatabaseTestCase
     {
         $mapper = new AuthTokenMapper();
 
-        $this->assertEquals(0, $mapper->deleteAuthToken('invalid'));
+        self::assertEquals(0, $mapper->deleteAuthToken('invalid'));
     }
 
     /**
@@ -129,7 +139,7 @@ class AuthTokenTest extends DatabaseTestCase
     {
         $mapper = new AuthTokenMapper();
 
-        $this->assertEquals(1, $mapper->deleteAllAuthTokenOfUser(1));
+        self::assertEquals(1, $mapper->deleteAllAuthTokenOfUser(1));
     }
 
     /**
@@ -139,7 +149,7 @@ class AuthTokenTest extends DatabaseTestCase
     {
         $mapper = new AuthTokenMapper();
 
-        $this->assertEquals(0, $mapper->deleteAllAuthTokenOfUser(-1));
+        self::assertEquals(0, $mapper->deleteAllAuthTokenOfUser(-1));
     }
 
     /**
@@ -149,17 +159,7 @@ class AuthTokenTest extends DatabaseTestCase
     {
         $mapper = new AuthTokenMapper();
 
-        $this->assertEquals(2, $mapper->deleteExpiredAuthTokens());
-    }
-
-    /**
-     * Creates and returns a dataset object.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
-     */
-    protected function getDataSet()
-    {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/../_files/mysql_database.yml');
+        self::assertEquals(2, $mapper->deleteExpiredAuthTokens());
     }
 
     /**

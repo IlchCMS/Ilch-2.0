@@ -37,15 +37,15 @@ class RouterTest extends TestCase
         $pattern = Router::DEFAULT_REGEX_PATTERN;
         $pattern = '#^' . $pattern . '$#i';
 
-        $this->assertRegExp($pattern, 'module/controller');
-        $this->assertRegExp($pattern, 'module/controller/action');
-        $this->assertRegExp($pattern, 'module/controller/action/param1/value1/param2/value2');
+        self::assertRegExp($pattern, 'module/controller');
+        self::assertRegExp($pattern, 'module/controller/action');
+        self::assertRegExp($pattern, 'module/controller/action/param1/value1/param2/value2');
     }
 
     public function testParamConvertingIntoArray()
     {
         $params = $this->router->convertParamStringIntoArray('param1/value1/param2/value2');
-        $this->assertEquals($params, ['param1' => 'value1', 'param2' => 'value2']);
+        self::assertEquals(['param1' => 'value1', 'param2' => 'value2'], $params);
     }
 
     public function testMatchModuleController()
@@ -59,7 +59,7 @@ class RouterTest extends TestCase
         ];
 
         $match = $this->router->matchByRegexp($expectedResult[0]);
-        $this->assertTrue(is_array($match), 'Expected match result need to be an array!');
+        self::assertTrue(\is_array($match), 'Expected match result need to be an array!');
     }
 
     public function testMatchModuleControllerAction()
@@ -76,7 +76,7 @@ class RouterTest extends TestCase
         ];
 
         $match = $this->router->matchByRegexp($expectedResult[0]);
-        $this->assertTrue(is_array($match), 'Expected route does not match!');
+        self::assertTrue(\is_array($match), 'Expected route does not match!');
     }
 
     public function testMatchModuleControllerActionParams()
@@ -96,16 +96,16 @@ class RouterTest extends TestCase
         ];
 
         $match = $this->router->matchByRegexp($expectedResult[0]);
-        $this->assertTrue(is_array($match), 'Expected route does not match!');
+        self::assertTrue(\is_array($match), 'Expected route does not match!');
         $params = $this->router->convertParamStringIntoArray($match['params']);
-        $this->assertEquals($params, ['param1' => 'value1', 'param2' => 'value2']);
+        self::assertEquals(['param1' => 'value1', 'param2' => 'value2'], $params);
     }
 
     public function testMatchByQuery()
     {
         $route = 'page/index/show/param1/value1/param2/value2';
         $match = $this->router->matchByQuery($route);
-        $this->assertTrue(is_array($match), 'Expected route does not match!');
+        self::assertTrue(\is_array($match), 'Expected route does not match!');
     }
 
     /**
@@ -129,11 +129,11 @@ class RouterTest extends TestCase
         $result = $this->router->matchByQuery($route);
         $this->router->updateRequest($result);
 
-        $this->assertSame($expectIsAdmin, $this->request->isAdmin());
-        $this->assertSame($expectedModule, $this->request->getModuleName());
-        $this->assertSame($expectedController, $this->request->getControllerName());
-        $this->assertSame($expectedAction, $this->request->getActionName());
-        $this->assertSame($expectedParams, $this->request->getParams());
+        self::assertSame($expectIsAdmin, $this->request->isAdmin());
+        self::assertSame($expectedModule, $this->request->getModuleName());
+        self::assertSame($expectedController, $this->request->getControllerName());
+        self::assertSame($expectedAction, $this->request->getActionName());
+        self::assertSame($expectedParams, $this->request->getParams());
     }
 
     /**
@@ -175,21 +175,21 @@ class RouterTest extends TestCase
         $result = $this->router->matchByRegexp($route);
         $this->router->updateRequest($result);
 
-        $this->assertSame(false, $this->request->isAdmin());
-        $this->assertSame('page', $this->request->getModuleName());
-        $this->assertSame('index', $this->request->getControllerName());
-        $this->assertSame('show', $this->request->getActionName());
-        $this->assertSame(['param1' => 'value1', 'param2' => 'value2'], $this->request->getParams());
+        self::assertFalse($this->request->isAdmin());
+        self::assertSame('page', $this->request->getModuleName());
+        self::assertSame('index', $this->request->getControllerName());
+        self::assertSame('show', $this->request->getActionName());
+        self::assertSame(['param1' => 'value1', 'param2' => 'value2'], $this->request->getParams());
 
 
         $route = 'admin/page/index/show/param1/value1/param2/value2';
         $result = $this->router->matchByRegexp($route);
         $this->router->updateRequest($result);
 
-        $this->assertSame(true, $this->request->isAdmin());
-        $this->assertSame('page', $this->request->getModuleName());
-        $this->assertSame('index', $this->request->getControllerName());
-        $this->assertSame('show', $this->request->getActionName());
-        $this->assertSame(['param1' => 'value1', 'param2' => 'value2'], $this->request->getParams());
+        self::assertTrue($this->request->isAdmin());
+        self::assertSame('page', $this->request->getModuleName());
+        self::assertSame('index', $this->request->getControllerName());
+        self::assertSame('show', $this->request->getActionName());
+        self::assertSame(['param1' => 'value1', 'param2' => 'value2'], $this->request->getParams());
     }
 }

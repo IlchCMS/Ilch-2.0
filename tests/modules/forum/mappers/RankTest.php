@@ -1,15 +1,16 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
 namespace Modules\Forum\Mappers;
 
 use PHPUnit\Ilch\DatabaseTestCase;
-use \Modules\Forum\Mappers\Rank as RankMapper;
-use \Modules\Forum\Models\Rank as RankModel;
-use \Modules\Forum\Config\Config as ModuleConfig;
+use Modules\Forum\Mappers\Rank as RankMapper;
+use Modules\Forum\Models\Rank as RankModel;
+use Modules\Forum\Config\Config as ModuleConfig;
+use PHPUnit\Ilch\PhpunitDataset;
 
 /**
  * Tests the rank mapper class.
@@ -18,9 +19,13 @@ use \Modules\Forum\Config\Config as ModuleConfig;
  */
 class RankTest extends DatabaseTestCase
 {
+    protected $phpunitDataset;
+
     public function setUp()
     {
         parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
     }
 
     /**
@@ -31,7 +36,7 @@ class RankTest extends DatabaseTestCase
         $mapper = new RankMapper();
         $ranks = $mapper->getRanks();
 
-        $this->assertTrue(count($ranks) == 3);
+        self::assertCount(3, $ranks);
     }
 
     /**
@@ -42,9 +47,9 @@ class RankTest extends DatabaseTestCase
         $mapper = new RankMapper();
         $rank = $mapper->getRankById(1);
 
-        $this->assertTrue($rank->getId() == 1);
-        $this->assertTrue($rank->getTitle() == 'Gruenschnabel');
-        $this->assertTrue($rank->getPosts() == 0);
+        self::assertEquals(1, $rank->getId());
+        self::assertSame($rank->getTitle(), 'Gruenschnabel');
+        self::assertEquals(0, $rank->getPosts());
     }
 
     /**
@@ -55,9 +60,9 @@ class RankTest extends DatabaseTestCase
         $mapper = new RankMapper();
         $rank = $mapper->getRankByPosts(1);
 
-        $this->assertTrue($rank->getId() == 1);
-        $this->assertTrue($rank->getTitle() == 'Gruenschnabel');
-        $this->assertTrue($rank->getPosts() == 0);
+        self::assertEquals(1, $rank->getId());
+        self::assertSame($rank->getTitle(), 'Gruenschnabel');
+        self::assertEquals(0, $rank->getPosts());
     }
 
     /**
@@ -68,9 +73,9 @@ class RankTest extends DatabaseTestCase
         $mapper = new RankMapper();
         $rank = $mapper->getRankByPosts(25);
 
-        $this->assertTrue($rank->getId() == 2);
-        $this->assertTrue($rank->getTitle() == 'Jungspund');
-        $this->assertTrue($rank->getPosts() == 25);
+        self::assertEquals(2, $rank->getId());
+        self::assertSame($rank->getTitle(), 'Jungspund');
+        self::assertEquals(25, $rank->getPosts());
     }
 
     /**
@@ -82,9 +87,9 @@ class RankTest extends DatabaseTestCase
         $mapper = new RankMapper();
         $rank = $mapper->getRankByPosts(30);
 
-        $this->assertTrue($rank->getId() == 2);
-        $this->assertTrue($rank->getTitle() == 'Jungspund');
-        $this->assertTrue($rank->getPosts() == 25);
+        self::assertEquals(2, $rank->getId());
+        self::assertSame($rank->getTitle(), 'Jungspund');
+        self::assertEquals(25, $rank->getPosts());
     }
 
     /**
@@ -95,9 +100,9 @@ class RankTest extends DatabaseTestCase
         $mapper = new RankMapper();
         $rank = $mapper->getRankByPosts(50);
 
-        $this->assertTrue($rank->getId() == 3);
-        $this->assertTrue($rank->getTitle() == 'Mitglied');
-        $this->assertTrue($rank->getPosts() == 50);
+        self::assertEquals(3, $rank->getId());
+        self::assertSame($rank->getTitle(), 'Mitglied');
+        self::assertEquals(50, $rank->getPosts());
     }
 
     /**
@@ -115,9 +120,9 @@ class RankTest extends DatabaseTestCase
 
         $rank = $mapper->getRankById(4);
 
-        $this->assertTrue($rank->getId() == 4);
-        $this->assertTrue($rank->getTitle() == 'TestTitle');
-        $this->assertTrue($rank->getPosts() == 100);
+        self::assertEquals(4, $rank->getId());
+        self::assertSame($rank->getTitle(), 'TestTitle');
+        self::assertEquals(100, $rank->getPosts());
     }
 
     /**
@@ -136,9 +141,9 @@ class RankTest extends DatabaseTestCase
 
         $rank = $mapper->getRankById(3);
 
-        $this->assertTrue($rank->getId() == 3);
-        $this->assertTrue($rank->getTitle() == 'TestTitle');
-        $this->assertTrue($rank->getPosts() == 100);
+        self::assertEquals(3, $rank->getId());
+        self::assertSame($rank->getTitle(), 'TestTitle');
+        self::assertEquals(100, $rank->getPosts());
     }
 
     /**
@@ -151,17 +156,7 @@ class RankTest extends DatabaseTestCase
         $mapper->delete(3);
         $ranks = $mapper->getRanks();
 
-        $this->assertTrue(count($ranks) == 2);
-    }
-
-    /**
-     * Creates and returns a dataset object.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
-     */
-    protected function getDataSet()
-    {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/../_files/mysql_database.yml');
+        self::assertCount(2, $ranks);
     }
 
     /**

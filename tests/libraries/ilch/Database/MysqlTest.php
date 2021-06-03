@@ -1,12 +1,13 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
 namespace Ilch\Database;
 
 use Ilch\Database\Mysql as MySQL;
+use PHPUnit\Ilch\PhpunitDataset;
 
 /**
  * Tests the MySQL database object.
@@ -16,16 +17,13 @@ use Ilch\Database\Mysql as MySQL;
  */
 class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
 {
-    /**
-     * Returns the8 initial dataset for the db.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_YamlDataSet
-     */
-    protected function getDataSet()
+    protected $phpunitDataset;
+
+    public function setUp()
     {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(
-            __DIR__ . '/../_files/mysql_database.yml'
-        );
+        parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
     }
 
     /**
@@ -39,7 +37,7 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
             ->execute()
             ->fetchCell();
 
-        $this->assertEquals('2', $result, 'Wrong cell value was returned.');
+        self::assertEquals('2', $result, 'Wrong cell value was returned.');
     }
 
     /**
@@ -53,7 +51,7 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
             ->execute()
             ->fetchCell();
 
-        $this->assertEquals('2', $result, 'Wrong cell value was returned.');
+        self::assertEquals('2', $result, 'Wrong cell value was returned.');
     }
 
     /**
@@ -72,7 +70,7 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
             ->execute()
             ->fetchCell();
 
-        $this->assertEquals('', $result, 'The db entry has not being updated with an empty string.');
+        self::assertEquals('', $result, 'The db entry has not being updated with an empty string.');
     }
 
     /**
@@ -88,6 +86,6 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
             ->execute()
             ->fetchCell();
 
-        $this->assertEquals(1, $result, 'The db entry has not being inserted with an empty string.');
+        self::assertEquals(1, $result, 'The db entry has not being inserted with an empty string.');
     }
 }

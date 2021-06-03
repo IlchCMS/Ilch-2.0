@@ -11,25 +11,25 @@ use Ilch\Request;
 use Ilch\Router;
 use Ilch\Translator;
 use PHPUnit\Ilch\DatabaseTestCase;
+use PHPUnit\Ilch\PhpunitDataset;
 
 class GetMenuTest extends DatabaseTestCase
 {
     static protected $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
 
+    protected $phpunitDataset;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../../_files/mysql_menu.yml');
+    }
+
     protected static function getSchemaSQLQueries()
     {
         $adminConfig = new \Modules\Admin\Config\Config();
         return $adminConfig->getInstallSql();
-    }
-
-    /**
-     * Returns the test dataset.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_IDataSet
-     */
-    protected function getDataSet()
-    {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/../../_files/mysql_menu.yml');
     }
 
     /**
@@ -49,7 +49,7 @@ class GetMenuTest extends DatabaseTestCase
 
         $out = new GetMenu($layout);
 
-        $this->assertSame($expected, $out->getMenu(1, '<h2>%s</h2>%c', $options));
+        self::assertSame($expected, $out->getMenu(1, '<h2>%s</h2>%c', $options));
     }
 
     public function dpForTestGetMenu()

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -33,7 +33,7 @@ class UserTest extends TestCase
     {
         $user = new User();
         $user->setId(123);
-        $this->assertEquals(123, $user->getId(), 'The id wasnt saved or returned correctly.');
+        self::assertEquals(123, $user->getId(), 'The id wasnt saved or returned correctly.');
     }
 
     /**
@@ -43,7 +43,7 @@ class UserTest extends TestCase
     {
         $user = new User();
         $user->setName('username');
-        $this->assertEquals('username', $user->getName(), 'The username wasnt saved or returned correctly.');
+        self::assertEquals('username', $user->getName(), 'The username wasnt saved or returned correctly.');
     }
 
     /**
@@ -53,7 +53,7 @@ class UserTest extends TestCase
     {
         $user = new User();
         $user->setEmail('email');
-        $this->assertEquals('email', $user->getEmail(), 'The email wasnt saved or returned correctly.');
+        self::assertEquals('email', $user->getEmail(), 'The email wasnt saved or returned correctly.');
     }
 
     /**
@@ -72,7 +72,7 @@ class UserTest extends TestCase
         $group3->setName('Clanleader');
         $user = new User();
         $user->setGroups([$group1, $group2, $group3]);
-        $this->assertEquals(
+        self::assertEquals(
             [$group1, $group2, $group3],
             $user->getGroups(),
             'The user groups wasnt saved or returned correctly.'
@@ -96,7 +96,7 @@ class UserTest extends TestCase
         $user = new User();
         $user->setGroups([$group1, $group3]);
         $user->addGroup($group2);
-        $this->assertEquals(
+        self::assertEquals(
             [$group1, $group3, $group2],
             $user->getGroups(),
             'The user groups wasnt added or returned correctly.'
@@ -124,11 +124,11 @@ class UserTest extends TestCase
 
         $user->addGroup($group1)->addGroup($group2)->addGroup($group3);
 
-        $this->assertTrue($user->hasGroup(2), 'The user has not the group with id "2".');
-        $this->assertFalse($user->hasGroup(4), 'The user has the group with id "4".');
+        self::assertTrue($user->hasGroup(2), 'The user has not the group with id "2".');
+        self::assertFalse($user->hasGroup(4), 'The user has the group with id "4".');
 
         $user->setGroups([]);
-        $this->assertFalse($user->hasGroup(2), 'The user has the group with id "2".');
+        self::assertFalse($user->hasGroup(2), 'The user has the group with id "2".');
     }
 
     /**
@@ -144,22 +144,22 @@ class UserTest extends TestCase
         $user->addGroup($group);
 
         $dbMock = $this->createPartialMock(Mysql::class, ['queryCell', 'escape']);
-        $dbMock->expects($this->once())
+        $dbMock->expects(self::once())
             ->method('escape')
             ->willReturnArgument(0);
-        $dbMock->expects($this->once())
+        $dbMock->expects(self::once())
             ->method('queryCell')
             ->with(
-                $this->logicalAnd(
-                    $this->stringContains('FROM [prefix]_groups_access'),
-                    $this->stringContains('INNER JOIN `[prefix]_modules`'),
-                    $this->stringContains('user')
+                self::logicalAnd(
+                    self::stringContains('FROM [prefix]_groups_access'),
+                    self::stringContains('INNER JOIN `[prefix]_modules`'),
+                    self::stringContains('user')
                 )
             )
-            ->will($this->returnValue('0'));
+            ->willReturn('0');
         Registry::remove('db');
         Registry::set('db', $dbMock);
 
-        $this->assertEquals(0, $user->hasAccess('module_user'));
+        self::assertEquals(0, $user->hasAccess('module_user'));
     }
 }

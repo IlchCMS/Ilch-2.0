@@ -46,7 +46,7 @@ class RequestTest extends TestCase
         $this->request->setParams($params);
         $actualParams = $this->request->getParams();
 
-        $this->assertEquals($params, $actualParams, 'Param array got manipulated unexpectedly.');
+        self::assertEquals($params, $actualParams, 'Param array got manipulated unexpectedly.');
     }
 
     /**
@@ -61,7 +61,7 @@ class RequestTest extends TestCase
         ];
         $this->request->setParams($params);
 
-        $this->assertEquals(123, $actualParam = $this->request->getParam('id'), 'Param got manipulated unexpectedly.');
+        self::assertEquals(123, $actualParam = $this->request->getParam('id'), 'Param got manipulated unexpectedly.');
     }
 
     /**
@@ -77,7 +77,7 @@ class RequestTest extends TestCase
         ];
         $this->request->setParams($params);
 
-        $this->assertEquals(
+        self::assertEquals(
             null,
             $actualParam = $this->request->getParam('nullParam'),
             'Param got manipulated unexpectedly.'
@@ -99,7 +99,7 @@ class RequestTest extends TestCase
         $this->request->setParams($params);
         $actualParams = $this->request->getParams();
 
-        $this->assertArrayHasKey('nullParam', $actualParams, 'The param with value null got deleted.');
+        self::assertArrayHasKey('nullParam', $actualParams, 'The param with value null got deleted.');
     }
 
     /**
@@ -110,7 +110,7 @@ class RequestTest extends TestCase
         $this->request->setParam('nullParam', null);
         $actualParams = $this->request->getParams();
 
-        $this->assertArrayHasKey('nullParam', $actualParams, 'The param with value null got deleted.');
+        self::assertArrayHasKey('nullParam', $actualParams, 'The param with value null got deleted.');
     }
 
     /**
@@ -121,7 +121,7 @@ class RequestTest extends TestCase
         $this->request->setParam('username', 'testuser');
         $actualParams = $this->request->getParams();
 
-        $this->assertArrayHasKey('username', $actualParams, 'The saved param got deleted.');
+        self::assertArrayHasKey('username', $actualParams, 'The saved param got deleted.');
     }
 
     /**
@@ -140,7 +140,7 @@ class RequestTest extends TestCase
         $params['testvar'] = false;
         $actualParams = $this->request->getParams();
 
-        $this->assertEquals($expectedParams, $actualParams, 'Param array got manipulated unexpectedly.');
+        self::assertEquals($expectedParams, $actualParams, 'Param array got manipulated unexpectedly.');
     }
 
     /**
@@ -149,7 +149,7 @@ class RequestTest extends TestCase
     public function testGetModuleName()
     {
         $this->request->setModuleName('moduleNameTest');
-        $this->assertEquals('moduleNameTest', $this->request->getModuleName(), 'Modulename changed.');
+        self::assertEquals('moduleNameTest', $this->request->getModuleName(), 'Modulename changed.');
     }
 
     /**
@@ -158,7 +158,7 @@ class RequestTest extends TestCase
     public function testGetControllerName()
     {
         $this->request->setControllerName('controllerNameTest');
-        $this->assertEquals('controllerNameTest', $this->request->getControllerName(), 'Controllername changed.');
+        self::assertEquals('controllerNameTest', $this->request->getControllerName(), 'Controllername changed.');
     }
 
     /**
@@ -167,7 +167,7 @@ class RequestTest extends TestCase
     public function testGetActionName()
     {
         $this->request->setActionName('actionNameTest');
-        $this->assertEquals('actionNameTest', $this->request->getActionName(), 'Actionname changed.');
+        self::assertEquals('actionNameTest', $this->request->getActionName(), 'Actionname changed.');
     }
 
     /**
@@ -183,7 +183,7 @@ class RequestTest extends TestCase
         $_POST = $params;
         $_REQUEST = $params;
 
-        $this->assertTrue($this->request->isPost());
+        self::assertTrue($this->request->isPost());
     }
 
     /**
@@ -193,7 +193,7 @@ class RequestTest extends TestCase
     {
         $_GET['username'] = 'testuser';
 
-        $this->assertEquals(
+        self::assertEquals(
             'testuser',
             $this->request->getQuery('username'),
             'The request object didnt returned the GET parameter.'
@@ -207,7 +207,7 @@ class RequestTest extends TestCase
     {
         $_POST['username'] = 'testuser';
 
-        $this->assertEquals(
+        self::assertEquals(
             'testuser',
             $this->request->getPost('username'),
             'The request object didnt returned the POST parameter.'
