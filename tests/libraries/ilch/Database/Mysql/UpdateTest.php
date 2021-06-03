@@ -1,11 +1,10 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
 namespace Ilch\Database\Mysql;
-
 
 class UpdateTest extends \PHPUnit\Framework\TestCase
 {
@@ -24,14 +23,13 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->setMethods(['escape'])
             ->getMockForAbstractClass();
-        $db->expects($this->any())
-            ->method('escape')
-            ->will($this->returnCallback(function ($value, $addQuotes = false) {
+        $db->method('escape')
+            ->willReturnCallback(function ($value, $addQuotes = false) {
                 if ($addQuotes) {
                     $value = '"' . $value . '"';
                 }
                 return $value;
-            }));
+            });
 
         $this->out = new Update($db);
     }
@@ -61,7 +59,7 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
         $expected = 'UPDATE `[prefix]_Test` SET '
             . '`super` = "data",`next` = "fieldData"';
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 
     public function testGenerateSqlForValuesAndSimpleWhere()
@@ -74,6 +72,6 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
             . '`super` = "data",`next` = "fieldData"'
             . ' WHERE `id` = "5"';
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 }

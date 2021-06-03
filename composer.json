@@ -27,7 +27,7 @@
     "require-dev": {
         "maximebf/debugbar": "^1.15",
         "phpunit/phpunit": "6.*",
-        "phpunit/dbunit": ">=3.0"
+        "symfony/yaml": "^3.3.6"
     },
     "autoload": {
         "psr-0": { "": "application/libraries/" },

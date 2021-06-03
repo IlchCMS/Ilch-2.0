@@ -1,15 +1,16 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
 namespace Modules\User\Mappers;
 
 use PHPUnit\Ilch\DatabaseTestCase;
-use \Modules\User\Mappers\CookieStolen as CookieStolenMapper;
+use Modules\User\Mappers\CookieStolen as CookieStolenMapper;
 use Modules\User\Config\Config as ModuleConfig;
 use Modules\Admin\Config\Config as AdminConfig;
+use PHPUnit\Ilch\PhpunitDataset;
 
 /**
  * Tests the cookie stolen mapper class.
@@ -18,6 +19,15 @@ use Modules\Admin\Config\Config as AdminConfig;
  */
 class CookieStolenTest extends DatabaseTestCase
 {
+    protected $phpunitDataset;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+    }
+
     /**
      * Tests containsCookieStolen(). Should return 1.
      */
@@ -25,7 +35,7 @@ class CookieStolenTest extends DatabaseTestCase
     {
         $mapper = new CookieStolenMapper();
 
-        $this->assertEquals(1, $mapper->containsCookieStolen(1));
+        self::assertEquals(1, $mapper->containsCookieStolen(1));
     }
 
     /**
@@ -35,7 +45,7 @@ class CookieStolenTest extends DatabaseTestCase
     {
         $mapper = new CookieStolenMapper();
 
-        $this->assertEquals(0, $mapper->containsCookieStolen(0));
+        self::assertEquals(0, $mapper->containsCookieStolen(0));
     }
 
     /**
@@ -46,7 +56,7 @@ class CookieStolenTest extends DatabaseTestCase
         $mapper = new CookieStolenMapper();
 
         $mapper->addCookieStolen(2);
-        $this->assertEquals(1, $mapper->containsCookieStolen(2));
+        self::assertEquals(1, $mapper->containsCookieStolen(2));
     }
 
     /**
@@ -56,7 +66,7 @@ class CookieStolenTest extends DatabaseTestCase
     {
         $mapper = new CookieStolenMapper();
 
-        $this->assertEquals(1, $mapper->deleteCookieStolen(1));
+        self::assertEquals(1, $mapper->deleteCookieStolen(1));
     }
 
     /**
@@ -66,17 +76,7 @@ class CookieStolenTest extends DatabaseTestCase
     {
         $mapper = new CookieStolenMapper();
 
-        $this->assertEquals(0, $mapper->deleteCookieStolen(0));
-    }
-
-    /**
-     * Creates and returns a dataset object.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
-     */
-    protected function getDataSet()
-    {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/../_files/mysql_database.yml');
+        self::assertEquals(0, $mapper->deleteCookieStolen(0));
     }
 
     /**

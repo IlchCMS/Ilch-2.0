@@ -1,26 +1,26 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
 namespace Ilch\Database\Mysql;
 
 use PHPUnit\Ilch\DatabaseTestCase;
+use PHPUnit\Ilch\PhpunitDataset;
 use PHPUnit_Extensions_Database_DataSet_IDataSet;
 
 class ResultTest extends DatabaseTestCase
 {
     static protected $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
 
-    /**
-     * Returns the test dataset.
-     *
-     * @return PHPUnit_Extensions_Database_DataSet_IDataSet
-     */
-    protected function getDataSet()
+    protected $phpunitDataset;
+
+    public function setUp()
     {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/../../_files/mysql_database.yml');
+        parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../../_files/mysql_database.yml');
     }
 
     /**
@@ -32,7 +32,7 @@ class ResultTest extends DatabaseTestCase
     public function testFetchCell($cellParam, $expected)
     {
         $result = $this->db->select('*', 'groups')->execute();
-        $this->assertEquals($expected, $result->fetchCell($cellParam));
+        self::assertEquals($expected, $result->fetchCell($cellParam));
     }
 
     /**
@@ -73,7 +73,7 @@ class ResultTest extends DatabaseTestCase
     public function testFetchArray($type, $expected)
     {
         $result = $this->db->select('*', 'groups')->execute();
-        $this->assertEquals($expected, $result->fetchArray($type));
+        self::assertEquals($expected, $result->fetchArray($type));
     }
 
     /**
@@ -110,7 +110,7 @@ class ResultTest extends DatabaseTestCase
             ->execute();
 
         foreach ($expectedRows as $expectedRow) {
-            $this->assertSame($expectedRow, $result->fetchRow());
+            self::assertSame($expectedRow, $result->fetchRow());
         }
     }
 
@@ -127,7 +127,7 @@ class ResultTest extends DatabaseTestCase
             ->execute();
 
         foreach ($expectedRows as $expectedRow) {
-            $this->assertSame($expectedRow, $result->fetchAssoc());
+            self::assertSame($expectedRow, $result->fetchAssoc());
         }
     }
 
@@ -144,7 +144,7 @@ class ResultTest extends DatabaseTestCase
             ->limit(2)
             ->execute();
 
-        $this->assertEquals($expectedRows, $result->fetchRows($keyField, $type));
+        self::assertEquals($expectedRows, $result->fetchRows($keyField, $type));
     }
 
     /**
@@ -210,7 +210,7 @@ class ResultTest extends DatabaseTestCase
             ->limit(2)
             ->execute();
 
-        $this->assertEquals($expectedList, $result->fetchList($field, $keyField));
+        self::assertEquals($expectedList, $result->fetchList($field, $keyField));
     }
 
     /**
@@ -257,7 +257,7 @@ class ResultTest extends DatabaseTestCase
             ->limit($limit)
             ->execute();
 
-        $this->assertSame($limit, $result->getFoundRows());
+        self::assertSame($limit, $result->getFoundRows());
     }
 
     /**
@@ -280,7 +280,7 @@ class ResultTest extends DatabaseTestCase
             ->limit(1)
             ->execute();
 
-        $this->assertSame($expected, $result->getFieldCount());
+        self::assertSame($expected, $result->getFieldCount());
     }
 
     /**
@@ -309,7 +309,7 @@ class ResultTest extends DatabaseTestCase
             ->useFoundRows()
             ->execute();
 
-        $this->assertSame($expected, $result->getFoundRows());
+        self::assertSame($expected, $result->getFoundRows());
     }
 
     public function testSetCurrentRow()
@@ -320,7 +320,7 @@ class ResultTest extends DatabaseTestCase
 
         $result->setCurrentRow(1);
 
-        $this->assertSame('Guest', $result->fetchCell());
+        self::assertSame('Guest', $result->fetchCell());
     }
 
     public function testGetMysqliResult()
@@ -337,7 +337,7 @@ class ResultTest extends DatabaseTestCase
         ];
 
         foreach ($mysqliResult as $key => $row) {
-            $this->assertSame($expectedRows[$key], $row);
+            self::assertSame($expectedRows[$key], $row);
         }
     }
 } 

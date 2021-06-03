@@ -1,13 +1,13 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
 namespace Modules\User\Mappers;
 
 use PHPUnit\Ilch\TestCase;
-use \Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Mappers\Group as GroupMapper;
 
 /**
  * Tests the user group mapper class.
@@ -31,8 +31,8 @@ class GroupTest extends TestCase
         $mapper = new GroupMapper();
         $group = $mapper->loadFromArray($groupRow);
 
-        $this->assertTrue($group !== false);
-        $this->assertEquals(1, $group->getId());
-        $this->assertEquals('Administrator', $group->getName());
+        self::assertNotFalse($group);
+        self::assertEquals(1, $group->getId());
+        self::assertEquals('Administrator', $group->getName());
     }
 }

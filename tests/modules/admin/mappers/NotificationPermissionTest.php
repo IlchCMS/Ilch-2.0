@@ -10,6 +10,7 @@ use PHPUnit\Ilch\DatabaseTestCase;
 use Modules\Admin\Config\Config as ModuleConfig;
 use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
 use Modules\Admin\Models\NotificationPermission as NotificationPermissionModel;
+use PHPUnit\Ilch\PhpunitDataset;
 
 /**
  * Tests the NotificationPermission mapper class.
@@ -22,10 +23,13 @@ class NotificationPermissionTest extends DatabaseTestCase
      * @var UserMapper
      */
     protected $out;
+    protected $phpunitDataset;
 
     public function setUp()
     {
         parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
         $this->out = new NotificationPermissionMapper();
     }
 
@@ -35,7 +39,7 @@ class NotificationPermissionTest extends DatabaseTestCase
      */
     public function testGetPermissions()
     {
-        $this->assertTrue(count($this->out->getPermissions()) == 2);
+        self::assertCount(2, $this->out->getPermissions());
     }
 
     /**
@@ -44,7 +48,7 @@ class NotificationPermissionTest extends DatabaseTestCase
      */
     public function testGetPermissionOfModuleNotExisting()
     {
-        $this->assertNull($this->out->getPermissionOfModule('xyzmodul'));
+        self::assertNull($this->out->getPermissionOfModule('xyzmodul'));
     }
 
     /**
@@ -59,7 +63,7 @@ class NotificationPermissionTest extends DatabaseTestCase
         $notificationPermissionModel->setLimit(3);
 
         $this->out->updatePermissionOfModule($notificationPermissionModel);
-        $this->assertEquals($notificationPermissionModel, $this->out->getPermissionOfModule('article'));
+        self::assertEquals($notificationPermissionModel, $this->out->getPermissionOfModule('article'));
     }
 
     /**
@@ -70,7 +74,7 @@ class NotificationPermissionTest extends DatabaseTestCase
     {
         $this->out->updatePermissionGrantedOfModule('article', false);
         $notificationPermissionModel = $this->out->getPermissionOfModule('article');
-        $this->assertTrue($notificationPermissionModel->getGranted() == 0);
+        self::assertEquals(0, $notificationPermissionModel->getGranted());
     }
 
     /**
@@ -81,7 +85,7 @@ class NotificationPermissionTest extends DatabaseTestCase
     {
         $this->out->updateLimitOfModule('article', 3);
         $notificationPermissionModel = $this->out->getPermissionOfModule('article');
-        $this->assertTrue($notificationPermissionModel->getLimit() == 3);
+        self::assertEquals(3, $notificationPermissionModel->getLimit());
     }
 
     /**
@@ -94,7 +98,7 @@ class NotificationPermissionTest extends DatabaseTestCase
         $this->out->updateLimitOfModule('article', 300);
         $notificationPermissionModel = $this->out->getPermissionOfModule('article');
         // If the limit is bigger than 255 (UNSIGNED TINYINT) then it gets set to the maximum of 255.
-        $this->assertTrue($notificationPermissionModel->getLimit() == 255);
+        self::assertEquals(255, $notificationPermissionModel->getLimit());
     }
 
     /**
@@ -107,7 +111,7 @@ class NotificationPermissionTest extends DatabaseTestCase
         $this->out->updateLimitOfModule('article', -1);
         $notificationPermissionModel = $this->out->getPermissionOfModule('article');
         // If the limit is negative (UNSIGNED) then it gets set to 0.
-        $this->assertTrue($notificationPermissionModel->getLimit() == 0);
+        self::assertEquals(0, $notificationPermissionModel->getLimit());
     }
 
     /**
@@ -122,7 +126,7 @@ class NotificationPermissionTest extends DatabaseTestCase
         $notificationPermissionModel->setLimit(5);
 
         $this->out->addPermissionForModule($notificationPermissionModel);
-        $this->assertEquals($notificationPermissionModel, $this->out->getPermissionOfModule('away'));
+        self::assertEquals($notificationPermissionModel, $this->out->getPermissionOfModule('away'));
     }
 
     /**
@@ -132,17 +136,7 @@ class NotificationPermissionTest extends DatabaseTestCase
     public function testDeletePermissionOfModule()
     {
         $this->out->deletePermissionOfModule('article');
-        $this->assertNull($this->out->getPermissionOfModule('article'));
-    }
-
-    /**
-     * Creates and returns a dataset object.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
-     */
-    protected function getDataSet()
-    {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/../_files/mysql_database.yml');
+        self::assertNull($this->out->getPermissionOfModule('article'));
     }
 
     /**

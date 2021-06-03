@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -22,10 +22,10 @@ class MinTest extends TestCase
     {
         $validator = new Min($data);
         $validator->run();
-        $this->assertSame($expectedIsValid, $validator->isValid());
+        self::assertSame($expectedIsValid, $validator->isValid());
         if (!empty($expectedErrorKey)) {
-            $this->assertSame($expectedErrorKey, $validator->getErrorKey());
-            $this->assertSame($expectedErrorParameters, $validator->getErrorParameters());
+            self::assertSame($expectedErrorKey, $validator->getErrorKey());
+            self::assertSame($expectedErrorParameters, $validator->getErrorParameters());
         }
     }
 

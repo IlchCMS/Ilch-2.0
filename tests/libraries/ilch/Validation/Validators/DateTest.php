@@ -22,10 +22,10 @@ class DateTest extends TestCase
     {
         $validator = new Date($data);
         $validator->run();
-        $this->assertSame($expectedIsValid, $validator->isValid());
+        self::assertSame($expectedIsValid, $validator->isValid());
         if (!empty($expectedErrorKey)) {
-            $this->assertSame($expectedErrorKey, $validator->getErrorKey());
-            $this->assertSame($expectedErrorParameters, $validator->getErrorParameters());
+            self::assertSame($expectedErrorKey, $validator->getErrorKey());
+            self::assertSame($expectedErrorParameters, $validator->getErrorParameters());
         }
     }
 

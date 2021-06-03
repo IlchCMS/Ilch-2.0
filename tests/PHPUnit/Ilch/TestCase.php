@@ -39,7 +39,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         parent::tearDown();
 
         foreach ($this->tearDownCallbacks as $callback) {
-            if (is_callable($callback)) {
+            if (\is_callable($callback)) {
                 $callback();
             }
         }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -10,6 +10,7 @@ use PHPUnit\Ilch\DatabaseTestCase;
 use Modules\Admin\Config\Config as ModuleConfig;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Modules\Admin\Models\Notification as NotificationModel;
+use PHPUnit\Ilch\PhpunitDataset;
 
 /**
  * Tests the Notifications mapper class.
@@ -23,9 +24,13 @@ class NotificationsTest extends DatabaseTestCase
      */
     protected $out;
 
+    protected $phpunitDataset;
+
     public function setUp()
     {
         parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
         $this->out = new NotificationsMapper();
     }
 
@@ -41,17 +46,17 @@ class NotificationsTest extends DatabaseTestCase
         $notificationModel->setTimestamp('2014-01-01 12:12:12');
         $notificationModel->setModule('article');
         $notificationModel->setMessage('Testmessage1');
-        $notificationModel->setURL('http://www.google.de');
+        $notificationModel->setURL('https://www.google.de');
         $notificationModel->setType('articleNewArticle');
 
         $notification = $this->out->getNotificationById(1);
-        $this->assertTrue($notification->getId() == 1);
+        self::assertEquals(1, $notification->getId());
         // The timestamp can vary by one hour. Therefore for example comparing
         // the notificationModel with the one from the database assertEquals() would not work always.
-        $this->assertTrue($notification->getModule() == 'article');
-        $this->assertTrue($notification->getMessage() == 'Testmessage1');
-        $this->assertTrue($notification->getURL() == 'http://www.google.de');
-        $this->assertTrue($notification->getType() == 'articleNewArticle');
+        self::assertSame($notification->getModule(), 'article');
+        self::assertSame($notification->getMessage(), 'Testmessage1');
+        self::assertSame($notification->getURL(), 'https://www.google.de');
+        self::assertSame($notification->getType(), 'articleNewArticle');
     }
 
     /**
@@ -61,7 +66,7 @@ class NotificationsTest extends DatabaseTestCase
      */
     public function testGetNotificationByIdNotExisting()
     {
-        $this->assertNull($this->out->getNotificationById(99));
+        self::assertNull($this->out->getNotificationById(99));
     }
 
     /**
@@ -70,7 +75,7 @@ class NotificationsTest extends DatabaseTestCase
      */
     public function testGetNotifications()
     {
-        $this->assertTrue(count($this->out->getNotifications()) == 2);
+        self::assertCount(2, $this->out->getNotifications());
     }
 
     /**
@@ -79,7 +84,7 @@ class NotificationsTest extends DatabaseTestCase
      */
     public function testGetNotificationsByModule()
     {
-        $this->assertTrue(count($this->out->getNotificationsByModule('article')) == 1);
+        self::assertCount(1, $this->out->getNotificationsByModule('article'));
     }
 
     /**
@@ -88,7 +93,7 @@ class NotificationsTest extends DatabaseTestCase
      */
     public function testGetNotificationsByModuleNotExisting()
     {
-        $this->assertEmpty($this->out->getNotificationsByModule('xyzmodule'));
+        self::assertEmpty($this->out->getNotificationsByModule('xyzmodule'));
     }
 
     /**
@@ -97,7 +102,7 @@ class NotificationsTest extends DatabaseTestCase
      */
     public function testGetNotificationsByType()
     {
-        $this->assertTrue(count($this->out->getNotificationsByType('articleNewArticle')) == 1);
+        self::assertCount(1, $this->out->getNotificationsByType('articleNewArticle'));
     }
 
     /**
@@ -106,7 +111,7 @@ class NotificationsTest extends DatabaseTestCase
      */
     public function testGetNotificationsByTypeNotExisting()
     {
-        $this->assertEmpty($this->out->getNotificationsByType('xyzmodule'));
+        self::assertEmpty($this->out->getNotificationsByType('xyzmodule'));
     }
 
     /**
@@ -120,10 +125,10 @@ class NotificationsTest extends DatabaseTestCase
         $notificationModel->setTimestamp('2014-01-01 12:12:12');
         $notificationModel->setModule('article');
         $notificationModel->setMessage('Testmessage1');
-        $notificationModel->setURL('http://www.google.de');
+        $notificationModel->setURL('https://www.google.de');
         $_SERVER['HTTP_HOST'] = '127.0.0.1';
 
-        $this->assertTrue($this->out->isValidNotification($notificationModel));
+        self::assertTrue($this->out->isValidNotification($notificationModel));
     }
 
     /**
@@ -136,16 +141,16 @@ class NotificationsTest extends DatabaseTestCase
         $notificationModel = new NotificationModel();
         $notificationModel->setModule('awards');
         $notificationModel->setMessage('Testmessage3');
-        $notificationModel->setURL('http://www.google.de');
+        $notificationModel->setURL('https://www.google.de');
         $notificationModel->setType('awardsNewAward');
         $_SERVER['HTTP_HOST'] = '127.0.0.1';
 
-        $this->assertTrue($this->out->addNotification($notificationModel) == 3);
+        self::assertEquals(3, $this->out->addNotification($notificationModel));
         $notification = $this->out->getNotificationById(3);
-        $this->assertTrue($notification->getModule() == 'awards');
-        $this->assertTrue($notification->getMessage() == 'Testmessage3');
-        $this->assertTrue($notification->getURL() == 'http://www.google.de');
-        $this->assertTrue($notification->getType() == 'awardsNewAward');
+        self::assertSame($notification->getModule(), 'awards');
+        self::assertSame($notification->getMessage(), 'Testmessage3');
+        self::assertSame($notification->getURL(), 'https://www.google.de');
+        self::assertSame($notification->getType(), 'awardsNewAward');
     }
 
     /**
@@ -159,16 +164,16 @@ class NotificationsTest extends DatabaseTestCase
         $notificationModel->setId(2);
         $notificationModel->setModule('awards');
         $notificationModel->setMessage('Testmessage3');
-        $notificationModel->setURL('http://www.google.de');
+        $notificationModel->setURL('https://www.google.de');
         $notificationModel->setType('awardsNewAward2');
         $_SERVER['HTTP_HOST'] = '127.0.0.1';
 
         $this->out->updateNotificationById($notificationModel);
         $notification = $this->out->getNotificationById(2);
-        $this->assertTrue($notification->getModule() == 'awards');
-        $this->assertTrue($notification->getMessage() == 'Testmessage3');
-        $this->assertTrue($notification->getURL() == 'http://www.google.de');
-        $this->assertTrue($notification->getType() == 'awardsNewAward2');
+        self::assertSame($notification->getModule(), 'awards');
+        self::assertSame($notification->getMessage(), 'Testmessage3');
+        self::assertSame($notification->getURL(), 'https://www.google.de');
+        self::assertSame($notification->getType(), 'awardsNewAward2');
     }
 
     /**
@@ -178,7 +183,7 @@ class NotificationsTest extends DatabaseTestCase
     public function testDeleteNotificationById()
     {
         $this->out->deleteNotificationById(1);
-        $this->assertNull($this->out->getNotificationById(1));
+        self::assertNull($this->out->getNotificationById(1));
     }
 
     /**
@@ -188,7 +193,7 @@ class NotificationsTest extends DatabaseTestCase
     public function testDeleteNotificationByIdNotExisting()
     {
         $this->out->deleteNotificationById(99);
-        $this->assertTrue(count($this->out->getNotifications()) == 2);
+        self::assertCount(2, $this->out->getNotifications());
     }
 
     /**
@@ -198,7 +203,7 @@ class NotificationsTest extends DatabaseTestCase
     public function testDeleteNotificationsByModule()
     {
         $this->out->deleteNotificationsByModule('article');
-        $this->assertTrue(count($this->out->getNotificationsByModule('article')) == 0);
+        self::assertCount(0, $this->out->getNotificationsByModule('article'));
     }
 
     /**
@@ -208,7 +213,7 @@ class NotificationsTest extends DatabaseTestCase
     public function testDeleteNotificationsByModuleNotExisting()
     {
         $this->out->deleteNotificationsByModule('xyzmodule');
-        $this->assertTrue(count($this->out->getNotifications()) == 2);
+        self::assertCount(2, $this->out->getNotifications());
     }
 
     /**
@@ -218,7 +223,7 @@ class NotificationsTest extends DatabaseTestCase
     public function testDeleteNotificationsByType()
     {
         $this->out->deleteNotificationsByType('awardsNewAward');
-        $this->assertTrue(count($this->out->getNotificationsByType('awardsNewAward')) == 0);
+        self::assertCount(0, $this->out->getNotificationsByType('awardsNewAward'));
     }
 
     /**
@@ -228,7 +233,7 @@ class NotificationsTest extends DatabaseTestCase
     public function testDeleteNotificationsByTypeNotExisting()
     {
         $this->out->deleteNotificationsByType('xyzmodule');
-        $this->assertTrue(count($this->out->getNotifications()) == 2);
+        self::assertCount(2, $this->out->getNotifications());
     }
 
     /**
@@ -237,17 +242,7 @@ class NotificationsTest extends DatabaseTestCase
      */
     public function testDeleteAllNotifications() {
         $this->out->deleteAllNotifications();
-        $this->assertTrue(count($this->out->getNotifications()) == 0);
-    }
-
-    /**
-     * Creates and returns a dataset object.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
-     */
-    protected function getDataSet()
-    {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/../_files/mysql_database.yml');
+        self::assertCount(0, $this->out->getNotifications());
     }
 
     /**

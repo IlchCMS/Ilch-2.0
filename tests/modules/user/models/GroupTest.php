@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -23,7 +23,7 @@ class GroupTest extends TestCase
         $group = new Group();
         $group->setName('newGroup');
 
-        $this->assertEquals('newGroup', $group->getName(), 'The group name did not save correctly.');
+        self::assertEquals('newGroup', $group->getName(), 'The group name did not save correctly.');
     }
 
     /**
@@ -34,7 +34,7 @@ class GroupTest extends TestCase
         $group = new Group();
         $group->setId(3);
 
-        $this->assertEquals(3, $group->getId(), 'The group id did not save correctly.');
-        $this->assertTrue(is_int($group->getId()), 'The group id was not returned as an Integer.');
+        self::assertEquals(3, $group->getId(), 'The group id did not save correctly.');
+        self::assertTrue(\is_int($group->getId()), 'The group id was not returned as an Integer.');
     }
 }

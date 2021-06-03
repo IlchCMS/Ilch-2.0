@@ -25,17 +25,15 @@ class InsertTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->setMethods(['escape', 'getLastInsertId'])
             ->getMockForAbstractClass();
-        $db->expects($this->any())
-            ->method('escape')
-            ->will($this->returnCallback(function ($value, $addQuotes = false) {
+        $db->method('escape')
+            ->willReturnCallback(function ($value, $addQuotes = false) {
                 if ($addQuotes) {
                     $value = '"' . $value . '"';
                 }
                 return $value;
-            }));
-        $db->expects($this->any())
-            ->method('getLastInsertId')
-            ->will($this->returnValue($this->lastInsetId));
+            });
+        $db->method('getLastInsertId')
+            ->willReturn($this->lastInsetId);
 
         $this->out = new Insert($db);
     }
@@ -66,6 +64,6 @@ class InsertTest extends \PHPUnit\Framework\TestCase
         $expected = 'INSERT INTO `[prefix]_Test` '
             . '(`super`,`next`) VALUES ("data","fieldData")';
 
-        $this->assertEquals($expected, $this->out->generateSql());
+        self::assertEquals($expected, $this->out->generateSql());
     }
 }

@@ -21,7 +21,7 @@ class TranslatorTest extends TestCase
     public function testLoadTranslationsFile()
     {
         $translator = new Translator('de_DE');
-        $this->assertTrue($translator->load(__DIR__ . '/_files'));
+        self::assertTrue($translator->load(__DIR__ . '/_files'));
     }
 
     /**
@@ -30,7 +30,7 @@ class TranslatorTest extends TestCase
     public function testLoadTranslationFileNotExists()
     {
         $translator = new Translator('xx_xx');
-        $this->assertFalse(
+        self::assertFalse(
             $translator->load(__DIR__ . '/_files'),
             'The translator didn\'t return false when the translation file doesn\'t exist.'
         );
@@ -42,7 +42,7 @@ class TranslatorTest extends TestCase
     public function testLoadTranslationDirNotExists()
     {
         $translator = new Translator('de_DE');
-        $this->assertFalse(
+        self::assertFalse(
             $translator->load('someImaginaryFolder'),
             'The translator didn\'t return false when the given translation directory doesn\'t exist.'
         );
@@ -57,7 +57,7 @@ class TranslatorTest extends TestCase
         $translator = new Translator('en_EN');
         $translator->load(__DIR__ . '/_files');
 
-        $this->assertEquals(
+        self::assertEquals(
             'The user gets what he wants!',
             $translator->trans('userGetsWhatHeWants'),
             'The text wasnt translated using the translation file.'
@@ -73,7 +73,7 @@ class TranslatorTest extends TestCase
         $translator = new Translator('en_EN');
         $translator->load(__DIR__ . '/_files');
 
-        $this->assertEquals(
+        self::assertEquals(
             'notTranslatedText',
             $translator->trans('notTranslatedText'),
             'The text wasnt simply returned.'
@@ -89,7 +89,7 @@ class TranslatorTest extends TestCase
         $translator = new Translator('en_EN');
         $translator->load(__DIR__ . '/_files');
 
-        $this->assertEquals(
+        self::assertEquals(
             'Welcome, Hans',
             $translator->trans('welcomeUser', 'Hans'),
             'The text wasnt returned with the placeholder.'
@@ -105,7 +105,7 @@ class TranslatorTest extends TestCase
         $translator = new Translator('en_EN');
         $translator->load(__DIR__ . '/_files');
 
-        $this->assertEquals(
+        self::assertEquals(
             'Welcome, Hans, ur last login was yesterday',
             $translator->trans('welcomeUserExtended', 'Hans', 'yesterday'),
             'The text wasnt returned with the placeholder.'
@@ -118,7 +118,7 @@ class TranslatorTest extends TestCase
     public function testRequestLocaleDefinition()
     {
         $translator = new Translator('en_EN');
-        $this->assertEquals('en_EN', $translator->getLocale());
+        self::assertEquals('en_EN', $translator->getLocale());
     }
 
     /**
@@ -128,7 +128,7 @@ class TranslatorTest extends TestCase
     public function testRequestLocaleDefinitionDefault()
     {
         $translator = new Translator();
-        $this->assertEquals('de_DE', $translator->getLocale());
+        self::assertEquals('de_DE', $translator->getLocale());
     }
 
     /**
@@ -140,7 +140,7 @@ class TranslatorTest extends TestCase
         $translator->load(__DIR__ . '/_files');
 
         $expectedTranslations = require __DIR__ . '/_files/en.php';
-        $this->assertEquals(
+        self::assertEquals(
             $expectedTranslations,
             $translator->getTranslations(),
             'The translations array was returned wrongly.'
@@ -153,6 +153,6 @@ class TranslatorTest extends TestCase
     public function testShortenLocale()
     {
         $translator = new Translator();
-        $this->assertEquals('en', $translator->shortenLocale('en_EN'), 'The locale wasn\'t trimmed correctly.');
+        self::assertEquals('en', $translator->shortenLocale('en_EN'), 'The locale wasn\'t trimmed correctly.');
     }
 }

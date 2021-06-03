@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -13,6 +13,7 @@ use Modules\User\Config\Config as ModuleConfig;
 use Modules\Admin\Config\Config as AdminConfig;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Models\User as UserModel;
+use PHPUnit\Ilch\PhpunitDataset;
 
 /**
  * Tests the user mapper class.
@@ -26,26 +27,19 @@ class UserTest extends DatabaseTestCase
      */
     protected $out;
 
+    protected $phpunitDataset;
+
     public function setUp()
     {
         parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
         $this->out = new UserMapper();
     }
 
-
     public function testGetAdministratorCount()
     {
-        $this->assertEquals(1, $this->out->getAdministratorCount());
-    }
-
-    /**
-     * Creates and returns a dataset object.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
-     */
-    protected function getDataSet()
-    {
-        return new \PHPUnit\DbUnit\DataSet\YamlDataSet(__DIR__ . '/../_files/mysql_database.yml');
+        self::assertEquals(1, $this->out->getAdministratorCount());
     }
 
     /**

@@ -33,9 +33,9 @@ class ValidationTest extends TestCase
     {
         $validation = Validation::create($params, ['testField' => ($inverted ? 'NOT' : '').'integer']);
 
-        $this->assertSame($expected, $validation->isValid());
+        self::assertSame($expected, $validation->isValid());
         if (!$expected) {
-            $this->assertTrue($validation->getErrorBag()->hasError('testField'));
+            self::assertTrue($validation->getErrorBag()->hasError('testField'));
         }
     }
 
@@ -71,9 +71,9 @@ class ValidationTest extends TestCase
     ) {
         $validation = Validation::create($params, ['testField' => $validatorRules]);
 
-        $this->assertSame($expected, $validation->isValid());
+        self::assertSame($expected, $validation->isValid());
         if (!$expected) {
-            $this->assertSame($expectedErrors, $validation->getErrorBag()->getErrors());
+            self::assertSame($expectedErrors, $validation->getErrorBag()->getErrors());
         }
     }
 
@@ -135,9 +135,9 @@ class ValidationTest extends TestCase
 
         $validation = Validation::create($params, ['testField' => $validatorRules]);
 
-        $this->assertSame($expected, $validation->isValid());
+        self::assertSame($expected, $validation->isValid());
         if (!$expected) {
-            $this->assertSame($expectedErrors, $validation->getErrorBag()->getErrors());
+            self::assertSame($expectedErrors, $validation->getErrorBag()->getErrors());
         }
     }
 
@@ -198,6 +198,6 @@ class ValidationTest extends TestCase
 
         $errorMessages = $validation->getErrorBag()->getErrorMessages();
 
-        $this->assertSame(['Das Feld muss mindestens 3 betragen.'], $errorMessages);
+        self::assertSame(['Das Feld muss mindestens 3 betragen.'], $errorMessages);
     }
 }
