@@ -58,10 +58,8 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * This method is called before the first test of this test class is run.
-     *
-     * @return void
      */
-    public static function setUpBeforeClass(): void
+    public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
         TestHelper::setConfigInRegistry(static::$configData);
@@ -104,17 +102,6 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
         }
 
         parent::setUp();
-    }
-
-    /**
-     * This method is called after the last test of this test class is run.
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        $db = Registry::get('db');
-        static::dropTables($db);
     }
 
     /**
