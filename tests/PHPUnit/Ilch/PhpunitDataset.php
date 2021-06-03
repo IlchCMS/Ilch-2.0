@@ -21,7 +21,7 @@ class PhpunitDataset extends DatabaseTestCase
      *
      * @param array $fullpaths full paths to yml files to load.
      */
-    public function loadFromFiles(array $fullpaths): void
+    public function loadFromFiles(array $fullpaths)
     {
         foreach ($fullpaths as $table => $fullpath) {
             // Only a table when it's an associative array.
@@ -35,7 +35,7 @@ class PhpunitDataset extends DatabaseTestCase
      *
      * @param string $fullpath full path to yml file to load.
      */
-    public function loadFromFile(string $fullpath): void
+    public function loadFromFile(string $fullpath)
     {
         if (!file_exists($fullpath)) {
             throw new coding_exception('File not found: ' . $fullpath);
@@ -58,7 +58,7 @@ class PhpunitDataset extends DatabaseTestCase
      *
      * @param string $content contents of yaml file to load.
      */
-    public function loadFromString(string $content): void
+    public function loadFromString(string $content)
     {
         try {
             $parsedYaml = Yaml::parse($content);
@@ -73,7 +73,7 @@ class PhpunitDataset extends DatabaseTestCase
      *
      * @param array $tables
      */
-    public function sendToDatabase(array $tables): void
+    public function sendToDatabase(array $tables)
     {
         foreach($tables as $table => $rows) {
             $tableNotEmpty = (bool) $this->db->select('*')
