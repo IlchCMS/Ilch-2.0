@@ -26,7 +26,8 @@
     },
     "require-dev": {
         "maximebf/debugbar": "^1.15",
-        "phpunit/phpunit": "6.*",
+        "sminnee/phpunit": "^5.7.29",
+        "sminnee/phpunit-mock-objects": "^3.4.10",
         "symfony/yaml": "^3.3.6"
     },
     "autoload": {
