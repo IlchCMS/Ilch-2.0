@@ -184,7 +184,7 @@ class War extends \Ilch\Mapper
      */
     public function getWarsByWhere($where = null, $pagination = null)
     {
-        $sql = $this->db()->select(['w.id' => 'war_id','w.enemy','w.group','w.time','w.maps','w.server','w.password','w.xonx','w.game','w.matchtype','w.report','w.status','w.show','w.read_access','g.name' => 'group_name','g.id' => 'group_is','e.name' => 'enemy_name','e.id' => 'enemy_id'])
+        $sql = $this->db()->select(['war_id' => 'w.id', 'w.enemy', 'w.group', 'w.time', 'w.maps', 'w.server', 'w.password', 'w.xonx', 'w.game', 'w.matchtype', 'w.report', 'w.status', 'w.show', 'w.read_access', 'group_name' => 'g.name', 'group_is' => 'g.id', 'enemy_name' => 'e.name', 'enemy_id' => 'e.id'])
             ->from(['w' => 'war'])
             ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT')
             ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT')
@@ -281,7 +281,7 @@ class War extends \Ilch\Mapper
      */
     public function getWarListByStatus($status = NULL, $pagination = NULL)
     {
-        $sql = $this->db()->select(['w.id' => 'war_id','w.enemy','w.group','w.time','w.maps','w.server','w.password','w.xonx','w.game','w.matchtype','w.report','w.status','w.show','w.read_access','g.name' => 'group_name','g.id' => 'group_is','e.name' => 'enemy_name','e.id' => 'enemy_id'])
+        $sql = $this->db()->select(['war_id' => 'w.id', 'w.enemy', 'w.group', 'w.time', 'w.maps', 'w.server', 'w.password', 'w.xonx', 'w.game', 'w.matchtype', 'w.report', 'w.status', 'w.show', 'w.read_access', 'group_name' => 'g.name', 'group_is' => 'g.id', 'enemy_name' => 'e.name', 'enemy_id' => 'e.id'])
             ->from(['w' => 'war'])
             ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT')
             ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT')
@@ -335,7 +335,7 @@ class War extends \Ilch\Mapper
      */
     public function getWarList($pagination = NULL)
     {
-        $sql = $this->db()->select(['w.id' => 'war_id','w.enemy','w.group','w.time','w.maps','w.server','w.password','w.xonx','w.game','w.matchtype','w.report','w.status','w.show','w.read_access','g.name' => 'group_name','g.id' => 'group_is','e.name' => 'enemy_name','e.id' => 'enemy_id'])
+        $sql = $this->db()->select(['war_id' => 'w.id', 'w.enemy', 'w.group', 'w.time', 'w.maps', 'w.server', 'w.password', 'w.xonx', 'w.game', 'w.matchtype', 'w.report', 'w.status', 'w.show', 'w.read_access', 'group_name' => 'g.name', 'group_is' => 'g.id', 'enemy_name' => 'e.name', 'enemy_id' => 'e.id'])
             ->from(['w' => 'war'])
             ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT')
             ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT')
@@ -390,7 +390,7 @@ class War extends \Ilch\Mapper
      */
     public function getWarListByStatusAndLimt($status = NULL, $limit = NULL, $order = 'ASC')
     {
-        $sql = $this->db()->select(['w.id' => 'war_id','w.enemy','w.group','w.time','w.maps','w.server','w.password','w.xonx','w.game','w.matchtype','w.report','w.status','w.show','w.read_access','g.name' => 'group_name','g.tag' => 'group_tag', 'g.id' => 'group_is','e.name' => 'enemy_name', 'e.tag' => 'enemy_tag', 'e.id' => 'enemy_id'])
+        $sql = $this->db()->select(['war_id' => 'w.id', 'w.enemy', 'w.group', 'w.time', 'w.maps', 'w.server', 'w.password', 'w.xonx', 'w.game', 'w.matchtype', 'w.report', 'w.status', 'w.show', 'w.read_access', 'group_name' => 'g.name', 'group_tag' => 'g.tag', 'group_is' => 'g.id', 'enemy_name' => 'e.name', 'enemy_tag' => 'e.tag', 'enemy_id' => 'e.id'])
             ->from(['w' => 'war'])
             ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT')
             ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT')
@@ -434,7 +434,7 @@ class War extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getWarOptDistinctXonx() 
+    public function getWarOptDistinctXonx()
     {
         $sql = 'SELECT DISTINCT xonx
                 FROM [prefix]_war';
@@ -456,7 +456,7 @@ class War extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getWarOptDistinctGame() 
+    public function getWarOptDistinctGame()
     {
         $sql = 'SELECT DISTINCT game
                 FROM [prefix]_war';
@@ -478,7 +478,7 @@ class War extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getWarOptDistinctMatchtype() 
+    public function getWarOptDistinctMatchtype()
     {
         $sql = 'SELECT DISTINCT matchtype
                 FROM [prefix]_war';
@@ -523,14 +523,14 @@ class War extends \Ilch\Mapper
         // OUTPUT
         if ($days_left == '0') {
             if ($hours_left == '0' && $minutes_left > '0') {
-                echo $minutes_left.'m';
+                echo $minutes_left . 'm';
             } elseif ($hours_left == '0' && $minutes_left == '0') {
                 echo 'live';
-            } else  {
-                echo $hours_left.'h '.$minutes_left.'m';
+            } else {
+                echo $hours_left . 'h ' . $minutes_left . 'm';
             }
         } else {
-            echo $days_left.'d '.$hours_left.'h';
+            echo $days_left . 'd ' . $hours_left . 'h';
         }
     }
 
@@ -543,6 +543,6 @@ class War extends \Ilch\Mapper
      */
     public function existsTable($table)
     {
-        return $this->db()->ifTableExists('[prefix]_'.$table);
+        return $this->db()->ifTableExists('[prefix]_' . $table);
     }
 }

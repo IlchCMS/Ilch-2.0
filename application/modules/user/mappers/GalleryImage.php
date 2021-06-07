@@ -19,7 +19,7 @@ class GalleryImage extends \Ilch\Mapper
      */
     public function getImageById($id)
     {
-        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'g.id' => 'imgid', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
             ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
             ->where(['g.cat' => $id])
@@ -50,7 +50,7 @@ class GalleryImage extends \Ilch\Mapper
      */
     public function getLastImageByGalleryId($id)
     {
-        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'g.id' => 'imgid', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
             ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
             ->where(['g.cat' => $id])
@@ -115,7 +115,7 @@ class GalleryImage extends \Ilch\Mapper
      */
     public function getImageByGalleryId($id, $pagination = NULL)
     {
-        $sql = $this->db()->select(['g.image_id', 'g.cat', 'g.id' => 'imgid', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+        $sql = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
             ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
             ->where(['g.cat' => $id])
