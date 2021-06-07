@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -11,17 +11,20 @@ use Modules\User\Models\GalleryImage as GalleryImageModel;
 class GalleryImage extends \Ilch\Mapper
 {
     /**
-     * @param $id
+     * Get image by id.
+     *
+     * @param int $id
      * @return GalleryImageModel|null
      * @throws \Ilch\Database\Exception
      */
     public function getImageById($id)
     {
-        $sql = 'SELECT g.image_id, g.cat, g.id as imgid, g.visits, g.image_title, g.image_description, m.url, m.id, m.url_thumb
-                FROM `[prefix]_users_gallery_imgs` AS g
-                LEFT JOIN `[prefix]_users_media` m ON g.image_id = m.id
-                WHERE g.id = '.$id;
-        $imageRow = $this->db()->queryRow($sql);
+        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'g.id' => 'imgid', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+            ->from(['g' => 'users_gallery_imgs'])
+            ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
+            ->where(['g.cat' => $id])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($imageRow)) {
             return null;
@@ -39,17 +42,22 @@ class GalleryImage extends \Ilch\Mapper
     }
 
     /**
-     * @param $id
+     * Get last image of gallery by category id.
+     *
+     * @param int $id
      * @return GalleryImageModel|null
      * @throws \Ilch\Database\Exception
      */
     public function getLastImageByGalleryId($id)
     {
-        $sql = 'SELECT g.image_id, g.cat, g.id as imgid, g.visits, g.image_title, g.image_description, m.url, m.id, m.url_thumb
-                FROM `[prefix]_users_gallery_imgs` AS g
-                LEFT JOIN `[prefix]_users_media` m ON g.image_id = m.id
-                WHERE g.cat = '.$id.' ORDER by g.id DESC LIMIT 1';
-        $imageRow = $this->db()->queryRow($sql);
+        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'g.id' => 'imgid', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+            ->from(['g' => 'users_gallery_imgs'])
+            ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
+            ->where(['g.cat' => $id])
+            ->order(['g.id' => 'DESC'])
+            ->limit(1)
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($imageRow)) {
             return null;
@@ -66,7 +74,9 @@ class GalleryImage extends \Ilch\Mapper
     }
 
     /**
-     * @param $id
+     * Get count of images by category id.
+     *
+     * @param int $id
      * @return false|string|null
      */
     public function getCountImageById($id)
@@ -96,41 +106,63 @@ class GalleryImage extends \Ilch\Mapper
         }
     }
 
+    /**
+     * Get images by gallery id.
+     *
+     * @param int $id
+     * @param null|\Ilch\Pagination $pagination
+     * @return array|null
+     */
     public function getImageByGalleryId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.image_id, g.cat, g.id as imgid, g.image_title, g.image_description, g.visits, m.url, m.id, m.url_thumb
-                FROM `[prefix]_users_gallery_imgs` AS g
-                LEFT JOIN `[prefix]_users_media` m ON g.image_id = m.id
-                WHERE g.cat = '.$id.' ORDER BY g.id DESC
-                LIMIT '.implode(',',$pagination->getLimit());
-        $imageArray = $this->db()->queryArray($sql);
+        $sql = $this->db()->select(['g.image_id', 'g.cat', 'g.id' => 'imgid', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+            ->from(['g' => 'users_gallery_imgs'])
+            ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
+            ->where(['g.cat' => $id])
+            ->order(['g.id' => 'DESC']);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $imageArray = $result->fetchRows();
 
         if (empty($imageArray)) {
             return null;
         }
 
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        $entries = [];
 
-        $entry = [];
-
-        foreach ($imageArray as $entries) {
-            $entryModel = new GalleryImageModel();
-            $entryModel->setImageUrl($entries['url']);
-            $entryModel->setImageThumb($entries['url_thumb']);
-            $entryModel->setId($entries['imgid']);
-            $entryModel->setImageId($entries['id']);
-            $entryModel->setImageTitle($entries['image_title']);
-            $entryModel->setImageDesc($entries['image_description']);
-            $entryModel->setVisits($entries['visits']);
-            $entryModel->setCat($entries['cat']);
-            $entry[] = $entryModel;
+        foreach ($imageArray as $entry) {
+            $galleryImageModel = new GalleryImageModel();
+            $galleryImageModel->setImageUrl($entry['url']);
+            $galleryImageModel->setImageThumb($entry['url_thumb']);
+            $galleryImageModel->setId($entry['imgid']);
+            $galleryImageModel->setImageId($entry['id']);
+            $galleryImageModel->setImageTitle($entry['image_title']);
+            $galleryImageModel->setImageDesc($entry['image_description']);
+            $galleryImageModel->setVisits($entry['visits']);
+            $galleryImageModel->setCat($entry['cat']);
+            $entries[] = $galleryImageModel;
         }
-        return $entry;
+
+        return $entries;
     }
 
+    /**
+     * Delete gallery image by id.
+     *
+     * @param int $id
+     * @return \Ilch\Database\Mysql\Result|int
+     */
     public function deleteById($id)
     {
-            return $this->db()->delete('users_gallery_imgs')
+        return $this->db()->delete('users_gallery_imgs')
             ->where(['id' => $id])
             ->execute();
     }
@@ -144,9 +176,9 @@ class GalleryImage extends \Ilch\Mapper
     {
         if ($model->getVisits()) {
             $this->db()->update('users_gallery_imgs')
-                    ->values(['visits' => $model->getVisits()])
-                    ->where(['image_id' => $model->getImageId()])
-                    ->execute();
+                ->values(['visits' => $model->getVisits()])
+                ->where(['image_id' => $model->getImageId()])
+                ->execute();
         }
     }
 
@@ -158,8 +190,8 @@ class GalleryImage extends \Ilch\Mapper
     public function saveImageTreat(GalleryImageModel $model)
     {
         $this->db()->update('users_gallery_imgs')
-                ->values(['image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc()])
-                ->where(['id' => $model->getId()])
-                ->execute();
+            ->values(['image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc()])
+            ->where(['id' => $model->getId()])
+            ->execute();
     }
 }

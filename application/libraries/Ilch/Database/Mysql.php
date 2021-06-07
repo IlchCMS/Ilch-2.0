@@ -378,7 +378,7 @@ class Mysql
      */
     protected function getFieldsSql($fields)
     {
-        if (!is_array($fields) && ($fields === '*' || strpos($fields, '(') !== false)) {
+        if (!\is_array($fields) && ($fields === '*' || strpos($fields, '(') !== false)) {
             return $fields;
         }
 
@@ -421,7 +421,7 @@ class Mysql
             }
         }
         $parts = explode('.', $field);
-        if (count($parts) > 2) {
+        if (\count($parts) > 2) {
             throw new \InvalidArgumentException('Invalid field expression: ' . $field);
         }
         

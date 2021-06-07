@@ -47,11 +47,11 @@ class Pictureofx extends \Ilch\Box
 
             if (($date <= $currentTime) || empty($this->getConfig()->get('gallery_currentPicOfX'))) {
                 if ($this->getConfig()->get('gallery_pictureOfXRandom')) {
-                    $index = mt_rand(0, count($imageIds) - 1);
+                    $index = mt_rand(0, \count($imageIds) - 1);
                 } else {
                     $index = $currentIndex + 1;
 
-                    if ((count($imageIds) - 1) < $index) {
+                    if ((\count($imageIds) - 1) < $index) {
                         $index = 0;
                     }
                 }
@@ -60,7 +60,7 @@ class Pictureofx extends \Ilch\Box
             } else {
                 $index = $currentIndex;
 
-                if ((count($imageIds) - 1) < $index) {
+                if ((\count($imageIds) - 1) < $index) {
                     $index = 0;
                 }
             }

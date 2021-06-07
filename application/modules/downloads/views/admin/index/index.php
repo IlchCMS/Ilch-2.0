@@ -6,7 +6,7 @@ $fileMapper = $this->get('fileMapper');
 function rec($item, $downloadsMapper, $obj, $fileMapper)
 {
     $subItems = $downloadsMapper->getDownloadsItemsByParent('1', $item->getId());
-    $file = $fileMapper->getCountFileById($item->getId());
+    $fileCount = $fileMapper->getCountOfFilesByCategory($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (empty($subItems)) {
@@ -37,7 +37,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                         <i class="fa fa-eye"></i>
                     </a>
                 </span>
-                <span class="count" style="float:right; margin-right: 6px;">'. count($file).'</span>
+                <span class="count" style="float:right; margin-right: 6px;">'.$fileCount.'</span>
             </div>';
 
     if (!empty($subItems)) {

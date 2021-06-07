@@ -1,70 +1,77 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Gallery\Mappers;
 
+use Ilch\Pagination;
 use Modules\Gallery\Models\Image as ImageModel;
 
 class Image extends \Ilch\Mapper
 {
     /**
-     * @param $id
+     * @param int $id
      * @return ImageModel|null
      * @throws \Ilch\Database\Exception
      */
     public function getImageById($id)
     {
-        $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
-                       FROM `[prefix]_gallery_imgs` AS g
-                       LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-                       WHERE g.id = '.(int)$id;
-        $imageRow = $this->db()->queryRow($sql);
+        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'g.id' => 'imgid', 'g.visits', 'g.image_title', 'g.image_description', 'm.url', 'm.id', 'm.url_thumb'])
+            ->from(['g' => 'gallery_imgs'])
+            ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
+            ->where(['g.id' => (int)$id])
+            ->execute()
+            ->fetchRow();
 
         if (empty($imageRow)) {
             return null;
         }
 
-        $entryModel = new ImageModel();
-        $entryModel->setId($imageRow['imgid']);
-        $entryModel->setImageId($imageRow['image_id']);
-        $entryModel->setImageUrl($imageRow['url']);
-        $entryModel->setImageThumb($imageRow['url_thumb']);
-        $entryModel->setImageTitle($imageRow['image_title']);
-        $entryModel->setImageDesc($imageRow['image_description']);
-        $entryModel->setCat($imageRow['cat']);
-        $entryModel->setVisits($imageRow['visits']);
+        $imageModel = new ImageModel();
+        $imageModel->setId($imageRow['imgid']);
+        $imageModel->setImageId($imageRow['image_id']);
+        $imageModel->setImageUrl($imageRow['url']);
+        $imageModel->setImageThumb($imageRow['url_thumb']);
+        $imageModel->setImageTitle($imageRow['image_title']);
+        $imageModel->setImageDesc($imageRow['image_description']);
+        $imageModel->setCat($imageRow['cat']);
+        $imageModel->setVisits($imageRow['visits']);
 
-        return $entryModel;
+        return $imageModel;
     }
 
     /**
-     * @param $id
+     * Get last image by gallery id.
+     *
+     * @param int $id
      * @return ImageModel|null
      * @throws \Ilch\Database\Exception
      */
     public function getLastImageByGalleryId($id)
     {
-        $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
-                       FROM `[prefix]_gallery_imgs` AS g
-                       LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-                       WHERE g.cat = '.(int)$id.' ORDER by g.id DESC LIMIT 1';
-        $imageRow = $this->db()->queryRow($sql);
+        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'g.visits', 'g.image_title', 'g.image_description', 'm.id', 'm.url_thumb'])
+            ->from(['g' => 'gallery_imgs'])
+            ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
+            ->where(['g.cat' => (int)$id])
+            ->order(['g.id' => 'DESC'])
+            ->limit(1)
+            ->execute()
+            ->fetchRow();
 
         if (empty($imageRow)) {
             return null;
         }
 
-        $entryModel = new ImageModel();
-        $entryModel->setImageId($imageRow['image_id']);
-        $entryModel->setImageThumb($imageRow['url_thumb']);
-        $entryModel->setImageTitle($imageRow['image_title']);
-        $entryModel->setImageDesc($imageRow['image_description']);
-        $entryModel->setVisits($imageRow['visits']);
+        $imageModel = new ImageModel();
+        $imageModel->setImageId($imageRow['image_id']);
+        $imageModel->setImageThumb($imageRow['url_thumb']);
+        $imageModel->setImageTitle($imageRow['image_title']);
+        $imageModel->setImageDesc($imageRow['image_description']);
+        $imageModel->setVisits($imageRow['visits']);
 
-        return $entryModel;
+        return $imageModel;
     }
 
     /**
@@ -76,7 +83,7 @@ class Image extends \Ilch\Mapper
      */
     public function getCountImageById($id)
     {
-        return $this->db()->select('COUNT(*)', 'gallery_imgs')
+        return (int)$this->db()->select('COUNT(*)', 'gallery_imgs')
             ->where(['cat' => $id])
             ->execute()
             ->fetchCell();
@@ -91,33 +98,42 @@ class Image extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('gallery_imgs')
-                ->values(['image_id' => $model->getImageId(),'cat' => $model->getCat()])
+                ->values(['image_id' => $model->getImageId(), 'cat' => $model->getCat()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('gallery_imgs')
-                ->values(['image_id' => $model->getImageId(),'cat' => $model->getCat()])
+                ->values(['image_id' => $model->getImageId(), 'cat' => $model->getCat()])
                 ->execute();
         }
     }
 
     /**
-     * @param $id
-     * @param null $pagination
+     * Get images by gallery id.
+     *
+     * @param int $id
+     * @param null|Pagination $pagination
      * @return array
      * @throws \Ilch\Database\Exception
      */
     public function getImageByGalleryId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.image_id,g.cat,g.id as imgid,g.image_title,g.image_description,g.visits, m.url, m.id, m.url_thumb
-                           FROM `[prefix]_gallery_imgs` AS g
-                           LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-                           WHERE g.cat = '.(int)$id.' ORDER BY g.id DESC
-                           LIMIT '.implode(',',$pagination->getLimit());
+        $sql = $this->db()->select(['g.image_id', 'g.cat', 'g.id' => 'imgid', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+            ->from(['g' => 'gallery_imgs'])
+            ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
+            ->where(['g.cat' => (int)$id])
+            ->order(['g.id' => 'DESC']);
 
-        $imageArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
 
+        $imageArray = $result->fetchRows();
         $entry = [];
 
         foreach ($imageArray as $entries) {
@@ -131,6 +147,7 @@ class Image extends \Ilch\Mapper
             $entryModel->setCat($entries['cat']);
             $entry[] = $entryModel;
         }
+
         return $entry;
     }
 
@@ -155,7 +172,7 @@ class Image extends \Ilch\Mapper
      */
     public function deleteById($id)
     {
-            return $this->db()->delete('gallery_imgs')
+        return $this->db()->delete('gallery_imgs')
             ->where(['id' => $id])
             ->execute();
     }
@@ -169,9 +186,9 @@ class Image extends \Ilch\Mapper
     {
         if ($model->getVisits()) {
             $this->db()->update('gallery_imgs')
-                    ->values(['visits' => $model->getVisits()])
-                    ->where(['image_id' => $model->getImageId()])
-                    ->execute();
+                ->values(['visits' => $model->getVisits()])
+                ->where(['image_id' => $model->getImageId()])
+                ->execute();
         }
     }
 
@@ -183,8 +200,8 @@ class Image extends \Ilch\Mapper
     public function saveImageTreat(ImageModel $model)
     {
         $this->db()->update('gallery_imgs')
-                ->values(['image_title' => $model->getImageTitle(),'image_description' => $model->getImageDesc()])
-                ->where(['id' => $model->getId()])
-                ->execute();
+            ->values(['image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc()])
+            ->where(['id' => $model->getId()])
+            ->execute();
     }
 }

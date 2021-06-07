@@ -10,6 +10,13 @@ use Modules\Downloads\Models\File as FileModel;
 
 class File extends \Ilch\Mapper
 {
+    /**
+     * Get the file by id.
+     *
+     * @param int $id
+     * @return FileModel|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getFileById($id)
     {
         $sql = 'SELECT g.file_id,g.cat,g.id as fileid,g.visits,g.file_title,g.file_description,g.file_image, m.url, m.id, m.url_thumb
@@ -35,6 +42,13 @@ class File extends \Ilch\Mapper
         return $entryModel;
     }
 
+    /**
+     * Get the last file by it's id.
+     *
+     * @param int $id
+     * @return FileModel|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getLastFileByDownloadsId($id)
     {
         $sql = 'SELECT g.file_id,g.cat,g.id as fileid,g.visits,g.file_title,g.file_image,g.file_description, m.url, m.id, m.url_thumb
@@ -59,13 +73,19 @@ class File extends \Ilch\Mapper
         return $entryModel;
     }
 
-    public function getCountFileById($id)
+    /**
+     * Get the count of files by category.
+     *
+     * @param int $catId id of the category
+     * @return int count of files
+     */
+    public function getCountOfFilesByCategory(int $catId): int
     {
-        $sql = 'SELECT *
-                FROM `[prefix]_downloads_files`
-                
-                WHERE cat = '.(int)$id;
-        return $this->db()->queryArray($sql);
+        return (int)$this->db()->select('Count(*)')
+            ->from(['downloads_files'])
+            ->where(['cat' => $catId])
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -87,35 +107,55 @@ class File extends \Ilch\Mapper
         }
     }
 
+    /**
+     * Get files by category id.
+     *
+     * @param int $id category id
+     * @param null $pagination
+     * @return array
+     */
     public function getFileByDownloadsId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.file_id,g.cat,g.id as fileid,g.file_title,g.file_image,g.file_description,g.visits, m.url, m.id, m.url_thumb
-                           FROM `[prefix]_downloads_files` AS g
-                           LEFT JOIN `[prefix]_media` m ON g.file_image = m.url
+        $sql = $this->db()->select(['g.cat', 'g.id' => 'fileid', 'g.file_title', 'g.file_image', 'g.file_description', 'g.visits', 'm.url', 'm.url_thumb'])
+            ->from(['g' => 'downloads_files'])
+            ->join(['m' => 'media'], 'g.file_image = m.url', 'LEFT')
+            ->where(['g.cat' => (int)$id])
+            ->order(['g.id' => ' DESC']);
 
-                           WHERE g.cat = '.(int)$id.' ORDER BY g.id DESC
-                           LIMIT '.implode(',',$pagination->getLimit());
-
-        $fileArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
-
-        $entry = [];
-
-        foreach ($fileArray as $entries) {
-            $entryModel = new FileModel();
-            $entryModel->setFileUrl($entries['url']);
-            $entryModel->setFileThumb($entries['url_thumb']);
-            $entryModel->setId($entries['fileid']);
-            $entryModel->setFileTitle($entries['file_title']);
-            $entryModel->setFileImage($entries['url_thumb']);
-            $entryModel->setFileDesc($entries['file_description']);
-            $entryModel->setVisits($entries['visits']);
-            $entryModel->setCat($entries['cat']);
-            $entry[] = $entryModel;
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
         }
-        return $entry;
+
+        $filesArray = $result->fetchRows();
+        $entries = [];
+
+        foreach ($filesArray as $entry) {
+            $fileModel = new FileModel();
+            $fileModel->setFileUrl($entry['url']);
+            $fileModel->setFileThumb($entry['url_thumb']);
+            $fileModel->setId($entry['fileid']);
+            $fileModel->setFileTitle($entry['file_title']);
+            $fileModel->setFileImage($entry['url_thumb']);
+            $fileModel->setFileDesc($entry['file_description']);
+            $fileModel->setVisits($entry['visits']);
+            $fileModel->setCat($entry['cat']);
+            $entries[] = $fileModel;
+        }
+
+        return $entries;
     }
 
+    /**
+     * Delete a file by it's id.
+     *
+     * @param int $id the id of the file
+     * @return \Ilch\Database\Mysql\Result|int
+     */
     public function deleteById($id)
     {
             return $this->db()->delete('downloads_files')

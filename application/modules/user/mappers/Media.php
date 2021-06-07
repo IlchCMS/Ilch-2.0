@@ -13,13 +13,23 @@ class Media extends \Ilch\Mapper
     /**
      * Gets the Media Lists by ending.
      *
+     * @param int $userId
      * @param string $ending
      * @param \Ilch\Pagination|null $pagination
      * @return MediaModel[]|array
+     * @throws \Ilch\Database\Exception
      */
     public function getMediaListByEnding($userId, $ending = NULL, $pagination = NULL) 
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *
+        if ($pagination) {
+            $sqlCountOfRows = 'SELECT COUNT(*)
+                FROM `[prefix]_users_media`
+                WHERE user_id = '.$userId.' AND ending IN ('.implode(',', $this->db()->escapeArray(explode(' ', $ending), true)).')';
+
+            $pagination->setRows($this->db()->querycell($sqlCountOfRows));
+        }
+
+        $sql = 'SELECT *
                 FROM `[prefix]_users_media`
                 WHERE user_id = '.$userId.' AND ending IN ('
                     .implode(',',  $this->db()->escapeArray(explode(' ', $ending), true))
@@ -28,7 +38,6 @@ class Media extends \Ilch\Mapper
                 LIMIT '.implode(',',$pagination->getLimit());
 
         $mediaArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
         if (empty($mediaArray)) {
             return null;

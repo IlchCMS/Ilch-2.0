@@ -6,7 +6,7 @@
 
 namespace Ilch\Database\Mysql;
 
-use \Ilch\Database\Mysql as DB;
+use Ilch\Database\Mysql as DB;
 
 class Insert extends QueryBuilder
 {
@@ -85,7 +85,8 @@ class Insert extends QueryBuilder
         }
 
         $sql = 'INSERT INTO ' . $this->db->quote('[prefix]_'.$this->table). ' (';
-        $sqlFields = $sqlValues = [];
+        $sqlValues = [];
+        $sqlFields = $sqlValues;
 
         if (!empty($this->values)) {
             foreach ($this->values as $key => $value) {

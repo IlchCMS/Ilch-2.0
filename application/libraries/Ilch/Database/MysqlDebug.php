@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -81,7 +81,7 @@ class MysqlDebug extends Mysql
      */
     public function getAccumulatedStatementsDuration()
     {
-        return array_reduce($this->executedStatements, function ($v, $s) { return $v + $s->getDuration(); });
+        return array_reduce($this->executedStatements, static function ($v, $s) { return $v + $s->getDuration(); });
     }
 
     /**
@@ -91,7 +91,7 @@ class MysqlDebug extends Mysql
      */
     public function getMemoryUsage()
     {
-        return array_reduce($this->executedStatements, function ($v, $s) { return $v + $s->getMemoryUsage(); });
+        return array_reduce($this->executedStatements, static function ($v, $s) { return $v + $s->getMemoryUsage(); });
     }
 
     /**
@@ -101,7 +101,7 @@ class MysqlDebug extends Mysql
      */
     public function getPeakMemoryUsage()
     {
-        return array_reduce($this->executedStatements, function ($v, $s) { $m = $s->getEndMemory(); return $m > $v ? $m : $v; });
+        return array_reduce($this->executedStatements, static function ($v, $s) { $m = $s->getEndMemory(); return $m > $v ? $m : $v; });
     }
 
     /**
@@ -121,6 +121,6 @@ class MysqlDebug extends Mysql
      */
     public function getFailedExecutedStatements()
     {
-        return array_filter($this->executedStatements, function ($s) { return !$s->isSuccess(); });
+        return array_filter($this->executedStatements, static function ($s) { return !$s->isSuccess(); });
     }
 }

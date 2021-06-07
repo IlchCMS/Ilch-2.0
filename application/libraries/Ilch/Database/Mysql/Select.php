@@ -6,7 +6,7 @@
 
 namespace Ilch\Database\Mysql;
 
-use \Ilch\Database\Mysql as DB;
+use Ilch\Database\Mysql as DB;
 
 class Select extends QueryBuilder
 {
@@ -156,8 +156,8 @@ class Select extends QueryBuilder
      */
     public function limit($limit)
     {
-        if (is_array($limit)) {
-            $limitCount = count($limit);
+        if (\is_array($limit)) {
+            $limitCount = \count($limit);
             if ($limitCount === 1) {
                 $this->limit = (int) $limit[0];
             } elseif ($limitCount > 1) {
@@ -217,7 +217,7 @@ class Select extends QueryBuilder
     public function join($table, $conditions, $type = Expression\Join::INNER, array $fields = null)
     {
         $join = $this->createJoin($table, $type);
-        if (is_string($conditions)) {
+        if (\is_string($conditions)) {
             $conditions = [$conditions];
         }
         if (isset($fields)) {
@@ -263,7 +263,76 @@ class Select extends QueryBuilder
      */
     public function execute()
     {
-        return new Result($this->db->query($this->generateSql()), $this->db);
+        $result = new Result($this->db->query($this->generateSql()), $this->db);
+
+        if ($this->useFoundRows) {
+            $resultTotalRows = new Result($this->db->query($this->generateSqlFoundRows()), $this->db);
+            $result->setFoundRows($resultTotalRows->fetchCell());
+        }
+
+        return $result;
+    }
+
+    /**
+     * Generate sql for joins
+     *
+     * @param array $fields
+     * @return array
+     * @since 2.1.43
+     */
+    private function generateSqlForJoins($fields): array
+    {
+        $joinSql = [];
+
+        foreach ($this->joins as $join) {
+            $temp = ' ' . $join->getType() . ' JOIN ' . $this->getTableSql($join->getTable());
+            $joinCondition = $join->getConditions();
+            if (!empty($joinCondition)) {
+                $temp .= ' ON ' . $this->createCompositeExpression($joinCondition, $join->getConditionsType());
+            }
+            $joinFields = $join->getFields();
+            if (!empty($joinFields)) {
+                $fields = array_merge($fields, $this->createFieldsArray($joinFields));
+            }
+            $joinSql[] = $temp;
+        }
+
+        return compact('joinSql', 'fields');
+    }
+
+    /**
+     * Generate the SQL to get the total rows.
+     * This is a replacement for the since MySQL 8.0.17 deprecated
+     * SQL_CALC_FOUND_ROWS query modifier and FOUND_ROWS().
+     *
+     * @return string
+     * @since 2.1.43
+     */
+    public function generateSqlFoundRows(): string
+    {
+        if (empty($this->table)) {
+            throw new \RuntimeException('table must be set');
+        }
+
+        $fields = $this->fields;
+
+        $sql = 'SELECT COUNT(*) FROM ' . $this->getTableSql($this->table);
+
+        // generate sql for joins
+        $joinSql = $this->generateSqlForJoins($fields);
+        $joinSql = ($joinSql !== []) ? $joinSql['joinSql'] : [];
+
+        $sql .= implode(' ', $joinSql);
+        $sql .= $this->generateWhereSql();
+        $groupBy = $this->generateGroupBySql();
+        $sql .= $groupBy;
+
+        // Special handling for sql queries with the group by clause.
+        if ($groupBy !== '') {
+            $sql = 'SELECT COUNT(*) FROM ('.$sql.') AS countOfRows';
+        }
+
+        return $sql;
     }
 
     /**
@@ -283,30 +352,16 @@ class Select extends QueryBuilder
 
         $sql = 'SELECT ';
 
-        if ($this->useFoundRows) {
-            $sql .= 'SQL_CALC_FOUND_ROWS ';
-        }
-
         // generate sql for joins
-        $joinSql = [];
-        foreach ($this->joins as $join) {
-            $temp = ' ' . $join->getType() . ' JOIN ' . $this->getTableSql($join->getTable());
-            $joinCondition = $join->getConditions();
-            if (!empty($joinCondition)) {
-                $temp .= ' ON ' . $this->createCompositeExpression($joinCondition, $join->getConditionsType());
-            }
-            $joinFields = $join->getFields();
-            if (!empty($joinFields)) {
-                $fields = array_merge($fields, $this->createFieldsArray($joinFields));
-            }
-            $joinSql[] = $temp;
-        }
+        $sqlAndFields = $this->generateSqlForJoins($fields);
+        $joinsSql = ($sqlAndFields !== []) ? $sqlAndFields['joinSql'] : [];
+        $fields = ($sqlAndFields !== []) ? $sqlAndFields['fields'] : [];
 
         // start query
         $sql .= $this->getFieldsSql($fields)
             . ' FROM ' . $this->getTableSql($this->table);
 
-        $sql .= implode(' ', $joinSql);
+        $sql .= implode(' ', $joinsSql);
 
         $sql .= $this->generateWhereSql();
         $sql .= $this->generateGroupBySql();
@@ -357,7 +412,7 @@ class Select extends QueryBuilder
                 }
             }
             //non int key -> alias
-            if (!is_int($key)) {
+            if (!\is_int($key)) {
                 $value .= ' AS ' . $this->db->quote($key, true);
             }
             $sqlFields[] = $value;
@@ -375,7 +430,7 @@ class Select extends QueryBuilder
      */
     protected function getTableSql($table)
     {
-        if (is_array($table)) {
+        if (\is_array($table)) {
             $tableName = reset($table);
             $tableAlias = key($table);
         } else {
@@ -383,7 +438,7 @@ class Select extends QueryBuilder
         }
 
         $sql = $this->db->quote('[prefix]_' . $tableName);
-        if (isset($tableAlias) && is_string($tableAlias)) {
+        if (isset($tableAlias) && \is_string($tableAlias)) {
             $sql .= ' AS ' . $this->db->quote($tableAlias, true);
         }
 
@@ -400,7 +455,7 @@ class Select extends QueryBuilder
      */
     protected function createFieldsArray($fields)
     {
-        if (is_string($fields)) {
+        if (\is_string($fields)) {
             //function like COUNT()
             if (strpos($fields, '(') !== false) {
                 $fields = [new Expression\Expression($fields)];
@@ -414,7 +469,7 @@ class Select extends QueryBuilder
         } elseif ($fields instanceof Expression\Expression) {
             $fields = [$fields];
         }
-        if (!is_array($fields)) {
+        if (!\is_array($fields)) {
             throw new \InvalidArgumentException('array or single field (or function) string expected');
         }
 
@@ -433,10 +488,10 @@ class Select extends QueryBuilder
             $sql .= ' GROUP BY ';
             $fields = [];
             foreach ($this->groupByFields as $key => $value) {
-                if (is_int($key)) {
+                if (\is_int($key)) {
                     $fields[] = $this->db->quote($value);
                 } else {
-                    if (!in_array($value, ['ASC', 'DESC'])) {
+                    if (!\in_array($value, ['ASC', 'DESC'])) {
                         throw new \InvalidArgumentException('Invalid GROUP BY option: ' . $value);
                     }
                     $fields[] = $this->db->quote($key) . ' ' . $value;

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -22,6 +22,9 @@ class Result
 
     /** @var \Ilch\Database\Mysql */
     protected $db;
+
+    /** @var */
+    protected $foundRows;
 
     /**
      * @param \mysqli_result $dbResult
@@ -51,7 +54,7 @@ class Result
     public function fetchCell($name = null)
     {
         if (isset($name)) {
-            if (is_int($name)) {
+            if (\is_int($name)) {
                 $fieldNumber = $name;
             } else {
                 $row = $this->dbResult->fetch_assoc();
@@ -183,15 +186,6 @@ class Result
     }
 
     /**
-     * Für eine Select Query, die mit useFoundRows aufgerufen wurde, kann so die FOUND_ROWS() aufgerufen werden
-     * @return integer
-     */
-    public function getFoundRows()
-    {
-        return (int) $this->db->queryCell('SELECT FOUND_ROWS()');
-    }
-
-    /**
      * Set the internal pointer to the given position (must be between 0..getNumRow()-1)
      * @param int $position
      * @return bool
@@ -199,5 +193,25 @@ class Result
     public function setCurrentRow($position)
     {
         return $this->dbResult->data_seek($position);
+    }
+
+    /**
+     * Returns the number of found rows if the query was called with useFoundRows.
+     *
+     * @return int
+     */
+    public function getFoundRows()
+    {
+        return (int) $this->foundRows;
+    }
+
+    /**
+     * @param int $foundRows
+     * @return Result
+     */
+    public function setFoundRows($foundRows)
+    {
+        $this->foundRows = $foundRows;
+        return $this;
     }
 }

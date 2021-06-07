@@ -43,7 +43,7 @@ class AfterDatabaseLoad
         \Ilch\Registry::set('user', $user);
 
         // Check if user is locked out. If that is the case log him out.
-        if (is_object($user) && $user->getLocked()) {
+        if (\is_object($user) && $user->getLocked()) {
             if (!empty($_COOKIE['remember'])) {
                 setcookieIlch('remember', '', strtotime('-1 hours'));
             }

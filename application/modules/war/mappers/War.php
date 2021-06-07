@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -146,8 +146,8 @@ class War extends \Ilch\Mapper
     /**
      * Get wars for json (for example the calendar)
      *
-     * @param $start
-     * @param $end
+     * @param string $start
+     * @param string $end
      * @return array|array[]|null
      */
     public function getWarsForJson($start, $end)
@@ -175,25 +175,32 @@ class War extends \Ilch\Mapper
     }
 
     /**
-     * Gets war by where
+     * Gets wars by where
      *
-     * @param mixed $where
+     * @param null|array $where
      * @param int $pagination
      * @return WarModel[]|null
      * @throws \Ilch\Database\Exception
      */
     public function getWarsByWhere($where = null, $pagination = null)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,w.show,w.read_access,g.name as group_name,g.id as group_is,e.name as enemy_name,e.id as enemy_id
-                FROM `[prefix]_war` as w
-                LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
-                LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
-                WHERE w.'.$where.'
-                ORDER by w.time DESC
-                LIMIT '.implode(',',$pagination->getLimit());
+        $sql = $this->db()->select(['w.id' => 'war_id','w.enemy','w.group','w.time','w.maps','w.server','w.password','w.xonx','w.game','w.matchtype','w.report','w.status','w.show','w.read_access','g.name' => 'group_name','g.id' => 'group_is','e.name' => 'enemy_name','e.id' => 'enemy_id'])
+            ->from(['w' => 'war'])
+            ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT')
+            ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT')
+            ->where($where)
+            ->order(['w.time' => 'DESC']);
 
-        $warArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        if ($pagination !== null) {
+            $sql->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $sql->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $sql->execute();
+        }
+
+        $warArray = $result->fetchRows();
 
         if (empty($warArray)) {
             return null;
@@ -265,18 +272,32 @@ class War extends \Ilch\Mapper
             ->execute();
     }
 
-    public function getWarListByStatus($status = NULL, $pagination = NULL) 
+    /**
+     * Get a list of wars by status.
+     *
+     * @param null|int $status
+     * @param null $pagination
+     * @return array|null
+     */
+    public function getWarListByStatus($status = NULL, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,w.show,w.read_access,g.name as group_name,g.id as group_is,e.name as enemy_name,e.id as enemy_id
-                FROM `[prefix]_war` as w
-                LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
-                LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
-                WHERE status = "'.$this->db->escape($status).'"
-                ORDER by w.time DESC
-                LIMIT '.implode(',',$pagination->getLimit());
+        $sql = $this->db()->select(['w.id' => 'war_id','w.enemy','w.group','w.time','w.maps','w.server','w.password','w.xonx','w.game','w.matchtype','w.report','w.status','w.show','w.read_access','g.name' => 'group_name','g.id' => 'group_is','e.name' => 'enemy_name','e.id' => 'enemy_id'])
+            ->from(['w' => 'war'])
+            ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT')
+            ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT')
+            ->where(['status' => $this->db()->escape($status)])
+            ->order(['w.time' => 'DESC']);
 
-        $warArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        if ($pagination !== null) {
+            $sql->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $sql->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $sql->execute();
+        }
+
+        $warArray = $result->fetchRows();
 
         if (empty($warArray)) {
             return null;
@@ -306,19 +327,30 @@ class War extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getWarList($pagination = NULL) 
+    /**
+     * Get a list of wars.
+     *
+     * @param null $pagination
+     * @return array|null
+     */
+    public function getWarList($pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,w.show,w.read_access,
-                g.name as group_name,g.id as group_is,
-                e.name as enemy_name,e.id as enemy_id
-                FROM `[prefix]_war` as w
-                LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
-                LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
-                ORDER by w.time DESC
-                LIMIT '.implode(',',$pagination->getLimit());
+        $sql = $this->db()->select(['w.id' => 'war_id','w.enemy','w.group','w.time','w.maps','w.server','w.password','w.xonx','w.game','w.matchtype','w.report','w.status','w.show','w.read_access','g.name' => 'group_name','g.id' => 'group_is','e.name' => 'enemy_name','e.id' => 'enemy_id'])
+            ->from(['w' => 'war'])
+            ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT')
+            ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT')
+            ->order(['w.time' => 'DESC']);
 
-        $warArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        if ($pagination !== null) {
+            $sql->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $sql->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $sql->execute();
+        }
+
+        $warArray = $result->fetchRows();
 
         if (empty($warArray)) {
             return null;
@@ -348,17 +380,29 @@ class War extends \Ilch\Mapper
         return $entry;
     }
 
+    /**
+     * Gets a number of wars to show them for example in a box.
+     *
+     * @param null|int $status
+     * @param null|int $limit
+     * @param string $order
+     * @return array|null
+     */
     public function getWarListByStatusAndLimt($status = NULL, $limit = NULL, $order = 'ASC')
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,w.show,w.read_access,g.name as group_name,g.tag as group_tag,g.id as group_id,e.name as enemy_name,e.tag as enemy_tag,e.id as enemy_id
-                FROM `[prefix]_war` as w
-                LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
-                LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
-                WHERE status = "'.$this->db()->escape($status).'"
-                ORDER by w.time '.$order.'
-                LIMIT '.(int)$limit;
+        $sql = $this->db()->select(['w.id' => 'war_id','w.enemy','w.group','w.time','w.maps','w.server','w.password','w.xonx','w.game','w.matchtype','w.report','w.status','w.show','w.read_access','g.name' => 'group_name','g.tag' => 'group_tag', 'g.id' => 'group_is','e.name' => 'enemy_name', 'e.tag' => 'enemy_tag', 'e.id' => 'enemy_id'])
+            ->from(['w' => 'war'])
+            ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT')
+            ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT')
+            ->where(['status' => $this->db()->escape($status)])
+            ->order(['w.time' => $order]);
 
-        $warArray = $this->db()->queryArray($sql);
+        if ($limit !== null) {
+            $sql->limit((int)$limit);
+        }
+
+        $warArray = $sql->execute()
+            ->fetchRows();
 
         if (empty($warArray)) {
             return null;

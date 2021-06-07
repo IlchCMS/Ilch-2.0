@@ -64,34 +64,41 @@ class Enemy extends \Ilch\Mapper
      */
     public function getEnemyList($pagination = null)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS e.id, e.name, e.tag, e.image, e.homepage, e.contact_name, e.contact_email, m.url, m.url_thumb
-                FROM `[prefix]_war_enemy` as e
-                LEFT JOIN [prefix]_media m ON e.image = m.url
-                ORDER by e.id DESC
-                LIMIT '.implode(',',$pagination->getLimit());
+        $sql = $this->db()->select(['e.id', 'e.name', 'e.tag', 'e.image', 'e.homepage', 'e.contact_name', 'e.contact_email', 'm.url', 'm.url_thumb'])
+            ->from(['e' => 'war_enemy'])
+            ->join(['m' => 'media'], 'e.image = m.url', 'LEFT')
+            ->order(['e.id' => 'DESC']);
 
-        $enemyArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $enemyArray = $result->fetchRows();
 
         if (empty($enemyArray)) {
             return null;
         }
 
-        $entry = [];
+        $entries = [];
 
-        foreach ($enemyArray as $entries) {
-            $entryModel = new EnemyModel();
-            $entryModel->setId($entries['id'])
-                ->setEnemyName($entries['name'])
-                ->setEnemyTag($entries['tag'])
-                ->setEnemyImage($entries['image'])
-                ->setEnemyHomepage($entries['homepage'])
-                ->setEnemyContactName($entries['contact_name'])
-                ->setEnemyContactEmail($entries['contact_email']);
-            $entry[] = $entryModel;
+        foreach ($enemyArray as $entry) {
+            $enemyModel = new EnemyModel();
+            $enemyModel->setId($entry['id'])
+                ->setEnemyName($entry['name'])
+                ->setEnemyTag($entry['tag'])
+                ->setEnemyImage($entry['image'])
+                ->setEnemyHomepage($entry['homepage'])
+                ->setEnemyContactName($entry['contact_name'])
+                ->setEnemyContactEmail($entry['contact_email']);
+            $entries[] = $enemyModel;
         }
 
-        return $entry;
+        return $entries;
     }
 
     /**

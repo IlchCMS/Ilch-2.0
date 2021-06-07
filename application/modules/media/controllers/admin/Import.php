@@ -70,12 +70,12 @@ class Import extends \Ilch\Controller\Admin
 
             foreach ($this->getRequest()->getPost('check_medias') as $media) {
                 $id = 0;
-                $dirname = dirname($media);
+                $dirname = \dirname($media);
                 $filename = basename($dirname);
-                $dirname = $dirname.'/';
+                $dirname .= '/';
 
                 if ($directoriesAsCategories) {
-                    if ($dirname != $directory && !in_array($filename, $createdCategories)) {
+                    if ($dirname != $directory && !\in_array($filename, $createdCategories)) {
                         // Create category
                         $category = new MediaModel();
                         $category->setCatName($filename);
@@ -83,14 +83,14 @@ class Import extends \Ilch\Controller\Admin
                         $createdCategories[] = $filename;
                     } else {
                         $category = $mediaMapper->getCatByName($filename);
-                        $id = (!empty($category)) ? $category->getId() : 0;
+                        $id = ($category !== null) ? $category->getId() : 0;
                     }
                 }
 
                 $upload = new \Ilch\Upload();
                 $upload->setFile($media);
                 $upload->setTypes($filetypes);
-                $upload->setPath(dirname($media).'/');
+                $upload->setPath(\dirname($media).'/');
                 $upload->save();
 
                 $model = new MediaModel();

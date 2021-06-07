@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -19,14 +19,21 @@ class Media extends \Ilch\Mapper
      */
     public function getMediaList($pagination = NULL) 
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
-                FROM `[prefix]_media` as m
-                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
-                ORDER by m.id DESC
-                LIMIT '.implode(',',$pagination->getLimit());
+        $sql = $this->db()->select(['m.id', 'm.url', 'm.url_thumb', 'm.name', 'm.datetime', 'm.ending', 'm.cat', 'c.cat_name'])
+            ->from(['m' => 'media'])
+            ->join(['c' => 'media_cats'], 'm.cat = c.id', 'LEFT')
+            ->order(['m.id' => 'DESC']);
 
-        $mediaArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $mediaArray = $result->fetchRows();
 
         if (empty($mediaArray)) {
             return null;
@@ -58,12 +65,12 @@ class Media extends \Ilch\Mapper
      */
     public function getMediaListAll()
     {
-        $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
-                FROM `[prefix]_media` as m
-                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
-                ORDER by m.id DESC';
-
-        $mediaArray = $this->db()->queryArray($sql);
+        $mediaArray = $this->db()->select(['m.id', 'm.url', 'm.url_thumb', 'm.name', 'm.datetime', 'm.ending', 'm.cat', 'c.cat_name'])
+            ->from(['m' => 'media'])
+            ->join(['c' => 'media_cats'], 'm.cat = c.id', 'LEFT')
+            ->order(['m.id' => 'DESC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($mediaArray)) {
             return null;
@@ -97,7 +104,16 @@ class Media extends \Ilch\Mapper
      */
     public function getMediaListByEnding($ending = NULL, $pagination = NULL) 
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
+        if ($pagination) {
+            $sqlCountOfRows = 'SELECT COUNT(*)
+                FROM `[prefix]_media` as m
+                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
+                WHERE m.ending IN ('.implode(',',  $this->db()->escapeArray(explode(' ', $ending), true)).')';
+
+            $pagination->setRows($this->db()->querycell($sqlCountOfRows));
+        }
+
+        $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
                 FROM `[prefix]_media` as m
                 LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
                 WHERE m.ending IN ('.implode(',',  $this->db()->escapeArray(explode(' ', $ending), true)).')
@@ -105,7 +121,6 @@ class Media extends \Ilch\Mapper
                 LIMIT '.implode(',',$pagination->getLimit());
 
         $mediaArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
         if (empty($mediaArray)) {
             return null;
@@ -138,14 +153,14 @@ class Media extends \Ilch\Mapper
      */
     public function getMediaListScroll($lastId = NULL) 
     {
-        $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
-                FROM `[prefix]_media` as m
-                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
-                WHERE m.id < '.(int)$lastId.'
-                ORDER by m.id DESC
-                LIMIT 40';
-
-        $mediaArray = $this->db()->query($sql);
+        $mediaArray = $this->db()->select(['m.id', 'm.url', 'm.url_thumb', 'm.name', 'm.datetime', 'm.ending', 'm.cat', 'c.cat_name'])
+            ->from(['m' => 'media'])
+            ->join(['c' => 'media_cats'], 'm.cat = c.id', 'LEFT')
+            ->where(['m.id <' => (int)$lastId])
+            ->order(['m.id' => 'DESC'])
+            ->limit(40)
+            ->execute()
+            ->fetchRows();
 
         if (empty($mediaArray)) {
             return null;

@@ -6,7 +6,7 @@
 
 namespace Ilch\Database\Mysql;
 
-use \Ilch\Database\Mysql as DB;
+use Ilch\Database\Mysql as DB;
 
 class Delete extends QueryBuilder
 {

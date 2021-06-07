@@ -48,7 +48,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
 
-        if (!empty($downloads)) {
+        if ($downloads !== null) {
             $this->getLayout()->getTitle()
                     ->add($downloads->getTitle());
             $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$downloads->getDesc());
@@ -78,7 +78,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
 
-        if (!empty($file)) {
+        if ($file !== null) {
             $download = $downloadsMapper->getDownloadsById($file->getCat());
 
             $this->getLayout()->getTitle()

@@ -47,7 +47,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'upload') {
+        if ($this->getRequest()->getActionName() === 'upload') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -164,7 +164,7 @@ class Index extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
         $image = $mediaMapper->getByWhere(['id' => $this->getRequest()->getParam('id')]);
 
-        if (!empty($image)) {
+        if ($image !== null) {
             $upload = new \Ilch\Upload();
             $upload->setURL($image->getUrl());
             $upload->setPath($this->getConfig()->get('media_uploadpath'));
