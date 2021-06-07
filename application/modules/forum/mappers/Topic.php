@@ -15,28 +15,23 @@ class Topic extends \Ilch\Mapper
 {
     public function getTopicsByForumId($id, $pagination = NULL)
     {
-        if ($pagination) {
-            $sqlCountOfRows = 'SELECT COUNT(*)
-                FROM `[prefix]_forum_topics` AS topics
-                LEFT JOIN `[prefix]_forum_posts` AS posts ON topics.id = posts.topic_id
-                WHERE topics.forum_id = '.(int)$id.'
-                GROUP by topics.type, topics.id, topics.topic_id, topics.topic_prefix, topics.topic_title, topics.visits, topics.creator_id, topics.date_created, topics.forum_id, topics.status';
+        $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)'])
+            ->from(['topics' => 'forum_topics'])
+            ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
+            ->where(['topics.forum_id' => (int)$id])
+            ->group(['topics.type', 'topics.id', 'topics.topic_id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
+            ->order(['topics.type' => 'DESC', 'latest_post' => 'DESC']);
 
-            $sqlCountOfRows = 'SELECT COUNT(*) FROM ('.$sqlCountOfRows.') AS countOfRows';
-            $pagination->setRows($this->db()->querycell($sqlCountOfRows));
+        if ($pagination !== null) {
+            $sql->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $sql->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $sql->execute();
         }
 
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *, topics.id, topics.visits, MAX(posts.date_created) AS latest_post
-                FROM `[prefix]_forum_topics` AS topics
-                LEFT JOIN `[prefix]_forum_posts` AS posts ON topics.id = posts.topic_id
-                WHERE topics.forum_id = '.(int)$id.'
-                GROUP by topics.type, topics.id, topics.topic_id, topics.topic_prefix, topics.topic_title, topics.visits, topics.creator_id, topics.date_created, topics.forum_id, topics.status
-                ORDER by topics.type DESC, latest_post DESC';
-
-        if (!empty($pagination)) {
-            $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
-        }
-        $topicArray = $this->db()->queryArray($sql);
+        $topicArray = $result->fetchRows();
 
         $entry = [];
         $user = null;
