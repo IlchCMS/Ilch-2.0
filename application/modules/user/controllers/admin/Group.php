@@ -181,10 +181,10 @@ class Group extends \Ilch\Controller\Admin
             }
             foreach($groupUsers as $key => $user_Id) {
                 if (!\in_array($user_Id, $sortItems)){
-                    if ($groupId != 1 || ($groupId == 1 && \count($groupUsers) > 1)) {
+                    if ($groupId != 1 || (\count($groupUsers) > 1)) {
                         $userMapper->deleteUserToGroup($user_Id, $groupId);
                         unset($groupUsers[$key]);
-                    } elseif ($groupId == 1 && \count($groupUsers) <= 1) {
+                    } elseif (\count($groupUsers) <= 1) {
                         $this->addMessage('delLastAdminProhibited', 'warning');
                     }
                 }

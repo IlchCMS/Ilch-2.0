@@ -118,7 +118,7 @@ class Image extends \Ilch\Mapper
      */
     public function getImageByGalleryId($id, $pagination = NULL)
     {
-        $sql = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+        $select = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'gallery_imgs'])
             ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
             ->where(['g.cat' => (int)$id])

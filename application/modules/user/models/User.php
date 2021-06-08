@@ -717,7 +717,7 @@ class User extends \Ilch\Model
     /**
      * Get if user is locked.
      *
-     * @return mixed
+     * @return int
      */
     public function getLocked()
     {

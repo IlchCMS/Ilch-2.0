@@ -115,11 +115,10 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('forum_filenameGroupappearanceCSS', $filename);
 
                 $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'groupappearance']);
             } else {
                 $this->addMessage('errorWritingGroupAppearanceCSSFile', 'danger');
-                $this->redirect(['action' => 'groupappearance']);
             }
+            $this->redirect(['action' => 'groupappearance']);
         }
 
         $appearances = json_decode($this->getConfig()->get('forum_groupAppearance'), true);

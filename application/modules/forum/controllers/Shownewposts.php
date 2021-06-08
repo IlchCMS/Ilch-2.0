@@ -75,9 +75,9 @@ class Shownewposts extends \Ilch\Controller\Frontend
                 $forum = $forumMapper->getForumById($topic->getTopicId());
                 $lastPost = $topicMapper->getLastPostByTopicId($topic->getId());
                 if ($adminAccess == true || is_in_array($groupIds, explode(',', $forum->getReadAccess()))) {
-                    if (!in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))) {
+                    if (!\in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))) {
                         $lastRead = $lastPost->getRead();
-                        if (in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
+                        if (\in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
                             $postModel->setId($lastPost->getId());
                             $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
                             $postMapper->saveRead($postModel);
@@ -86,10 +86,9 @@ class Shownewposts extends \Ilch\Controller\Frontend
                 }
             }
             $this->addMessage('allasreadForum', 'info');
-            $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
         } else {
             $this->addMessage('noAccessForum', 'warning');
-            $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
         }
+        $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
     }
 }

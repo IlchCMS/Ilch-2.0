@@ -349,7 +349,7 @@ class Forum extends \Ilch\Mapper
      */
     public function getForumPermas()
     {
-        $parmas = $this->db()->select('*')
+        $permas = $this->db()->select('*')
             ->from('forum_items')
             ->execute()
             ->fetchRows();

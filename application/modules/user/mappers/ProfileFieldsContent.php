@@ -37,7 +37,7 @@ class ProfileFieldsContent extends \Ilch\Mapper
     /**
      * Returns a ProfileFieldContentModel created using an array with data.
      *
-     * @param  mixed[] $profileFieldRow
+     * @param array $profileFieldRow
      * @return ProfileFieldContentModel
      */
     public function loadFromArray($profileFieldRow = [])

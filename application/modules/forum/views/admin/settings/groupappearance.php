@@ -34,7 +34,7 @@ $appearances = $this->get('appearances');
                     <td><?=$group->getName() ?></td>
                     <td>
                         <input type="color" id="textcolor<?=$group->getId() ?>" name="appearances[<?=$group->getId() ?>][textcolor]"
-                               value="<?=(isset($appearances[$group->getId()]['textcolor'])) ? $appearances[$group->getId()]['textcolor'] : '#000000' ?>">
+                               value="<?= $appearances[$group->getId()]['textcolor'] ?? '#000000' ?>">
                         <label for="textcolor<?=$group->getId() ?>"><?=$this->getTrans('textcolor') ?></label>
                         <input type="checkbox" id="bold<?=$group->getId() ?>"  name="appearances[<?=$group->getId() ?>][bold]" <?=(isset($appearances[$group->getId()]['bold'])) ? 'checked' : '' ?>>
                         <label for="bold<?=$group->getId() ?>"><b><?=$this->getTrans('bold') ?></b></label>

@@ -173,7 +173,7 @@ class Index extends \Ilch\Controller\Admin
                     $maps = $this->getRequest()->getPost('warMapPlayed');
                     $groupPoints = $this->getRequest()->getPost('warErgebnisGroup');
                     $enemyPoints = $this->getRequest()->getPost('warErgebnisEnemy');
-                    $mapCount = count($maps);
+                    $mapCount = \count($maps);
 
                     for ($i = 0; $i < $mapCount; $i++) {
                         $gameModel->setId($ids[$i])

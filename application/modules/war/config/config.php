@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.13.0',
+        'version' => '1.14.0',
         'icon_small' => 'fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -169,6 +169,9 @@ class Config extends \Ilch\Config\Install
                 foreach($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'war' AND `locale` = '%s';", $value['description'], $key));
                 }
+            case "1.11.0":
+            case "1.12.0":
+            case "1.13.0":
         }
     }
 }

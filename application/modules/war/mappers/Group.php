@@ -64,7 +64,7 @@ class Group extends \Ilch\Mapper
      */
     public function getGroupList($pagination = null)
     {
-        $sql = $this->db()->select(['g.id', 'g.name', 'g.tag', 'g.image', 'g.member', 'g.desc', 'm.url', 'm.url_thumb'])
+        $select = $this->db()->select(['g.id', 'g.name', 'g.tag', 'g.image', 'g.member', 'g.desc', 'm.url', 'm.url_thumb'])
             ->from(['g' => 'war_groups'])
             ->join(['m' => 'media'], 'g.image = m.url', 'LEFT')
             ->order(['g.id' => 'DESC']);

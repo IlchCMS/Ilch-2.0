@@ -198,7 +198,7 @@ class User extends \Ilch\Mapper
     /**
      * Returns a user created using an array with user data.
      *
-     * @param  mixed[] $userRow
+     * @param array $userRow
      * @return UserModel
      */
     public function loadFromArray($userRow = [])
@@ -443,7 +443,7 @@ class User extends \Ilch\Mapper
      */
     public function getAdministratorCount()
     {
-        return $this->db()->select('COUNT(*)', 'users_groups', ['group_id' => 1])
+        return (int)$this->db()->select('COUNT(*)', 'users_groups', ['group_id' => 1])
             ->execute()
             ->fetchCell();
     }

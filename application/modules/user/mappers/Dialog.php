@@ -178,14 +178,13 @@ class Dialog extends \Ilch\Mapper
      */
     public function getCountOfUnreadMessagesByUser($user_id)
     {
-        $result = $this->db()->select('COUNT(*)')
+        return (int)$this->db()->select('COUNT(*)')
             ->from(['r' => 'users_dialog_reply', 'u' => 'users_dialog'])
             ->join(['u' => 'users_dialog'], 'r.c_id_fk = u.c_id')
             ->where(['u.user_one' => $user_id, 'u.user_two' => $user_id], 'or')
             ->andWhere(['r.user_id_fk !=' => $user_id, 'r.read' => 0])
-            ->execute();
-
-        return $result->fetchCell();
+            ->execute()
+            ->fetchCell();
     }
 
     /**

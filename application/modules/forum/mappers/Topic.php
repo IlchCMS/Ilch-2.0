@@ -47,7 +47,7 @@ class Topic extends \Ilch\Mapper
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
 
-            if (array_key_exists($entries['creator_id'], $userCache)) {
+            if (\array_key_exists($entries['creator_id'], $userCache)) {
                 $entryModel->setAuthor($userCache[$entries['creator_id']]);
             } else {
                 $user = $userMapper->getUserById($entries['creator_id']);
@@ -137,7 +137,7 @@ class Topic extends \Ilch\Mapper
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
 
-            if (array_key_exists($entries['creator_id'], $userCache)) {
+            if (\array_key_exists($entries['creator_id'], $userCache)) {
                 $entryModel->setAuthor($userCache[$entries['creator_id']]);
             } else {
                 $user = $userMapper->getUserById($entries['creator_id']);

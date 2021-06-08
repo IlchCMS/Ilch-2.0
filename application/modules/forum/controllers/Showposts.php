@@ -101,7 +101,7 @@ class Showposts extends \Ilch\Controller\Frontend
             $lastPost = $topicMapper->getLastPostByTopicId($topicId);
 
             $lastRead = $lastPost->getRead();
-            if (in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
+            if (\in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
                 $postModel->setId($lastPost->getId());
                 $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
                 $postMapper->saveRead($postModel);
@@ -306,7 +306,7 @@ class Showposts extends \Ilch\Controller\Frontend
             $reportedPostsIds[] = $reportedPost->getPostId();
         }
 
-        if (($this->getUser() && $this->getConfig()->get('forum_reportingPosts') == 1) && !in_array($postId, $reportedPostsIds)) {
+        if (($this->getUser() && $this->getConfig()->get('forum_reportingPosts') == 1) && !\in_array($postId, $reportedPostsIds)) {
             if ($this->getRequest()->getPost()) {
                 $validation = Validation::create($this->getRequest()->getPost(), [
                     'reason' => 'required|numeric|min:1|max:4'
@@ -357,7 +357,7 @@ class Showposts extends \Ilch\Controller\Frontend
                                 continue;
                             }
 
-                            if (in_array($user->getId(), $receivedMail)) {
+                            if (\in_array($user->getId(), $receivedMail)) {
                                 continue;
                             }
 
@@ -367,10 +367,7 @@ class Showposts extends \Ilch\Controller\Frontend
                             $username = $this->getLayout()->escape($user->getName());
                             $date = new \Ilch\Date();
                             $mailContent = $emailsMapper->getEmail('forum', 'post_reportedPost_mail', $this->getTranslator()->getLocale());
-                            $layout = '';
-                            if (isset($_SESSION['layout'])) {
-                                $layout = $_SESSION['layout'];
-                            }
+                            $layout = $_SESSION['layout'] ?? '';
                             if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/reportedPost.php')) {
                                 $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/reportedPost.php');
                             } else {

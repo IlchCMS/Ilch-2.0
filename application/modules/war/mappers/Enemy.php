@@ -64,7 +64,7 @@ class Enemy extends \Ilch\Mapper
      */
     public function getEnemyList($pagination = null)
     {
-        $sql = $this->db()->select(['e.id', 'e.name', 'e.tag', 'e.image', 'e.homepage', 'e.contact_name', 'e.contact_email', 'm.url', 'm.url_thumb'])
+        $select = $this->db()->select(['e.id', 'e.name', 'e.tag', 'e.image', 'e.homepage', 'e.contact_name', 'e.contact_email', 'm.url', 'm.url_thumb'])
             ->from(['e' => 'war_enemy'])
             ->join(['m' => 'media'], 'e.image = m.url', 'LEFT')
             ->order(['e.id' => 'DESC']);

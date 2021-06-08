@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -93,20 +93,45 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->getParam('rows')) {
             $pagination->setRowsPerPage($this->getRequest()->getParam('rows'));
             $rows = ['rows' => $this->getRequest()->getParam('rows')];
-            $this->getView()->set('rows', $rows);
         } else {
             $rows = [];
-            $this->getView()->set('rows', $rows);
         }
+        $this->getView()->set('rows', $rows);
 
         if ($this->getRequest()->getPost('search') === 'search') {
             $pagination->setRowsPerPage($this->getRequest()->getPost('rows'));
             $rows = ['rows' => $this->getRequest()->getPost('rows')];
             $this->getView()->set('rows', $rows);
+
+            $sortOrder = 'DESC';
+            if ($this->getRequest()->getPost('order') === 'ASC') {
+                $sortOrder = 'ASC';
+            }
+
+            if ($this->getRequest()->getPost('orderbytype')) {
+                switch($this->getRequest()->getPost('orderbytype')) {
+                    case 'image':
+                        $type = $this->getConfig()->get('media_ext_img');
+                        break;
+                    case 'video':
+                        $type = $this->getConfig()->get('media_ext_video');
+                        break;
+                    case 'file':
+                        $type = $this->getConfig()->get('media_ext_file');
+                        break;
+                }
+            }
+
+            if ($this->getRequest()->getPost('orderbytype') !== 'all') {
+                $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination, $sortOrder));
+            } else {
+                $this->getView()->set('medias', $mediaMapper->getMediaList($pagination, $sortOrder));
+            }
+        } else {
+            $this->getView()->set('medias', $mediaMapper->getMediaList($pagination));
         }
 
         $this->getView()->set('pagination', $pagination);
-        $this->getView()->set('medias', $mediaMapper->getMediaList($pagination));
         $this->getView()->set('catnames', $mediaMapper->getCatList());
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
         $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));

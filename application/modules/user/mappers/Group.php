@@ -56,7 +56,7 @@ class Group extends \Ilch\Mapper
      * Returns an array with user group models found by the where clause of false if
      * none found.
      *
-     * @param  mixed[]            $where
+     * @param array $where
      * @return false|GroupModel[]
      */
     protected function getBy($where = [])
@@ -77,7 +77,7 @@ class Group extends \Ilch\Mapper
     /**
      * Returns a user group created using an array with user group data.
      *
-     * @param  mixed[]    $groupRow
+     * @param array $groupRow
      * @return GroupModel
      */
     public function loadFromArray($groupRow = [])
@@ -200,7 +200,7 @@ class Group extends \Ilch\Mapper
      * Returns the group access list from the database.
      *
      * @param  int $groupId
-     * @return mixed[]
+     * @return array
      * @throws \Ilch\Database\Exception
      */
     public function getGroupAccessList($groupId)
@@ -253,7 +253,7 @@ class Group extends \Ilch\Mapper
      *
      * @param  string $Type
      * @param  string $Id
-     * @return mixed[]
+     * @return array
      * @throws \Ilch\Database\Exception
      */
     public function getAccessAccessList($Type, $Id)

@@ -209,7 +209,7 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Returns a profile-field created using an array with data.
      *
-     * @param  mixed[] $profileFieldRow
+     * @param array $profileFieldRow
      * @return ProfileFieldModel
      */
     public function loadFromArray($profileFieldRow = [])
