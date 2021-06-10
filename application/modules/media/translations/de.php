@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -33,7 +33,8 @@ return [
     'importInfoText' => 'Hier können Sie neue Dateien hinzufügen, die sich im Upload Ordner befinden, jedoch noch nicht in der Datenbank. Dies ist besonders hilfreich bei größeren Dateien, die ganz einfach per FTP in den Upload Ordner geladen werden können.',
     'rowsPerPage' => 'Zeilen pro Seite',
     'orderBy' => 'Sortieren nach',
-    'descendent' => 'absteigend',
+    'ascending' => 'aufsteigend',
+    'descending' => 'absteigend',
     'mediaType' => 'Medien-Typ',
     'all' => 'alle',
     'image' => 'Bild',

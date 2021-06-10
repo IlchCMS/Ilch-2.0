@@ -30,14 +30,14 @@ class BeforeControllerLoad
 
         $request = $pluginData['request'];
 
-        if (!$userId && $request->getModuleName() === 'user' && !in_array($request->getControllerName(), ['index', 'login', 'regist'])) {
+        if (!$userId && $request->getModuleName() === 'user' && !\in_array($request->getControllerName(), ['index', 'login', 'regist'])) {
             $pluginData['controller']->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
         }
 
         $userMapper = new UserMapper();
         $user = $userMapper->getUserById($userId);
 
-        if (!is_object($user)) {
+        if (!\is_object($user)) {
             // Happens rarely, for example if a user id is saved in the session before reinstalling and the cms got just installed.
             return;
         }
@@ -53,7 +53,7 @@ class BeforeControllerLoad
             /*
              * Not admins have only access to modules.
              */
-            if ($request->getModuleName() === 'admin' && !in_array($request->getControllerName(), ['index', 'login'])) {
+            if ($request->getModuleName() === 'admin' && !\in_array($request->getControllerName(), ['index', 'login'])) {
                 $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
 

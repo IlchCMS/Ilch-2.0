@@ -6,7 +6,7 @@
 
 namespace Modules\Downloads\Mappers;
 
-use Modules\Downloads\Models\DownloadsItem as DownloadsItem;
+use Modules\Downloads\Models\DownloadsItem;
 
 class Downloads extends \Ilch\Mapper
 {
@@ -72,6 +72,12 @@ class Downloads extends \Ilch\Mapper
         return $items;
     }
 
+    /**
+     * Get download by id.
+     *
+     * @param int $id id of download
+     * @return DownloadsItem|null
+     */
     public function getDownloadsById($id)
     {
         $itemRows = $this->db()->select('*')

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -33,7 +33,8 @@ return [
     'importInfoText' => 'Here you can import new files from the upload folder, which are not yet in the database. This is particularly useful for large files, which can be easily uploaded via FTP to the upload folder.',
     'rowsPerPage' => 'Rows per page',
     'orderBy' => 'Order by',
-    'descendent' => 'descendent',
+    'ascending' => 'ascending',
+    'descending' => 'descending',
     'mediaType' => 'Media Type',
     'all' => 'all',
     'image' => 'image',

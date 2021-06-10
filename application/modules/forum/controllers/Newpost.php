@@ -137,10 +137,7 @@ class Newpost extends \Ilch\Controller\Frontend
                         $subscriberUsername = $this->getLayout()->escape($subscriber->getUsername());
                         $date = new \Ilch\Date();
                         $mailContent = $emailsMapper->getEmail('forum', 'topic_subscription_mail', $this->getTranslator()->getLocale());
-                        $layout = '';
-                        if (isset($_SESSION['layout'])) {
-                            $layout = $_SESSION['layout'];
-                        }
+                        $layout = $_SESSION['layout'] ?? '';
                         if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/topicsubscription.php')) {
                             $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/topicsubscription.php');
                         } else {

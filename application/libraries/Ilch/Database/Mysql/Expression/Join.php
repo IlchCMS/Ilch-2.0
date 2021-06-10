@@ -51,7 +51,7 @@ class Join
     function __construct($table, $type)
     {
         $allowedTypes = [self::INNER, self::LEFT, self::RIGHT];
-        if (!in_array($type, $allowedTypes)) {
+        if (!\in_array($type, $allowedTypes)) {
             throw new \InvalidArgumentException('invalid type, allowed: ' . implode(', ', $allowedTypes));
         }
 
@@ -101,7 +101,7 @@ class Join
     public function setConditions(array $conditions, $type = null)
     {
         $this->conditions = $conditions;
-        if (isset($type) && in_array($type, ['and', 'or'])) {
+        if (isset($type) && \in_array($type, ['and', 'or'])) {
             $this->conditionsType = $type;
         }
         return $this;

@@ -4,7 +4,8 @@
 $galleryMapper = $this->get('galleryMapper');
 $galleryItems = $this->get('galleryItems');
 $imageMapper = $this->get('imageMapper');
-$catID = $catTitle = '';
+$catTitle = '';
+$catID = $catTitle;
 
 function recCategory($item, $galleryMapper, $obj, $imageMapper)
 {   

@@ -1,5 +1,5 @@
 <?php
-$reaonTransKeys = [
+$reasonTransKeys = [
     '1' => 'illegalContent',
     '2' => 'spam',
     '3' => 'wrongTopic',
@@ -23,7 +23,7 @@ $report = $this->get('report');
             <?=$this->getTrans('reason') ?>:
         </label>
         <div class="col-lg-10">
-            <p><?=$this->getTrans($reaonTransKeys[$report->getReason()]) ?></p>
+            <p><?=$this->getTrans($reasonTransKeys[$report->getReason()]) ?></p>
         </div>
     </div>
     <div class="form-group">

@@ -63,7 +63,7 @@ class Password
             $keyspace = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`-=~!@#$%^&*()_+,./<>?;:[]{}\|";
         }
         $str = '';
-        $max = strlen($keyspace) - 1;
+        $max = \strlen($keyspace) - 1;
         if ($max < 1) {
             throw new \RuntimeException('$keyspace must be at least two characters long');
         }

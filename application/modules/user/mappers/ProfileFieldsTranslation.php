@@ -61,7 +61,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
     /**
      * Returns a ProfileFieldTranslationModel created using an array with data.
      *
-     * @param  mixed[] $profileFieldRow
+     * @param array $profileFieldRow
      * @return ProfileFieldTranslationModel
      */
     public function loadFromArray($profileFieldRow = [])

@@ -257,7 +257,7 @@ class ResultTest extends DatabaseTestCase
             ->limit($limit)
             ->execute();
 
-        self::assertSame($limit, $result->getFoundRows());
+        self::assertSame($limit, $result->getNumRows());
     }
 
     /**
@@ -305,6 +305,24 @@ class ResultTest extends DatabaseTestCase
         $expected = 5; //rows in dataset
 
         $result = $this->db->select(null, 'groups')
+            ->limit(2)
+            ->useFoundRows()
+            ->execute();
+
+        self::assertSame($expected, $result->getFoundRows());
+    }
+
+    /**
+     * Make sure the SQL_CALC_FOUND_ROWS query modifier and accompanying FOUND_ROWS() function
+     * replacement returns the same result when dealing with a query with a 'GROUP BY' clause.
+     */
+    public function testGetFoundRowsWithGroupBy()
+    {
+        // 5 rows in dataset, but 4 different values for name. 'Clanleader' exists two times.
+        $expected = 4;
+
+        $result = $this->db->select(null, 'groups')
+            ->group(['name'])
             ->limit(2)
             ->useFoundRows()
             ->execute();

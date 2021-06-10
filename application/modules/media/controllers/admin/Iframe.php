@@ -55,7 +55,7 @@ class Iframe extends \Ilch\Controller\Admin
 
         $lastId = $this->getRequest()->getParam('lastid');
 
-        if ($this->getRequest()->getParam('type') === 'multi' || $this->getRequest()->getParam('type') === 'single' || $this->getRequest()->getParam('type') == 'imageckeditor') {
+        if ($this->getRequest()->getParam('type') === 'multi' || $this->getRequest()->getParam('type') === 'single' || $this->getRequest()->getParam('type') === 'imageckeditor') {
             $type = $this->getConfig()->get('media_ext_img');
         }
 

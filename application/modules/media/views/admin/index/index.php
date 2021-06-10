@@ -37,18 +37,19 @@
                     <label class="col-lg-2 control-label" for="pref-orderby"><?=$this->getTrans('orderBy') ?>:</label>
                     <div class="col-lg-2">
                         <select class="form-control" id="pref-orderby" name="order">
-                            <option><?=$this->getTrans('descendent') ?></option>
-                        </select>    
+                            <option value="ASC"><?=$this->getTrans('ascending') ?></option>
+                            <option value="DESC"><?=$this->getTrans('descending') ?></option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label" for="pref-orderbytype"><?=$this->getTrans('mediaType') ?>:</label>
                     <div class="col-lg-2">
                         <select class="form-control" id="pref-orderbytype" name="orderbytype">
-                            <option><?=$this->getTrans('all') ?></option>
-                            <option><?=$this->getTrans('image') ?></option>
-                            <option><?=$this->getTrans('video') ?></option>
-                            <option><?=$this->getTrans('file') ?></option>
+                            <option value="all"><?=$this->getTrans('all') ?></option>
+                            <option value="image"><?=$this->getTrans('image') ?></option>
+                            <option value="video"><?=$this->getTrans('video') ?></option>
+                            <option value="file"><?=$this->getTrans('file') ?></option>
                         </select>
                     </div>
                 </div>

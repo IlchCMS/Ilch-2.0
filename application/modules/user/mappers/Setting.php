@@ -10,8 +10,11 @@ class Setting extends \Ilch\Mapper
 {
     /**
      * Gets the Size.
-     * @param
-     * @return Size
+     *
+     * @param $bytes
+     * @param null $format
+     * @param bool $addFormat
+     * @return float|string
      */
     public function getNicebytes($bytes, $format = null, $addFormat = true) {
         if ($format === null) {

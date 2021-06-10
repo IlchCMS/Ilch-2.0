@@ -198,7 +198,7 @@ class User extends \Ilch\Mapper
     /**
      * Returns a user created using an array with user data.
      *
-     * @param  mixed[] $userRow
+     * @param array $userRow
      * @return UserModel
      */
     public function loadFromArray($userRow = [])
@@ -443,7 +443,7 @@ class User extends \Ilch\Mapper
      */
     public function getAdministratorCount()
     {
-        return $this->db()->select('COUNT(*)', 'users_groups', ['group_id' => 1])
+        return (int)$this->db()->select('COUNT(*)', 'users_groups', ['group_id' => 1])
             ->execute()
             ->fetchCell();
     }
@@ -486,7 +486,7 @@ class User extends \Ilch\Mapper
     {
         $groupMapper = new GroupMapper();
 
-        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && !in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
+        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && !\in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
             $this->db()->insert('users_groups')
                 ->values(['user_id' => $userId, 'group_id' => $groupId])
                 ->execute();
@@ -503,7 +503,7 @@ class User extends \Ilch\Mapper
     {
         $groupMapper = new GroupMapper();
 
-        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
+        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && \in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
             $this->db()->delete('users_groups')
                 ->where(['user_id' => $userId, 'group_id' => $groupId])
                 ->execute();

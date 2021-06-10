@@ -10,14 +10,21 @@ use Modules\Downloads\Models\File as FileModel;
 
 class File extends \Ilch\Mapper
 {
+    /**
+     * Get the file by id.
+     *
+     * @param int $id
+     * @return FileModel|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getFileById($id)
     {
-        $sql = 'SELECT g.file_id,g.cat,g.id as fileid,g.visits,g.file_title,g.file_description,g.file_image, m.url, m.id, m.url_thumb
-                           FROM `[prefix]_downloads_files` AS g
-                           LEFT JOIN `[prefix]_media` m ON g.file_id = m.id
-
-                           WHERE g.id = '.(int)$id;
-        $fileRow = $this->db()->queryRow($sql);
+        $fileRow = $this->db()->select(['g.file_id', 'g.cat', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
+            ->from(['g' => 'downloads_files'])
+            ->join(['m' => 'media'], 'g.file_id = m.id', 'LEFT')
+            ->where(['g.id' => (int)$id])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($fileRow)) {
             return null;
@@ -35,14 +42,23 @@ class File extends \Ilch\Mapper
         return $entryModel;
     }
 
+    /**
+     * Get the last file by it's id.
+     *
+     * @param int $id
+     * @return FileModel|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getLastFileByDownloadsId($id)
     {
-        $sql = 'SELECT g.file_id,g.cat,g.id as fileid,g.visits,g.file_title,g.file_image,g.file_description, m.url, m.id, m.url_thumb
-                           FROM `[prefix]_downloads_files` AS g
-                           LEFT JOIN `[prefix]_media` m ON g.file_id = m.id
-
-                           WHERE g.cat = '.(int)$id.' ORDER by g.id DESC LIMIT 1';
-        $fileRow = $this->db()->queryRow($sql);
+        $fileRow = $this->db()->select(['g.file_id', 'g.cat', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
+            ->from(['g' => 'downloads_files'])
+            ->join(['m' => 'media'], 'g.file_id = m.id', 'LEFT')
+            ->where(['g.cat' => (int)$id])
+            ->order(['g.id' => 'DESC'])
+            ->limit(1)
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($fileRow)) {
             return null;
@@ -59,13 +75,19 @@ class File extends \Ilch\Mapper
         return $entryModel;
     }
 
-    public function getCountFileById($id)
+    /**
+     * Get the count of files by category.
+     *
+     * @param int $catId id of the category
+     * @return int count of files
+     */
+    public function getCountOfFilesByCategory(int $catId): int
     {
-        $sql = 'SELECT *
-                FROM `[prefix]_downloads_files`
-                
-                WHERE cat = '.(int)$id;
-        return $this->db()->queryArray($sql);
+        return (int)$this->db()->select('Count(*)')
+            ->from(['downloads_files'])
+            ->where(['cat' => $catId])
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -77,48 +99,68 @@ class File extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('downloads_files')
-                ->values(['file_id' => $model->getFileId(),'cat' => $model->getCat(), 'file_title' => $model->getFileTitle()])
+                ->values(['file_id' => $model->getFileId(), 'cat' => $model->getCat(), 'file_title' => $model->getFileTitle()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('downloads_files')
-                ->values(['file_id' => $model->getFileId(),'cat' => $model->getCat(), 'file_title' => $model->getFileTitle()])
+                ->values(['file_id' => $model->getFileId(), 'cat' => $model->getCat(), 'file_title' => $model->getFileTitle()])
                 ->execute();
         }
     }
 
+    /**
+     * Get files by category id.
+     *
+     * @param int $id category id
+     * @param null $pagination
+     * @return array
+     */
     public function getFileByDownloadsId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.file_id,g.cat,g.id as fileid,g.file_title,g.file_image,g.file_description,g.visits, m.url, m.id, m.url_thumb
-                           FROM `[prefix]_downloads_files` AS g
-                           LEFT JOIN `[prefix]_media` m ON g.file_image = m.url
+        $sql = $this->db()->select(['g.cat', 'fileid' => 'g.id', 'g.file_title', 'g.file_image', 'g.file_description', 'g.visits', 'm.url', 'm.url_thumb'])
+            ->from(['g' => 'downloads_files'])
+            ->join(['m' => 'media'], 'g.file_image = m.url', 'LEFT')
+            ->where(['g.cat' => (int)$id])
+            ->order(['g.id' => 'DESC']);
 
-                           WHERE g.cat = '.(int)$id.' ORDER BY g.id DESC
-                           LIMIT '.implode(',',$pagination->getLimit());
-
-        $fileArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
-
-        $entry = [];
-
-        foreach ($fileArray as $entries) {
-            $entryModel = new FileModel();
-            $entryModel->setFileUrl($entries['url']);
-            $entryModel->setFileThumb($entries['url_thumb']);
-            $entryModel->setId($entries['fileid']);
-            $entryModel->setFileTitle($entries['file_title']);
-            $entryModel->setFileImage($entries['url_thumb']);
-            $entryModel->setFileDesc($entries['file_description']);
-            $entryModel->setVisits($entries['visits']);
-            $entryModel->setCat($entries['cat']);
-            $entry[] = $entryModel;
+        if ($pagination !== null) {
+            $sql->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $sql->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $sql->execute();
         }
-        return $entry;
+
+        $filesArray = $result->fetchRows();
+        $entries = [];
+
+        foreach ($filesArray as $entry) {
+            $fileModel = new FileModel();
+            $fileModel->setFileUrl($entry['url']);
+            $fileModel->setFileThumb($entry['url_thumb']);
+            $fileModel->setId($entry['fileid']);
+            $fileModel->setFileTitle($entry['file_title']);
+            $fileModel->setFileImage($entry['url_thumb']);
+            $fileModel->setFileDesc($entry['file_description']);
+            $fileModel->setVisits($entry['visits']);
+            $fileModel->setCat($entry['cat']);
+            $entries[] = $fileModel;
+        }
+
+        return $entries;
     }
 
+    /**
+     * Delete a file by it's id.
+     *
+     * @param int $id the id of the file
+     * @return \Ilch\Database\Mysql\Result|int
+     */
     public function deleteById($id)
     {
-            return $this->db()->delete('downloads_files')
+        return $this->db()->delete('downloads_files')
             ->where(['id' => $id])
             ->execute();
     }
@@ -132,9 +174,9 @@ class File extends \Ilch\Mapper
     {
         if ($model->getVisits()) {
             $this->db()->update('downloads_files')
-                    ->values(['visits' => $model->getVisits()])
-                    ->where(['file_id' => $model->getFileId()])
-                    ->execute();
+                ->values(['visits' => $model->getVisits()])
+                ->where(['file_id' => $model->getFileId()])
+                ->execute();
         }
     }
 
@@ -146,8 +188,8 @@ class File extends \Ilch\Mapper
     public function saveFileTreat(FileModel $model)
     {
         $this->db()->update('downloads_files')
-                ->values(['file_title' => $model->getFileTitle(),'file_image' => $model->getFileImage(),'file_description' => $model->getFileDesc()])
-                ->where(['id' => $model->getId()])
-                ->execute();
+            ->values(['file_title' => $model->getFileTitle(), 'file_image' => $model->getFileImage(), 'file_description' => $model->getFileDesc()])
+            ->where(['id' => $model->getId()])
+            ->execute();
     }
 }

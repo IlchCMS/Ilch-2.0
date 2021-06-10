@@ -6,7 +6,7 @@
 
 namespace Ilch\Database\Mysql;
 
-use \Ilch\Database\Mysql as DB;
+use Ilch\Database\Mysql as DB;
 
 abstract class QueryBuilder
 {
@@ -45,8 +45,8 @@ abstract class QueryBuilder
      */
     public function where($where, $type = 'and')
     {
-        if (is_array($where)) {
-            if (!in_array($type, ['and', 'or'])) {
+        if (\is_array($where)) {
+            if (!\in_array($type, ['and', 'or'])) {
                 throw new \InvalidArgumentException('Invalid type: "and" or "or" expected');
             }
             $where = $this->createCompositeExpression($where, $type);
@@ -176,7 +176,7 @@ abstract class QueryBuilder
         $oppositeType = $type === 'and' ? 'or' : 'and';
         // add to existing or
         if (is_a($this->where, __NAMESPACE__ . '\Expression\\' . ucfirst($type) . 'X')) {
-            if (is_array($where)) {
+            if (\is_array($where)) {
                 $this->where->addParts($this->createCompositePartArray($where));
             } elseif ($where instanceof Expression\CompositePart) {
                 $this->where->addPart($where);
@@ -188,7 +188,7 @@ abstract class QueryBuilder
 
         // new or insert existing where into condition
         if (is_a($this->where, __NAMESPACE__ . '\Expression\\' . ucfirst($oppositeType) . 'X')) {
-            if (!is_array($where)) {
+            if (!\is_array($where)) {
                 $where = [$where];
             }
             array_unshift($where, $this->where);
@@ -240,27 +240,25 @@ abstract class QueryBuilder
         $singleComparisonOperators =  ['=', '<=', '>=', '<', '>', '!=', '<>', 'LIKE', 'NOT LIKE', 'IS', 'IS NOT'];
 
         // expect comparison of 2 fields -> don't escape (f.e. join conditions)
-        if (is_int($key)) {
+        if (\is_int($key)) {
             $conditionParts = explode(' ', $value);
-            if (count($conditionParts) < 3 || ( count($conditionParts) == 3 && !in_array($conditionParts[1], $singleComparisonOperators) ) ||  ( count($conditionParts) == 4 && !in_array($conditionParts[1].' '.$conditionParts[2], $singleComparisonOperators) ) ) {
+            if (\count($conditionParts) < 3 || ( \count($conditionParts) == 3 && !\in_array($conditionParts[1], $singleComparisonOperators) ) ||  ( \count($conditionParts) == 4 && !\in_array($conditionParts[1].' '.$conditionParts[2], $singleComparisonOperators) ) ) {
                 throw new \InvalidArgumentException('Invalid comparison expression');
             }
 
             $left = $this->db->quote($conditionParts[0]);
-            if (count($conditionParts) == 4) {
+            if (\count($conditionParts) == 4) {
                 $operator = $conditionParts[1].' '.$conditionParts[2];
             } else {
                 $operator = $conditionParts[1];
             }
 
-            if (in_array($operator, ['IS', 'IS NOT'])) {
+            if (\in_array($operator, ['IS', 'IS NOT'])) {
                 $right = 'NULL';
+            } else if (\count($conditionParts) == 4) {
+                $right = $this->db->quote($conditionParts[3]);
             } else {
-                if (count($conditionParts) == 4) {
-                    $right = $this->db->quote($conditionParts[3]);
-                } else {
-                    $right = $this->db->quote($conditionParts[2]);
-                }
+                $right = $this->db->quote($conditionParts[2]);
             }
         } else {
             // string key -> comparison with value(s)
@@ -272,21 +270,21 @@ abstract class QueryBuilder
                 $operator = '=';
             }
 
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 if ($operator === '=') {
                     $operator = 'IN';
-                } elseif (in_array($operator, ['!=', '<>'])) {
+                } elseif (\in_array($operator, ['!=', '<>'])) {
                     $operator = 'NOT IN';
                 }
-                if (!in_array($operator, ['IN', 'NOT IN'])) {
+                if (!\in_array($operator, ['IN', 'NOT IN'])) {
                     throw new \InvalidArgumentException('invalid operator for multiple value comparison');
                 }
                 $right = '(' . implode(', ', $this->db->escapeArray($value, true)) . ')';
             } else {
-                if (!in_array($operator, $singleComparisonOperators)) {
+                if (!\in_array($operator, $singleComparisonOperators)) {
                     throw new \InvalidArgumentException('invalid operator for single value comparison');
                 }
-                if (in_array($operator, ['IS', 'IS NOT'])) {
+                if (\in_array($operator, ['IS', 'IS NOT'])) {
                     $right = 'NULL';
                 } else {
                     $right = $this->db->escape($value, true);

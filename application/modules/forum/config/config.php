@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.27.0',
+        'version' => '1.28.0',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -36,7 +36,7 @@ class Config extends \Ilch\Config\Install
             ]
         ],
         'ilchCore' => '2.1.36',
-        'phpVersion' => '5.6'
+        'phpVersion' => '7.0'
     ];
 
     public function install()
@@ -180,7 +180,7 @@ class Config extends \Ilch\Config\Install
                 (1, 2, "Willkommen bei Ilch!", 0, NOW(), 2);
 
             INSERT INTO `[prefix]_forum_posts` (`id`, `topic_id`, `text`, `user_id`, `date_created`, `forum_id`) VALUES
-                (1, 1, "Willkommen im Ilch 2 Forum!\n\nBei Fragen oder Probleme im [url=http://www.ilch.de/forum.html]Ilch Forum[/url] melden.
+                (1, 1, "Willkommen im Ilch 2 Forum!\n\nBei Fragen oder Probleme im [url=https://www.ilch.de/forum.html]Ilch Forum[/url] melden.
 
                         Viel Erfolg
                         Ilch", 0, NOW(), 2);
@@ -428,10 +428,13 @@ class Config extends \Ilch\Config\Install
                             PRIMARY KEY (`id`)
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
-            // Update description
-            foreach($this->config['languages'] as $key => $value) {
-                $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'forum' AND `locale` = '%s';", $value['description'], $key));
-            }
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'forum' AND `locale` = '%s';", $value['description'], $key));
+                }
+            case "1.25.0":
+            case "1.26.0":
+            case "1.27.0":
         }
     }
 }

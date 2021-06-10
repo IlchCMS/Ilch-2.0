@@ -717,7 +717,7 @@ class User extends \Ilch\Model
     /**
      * Get if user is locked.
      *
-     * @return mixed
+     * @return int
      */
     public function getLocked()
     {
@@ -766,7 +766,7 @@ class User extends \Ilch\Model
      */
     public function isAdmin()
     {
-        if (array_key_exists(1, $this->getGroups())) {
+        if (\array_key_exists(1, $this->getGroups())) {
             return true;
         }
 

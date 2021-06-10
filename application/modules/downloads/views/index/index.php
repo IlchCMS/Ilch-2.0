@@ -60,7 +60,7 @@ $fileMapper = $this->get('fileMapper');
 function rec($item, $downloadsMapper, $obj, $fileMapper)
 {
     $subItems = $downloadsMapper->getDownloadsItemsByParent('1', $item->getId());
-    $fileCount = $fileMapper->getCountFileById($item->getId());
+    $fileCount = $fileMapper->getCountOfFilesByCategory($item->getId());
     
     if ($item->getType() === 0) {
         echo '<div class="page-header">
@@ -86,7 +86,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                                 <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
                                     '.$obj->escape($item->getTitle()).'
                                 </a>
-                                <p class="text-left">'.$obj->getTrans('files').': '. count($fileCount).'</p>
+                                <p class="text-left">'.$obj->getTrans('files').': '.$fileCount.'</p>
                                 <div class="lib-header-seperator"></div>
                                 
                             </div>

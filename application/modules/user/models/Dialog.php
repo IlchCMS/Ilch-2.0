@@ -254,7 +254,7 @@ class Dialog extends \Ilch\Model
     /**
      * Set the NAME of the user
      * @param string $name
-     * @return void
+     * @return Dialog
      */
     public function setName($name)
     {

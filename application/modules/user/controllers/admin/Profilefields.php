@@ -126,7 +126,7 @@ class ProfileFields extends \Ilch\Controller\Admin
             $profileField = $profileFieldsMapper->loadFromArray($profileFieldData);
             $profileFieldId = $profileFieldsMapper->save($profileField);
 
-            for ($i = 0, $iMax = count($postData); $i < $iMax; $i++) {
+            for ($i = 0, $iMax = \count($postData); $i < $iMax; $i++) {
                 if (isset($postData['profileFieldTrans'.$i])) {
                     $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 

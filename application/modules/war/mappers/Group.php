@@ -64,14 +64,21 @@ class Group extends \Ilch\Mapper
      */
     public function getGroupList($pagination = null)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.id, g.name, g.tag, g.image, g.member, g.desc, m.url, m.url_thumb
-                FROM `[prefix]_war_groups` as g
-                LEFT JOIN [prefix]_media m ON g.image = m.url
-                ORDER by g.id DESC
-                LIMIT ' . implode(',', $pagination->getLimit());
+        $select = $this->db()->select(['g.id', 'g.name', 'g.tag', 'g.image', 'g.member', 'g.desc', 'm.url', 'm.url_thumb'])
+            ->from(['g' => 'war_groups'])
+            ->join(['m' => 'media'], 'g.image = m.url', 'LEFT')
+            ->order(['g.id' => 'DESC']);
 
-        $groupArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $groupArray = $result->fetchRows();
 
         if (empty($groupArray)) {
             return null;

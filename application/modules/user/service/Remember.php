@@ -52,7 +52,7 @@ class Remember
     {
         $remember = explode(':', $_COOKIE['remember']);
 
-        if (count($remember) !== 2) {
+        if (\count($remember) !== 2) {
             $remember[1] = '';
         }
         list($selector, $authenticator) = $remember;

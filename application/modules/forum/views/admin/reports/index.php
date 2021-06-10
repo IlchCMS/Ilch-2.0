@@ -1,5 +1,5 @@
 <?php
-$reaonTransKeys = [
+$reasonTransKeys = [
     '1' => 'illegalContent',
     '2' => 'spam',
     '3' => 'wrongTopic',
@@ -38,7 +38,7 @@ $reaonTransKeys = [
                             <td><?=$this->getDeleteCheckbox('check_forumReports', $report->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $report->getId()]) ?></td>
                             <td><?=$this->escape($report->getDate()) ?></td>
-                            <td><?=$this->getTrans($reaonTransKeys[$report->getReason()]) ?></td>
+                            <td><?=$this->getTrans($reasonTransKeys[$report->getReason()]) ?></td>
                             <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'reports', 'action' => 'show', 'id' => $report->getId()], 'admin') ?>"><?=$this->getTrans('showDetails') ?></a></td>
                             <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $report->getTopicId().'#'.$report->getPostId()], '') ?>" target="_blank"><?=$this->getTrans('showPost') ?></a></td>
                             <td><?=$this->escape($report->getUsername()) ?></td>

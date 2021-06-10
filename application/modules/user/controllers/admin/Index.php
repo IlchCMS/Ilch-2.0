@@ -21,7 +21,7 @@ use Modules\User\Mappers\AuthProvider;
 use Modules\User\Mappers\Friends as FriendsMapper;
 use Modules\User\Mappers\Dialog as DialogMapper;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
-use \Ilch\Registry;
+use Ilch\Registry;
 use Ilch\Validation;
 
 /**
@@ -137,9 +137,9 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('userList', $entries)
             ->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'))
             ->set('errorMsg', $this->getRequest()->getParam('errorMsg'))
-            ->set('badge', count($userMapper->getUserList(['confirmed' => 0])))
-            ->set('badgeLocked', count($userMapper->getUserList(['locked' => 1])))
-            ->set('badgeSelectsDelete', count($userMapper->getUserList(['selectsdelete >' => '1000-01-01 00:00:00'])))
+            ->set('badge', \count($userMapper->getUserList(['confirmed' => 0])))
+            ->set('badgeLocked', \count($userMapper->getUserList(['locked' => 1])))
+            ->set('badgeSelectsDelete', \count($userMapper->getUserList(['selectsdelete >' => '1000-01-01 00:00:00'])))
             ->set('timetodelete', $this->getConfig()->get('userdeletetime'))
             ->set('pagination', $pagination);
     }

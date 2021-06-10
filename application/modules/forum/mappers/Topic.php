@@ -15,21 +15,24 @@ class Topic extends \Ilch\Mapper
 {
     public function getTopicsByForumId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *, topics.id, topics.visits, MAX(posts.date_created) AS latest_post
-                FROM `[prefix]_forum_topics` AS topics
-                LEFT JOIN `[prefix]_forum_posts` AS posts ON topics.id = posts.topic_id
-                WHERE topics.forum_id = '.(int)$id.'
-                GROUP by topics.type, topics.id, topics.topic_id, topics.topic_prefix, topics.topic_title, topics.visits, topics.creator_id, topics.date_created, topics.forum_id, topics.status
-                ORDER by topics.type DESC, latest_post DESC';
+        $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)'])
+            ->from(['topics' => 'forum_topics'])
+            ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
+            ->where(['topics.forum_id' => (int)$id])
+            ->group(['topics.type', 'topics.id', 'topics.topic_id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
+            ->order(['topics.type' => 'DESC', 'latest_post' => 'DESC']);
 
-        if (!empty($pagination)) {
-            $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
-            $topicArray = $this->db()->queryArray($sql);
-            $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        if ($pagination !== null) {
+            $sql->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $sql->execute();
+            $pagination->setRows($result->getFoundRows());
         } else {
-            $topicArray = $this->db()->queryArray($sql);
+            $result = $sql->execute();
         }
-        
+
+        $topicArray = $result->fetchRows();
+
         $entry = [];
         $user = null;
         $dummyUser = null;
@@ -44,7 +47,7 @@ class Topic extends \Ilch\Mapper
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
 
-            if (array_key_exists($entries['creator_id'], $userCache)) {
+            if (\array_key_exists($entries['creator_id'], $userCache)) {
                 $entryModel->setAuthor($userCache[$entries['creator_id']]);
             } else {
                 $user = $userMapper->getUserById($entries['creator_id']);
@@ -89,30 +92,42 @@ class Topic extends \Ilch\Mapper
         return $result;
     }
 
+    /**
+     * Get the topics.
+     *
+     * @param null|\Ilch\Pagination $pagination
+     * @param null|array $limit
+     * @return array
+     * @throws \Ilch\Database\Exception
+     */
     public function getTopics($pagination = NULL, $limit = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *
-                FROM `[prefix]_forum_topics`
-                GROUP by type, `id`, `topic_id`, `topic_prefix`, `topic_title`, `visits`, `creator_id`, `date_created`, `forum_id`, `status`
-                ORDER by type DESC, id DESC';
-        if ($pagination != null) {
-            $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
+        $sql = $this->db()->select('*')
+            ->from(['forum_topics'])
+            ->group(['type', 'id', 'topic_id', 'topic_prefix', 'topic_title', 'visits', 'creator_id', 'date_created', 'forum_id', 'status'])
+            ->order(['type' => 'DESC', 'id' => 'DESC']);
+
+        if ($pagination !== null) {
+            $sql->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $sql->execute();
+            $pagination->setRows($result->getFoundRows());
         } elseif ($limit != null) {
-            $sql .= ' LIMIT '.(int)$limit;
+            $sql = $sql->limit((int)$limit);
+            $result = $sql->execute();
+        } else {
+            $result = $sql->execute();
         }
 
-        $fileArray = $this->db()->queryArray($sql);
+        $topicsArray = $result->fetchRows();
 
-        if ($pagination != null) {
-            $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
-        }
 
         $entry = [];
         $user = null;
         $dummyUser = null;
         $userCache = [];
 
-        foreach ($fileArray as $entries) {
+        foreach ($topicsArray as $entries) {
             $entryModel = new TopicModel();
             $userMapper = new UserMapper();
             $entryModel->setId($entries['id']);
@@ -122,7 +137,7 @@ class Topic extends \Ilch\Mapper
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
 
-            if (array_key_exists($entries['creator_id'], $userCache)) {
+            if (\array_key_exists($entries['creator_id'], $userCache)) {
                 $entryModel->setAuthor($userCache[$entries['creator_id']]);
             } else {
                 $user = $userMapper->getUserById($entries['creator_id']);
@@ -183,6 +198,13 @@ class Topic extends \Ilch\Mapper
         return $entryModel;
     }
 
+    /**
+     * Get last post by topic id.
+     *
+     * @param int $id topic id
+     * @return PostModel|null
+     * @throws \Ilch\Database\Exception
+     */
     public function getLastPostByTopicId($id)
     {
         $lastPostRow = $this->db()->select()
@@ -294,32 +316,12 @@ class Topic extends \Ilch\Mapper
             ->execute();
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastInsertId()
     {
         return $this->last_insert_id;
-    }
-
-    public function getPostByTopicId($id, $pagination = NULL)
-    {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *
-                FROM `[prefix]_forum_topics`
-                WHERE topic_id = '.(int)$id.'
-                LIMIT '.implode(',',$pagination->getLimit());
-
-        $fileArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
-
-        $entry = [];
-
-        foreach ($fileArray as $entries) {
-            $entryModel = new TopicModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setTopicId($id);
-            $entryModel->setTopicTitle($entries['topic_title']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
     }
 
     /**

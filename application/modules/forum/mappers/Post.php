@@ -57,8 +57,9 @@ class Post extends \Ilch\Mapper
     /**
      * Get all posts by topic id (posts of a topic)
      *
-     * @param $topicId
-     * @param null $pagination
+     * @param int $topicId
+     * @param null|\Ilch\Pagination $pagination
+     * @param int $descorder
      * @return array
      * @throws \Ilch\Database\Exception
      */
@@ -91,7 +92,7 @@ class Post extends \Ilch\Mapper
             $entryModel->setText($entries['text']);
             $entryModel->setVotes($entries['votes']);
             $entryModel->setDateCreated($entries['date_created']);
-            if (array_key_exists($entries['user_id'], $userCache)) {
+            if (\array_key_exists($entries['user_id'], $userCache)) {
                 $entryModel->setAutor($userCache[$entries['user_id']]);
             } else {
                 $user = $userMapper->getUserById($entries['user_id']);
@@ -274,8 +275,8 @@ class Post extends \Ilch\Mapper
     /**
      * Check if a post is the first one of a topic.
      *
-     * @param $topicId
-     * @param $postId
+     * @param int $topicId
+     * @param int $postId
      * @return bool
      */
     public function isFirstPostOfTopic($topicId, $postId)

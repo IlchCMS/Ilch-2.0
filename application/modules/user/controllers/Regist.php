@@ -71,7 +71,7 @@ class Regist extends \Ilch\Controller\Frontend
             ];
 
             if ($captchaNeeded) {
-                if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+                if (\in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
                     $validationRules['token'] = 'required|grecaptcha:saveRegist';
                 } else {
                     $validationRules['captcha'] = 'required|captcha';
@@ -169,7 +169,7 @@ class Regist extends \Ilch\Controller\Frontend
         }
 
         if ($captchaNeeded) {
-            if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+            if (\in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
                 $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
                 $this->getView()->set('googlecaptcha', $googlecaptcha);
             } else {
