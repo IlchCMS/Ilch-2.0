@@ -206,8 +206,7 @@ class Config extends \Ilch\Config\Install
                 foreach($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'teams' AND `locale` = '%s';", $value['description'], $key));
                 }
-            case "1.19.1":
-                // update Captcha
+            case "1.19.0":
         }
     }
 }
