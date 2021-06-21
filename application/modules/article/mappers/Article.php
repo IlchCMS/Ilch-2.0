@@ -886,7 +886,7 @@ class Article extends \Ilch\Mapper
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 // Update existing article with specific id and locale
                 $this->db()->update('articles')
-                    ->values(['cat_id' => $article->getCatId(), 'date_created' => $article->getDateCreated(), 'commentsDisabled' => $article->getCommentsDisabled()])
+                    ->values(['cat_id' => $article->getCatId(), 'date_created' => $article->getDateCreated(), 'commentsDisabled' => (int)$article->getCommentsDisabled()])
                     ->where(['id' => $article->getId()])
                     ->execute();
 
@@ -924,7 +924,7 @@ class Article extends \Ilch\Mapper
         } else {
             // Insert new article
             $articleId = $this->db()->insert('articles')
-                ->values(['cat_id' => $article->getCatId(), 'date_created' => $article->getDateCreated(), 'commentsDisabled' => $article->getCommentsDisabled()])
+                ->values(['cat_id' => $article->getCatId(), 'date_created' => $article->getDateCreated(), 'commentsDisabled' => (int)$article->getCommentsDisabled()])
                 ->execute();
 
             $this->db()->insert('articles_content')
@@ -945,7 +945,7 @@ class Article extends \Ilch\Mapper
             $id = $articleId;
         }
 
-        $this->setTopArticle($id, $article->getTopArticle());
+        $this->setTopArticle($id, (int)$article->getTopArticle());
         $this->saveReadAccess($id, $article->getReadAccess());
 
         return $id;
