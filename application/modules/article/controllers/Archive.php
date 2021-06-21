@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -63,8 +63,7 @@ class Archive extends \Ilch\Controller\Frontend
             ->set('commentMapper', $commentMapper)
             ->set('userMapper', $userMapper)
             ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
-            ->set('articles', $articleMapper->getArticles($this->locale, $pagination))
-            ->set('readAccess', $readAccess)
+            ->set('articles', $articleMapper->getArticlesByAccess($readAccess, $this->locale, $pagination))
             ->set('pagination', $pagination);
     }
 
@@ -96,7 +95,7 @@ class Archive extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans($date->format('F', true)).$date->format(' Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
 
-            $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
+            $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
             $pagination->setPage($this->getRequest()->getParam('page'));
 
             $user = null;
@@ -111,10 +110,9 @@ class Archive extends \Ilch\Controller\Frontend
                 }
             }
 
-            $articles = $articleMapper->getArticlesByDate($date, $pagination, $this->locale);
+            $articles = $articleMapper->getArticlesByDateAccess($date, $readAccess, $pagination, $this->locale);
 
-            $this->getView()->set('readAccess', $readAccess)
-                ->set('pagination', $pagination);
+            $this->getView()->set('pagination', $pagination);
         }
 
         $this->getView()->set('categoryMapper', $categoryMapper)

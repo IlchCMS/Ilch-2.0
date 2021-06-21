@@ -82,7 +82,9 @@ class PhpunitDataset extends DatabaseTestCase
                 ->fetchCell();
 
             if ($tableNotEmpty) {
+                $this->db->query('SET FOREIGN_KEY_CHECKS = 0;');
                 $this->db->truncate($table);
+                $this->db->query('SET FOREIGN_KEY_CHECKS = 1;');
             }
 
             foreach($rows as $row => $columns) {

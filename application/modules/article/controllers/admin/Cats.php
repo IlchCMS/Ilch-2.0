@@ -48,7 +48,7 @@ class Cats extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'cats' && $this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getControllerName() === 'cats' && $this->getRequest()->getActionName() === 'treat') {
             $items[1][0]['active'] = true;
         } else {
             $items[1]['active'] = true;

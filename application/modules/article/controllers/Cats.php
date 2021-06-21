@@ -96,8 +96,7 @@ class Cats extends \Ilch\Controller\Frontend
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
-            ->set('articles', $articleMapper->getArticlesByCats($this->getRequest()->getParam('id'), $this->locale, $pagination))
-            ->set('readAccess', $readAccess)
+            ->set('articles', $articleMapper->getArticlesByCatsAccess($this->getRequest()->getParam('id'), $readAccess, $this->locale, $pagination))
             ->set('pagination', $pagination);
     }
 

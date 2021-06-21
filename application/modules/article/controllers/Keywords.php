@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -98,8 +98,7 @@ class Keywords extends \Ilch\Controller\Frontend
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
-            ->set('articles', $articleMapper->getArticlesByKeyword($keyword, $this->locale, $pagination))
-            ->set('readAccess', $readAccess)
+            ->set('articles', $articleMapper->getArticlesByKeywordAccess($keyword, $readAccess, $this->locale, $pagination))
             ->set('pagination', $pagination);
     }
 

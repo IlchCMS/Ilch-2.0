@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -18,7 +18,7 @@ class Article extends \Ilch\Model
     /**
      * The catId of the article.
      *
-     * @var int
+     * @var string
      */
     protected $catId;
 
@@ -506,7 +506,7 @@ class Article extends \Ilch\Model
     /**
      * Sets the read access.
      *
-     * @param integer $readAccess
+     * @param string $readAccess
      * @return $this
      */
     public function setReadAccess($readAccess)

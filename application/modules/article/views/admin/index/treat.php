@@ -8,7 +8,7 @@ if ($this->get('article') != '') {
 <h1><?=($this->get('article') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('template') ? 'has-error' : '' ?>">
         <label for="template" class="col-lg-2 control-label">
             <?=$this->getTrans('template') ?>:
         </label>
@@ -60,7 +60,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    id="date_created"
                    name="date_created"
-                   value="<?php if ($this->get('article') != '' && $this->get('article')->getDateCreated()) { echo date('d.m.Y H:i', strtotime($this->get('article')->getDateCreated())); } ?>"
+                   value="<?=($this->get('article') != '' && $this->get('article')->getDateCreated()) ? date('d.m.Y H:i', strtotime($this->get('article')->getDateCreated())) : '' ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
@@ -201,7 +201,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    name="imageSource"
                    id="imageSource"
-                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getImageSource()); } ?>" />
+                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getImageSource()) : $this->originalInput('imageSource') ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -219,8 +219,8 @@ if ($this->get('article') != '') {
         </label>
         <div class="col-lg-4">
             <textarea class="form-control" 
-                      id="description" 
-                      name="description"><?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getDescription()); } ?></textarea>
+                      id="description"
+                      name="description"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getDescription()) : $this->originalInput('description') ?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -230,7 +230,7 @@ if ($this->get('article') != '') {
         <div class="col-lg-4">
             <textarea class="form-control" 
                       id="keywords" 
-                      name="keywords"><?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getKeywords()); } ?></textarea>
+                      name="keywords"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords')?></textarea>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
@@ -244,7 +244,7 @@ if ($this->get('article') != '') {
                        type="text"
                        id="permaLink"
                        name="permaLink"
-                       value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
+                       value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getPerma()) : $this->originalInput('permaLink') ?>" />
             </div>
         </div>
     </div>

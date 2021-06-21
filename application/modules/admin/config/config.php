@@ -770,6 +770,54 @@ class Config extends \Ilch\Config\Install
                 
                 replaceVendorDirectory();
                 break;
+            case "2.1.43":
+                // Create new table for articles read access.
+                $this->db()->queryMulti('CREATE TABLE `[prefix]_articles_access` (
+                    `article_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    PRIMARY KEY (`article_id`, `group_id`) USING BTREE,
+                    INDEX `FK_[prefix]_articles_access_[prefix]_groups` (`group_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_articles_access_[prefix]_articles` FOREIGN KEY (`article_id`) REFERENCES `[prefix]_articles` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_articles_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // Convert data from old read_access column of table articles to the new articles_access table.
+                $readAccessRows = $this->db()->select(['id', 'read_access'])
+                    ->from(['articles'])
+                    ->execute()
+                    ->fetchRows();
+
+                $sql = 'INSERT INTO [prefix]_articles_access (article_id, group_id) VALUES';
+                $sqlWithValues = $sql;
+                $rowCount = 0;
+
+                foreach ($readAccessRows as $readAccessRow) {
+                    $readAccessArray = [];
+                    $readAccessArray[$readAccessRow['id']] = explode(',', $readAccessRow['read_access']);
+                    foreach ($readAccessArray as $articleId => $groupIds) {
+                        // There is a limit of 1000 rows per insert, but according to some benchmarks found online
+                        // the sweet spot seams to be around 25 rows per insert. So aim for that.
+                        if ($rowCount >= 25) {
+                            $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+                            $this->db()->queryMulti($sqlWithValues);
+                            $rowCount = 0;
+                            $sqlWithValues = $sql;
+                        }
+
+                        $rowCount += \count($groupIds);
+
+                        foreach ($groupIds as $groupId) {
+                            $sqlWithValues .= '(' . $articleId . ',' . $groupId . '),';
+                        }
+                    }
+                }
+
+                // Insert remaining rows.
+                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+                $this->db()->queryMulti($sqlWithValues);
+
+                // Delete old read_access column of table articles.
+                $this->db()->query('ALTER TABLE `[prefix]_articles` DROP COLUMN `read_access`;');
         }
 
         return 'Update function executed.';

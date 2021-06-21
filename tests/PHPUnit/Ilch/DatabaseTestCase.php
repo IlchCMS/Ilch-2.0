@@ -127,9 +127,11 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
         $sql = 'SHOW TABLES';
         $tableList = $db->queryList($sql);
 
+        $db->query('SET FOREIGN_KEY_CHECKS = 0;');
         foreach ($tableList as $table) {
             $sql = 'DROP TABLE ' . $table;
             $db->query($sql);
         }
+        $db->query('SET FOREIGN_KEY_CHECKS = 1;');
     }
 }
