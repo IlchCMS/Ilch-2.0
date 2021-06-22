@@ -63,7 +63,7 @@ class Article extends \Ilch\Mapper
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticlesByAccess($groupIds = '3', $locale = '', $pagination = null)
+    public function getArticlesByAccess($groupIds = '3', string $locale = '', $pagination = null)
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -154,7 +154,7 @@ class Article extends \Ilch\Mapper
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticlesByCatsAccess($catId, $groupIds = '3', $locale = '', $pagination = null)
+    public function getArticlesByCatsAccess(int $catId, $groupIds = '3', string $locale = '', $pagination = null)
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -244,7 +244,7 @@ class Article extends \Ilch\Mapper
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticlesByKeywordAccess($keyword, $groupIds = '3', $locale = '', $pagination = null)
+    public function getArticlesByKeywordAccess(string $keyword, $groupIds = '3', string $locale = '', $pagination = null)
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -341,7 +341,7 @@ class Article extends \Ilch\Mapper
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticlesByDateAccess(\DateTime $date, $groupIds = '3', $pagination = null, $locale = '')
+    public function getArticlesByDateAccess(\DateTime $date, $groupIds = '3', $pagination = null, string $locale = '')
     {
         $db = $this->db();
 
@@ -410,7 +410,7 @@ class Article extends \Ilch\Mapper
      * @return int
      * @since 2.1.44
      */
-    public function getCountArticlesByCatIdAccess($catId, $groupIds = '3')
+    public function getCountArticlesByCatIdAccess(int $catId, $groupIds = '3'): int
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -447,13 +447,13 @@ class Article extends \Ilch\Mapper
     /**
      * Get articles count by month and year and taking the group IDs into account.
      *
-     * @param null $date
+     * @param string|null $date
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return int
      * @throws \Ilch\Database\Exception
      * @since 2.1.44
      */
-    public function getCountArticlesByMonthYearAccess($date = null, $groupIds = '3')
+    public function getCountArticlesByMonthYearAccess(string $date = null, $groupIds = '3'): int
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -515,13 +515,13 @@ class Article extends \Ilch\Mapper
      * Get a list for the archive box and take the group IDs into account.
      *
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
-     * @param null $limit
+     * @param int|null $limit
      * @return array
      * @throws \Ilch\Database\Exception
      * @todo: Remove the group (aggregate) function MAX() workaround, which avoids duplicated entries in the archive-box if possible.
      * @since 2.1.44
      */
-    public function getArticleDateListAccess($groupIds = '3', $limit = null)
+    public function getArticleDateListAccess($groupIds = '3', int $limit = null): array
     {
         $sql = 'SELECT MAX(`date_created`) AS `date_created`
                 FROM `[prefix]_articles`
@@ -603,11 +603,11 @@ class Article extends \Ilch\Mapper
      *
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $locale
-     * @param null $limit
+     * @param int|null $limit
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticleListAccess($groupIds = '3', $locale = '', $limit = null)
+    public function getArticleListAccess($groupIds = '3', string $locale = '', int $limit = null)
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -645,7 +645,7 @@ class Article extends \Ilch\Mapper
     /**
      * Returns article model found by the key.
      *
-     * @param string $id
+     * @param int $id
      * @param string $locale
      * @return ArticleModel|null
      */
@@ -693,6 +693,9 @@ class Article extends \Ilch\Mapper
 
         $keywordsList = [];
         foreach ($keywordsArray as $keywords) {
+            if ($keywords['keywords'] === '') {
+                continue;
+            }
             $articleModel = new ArticleModel();
             $articleModel->setKeywords($keywords['keywords']);
             $keywordsList[] = $articleModel;
@@ -705,11 +708,11 @@ class Article extends \Ilch\Mapper
      * Get a list of the keywords and take the group IDs into account.
      *
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
-     * @param null $limit
+     * @param int|null $limit
      * @return array
      * @since 2.1.44
      */
-    public function getKeywordsListAccess($groupIds = '3', $limit = null)
+    public function getKeywordsListAccess($groupIds = '3', int $limit = null): array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -734,6 +737,9 @@ class Article extends \Ilch\Mapper
 
         $keywordsList = [];
         foreach ($keywordsArray as $keywords) {
+            if ($keywords['keywords'] === '') {
+                continue;
+            }
             $articleModel = new ArticleModel();
             $articleModel->setKeywords($keywords['keywords']);
             $keywordsList[] = $articleModel;
@@ -959,7 +965,7 @@ class Article extends \Ilch\Mapper
      * @throws \Ilch\Database\Exception
      * @since 2.1.44
      */
-    private function saveReadAccess($articleId, $readAccess)
+    private function saveReadAccess(int $articleId, string $readAccess)
     {
         // Delete possible old entries to later insert the new ones.
         $this->db()->delete('articles_access')
@@ -1045,7 +1051,7 @@ class Article extends \Ilch\Mapper
     /**
      * Delete an article with all associated comments
      *
-     * @param $id
+     * @param int $id
      * @param CommentMapper|null $commentsMapper
      */
     public function deleteWithComments($id, CommentMapper $commentsMapper = null)
@@ -1063,11 +1069,11 @@ class Article extends \Ilch\Mapper
     /**
      * Returns an article model created from an article row.
      *
-     * @param Array $articleRow
+     * @param array $articleRow
      * @return ArticleModel
      * @since 2.1.44
      */
-    private function loadFromArray($articleRow)
+    private function loadFromArray(array $articleRow)
     {
         $articleModel = new ArticleModel();
 

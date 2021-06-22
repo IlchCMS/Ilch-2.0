@@ -33,6 +33,7 @@ class Cats extends \Ilch\Controller\Frontend
     {
         $articleMapper = new ArticleMapper();
         $categoryMapper = new CategoryMapper();
+        $userMapper = new UserMapper();
 
         $this->getLayout()->header()
             ->css('static/css/article.css');
@@ -43,8 +44,21 @@ class Cats extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
 
+        $user = null;
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+        }
+
+        $readAccess = [3];
+        if ($user) {
+            foreach ($user->getGroups() as $us) {
+                $readAccess[] = $us->getId();
+            }
+        }
+
         $this->getView()->set('articleMapper', $articleMapper)
-            ->set('cats', $categoryMapper->getCategories());
+            ->set('cats', $categoryMapper->getCategories())
+            ->set('readAccess', $readAccess);
     }
 
     public function showAction()
