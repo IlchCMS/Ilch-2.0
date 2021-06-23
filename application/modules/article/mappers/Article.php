@@ -307,7 +307,7 @@ class Article extends \Ilch\Mapper
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
             ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo, 'pc.locale' => $this->db()->escape($locale)])
-            ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->group(['p.id'])
             ->order(['p.id' => 'DESC']);
 
         if ($pagination !== null) {
