@@ -310,7 +310,6 @@ class Article extends \Ilch\Mapper
             ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->order(['p.id' => 'DESC']);
 
-
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
                 ->useFoundRows();
@@ -364,7 +363,7 @@ class Article extends \Ilch\Mapper
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
             ->where(['ra.group_id' => $groupIds, 'p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo, 'pc.locale' => $this->db()->escape($locale)])
-            ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->group(['p.id'])
             ->order(['p.id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -1038,17 +1037,10 @@ class Article extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $deleted = $this->db()->delete('articles')
+        // Rows in articles_access and articles_content get automatically deleted due to foreign key constraints.
+        return $this->db()->delete('articles')
             ->where(['id' => $id])
             ->execute();
-
-        $this->db()->delete('articles_content')
-            ->where(['article_id' => $id])
-            ->execute();
-
-        // Rows in articles_access get automatically deleted due to foreign key constraints.
-
-        return $deleted;
     }
 
     /**

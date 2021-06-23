@@ -1,5 +1,5 @@
 ### Ilch 2 [![Build Status](https://travis-ci.com/IlchCMS/Ilch-2.0.png?branch=master)](https://travis-ci.com/IlchCMS/Ilch-2.0)
-Ilch 2 ist der direkte Nachfolger der Ilch Versionen 1.1. 
+Ilch 2 ist der direkte Nachfolger der Ilch Versionen 1.1.
 
 ### Neueste Version (für Anwender)
 - [Zur neuesten Version](https://github.com/IlchCMS/Ilch-2.0/releases/latest)
@@ -22,9 +22,8 @@ Ilch 2 ist der direkte Nachfolger der Ilch Versionen 1.1.
 
 ### Voraussetzungen
 - PHP Version 7.0 oder neuer
-- MySQL (5.5.3), MariaDB (5.5) oder Equivalent
+- MySQL (5.5.3 oder neuer), MariaDB (5.5 oder neuer) oder Equivalent
 
 ### Support/Dokumentation
 - https://www.ilch.de
 - https://github.com/IlchCMS/Ilch-2.0/wiki
-
