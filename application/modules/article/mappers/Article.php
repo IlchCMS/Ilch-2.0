@@ -778,7 +778,7 @@ class Article extends \Ilch\Mapper
      */
     public function getArticlePermas()
     {
-        $permas = $this->db()->select(['perma'])
+        $permas = $this->db()->select(['article_id', 'locale', 'perma'])
             ->from('articles_content')
             ->execute()
             ->fetchRows();
