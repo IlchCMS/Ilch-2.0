@@ -110,7 +110,9 @@ class Config extends \Ilch\Config\Install
                   `perma` VARCHAR(255) NOT NULL,
                   `img` VARCHAR(255) NOT NULL,
                   `img_source` VARCHAR(255) NOT NULL,
-                  `votes` LONGTEXT NOT NULL
+                  `votes` LONGTEXT NOT NULL,
+                  INDEX `FK_[prefix]_articles_content_[prefix]_articles` (`article_id`) USING BTREE,
+                  CONSTRAINT `FK_[prefix]_articles_content_[prefix]_articles` FOREIGN KEY (`article_id`) REFERENCES `[prefix]_articles` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_articles_templates` (

@@ -818,6 +818,9 @@ class Config extends \Ilch\Config\Install
 
                 // Delete old read_access column of table articles.
                 $this->db()->query('ALTER TABLE `[prefix]_articles` DROP COLUMN `read_access`;');
+
+                // Add constraint to articles_content.
+                $this->db()->query('ALTER TABLE `[prefix]_articles_content` ADD CONSTRAINT `FK_[prefix]_articles_content_[prefix]_articles` FOREIGN KEY (`article_id`) REFERENCES `[prefix]_articles` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
         }
 
         return 'Update function executed.';
