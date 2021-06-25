@@ -819,7 +819,23 @@ class Config extends \Ilch\Config\Install
                 // Delete old read_access column of table articles.
                 $this->db()->query('ALTER TABLE `[prefix]_articles` DROP COLUMN `read_access`;');
 
-                // Add constraint to articles_content.
+                // Add constraint to articles_content after deleting orphaned rows in it (rows with an article id not
+                // existing in the articles table) as this would lead to an error.
+                $idsArticles = $this->db()->select('id')
+                    ->from('articles')
+                    ->execute()
+                    ->fetchList();
+
+                $idsArticlesContent = $this->db()->select('article_id')
+                    ->from('articles_content')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($idsArticlesContent, $idsArticles);
+                $delete ->from('articles_content')
+                    ->where(['article_id' => $orphanedRows])
+                    ->execute();
+
                 $this->db()->query('ALTER TABLE `[prefix]_articles_content` ADD CONSTRAINT `FK_[prefix]_articles_content_[prefix]_articles` FOREIGN KEY (`article_id`) REFERENCES `[prefix]_articles` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
         }
 
