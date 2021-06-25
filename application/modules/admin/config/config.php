@@ -676,7 +676,7 @@ class Config extends \Ilch\Config\Install
                 if (!empty($comments)) {
                     foreach($comments as $comment) {
                         $key = '';
-                        if (!(strlen($comment['key']) - (strrpos($comment['key'], '/')) === 0)) {
+                        if (!(\strlen($comment['key']) - (strrpos($comment['key'], '/')) === 0)) {
                             // Add missing slash at the end to usually terminate the id.
                             // This is needed for example so that id 11 doesn't get counted as id 1.
                             $key = $comment['key'] . '/';
@@ -809,13 +809,12 @@ class Config extends \Ilch\Config\Install
                             $sqlWithValues = $sql;
                         }
 
+                        // Don't try to add a groupId that doesn't exist in the groups table as this would
+                        // lead to an error (foreign key constraint).
+                        $groupIds = array_intersect($existingGroups, $groupIds);
+                        $rowCount += \count($groupIds);
+
                         foreach ($groupIds as $groupId) {
-                            // Don't try to add a groupId that doesn't exist in the groups table as this would
-                            // lead to an error (foreign key constraint).
-                            if (in_array($groupId, $existingGroups)) {
-                                continue;
-                            }
-                            $rowCount++;
                             $sqlWithValues .= '(' . $articleId . ',' . $groupId . '),';
                         }
                     }
