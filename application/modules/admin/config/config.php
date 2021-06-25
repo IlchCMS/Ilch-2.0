@@ -787,6 +787,11 @@ class Config extends \Ilch\Config\Install
                     ->execute()
                     ->fetchRows();
 
+                $existingGroups = $this->db()->select('id')
+                    ->from(['groups'])
+                    ->execute()
+                    ->fetchList();
+
                 $sql = 'INSERT INTO [prefix]_articles_access (article_id, group_id) VALUES';
                 $sqlWithValues = $sql;
                 $rowCount = 0;
@@ -804,9 +809,13 @@ class Config extends \Ilch\Config\Install
                             $sqlWithValues = $sql;
                         }
 
-                        $rowCount += \count($groupIds);
-
                         foreach ($groupIds as $groupId) {
+                            // Don't try to add a groupId that doesn't exist in the groups table as this would
+                            // lead to an error (foreign key constraint).
+                            if (in_array($groupId, $existingGroups)) {
+                                continue;
+                            }
+                            $rowCount++;
                             $sqlWithValues .= '(' . $articleId . ',' . $groupId . '),';
                         }
                     }
