@@ -424,15 +424,18 @@ class Transfer
 
     /**
      * @param string $installedVersion
-     * @return true/false
+     * @return true|false
      */
     public function update($installedVersion)
     {
+        @set_time_limit(300);
+        $zip = new \ZipArchive();
+        $content = [];
+
         try {
-            $content = [];
-            @set_time_limit(300);
-            $zipHandle = zip_open($this->zipFile);
-            if (!is_resource($zipHandle)) {
+            $res = $zip->open($this->zipFile);
+
+            if ($res !== TRUE) {
                 $content[] = 'Failed to open update file.';
                 return false;
             }
@@ -453,59 +456,43 @@ class Transfer
                 return false;
             }
 
-            while ($aF = zip_read($zipHandle)) {
-                $thisFileName = zip_entry_name($aF);
-                $thisFileDir = dirname($thisFileName);
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $thisFileName = $zip->getNameIndex($i);
+                $thisFileDir = \dirname($thisFileName);
 
-                //Continue if its not a file
-                if (substr($thisFileName,-1,1) === '/') {
-                    continue;
+                if (!is_dir(ROOT_PATH.'/'.$thisFileDir)) {
+                    $content[] = 'New directory: '.$thisFileDir;
                 }
 
-                //Make the directory if we need to...
-                if (!is_dir (ROOT_PATH.'/'.$thisFileDir)) {
-                    mkdir (ROOT_PATH.'/'.$thisFileDir, 0777, true );
-                    $content[] = 'Created new directory: '.$thisFileDir;
-                }
-
-                //Overwrite the file
                 if (!is_dir(ROOT_PATH.'/'.$thisFileName)) {
-                    $content[] = 'New file: '.$thisFileName;
-                    $contents = zip_entry_read($aF, zip_entry_filesize($aF));
-                    $updateThis = @fopen(ROOT_PATH.'/'.$thisFileName, 'wb');
-                    $bytesWritten = @fwrite($updateThis, $contents);
-                    $successful = $updateThis !== false && $bytesWritten !== false;
-                    @fclose($updateThis);
-                    $successful = $successful && !($bytesWritten == 0 && $bytesWritten != strlen($contents));
-                    unset($contents);
+                    $content[] = 'New file: ' . $thisFileName;
+                }
+                $success = $zip->extractTo(ROOT_PATH, [$thisFileName]);
 
-                    if (!$successful) {
-                        $content[] = 'Error writing new file: '.$thisFileName;
-                        unset($aF);
-                        return false;
-                    }
+                if (!$success) {
+                    $content[] = 'Error writing new file: '.$thisFileName;
+                    return false;
+                }
 
-                    //If we need to run commands, then do it.
-                    if ($thisFileName == $thisFileDir.'/config.php') {
-                        include $thisFileName;
+                // Execute getUpdate() in config.php if needed.
+                if ($thisFileName == $thisFileDir.'/config.php') {
+                    include $thisFileName;
 
-                        $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
-                        if (class_exists($configClass)) {
-                            $config = new $configClass();
+                    $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
+                    if (class_exists($configClass)) {
+                        $config = new $configClass();
 
-                            if (method_exists($config, 'getUpdate')) {
-                                $content[] = $config->getUpdate($installedVersion);
-                            }
+                        if (method_exists($config, 'getUpdate')) {
+                            $content[] = $config->getUpdate($installedVersion);
                         }
                     }
                 }
             }
+
             return true;
         } finally {
             $this->setContent($content);
-            if (is_resource($zipHandle)) {
-                zip_close($zipHandle);
-            }
+            $zip->close();
             unlink($this->zipFile);
             unlink($this->zipFile.'-signature.sig');
             $this->curlClose();
