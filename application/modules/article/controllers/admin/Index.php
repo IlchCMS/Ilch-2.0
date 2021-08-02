@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -189,7 +189,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->getParam('id')) {
-            $groups = explode(',', $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), '')->getReadAccess());
+            $groups = explode(',', $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'))->getReadAccess());
         } else {
             $groups = [1,2,3];
         }

@@ -66,9 +66,8 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
-            ->set('articles', $articleMapper->getArticles($this->locale, $pagination))
-            ->set('pagination', $pagination)
-            ->set('readAccess', $readAccess);
+            ->set('articles', $articleMapper->getArticlesByAccess($readAccess, $this->locale, $pagination))
+            ->set('pagination', $pagination);
     }
 
     public function showAction()
@@ -276,7 +275,7 @@ class Index extends \Ilch\Controller\Frontend
         $user = null;
         // FIXME: Only create RSS-Feed with guest rights to avoid leaking articles not supposed to be for everyone.
         // This (unfinished) feature needs a complete rewrite to be ready.
-        // http://redmine.ilch2.de/issues/591
+        // https://github.com/IlchCMS/Ilch-2.0/issues/448
         // if ($this->getUser()) {
             // $user = $userMapper->getUserById($this->getUser()->getId());
         // }

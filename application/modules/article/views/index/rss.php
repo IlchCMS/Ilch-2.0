@@ -53,11 +53,10 @@ if ($articles) {
         if (strpos($strippedContent, '[PREVIEWSTOP]') !== false) {
             $contentParts = explode('[PREVIEWSTOP]', $strippedContent);
             $data = $xml->createElement('description', reset($contentParts));
-            $item->appendChild($data);
         } else {
             $data = $xml->createElement('description', $strippedContent);
-            $item->appendChild($data);
         }
+        $item->appendChild($data);
 
         if ($user) {
             $data = $xml->createElement('author', $this->escape($user->getName()));

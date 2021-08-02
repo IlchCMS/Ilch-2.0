@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -33,7 +33,6 @@ class Article extends \Ilch\Box
             $locale = $this->getTranslator()->getLocale();
         }
 
-        $this->getView()->set('articles', $articleMapper->getArticleList($locale, $this->getConfig()->get('article_box_articleLimit')))
-                        ->set('readAccess', $readAccess);
+        $this->getView()->set('articles', $articleMapper->getArticleListAccess($readAccess, $locale, $this->getConfig()->get('article_box_articleLimit')));
     }
 }

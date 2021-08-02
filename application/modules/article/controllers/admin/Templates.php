@@ -57,7 +57,7 @@ class Templates extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manageTemplates'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_articles')) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_articles')) {
             foreach ($this->getRequest()->getPost('check_articles') as $articleId) {
                 $templateMapper->delete($articleId);
             }

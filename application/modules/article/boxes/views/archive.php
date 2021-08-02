@@ -17,7 +17,7 @@ $archive = $this->get('archive');
                         </a>
                     </span>
                     <span class="badge">
-                        <?=$articleMapper->getCountArticlesByMonthYear($archiv->getDateCreated()) ?>
+                        <?=$articleMapper->getCountArticlesByMonthYearAccess($archiv->getDateCreated(), $this->get('readAccess')) ?>
                     </span>
                 </li>
             <?php endforeach; ?>

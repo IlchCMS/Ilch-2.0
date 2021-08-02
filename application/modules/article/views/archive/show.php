@@ -3,11 +3,6 @@ $articles = $this->get('articles');
 $categoryMapper = $this->get('categoryMapper');
 $commentMapper = $this->get('commentMapper');
 
-$adminAccess = null;
-if ($this->getUser()) {
-    $adminAccess = $this->getUser()->isAdmin();
-}
-
 $date = null;
 if ($this->get('date')) {
     $date = $this->get('date');
@@ -17,15 +12,7 @@ if ($this->get('date')) {
 <h1><?=$this->getTrans('monthArchives') ?><?=($date) ? ': <i>'.$this->getTrans($date->format('F', true)).$date->format(' Y', true).'</i>' : '' ?></h1>
 <?php if ($articles != ''): ?>
     <?php
-    $displayedArticles = 0;
-
     foreach ($articles as $article):
-        if (!is_in_array($this->get('readAccess'), explode(',', $article->getReadAccess())) && $adminAccess == false) {
-            continue;
-        }
-
-        $displayedArticles++;
-
         $date = new \Ilch\Date($article->getDateCreated());
         $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
         $image = $article->getImage();
@@ -103,11 +90,9 @@ if ($this->get('date')) {
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
-    <?php if ($displayedArticles > 0) : ?>
-        <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]) ?>
-    <?php else: ?>
-        <?=$this->getTrans('noArticles') ?>
-    <?php endif; ?>
+        <div class="pull-right">
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]) ?>
+        </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

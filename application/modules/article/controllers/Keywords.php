@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -32,6 +32,7 @@ class Keywords extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $articleMapper = new ArticleMapper();
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuArticle'))
@@ -40,8 +41,20 @@ class Keywords extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuKeywords'), ['action' => 'index']);
 
+        $user = null;
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+        }
+
+        $readAccess = [3];
+        if ($user) {
+            foreach ($user->getGroups() as $us) {
+                $readAccess[] = $us->getId();
+            }
+        }
+
         $keywordsList = [];
-        foreach ($articleMapper->getKeywordsList() as $keywords) {
+        foreach ($articleMapper->getKeywordsListAccess($readAccess) as $keywords) {
             $keywordsList[] = $keywords->getKeywords();
         }
 
@@ -98,8 +111,7 @@ class Keywords extends \Ilch\Controller\Frontend
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
-            ->set('articles', $articleMapper->getArticlesByKeyword($keyword, $this->locale, $pagination))
-            ->set('readAccess', $readAccess)
+            ->set('articles', $articleMapper->getArticlesByKeywordAccess($keyword, $readAccess, $this->locale, $pagination))
             ->set('pagination', $pagination);
     }
 

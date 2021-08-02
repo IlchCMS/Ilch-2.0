@@ -1,0 +1,88 @@
+articles:
+  -
+    id: 1
+    cat_id: "2"
+    date_created: "2021-05-08 08:10:38"
+    top: 0
+    commentsDisabled: 0
+  -
+    id: 2
+    cat_id: "1"
+    date_created: "2021-05-09 08:10:38"
+    top: 0
+    commentsDisabled: 0
+  -
+    id: 3
+    cat_id: "1"
+    date_created: "2021-05-10 08:10:38"
+    top: 0
+    commentsDisabled: 1
+
+articles_access:
+  -
+    article_id: 1
+    group_id: 1
+  -
+    article_id: 1
+    group_id: 2
+  -
+    article_id: 1
+    group_id: 3
+  -
+    article_id: 2
+    group_id: 1
+  -
+    article_id: 2
+    group_id: 2
+  -
+    article_id: 3
+    group_id: 1
+
+articles_content:
+  -
+    article_id: 1
+    author_id: 1
+    visits: 1
+    content: "TestContent"
+    description: "TestDescription"
+    keywords: "keyword1, keyword2"
+    locale: ""
+    title: "TestTitle"
+    teaser: "TestTeaser"
+    perma: "testtitle.html"
+    img: ""
+    img_source: ""
+    votes: ""
+  -
+    article_id: 2
+    author_id: 1
+    visits: 2
+    content: "TestContent2"
+    description: "TestDescription2"
+    keywords: "keyword1, keyword2"
+    locale: ""
+    title: "TestTitle2"
+    teaser: "TestTeaser2"
+    perma: "testtitle2.html"
+    img: ""
+    img_source: ""
+    votes: ""
+  -
+    article_id: 3
+    author_id: 1
+    visits: 3
+    content: "TestContent3"
+    description: "TestDescription3"
+    keywords: "keyword1, keyword2"
+    locale: ""
+    title: "TestTitle3"
+    teaser: "TestTeaser3"
+    perma: "testtitle3.html"
+    img: ""
+    img_source: ""
+    votes: ""
+
+users:
+  -
+    id: 1
+    name: admin

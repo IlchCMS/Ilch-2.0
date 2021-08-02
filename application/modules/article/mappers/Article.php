@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -22,13 +22,14 @@ class Article extends \Ilch\Mapper
     public function getArticles($locale = '', $pagination = null)
     {
         $select = $this->db()->select()
-                ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'p.read_access'])
-                ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
-                ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
-                ->where(['pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
-                ->order(['top' => 'DESC', 'date_created' => 'DESC']);
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
+            ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
+            ->where(['pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->order(['top' => 'DESC', 'date_created' => 'DESC']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -47,26 +48,55 @@ class Article extends \Ilch\Mapper
 
         $articles = [];
         foreach ($articleArray as $articleRow) {
-            $articleModel = new ArticleModel();
-            $articleModel->setId($articleRow['id']);
-            $articleModel->setCatId($articleRow['cat_id']);
-            $articleModel->setVisits($articleRow['visits']);
-            $articleModel->setAuthorId($articleRow['author_id']);
-            $articleModel->setAuthorName($articleRow['name']);
-            $articleModel->setDescription($articleRow['description']);
-            $articleModel->setKeywords($articleRow['keywords']);
-            $articleModel->setTitle($articleRow['title']);
-            $articleModel->setTeaser($articleRow['teaser']);
-            $articleModel->setPerma($articleRow['perma']);
-            $articleModel->setContent($articleRow['content']);
-            $articleModel->setDateCreated($articleRow['date_created']);
-            $articleModel->setTopArticle($articleRow['top']);
-            $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
-            $articleModel->setReadAccess($articleRow['read_access']);
-            $articleModel->setImage($articleRow['img']);
-            $articleModel->setImageSource($articleRow['img_source']);
-            $articleModel->setVotes($articleRow['votes']);
-            $articles[] = $articleModel;
+            $articles[] = $this->loadFromArray($articleRow);
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Get articles and taking the group IDs into account.
+     *
+     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string $locale
+     * @param null $pagination
+     * @return array|null
+     * @since 2.1.44
+     */
+    public function getArticlesByAccess($groupIds = '3', string $locale = '', $pagination = null)
+    {
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
+        $select = $this->db()->select()
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
+            ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
+            ->where(['ra.group_id' => $groupIds, 'pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->order(['top' => 'DESC', 'date_created' => 'DESC']);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $articleArray = $result->fetchRows();
+
+        if (empty($articleArray)) {
+            return null;
+        }
+
+        $articles = [];
+        foreach ($articleArray as $articleRow) {
+            $articles[] = $this->loadFromArray($articleRow);
         }
 
         return $articles;
@@ -83,11 +113,13 @@ class Article extends \Ilch\Mapper
     public function getArticlesByCats($catId, $locale = '', $pagination = null)
     {
         $select = $this->db()->select()
-            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'read_access'])
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
-            ->where(['p.cat_id LIKE' => '%'.$catId.'%', 'pc.locale' => $this->db()->escape($locale)])
+            ->where(['p.cat_id LIKE' => '%' . $catId . '%', 'pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id'])
             ->order(['id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -106,26 +138,55 @@ class Article extends \Ilch\Mapper
 
         $articles = [];
         foreach ($articleArray as $articleRow) {
-            $articleModel = new ArticleModel();
-            $articleModel->setId($articleRow['id']);
-            $articleModel->setCatId($articleRow['cat_id']);
-            $articleModel->setVisits($articleRow['visits']);
-            $articleModel->setAuthorId($articleRow['author_id']);
-            $articleModel->setAuthorName($articleRow['name']);
-            $articleModel->setDescription($articleRow['description']);
-            $articleModel->setKeywords($articleRow['keywords']);
-            $articleModel->setTitle($articleRow['title']);
-            $articleModel->setTeaser($articleRow['teaser']);
-            $articleModel->setPerma($articleRow['perma']);
-            $articleModel->setContent($articleRow['content']);
-            $articleModel->setDateCreated($articleRow['date_created']);
-            $articleModel->setTopArticle($articleRow['top']);
-            $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
-            $articleModel->setReadAccess($articleRow['read_access']);
-            $articleModel->setImage($articleRow['img']);
-            $articleModel->setImageSource($articleRow['img_source']);
-            $articleModel->setVotes($articleRow['votes']);
-            $articles[] = $articleModel;
+            $articles[] = $this->loadFromArray($articleRow);
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Get articles by category id and taking the group IDs into account.
+     *
+     * @param integer $catId
+     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string $locale
+     * @param null $pagination
+     * @return array|null
+     * @since 2.1.44
+     */
+    public function getArticlesByCatsAccess(int $catId, $groupIds = '3', string $locale = '', $pagination = null)
+    {
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
+        $select = $this->db()->select()
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
+            ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
+            ->where(['ra.group_id' => $groupIds, 'p.cat_id LIKE' => '%' . $catId . '%', 'pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id'])
+            ->order(['id' => 'DESC']);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+        $articleArray = $result->fetchRows();
+
+        if (empty($articleArray)) {
+            return null;
+        }
+
+        $articles = [];
+        foreach ($articleArray as $articleRow) {
+            $articles[] = $this->loadFromArray($articleRow);
         }
 
         return $articles;
@@ -134,7 +195,7 @@ class Article extends \Ilch\Mapper
     /**
      * Get articles by keyword.
      *
-     * @param integer $keyword
+     * @param string $keyword
      * @param string $locale
      * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
@@ -142,11 +203,13 @@ class Article extends \Ilch\Mapper
     public function getArticlesByKeyword($keyword, $locale = '', $pagination = null)
     {
         $select = $this->db()->select()
-            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'read_access'])
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
-            ->where(['pc.keywords LIKE' => '%'.$keyword.'%', 'pc.locale' => $this->db()->escape($locale)])
+            ->where(['pc.keywords LIKE' => '%' . $keyword . '%', 'pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id'])
             ->order(['id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -165,26 +228,55 @@ class Article extends \Ilch\Mapper
 
         $articles = [];
         foreach ($articleArray as $articleRow) {
-            $articleModel = new ArticleModel();
-            $articleModel->setId($articleRow['id']);
-            $articleModel->setCatId($articleRow['cat_id']);
-            $articleModel->setVisits($articleRow['visits']);
-            $articleModel->setAuthorId($articleRow['author_id']);
-            $articleModel->setAuthorName($articleRow['name']);
-            $articleModel->setDescription($articleRow['description']);
-            $articleModel->setKeywords($articleRow['keywords']);
-            $articleModel->setTitle($articleRow['title']);
-            $articleModel->setTeaser($articleRow['teaser']);
-            $articleModel->setPerma($articleRow['perma']);
-            $articleModel->setContent($articleRow['content']);
-            $articleModel->setDateCreated($articleRow['date_created']);
-            $articleModel->setTopArticle($articleRow['top']);
-            $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
-            $articleModel->setReadAccess($articleRow['read_access']);
-            $articleModel->setImage($articleRow['img']);
-            $articleModel->setImageSource($articleRow['img_source']);
-            $articleModel->setVotes($articleRow['votes']);
-            $articles[] = $articleModel;
+            $articles[] = $this->loadFromArray($articleRow);
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Get articles by keyword and taking the group IDs into account.
+     *
+     * @param string $keyword
+     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string $locale
+     * @param null $pagination
+     * @return array|null
+     * @since 2.1.44
+     */
+    public function getArticlesByKeywordAccess(string $keyword, $groupIds = '3', string $locale = '', $pagination = null)
+    {
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
+        $select = $this->db()->select()
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
+            ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
+            ->where(['ra.group_id' => $groupIds, 'pc.keywords LIKE' => '%' . $keyword . '%', 'pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id'])
+            ->order(['id' => 'DESC']);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+        $articleArray = $result->fetchRows();
+
+        if (empty($articleArray)) {
+            return null;
+        }
+
+        $articles = [];
+        foreach ($articleArray as $articleRow) {
+            $articles[] = $this->loadFromArray($articleRow);
         }
 
         return $articles;
@@ -209,12 +301,14 @@ class Article extends \Ilch\Mapper
         $dateTo = $dateTo->format($db::FORMAT_DATETIME);
 
         $select = $this->db()->select()
-            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'read_access'])
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
             ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo, 'pc.locale' => $this->db()->escape($locale)])
-            ->group(['p.id' => 'DESC', 'p.cat_id', 'p.date_created', 'p.top', 'p.read_access', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source', 'pc.votes']);
+            ->group(['p.id'])
+            ->order(['p.id' => 'DESC']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -232,26 +326,63 @@ class Article extends \Ilch\Mapper
 
         $articles = [];
         foreach ($articleArray as $articleRow) {
-            $articleModel = new ArticleModel();
-            $articleModel->setId($articleRow['id']);
-            $articleModel->setCatId($articleRow['cat_id']);
-            $articleModel->setVisits($articleRow['visits']);
-            $articleModel->setAuthorId($articleRow['author_id']);
-            $articleModel->setAuthorName($articleRow['name']);
-            $articleModel->setDescription($articleRow['description']);
-            $articleModel->setKeywords($articleRow['keywords']);
-            $articleModel->setTitle($articleRow['title']);
-            $articleModel->setTeaser($articleRow['teaser']);
-            $articleModel->setPerma($articleRow['perma']);
-            $articleModel->setContent($articleRow['content']);
-            $articleModel->setDateCreated($articleRow['date_created']);
-            $articleModel->setTopArticle($articleRow['top']);
-            $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
-            $articleModel->setReadAccess($articleRow['read_access']);
-            $articleModel->setImage($articleRow['img']);
-            $articleModel->setImageSource($articleRow['img_source']);
-            $articleModel->setVotes($articleRow['votes']);
-            $articles[] = $articleModel;
+            $articles[] = $this->loadFromArray($articleRow);
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Get articles of the month of the given date and taking the group IDs into account.
+     *
+     * @param \DateTime $date
+     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param null $pagination
+     * @param string $locale
+     * @return array|null
+     * @since 2.1.44
+     */
+    public function getArticlesByDateAccess(\DateTime $date, $groupIds = '3', $pagination = null, string $locale = '')
+    {
+        $db = $this->db();
+
+        $dateTo = clone $date;
+        $dateTo->modify('first day of next month');
+
+        $dateFrom = $date->format($db::FORMAT_DATETIME);
+        $dateTo = $dateTo->format($db::FORMAT_DATETIME);
+
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
+        $select = $this->db()->select()
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
+            ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
+            ->where(['ra.group_id' => $groupIds, 'p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo, 'pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id'])
+            ->order(['p.id' => 'DESC']);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+        $articleArray = $result->fetchRows();
+
+        if (empty($articleArray)) {
+            return null;
+        }
+
+        $articles = [];
+        foreach ($articleArray as $articleRow) {
+            $articles[] = $this->loadFromArray($articleRow);
         }
 
         return $articles;
@@ -261,12 +392,12 @@ class Article extends \Ilch\Mapper
      * Get articles count by cat id
      *
      * @param int $catId
-     * @return int|string $count
+     * @return int
      * @throws \Ilch\Database\Exception
      */
     public function getCountArticlesByCatId($catId)
     {
-        return $this->db()->select('COUNT(*)')
+        return (int)$this->db()->select('COUNT(*)')
             ->from('articles')
             ->where(['cat_id LIKE' => '%' . $catId . '%'])
             ->execute()
@@ -274,9 +405,31 @@ class Article extends \Ilch\Mapper
     }
 
     /**
+     * Get articles count by category id and taking the group IDs into account.
+     *
+     * @param int $catId
+     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @return int
+     * @since 2.1.44
+     */
+    public function getCountArticlesByCatIdAccess(int $catId, $groupIds = '3'): int
+    {
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
+        return (int)$this->db()->select('COUNT(DISTINCT(id))')
+            ->from('articles')
+            ->join(['articles_access'], 'id = article_id', 'LEFT')
+            ->where(['group_id' => $groupIds, 'cat_id LIKE' => '%' . $catId . '%'])
+            ->execute()
+            ->fetchCell();
+    }
+
+    /**
      * Get articles count by month and year
      *
-     * @param integer $date
+     * @param string $date
      * @return int
      * @throws \Ilch\Database\Exception
      */
@@ -286,11 +439,43 @@ class Article extends \Ilch\Mapper
                 FROM `[prefix]_articles`';
 
         if ($date != null) {
-            $sql .= ' WHERE YEAR(date_created) = YEAR("'.$this->db()->escape($date)
-                .'") AND MONTH(date_created) = MONTH("'.$this->db()->escape($date).'")';
+            $sql .= ' WHERE YEAR(date_created) = YEAR("' . $this->db()->escape($date)
+                . '") AND MONTH(date_created) = MONTH("' . $this->db()->escape($date) . '")';
         }
 
-        return $this->db()->queryCell($sql);
+        return (int)$this->db()->queryCell($sql);
+    }
+
+    /**
+     * Get articles count by month and year and taking the group IDs into account.
+     *
+     * @param string|null $date
+     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @return int
+     * @throws \Ilch\Database\Exception
+     * @since 2.1.44
+     */
+    public function getCountArticlesByMonthYearAccess(string $date = null, $groupIds = '3'): int
+    {
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
+        $sql = 'SELECT COUNT(DISTINCT(id))
+                FROM `[prefix]_articles`
+                LEFT JOIN `[prefix]_articles_access` ON `id` = `article_id`';
+
+        if ($date != null) {
+            $sql .= ' WHERE YEAR(date_created) = YEAR("' . $this->db()->escape($date)
+                . '") AND MONTH(date_created) = MONTH("' . $this->db()->escape($date) . '")';
+        }
+
+        $sql .= ' AND `group_id` IN (';
+        foreach ($groupIds as $groupId) {
+            $sql .= (int)$groupId . ',';
+        }
+        $sql = rtrim($sql, ',') . ') ';
+        return (int)$this->db()->queryCell($sql);
     }
 
     /**
@@ -309,7 +494,56 @@ class Article extends \Ilch\Mapper
                 ORDER BY `date_created` DESC';
 
         if ($limit !== null) {
-            $sql .= ' LIMIT '.(int)$limit;
+            $sql .= ' LIMIT ' . (int)$limit;
+        }
+
+        $articleArray = $this->db()->queryArray($sql);
+
+        if (empty($articleArray)) {
+            return [];
+        }
+
+        $articles = [];
+        foreach ($articleArray as $articleRow) {
+            $articleModel = new ArticleModel();
+            $articleModel->setDateCreated($articleRow['date_created']);
+            $articles[] = $articleModel;
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Get a list for the archive box and take the group IDs into account.
+     *
+     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param int|null $limit
+     * @return array
+     * @throws \Ilch\Database\Exception
+     * @todo: Remove the group (aggregate) function MAX() workaround, which avoids duplicated entries in the archive-box if possible.
+     * @since 2.1.44
+     */
+    public function getArticleDateListAccess($groupIds = '3', int $limit = null): array
+    {
+        $sql = 'SELECT MAX(`date_created`) AS `date_created`
+                FROM `[prefix]_articles`
+                LEFT JOIN `[prefix]_articles_access` ON `article_id` = `id`';
+
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
+        $sql .= ' WHERE `group_id` IN (';
+        foreach ($groupIds as $groupId) {
+            $sql .= (int)$groupId . ',';
+        }
+        $sql = rtrim($sql, ',') . ') ';
+
+        $sql .= 'GROUP BY YEAR(date_created), MONTH(date_created)
+                ORDER BY `date_created` DESC';
+
+        if ($limit !== null) {
+            $sql .= ' LIMIT ' . (int)$limit;
         }
 
         $articleArray = $this->db()->queryArray($sql);
@@ -338,14 +572,15 @@ class Article extends \Ilch\Mapper
     public function getArticleList($locale = '', $limit = null)
     {
         $select = $this->db()->select()
-                ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.read_access'])
-                ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
-                ->join(['m' => 'media'], 'pc.img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
-                ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
-                ->where(['pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.read_access', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes', 'm.url_thumb', 'm.url'])
-                ->order(['date_created' => 'DESC']);
+            ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+            ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['m' => 'media'], 'pc.img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
+            ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
+            ->where(['pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes', 'm.url_thumb', 'm.url'])
+            ->order(['date_created' => 'DESC']);
 
         if ($limit !== null) {
             $select->limit($limit);
@@ -359,23 +594,51 @@ class Article extends \Ilch\Mapper
 
         $articles = [];
         foreach ($articleArray as $articleRow) {
-            $articleModel = new ArticleModel();
-            $articleModel->setId($articleRow['id']);
-            $articleModel->setCatId($articleRow['cat_id']);
-            $articleModel->setDateCreated($articleRow['date_created']);
-            $articleModel->setAuthorId($articleRow['author_id']);
-            $articleModel->setAuthorName($articleRow['name']);
-            $articleModel->setVisits($articleRow['visits']);
-            $articleModel->setKeywords($articleRow['keywords']);
-            $articleModel->setTitle($articleRow['title']);
-            $articleModel->setTeaser($articleRow['teaser']);
-            $articleModel->setPerma($articleRow['perma']);
-            $articleModel->setReadAccess($articleRow['read_access']);
-            $articleModel->setImage($articleRow['img']);
-            $articleModel->setImageThumb($articleRow['url_thumb']);
-            $articleModel->setImageSource($articleRow['img_source']);
-            $articleModel->setVotes($articleRow['votes']);
-            $articles[] = $articleModel;
+            $articles[] = $this->loadFromArray($articleRow);
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Get article list for overview and take the group IDs into account.
+     *
+     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string $locale
+     * @param int|null $limit
+     * @return array|null
+     * @since 2.1.44
+     */
+    public function getArticleListAccess($groupIds = '3', string $locale = '', int $limit = null)
+    {
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
+        $select = $this->db()->select()
+            ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+            ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['m' => 'media'], 'pc.img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
+            ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
+            ->where(['ra.group_id' => $groupIds, 'pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes', 'm.url_thumb', 'm.url'])
+            ->order(['date_created' => 'DESC']);
+
+        if ($limit !== null) {
+            $select->limit($limit);
+        }
+        $result = $select->execute();
+        $articleArray = $result->fetchRows();
+
+        if (empty($articleArray)) {
+            return null;
+        }
+
+        $articles = [];
+        foreach ($articleArray as $articleRow) {
+            $articles[] = $this->loadFromArray($articleRow);
         }
 
         return $articles;
@@ -384,50 +647,31 @@ class Article extends \Ilch\Mapper
     /**
      * Returns article model found by the key.
      *
-     * @param string $id
+     * @param int $id
      * @param string $locale
      * @return ArticleModel|null
      */
     public function getArticleByIdLocale($id, $locale = '')
     {
-        $select = $this->db()->select()
-                ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'p.read_access'])
-                ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source', 'pc.votes'])
-                ->where(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)]);
-
-        $result = $select->execute();
-        $articleRow = $result->fetchAssoc();
+        $articleRow = $this->db()->select()
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
+            ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->group(['p.id'])
+            ->where(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($articleRow)) {
             return null;
         }
 
-        $articleModel = new ArticleModel();
-        $articleModel->setId($articleRow['id']);
-        $articleModel->setCatId($articleRow['cat_id']);
-        $articleModel->setAuthorId($articleRow['author_id']);
-        $articleModel->setVisits($articleRow['visits']);
-        $articleModel->setDescription($articleRow['description']);
-        $articleModel->setKeywords($articleRow['keywords']);
-        $articleModel->setTitle($articleRow['title']);
-        $articleModel->setTeaser($articleRow['teaser']);
-        $articleModel->setContent($articleRow['content']);
-        $articleModel->setLocale($articleRow['locale']);
-        $articleModel->setPerma($articleRow['perma']);
-        $articleModel->setDateCreated($articleRow['date_created']);
-        $articleModel->setTopArticle($articleRow['top']);
-        $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
-        $articleModel->setReadAccess($articleRow['read_access']);
-        $articleModel->setImage($articleRow['img']);
-        $articleModel->setImageSource($articleRow['img_source']);
-        $articleModel->setVotes($articleRow['votes']);
-
-        return $articleModel;
+        return $this->loadFromArray($articleRow);
     }
 
     /**
-     * Get articles.
+     * Get a list of the keywords.
      *
      * @param int $limit
      * @return ArticleModel[]|array
@@ -435,14 +679,15 @@ class Article extends \Ilch\Mapper
      */
     public function getKeywordsList($limit = null)
     {
-        $sql = 'SELECT `keywords`
-                FROM `[prefix]_articles_content`';
+        $sql = $this->db()->select('keywords')
+            ->from('articles_content');
 
         if ($limit !== null) {
-            $sql .= ' LIMIT '.(int)$limit;
+            $sql = $sql->limit((int)$limit);
         }
 
-        $keywordsArray = $this->db()->queryArray($sql);
+        $keywordsArray = $sql->execute()
+            ->fetchRows();
 
         if (empty($keywordsArray)) {
             return [];
@@ -450,6 +695,53 @@ class Article extends \Ilch\Mapper
 
         $keywordsList = [];
         foreach ($keywordsArray as $keywords) {
+            if ($keywords['keywords'] === '') {
+                continue;
+            }
+            $articleModel = new ArticleModel();
+            $articleModel->setKeywords($keywords['keywords']);
+            $keywordsList[] = $articleModel;
+        }
+
+        return $keywordsList;
+    }
+
+    /**
+     * Get a list of the keywords and take the group IDs into account.
+     *
+     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param int|null $limit
+     * @return array
+     * @since 2.1.44
+     */
+    public function getKeywordsListAccess($groupIds = '3', int $limit = null): array
+    {
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
+        $sql = $this->db()->select('keywords')
+            ->from('articles_content')
+            ->join(['p' => 'articles'], 'p.id = article_id', 'LEFT')
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT')
+            ->where(['ra.group_id' => $groupIds]);
+
+        if ($limit !== null) {
+            $sql = $sql->limit((int)$limit);
+        }
+
+        $keywordsArray = $sql->execute()
+            ->fetchRows();
+
+        if (empty($keywordsArray)) {
+            return [];
+        }
+
+        $keywordsList = [];
+        foreach ($keywordsArray as $keywords) {
+            if ($keywords['keywords'] === '') {
+                continue;
+            }
             $articleModel = new ArticleModel();
             $articleModel->setKeywords($keywords['keywords']);
             $keywordsList[] = $articleModel;
@@ -461,7 +753,7 @@ class Article extends \Ilch\Mapper
     /**
      * Check if keyword exists.
      *
-     * @param $keyword
+     * @param string $keyword
      * @return bool
      * @since 2.1.25
      */
@@ -475,7 +767,7 @@ class Article extends \Ilch\Mapper
         $keywordsListString = implode(', ', $keywordsList);
         $keywordsListArray = explode(', ', $keywordsListString);
 
-        return in_array($keyword, $keywordsListArray);
+        return \in_array($keyword, $keywordsListArray);
     }
 
     /**
@@ -507,13 +799,16 @@ class Article extends \Ilch\Mapper
      * Get the top article.
      *
      * @return ArticleModel|null
+     * @deprecated Use getTopArticles() instead. There can be more than one top article.
      */
     public function getTopArticle()
     {
         $articleRow = $this->db()->select('*')
-            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled', 'p.read_access'])
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->group(['p.id'])
             ->where(['top' => 1])
             ->execute()
             ->fetchAssoc();
@@ -522,27 +817,37 @@ class Article extends \Ilch\Mapper
             return null;
         }
 
-        $articleModel = new ArticleModel();
-        $articleModel->setId($articleRow['id']);
-        $articleModel->setCatId($articleRow['cat_id']);
-        $articleModel->setAuthorId($articleRow['author_id']);
-        $articleModel->setVisits($articleRow['visits']);
-        $articleModel->setDescription($articleRow['description']);
-        $articleModel->setKeywords($articleRow['keywords']);
-        $articleModel->setTitle($articleRow['title']);
-        $articleModel->setTeaser($articleRow['teaser']);
-        $articleModel->setContent($articleRow['content']);
-        $articleModel->setLocale($articleRow['locale']);
-        $articleModel->setPerma($articleRow['perma']);
-        $articleModel->setDateCreated($articleRow['date_created']);
-        $articleModel->setTopArticle($articleRow['top']);
-        $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
-        $articleModel->setReadAccess($articleRow['read_access']);
-        $articleModel->setImage($articleRow['img']);
-        $articleModel->setImageSource($articleRow['img_source']);
-        $articleModel->setVotes($articleRow['votes']);
+        return $this->loadFromArray($articleRow);
+    }
 
-        return $articleModel;
+    /**
+     * Get the top articles.
+     *
+     * @return array|ArticleModel[]
+     * @since 2.1.44
+     */
+    public function getTopArticles()
+    {
+        $articleRows = $this->db()->select('*')
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
+            ->from(['p' => 'articles'])
+            ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->group(['p.id'])
+            ->where(['top' => 1])
+            ->execute()
+            ->fetchRows();
+
+        if (empty($articleRows)) {
+            return [];
+        }
+
+        $articleModels = [];
+        foreach ($articleRows as $articleRow) {
+            $articleModels[] = $this->loadFromArray($articleRow);
+        }
+
+        return $articleModels;
     }
 
     /**
@@ -568,9 +873,9 @@ class Article extends \Ilch\Mapper
     {
         if ($article->getVisits()) {
             $this->db()->update('articles_content')
-                    ->values(['visits' => $article->getVisits()])
-                    ->where(['article_id' => $article->getId()])
-                    ->execute();
+                ->values(['visits' => $article->getVisits()])
+                ->where(['article_id' => $article->getId()])
+                ->execute();
         }
     }
 
@@ -589,79 +894,26 @@ class Article extends \Ilch\Mapper
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 // Update existing article with specific id and locale
                 $this->db()->update('articles')
-                    ->values(['cat_id' => $article->getCatId(),
-                              'date_created' => $article->getDateCreated(),
-                              'commentsDisabled' => (bool)$article->getCommentsDisabled(),
-                              'read_access' => $article->getReadAccess()])
+                    ->values(['cat_id' => $article->getCatId(), 'date_created' => $article->getDateCreated(), 'commentsDisabled' => (int)$article->getCommentsDisabled()])
                     ->where(['id' => $article->getId()])
                     ->execute();
 
                 $this->db()->update('articles_content')
-                    ->values
-                    (
-                        [
-                            'title' => $article->getTitle(),
-                            'teaser' => $article->getTeaser(),
-                            'description' => $article->getDescription(),
-                            'keywords' => $article->getKeywords(),
-                            'content' => $article->getContent(),
-                            'perma' => $article->getPerma(),
-                            'img' => $article->getImage(),
-                            'img_source' => $article->getImageSource(),
-                            'votes' => $article->getVotes()
-                        ]
-                    )
-                    ->where
-                    (
-                        [
-                            'article_id' => $article->getId(), 
-                            'locale' => $article->getLocale()
-                        ]
-                    )
+                    ->values(['title' => $article->getTitle(),
+                        'teaser' => $article->getTeaser(),
+                        'description' => $article->getDescription(),
+                        'keywords' => $article->getKeywords(),
+                        'content' => $article->getContent(),
+                        'perma' => $article->getPerma(),
+                        'img' => $article->getImage(),
+                        'img_source' => $article->getImageSource(),
+                        'votes' => $article->getVotes()])
+                    ->where(['article_id' => $article->getId(), 'locale' => $article->getLocale()])
                     ->execute();
             } else {
                 // Insert content with a new locale for an existing article
                 $this->db()->insert('articles_content')
-                    ->values
-                    (
-                        [
-                            'article_id' => $article->getId(),
-                            'author_id' => $article->getAuthorId(),
-                            'description' => $article->getDescription(),
-                            'keywords' => $article->getKeywords(),
-                            'title' => $article->getTitle(),
-                            'teaser' => $article->getTeaser(),
-                            'content' => $article->getContent(),
-                            'perma' => $article->getPerma(),
-                            'locale' => $article->getLocale(),
-                            'img' => $article->getImage(),
-                            'img_source' => $article->getImageSource(),
-                            'votes' => $article->getVotes()
-                        ]
-                    )
-                    ->execute();
-            }
-
-            $id = $article->getId();
-        } else {
-            // Insert new article
-            $articleId = $this->db()->insert('articles')
-                ->values
-                (
-                    [
-                        'cat_id' => $article->getCatId(),
-                        'date_created' => $article->getDateCreated(),
-                        'commentsDisabled' => (bool)$article->getCommentsDisabled(),
-                        'read_access' => $article->getReadAccess()
-                    ]
-                )
-                ->execute();
-
-            $this->db()->insert('articles_content')
-                ->values
-                (
-                    [
-                        'article_id' => $articleId,
+                    ->values(['article_id' => $article->getId(),
                         'author_id' => $article->getAuthorId(),
                         'description' => $article->getDescription(),
                         'keywords' => $article->getKeywords(),
@@ -672,17 +924,78 @@ class Article extends \Ilch\Mapper
                         'locale' => $article->getLocale(),
                         'img' => $article->getImage(),
                         'img_source' => $article->getImageSource(),
-                        'votes' => $article->getVotes()
-                    ]
-                )
+                        'votes' => $article->getVotes()])
+                    ->execute();
+            }
+
+            $id = $article->getId();
+        } else {
+            // Insert new article
+            $articleId = $this->db()->insert('articles')
+                ->values(['cat_id' => $article->getCatId(), 'date_created' => $article->getDateCreated(), 'commentsDisabled' => (int)$article->getCommentsDisabled()])
+                ->execute();
+
+            $this->db()->insert('articles_content')
+                ->values(['article_id' => $articleId,
+                    'author_id' => $article->getAuthorId(),
+                    'description' => $article->getDescription(),
+                    'keywords' => $article->getKeywords(),
+                    'title' => $article->getTitle(),
+                    'teaser' => $article->getTeaser(),
+                    'content' => $article->getContent(),
+                    'perma' => $article->getPerma(),
+                    'locale' => $article->getLocale(),
+                    'img' => $article->getImage(),
+                    'img_source' => $article->getImageSource(),
+                    'votes' => $article->getVotes()])
                 ->execute();
 
             $id = $articleId;
         }
 
-        $this->setTopArticle($id, (bool)$article->getTopArticle());
+        $this->setTopArticle($id, (int)$article->getTopArticle());
+        $this->saveReadAccess($id, $article->getReadAccess());
 
         return $id;
+    }
+
+    /**
+     * Update the entries for which user groups are allowed to read an article.
+     *
+     * @param int $articleId
+     * @param string $readAccess example: "1,2,3"
+     * @throws \Ilch\Database\Exception
+     * @since 2.1.44
+     */
+    private function saveReadAccess(int $articleId, string $readAccess)
+    {
+        // Delete possible old entries to later insert the new ones.
+        $this->db()->delete('articles_access')
+            ->where(['article_id' => $articleId])
+            ->execute();
+
+        $sql = 'INSERT INTO [prefix]_articles_access (article_id, group_id) VALUES';
+        $sqlWithValues = $sql;
+        $rowCount = 0;
+        $groupIds = explode(',', $readAccess);
+
+        foreach ($groupIds as $groupId) {
+            // There is a limit of 1000 rows per insert, but according to some benchmarks found online
+            // the sweet spot seams to be around 25 rows per insert. So aim for that.
+            if ($rowCount >= 25) {
+                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+                $this->db()->queryMulti($sqlWithValues);
+                $rowCount = 0;
+                $sqlWithValues = $sql;
+            }
+
+            $rowCount++;
+            $sqlWithValues .= '(' . (int)$articleId . ',' . (int)$groupId . '),';
+        }
+
+        // Insert remaining rows.
+        $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+        $this->db()->queryMulti($sqlWithValues);
     }
 
     /**
@@ -696,7 +1009,7 @@ class Article extends \Ilch\Mapper
         $votes = $this->getVotes($id);
 
         $this->db()->update('articles_content')
-            ->values(['votes' => $votes.$userId.','])
+            ->values(['votes' => $votes . $userId . ','])
             ->where(['article_id' => $id])
             ->execute();
     }
@@ -718,27 +1031,22 @@ class Article extends \Ilch\Mapper
 
     /**
      * Delete an article (with all language contents)
-     * 
+     *
      * @param int $id
      * @return int
      */
     public function delete($id)
     {
-        $deleted = $this->db()->delete('articles')
+        // Rows in articles_access and articles_content get automatically deleted due to foreign key constraints.
+        return $this->db()->delete('articles')
             ->where(['id' => $id])
             ->execute();
-
-        $this->db()->delete('articles_content')
-            ->where(['article_id' => $id])
-            ->execute();
-
-        return $deleted;
     }
 
     /**
      * Delete an article with all associated comments
      *
-     * @param $id
+     * @param int $id
      * @param CommentMapper|null $commentsMapper
      */
     public function deleteWithComments($id, CommentMapper $commentsMapper = null)
@@ -751,5 +1059,95 @@ class Article extends \Ilch\Mapper
             $commentsMapper = new CommentMapper();
         }
         $commentsMapper->deleteByKey(sprintf(ArticleConfig::COMMENT_KEY_TPL, $id));
+    }
+
+    /**
+     * Returns an article model created from an article row.
+     *
+     * @param array $articleRow
+     * @return ArticleModel
+     * @since 2.1.44
+     */
+    private function loadFromArray(array $articleRow)
+    {
+        $articleModel = new ArticleModel();
+
+        if (isset($articleRow['id'])) {
+            $articleModel->setId($articleRow['id']);
+        }
+
+        if (isset($articleRow['cat_id'])) {
+            $articleModel->setCatId($articleRow['cat_id']);
+        }
+
+        if (isset($articleRow['visits'])) {
+            $articleModel->setVisits($articleRow['visits']);
+        }
+
+        if (isset($articleRow['author_id'])) {
+            $articleModel->setAuthorId($articleRow['author_id']);
+        }
+
+        if (isset($articleRow['name'])) {
+            $articleModel->setAuthorName($articleRow['name']);
+        }
+
+        if (isset($articleRow['description'])) {
+            $articleModel->setDescription($articleRow['description']);
+        }
+
+        if (isset($articleRow['keywords'])) {
+            $articleModel->setKeywords($articleRow['keywords']);
+        }
+
+        if (isset($articleRow['title'])) {
+            $articleModel->setTitle($articleRow['title']);
+        }
+
+        if (isset($articleRow['teaser'])) {
+            $articleModel->setTeaser($articleRow['teaser']);
+        }
+
+        if (isset($articleRow['perma'])) {
+            $articleModel->setPerma($articleRow['perma']);
+        }
+
+        if (isset($articleRow['content'])) {
+            $articleModel->setContent($articleRow['content']);
+        }
+
+        if (isset($articleRow['locale'])) {
+            $articleModel->setLocale($articleRow['locale']);
+        }
+
+        if (isset($articleRow['date_created'])) {
+            $articleModel->setDateCreated($articleRow['date_created']);
+        }
+
+        if (isset($articleRow['top'])) {
+            $articleModel->setTopArticle($articleRow['top']);
+        }
+
+        if (isset($articleRow['commentsDisabled'])) {
+            $articleModel->setCommentsDisabled($articleRow['commentsDisabled']);
+        }
+
+        if (isset($articleRow['read_access'])) {
+            $articleModel->setReadAccess($articleRow['read_access']);
+        }
+
+        if (isset($articleRow['img'])) {
+            $articleModel->setImage($articleRow['img']);
+        }
+
+        if (isset($articleRow['img_source'])) {
+            $articleModel->setImageSource($articleRow['img_source']);
+        }
+
+        if (isset($articleRow['votes'])) {
+            $articleModel->setVotes($articleRow['votes']);
+        }
+
+        return $articleModel;
     }
 }

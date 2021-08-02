@@ -1,12 +1,5 @@
 <?php
 $articles = $this->get('articles');
-
-$adminAccess = null;
-if ($this->getUser()) {
-    $adminAccess = $this->getUser()->isAdmin();
-}
-
-$displayedArticles = 0;
 ?>
 
 <link href="<?=$this->getBoxUrl('static/css/article.css') ?>" rel="stylesheet">
@@ -15,11 +8,6 @@ $displayedArticles = 0;
     <div class="article-box">
         <ul class="list-unstyled">
             <?php foreach ($articles as $article):
-                if (!is_in_array($this->get('readAccess'), explode(',', $article->getReadAccess())) && $adminAccess == false) {
-                    continue;
-                }
-
-                $displayedArticles++;
                 $date = new \Ilch\Date($article->getDateCreated());
             ?>
                 <li class="ellipsis" style="line-height: 25px;">
@@ -36,9 +24,6 @@ $displayedArticles = 0;
                     </span>
                 </li>
             <?php endforeach; ?>
-            <?php if ($displayedArticles == 0) : ?>
-                <?=$this->getTrans('noArticles') ?>
-            <?php endif; ?>
         </ul>
     </div>
 <?php else: ?>

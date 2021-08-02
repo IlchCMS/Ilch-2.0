@@ -401,9 +401,8 @@ class Index extends \Ilch\Controller\Frontend
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
                 $boxMapper = new \Modules\Admin\Mappers\Box();
 
-                /*
-                 * Clear old tables.
-                 */
+                // Clear old tables
+                $db->query('SET FOREIGN_KEY_CHECKS = 0;');
                 $db->dropTablesByPrefix($db->getPrefix());
 
                 foreach ($modulesToInstall as $module) {
@@ -500,7 +499,9 @@ class Index extends \Ilch\Controller\Frontend
                     (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', ''),
                     (2, 30, 0, 0, 0, 'article_archive', 4, 'Archiv', '', ''),
                     (2, 40, 0, 0, 0, 'article_categories', 4, 'Kategorien', '', ''),
-                    (2, 50, 0, 0, 0, 'article_keywords', 4, 'Keywords', '', '')";
+                    (2, 50, 0, 0, 0, 'article_keywords', 4, 'Keywords', '', '');
+
+                    SET FOREIGN_KEY_CHECKS = 1;";
                 $db->queryMulti($boxes);
 
                 unset($_SESSION['install']);

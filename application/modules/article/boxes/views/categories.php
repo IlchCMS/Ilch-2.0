@@ -9,6 +9,13 @@ $cats = $this->get('cats');
     <div class="article-box">
         <ul class="list-unstyled">
             <?php foreach ($cats as $cat): ?>
+                <?php
+                    $count = $articleMapper->getCountArticlesByCatIdAccess($cat->getId(), $this->get('readAccess'));
+
+                    if ($count === 0) {
+                        continue;
+                    }
+                ?>
                 <li class="ellipsis">
                     <span class="ellipsis-item">
                         <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'cats', 'action' => 'show', 'id' => $cat->getId()]) ?>">
@@ -16,7 +23,7 @@ $cats = $this->get('cats');
                         </a>
                     </span>
                     <span class="badge">
-                        <?=$articleMapper->getCountArticlesByCatId($cat->getId()) ?>
+                        <?=$count ?>
                     </span>
                 </li>
             <?php endforeach; ?>

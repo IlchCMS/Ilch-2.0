@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -55,7 +55,7 @@ class Delete extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'DELETE  FROM ' . $this->db->quote('[prefix]_' . $this->table);
+        $sql = 'DELETE FROM ' . $this->db->quote('[prefix]_' . $this->table);
 
         $sql .= $this->generateWhereSql();
 

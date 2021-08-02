@@ -676,7 +676,7 @@ class Config extends \Ilch\Config\Install
                 if (!empty($comments)) {
                     foreach($comments as $comment) {
                         $key = '';
-                        if (!(strlen($comment['key']) - (strrpos($comment['key'], '/')) === 0)) {
+                        if (!(\strlen($comment['key']) - (strrpos($comment['key'], '/')) === 0)) {
                             // Add missing slash at the end to usually terminate the id.
                             // This is needed for example so that id 11 doesn't get counted as id 1.
                             $key = $comment['key'] . '/';
@@ -770,6 +770,81 @@ class Config extends \Ilch\Config\Install
                 
                 replaceVendorDirectory();
                 break;
+            case "2.1.43":
+                // Create new table for articles read access.
+                $this->db()->queryMulti('CREATE TABLE `[prefix]_articles_access` (
+                    `article_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    PRIMARY KEY (`article_id`, `group_id`) USING BTREE,
+                    INDEX `FK_[prefix]_articles_access_[prefix]_groups` (`group_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_articles_access_[prefix]_articles` FOREIGN KEY (`article_id`) REFERENCES `[prefix]_articles` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_articles_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // Convert data from old read_access column of table articles to the new articles_access table.
+                $readAccessRows = $this->db()->select(['id', 'read_access'])
+                    ->from(['articles'])
+                    ->execute()
+                    ->fetchRows();
+
+                $existingGroups = $this->db()->select('id')
+                    ->from(['groups'])
+                    ->execute()
+                    ->fetchList();
+
+                $sql = 'INSERT INTO [prefix]_articles_access (article_id, group_id) VALUES';
+                $sqlWithValues = $sql;
+                $rowCount = 0;
+
+                foreach ($readAccessRows as $readAccessRow) {
+                    $readAccessArray = [];
+                    $readAccessArray[$readAccessRow['id']] = explode(',', $readAccessRow['read_access']);
+                    foreach ($readAccessArray as $articleId => $groupIds) {
+                        // There is a limit of 1000 rows per insert, but according to some benchmarks found online
+                        // the sweet spot seams to be around 25 rows per insert. So aim for that.
+                        if ($rowCount >= 25) {
+                            $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+                            $this->db()->queryMulti($sqlWithValues);
+                            $rowCount = 0;
+                            $sqlWithValues = $sql;
+                        }
+
+                        // Don't try to add a groupId that doesn't exist in the groups table as this would
+                        // lead to an error (foreign key constraint).
+                        $groupIds = array_intersect($existingGroups, $groupIds);
+                        $rowCount += \count($groupIds);
+
+                        foreach ($groupIds as $groupId) {
+                            $sqlWithValues .= '(' . $articleId . ',' . $groupId . '),';
+                        }
+                    }
+                }
+
+                // Insert remaining rows.
+                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+                $this->db()->queryMulti($sqlWithValues);
+
+                // Delete old read_access column of table articles.
+                $this->db()->query('ALTER TABLE `[prefix]_articles` DROP COLUMN `read_access`;');
+
+                // Add constraint to articles_content after deleting orphaned rows in it (rows with an article id not
+                // existing in the articles table) as this would lead to an error.
+                $idsArticles = $this->db()->select('id')
+                    ->from('articles')
+                    ->execute()
+                    ->fetchList();
+
+                $idsArticlesContent = $this->db()->select('article_id')
+                    ->from('articles_content')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($idsArticlesContent, $idsArticles);
+                $delete ->from('articles_content')
+                    ->where(['article_id' => $orphanedRows])
+                    ->execute();
+
+                $this->db()->query('ALTER TABLE `[prefix]_articles_content` ADD CONSTRAINT `FK_[prefix]_articles_content_[prefix]_articles` FOREIGN KEY (`article_id`) REFERENCES `[prefix]_articles` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
         }
 
         return 'Update function executed.';
