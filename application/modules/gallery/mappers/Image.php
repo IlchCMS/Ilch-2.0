@@ -23,7 +23,7 @@ class Image extends \Ilch\Mapper
             ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
             ->where(['g.id' => (int)$id])
             ->execute()
-            ->fetchRow();
+            ->fetchAssoc();
 
         if (empty($imageRow)) {
             return null;
@@ -58,7 +58,7 @@ class Image extends \Ilch\Mapper
             ->order(['g.id' => 'DESC'])
             ->limit(1)
             ->execute()
-            ->fetchRow();
+            ->fetchAssoc();
 
         if (empty($imageRow)) {
             return null;
