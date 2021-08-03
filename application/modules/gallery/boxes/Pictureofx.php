@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,7 +13,7 @@ class Pictureofx extends \Ilch\Box
     public function render()
     {
         $imageMapper = new ImageMapper();
-        $galleries = $this->getConfig()->get('gallery_pictureOfXSource');
+        $galleries = explode(',', $this->getConfig()->get('gallery_pictureOfXSource'));
         $imageIds = $imageMapper->getListOfValidIds(['cat' => $galleries]);
 
         if (!empty($imageIds)) {
