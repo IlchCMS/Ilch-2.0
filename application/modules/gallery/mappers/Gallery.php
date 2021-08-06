@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -48,12 +48,11 @@ class Gallery extends \Ilch\Mapper
     /**
      * Gets all gallery items by type.
      *
-     * @param $type
-     * @return array|null
+     * @param int $type
+     * @return array|GalleryItem[]
      */
-    public function getGalleryCatItem($type)
+    public function getGalleryCatItem(int $type): array
     {
-        $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('gallery_items')
                 ->where(['type' => $type])
@@ -62,9 +61,10 @@ class Gallery extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($itemRows)) {
-            return null;
+            return [];
         }
 
+        $items = [];
         foreach ($itemRows as $itemRow) {
             $itemModel = new GalleryItem();
             $itemModel->setId($itemRow['id']);
