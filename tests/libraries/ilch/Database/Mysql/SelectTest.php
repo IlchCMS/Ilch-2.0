@@ -464,8 +464,40 @@ class SelectTest extends \PHPUnit\Framework\TestCase
                 'expectedSqlPart' => '`field1`,`table`.`field2`'
             ],
             'one field with direction (conversion to separate ORDER BY)' => [
-                'groupByFields' => ['table.field' => 'DESC'],
-                'expectedSqlPart' => '`table`.`field` ORDER BY `table`.`field` DESC'
+                'groupByFields' => ['table.field1' => 'DESC'],
+                'expectedSqlPart' => '`table`.`field1` ORDER BY `table`.`field1` DESC'
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider dpForTestGenerateSqlWithGroupDirectionAndOrder
+     *
+     * @param array $groupByFields
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlWithGroupDirectionAndOrder($groupByFields, $orderByFields, $expectedSqlPart)
+    {
+        $this->out->from('Test')
+            ->group($groupByFields)
+            ->order($orderByFields);
+
+        $expected = 'SELECT * FROM `[prefix]_Test`'
+            . ' GROUP BY ' . $expectedSqlPart;
+
+        self::assertEquals($expected, $this->out->generateSql());
+    }
+
+    /**
+     * @return array
+     */
+    public function dpForTestGenerateSqlWithGroupDirectionAndOrder()
+    {
+        return [
+            'one field with direction (conversion to separate ORDER BY)' => [
+                'groupByFields' => ['table.field1' => 'DESC'],
+                'orderByFields' => ['table.field2' => 'DESC'],
+                'expectedSqlPart' => '`table`.`field1` ORDER BY `table`.`field2` DESC,`table`.`field1` DESC'
             ]
         ];
     }
