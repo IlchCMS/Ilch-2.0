@@ -67,7 +67,7 @@ class Templates extends \Ilch\Controller\Admin
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('templateMapper', $templateMapper);
-        $this->getView()->set('articles', $templateMapper->getTemplates('', $pagination));
+        $this->getView()->set('articles', $templateMapper->getTemplates(null, $pagination));
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('pagination', $pagination);
@@ -81,13 +81,7 @@ class Templates extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-        if ($this->getRequest()->getParam('locale') == '') {
-            $locale = '';
-        } else {
-            $locale = $this->getRequest()->getParam('locale');
-        }
-
-        $this->getView()->set('article', $templateMapper->getTemplateByIdLocale($this->getRequest()->getParam('id'), $locale));
+        $this->getView()->set('article', $templateMapper->getTemplateById($this->getRequest()->getParam('id')));
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -109,6 +103,7 @@ class Templates extends \Ilch\Controller\Admin
                 $model->setAuthorId($this->getUser()->getId())
                     ->setDescription($this->getRequest()->getPost('description'))
                     ->setKeywords($this->getRequest()->getPost('keywords'))
+                    ->setLocale($this->getRequest()->getPost('language'))
                     ->setTitle($this->getRequest()->getPost('title'))
                     ->setTeaser($this->getRequest()->getPost('teaser'))
                     ->setContent($this->getRequest()->getPost('content'))
