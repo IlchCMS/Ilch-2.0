@@ -40,7 +40,7 @@ if ($this->get('article') != '') {
                       toolbar="ilch_html"><?=($this->get('article') != '') ? $this->get('article')->getContent(): $this->originalInput('content') ?></textarea>
         </div>
     </div>
-    <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
+    <?php if ($this->get('multilingual')): ?>
         <div class="form-group">
             <label for="language" class="col-lg-2 control-label">
                 <?=$this->getTrans('language') ?>:
@@ -51,7 +51,7 @@ if ($this->get('article') != '') {
                     foreach ($this->get('languages') as $key => $value) {
                         $selected = '';
                         if ($key == $this->get('contentLanguage')) {
-                            continue;
+                            $key = '';
                         }
 
                         if ($this->getRequest()->getParam('locale') == $key) {

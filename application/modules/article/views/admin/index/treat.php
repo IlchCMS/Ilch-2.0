@@ -21,7 +21,7 @@ if ($this->get('article') != '') {
                     <option value="0"><?=$this->getTrans('selectTemplate') ?></option>
                 <?php foreach ($this->get('templates') as $template): ?>
                     <option value="<?=$template->getId() ?>" <?=($this->get('template') == $template->getId()) ? 'selected="selected"' : '' ?>>
-                        <?=$this->escape($template->getTitle()) ?>
+                        <?=$this->escape($template->getTitle() . ($template->getLocale() ? ' (' . $template->getLocale() . ')' : '')) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -294,7 +294,7 @@ $('#language').change(
 ?>
 
 $('#preview').click(
-    function(e) 
+    function(e)
     {
         e.preventDefault();
         $('#article_form').attr('action', '<?=$this->getUrl('index.php/article/index/show/preview/true') ?>');
@@ -323,11 +323,11 @@ $('#tags').on('tokenfield:createtoken', function (event) {
             event.preventDefault();
     });
 });
-$( "#template" ).change(function() {
+$('#template').change(function() {
     if (<?=($articleID) ? json_encode($articleID) : '""' ?>) {
-        window.location = '<?=$this->getUrl(['id' => $articleID]) ?>/template/'+$(this).val();
+        window.location = '<?=$this->getCurrentUrl(['id' => $articleID], false) ?>/template/'+$(this).val();
     } else {
-        window.location = '<?=$this->getUrl(['action' => 'treat']) ?>/template/'+$(this).val();
+        window.location = '<?=$this->getCurrentUrl(['action' => 'treat'], false) ?>/template/'+$(this).val();
     }
 });
 </script>

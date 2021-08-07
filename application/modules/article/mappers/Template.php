@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,16 +13,19 @@ class Template extends \Ilch\Mapper
     /**
      * Get all templates
      *
-     * @param string $locale
+     * @param string|null $locale
      * @param null $pagination
      * @return ArticleModel[]|[]
      */
-    public function getTemplates($locale = '', $pagination = null)
+    public function getTemplates(string $locale = null, $pagination = null): array
     {
         $select = $this->db()->select()
             ->fields(['id', 'author_id', 'description', 'keywords', 'title', 'teaser', 'perma', 'content', 'locale', 'img', 'img_source'])
-            ->from('articles_templates')
-            ->where(['locale' => $this->db()->escape($locale)]);
+            ->from('articles_templates');
+
+        if ($locale !== null) {
+            $select = $select->where(['locale' => $this->db()->escape($locale)]);
+        }
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -46,6 +49,7 @@ class Template extends \Ilch\Mapper
             $articleModel->setAuthorId($articleRow['author_id']);
             $articleModel->setDescription($articleRow['description']);
             $articleModel->setKeywords($articleRow['keywords']);
+            $articleModel->setLocale($articleRow['locale']);
             $articleModel->setTitle($articleRow['title']);
             $articleModel->setTeaser($articleRow['teaser']);
             $articleModel->setPerma($articleRow['perma']);
@@ -61,16 +65,15 @@ class Template extends \Ilch\Mapper
     /**
      * Get template by id and locale.
      *
-     * @param $id
-     * @param string $locale
+     * @param int $id
      * @return ArticleModel|null
      */
-    public function getTemplateByIdLocale($id, $locale = '')
+    public function getTemplateById(int $id)
     {
         $select = $this->db()->select()
             ->fields(['id', 'author_id', 'description', 'keywords', 'title', 'teaser', 'perma', 'content', 'locale', 'img', 'img_source'])
             ->from('articles_templates')
-            ->where(['id' => $id, 'locale' => $this->db()->escape($locale)]);
+            ->where(['id' => $id]);
 
         $result = $select->execute();
         $articleRow = $result->fetchAssoc();
@@ -84,6 +87,7 @@ class Template extends \Ilch\Mapper
         $articleModel->setAuthorId($articleRow['author_id']);
         $articleModel->setDescription($articleRow['description']);
         $articleModel->setKeywords($articleRow['keywords']);
+        $articleModel->setLocale($articleRow['locale']);
         $articleModel->setTitle($articleRow['title']);
         $articleModel->setTeaser($articleRow['teaser']);
         $articleModel->setContent($articleRow['content']);
@@ -101,75 +105,43 @@ class Template extends \Ilch\Mapper
      * @param ArticleModel $article
      * @return int id
      */
-    public function save(ArticleModel $article)
+    public function save($article): int
     {
-        if ($article->getId()) {
-            // Existing template
-            if ($this->getTemplateByIdLocale($article->getId(), $article->getLocale())) {
-                // Update existing template with specific id and locale
-                $this->db()->update('articles_templates')
-                    ->values
-                    (
-                        [
-                            'title' => $article->getTitle(),
-                            'teaser' => $article->getTeaser(),
-                            'description' => $article->getDescription(),
-                            'keywords' => $article->getKeywords(),
-                            'content' => $article->getContent(),
-                            'perma' => $article->getPerma(),
-                            'img' => $article->getImage(),
-                            'img_source' => $article->getImageSource()
-                        ]
-                    )
-                    ->where
-                    (
-                        [
-                            'id' => $article->getId(),
-                            'locale' => $article->getLocale()
-                        ]
-                    )
-                    ->execute();
-            } else {
-                // Insert content with a new locale for an existing template
-                $this->db()->insert('articles_templates')
-                    ->values
-                    (
-                        [
-                            'id' => $article->getId(),
-                            'author_id' => $article->getAuthorId(),
-                            'description' => $article->getDescription(),
-                            'keywords' => $article->getKeywords(),
-                            'title' => $article->getTitle(),
-                            'teaser' => $article->getTeaser(),
-                            'content' => $article->getContent(),
-                            'perma' => $article->getPerma(),
-                            'locale' => $article->getLocale(),
-                            'img' => $article->getImage(),
-                            'img_source' => $article->getImageSource()
-                        ]
-                    )
-                    ->execute();
-            }
+        $exists = $this->db()->select('id')
+            ->from('articles_templates')
+            ->where(['id' => $article->getId()])
+            ->execute()
+            ->fetchCell();
+
+        if ($exists) {
+            // Update existing template.
+            $this->db()->update('articles_templates')
+                ->values(['title' => $article->getTitle(),
+                    'teaser' => $article->getTeaser(),
+                    'description' => $article->getDescription(),
+                    'keywords' => $article->getKeywords(),
+                    'content' => $article->getContent(),
+                    'perma' => $article->getPerma(),
+                    'locale' => $article->getLocale(),
+                    'img' => $article->getImage(),
+                    'img_source' => $article->getImageSource()])
+                ->where(['id' => $article->getId()])
+                ->execute();
 
             $id = $article->getId();
         } else {
             // Insert new template
             $id = $this->db()->insert('articles_templates')
-                ->values
-                (
-                    [
-                        'author_id' => $article->getAuthorId(),
-                        'description' => $article->getDescription(),
-                        'keywords' => $article->getKeywords(),
-                        'title' => $article->getTitle(),
-                        'teaser' => $article->getTeaser(),
-                        'content' => $article->getContent(),
-                        'perma' => $article->getPerma(),
-                        'locale' => $article->getLocale(),
-                        'img' => $article->getImage(),
-                        'img_source' => $article->getImageSource()
-                    ]
-                )
+                ->values(['author_id' => $article->getAuthorId(),
+                    'description' => $article->getDescription(),
+                    'keywords' => $article->getKeywords(),
+                    'title' => $article->getTitle(),
+                    'teaser' => $article->getTeaser(),
+                    'content' => $article->getContent(),
+                    'perma' => $article->getPerma(),
+                    'locale' => $article->getLocale(),
+                    'img' => $article->getImage(),
+                    'img_source' => $article->getImageSource()])
                 ->execute();
         }
 
@@ -182,9 +154,9 @@ class Template extends \Ilch\Mapper
      * @param int $id
      * @return int
      */
-    public function delete($id)
+    public function delete(int $id): int
     {
-        return $this->db()->delete('articles_templates')
+        return (int)$this->db()->delete('articles_templates')
             ->where(['id' => $id])
             ->execute();
     }

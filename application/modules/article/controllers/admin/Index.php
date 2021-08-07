@@ -98,16 +98,11 @@ class Index extends \Ilch\Controller\Admin
         $groupMapper = new GroupMapper();
 
         $groupsList = $groupMapper->getGroupList();
-
-        if ($this->getRequest()->getParam('locale') == '') {
-            $locale = '';
-        } else {
-            $locale = $this->getRequest()->getParam('locale');
-        }
+        $locale = $this->getRequest()->getParam('locale');
 
         if ($this->getRequest()->getParam('template')) {
             $this->getView()->set('template', $this->getRequest()->getParam('template'));
-            $this->getView()->set('article', $templateMapper->getTemplateByIdLocale($this->getRequest()->getParam('template'), $locale));
+            $this->getView()->set('article', $templateMapper->getTemplateById($this->getRequest()->getParam('template')));
         } elseif ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
@@ -194,7 +189,7 @@ class Index extends \Ilch\Controller\Admin
             $groups = [1,2,3];
         }
 
-        $this->getView()->set('templates', $templateMapper->getTemplates());
+        $this->getView()->set('templates', $templateMapper->getTemplates($locale));
         $this->getView()->set('cats', $categoryMapper->getCategories());
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());

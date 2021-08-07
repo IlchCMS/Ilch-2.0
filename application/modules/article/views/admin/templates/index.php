@@ -9,9 +9,7 @@
                     <col class="icon_width" />
                     <col class="icon_width" />
                     <col />
-                    <?php if ($this->get('multilingual')): ?>
-                        <col class="col-lg-1">
-                    <?php endif; ?>
+                    <col />
                 </colgroup>
                 <thead>
                 <tr>
@@ -19,17 +17,7 @@
                     <th></th>
                     <th></th>
                     <th><?=$this->getTrans('title') ?></th>
-                    <?php if ($this->get('multilingual')): ?>
-                        <th class="text-right">
-                            <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
-                                <?php if ($key == $this->get('contentLanguage')): ?>
-                                    <?php continue; ?>
-                                <?php endif; ?>
-
-                                <img src="<?=$this->getStaticUrl('img/lang/'.$key.'.png') ?>" alt="<?=$this->getTrans('language').' '.$key ?>">
-                            <?php endforeach; ?>
-                        </th>
-                    <?php endif; ?>
+                    <th><?=$this->getTrans('language') ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,21 +27,7 @@
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
                         <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $article->getId()]) ?></td>
                         <td><?=$this->escape($article->getTitle()) ?></td>
-                        <?php if ($this->get('multilingual')): ?>
-                            <td class="text-right">
-                                <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
-                                    <?php if ($key == $this->get('contentLanguage')): ?>
-                                        <?php continue; ?>
-                                    <?php endif; ?>
-
-                                    <?php if ($this->get('templateMapper')->getTemplateByIdLocale($article->getId(), $key)): ?>
-                                        <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa fa-edit"></i></a>
-                                    <?php else: ?>
-                                        <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa fa-plus-circle"></i></a>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </td>
-                        <?php endif; ?>
+                        <td><?=$this->escape($article->getLocale()) ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
