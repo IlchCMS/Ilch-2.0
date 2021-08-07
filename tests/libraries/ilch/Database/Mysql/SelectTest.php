@@ -463,9 +463,9 @@ class SelectTest extends \PHPUnit\Framework\TestCase
                 'groupByFields' => ['field1', 'table.field2'],
                 'expectedSqlPart' => '`field1`,`table`.`field2`'
             ],
-            'one field with direction' => [
+            'one field with direction (conversion to separate ORDER BY)' => [
                 'groupByFields' => ['table.field' => 'DESC'],
-                'expectedSqlPart' => '`table`.`field` DESC'
+                'expectedSqlPart' => '`table`.`field` ORDER BY `table`.`field` DESC'
             ]
         ];
     }

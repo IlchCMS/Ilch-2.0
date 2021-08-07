@@ -232,6 +232,7 @@ class Select extends QueryBuilder
      *
      * @param array $fields ['field' => 'DESC|ASC', 'field2']
      * @param boolean $replace
+     * @deprecated providing a sort order like 'field' => 'DESC|ASC' is deprecated.
      *
      * @return \Ilch\Database\Mysql\Select
      */
@@ -492,9 +493,10 @@ class Select extends QueryBuilder
                     $fields[] = $this->db->quote($value);
                 } else {
                     if (!\in_array($value, ['ASC', 'DESC'])) {
-                        throw new \InvalidArgumentException('Invalid GROUP BY option: ' . $value);
+                        throw new \InvalidArgumentException('Invalid GROUP BY option: ' . $value . ' Note: a sort order within GROUP BY is deprecated.');
                     }
-                    $fields[] = $this->db->quote($key) . ' ' . $value;
+                    $this->order[$key] = $value; // TODO: Remove this line when support for 'field' => 'DESC|ASC' in group() gets removed.
+                    $fields[] = $this->db->quote($key);
                 }
             }
             $sql .= implode(',', $fields);
