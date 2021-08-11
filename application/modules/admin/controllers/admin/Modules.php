@@ -178,11 +178,9 @@ class Modules extends \Ilch\Controller\Admin
                     return;
                 }
 
-                if (!$model->getId()) {
-                    foreach ($groups as $key => $group) {
-                        if ($group->getId() !== 1) {
-                            $groupMapper->saveAccessData($group->getId(), $this->getRequest()->getParam('key'), 1, 'module');
-                        }
+                foreach ($groups as $key => $group) {
+                    if ($group->getId() !== 1) {
+                        $groupMapper->saveAccessData($group->getId(), $this->getRequest()->getParam('key'), 1, 'module');
                     }
                 }
 
