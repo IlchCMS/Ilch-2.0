@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -12,6 +12,8 @@ class Insert extends QueryBuilder
 {
     /** @var  array */
     protected $values;
+    /** @var  array */
+    protected $columns;
 
     /**
      * @param \Ilch\Database\Mysql $db
@@ -32,7 +34,7 @@ class Insert extends QueryBuilder
 
     /**
      * @param array $values values as [name => value]
-     * @return Update
+     * @return Insert
      */
     public function values(array $values)
     {
@@ -42,7 +44,7 @@ class Insert extends QueryBuilder
 
     /**
      * @param string $table table without prefix
-     * @return Update
+     * @return Insert
      */
     public function into($table)
     {
@@ -51,14 +53,13 @@ class Insert extends QueryBuilder
     }
 
     /**
-     * @todo remove after updating modules
-     * @deprecated
-     * @param array $values
-     * @return Update
+     * @param array $columns as ['firstColumn', 'secondColumn']
+     * @return Insert
      */
-    public function fields(array $values)
+    public function columns(array $columns)
     {
-        return $this->values($values);
+        $this->columns = $columns;
+        return $this;
     }
 
     /**
@@ -89,13 +90,39 @@ class Insert extends QueryBuilder
         $sqlFields = $sqlValues;
 
         if (!empty($this->values)) {
-            foreach ($this->values as $key => $value) {
-                if ($value === null) {
-                    continue;
+            if (empty($this->columns)) {
+                foreach ($this->values as $key => $value) {
+                    if ($value === null) {
+                        continue;
+                    }
+
+                    $sqlFields[] = $this->db->quote($key);
+                    $sqlValues[] = $this->db->escape($value, true);
+                }
+            } else {
+                $escapeFunc = function($value) { return $this->db->escape($value, true); };
+                $countOfColumns = \count($this->columns);
+                $countOfRows = \count($this->values);
+
+                foreach($this->columns as $column) {
+                    $sqlFields[] = $this->db->quote($column);
                 }
 
-                $sqlFields[] = $this->db->quote($key);
-                $sqlValues[] = $this->db->escape($value, true);
+                foreach($this->values as $value) {
+                    if (!\is_array($value)) {
+                        throw new \RuntimeException('no valid values for insert');
+                    }
+
+                    if ($countOfColumns !== \count($value)) {
+                        throw new \RuntimeException('count of values does not fit the count of columns');
+                    }
+
+                    if ($countOfRows > 1000) {
+                        throw new \RuntimeException('not more than 1000 rows allowed');
+                    }
+
+                    $sqlValues[] = '(' . implode(',', array_map($escapeFunc, $value)) . ')';
+                }
             }
         }
 
@@ -104,9 +131,13 @@ class Insert extends QueryBuilder
         }
 
         $sql .= implode(',', $sqlFields);
-        $sql .= ') VALUES (';
+        $sql .= ') VALUES ';
 
-        $sql .= implode(',', $sqlValues) . ')';
+        if (empty($this->columns)) {
+            $sql .= '(' . implode(',', $sqlValues) . ')';
+        } else {
+            $sql .= implode(',', $sqlValues);
+        }
 
         return $sql;
     }
