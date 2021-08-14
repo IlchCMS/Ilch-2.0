@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'vote',
-        'version' => '1.10.0',
+        'version' => '1.11.0',
         'icon_small' => 'fa-tasks',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -94,6 +94,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_poll_ip` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
             case '1.7.0':
             case '1.8.0':
+            case '1.9.0':
+            case '1.10.0':
                 // Update description
                 foreach($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'vote' AND `locale` = '%s';", $value['description'], $key));
