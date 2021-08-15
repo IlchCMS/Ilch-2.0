@@ -507,6 +507,17 @@ class Config extends \Ilch\Config\Install
                 // Add new 'permanent' column to users_dialog_hidden
                 $this->db()->query('ALTER TABLE `[prefix]_users_dialog_hidden` ADD COLUMN `permanent` TINYINT(1) UNSIGNED NOT NULL;');
                 break;
+            case "2.1.43":
+                // convert old icons to new format
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fas fa-globe' WHERE `icon` = 'fa-globe';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fab fa-facebook' WHERE `icon` = 'fa-facebook';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fab fa-twitter' WHERE `icon` = 'fa-twitter';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fab fa-google-plus-g' WHERE `icon` = 'fa-google-plus';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fab fa-steam-square' WHERE `icon` = 'fa-steam-square';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fab fa-twitch' WHERE `icon` = 'fa-twitch';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fas fa-headphones' WHERE `icon` = 'fa-headphones';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fas fa-microphone' WHERE `icon` = 'fa-microphone';");
+                break;
         }
     }
 }
