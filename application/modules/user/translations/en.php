@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -314,6 +314,8 @@ return [
     'translationAlreadyExisting' => 'There can only be one translation per language.',
     'pleaseSelect' => 'Please select',
     'profileFieldHidden' => 'Field hidden by the administrator.',
+    'chooseIcon' => 'Choose a symbol',
+    'noIcon' => 'No symbol',
 
     'picturesPerPage' => 'Pictures per page',
 

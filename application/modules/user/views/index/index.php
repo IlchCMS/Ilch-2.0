@@ -65,7 +65,7 @@ $groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape
                                                         }
                                                     }
 
-                                                    echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" rel="noopener" class="fa '.$profileIconField->getIcon().' fa-lg user-link" title="'.$profileFieldName.'"></a>';
+                                                    echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" rel="noopener" class="'.$profileIconField->getIcon().' fa-lg user-link" title="'.$profileFieldName.'"></a>';
                                                     break;
                                                 }
                                             }
