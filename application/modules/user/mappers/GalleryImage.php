@@ -22,7 +22,7 @@ class GalleryImage extends \Ilch\Mapper
         $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
             ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.cat' => $id])
+            ->where(['g.id' => $id])
             ->execute()
             ->fetchAssoc();
 

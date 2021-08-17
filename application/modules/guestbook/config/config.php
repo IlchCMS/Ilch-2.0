@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'version' => '1.10.0',
+        'version' => '1.11.0',
         'icon_small' => 'fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -74,9 +74,10 @@ class Config extends \Ilch\Config\Install
             case "1.7.0":
             case "1.8.0":
             case "1.9.0":
+            case "1.10.0":
                 // Update description
                 foreach($this->config['languages'] as $key => $value) {
-                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'vote' AND `locale` = '%s';", $value['description'], $key));
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'guestbook' AND `locale` = '%s';", $value['description'], $key));
                 }
         }
     }
