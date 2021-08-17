@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -54,7 +54,7 @@ class ProfileFields extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() === 'treat') {
+        if ($this->getRequest()->getActionName() === 'treat' && !$this->getRequest()->getParam('id')) {
             $items[2][0]['active'] = true;
         } else {
             $items[2]['active'] = true;
@@ -102,10 +102,18 @@ class ProfileFields extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index'])
-            ->add($this->getTranslator()->trans('editProfileField'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
+            ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index']);
 
         $profileFieldId = $this->getRequest()->getParam('id');
+
+        if (!empty($profileFieldId)) {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('editProfileField'), ['action' => 'treat', 'id' => $profileFieldId]);
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuActionNewProfileField'), ['action' => 'treat']);
+        }
+
         $profileFieldsMapper = new ProfileFieldsMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 

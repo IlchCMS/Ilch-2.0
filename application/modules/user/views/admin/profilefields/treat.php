@@ -54,20 +54,21 @@ function addIndex(index) {
     </div>
     <div class="form-group <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldIcons">
         <label for="profileFieldIcon" class="col-lg-3 control-label">
-            <?=$this->getTrans('profileFieldIcon') ?>
+            <?=$this->getTrans('profileFieldIcon') ?>:
         </label>
-        <div class="col-lg-2">
-            <select class="form-control fontawesome-select" id="profileFieldIcon" name="profileField[icon]">
-                <option value="" <?php if ($profileField->getIcon() == '') { echo 'selected="selected"'; } ?> disabled><?=$this->getTrans('pleaseSelect') ?></option>
-                <option value="fa-globe" <?php if ($profileField->getIcon() === 'fa-globe') { echo 'selected="selected"'; } ?>>&#xf0ac; fa-globe</option>
-                <option value="fa-facebook" <?php if ($profileField->getIcon() === 'fa-facebook') { echo 'selected="selected"'; } ?>>&#xf09a; fa-facebook</option>
-                <option value="fa-twitter" <?php if ($profileField->getIcon() === 'fa-twitter') { echo 'selected="selected"'; } ?>>&#xf099; fa-twitter</option>
-                <option value="fa-google-plus" <?php if ($profileField->getIcon() === 'fa-google-plus') { echo 'selected="selected"'; } ?>>&#xf0d5; fa-google-plus</option>
-                <option value="fa-steam-square" <?php if ($profileField->getIcon() === 'fa-steam-square') { echo 'selected="selected"'; } ?>>&#xf1b7; fa-steam-square</option>
-                <option value="fa-twitch" <?php if ($profileField->getIcon() === 'fa-twitch') { echo 'selected="selected"'; } ?>>&#xf1e8; fa-twitch</option>
-                <option value="fa-headphones" <?php if ($profileField->getIcon() === 'fa-headphones') { echo 'selected="selected"'; } ?>>&#xf025; fa-headphones</option>
-                <option value="fa-microphone" <?php if ($profileField->getIcon() === 'fa-microphone') { echo 'selected="selected"'; } ?>>&#xf130; fa-microphone</option>
-            </select>
+        <div class="col-lg-2 input-group ilch-date">
+            <span class="input-group-addon">
+                <span id="chosensymbol" class="<?=($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'] ?>"></span>
+            </span>
+            <input type="text"
+                   class="form-control"
+                   id="profileFieldIcon"
+                   name="profileField[icon]"
+                   value="<?=($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'] ?>"
+                   readonly />
+            <span class="input-group-addon">
+                <span class="fas fa-mouse-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
+            </span>
         </div>
     </div>
     <div class="form-group">
@@ -100,7 +101,7 @@ function addIndex(index) {
         <div class="form-group" id="profileFieldTrans<?=$i ?>">
             <div class="col-lg-3">
                 <button type="button" class="btn" onclick="deleteTranslation(<?=$i ?>)">-</button>
-                <label for="profileFieldName"
+                <label for="profileFieldName<?=$i ?>"
                        class="control-label">
                     <?= $localeList[$profileFieldTranslation->getLocale()] ?? $profileFieldTranslation->getLocale() ?>
                 </label>
@@ -114,7 +115,7 @@ function addIndex(index) {
             <div class="col-lg-4">
                 <input type="text"
                        class="form-control"
-                       id="profileFieldName"
+                       id="profileFieldName<?=$i ?>"
                        name="profileFieldTrans<?=$i ?>[name]"
                        placeholder="<?=$this->getTrans('profileFieldName') ?>"
                        value="<?=$this->escape($profileFieldTranslation->getName()) ?>" />
@@ -130,6 +131,25 @@ function addIndex(index) {
     </div>
     <?=$this->getSaveBar() ?>
 </form>
+
+<div class="modal fade" id="symbolDialog" tabindex="-1" role="dialog" aria-labelledby="symbolDialogTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="symbolDialogTitle"><?=$this->getTrans('chooseIcon') ?></h5>
+                <button type="button" class="btn" id="noIcon" data-dismiss="modal"><?=$this->getTrans('noIcon') ?></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"><?=$this->getTrans('close') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('profileFieldTransInfoText')) ?>
 
@@ -169,7 +189,7 @@ function addTranslations() {
                     '<div class="col-lg-4">'+
                         '<input type="text"'+
                                'class="form-control"'+
-                               'id="profileFieldName"'+
+                               'id="profileFieldName'+index+'"'+
                                'name="profileFieldTrans'+index+'[name]"'+
                                'placeholder="<?=$this->getTrans('profileFieldName') ?>"'+
                                'value="" />'+
@@ -194,6 +214,8 @@ function isDuplicate() {
         allElements = document.getElementsByName('profileFieldTrans'+indexList[x]+'[locale]')[0];
         for(y = x+1; y < indexList.length; y++) {
             select_id = document.getElementsByName('profileFieldTrans'+indexList[y]+'[locale]')[0];
+            console.log(select_id);
+            console.log(allElements);
             if(select_id.options[select_id.selectedIndex].value != "" && select_id.options[select_id.selectedIndex].value == allElements.value) {
                 alert('<?=$this->getTrans('translationAlreadyExisting') ?>');
                 deleteTranslation(indexList[y]);
@@ -211,4 +233,40 @@ function deleteTranslation(a) {
     document.getElementById('profileFieldTrans'+a).style.display = 'none';
     document.getElementsByName('profileFieldTrans'+a+'[name]')[0].value = '';    
 }
+
+$("#symbolDialog").on('shown.bs.modal', function (e) {
+    let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH.'/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
+    let icons = [];
+
+    $.each(content, function(index, icon) {
+        if (icon.styles == 'brands') {
+            icons.push('fab fa-' + index);
+        } else if (icon.styles == 'solid') {
+            icons.push('fas fa-' + index);
+        } else if (icon.styles == 'regular') {
+            icons.push('far fa-' + index);
+        }
+    })
+
+    for (var x = 0; x < icons.length;) {
+        div = '<div class="row">';
+        for (var y = x; y < x+6; y++) {
+            div += '<div class="icon col-lg-2"><i id="'+icons[y]+'" class="faicon '+icons[y]+' fa-2x"></i></div>';
+        }
+        div += '</div>';
+        x = y;
+
+        $("#symbolDialog .modal-content .modal-body").append(div);
+    }
+
+    $(".faicon").click(function (e) {
+        $("#profileFieldIcon").val($(this).closest("i").attr('id'));
+        $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
+        $("#symbolDialog").modal('hide')
+    });
+
+    $("#noIcon").click(function (e) {
+        $("#profileFieldIcon").val("");
+    });
+});
 </script>
