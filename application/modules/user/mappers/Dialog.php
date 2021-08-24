@@ -388,12 +388,15 @@ class Dialog extends \Ilch\Mapper
 
         // Dialog couldn't be really deleted as other user still uses it.
         // Hide the dialog and set it as permanently hidden (to make it later look like deleted).
+        // Additionally, mark all messages of the other user as read.
         $this->hideDialog($c_id, $userId);
 
         $this->db()->update('users_dialog_hidden')
             ->values(['permanent' => 1])
             ->where(['c_id' => $c_id, 'user_id' => $userId])
             ->execute();
+
+        $this->markAllAsRead($c_id, $userId);
     }
 
     /**
@@ -600,20 +603,16 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-     * Updates dialog read.
+     * Mark all messages of the other user in a dialog as read.
      *
-     * @param DialogModel $model
+     * @param int $c_id dialog id
+     * @param int $userId id of the user (messages of the other user are getting marked as read)
      */
-    public function updateRead(DialogModel $model)
+    public function markAllAsRead(int $c_id, int $userId)
     {
-        $fields = [
-            'cr_id' => $model->getCrId(),
-            'read' => $model->getRead(),
-        ];
-
         $this->db()->update('users_dialog_reply')
-                ->values($fields)
-                ->where(['cr_id' => $model->getCrId()])
-                ->execute();
+            ->values(['read' => 1])
+            ->where(['c_id_fk' => $c_id, 'user_id_fk <>' => $userId])
+            ->execute();
     }
 }

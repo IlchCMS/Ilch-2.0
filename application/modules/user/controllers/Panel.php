@@ -430,18 +430,14 @@ class Panel extends BaseController
                         ->setText($text);
                     $dialogMapper->save($model);
 
+                    $dialogMapper->unhideDialog($c_id, $user_one);
+
                     $this->redirect(['action' => 'dialog','id'=> $c_id]);
+                } else {
+                    $dialogMapper->markAllAsRead($c_id, $this->getUser()->getId());
                 }
 
                 $this->getView()->set('inbox', $dialogMapper->getDialogMessage($c_id));
-
-                $dialog = $dialogMapper->getReadLastOneDialog($c_id);
-                if ($dialog && $dialog->getUserOne() != $this->getUser()->getId()) {
-                    $model = new DialogModel();
-                    $model->setCrId($dialog->getCrId())
-                        ->setRead(1);
-                    $dialogMapper->updateRead($model);
-                }
             } else {
                 $this->redirect(['action' => 'dialog']);
             }
@@ -499,13 +495,7 @@ class Panel extends BaseController
             $dialogMapper = new DialogMapper();
             $c_id = $this->getRequest()->getParam('id');
 
-            $dialog = $dialogMapper->getReadLastOneDialog($c_id);
-            if ($dialog && $dialog->getUserOne() != $this->getUser()->getId()) {
-                $model = new DialogModel();
-                $model->setCrId($dialog->getCrId())
-                    ->setRead(1);
-                $dialogMapper->updateRead($model);
-            }
+            $dialogMapper->markAllAsRead($c_id, $this->getUser()->getId());
 
             $this->getView()->set('inbox', $dialogMapper->getDialogMessage($c_id));
         }
