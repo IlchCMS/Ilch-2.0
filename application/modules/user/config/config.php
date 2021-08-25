@@ -508,7 +508,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_users_dialog_hidden` ADD COLUMN `permanent` TINYINT(1) UNSIGNED NOT NULL;');
                 break;
             case "2.1.43":
-                // convert old icons to new format
+                // Convert old icons to new format
                 $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fas fa-globe' WHERE `icon` = 'fa-globe';");
                 $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fab fa-facebook' WHERE `icon` = 'fa-facebook';");
                 $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fab fa-twitter' WHERE `icon` = 'fa-twitter';");
@@ -517,6 +517,18 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fab fa-twitch' WHERE `icon` = 'fa-twitch';");
                 $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fas fa-headphones' WHERE `icon` = 'fa-headphones';");
                 $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fas fa-microphone' WHERE `icon` = 'fa-microphone';");
+
+                // Restore deleted dialogs with unread messages
+                $deletedDialogs = $this->db()->select('DISTINCT h.c_id')
+                    ->from(['h' => 'users_dialog_hidden'])
+                    ->join(['r' => 'users_dialog_reply'], 'h.c_id = r.c_id_fk', 'INNER')
+                    ->where(['h.permanent' => 1, 'r.read' => 0])
+                    ->execute()
+                    ->fetchList();
+
+                $this->db()->delete('users_dialog_hidden')
+                    ->where(['c_id' => $deletedDialogs], 'or')
+                    ->execute();
                 break;
         }
     }
