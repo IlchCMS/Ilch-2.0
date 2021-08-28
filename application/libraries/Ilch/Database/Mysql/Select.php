@@ -362,7 +362,7 @@ class Select extends QueryBuilder
         $sql .= $this->getFieldsSql($fields)
             . ' FROM ' . $this->getTableSql($this->table);
 
-        $sql .= implode(' ', $joinsSql);
+        $sql .= implode('', $joinsSql);
 
         $sql .= $this->generateWhereSql();
         $sql .= $this->generateGroupBySql();
