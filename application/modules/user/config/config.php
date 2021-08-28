@@ -529,6 +529,9 @@ class Config extends \Ilch\Config\Install
                 $this->db()->delete('users_dialog_hidden')
                     ->where(['c_id' => $deletedDialogs], 'or')
                     ->execute();
+
+                // Add a composite primary key to the users_dialog_hidden table
+                $this->db()->query("ALTER TABLE `[prefix]_users_dialog_hidden` ADD PRIMARY KEY (`c_id`, `user_id`);");
                 break;
         }
     }

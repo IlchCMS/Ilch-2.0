@@ -421,11 +421,11 @@ class Dialog extends \Ilch\Mapper
      */
     public function hideDialog($c_id, $userId)
     {
-        $dialogHiddenRow = $this->db()->select('*')
+        $dialogHiddenRow = $this->db()->select('c_id')
             ->from('users_dialog_hidden')
             ->where(['c_id' => $c_id, 'user_id' => $userId])
             ->execute()
-            ->fetchRow();
+            ->fetchCell();
 
         if (empty($dialogHiddenRow)) {
             $this->db()->insert('users_dialog_hidden')
