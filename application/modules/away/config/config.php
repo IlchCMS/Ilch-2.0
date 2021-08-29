@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,19 +10,19 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'away',
-        'version' => '1.4.0',
+        'version' => '1.5.0',
         'icon_small' => 'fa-calendar-times-o',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'official' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Abwesenheit',
-                'description' => 'Hier kann die Abwesenheitsliste verwaltet werden.',
+                'description' => 'Benutzer können ihre Abwesenheit (z.B. Urlaubsreise) eintragen, welche dann übersichtlich dargestellt wird und im Admincenter verwaltet werden kann.',
             ],
             'en_EN' => [
                 'name' => 'Away',
-                'description' => 'Here you can manage the awaylist.',
+                'description' => 'User can enter when they are away (e.g. on holidays). There is an overview of this and the entries can be mananged in the admincenter.',
             ],
         ],
         'ilchCore' => '2.1.16',
@@ -70,6 +70,13 @@ class Config extends \Ilch\Config\Install
             case "1.1":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_away` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.2.0":
+            case "1.3.0":
+            case "1.4.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'away' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }

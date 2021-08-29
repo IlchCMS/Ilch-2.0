@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,18 +10,18 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'rule',
-        'version' => '1.6.0',
+        'version' => '1.7.0',
         'icon_small' => 'fa-gavel',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Regeln',
-                'description' => 'Hier können neue Regeln erstellt werden.',
+                'description' => 'Zum Verfassen von Regeln, die auf der Seite angezeigt werden können. Untersützt Paragraphen, bequemes Ändern der Reihenfolge und Leserechte.',
             ],
             'en_EN' => [
                 'name' => 'Rules',
-                'description' => 'Here you can create new rules.',
+                'description' => 'Can be used to write down a ruleset, which can be shown on the websites. Supports paragraphs, easy changing the order and adjusting read access.',
             ],
         ],
         'ilchCore' => '2.1.26',
@@ -74,6 +74,13 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('rule_showallonstart', '1');
+            case "1.4.0":
+            case "1.5.0":
+            case "1.6.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'rule' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }

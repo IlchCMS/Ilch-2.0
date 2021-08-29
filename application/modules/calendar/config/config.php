@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,18 +10,18 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.6.0',
+        'version' => '1.7.0',
         'icon_small' => 'fa-calendar',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Kalender',
-                'description' => 'Hier kannst du den Kalender verwalten.',
+                'description' => 'Ein einfacher Kalender. Termine können im Admincenter eingetragen werden.',
             ],
             'en_EN' => [
                 'name' => 'Calendar',
-                'description' => 'Here you can manage the calendar.',
+                'description' => 'A simple calendar. Appointments can be entered in the admincenter.',
             ],
         ],
         'ilchCore' => '2.1.26',
@@ -74,6 +74,14 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_calendar_events` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.3.0":
+            case "1.4.0":
+            case "1.5.0":
+            case "1.6.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'calendar' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }

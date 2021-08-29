@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,18 +10,18 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'jobs',
-        'version' => '1.4.0',
+        'version' => '1.5.0',
         'icon_small' => 'fa-briefcase',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Jobs',
-                'description' => 'Hier können Jobs erstellt werden.',
+                'description' => 'Mit diesem Modul können offene Stellen/Jobangebote veröffentlicht werden.',
             ],
             'en_EN' => [
                 'name' => 'Jobs',
-                'description' => 'Here you can create jobs.',
+                'description' => 'With this module you can show job openinings on your website.',
             ],
         ],
         'boxes' => [
@@ -68,6 +68,12 @@ class Config extends \Ilch\Config\Install
             case "1.2":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_jobs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.3.0":
+            case "1.4.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'jobs' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }

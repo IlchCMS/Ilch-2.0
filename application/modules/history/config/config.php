@@ -10,18 +10,18 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'history',
-        'version' => '1.6.0',
+        'version' => '1.7.0',
         'icon_small' => 'fa-history',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Geschichte',
-                'description' => 'Hier kann die Geschichte der Seite erstellt werden.',
+                'description' => 'Hiermit kann die Geschichte der Seite, des Vereins usw. erzählt werden.',
             ],
             'en_EN' => [
                 'name' => 'History',
-                'description' => 'Here you can create a history for your site.',
+                'description' => 'With this module you can tell the story of your website, club etc.',
             ],
         ],
         'ilchCore' => '2.1.32',
@@ -81,6 +81,11 @@ class Config extends \Ilch\Config\Install
 
                 // remove no longer needed images
                 removeDir(APPLICATION_PATH.'/modules/history/static/img');
+            case "1.6.0":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'history' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }
