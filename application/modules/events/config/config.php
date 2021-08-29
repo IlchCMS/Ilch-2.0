@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.21.1',
+        'version' => '1.21.2',
         'icon_small' => 'fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -20,11 +20,11 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'Veranstaltungen',
-                'description' => 'Hier kannst du Veranstaltungen erstellen und bearbeiten.',
+                'description' => 'Es können Veranstaltungen erstellt und bearbeitet werden. Diese können auf einer Seite oder in einer Box angezeigt werden.',
             ],
             'en_EN' => [
                 'name' => 'Events',
-                'description' => 'Here you can add and change events.',
+                'description' => 'You can add or modify events. These events can be shown on a page or inside a box.',
             ],
         ],
         'boxes' => [
@@ -185,6 +185,14 @@ class Config extends \Ilch\Config\Install
             case "1.18.0":
                 // Add new type column.
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `type` VARCHAR(255) NOT NULL AFTER `place`;');
+            case "1.19.0":
+            case "1.20.0":
+            case "1.21.0":
+            case "1.21.1":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'events' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }

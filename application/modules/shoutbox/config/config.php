@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,18 +10,18 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.4.1',
+        'version' => '1.4.2',
         'icon_small' => 'fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Shoutbox',
-                'description' => 'Hier kann die Shoutbox verwaltet werden.',
+                'description' => 'Zum Einbinden einer Shoutbox als Seite oder Box. Mit Unterstützung für Schreibrechte (z.B. nur Mitglieder).',
             ],
             'en_EN' => [
                 'name' => 'Shoutbox',
-                'description' => 'Here you can manage your shoutbox.',
+                'description' => 'A shoutbox you can show as a site or box. Supports setting write access (for example only members).',
             ],
         ],
         'boxes' => [
@@ -78,6 +78,13 @@ class Config extends \Ilch\Config\Install
             case "1.2":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_shoutbox` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.3.0":
+            case "1.4.0":
+            case "1.4.1":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'shoutbox' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }

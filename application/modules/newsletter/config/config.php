@@ -10,18 +10,18 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'newsletter',
-        'version' => '1.6.1',
+        'version' => '1.6.2',
         'icon_small' => 'fa-newspaper-o',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Newsletter',
-                'description' => 'Hier kannst du Newsletter verschicken.',
+                'description' => 'Modul zum Verschicken von Newslettern. Besucher können den Newsletter über eine Box abonnieren.',
             ],
             'en_EN' => [
                 'name' => 'Newsletter',
-                'description' => 'Here you can send a newsletter.',
+                'description' => 'Module to send newsletters. Visitors can subscribe to your newsletter in a box.',
             ],
         ],
         'boxes' => [
@@ -71,7 +71,7 @@ class Config extends \Ilch\Config\Install
 
                 INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `locale`, `description`, `name`) VALUES
                 ("newsletter/index/settings", "de_DE", "Hier kannst du deine Newsletter Einstellungen bearbeiten.", "Newsletter"),
-                ("newsletter/index/settings", "en_EN", "Here you can manage your Newsletter settings.", "Newsletter");';
+                ("newsletter/index/settings", "en_EN", "Here you can manage your newsletter settings.", "Newsletter");';
     }
 
     public function getUpdate($installedVersion)
@@ -82,6 +82,16 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_newsletter` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_newsletter_mails` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case "1.2.0":
+            case "1.3.0":
+            case "1.4.0":
+            case "1.5.0":
+            case "1.6.0":
+            case "1.6.1":
+                // Update description
+                foreach($this->config['languages'] as $key => $value) {
+                    $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'newsletter' AND `locale` = '%s';", $value['description'], $key));
+                }
         }
     }
 }
