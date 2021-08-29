@@ -18,7 +18,7 @@ return [
     'addButton' => 'Send',
     'writes' => 'writes',
     'privacy' => 'Privacy',
-    'acceptPrivacy' => 'I have read the <a href="/index.php/privacy/index/index" title="data protection information" target="_blank">data protection information</a>.',
+    'acceptPrivacy' => 'I have read the <a href="'.BASE_URL.'/index.php/privacy/index/index" title="data protection information" target="_blank">data protection information</a>.',
     'directOrReplyLink' => 'You can reply directly to this email or use the following link',
     'welcomeMessage' => 'Welcome message',
 ];
