@@ -539,4 +539,21 @@ class SelectTest extends \PHPUnit\Framework\TestCase
             ]
         ];
     }
+
+    /**
+     * Test if sql query is correct with two joins.
+     * There was an issue where the second (or more) join started with two spaces.
+     */
+    public function testGenerateSqlForMoreThanOneJoin()
+    {
+        $this->out->from(['a' => 'Test']);
+        $this->out->join(['b' => 'Table2'], 'a.field1 = b.field2');
+        $this->out->join(['c' => 'Table3'], 'a.field1 = c.field2');
+
+        $expectedSql = 'SELECT * FROM `[prefix]_Test` AS `a`'
+            . ' INNER JOIN `[prefix]_Table2` AS `b` ON `a`.`field1` = `b`.`field2`'
+            . ' INNER JOIN `[prefix]_Table3` AS `c` ON `a`.`field1` = `c`.`field2`';
+
+        self::assertEquals($expectedSql, $this->out->generateSql());
+    }
 }
