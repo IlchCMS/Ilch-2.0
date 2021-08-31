@@ -26,9 +26,11 @@
     <?=$this->getSaveBar('updateButton') ?>
 </form>
 
+<script>
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 
 <?=$this->getMedia()
     ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
     ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
+</script>
