@@ -242,7 +242,7 @@ abstract class QueryBuilder
         // expect comparison of 2 fields -> don't escape (f.e. join conditions)
         if (\is_int($key)) {
             $conditionParts = explode(' ', $value);
-            if (\count($conditionParts) < 3 || ( \count($conditionParts) == 3 && !\in_array($conditionParts[1], $singleComparisonOperators) ) ||  ( \count($conditionParts) == 4 && !\in_array($conditionParts[1].' '.$conditionParts[2], $singleComparisonOperators) ) ) {
+            if (\count($conditionParts) < 3 || ( \count($conditionParts) == 3 && !\in_array($conditionParts[1], $singleComparisonOperators) ) || ( \count($conditionParts) == 4 && !\in_array($conditionParts[1].' '.$conditionParts[2], $singleComparisonOperators) ) ) {
                 throw new \InvalidArgumentException('Invalid comparison expression');
             }
 

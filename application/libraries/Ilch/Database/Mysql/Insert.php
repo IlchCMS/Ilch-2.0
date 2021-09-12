@@ -14,6 +14,8 @@ class Insert extends QueryBuilder
     protected $values;
     /** @var  array */
     protected $columns;
+    /** @var bool */
+    private $multipleRows;
 
     /**
      * @param \Ilch\Database\Mysql $db
@@ -70,6 +72,9 @@ class Insert extends QueryBuilder
     public function execute()
     {
         $this->db->query($this->generateSql());
+        if ($this->multipleRows) {
+            return $this->db->getAffectedRows();
+        }
         return $this->db->getLastInsertId();
     }
 
@@ -91,6 +96,7 @@ class Insert extends QueryBuilder
 
         if (!empty($this->values)) {
             if (empty($this->columns)) {
+                $this->multipleRows = false;
                 foreach ($this->values as $key => $value) {
                     if ($value === null) {
                         continue;
@@ -100,6 +106,7 @@ class Insert extends QueryBuilder
                     $sqlValues[] = $this->db->escape($value, true);
                 }
             } else {
+                $this->multipleRows = true;
                 $escapeFunc = function($value) { return $this->db->escape($value, true); };
                 $countOfColumns = \count($this->columns);
                 $countOfRows = \count($this->values);
