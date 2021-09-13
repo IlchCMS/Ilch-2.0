@@ -1,0 +1,85 @@
+users:
+  -
+    id: 1
+    name: "Testuser1"
+    password: "hash"
+    email: "testuser1@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 2
+    name: "Testuser2"
+    password: "hash"
+    email: "testuser1@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 3
+    name: "Testuser3"
+    password: "hash"
+    email: "testuser1@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+
+modules:
+  -
+    key: "forum"
+    system: 0
+    layout: 0
+    hide_menu: 0
+    author: "test"
+    version: "1.0.0"
+    link: "https://ilch.de"
+    icon_small: "fa-list"
+
+users_notifications_permission:
+  -
+    id: 1
+    user_id: 1
+    module: "forum"
+    type: "forumTest"
+    granted: 1
+  -
+    id: 2
+    user_id: 1
+    module: "forum"
+    type: "forumTest2"
+    granted: 0
+  -
+    id: 3
+    user_id: 2
+    module: "forum"
+    type: ""
+    granted: 1
+
+users_notifications:
+  -
+    id: 1
+    user_id: 1
+    timestamp: "2014-01-01 12:12:12"
+    module: "forum"
+    message: "test"
+    url: "https://www.ilch.de"
+    type: "forumTest"
+  -
+    id: 2
+    user_id: 1
+    timestamp: "2014-01-02 12:12:12"
+    module: "forum"
+    message: "test2"
+    url: "https://www.ilch.de"
+    type: "forumTest2"
+  -
+    id: 3
+    user_id: 1
+    timestamp: "2014-01-03 12:12:12"
+    module: "forum"
+    message: "test3"
+    url: "https://www.ilch.de"
+    type: "forumTest"

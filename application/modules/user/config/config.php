@@ -276,6 +276,34 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`user_id`, `provider`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+            CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications` (
+                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `module` VARCHAR(255) NOT NULL,
+                `message` VARCHAR(255) NOT NULL,
+                `url` VARCHAR(255) NOT NULL,
+                `type` VARCHAR(255) NOT NULL,
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_users_notifications_[prefix]_users` (`user_id`) USING BTREE,
+                INDEX `FK_[prefix]_users_notifications_[prefix]_modules` (`module`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_notifications_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_users_notifications_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications_permission` (
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                `module` VARCHAR(255) NOT NULL,
+                `type` VARCHAR(255) NOT NULL,
+                `granted` TINYINT(1) NOT NULL DEFAULT 1,
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_users_notifications_permission_[prefix]_users` (`user_id`) USING BTREE,
+                INDEX `FK_[prefix]_users_notifications_permission_[prefix]_modules` (`module`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_notifications_permission_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_users_notifications_permission_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
             INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
                 (1, "Administrator"),
                 (2, "User"),
@@ -532,6 +560,35 @@ class Config extends \Ilch\Config\Install
 
                 // Add a composite primary key to the users_dialog_hidden table
                 $this->db()->query("ALTER TABLE `[prefix]_users_dialog_hidden` ADD PRIMARY KEY (`c_id`, `user_id`);");
+
+                // Create new tables for the user notifications feature
+                $this->db()->query("CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications` (
+                    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                    `user_id` INT(11) UNSIGNED NOT NULL,
+                    `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    `module` VARCHAR(255) NOT NULL,
+                    `message` VARCHAR(255) NOT NULL,
+                    `url` VARCHAR(255) NOT NULL,
+                    `type` VARCHAR(255) NOT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_users_notifications_[prefix]_users` (`user_id`) USING BTREE,
+                    INDEX `FK_[prefix]_users_notifications_[prefix]_modules` (`module`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_users_notifications_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_users_notifications_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications_permission` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `user_id` INT(11) UNSIGNED NOT NULL,
+                    `module` VARCHAR(255) NOT NULL,
+                    `type` VARCHAR(255) NOT NULL,
+                    `granted` TINYINT(1) NOT NULL DEFAULT 1,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_users_notifications_permission_[prefix]_users` (`user_id`) USING BTREE,
+                    INDEX `FK_[prefix]_users_notifications_permission_[prefix]_modules` (`module`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_users_notifications_permission_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_users_notifications_permission_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
                 break;
         }
     }

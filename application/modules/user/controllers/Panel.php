@@ -19,6 +19,9 @@ use Modules\User\Mappers\GalleryImage as GalleryImageMapper;
 use Modules\User\Models\GalleryImage as GalleryImageModel;
 use Modules\User\Mappers\Media as MediaMapper;
 use Modules\User\Mappers\Friends as FriendsMapper;
+use Modules\User\Mappers\Notifications as NotificationsMapper;
+use Modules\User\Mappers\NotificationPermission as NotificationPermissionMapper;
+use Modules\User\Models\NotificationPermission as NotificationPermissionModel;
 use Ilch\Date as IlchDate;
 use Ilch\Validation;
 
@@ -34,11 +37,21 @@ class Panel extends BaseController
 {
     public function indexAction()
     {
+        $notificationsMapper = new NotificationsMapper();
         $friendsMapper = new FriendsMapper();
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index', 'user' => $this->getUser()->getId()]);
 
+        // Delete selected notifications
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_notifications')) {
+
+            foreach ($this->getRequest()->getPost('check_notifications') as $notificationId) {
+                $notificationsMapper->deleteNotificationById($notificationId, $this->getUser()->getId());
+            }
+        }
+
+        $this->getView()->set('notifications', $notificationsMapper->getNotificationsSortedByDateType($this->getUser()->getId()));
         $this->getView()->set('openFriendRequests', $friendsMapper->getOpenFriendRequests($this->getUser()->getId()));
     }
 
@@ -786,5 +799,110 @@ class Panel extends BaseController
 
         $this->getView()->set('authProvider', $authProvider)
             ->set('providers', $authProvider->getProviders());
+    }
+
+    public function notificationsAction()
+    {
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+            ->add($this->getTranslator()->trans('menuNotifications'), ['controller' => 'panel', 'action' => 'notifications']);
+
+        $notificationPermissionMapper = new NotificationPermissionMapper();
+
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_notificationPermissions')) {
+            $idsNotificationPermissions = $this->getRequest()->getPost('check_notificationPermissions');
+            $notificationPermissionMapper->deletePermissionsById($idsNotificationPermissions, $this->getUser()->getId());
+        }
+
+        $this->getView()->set('notificationPermissions', $notificationPermissionMapper->getPermissions());
+    }
+
+    public function deletePermissionAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $notificationPermissionMapper = new NotificationPermissionMapper();
+
+            $notificationPermissionMapper->deletePermissionsById($this->getRequest()->getParam('id'), $this->getUser()->getId());
+            $this->addMessage('deleteSuccess');
+        }
+
+        $this->redirect(['action' => 'notifications']);
+    }
+
+    public function changePermissionAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $notificationPermissionMapper = new NotificationPermissionMapper();
+            $notificationsMapper = new NotificationsMapper();
+
+            $value = !($this->getRequest()->getParam('revoke') === 'true');
+            $notificationPermissionMapper->updatePermissionGrantedById([$this->getRequest()->getParam('id')], $this->getUser()->getId(), $value);
+
+            if ($this->getRequest()->getParam('all')) {
+                $notificationPermissionMapper->deleteOtherPermissionsOfModule($this->getRequest()->getParam('id'));
+            }
+
+            if ($value) {
+                $this->addMessage('grantedPermissionSuccess');
+            } else {
+                $this->addMessage('revokePermissionSuccess');
+            }
+        }
+
+        $this->redirect(['action' => 'notifications']);
+    }
+
+    public function deleteAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $id = $this->getRequest()->getParam('id');
+            $userId = $this->getUser()->getId();
+
+            if ($id && $userId) {
+                $notificationsMapper = new NotificationsMapper();
+
+                $notificationsMapper->deleteNotificationById($id, $userId);
+            }
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
+
+    public function revokePermissionAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $moduleKey = $this->getRequest()->getParam('key');
+            $type = $this->getRequest()->getParam('type');
+            $userId = $this->getUser()->getId();
+
+            if ($moduleKey !== null) {
+                $notificationPermissionMapper = new NotificationPermissionMapper();
+                $notificationsMapper = new NotificationsMapper();
+
+                if ($type !== null) {
+                    // Don't show notifications of this specific type again.
+                    $notificationPermissionMapper->updatePermissionGrantedOfModuleType($moduleKey, $type, $userId, false);
+                    $notificationsMapper->deleteNotificationsByType($moduleKey, $type, $userId);
+                    $this->addMessage('revokePermissionSuccessType');
+                } else {
+                    // Don't show any notifications of this module anymore.
+                    // Delete all other more specific permissions.
+                    $notificationPermissionMapper->deletePermissionOfModule($moduleKey, $userId);
+
+                    $notificationPermission = new NotificationPermissionModel();
+                    $notificationPermission->setUserId($userId);
+                    $notificationPermission->setModule($moduleKey);
+                    $notificationPermission->setType('');
+                    $notificationPermission->setGranted(false);
+                    $notificationPermissionMapper->addPermissionForModule($notificationPermission);
+
+                    $notificationsMapper->deleteNotificationsByModule($moduleKey, $userId);
+                    $this->addMessage('revokePermissionSuccess');
+                }
+            }
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 }
