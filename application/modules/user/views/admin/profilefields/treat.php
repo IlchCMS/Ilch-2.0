@@ -14,10 +14,6 @@ $type = [
 <link href="<?=$this->getModuleUrl('static/css/profile-fields.css') ?>" rel="stylesheet">
 <script>
 var indexList = [];
-
-function addIndex(index) {
-    indexList.push(index);
-}
 </script>
 
 <h1>
@@ -120,7 +116,7 @@ function addIndex(index) {
                        placeholder="<?=$this->getTrans('profileFieldName') ?>"
                        value="<?=$this->escape($profileFieldTranslation->getName()) ?>" />
             </div>
-            <script>addIndex(<?=$i ?>)</script>
+            <script>indexList.push(<?=$i ?>)</script>
         </div>
         <?php $i++;
     endforeach; ?>
@@ -166,6 +162,31 @@ $('[name="profileField[type]"]').click(function () {
     }
 });
 
+function isDuplicate(test) {
+    var allElements;
+    var select_id;
+
+    // indexList is undefined after deleting the last element with array.splice().
+    if (indexList == undefined) {
+        indexList = [];
+    }
+
+    for(x = 0; x < indexList.length; x++) {
+        allElements = document.getElementsByName('profileFieldTrans'+indexList[x]+'[locale]')[0];
+        for(y = x+1; y < indexList.length; y++) {
+            select_id = document.getElementsByName('profileFieldTrans'+indexList[y]+'[locale]')[0];
+
+            if (select_id.options && select_id.options[select_id.selectedIndex].value != "" && select_id.options[select_id.selectedIndex].value == allElements.value) {
+                alert('<?=$this->getTrans('translationAlreadyExisting') ?>');
+                deleteTranslation(indexList[y]);
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 function addTranslations() {
     if (isDuplicate()) {
         return;
@@ -197,41 +218,13 @@ function addTranslations() {
                 '</div>';
     var d1 = document.getElementById('addTranslations');
     d1.insertAdjacentHTML('beforeend', html);
-    addIndex(index);
+    indexList.push(index)
     index++;
 }
 
-function isDuplicate() {
-    var allElements;
-    var select_id;
-
-    // indexList is undefined after deleting the last element with array.splice().
-    if (indexList == undefined) {
-        indexList = [];
-    }
-
-    for(x = 0; x < indexList.length; x++) {
-        allElements = document.getElementsByName('profileFieldTrans'+indexList[x]+'[locale]')[0];
-        for(y = x+1; y < indexList.length; y++) {
-            select_id = document.getElementsByName('profileFieldTrans'+indexList[y]+'[locale]')[0];
-            console.log(select_id);
-            console.log(allElements);
-            if(select_id.options[select_id.selectedIndex].value != "" && select_id.options[select_id.selectedIndex].value == allElements.value) {
-                alert('<?=$this->getTrans('translationAlreadyExisting') ?>');
-                deleteTranslation(indexList[y]);
-                // Delete the locale so this one gets discarded.
-                document.getElementsByName('profileFieldTrans'+indexList[y]+'[locale]')[0].value = '';
-                indexList.splice(y,1);
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 function deleteTranslation(a) {
-    document.getElementById('profileFieldTrans'+a).style.display = 'none';
-    document.getElementsByName('profileFieldTrans'+a+'[name]')[0].value = '';    
+    document.getElementById('profileFieldTrans'+a).remove();
+    indexList.splice(indexList.indexOf(a), 1);
 }
 
 $("#symbolDialog").on('shown.bs.modal', function (e) {
