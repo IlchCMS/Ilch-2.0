@@ -75,6 +75,7 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getConfig()->get('away_userNotification')) {
                 $userNotificationsMapper = new UserNotificationsMapper();
                 $awayGroupMapper = new AwayGroupMapper();
+                $userMapper = new UserMapper();
 
                 $notifications = [];
                 $userGroups = $awayGroupMapper->getGroups();

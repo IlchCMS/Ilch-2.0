@@ -93,9 +93,9 @@ class Index extends \Ilch\Controller\Frontend
 
                     foreach ($users as $user) {
                         // Don't notify the user that just created the new entry.
-//                        if ($currentUserId === $user->getId()) {
-//                            continue;
-//                        }
+                        if ($currentUserId === $user->getId()) {
+                            continue;
+                        }
 
                         $notification = new UserNotificationModel();
                         $notification->setUserId($user->getId());
@@ -144,6 +144,7 @@ class Index extends \Ilch\Controller\Frontend
             if ($this->getConfig()->get('away_userNotification')) {
                 $userNotificationsMapper = new UserNotificationsMapper();
                 $awayGroupMapper = new AwayGroupMapper();
+                $userMapper = new UserMapper();
 
                 $notifications = [];
                 $userGroups = $awayGroupMapper->getGroups();

@@ -7,7 +7,7 @@
 return [
     'menuAway' => 'Away list',
     'adminNotification' => 'Notify administrators of new entries',
-    'userNotification' => 'Notify users of new entries',
+    'userNotification' => 'Notify users',
     'notifyGroups' => 'Notify these user groups',
     'menuEntry' => 'Entry',
     'noAway' => 'No entries available',

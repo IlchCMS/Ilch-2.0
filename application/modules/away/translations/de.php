@@ -7,7 +7,7 @@
 return [
     'menuAway' => 'Abwesenheitsliste',
     'adminNotification' => 'Administratoren bei neuen Eintrag benachrichtigen',
-    'userNotification' => 'Benutzergruppen bei neuen Eintrag benachrichtigen',
+    'userNotification' => 'Benutzergruppen benachrichtigen',
     'notifyGroups' => 'Zu benachrichtigende Benutzergruppen',
     'menuEntry' => 'Eintragen',
     'noAway' => 'Keine Einträge vorhanden',
