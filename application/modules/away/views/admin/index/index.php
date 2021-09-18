@@ -50,7 +50,7 @@
                             <?php endif; ?>
                             <?php $startDate = new \Ilch\Date($away->getStart()); ?>
                             <?php $endDate = new \Ilch\Date($away->getEnd()); ?>
-                            <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
+                            <?php if ($away->getStart() >= date('Y-m-d') || $away->getEnd() >= date('Y-m-d')): ?>
                                 <td style="color: #008000;"><?=$startDate->format('d.m.Y', true) ?> - <?=$endDate->format('d.m.Y', true) ?></td>
                             <?php else: ?>
                                 <td style="color: #ff0000;"><?=$startDate->format('d.m.Y', true) ?> - <?=$endDate->format('d.m.Y', true) ?></td>

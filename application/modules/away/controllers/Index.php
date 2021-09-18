@@ -6,9 +6,14 @@
 
 namespace Modules\Away\Controllers;
 
+use Modules\Admin\Mappers\Notifications as AdminNotificationsMapper;
+use Modules\Admin\Models\Notification as AdminNotificationModel;
 use Modules\Away\Mappers\Away as AwayMapper;
+Use Modules\Away\Mappers\Groups as AwayGroupMapper;
 use Modules\Away\Models\Away as AwayModel;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\Notifications as UserNotificationsMapper;
+use Modules\User\Models\Notification as UserNotificationModel;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
@@ -63,6 +68,47 @@ class Index extends \Ilch\Controller\Frontend
                 $awayModel->setShow($post['calendarShow']);
                 $awayMapper->save($awayModel);
 
+                // Notify administrators and users if enabled.
+                if ($this->getConfig()->get('away_adminNotification')) {
+                    $notification = new AdminNotificationModel();
+                    $adminNotificationsMapper = new AdminNotificationsMapper();
+
+                    $notification->setModule('away');
+                    $notification->setMessage($this->getLayout()->getTrans('awayAdminNewEntryMessage'));
+                    $notification->setURL($this->getLayout()->getUrl(['module' => 'away', 'controller' => 'index', 'action' => 'index'], 'admin'));
+                    $notification->setType('awayAdminNewEntry');
+                    $adminNotificationsMapper->addNotification($notification);
+                }
+
+                if ($this->getConfig()->get('away_userNotification')) {
+                    $userNotificationsMapper = new UserNotificationsMapper();
+                    $awayGroupMapper = new AwayGroupMapper();
+
+                    $notifications = [];
+                    $userGroups = $awayGroupMapper->getGroups();
+                    $users = $userMapper->getUserListByGroupId($userGroups, 1);
+                    // Users might be in several groups. Remove duplicates so each user only gets one notification.
+                    $users = array_unique($users, SORT_REGULAR);
+                    $currentUserId = $this->getUser()->getId();
+
+                    foreach ($users as $user) {
+                        // Don't notify the user that just created the new entry.
+//                        if ($currentUserId === $user->getId()) {
+//                            continue;
+//                        }
+
+                        $notification = new UserNotificationModel();
+                        $notification->setUserId($user->getId());
+                        $notification->setModule('away');
+                        $notification->setMessage($this->getLayout()->getTrans('awayNewEntryMessage'));
+                        $notification->setURL($this->getLayout()->getUrl(['module' => 'away', 'controller' => 'index', 'action' => 'index']));
+                        $notification->setType('awayNewEntry');
+                        $notifications[] = $notification;
+                    }
+
+                    $userNotificationsMapper->addNotifications($notifications);
+                }
+
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
             }
@@ -73,7 +119,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $aways = $awayMapper->getAway();
         foreach ($aways as $away) {
-            if (!array_key_exists($away->getUserId(), $userCache)) {
+            if (!\array_key_exists($away->getUserId(), $userCache)) {
                 $userCache[$away->getUserId()] = $userMapper->getUserById($away->getUserId());
             }
         }
@@ -83,7 +129,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
+        $this->getView()->set('errorFields', ($errorFields ?? []));
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('userCache', $userCache);
         $this->getView()->set('aways', $aways);
@@ -94,6 +140,35 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->isSecure()) {
             $awayMapper = new AwayMapper();
             $awayMapper->update($this->getRequest()->getParam('id'));
+
+            if ($this->getConfig()->get('away_userNotification')) {
+                $userNotificationsMapper = new UserNotificationsMapper();
+                $awayGroupMapper = new AwayGroupMapper();
+
+                $notifications = [];
+                $userGroups = $awayGroupMapper->getGroups();
+                $users = $userMapper->getUserListByGroupId($userGroups, 1);
+                // Users might be in several groups. Remove duplicates so each user only gets one notification.
+                $users = array_unique($users, SORT_REGULAR);
+                $currentUserId = $this->getUser()->getId();
+
+                foreach ($users as $user) {
+                    // Don't notify the user that just changed the entry.
+                    if ($currentUserId === $user->getId()) {
+                        continue;
+                    }
+
+                    $notification = new UserNotificationModel();
+                    $notification->setUserId($user->getId());
+                    $notification->setModule('away');
+                    $notification->setMessage($this->getLayout()->getTrans('awayChangedEntryMessage'));
+                    $notification->setURL($this->getLayout()->getUrl(['module' => 'away', 'controller' => 'index', 'action' => 'index']));
+                    $notification->setType('awayChangedEntry');
+                    $notifications[] = $notification;
+                }
+
+                $userNotificationsMapper->addNotifications($notifications);
+            }
 
             $this->addMessage('saveSuccess');
         }

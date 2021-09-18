@@ -41,7 +41,7 @@ if ($this->getUser()) {
                             </td>
                             <?php $startDate = new \Ilch\Date($away->getStart()); ?>
                             <?php $endDate = new \Ilch\Date($away->getEnd()); ?>
-                            <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
+                            <?php if ($away->getStart() >= date('Y-m-d') || $away->getEnd() >= date('Y-m-d')): ?>
                                 <?php $style = 'color: #008000; border-right: 1px solid #dddddd; border-left: 1px solid #dddddd;'?>
                             <?php else: ?>
                                 <?php $style = 'color: #ff0000; border-right: 1px solid #dddddd; border-left: 1px solid #dddddd;'?>
@@ -69,7 +69,7 @@ if ($this->getUser()) {
                             <td>
                                 <?php if ($this->getUser()): ?>
                                     <?php if ($userCheck->isAdmin()): ?>
-                                        <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
+                                        <?php if ($away->getStart() >= date('Y-m-d') || $away->getEnd() >= date('Y-m-d')): ?>
                                             <?php if ($away->getStatus() == 1): ?>
                                                 <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
                                                     <span class="fa fa-check-square-o text-info"></span>
@@ -85,7 +85,7 @@ if ($this->getUser()) {
                             </td>
                             <td>
                                 <?php if ($this->getUser()): ?>
-                                    <?php if ($away->getUserId() == $this->getUser()->getId() OR $userCheck->isAdmin()): ?>
+                                    <?php if ($userCheck->isAdmin() || $away->getUserId() == $this->getUser()->getId()): ?>
                                         <?=$this->getDeleteIcon(['action' => 'del', 'id' => $away->getId()]) ?>
                                     <?php endif; ?>
                                 <?php endif; ?>
@@ -108,7 +108,7 @@ if ($this->getUser()) {
 <?php if ($this->getUser()): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <h1><?=$this->getTrans('menuEntry'); ?></h1>
+        <h1><?=$this->getTrans('menuEntry') ?></h1>
 
         <div class="form-group <?=in_array('reason', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="reason" class="col-lg-2 control-label">
@@ -181,7 +181,7 @@ if ($this->getUser()) {
 <?php endif; ?>
 
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>

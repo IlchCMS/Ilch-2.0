@@ -8,7 +8,7 @@ if ($this->get('awayList')) {
         $e['title'] = $this->escape($awayList->getReason());
         $e['start'] = $awayList->getStart().' 00:00:00';
         $e['end'] = $awayList->getEnd().' 23:59:59';
-        if ($awayList->getStatus() == 0 OR $awayList->getStatus() == 2) {
+        if ($awayList->getStatus() == 0 || $awayList->getStatus() == 2) {
             $e['color'] = '#DF0101';
         } else {
             $e['color'] = '#04B404';

@@ -25,8 +25,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'User can enter when they are away (e.g. on holidays). There is an overview of this and the entries can be mananged in the admincenter.',
             ],
         ],
-        'ilchCore' => '2.1.16',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.44',
+        'phpVersion' => '7.0'
     ];
 
     public function install()
@@ -36,7 +36,10 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_away`;');
+        $this->db()->queryMulti("DROP TABLE `[prefix]_away`;
+            DROP TABLE `[prefix]_away_groups`;
+            DELETE FROM `[prefix]_config` WHERE `key` = 'away_adminNotification';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'away_userNotification';");
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $this->db()->queryMulti("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'away/aways/index/';");
@@ -56,7 +59,13 @@ class Config extends \Ilch\Config\Install
             `status` INT(11) NOT NULL DEFAULT "2",
             `show` INT(11) NOT NULL,
             PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+            
+            CREATE TABLE IF NOT EXISTS `[prefix]_away_groups` (
+            `group_id` INT(11) NOT NULL,
+            INDEX `FK_[prefix]_away_groups_[prefix]_groups` (`group_id`) USING BTREE,
+            CONSTRAINT `FK_[prefix]_away_groups_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             return $installSql.'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("away/aways/index/");';
@@ -77,6 +86,13 @@ class Config extends \Ilch\Config\Install
                 foreach($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'away' AND `locale` = '%s';", $value['description'], $key));
                 }
+
+                // Create new table for user groups to be notified on new entries.
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_away_groups` (
+                        `group_id` INT(11) NOT NULL,
+                        INDEX `FK_[prefix]_away_groups_[prefix]_groups` (`group_id`) USING BTREE,
+                        CONSTRAINT `FK_[prefix]_away_groups_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
         }
     }
 }
