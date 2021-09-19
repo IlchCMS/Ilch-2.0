@@ -379,6 +379,8 @@ return [
     'emailText' => 'Text',
 
     'menuMail' => 'Mail Einstellungen',
+    'smtpModeEnabledDescription' => 'Versende E-Mails über einen SMTP-Server.',
+    'smtpModeDisabledDescription' => 'Versende E-Mails über den lokalen Mailserver. Unnötige SMTP-Einstellungen ausgeblendet.',
     'smtpMode' => 'SMTP-Mode',
     'smtp_server' => 'SMTP-Server-Adresse',
     'smtp_port' => 'SMTP-Port (optional, default = 25)',

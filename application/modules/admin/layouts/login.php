@@ -46,7 +46,8 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                            class="form-control"
                                            name="emailname"
                                            placeholder="<?=$this->getTrans('emailname') ?>"
-                                           value="<?=$this->escape($emailname) ?>">
+                                           value="<?=$this->escape($emailname) ?>"
+                                           autocomplete="username">
                                 </div>
                             </div>
                             <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; } ?>">
@@ -55,7 +56,8 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                     <input type="password"
                                            class="form-control"
                                            name="password"
-                                           placeholder="<?=$this->getTrans('password') ?>">
+                                           placeholder="<?=$this->getTrans('password') ?>"
+                                           autocomplete="current-password">
                                 </div>
                             </div>
                             <div class="form-group">

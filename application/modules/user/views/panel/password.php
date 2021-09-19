@@ -18,6 +18,7 @@
                                id="password"
                                name="password"
                                value=""
+                               autocomplete="new-password"
                                required />
                         <?=$this->getTrans('profilePasswordInfo') ?>
                     </div>
@@ -31,6 +32,7 @@
                                class="form-control"
                                name="password2"
                                value=""
+                               autocomplete="new-password"
                                required />
                     </div>
                 </div>

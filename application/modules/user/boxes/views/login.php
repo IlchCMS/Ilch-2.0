@@ -40,7 +40,8 @@
                     <input type="text"
                            class="form-control"
                            name="login_emailname"
-                           placeholder="<?=$this->getTrans('nameEmail') ?>" />
+                           placeholder="<?=$this->getTrans('nameEmail') ?>"
+                           autocomplete="username" />
                 </div>
             </div>
         </div>
@@ -51,7 +52,8 @@
                     <input type="password"
                            class="form-control"
                            name="login_password"
-                           placeholder="<?=$this->getTrans('password') ?>" />
+                           placeholder="<?=$this->getTrans('password') ?>"
+                           autocomplete="current-password" />
                 </div>
             </div>
         </div>

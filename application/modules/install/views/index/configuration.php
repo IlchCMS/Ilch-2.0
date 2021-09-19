@@ -26,7 +26,8 @@
                class="form-control"
                id="adminName"
                name="adminName"
-               value="<?php if ($this->get('adminName') != '') { echo $this->escape($this->get('adminName')); } ?>" />
+               value="<?php if ($this->get('adminName') != '') { echo $this->escape($this->get('adminName')); } ?>"
+               autocomplete="username" />
         <?php if (!empty($errors['adminName'])): ?>
             <span class="help-inline"><?=$this->getTrans($errors['adminName']) ?></span>
         <?php endif; ?>
@@ -41,7 +42,8 @@
                class="form-control"
                id="adminPassword"
                name="adminPassword"
-               value="<?php if ($this->get('adminPassword') != '') { echo $this->escape($this->get('adminPassword')); } ?>" />
+               value="<?php if ($this->get('adminPassword') != '') { echo $this->escape($this->get('adminPassword')); } ?>" 
+               autocomplete="new-password" />
         <?php if (!empty($errors['adminPassword'])): ?>
             <span class="help-inline"><?=$this->getTrans($errors['adminPassword']) ?></span>
         <?php endif; ?>
@@ -56,7 +58,8 @@
                class="form-control"
                id="adminPassword2"
                name="adminPassword2"
-               value="<?php if ($this->get('adminPassword2') != '') { echo $this->escape($this->get('adminPassword2')); } ?>" />
+               value="<?php if ($this->get('adminPassword2') != '') { echo $this->escape($this->get('adminPassword2')); } ?>"
+               autocomplete="new-password" />
         <?php if (!empty($errors['adminPassword2'])): ?>
             <span class="help-inline"><?=$this->getTrans($errors['adminPassword2']) ?></span>
         <?php endif; ?>
