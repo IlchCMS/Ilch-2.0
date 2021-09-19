@@ -79,11 +79,35 @@ class InsertTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $this->out->generateSql());
     }
 
+    public function testGenerateSqlForValuesMultipleRowsOneColumn()
+    {
+        $this->out->into('Test')
+            ->columns(['super'])
+            ->values(['data', 'data2', 'data3']);
+
+        $expected = 'INSERT INTO `[prefix]_Test` '
+            . '(`super`) VALUES ("data"),("data2"),("data3")';
+
+        self::assertEquals($expected, $this->out->generateSql());
+    }
+
     public function testGenerateSqlForValuesMultipleRowsInvalidCount()
     {
         $this->out->into('Test')
             ->columns(['super', 'next'])
             ->values([['data'], ['data2', 'fieldData2']]);
+
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('count of values does not fit the count of columns');
+
+        $this->out->generateSql();
+    }
+
+    public function testGenerateSqlForValuesMultipleRowsMoreValuesThanColums()
+    {
+        $this->out->into('Test')
+            ->columns(['super'])
+            ->values([['data1', 'fieldData1'], ['data2', 'fieldData2']]);
 
         $this->expectException('RuntimeException');
         $this->expectExceptionMessage('count of values does not fit the count of columns');

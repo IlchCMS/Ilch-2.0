@@ -6,6 +6,9 @@
 
 return [
     'menuAway' => 'Away list',
+    'adminNotification' => 'Notify administrators of new entries',
+    'userNotification' => 'Notify users',
+    'notifyGroups' => 'Notify these user groups',
     'menuEntry' => 'Entry',
     'noAway' => 'No entries available',
     'from' => 'From',
@@ -21,4 +24,10 @@ return [
     'addButton' => 'Entry',
     'calendarShow' => 'Show in the calendar?',
     'unknown' => 'unknown',
+    'awayAdminNewEntry' => 'New entry',
+    'awayAdminNewEntryMessage' => 'New entry waiting for approval.',
+    'awayNewEntry' => 'New entry',
+    'awayNewEntryMessage' => 'New entry in the away list.',
+    'awayChangedEntry' => 'Status of entry changed',
+    'awayChangedEntryMessage' => 'The status of an entry in the away list has changed.',
 ];

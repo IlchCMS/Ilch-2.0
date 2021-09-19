@@ -116,11 +116,13 @@ class Insert extends QueryBuilder
                 }
 
                 foreach($this->values as $value) {
-                    if (!\is_array($value)) {
+                    $rowWithMultipleValues = \is_array($value);
+
+                    if (!$rowWithMultipleValues && $countOfColumns !== 1) {
                         throw new \RuntimeException('no valid values for insert');
                     }
 
-                    if ($countOfColumns !== \count($value)) {
+                    if ($rowWithMultipleValues && ($countOfColumns !== \count($value))) {
                         throw new \RuntimeException('count of values does not fit the count of columns');
                     }
 
@@ -128,7 +130,11 @@ class Insert extends QueryBuilder
                         throw new \RuntimeException('not more than 1000 rows allowed');
                     }
 
-                    $sqlValues[] = '(' . implode(',', array_map($escapeFunc, $value)) . ')';
+                    if ($rowWithMultipleValues) {
+                        $sqlValues[] = '(' . implode(',', array_map($escapeFunc, $value)) . ')';
+                    } else {
+                        $sqlValues[] = '(' . $this->db->escape($value, true) . ')';
+                    }
                 }
             }
         }
@@ -140,10 +146,10 @@ class Insert extends QueryBuilder
         $sql .= implode(',', $sqlFields);
         $sql .= ') VALUES ';
 
-        if (empty($this->columns)) {
-            $sql .= '(' . implode(',', $sqlValues) . ')';
-        } else {
+        if ($this->multipleRows) {
             $sql .= implode(',', $sqlValues);
+        } else {
+            $sql .= '(' . implode(',', $sqlValues) . ')';
         }
 
         return $sql;
