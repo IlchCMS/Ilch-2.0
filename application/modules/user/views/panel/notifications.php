@@ -49,7 +49,7 @@ $index = 0;
                                     <input type="hidden" class="form-control" name="data[<?=$index ?>][key]" value="<?=$notificationPermission->getModule() ?>">
                                     <td><?=$this->getDeleteCheckbox('check_notificationPermissions', $notificationPermission->getId()) ?></td>
                                     <td><?=$this->getDeleteIcon(['action' => 'deletePermission', 'id' => $notificationPermission->getId()]) ?></td>
-                                    <td><a href="<?=$this->getUrl(['action' => 'changePermission', 'id' => $notificationPermission->getId(), 'revoke' => $value, 'all' => ($notificationPermission->getType() === '')], null, true) ?>" title="<?=$this->getTrans($translation) ?>"><i class="<?=$icon ?>"></i></a></td>
+                                    <td><a href="<?=$this->getUrl(['action' => 'changePermission', 'id' => $notificationPermission->getId(), 'revoke' => $value, 'all' => ($notificationPermission->getType() === '') ? 'true' : 'false'], null, true) ?>" title="<?=$this->getTrans($translation) ?>"><i class="<?=$icon ?>"></i></a></td>
                                     <td><?=($notificationPermission->getType() !== '') ? $this->escape($this->getTrans($notificationPermission->getType())) : $this->getTrans('notificationsAllTypes') ?></td>
                                     <td><?=$this->escape($notificationPermission->getModule()) ?></td>
                                 </tr>

@@ -83,6 +83,17 @@ class NotificationPermission extends \Ilch\Mapper
     }
 
     /**
+     * Get permissions by the user id.
+     *
+     * @param int $userId
+     * @return NotificationPermissionModel[]
+     */
+    public function getPermissionsByUserId(int $userId): array
+    {
+        return $this->getPermissionsBy(['user_id' => $userId]);
+    }
+
+    /**
      * Get permissions not granted.
      *
      * @return NotificationPermissionModel[]
@@ -204,16 +215,16 @@ class NotificationPermission extends \Ilch\Mapper
         $permissions = $this->getPermissions();
         $valuesOfRows = [];
 
-        foreach ($permissions as $permission) {
-            foreach ($permissionModels as $permissionModel) {
-                if ($permission->getUserId() === $permissionModel->getUserId() && $permission->getModule() === $permissionModel->getModule() && ($permission->getType() === '' || $permission->getType() === $permissionModel->getType())) {
-                    break;
+        foreach ($permissionModels as $permissionModel) {
+            foreach ($permissions as $permission) {
+                if ($permission->getUserId() === $permissionModel->getUserId() && $permission->getModule() === $permissionModel->getModule() && $permission->getType() === $permissionModel->getType()) {
+                    continue 2;
                 }
+            }
 
-                $row = [$permissionModel->getUserId(), $permissionModel->getModule(), $permissionModel->getType()];
-                if (!\in_array($row, $valuesOfRows, true)) {
-                    $valuesOfRows[] = $row;
-                }
+            $row = [$permissionModel->getUserId(), $permissionModel->getModule(), $permissionModel->getType()];
+            if (!\in_array($row, $valuesOfRows, true)) {
+                $valuesOfRows[] = $row;
             }
         }
 
