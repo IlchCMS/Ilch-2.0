@@ -17,7 +17,7 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'Regeln',
-                'description' => 'Zum Verfassen von Regeln, die auf der Seite angezeigt werden können. Untersützt Paragraphen, bequemes Ändern der Reihenfolge und Leserechte.',
+                'description' => 'Zum Verfassen von Regeln, die auf der Seite angezeigt werden können. Unterstützt Paragraphen, bequemes Ändern der Reihenfolge und Leserechte.',
             ],
             'en_EN' => [
                 'name' => 'Rules',
