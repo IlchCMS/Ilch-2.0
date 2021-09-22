@@ -815,7 +815,7 @@ class Panel extends BaseController
             $notificationPermissionMapper->deletePermissionsById($idsNotificationPermissions, $this->getUser()->getId());
         }
 
-        $this->getView()->set('notificationPermissions', $notificationPermissionMapper->getPermissions());
+        $this->getView()->set('notificationPermissions', $notificationPermissionMapper->getPermissionsByUserId($this->getUser()->getId()));
     }
 
     public function deletePermissionAction()
@@ -823,7 +823,7 @@ class Panel extends BaseController
         if ($this->getRequest()->isSecure()) {
             $notificationPermissionMapper = new NotificationPermissionMapper();
 
-            $notificationPermissionMapper->deletePermissionsById($this->getRequest()->getParam('id'), $this->getUser()->getId());
+            $notificationPermissionMapper->deletePermissionsById([$this->getRequest()->getParam('id')], $this->getUser()->getId());
             $this->addMessage('deleteSuccess');
         }
 

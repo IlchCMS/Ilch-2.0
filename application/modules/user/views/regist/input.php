@@ -31,7 +31,8 @@ $errors = $this->get('errors');
                            class="form-control"
                            id="name"
                            name="name"
-                           value="<?= $this->originalInput('name') ?>" />
+                           value="<?= $this->originalInput('name') ?>"
+                           autocomplete="username" />
                 </div>
             </div>
             <div class="form-group <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
@@ -43,7 +44,8 @@ $errors = $this->get('errors');
                            class="form-control"
                            id="password"
                            name="password"
-                           value="<?= $this->originalInput('password') ?>" />
+                           value="<?= $this->originalInput('password') ?>"
+                           autocomplete="new-password" />
                 </div>
             </div>
             <div class="form-group <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
@@ -55,7 +57,8 @@ $errors = $this->get('errors');
                            class="form-control"
                            id="password2"
                            name="password2"
-                           value="<?= $this->originalInput('password2') ?>" />
+                           value="<?= $this->originalInput('password2') ?>"
+                           autocomplete="new-password" />
                 </div>
             </div>
             <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">

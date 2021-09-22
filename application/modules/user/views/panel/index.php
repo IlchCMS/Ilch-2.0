@@ -44,18 +44,20 @@ $openFriendRequests = $this->get('openFriendRequests');
 
             <?php if (!empty($notifications)): ?>
                 <h1><?=$this->getTrans('notifications') ?></h1>
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped">
-                        <colgroup>
-                            <col class="icon_width">
-                            <col class="icon_width">
-                            <col class="icon_width">
-                            <col class="icon_width">
-                            <col class="col-lg-2">
-                            <col class="col-lg-2">
-                            <col class="col-lg-8">
-                        </colgroup>
-                        <thead>
+                <form class="form-horizontal" method="POST">
+                    <?=$this->getTokenField() ?>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <colgroup>
+                                <col class="icon_width">
+                                <col class="icon_width">
+                                <col class="icon_width">
+                                <col class="icon_width">
+                                <col class="col-lg-2">
+                                <col class="col-lg-2">
+                                <col class="col-lg-8">
+                            </colgroup>
+                            <thead>
                             <tr>
                                 <th><?=$this->getCheckAllCheckbox('check_notifications') ?></th>
                                 <th></th>
@@ -65,26 +67,32 @@ $openFriendRequests = $this->get('openFriendRequests');
                                 <th><?=$this->getTrans('notificationModule') ?></th>
                                 <th><?=$this->getTrans('notificationMessage') ?></th>
                             </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($notifications as $notification): ?>
-                            <?php $date = new \Ilch\Date($notification->getTimestamp()); ?>
-                            <tr>
-                                <td><?=$this->getDeleteCheckbox('check_notifications', $notification->getId()) ?></td>
-                                <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $notification->getId()]) ?></td>
-                                <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermissionAll') ?>"><i class="fas fa-bell-slash text-danger"></i></a></td>
-                                <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule(), 'type' => $notification->getType()], null, true) ?>" title="<?=$this->getTrans('revokePermissionType') ?>"><i class="far fa-bell-slash text-danger"></i></a></td>
-                                <td><?=$date->format('d.m.Y H:i:s', true) ?></td>
-                                <td><a href="<?=$notification->getURL() ?>" target="_blank" rel="noopener" title="<?=$this->escape($notification->getModule()) ?>"><?=$this->escape($notification->getModule()) ?></a></td>
-                                <td><?=$this->escape($notification->getMessage()) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($notifications as $notification): ?>
+                                <?php $date = new \Ilch\Date($notification->getTimestamp()); ?>
+                                <tr>
+                                    <td><?=$this->getDeleteCheckbox('check_notifications', $notification->getId()) ?></td>
+                                    <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $notification->getId()]) ?></td>
+                                    <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermissionAll') ?>"><i class="fas fa-bell-slash text-danger"></i></a></td>
+                                    <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule(), 'type' => $notification->getType()], null, true) ?>" title="<?=$this->getTrans('revokePermissionType') ?>"><i class="far fa-bell-slash text-danger"></i></a></td>
+                                    <td><?=$date->format('d.m.Y H:i:s', true) ?></td>
+                                    <td><a href="<?=$notification->getURL() ?>" target="_blank" rel="noopener" title="<?=$this->escape($notification->getModule()) ?>"><?=$this->escape($notification->getModule()) ?></a></td>
+                                    <td><?=$this->escape($notification->getMessage()) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <?=$this->getListBar(['delete' => 'delete']) ?>
+                </form>
             <?php else: ?>
                 <p><?=$this->getTrans('notificationNoNotificiations') ?></p>
             <?php endif; ?>
         </div>
     </div>
 </div>
+
+<script>
+    var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries')) ?>;
+</script>

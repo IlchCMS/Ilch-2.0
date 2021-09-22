@@ -24,7 +24,8 @@
                     <input type="text"
                            class="form-control"
                            id="login_emailname"
-                           name="login_emailname" />
+                           name="login_emailname"
+                           autocomplete="username" />
                 </div>
             </div>
         </div>
@@ -38,7 +39,8 @@
                     <input type="password"
                            class="form-control"
                            id="login_password"
-                           name="login_password" />
+                           name="login_password"
+                           autocomplete="current-password"/>
                 </div>
             </div>
         </div>

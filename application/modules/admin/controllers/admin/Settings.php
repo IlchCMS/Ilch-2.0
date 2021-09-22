@@ -467,6 +467,8 @@ HTACCESS;
             $this->getConfig()->set('smtp_pass', $this->getRequest()->getPost('smtp_pass'));
             $this->getConfig()->set('emailBlacklist', $this->getRequest()->getPost('emailBlacklist'));
         }
+
+        $this->getView()->set('standardMail', $this->getConfig()->get('standardMail'));
         $this->getView()->set('smtp_mode', $this->getConfig()->get('smtp_mode'));
         $this->getView()->set('smtp_server', $this->getConfig()->get('smtp_server'));
         $this->getView()->set('smtp_port', $this->getConfig()->get('smtp_port'));

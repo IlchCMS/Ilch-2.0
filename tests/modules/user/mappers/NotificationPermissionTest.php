@@ -67,6 +67,36 @@ class NotificationPermissionTest extends DatabaseTestCase
         self::assertEquals('forum', $permissions[1]->getModule());
         self::assertEquals('forumTest2', $permissions[1]->getType());
         self::assertEquals(0, $permissions[1]->getGranted());
+
+        self::assertEquals(3, $permissions[2]->getId());
+        self::assertEquals(2, $permissions[2]->getUserId());
+        self::assertEquals('forum', $permissions[2]->getModule());
+        self::assertEquals('', $permissions[2]->getType());
+        self::assertEquals(1, $permissions[2]->getGranted());
+    }
+
+    /**
+     * Tests getting all permissions.
+     */
+    public function testGetPermissionsByUserId()
+    {
+        $mapper = new NotificationPermissionMapper();
+        $permissions = $mapper->getPermissionsByUserId(1);
+
+        self::assertNotNull($permissions);
+        self::assertCount(2, $permissions);
+
+        self::assertEquals(1, $permissions[0]->getId());
+        self::assertEquals(1, $permissions[0]->getUserId());
+        self::assertEquals('forum', $permissions[0]->getModule());
+        self::assertEquals('forumTest', $permissions[0]->getType());
+        self::assertEquals(1, $permissions[0]->getGranted());
+
+        self::assertEquals(2, $permissions[1]->getId());
+        self::assertEquals(1, $permissions[1]->getUserId());
+        self::assertEquals('forum', $permissions[1]->getModule());
+        self::assertEquals('forumTest2', $permissions[1]->getType());
+        self::assertEquals(0, $permissions[1]->getGranted());
     }
 
     /**
