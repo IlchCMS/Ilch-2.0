@@ -9,7 +9,7 @@ return [
     'title' => 'Name',
     'type' => 'Type',
     'cat' => 'Category',
-    'infoCat' => 'First you must create a category',
+    'infoCat' => 'A category must first be created',
     'forumItemAdd' => 'Add',
     'topics' => 'Topics',
     'totalTopics' => 'Total topics',

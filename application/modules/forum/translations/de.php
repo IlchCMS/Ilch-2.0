@@ -9,7 +9,7 @@ return [
     'title' => 'Name',
     'type' => 'Art',
     'cat' => 'Kategorie',
-    'infoCat' => 'Es muss zuerst eine Kategorie hinzugefügt werden',
+    'infoCat' => 'Es muss zuerst eine Kategorie angelegt werden',
     'forumItemAdd' => 'Hinzufügen',
     'topics' => 'Themen',
     'totalTopics' => 'Themen insgesamt',

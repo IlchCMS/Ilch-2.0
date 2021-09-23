@@ -20,8 +20,8 @@ return [
     'change' => 'change',
     'menuCats' => 'Categories',
     'noCats' => 'No categories available',
-    'categoryInUse' => 'This category cannot be deleted as it is still assigned with rules.',
-    'OneOrMoreCategoriesInUse' => 'One or more categories couldn\'t be deleted as there where still rules assigned.',
-    'showallonstart' => 'Categories opened at startup',
+    'categoryInUse' => 'This category cannot be deleted because rules are still assigned.',
+    'OneOrMoreCategoriesInUse' => 'One or more categories could not be deleted because rules are still assigned.',
+    'showallonstart' => 'Categories open / closed',
     'selectAssignedGroups' => 'Selected groups or empty for all',
 ];
