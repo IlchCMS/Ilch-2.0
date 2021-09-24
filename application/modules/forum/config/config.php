@@ -186,18 +186,15 @@ class Config extends \Ilch\Config\Install
                         Ilch", 0, NOW(), 2);
 
             INSERT INTO `[prefix]_forum_ranks` (`id`, `title`, `posts`) VALUES
-                (1, "Grünschnabel", 0),
-                (2, "Jungspund", 25),
-                (3, "Mitglied", 50),
-                (4, "Eroberer", 75),
-                (5, "Doppel-As", 150),
-                (6, "Tripel-As", 250),
-                (7, "Haudegen", 500),
-                (8, "Routinier", 1000),
-                (9, "König", 2000),
-                (10, "Kaiser", 5000),
-                (11, "Legende", 7000),
-                (12, "Foren Gott", 10000);
+                (1, "Anfänger", 0),
+                (2, "Stammgast", 50),
+                (3, "Forum-Mitglied", 100),
+                (4, "Forum-Elite", 150),
+                (5, "Aufsteigender-Elite", 250),
+                (6, "Forum-Legende", 500),
+                (7, "Historiker", 1500),
+                (8, "Aufsteigender-Historiker", 5000),
+                (9, "Dichter", 10000),
 
             INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
                 ("forum", "topic_subscription_mail", "Neue Beiträge im abonnierten Thema", "<p>Hallo <b>{name}</b>,</p>
@@ -258,18 +255,15 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
                 INSERT INTO `[prefix]_forum_ranks` (`id`, `title`, `posts`) VALUES
-                    (1, "Grünschnabel", 0),
-                    (2, "Jungspund", 25),
-                    (3, "Mitglied", 50),
-                    (4, "Eroberer", 75),
-                    (5, "Doppel-As", 150),
-                    (6, "Tripel-As", 250),
-                    (7, "Haudegen", 500),
-                    (8, "Routinier", 1000),
-                    (9, "König", 2000),
-                    (10, "Kaiser", 5000),
-                    (11, "Legende", 7000),
-                    (12, "Foren Gott", 10000);');
+                (1, "Anfänger", 0),
+                (2, "Stammgast", 50),
+                (3, "Forum-Mitglied", 100),
+                (4, "Forum-Elite", 150),
+                (5, "Aufsteigender-Elite", 250),
+                (6, "Forum-Legende", 500),
+                (7, "Historiker", 1500),
+                (8, "Aufsteigender-Historiker", 5000),
+                (9, "Dichter", 10000);');
             case "1.4":
             case "1.5":
             case "1.6":
