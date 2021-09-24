@@ -194,7 +194,7 @@ class Config extends \Ilch\Config\Install
                 (6, "Forum-Legende", 500),
                 (7, "Historiker", 1500),
                 (8, "Aufsteigender-Historiker", 5000),
-                (9, "Dichter", 10000),
+                (9, "Dichter", 10000);
 
             INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
                 ("forum", "topic_subscription_mail", "Neue Beiträge im abonnierten Thema", "<p>Hallo <b>{name}</b>,</p>
