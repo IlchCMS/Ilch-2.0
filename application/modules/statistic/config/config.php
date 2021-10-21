@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -40,8 +40,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.0.0',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.44',
+        'phpVersion' => '7.0'
     ];
 
     public function install()

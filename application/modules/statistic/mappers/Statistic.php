@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -23,12 +23,12 @@ class Statistic extends \Ilch\Mapper
         $date = new \Ilch\Date();
         $date->modify('-5 minutes');
 
-        $sql = 'SELECT *
-                FROM `[prefix]_visits_online`
-                WHERE `date_last_activity` > "'.$date->format('Y-m-d H:i:s', true).'"
-                AND `user_id` > 0';
+        $select = $this->db()->select(['*'])
+            ->from('visits_online')
+            ->where(['date_last_activity >' => $date->format('Y-m-d H:i:s', true), 'user_id >' => 0]);
+                                   
 
-        $rows = $this->db()->queryArray($sql);
+        $rows = $select->execute()->fetchRows();
 
         $users = [];
         foreach ($rows as $row) {
@@ -51,12 +51,12 @@ class Statistic extends \Ilch\Mapper
         $date = new \Ilch\Date();
         $date->modify('-5 minutes');
 
-        $sql = 'SELECT *
-                FROM `[prefix]_visits_online`
-                WHERE `date_last_activity` > "'.$date->format('Y-m-d H:i:s', true).'"
-                ORDER BY date_last_activity DESC';
+        $select = $this->db()->select(['*'])
+            ->from('visits_online')
+            ->where(['date_last_activity >' => $date->format('Y-m-d H:i:s', true)])
+            ->order(['date_last_activity' => 'DESC']);
 
-        $entryArray = $this->db()->queryArray($sql);
+        $entryArray = $select->execute()->fetchRows();
 
         if (empty($entryArray)) {
             return null;
@@ -396,54 +396,54 @@ class Statistic extends \Ilch\Mapper
         $date = new \Ilch\Date();
         $date->modify('-5 minutes');
 
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_visits_online`
-                WHERE `date_last_activity` > "'.$date->format('Y-m-d H:i:s', true).'"';
+        $select = $this->db()->select('COUNT(*)')
+            ->from('visits_online')
+            ->where(['date_last_activity >' => $date->format('Y-m-d H:i:s', true)]);
 
-        return $this->db()->queryCell($sql);
+        return $select->execute()->fetchCell();
     }
 
     public function getArticlesCount()
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_articles`';
+        $select = $this->db()->select('COUNT(*)')
+            ->from('articles');
 
-        return $this->db()->queryCell($sql);
+        return $select->execute()->fetchCell();
     }
 
     public function getCommentsCount()
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_comments`';
+        $select = $this->db()->select('COUNT(*)')
+            ->from('comments');
 
-        return $this->db()->queryCell($sql);
+        return $select->execute()->fetchCell();
     }
 
     public function getModulesCount()
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_modules`
-                WHERE `system` = 0';
+        $select = $this->db()->select('COUNT(*)')
+            ->from('modules')
+            ->where(['system' => '0']);
 
-        return $this->db()->queryCell($sql);
+        return $select->execute()->fetchCell();
     }
 
     public function getRegistUserCount()
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_users`
-                WHERE `confirmed` = 1';
+        $select = $this->db()->select('COUNT(*)')
+            ->from('users')
+            ->where(['confirmed' => '1']);
 
-        return $this->db()->queryCell($sql);
+        return $select->execute()->fetchCell();
     }
 
     public function getRegistNewUser()
     {
-        $sql = 'SELECT MAX(id)
-                FROM `[prefix]_users`
-                WHERE `confirmed` = 1';
+        $select = $this->db()->select('MAX(`id`)')
+            ->from('users')
+            ->where(['confirmed' => '1', 'locked' => '0']);
 
-        return $this->db()->queryCell($sql);
+        return $select->execute()->fetchCell();
     }
 
     /**
@@ -501,75 +501,107 @@ class Statistic extends \Ilch\Mapper
     /**
      * Get the name and/or version of the operating system from the user agent.
      *
-     * @param  string $name
-     * @param  string $version
+     * @param  string|null $name
+     * @param  string|null $version
      * @return string
      */
     public function getOS($name = null, $version = null)
     {
-        if (!isset($_SERVER['HTTP_USER_AGENT'])) {
-            return '';
-        }
+        if (ISHTTPSPAGE && isset($_SERVER['HTTP_SEC_CH_UA']) && isset($_SERVER['HTTP_SEC_CH_UA_PLATFORM'])) {
+            if ($name != null) {
+                if (!empty($_SERVER['HTTP_SEC_CH_UA_PLATFORM'])) {
+                    $osArray = [
+                        '=Windows=' => 'Windows',
+                        '=Android=' => 'Android',
+                        '=Linux=' => 'Linux',
+                        '=Chrome OS=' => 'Chrome OS',
+                        '=iOS=' => 'iOS',
+                        '=macOS=' => 'Mac OS',
+                        '=Unknown=' => 'Unknown'
+                    ];
 
-        $useragent = $_SERVER['HTTP_USER_AGENT'];
-        $osArray = [];
+                    foreach ($osArray as $regex => $os) {
+                        if (preg_match($regex, $_SERVER['HTTP_SEC_CH_UA_PLATFORM'])) {
+                            return $os;
+                        }
+                    }
+                }
+            } elseif ($version != null) {
+                if (isset($_SERVER['HTTP_SEC_CH_UA_PLATFORM_VERSION']) && !empty($_SERVER['HTTP_SEC_CH_UA_PLATFORM_VERSION'])) {
+                    return $_SERVER['HTTP_SEC_CH_UA_PLATFORM_VERSION'];
+                }
+            }
+        } else {
+            if (!isset($_SERVER['HTTP_USER_AGENT'])) {
+                return '';
+            }
 
-        if ($name != null) {
-            $osArray = [
-                '=Windows NT|Windows Server 2003|Windows XP x64|Windows 98|Windows Phone|Windows 95=' => 'Windows',
-                '=Android=' => 'Android',
-                '=Linux|Ubuntu|X11=' => 'Linux',
-                '=SunOS=' => 'SunOs',
-                '=iPhone=' => 'iPhone',
-                '=iPad=' => 'iPad',
-                '=Mac OS X=' => 'Mac OS X',
-                '=Mac OS=' => 'Mac OS',
-                '=Mac_PowerPC|Macintosh=' => 'Macintosh'
-            ];
-        } elseif ($version != null) {
-            $osArray = [
-                '=Android 10.0=' => '10.0',
-                '=Android 9.0=' => '9.0',
-                '=Android 8.1=' => '8.1',
-                '=Android 8.0=' => '8.0',
-                '=Android 7=' => '7.x',
-                '=Android 6=' => '6.x',
-                '=Android 5=' => '5.x',
-                '=Android 4.4=' => '4.4',
-                '=Android 4.1|Android 4.2|Android 4.3=' => '4.x',
-                '=Android 4.0=' => '4.0',
-                '=Android 3=' => '3.x',
-                '=Android 2.3=' => '2.3',
-                '=Android 2.2=' => '2.2',
-                '=Windows NT 5.1|Windows XP=' => 'XP',
-                '=Windows NT 6.0|Windows Vista=' => 'Vista',
-                '=Windows NT 6.1|Windows 7=' => '7',
-                '=Windows NT 6.2|Windows 8=' => '8',
-                '=Windows NT 6.3|Windows 8.1=' => '8.1',
-                '=Windows NT 10.0|Windows 10=' => '10',
-                '=Windows NT 5.0|Windows 2000=' => '2000',
-                '=Windows NT 5\.2|Windows Server 2003|Windows XP x64=' => 'Server 2003',
-                '=Windows NT 4|WinNT4=' => 'NT',
-                '=Windows Phone OS 7=' => 'Phone 7.x',
-                '=Windows Phone 8=' => 'Phone 8.0',
-                '=Windows Phone 8.1=' => 'Phone 8.1',
-                '=Windows Phone 10=' => '10 Mobile',
-                '=Windows 98=' => '98',
-                '=Windows 95=' => '95',
-                '=Mac OS X 10.8|Mac OS X 10_8=' => '10.8',
-                '=Mac OS X 10.9|Mac OS X 10_9=' => '10.9',
-                '=Mac OS X 10.10|Mac OS X 10_10=' => '10.10',
-                '=Mac OS X 10.11|Mac OS X 10_11=' => '10.11',
-                '=Mac OS X 10.12|Mac OS X 10_12=' => '10.12',
-                '=Mac OS X 10.13|Mac OS X 10_13=' => '10.13',
-                '=Mac OS X 10.14|Mac OS X 10_14=' => '10.14',
-                '=Mac OS X 10.15|Mac OS X 10_15=' => '10.15'
-            ];
-        }
+            $useragent = $_SERVER['HTTP_USER_AGENT'];
+            $osArray = [];
 
-        foreach ($osArray as $regex => $os) {
-            if (preg_match($regex, $useragent)) {
-                return $os;
+            if ($name != null) {
+                $osArray = [
+                    '=Windows NT|Windows Server 2003|Windows XP x64|Windows 98|Windows Phone|Windows 95=' => 'Windows',
+                    '=Android=' => 'Android',
+                    '=Linux|Ubuntu|X11=' => 'Linux',
+                    '=SunOS=' => 'SunOs',
+                    '=iPhone=' => 'iPhone',
+                    '=iPad=' => 'iPad',
+                    '=Mac OS X=' => 'Mac OS X',
+                    '=Mac OS=' => 'Mac OS',
+                    '=Mac_PowerPC|Macintosh=' => 'Macintosh'
+                ];
+            } elseif ($version != null) {
+                $osArray = [
+                    '=Android 12.0=' => '12.0',
+                    '=Android 11.0=' => '11.0',
+                    '=Android 10.0=' => '10.0',
+                    '=Android 9.0=' => '9.0',
+                    '=Android 8.1=' => '8.1',
+                    '=Android 8.0=' => '8.0',
+                    '=Android 7=' => '7.x',
+                    '=Android 6=' => '6.x',
+                    '=Android 5=' => '5.x',
+                    '=Android 4.4=' => '4.4',
+                    '=Android 4.1|Android 4.2|Android 4.3=' => '4.x',
+                    '=Android 4.0=' => '4.0',
+                    '=Android 3=' => '3.x',
+                    '=Android 2.3=' => '2.3',
+                    '=Android 2.2=' => '2.2',
+                    '=Windows NT 5.1|Windows XP=' => 'XP',
+                    '=Windows NT 6.0|Windows Vista=' => 'Vista',
+                    '=Windows NT 6.1|Windows 7=' => '7',
+                    '=Windows NT 6.2|Windows 8=' => '8',
+                    '=Windows NT 6.3|Windows 8.1=' => '8.1',
+                    '=Windows NT 10.0|Windows 10=' => '10',
+                    '=Windows NT 11.0|Windows 11=' => '11',
+                    '=Windows NT 5.0|Windows 2000=' => '2000',
+                    '=Windows NT 5\.2|Windows Server 2003|Windows XP x64=' => 'Server 2003',
+                    '=Windows NT 4|WinNT4=' => 'NT',
+                    '=Windows Phone OS 7=' => 'Phone 7.x',
+                    '=Windows Phone 8=' => 'Phone 8.0',
+                    '=Windows Phone 8.1=' => 'Phone 8.1',
+                    '=Windows Phone 10=' => '10 Mobile',
+                    '=Windows 98=' => '98',
+                    '=Windows 95=' => '95',
+                    '=Mac OS X 10.8|Mac OS X 10_8=' => '10.8',
+                    '=Mac OS X 10.9|Mac OS X 10_9=' => '10.9',
+                    '=Mac OS X 10.10|Mac OS X 10_10=' => '10.10',
+                    '=Mac OS X 10.11|Mac OS X 10_11=' => '10.11',
+                    '=Mac OS X 10.12|Mac OS X 10_12=' => '10.12',
+                    '=Mac OS X 10.13|Mac OS X 10_13=' => '10.13',
+                    '=Mac OS X 10.14|Mac OS X 10_14=' => '10.14',
+                    '=Mac OS X 10.15|Mac OS X 10_15=' => '10.15',
+                    '=Mac OS X 10.17|Mac OS X 10_17=' => '10.17',
+                    '=Mac OS X 11.6|Mac OS X 11_6=' => '11.0',
+                    '=Mac OS X 12.0|Mac OS X 12_0=' => '12.0',
+                ];
+            }
+
+            foreach ($osArray as $regex => $os) {
+                if (preg_match($regex, $useragent)) {
+                    return $os;
+                }
             }
         }
 
@@ -579,102 +611,134 @@ class Statistic extends \Ilch\Mapper
     /**
      * Detect which browser is used.
      *
-     * @param null $version
+     * @param string|null $version
      * @return null|string
      */
     public function getBrowser($version = null)
     {
-        if (!isset($_SERVER['HTTP_USER_AGENT'])) {
-            return '';
-        }
-
-        $useragent = $_SERVER['HTTP_USER_AGENT'];
-
-        if ($version != null) {
-            if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent)) {
-                return ('Firefox');
+        if (ISHTTPSPAGE && isset($_SERVER['HTTP_SEC_CH_UA'])) {
+            $browserArray = [
+                '=Google Chrome\";v\=\"([\.a-zA-Z0-9]*)=' => 'Chrome',
+                '=Microsoft Edge\";v\=\"([\.a-zA-Z0-9]*)=' => 'Edge',
+                '=Opera\";v\=\"([\.a-zA-Z0-9]*)=' => 'Opera',
+                '=Firefox\";v\=\"([\.a-zA-Z0-9]*)=' => 'Firefox',
+                '=Safari\";v\=\"([\.a-zA-Z0-9]*)=' => 'Safari',
+            ];
+            
+            foreach ($browserArray as $regex => $name) {
+                if (preg_match($regex, $_SERVER['HTTP_SEC_CH_UA'], $browser)) {
+                    if ($version != null) {
+                        return $name;
+                    }
+                    return $browser[1];
+                }
             }
-            if (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
-                return 'Internet Explorer';
-            }
-            if (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
-                return 'Internet Explorer';
-            }
-            if (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent)) {
-                return 'Opera';
-            }
-            if (preg_match("=OPR\/([0-9\.]*)=", $useragent)) {
-                return 'Opera';
-            }
-            if (preg_match("=Edge/([0-9\.]*)=", $useragent)) {
-                return 'Edge';
-            }
-            if (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent)) {
-                return 'Vivaldi';
-            }
-            if (preg_match("=Chrome/([0-9\.]*)=", $useragent)) {
-                return 'Chrome';
-            }
-            if (preg_match('=Safari/=', $useragent)) {
-                return 'Safari';
-            }
-            if (strpos($useragent, 'Konqueror') !== false) {
-                return 'Konqueror';
-            }
-            if (preg_match('=Netscape|Navigator=', $useragent)) {
-                return 'Netscape';
-            }
-
-            return '';
-        }
-
-        if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent, $browser)) {
-            return $browser[1];
-        }
-        if (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
-            return $browser[1];
-        }
-        if (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
-            return $browser[1];
-        }
-        if (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent, $browser)) {
-            return $browser[1];
-        }
-        if (preg_match("=OPR\/([0-9\.]*)=", $useragent, $browser)) {
-            $tmp = explode('.', $browser[1]);
-            if (count($tmp) > 2) {
-                $browser[1] = $tmp[0] . '.' . $tmp[1];
-            }
-            return $browser[1];
-        }
-        if (preg_match("=Edge/([0-9\.]*)=", $useragent, $browser)) {
-            $tmp = explode('.', $browser[1]);
-            if (count($tmp) > 2) {
-                $browser[1] = $tmp[0] . '.' . $tmp[1];
-            }
-            return $browser[1];
-        }
-        if (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent, $browser)) {
-            $tmp = explode('.', $browser[1]);
-            if (count($tmp) > 2) {
-                $browser[1] = $tmp[0] . '.' . $tmp[1];
-            }
-            return $browser[1];
-        }
-        if (preg_match("=Chrome/([0-9\.]*)=", $useragent, $browser)) {
-            $tmp = explode('.', $browser[1]);
-            if (count($tmp) > 2) {
-                $browser[1] = $tmp[0] . '.' . $tmp[1];
-            }
-            return $browser[1];
-        }
-        if (preg_match('=Safari/=', $useragent)) {
-            if (preg_match('=Version/([\.0-9]*)=', $useragent, $browser)) {
-                $version = $browser[1];
-            } else {
+        } else {
+            if (!isset($_SERVER['HTTP_USER_AGENT'])) {
                 return '';
             }
-            return $version;
+
+            $useragent = $_SERVER['HTTP_USER_AGENT'];
+
+            if ($version != null) {
+                if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent)) {
+                    return 'Firefox';
+                }
+                if (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
+                    return 'Internet Explorer';
+                }
+                if (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
+                    return 'Internet Explorer';
+                }
+                if (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent)) {
+                    return 'Opera';
+                }
+                if (preg_match("=OPR\/([0-9\.]*)=", $useragent)) {
+                    return 'Opera';
+                }
+                if (preg_match("=Edge/([0-9\.]*)=", $useragent)) {
+                    return 'Edge';
+                }
+                if (preg_match("=Edg/([0-9\.]*)=", $useragent)) {
+                    return 'Edge';
+                }
+                if (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent)) {
+                    return 'Vivaldi';
+                }
+                if (preg_match("=SamsungBrowser\/([0-9\.]*)=", $useragent)) {
+                    return 'Samsung Browser';
+                }
+                if (preg_match("=Chrome/([0-9\.]*)=", $useragent)) {
+                    return 'Chrome';
+                }
+                if (preg_match('=Safari/=', $useragent)) {
+                    return 'Safari';
+                }
+                if (strpos($useragent, 'Konqueror') !== false) {
+                    return 'Konqueror';
+                }
+                if (preg_match('=Netscape|Navigator=', $useragent)) {
+                    return 'Netscape';
+                }
+
+                return '';
+            }
+
+            if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent, $browser)) {
+                return $browser[1];
+            }
+            if (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
+                return $browser[1];
+            }
+            if (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
+                return $browser[1];
+            }
+            if (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent, $browser)) {
+                return $browser[1];
+            }
+            if (preg_match("=OPR\/([0-9\.]*)=", $useragent, $browser)) {
+                $tmp = explode('.', $browser[1]);
+                if (count($tmp) > 2) {
+                    $browser[1] = $tmp[0] . '.' . $tmp[1];
+                }
+                return $browser[1];
+            }
+            if (preg_match("=Edge/([0-9\.]*)=", $useragent, $browser)) {
+                $tmp = explode('.', $browser[1]);
+                if (count($tmp) > 2) {
+                    $browser[1] = $tmp[0] . '.' . $tmp[1];
+                }
+                return $browser[1];
+            }
+            if (preg_match("=Edg/([0-9\.]*)=", $useragent, $browser)) {
+                $tmp = explode('.', $browser[1]);
+                if (count($tmp) > 2) {
+                    $browser[1] = $tmp[0] . '.' . $tmp[1];
+                }
+                return $browser[1];
+            }
+            if (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent, $browser)) {
+                $tmp = explode('.', $browser[1]);
+                if (count($tmp) > 2) {
+                    $browser[1] = $tmp[0] . '.' . $tmp[1];
+                }
+                return $browser[1];
+            }
+            if (preg_match("=Chrome/([0-9\.]*)=", $useragent, $browser)) {
+                $tmp = explode('.', $browser[1]);
+                if (count($tmp) > 2) {
+                    $browser[1] = $tmp[0] . '.' . $tmp[1];
+                }
+                return $browser[1];
+            }
+            if (preg_match('=Safari/=', $useragent)) {
+                if (preg_match('=Version/([\.0-9]*)=', $useragent, $browser)) {
+                    $version = $browser[1];
+                } else {
+                    return '';
+                }
+                return $version;
+            }
         }
 
         return '';
