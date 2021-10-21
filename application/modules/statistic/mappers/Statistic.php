@@ -528,7 +528,7 @@ class Statistic extends \Ilch\Mapper
                 }
             } elseif ($version != null) {
                 if (isset($_SERVER['HTTP_SEC_CH_UA_PLATFORM_VERSION']) && !empty($_SERVER['HTTP_SEC_CH_UA_PLATFORM_VERSION'])) {
-                    return $_SERVER['HTTP_SEC_CH_UA_PLATFORM_VERSION'];
+                    return str_replace('"', '', $_SERVER['HTTP_SEC_CH_UA_PLATFORM_VERSION']);
                 }
             }
         } else {

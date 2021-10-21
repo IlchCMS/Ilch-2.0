@@ -52,6 +52,9 @@ define('REWRITE_BASE', $rewriteBaseParts);
 $protocol = ISHTTPSPAGE ? 'https' : 'http';
 define('BASE_URL', $protocol.'://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 
+//Get Platform-Version from User-Agent Client Hints
+header("Accept-CH: Sec-CH-UA, Sec-CH-UA-Platform-Version");
+
 // register autoloaders
 require ROOT_PATH . '/vendor/autoload.php';
 $loader = new \Ilch\Loader();
