@@ -11,6 +11,7 @@ use Ilch\Router;
 use Ilch\Translator;
 use Modules\Admin\Mappers\LayoutAdvSettings;
 use Modules\Admin\Models\LayoutAdvSettings as LayoutAdvSettingsModel;
+use Modules\Admin\Mappers\Box as BoxMapper;
 
 /**
  * Class Frontend
