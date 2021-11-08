@@ -250,6 +250,7 @@ class Frontend extends Base
      * @param string $id
      * @return object $boxMapper
      * @throws \Ilch\Database\Exception
+     * @since 2.1.42
      */
     public function getSelfBoxById($id)
     {
