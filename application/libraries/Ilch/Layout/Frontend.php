@@ -254,8 +254,15 @@ class Frontend extends Base
      */
     public function getSelfBoxById($id)
     {
+        $config = \Ilch\Registry::get('config');
+        $locale = '';
+
+        if ((bool)$config->get('multilingual_acp') && $this->getTranslator()->getLocale() != $config->get('content_language')) {
+            $locale = $this->getTranslator()->getLocale();
+        }
+
         $boxMapper = new BoxMapper();
-        return $boxMapper->getSelfBoxByIdLocale($id);
+        return $boxMapper->getSelfBoxByIdLocale($id, $locale);
     }
 
     /**
