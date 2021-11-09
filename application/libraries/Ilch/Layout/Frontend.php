@@ -11,6 +11,7 @@ use Ilch\Router;
 use Ilch\Translator;
 use Modules\Admin\Mappers\LayoutAdvSettings;
 use Modules\Admin\Models\LayoutAdvSettings as LayoutAdvSettingsModel;
+use Modules\Admin\Mappers\Box as BoxMapper;
 
 /**
  * Class Frontend
@@ -249,11 +250,19 @@ class Frontend extends Base
      * @param string $id
      * @return object $boxMapper
      * @throws \Ilch\Database\Exception
+     * @since 2.1.42
      */
     public function getSelfBoxById($id)
     {
+        $config = \Ilch\Registry::get('config');
+        $locale = '';
+
+        if ((bool)$config->get('multilingual_acp') && $this->getTranslator()->getLocale() != $config->get('content_language')) {
+            $locale = $this->getTranslator()->getLocale();
+        }
+
         $boxMapper = new BoxMapper();
-        return $boxMapper->getSelfBoxByIdLocale($id);
+        return $boxMapper->getSelfBoxByIdLocale($id, $locale);
     }
 
     /**
