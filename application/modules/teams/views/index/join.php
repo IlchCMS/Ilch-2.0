@@ -192,6 +192,8 @@ if ($this->getUser()) {
                         } else {
                             echo $this->getSaveBar('apply', 'join');
                         }
+                    } else {
+                        echo $this->getSaveBar('apply', 'join');
                     }
                 ?>
             </div>

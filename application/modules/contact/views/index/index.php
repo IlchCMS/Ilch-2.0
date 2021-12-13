@@ -83,6 +83,8 @@
                     } else {
                         echo $this->getSaveBar('addButton', 'Contact');
                     }
+                } else {
+                    echo $this->getSaveBar('addButton', 'Contact');
                 }
             ?>
         </div>
