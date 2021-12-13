@@ -86,6 +86,8 @@ $errors = $this->get('errors');
                         } else {
                             echo $this->getSaveBar('registButton', 'Regist');
                         }
+                    } else {
+                        echo $this->getSaveBar('registButton', 'Regist');
                     }
                 ?>
             </div>
