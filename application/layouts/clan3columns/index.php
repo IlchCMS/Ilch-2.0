@@ -14,12 +14,12 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-main" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
+                            <span class="sr-only"><?=$this->getTrans('togglenavigation') ?></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="/">Navigation</a>
+                        <a class="navbar-brand" href="<?=$this->getUrl() ?>"><?=$this->getTrans('navigation') ?></a>
                     </div>
 
                     <div class="collapse navbar-collapse" id="bs-navbar-collapse-main">
@@ -62,11 +62,11 @@
 
                         <a class="left carousel-control" href="#carousel-generic" role="button" data-slide="prev">
                             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
+                            <span class="sr-only"><?=$this->getTrans('previous') ?></span>
                         </a>
                         <a class="right carousel-control" href="#carousel-generic" role="button" data-slide="next">
                             <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
+                            <span class="sr-only"><?=$this->getTrans('next') ?></span>
                         </a>
                     </div>
 
@@ -129,10 +129,10 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 nav">
                             <ul>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/index.php/contact/index/index">Kontakt</a></li>
-                                <li><a href="/index.php/imprint/index/index">Impressum</a></li>
-                                <li><a href="/index.php/privacy/index/index">Datenschutz</a></li>
+                                <li><a href="<?=$this->getUrl() ?>">Home</a></li>
+                                <li><a href="<?=$this->getUrl(['module'=>'contact', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('contact') ?></a></li>
+                                <li><a href="<?=$this->getUrl(['module'=>'imprint', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('imprint') ?></a></li>
+                                <li><a href="<?=$this->getUrl(['module'=>'privacy', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('privacy') ?></a></li>
                             </ul>
                         </div>
                     </div>
