@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -29,4 +29,6 @@ return [
     'check' => 'Danke. Eintrag wird geprüft.',
     'entriesPerPage' => 'Einträge pro Seite',
     'welcomeMessage' => 'Willkommensnachricht',
+    'reset' => 'Zurücksetzen',
+    'resetall' => 'Alles zurücksetzen',
 ];

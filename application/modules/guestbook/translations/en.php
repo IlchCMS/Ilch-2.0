@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -29,4 +29,6 @@ return [
     'check' => 'Thanks. Entry is checked.',
     'entriesPerPage' => 'Entries per page',
     'welcomeMessage' => 'Welcome message',
+    'reset' => 'Reset',
+    'resetall' => 'Reset all',
 ];
