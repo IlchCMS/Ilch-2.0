@@ -63,6 +63,8 @@
                     } else {
                         echo $this->getSaveBar('addButton', 'Partner');
                     }
+                } else {
+                    echo $this->getSaveBar('addButton', 'Partner');
                 }
             ?>
         </div>

@@ -73,6 +73,8 @@
                     } else {
                         echo $this->getSaveBar('addButton', 'Guestbook');
                     }
+                } else {
+                    echo $this->getSaveBar('addButton', 'Guestbook');
                 }
             ?>
         </div>

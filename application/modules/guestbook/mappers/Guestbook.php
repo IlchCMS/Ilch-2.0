@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -89,5 +89,25 @@ class Guestbook extends \Ilch\Mapper
         return $this->db()->delete('gbook')
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Reset the Vote counts.
+     *
+     * @param null|integer $setfree
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.11.0
+     */
+    public function reset($setfree = null)
+    {
+        if ($setfree == null) {
+            $this->db()->truncate('[prefix]_gbook');
+            return $this->db()->queryMulti('ALTER TABLE `[prefix]_gbook` auto_increment = 1;');
+        } else {
+            return $this->db()->delete('gbook')
+                ->where(['setfree' => $setfree])
+                ->execute();
+        }
     }
 }
