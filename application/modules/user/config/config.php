@@ -554,15 +554,17 @@ class Config extends \Ilch\Config\Install
                     ->execute()
                     ->fetchList();
 
-                $this->db()->delete('users_dialog_hidden')
-                    ->where(['c_id' => $deletedDialogs], 'or')
-                    ->execute();
+                if (!empty($deletedDialogs)) {
+                    $this->db()->delete('users_dialog_hidden')
+                        ->where(['c_id' => $deletedDialogs], 'or')
+                        ->execute();
+                }
 
                 // Add a composite primary key to the users_dialog_hidden table
                 $this->db()->query("ALTER TABLE `[prefix]_users_dialog_hidden` ADD PRIMARY KEY (`c_id`, `user_id`);");
 
                 // Create new tables for the user notifications feature
-                $this->db()->query("CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications` (
+                $this->db()->queryMulti("CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications` (
                     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                     `user_id` INT(11) UNSIGNED NOT NULL,
                     `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
