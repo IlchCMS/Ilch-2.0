@@ -4,30 +4,30 @@
  * @package ilch
  */
 
-namespace Modules\Sample\Config;
+namespace Modules\modulCreator\Config;
 
 class Config extends \Ilch\Config\Install
 {
     public $config = [
-        'key' => 'sample',
+        'key' => 'modulCreator',
         'version' => '1.0.0',
         'icon_small' => '',
-        'author' => '',
+        'author' => 'RTX2070',
         'link' => '',
         // 'isLayout' => true,
         // 'hide_menu' => true,
         'languages' => [
             'de_DE' => [
-                'name' => 'Sample',
-                'description' => '',
+                'name' => 'ModulCreator',
+                'description' => 'Ermöglich auch Module zu erstellen',
             ],
             'en_EN' => [
-                'name' => 'Sample',
-                'description' => '',
+                'name' => 'ModulCreator',
+                'description' => 'Make your own Module',
             ],
         ],
-        'ilchCore' => '2.0.0',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.43',
+        'phpVersion' => '7.4'
     ];
 
     public function install()

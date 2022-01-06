@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Modules\Sample\Controllers;
+namespace Modules\modulCreator\Controllers;
 
 class Index extends \Ilch\Controller\Frontend
 {
