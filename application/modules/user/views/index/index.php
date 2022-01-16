@@ -5,6 +5,7 @@ $profileIconFields = $this->get('profileIconFields');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 $group = $this->get('group');
 $groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape($group->getName()).')' : '';
+$confirmedUserTrue = $this->get('confirmedUserTrue');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
@@ -28,6 +29,7 @@ $groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape
                         <th><?=$this->getTrans('userlistRegist') ?></th>
                         <th><?=$this->getTrans('userDateLastActivity') ?></th>
                         <th><?=$this->getTrans('userlistContact') ?></th>
+                        <th><?=$this->getTrans('userGroups') ?></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -71,6 +73,25 @@ $groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape
                                             }
                                         }
                                     }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+    if ($this->get('confirmedUserTrue') != ''):
+        foreach ($this->get('confirmedUserTrue') as $user):
+            $groups = '';
+
+            foreach ($user->getGroups() as $group) {
+                if ($groups != '') {
+                    $groups .= ', ';
+                }
+
+                $groups .= $group->getName();
+            }
+
+            if ($groups === '') {
+                $groups = $this->getTrans('noGroupsAssigned');
+            } endforeach; endif;
                                     ?>
                                 </td>
                             </tr>
