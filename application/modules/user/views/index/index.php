@@ -92,6 +92,7 @@ $confirmedUserTrue = $this->get('confirmedUserTrue');
             if ($groups === '') {
                 $groups = $this->getTrans('noGroupsAssigned');
             } endforeach; endif;
+            $this->escape($groups)
                                     ?>
                                 </td>
                             </tr>
