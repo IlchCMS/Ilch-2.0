@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -45,7 +45,7 @@ class Date extends \DateTime
      * @param string              $time     A string which represents the current time.
      * @param string|\DateTimeZone $timezone The locale to set the timezone.
      */
-    public function __construct($time = 'now', $timezone = 'UTC')
+    public function __construct(string $time = 'now', $timezone = 'UTC')
     {
         if (Registry::has('config')) {
             $timezoneString = Registry::get('config')->get('timezone');
@@ -71,7 +71,7 @@ class Date extends \DateTime
      * @param  boolean $localTimezone
      * @return string  A formatted date string.
      */
-    public function toDb($localTimezone = false)
+    public function toDb(bool $localTimezone = false): string
     {
         return $this->ownFormat($this->dbFormat, $localTimezone);
     }
@@ -81,7 +81,7 @@ class Date extends \DateTime
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->format($this->defaultFormat);
     }
@@ -91,11 +91,11 @@ class Date extends \DateTime
      *
      * If no format is given, the default format will be used.
      *
-     * @param  string  $format See http://www.php.net/manual/en/function.date.php
+     * @param  string|null  $format See http://www.php.net/manual/en/function.date.php
      * @param  boolean $local
      * @return string
      */
-    public function format($format = null, $local = false)
+    public function format($format = null, bool $local = false): string
     {
         if ($format === null) {
             $format = $this->defaultFormat;
@@ -111,7 +111,7 @@ class Date extends \DateTime
      * @param  boolean $localTimezone
      * @return string
      */
-    protected function ownFormat($format, $localTimezone)
+    protected function ownFormat(string $format, bool $localTimezone): string
     {
         if ($localTimezone) {
             $this->setTimezone($this->timeZoneLocal);
@@ -128,19 +128,23 @@ class Date extends \DateTime
      * Sets the db format.
      *
      * @param string $format
+     * @return Date
      */
-    public function setDbFormat($format)
+    public function setDbFormat(string $format)
     {
         $this->dbFormat = $format;
+        return $this;
     }
 
     /**
      * Sets the default format.
      *
      * @param string $format
+     * @return Date
      */
-    public function setDefaultFormat($format)
+    public function setDefaultFormat(string $format)
     {
         $this->defaultFormat = $format;
+        return $this;
     }
 }
