@@ -59,7 +59,8 @@ class Config extends \Ilch\Config\Install
             ->set('usergallery_allowed', '1')
             ->set('usergallery_uploadpath', 'application/modules/user/static/upload/gallery/')
             ->set('usergallery_filetypes', 'jpg jpeg png gif')
-            ->set('userdeletetime', '5');
+            ->set('userdeletetime', '5')
+            ->set('userGroupList_allowed', '0');
 
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
@@ -591,6 +592,8 @@ class Config extends \Ilch\Config\Install
                     CONSTRAINT `FK_[prefix]_users_notifications_permission_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE,
                     CONSTRAINT `FK_[prefix]_users_notifications_permission_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('userGroupList_allowed','0');
                 break;
         }
     }
