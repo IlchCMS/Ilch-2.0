@@ -840,7 +840,7 @@ class Config extends \Ilch\Config\Install
                     ->fetchList();
 
                 $orphanedRows = array_diff($idsArticlesContent, $idsArticles);
-                $delete ->from('articles_content')
+                $this->db()->delete->from('articles_content')
                     ->where(['article_id' => $orphanedRows])
                     ->execute();
 
