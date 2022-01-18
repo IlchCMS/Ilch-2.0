@@ -5,33 +5,57 @@ $profileIconFields = $this->get('profileIconFields');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 $group = $this->get('group');
 $groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape($group->getName()).')' : '';
+$userGroupList_allowed = $this->get('userGroupList_allowed');
+
+
 ?>
 
-<link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
+    <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
-<h1><?=$this->getTrans('menuUserList').$groupText ?></h1>
+    <h1><?=$this->getTrans('menuUserList').$groupText ?></h1>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
-<div class="userlist">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                    <colgroup>
-                        <col class="col-lg-3" />
-                        <col class="col-lg-3" />
-                        <col class="col-lg-3" />
-                        <col class="col-lg-3" />
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th><?=$this->getTrans('userlistName') ?></th>
-                        <th><?=$this->getTrans('userlistRegist') ?></th>
-                        <th><?=$this->getTrans('userDateLastActivity') ?></th>
-                        <th><?=$this->getTrans('userlistContact') ?></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($this->get('userList') as $userlist): ?>
+    <div class="userlist">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <colgroup>
+                            <col class="col-lg-3" />
+                            <col class="col-lg-3" />
+                            <col class="col-lg-3" />
+                            <col class="col-lg-3" />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th><?=$this->getTrans('userlistName') ?></th>
+                            <th><?=$this->getTrans('userlistRegist') ?></th>
+                            <th><?=$this->getTrans('userDateLastActivity') ?></th>
+                            <th><?=$this->getTrans('userlistContact') ?></th>
+
+                            <!-- Tabellenkopf -->
+                            <?php if ($userGroupList_allowed == 1): ?>
+                            <th><?=$this->getTrans('userGroups') ?></th>
+                            <?php endif; ?>
+                            <!-- Tabellenkopf Ende -->
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($this->get('userList') as $userlist):
+
+                            // Gruppenliste laden um mit Komma trennen
+                            $groups = '';
+
+                            foreach ($userlist->getGroups() as $group) {
+                                if ($groups != '') {
+                                    $groups .= ', ';
+                                }
+
+                                $groups .= $group->getName();
+                            }?>
+                            <!-- Laden Ende -->
+
+
                             <?php $ilchDate = new Ilch\Date($userlist->getDateCreated()); ?>
                             <?php $ilchLastDate = (!empty($userlist->getDateLastActivity())) ? new Ilch\Date($userlist->getDateLastActivity()) : ''; ?>
                             <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($userlist->getId()); ?>
@@ -73,12 +97,21 @@ $groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape
                                     }
                                     ?>
                                 </td>
+                                <!-- Neue Spalte -->
+                                <?php
+                                if($userGroupList_allowed == True):
+                                ?>
+                                <td>
+                                    <?=$this->escape($groups) ?>
+                                </td>
+                                <?php endif; ?>
+                                <!-- Spalte Ende -->
                             </tr>
                         <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
