@@ -28,11 +28,14 @@ class Index extends \Ilch\Controller\Frontend
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $confirmedUserTrue = $userMapper->getUserList(['confirmed' => 1], $pagination);
+        $userGroupList_allowed = $this->getConfig()->get('userGroupList_allowed');
+
 
         $groupId = $this->getRequest()->getParam('groupid');
         if ($groupId) {
             $groupMapper = new GroupMapper();
+
+
             $userlist = $userMapper->getUserListByGroupId($groupId, 1, $pagination);
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('Gruppe'), ['action' => 'index', 'groupid' => $groupId]);
@@ -49,7 +52,9 @@ class Index extends \Ilch\Controller\Frontend
             ->set('profileIconFields', $profileIconFields)
             ->set('profileFieldsTranslation', $profileFieldsTranslation)
             ->set('pagination', $pagination)
-            ->set('confirmedUserTrue', $confirmedUserTrue);
+            ->set('userGroupList_allowed', $userGroupList_allowed);
+
+
     }    
 }
 

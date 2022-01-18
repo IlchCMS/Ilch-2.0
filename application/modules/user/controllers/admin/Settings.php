@@ -56,6 +56,17 @@ class Settings extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
+
+
+            if($this->getRequest()->getPost('userGroupList_allowed') == 1){
+                $this->getConfig()->set('userGroupList_allowed', 1);
+                $this->addMessage('saveSuccess');
+            }else {
+                $this->getConfig()->set('userGroupList_allowed', 0);
+            }
+
+
+
             // Don't allow adding forbidden file extensions.
             $forbiddenExtensionFound = false;
             $extensionLists = ['avatar_filetypes', 'usergallery_filetypes'];
@@ -107,6 +118,7 @@ class Settings extends \Ilch\Controller\Admin
             ->set('usergallery_filetypes', $this->getConfig()->get('usergallery_filetypes'))
             ->set('regist_rules', $this->getConfig()->get('regist_rules'))
             ->set('picturesPerPage', $this->getConfig()->get('user_picturesPerPage'))
-            ->set('delete_time', $this->getConfig()->get('userdeletetime'));
+            ->set('delete_time', $this->getConfig()->get('userdeletetime'))
+            ->set('userGroupList_allowed', $this->getConfig()->get('userGroupList_allowed'));
     }
 }

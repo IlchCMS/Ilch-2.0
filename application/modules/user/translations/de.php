@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -29,6 +29,8 @@ return [
     'filter' => 'Tabellenfilter',
     'search' => 'Suchen',
     'userGroups' => 'Benutzergruppen',
+    'UserGroupsList' => 'Mitgliederliste',
+    'userGroupsAllowed' => 'Benutzergruppen in Liste anzeigen ?',
     'save' => 'Speichern',
     'success' => 'Erfolgreich gespeichert',
     'notConfirmedYet' => 'Noch nicht bestätigt',
@@ -314,8 +316,6 @@ return [
     'translationAlreadyExisting' => 'Es kann nur eine Übersetzung pro Sprache angelegt werden.',
     'pleaseSelect' => 'Bitte auswählen',
     'profileFieldHidden' => 'Feld vom Administrator ausgeblendet.',
-    'chooseIcon' => 'Wählen Sie ein Symbol',
-    'noIcon' => 'Kein Symbol',
 
     'picturesPerPage' => 'Bilder pro Seite',
 
@@ -360,24 +360,4 @@ return [
     'approveFriendRequestSuccess' => 'Freundschaftsanfrage erfolgreich akzeptiert.',
     'approveFriendRequestFail' => 'Freundschaftsanfrage akzeptieren fehlgeschlagen.',
     'declineFriendRequest' => 'Freundschaftsanfrage ablehnen',
-
-    'menuNotifications' => 'Benachrichtigungen',
-    'settingsNotifications' => 'Benachrichtigungen',
-    'settingsNotificationsDesc' => 'Hier können Sie festlegen, welche Benachrichtigung angezeigt werden.',
-    'settingsNotificationPermissions' => 'Rechte',
-    'notifications' => 'Benachrichtigungen',
-    'notificationDate' => 'Datum',
-    'notificationModule' => 'Modul',
-    'notificationMessage' => 'Nachricht',
-    'notificationType' => 'Art',
-    'notificationNoNotificiations' => 'Keine Benachrichtigungen vorhanden.',
-    'revokePermission' => 'Erlaubnis für Benachrichtigungen entziehen.',
-    'revokePermissionType' => 'Keine weiteren Benachrichtigungen dieses Typs anzeigen.',
-    'revokePermissionAll' => 'Keine weiteren Benachrichtigungen dieses Moduls anzeigen.',
-    'grantPermission' => 'Erlaubnis für Benachrichtigungen geben.',
-    'revokePermissionSuccess' => 'Die Erlaubnis Benachrichtigungen anzuzeigen wurde erfolgreich widerrufen.',
-    'revokePermissionSuccessType' => 'Die Erlaubnis Benachrichtigungen dieses Typs anzuzeigen wurde erfolgreich widerrufen.',
-    'grantedPermissionSuccess' => 'Die Erlaubnis Benachrichtigungen anzuzeigen wurde erfolgreich gegeben.',
-    'noNotificationPermissions' => 'Keine Einträge vorhanden.',
-    'notificationsAllTypes' => 'alle',
 ];
