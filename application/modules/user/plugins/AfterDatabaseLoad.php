@@ -74,14 +74,14 @@ class AfterDatabaseLoad
 
         if (empty($_SERVER['HTTP_REFERER'])) {
             $referer = '';
-        }  else {
+        } else {
             $referer = $_SERVER['HTTP_REFERER'];
         }
 
         if (empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $lang = '';
         } else {
-            $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
+            $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
         }
 
         $request = $pluginData['request'];

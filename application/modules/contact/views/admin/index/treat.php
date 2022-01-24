@@ -18,7 +18,7 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getName()); } else { echo $this->escape($this->originalInput('name')); } ?>" />
+                   value="<?=($this->get('receiver') != '') ? $this->escape($this->get('receiver')->getName()) : $this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
@@ -30,14 +30,8 @@
                    class="form-control"
                    id="email"
                    name="email"
-                   value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getEmail()); } else { echo $this->escape($this->originalInput('email')); } ?>" />
+                   value="<?($this->get('receiver') != '') ? $this->escape($this->get('receiver')->getEmail()) : $this->escape($this->originalInput('email')) ?>" />
         </div>
     </div>
-    <?php
-    if ($this->get('receiver') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?=($this->get('receiver') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>

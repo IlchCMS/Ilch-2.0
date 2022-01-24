@@ -51,7 +51,7 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql()
     {
-        $installSql = 
+        $installSql =
             'CREATE TABLE IF NOT EXISTS `[prefix]_away` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `user_id` INT(11) NOT NULL,
@@ -84,11 +84,12 @@ class Config extends \Ilch\Config\Install
             case "1.1":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_away` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                // no break
             case "1.2.0":
             case "1.3.0":
             case "1.4.0":
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'away' AND `locale` = '%s';", $value['description'], $key));
                 }
 

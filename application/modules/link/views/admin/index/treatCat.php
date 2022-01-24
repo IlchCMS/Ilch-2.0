@@ -19,7 +19,7 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?php if ($this->get('category') != '') { echo $this->escape($this->get('category')->getName()); } else { echo $this->escape($this->get('post')['name']); } ?>" />
+                   value="<?=($this->get('category') != '') ? $this->escape($this->get('category')->getName()) : $this->escape($this->get('post')['name']) ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -31,14 +31,8 @@
                       id="desc"
                       name="desc"
                       cols="45"
-                      rows="3"><?php if ($this->get('category') != '') { echo $this->escape($this->get('category')->getDesc()); } else { echo $this->escape($this->get('post')['desc']); } ?></textarea>
+                      rows="3"><?=($this->get('category') != '') ? $this->escape($this->get('category')->getDesc()) : $this->escape($this->get('post')['desc']) ?></textarea>
         </div>
     </div>
-    <?php
-    if ($this->get('category') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?=($this->get('category') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>

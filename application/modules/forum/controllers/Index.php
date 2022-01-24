@@ -59,7 +59,7 @@ class Index extends \Ilch\Controller\Frontend
         foreach ($usersOnline as $user) {
             foreach ($groupRankingMapper->getUserGroupsSortedByRank() as $groupRank) {
                 $groupRankId = $groupRank->getId();
-                foreach($user->getGroups() as $group) {
+                foreach ($user->getGroups() as $group) {
                     $groupId = $group->getId();
                     if ($groupRankId == $groupId) {
                         $onlineUsersHighestRankedGroup[$user->getId()] = $groupId;

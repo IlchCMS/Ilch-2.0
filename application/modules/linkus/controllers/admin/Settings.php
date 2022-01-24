@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Linkus\Controllers\Admin;
+
 use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
@@ -26,14 +27,13 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuLinkus',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuLinkus'), ['controller' => 'index', 'action' => 'index'])

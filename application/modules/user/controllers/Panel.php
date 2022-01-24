@@ -45,7 +45,6 @@ class Panel extends BaseController
 
         // Delete selected notifications
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_notifications')) {
-
             foreach ($this->getRequest()->getPost('check_notifications') as $notificationId) {
                 $notificationsMapper->deleteNotificationById($notificationId, $this->getUser()->getId());
             }
@@ -706,7 +705,7 @@ class Panel extends BaseController
         }
     }
 
-    public function treatGalleryAction() 
+    public function treatGalleryAction()
     {
         $imageMapper = new GalleryImageMapper();
         $pagination = new \Ilch\Pagination();
@@ -732,7 +731,7 @@ class Panel extends BaseController
         }
 
         if ($this->getRequest()->getPost()) {
-            foreach ($this->getRequest()->getPost('check_image') as $imageId ) {
+            foreach ($this->getRequest()->getPost('check_image') as $imageId) {
                 $catId = $this->getRequest()->getParam('id');
 
                 $model = new GalleryImageModel();
@@ -750,7 +749,7 @@ class Panel extends BaseController
             ->set('galleryTitle', $gallery->getTitle());
     }
 
-    public function treatGalleryImageAction() 
+    public function treatGalleryImageAction()
     {
         $imageMapper = new GalleryImageMapper();
         $galleryMapper = new GalleryMapper();

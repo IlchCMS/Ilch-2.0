@@ -48,8 +48,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuRules',
             $items
         );
@@ -67,7 +66,6 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getPost('action') == 'delete') {
                 $categoryInUse = false;
                 foreach ($this->getRequest()->getPost('check_entries') as $ruleId) {
-
                     if ($ruleMapper->getRulesItemsByParent($ruleId) == '') {
                         $ruleMapper->delete($ruleId);
                     } else {

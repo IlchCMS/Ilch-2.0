@@ -77,7 +77,7 @@ class Shownewposts extends \Ilch\Controller\Frontend
                 if ($adminAccess == true || is_in_array($groupIds, explode(',', $forum->getReadAccess()))) {
                     if (!\in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))) {
                         $lastRead = $lastPost->getRead();
-                        if (\in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
+                        if (\in_array($this->getUser()->getId(), explode(',', $lastRead)) == false) {
                             $postModel->setId($lastPost->getId());
                             $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
                             $postMapper->saveRead($postModel);

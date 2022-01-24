@@ -27,7 +27,7 @@
                     <?php endif; ?> />
                 <label for="jobs-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
                 <input type="radio" class="flipswitch-input" id="jobs-no" name="show" value="0"
-                    <?php if ($this->get('jobs') != '' AND $this->get('jobs')->getShow() == 0): ?>
+                    <?php if ($this->get('jobs') != '' and $this->get('jobs')->getShow() == 0): ?>
                         checked="checked"
                     <?php endif; ?> />
                 <label for="jobs-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
@@ -44,7 +44,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getTitle()); } else { echo $this->escape($this->get('post')['title']); } ?>" />
+                   value="<?=($this->get('jobs') != '') ? $this->escape($this->get('jobs')->getTitle()) : echo $this->escape($this->get('post')['title']) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -56,7 +56,7 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getText()); } else { echo $this->escape($this->get('post')['text']); } ?></textarea>
+                      rows="5"><?=($this->get('jobs') != '') ? $this->escape($this->get('jobs')->getText()) : $this->escape($this->get('post')['text']) ?></textarea>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
@@ -68,7 +68,7 @@
                    class="form-control"
                    id="email"
                    name="email"
-                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getEmail()); } else { echo $this->escape($this->get('post')['email']); } ?>" />
+                   value="<?=($this->get('jobs') != '') ? $this->escape($this->get('jobs')->getEmail()) : $this->escape($this->get('post')['email']) ?>" />
         </div>
     </div>
     <?php

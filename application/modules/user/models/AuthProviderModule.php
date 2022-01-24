@@ -17,7 +17,6 @@ class AuthProviderModule extends \Ilch\Model
 
     public function __construct()
     {
-
     }
 
     /**

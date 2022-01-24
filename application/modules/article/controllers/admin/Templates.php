@@ -41,8 +41,7 @@ class Templates extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuArticle',
             $items
         );

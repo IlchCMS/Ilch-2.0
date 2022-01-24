@@ -74,7 +74,7 @@
             foreach ($keywordsListArray as $keyword) {
                 $keywordsList[] = '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => urlencode($keyword)]).'">'.$this->escape($keyword).'</a>';
             }
-            echo implode(', ',$keywordsList); ?>
+            echo implode(', ', $keywordsList); ?>
         <?php endif; ?>
     </div>
 

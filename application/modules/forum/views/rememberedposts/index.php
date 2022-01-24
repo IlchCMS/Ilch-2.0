@@ -28,7 +28,7 @@ $rememberedPosts = $this->get('rememberedPosts');
                 </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($rememberedPosts as $post): ?>
+                    <?php foreach ($rememberedPosts as $post): ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_rememberedPosts', $post->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $post->getId()]) ?></td>

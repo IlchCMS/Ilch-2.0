@@ -1,12 +1,7 @@
 <link href="<?=$this->getModuleUrl('static/css/teams.css') ?>" rel="stylesheet">
 
 <h1>
-    <?php if ($this->get('team') != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
+    <?=($this->get('team') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa fa-info"></i>
     </a>
@@ -67,7 +62,8 @@
                     multiple>
                 <?php foreach ($this->get('userList') as $userList): ?>
                     <option value="<?=$userList->getId() ?>"
-                        <?php if ($this->get('team') != '') {
+                        <?php
+                        if ($this->get('team') != '') {
                             $leaderIds = explode(',', $this->get('team')->getLeader());
                             foreach ($leaderIds as $leaderId) {
                                 if ($userList->getId() == $leaderId) {

@@ -24,8 +24,7 @@
                     $groupUsers = $this->get('groupUsersList');
 
                     foreach ($this->get('groupList') as $group) {
-                        $assignedUsers = $groupUsers[$group->getId()];
-                        ?>
+                        $assignedUsers = $groupUsers[$group->getId()]; ?>
                         <tr>
                             <td>
                                 <input type="checkbox" name="check_groups[]" value="<?=$group->getId() ?>" />

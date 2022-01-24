@@ -9,7 +9,7 @@ namespace Modules\Away\Controllers;
 use Modules\Admin\Mappers\Notifications as AdminNotificationsMapper;
 use Modules\Admin\Models\Notification as AdminNotificationModel;
 use Modules\Away\Mappers\Away as AwayMapper;
-Use Modules\Away\Mappers\Groups as AwayGroupMapper;
+use Modules\Away\Mappers\Groups as AwayGroupMapper;
 use Modules\Away\Models\Away as AwayModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Notifications as UserNotificationsMapper;

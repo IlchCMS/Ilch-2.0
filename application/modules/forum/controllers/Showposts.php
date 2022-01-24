@@ -27,7 +27,7 @@ use Ilch\Validation;
 
 class Showposts extends \Ilch\Controller\Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $postMapper = new PostMapper();
         $topicMapper = new TopicMapper();
@@ -101,7 +101,7 @@ class Showposts extends \Ilch\Controller\Frontend
             $lastPost = $topicMapper->getLastPostByTopicId($topicId);
 
             $lastRead = $lastPost->getRead();
-            if (\in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
+            if (\in_array($this->getUser()->getId(), explode(',', $lastRead)) == false) {
                 $postModel->setId($lastPost->getId());
                 $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
                 $postMapper->saveRead($postModel);
@@ -114,7 +114,7 @@ class Showposts extends \Ilch\Controller\Frontend
             }
 
             $rememberedPosts = $rememberMapper->getRememberedPostsByTopicId($topicId, $userId);
-            foreach($rememberedPosts as $rememberedPost) {
+            foreach ($rememberedPosts as $rememberedPost) {
                 $rememberedPostIds[] = $rememberedPost->getPostId();
             }
         }
@@ -136,7 +136,7 @@ class Showposts extends \Ilch\Controller\Frontend
 
         $reportedPosts = $reportsMapper->getReports();
         $reportedPostsIds = [];
-        foreach($reportedPosts as $reportedPost) {
+        foreach ($reportedPosts as $reportedPost) {
             $reportedPostsIds[] = $reportedPost->getPostId();
         }
 
@@ -302,7 +302,7 @@ class Showposts extends \Ilch\Controller\Frontend
 
         $reportedPosts = $reportsMapper->getReports();
         $reportedPostsIds = [];
-        foreach($reportedPosts as $reportedPost) {
+        foreach ($reportedPosts as $reportedPost) {
             $reportedPostsIds[] = $reportedPost->getPostId();
         }
 
@@ -341,7 +341,7 @@ class Showposts extends \Ilch\Controller\Frontend
                         foreach ($forumAccessList['entries'] as $groupId => $accessLevel) {
                             // Access level 2 means right to edit in backend or in other words admin rights for
                             // that module.
-                            If ($accessLevel == 2) {
+                            if ($accessLevel == 2) {
                                 $groupIds[] = $groupId;
                             }
                         }
@@ -352,7 +352,7 @@ class Showposts extends \Ilch\Controller\Frontend
                         $users = array_merge([], ...$users);
 
                         $receivedMail = [];
-                        foreach($users as $user) {
+                        foreach ($users as $user) {
                             if (empty($user)) {
                                 continue;
                             }

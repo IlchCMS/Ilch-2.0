@@ -42,8 +42,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuPartner',
             $items
         );
@@ -143,7 +142,7 @@ class Index extends \Ilch\Controller\Admin
         }
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $partnerMapper = new PartnerMapper();
 

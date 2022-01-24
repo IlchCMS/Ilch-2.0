@@ -28,8 +28,7 @@ class Receiver extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuNewsletter',
             $items
         );

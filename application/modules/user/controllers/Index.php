@@ -53,9 +53,5 @@ class Index extends \Ilch\Controller\Frontend
             ->set('profileFieldsTranslation', $profileFieldsTranslation)
             ->set('pagination', $pagination)
             ->set('userGroupList_allowed', $userGroupList_allowed);
-
-
-    }    
+    }
 }
-
-

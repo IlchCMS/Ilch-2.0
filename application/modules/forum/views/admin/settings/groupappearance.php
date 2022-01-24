@@ -21,10 +21,10 @@ $appearances = $this->get('appearances');
             </tr>
             </thead>
             <tbody>
-            <?php foreach($this->get('groupList') as $group) : ?>
-                <?php if ($group->getId() == 3)  {
-                    continue;
-                } ?>
+            <?php foreach ($this->get('groupList') as $group) : ?>
+                <?php if ($group->getId() == 3) {
+    continue;
+} ?>
                 <tr>
                     <td>
                         <input type="checkbox" id="active<?=$group->getId() ?>" name="appearances[<?=$group->getId() ?>][active]" <?=(isset($appearances[$group->getId()]['active'])) ? 'checked' : '' ?>>

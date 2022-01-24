@@ -593,9 +593,8 @@ class Config extends \Ilch\Config\Install
                     CONSTRAINT `FK_[prefix]_users_notifications_permission_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->set('userGroupList_allowed','0');
+                $databaseConfig->set('userGroupList_allowed', '0');
                 break;
         }
     }
 }
-

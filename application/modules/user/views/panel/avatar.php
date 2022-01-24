@@ -1,4 +1,4 @@
-<?php 
+<?php
 $profil = $this->get('profil');
 $settingMapper = $this->get('settingMapper');
 ?>

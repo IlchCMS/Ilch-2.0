@@ -11,7 +11,7 @@ use Modules\User\Mappers\User as UserMapper;
 
 class Showcat extends \Ilch\Controller\Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $forumMapper = new ForumMapper();
         $userMapper = new UserMapper();

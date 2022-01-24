@@ -15,11 +15,10 @@ function rec($item, $obj, $readAccess, $i)
     if (!empty($subItems) && ($item->getType() === 0)) {
         foreach ($subItems as $subItem) {
             if ($adminAccess == true || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
-                 $subItemsFalse = true;
+                $subItemsFalse = true;
             }
         }
-    }
-?>
+    } ?>
     <?php if ($subItemsFalse == true && $item->getType() === 0): ?>
         <optgroup label="<?=$item->getTitle() ?>"></optgroup>
     <?php endif; ?>

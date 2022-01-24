@@ -47,8 +47,7 @@ class Currency extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'checkout',
             $items
         );

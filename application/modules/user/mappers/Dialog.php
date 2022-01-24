@@ -57,7 +57,7 @@ class Dialog extends \Ilch\Mapper
             $dialogModel->setRead($readLastOneDialog);
             if (file_exists($dialog['avatar'])) {
                 $dialogModel->setAvatar($dialog['avatar']);
-            }  else {
+            } else {
                 $dialogModel->setAvatar('static/img/noavatar.jpg');
             }
             $last = $this->getLastOneDialog($dialog['c_id']);
@@ -70,7 +70,6 @@ class Dialog extends \Ilch\Mapper
             }
             $dialogModel->setHidden(!empty($dialog['hidden']));
             $dialogs[] = $dialogModel;
-
         }
 
         return $dialogs;
@@ -106,7 +105,7 @@ class Dialog extends \Ilch\Mapper
         $dialogModel->setName($dialogRow['name']);
         if (file_exists($dialogRow['avatar'])) {
             $dialogModel->setAvatar($dialogRow['avatar']);
-        }  else {
+        } else {
             $dialogModel->setAvatar('static/img/noavatar.jpg');
         }
 
@@ -219,11 +218,10 @@ class Dialog extends \Ilch\Mapper
             $dialogModel->setTime($dialog['time']);
             if (file_exists($dialog['avatar'])) {
                 $dialogModel->setAvatar($dialog['avatar']);
-            }  else {
+            } else {
                 $dialogModel->setAvatar('static/img/noavatar.jpg');
             }
             $dialogModels[] = $dialogModel;
-
         }
 
         return array_reverse($dialogModels);
@@ -543,9 +541,9 @@ class Dialog extends \Ilch\Mapper
         return $dialogModel;
     }
 
-     /**
+    /**
     * Get the dialog id
-      *
+     *
     * @param int $user_one
     * @return null|\Modules\User\Models\Dialog
     */

@@ -7,9 +7,9 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="adminNotification-on" name="adminNotification" value="1" <?php if ($this->get('adminNotification') === '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="adminNotification-on" name="adminNotification" value="1" <?=($this->get('adminNotification') === '1') ? 'checked="checked"' : '' ?> />
                 <label for="adminNotification-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="adminNotification-off" name="adminNotification" value="0" <?php if ($this->get('adminNotification') !== '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="adminNotification-off" name="adminNotification" value="0" <?=($this->get('adminNotification') !== '1') ? 'checked="checked"' : '' ?> />
                 <label for="adminNotification-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -21,15 +21,15 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="userNotification-on" name="userNotification" value="1" <?php if ($this->get('userNotification') === '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="userNotification-on" name="userNotification" value="1" <?=($this->get('userNotification') === '1') ? 'checked="checked"' : '' ?> />
                 <label for="userNotification-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="userNotification-off" name="userNotification" value="0" <?php if ($this->get('userNotification') !== '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="userNotification-off" name="userNotification" value="0" <?=($this->get('userNotification') !== '1') ? 'checked="checked"' : '' ?> />
                 <label for="userNotification-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
-    <div id="notifyGroupsDiv" class="form-group <?=$this->validation()->hasError('notifyGroups') ? 'has-error' : '' ?> <?php if ($this->get('userNotification') !== '1') { echo 'hidden'; } ?>">
+    <div id="notifyGroupsDiv" class="form-group <?=$this->validation()->hasError('notifyGroups') ? 'has-error' : '' ?> <?=($this->get('userNotification') !== '1') ? 'hidden' : '' ?>">
         <label for="notifyGroups" class="col-lg-2 control-label">
             <?=$this->getTrans('notifyGroups') ?>
         </label>

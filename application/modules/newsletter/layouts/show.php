@@ -111,7 +111,7 @@ $translator->load(APPLICATION_PATH.'/modules/newsletter/translations/');
             FOOTER
         ------------------------------------- */
         table.footer-wrap {
-            width: 100%;	
+            width: 100%;
             clear: both!important;
         }
 

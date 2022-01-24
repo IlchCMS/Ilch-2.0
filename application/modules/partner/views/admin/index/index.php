@@ -8,13 +8,13 @@
     <form class="form-horizontal" id="partnerIndexForm" method="POST">
         <?=$this->getTokenField() ?>
         <ul class="nav nav-tabs">
-            <li <?php if (!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
+            <li <?=(!$this->getRequest()->getParam('showsetfree')) ? 'class="active"' : '' ?>>
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
                     <?=$this->getTrans('entrys') ?>
                 </a>
             </li>
             <?php if ($this->get('badge') > 0): ?>
-                <li <?php if ($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
+                <li <?=($this->getRequest()->getParam('showsetfree')) ? 'class="active"' : '' ?>>
                     <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                         <?=$this->getTrans('setfree') ?> <span class="badge"><?=$this->get('badge') ?></span>
                     </a>

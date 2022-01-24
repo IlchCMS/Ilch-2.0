@@ -87,7 +87,11 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         <input type="text"
                                class="form-control"
                                name="birthday"
-                               value="<?php if ($profil->getBirthday() != '') { echo $birthday->format('d.m.Y'); } else { echo ''; } ?>">
+                               value="<?php if ($profil->getBirthday() != '') {
+    echo $birthday->format('d.m.Y');
+} else {
+    echo '';
+} ?>">
                         <span class="input-group-addon">
                             <span class="fa fa-calendar"></span>
                         </span>

@@ -174,7 +174,7 @@ class Index extends \Ilch\Controller\Frontend
                             $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/notifyLeader.php');
                         }
 
-                        foreach($leadersIds as $leaderId) {
+                        foreach ($leadersIds as $leaderId) {
                             $receiver = $userMapper->getUserById($leaderId);
                             $date = new \Ilch\Date();
                             $messageReplace = [

@@ -17,9 +17,9 @@ if (!$this->validation()->hasErrors()) {
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="html-yes" name="showHtml" value="1" <?php if ($showHtml) { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="html-yes" name="showHtml" value="1" <?=($showHtml) ? 'checked="checked"' : '' ?> />
                 <label for="html-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="html-no" name="showHtml" value="0" <?php if (!$showHtml) { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="html-no" name="showHtml" value="0" <?=(!$showHtml) ? 'checked="checked"' : '' ?> />
                 <label for="html-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -31,9 +31,9 @@ if (!$this->validation()->hasErrors()) {
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="bbcode-yes" name="showBBCode" value="1" <?php if ($showBBCode) { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="bbcode-yes" name="showBBCode" value="1" <?=($showBBCode) ? 'checked="checked"' : '' ?> />
                 <label for="bbcode-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="bbcode-no" name="showBBCode" value="0" <?php if (!$showBBCode) { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="bbcode-no" name="showBBCode" value="0" <?=(!$showBBCode) ? 'checked="checked"' : '' ?> />
                 <label for="bbcode-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>

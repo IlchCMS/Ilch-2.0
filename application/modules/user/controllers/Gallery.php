@@ -15,7 +15,7 @@ use Modules\User\Mappers\User as UserMapper;
 
 class Gallery extends \Ilch\Controller\Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new GalleryImageMapper();
@@ -36,7 +36,7 @@ class Gallery extends \Ilch\Controller\Frontend
         $this->getView()->set('imageMapper', $imageMapper);
     }
 
-    public function showAction() 
+    public function showAction()
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new GalleryImageMapper();
@@ -64,7 +64,7 @@ class Gallery extends \Ilch\Controller\Frontend
         $this->getView()->set('pagination', $pagination);
     }
 
-    public function showImageAction() 
+    public function showImageAction()
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new GalleryImageMapper();

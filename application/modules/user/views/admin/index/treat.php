@@ -98,9 +98,13 @@ if ($user->getId()) {
         </div>
         <div class="col-lg-9">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="opt-gallery-yes" name="opt_gallery" value="1" <?php if ($user->getOptGallery() == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="opt-gallery-yes" name="opt_gallery" value="1" <?php if ($user->getOptGallery() == '1') {
+        echo 'checked="checked"';
+    } ?> />
                 <label for="opt-gallery-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="opt-gallery-no" name="opt_gallery" value="0" <?php if ($user->getOptGallery() != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="opt-gallery-no" name="opt_gallery" value="0" <?php if ($user->getOptGallery() != '1') {
+        echo 'checked="checked"';
+    } ?> />
                 <label for="opt-gallery-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -113,9 +117,13 @@ if ($user->getId()) {
         </div>
         <div class="col-lg-9">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="locked-yes" name="locked" value="1" <?php if ($user->getLocked() == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="locked-yes" name="locked" value="1" <?php if ($user->getLocked() == '1') {
+        echo 'checked="checked"';
+    } ?> />
                 <label for="locked-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="locked-no" name="locked" value="0" <?php if ($user->getLocked() != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="locked-no" name="locked" value="0" <?php if ($user->getLocked() != '1') {
+        echo 'checked="checked"';
+    } ?> />
                 <label for="locked-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -135,7 +143,7 @@ if ($user->getId()) {
                 <?php
                 foreach ($this->get('groupList') as $group) {
                     if (($this->getUser()->isAdmin() && $group->getId() == 1) || $group->getId() != 1) {
-                    ?>
+                        ?>
                     <option value="<?=$group->getId() ?>"
                             <?php
                             foreach ($user->getGroups() as $assignedGroup) {
@@ -143,8 +151,7 @@ if ($user->getId()) {
                                     echo 'selected="selected"';
                                     break;
                                 }
-                            }
-                            ?>>
+                            } ?>>
                         <?=$this->escape($group->getName()) ?>
                     </option>
                     <?php

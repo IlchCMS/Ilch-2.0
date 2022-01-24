@@ -46,8 +46,7 @@ class Applications extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuTeams',
             $items
         );
@@ -98,7 +97,7 @@ class Applications extends \Ilch\Controller\Admin
         $this->getView()->set('joinsMapper', $joinsMapper)
             ->set('teamsMapper', $teamsMapper)
             ->set('join', $join)
-            ->set('userDeleted', $userDeleted); 
+            ->set('userDeleted', $userDeleted);
     }
 
     public function acceptAction()

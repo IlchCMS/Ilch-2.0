@@ -37,7 +37,7 @@ class Keywords extends \Ilch\Box
         $keywordsListArray = explode(', ', $keywordsListString);
         $keywordsList = array_count_values($keywordsListArray);
 
-        $keywordsFontSizes = explode(',',$this->getConfig()->get('article_box_keywords'));
+        $keywordsFontSizes = explode(',', $this->getConfig()->get('article_box_keywords'));
         $this->getView()->set('keywordsList', $keywordsList)
             ->set('keywordsH2', $keywordsFontSizes[0])
             ->set('keywordsH3', $keywordsFontSizes[1])

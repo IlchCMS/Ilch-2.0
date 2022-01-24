@@ -14,7 +14,8 @@ class CookieStolen extends \Ilch\Mapper
      * @param int userid
      * @return boolean
      */
-    public function containsCookieStolen($userid) {
+    public function containsCookieStolen($userid)
+    {
         $select = $this->db()->select('*');
         return (bool) $select->from('cookie_stolen')
             ->where(['userid' => $userid])
@@ -28,7 +29,8 @@ class CookieStolen extends \Ilch\Mapper
      * @param int userid
      * @return int
      */
-    public function addCookieStolen($userid) {
+    public function addCookieStolen($userid)
+    {
         if ($this->containsCookieStolen($userid)) {
             return 0;
         }
@@ -44,7 +46,8 @@ class CookieStolen extends \Ilch\Mapper
      * @param int userid
      * @return \Ilch\Database\Mysql\Result|int
      */
-    public function deleteCookieStolen($userid) {
+    public function deleteCookieStolen($userid)
+    {
         $delete = $this->db()->delete();
         return $delete->from('cookie_stolen')
             ->where(['userid' => $userid])

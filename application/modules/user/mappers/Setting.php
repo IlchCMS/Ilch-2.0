@@ -16,7 +16,8 @@ class Setting extends \Ilch\Mapper
      * @param bool $addFormat
      * @return float|string
      */
-    public function getNicebytes($bytes, $format = null, $addFormat = true) {
+    public function getNicebytes($bytes, $format = null, $addFormat = true)
+    {
         if ($format === null) {
             $format = $bytes < 1000000 ? 'KB' : 'MB';
         }
@@ -42,7 +43,7 @@ class Setting extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delAvatarById($id) 
+    public function delAvatarById($id)
     {
         $avatar = $this->db()->select('avatar')
             ->from('users')

@@ -78,28 +78,28 @@ $userGroupList_allowed = $this->get('userGroupList_allowed');
                                     <?php endif; ?>
 
                                     <?php foreach ($profileIconFields as $profileIconField) {
-                                        if ($profileIconField->getShow()) {
-                                            foreach ($profileFieldsContent as $profileFieldContent) {
-                                                if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
-                                                    $profileFieldName = $profileIconField->getKey();
-                                                    foreach ($profileFieldsTranslation as $profileFieldTrans) {
-                                                        if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
-                                                            $profileFieldName = $profileFieldTrans->getName();
-                                                            break;
-                                                        }
-                                                    }
-
-                                                    echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" rel="noopener" class="'.$profileIconField->getIcon().' fa-lg user-link" title="'.$profileFieldName.'"></a>';
+                                if ($profileIconField->getShow()) {
+                                    foreach ($profileFieldsContent as $profileFieldContent) {
+                                        if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
+                                            $profileFieldName = $profileIconField->getKey();
+                                            foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                                                if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
+                                                    $profileFieldName = $profileFieldTrans->getName();
                                                     break;
                                                 }
                                             }
+
+                                            echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" rel="noopener" class="'.$profileIconField->getIcon().' fa-lg user-link" title="'.$profileFieldName.'"></a>';
+                                            break;
                                         }
                                     }
+                                }
+                            }
                                     ?>
                                 </td>
                                 <!-- Neue Spalte -->
                                 <?php
-                                if($userGroupList_allowed == True):
+                                if ($userGroupList_allowed == true):
                                 ?>
                                 <td>
                                     <?=$this->escape($groups) ?>

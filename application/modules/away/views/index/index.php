@@ -119,7 +119,7 @@ if ($this->getUser()) {
                        class="form-control"
                        id="reason"
                        name="reason"
-                       value="<?php if ($this->get('post') != '') { echo $this->get('post')['reason']; } else { echo ''; } ?>" />
+                       value="<?=($this->get('post') != '') ? $this->get('post')['reason'] : '' ?>" />
             </div>
         </div>
         <div class="form-group <?=(in_array('start', $this->get('errorFields')) or in_array('end', $this->get('errorFields'))) ? 'has-error' : '' ?>">
@@ -157,7 +157,7 @@ if ($this->getUser()) {
                 <textarea class="form-control"
                           name="text"
                           id="text"
-                          rows="3"><?php if ($this->get('post') != '') { echo $this->get('post')['text']; } else { echo ''; } ?></textarea>
+                          rows="3"><?=($this->get('post') != '') ? $this->get('post')['text'] : '' ?></textarea>
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
@@ -167,7 +167,7 @@ if ($this->getUser()) {
                            id="calendarShow"
                            name="calendarShow"
                            value="1"
-                           <?php if ($this->get('post')['calendarShow'] != '') { echo 'checked'; } else { echo ''; } ?> />
+                           <?=($this->get('post')['calendarShow'] != '') ? 'checked' : '' ?> />
                     <label for="calendarShow">
                         <?=$this->getTrans('calendarShow') ?>
                     </label>

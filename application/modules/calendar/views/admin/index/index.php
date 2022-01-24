@@ -43,12 +43,7 @@ $periodDays = [
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $calendar->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $calendar->getId()]) ?></td>
                             <td>
-                                <?php if ($calendar->getPeriodDay()) {
-                                    echo date('H:i', strtotime($calendar->getStart()));
-                                } else {
-                                    echo date('d.m.Y H:i', strtotime($calendar->getStart()));
-                                }
-                                ?>
+                                <?=($calendar->getPeriodDay()) ? date('H:i', strtotime($calendar->getStart())) : date('d.m.Y H:i', strtotime($calendar->getStart())) ?>
                             </td>
                             <td>
                                 <?php if ($calendar->getPeriodDay()) {

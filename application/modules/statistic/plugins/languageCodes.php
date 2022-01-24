@@ -394,7 +394,7 @@ class LanguageCodes
             'zh' => 'Chinese',
             'zu' => 'Zulu',
             '' => '',
-        ]; 
+        ];
 
         if (isset($languageDEArray[$language])) {
             if ($locale == 'de_DE') {

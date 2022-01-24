@@ -318,7 +318,7 @@ class Statistic extends \Ilch\Mapper
         if ($month != null && $year != null) {
             $date = (int)$year.'-'.(int)$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
-        } else if ($month == null && $year != null) {
+        } elseif ($month == null && $year != null) {
             $date = (int)$year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
@@ -824,7 +824,8 @@ class Statistic extends \Ilch\Mapper
      *
      * @param int $userId
      */
-    public function deleteUserOnline($userId) {
+    public function deleteUserOnline($userId)
+    {
         $this->db()->delete('visits_online')
             ->where(['user_id' => $userId])
             ->execute();

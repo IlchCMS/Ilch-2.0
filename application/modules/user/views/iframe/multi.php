@@ -26,7 +26,7 @@
         <div id="ilchmedia">
             <div class="container-fluid">
                 <?php foreach ($this->get('medias') as $media): ?>
-                    <?php if (in_array($media->getEnding(), explode(' ',$this->get('usergallery_filetypes')))): ?>
+                    <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
                         <div id="<?=$media->getId() ?>" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
                             <img class="image thumbnail img-responsive"
                                  data-url="<?=$media->getUrl() ?>"

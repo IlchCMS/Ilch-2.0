@@ -119,7 +119,7 @@ class Rule extends \Ilch\Mapper
             'text' => $rule->getText(),
             'parent_id' => $rule->getParent_Id(),
             'position' => $rule->getPosition(),
-            'access' => $rule->getAccess()   
+            'access' => $rule->getAccess()
         ];
 
         if ($rule->getId()) {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 $userMapper = $this->get('userMapper');
 $profil = $this->get('profil');
 $birthday = '';
@@ -18,7 +18,7 @@ foreach ($profil->getGroups() as $group) {
     }
 
     $groups .= $group->getName();
-} 
+}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
@@ -60,23 +60,23 @@ foreach ($profil->getGroups() as $group) {
                 <?php endif; ?>
 
                 <?php foreach ($profileIconFields as $profileIconField) {
-                    if ($profileIconField->getShow()) {
-                        foreach ($profileFieldsContent as $profileFieldContent) {
-                            if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
-                                $profileFieldName = $profileIconField->getKey();
-                                foreach ($profileFieldsTranslation as $profileFieldTrans) {
-                                    if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
-                                        $profileFieldName = $profileFieldTrans->getName();
-                                        break;
-                                    }
-                                }
-
-                                echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" rel="noopener" class="fa '.$profileIconField->getIcon().'" title="'.$profileFieldName.'"></a>';
-                                break;
-                            }
-                        }
+    if ($profileIconField->getShow()) {
+        foreach ($profileFieldsContent as $profileFieldContent) {
+            if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
+                $profileFieldName = $profileIconField->getKey();
+                foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                    if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
+                        $profileFieldName = $profileFieldTrans->getName();
+                        break;
                     }
                 }
+
+                echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" rel="noopener" class="fa '.$profileIconField->getIcon().'" title="'.$profileFieldName.'"></a>';
+                break;
+            }
+        }
+    }
+}
                 ?>
             </div>
         </div>        
@@ -129,35 +129,37 @@ foreach ($profil->getGroups() as $group) {
                 <?=$this->getTrans('profileBirthday') ?>
             </div>
             <div class="col-lg-10 detail">
-                <?php if ($profil->getBirthday() != '') { echo $birthday->format('d-m-Y', true).' ('.floor(($date->format('Ymd') - str_replace("-", "", $this->escape($profil->getBirthday()))) / 10000).')'; } ?>
+                <?php if ($profil->getBirthday() != '') {
+                    echo $birthday->format('d-m-Y', true).' ('.floor(($date->format('Ymd') - str_replace("-", "", $this->escape($profil->getBirthday()))) / 10000).')';
+                } ?>
             </div>
         </div>
 
         <?php foreach ($profileFields as $profileField) {
-            if (!$profileField->getShow()) {
-                continue;
-            }
-
-            $profileFieldName = $profileField->getKey();
-            if (!$profileField->getType()) {
-                $value = '';
-                foreach ($profileFieldsContent as $profileFieldContent) {
-                    if ($profileFieldContent->getValue() && $profileField->getId() == $profileFieldContent->getFieldId()) {
-                        $value = $profileFieldContent->getValue();
+                    if (!$profileField->getShow()) {
+                        continue;
                     }
-                }
-            }
 
-            if ($profileField->getType() || (!$profileField->getType() && !empty($value))) {
-                foreach ($profileFieldsTranslation as $profileFieldTrans) {
-                    if ($profileField->getId() == $profileFieldTrans->getFieldId()) {
-                        $profileFieldName = $profileFieldTrans->getName();
-                        break;
+                    $profileFieldName = $profileField->getKey();
+                    if (!$profileField->getType()) {
+                        $value = '';
+                        foreach ($profileFieldsContent as $profileFieldContent) {
+                            if ($profileFieldContent->getValue() && $profileField->getId() == $profileFieldContent->getFieldId()) {
+                                $value = $profileFieldContent->getValue();
+                            }
+                        }
                     }
-                }
-            }
 
-            if (!$profileField->getType() && !empty($value)): ?>
+                    if ($profileField->getType() || (!$profileField->getType() && !empty($value))) {
+                        foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                            if ($profileField->getId() == $profileFieldTrans->getFieldId()) {
+                                $profileFieldName = $profileFieldTrans->getName();
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!$profileField->getType() && !empty($value)): ?>
                 <div class="row">
                     <div class="col-lg-2 detail bold">
                         <?=$this->escape($profileFieldName) ?>
@@ -171,7 +173,7 @@ foreach ($profil->getGroups() as $group) {
                 <br />
                 <h1><?=$this->escape($profileFieldName) ?></h1>
             <?php endif;
-        }
+                }
         ?>
 
         <?php if ($profil->getSignature() != ''): ?>

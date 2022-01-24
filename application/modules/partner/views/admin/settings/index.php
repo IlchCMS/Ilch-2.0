@@ -16,23 +16,23 @@ if ($this->validation()->hasErrors()) {
         </div>
         <div class="col-lg-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="slider-on" name="slider" value="1" <?php if ($slider) { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="slider-on" name="slider" value="1" <?=($slider) ? 'checked="checked"' : '' ?> />
                 <label for="slider-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="slider-off" name="slider" value="0" <?php if (!$slider) { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="slider-off" name="slider" value="0" <?=(!$slider) ? 'checked="checked"' : '' ?> />
                 <label for="slider-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
-    <div id="contentHeight" class="<?php if (!$slider) { echo 'hidden'; } ?>">
+    <div id="contentHeight" class="<?=(!$slider) ? 'hidden' : '' ?>">
         <div class="form-group <?=$this->validation()->hasError('boxSliderMode') ? 'has-error' : '' ?>">
             <label for="boxSliderMode" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxSliderMode') ?>:
             </label>
             <div class="col-lg-2">
                 <select class="form-control" name="boxSliderMode">
-                    <option <?php if ($this->get('boxSliderMode') === 'vertical') { echo 'selected="selected"'; } ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
-                    <option <?php if ($this->get('boxSliderMode') === 'horizontal') { echo 'selected="selected"'; } ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
+                    <option <?=($this->get('boxSliderMode') === 'vertical') ? 'selected="selected"' : '' ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
+                    <option <?=($this->get('boxSliderMode') === 'horizontal') ? 'selected="selected"' : '' ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
                 </select>
             </div>
         </div>

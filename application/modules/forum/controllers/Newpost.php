@@ -114,7 +114,7 @@ class Newpost extends \Ilch\Controller\Frontend
                     $topicSubscriptionMapper = new TopicSubscriptionMapper();
                     $subscribers = $topicSubscriptionMapper->getSubscriptionsForTopic($topicId);
 
-                    foreach($subscribers as $subscriber) {
+                    foreach ($subscribers as $subscriber) {
                         if ($subscriber->getUserId() == $this->getUser()->getId()) {
                             // Skip if post is from same user.
                             continue;

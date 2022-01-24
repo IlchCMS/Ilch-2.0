@@ -66,7 +66,8 @@ class Link extends \Ilch\Mapper
      * @param int $id, int $position
      *
      */
-    public function updatePositionById($id, $position) {
+    public function updatePositionById($id, $position)
+    {
         $this->db()->update('links')
             ->values(['pos' => $position])
             ->where(['id' => $id])

@@ -120,11 +120,11 @@ class ForumTopic extends \Ilch\Model
      */
     protected $status;
 
-   /**
-     * Gets the id of the topic.
-     *
-     * @return integer
-     */
+    /**
+      * Gets the id of the topic.
+      *
+      * @return integer
+      */
     public function getId()
     {
         return $this->id;

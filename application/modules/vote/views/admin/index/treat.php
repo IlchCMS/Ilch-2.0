@@ -12,10 +12,10 @@
                     id="group" name="participationGroups[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
                     multiple>
-                <option value="0" <?=($vote != '' AND $this->escape($vote->getGroups()) == '0') ? 'selected="selected"' : '' ?>>
+                <option value="0" <?=($vote != '' and $this->escape($vote->getGroups()) == '0') ? 'selected="selected"' : '' ?>>
                     <?=$this->getTrans('groupAll') ?>
                 </option>
-            <?php foreach($this->get('userGroupList') as $group): ?>
+            <?php foreach ($this->get('userGroupList') as $group): ?>
                 <option value="<?=$group->getId() ?>" <?=(in_array($group->getId(), $this->get('participationGroups'))) ? ' selected' : '' ?>>
                     <?=$this->escape($group->getName()) ?>
                 </option>
@@ -49,7 +49,9 @@
                    type="text"
                    id="question"
                    name="question"
-                   value="<?php if ($vote != '') { echo $this->escape($vote->getQuestion()); } ?>" />
+                   value="<?php if ($vote != '') {
+    echo $this->escape($vote->getQuestion());
+} ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">

@@ -49,8 +49,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuTeams',
             $items
         );
@@ -83,7 +82,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('teams', $teamsMapper->getTeams());
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $teamsMapper = new TeamsMapper();
         $userMapper = new UserMapper();

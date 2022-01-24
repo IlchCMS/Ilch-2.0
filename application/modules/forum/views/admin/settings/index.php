@@ -60,8 +60,7 @@
                                 echo 'selected="selected"';
                                 break;
                             }
-                        }
-                        ?>>
+                        } ?>>
                         <?=$this->escape($group->getName()) ?>
                     </option>
                     <?php
@@ -76,9 +75,9 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="postVoting-on" name="postVoting" value="1" <?php if ($this->get('postVoting') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="postVoting-on" name="postVoting" value="1" <?=($this->get('postVoting') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="postVoting-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="postVoting-off" name="postVoting" value="0" <?php if ($this->get('postVoting') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="postVoting-off" name="postVoting" value="0" <?=($this->get('postVoting') != '1') ? 'checked="checked"' : '' ?> />
                 <label for="postVoting-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -90,9 +89,9 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="topicSubscription-on" name="topicSubscription" value="1" <?php if ($this->get('topicSubscription') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="topicSubscription-on" name="topicSubscription" value="1" <?=($this->get('topicSubscription') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="topicSubscription-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="topicSubscription-off" name="topicSubscription" value="0" <?php if ($this->get('topicSubscription') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="topicSubscription-off" name="topicSubscription" value="0" <?=($this->get('topicSubscription') != '1') ? 'checked="checked"' : '' ?> />
                 <label for="topicSubscription-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -104,9 +103,9 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="DESCPostorder-on" name="DESCPostorder" value="1" <?php if ($this->get('DESCPostorder') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="DESCPostorder-on" name="DESCPostorder" value="1" <?=($this->get('DESCPostorder') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="DESCPostorder-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="DESCPostorder-off" name="DESCPostorder" value="0" <?php if ($this->get('DESCPostorder') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="DESCPostorder-off" name="DESCPostorder" value="0" <?=($this->get('DESCPostorder') != '1') ? 'checked="checked"' : '' ?> />
                 <label for="DESCPostorder-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -133,9 +132,9 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="reportingPosts-on" name="reportingPosts" value="1" <?php if ($this->get('reportingPosts') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="reportingPosts-on" name="reportingPosts" value="1" <?=($this->get('reportingPosts') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="reportingPosts-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="reportingPosts-off" name="reportingPosts" value="0" <?php if ($this->get('reportingPosts') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="reportingPosts-off" name="reportingPosts" value="0" <?=($this->get('reportingPosts') != '1') ? 'checked="checked"' : '' ?> />
                 <label for="reportingPosts-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -147,9 +146,9 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="reportNotificationEMail-on" name="reportNotificationEMail" value="1" <?php if ($this->get('reportNotificationEMail') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="reportNotificationEMail-on" name="reportNotificationEMail" value="1" <?=($this->get('reportNotificationEMail') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="reportNotificationEMail-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="reportNotificationEMail-off" name="reportNotificationEMail" value="0" <?php if ($this->get('reportNotificationEMail') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="reportNotificationEMail-off" name="reportNotificationEMail" value="0" <?=($this->get('reportNotificationEMail') != '1') ? 'checked="checked"' : '' ?> />
                 <label for="reportNotificationEMail-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>

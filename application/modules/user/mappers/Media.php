@@ -19,7 +19,7 @@ class Media extends \Ilch\Mapper
      * @return MediaModel[]|array
      * @throws \Ilch\Database\Exception
      */
-    public function getMediaListByEnding($userId, $ending = NULL, $pagination = NULL) 
+    public function getMediaListByEnding($userId, $ending = null, $pagination = null)
     {
         if ($pagination) {
             $sqlCountOfRows = 'SELECT COUNT(*)
@@ -32,10 +32,10 @@ class Media extends \Ilch\Mapper
         $sql = 'SELECT *
                 FROM `[prefix]_users_media`
                 WHERE user_id = '.$userId.' AND ending IN ('
-                    .implode(',',  $this->db()->escapeArray(explode(' ', $ending), true))
+                    .implode(',', $this->db()->escapeArray(explode(' ', $ending), true))
                     .')
                 ORDER by id DESC
-                LIMIT '.implode(',',$pagination->getLimit());
+                LIMIT '.implode(',', $pagination->getLimit());
 
         $mediaArray = $this->db()->queryArray($sql);
 
@@ -65,7 +65,7 @@ class Media extends \Ilch\Mapper
      * @param int $lastId
      * @return MediaModel[]|array
      */
-    public function getMediaListScroll($lastId = NULL) 
+    public function getMediaListScroll($lastId = null)
     {
         $mediaRows = $this->db()->select('*')
             ->from('users_media')
@@ -119,7 +119,7 @@ class Media extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delMediaById($id) 
+    public function delMediaById($id)
     {
         $mediaRow = $this->db()->select('*')
             ->from('users_media')

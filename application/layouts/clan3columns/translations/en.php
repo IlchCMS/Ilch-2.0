@@ -6,7 +6,7 @@
 
 return [
     'togglenavigation' => 'Toggle Navigation',
-    'navigation' => 'Navigation', 
+    'navigation' => 'Navigation',
     
     'home' => 'Home',
     'contact' => 'Contact',

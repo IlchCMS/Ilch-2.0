@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Partner\Controllers\Admin;
+
 use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
@@ -26,14 +27,13 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuPartner',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuPartner'), ['controller' => 'index', 'action' => 'index'])

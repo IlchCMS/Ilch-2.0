@@ -28,8 +28,8 @@
         </div>
         <div class="col-lg-3">
             <select class="form-control" id="target" name="target">
-                <option value="0"<?=($this->get('partner') != '' AND $this->get('partner')->getTarget() == 0) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetBlank') ?></option>
-                <option value="1"<?=($this->get('partner') != '' AND $this->get('partner')->getTarget() == 1) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetSelf') ?></option>
+                <option value="0"<?=($this->get('partner') != '' and $this->get('partner')->getTarget() == 0) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetBlank') ?></option>
+                <option value="1"<?=($this->get('partner') != '' and $this->get('partner')->getTarget() == 1) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetSelf') ?></option>
             </select>
         </div>
     </div>

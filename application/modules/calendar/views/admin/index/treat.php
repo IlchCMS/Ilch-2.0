@@ -30,7 +30,7 @@ $periodDays = [
                    class="form-control"
                    id="start"
                    name="start"
-                   value="<?php if ($this->get('calendar') != '') { echo date('d.m.Y H:i', strtotime($this->get('calendar')->getStart())); } ?>"
+                   value="<?=($this->get('calendar') != '') ? date('d.m.Y H:i', strtotime($this->get('calendar')->getStart())) : '' ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
@@ -46,7 +46,7 @@ $periodDays = [
                    class="form-control"
                    id="end"
                    name="end"
-                   value="<?php if ($this->get('calendar') != '') { echo date('d.m.Y H:i', strtotime($this->get('calendar')->getEnd())); } ?>"
+                   value="<?=($this->get('calendar') != '') ? date('d.m.Y H:i', strtotime($this->get('calendar')->getEnd())) : '' ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
@@ -62,7 +62,7 @@ $periodDays = [
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('calendar') != '') { echo $this->escape($this->get('calendar')->getTitle()); } ?>" />
+                   value="<?=($this->get('calendar') != '') ? $this->escape($this->get('calendar')->getTitle()) : '' ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -74,7 +74,7 @@ $periodDays = [
                    class="form-control"
                    id="place"
                    name="place"
-                   value="<?php if ($this->get('calendar') != '') { echo $this->escape($this->get('calendar')->getPlace()); } ?>" />
+                   value="<?=($this->get('calendar') != '') ? $this->escape($this->get('calendar')->getPlace()) : '' ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -86,7 +86,7 @@ $periodDays = [
                 <option selected="selected"><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodDays as $key => $value): ?>
                     <?php $selected = ''; ?>
-                    <?php if ($this->get('calendar') != '' AND $this->get('calendar')->getPeriodDay() == $key OR $this->originalInput('periodDay') == $key): ?>
+                    <?php if ($this->get('calendar') != '' and $this->get('calendar')->getPeriodDay() == $key or $this->originalInput('periodDay') == $key): ?>
                         <?php $selected = 'selected="selected"'; ?>
                     <?php endif; ?>
 
@@ -103,7 +103,7 @@ $periodDays = [
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"
-                   value="<?php if ($this->get('calendar') != '') { echo $this->get('calendar')->getColor(); } else { echo '#32333B'; } ?>">
+                   value="<?=($this->get('calendar') != '') ? $this->get('calendar')->getColor() : '#32333B' ?>">
             <span class="input-group-addon">
                 <span class="fa fa-undo" onclick="document.getElementById('color').color.fromString('32333B')"></span>
             </span>
@@ -130,7 +130,7 @@ $periodDays = [
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?php if ($this->get('calendar') != '') { echo $this->escape($this->get('calendar')->getText()); } ?></textarea>
+                      rows="5"><?=($this->get('calendar') != '') ? $this->escape($this->get('calendar')->getText()) : '' ?></textarea>
         </div>
     </div>
     <?php if ($this->get('event') != ''): ?>

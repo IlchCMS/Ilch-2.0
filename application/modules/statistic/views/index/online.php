@@ -37,7 +37,7 @@ if ($this->getUser()) {
         <tbody>
             <?php foreach ($this->get('userOnlineList') as $userOnlineList): ?>
                 <?php $user = $userMapper->getUserById($userOnlineList->getUserId()); ?>
-                <?php $moduleKey = implode('/',array_slice(explode('/',$userOnlineList->getSite()),1,1)); ?>
+                <?php $moduleKey = implode('/', array_slice(explode('/', $userOnlineList->getSite()), 1, 1)); ?>
                 <?php if ($moduleKey != ''): ?>
                     <?php $module = $modulesMapper->getModulesByKey($moduleKey, $this->getTranslator()->getLocale()); ?>
                     <?php (!empty($module)) ? $moduleName = $module->getName() : $moduleName = '' ?>
@@ -60,7 +60,7 @@ if ($this->getUser()) {
                         <?php endif; ?>
                     <?php endif; ?>
                     <?php if ($moduleName !== ''): ?>
-                        <td><a href="<?=$this->getUrl($this->escape(substr($userOnlineList->getSite(),1))) ?>"><?=$this->escape($moduleName) ?></a></td>
+                        <td><a href="<?=$this->getUrl($this->escape(substr($userOnlineList->getSite(), 1))) ?>"><?=$this->escape($moduleName) ?></a></td>
                     <?php else: ?>
                         <td></td>
                     <?php endif; ?>

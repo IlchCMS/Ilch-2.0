@@ -92,7 +92,8 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      *
      * @return boolean True if success, otherwise false.
      */
-    public function deleteProfileFieldTranslationsByFieldId($fieldId) {
+    public function deleteProfileFieldTranslationsByFieldId($fieldId)
+    {
         return $this->db()->delete('profile_trans')
             ->where(['field_id' => $fieldId])
             ->execute();
@@ -106,7 +107,8 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      *
      * @return boolean True if success, otherwise false.
      */
-    public function deleteProfileFieldTranslation($locale, $fieldId) {
+    public function deleteProfileFieldTranslation($locale, $fieldId)
+    {
         return $this->db()->delete('profile_trans')
             ->where(['locale' => $locale, 'field_id' => $fieldId])
             ->execute();

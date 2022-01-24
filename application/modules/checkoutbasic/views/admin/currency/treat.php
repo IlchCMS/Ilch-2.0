@@ -1,12 +1,7 @@
 <?php $currency = $this->get('currency'); ?>
 
 <h1>
-    <?php if ($this->getRequest()->getParam("id")) {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
+    <?=($this->getRequest()->getParam("id")) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>

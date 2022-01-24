@@ -43,8 +43,7 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuUser',
             $items
         );
@@ -56,12 +55,10 @@ class Settings extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-
-
-            if($this->getRequest()->getPost('userGroupList_allowed') == 1){
+            if ($this->getRequest()->getPost('userGroupList_allowed') == 1) {
                 $this->getConfig()->set('userGroupList_allowed', 1);
                 $this->addMessage('saveSuccess');
-            }else {
+            } else {
                 $this->getConfig()->set('userGroupList_allowed', 0);
             }
 

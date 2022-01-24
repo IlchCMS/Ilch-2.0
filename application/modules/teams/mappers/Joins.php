@@ -129,7 +129,8 @@ class Joins extends \Ilch\Mapper
      * @param string $date
      * @return JoinsModel|null
      */
-    public function getAge($date) {
+    public function getAge($date)
+    {
         return (int)date('Y', time() - strtotime($date)) - 1970;
     }
 
@@ -140,7 +141,8 @@ class Joins extends \Ilch\Mapper
      * @param int $id
      * @param int $decision
      */
-    public function updateDecision($id, $decision) {
+    public function updateDecision($id, $decision)
+    {
         $this->db()->update('teams_joins')
             ->values(['decision' => $decision, 'undecided' => 0])
             ->where(['id' => $id])

@@ -67,7 +67,7 @@ class Usermenu extends \Ilch\Mapper
             $usermenuModel->setDescription($usermenuRow['description']);
 
             $usermenu[] = $usermenuModel;
-        }        
+        }
 
         return $usermenu;
     }

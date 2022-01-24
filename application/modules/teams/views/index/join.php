@@ -33,7 +33,8 @@ if ($this->getUser()) {
             <div class="col-lg-4">
                 <select class="form-control" id="teamId" name="teamId">
                     <optgroup label="<?=$this->getTrans('teams') ?>">
-                        <?php foreach ($this->get('teams') as $teamList) {
+                        <?php
+                        foreach ($this->get('teams') as $teamList) {
                             $groupList = $groupMapper->getUsersForGroup($teamList->getGroupId());
                             $leaderIds = explode(',', $teamList->getLeader());
                             $coLeaderIds = explode(',', $teamList->getCoLeader());
@@ -46,7 +47,8 @@ if ($this->getUser()) {
                                 }
                                 echo '<option '.$selected.' value="'.$teamList->getId().'">'.$teamList->getName().'</option>';
                             }
-                        } ?>
+                        }
+                        ?>
                     </optgroup>
                 </select>
             </div>
@@ -185,7 +187,7 @@ if ($this->getUser()) {
         <?php endif; ?>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-8">
-                <?php 
+                <?php
                     if ($this->get('captchaNeeded')) {
                         if ($this->get('googlecaptcha')) {
                             echo $this->get('googlecaptcha')->setForm('joinForm')->getCaptcha($this, 'apply', 'join');

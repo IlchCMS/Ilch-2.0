@@ -54,20 +54,20 @@
                                     $activeaccess = $this->escape($content['name']);
                                 }
                             } elseif ($accessType === 'article') {
-                               echo $this->escape($type->getTitle());
-                               if ($this->get('activeaccessId') == $accessType.'_'.($type->getId())) {
-                                   $activeaccess = $this->escape($type->getTitle());
-                               }
+                                echo $this->escape($type->getTitle());
+                                if ($this->get('activeaccessId') == $accessType.'_'.($type->getId())) {
+                                    $activeaccess = $this->escape($type->getTitle());
+                                }
                             } elseif ($accessType === 'page') {
                                 echo $this->escape($type->getTitle());
-                               if ($this->get('activeaccessId') == $accessType.'_'.($type->getId())) {
-                                   $activeaccess = $this->escape($type->getTitle());
-                               }
+                                if ($this->get('activeaccessId') == $accessType.'_'.($type->getId())) {
+                                    $activeaccess = $this->escape($type->getTitle());
+                                }
                             } elseif ($accessType === 'box') {
                                 echo $this->escape($type->getTitle());
-                               if ($this->get('activeaccessId') == $accessType.'_'.($type->getId())) {
-                                   $activeaccess = $this->escape($type->getTitle());
-                               }
+                                if ($this->get('activeaccessId') == $accessType.'_'.($type->getId())) {
+                                    $activeaccess = $this->escape($type->getTitle());
+                                }
                             }
                             ?>
                         </option>
@@ -123,7 +123,7 @@
                                     if ($accessType === 'module') {
                                         echo $this->escape($content['name']);
                                     } elseif ($accessType === 'article') {
-                                       echo $this->escape($type->getTitle());
+                                        echo $this->escape($type->getTitle());
                                     } elseif ($accessType === 'page') {
                                         echo $this->escape($type->getTitle());
                                     } elseif ($accessType === 'box') {
@@ -158,9 +158,9 @@
                                            <?php
                                             if ($accessType === 'module') {
                                                 echo 'name="groupAccess['.$accessType.']['.$type->getKey().']"';
-                                             } else {
-                                                 echo 'name="groupAccess['.$accessType.']['.$type->getId().']"';
-                                             }
+                                            } else {
+                                                echo 'name="groupAccess['.$accessType.']['.$type->getId().']"';
+                                            }
                                             ?>
                                            value="<?=$accessLevel ?>"
                                            <?=($accessLevel == $typeAccessLevel) ? 'checked' : '' ?> />

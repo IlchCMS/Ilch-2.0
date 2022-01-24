@@ -16,7 +16,7 @@ use Ilch\Accesses;
 
 class Edittopic extends \Ilch\Controller\Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $userMapper = new UserMapper();
         $forumMapper = new ForumMapper();

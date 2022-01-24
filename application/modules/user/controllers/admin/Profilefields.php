@@ -60,8 +60,7 @@ class ProfileFields extends \Ilch\Controller\Admin
             $items[2]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuUser',
             $items
         );

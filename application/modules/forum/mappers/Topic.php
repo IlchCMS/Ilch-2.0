@@ -13,7 +13,7 @@ use Modules\Forum\Mappers\Post as PostMapper;
 
 class Topic extends \Ilch\Mapper
 {
-    public function getTopicsByForumId($id, $pagination = NULL)
+    public function getTopicsByForumId($id, $pagination = null)
     {
         $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)'])
             ->from(['topics' => 'forum_topics'])
@@ -100,7 +100,7 @@ class Topic extends \Ilch\Mapper
      * @return array
      * @throws \Ilch\Database\Exception
      */
-    public function getTopics($pagination = NULL, $limit = NULL)
+    public function getTopics($pagination = null, $limit = null)
     {
         $sql = $this->db()->select('*')
             ->from(['forum_topics'])
@@ -260,7 +260,7 @@ class Topic extends \Ilch\Mapper
                     'date_created' => $model->getDateCreated()
                 ])
                 ->execute();
-                $this->last_insert_id = $this->db()->getLastInsertId();
+            $this->last_insert_id = $this->db()->getLastInsertId();
         }
     }
 
@@ -309,7 +309,8 @@ class Topic extends \Ilch\Mapper
      * @param $column
      * @param $value
      */
-    public function update($id, $column, $value) {
+    public function update($id, $column, $value)
+    {
         $this->db()->update('forum_topics')
             ->values([$column => $value])
             ->where(['id' => $id])

@@ -226,5 +226,3 @@ class Regist extends \Ilch\Controller\Frontend
         }
     }
 }
-
-

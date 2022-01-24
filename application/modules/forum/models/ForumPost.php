@@ -120,11 +120,11 @@ class ForumPost extends \Ilch\Model
      */
     protected $autorallpost;
 
-   /**
-     * Gets the id of the post.
-     *
-     * @return integer
-     */
+    /**
+      * Gets the id of the post.
+      *
+      * @return integer
+      */
     public function getId()
     {
         return $this->id;
@@ -464,5 +464,4 @@ class ForumPost extends \Ilch\Model
 
         return $this;
     }
-
 }
