@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -60,7 +60,7 @@ class Admin extends Base
     public function addMenu($headKey, $items)
     {
         $this->menus[$headKey] = $items;
-     }
+    }
 
     /**
      * Add menu action to layout.

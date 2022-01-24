@@ -460,7 +460,7 @@ class Select extends QueryBuilder
             //function like COUNT()
             if (strpos($fields, '(') !== false) {
                 $fields = [new Expression\Expression($fields)];
-                //single field
+            //single field
             } elseif (strpos($fields, ' ') !== false) {
                 // Added to support for example "DISTINCT c1, c2, c3"
                 $fields = [new Expression\Expression($fields)];
@@ -528,5 +528,4 @@ class Select extends QueryBuilder
         }
         return $sql;
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Dennis Reilard
+ * @copyright Ilch 2
  * @package ilch
  */
 

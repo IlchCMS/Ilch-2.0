@@ -233,8 +233,8 @@ class Translator
         if (intl_is_failure($numberFormatter->getErrorCode())) {
             // Error occured - probably the currency-code is wrong.
             // Try to just format the number correctly and append $currencyCode.
-            $numberFormatter = new \NumberFormatter($this->getLocale(), \NumberFormatter::DECIMAL); 
-            $numberFormatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, 2); 
+            $numberFormatter = new \NumberFormatter($this->getLocale(), \NumberFormatter::DECIMAL);
+            $numberFormatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, 2);
             $numberFormatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS, 2);
             $returnValue = $numberFormatter->format($amount). ' ' .$currencyCode;
         }

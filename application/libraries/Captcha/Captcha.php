@@ -123,10 +123,12 @@ class Captcha
     /** GD image */
     public $im;
 
-    public function __construct($config = []) {
+    public function __construct($config = [])
+    {
     }
 
-    public function CreateImage() {
+    public function CreateImage()
+    {
         $ini = microtime(true);
 
         /** Initialization */
@@ -151,7 +153,11 @@ class Captcha
 
 
         if ($this->debug) {
-            imagestring($this->im, 1, 1, $this->height-8,
+            imagestring(
+                $this->im,
+                1,
+                1,
+                $this->height-8,
                 "$text {$fontcfg['font']} ".round((microtime(true)-$ini)*1000)."ms",
                 $this->GdFgColor
             );
@@ -166,7 +172,8 @@ class Captcha
     /**
      * Creates the image resources
      */
-    protected function ImageAllocate() {
+    protected function ImageAllocate()
+    {
         // Cleanup
         if (!empty($this->im)) {
             imagedestroy($this->im);
@@ -175,7 +182,8 @@ class Captcha
         $this->im = imagecreatetruecolor($this->width*$this->scale, $this->height*$this->scale);
 
         // Background color
-        $this->GdBgColor = imagecolorallocate($this->im,
+        $this->GdBgColor = imagecolorallocate(
+            $this->im,
             $this->backgroundColor[0],
             $this->backgroundColor[1],
             $this->backgroundColor[2]
@@ -188,7 +196,8 @@ class Captcha
 
         // Shadow color
         if (!empty($this->shadowColor) && is_array($this->shadowColor) && sizeof($this->shadowColor) >= 3) {
-            $this->GdShadowColor = imagecolorallocate($this->im,
+            $this->GdShadowColor = imagecolorallocate(
+                $this->im,
                 $this->shadowColor[0],
                 $this->shadowColor[1],
                 $this->shadowColor[2]
@@ -201,7 +210,8 @@ class Captcha
      *
      * @return string Text
      */
-    protected function GetCaptchaText() {
+    protected function GetCaptchaText()
+    {
         $text = $this->GetDictionaryCaptchaText();
         if (!$text) {
             $text = $this->GetRandomCaptchaText();
@@ -214,7 +224,8 @@ class Captcha
      *
      * @return string Text
      */
-    protected function GetRandomCaptchaText($length = null) {
+    protected function GetRandomCaptchaText($length = null)
+    {
         if (empty($length)) {
             $length = rand($this->minWordLength, $this->maxWordLength);
         }
@@ -241,7 +252,8 @@ class Captcha
      * @param boolean $extended Add extended "fake" words
      * @return string Word
      */
-    function GetDictionaryCaptchaText($extended = false) {
+    public function GetDictionaryCaptchaText($extended = false)
+    {
         if (empty($this->wordsFile)) {
             return false;
         }
@@ -288,8 +300,8 @@ class Captcha
     /**
      * Horizontal line insertion
      */
-    protected function WriteLine() {
-
+    protected function WriteLine()
+    {
         $x1 = $this->width*$this->scale*.15;
         $x2 = $this->textFinalX;
         $y1 = rand($this->height*$this->scale*.40, $this->height*$this->scale*.65);
@@ -304,7 +316,8 @@ class Captcha
     /**
      * Text insertion
      */
-    protected function WriteText($text, $fontcfg = []) {
+    protected function WriteText($text, $fontcfg = [])
+    {
         if (empty($fontcfg)) {
             // Select the font configuration
             $fontcfg  = $this->fonts[array_rand($this->fonts)];
@@ -328,13 +341,27 @@ class Captcha
             $letter   = substr($text, $i, 1);
 
             if ($this->shadowColor) {
-                $coords = imagettftext($this->im, $fontsize, $degree,
-                    $x+$this->scale, $y+$this->scale,
-                    $this->GdShadowColor, $fontfile, $letter);
+                $coords = imagettftext(
+                    $this->im,
+                    $fontsize,
+                    $degree,
+                    $x+$this->scale,
+                    $y+$this->scale,
+                    $this->GdShadowColor,
+                    $fontfile,
+                    $letter
+                );
             }
-            $coords = imagettftext($this->im, $fontsize, $degree,
-                $x, $y,
-                $this->GdFgColor, $fontfile, $letter);
+            $coords = imagettftext(
+                $this->im,
+                $fontsize,
+                $degree,
+                $x,
+                $y,
+                $this->GdFgColor,
+                $fontfile,
+                $letter
+            );
             $x += ($coords[2]-$x) + ($fontcfg['spacing']*$this->scale);
         }
 
@@ -344,36 +371,59 @@ class Captcha
     /**
      * Wave filter
      */
-    protected function WaveImage() {
+    protected function WaveImage()
+    {
         // X-axis wave generation
-        $xp = $this->scale*$this->Xperiod*rand(1,3);
+        $xp = $this->scale*$this->Xperiod*rand(1, 3);
         $k = rand(0, 100);
         for ($i = 0; $i < ($this->width*$this->scale); $i++) {
-            imagecopy($this->im, $this->im,
-                $i-1, sin($k+$i/$xp) * ($this->scale*$this->Xamplitude),
-                $i, 0, 1, $this->height*$this->scale);
+            imagecopy(
+                $this->im,
+                $this->im,
+                $i-1,
+                sin($k+$i/$xp) * ($this->scale*$this->Xamplitude),
+                $i,
+                0,
+                1,
+                $this->height*$this->scale
+            );
         }
 
         // Y-axis wave generation
         $k = rand(0, 100);
-        $yp = $this->scale*$this->Yperiod*rand(1,2);
+        $yp = $this->scale*$this->Yperiod*rand(1, 2);
         for ($i = 0; $i < ($this->height*$this->scale); $i++) {
-            imagecopy($this->im, $this->im,
-                sin($k+$i/$yp) * ($this->scale*$this->Yamplitude), $i-1,
-                0, $i, $this->width*$this->scale, 1);
+            imagecopy(
+                $this->im,
+                $this->im,
+                sin($k+$i/$yp) * ($this->scale*$this->Yamplitude),
+                $i-1,
+                0,
+                $i,
+                $this->width*$this->scale,
+                1
+            );
         }
     }
 
     /**
      * Reduce the image to the final size
      */
-    protected function ReduceImage() {
+    protected function ReduceImage()
+    {
         // Reduzco el tama�o de la imagen
         $imResampled = imagecreatetruecolor($this->width, $this->height);
-        imagecopyresampled($imResampled, $this->im,
-            0, 0, 0, 0,
-            $this->width, $this->height,
-            $this->width*$this->scale, $this->height*$this->scale
+        imagecopyresampled(
+            $imResampled,
+            $this->im,
+            0,
+            0,
+            0,
+            0,
+            $this->width,
+            $this->height,
+            $this->width*$this->scale,
+            $this->height*$this->scale
         );
         imagedestroy($this->im);
         $this->im = $imResampled;
@@ -382,7 +432,8 @@ class Captcha
     /**
      * File generation
      */
-    protected function WriteImage() {
+    protected function WriteImage()
+    {
         if ($this->imageFormat == 'png' && function_exists('imagepng')) {
             header("Content-type: image/png");
             imagepng($this->im);
@@ -395,7 +446,8 @@ class Captcha
     /**
      * Cleanup
      */
-    protected function Cleanup() {
+    protected function Cleanup()
+    {
         imagedestroy($this->im);
     }
 }

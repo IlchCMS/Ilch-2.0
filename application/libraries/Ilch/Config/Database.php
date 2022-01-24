@@ -84,7 +84,7 @@ class Database
                     ->execute();
             }
         } else {
-                $this->db->insert('config')
+            $this->db->insert('config')
                     ->values([
                         'key' => $key,
                         'value' => $value,
@@ -125,7 +125,7 @@ class Database
     public function delete($keys)
     {
         if (is_array($keys)) {
-            foreach($keys as $key) {
+            foreach ($keys as $key) {
                 $this->deleteKey($key);
             }
         } else {

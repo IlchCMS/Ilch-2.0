@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -61,7 +61,4 @@ class GetMenu
 
         return $menu->getItems($tpl, array_replace_recursive(self::DEFAULT_OPTIONS, $options));
     }
-
-
-
 }

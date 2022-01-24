@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -282,13 +282,11 @@ class Upload extends \Ilch\Controller\Base
     {
         $bytes = sprintf('%u', filesize($this->file));
 
-        if ($bytes > 0)
-        {
+        if ($bytes > 0) {
             $unit = (int)log($bytes, 1024);
             $units = ['B', 'KB', 'MB', 'GB'];
 
-            if (array_key_exists($unit, $units) === true)
-            {
+            if (array_key_exists($unit, $units) === true) {
                 return sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]);
             }
         }
@@ -322,7 +320,8 @@ class Upload extends \Ilch\Controller\Base
      * @return bool
      * @since 2.1.20
      */
-    public function enoughFreeMemory($imageFilePath) {
+    public function enoughFreeMemory($imageFilePath)
+    {
         $memoryLimit = ini_get('memory_limit');
         if ($memoryLimit == '-1') {
             return true;
@@ -368,14 +367,20 @@ class Upload extends \Ilch\Controller\Base
      * @param $size_str
      * @return float|int
      */
-    public function returnBytes ($size_str)
+    public function returnBytes($size_str)
     {
-        switch (substr($size_str, -1))
-        {
-            case 'M': case 'm': return (int)$size_str * 1048576;
-            case 'K': case 'k': return (int)$size_str * 1024;
-            case 'G': case 'g': return (int)$size_str * 1073741824;
-            default: return $size_str;
+        switch (substr($size_str, -1)) {
+            case 'M':
+            case 'm':
+                return (int)$size_str * 1048576;
+            case 'K':
+            case 'k':
+                return (int)$size_str * 1024;
+            case 'G':
+            case 'g':
+                return (int)$size_str * 1073741824;
+            default:
+                return $size_str;
         }
     }
 
@@ -389,7 +394,7 @@ class Upload extends \Ilch\Controller\Base
         $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
 
         rename($this->path.$this->getName().'.'.$this->getEnding(), $this->path.$hash.'.'.$this->getEnding());
-        if (in_array($this->getEnding() , explode(' ', $this->types))) {
+        if (in_array($this->getEnding(), explode(' ', $this->types))) {
             if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
                 return;
             }
@@ -412,7 +417,7 @@ class Upload extends \Ilch\Controller\Base
         $thumb->Thumbprefix = 'thumb_';
         $thumb->Thumblocation = $this->path;
         $thumb->Thumbsize = 300;
-        $thumb->Createthumb($this->getUrl(),'file');
+        $thumb->Createthumb($this->getUrl(), 'file');
 
         $this->setUrlThumb($this->path.'thumb_'.basename($this->getUrl()));
         return true;

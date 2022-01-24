@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -31,7 +31,7 @@ class Model
      * @param mixed[] $arguments
      * @return mixed[]
      */
-    public function __call($name, $arguments) 
+    public function __call($name, $arguments)
     {
         $action = substr($name, 0, 3);
         $property = lcfirst(substr($name, 3));

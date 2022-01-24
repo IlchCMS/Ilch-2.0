@@ -263,7 +263,7 @@ class Comments
         </div>';
         }
 
-        foreach($comments as $comment) {
+        foreach ($comments as $comment) {
             $user = $this->getUser($comment->getUserId());
             $commentDate = new \Ilch\Date($comment->getDateCreated());
             $voted = explode(',', $comment->getVoted());

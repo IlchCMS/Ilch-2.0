@@ -272,16 +272,16 @@ class GoogleCaptcha
         }
 
         if ($this->getVersion() === 3) {
-            if ($recaptcha->success == true && $recaptcha->score >= $score && ( ( $action && $recaptcha->action == $action ) || !$action ) ) {
-               return true;
+            if ($recaptcha->success == true && $recaptcha->score >= $score && (($action && $recaptcha->action == $action) || !$action)) {
+                return true;
             } else {
-               return false;
+                return false;
             }
         } elseif ($this->getVersion() === 2) {
             if ($recaptcha->success == true) {
-               return true;
+                return true;
             } else {
-               return false;
+                return false;
             }
         }
     }

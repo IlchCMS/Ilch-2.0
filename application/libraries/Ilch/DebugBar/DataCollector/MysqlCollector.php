@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -61,7 +61,8 @@ class MysqlCollector extends DataCollector implements Renderable, AssetProvider
             'nb_failed_statements' => count($this->mysqlDebug->getFailedExecutedStatements()),
             'accumulated_duration' => $this->mysqlDebug->getAccumulatedStatementsDuration(),
             'accumulated_duration_str' => $this->getDataFormatter()->formatDuration(
-                $this->mysqlDebug->getAccumulatedStatementsDuration()),
+                $this->mysqlDebug->getAccumulatedStatementsDuration()
+            ),
             'memory_usage' => $this->mysqlDebug->getMemoryUsage(),
             'memory_usage_str' => $this->getDataFormatter()->formatBytes($this->mysqlDebug->getPeakMemoryUsage()),
             'peak_memory_usage' => $this->mysqlDebug->getPeakMemoryUsage(),

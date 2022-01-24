@@ -384,9 +384,11 @@ class Frontend extends Base
     public function load($file, $data = [])
     {
         $request = $this->getRequest();
-        $layout = new \Ilch\Layout\Frontend($request,
+        $layout = new \Ilch\Layout\Frontend(
+            $request,
             $this->getTranslator(),
-            $this->getRouter());
+            $this->getRouter()
+        );
         $layout->setArray($data);
         $layout->setFile($this->getFile(), $this->getLayoutKey());
         $this->loadSettings();
@@ -411,7 +413,7 @@ class Frontend extends Base
                 $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
                 if (!empty($config->config['settings'])) {
-                    foreach($config->config['settings'] as $key => $value) {
+                    foreach ($config->config['settings'] as $key => $value) {
                         if ($value['type'] !== 'separator') {
                             $this->settings[$key] = $value['default'];
                         }

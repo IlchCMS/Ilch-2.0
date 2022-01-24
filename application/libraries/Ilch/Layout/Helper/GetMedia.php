@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -84,8 +84,7 @@ class GetMedia
         $mediaButton = null,
         $actionButton = null,
         $inputId = null
-    )
-    {
+    ) {
         if (isset($mediaButton)) {
             $this->addMediaButton($mediaButton);
         }

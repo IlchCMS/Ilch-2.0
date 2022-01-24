@@ -1,5 +1,6 @@
 <?php
 /**
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -15,7 +16,7 @@ class Frontend extends Base
 
         if (!empty($_SESSION['layout'])) {
             $layoutKey = $_SESSION['layout'];
-        } elseif ($this->getConfig() !== NULL) {
+        } elseif ($this->getConfig() !== null) {
             $layoutKey = $this->getConfig()->get('default_layout');
         } else {
             $layoutKey = DEFAULT_LAYOUT;

@@ -450,10 +450,10 @@ class Mail
         }
         $mail->WordWrap = 78; // Set word wrap to the RFC2822 limit
         $mail->Body = $body; // Create message bodies and embed images
-        foreach($this->attachments as $attachment) {
+        foreach ($this->attachments as $attachment) {
             $mail->addAttachment($attachment['path'], $attachment['name']);
         }
-        foreach($this->stringAttachments as $attachment) {
+        foreach ($this->stringAttachments as $attachment) {
             $mail->addStringAttachment($attachment['string'], $attachment['filename']);
         }
 
