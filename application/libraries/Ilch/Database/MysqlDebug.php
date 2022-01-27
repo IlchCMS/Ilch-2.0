@@ -35,7 +35,7 @@ class MysqlDebug extends Mysql
      * @param  string $sql
      * @return \mysqli_result
      */
-    public function query($sql)
+    public function query(string $sql)
     {
         $sql = $this->getSqlWithPrefix($sql);
 
