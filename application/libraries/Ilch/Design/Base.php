@@ -619,11 +619,11 @@ abstract class Base
      * @param string $mediaButton Define Media Button by given URL
      * @param string $actionButton Define Action Button by given URL
      * @param null|string $inputId
-     * @return string
+     * @return \Ilch\Layout\Helper\GetMedia
      */
-    public function getMedia(string $mediaButton = null, string $actionButton = null, $inputId = null): string
+    public function getMedia(string $mediaButton = null, string $actionButton = null, $inputId = null): \Ilch\Layout\Helper\GetMedia
     {
-        return  new \Ilch\Layout\Helper\GetMedia($this, $mediaButton, $actionButton, $inputId);
+        return  new \Ilch\Layout\Helper\GetMedia($mediaButton, $actionButton, $inputId);
     }
 
     /**

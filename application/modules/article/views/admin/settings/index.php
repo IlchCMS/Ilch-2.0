@@ -20,7 +20,7 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="articleRating-on" name="articleRating" value="1" <?($this->get('articleRating') == '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="articleRating-on" name="articleRating" value="1" <?=($this->get('articleRating') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="articleRating-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
                 <input type="radio" class="flipswitch-input" id="articleRating-off" name="articleRating" value="0" <?=($this->get('articleRating') != '1') ? 'checked="checked"' : '' ?> />
                 <label for="articleRating-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>

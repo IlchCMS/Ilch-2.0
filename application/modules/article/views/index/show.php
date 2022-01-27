@@ -6,7 +6,7 @@
     $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
     $preview = $this->getRequest()->getParam('preview');
     $config = $this->get('config');
-    $date = new \Ilch\Date($article->getDateCreated());
+    $date = new \Ilch\Date($article->getDateCreated() ?? '');
 
     $catIds = explode(',', $article->getCatId());
     $categories = '';

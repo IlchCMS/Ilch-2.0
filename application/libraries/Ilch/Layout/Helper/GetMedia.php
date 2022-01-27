@@ -11,22 +11,22 @@ class GetMedia
     /**
      * @var string
      */
-    protected $mediaButton;
+    protected $mediaButton = '';
 
     /**
      * @var string
      */
-    protected $actionButton;
+    protected $actionButton = '';
 
     /**
      * @var string
      */
-    protected $uploadController;
+    protected $uploadController = '';
 
     /**
      * @var string
      */
-    protected $inputId;
+    protected $inputId = '';
 
     /**
      * Sets the mediaButton.
@@ -34,7 +34,7 @@ class GetMedia
      * @param string $mediaButton
      * @return GetMedia
      */
-    public function addMediaButton($mediaButton)
+    public function addMediaButton(string $mediaButton)
     {
         $this->mediaButton = $mediaButton;
 
@@ -47,7 +47,7 @@ class GetMedia
      * @param string $actionButton
      * @return GetMedia
      */
-    public function addActionButton($actionButton)
+    public function addActionButton(string $actionButton)
     {
         $this->actionButton = $actionButton;
 
@@ -60,7 +60,7 @@ class GetMedia
      * @param string $uploadController
      * @return GetMedia
      */
-    public function addUploadController($uploadController)
+    public function addUploadController(string $uploadController)
     {
         $this->uploadController = $uploadController;
 
@@ -73,7 +73,7 @@ class GetMedia
      * @param string $inputId
      * @return GetMedia
      */
-    public function addInputId($inputId)
+    public function addInputId(string $inputId)
     {
         $this->inputId = $inputId;
 
@@ -85,13 +85,13 @@ class GetMedia
         $actionButton = null,
         $inputId = null
     ) {
-        if (isset($mediaButton)) {
+        if ($mediaButton) {
             $this->addMediaButton($mediaButton);
         }
-        if (isset($actionButton)) {
+        if ($actionButton) {
             $this->addActionButton($actionButton);
         }
-        if (isset($inputId)) {
+        if ($inputId) {
             $this->addInputId($inputId);
         }
     }
@@ -101,7 +101,7 @@ class GetMedia
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $_SESSION['media-url-media-button'] = $this->mediaButton;
         $_SESSION['media-url-action-button'] = $this->actionButton;
