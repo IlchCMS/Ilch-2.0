@@ -64,7 +64,7 @@ $postsPerPage = $this->get('postsPerPage');
                         <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getTopicId()) ?>
                         <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getTopicId()) ?>
                         <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getTopicId()) ?>
-                        <li class="row ilch-border ilch-bg--hover <?php if ($topic->getType() == '1') { echo 'tack'; } ?>">
+                        <li class="row ilch-border ilch-bg--hover <?=($topic->getType() == '1') ? 'tack' : '' ?>">
                             <dl class="icon
                                 <?php if ($this->getUser()): ?>
                                     <?php if ($topic->getStatus() == 0 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>

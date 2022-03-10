@@ -68,8 +68,8 @@ class Index extends \Ilch\Controller\Frontend
         // Early exit if browser or os was never seen before.
         // This avoids adding untrusted parts to menus and urls later.
         if (!empty($browser) && !$statisticMapper->browserSeenBefore($browser)) {
-             $this->addMessage('unknownOrUnseenBrowser', 'danger');
-             $this->redirect()
+            $this->addMessage('unknownOrUnseenBrowser', 'danger');
+            $this->redirect()
              ->to(['action' => 'index']);
         }
         if (!empty($os) && !$statisticMapper->osSeenBefore($os)) {

@@ -8,9 +8,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="desc_order-on" name="desc_order" value="1" <?php if ($this->get('desc_order') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="desc_order-on" name="desc_order" value="1" <?=($this->get('desc_order') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="desc_order-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="desc_order-off" name="desc_order" value="0" <?php if ($this->get('desc_order') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="desc_order-off" name="desc_order" value="0" <?=($this->get('desc_order') != '1') ? 'checked="checked"' : '' ?> />
                 <label for="desc_order-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>

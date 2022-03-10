@@ -68,18 +68,21 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
+                // no break
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `period_day` INT(1) DEFAULT NULL AFTER `color`;');
+                // no break
             case "1.2":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_calendar_events` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                // no break
             case "1.3.0":
             case "1.4.0":
             case "1.5.0":
             case "1.6.0":
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'calendar' AND `locale` = '%s';", $value['description'], $key));
                 }
         }

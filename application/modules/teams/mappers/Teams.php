@@ -81,7 +81,8 @@ class Teams extends \Ilch\Mapper
      * @param int $id , int $position
      * @param int $position
      */
-    public function updatePositionById($id, $position) {
+    public function updatePositionById($id, $position)
+    {
         $this->db()->update('teams')
             ->values(['position' => $position])
             ->where(['id' => $id])
@@ -176,6 +177,5 @@ class Teams extends \Ilch\Mapper
         $this->db()->delete('teams')
             ->where(['id' => $id])
             ->execute();
-
     }
 }

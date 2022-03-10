@@ -107,15 +107,17 @@ class Insert extends QueryBuilder
                 }
             } else {
                 $this->multipleRows = true;
-                $escapeFunc = function($value) { return $this->db->escape($value, true); };
+                $escapeFunc = function ($value) {
+                    return $this->db->escape($value, true);
+                };
                 $countOfColumns = \count($this->columns);
                 $countOfRows = \count($this->values);
 
-                foreach($this->columns as $column) {
+                foreach ($this->columns as $column) {
                     $sqlFields[] = $this->db->quote($column);
                 }
 
-                foreach($this->values as $value) {
+                foreach ($this->values as $value) {
                     $rowWithMultipleValues = \is_array($value);
 
                     if (!$rowWithMultipleValues && $countOfColumns !== 1) {

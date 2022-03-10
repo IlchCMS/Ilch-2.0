@@ -1,5 +1,5 @@
 <?php
-$adate = new \Ilch\Date(); 
+$adate = new \Ilch\Date();
 $history = $this->get('history');
 
 if ($history != '') {
@@ -25,7 +25,7 @@ if ($history != '') {
                    class="form-control"
                    id="date"
                    name="date"
-                   value="<?php if ($history != '') { echo $date; } else { echo $this->get('post')['date']; } ?>"
+                   value="<?=($history != '') ? $date : $this->get('post')['date'] ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
@@ -41,7 +41,7 @@ if ($history != '') {
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($history != '') { echo $this->escape($history->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
+                   value="<?=($history != '') ? $this->escape($history->getTitle()) : $this->get('post')['title'] ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -53,7 +53,7 @@ if ($history != '') {
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?php if ($history != '') { echo $this->escape($history->getText()); } else { echo $this->get('post')['text']; } ?></textarea>
+                      rows="5"><?=($history != '') ? $this->escape($history->getText()) : $this->get('post')['text'] ?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -83,7 +83,7 @@ if ($history != '') {
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"
-                   value="<?php if ($history != '') { echo $history->getColor(); } else { echo '#75ce66'; } ?>">
+                   value="<?=($history != '') ? $history->getColor() : '#75ce66' ?>">
             <span class="input-group-addon">
                 <span class="fa fa-undo" onclick="document.getElementById('color').color.fromString('75ce66')"></span>
             </span>

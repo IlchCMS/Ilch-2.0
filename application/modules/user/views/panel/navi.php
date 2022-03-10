@@ -1,7 +1,8 @@
-<?php 
+<?php
 $profil = $this->get('profil');
 
-function getTransKey($usermenuId) {
+function getTransKey($usermenuId)
+{
     switch ($usermenuId) {
     case 1:
         return 'panel';
@@ -32,16 +33,16 @@ function getTransKey($usermenuId) {
     <div class="profile-usermenu">
         <ul class="nav">
             <?php foreach ($this->get('usermenu') as $usermenu) {
-                $class = '';
-                if ($usermenu->getKey() == 'user/panel/'.$this->getRequest()->getActionName()) {
-                    $class = 'active';
-                }
+    $class = '';
+    if ($usermenu->getKey() == 'user/panel/'.$this->getRequest()->getActionName()) {
+        $class = 'active';
+    }
 
-                if ($usermenu->getKey() === 'user/panel/gallery' && ($this->get('galleryAllowed') == 0 || $profil->getOptGallery() == 0)) {
-                } else {
-                    echo '<li class="'.$class.'"><a href="'.$this->getUrl($usermenu->getKey()).'">'.$this->getTrans(getTransKey($usermenu->getId())).' <i class="fa '.$usermenu->getIcon().' pull-right"></i></a></li>';
-                }
-            } ?>
+    if ($usermenu->getKey() === 'user/panel/gallery' && ($this->get('galleryAllowed') == 0 || $profil->getOptGallery() == 0)) {
+    } else {
+        echo '<li class="'.$class.'"><a href="'.$this->getUrl($usermenu->getKey()).'">'.$this->getTrans(getTransKey($usermenu->getId())).' <i class="fa '.$usermenu->getIcon().' pull-right"></i></a></li>';
+    }
+} ?>
         </ul>
     </div>
 </div>

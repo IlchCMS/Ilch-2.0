@@ -35,7 +35,7 @@ class MysqlDebug extends Mysql
      * @param  string $sql
      * @return \mysqli_result
      */
-    public function query($sql)
+    public function query(string $sql)
     {
         $sql = $this->getSqlWithPrefix($sql);
 
@@ -81,7 +81,9 @@ class MysqlDebug extends Mysql
      */
     public function getAccumulatedStatementsDuration()
     {
-        return array_reduce($this->executedStatements, static function ($v, $s) { return $v + $s->getDuration(); });
+        return array_reduce($this->executedStatements, static function ($v, $s) {
+            return $v + $s->getDuration();
+        });
     }
 
     /**
@@ -91,7 +93,9 @@ class MysqlDebug extends Mysql
      */
     public function getMemoryUsage()
     {
-        return array_reduce($this->executedStatements, static function ($v, $s) { return $v + $s->getMemoryUsage(); });
+        return array_reduce($this->executedStatements, static function ($v, $s) {
+            return $v + $s->getMemoryUsage();
+        });
     }
 
     /**
@@ -101,7 +105,10 @@ class MysqlDebug extends Mysql
      */
     public function getPeakMemoryUsage()
     {
-        return array_reduce($this->executedStatements, static function ($v, $s) { $m = $s->getEndMemory(); return $m > $v ? $m : $v; });
+        return array_reduce($this->executedStatements, static function ($v, $s) {
+            $m = $s->getEndMemory();
+            return $m > $v ? $m : $v;
+        });
     }
 
     /**
@@ -121,6 +128,8 @@ class MysqlDebug extends Mysql
      */
     public function getFailedExecutedStatements()
     {
-        return array_filter($this->executedStatements, static function ($s) { return !$s->isSuccess(); });
+        return array_filter($this->executedStatements, static function ($s) {
+            return !$s->isSuccess();
+        });
     }
 }

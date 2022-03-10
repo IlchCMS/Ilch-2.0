@@ -42,20 +42,19 @@ class Cats extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getControllerName() == 'cats' and $this->getRequest()->getActionName() == 'treat') {
             $items[1][0]['active'] = true;
         } else {
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuRules',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $ruleMapper = new RuleMapper();
 
@@ -87,7 +86,7 @@ class Cats extends \Ilch\Controller\Admin
         $this->getView()->set('cats', $ruleMapper->getRules(['r.parent_id' => 0]));
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $ruleMapper = new RuleMapper();
         $userGroupMapper = new UserGroupMapper();

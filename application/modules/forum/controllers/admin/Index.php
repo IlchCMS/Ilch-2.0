@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -41,14 +41,13 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'forum',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['action' => 'index']);

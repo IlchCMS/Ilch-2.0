@@ -76,7 +76,7 @@
             <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
         <?php endif; ?>
         <div class="col-lg-10" align="right">
-            <?php 
+            <?php
                 if ($this->get('captchaNeeded')) {
                     if ($this->get('googlecaptcha')) {
                         echo $this->get('googlecaptcha')->setForm('contactForm')->getCaptcha($this, 'addButton', 'Contact');

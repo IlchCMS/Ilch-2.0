@@ -81,12 +81,15 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('partners_slider_mode', 'vertical');
+                // no break
             case "1.1":
             case "1.2":
                 $this->db()->query('ALTER TABLE `[prefix]_partners` ADD `target` TINYINT(1) NOT NULL DEFAULT 0 AFTER `link`;');
+                // no break
             case "1.3":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_partners` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                // no break
             case "1.4.0":
             case "1.5.0":
             case "1.6.0":
@@ -96,9 +99,10 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('UPDATE `[prefix]_partners` SET `banner` = \'https://www.ilch.de/include/images/linkus/88x31.png\', `link` = \'https://ilch.de\' WHERE `id` = \'1\' AND `banner` = \'http://www.ilch.de/include/images/linkus/88x31.png\'');
 
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'partner' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
             case "1.9.0":
                 // update Captcha
         }

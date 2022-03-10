@@ -47,13 +47,15 @@ $teamsMapper = $this->get('teamsMapper');
                 <?=$this->getTrans('gender') ?>:
             </label>
             <div class="col-lg-2">
-                <?php if ($join->getGender() == 1) {
+                <?php
+                if ($join->getGender() == 1) {
                     echo $this->getTrans('genderMale');
                 } elseif ($join->getGender() == 2) {
                     echo $this->getTrans('genderFemale');
                 } else {
                     echo $this->getTrans('genderNonBinary');
-                } ?>
+                }
+                ?>
             </div>
         </div>
         <?php if ($join->getBirthday()): ?>

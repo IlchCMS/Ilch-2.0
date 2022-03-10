@@ -264,6 +264,7 @@ class Config extends \Ilch\Config\Install
                 (7, "Historiker", 1500),
                 (8, "Aufsteigender-Historiker", 5000),
                 (9, "Dichter", 10000);');
+                // no break
             case "1.4":
             case "1.5":
             case "1.6":
@@ -272,15 +273,18 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig->set('forum_postVoting', '0');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
+                // no break
             case "1.8":
                 if (!$this->db()->ifColumnExists('[prefix]_forum_posts', 'votes')) {
                     $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD COLUMN `votes` LONGTEXT NOT NULL AFTER `visits`;');
                 }
+                // no break
             case "1.9":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
 
                 $databaseConfig->set('forum_floodInterval', '0');
                 $databaseConfig->set('forum_excludeFloodProtection', '1');
+                // no break
             case "1.10.0":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_forum_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
@@ -290,6 +294,7 @@ class Config extends \Ilch\Config\Install
 
                 // Delete no longer needed file.
                 unlink(ROOT_PATH.'/application/modules/forum/controllers/admin/Base.php');
+                // no break
             case "1.11.0":
             case "1.12.0":
             case "1.13.0":
@@ -346,6 +351,7 @@ class Config extends \Ilch\Config\Install
                           <p>&nbsp;</p>
                           <p>Best regards</p>
                           <p>Administrator</p>", "en_EN");');
+                // no break
             case "1.18.0":
                 // Add table for reported posts.
                 $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_forum_reports` (
@@ -400,15 +406,18 @@ class Config extends \Ilch\Config\Install
                     file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
                     $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
                 }
+                // no break
             case "1.19.0":
             case "1.20.0":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('forum_DESCPostorder', '0');
+                // no break
             case "1.21.0":
                 // convert forum_groupAppearance to new format
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $appearance = unserialize($databaseConfig->get('forum_groupAppearance'));
                 $databaseConfig->set('forum_groupAppearance', json_encode($appearance));
+                // no break
             case "1.22.0":
             case "1.23.0":
             case "1.24.0":
@@ -423,9 +432,10 @@ class Config extends \Ilch\Config\Install
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'forum' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
             case "1.25.0":
             case "1.26.0":
             case "1.27.0":

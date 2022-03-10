@@ -52,8 +52,7 @@ class Settings extends \Ilch\Controller\Admin
             $items[3]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'forum',
             $items
         );
@@ -135,7 +134,7 @@ class Settings extends \Ilch\Controller\Admin
     private function writeCSSFile($appearances)
     {
         $content = '';
-        foreach($appearances as $key => $value) {
+        foreach ($appearances as $key => $value) {
             if (!isset($value['active'])) {
                 continue;
             }
@@ -155,7 +154,7 @@ class Settings extends \Ilch\Controller\Admin
 
         // Delete old stylesheets
         $files = glob(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/*');
-        foreach($files as $file) {
+        foreach ($files as $file) {
             if (is_file($file)) {
                 unlink($file);
             }

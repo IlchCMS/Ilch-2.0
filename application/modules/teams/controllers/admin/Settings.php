@@ -33,14 +33,13 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuTeams',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])

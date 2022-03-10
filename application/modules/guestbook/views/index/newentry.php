@@ -66,7 +66,7 @@
     <?php endif; ?>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
-            <?php 
+            <?php
                 if ($this->get('captchaNeeded')) {
                     if ($this->get('googlecaptcha')) {
                         echo $this->get('googlecaptcha')->setForm('guestbookForm')->getCaptcha($this, 'addButton', 'Guestbook');

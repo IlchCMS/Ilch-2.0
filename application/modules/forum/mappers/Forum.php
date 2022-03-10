@@ -242,7 +242,7 @@ class Forum extends \Ilch\Mapper
         $topicMapper = new TopicMapper();
         $id = $forumItem->getId();
         $topics = $topicMapper->getTopicsListByForumId($id);
-        foreach ($topics as $topicId){
+        foreach ($topics as $topicId) {
             $topicMapper->deleteById($topicId);
         }
         $this->db()->delete('forum_items')

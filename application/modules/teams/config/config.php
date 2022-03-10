@@ -156,10 +156,12 @@ class Config extends \Ilch\Config\Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `position` INT NOT NULL DEFAULT 0;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY `optIn` TINYINT NOT NULL;');
+                // no break
             case "1.1":
             case "1.2":
             case "1.3":
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `optShow` TINYINT(1) NOT NULL AFTER `groupId`;');
+                // no break
             case "1.4":
             case "1.5":
             case "1.6":
@@ -169,6 +171,7 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_teams` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                // no break
             case "1.10.0":
             case "1.11.0":
             case "1.12.0":
@@ -199,13 +202,15 @@ class Config extends \Ilch\Config\Install
                 $imageExtensions = explode(' ', $databaseConfig->get('teams_filetypes'));
                 $imageExtensions = array_diff($imageExtensions, $blacklist);
                 $databaseConfig->set('teams_filetypes', implode(' ', $imageExtensions));
+                // no break
             case "1.16.0":
             case "1.17.0":
             case "1.18.0":
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'teams' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
             case "1.19.0":
         }
     }

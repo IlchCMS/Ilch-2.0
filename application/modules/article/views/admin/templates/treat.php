@@ -90,7 +90,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    name="imageSource"
                    id="imageSource"
-                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getImageSource()); } ?>" />
+                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getImageSource()) : '' ?>" />
         </div>
     </div>
     <h1><?=$this->getTrans('seo') ?></h1>
@@ -101,7 +101,7 @@ if ($this->get('article') != '') {
         <div class="col-lg-4">
             <textarea class="form-control" 
                       id="description" 
-                      name="description"><?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getDescription()); } ?></textarea>
+                      name="description"><?=if ($this->get('article') != '') ? $this->escape($this->get('article')->getDescription()) : ''?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -111,7 +111,7 @@ if ($this->get('article') != '') {
         <div class="col-lg-4">
             <textarea class="form-control" 
                       id="keywords" 
-                      name="keywords"><?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getKeywords()); } ?></textarea>
+                      name="keywords"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getKeywords()) : '' ?></textarea>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
@@ -125,7 +125,7 @@ if ($this->get('article') != '') {
                        type="text"
                        id="permaLink"
                        name="permaLink"
-                       value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
+                       value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getPerma()) : $this->get('post')['permaLink'] ?>" />
             </div>
         </div>
     </div>

@@ -62,6 +62,7 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_history` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                // no break
             case "1.1":
             case "1.1.0":
             case "1.2.0":
@@ -69,6 +70,7 @@ class Config extends \Ilch\Config\Install
                 // Add sort order setting
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('history_desc_order', '0');
+                // no break
             case "1.4.0":
             case "1.5.0":
                 // convert type to new icons
@@ -81,9 +83,10 @@ class Config extends \Ilch\Config\Install
 
                 // remove no longer needed images
                 removeDir(APPLICATION_PATH.'/modules/history/static/img');
+                // no break
             case "1.6.0":
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'history' AND `locale` = '%s';", $value['description'], $key));
                 }
         }

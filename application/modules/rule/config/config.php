@@ -57,11 +57,14 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_rules` ADD `position` INT(11) NOT NULL DEFAULT 0;');
+                // no break
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_rules` MODIFY COLUMN `paragraph` VARCHAR(255) NOT NULL;');
+                // no break
             case "1.2":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_rules` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                // no break
             case "1.3.0":
                 $this->db()->query('ALTER TABLE `[prefix]_rules` ADD COLUMN `parent_id` INT(11) NOT NULL DEFAULT 0;');
                 $this->db()->query('ALTER TABLE `[prefix]_rules` ADD COLUMN `access` varchar(255) NOT NULL;');
@@ -74,11 +77,12 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('rule_showallonstart', '1');
+                // no break
             case "1.4.0":
             case "1.5.0":
             case "1.6.0":
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'rule' AND `locale` = '%s';", $value['description'], $key));
                 }
         }

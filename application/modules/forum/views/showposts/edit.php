@@ -17,7 +17,7 @@ $post = $this->get('post');
             <div class="new-topic ilch-bg ilch-border">
                 <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
-                    <?php If ($this->get('isFirstPost')) : ?>
+                    <?php if ($this->get('isFirstPost')) : ?>
                     <div class="form-group <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
                         <label for="topicTitle" class="col-lg-2 control-label">
                             <?=$this->getTrans('topicTitle') ?>

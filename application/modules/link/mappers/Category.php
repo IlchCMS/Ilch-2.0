@@ -116,7 +116,8 @@ class Category extends \Ilch\Mapper
      * @param int $position
      *
      */
-    public function updatePositionById($id, $position) {
+    public function updatePositionById($id, $position)
+    {
         $this->db()->update('link_cats')
             ->values(['pos' => $position])
             ->where(['id' => $id])

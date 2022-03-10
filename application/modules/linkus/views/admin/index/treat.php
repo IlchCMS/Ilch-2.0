@@ -18,7 +18,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($linkus != '') { echo $this->escape($linkus->getTitle()); } else { echo $this->escape($this->get('post')['title']); } ?>" />
+                   value="<?=($linkus != '') ? $this->escape($linkus->getTitle()) : $this->escape($this->get('post')['title']) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
@@ -31,17 +31,13 @@
                        class="form-control"
                        id="selectedImage_1"
                        name="banner"
-                       value="<?php if ($linkus != '') { echo $this->escape($linkus->getBanner()); } else { echo $this->escape($this->get('post')['banner']); } ?>"
+                       value="<?=($linkus != '') ? $this->escape($linkus->getBanner()) : $this->escape($this->get('post')['banner']) ?>"
                        readonly />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
     </div>
-    <?php if ($linkus != ''): ?>
-        <?=$this->getSaveBar('updateButton') ?>
-    <?php else: ?>
-        <?=$this->getSaveBar('addButton') ?>
-    <?php endif; ?>
+    <?=($linkus != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>

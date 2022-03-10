@@ -14,10 +14,11 @@
                     <?php if ($this->get('authProvider')->hasProviderLinked($provider->getKey(), currentUser()->getId())): ?>
                         <?php $accountDetails = $this->get('authProvider')->getLinkedProviderDetails($provider->getKey(), currentUser()->getId()); ?>
                         <li class="list-group-item">
-                            <?=$this->getTrans('providers.linkedToAccount',
-                                '<b>'.$accountDetails->getScreenName().'</b>',
-                                '<i>'.$accountDetails->getCreatedAt().'</i>'
-                            ) ?>
+                            <?=$this->getTrans(
+    'providers.linkedToAccount',
+    '<b>'.$accountDetails->getScreenName().'</b>',
+    '<i>'.$accountDetails->getCreatedAt().'</i>'
+) ?>
                         </li>
                         <li class="list-group-item">
                             <form method="POST" 

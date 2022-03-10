@@ -16,9 +16,9 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" id="newsletter_yes" name="acceptNewsletter" value="1" <?php if ($countMail == '1') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="newsletter_yes" name="acceptNewsletter" value="1" <?=($countMail == '1') ? 'checked="checked"' : '' ?> />
                             <label for="newsletter_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" id="newsletter_no" name="acceptNewsletter" value="0" <?php if ($countMail == '0') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="newsletter_no" name="acceptNewsletter" value="0" <?=($countMail == '0') ? 'checked="checked"' : '' ?> />
                             <label for="newsletter_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>

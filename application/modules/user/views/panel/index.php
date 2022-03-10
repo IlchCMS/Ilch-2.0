@@ -13,7 +13,7 @@ $openFriendRequests = $this->get('openFriendRequests');
         <div class="profile-content active">
             <h1><?=$this->getTrans('welcome') ?> <?=$this->escape($profil->getName()) ?></h1>
 
-            <?php if(!empty($openFriendRequests)): ?>
+            <?php if (!empty($openFriendRequests)): ?>
                 <h1><?=$this->getTrans('friendRequests') ?></h1>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">

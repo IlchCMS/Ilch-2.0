@@ -25,7 +25,7 @@ function rec($item, $obj, $readAccess, $i)
     if (!empty($subItems) && ($item->getType() === 0)) {
         foreach ($subItems as $subItem) {
             if ($adminAccess == true || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
-                 $subItemsFalse = true;
+                $subItemsFalse = true;
             }
         }
     }
@@ -87,7 +87,7 @@ function rec($item, $obj, $readAccess, $i)
                         </dd>
                         <dd class="lastpost small">
                             <?php if ($lastPost): ?>
-                                <?php 
+                                <?php
                                 $forumMapper = $obj->get('forumMapper');
                                 $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId());
                                 ?>
@@ -124,7 +124,6 @@ function rec($item, $obj, $readAccess, $i)
         $i++;
         foreach ($subItems as $subItem) {
             rec($subItem, $obj, $readAccess, $i);
-            
         }
     }
 }

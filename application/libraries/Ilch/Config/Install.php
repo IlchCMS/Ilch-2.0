@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -9,7 +9,7 @@ namespace Ilch\Config;
 class Install extends \Ilch\Mapper
 {
     /**
-     * @var \Ilch\Translator 
+     * @var \Ilch\Translator
      */
     private $translator;
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -53,9 +53,5 @@ class Index extends \Ilch\Controller\Frontend
             ->set('profileFieldsTranslation', $profileFieldsTranslation)
             ->set('pagination', $pagination)
             ->set('userGroupList_allowed', $userGroupList_allowed);
-
-
-    }    
+    }
 }
-
-

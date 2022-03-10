@@ -68,7 +68,7 @@ function debug_backtrace_html($skipEntries = 1)
             $r .= '()';
         }
 
-         $r .= "\r\n";
+        $r .= "\r\n";
     }
 
     return $r;
@@ -198,7 +198,7 @@ function is_in_array($needle, $haystack)
 {
     foreach ($needle as $stack) {
         if (in_array($stack, $haystack)) {
-             return true;
+            return true;
         }
     }
     return false;
@@ -240,13 +240,13 @@ function url_get_contents($url, $write_cache = true, $ignoreCache = false, $cach
     if ($ignoreCache || $filetimemod < time()) {
         $ch = curl_init($url);
         curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_RETURNTRANSFER => true,
             CURLOPT_USERAGENT      => 'Ilch 2 (+http://www.ilch.de)',
-            CURLOPT_FOLLOWLOCATION => TRUE,
+            CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS      => 5,
             CURLOPT_CONNECTTIMEOUT => 15,
             CURLOPT_TIMEOUT        => 30,
-            CURLOPT_SSL_VERIFYPEER => TRUE,
+            CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_CAINFO         => ROOT_PATH.'/certificate/cacert.pem',
             CURLOPT_URL            => $url,
@@ -371,7 +371,7 @@ function glob_recursive($pattern, $flags = 0)
 {
     $files = glob($pattern, $flags);
 
-    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir){
+    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
         $files = array_merge($files, glob_recursive($dir.'/'.basename($pattern), $flags));
     }
 
@@ -490,7 +490,7 @@ function setcookieIlch(string $name, string $value = '', int $expires = 0, $para
     $params['expires'] = $expires;
 
     $allows = ['expires' => true, 'path' => true, 'domain' => true, 'secure' => true, 'httponly' => true, 'samesite' => true];
-    foreach(array_keys($params) as $key) {
+    foreach (array_keys($params) as $key) {
         if (!isset($allows[$key]) || !$allows[$key]) {
             unset($params[$key]);
         }

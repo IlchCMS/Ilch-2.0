@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -37,7 +37,7 @@ class Iframe extends \Ilch\Controller\Frontend
         $this->getView()->set('usergallery_filetypes', $this->getConfig()->get('usergallery_filetypes'));
     }
 
-    public function uploadAction() 
+    public function uploadAction()
     {
         $this->getLayout()->setFile('modules/admin/layouts/iframe');
 

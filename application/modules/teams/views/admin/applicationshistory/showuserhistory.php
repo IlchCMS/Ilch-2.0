@@ -25,7 +25,8 @@ $teamsCache = [];
             </thead>
             <tbody>
                 <?php foreach ($this->get('joins') as $join): ?>
-                    <?php if (!array_key_exists($join->getTeamId(), $teamsCache)) {
+                    <?php
+                    if (!array_key_exists($join->getTeamId(), $teamsCache)) {
                         $teamsCache[$join->getTeamId()] = $teamsMapper->getTeamById($join->getTeamId());
                     }
                     $team = $teamsCache[$join->getTeamId()];

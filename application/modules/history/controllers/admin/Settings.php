@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Dennis Reilard
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -27,39 +27,38 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuHistorys',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuHistorys'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
-            if ($this->getRequest()->isPost()) {
-                $validation = Validation::create($this->getRequest()->getPost(), [
+        if ($this->getRequest()->isPost()) {
+            $validation = Validation::create($this->getRequest()->getPost(), [
                     'desc_order'     => 'required|numeric|min:0|max:1',
                 ]);
 
-                if ($validation->isValid()) {
-                    $this->getConfig()->set('history_desc_order', $this->getRequest()->getPost('desc_order'));
+            if ($validation->isValid()) {
+                $this->getConfig()->set('history_desc_order', $this->getRequest()->getPost('desc_order'));
 
-                    $this->redirect()
+                $this->redirect()
                         ->withMessage('saveSuccess')
                         ->to(['action' => 'index']);
-                }
+            }
 
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
                     ->withInput()
                     ->withErrors($validation->getErrorBag())
                     ->to(['action' => 'index']);
-            }
+        }
 
-            $this->getView()->set('desc_order', $this->getConfig()->get('history_desc_order'));
+        $this->getView()->set('desc_order', $this->getConfig()->get('history_desc_order'));
     }
 }

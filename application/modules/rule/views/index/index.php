@@ -1,4 +1,4 @@
-<?php 
+<?php
 $rules = $this->get('rules');
 
 function rec($item, $obj)
@@ -14,7 +14,7 @@ function rec($item, $obj)
         if (!empty($subItems)) {
             foreach ($subItems as $subItem) {
                 if ($subItem->getAccess() == '' || is_in_array($obj->get('groupIdsArray'), explode(',', $subItem->getAccess())) || $adminAccess == true) {
-                     $subItemsFalse = true;
+                    $subItemsFalse = true;
                 }
             }
         } else {
@@ -25,7 +25,7 @@ function rec($item, $obj)
     $paragraph = $obj->escape($item->getParagraph());
 
     if ($item->getParent_Id() === 0 and $subItemsFalse == true and ($item->getAccess() == '' || is_in_array($obj->get('groupIdsArray'), explode(',', $item->getAccess())) || $adminAccess == true)) {
-    echo '<div class="card">
+        echo '<div class="card">
     <div class="card-header" id="paragraph'.$paragraph.'">
         <h3 class="mb-0" data-toggle="collapse" data-target="#paragraph0_'.$paragraph.'" aria-expanded="false" aria-controls="paragraph0_'.$paragraph.'">
             <a href="#paragraph'.$paragraph.'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$paragraph.' : '.$obj->escape($item->getTitle()).'<span class="pull-right glyphicon glyphicon-'.($obj->get('showallonstart')?'minus':'plus').'"></span>

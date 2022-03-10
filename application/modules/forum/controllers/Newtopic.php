@@ -16,7 +16,7 @@ use Ilch\Validation;
 
 class Newtopic extends \Ilch\Controller\Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $forumMapper = new ForumMapper();
         $id = (int)$this->getRequest()->getParam('id');

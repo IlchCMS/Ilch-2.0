@@ -15,7 +15,7 @@ use Ilch\Accesses;
 
 class Showtopics extends \Ilch\Controller\Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
@@ -41,7 +41,7 @@ class Showtopics extends \Ilch\Controller\Frontend
         $groupIds = [3];
 
         if ($this->getRequest()->isPost() && $this->getRequest()->getPost('forumEdit') === 'forumEdit') {
-           $this->getView()->set('forumEdit', true);
+            $this->getView()->set('forumEdit', true);
         }
 
         if ($this->getUser()) {

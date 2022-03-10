@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -39,8 +39,7 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuArticle',
             $items
         );
@@ -72,7 +71,7 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('article_box_articleLimit', $this->getRequest()->getPost('boxArticleLimit'));
                 $this->getConfig()->set('article_box_archiveLimit', $this->getRequest()->getPost('boxArchiveLimit'));
                 
-                $this->getConfig()->set('article_box_keywords', implode(',',[
+                $this->getConfig()->set('article_box_keywords', implode(',', [
                     $this->getRequest()->getPost('boxKeywordsH2'),
                     $this->getRequest()->getPost('boxKeywordsH3'),
                     $this->getRequest()->getPost('boxKeywordsH4'),
@@ -89,7 +88,7 @@ class Settings extends \Ilch\Controller\Admin
                 ->to(['action' => 'index']);
         }
 
-        $keywordsFontSizes = explode(',',$this->getConfig()->get('article_box_keywords'));
+        $keywordsFontSizes = explode(',', $this->getConfig()->get('article_box_keywords'));
         $this->getView()->set('articlesPerPage', $this->getConfig()->get('article_articlesPerPage'))
             ->set('articleRating', $this->getConfig()->get('article_articleRating'))
             ->set('disableComments', $this->getConfig()->get('article_disableComments'))

@@ -148,7 +148,7 @@ abstract class Base
         $this->purifierConfig = \HTMLPurifier_Config::createDefault();
         $this->purifierConfig->set('Filter.YouTube', true);
         $this->purifierConfig->set('HTML.SafeIframe', true);
-        $this->purifierConfig->set('URI.SafeIframeRegexp','%^https://(www.youtube.com/embed/|www.youtube-nocookie.com/embed/|player.vimeo.com/video/|)%');
+        $this->purifierConfig->set('URI.SafeIframeRegexp', '%^https://(www.youtube.com/embed/|www.youtube-nocookie.com/embed/|player.vimeo.com/video/|)%');
         $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
         $this->purifierConfig->set('Attr.EnableID', true);
         $this->purifierConfig->set('AutoFormat.Linkify', true);
@@ -279,8 +279,8 @@ abstract class Base
      */
     public function getTrans(string $key): string
     {
-      $args = \func_get_args();
-      return $this->getTranslator()->trans(...$args);
+        $args = \func_get_args();
+        return $this->getTranslator()->trans(...$args);
     }
 
     /**
@@ -322,12 +322,12 @@ abstract class Base
         return $this->baseUrl . '/' . $url;
     }
 
-   /**
-     * Gets the layout url.
-     *
-     * @param string $url
-     * @return string
-     */
+    /**
+      * Gets the layout url.
+      *
+      * @param string $url
+      * @return string
+      */
     public function getLayoutUrl(string $url = ''): string
     {
         return $this->getBaseUrl('application/layouts/'.$this->getLayoutKey().'/'.$url);
@@ -619,11 +619,11 @@ abstract class Base
      * @param string $mediaButton Define Media Button by given URL
      * @param string $actionButton Define Action Button by given URL
      * @param null|string $inputId
-     * @return string
+     * @return \Ilch\Layout\Helper\GetMedia
      */
-    public function getMedia(string $mediaButton = null, string $actionButton = null, $inputId = null): string
+    public function getMedia(string $mediaButton = null, string $actionButton = null, $inputId = null): \Ilch\Layout\Helper\GetMedia
     {
-        return  new \Ilch\Layout\Helper\GetMedia($this, $mediaButton, $actionButton, $inputId);
+        return  new \Ilch\Layout\Helper\GetMedia($mediaButton, $actionButton, $inputId);
     }
 
     /**
@@ -737,8 +737,8 @@ abstract class Base
                         '.$content.'
                     </div>
                     <div class="modal-footer">';
-                        if ($submit != null) {
-                            $html .= '<button type="button"
+        if ($submit != null) {
+            $html .= '<button type="button"
                                  class="btn btn-primary"
                                  id="modalButton">'.$this->getTrans('ack').'
                             </button>
@@ -746,14 +746,14 @@ abstract class Base
                                     class="btn btn-default"
                                     data-dismiss="modal">'.$this->getTrans('cancel').'
                             </button>';
-                        } else {
-                            $html .= '<button type="button"
+        } else {
+            $html .= '<button type="button"
                                 class="btn btn-primary"
                                 data-dismiss="modal">
                             '.$this->getTrans('close').'
                             </button>';
-                        }
-                    $html .= '</div>
+        }
+        $html .= '</div>
                 </div>
             </div>
         </div>';

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -242,7 +242,7 @@ abstract class QueryBuilder
         // expect comparison of 2 fields -> don't escape (f.e. join conditions)
         if (\is_int($key)) {
             $conditionParts = explode(' ', $value);
-            if (\count($conditionParts) < 3 || ( \count($conditionParts) == 3 && !\in_array($conditionParts[1], $singleComparisonOperators) ) || ( \count($conditionParts) == 4 && !\in_array($conditionParts[1].' '.$conditionParts[2], $singleComparisonOperators) ) ) {
+            if (\count($conditionParts) < 3 || (\count($conditionParts) == 3 && !\in_array($conditionParts[1], $singleComparisonOperators)) || (\count($conditionParts) == 4 && !\in_array($conditionParts[1].' '.$conditionParts[2], $singleComparisonOperators))) {
                 throw new \InvalidArgumentException('Invalid comparison expression');
             }
 
@@ -255,7 +255,7 @@ abstract class QueryBuilder
 
             if (\in_array($operator, ['IS', 'IS NOT'])) {
                 $right = 'NULL';
-            } else if (\count($conditionParts) == 4) {
+            } elseif (\count($conditionParts) == 4) {
                 $right = $this->db->quote($conditionParts[3]);
             } else {
                 $right = $this->db->quote($conditionParts[2]);

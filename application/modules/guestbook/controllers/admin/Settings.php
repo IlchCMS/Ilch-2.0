@@ -27,14 +27,13 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'guestbook',
             $items
         );
     }
     
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])

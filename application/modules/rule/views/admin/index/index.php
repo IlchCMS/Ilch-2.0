@@ -34,7 +34,7 @@
                         <tr>
                             <input type="hidden" name="items[]" value="<?=$rule->getId() ?>" />
                             <td><?=$this->getDeleteCheckbox('check_entries', $rule->getId()) ?></td>
-                            <td><?=$this->getEditIcon(array_merge(($rule->getParent_Id()==0?['controller' => 'cats']:[]),['action' => 'treat', 'id' => $rule->getId()])) ?></td>
+                            <td><?=$this->getEditIcon(array_merge(($rule->getParent_Id()==0?['controller' => 'cats']:[]), ['action' => 'treat', 'id' => $rule->getId()])) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $rule->getId()]) ?></td>
                             <td><i class="fa fa-sort"></i></td>
                             <td><?=($rulesparent?$this->escape($rulesparent->getParagraph()).' / ':'') ?><?=$this->escape($rule->getParagraph()) ?></td>

@@ -41,7 +41,6 @@ class Away extends \Ilch\Mapper
             $entryModel->setStatus($entries['status']);
             $entryModel->setShow($entries['show']);
             $away[] = $entryModel;
-
         }
 
         return $away;

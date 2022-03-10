@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -54,14 +54,13 @@ class Cats extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuArticle',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $categoryMapper = new CategoryMapper();
         
@@ -92,7 +91,7 @@ class Cats extends \Ilch\Controller\Admin
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $categoryMapper = new CategoryMapper();
 

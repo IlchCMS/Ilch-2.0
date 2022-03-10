@@ -34,7 +34,7 @@ class Remember
         // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
         $authTokenModel->setToken(hash('sha256', $authenticator));
         $authTokenModel->setUserid($userId);
-        $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
+        $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime('+30 days')));
 
         setcookieIlch('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'));
 
@@ -72,7 +72,7 @@ class Remember
                 // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
                 $authTokenModel->setToken(hash('sha256', $authenticator));
                 $authTokenModel->setUserid($_SESSION['user_id']);
-                $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
+                $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime('+30 days')));
 
                 setcookieIlch('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'));
 

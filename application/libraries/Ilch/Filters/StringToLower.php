@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  * @author Tobias Schwarz <tobias.schwarz@gmx.eu>
  */
@@ -14,7 +14,6 @@ class StringToLower extends Base
 {
     public function __construct($paramters = null)
     {
-
     }
 
     public function filter($data)

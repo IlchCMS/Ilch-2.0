@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -114,7 +114,7 @@ class Model
                 $groupIds[] = $groups->getId();
             }
 
-            if($this->layout->getUser()->isAdmin()){
+            if ($this->layout->getUser()->isAdmin()) {
                 $adminAccess = true;
             }
         }
@@ -197,7 +197,7 @@ class Model
                 $groupIds[] = $groups->getId();
             }
 
-            if($this->layout->getUser()->isAdmin()){
+            if ($this->layout->getUser()->isAdmin()) {
                 $adminAccess = true;
             }
         }

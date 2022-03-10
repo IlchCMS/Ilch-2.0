@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -66,7 +66,7 @@ class GroupRanking extends \Ilch\Mapper
         $select = $this->db()->select('*')
             ->from('forum_groupranking');
 
-        foreach($group_ids as $groupId) {
+        foreach ($group_ids as $groupId) {
             $select->orWhere(['group_id' => $groupId]);
         }
 
@@ -97,7 +97,7 @@ class GroupRanking extends \Ilch\Mapper
     {
         $groupRows = $this->db()->select('*')
             ->from(['r' => 'forum_groupranking'])
-            ->join(['g' => 'groups'],'g.id = r.group_id','RIGHT')
+            ->join(['g' => 'groups'], 'g.id = r.group_id', 'RIGHT')
             ->order(['r.rank' => 'ASC'])
             ->execute()
             ->fetchRows();
@@ -124,7 +124,7 @@ class GroupRanking extends \Ilch\Mapper
      */
     public function saveGroupRanking($groups)
     {
-        foreach($groups as $rank => $group_id) {
+        foreach ($groups as $rank => $group_id) {
             $groupRanking = $this->getGroupRankingByGroupId($group_id);
 
             if (empty($groupRanking)) {

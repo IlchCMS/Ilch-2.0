@@ -76,8 +76,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuUser',
             $items
         );
@@ -122,13 +121,13 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('showselectsdelete')) {
             $entries = $userMapper->getUserList(['selectsdelete >' => '1000-01-01 00:00:00'], $pagination);
-        } else if ($this->getRequest()->getParam('showsetfree')) {
+        } elseif ($this->getRequest()->getParam('showsetfree')) {
             $entries = $userMapper->getUserList(['confirmed' => 0], $pagination);
             if (empty($entries)) {
                 $notificationsMapper = new NotificationsMapper();
                 $notificationsMapper->deleteNotificationsByType('userAwaitingApproval');
             }
-        } else if ($this->getRequest()->getParam('showlocked')) {
+        } elseif ($this->getRequest()->getParam('showlocked')) {
             $entries = $userMapper->getUserList(['locked' => 1], $pagination);
         } else {
             $entries = $userMapper->getUserList(['confirmed' => 1], $pagination);
@@ -445,7 +444,7 @@ class Index extends \Ilch\Controller\Admin
             $user = $userMapper->getUserById($userId);
 
             if ($user) {
-                switch($default) {
+                switch ($default) {
                     case 'firstname':
                         $user->setFirstName('');
                         break;
@@ -492,7 +491,7 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('delOwnUserProhibited', 'warning');
             } elseif ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
                 $this->addMessage('delLastAdminProhibited', 'warning');
-                // Delete adminuser only if he is not the last admin.
+            // Delete adminuser only if he is not the last admin.
             } else {
                 if ($deleteUser->getAvatar() !== 'static/img/noavatar.jpg') {
                     unlink($deleteUser->getAvatar());

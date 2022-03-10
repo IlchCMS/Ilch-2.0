@@ -233,7 +233,7 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($this->getConfig()->get('article_articleRating')) {
             $articleMapper = new ArticleMapper();
-            $userMapper = New UserMapper();
+            $userMapper = new UserMapper();
 
             $article = $articleMapper->getArticleByIdLocale($id, $this->locale);
 
@@ -277,7 +277,7 @@ class Index extends \Ilch\Controller\Frontend
         // This (unfinished) feature needs a complete rewrite to be ready.
         // https://github.com/IlchCMS/Ilch-2.0/issues/448
         // if ($this->getUser()) {
-            // $user = $userMapper->getUserById($this->getUser()->getId());
+        // $user = $userMapper->getUserById($this->getUser()->getId());
         // }
 
         $readAccess = [3];

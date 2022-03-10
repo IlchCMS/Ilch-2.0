@@ -24,8 +24,7 @@
 
                     <div class="collapse navbar-collapse" id="bs-navbar-collapse-main">
                         <?php
-                        echo $this->getMenu
-                        (
+                        echo $this->getMenu(
                             1,
                             '<div class="panel panel-gaming">
                                      <div class="panel-heading">%s</div>
@@ -82,8 +81,7 @@
                 <div class="row">
                     <div class="hidden-xs col-sm-3 col-md-2">
                         <?php
-                        echo $this->getMenu
-                        (
+                        echo $this->getMenu(
                             1,
                             '<div class="panel panel-gaming">
                                  <div class="panel-heading">%s</div>

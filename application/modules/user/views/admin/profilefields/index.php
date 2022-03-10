@@ -60,7 +60,7 @@
                             $found = true;
                             break;
                         }
-                    } 
+                    }
 
                     if (!$found) {
                         $profileFieldName = $profileField->getKey();

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -17,7 +17,6 @@ class AuthProviderModule extends \Ilch\Model
 
     public function __construct()
     {
-
     }
 
     /**

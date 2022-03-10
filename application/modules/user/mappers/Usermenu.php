@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -67,7 +67,7 @@ class Usermenu extends \Ilch\Mapper
             $usermenuModel->setDescription($usermenuRow['description']);
 
             $usermenu[] = $usermenuModel;
-        }        
+        }
 
         return $usermenu;
     }

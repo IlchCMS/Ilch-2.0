@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -16,7 +16,8 @@ class AuthToken extends \Ilch\Mapper
      * @param string selector
      * @return AuthTokenModel|null
      */
-    public function getAuthToken($selector) {
+    public function getAuthToken($selector)
+    {
         $select = $this->db()->select('*');
         $result = $select->from('auth_tokens')
             ->where(['selector' => $selector])
@@ -40,7 +41,8 @@ class AuthToken extends \Ilch\Mapper
      * @param string Modules\User\Models\AuthToken
      * @return int
      */
-    public function addAuthToken($authToken) {
+    public function addAuthToken($authToken)
+    {
         $insert = $this->db()->insert();
         return $insert->into('auth_tokens')
             ->values(['selector' => $authToken->getSelector(), 'token' => $authToken->getToken(), 'userid' => $authToken->getUserid(), 'expires' => $authToken->getExpires()])
@@ -53,7 +55,8 @@ class AuthToken extends \Ilch\Mapper
      * @param string Modules\User\Models\AuthToken
      * @return \Ilch\Database\Mysql\Result|int number of changed rows
      */
-    public function updateAuthToken($authToken) {
+    public function updateAuthToken($authToken)
+    {
         $update = $this->db()->update();
         return $update->table('auth_tokens')
             ->values(['token' => $authToken->getToken(), 'userid' => $authToken->getUserid(), 'expires' => $authToken->getExpires()])
@@ -67,7 +70,8 @@ class AuthToken extends \Ilch\Mapper
      * @param string selector
      * @return \Ilch\Database\Mysql\Result|int number of deleted rows
      */
-    public function deleteAuthToken($selector) {
+    public function deleteAuthToken($selector)
+    {
         $delete = $this->db()->delete();
         return $delete->from('auth_tokens')
             ->where(['selector' => $selector])
@@ -80,7 +84,8 @@ class AuthToken extends \Ilch\Mapper
      * @param int userid
      * @return \Ilch\Database\Mysql\Result|int number of deleted rows
      */
-    public function deleteAllAuthTokenOfUser($userid) {
+    public function deleteAllAuthTokenOfUser($userid)
+    {
         $delete = $this->db()->delete();
         return $delete->from('auth_tokens')
             ->where(['userid' => $userid])
@@ -92,7 +97,8 @@ class AuthToken extends \Ilch\Mapper
      *
      * @return \Ilch\Database\Mysql\Result|int number of deleted rows
      */
-    public function deleteExpiredAuthTokens() {
+    public function deleteExpiredAuthTokens()
+    {
         $delete = $this->db()->delete();
         return $delete->from('auth_tokens')
             ->where(['expires <' => date('Y-m-d\TH:i:s')])

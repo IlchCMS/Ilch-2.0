@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -79,7 +79,7 @@ class Pagination
         $links = 7;
         $last = ceil($this->rows/$this->rowsPerPage);
 
-        if ($last == 1){
+        if ($last == 1) {
             return '';
         }
 
@@ -100,7 +100,7 @@ class Pagination
         }
 
         for ($i = $start; $i <= $end; $i++) {
-            $class  = ( $this->page == $i ) ? 'active' : '';
+            $class  = ($this->page == $i) ? 'active' : '';
             $urlArray['page'] = $i;
             $html .= '<li class="'.$class.'"><a href="'.$view->getUrl($urlArray).'">'.$i.'</a></li>';
         }

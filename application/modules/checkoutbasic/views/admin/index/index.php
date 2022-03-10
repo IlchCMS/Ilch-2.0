@@ -23,7 +23,7 @@ $date;
                    id="datetime"
                    name="datetime"
                    placeholder="<?=$this->getTrans('datetime') ?>"
-                   value="<?php if ($this->get('checkoutdate') != '') { echo $this->get('checkoutdate'); } ?>" />
+                   value="<?=($this->get('checkoutdate') != '') ? $this->get('checkoutdate') : '' ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
@@ -58,17 +58,29 @@ $date;
         <div class="panel panel-default">
             <div class="panel-body">
                 <strong>
-                    <?php if ($this->get('amount') != '') { echo $this->getTrans('balancetotal'),': ', $this->get('amount'), ' '.$currency ; } 
-                    else { echo $this->getTrans('balancetotal'), ': 0 ', $currency ;}
+                    <?php
+                    if ($this->get('amount') != '') {
+                        echo $this->getTrans('balancetotal'),': ', $this->get('amount'), ' '.$currency ;
+                    } else {
+                        echo $this->getTrans('balancetotal'), ': 0 ', $currency ;
+                    }
                     ?>
                 </strong>
                 <br>
-                <?php if ($this->get('amountplus') != '') { echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), ' '.$currency ; } 
-                else { echo $this->getTrans('totalpaid'), ': 0 ', $currency ;}
+                <?php 
+                    if ($this->get('amountplus') != '') {
+                        echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), ' '.$currency ;
+                    } else {
+                        echo $this->getTrans('totalpaid'), ': 0 ', $currency ;
+                    }
                 ?>
                 <br>
-                <?php if ($this->get('amountminus') != '') { echo $this->getTrans('totalpaidout'),': ', $this->get('amountminus'), ' '.$currency ; }
-                else { echo $this->getTrans('totalpaidout'), ': 0 ', $currency ;}
+                <?php 
+                if ($this->get('amountminus') != '') {
+                    echo $this->getTrans('totalpaidout'),': ', $this->get('amountminus'), ' '.$currency ;
+                } else {
+                    echo $this->getTrans('totalpaidout'), ': 0 ', $currency ;
+                }
                 ?>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -74,8 +74,7 @@ class Group extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuUser',
             $items
         );
@@ -173,14 +172,14 @@ class Group extends \Ilch\Controller\Admin
 
             $groupUsers = $groupMapper->getUsersForGroup($groupId);
             $userMapper = new UserMapper();
-            foreach($sortItems as $key => $user_Id) {
-                if (!\in_array($user_Id, $groupUsers)){
+            foreach ($sortItems as $key => $user_Id) {
+                if (!\in_array($user_Id, $groupUsers)) {
                     $userMapper->addUserToGroup($user_Id, $groupId);
                     $groupUsers[] = $user_Id;
                 }
             }
-            foreach($groupUsers as $key => $user_Id) {
-                if (!\in_array($user_Id, $sortItems)){
+            foreach ($groupUsers as $key => $user_Id) {
+                if (!\in_array($user_Id, $sortItems)) {
                     if ($groupId != 1 || (\count($groupUsers) > 1)) {
                         $userMapper->deleteUserToGroup($user_Id, $groupId);
                         unset($groupUsers[$key]);

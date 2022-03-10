@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -132,7 +132,7 @@ class Transfer
 
     /**
      * USE IT AFTER newVersionFound()
-     * 
+     *
      * Gets the DownloadUrl.
      * @return string
      */
@@ -157,7 +157,7 @@ class Transfer
 
     /**
      * USE IT AFTER newVersionFound()
-     * 
+     *
      * Gets the DownloadSignatureUrl.
      * @return string
      */
@@ -265,7 +265,7 @@ class Transfer
         if ($versionsList !== null) {
             foreach ($this->getVersionsList() as $version => $requirements) {
                 if (version_compare(preg_replace('/\s+/', '', $version), $this->getVersionNow(), '>')) {
-                    $this->setNewVersion(trim(preg_replace('/\s\s+/','', $version)));
+                    $this->setNewVersion(trim(preg_replace('/\s\s+/', '', $version)));
                     $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
                     $this->checkRequirements($requirements);
                     return true;
@@ -435,7 +435,7 @@ class Transfer
         try {
             $res = $zip->open($this->zipFile);
 
-            if ($res !== TRUE) {
+            if ($res !== true) {
                 $content[] = 'Failed to open update file.';
                 return false;
             }
@@ -449,7 +449,7 @@ class Transfer
 
             if (!empty($notWritable)) {
                 $content[] = 'Some files/directories seem to be not writable:';
-                foreach($notWritable as $path) {
+                foreach ($notWritable as $path) {
                     $content[] = $path;
                 }
 
@@ -584,7 +584,7 @@ class Transfer
     private function curlClose()
     {
         if (is_resource($this->transferUrl)) {
-          curl_close($this->transferUrl);
+            curl_close($this->transferUrl);
         }
     }
 

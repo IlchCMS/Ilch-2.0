@@ -171,7 +171,7 @@ class Login extends \Ilch\Controller\Frontend
                 $confirmedCode = bin2hex(random_bytes(32));
                 $user->setSelector($selector);
                 $user->setConfirmedCode($confirmedCode);
-                $user->setExpires(date('Y-m-d\TH:i:s', strtotime( '+1 day' )));
+                $user->setExpires(date('Y-m-d\TH:i:s', strtotime('+1 day')));
                 if ($user->getId()) {
                     // TODO: Ideally call save() for a dummy user too. Currently not possible.
                     $userMapper->save($user);

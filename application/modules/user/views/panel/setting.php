@@ -31,9 +31,13 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="optMail" value="1" <?php if ($this->getUser()->getOptMail() == '1') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="optMail" value="1" <?php if ($this->getUser()->getOptMail() == '1') {
+    echo 'checked="checked"';
+} ?> />
                             <label for="opt_mail_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" id="opt_mail_no" name="optMail" value="0" <?php if ($this->getUser()->getOptMail() == '0') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_no" name="optMail" value="0" <?php if ($this->getUser()->getOptMail() == '0') {
+    echo 'checked="checked"';
+} ?> />
                             <label for="opt_mail_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>

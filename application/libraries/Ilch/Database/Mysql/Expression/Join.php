@@ -1,11 +1,10 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Ilch\Database\Mysql\Expression;
-
 
 class Join
 {
@@ -48,7 +47,7 @@ class Join
      * @param string $type
      * @throws \InvalidArgumentException
      */
-    function __construct($table, $type)
+    public function __construct($table, $type)
     {
         $allowedTypes = [self::INNER, self::LEFT, self::RIGHT];
         if (!\in_array($type, $allowedTypes)) {

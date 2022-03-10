@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -22,7 +22,6 @@ class File
     public function get($key)
     {
         return $this->configData[$key] ?? null;
-
     }
 
     /**

@@ -1,6 +1,6 @@
-<?php 
+<?php
 /**
-* @copyright Ilch 2.0
+* @copyright Ilch 2
 * @package ilch
 */
 
@@ -29,4 +29,4 @@ class Expression
     {
         return $this->expression;
     }
-} 
+}

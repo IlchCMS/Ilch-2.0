@@ -28,14 +28,13 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuShoutbox',
             $items
         );
     }
     
-    public function indexAction() 
+    public function indexAction()
     {
         $userGroupMapper = new UserGroupMapper();
 

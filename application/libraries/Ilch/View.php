@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -34,9 +34,11 @@ class View extends Design\Base
     public function load($file, $data = [])
     {
         $request = $this->getRequest();
-        $view = new \Ilch\View($request,
+        $view = new \Ilch\View(
+            $request,
             $this->getTranslator(),
-            $this->getRouter());
+            $this->getRouter()
+        );
         $view->setArray($data);
 
         echo $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/'.$file);
@@ -83,9 +85,9 @@ class View extends Design\Base
                                 $this->getTrans('selected').' <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu listChooser" role="menu">';
-                                foreach ($actions as $key => $name) {
-                                    $html .= '<li><a href="#" data-hiddenkey="'.$key.'" id="'.$key.'">'.$this->getTrans($name).'</a></li>';
-                                }
+        foreach ($actions as $key => $name) {
+            $html .= '<li><a href="#" data-hiddenkey="'.$key.'" id="'.$key.'">'.$this->getTrans($name).'</a></li>';
+        }
         $html .= '</ul></div></div>';
 
         return $html;

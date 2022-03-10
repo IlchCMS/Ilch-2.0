@@ -188,15 +188,12 @@ class Newsletter extends \Ilch\Mapper
     public function save(NewsletterModel $newsletter)
     {
         $this->db()->insert('newsletter')
-                ->values
-                        (
-                        [
+                ->values([
                             'user_id' => $newsletter->getUserId(),
                             'date_created' => $newsletter->getDateCreated(),
                             'subject' => $newsletter->getSubject(),
                             'text' => $newsletter->getText(),
-                        ]
-                )
+                        ])
                 ->execute();
     }
 
@@ -208,14 +205,11 @@ class Newsletter extends \Ilch\Mapper
     public function saveEmail(NewsletterModel $newsletter)
     {
         $this->db()->insert('newsletter_mails')
-                ->values
-                        (
-                        [
+                ->values([
                             'email' => $newsletter->getEmail(),
                             'selector' => $newsletter->getSelector(),
                             'confirmCode' => $newsletter->getConfirmCode(),
-                        ]
-                )
+                        ])
                 ->execute();
     }
 
@@ -287,14 +281,11 @@ class Newsletter extends \Ilch\Mapper
 
         if ($newsletterMail == '0') {
             $this->db()->insert('newsletter_mails')
-                ->values
-                        (
-                        [
+                ->values([
                             'email' => $userMail,
                             'selector' => $newsletter->getSelector(),
                             'confirmCode' => $newsletter->getConfirmCode()
-                        ]
-                        )
+                        ])
                 ->execute();
         } else {
             $this->db()->delete('newsletter_mails')

@@ -240,7 +240,7 @@ class User extends \Ilch\Mapper
         if (isset($userRow['avatar'])) {
             if (file_exists($userRow['avatar'])) {
                 $user->setAvatar($userRow['avatar']);
-            }  else {
+            } else {
                 $user->setAvatar('static/img/noavatar.jpg');
             }
         }
@@ -399,7 +399,6 @@ class User extends \Ilch\Mapper
                 ->where(['id' => $userId])
                 ->execute();
         } else {
-
             /*
              * User does not exist yet, insert.
              */
@@ -427,7 +426,8 @@ class User extends \Ilch\Mapper
      * @param string $homepage
      * @return string
      */
-    public function getHomepage($homepage) {
+    public function getHomepage($homepage)
+    {
         $homepage = trim($homepage);
         if (preg_match('~^https?://~', $homepage) === 0) {
             $homepage = 'http://' . $homepage;
@@ -517,8 +517,8 @@ class User extends \Ilch\Mapper
      * @param  string $deletedate
      * @return int affected rows
      */
-     public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00')
-     {
+    public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00')
+    {
         if (is_a($userId, UserModel::class)) {
             $userId = $userId->getId();
         }
@@ -535,8 +535,8 @@ class User extends \Ilch\Mapper
      * @param  int $timetodelete
      * @return boolean True if success, otherwise false.
      */
-     public function deleteselectsdelete($timetodelete = 5)
-     {
+    public function deleteselectsdelete($timetodelete = 5)
+    {
         $date = new \Ilch\Date();
         $authTokenMapper = new AuthTokenMapper();
         $statisticMapper = new StatisticMapper();

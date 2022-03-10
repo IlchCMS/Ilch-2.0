@@ -57,8 +57,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuArticle',
             $items
         );

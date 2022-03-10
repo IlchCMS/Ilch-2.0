@@ -40,8 +40,7 @@ class Applicationshistory extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuTeams',
             $items
         );

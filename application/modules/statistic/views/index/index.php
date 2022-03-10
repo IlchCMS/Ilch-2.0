@@ -1,4 +1,4 @@
-<?php 
+<?php
 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
 $userMapper = new \Modules\User\Mappers\User();
 $modulesMapper = new \Modules\Admin\Mappers\Module();

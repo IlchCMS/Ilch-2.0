@@ -16,10 +16,10 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuVote') ?></h1>
-<?php if ($vote != '' ):
+<?php if ($vote != ''):
     $userId = null;
     $groupIds = [];
-    $admin = FALSE;
+    $admin = false;
     $i = 0;
 
     if ($this->getUser()) {
@@ -35,7 +35,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
     }
     ?>
     <?php foreach ($vote as $groupVote): ?>
-        <?php if (is_in_array($this->get('readAccess'), explode(',', $groupVote->getReadAccess())) || $admin == TRUE): ?>
+        <?php if (is_in_array($this->get('readAccess'), explode(',', $groupVote->getReadAccess())) || $admin == true): ?>
             <div class="row">
                 <div class="col-lg-12">
                     <form class="form-horizontal" method="POST">

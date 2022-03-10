@@ -79,7 +79,7 @@ $errors = $this->get('errors');
         </div>
         <div class="panel-footer clearfix">
             <div class="pull-right">
-                <?php 
+                <?php
                     if ($this->get('captchaNeeded')) {
                         if ($this->get('googlecaptcha')) {
                             echo $this->get('googlecaptcha')->setForm('registForm')->getCaptcha($this, 'registButton', 'Regist');

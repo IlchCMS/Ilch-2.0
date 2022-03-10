@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -92,7 +92,7 @@ abstract class Base extends \Ilch\Design\Base
         }
 
         foreach ($messages as $key => $message) {
-            if (!empty($message['validationError']) And $message['validationError'] == true) {
+            if (!empty($message['validationError']) and $message['validationError'] == true) {
                 $text = '';
                 $text .= '<b>'.$this->getTrans('errorsOccured').'</b>';
                 $text .= '<ul>';

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -41,7 +41,7 @@ class AuthToken extends \Ilch\Model
         return $this;
     }
     
-        /**
+    /**
      * Returns the token of the user.
      * SHA256 hash of the authenticator.
      *

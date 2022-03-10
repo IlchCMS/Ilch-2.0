@@ -38,8 +38,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuVote',
             $items
         );
@@ -53,7 +52,7 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_vote') && $this->getRequest()->getPost('action') === 'delete') {
-            foreach($this->getRequest()->getPost('check_vote') as $voteId) {
+            foreach ($this->getRequest()->getPost('check_vote') as $voteId) {
                 $voteMapper->delete($voteId);
             }
         }
@@ -73,7 +72,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('vote', $voteMapper->getVoteById($this->getRequest()->getParam('id')));
-        }  else {
+        } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
@@ -110,14 +109,14 @@ class Index extends \Ilch\Controller\Admin
                 if ($this->getRequest()->getParam('id')) {
                     $resultMapper->delete($this->getRequest()->getParam('id'));
 
-                    foreach($this->getRequest()->getPost('reply') as $key => $reply) {
+                    foreach ($this->getRequest()->getPost('reply') as $key => $reply) {
                         $resultModel = new ResultModel();
                         $resultModel->setPollId($this->getRequest()->getParam('id'))
                             ->setReply($reply);
                         $resultMapper->saveReply($resultModel);
                     }
                 } else {
-                    foreach($this->getRequest()->getPost('reply') as $key => $reply) {
+                    foreach ($this->getRequest()->getPost('reply') as $key => $reply) {
                         $resultModel = new ResultModel();
                         $resultModel->setPollId($voteMapper->getLastId())
                             ->setReply($reply);

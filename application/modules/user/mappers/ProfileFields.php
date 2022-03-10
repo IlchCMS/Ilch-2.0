@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -84,7 +84,8 @@ class ProfileFields extends \Ilch\Mapper
      * @param int $position
      *
      */
-    public function updatePositionById($id, $position) {
+    public function updatePositionById($id, $position)
+    {
         $this->db()->update('profile_fields')
             ->values(['position' => $position])
             ->where(['id' => $id])

@@ -21,8 +21,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuStatistic',
             $items
         );
@@ -43,7 +42,7 @@ class Index extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 // offset of 1 because the first element is the token. length of 6 because of 6 settings - last element is the action.
                 // sites,ilch version,modules,visits,browser,os
-                $visibilitySettings = array_slice($this->getRequest()->getPost(),1, 6);
+                $visibilitySettings = array_slice($this->getRequest()->getPost(), 1, 6);
                 $this->getConfig()->set('statistic_visibleStats', implode(',', $visibilitySettings));
 
                 $this->redirect()
