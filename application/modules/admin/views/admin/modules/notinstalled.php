@@ -3,7 +3,7 @@
 <?php if (!empty($this->get('modulesNotInstalled'))): ?>
     <?php
     $modulesList = url_get_contents($this->get('updateserver'));
-    $modulesOnUpdateServer = json_decode($modulesList);
+    $modulesOnUpdateServer = json_decode($modulesList) ?? [];
     $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
     $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 
@@ -121,8 +121,8 @@
                                     </button>
                                 </form>
                             <?php endif; ?>
-                            <?php if ($module->getKey() == $moduleOnUpdateServer->key): ?>
-                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
+                            <?php if ($module->getKey() == ($moduleOnUpdateServerFound ? $moduleOnUpdateServerFound->key : '')): ?>
+                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServerFound->id]) ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-default">
                                         <i class="fa fa-info text-info"></i>
                                     </span>
