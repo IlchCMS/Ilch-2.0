@@ -1,11 +1,11 @@
 <?php
 $articleID = '';
-if ($this->get('article') != '') {
+if ($this->get('article')) {
     $articleID = $this->get('article')->getId();
 }
 ?>
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-<h1><?=($this->get('article') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<h1><?=($this->get('article')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('template') ? 'has-error' : '' ?>">
@@ -36,7 +36,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    id="teaser"
                    name="teaser"
-                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTeaser()) : $this->originalInput('teaser') ?>" />
+                   value="<?=($this->get('article')) ? $this->escape($this->get('article')->getTeaser()) : $this->originalInput('teaser') ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
@@ -48,7 +48,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTitle()) : $this->originalInput('title') ?>" />
+                   value="<?=($this->get('article')) ? $this->escape($this->get('article')->getTitle()) : $this->originalInput('title') ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -60,7 +60,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    id="date_created"
                    name="date_created"
-                   value="<?=($this->get('article') != '' && $this->get('article')->getDateCreated()) ? date('d.m.Y H:i', strtotime($this->get('article')->getDateCreated())) : '' ?>"
+                   value="<?=($this->get('article') && $this->get('article')->getDateCreated()) ? date('d.m.Y H:i', strtotime($this->get('article')->getDateCreated())) : '' ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
@@ -79,7 +79,7 @@ if ($this->get('article') != '') {
                     multiple>
                 <?php foreach ($this->get('cats') as $cats): ?>
                     <option value="<?=$cats->getId() ?>"
-                        <?php if ($this->get('article') != '') {
+                        <?php if ($this->get('article')) {
                             $catIds = explode(',', $this->get('article')->getCatId());
                             foreach ($catIds as $catId) {
                                 if ($cats->getId() == $catId) {
@@ -100,7 +100,7 @@ if ($this->get('article') != '') {
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="content"
-                      toolbar="ilch_html"><?=($this->get('article') != '') ? $this->get('article')->getContent(): $this->originalInput('content') ?></textarea>
+                      toolbar="ilch_html"><?=($this->get('article')) ? $this->get('article')->getContent(): $this->originalInput('content') ?></textarea>
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
@@ -187,7 +187,7 @@ if ($this->get('article') != '') {
                        class="form-control"
                        id="selectedImage"
                        name="image"
-                       value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getImage()) : $this->originalInput('image') ?>" />
+                       value="<?=$this->get('article') ? $this->escape($this->get('article')->getImage()) : $this->originalInput('image') ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
@@ -201,7 +201,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    name="imageSource"
                    id="imageSource"
-                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getImageSource()) : $this->originalInput('imageSource') ?>" />
+                   value="<?=($this->get('article')) ? $this->escape($this->get('article')->getImageSource()) : $this->originalInput('imageSource') ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -220,7 +220,7 @@ if ($this->get('article') != '') {
         <div class="col-lg-4">
             <textarea class="form-control" 
                       id="description"
-                      name="description"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getDescription()) : $this->originalInput('description') ?></textarea>
+                      name="description"><?=($this->get('article')) ? $this->escape($this->get('article')->getDescription()) : $this->originalInput('description') ?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -230,7 +230,7 @@ if ($this->get('article') != '') {
         <div class="col-lg-4">
             <textarea class="form-control" 
                       id="keywords" 
-                      name="keywords"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords')?></textarea>
+                      name="keywords"><?=($this->get('article')) ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords')?></textarea>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
@@ -244,11 +244,11 @@ if ($this->get('article') != '') {
                        type="text"
                        id="permaLink"
                        name="permaLink"
-                       value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getPerma()) : $this->originalInput('permaLink') ?>" />
+                       value="<?=($this->get('article')) ? $this->escape($this->get('article')->getPerma()) : $this->originalInput('permaLink') ?>" />
             </div>
         </div>
     </div>
-    <?=($this->get('article') != '') ?  $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
+    <?=($this->get('article')) ?  $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
