@@ -34,6 +34,22 @@ class Exists extends Base
     protected $query;
 
     /**
+     * Defines whether logic can be negated.
+     *
+     * @var bool
+     * @since 2.1.43
+     */
+    protected $hasInvertLogic = true;
+
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     * @since 2.1.43
+     */
+    protected $invertErrorKey = 'validation.errors.exists.resourceFound';
+
+    /**
      * Runs the validation.
      *
      * @return self
