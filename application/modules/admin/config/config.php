@@ -840,11 +840,17 @@ class Config extends \Ilch\Config\Install
                     ->fetchList();
 
                 $orphanedRows = array_diff($idsArticlesContent, $idsArticles);
-                $this->db()->delete->from('articles_content')
+                $this->db()->delete()->from('articles_content')
                     ->where(['article_id' => $orphanedRows])
                     ->execute();
 
                 $this->db()->query('ALTER TABLE `[prefix]_articles_content` ADD CONSTRAINT `FK_[prefix]_articles_content_[prefix]_articles` FOREIGN KEY (`article_id`) REFERENCES `[prefix]_articles` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // Add new updateserver.
+                $this->db()->insert('admin_updateservers')
+                    ->values(['url' => 'https://www.ilch.de/development/updateserver/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
+                    ->execute();
+                break;
         }
 
         return 'Update function executed.';
