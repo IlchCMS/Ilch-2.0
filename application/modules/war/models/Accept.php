@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,42 +13,79 @@ class Accept extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The warId
      *
      * @var int
      */
-    protected $warId;
+    protected $warId = 0;
 
     /**
      * The userId
      *
      * @var int
      */
-    protected $userId;
+    protected $userId = 0;
 
     /**
      * The accept
      *
      * @var int
      */
-    protected $accept;
+    protected $accept = 0;
 
     /**
      * The comment
      *
      * @var string
      */
-    protected $comment;
+    protected $comment = '';
+
+    /**
+     * The datetime when the Accept got created.
+     *
+     * @var string
+     */
+    protected $dateCreated;
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray($entries): Accept
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['war_id'])) {
+            $this->setWarId($entries['war_id']);
+        }
+        if (isset($entries['user_id'])) {
+            $this->setUserId($entries['user_id']);
+        }
+        if (isset($entries['accept'])) {
+            $this->setAccept($entries['accept']);
+        }
+        if (isset($entries['comment'])) {
+            $this->setComment($entries['comment']);
+        }
+        if (isset($entries['date_created'])) {
+            $this->setDateCreated($entries['date_created']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -59,9 +96,9 @@ class Accept extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Accept
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -71,7 +108,7 @@ class Accept extends \Ilch\Model
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -82,9 +119,9 @@ class Accept extends \Ilch\Model
      * @param int $userId
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Accept
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -94,7 +131,7 @@ class Accept extends \Ilch\Model
      *
      * @return int
      */
-    public function getWarId()
+    public function getWarId(): int
     {
         return $this->warId;
     }
@@ -105,9 +142,9 @@ class Accept extends \Ilch\Model
      * @param int $warId
      * @return $this
      */
-    public function setWarId($warId)
+    public function setWarId(int $warId): Accept
     {
-        $this->warId = (int)$warId;
+        $this->warId = $warId;
 
         return $this;
     }
@@ -117,7 +154,7 @@ class Accept extends \Ilch\Model
      *
      * @return int
      */
-    public function getAccept()
+    public function getAccept(): int
     {
         return $this->accept;
     }
@@ -128,9 +165,9 @@ class Accept extends \Ilch\Model
      * @param int $accept
      * @return $this
      */
-    public function setAccept($accept)
+    public function setAccept(int $accept): Accept
     {
-        $this->accept = (int)$accept;
+        $this->accept = $accept;
 
         return $this;
     }
@@ -140,7 +177,7 @@ class Accept extends \Ilch\Model
      *
      * @return string
      */
-    public function getComment()
+    public function getComment(): string
     {
         return $this->comment;
     }
@@ -151,10 +188,53 @@ class Accept extends \Ilch\Model
      * @param string $comment
      * @return $this
      */
-    public function setComment($comment)
+    public function setComment(string $comment): Accept
     {
-        $this->comment = (string)$comment;
+        $this->comment = $comment;
 
         return $this;
+    }
+
+    /**
+     * Gets the date_created timestamp of the Accept.
+     *
+     * @return string
+     */
+    public function getDateCreated(): string
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * Sets the date_created date of the Accept.
+     *
+     * @param string $dateCreated
+     * @return $this
+     */
+    public function setDateCreated(string $dateCreated): Accept
+    {
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true)
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'war_id' => $this->getWarId(),
+                'user_id' => $this->getUserId(),
+                'accept' => $this->getAccept(),
+                'comment' => $this->getComment(),
+                'date_created' => $this->getDateCreated(),
+            ]
+        );
     }
 }

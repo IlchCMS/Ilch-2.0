@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -40,6 +40,12 @@ class Enemy extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'index'])
             ],
             [
+                'name' => 'menuMaps',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'maps', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuSettings',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
@@ -53,8 +59,7 @@ class Enemy extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuWars',
             $items
         );
@@ -72,6 +77,9 @@ class Enemy extends \Ilch\Controller\Admin
             foreach ($this->getRequest()->getPost('check_enemy') as $enemyId) {
                 $enemyMapper->delete($enemyId);
             }
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_enemiesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_enemiesPerPage'));
@@ -84,13 +92,14 @@ class Enemy extends \Ilch\Controller\Admin
     public function treatAction()
     {
         $enemyMapper = new EnemyMapper();
+        $enemyModel = new EnemyModel();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('treatEnemy'), ['action' => 'treat']);
 
-            $this->getView()->set('enemy', $enemyMapper->getEnemyById($this->getRequest()->getParam('id')));
+            $enemyModel = $enemyMapper->getEnemyById($this->getRequest()->getParam('id'));
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index'])
@@ -107,53 +116,58 @@ class Enemy extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->isPost()) {
-            $enemyImage = trim($this->getRequest()->getPost('enemyImage'));
+            $enemyImage = $this->getRequest()->getPost('enemyImage');
             if (!empty($enemyImage)) {
                 $enemyImage = BASE_URL . '/' . $enemyImage;
             }
 
             $post = [
-                'enemyName' => trim($this->getRequest()->getPost('enemyName')),
-                'enemyTag' => trim($this->getRequest()->getPost('enemyTag')),
+                'enemyName' => $this->getRequest()->getPost('enemyName'),
+                'enemyTag' => $this->getRequest()->getPost('enemyTag'),
                 'enemyImage' => $enemyImage,
                 'enemyHomepage' => $this->getRequest()->getPost('enemyHomepage'),
                 'enemyContactName' => $this->getRequest()->getPost('enemyContactName'),
                 'enemyContactEmail' => $this->getRequest()->getPost('enemyContactEmail')
             ];
-
-            $validation = Validation::create($post, [
-                'enemyName' => 'required',
-                'enemyTag' => 'required',
+            
+            $validator = [
+                'enemyName' => 'required|unique:war_enemy,name',
+                'enemyTag' => 'required|unique:war_enemy,tag',
                 'enemyHomepage' => 'url',
                 'enemyImage' => 'url',
                 'enemyContactEmail' => 'email'
-            ]);
+            ];
+            
+            if ($enemyModel->getId()) {
+                $validator['enemyName'] = 'required';
+                $validator['enemyTag'] = 'required';
+            }
 
-            $post['enemyImage'] = trim($this->getRequest()->getPost('enemyImage'));
+            $validation = Validation::create($post, $validator);
 
             if ($validation->isValid()) {
-                $enemyModel = new EnemyModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $enemyModel->setId($this->getRequest()->getParam('id'));
-                }
-                $enemyModel->setEnemyName($post['enemyName'])
-                    ->setEnemyTag($post['enemyTag'])
-                    ->setEnemyImage($post['enemyImage'])
-                    ->setEnemyHomepage($post['enemyHomepage'])
-                    ->setEnemyContactName($post['enemyContactName'])
-                    ->setEnemyContactEmail($post['enemyContactEmail']);
+                $enemyModel->setEnemyName($this->getRequest()->getPost('enemyName'))
+                    ->setEnemyTag($this->getRequest()->getPost('enemyTag'))
+                    ->setEnemyImage($this->getRequest()->getPost('enemyImage'))
+                    ->setEnemyHomepage($this->getRequest()->getPost('enemyHomepage'))
+                    ->setEnemyContactName($this->getRequest()->getPost('enemyContactName'))
+                    ->setEnemyContactEmail($this->getRequest()->getPost('enemyContactEmail'));
                 $enemyMapper->save($enemyModel);
 
-                $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], ($enemyModel->getId()?['id' => $enemyModel->getId()]:[])));
         }
 
-        $this->getView()->set('post', $post)
-            ->set('errorFields', ($errorFields ?? []));
+
+        $this->getView()->set('enemy', $enemyModel);
     }
 
     public function delAction()

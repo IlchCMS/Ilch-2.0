@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,70 +13,103 @@ class Enemy extends \Ilch\Model
      *
      * @var integer
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The Enemy Name.
      *
      * @var string
      */
-    protected $enemyName;
+    protected $enemyName = '';
 
     /**
      * The Enemy Tag.
      *
      * @var string
      */
-    protected $enemyTag;
+    protected $enemyTag = '';
 
     /**
      * The Enemy Homepage.
      *
      * @var string
      */
-    protected $enemyHomepage;
+    protected $enemyHomepage = '';
 
     /**
      * The Enemy Image.
      *
      * @var string
      */
-    protected $enemyImage;
+    protected $enemyImage = '';
 
     /**
      * The Enemy ImageThumb.
      *
      * @var string
      */
-    protected $enemyImageThumb;
+    protected $enemyImageThumb = '';
 
     /**
      * The Enemy Land.
      *
      * @var string
      */
-    protected $enemyLand;
+    protected $enemyLand = '';
 
     /**
      * The Enemy Contact Name.
      *
      * @var string
      */
-    protected $enemyContactName;
+    protected $enemyContactName = '';
 
     /**
      * The Enemy Contact Email.
      *
      * @var string
      */
-    protected $enemyContactEmail;
+    protected $enemyContactEmail = '';
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray($entries): Enemy
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['name'])) {
+            $this->setEnemyName($entries['name']);
+        }
+        if (isset($entries['tag'])) {
+            $this->setEnemyTag($entries['tag']);
+        }
+        if (isset($entries['image'])) {
+            $this->setEnemyImage($entries['image']);
+        }
+        if (isset($entries['homepage'])) {
+            $this->setEnemyHomepage($entries['homepage']);
+        }
+        if (isset($entries['contact_name'])) {
+            $this->setEnemyContactName($entries['contact_name']);
+        }
+        if (isset($entries['contact_email'])) {
+            $this->setEnemyContactEmail($entries['contact_email']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the group.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -84,12 +117,12 @@ class Enemy extends \Ilch\Model
     /**
      * Sets the id of the group.
      *
-     * @param integer $id
+     * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Enemy
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -99,7 +132,7 @@ class Enemy extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnemyName()
+    public function getEnemyName(): string
     {
         return $this->enemyName;
     }
@@ -110,9 +143,9 @@ class Enemy extends \Ilch\Model
      * @param string $enemyName
      * @return $this
      */
-    public function setEnemyName($enemyName)
+    public function setEnemyName(string $enemyName): Enemy
     {
-        $this->enemyName = (string)$enemyName;
+        $this->enemyName = $enemyName;
 
         return $this;
     }
@@ -122,7 +155,7 @@ class Enemy extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnemyTag()
+    public function getEnemyTag(): string
     {
         return $this->enemyTag;
     }
@@ -133,9 +166,9 @@ class Enemy extends \Ilch\Model
      * @param string $enemyTag
      * @return $this
      */
-    public function setEnemyTag($enemyTag)
+    public function setEnemyTag(string $enemyTag): Enemy
     {
-        $this->enemyTag = (string)$enemyTag;
+        $this->enemyTag = $enemyTag;
 
         return $this;
     }
@@ -145,7 +178,7 @@ class Enemy extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnemyHomepage()
+    public function getEnemyHomepage(): string
     {
         return $this->enemyHomepage;
     }
@@ -156,9 +189,9 @@ class Enemy extends \Ilch\Model
      * @param string $enemyHomepage
      * @return $this
      */
-    public function setEnemyHomepage($enemyHomepage)
+    public function setEnemyHomepage(string $enemyHomepage): Enemy
     {
-        $this->enemyHomepage = (string)$enemyHomepage;
+        $this->enemyHomepage = $enemyHomepage;
 
         return $this;
     }
@@ -168,7 +201,7 @@ class Enemy extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnemyImage()
+    public function getEnemyImage(): string
     {
         return $this->enemyImage;
     }
@@ -179,9 +212,9 @@ class Enemy extends \Ilch\Model
      * @param string $enemyImage
      * @return $this
      */
-    public function setEnemyImage($enemyImage)
+    public function setEnemyImage(string $enemyImage): Enemy
     {
-        $this->enemyImage = (string)$enemyImage;
+        $this->enemyImage = $enemyImage;
 
         return $this;
     }
@@ -191,7 +224,7 @@ class Enemy extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnemyImageThumb()
+    public function getEnemyImageThumb(): string
     {
         return $this->enemyImageThumb;
     }
@@ -202,9 +235,9 @@ class Enemy extends \Ilch\Model
      * @param string $enemyImageThumb
      * @return $this
      */
-    public function setEnemyImageThumb($enemyImageThumb)
+    public function setEnemyImageThumb(string $enemyImageThumb): Enemy
     {
-        $this->enemyImageThumb = (string)$enemyImageThumb;
+        $this->enemyImageThumb = $enemyImageThumb;
 
         return $this;
     }
@@ -214,7 +247,7 @@ class Enemy extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnemyLand()
+    public function getEnemyLand(): string
     {
         return $this->enemyLand;
     }
@@ -225,9 +258,9 @@ class Enemy extends \Ilch\Model
      * @param string $enemyLand
      * @return $this
      */
-    public function setEnemyLand($enemyLand)
+    public function setEnemyLand(string $enemyLand): Enemy
     {
-        $this->enemyLand = (string)$enemyLand;
+        $this->enemyLand = $enemyLand;
 
         return $this;
     }
@@ -237,7 +270,7 @@ class Enemy extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnemyContactName()
+    public function getEnemyContactName(): string
     {
         return $this->enemyContactName;
     }
@@ -248,9 +281,9 @@ class Enemy extends \Ilch\Model
      * @param string $enemyContactName
      * @return $this
      */
-    public function setEnemyContactName($enemyContactName)
+    public function setEnemyContactName(string $enemyContactName): Enemy
     {
-        $this->enemyContactName = (string)$enemyContactName;
+        $this->enemyContactName = $enemyContactName;
 
         return $this;
     }
@@ -260,7 +293,7 @@ class Enemy extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnemyContactEmail()
+    public function getEnemyContactEmail(): string
     {
         return $this->enemyContactEmail;
     }
@@ -271,10 +304,31 @@ class Enemy extends \Ilch\Model
      * @param string $enemyContactEmail
      * @return $this
      */
-    public function setEnemyContactEmail($enemyContactEmail)
+    public function setEnemyContactEmail(string $enemyContactEmail): Enemy
     {
-        $this->enemyContactEmail = (string)$enemyContactEmail;
+        $this->enemyContactEmail = $enemyContactEmail;
 
         return $this;
+    }
+    
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true)
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'name' => $this->getEnemyName(),
+                'tag' => $this->getEnemyTag(),
+                'image' => $this->getEnemyImage(),
+                'homepage' => $this->getEnemyHomepage(),
+                'contact_name' => $this->getEnemyContactName(),
+                'contact_email' => $this->getEnemyContactEmail(),
+            ]
+        );
     }
 }

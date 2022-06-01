@@ -2,15 +2,16 @@
 /**
  * @copyright Ilch 2
  * @package ilch
+ * @since 1.15.0
  */
 
 namespace Modules\War\Mappers;
 
-use Modules\War\Models\Enemy as EntriesModel;
+use Modules\War\Models\Maps as EntriesModel;
 
-class Enemy extends \Ilch\Mapper
+class Maps extends \Ilch\Mapper
 {
-    public $tablename = 'war_enemy';
+    public $tablename = 'war_maps';
 
     /**
      * returns if the module is installed.
@@ -30,12 +31,11 @@ class Enemy extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['e.id' => 'DESC'], $pagination = null)
+    public function getEntriesBy($where = [], $orderBy = ['a.id' => 'DESC'], $pagination = null)
     {
         $select = $this->db()->select()
-            ->fields(['e.id', 'e.name', 'e.tag', 'e.image', 'e.homepage', 'e.contact_name', 'e.contact_email'])
-            ->from(['e' => $this->tablename])
-            ->join(['m' => 'media'], 'e.image = m.url', 'LEFT', ['m.url', 'm.url_thumb'])
+            ->fields(['*'])
+            ->from([$this->tablename])
             ->where($where)
             ->order($orderBy);
 
@@ -65,41 +65,41 @@ class Enemy extends \Ilch\Mapper
     }
 
     /**
-     * Gets the Enemy
+     * Gets the Entries.
      *
      * @param array $where
      * @param \Ilch\Pagination|null $pagination
-     * @return null|array
+     * @return array|null
      */
-    public function getEnemy($where = [], $pagination = null)
+    public function getEntries($where = [], $pagination = null)
     {
-        return $this->getEntriesBy($where, ['e.id' => 'DESC'], $pagination);
+        return $this->getEntriesBy($where, ['id' => 'ASC'], $pagination);
     }
-
+    
     /**
-     * Gets the Enemy List
+     * Gets the List by status.
      *
      * @param \Ilch\Pagination|null $pagination
      * @return null|array
      */
-    public function getEnemyList($pagination = null)
+    public function getList($pagination = null)
     {
-        return $this->getEntriesBy([], ['e.id' => 'DESC'], $pagination);
+        return $this->getEntriesBy([], ['id' => 'ASC'], $pagination);
     }
 
     /**
-     * Gets Enemy by id.
+     * Gets the entry by given ID.
      *
      * @param int|EntriesModel $id
-     * @return EntriesModel|null
+     * @return null|EntriesModel
      */
-    public function getEnemyById($id)
+    public function getEntryById(int $id)
     {
         if (is_a($id, EntriesModel::class)) {
             $id = $id->getId();
         }
 
-        $entrys = $this->getEntriesBy(['e.id' => (int)$id], []);
+        $entrys = $this->getEntriesBy(['id' => (int)$id], []);
 
         if (!empty($entrys)) {
             return reset($entrys);

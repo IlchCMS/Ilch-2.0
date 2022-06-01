@@ -8,13 +8,9 @@
     }
 
     foreach ($this->get('war') as $war):
-        if (!is_in_array($this->get('readAccess'), explode(',', $war->getReadAccess())) && $adminAccess == false) {
-            continue;
-        }
         $displayed++;
 
-        $warMapper = $this->get('warMapper');
-        $warTime = $war->getWarTime();    
+        $warMapper = $this->get('warMapper');  
         $gameImg = $this->getBoxUrl('static/img/'.$war->getWarGame().'.png');
         if (file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$war->getWarGame().'.png')) {
             $gameImg = '<img src="'.$this->getBoxUrl('static/img/'.urlencode($war->getWarGame()).'.png').'" title="'.$this->escape($war->getWarGame()).'" width="16" height="16">';
@@ -24,7 +20,7 @@
         ?>
         <div class="nextwar-box">
             <div class="row">
-                <a href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>">
+                <a href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>" title="<?=$this->escape($war->getWarGroupTag()).' '.$this->getTrans('vs').' '.$this->escape($war->getWarEnemyTag()) ?>">
                     <div class="col-xs-4 ellipsis">
                         <?=$gameImg ?>
                         <div class="ellipsis-item">
@@ -39,8 +35,11 @@
                     </div>
                 </a>
                 <div class="col-xs-3 small nextwar-date">
-                    <div class="ellipsis-item text-right" title="<?=$warMapper->countdown(date("Y", strtotime($warTime)), date("m", strtotime($warTime)), date("d", strtotime($warTime)), date("H", strtotime($warTime)), date("i", strtotime($warTime))) ?>">
-                        <i><?=$warMapper->countdown(date("Y", strtotime($warTime)), date("m", strtotime($warTime)), date("d", strtotime($warTime)), date("H", strtotime($warTime)), date("i", strtotime($warTime))) ?></i>
+                    <?php
+                    $countdown = $warMapper->countdown($war->getWarTime());
+                    ?>
+                    <div class="ellipsis-item text-right" title="<?=$countdown ?>">
+                        <i><?=$countdown ?></i>
                     </div>
                 </div>
             </div>

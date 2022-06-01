@@ -7,7 +7,7 @@
 </style>
 
 <h1><?=$this->getTrans('manageGroups') ?></h1>
-<?php if ($this->get('groups') != ''): ?>
+<?php if ($this->get('groups')): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
@@ -39,7 +39,7 @@
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $group->getId()]) ?></td>
                             <td><?=$this->escape($group->getGroupName()) ?></td>
                             <td><?=$this->escape($group->getGroupTag()) ?></td>
-                            <td><img class="group-image" src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" /></td>
+                            <td><img class="group-image" src="<?=$this->getBaseUrl($group->getGroupImage()) ?>"  alt="<?=$this->escape($group->getGroupName()) ?>"/></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

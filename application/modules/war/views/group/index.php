@@ -1,7 +1,7 @@
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuGroups') ?></h1>
-<?php if ($this->get('groups') != ''): ?>
+<?php if ($this->get('groups')): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <div id="war_index">
         <?php foreach ($this->get('groups') as $group): ?>
@@ -18,7 +18,7 @@
 
             $wars = $warMapper->getWars(['group' => $group->getId()]);
 
-            foreach ($wars as $war) {
+            foreach ($wars ?? [] as $war) {
                 $enemyPoints = 0;
                 $groupPoints = 0;
                 $games = $gamesMapper->getGamesByWhere(['war_id' => $war->getId()]);

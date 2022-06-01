@@ -1,128 +1,119 @@
+<link href="<?=$this->getBaseUrl('application/modules/war/static/css/jquery-editable-select.min.css') ?>" rel="stylesheet">
+<script src="<?=$this->getBaseUrl('application/modules/war/static/js/jquery-editable-select.min.js') ?>"></script>
 <div id="dup">
-    <?php $index = 0; ?>
-    <?php if ($this->get('games') != ''): ?>
-        <?php foreach ($this->get('games') as $game): ?>
-            <div id="duplicator<?=$index++ ?>">
-                <input type="hidden" name="warGameIds[]" value="<?=$game->getId() ?>">
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="textinput">
-                        <?=$this->getTrans('warMapName') ?>
-                        <?php if ($game->getId() != ''): ?>
-                            <a id="<?=$game->getId() ?>"
-                               class="btn btn-danger btn-sm"
-                               href="javascript:void(0)"
-                               onclick="del(event)">
-                                <i class="fa fa-trash-o"></i>
-                            </a>
-                        <?php endif; ?>
-                    </label>
-                    <div class="col-lg-4">
-                        <input type="text"
-                               class="form-control"
-                               name="warMapPlayed[]"
-                               placeholder="<?=$this->getTrans('warMapName') ?>"
-                               value="<?=$game->getMap() ?>">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="textinput">
-                        <?=$this->getTrans('warResult') ?>
-                    </label>
-                    <div class="col-lg-2">
-                        <input type="number"
-                               class="form-control"
-                               name="warErgebnisGroup[]"
-                               placeholder="<?=$this->getTrans('warResultWe') ?>"
-                               value="<?=$game->getGroupPoints() ?>">
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="number"
-                               class="form-control"
-                               name="warErgebnisEnemy[]"
-                               placeholder="<?=$this->getTrans('warResultEnemy') ?>"
-                               value="<?=$game->getEnemyPoints() ?>">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-2"></label>
-                    <div class="col-lg-4">
-                        <h1></h1>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <div id="duplicator<?=$index++ ?>">
-            <div class="form-group">
-                <label class="col-lg-2 control-label" for="textinput">
-                    <?=$this->getTrans('warMapName') ?>
-                </label>
-                <div class="col-lg-4">
-                    <input type="text"
-                           class="form-control"
-                           name="warMapPlayed[]"
-                           placeholder="<?=$this->getTrans('warMapName') ?>">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-2 control-label" for="textinput">
-                    <?=$this->getTrans('warResult') ?>
-                </label>
-                <div class="col-lg-2">
-                    <input type="text"
-                           class="form-control"
-                           name="warErgebnisGroup[]"
-                           placeholder="<?=$this->getTrans('warResultWe') ?>">
-                </div>
-                <div class="col-lg-2">
-                    <input type="text"
-                           class="form-control"
-                           name="warErgebnisEnemy[]"
-                           placeholder="<?=$this->getTrans('warResultEnemy') ?>">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-2"></label>
-                <div class="col-lg-4">
-                    <h1></h1>
-                </div>
+<?php $index = 0; ?>
+<?php foreach ($this->get('games') as $game): ?>
+    <div id="duplicator<?=$index++ ?>">
+        <?php if ($game->getId()): ?>
+        <input type="hidden" name="warGameIds[]" value="<?=$game->getId() ?>">
+        <?php endif; ?>
+        <div class="form-group">
+            <label class="col-lg-2 control-label" for="textinput">
+                <?=$this->getTrans('warMapName') ?>
+                <?php if ($game->getId()): ?>
+                <a name="warGamedel[]" 
+                    id="<?=$game->getId() ?>"
+                   class="btn btn-danger btn-sm"
+                   href="javascript:void(0)"
+                   onclick="del(<?=$game->getId() ?>)">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+                <?php endif; ?>
+            </label>
+            <div class="col-lg-4">
+                <select class="chosen-select form-control"
+                        id="warMapPlayed[]"
+                        name="warMapPlayed[]"
+                        data-placeholder="<?=$this->getTrans('warMapName') ?>">
+                    <?php foreach ($this->get('gamesmaps') ?? [] as $maps): ?>
+                        <option value="<?=$maps->getId() ?>" <?=$game->getMap() == $maps->getId() ? 'selected=""' : '' ?>><?=$this->escape($maps->getName()) ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
-    <?php endif; ?>
+        <div class="form-group">
+            <label class="col-lg-2 control-label" for="textinput">
+                <?=$this->getTrans('warResult') ?>
+            </label>
+            <div class="col-lg-2">
+                <input type="number"
+                       class="form-control"
+                       name="warErgebnisGroup[]"
+                       placeholder="<?=$this->getTrans('warResultWe') ?>"
+                       value="<?=$game->getGroupPoints() ?>">
+            </div>
+            <div class="col-lg-2">
+                <input type="number"
+                       class="form-control"
+                       name="warErgebnisEnemy[]"
+                       placeholder="<?=$this->getTrans('warResultEnemy') ?>"
+                       value="<?=$game->getEnemyPoints() ?>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2"></label>
+            <div class="col-lg-4">
+                <h1></h1>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
 </div>
 <div class="form-group">
     <label class="col-lg-2 control-label" for="textinput"></label>
     <div class="col-lg-2">
-        <a id="button-duplicater" class="btn btn-default" onlick="duplicate()"><?=$this->getTrans('warMoreMaps') ?></a>
+        <a id="button-duplicater" class="btn btn-default"><?=$this->getTrans('warMoreMaps') ?></a>
     </div>
     <div class="col-lg-2">
-        <a id="button-remover" class="btn btn-default" onlick="remove()"><?=$this->getTrans('warRemoveMaps') ?></a>
+        <a id="button-remover" class="btn btn-default"><?=$this->getTrans('warRemoveMaps') ?></a>
     </div>
 </div>
 
 <script>
     document.getElementById('button-duplicater').onclick = duplicate;
     document.getElementById('button-remover').onclick = remove;
+    document.getElementById('button-remover').onclick = remove;
 
-    var i = <?=$index?>;
-    var original = document.getElementById('duplicator0');
+    let i = <?=$index?>;
+    let original = document.getElementById('duplicator0');
 
     function duplicate() {
-        var clone = original.cloneNode(true); // "deep" clone
+        let clone = original.cloneNode(true); // "deep" clone
         clone.id = "duplicator" + i++; // there can only be one element with an ID
-        var dup = original.parentNode.appendChild(clone);
+        let dup = original.parentNode.appendChild(clone);
 
         // delete a possible hidden input "warGameIds" for the clone as otherwise the original would
         // get overwritten in the database.
-        var allWarGameId = document.getElementsByName('warGameIds[]');
-        if (allWarGameId.length != 0) {
-            var lastWarGameId = allWarGameId[allWarGameId.length - 1];
+        let allWarGameId = document.getElementsByName('warGameIds[]');
+        if (allWarGameId.length !== 0) {
+            let lastWarGameId = allWarGameId[allWarGameId.length - 1];
             lastWarGameId.parentNode.removeChild(lastWarGameId);
+        }
+
+        let warGamedel = document.getElementsByName('warGamedel[]');
+        if (warGamedel.length !== 0) {
+            let lastWarGameId = warGamedel[warGamedel.length - 1];
+            lastWarGameId.parentNode.removeChild(lastWarGameId);
+        }
+
+        let warMapPlayed = document.getElementsByName('warMapPlayed[]');
+        if (warMapPlayed.length !== 0) {
+            //warMapPlayed[warMapPlayed.length - 1].editableSelect();
+        }
+
+        let warErgebnisGroup = document.getElementsByName('warErgebnisGroup[]');
+        if (warErgebnisGroup.length !== 0) {
+            warErgebnisGroup[warErgebnisGroup.length - 1].value = '';
+        }
+
+        let warErgebnisEnemy = document.getElementsByName('warErgebnisEnemy[]');
+        if (warErgebnisEnemy.length !== 0) {
+            warErgebnisEnemy[warErgebnisEnemy.length - 1].value = '';
         }
     }
 
     function remove() {
-        var node = document.getElementById('dup');
+        let node = document.getElementById('dup');
         if (node.hasChildNodes()) {
             if (node.childNodes.length > '2') {
                 node.removeChild(node.lastChild);
@@ -130,8 +121,7 @@
         }
     }
 
-    function del(event) {
-        var mapid = event.currentTarget.id;
+    function del(mapid) {
         $('#games').load('<?=$this->getUrl('index.php/admin/war/ajax/del/id/' . $this->getRequest()->getParam('id') . '/mapid/') ?>' + mapid);
     }
 </script>

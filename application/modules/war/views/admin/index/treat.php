@@ -1,6 +1,6 @@
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-
-<h1><?=($this->getRequest()->getParam('id') == '') ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
+<?php $entrie = $this->get('war'); ?>
+<h1><?=(!$entrie->getId()) ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
 <?php if ($this->get('group') != '' && $this->get('enemy') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
@@ -12,13 +12,7 @@
                 <select class="form-control" id="warEnemy" name="warEnemy">
                     <optgroup label="<?=$this->getTrans('enemysName') ?>">
                         <?php foreach ($this->get('enemy') as $enemy): ?>
-                            <?php
-                            $selected = '';
-                            if ($this->get('war') != '' && $this->get('war')->getWarEnemy() == $enemy->getId()) {
-                                $selected = ' selected="selected"';
-                            }
-                            ?>
-                            <option<?=$selected ?> value="<?=$enemy->getId() ?>"><?=$this->escape($enemy->getEnemyName()) ?></option>
+                            <option value="<?=$enemy->getId() ?>" <?=($this->originalInput('warEnemy', ($entrie->getId()?$entrie->getWarEnemy():0))) == $enemy->getId() ? 'selected=""' : '' ?>><?=$this->escape($enemy->getEnemyName()) ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 </select>
@@ -32,13 +26,7 @@
                 <select class="form-control" id="warGroup" name="warGroup">
                     <optgroup label="<?=$this->getTrans('groupsName') ?>">
                         <?php foreach ($this->get('group') as $group): ?>
-                            <?php
-                            $selected = '';
-                            if ($this->get('war') != '' && $this->get('war')->getWarGroup() == $group->getId()) {
-                                $selected = ' selected="selected"';
-                            }
-                            ?>
-                            <option<?=$selected ?> value="<?=$group->getId() ?>"><?=$this->escape($group->getGroupName()) ?></option>
+                            <option value="<?=$group->getId() ?>" <?=($this->originalInput('warGroup', ($entrie->getId()?$entrie->getWarGroup():0))) == $group->getId() ? 'selected=""' : '' ?>><?=$this->escape($group->getGroupName()) ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 </select>
@@ -54,7 +42,7 @@
                        id="warTimeInput"
                        name="warTime"
                        size="16"
-                       value="<?=($this->get('war') != '') ? $this->get('war')->getWarTime() : '' ?>"
+                       value="<?=$this->escape($this->originalInput('warTime', ($entrie->getId()?(new \Ilch\Date($entrie->getWarTime()))->format("d.m.Y H:i"):''))) ?>"
                        readonly />
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
@@ -63,22 +51,14 @@
         </div>
         <div class="form-group<?=$this->validation()->hasError('warMap') ? ' has-error' : '' ?>">
             <label for="warMapInput" class="col-lg-2 control-label">
-                <?=$this->getTrans('warMap') ?>:
+                <?=$this->getTrans('warMap') ?>
             </label>
             <div class="col-lg-4">
-                <?php
-                $value = "";
-                if ($this->originalInput('warMap') != '') {
-                    $value = $this->originalInput('warMap');
-                } elseif ($this->get('war') != '') {
-                    $value = $this->get('war')->getWarMaps();
-                }
-                ?>
-                <input type="text"
-                       class="form-control"
-                       id="warMapInput"
-                       name="warMap"
-                       value="<?=$this->escape($value) ?>" />
+                <select class="chosen-select form-control" id="warMapInput" name="warMap[]" data-placeholder="<?=$this->getTrans('selectAssignedMaps') ?>" multiple>
+                    <?php foreach ($this->get('mapsList') ?? [] as $mapsList): ?>
+                        <option value="<?=$mapsList->getId() ?>" <?=in_array($mapsList->getId(), $this->originalInput('warMap', $this->get('warMap'))) ? 'selected=""' : '' ?>><?=$mapsList->getName() ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
         <div class="form-group<?=$this->validation()->hasError('warServer') ? ' has-error' : '' ?>">
@@ -86,39 +66,23 @@
                 <?=$this->getTrans('warServer') ?>:
             </label>
             <div class="col-lg-4">
-                <?php
-                $value = "";
-                if ($this->originalInput('warServer') != '') {
-                    $value = $this->originalInput('warServer');
-                } elseif ($this->get('war') != '') {
-                    $value = $this->get('war')->getWarServer();
-                }
-                ?>
                 <input type="text"
                        class="form-control"
                        id="warServerInput"
                        name="warServer"
-                       value="<?=$this->escape($value) ?>" />
+                       value="<?=$this->escape($this->originalInput('warServer', ($entrie->getId()?$entrie->getWarServer():''))) ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group<?=$this->validation()->hasError('warPassword') ? ' has-error' : '' ?>">
             <label for="warPasswordInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('warPassword') ?>:
             </label>
             <div class="col-lg-4">
-                <?php
-                $value = "";
-                if ($this->originalInput('warPassword') != '') {
-                    $value = $this->originalInput('warPassword');
-                } elseif ($this->get('war') != '') {
-                    $value = $this->get('war')->getWarPassword();
-                }
-                ?>
                 <input type="text"
                        class="form-control"
                        id="warPasswordInput"
                        name="warPassword"
-                       value="<?=$this->escape($value) ?>" />
+                       value="<?=$this->escape($this->originalInput('warPassword', ($entrie->getId()?$entrie->getWarPassword():''))) ?>" />
             </div>
         </div>
         <div class="form-group<?=$this->validation()->hasError('warXonx') ? ' has-error' : '' ?>">
@@ -126,18 +90,12 @@
                 <?=$this->getTrans('warXonx') ?>:
             </label>
             <div class="col-lg-2">
-                <select class="form-control" id="warXonx" name="warXonx" onchange="diasableXonx()">
+                <select class="form-control" id="warXonx" name="warXonx">
                     <optgroup label="<?=$this->getTrans('warXonx') ?>">
-                        <option value="neu"><?=$this->getTrans('new') ?></option>
+                        <option value="neu" <?=($this->originalInput('warXonx', ($entrie->getId()?$entrie->getWarXonx():'neu'))) == 'neu' ? 'selected=""' : '' ?>><?=$this->getTrans('new') ?></option>
                         <?php if ($this->get('warOptXonx') != ''): ?>
                             <?php foreach ($this->get('warOptXonx') as $opt): ?>
-                                <?php
-                                $selected = '';
-                                if ($this->get('war') != '' && $this->get('war')->getWarXonx() == $opt->getWarXonx()) {
-                                    $selected = ' selected="selected"';
-                                }
-                                ?>
-                                <option<?=$selected ?> value="<?=$opt->getWarXonx() ?>"><?=$this->escape($opt->getWarXonx()) ?></option>
+                                <option value="<?=$opt->getWarXonx() ?>" <?=($this->originalInput('warXonx', ($entrie->getId()?$entrie->getWarXonx():'neu'))) == $opt->getWarXonx() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarXonx()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -149,7 +107,7 @@
                        style=""
                        id="warXonxNew"
                        name="warXonxNew"
-                       value="" />
+                       value="<?=$this->escape($this->originalInput('warXonxNew')) ?>" />
             </div>
         </div>
         <div class="form-group<?=$this->validation()->hasError('warGame') ? ' has-error' : '' ?>">
@@ -157,18 +115,12 @@
                 <?=$this->getTrans('warGame') ?>:
             </label>
             <div class="col-lg-2">
-                <select class="form-control" id="warGame" name="warGame" onchange="diasableGame()">
+                <select class="form-control" id="warGame" name="warGame">
                     <optgroup label="<?=$this->getTrans('warGame') ?>">
-                        <option value="neu"><?=$this->getTrans('warNew') ?></option>
+                        <option value="neu" <?=($this->originalInput('warGame', ($entrie->getId()?$entrie->getWarGame():'neu'))) == 'neu' ? 'selected=""' : '' ?>><?=$this->getTrans('warNew') ?></option>
                         <?php if ($this->get('warOptGame') != ''): ?>
                             <?php foreach ($this->get('warOptGame') as $opt): ?>
-                                <?php
-                                $selected = '';
-                                if ($this->get('war') != '' && $this->get('war')->getWarGame() == $opt->getWarGame()) {
-                                    $selected = ' selected="selected"';
-                                }
-                                ?>
-                                <option<?=$selected ?> value="<?=$opt->getWarGame() ?>"><?=$this->escape($opt->getWarGame()) ?></option>
+                                <option value="<?=$opt->getWarGame() ?>" <?=($this->originalInput('warGame', ($entrie->getId()?$entrie->getWarGame():'neu'))) == $opt->getWarGame() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarGame()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -180,7 +132,7 @@
                        style=""
                        id="warGameNew"
                        name="warGameNew"
-                       value="" />
+                       value="<?=$this->escape($this->originalInput('warGameNew')) ?>" />
             </div>
         </div>
         <div class="form-group<?=$this->validation()->hasError('warMatchtype') ? ' has-error' : '' ?>">
@@ -188,18 +140,12 @@
                 <?=$this->getTrans('warMatchtype') ?>:
             </label>
             <div class="col-lg-2">
-                <select class="form-control" id="warMatchtype" name="warMatchtype" onchange="diasableMatchtype()">
+                <select class="form-control" id="warMatchtype" name="warMatchtype">
                     <optgroup label="<?=$this->getTrans('warMatchtype') ?>">
-                        <option value="neu"><?=$this->getTrans('new') ?></option>
+                        <option value="neu" <?=($this->originalInput('warMatchtype', ($entrie->getId()?$entrie->getWarMatchtype():'neu'))) == 'neu' ? 'selected=""' : '' ?>><?=$this->getTrans('new') ?></option>
                         <?php if ($this->get('warOptMatchtype') != ''): ?>
                             <?php foreach ($this->get('warOptMatchtype') as $opt): ?>
-                                <?php
-                                $selected = '';
-                                if ($this->get('war') != '' && $this->get('war')->getWarMatchtype() == $opt->getWarMatchtype()) {
-                                    $selected = ' selected="selected"';
-                                }
-                                ?>
-                                <option<?=$selected ?> value="<?=$opt->getWarMatchtype() ?>"><?=$this->escape($opt->getWarMatchtype()) ?></option>
+                                <option value="<?=$opt->getWarMatchtype() ?>" <?=($this->originalInput('warMatchtype', ($entrie->getId()?$entrie->getWarMatchtype():'neu'))) == $opt->getWarMatchtype() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarMatchtype()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -211,10 +157,22 @@
                        style=""
                        id="warMatchtypeNew"
                        name="warMatchtypeNew"
-                       value="" />
+                       value="<?=$this->escape($this->originalInput('warMatchtypeNew')) ?>" />
             </div>
         </div>
-        <?php if ($this->getRequest()->getParam('id')): ?>
+        <div class="form-group<?=$this->validation()->hasError('lastAcceptTime') ? ' has-error' : '' ?>">
+            <label for="lastAcceptTimeInput" class="col-lg-2 control-label">
+                <?=$this->getTrans('lastAcceptTime') ?>:
+            </label>
+            <div class="col-lg-4">
+                <input type="text"
+                       class="form-control"
+                       id="lastAcceptTimeInput"
+                       name="lastAcceptTime"
+                       value="<?=$this->escape($this->originalInput('lastAcceptTime', ($entrie->getId()?$entrie->getLastAcceptTime():0))) ?>" />
+            </div>
+        </div>
+        <?php if ($entrie->getId()): ?>
             <h1><?=$this->getTrans('warResult') ?></h1>
             <div id="games"></div>
         <?php else: ?>
@@ -229,23 +187,15 @@
             </div>
         <?php endif; ?>
         <h1><?=$this->getTrans('warReport') ?></h1>
-        <div class="form-group">
+        <div class="form-group<?=$this->validation()->hasError('warReport') ? ' has-error' : '' ?>">
             <div class="col-lg-offset-2 col-lg-8">
-                <?php
-                $value = "";
-                if ($this->originalInput('warReport') != '') {
-                    $value = $this->originalInput('warReport');
-                } elseif ($this->get('war') != '') {
-                    $value = $this->get('war')->getWarReport();
-                }
-                ?>
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="warReport"
-                          toolbar="ilch_html"><?=$this->escape($value) ?></textarea>
+                          toolbar="ilch_html"><?=$this->escape($this->originalInput('warReport', ($entrie->getId()?$entrie->getWarReport():''))) ?></textarea>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
             <label for="access" class="col-lg-2 control-label">
                 <?=$this->getTrans('visibleFor') ?>
             </label>
@@ -253,41 +203,44 @@
                 <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                     <?php foreach ($this->get('userGroupList') as $groupList): ?>
                         <?php if ($groupList->getId() != 1): ?>
-                            <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                            <option value="<?=$groupList->getId() ?>" <?=in_array($groupList->getId(), $this->originalInput('groups', $this->get('groups'))) ? 'selected=""' : '' ?>><?=$groupList->getName() ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
-            <div class="form-group">
-                <div class="col-lg-offset-2 col-lg-10">
-                    <input type="checkbox"
-                           id="calendarShow"
-                           name="calendarShow"
-                           value="1"
-                        <?=(($this->get('war') != '' AND $this->get('war')->getShow() == 1) OR $this->originalInput('calendarShow') == 1) ? 'checked' : '' ?> />
-                    <label for="calendarShow">
-                        <?=$this->getTrans('calendarShow') ?>
-                    </label>
+        <div class="form-group<?=$this->validation()->hasError('calendarShow') ? ' has-error' : '' ?>">
+            <label for="calendarShow" class="col-lg-2 control-label">
+                <?=$this->getTrans('calendarShow') ?>:
+            </label>
+            <div class="col-lg-4">
+                <div class="flipswitch">
+                    <input type="radio" class="flipswitch-input" id="calendarShow-yes" name="calendarShow" value="1" <?=($this->originalInput('calendarShow', ($entrie->getId()?$entrie->getShow():true)))?'checked="checked"':'' ?> />
+                    <label for="calendarShow-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                    <input type="radio" class="flipswitch-input" id="calendarShow-no" name="calendarShow" value="0"  <?=(!$this->originalInput('calendarShow', ($entrie->getId()?$entrie->getShow():true)))?'checked="checked"':'' ?> />
+                    <label for="calendarShow-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                    <span class="flipswitch-selection"></span>
                 </div>
             </div>
+        </div>
         <?php endif; ?>
         <h1><?=$this->getTrans('warStatus') ?></h1>
-        <div class="form-group">
+        <div class="form-group<?=$this->validation()->hasError('warStatus') ? ' has-error' : '' ?>">
             <label for="warStatus" class="col-lg-2 control-label">
                 <?=$this->getTrans('warStatus') ?>:
             </label>
             <div class="col-lg-4">
-                <select class="form-control" id="warStatus" name="warStatus">
-                    <optgroup label="<?=$this->getTrans('warStatus') ?>">
-                        <option<?=($this->get('war') != '' && $this->get('war')->getWarStatus() == '1') ? ' selected="selected"' : '' ?> value="1"><?=$this->getTrans('warStatusOpen') ?></option>
-                        <option<?=($this->get('war') != '' && $this->get('war')->getWarStatus() == '2') ? ' selected="selected"' : '' ?> value="2"><?=$this->getTrans('warStatusClose') ?></option>
-                    </optgroup>
-                </select>
+                <div class="flipswitch">
+                    <input type="radio" class="flipswitch-input" id="warStatus-open" name="warStatus" value="1" <?=($this->originalInput('warStatus', ($entrie->getId()?$entrie->getWarStatus():1)) == 1)?'checked="checked"':'' ?> />
+                    <label for="warStatus-open" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('warStatusOpen') ?></label>
+                    <input type="radio" class="flipswitch-input" id="warStatus-close" name="warStatus" value="2"  <?=($this->originalInput('warStatus', ($entrie->getId()?$entrie->getWarStatus():1)) == 2)?'checked="checked"':'' ?> />
+                    <label for="warStatus-close" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('warStatusClose') ?></label>
+                    <span class="flipswitch-selection"></span>
+                </div>
             </div>
         </div>
-        <?=$this->getSaveBar() ?>
+        <?=($entrie->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
     </form>
 <?php else: ?>
     <?=$this->getTranslator()->trans('firstGroupEnemy') ?>
@@ -299,6 +252,7 @@
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
+    $('#warMapInput').chosen();
     $('#access').chosen();
     $(document).ready(function () {
         $(".form_datetime").datetimepicker({
@@ -349,7 +303,7 @@
         }
 
         function loadGames() {
-            $('#games').load('<?=$this->getUrl('index.php/admin/war/ajax/game/id/' . $this->getRequest()->getParam('id') . '') ?>');
+            $('#games').load('<?=$this->getUrl(array_merge(['controller' => 'ajax', 'action' => 'game'], ($entrie->getId()?['id' => $entrie->getId()]:[]))) ?>');
         }
     });
 </script>

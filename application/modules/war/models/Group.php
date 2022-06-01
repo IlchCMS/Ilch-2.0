@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,56 +13,86 @@ class Group extends \Ilch\Model
      *
      * @var integer
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The Group Name.
      *
      * @var string
      */
-    protected $groupName;
+    protected $groupName = '';
 
     /**
      * The Group Tag.
      *
      * @var string
      */
-    protected $groupTag;
+    protected $groupTag = '';
 
     /**
      * The Group Image.
      *
      * @var string
      */
-    protected $groupImage;
+    protected $groupImage = '';
 
     /**
      * The Group ImageThumb.
      *
      * @var string
      */
-    protected $groupImageThumb;
+    protected $groupImageThumb = '';
 
     /**
      * The Group Member.
      *
      * @var string
      */
-    protected $groupMember;
+    protected $groupMember = '';
 
     /**
      * The Group Desc.
      *
      * @var string
      */
-    protected $groupDesc;
+    protected $groupDesc = '';
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray($entries): Group
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['name'])) {
+            $this->setGroupName($entries['name']);
+        }
+        if (isset($entries['tag'])) {
+            $this->setGroupTag($entries['tag']);
+        }
+        if (isset($entries['image'])) {
+            $this->setGroupImage($entries['image']);
+        }
+        if (isset($entries['member'])) {
+            $this->setGroupMember($entries['member']);
+        }
+        if (isset($entries['desc'])) {
+            $this->setGroupDesc($entries['desc']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the group.
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -73,9 +103,9 @@ class Group extends \Ilch\Model
      * @param integer $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Group
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -85,7 +115,7 @@ class Group extends \Ilch\Model
      *
      * @return string
      */
-    public function getGroupName()
+    public function getGroupName(): string
     {
         return $this->groupName;
     }
@@ -96,9 +126,9 @@ class Group extends \Ilch\Model
      * @param string $groupName
      * @return $this
      */
-    public function setGroupName($groupName)
+    public function setGroupName(string $groupName): Group
     {
-        $this->groupName = (string)$groupName;
+        $this->groupName = $groupName;
 
         return $this;
     }
@@ -108,7 +138,7 @@ class Group extends \Ilch\Model
      *
      * @return string
      */
-    public function getGroupTag()
+    public function getGroupTag(): string
     {
         return $this->groupTag;
     }
@@ -119,9 +149,9 @@ class Group extends \Ilch\Model
      * @param string $groupTag
      * @return $this
      */
-    public function setGroupTag($groupTag)
+    public function setGroupTag(string $groupTag): Group
     {
-        $this->groupTag = (string)$groupTag;
+        $this->groupTag = $groupTag;
 
         return $this;
     }
@@ -131,7 +161,7 @@ class Group extends \Ilch\Model
      *
      * @return string
      */
-    public function getGroupImage()
+    public function getGroupImage(): string
     {
         return $this->groupImage;
     }
@@ -142,9 +172,9 @@ class Group extends \Ilch\Model
      * @param string $groupImage
      * @return $this
      */
-    public function setGroupImage($groupImage)
+    public function setGroupImage(string $groupImage): Group
     {
-        $this->groupImage = (string)$groupImage;
+        $this->groupImage = $groupImage;
 
         return $this;
     }
@@ -154,7 +184,7 @@ class Group extends \Ilch\Model
      *
      * @return string
      */
-    public function getGroupImageThumb()
+    public function getGroupImageThumb(): string
     {
         return $this->groupImageThumb;
     }
@@ -165,9 +195,9 @@ class Group extends \Ilch\Model
      * @param string $groupImageThumb
      * @return $this
      */
-    public function setGroupImageThumb($groupImageThumb)
+    public function setGroupImageThumb(string $groupImageThumb): Group
     {
-        $this->groupImageThumb = (string)$groupImageThumb;
+        $this->groupImageThumb = $groupImageThumb;
 
         return $this;
     }
@@ -177,7 +207,7 @@ class Group extends \Ilch\Model
      *
      * @return string
      */
-    public function getGroupMember()
+    public function getGroupMember(): string
     {
         return $this->groupMember;
     }
@@ -188,9 +218,9 @@ class Group extends \Ilch\Model
      * @param string $groupMember
      * @return $this
      */
-    public function setGroupMember($groupMember)
+    public function setGroupMember(string $groupMember): Group
     {
-        $this->groupMember = (string)$groupMember;
+        $this->groupMember = $groupMember;
 
         return $this;
     }
@@ -200,7 +230,7 @@ class Group extends \Ilch\Model
      *
      * @return string
      */
-    public function getGroupDesc()
+    public function getGroupDesc(): string
     {
         return $this->groupDesc;
     }
@@ -211,10 +241,30 @@ class Group extends \Ilch\Model
      * @param string $groupDesc
      * @return $this
      */
-    public function setGroupDesc($groupDesc)
+    public function setGroupDesc(string $groupDesc): Group
     {
-        $this->groupDesc = (string)$groupDesc;
+        $this->groupDesc = $groupDesc;
 
         return $this;
+    }
+    
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true)
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'name' => $this->getGroupName(),
+                'tag' => $this->getGroupTag(),
+                'image' => $this->getGroupImage(),
+                'member' => $this->getGroupMember(),
+                'desc' => $this->getGroupDesc(),
+            ]
+        );
     }
 }

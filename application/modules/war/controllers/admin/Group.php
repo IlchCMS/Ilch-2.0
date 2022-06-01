@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -41,6 +41,12 @@ class Group extends \Ilch\Controller\Admin
                 ]
             ],
             [
+                'name' => 'menuMaps',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'maps', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuSettings',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
@@ -54,8 +60,7 @@ class Group extends \Ilch\Controller\Admin
             $items[2]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuWars',
             $items
         );
@@ -73,6 +78,9 @@ class Group extends \Ilch\Controller\Admin
             foreach ($this->getRequest()->getPost('check_groups') as $groupId) {
                 $groupMapper->delete($groupId);
             }
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_groupsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_groupsPerPage'));
@@ -86,74 +94,69 @@ class Group extends \Ilch\Controller\Admin
     {
         $groupMapper = new GroupMapper();
         $userGroupMapper = new UserGroupMapper();
+        $groupModel = new GroupModel();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('treatGroup'), ['action' => 'treat']);
 
-            $this->getView()->set('groups', $groupMapper->getGroupById($this->getRequest()->getParam('id')));
+            $groupModel = $groupMapper->getGroupById($this->getRequest()->getParam('id'));
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manageNewGroup'), ['action' => 'treat']);
         }
 
-        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
-
-        $post = [
-            'groupName' => '',
-            'groupTag' => '',
-            'groupImage' => '',
-            'userGroup' => '',
-            'groupDesc' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $groupImage = trim($this->getRequest()->getPost('groupImage'));
+            $groupImage = $this->getRequest()->getPost('groupImage');
             if (!empty($groupImage)) {
                 $groupImage = BASE_URL . '/' . $groupImage;
             }
-
+            
             $post = [
-                'groupName' => trim($this->getRequest()->getPost('groupName')),
-                'groupTag' => trim($this->getRequest()->getPost('groupTag')),
+                'groupName' => $this->getRequest()->getPost('groupName'),
+                'groupTag' => $this->getRequest()->getPost('groupTag'),
                 'groupImage' => $groupImage,
-                'userGroup' => $this->getRequest()->getPost('userGroup'),
-                'groupDesc' => trim($this->getRequest()->getPost('groupDesc')),
+                'userGroup' => $this->getRequest()->getPost('userGroup')
             ];
-
-            $validation = Validation::create($post, [
-                'groupName' => 'required',
-                'groupTag' => 'required',
+            
+            $validator = [
+                'groupName' => 'required|unique:war_groups,name',
+                'groupTag' => 'required|unique:war_groups,tag',
                 'groupImage' => 'required|url',
-                'userGroup' => 'required|numeric|integer|min:1'
-            ]);
+                'userGroup' => 'required|numeric|integer|min:1|exists:groups'
+            ];
+            
+            if ($groupModel->getId()) {
+                $validator['groupName'] = 'required';
+                $validator['groupTag'] = 'required';
+            }
 
-            $post['groupImage'] = trim($this->getRequest()->getPost('groupImage'));
+            $validation = Validation::create($post, $validator);
 
             if ($validation->isValid()) {
-                $groupModel = new GroupModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $groupModel->setId($this->getRequest()->getParam('id'));
-                }
-                $groupModel->setGroupMember($post['userGroup'])
-                    ->setGroupName($post['groupName'])
-                    ->setGroupTag($post['groupTag'])
-                    ->setGroupImage($post['groupImage'])
-                    ->setGroupDesc($post['groupDesc']);
+                $groupModel->setGroupMember($this->getRequest()->getPost('userGroup'))
+                    ->setGroupName($this->getRequest()->getPost('groupName'))
+                    ->setGroupTag($this->getRequest()->getPost('groupTag'))
+                    ->setGroupImage($this->getRequest()->getPost('groupImage'))
+                    ->setGroupDesc($this->getRequest()->getPost('groupDesc'));
                 $groupMapper->save($groupModel);
 
-                $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], ($groupModel->getId()?['id' => $groupModel->getId()]:[])));
         }
 
-        $this->getView()->set('post', $post)
-            ->set('errorFields', ($errorFields ?? []));
+        $this->getView()->set('groups', $groupModel)
+            ->set('userGroupList', $userGroupMapper->getGroupList());
     }
 
     public function delAction()

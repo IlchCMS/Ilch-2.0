@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=in_array('warsPerPage', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('warsPerPage') ? 'has-error' : '' ?>">
         <label for="warsPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('warsPerPage') ?>:
         </label>
@@ -11,10 +11,10 @@
                    id="warsPerPageInput"
                    name="warsPerPage"
                    min="1"
-                   value="<?=(empty($this->get('errorFields'))) ? $this->escape($this->get('warsPerPage')) : $this->get('post')['warsPerPage'] ?>" />
+                   value="<?=$this->escape($this->originalInput('warsPerPage', $this->get('warsPerPage'))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('enemiesPerPage', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('enemiesPerPage') ? 'has-error' : '' ?>">
         <label for="enemiesPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('enemiesPerPage') ?>:
         </label>
@@ -24,10 +24,10 @@
                    id="enemiesPerPageInput"
                    name="enemiesPerPage"
                    min="1"
-                   value="<?=(empty($this->get('errorFields'))) ? $this->escape($this->get('enemiesPerPage')) : $this->get('post')['enemiesPerPage'] ?>" />
+                   value="<?=$this->escape($this->originalInput('enemiesPerPage', $this->get('enemiesPerPage'))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('groupsPerPage', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('groupsPerPage') ? 'has-error' : '' ?>">
         <label for="groupsPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('groupsPerPage') ?>:
         </label>
@@ -37,12 +37,12 @@
                    id="groupsPerPageInput"
                    name="groupsPerPage"
                    min="1"
-                   value="<?=(empty($this->get('errorFields'))) ? $this->escape($this->get('groupsPerPage')) : $this->get('post')['groupsPerPage'] ?>" />
+                   value="<?=$this->escape($this->originalInput('groupsPerPage', $this->get('groupsPerPage'))) ?>" />
         </div>
     </div>
 
     <h1><?=$this->getTrans('boxSettings') ?></h1>
-    <div class="form-group<?=in_array('boxNextWarLimit', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('boxNextWarLimit') ? 'has-error' : '' ?>">
         <label for="limitNextWarInput" class="col-lg-2 control-label">
             <?=$this->getTrans('nextWarLimit') ?>:
         </label>
@@ -52,10 +52,10 @@
                    id="limitNextWarInput"
                    name="boxNextWarLimit"
                    min="1"
-                   value="<?=(empty($this->get('errorFields'))) ? $this->escape($this->get('boxNextWarLimit')) : $this->get('post')['boxNextWarLimit'] ?>" />
+                   value="<?=$this->escape($this->originalInput('boxNextWarLimit', $this->get('boxNextWarLimit'))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('boxLastWarLimit', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('boxLastWarLimit') ? 'has-error' : '' ?>">
         <label for="limitLastWarInput" class="col-lg-2 control-label">
             <?=$this->getTrans('lastWarLimit') ?>:
         </label>
@@ -65,7 +65,7 @@
                    id="limitLastWarInput"
                    name="boxLastWarLimit"
                    min="1"
-                   value="<?=(empty($this->get('errorFields'))) ? $this->escape($this->get('boxLastWarLimit')) : $this->get('post')['boxLastWarLimit'] ?>" />
+                   value="<?=$this->escape($this->originalInput('boxLastWarLimit', $this->get('boxLastWarLimit'))) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

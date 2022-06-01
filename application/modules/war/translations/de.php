@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -139,4 +139,22 @@ return [
     'groupNotFound' => 'Gruppe wurde nicht gefunden',
     'visibleFor' => 'Sichtbar für',
     'calendarShow' => 'War im Kalender anzeigen?',
+    
+    'modificationtime' => 'Änderungszeit',
+    'lastAcceptTime' => 'x Minuten bis die Anmeldung gesperrt wird',
+    
+    'menuMaps' => 'Karten',
+    'manageMaps' => 'Karten verwalten',
+    'mapsName' => 'Name',
+    'manageNewMaps' => 'Neue Karte erstellen',
+    'treatMaps' => 'Karten bearbeiten',
+    'selectAssignedMaps' => 'Karten',
+    'menuActionNewMap' => 'Neue Karte erstellen',
+    'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
+    'forbiddenExtension' => 'Sie haben versucht eine unerlaubte Dateiendung einzutragen.',
+    'menuGameIcon' => 'Game Icon',
+    'manageGameIcon' => 'Game Icon bearbeiten',
+    'manageNewGameIcon' => 'Neues Game Icon erstellen',
+    'treatMaps' => 'Game Icon bearbeiten',
+    'menuActionNewGameIcon' => 'Neues Game Icon erstellen',
 ];

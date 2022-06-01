@@ -1,118 +1,160 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\War\Mappers;
 
-use Modules\War\Models\Games as GamesModel;
+use Modules\War\Models\Games as EntriesModel;
 
 class Games extends \Ilch\Mapper
 {
-    /**
-     * Gets the Games.
-     *
-     * @param string $id
-     * @return GamesModel[]|array
-     */
-    public function getGamesByWarId($id = null)
-    {
-        $select = $this->db()->select('*')
-            ->from('war_played')
-            ->where(['war_id' => $id])
-            ->order(['war_id' => 'DESC'])
-            ->execute()
-            ->fetchRows();
+    public $tablename = 'war_played';
 
-        if (empty($select)) {
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by param.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return array|null
+     */
+    public function getEntriesBy($where = [], $orderBy = ['id' => 'DESC'], $pagination = null)
+    {
+        $select = $this->db()->select()
+            ->fields(['*'])
+            ->from([$this->tablename])
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
             return null;
         }
+        $entrys = [];
 
-        $games = [];
+        foreach ($entryArray as $entries) {
+            $entryModel = new EntriesModel();
 
-        foreach ($select as $game) {
-            $gameModel = new GamesModel();
-            $gameModel->setId($game['id'])
-                ->setWarId($game['war_id'])
-                ->setMap(($game['map']))
-                ->setGroupPoints(($game['group_points']))
-                ->setEnemyPoints(($game['enemy_points']));
-            $games[] = $gameModel;
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
         }
-
-        return $games;
+        return $entrys;
     }
 
     /**
      * Gets the Games.
      *
-     * @param array[]
-     * @return GamesModel[]|array
+     * @param int $id
+     * @return null|array
+     */
+    public function getGamesByWarId(int $id)
+    {
+        return $this->getEntriesBy(['war_id' => $id], ['war_id' => 'DESC']);
+    }
+
+    /**
+     * Gets the Games.
+     *
+     * @param array
+     * @return null|array
      */
     public function getGamesByWhere($where = [])
     {
-        $select = $this->db()->select('*')
-            ->from('war_played')
-            ->where($where)
-            ->order(['war_id' => 'DESC'])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($select)) {
-            return null;
-        }
-
-        $games = [];
-
-        foreach ($select as $game) {
-            $gameModel = new GamesModel();
-            $gameModel->setId($game['id'])
-                ->setWarId($game['war_id'])
-                ->setMap(($game['map']))
-                ->setGroupPoints(($game['group_points']))
-                ->setEnemyPoints(($game['enemy_points']));
-            $games[] = $gameModel;
-        }
-
-        return $games;
+        return $this->getEntriesBy($where, ['war_id' => 'DESC']);
     }
 
     /**
-     * Inserts or updates Game entry.
+     * Inserts or updates entry.
      *
-     * @param GamesModel $model
+     * @param EntriesModel $model
+     * @return integer
      */
-    public function save(GamesModel $model)
+    public function save(EntriesModel $model): int
     {
-        $fields = [
-            'war_id' => $model->getWarId(),
-            'map' => $model->getMap(),
-            'group_points' => $model->getGroupPoints(),
-            'enemy_points' => $model->getEnemyPoints()
-        ];
+        $fields = $model->getArray();
 
         if ($model->getId()) {
-            $this->db()->update('war_played')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
+            $result = $model->getId();
         } else {
-            $this->db()->insert('war_played')
+            $result = (int)$this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
+
+        return $result;
+    }
+
+    /**
+     * Deletes the entry.
+     *
+     * @param int|EntriesModel $id
+     * @return boolean
+     */
+    public function delete($id): bool
+    {
+        if (is_a($id, EntriesModel::class)) {
+            $id = $id->getId();
+        }
+
+        return $this->db()->delete($this->tablename)
+            ->where(['id' => (int)$id])
+            ->execute();
+    }
+
+    /**
+     * Get Export Json.
+     *
+     * @param int $options
+     * @return string
+     */
+    public function getJson(int $options = 0): string
+    {
+        $entryArray = $this->getEntriesBy();
+        $entrys = [];
+
+        if ($entryArray) {
+            foreach ($entryArray as $entryModel) {
+                $entrys[] = $entryModel->getArray(false);
+            }
+        }
+        
+        return json_encode($entrys, $options);
     }
 
     /**
      * Delete the game.
      *
-     * @param  $id
+     * @param int $id
+     * @return bool
      */
-    public function deleteById($id)
+    public function deleteById(int $id): bool
     {
-        $this->db()->delete('war_played')
-            ->where(['id' => $id])
-            ->execute();
+        return $this->delete($id);
     }
 }

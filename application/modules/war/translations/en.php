@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -139,4 +139,22 @@ return [
     'groupNotFound' => 'Group not found',
     'visibleFor' => 'Visible for',
     'calendarShow' => 'Show war in calendar?',
+    
+    'modificationtime' => 'Modification Time',
+    'lastAcceptTime' => 'x minutes until login is blocked',
+    
+    'menuMaps' => 'Maps',
+    'manageMaps' => 'Manage Maps',
+    'mapsName' => 'Name',
+    'manageNewMaps' => 'Add new map',
+    'treatMaps' => 'Treat map',
+    'selectAssignedMaps' => 'Maps',
+    'menuActionNewMap' => 'Add new map',
+    'failedFilesize' => 'Avatar has unauthorized width, height or is too big.',
+    'forbiddenExtension' => 'You tried to add an forbidden file extension.',
+    'menuGameIcon' => 'Game Icon',
+    'manageGameIcon' => 'Manage Game Icon',
+    'manageNewGameIcon' => 'Add new Game Icon',
+    'treatMaps' => 'Treat Game Icon',
+    'menuActionNewGameIcon' => 'Add new Game Icon',
 ];

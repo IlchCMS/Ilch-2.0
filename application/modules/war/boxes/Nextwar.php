@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -32,7 +32,6 @@ class Nextwar extends \Ilch\Box
 
         $this->getView()->set('warMapper', $warMapper)
             ->set('date', $date->format(null, true))
-            ->set('war', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit')))
-            ->set('readAccess', $readAccess);
+            ->set('war', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit'), $readAccess));
     }
 }

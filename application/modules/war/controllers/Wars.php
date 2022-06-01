@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -30,7 +30,6 @@ class Wars extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('warList', $warMapper->getWarsForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')))
-            ->set('readAccess', $readAccess);
+        $this->getView()->set('warList', $warMapper->getWarsForJson($this->getRequest()->getQuery('start') ?? '', $this->getRequest()->getQuery('end') ?? '', $readAccess));
     }
 }
