@@ -186,6 +186,7 @@ class War extends \Ilch\Mapper
      *
      * @param int $warId
      * @param string|array $readAccess example: "1,2,3"
+     * @param boolean $addAdmin
      * @since 1.15.0
      */
     public function saveReadAccess(int $warId, $readAccess, bool $addAdmin = true)
@@ -203,7 +204,7 @@ class War extends \Ilch\Mapper
         $sqlWithValues = $sql;
         $rowCount = 0;
         if (!empty($readAccess)) {
-            $groupIds = explode(',', $readAccess);
+            $groupIds = $readAccess;
         } else {
             $groupIds = [];
         }
