@@ -167,7 +167,11 @@ class Index extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $groups = '';
                 if (!empty($this->getRequest()->getPost('groups'))) {
-                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                    if (in_array('all', $this->getRequest()->getPost('groups'))) {
+                        $groups = 'all';
+                    } else {
+                        $groups = implode(',', $this->getRequest()->getPost('groups'));
+                    }
                 }
                 $warMap = '';
                 if (!empty($this->getRequest()->getPost('warMap'))) {

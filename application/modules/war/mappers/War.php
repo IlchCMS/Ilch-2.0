@@ -33,13 +33,19 @@ class War extends \Ilch\Mapper
      */
     public function getEntriesBy($where = [], $orderBy = ['g.id' => 'DESC'], $pagination = null)
     {
-        $select = $this->db()->select()
-            ->fields(['w.id', 'w.enemy', 'w.group', 'w.time', 'w.maps', 'w.server', 'w.password', 'w.xonx', 'w.game', 'w.matchtype', 'w.report', 'w.status', 'w.show', 'w.lastaccepttime'])
+        $read_access = '';
+        if (isset($where['ra.group_id'])) {
+            $read_access = $where['ra.group_id'];
+            unset($where['ra.group_id']);
+        }
+
+        $select = $this->db()->select();
+        $select->fields(['w.id', 'w.enemy', 'w.group', 'w.time', 'w.maps', 'w.server', 'w.password', 'w.xonx', 'w.game', 'w.matchtype', 'w.report', 'w.status', 'w.show', 'w.lastaccepttime', 'w.read_access_all'])
             ->from(['w' => $this->tablename])
             ->join(['ra' => 'war_access'], 'w.id = ra.war_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT', ['war_groups' => 'g.tag', 'group_name' => 'g.name', 'group_is' => 'g.id'])
             ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT', ['war_enemy' => 'e.tag', 'enemy_name' => 'e.name', 'enemy_id' => 'e.id'])
-            ->where($where)
+            ->where(array_merge($where, ($read_access ? [$select->orX(['ra.group_id' => $read_access, 'w.read_access_all' => '1'])] : [])))
             ->order($orderBy)
             ->group(['w.id']);
 
@@ -203,10 +209,11 @@ class War extends \Ilch\Mapper
         $sql = 'INSERT INTO [prefix]_war_access (war_id, group_id) VALUES';
         $sqlWithValues = $sql;
         $rowCount = 0;
+        $groupIds = [];
         if (!empty($readAccess)) {
-            $groupIds = $readAccess;
-        } else {
-            $groupIds = [];
+            if (!in_array('all', $readAccess)) {
+                $groupIds = $readAccess;
+            }
         }
         if ($addAdmin && !in_array('1', $groupIds)) {
             $groupIds[] = '1';
@@ -223,7 +230,7 @@ class War extends \Ilch\Mapper
             }
 
             $rowCount++;
-            $sqlWithValues .= '(' . (int)$warId . ',' . (int)$groupId . '),';
+            $sqlWithValues .= '(' . $warId . ',' . (int)$groupId . '),';
         }
 
         // Insert remaining rows.
@@ -260,7 +267,7 @@ class War extends \Ilch\Mapper
      */
     public function getWarListByStatus($status = null, $pagination = null)
     {
-        return $this->getEntriesBy(['status' => $this->db()->escape($status)], ['w.time' => 'DESC'], $pagination);
+        return $this->getEntriesBy(['status' => $status], ['w.time' => 'DESC'], $pagination);
     }
 
     /**
@@ -299,10 +306,7 @@ class War extends \Ilch\Mapper
 
     public function getWarOptDistinctXonx()
     {
-        $sql = 'SELECT DISTINCT xonx
-                FROM [prefix]_war';
-
-        $warArray = $this->db()->queryArray($sql);
+        $warArray = $this->db()->queryArray('SELECT DISTINCT xonx FROM [prefix]_war');
 
         if (empty($warArray)) {
             return null;
@@ -321,10 +325,7 @@ class War extends \Ilch\Mapper
 
     public function getWarOptDistinctGame()
     {
-        $sql = 'SELECT DISTINCT game
-                FROM [prefix]_war';
-
-        $warArray = $this->db()->queryArray($sql);
+        $warArray = $this->db()->queryArray('SELECT DISTINCT game FROM [prefix]_war');
 
         if (empty($warArray)) {
             return null;
@@ -343,10 +344,7 @@ class War extends \Ilch\Mapper
 
     public function getWarOptDistinctMatchtype()
     {
-        $sql = 'SELECT DISTINCT matchtype
-                FROM [prefix]_war';
-
-        $warArray = $this->db()->queryArray($sql);
+        $warArray = $this->db()->queryArray('SELECT DISTINCT matchtype FROM [prefix]_war');
 
         if (empty($warArray)) {
             return null;

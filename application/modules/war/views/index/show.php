@@ -138,6 +138,7 @@ $commentsClass = new Ilch\Comments();
                             $user = $userMapper->getDummyUser();
                         }
                         $text = '';
+                        $class = '';
                         if ($acceptCheck->getAccept() == '1') {
                             $class = ' war_win';
                             $text = $this->getTrans('has').' '.$this->getTrans('accepted');
@@ -150,15 +151,14 @@ $commentsClass = new Ilch\Comments();
                             $class = ' war_drawn';
                             $text = $this->getTrans('is').' '.$this->getTrans('undecided');
                         }
-                        if ($acceptCheck->getComment() != '') {
+                        $comment = '';
+                        if ($acceptCheck->getComment()) {
                             $comment = ' -> '.$this->escape($acceptCheck->getComment());
-                        } else {
-                            $comment = '';
                         }
                         ?>
                         <li class="list-group-item<?=$class ?>">
                             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: 
-                            <a href="#" title="<?=$this->getTrans('modificationtime') ?>" data-toggle="popover" data-trigger="hover" data-content="<?=(new \Ilch\Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"><?=$text ?><?=$comment ?></a>
+                            <?=$text ?><?=$comment ?> <i class="fas fa-info-circle" data-toggle="popover" data-trigger="hover" data-content="<?=(new \Ilch\Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></i>
                         </li>
                     <?php endforeach; ?>
                     </ul>

@@ -179,6 +179,9 @@ class War extends \Ilch\Model
         if (isset($entries['lastaccepttime'])) {
             $this->setLastAcceptTime($entries['lastaccepttime']);
         }
+        if (isset($entries['read_access_all'])) {
+            $this->setReadAccess('all');
+        }
 
         if (isset($entries['war_groups'])) {
             $this->setWarGroupTag($entries['war_groups']);
@@ -602,7 +605,8 @@ class War extends \Ilch\Model
                 'report'            => $this->getWarReport(),
                 'status'            => $this->getWarStatus(),
                 'show'              => $this->getShow(),
-                'lastaccepttime'    => $this->getLastAcceptTime()
+                'lastaccepttime'    => $this->getLastAcceptTime(),
+                'read_access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0)
             ]
         );
     }

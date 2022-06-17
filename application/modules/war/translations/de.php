@@ -139,10 +139,11 @@ return [
     'groupNotFound' => 'Gruppe wurde nicht gefunden',
     'visibleFor' => 'Sichtbar für',
     'calendarShow' => 'War im Kalender anzeigen?',
-    
+
     'modificationtime' => 'Änderungszeit',
     'lastAcceptTime' => 'x Minuten bis die Anmeldung gesperrt wird',
-    
+    'groupAll' => 'Alle',
+
     'menuMaps' => 'Karten',
     'manageMaps' => 'Karten verwalten',
     'mapsName' => 'Name',

@@ -98,6 +98,7 @@ class Config extends \Ilch\Config\Install
           `status` TINYINT(1) NOT NULL DEFAULT 0,
           `show` TINYINT(1) NOT NULL DEFAULT 0,
           `lastaccepttime` INT(11) NOT NULL,
+          `read_access_all` TINYINT(1) NOT NULL,
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -290,8 +291,8 @@ class Config extends \Ilch\Config\Install
                     }
                 }
 
-                // Delete old read_access column of table articles.
-                $this->db()->query('ALTER TABLE `[prefix]_war` DROP COLUMN `read_access`;');
+            // Delete old read_access column of table war.
+            $this->db()->query('ALTER TABLE `[prefix]_war` DROP COLUMN `read_access`;');
 
                 //Deleting all old ID's
                 $idswar = $this->db()->select('id')
@@ -352,6 +353,14 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD CONSTRAINT `FK_[prefix]_war_accept_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD `date_created` DATETIME NOT NULL AFTER `comment`;');
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `lastaccepttime` INT(11) NOT NULL AFTER `show`;');
+            // no break
+            case "1.15.0":
+                // update zu 1.15.1
+                /*
+                Rechte-System erweitert
+                Code verbesseung
+                */
+                $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `lastaccepttime`;');
         }
     }
 }

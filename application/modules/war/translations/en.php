@@ -142,6 +142,7 @@ return [
     
     'modificationtime' => 'Modification Time',
     'lastAcceptTime' => 'x minutes until login is blocked',
+    'groupAll' => 'All',
     
     'menuMaps' => 'Maps',
     'manageMaps' => 'Manage Maps',
