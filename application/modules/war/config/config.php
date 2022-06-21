@@ -294,65 +294,65 @@ class Config extends \Ilch\Config\Install
             // Delete old read_access column of table war.
             $this->db()->query('ALTER TABLE `[prefix]_war` DROP COLUMN `read_access`;');
 
-                //Deleting all old ID's
-                $idswar = $this->db()->select('id')
-                    ->from('war')
-                    ->execute()
-                    ->fetchList();
+            //Deleting all old ID's
+            $idswar = $this->db()->select('id')
+                ->from('war')
+                ->execute()
+                ->fetchList();
 
-                $idswar_played = $this->db()->select('war_id')
-                    ->from('war_played')
-                    ->execute()
-                    ->fetchList();
+            $idswar_played = $this->db()->select('war_id')
+                ->from('war_played')
+                ->execute()
+                ->fetchList();
 
-                $idswar_accept = $this->db()->select('war_id')
-                    ->from('war_accept')
-                    ->execute()
-                    ->fetchList();
+            $idswar_accept = $this->db()->select('war_id')
+                ->from('war_accept')
+                ->execute()
+                ->fetchList();
 
-                $orphanedRowswar_played = array_diff($idswar_played ?? [], $idswar ?? []);
-                if (count($orphanedRowswar_played) > 0) {
-                    $this->db()->delete()->from('war_played')
-                        ->where(['war_id' => $orphanedRowswar_played])
+            $orphanedRowswar_played = array_diff($idswar_played ?? [], $idswar ?? []);
+            if (count($orphanedRowswar_played) > 0) {
+                $this->db()->delete()->from('war_played')
+                    ->where(['war_id' => $orphanedRowswar_played])
+                    ->execute();
+            }
+
+            $orphanedRowswar_accept = array_diff($idswar_accept ?? [], $idswar ?? []);
+            if (count($orphanedRowswar_accept) > 0) {
+                $this->db()->delete()->from('war_accept')
+                    ->where(['war_id' => $orphanedRowswar_accept])
+                    ->execute();
+            }
+
+            $commentsArray = $this->db()->select('*')
+                ->from('comments')
+                ->where(['key LIKE' => 'war/index/show/id/%'])
+                ->execute()
+                ->fetchRows();
+
+            $idswar_comments = [];
+            foreach ($commentsArray ?? [] as $comments) {
+                $warid = explode('/', $comments['key']);
+                if (isset($warid[4]) and !in_array($warid[4], $idswar_comments)) {
+                    $idswar_comments[] = $warid[4];
+                }
+            }
+            $orphanedRowswar_comments = array_diff($idswar_comments ?? [], $idswar ?? []);
+            if (count($orphanedRowswar_comments) > 0) {
+                foreach ($orphanedRowswar_comments as $warid) {
+                    $this->db()->delete()->from('comments')
+                        ->where(['key LIKE' => 'war/index/show/id/'.$warid.'%'])
                         ->execute();
                 }
+            }
 
-                $orphanedRowswar_accept = array_diff($idswar_accept ?? [], $idswar ?? []);
-                if (count($orphanedRowswar_accept) > 0) {
-                    $this->db()->delete()->from('war_accept')
-                        ->where(['war_id' => $orphanedRowswar_accept])
-                        ->execute();
-                }
-
-                $commentsArray = $this->db()->select('*')
-                    ->from('comments')
-                    ->where(['key LIKE' => 'war/index/show/id/%'])
-                    ->execute()
-                    ->fetchRows();
-
-                $idswar_comments = [];
-                foreach ($commentsArray ?? [] as $comments) {
-                    $warid = explode('/', $comments['key']);
-                    if (isset($warid[4]) and !in_array($warid[4], $idswar_comments)) {
-                        $idswar_comments[] = $warid[4];
-                    }
-                }
-                $orphanedRowswar_comments = array_diff($idswar_comments ?? [], $idswar ?? []);
-                if (count($orphanedRowswar_comments) > 0) {
-                    foreach ($orphanedRowswar_comments as $warid) {
-                        $this->db()->delete()->from('comments')
-                            ->where(['key LIKE' => 'war/index/show/id/'.$warid.'%'])
-                            ->execute();
-                    }
-                }
-
-                //change TABLE
-                $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD INDEX `FK_[prefix]_war_played_[prefix]_war` (`war_id`) USING BTREE;');
-                $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD CONSTRAINT `FK_[prefix]_war_played_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
-                $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD INDEX `FK_[prefix]_war_accept_[prefix]_war` (`war_id`) USING BTREE;');
-                $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD CONSTRAINT `FK_[prefix]_war_accept_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
-                $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD `date_created` DATETIME NOT NULL AFTER `comment`;');
-                $this->db()->query('ALTER TABLE `[prefix]_war` ADD `lastaccepttime` INT(11) NOT NULL AFTER `show`;');
+            //change TABLE
+            $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD INDEX `FK_[prefix]_war_played_[prefix]_war` (`war_id`) USING BTREE;');
+            $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD CONSTRAINT `FK_[prefix]_war_played_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+            $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD INDEX `FK_[prefix]_war_accept_[prefix]_war` (`war_id`) USING BTREE;');
+            $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD CONSTRAINT `FK_[prefix]_war_accept_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+            $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD `date_created` DATETIME NOT NULL AFTER `comment`;');
+            $this->db()->query('ALTER TABLE `[prefix]_war` ADD `lastaccepttime` INT(11) NOT NULL AFTER `show`;');
             // no break
             case "1.15.0":
                 // update zu 1.15.1

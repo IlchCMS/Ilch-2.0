@@ -180,7 +180,9 @@ class War extends \Ilch\Model
             $this->setLastAcceptTime($entries['lastaccepttime']);
         }
         if (isset($entries['read_access_all'])) {
-            $this->setReadAccess('all');
+            if ($entries['read_access_all']) {
+                $this->setReadAccess('all');
+            }
         }
 
         if (isset($entries['war_groups'])) {

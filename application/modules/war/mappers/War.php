@@ -121,20 +121,24 @@ class War extends \Ilch\Mapper
     /**
      * Get wars for json (for example the calendar)
      *
-     * @param string $start
-     * @param string $end
+     * @param \Ilch\Date|string $start
+     * @param \Ilch\Date|string $end
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return array|null
      */
-    public function getWarsForJson(string $start, string $end, $groupIds = '3')
+    public function getWarsForJson($start, $end, $groupIds = '3')
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
         }
 
         if ($start && $end) {
-            $start = new \Ilch\Date($start);
-            $end = new \Ilch\Date($end);
+            if (!is_a($start, \Ilch\Date::class)) {
+                $start = new \Ilch\Date($start);
+            }
+            if (!is_a($end, \Ilch\Date::class)) {
+                $end = new \Ilch\Date($end);
+            }
 
             $entryArray = $this->getEntriesBy(['show' => 1, 'time >=' => $start, 'time <=' => $end, 'ra.group_id' => $groupIds], []);
 
