@@ -43,7 +43,8 @@ class Calendar extends \Ilch\Mapper
             ->from(['c' => $this->tablename])
             ->join(['ra' => 'calendar_access'], 'c.id = ra.calendar_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->where(array_merge($where, ($read_access ? [$select->orX(['ra.group_id' => $read_access, 'c.read_access_all' => '1'])] : [])))
-            ->order($orderBy);
+            ->order($orderBy)
+            ->group(['c.id']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())

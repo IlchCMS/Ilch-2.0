@@ -1,0 +1,77 @@
+calendar:
+  -
+    id: 1
+    title: "Training 1"
+    place: ""
+    start: "2021-05-09 08:10:38"
+    end: "2021-05-09 08:10:38"
+    text: ""
+    color: "#32333B"
+    period_day: 0
+    read_access_all: 0
+  -
+    id: 2
+    title: "Training 2"
+    place: ""
+    start: "2021-05-09 09:10:38"
+    end: "2021-05-09 09:10:38"
+    text: ""
+    color: "#32333B"
+    period_day: 0
+    read_access_all: 0
+  -
+    id: 3
+    title: "Training 3"
+    place: ""
+    start: "2021-05-10 09:10:38"
+    end: "2021-05-10 09:10:38"
+    text: ""
+    color: "#32333B"
+    period_day: 0
+    read_access_all: 1
+
+calendar_events:
+  -
+    id: 1
+    url: "calendar/events/index/"
+  -
+    id: 2
+    url: "war/wars/index/"
+  -
+    id: 3
+    url: "training/trainings/index/"
+  -
+    id: 4
+    url: "birthday/birthdays/index/"
+  -
+    id: 5
+    url: "events/events/index/"
+  -
+    id: 6
+    url: "away/aways/index/"
+
+calendar_access:
+  -
+    calendar_id: 1
+    group_id: 1
+  -
+    calendar_id: 1
+    group_id: 3
+  -
+    calendar_id: 2
+    group_id: 1
+  -
+    calendar_id: 3
+    group_id: 1
+
+groups:
+  -
+    id: 1
+    name: "Admin"
+  -
+    id: 2
+    name: "Guest"
+  -
+    id: 3
+    name: "User"
+
