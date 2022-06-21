@@ -19,10 +19,8 @@ class Events extends \Ilch\Controller\Frontend
         $this->getLayout()->setFile('modules/calendar/layouts/events');
 
         $user = null;
-        $adminAccess = false;
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
-            $adminAccess = $this->getUser()->isAdmin();
         }
 
         $readAccess = [3];
@@ -57,10 +55,10 @@ class Events extends \Ilch\Controller\Frontend
                 }
             }
 
-            if (!is_in_array($readAccess, explode(',', $calendar->getReadAccess())) or $adminAccess) {
+            if (!is_in_array($readAccess, explode(',', $calendar->getReadAccess())) or !$adminAccess) {
                 $this->redirect()
                     ->withMessage('noCalendar', 'warning')
-                    ->to(['action' => 'index']);
+                    ->to(['controller' => 'index', 'action' => 'index']);
 
                 return;
             }
@@ -76,7 +74,7 @@ class Events extends \Ilch\Controller\Frontend
         } else {
             $this->redirect()
                 ->withMessage('noCalendar', 'warning')
-                ->to(['action' => 'index']);
+                ->to(['controller' => 'index', 'action' => 'index']);
         }
     }
 
@@ -86,10 +84,8 @@ class Events extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
 
         $user = null;
-        $adminAccess = false;
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
-            $adminAccess = $this->getUser()->isAdmin();
         }
 
         $readAccess = [3];
