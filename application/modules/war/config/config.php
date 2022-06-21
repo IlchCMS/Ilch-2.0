@@ -152,7 +152,7 @@ class Config extends \Ilch\Config\Install
           CONSTRAINT `FK_[prefix]_war_accept_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-        CREATE TABLE `[prefix]_war_access` (
+        CREATE TABLE IF NOT EXISTS `[prefix]_war_access` (
             `war_id` INT(11) NOT NULL,
             `group_id` INT(11) NOT NULL,
             PRIMARY KEY (`war_id`, `group_id`) USING BTREE,
