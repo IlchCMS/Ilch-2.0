@@ -13,15 +13,16 @@
 <script src="<?=$this->getModuleUrl('static/js/fullcalendar/locale-all.js') ?>"></script>
 <script>
 $(document).ready(function() {
-    var date = new Date();
-    var language = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
+    let language = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
+    let timeFormat = '';
+    let labelTimeFormat = '';
 
-    if (language == 'de') {
-        var timeFormat = 'HH:mm',
-            labelTimeFormat = 'HH:mm';
-    } else if (language == 'en') {
-        var timeFormat = 'hh:mm',
-            labelTimeFormat = 'hh:mm A';
+    if (language === 'de') {
+        timeFormat = 'HH:mm';
+        labelTimeFormat = 'HH:mm';
+    } else if (language === 'en') {
+        timeFormat = 'hh:mm';
+        labelTimeFormat = 'hh:mm A';
     }
 
     $('#calendar').fullCalendar({
@@ -47,9 +48,9 @@ $(document).ready(function() {
             $('#calendar').fullCalendar('gotoDate', date);
         },
         eventClick: function(event, jsEvent, view) {
-            var currentView = view.name;
+            let currentView = view.name;
 
-            if (event.url && currentView == 'agendaDay') {
+            if (event.url && currentView === 'agendaDay') {
                 window.open(event.url, "_self");
                 return false;
             } else {
@@ -60,7 +61,7 @@ $(document).ready(function() {
 
         // from database
         eventSources: [
-            <?php foreach ($this->get('events') as $url): ?>
+            <?php foreach ($this->get('events') ?? [] as $url): ?>
                 {
                     url: '<?=$this->getUrl($url->getUrl()) ?>'
                 },
@@ -76,28 +77,28 @@ $(document).ready(function() {
     bindButtonActions();
 
     function addButtons() {
-        var month = $("<button/>")
+        let month = $("<button/>")
             .addClass("fc-month-button fc-button fc-state-default fc-corner-left fc-state-active")
             .attr({
                 type: "button"
             })
             .text("<?=$this->getTrans('calendarMonth') ?>");
 
-        var week = $("<button/>")
+        let week = $("<button/>")
             .addClass("fc-agendaWeek-button fc-button fc-state-default")
             .attr({
                 type: "button"
             })
             .text("<?=$this->getTrans('calendarWeek') ?>");
 
-        var day = $("<button/>")
+        let day = $("<button/>")
             .addClass("fc-agendaDay-button fc-button fc-state-default fc-corner-right")
             .attr({
                 type: "button"
             })
             .text("<?=$this->getTrans('calendarDay') ?>");
 
-        var today = $("<button/>")
+        let today = $("<button/>")
             .addClass("fc-today-button fc-button fc-state-default fc-corner-left fc-state-disabled")
             .attr({
                 type: "button",
@@ -105,28 +106,28 @@ $(document).ready(function() {
             })
             .text("<?=$this->getTrans('calendarToday') ?>");
 
-        var listWeek = $("<button/>")
+        let listWeek = $("<button/>")
             .addClass("fc-listWeek-button fc-button fc-state-default")
             .attr({
                 type: "button"
             })
             .text("<?=$this->getTrans('calendarWeek') ?>");
 
-        var list = $("<button/>")
+        let list = $("<button/>")
             .addClass("fc-listWeek-button fc-button fc-state-default fc-corner-right fc-listWeek-button-desk")
             .attr({
                 type: "button"
             })
             .text("<?=$this->getTrans('calendarList') ?>");
 
-        var iCal = $("<button/>")
+        let iCal = $("<button/>")
             .addClass("fc-iCal-button fc-button fc-state-default fc-corner-left fc-corner-right")
             .attr({
                 type: "button"
             })
             .text("<?=$this->getTrans('calendarICal') ?>");
 
-        var btn = $("<div class='fc-head'/>").append(
+        let btn = $("<div class='fc-head'/>").append(
             $("<div/>")
                 .addClass("fc-button-group")
                 .append(month)
@@ -142,7 +143,7 @@ $(document).ready(function() {
                 .append(list)
         );
 
-        var clear = $("<div/>").addClass("fc-clear");
+        let clear = $("<div/>").addClass("fc-clear");
 
         $(".fc-toolbar").find(".fc-left").before(btn);
         $(".fc-toolbar").find(".fc-head").after(clear);
@@ -150,7 +151,7 @@ $(document).ready(function() {
 
     function bindButtonActions(){
         $(".fc-month-button, .fc-agendaWeek-button, .fc-agendaDay-button, .fc-listWeek-button, .fc-iCal-button").on('click', function() {
-            var view = "month";
+            let view = "month";
             if ($(this).hasClass("fc-agendaWeek-button")) {
                 view = "agendaWeek";
             } else if ($(this).hasClass("fc-agendaDay-button")) {
@@ -158,7 +159,7 @@ $(document).ready(function() {
             } else if ($(this).hasClass("fc-listWeek-button")) {
                 view = "listWeek";
             } else if ($(this).hasClass("fc-iCal-button")) {
-                var currentView = $('#calendar').fullCalendar('getView');
+                let currentView = $('#calendar').fullCalendar('getView');
 
                 view = currentView.name;
                 window.location = '<?=$this->getUrl('calendar/events/iCal/') ?>';

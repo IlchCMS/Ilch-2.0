@@ -28,4 +28,5 @@ return [
     'calendarList' => 'Liste',
     'calendarICal' => 'iCal',
     'calendarLimitText' => 'weitere',
+    'groupAll' => 'Alle',
 ];

@@ -19,8 +19,10 @@ class Events extends \Ilch\Controller\Frontend
         $this->getLayout()->setFile('modules/calendar/layouts/events');
 
         $user = null;
+        $adminAccess = false;
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
+            $adminAccess = $this->getUser()->isAdmin();
         }
 
         $readAccess = [3];
@@ -30,8 +32,7 @@ class Events extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('calendarList', $calendarMapper->getEntriesForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')))
-            ->set('readAccess', $readAccess);
+        $this->getView()->set('calendarList', $calendarMapper->getEntriesForJson($this->getRequest()->getQuery('start') ?? '', $this->getRequest()->getQuery('end') ?? '', $readAccess));
     }
 
     public function showAction()
@@ -39,39 +40,44 @@ class Events extends \Ilch\Controller\Frontend
         $calendarMapper = new CalendarMapper();
         $userMapper = new UserMapper();
 
-        $user = null;
-        if ($this->getUser()) {
-            $user = $userMapper->getUserById($this->getUser()->getId());
-        }
-
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
-            }
-        }
-
-        $adminAccess = false;
-        if ($this->getUser()) {
-            $adminAccess = $this->getUser()->isAdmin();
-        }
-
         $calendar = $calendarMapper->getCalendarById($this->getRequest()->getParam('id'));
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuCalendar'));
-        $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuCalendar'), ['controller' => 'index', 'action' => 'index']);
 
-        if (is_in_array($readAccess, explode(',', $calendar->getReadAccess())) or $adminAccess == true) {
+        if ($calendar) {
+            $user = null;
+            $adminAccess = false;
+            if ($this->getUser()) {
+                $user = $userMapper->getUserById($this->getUser()->getId());
+                $adminAccess = $this->getUser()->isAdmin();
+            }
+
+            $readAccess = [3];
+            if ($user) {
+                foreach ($user->getGroups() as $us) {
+                    $readAccess[] = $us->getId();
+                }
+            }
+
+            if (!is_in_array($readAccess, explode(',', $calendar->getReadAccess())) or $adminAccess) {
+                $this->redirect()
+                    ->withMessage('noCalendar', 'warning')
+                    ->to(['action' => 'index']);
+
+                return;
+            }
+
             $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('menuCalendar'))
                 ->add($calendar->getTitle());
             $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuCalendar'), ['controller' => 'index', 'action' => 'index'])
                 ->add($calendar->getTitle(), ['controller' => 'events', 'action' => 'show', 'id' => $calendar->getId()]);
-        } else {
-            $calendar = null;
-        }
 
-        $this->getView()->set('calendar', $calendar);
+            $this->getView()->set('calendar', $calendar);
+        } else {
+            $this->redirect()
+                ->withMessage('noCalendar', 'warning')
+                ->to(['action' => 'index']);
+        }
     }
 
     public function iCalAction()
@@ -80,8 +86,10 @@ class Events extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
 
         $user = null;
+        $adminAccess = false;
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
+            $adminAccess = $this->getUser()->isAdmin();
         }
 
         $readAccess = [3];
@@ -93,7 +101,6 @@ class Events extends \Ilch\Controller\Frontend
 
         $this->getLayout()->setFile('modules/calendar/layouts/iCal');
 
-        $this->getView()->set('calendarList', $calendarMapper->getEntries())
-            ->set('readAccess', $readAccess);
+        $this->getView()->set('calendarList', $calendarMapper->getEntries(['ra.group_id' => $readAccess]));
     }
 }

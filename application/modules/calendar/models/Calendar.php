@@ -13,70 +13,111 @@ class Calendar extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The title of the calendar.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The place of the calendar.
      *
      * @var string
      */
-    protected $place;
+    protected $place = '';
 
     /**
      * The start date of the calendar.
      *
      * @var string
      */
-    protected $start;
+    protected $start = '';
 
     /**
      * The end date of the calendar.
      *
      * @var string
      */
-    protected $end;
+    protected $end = '';
 
     /**
      * The text of the calendar.
      *
      * @var string
      */
-    protected $text;
+    protected $text = '';
 
     /**
      * The color of the calendar.
      *
      * @var string
      */
-    protected $color;
+    protected $color = '';
 
     /**
      * The period day of the calendar.
      *
      * @var int
      */
-    protected $periodDay;
+    protected $periodDay = 0;
 
     /**
      * Read access of the article.
      *
      * @var string
      */
-    protected $readAccess;
+    protected $readAccess = '';
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray($entries): Calendar
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['place'])) {
+            $this->setPlace($entries['place']);
+        }
+        if (isset($entries['start'])) {
+            $this->setStart($entries['start']);
+        }
+        if (isset($entries['end'])) {
+            $this->setEnd($entries['end']);
+        }
+        if (isset($entries['color'])) {
+            $this->setColor($entries['color']);
+        }
+        if (isset($entries['period_day'])) {
+            $this->setPeriodDay($entries['period_day']);
+        }
+        if (isset($entries['read_access'])) {
+            $this->setReadAccess($entries['read_access']);
+        }
+        if (isset($entries['read_access_all'])) {
+            if ($entries['read_access_all']) {
+                $this->setReadAccess('all');
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the calendar.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -87,9 +128,9 @@ class Calendar extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Calendar
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -99,7 +140,7 @@ class Calendar extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -110,9 +151,9 @@ class Calendar extends \Ilch\Model
      * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Calendar
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -122,7 +163,7 @@ class Calendar extends \Ilch\Model
      *
      * @return string
      */
-    public function getPlace()
+    public function getPlace(): string
     {
         return $this->place;
     }
@@ -133,9 +174,9 @@ class Calendar extends \Ilch\Model
      * @param string $place
      * @return $this
      */
-    public function setPlace($place)
+    public function setPlace(string $place): Calendar
     {
-        $this->place = (string)$place;
+        $this->place = $place;
 
         return $this;
     }
@@ -145,7 +186,7 @@ class Calendar extends \Ilch\Model
      *
      * @return string
      */
-    public function getStart()
+    public function getStart(): string
     {
         return $this->start;
     }
@@ -156,9 +197,9 @@ class Calendar extends \Ilch\Model
      * @param string $start
      * @return $this
      */
-    public function setStart($start)
+    public function setStart(string $start): Calendar
     {
-        $this->start = (string)$start;
+        $this->start = $start;
 
         return $this;
     }
@@ -168,7 +209,7 @@ class Calendar extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnd()
+    public function getEnd(): string
     {
         return $this->end;
     }
@@ -179,9 +220,9 @@ class Calendar extends \Ilch\Model
      * @param string $end
      * @return $this
      */
-    public function setEnd($end)
+    public function setEnd(string $end): Calendar
     {
-        $this->end = (string)$end;
+        $this->end = $end;
 
         return $this;
     }
@@ -191,7 +232,7 @@ class Calendar extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -202,9 +243,9 @@ class Calendar extends \Ilch\Model
      * @param string $text
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Calendar
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -214,7 +255,7 @@ class Calendar extends \Ilch\Model
      *
      * @return string
      */
-    public function getColor()
+    public function getColor(): string
     {
         return $this->color;
     }
@@ -225,9 +266,9 @@ class Calendar extends \Ilch\Model
      * @param string $color
      * @return $this
      */
-    public function setColor($color)
+    public function setColor(string $color): Calendar
     {
-        $this->color = (string)$color;
+        $this->color = $color;
 
         return $this;
     }
@@ -237,7 +278,7 @@ class Calendar extends \Ilch\Model
      *
      * @return int
      */
-    public function getPeriodDay()
+    public function getPeriodDay(): int
     {
         return $this->periodDay;
     }
@@ -248,9 +289,9 @@ class Calendar extends \Ilch\Model
      * @param int $periodDay
      * @return $this
      */
-    public function setPeriodDay($periodDay)
+    public function setPeriodDay(int $periodDay): Calendar
     {
-        $this->periodDay = (int)$periodDay;
+        $this->periodDay = $periodDay;
 
         return $this;
     }
@@ -260,19 +301,42 @@ class Calendar extends \Ilch\Model
      *
      * @return string
      */
-    public function getReadAccess()
+    public function getReadAccess(): string
     {
         return $this->readAccess;
     }
     /**
      * Sets the read access.
      *
-     * @param integer $readAccess
+     * @param string $readAccess
      * @return $this
      */
-    public function setReadAccess($readAccess)
+    public function setReadAccess(string $readAccess): Calendar
     {
-        $this->readAccess = (string) $readAccess;
+        $this->readAccess = $readAccess;
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true)
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'title' => $this->getTitle(),
+                'place' => $this->getPlace(),
+                'start' => $this->getStart(),
+                'end' => $this->getEnd(),
+                'text' => $this->getText(),
+                'color' => $this->getColor(),
+                'period_day' => $this->getPeriodDay(),
+                'read_access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0)
+            ]
+        );
     }
 }

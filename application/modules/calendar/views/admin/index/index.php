@@ -1,5 +1,6 @@
 <?php
 $periodDays = [
+    '0' => '',
     '1' => $this->getTranslator()->trans('Monday'),
     '2' => $this->getTranslator()->trans('Tuesday'),
     '3' => $this->getTranslator()->trans('Wednesday'),
@@ -42,22 +43,9 @@ $periodDays = [
                             <td><?=$this->getDeleteCheckbox('check_entries', $calendar->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $calendar->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $calendar->getId()]) ?></td>
-                            <td>
-                                <?=($calendar->getPeriodDay()) ? date('H:i', strtotime($calendar->getStart())) : date('d.m.Y H:i', strtotime($calendar->getStart())) ?>
-                            </td>
-                            <td>
-                                <?php if ($calendar->getPeriodDay()) {
-                                    echo date('H:i', strtotime($calendar->getEnd()));
-                                } else {
-                                    echo date('d.m.Y H:i', strtotime($calendar->getEnd()));
-                                }
-                                ?>
-                            </td>
-                            <td>
-                                <?php if ($calendar->getPeriodDay()) {
-                                    echo $periodDays[$calendar->getPeriodDay()];
-                                }
-                                ?></td>
+                            <td><?=(new \Ilch\Date($calendar->getStart()))->format(($calendar->getPeriodDay()) ? 'H:i' : 'd.m.Y H:i') ?></td>
+                            <td><?=(new \Ilch\Date($calendar->getEnd()))->format(($calendar->getPeriodDay()) ? 'H:i' : 'd.m.Y H:i') ?></td>
+                            <td><?=$periodDays[$calendar->getPeriodDay()] ?></td>
                             <td><?=$this->escape($calendar->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
