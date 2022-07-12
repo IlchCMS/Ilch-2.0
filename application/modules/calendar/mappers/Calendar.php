@@ -39,7 +39,7 @@ class Calendar extends \Ilch\Mapper
         }
 
         $select = $this->db()->select();
-        $select->fields(['c.id', 'c.title', 'c.place', 'c.start', 'c.end', 'c.text', 'c.color', 'c.period_day', 'c.read_access_all'])
+        $select->fields(['c.id', 'c.title', 'c.place', 'c.start', 'c.end', 'c.text', 'c.color', 'c.period_type', 'c.period_day', 'c.read_access_all'])
             ->from(['c' => $this->tablename])
             ->join(['ra' => 'calendar_access'], 'c.id = ra.calendar_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->where(array_merge($where, ($read_access ? [$select->orX(['ra.group_id' => $read_access, 'c.read_access_all' => '1'])] : [])))
@@ -124,8 +124,26 @@ class Calendar extends \Ilch\Mapper
             if (!is_a($end, \Ilch\Date::class)) {
                 $end = new \Ilch\Date($end);
             }
-
-            return $this->getEntriesBy(['c.start >=' => $start->format('Y-m-d').' 00:00:00', 'c.end <=' => $end->format('Y-m-d').' 23:59:59', 'ra.group_id' => $groupIds], ['c.start' => 'ASC']);
+            $select = $this->db()->select();
+            return $this->getEntriesBy(
+                [
+                    $select->orX(
+                        [
+                            $select->andX(['c.end <=' => $end->format('Y-m-d').' 23:59:59']),
+                            $select->andX(['c.start >=' => $start->format('Y-m-d').' 00:00:00', 'c.end <=' => $end->format('Y-m-d').' 23:59:59']),
+                            $select->andX(
+                                [
+                                    'c.period_type !=' => '',
+                                    'c.start <=' => $end->format('Y-m-d').' 00:00:00',
+                                    $select->orX(['c.end >=' => $start->format('Y-m-d').' 23:59:59', 'c.end =' => '1000-01-01 00:00:00'])
+                                ]
+                            )
+                        ]
+                    ),
+                    'ra.group_id' => $groupIds
+                ],
+                ['c.start' => 'ASC']
+            );
         } else {
             return null;
         }
@@ -152,6 +170,8 @@ class Calendar extends \Ilch\Mapper
                 ->values($fields)
                 ->execute();
         }
+
+        $this->saveReadAccess($result, $model->getReadAccess());
 
         return $result;
     }
@@ -220,5 +240,96 @@ class Calendar extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => (int)$id])
             ->execute();
+    }
+
+    /**
+     * Repeat Date Entry .
+     *
+     * @param String $type
+     * @param \Ilch\Date $startdate
+     * @param \Ilch\Date|int $enddate
+     * @param int $faktor
+     * @return array
+     */
+    public function repeat(String $type, \Ilch\Date $startdate, $enddate, int $faktor = 1)
+    {
+        //type=daily/weekly/monthly_date/monthly_day/quarterly_date/quarterly_day - $start=yyyy-mm-dd hh-mm-ss - $end=yyyy-mm-dd hh-mm-ss/xx
+        $a = [];
+        $type = trim($type);
+        switch ($type) {
+            case "monthly":
+            case "daily":
+                $diff = 1;
+                break;
+            case "weekly":
+                $diff = 7;
+                break;
+            case "quarterly":
+                $diff = 3;
+                break;
+            case "days":
+                $daydiff = $faktor - $startdate->format('N');
+                if ($daydiff < 0) {
+                    $daydiff = 7 - $daydiff;
+                }
+                if ($daydiff < 7) {
+                    $startdate->modify('+' . $daydiff . ' day');
+                }
+
+                $diff = 7;
+                $faktor = 1;
+                break;
+            default:
+                $diff = 0;
+        }
+        if ($diff > 0 && $faktor > 0) {
+            if (is_numeric($enddate)) {
+                $temp = clone $startdate;
+
+                switch ($type) {
+                    case "weekly":
+                        $temp->modify(($diff * $faktor * 7) . " days");
+                        break;
+                    case "daily":
+                        $temp->modify(($diff * $faktor * 30) . " days");
+                        break;
+                    case "quarterly":
+                    case "monthly":
+                        $temp->modify(($diff * $faktor * 2 ) . " months");
+                        break;
+                    case "days":
+                        $temp->modify(($diff * 7)." days");
+                        break;
+                }
+                $enddate = $temp;
+            }
+            if (is_a($enddate, \Ilch\Date::class)) {
+                $end_ts = $enddate->getTimestamp();
+                $a[] = $startdate;
+                $temp = clone $startdate;
+                while ($temp->getTimestamp() < $end_ts) {
+                    $temp = clone $temp;
+                    switch ($type) {
+                        case "weekly":
+                        case "days":
+                        case "daily":
+                            $temp->modify(($diff * $faktor) . " days");
+                            break;
+                        case "quarterly":
+                        case "monthly":
+                            $temp->modify(($diff * $faktor) . " months");
+                            break;
+                    }
+                    if ($temp->getTimestamp() < $end_ts) {
+                        $a[] = $temp;
+                    }
+                }
+            } else {
+                $a[] = $startdate;
+            }
+        } else {
+            $a[] = $startdate;
+        }
+        return $a;
     }
 }

@@ -61,7 +61,8 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('calendar', $calendarMapper->getEntries());
+        $this->getView()->set('calendar', $calendarMapper->getEntries())
+            ->set('calendarMapper', $calendarMapper);
     }
 
     public function treatAction()
@@ -83,15 +84,32 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost()) {
+            Validation::setCustomFieldAliases([
+                'periodDay' => 'periodEntry',
+                'periodDays' => 'periodEntry',
+                'periodType' => 'periodEntry',
+            ]);
+
+            $validator = [
+                'title'           => 'required',
+                'start'           => 'required|date:d.m.Y H\:i',
+                'color'           => 'required',
+            ];
+
+            if ($this->getRequest()->getPost('periodType') == 'days') {
+                $_POST['periodDay'] = $this->getRequest()->getPost('periodDays');
+                $validator['periodDay'] = 'required|numeric|min:1|max:7';
+            } elseif ($this->getRequest()->getPost('periodType') != '') {
+                $validator['periodDay'] = 'required|numeric|min:1';
+            }
+
+            if ($this->getRequest()->getPost('end')) {
+                $validator['end']= 'required|date:d.m.Y H\:i';
+            }
+
             $validation = Validation::create(
                 $this->getRequest()->getPost(),
-                [
-                    'title'           => 'required',
-                    'start'           => 'required|date:d.m.Y H\:i',
-                    'end'           => 'required|date:d.m.Y H\:i',
-                    'color'           => 'required',
-                    'periodDay'              => 'required|numeric|min:0|max:7',
-                ]
+                $validator
             );
 
             if ($validation->isValid()) {
@@ -103,13 +121,15 @@ class Index extends \Ilch\Controller\Admin
                         $groups = implode(',', $this->getRequest()->getPost('groups'));
                     }
                 }
+
                 $calendarModel->setTitle($this->getRequest()->getPost('title'))
                     ->setPlace($this->getRequest()->getPost('place'))
                     ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
-                    ->setEnd(new \Ilch\Date($this->getRequest()->getPost('end')))
+                    ->setEnd($this->getRequest()->getPost('end') ? new \Ilch\Date($this->getRequest()->getPost('end')) : '1000-01-01 00:00:00')
                     ->setText($this->getRequest()->getPost('text'))
                     ->setColor($this->getRequest()->getPost('color'))
                     ->setPeriodDay($this->getRequest()->getPost('periodDay'))
+                    ->setPeriodType($this->getRequest()->getPost('periodType'))
                     ->setReadAccess($groups);
                 $calendarMapper->save($calendarModel);
 

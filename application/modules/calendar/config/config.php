@@ -28,6 +28,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'A simple calendar. Appointments can be entered in the admincenter.',
             ],
         ],
+        'boxes' => [
+            'calendar' => [
+                'de_DE' => [
+                    'name' => 'Kalender'
+                ],
+                'en_EN' => [
+                    'name' => 'Calendar'
+                ]
+            ]
+        ],
         'ilchCore' => '2.1.43',
         'phpVersion' => '7.4'
     ];
@@ -66,8 +76,9 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_calendar`;
-                                 DROP TABLE `[prefix]_calendar_events`;');
+        $this->db()->drop('calendar_access', true);
+        $this->db()->drop('calendar_events', true);
+        $this->db()->drop('calendar', true);
     }
 
     public function getInstallSql(): string
@@ -80,7 +91,8 @@ class Config extends \Ilch\Config\Install
           `end` DATETIME DEFAULT NULL,
           `text` MEDIUMTEXT DEFAULT NULL,
           `color` VARCHAR(7) DEFAULT NULL,
-          `period_day` INT(1) DEFAULT NULL,
+          `period_type` VARCHAR(100) NOT NULL,
+          `period_day` INT(11) NOT NULL,
           `read_access_all` TINYINT(1) NOT NULL,
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -124,14 +136,19 @@ class Config extends \Ilch\Config\Install
             case "1.6.0":
             // update zu 1.7.0
                 /*
-                Update ilchCore
-                Rechte-System geändert
-                Code verbesseung
+                Update ilch Core
+                Rechtesystem geändert
+                Code verbesserung
+                Box hinzugefügt #461
+                Zyklische / wiederkehrende Termine #424
                 */
                 // Update description
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'calendar' AND `locale` = '%s';", $value['description'], $key));
                 }
+
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD `period_type` VARCHAR(100) NOT NULL AFTER `color`;');
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` CHANGE `period_day` `period_day` INT(11) NOT NULL;');
 
                 // Create new table for war read access.
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_calendar_access` (
@@ -143,7 +160,7 @@ class Config extends \Ilch\Config\Install
                         CONSTRAINT `FK_[prefix]_calendar_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
                 // Convert data from old read_access column of table war to the new war_access table.
-                $readAccessRows = $this->db()->select(['id', 'read_access'])
+                $readAccessRows = $this->db()->select(['id', 'read_access', 'period_day'])
                     ->from(['calendar'])
                     ->execute()
                     ->fetchRows();
@@ -160,12 +177,28 @@ class Config extends \Ilch\Config\Install
                         $groupIds = explode(',', $readAccessRow['read_access']);
                         $groupIds = array_intersect($existingGroups, $groupIds);
                         $calendarMapper->saveReadAccess($readAccessRow['id'], $groupIds);
+
+                        if ($readAccessRow['period_day'] > 0) {
+                            $this->db()->update('calendar')
+                                ->values(['period_type' => 'days'])
+                                ->where(['id' => $readAccessRow['id']])
+                                ->execute();
+                        }
                     }
                 }
 
-                // Delete old read_access column of table war.
+                // Delete old read_access column of table calendar.
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` DROP COLUMN `read_access`;');
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `period_day`;');
+
+                //add Box
+                $boxMapper = new \Modules\Admin\Mappers\Box();
+                $boxModel = new \Modules\Admin\Models\Box();
+                $boxModel->setModule($this->config['key']);
+                $boxModel->addContent('calendar', $this->config['boxes']['calendar']);
+                $boxMapper->install($boxModel);
+
+                removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar/');
         }
     }
 }

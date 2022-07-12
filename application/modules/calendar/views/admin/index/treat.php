@@ -8,7 +8,14 @@ $periodDays = [
     '6' => $this->getTranslator()->trans('Saturday'),
     '7' => $this->getTranslator()->trans('Sunday')
 ];
- $entrie = $this->get('calendar');
+$periodTypes = [
+    'daily' => $this->getTranslator()->trans('daily'),
+    'weekly' => $this->getTranslator()->trans('weekly'),
+    'monthly' => $this->getTranslator()->trans('monthly'),
+    'quarterly' => $this->getTranslator()->trans('quarterly'),
+    'days' => $this->getTranslator()->trans('days'),
+];
+$entrie = $this->get('calendar');
  ?>
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
@@ -22,7 +29,7 @@ $periodDays = [
         <label for="start" class="col-lg-2 control-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div class="col-lg-4 input-group ilch-date date form_datetime">
+        <div class="col-lg-4 input-group ilch-date date form_datetime_1">
             <input type="text"
                    class="form-control"
                    id="start"
@@ -38,13 +45,12 @@ $periodDays = [
         <label for="end" class="col-lg-2 control-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div class="col-lg-4 input-group ilch-date date form_datetime">
+        <div class="col-lg-4 input-group ilch-date date form_datetime_2">
             <input type="text"
                    class="form-control"
                    id="end"
                    name="end"
-                   value="<?=$this->escape($this->originalInput('end', ($entrie->getId()?(new \Ilch\Date($entrie->getEnd()))->format("d.m.Y H:i"):''))) ?>"
-                   readonly>
+                   value="<?=$this->escape($this->originalInput('end', ($entrie->getId()?($entrie->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entrie->getEnd()))->format("d.m.Y H:i") : ''):''))) ?>">
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
             </span>
@@ -74,17 +80,38 @@ $periodDays = [
                    value="<?=$this->escape($this->originalInput('place', ($entrie->getId()?$entrie->getPlace():''))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>">
+    <div class="form-group<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
         <label for="place" class="col-lg-2 control-label">
             <?=$this->getTrans('periodEntry') ?>:
         </label>
         <div class="col-lg-4">
-            <select class="form-control" name="periodDay" id="periodDay">
+            <select class="form-control" name="periodType" id="periodType">
+                <option value="" <?=($this->originalInput('periodType', ($entrie->getId()?$entrie->getPeriodType():''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
+                <?php foreach ($periodTypes as $key => $value): ?>
+                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($entrie->getId()?$entrie->getPeriodType():''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group<?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
+        <label for="place" class="col-lg-2 control-label"></label>
+        <div class="col-lg-4">
+            <select class="form-control" name="periodDays" id="periodDays">
                 <option value="0" <?=($this->originalInput('periodDay', ($entrie->getId()?$entrie->getPeriodDay():'0'))) == '0' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodDays as $key => $value): ?>
                     <option value="<?=$key ?>" <?=($this->originalInput('periodDay', ($entrie->getId()?$entrie->getPeriodDay():'0'))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
                 <?php endforeach; ?>
             </select>
+        </div>
+    </div>
+    <div class="form-group<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
+        <label for="place" class="col-lg-2 control-label"></label>
+        <div class="col-lg-4">
+            <input type="text"
+                   class="form-control"
+                   id="periodDay"
+                   name="periodDay"
+                   value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($entrie->getId()?$entrie->getPeriodType():'')) == 'days'?'0':($entrie->getId()?$entrie->getPeriodDay():'1')))) ?>" />
         </div>
     </div>
     <div class="form-group<?=$this->validation()->hasError('color') ? ' has-error' : '' ?>">
@@ -145,15 +172,46 @@ $periodDays = [
 $('#access').chosen();
 
 $(document).ready(function() {
-    $(".form_datetime").datetimepicker({
+    $(".form_datetime_1").datetimepicker({
+        format: "dd.mm.yyyy hh:ii",
+        autoclose: true,
+        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        minuteStep: 15,
+        todayHighlight: true,
+    }).on('change.datetimepicker', function (e) {
+        let mindate = $(".form_datetime_1").data("datetimepicker").getDate();
+        $('.form_datetime_2').datetimepicker('minDate', mindate);
+    });
+
+    $(".form_datetime_2").datetimepicker({
         format: "dd.mm.yyyy hh:ii",
         startDate: new Date(),
         autoclose: true,
         language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
         minuteStep: 15,
-        todayHighlight: true,
-        linkField: "end",
-        linkFormat: "dd.mm.yyyy hh:ii"
+        todayHighlight: false,
+        useCurrent: false,
+        minDate: $(".form_datetime_1").data("datetimepicker").getDate()
     });
+
+
+    diasableDays();
+
+    document.getElementById('periodType').onchange = diasableDays;
+
+    function diasableDays() {
+        if (document.getElementById('periodType').value !== '') {
+            if (document.getElementById('periodType').value === 'days') {
+                document.getElementById("periodDays_div").style.display = "block";
+                document.getElementById("periodDay_div").style.display = "none";
+            } else {
+                document.getElementById("periodDays_div").style.display = "none";
+                document.getElementById("periodDay_div").style.display = "block";
+            }
+        } else {
+            document.getElementById("periodDays_div").style.display = "none";
+            document.getElementById("periodDay_div").style.display = "none";
+        }
+    }
 });
 </script>

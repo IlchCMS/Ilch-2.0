@@ -72,6 +72,13 @@ class Calendar extends \Ilch\Model
     protected $readAccess = '';
 
     /**
+     * Read access of the article.
+     *
+     * @var string
+     */
+    protected $periodType = '';
+
+    /**
      * Sets Model by Array.
      *
      * @param array $entries
@@ -107,6 +114,9 @@ class Calendar extends \Ilch\Model
             if ($entries['read_access_all']) {
                 $this->setReadAccess('all');
             }
+        }
+        if (isset($entries['period_type'])) {
+            $this->setPeriodType($entries['period_type']);
         }
 
         return $this;
@@ -318,6 +328,28 @@ class Calendar extends \Ilch\Model
     }
 
     /**
+     * Gets the period type of the calendar.
+     *
+     * @return string
+     */
+    public function getPeriodType(): string
+    {
+        return $this->periodType;
+    }
+
+    /**
+     * Sets the period type of the calendar.
+     *
+     * @param string $periodType
+     * @return $this
+     */
+    public function setPeriodType(string $periodType): Calendar
+    {
+        $this->periodType = $periodType;
+        return $this;
+    }
+
+    /**
      * Gets the Array of Model.
      *
      * @param bool $withId
@@ -335,7 +367,8 @@ class Calendar extends \Ilch\Model
                 'text' => $this->getText(),
                 'color' => $this->getColor(),
                 'period_day' => $this->getPeriodDay(),
-                'read_access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0)
+                'read_access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0),
+                'period_type' => $this->getPeriodType(),
             ]
         );
     }

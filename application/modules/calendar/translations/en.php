@@ -18,6 +18,8 @@ return [
     'at' => 'at',
     'clock' => 'o\'clock',
     'visibleFor' => 'Visible for',
+    'periodEntry' => 'Cycle',
+    'noPeriodEntry' => 'no cycle',
 
     'calendarMonth' => 'Month',
     'calendarWeek' => 'Week',
@@ -27,4 +29,10 @@ return [
     'calendarICal' => 'iCal',
     'calendarLimitText' => 'more',
     'groupAll' => 'All',
+
+    'daily' => 'days',
+    'weekly' => 'Weekly',
+    'monthly' => 'monthly',
+    'quarterly' => 'quarterly',
+    'days' => 'day',
 ];

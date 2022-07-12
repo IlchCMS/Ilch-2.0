@@ -30,7 +30,8 @@ class Events extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('calendarList', $calendarMapper->getEntriesForJson($this->getRequest()->getQuery('start') ?? '', $this->getRequest()->getQuery('end') ?? '', $readAccess));
+        $this->getView()->set('calendarList', $calendarMapper->getEntriesForJson($this->getRequest()->getQuery('start') ?? '', $this->getRequest()->getQuery('end') ?? '', $readAccess))
+            ->set('calendarMapper', $calendarMapper);
     }
 
     public function showAction()
@@ -70,7 +71,8 @@ class Events extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuCalendar'), ['controller' => 'index', 'action' => 'index'])
                 ->add($calendar->getTitle(), ['controller' => 'events', 'action' => 'show', 'id' => $calendar->getId()]);
 
-            $this->getView()->set('calendar', $calendar);
+            $this->getView()->set('calendar', $calendar)
+                ->set('calendarMapper', $calendarMapper);
         } else {
             $this->redirect()
                 ->withMessage('noCalendar', 'warning')
@@ -97,6 +99,7 @@ class Events extends \Ilch\Controller\Frontend
 
         $this->getLayout()->setFile('modules/calendar/layouts/iCal');
 
-        $this->getView()->set('calendarList', $calendarMapper->getEntries(['ra.group_id' => $readAccess]));
+        $this->getView()->set('calendarList', $calendarMapper->getEntries(['ra.group_id' => $readAccess]))
+            ->set('calendarMapper', $calendarMapper);
     }
 }

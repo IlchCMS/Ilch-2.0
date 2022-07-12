@@ -29,4 +29,10 @@ return [
     'calendarICal' => 'iCal',
     'calendarLimitText' => 'weitere',
     'groupAll' => 'Alle',
+
+    'daily' => 'Tage',
+    'weekly' => 'Wöchentlich',
+    'monthly' => 'Monatlich',
+    'quarterly' => 'Quartal',
+    'days' => 'Tag',
 ];
