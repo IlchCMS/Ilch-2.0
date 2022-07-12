@@ -140,7 +140,7 @@ class War extends \Ilch\Mapper
                 $end = new \Ilch\Date($end);
             }
 
-            $entryArray = $this->getEntriesBy(['show' => 1, 'time >=' => $start, 'time <=' => $end, 'ra.group_id' => $groupIds], []);
+            $entryArray = $this->getEntriesBy(['show' => 1, 'time >=' => $start->format('Y-m-d').' 00:00:00', 'time <=' => $end->format('Y-m-d').' 23:59:59', 'ra.group_id' => $groupIds], []);
 
             if (empty($entryArray)) {
                 return [];
