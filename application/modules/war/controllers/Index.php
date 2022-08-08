@@ -14,7 +14,9 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Modules\War\Models\Accept as AcceptModel;
 use Modules\War\Mappers\Accept as AcceptMapper;
+use Modules\War\Mappers\Maps as MapsMapper;
 use Ilch\Comments;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -24,6 +26,8 @@ class Index extends \Ilch\Controller\Frontend
         $warMapper = new WarMapper();
         $userMapper = new UserMapper();
         $gamesMapper = new GamesMapper();
+        $groupMapper = new GroupMapper();
+        $enemyMapper = new EnemyMapper();
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index']);
@@ -44,9 +48,10 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('gamesMapper', $gamesMapper)
-            ->set('war', $warMapper->getWarList($pagination))
+            ->set('war', $warMapper->getWarList($pagination, $readAccess))
             ->set('pagination', $pagination)
-            ->set('readAccess', $readAccess);
+            ->set('groupMapper', $groupMapper)
+            ->set('enemyMapper', $enemyMapper);
     }
 
     public function showAction()
@@ -58,56 +63,21 @@ class Index extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
         $userGroupMapper = new UserGroupMapper();
         $acceptMapper = new AcceptMapper();
+        $mapsMapper = new MapsMapper();
+        
+        $date = new \Ilch\Date();
+        $datenow = new \Ilch\Date($date->format("Y-m-d H:i:s", true));
 
         $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
+
         if ($war) {
-            $group = $groupMapper->getGroupById($war->getWarGroup());
-            if ($this->getUser() && $this->getRequest()->isPost()) {
-                if ($this->getRequest()->getPost('warAccept')) {
-                    $checkAccept = $acceptMapper->getAcceptListByGroupId($group->getGroupMember(), $this->getRequest()->getParam('id'));
-
-                    $model = new AcceptModel();
-                    foreach ($checkAccept as $check) {
-                        if ($this->getUser()->getId() == $check->getUserId()) {
-                            $model->setId($check->getId());
-                        }
-                    }
-                    $model->setWarId($war->getId())
-                        ->setUserId($this->getUser()->getId())
-                        ->setAccept((int)$this->getRequest()->getPost('warAccept'))
-                        ->setComment(trim($this->getRequest()->getPost('warComment')));
-                    $acceptMapper->save($model);
-
-                    $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
-                } elseif ($this->getRequest()->getPost('saveComment')) {
-                    $comments = new Comments();
-                    $key = 'war/index/show/id/'.$this->getRequest()->getParam('id');
-
-                    if ($this->getRequest()->getPost('fkId')) {
-                        $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
-                    }
-
-                    $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
-                    $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
-                }
-            }
-
-            if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
-                $commentId = $this->getRequest()->getParam('commentId');
-                $comments = new Comments();
-
-                $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-                $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id').'#comment_'.$commentId]);
-            }
-
-            $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index'])
-                ->add(($group) ? $group->getGroupName() : '', ($group) ? ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()] : '')
-                ->add($this->getTranslator()->trans('warPlay'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+            $commentsKey = 'war/index/show/id/'.$war->getId();
 
             $user = null;
+            $adminAccess = null;
             if ($this->getUser()) {
                 $user = $userMapper->getUserById($this->getUser()->getId());
+                $adminAccess = $this->getUser()->isAdmin();
             }
 
             $readAccess = [3];
@@ -117,12 +87,7 @@ class Index extends \Ilch\Controller\Frontend
                 }
             }
 
-            $adminAccess = null;
-            if ($this->getUser()) {
-                $adminAccess = $this->getUser()->isAdmin();
-            }
-
-            $hasReadAccess = (is_in_array($readAccess, explode(',', $war->getReadAccess())) || $adminAccess == true);
+            $hasReadAccess = (is_in_array($readAccess, explode(',', $war->getReadAccess())) || $adminAccess === true);
             if (!$hasReadAccess) {
                 $this->redirect()
                     ->withMessage('warNotFound', 'warning')
@@ -130,17 +95,87 @@ class Index extends \Ilch\Controller\Frontend
 
                 return;
             }
+            
+            $group = $groupMapper->getGroupById($war->getWarGroup());
+            $checkAccept = [];
+            $accept = null;
+            if ($group) {
+                $checkAccept = $acceptMapper->getAcceptListByGroupId($group->getGroupMember(), $war->getId());
+                if ($this->getUser()) {
+                    foreach ($checkAccept as $check) {
+                        if ($this->getUser()->getId() == $check->getUserId()) {
+                            $accept = $check;
+                            break;
+                        }
+                    }
+                }
+            }
+            if ($this->getUser() && $this->getRequest()->isPost()) {
+                if ($this->getRequest()->getPost('warAccept')) {
+                    $validation = Validation::create($this->getRequest()->getPost(), [
+                        'warAccept'           => 'required|min:1|max:3'
+                    ]);
 
-            $this->getView()->set('gamesMapper', $gamesMapper)
-                ->set('userMapper', $userMapper)
-                ->set('userGroupMapper', $userGroupMapper)
-                ->set('games', $gamesMapper->getGamesByWarId($this->getRequest()->getParam('id')))
+                    if ($validation->isValid()) {
+                        $model = new AcceptModel();
+                        if ($accept) {
+                            $model->setId($accept->getId());
+                        }
+
+                        $model->setWarId($war->getId())
+                            ->setUserId($this->getUser()->getId())
+                            ->setAccept((int)$this->getRequest()->getPost('warAccept'))
+                            ->setComment(trim($this->getRequest()->getPost('warComment')))
+                            ->setDateCreated($datenow);
+                        $acceptMapper->save($model);
+
+                        $this->redirect()
+                            ->withMessage('saveSuccess')
+                            ->to(['action' => 'show', 'id' => $war->getId()]);
+                        $this->redirect(['action' => 'show', 'id' => $war->getId()]);
+                    }
+                    $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                    $this->redirect()
+                        ->withInput()
+                        ->withErrors($validation->getErrorBag())
+                        ->to(['action' => 'show', 'id' => $war->getId()]);
+                } elseif ($this->getRequest()->getPost('saveComment')) {
+                    $comments = new Comments();
+
+                    if ($this->getRequest()->getPost('fkId')) {
+                        $commentsKey .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                    }
+
+                    $comments->saveComment($commentsKey, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
+                    $this->redirect(['action' => 'show', 'id' => $war->getId()]);
+                }
+            }
+
+            if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
+                $commentId = $this->getRequest()->getParam('commentId');
+                $comments = new Comments();
+
+                $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
+                $this->redirect(['action' => 'show', 'id' => $war->getId().'#comment_'.$commentId]);
+            }
+
+            $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index'])
+                ->add(($group) ? $group->getGroupName() : '', ($group) ? ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()] : '')
+                ->add($this->getTranslator()->trans('warPlay'), ['action' => 'show', 'id' => $war->getId()]);
+
+
+            $this->getView()->set('userMapper', $userMapper)
+                ->set('userGroupIds', $userGroupMapper->getUsersForGroup($group ? $group->getGroupMember() : ''))
+                ->set('games', $gamesMapper->getGamesByWarId($war->getId()))
                 ->set('group', $group)
                 ->set('enemy', $enemyMapper->getEnemyById($war->getWarEnemy()))
                 ->set('war', $war)
-                ->set('accept', $acceptMapper->getAcceptByWhere(['war_id' => $this->getRequest()->getParam('id')]))
-                ->set('acceptCheck', ($group) ? $acceptMapper->getAcceptListByGroupId($group->getGroupMember(), $this->getRequest()->getParam('id')) : '')
-                ->set('commentsKey', 'war/index/show/id/'.$this->getRequest()->getParam('id'));
+                ->set('accept', $accept)
+                ->set('acceptCheck', $checkAccept)
+                ->set('commentsKey', 'war/index/show/id/'.$war->getId())
+                ->set('datenow', $datenow)
+                ->set('mapsMapper', $mapsMapper);
         } else {
             $this->redirect()
                 ->withMessage('warNotFound', 'warning')

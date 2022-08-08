@@ -1,6 +1,6 @@
 <?php
 $group = $this->get('group');
-$warMapper = $this->get('warMapper');
+$wars = $this->get('wars');
 $gamesMapper = $this->get('gamesMapper');
 
 $win = 0;
@@ -10,8 +10,7 @@ $winCount = 0;
 $lostCont = 0;
 $drawnCount = 0;
 
-$wars = $warMapper->getWars(['group' => $group->getId()]);
-foreach ($wars as $war) {
+foreach ($wars ?? [] as $war) {
     $enemyPoints = 0;
     $groupPoints = 0;
     $games = $gamesMapper->getGamesByWhere(['war_id' => $war->getId()]);
@@ -66,7 +65,7 @@ foreach ($wars as $war) {
 </div>
 
 <h1><?=$this->getTrans('warsOverview') ?></h1>
-<?php if ($this->get('war') != ''): ?>
+<?php if ($this->get('war')): ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <colgroup>
@@ -91,8 +90,14 @@ foreach ($wars as $war) {
                 <?php foreach ($this->get('war') as $war): ?>
                     <?php $date = new \Ilch\Date($war->getWarTime()) ?>
                     <tr>
-                        <td><?=$this->escape($war->getWarEnemy()) ?></td>
-                        <td><?=$this->escape($war->getWarGroup()) ?></td>
+                        <td><?php
+                        $enemy = $this->get('enemyMapper')->getEnemyById($war->getWarEnemy());
+                        echo $this->escape($enemy ? $enemy->getEnemyName() : '');
+                        ?></td>
+                        <td><?php
+                        $group = $this->get('groupMapper')->getGroupById($war->getWarGroup());
+                        echo $this->escape($group ? $group->getGroupName() : '');
+                        ?></td>
                         <td><?=$date->format("d.m.Y H:i", true) ?></td>
                         <td>
                             <?php

@@ -8,18 +8,15 @@
     }
 
     foreach ($this->get('war') as $war):
-        if (!is_in_array($this->get('readAccess'), explode(',', $war->getReadAccess())) && $adminAccess == false) {
-            continue;
-        }
         $displayed++;
 
         $gamesMapper = $this->get('gamesMapper');
         $warMapper = $this->get('warMapper');
         $games = $gamesMapper->getGamesByWarId($war->getId());
+        $enemyPoints = 0;
+        $groupPoints = 0;
+        $matchStatus = '';
         if ($games != '') {
-            $enemyPoints = 0;
-            $groupPoints = 0;
-            $matchStatus = '';
             foreach ($games as $game) {
                 $groupPoints += $game->getGroupPoints();
                 $enemyPoints += $game->getEnemyPoints();
@@ -44,7 +41,7 @@
         ?>
         <div class="lastwar-box">
             <div class="row">
-                <a href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>">
+                <a href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>" title="<?=$this->escape($war->getWarGroupTag()).' '.$this->getTrans('vs').' '.$this->escape($war->getWarEnemyTag()) ?>">
                     <div class="col-xs-4 ellipsis">
                         <?=$gameImg ?>
                         <div class="ellipsis-item">

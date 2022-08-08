@@ -9,6 +9,7 @@ namespace Modules\Calendar\Controllers\Admin;
 use Modules\Calendar\Mappers\Calendar as CalendarMapper;
 use Modules\Calendar\Models\Calendar as CalendarModel;
 use Modules\User\Mappers\Group as GroupMapper;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -54,10 +55,14 @@ class Index extends \Ilch\Controller\Admin
                 foreach ($this->getRequest()->getPost('check_entries') as $calendarId) {
                     $calendarMapper->delete($calendarId);
                 }
+                $this->redirect()
+                    ->withMessage('deleteSuccess')
+                    ->to(['action' => 'index']);
             }
         }
 
-        $this->getView()->set('calendar', $calendarMapper->getEntries());
+        $this->getView()->set('calendar', $calendarMapper->getEntries())
+            ->set('calendarMapper', $calendarMapper);
     }
 
     public function treatAction()
@@ -71,7 +76,7 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('menuCalendar'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('calendar', $calendarMapper->getCalendarById($this->getRequest()->getParam('id')));
+            $calendarModel = $calendarMapper->getCalendarById($this->getRequest()->getParam('id'));
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuCalendar'), ['action' => 'index'])
@@ -79,51 +84,75 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost()) {
-            if ($this->getRequest()->getParam('id')) {
-                $calendarModel->setId($this->getRequest()->getParam('id'));
+            Validation::setCustomFieldAliases([
+                'periodDay' => 'periodEntry',
+                'periodDays' => 'periodEntry',
+                'periodType' => 'periodEntry',
+            ]);
+
+            $validator = [
+                'title'           => 'required',
+                'start'           => 'required|date:d.m.Y H\:i',
+                'color'           => 'required',
+            ];
+
+            if ($this->getRequest()->getPost('periodType') == 'days') {
+                $_POST['periodDay'] = $this->getRequest()->getPost('periodDays');
+                $validator['periodDay'] = 'required|numeric|min:1|max:7';
+            } elseif ($this->getRequest()->getPost('periodType') != '') {
+                $validator['periodDay'] = 'required|numeric|min:1';
             }
-            
-            $title = trim($this->getRequest()->getPost('title'));
-            $place = trim($this->getRequest()->getPost('place'));
-            $start = new \Ilch\Date(trim($this->getRequest()->getPost('start')));
-            $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));
-            $text = trim($this->getRequest()->getPost('text'));
-            $color = trim($this->getRequest()->getPost('color'));
-            $periodDay = trim($this->getRequest()->getPost('periodDay'));
-            
-            if (empty($start)) {
-                $this->addMessage('missingDate', 'danger');
-            } elseif (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } else {
+
+            if ($this->getRequest()->getPost('end')) {
+                $validator['end']= 'required|date:d.m.Y H\:i';
+            }
+
+            $validation = Validation::create(
+                $this->getRequest()->getPost(),
+                $validator
+            );
+
+            if ($validation->isValid()) {
                 $groups = '';
                 if (!empty($this->getRequest()->getPost('groups'))) {
-                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                    if (in_array('all', $this->getRequest()->getPost('groups'))) {
+                        $groups = 'all';
+                    } else {
+                        $groups = implode(',', $this->getRequest()->getPost('groups'));
+                    }
                 }
-                $calendarModel->setTitle($title);
-                $calendarModel->setPlace($place);
-                $calendarModel->setStart($start);
-                $calendarModel->setEnd($end);
-                $calendarModel->setText($text);
-                $calendarModel->setColor($color);
-                $calendarModel->setPeriodDay($periodDay);
-                $calendarModel->setReadAccess($groups);
+
+                $calendarModel->setTitle($this->getRequest()->getPost('title'))
+                    ->setPlace($this->getRequest()->getPost('place'))
+                    ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
+                    ->setEnd($this->getRequest()->getPost('end') ? new \Ilch\Date($this->getRequest()->getPost('end')) : '1000-01-01 00:00:00')
+                    ->setText($this->getRequest()->getPost('text'))
+                    ->setColor($this->getRequest()->getPost('color'))
+                    ->setPeriodDay($this->getRequest()->getPost('periodDay'))
+                    ->setPeriodType($this->getRequest()->getPost('periodType'))
+                    ->setReadAccess($groups);
                 $calendarMapper->save($calendarModel);
-                
-                $this->addMessage('saveSuccess');
-                
-                $this->redirect(['action' => 'index']);
+
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], ($calendarModel->getId()?['id' => $calendarModel->getId()]:[])));
         }
 
-        if ($this->getRequest()->getParam('id')) {
-            $groups = explode(',', $calendarMapper->getCalendarById($this->getRequest()->getParam('id'))->getReadAccess());
+        if ($calendarModel->getId()) {
+            $groups = explode(',', $calendarModel->getReadAccess());
         } else {
-            $groups = [1,2,3];
+            $groups = [1, 2, 3];
         }
 
-        $this->getView()->set('userGroupList', $groupMapper->getGroupList());
-        $this->getView()->set('groups', $groups);
+        $this->getView()->set('calendar', $calendarModel)
+            ->set('userGroupList', $groupMapper->getGroupList())
+            ->set('groups', $groups);
     }
 
     public function delAction()

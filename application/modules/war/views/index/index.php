@@ -1,9 +1,7 @@
 <?php
 $gamesMapper = $this->get('gamesMapper');
-$adminAccess = null;
-if ($this->getUser()) {
-    $adminAccess = $this->getUser()->isAdmin();
-}
+$gamesMapper = $this->get('gamesMapper');
+$gamesMapper = $this->get('gamesMapper');
 ?>
 
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
@@ -12,7 +10,7 @@ if ($this->getUser()) {
 <h4><a class="btn btn-default" href="<?=$this->getUrl(['controller' => 'group', 'action' => 'index']) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
 
 <h1><?=$this->getTrans('warsOverview') ?></h1>
-<?php if ($this->get('war') != ''): ?>
+<?php if ($this->get('war')): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
@@ -37,14 +35,17 @@ if ($this->getUser()) {
             <tbody>
                 <?php foreach ($this->get('war') as $war): ?>
                     <?php
-                    if (!is_in_array($this->get('readAccess'), explode(',', $war->getReadAccess())) && $adminAccess == false) {
-                        continue;
-                    }
                     $date = new \Ilch\Date($war->getWarTime())
                     ?>
                     <tr>
-                        <td><?=$this->escape($war->getWarEnemy()) ?></td>
-                        <td><?=$this->escape($war->getWarGroup()) ?></td>
+                        <td><?php
+                        $enemy = $this->get('enemyMapper')->getEnemyById($war->getWarEnemy());
+                        echo $this->escape($enemy ? $enemy->getEnemyName() : '');
+                        ?></td>
+                        <td><?php
+                        $group = $this->get('groupMapper')->getGroupById($war->getWarGroup());
+                        echo $this->escape($group ? $group->getGroupName() : '');
+                        ?></td>
                         <td><?=$date->format("d.m.Y H:i", true) ?></td>
                         <td>
                             <?php

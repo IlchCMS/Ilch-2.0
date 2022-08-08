@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,42 +13,69 @@ class Games extends \Ilch\Model
      *
      * @var integer
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The warId.
      *
      * @var integer
      */
-    protected $warId;
+    protected $warId = 0;
 
     /**
      * The Game map.
      *
      * @var string
      */
-    protected $map;
+    protected $map = '';
 
     /**
      * The Group Points.
      *
      * @var string
      */
-    protected $groupPoints;
+    protected $groupPoints = '';
 
     /**
      * The Enemy Points.
      *
      * @var string
      */
-    protected $enemyPoints;
+    protected $enemyPoints = '';
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray($entries): Games
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['war_id'])) {
+            $this->setWarId($entries['war_id']);
+        }
+        if (isset($entries['map'])) {
+            $this->setMap($entries['map']);
+        }
+        if (isset($entries['group_points'])) {
+            $this->setGroupPoints($entries['group_points']);
+        }
+        if (isset($entries['enemy_points'])) {
+            $this->setEnemyPoints($entries['enemy_points']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -56,12 +83,12 @@ class Games extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Games
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -69,9 +96,9 @@ class Games extends \Ilch\Model
     /**
      * Gets the warId.
      *
-     * @return integer
+     * @return int
      */
-    public function getWarId()
+    public function getWarId(): int
     {
         return $this->warId;
     }
@@ -79,12 +106,12 @@ class Games extends \Ilch\Model
     /**
      * Sets the warId.
      *
-     * @param integer $warId
+     * @param int $warId
      * @return $this
      */
-    public function setWarId($warId)
+    public function setWarId(int $warId): Games
     {
-        $this->warId = (int)$warId;
+        $this->warId = $warId;
 
         return $this;
     }
@@ -94,7 +121,7 @@ class Games extends \Ilch\Model
      *
      * @return string
      */
-    public function getMap()
+    public function getMap(): string
     {
         return $this->map;
     }
@@ -105,9 +132,9 @@ class Games extends \Ilch\Model
      * @param string $map
      * @return $this
      */
-    public function setMap($map)
+    public function setMap(string $map): Games
     {
-        $this->map = (string)$map;
+        $this->map = $map;
 
         return $this;
     }
@@ -117,7 +144,7 @@ class Games extends \Ilch\Model
      *
      * @return string
      */
-    public function getGroupPoints()
+    public function getGroupPoints(): string
     {
         return $this->groupPoints;
     }
@@ -128,9 +155,9 @@ class Games extends \Ilch\Model
      * @param string $groupPoints
      * @return $this
      */
-    public function setGroupPoints($groupPoints)
+    public function setGroupPoints(string $groupPoints): Games
     {
-        $this->groupPoints = (string)$groupPoints;
+        $this->groupPoints = $groupPoints;
 
         return $this;
     }
@@ -140,7 +167,7 @@ class Games extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnemyPoints()
+    public function getEnemyPoints(): string
     {
         return $this->enemyPoints;
     }
@@ -151,10 +178,29 @@ class Games extends \Ilch\Model
      * @param string $enemyPoints
      * @return $this
      */
-    public function setEnemyPoints($enemyPoints)
+    public function setEnemyPoints(string $enemyPoints): Games
     {
-        $this->enemyPoints = (string)$enemyPoints;
+        $this->enemyPoints = $enemyPoints;
 
         return $this;
+    }
+    
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true)
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'war_id' => $this->getWarId(),
+                'map' => $this->getMap(),
+                'group_points' => $this->getGroupPoints(),
+                'enemy_points' => $this->getEnemyPoints(),
+            ]
+        );
     }
 }

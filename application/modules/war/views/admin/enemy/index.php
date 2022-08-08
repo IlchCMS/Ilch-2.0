@@ -1,13 +1,5 @@
-<style>
-    .group-image {
-         max-width: 100px;
-         height: 50px;
-         margin: -8px;
-     }
-</style>
-
 <h1><?=$this->getTrans('manageEnemy') ?></h1>
-<?php if ($this->get('enemy') != ''): ?>
+<?php if ($this->get('enemy')): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>

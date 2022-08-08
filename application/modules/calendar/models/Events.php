@@ -13,14 +13,32 @@ class Events extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The Url of the events.
      *
      * @var string
      */
-    protected $url;
+    protected $url = '';
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray($entries): Events
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['url'])) {
+            $this->setUrl($entries['url']);
+        }
+
+        return $this;
+    }
 
 
     /**
@@ -28,7 +46,7 @@ class Events extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -39,9 +57,9 @@ class Events extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Events
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -51,7 +69,7 @@ class Events extends \Ilch\Model
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -62,10 +80,26 @@ class Events extends \Ilch\Model
      * @param string $url
      * @return $this
      */
-    public function setUrl($url)
+    public function setUrl(string $url): Events
     {
-        $this->url = (string)$url;
+        $this->url = $url;
 
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true)
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'url' => $this->getUrl(),
+            ]
+        );
     }
 }

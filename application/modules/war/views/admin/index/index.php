@@ -1,31 +1,20 @@
 <h1><?=$this->getTrans('manageWarOverview') ?></h1>
-<?php if ($this->get('war') != ''): ?>
+<?php if ($this->get('war')): ?>
     <div id="filter-media">
         <div id="filter-panel" class="collapse filter-panel">
-            <form class="form-horizontal" method="POST" action="">
-                <?=$this->getTokenField() ?>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-perpage">
-                        <?=$this->getTrans('showOnly') ?>
-                    </label>
-                    <div class="col-lg-2">
-                        <select class="form-control" id="pref-perpage" name="filterLastNext">
-                            <option value="0"><?=$this->getTrans('all') ?></option>
-                            <option value="1"><?=$this->getTrans('warStatusOpen') ?></option>
-                            <option value="2"><?=$this->getTrans('warStatusClose') ?></option>
-                        </select>
-                    </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="pref-perpage">
+                    <?=$this->getTrans('showOnly') ?>
+                </label>
+                <div class="col-lg-2">
+                    <select class="form-control" id="pref-perpage" name="filterLastNext">
+                        <option value="0" <?=($this->getRequest()->getParam('filterLastNext') == 0)?'selected=""':'' ?>><?=$this->getTrans('all') ?></option>
+                        <option value="1" <?=($this->getRequest()->getParam('filterLastNext') == 1)?'selected=""':'' ?>><?=$this->getTrans('warStatusOpen') ?></option>
+                        <option value="2" <?=($this->getRequest()->getParam('filterLastNext') == 2)?'selected=""':'' ?>><?=$this->getTrans('warStatusClose') ?></option>
+                    </select>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default filter-col" name="filter" value="filter">
-                        <span class="fa fa-search"></span> <?=$this->getTrans('send') ?>
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
-        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-            <span class="fa fa-cogs"></span> <?=$this->getTrans('filter') ?>
-        </button>
     </div>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">
@@ -58,8 +47,14 @@
                             <td><?=$this->getDeleteCheckbox('check_war', $war->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $war->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $war->getId()]) ?></td>
-                            <td><?=$this->escape($war->getWarEnemy()) ?></td>
-                            <td><?=$this->escape($war->getWarGroup()) ?></td>
+                            <td><?php
+                            $enemy = $this->get('enemyMapper')->getEnemyById($war->getWarEnemy());
+                            echo $this->escape($enemy ? $enemy->getEnemyName() : '');
+                            ?></td>
+                            <td><?php
+                            $group = $this->get('groupMapper')->getGroupById($war->getWarGroup());
+                            echo $this->escape($group ? $group->getGroupName() : '');
+                            ?></td>
                             <td><?=date('d.m.Y H:i', strtotime($war->getWarTime())) ?></td>
                             <td>
                                 <?php
@@ -81,3 +76,14 @@
 <?php else: ?>
     <?=$this->getTranslator()->trans('noWars') ?>
 <?php endif; ?>
+<script>
+    $(function() {
+        $('#filterLastNext').change(function() {
+            if ($(this).val() !== 0) {
+                window.open("<?=$this->getUrl(['action' => 'index']) ?>/filterLastNext/"+$(this).val(),"_self");
+            } else {
+                window.open("<?=$this->getUrl(['action' => 'index']) ?>","_self");
+            }
+        })
+    })
+</script>

@@ -1,37 +1,33 @@
 <?php
+header('Content-Type: application/json');
+
 $events = [];
 
-$adminAccess = null;
-if ($this->getUser()) {
-    $adminAccess = $this->getUser()->isAdmin();
-}
-
 // calendar entries
-if ($this->get('calendarList')) {
-    foreach ($this->get('calendarList') as $calendarList) {
-        if (!is_in_array($this->get('readAccess'), explode(',', $calendarList->getReadAccess())) && $adminAccess == false) {
-            continue;
-        }
-        $e = [];
-        $e['title'] = $this->escape($calendarList->getTitle());
-        $e['start'] = $calendarList->getStart();
-        $e['end'] = $calendarList->getEnd();
-        $e['color'] = $calendarList->getColor();
-        $e['url'] = $this->getUrl('calendar/events/show/id/' . $calendarList->getId());
+foreach ($this->get('calendarList') ?? [] as $calendarList) {
+    $e = [];
+    $e['title'] = $this->escape($calendarList->getTitle());
+    $e['start'] = $calendarList->getStart();
+    $e['end'] = $calendarList->getEnd();
+    $e['color'] = $calendarList->getColor();
+    $e['url'] = $this->getUrl('calendar/events/show/id/' . $calendarList->getId());
 
-        if ($calendarList->getPeriodDay()) {
-            $startDate = new \Ilch\Date($calendarList->getStart());
-            $endDate = new \Ilch\Date($calendarList->getEnd());
+    $startDate = new \Ilch\Date($calendarList->getStart());
+    $endDate = $calendarList->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($calendarList->getEnd()) : 1;
 
-            if ($calendarList->getPeriodDay() == 7) {
-                $periodDay = 0;
-            } else {
-                $periodDay = $calendarList->getPeriodDay();
+    $days = $this->get('calendarMapper')->repeat($calendarList->getPeriodType(), $startDate, $endDate, $calendarList->getPeriodDay());
+
+    foreach($days as $date) {
+        $e['start'] = $date->format('Y-m-d H:i:s');
+        $e['end'] = '';
+        if (!is_numeric($endDate)) {
+            //var_dump($date->format('H') .' <= '. $endDate->format('H'));
+            if ($date->format('H') <= $endDate->format('H')) {
+                $e['end'] = $date->format('Y-m-d').' '. $endDate->format('H:i:s');
             }
-
-            $e['start'] = $startDate->format('H:i');
-            $e['end'] = $endDate->format('H:i');
-            $e['dow'] = [$periodDay];
+        }
+        if ($e['end'] == '') {
+            $e['end'] = $e['start'];
         }
 
         $events[] = $e;

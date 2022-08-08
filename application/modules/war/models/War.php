@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,118 +13,194 @@ class War extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The War Enemy.
      *
      * @var int
      */
-    protected $warEnemy;
+    protected $warEnemy = 0;
 
     /**
      * The War Enemy Tag.
      *
-     * @var int
+     * @var string
      */
-    protected $warEnemyTag;
+    protected $warEnemyTag = '';
 
     /**
      * The War Group.
      *
      * @var int
      */
-    protected $warGroup;
+    protected $warGroup = 0;
 
     /**
      * The War Group Tag.
      *
-     * @var int
+     * @var string
      */
-    protected $warGroupTag;
+    protected $warGroupTag = '';
 
     /**
      * The War Time.
      *
      * @var string
      */
-    protected $warTime;
+    protected $warTime = '';
 
     /**
      * The War Maps.
      *
      * @var string
      */
-    protected $warMaps;
+    protected $warMaps = '';
 
     /**
      * The War Server.
      *
      * @var string
      */
-    protected $warServer;
+    protected $warServer = '';
 
     /**
      * The War Password.
      *
      * @var string
      */
-    protected $warPassword;
+    protected $warPassword = '';
 
     /**
      * The War Xonx.
      *
      * @var string
      */
-    protected $warXonx;
+    protected $warXonx = '';
 
     /**
      * The War Game.
      *
      * @var string
      */
-    protected $warGame;
+    protected $warGame = '';
 
     /**
      * The War Matchtype.
      *
      * @var string
      */
-    protected $warMatchtype;
+    protected $warMatchtype = '';
 
     /**
      * The War Report.
      *
      * @var string
      */
-    protected $warReport;
+    protected $warReport = '';
 
     /**
      * The War Status.
      *
      * @var int
      */
-    protected $warStatus;
+    protected $warStatus = '';
 
     /**
      * The show value (hide or show in calendar) of the training.
      *
      * @var int
      */
-    protected $show;
+    protected $show = 0;
     /**
      * The readaccess of the training.
      *
      * @var string
      */
-    protected $readAccess;
+    protected $readAccess = '';
+
+    /**
+     * The last Accept Time.
+     *
+     * @var int
+     */
+    protected $lastAcceptTime = 0;
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray($entries): War
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['enemy'])) {
+            $this->setWarEnemy($entries['enemy']);
+        }
+        if (isset($entries['group'])) {
+            $this->setWarGroup($entries['group']);
+        }
+        if (isset($entries['time'])) {
+            $this->setWarTime($entries['time']);
+        }
+        if (isset($entries['maps'])) {
+            $this->setWarMaps($entries['maps']);
+        }
+        if (isset($entries['server'])) {
+            $this->setWarServer($entries['server']);
+        }
+        if (isset($entries['password'])) {
+            $this->setWarPassword($entries['password']);
+        }
+        if (isset($entries['xonx'])) {
+            $this->setWarXonx($entries['xonx']);
+        }
+        if (isset($entries['game'])) {
+            $this->setWarGame($entries['game']);
+        }
+        if (isset($entries['matchtype'])) {
+            $this->setWarMatchtype($entries['matchtype']);
+        }
+        if (isset($entries['report'])) {
+            $this->setWarReport($entries['report']);
+        }
+        if (isset($entries['status'])) {
+            $this->setWarStatus($entries['status']);
+        }
+        if (isset($entries['show'])) {
+            $this->setShow($entries['show']);
+        }
+        if (isset($entries['read_access'])) {
+            $this->setReadAccess($entries['read_access']);
+        }
+        if (isset($entries['lastaccepttime'])) {
+            $this->setLastAcceptTime($entries['lastaccepttime']);
+        }
+        if (isset($entries['read_access_all'])) {
+            if ($entries['read_access_all']) {
+                $this->setReadAccess('all');
+            }
+        }
+
+        if (isset($entries['war_groups'])) {
+            $this->setWarGroupTag($entries['war_groups']);
+        }
+        if (isset($entries['war_enemy'])) {
+            $this->setWarEnemyTag($entries['war_enemy']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the group.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -135,9 +211,9 @@ class War extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): War
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -147,7 +223,7 @@ class War extends \Ilch\Model
      *
      * @return int
      */
-    public function getWarEnemy()
+    public function getWarEnemy(): int
     {
         return $this->warEnemy;
     }
@@ -158,9 +234,9 @@ class War extends \Ilch\Model
      * @param int $warEnemy
      * @return $this
      */
-    public function setWarEnemy($warEnemy)
+    public function setWarEnemy(int $warEnemy): War
     {
-        $this->warEnemy = (string)$warEnemy;
+        $this->warEnemy = $warEnemy;
 
         return $this;
     }
@@ -168,9 +244,9 @@ class War extends \Ilch\Model
     /**
      * Gets the war enemy tag.
      *
-     * @return int
+     * @return string
      */
-    public function getWarEnemyTag()
+    public function getWarEnemyTag(): string
     {
         return $this->warEnemyTag;
     }
@@ -178,12 +254,12 @@ class War extends \Ilch\Model
     /**
      * Sets the war enemy tag.
      *
-     * @param int $warEnemyTag
+     * @param string $warEnemyTag
      * @return $this
      */
-    public function setWarEnemyTag($warEnemyTag)
+    public function setWarEnemyTag(string $warEnemyTag): War
     {
-        $this->warEnemyTag = (string)$warEnemyTag;
+        $this->warEnemyTag = $warEnemyTag;
 
         return $this;
     }
@@ -193,7 +269,7 @@ class War extends \Ilch\Model
      *
      * @return int
      */
-    public function getWarGroup()
+    public function getWarGroup(): int
     {
         return $this->warGroup;
     }
@@ -204,9 +280,9 @@ class War extends \Ilch\Model
      * @param int $warGroup
      * @return $this
      */
-    public function setWarGroup($warGroup)
+    public function setWarGroup(int $warGroup): War
     {
-        $this->warGroup = (string)$warGroup;
+        $this->warGroup = $warGroup;
 
         return $this;
     }
@@ -214,9 +290,9 @@ class War extends \Ilch\Model
     /**
      * Gets the war group tag.
      *
-     * @return int
+     * @return string
      */
-    public function getWarGroupTag()
+    public function getWarGroupTag(): string
     {
         return $this->warGroupTag;
     }
@@ -224,12 +300,12 @@ class War extends \Ilch\Model
     /**
      * Sets the war group tag.
      *
-     * @param int $warGroupTag
+     * @param string $warGroupTag
      * @return $this
      */
-    public function setWarGroupTag($warGroupTag)
+    public function setWarGroupTag(string $warGroupTag): War
     {
-        $this->warGroupTag = (string)$warGroupTag;
+        $this->warGroupTag = $warGroupTag;
 
         return $this;
     }
@@ -239,7 +315,7 @@ class War extends \Ilch\Model
      *
      * @return string
      */
-    public function getWarTime()
+    public function getWarTime(): string
     {
         return $this->warTime;
     }
@@ -250,9 +326,9 @@ class War extends \Ilch\Model
      * @param string $warTime
      * @return $this
      */
-    public function setWarTime($warTime)
+    public function setWarTime(string $warTime): War
     {
-        $this->warTime = (string)$warTime;
+        $this->warTime = $warTime;
 
         return $this;
     }
@@ -262,7 +338,7 @@ class War extends \Ilch\Model
      *
      * @return string
      */
-    public function getWarMaps()
+    public function getWarMaps(): string
     {
         return $this->warMaps;
     }
@@ -273,9 +349,9 @@ class War extends \Ilch\Model
      * @param string $warMaps
      * @return $this
      */
-    public function setWarMaps($warMaps)
+    public function setWarMaps(string $warMaps): War
     {
-        $this->warMaps = (string)$warMaps;
+        $this->warMaps = $warMaps;
 
         return $this;
     }
@@ -285,7 +361,7 @@ class War extends \Ilch\Model
      *
      * @return string
      */
-    public function getWarServer()
+    public function getWarServer(): string
     {
         return $this->warServer;
     }
@@ -296,9 +372,9 @@ class War extends \Ilch\Model
      * @param string $warServer
      * @return $this
      */
-    public function setWarServer($warServer)
+    public function setWarServer(string $warServer): War
     {
-        $this->warServer = (string)$warServer;
+        $this->warServer = $warServer;
 
         return $this;
     }
@@ -308,7 +384,7 @@ class War extends \Ilch\Model
      *
      * @return string
      */
-    public function getWarPassword()
+    public function getWarPassword(): string
     {
         return $this->warPassword;
     }
@@ -319,9 +395,9 @@ class War extends \Ilch\Model
      * @param string $warPassword
      * @return $this
      */
-    public function setWarPassword($warPassword)
+    public function setWarPassword(string $warPassword): War
     {
-        $this->warPassword = (string)$warPassword;
+        $this->warPassword = $warPassword;
 
         return $this;
     }
@@ -331,7 +407,7 @@ class War extends \Ilch\Model
      *
      * @return string
      */
-    public function getWarXonx()
+    public function getWarXonx(): string
     {
         return $this->warXonx;
     }
@@ -342,9 +418,9 @@ class War extends \Ilch\Model
      * @param string $warXonx
      * @return $this
      */
-    public function setWarXonx($warXonx)
+    public function setWarXonx(string $warXonx): War
     {
-        $this->warXonx = (string)$warXonx;
+        $this->warXonx = $warXonx;
 
         return $this;
     }
@@ -354,7 +430,7 @@ class War extends \Ilch\Model
      *
      * @return string
      */
-    public function getWarGame()
+    public function getWarGame(): string
     {
         return $this->warGame;
     }
@@ -365,9 +441,9 @@ class War extends \Ilch\Model
      * @param string $warGame
      * @return $this
      */
-    public function setWarGame($warGame)
+    public function setWarGame(string $warGame): War
     {
-        $this->warGame = (string)$warGame;
+        $this->warGame = $warGame;
 
         return $this;
     }
@@ -377,7 +453,7 @@ class War extends \Ilch\Model
      *
      * @return string
      */
-    public function getWarMatchtype()
+    public function getWarMatchtype(): string
     {
         return $this->warMatchtype;
     }
@@ -388,9 +464,9 @@ class War extends \Ilch\Model
      * @param string $warMatchtype
      * @return $this
      */
-    public function setWarMatchtype($warMatchtype)
+    public function setWarMatchtype(string $warMatchtype): War
     {
-        $this->warMatchtype = (string)$warMatchtype;
+        $this->warMatchtype = $warMatchtype;
 
         return $this;
     }
@@ -400,7 +476,7 @@ class War extends \Ilch\Model
      *
      * @return string
      */
-    public function getWarReport()
+    public function getWarReport(): string
     {
         return $this->warReport;
     }
@@ -411,9 +487,9 @@ class War extends \Ilch\Model
      * @param string $warReport
      * @return $this
      */
-    public function setWarReport($warReport)
+    public function setWarReport(string $warReport): War
     {
-        $this->warReport = (string)$warReport;
+        $this->warReport = $warReport;
 
         return $this;
     }
@@ -423,7 +499,7 @@ class War extends \Ilch\Model
      *
      * @return int
      */
-    public function getWarStatus()
+    public function getWarStatus(): int
     {
         return $this->warStatus;
     }
@@ -434,9 +510,9 @@ class War extends \Ilch\Model
      * @param int $warStatus
      * @return $this
      */
-    public function setWarStatus($warStatus)
+    public function setWarStatus(int $warStatus): War
     {
-        $this->warStatus = (int)$warStatus;
+        $this->warStatus = $warStatus;
 
         return $this;
     }
@@ -446,7 +522,7 @@ class War extends \Ilch\Model
      *
      * @return int
      */
-    public function getShow()
+    public function getShow(): int
     {
         return $this->show;
     }
@@ -457,18 +533,18 @@ class War extends \Ilch\Model
      * @param int $show
      * @return $this
      */
-    public function setShow($show)
+    public function setShow(int $show): War
     {
-        $this->show = (int)$show;
+        $this->show = $show;
 
         return $this;
     }
     /**
      * Gets the read access of the war.
      *
-     * @return int
+     * @return string
      */
-    public function getReadAccess()
+    public function getReadAccess(): string
     {
         return $this->readAccess;
     }
@@ -478,10 +554,62 @@ class War extends \Ilch\Model
      * @param string $readAccess
      * @return $this
      */
-    public function setReadAccess($readAccess)
+    public function setReadAccess(string $readAccess): War
     {
-        $this->readAccess = (string)$readAccess;
+        $this->readAccess = $readAccess;
 
         return $this;
+    }
+
+    /**
+     * Gets the last Accept Time.
+     *
+     * @return int
+     */
+    public function getLastAcceptTime(): int
+    {
+        return $this->lastAcceptTime;
+    }
+
+    /**
+     * Sets the last Accept Time.
+     *
+     * @param int $lastAcceptTime
+     * @return $this
+     */
+    public function setLastAcceptTime(int $lastAcceptTime): War
+    {
+        $this->lastAcceptTime = $lastAcceptTime;
+
+        return $this;
+    }
+    
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true)
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'enemy'             => $this->getWarEnemy(),
+                'group'             => $this->getWarGroup(),
+                'time'              => $this->getWarTime(),
+                'maps'              => $this->getWarMaps(),
+                'server'            => $this->getWarServer(),
+                'password'          => $this->getWarPassword(),
+                'xonx'              => $this->getWarXonx(),
+                'game'              => $this->getWarGame(),
+                'matchtype'         => $this->getWarMatchtype(),
+                'report'            => $this->getWarReport(),
+                'status'            => $this->getWarStatus(),
+                'show'              => $this->getShow(),
+                'lastaccepttime'    => $this->getLastAcceptTime(),
+                'read_access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0)
+            ]
+        );
     }
 }

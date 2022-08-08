@@ -1,28 +1,43 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\War\Mappers;
 
-use Modules\War\Models\Enemy as EnemyModel;
+use Modules\War\Models\Enemy as EntriesModel;
 
 class Enemy extends \Ilch\Mapper
 {
+    public $tablename = 'war_enemy';
+
     /**
-     * Gets the Enemy
+     * returns if the module is installed.
+     *
+     * @return boolean
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by param.
      *
      * @param array $where
+     * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
-     * @return EnemyModel[]|array
+     * @return array|null
      */
-    public function getEnemy($where = [], $pagination = null)
+    public function getEntriesBy($where = [], $orderBy = ['e.id' => 'DESC'], $pagination = null)
     {
-        $select = $this->db()->select('*')
-            ->from('war_enemy')
+        $select = $this->db()->select()
+            ->fields(['e.id', 'e.name', 'e.tag', 'e.image', 'e.homepage', 'e.contact_name', 'e.contact_email'])
+            ->from(['e' => $this->tablename])
+            ->join(['m' => 'media'], 'e.image = m.url', 'LEFT', ['m.url', 'm.url_thumb'])
             ->where($where)
-            ->order(['id' => 'DESC']);
+            ->order($orderBy);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -34,135 +49,124 @@ class Enemy extends \Ilch\Mapper
         }
 
         $entryArray = $result->fetchRows();
-
         if (empty($entryArray)) {
             return null;
         }
-
-        $entry = [];
+        $entrys = [];
 
         foreach ($entryArray as $entries) {
-            $entryModel = new EnemyModel();
-            $entryModel->setId($entries['id'])
-                ->setEnemyName($entries['name'])
-                ->setEnemyTag($entries['tag'])
-                ->setEnemyImage($entries['image'])
-                ->setEnemyHomepage($entries['homepage'])
-                ->setEnemyContactName($entries['contact_name'])
-                ->setEnemyContactEmail($entries['contact_email']);
-            $entry[] = $entryModel;
-        }
+            $entryModel = new EntriesModel();
 
-        return $entry;
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
+     * Gets the Enemy
+     *
+     * @param array $where
+     * @param \Ilch\Pagination|null $pagination
+     * @return null|array
+     */
+    public function getEnemy($where = [], $pagination = null)
+    {
+        return $this->getEntriesBy($where, ['e.id' => 'DESC'], $pagination);
     }
 
     /**
      * Gets the Enemy List
      *
      * @param \Ilch\Pagination|null $pagination
-     * @return EnemyModel[]|array
+     * @return null|array
      */
     public function getEnemyList($pagination = null)
     {
-        $select = $this->db()->select(['e.id', 'e.name', 'e.tag', 'e.image', 'e.homepage', 'e.contact_name', 'e.contact_email', 'm.url', 'm.url_thumb'])
-            ->from(['e' => 'war_enemy'])
-            ->join(['m' => 'media'], 'e.image = m.url', 'LEFT')
-            ->order(['e.id' => 'DESC']);
-
-        if ($pagination !== null) {
-            $select->limit($pagination->getLimit())
-                ->useFoundRows();
-            $result = $select->execute();
-            $pagination->setRows($result->getFoundRows());
-        } else {
-            $result = $select->execute();
-        }
-
-        $enemyArray = $result->fetchRows();
-
-        if (empty($enemyArray)) {
-            return null;
-        }
-
-        $entries = [];
-
-        foreach ($enemyArray as $entry) {
-            $enemyModel = new EnemyModel();
-            $enemyModel->setId($entry['id'])
-                ->setEnemyName($entry['name'])
-                ->setEnemyTag($entry['tag'])
-                ->setEnemyImage($entry['image'])
-                ->setEnemyHomepage($entry['homepage'])
-                ->setEnemyContactName($entry['contact_name'])
-                ->setEnemyContactEmail($entry['contact_email']);
-            $entries[] = $enemyModel;
-        }
-
-        return $entries;
+        return $this->getEntriesBy([], ['e.id' => 'DESC'], $pagination);
     }
 
     /**
      * Gets Enemy by id.
      *
-     * @param integer $id
-     * @return EnemyModel|null
+     * @param int|EntriesModel $id
+     * @return EntriesModel|null
      */
     public function getEnemyById($id)
     {
-        $enemyRow = $this->db()->select('*')
-            ->from('war_enemy')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
-
-        if (empty($enemyRow)) {
-            return null;
+        if (is_a($id, EntriesModel::class)) {
+            $id = $id->getId();
         }
 
-        $enemyModel = new EnemyModel();
-        $enemyModel->setId($enemyRow['id'])
-            ->setEnemyName($enemyRow['name'])
-            ->setEnemyTag($enemyRow['tag'])
-            ->setEnemyImage($enemyRow['image'])
-            ->setEnemyHomepage($enemyRow['homepage'])
-            ->setEnemyContactName($enemyRow['contact_name'])
-            ->setEnemyContactEmail($enemyRow['contact_email']);
+        $entrys = $this->getEntriesBy(['e.id' => (int)$id], []);
 
-        return $enemyModel;
+        if (!empty($entrys)) {
+            return reset($entrys);
+        }
+
+        return null;
     }
 
     /**
-     * Inserts or updates enemy entry.
+     * Inserts or updates entry.
      *
-     * @param EnemyModel $model
+     * @param EntriesModel $model
+     * @return integer
      */
-    public function save(EnemyModel $model)
+    public function save(EntriesModel $model): int
     {
-        $fields = [
-            'name' => $model->getEnemyName(),
-            'tag' => $model->getEnemyTag(),
-            'image' => $model->getEnemyImage(),
-            'homepage' => $model->getEnemyHomepage(),
-            'contact_name' => $model->getEnemyContactName(),
-            'contact_email' => $model->getEnemyContactEmail()
-        ];
+        $fields = $model->getArray();
 
         if ($model->getId()) {
-            $this->db()->update('war_enemy')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
+            $result = $model->getId();
         } else {
-            $this->db()->insert('war_enemy')
+            $result = (int)$this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
+
+        return $result;
     }
 
-    public function delete($id)
+    /**
+     * Deletes the entry.
+     *
+     * @param int|EntriesModel $id
+     * @return boolean
+     */
+    public function delete($id): bool
     {
-        $this->db()->delete('war_enemy')
-            ->where(['id' => $id])
+        if (is_a($id, EntriesModel::class)) {
+            $id = $id->getId();
+        }
+
+        return $this->db()->delete($this->tablename)
+            ->where(['id' => (int)$id])
             ->execute();
+    }
+
+    /**
+     * Get Export Json.
+     *
+     * @param int $options
+     * @return string
+     */
+    public function getJson(int $options = 0): string
+    {
+        $entryArray = $this->getEntriesBy();
+        $entrys = [];
+
+        if ($entryArray) {
+            foreach ($entryArray as $entryModel) {
+                $entrys[] = $entryModel->getArray(false);
+            }
+        }
+        
+        return json_encode($entrys, $options);
     }
 }
