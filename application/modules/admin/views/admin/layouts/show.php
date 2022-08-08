@@ -150,7 +150,7 @@ foreach ($layouts as $layout): ?>
                     <i class="fa fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
-                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search', 'key' => $layout->key]) ?>">
+                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search', 'key' => $layout->key, 'version' => $layout->version]) ?>">
                     <?=$this->getTokenField() ?>
                     <button type="submit" class="btn btn-default">
                         <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
