@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,6 +10,7 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
 use Modules\Admin\Mappers\Menu as MenuMapper;
 use Ilch\Validation;
+use Ilch\Sorter;
 use Modules\User\Mappers\Group as GroupMapper;
 
 class Boxes extends \Ilch\Controller\Admin
@@ -48,6 +49,7 @@ class Boxes extends \Ilch\Controller\Admin
     {
         $boxMapper = new BoxMapper();
         $menuMapper = New MenuMapper();
+        $sorter = New Sorter($this->getRequest(), ['id', 'title', 'date_created']);
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuBoxes'), ['action' => 'index']);
@@ -57,9 +59,12 @@ class Boxes extends \Ilch\Controller\Admin
                 $boxMapper->delete($boxId);
                 $menuMapper->deleteItemByBoxId($boxId);
             }
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
         }
 
-        $boxes = $boxMapper->getSelfBoxList('');
+        $boxes = $boxMapper->getSelfBoxList('', $sorter->getOrderByArray());
 
         /*
          * Filtering boxes out which are not allowed for the user.
@@ -72,15 +77,17 @@ class Boxes extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('boxMapper', $boxMapper);
-        $this->getView()->set('boxes', $boxes);
-        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
-        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
+        $this->getView()->set('boxMapper', $boxMapper)
+            ->set('boxes', $boxes)
+            ->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'))
+            ->set('contentLanguage', $this->getConfig()->get('content_language'))
+            ->set('sorter', $sorter);
     }
 
     public function treatAction()
     {
         $groupMapper = new GroupMapper();
+        $model = new BoxModel();
 
         $groups = $groupMapper->getGroupList();
         $boxMapper = new BoxMapper();
@@ -101,43 +108,33 @@ class Boxes extends \Ilch\Controller\Admin
             } else {
                 $locale = $this->getRequest()->getParam('locale');
             }
-
-            $this->getView()->set('box', $boxMapper->getSelfBoxByIdLocale($this->getRequest()->getParam('id'), $locale));
+            $model = $boxMapper->getSelfBoxByIdLocale($this->getRequest()->getParam('id'), $locale);
+            if (!$model) {
+                $model = new BoxModel();
+            }
+            if (!$model->getId()) {
+                $model->setId($this->getRequest()->getParam('id'));
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuBoxes'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        $post = [
-            'boxTitle' => '',
-            'boxContent' => '',
-            'boxLanguage' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'boxTitle' => $this->getRequest()->getPost('boxTitle'),
-                'boxContent' => trim($this->getRequest()->getPost('boxContent')),
-                'boxLanguage' => $this->getRequest()->getPost('boxLanguage')
-            ];
-
-            $validation = Validation::create($post, [
-                'boxTitle' => 'required',
-                'boxContent' => 'required'
-            ]);
+            $validation = Validation::create(
+                $this->getRequest()->getPost(),
+                [
+                    'boxTitle' => 'required',
+                    'boxContent' => 'required'
+                ]
+            );
 
             if ($validation->isValid()) {
-                $model = new BoxModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-                $model->setTitle($post['boxTitle']);
-                $model->setContent($post['boxContent']);
+                $model->setTitle($this->getRequest()->getPost('boxTitle'))
+                    ->setContent($this->getRequest()->getPost('boxContent'));
                 if ($this->getRequest()->getPost('boxLanguage') != '') {
-                    $model->setLocale($post['boxLanguage']);
-                } else {
-                    $model->setLocale('');
+                    $model->setLocale($this->getRequest()->getPost('boxLanguage'));
                 }
                 $boxId = $boxMapper->save($model);
 
@@ -149,17 +146,21 @@ class Boxes extends \Ilch\Controller\Admin
                     }
                 }
 
-                $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'index']);
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], ($model->getId()?['id' => $model->getId()]:[])));
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
-        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
-        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
+        $this->getView()->set('box', $model)
+            ->set('contentLanguage', $this->getConfig()->get('content_language'))
+            ->set('languages', $this->getTranslator()->getLocaleList())
+            ->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
     }
 
     /**

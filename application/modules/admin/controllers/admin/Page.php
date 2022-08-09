@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,6 +10,7 @@ use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Admin\Models\Page as PageModel;
 use Modules\Admin\Mappers\Menu as MenuMapper;
 use Ilch\Validation;
+use Ilch\Sorter;
 use Modules\User\Mappers\Group as GroupMapper;
 
 class Page extends \Ilch\Controller\Admin
@@ -48,6 +49,7 @@ class Page extends \Ilch\Controller\Admin
     {
         $pageMapper = new PageMapper();
         $menuMapper = New MenuMapper();
+        $sorter = New Sorter($this->getRequest(), ['id', 'title', 'date_created']);
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index']);
@@ -57,18 +59,36 @@ class Page extends \Ilch\Controller\Admin
                 $pageMapper->delete($pageId);
                 $menuMapper->deleteItemByPageId($pageId);
             }
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('pageMapper', $pageMapper);
-        $this->getView()->set('pages', $pageMapper->getPageList());
-        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
-        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
+        $pages = $pageMapper->getPageList('', $sorter->getOrderByArray());
+
+        /*
+         * Filtering boxes out which are not allowed for the user.
+         */
+        $user = \Ilch\Registry::get('user');
+
+        foreach ($pages as $key => $page) {
+            if (!$user->hasAccess('page_'.$page->getId())) {
+                unset($user[$key]);
+            }
+        }
+
+        $this->getView()->set('pageMapper', $pageMapper)
+            ->set('pages', $pages)
+            ->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'))
+            ->set('contentLanguage', $this->getConfig()->get('content_language'))
+            ->set('sorter', $sorter);
     }
 
     public function treatAction()
     {
         $pageMapper = new PageMapper();
         $groupMapper = new GroupMapper();
+        $model = new PageModel();
 
         $groups = $groupMapper->getGroupList();
 
@@ -77,27 +97,29 @@ class Page extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
 
+            $user = \Ilch\Registry::get('user');
+
+            if (!$user->hasAccess('page_'.$this->getRequest()->getParam('id'))) {
+                $this->redirect(['action' => 'index']);
+            }
+
             if ($this->getRequest()->getParam('locale') == '') {
                 $locale = '';
             } else {
                 $locale = $this->getRequest()->getParam('locale');
             }
-
-            $this->getView()->set('page', $pageMapper->getPageByIdLocale($this->getRequest()->getParam('id'), $locale));
+            $model = $pageMapper->getPageByIdLocale($this->getRequest()->getParam('id'), $locale);
+            if (!$model) {
+                $model = new PageModel();
+            }
+            if (!$model->getId()) {
+                $model->setId($this->getRequest()->getParam('id'));
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
-
-        $post = [
-            'pageTitle' => '',
-            'pageContent' => '',
-            'pageLanguage' => '',
-            'keywords' => '',
-            'description' => '',
-            'permaLink' => ''
-        ];
 
         if ($this->getRequest()->isPost()) {
             // Create full-url of permaLink.
@@ -121,39 +143,32 @@ class Page extends \Ilch\Controller\Admin
                 $permaLinkUrl = '';
             }
 
-            $post = [
-                'pageTitle' => $this->getRequest()->getPost('pageTitle'),
-                'pageContent' => trim($this->getRequest()->getPost('pageContent')),
-                'pageLanguage' => $this->getRequest()->getPost('pageLanguage'),
-                'keywords' => $this->getRequest()->getPost('keywords'),
-                'description' => trim($this->getRequest()->getPost('description')),
-                'permaLink' => $permaLinkUrl,
-            ];
+            $_POST['permaLink'] = $permaLinkUrl;
 
-            $validation = Validation::create($post, [
-                'pageTitle' => 'required',
-                'pageContent' => 'required',
-                'permaLink' => 'url|required'
-            ]);
+            $validation = Validation::create(
+                $this->getRequest()->getPost(),
+                [
+                    'pageTitle' => 'required',
+                    'pageContent' => 'required',
+                    'permaLink' => 'url|required'
+                ]
+            );
 
             // Restore original values
-            $post['permaLink'] = $permaLink;
+            $_POST['permaLink'] = $permaLink;
 
             if ($validation->isValid()) {
-                $model = new PageModel();
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-                $model->setTitle($post['pageTitle']);
-                $model->setContent($post['pageContent']);
-                $model->setKeywords($post['keywords']);
-                $model->setDescription($post['description']);
+                $model->setTitle($this->getRequest()->getPost('pageTitle'));
+                $model->setContent($this->getRequest()->getPost('pageContent'));
+                $model->setKeywords($this->getRequest()->getPost('keywords'));
+                $model->setDescription($this->getRequest()->getPost('description'));
                 if ($this->getRequest()->getPost('pageLanguage') != '') {
-                    $model->setLocale($post['pageLanguage']);
-                } else {
-                    $model->setLocale('');
+                    $model->setLocale($this->getRequest()->getPost('pageLanguage'));
                 }
-                $model->setPerma($permaLink);
+                $model->setPerma($this->getRequest()->getPost('permaLink'));
                 $pageId = $pageMapper->save($model);
 
                 if (!$model->getId()) {
@@ -164,22 +179,28 @@ class Page extends \Ilch\Controller\Admin
                     }
                 }
 
-                $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'index']);
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], ($model->getId()?['id' => $model->getId()]:[])));
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
-        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
-        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
+        $this->getView()->set('page', $model)
+            ->set('contentLanguage', $this->getConfig()->get('content_language'))
+            ->set('languages', $this->getTranslator()->getLocaleList())
+            ->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
     }
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        $user = \Ilch\Registry::get('user');
+
+        if ($user->hasAccess('box_'.$this->getRequest()->getParam('id')) && $this->getRequest()->isSecure()) {
             $pageMapper = new PageMapper();
             $menuMapper = New MenuMapper();
 

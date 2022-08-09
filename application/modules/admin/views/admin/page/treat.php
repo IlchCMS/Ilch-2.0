@@ -1,11 +1,8 @@
+<?php
+$entrie = $this->get('page');
+?>
 <h1>
-    <?php
-    if ($this->get('page') != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
+    <?=($entrie->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
 
 <form class="form-horizontal" method="POST">
@@ -19,7 +16,7 @@
                    class="form-control"
                    id="pageTitle"
                    name="pageTitle"
-                   value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getTitle()); } else { echo $this->get('post')['pageTitle']; } ?>" />
+                   value="<?=$this->escape($this->originalInput('pageTitle', ($entrie->getId()?$entrie->getTitle():''))) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('pageContent') ? 'has-error' : '' ?>">
@@ -29,36 +26,26 @@
         <div class="col-lg-8">
             <textarea class="form-control ckeditor"
                       id="pageContent" name="pageContent"
-                      toolbar="ilch_html"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getContent()); } else { echo $this->get('post')['pageContent']; } ?></textarea>
+                      toolbar="ilch_html"><?=$this->escape($this->originalInput('pageContent', ($entrie->getId()?$entrie->getContent():''))) ?></textarea>
         </div>
     </div>
-    <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
+    <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale')): ?>
         <div class="form-group">
             <label for="pageLanguage" class="col-lg-2 control-label">
                 <?=$this->getTrans('pageLanguage') ?>:
             </label>
-            <div class="col-lg-8">
+            <div class="col-lg-2">
                 <select class="form-control" id="pageLanguage" name="pageLanguage">
-                    <?php
-                    foreach ($this->get('languages') as $key => $value) {
-                        $selected = '';
-
-                        if ($key == $this->get('contentLanguage')) {
-                            continue;
-                        }
-
-                        if ($this->getRequest()->getParam('locale') == $key) {
-                            $selected = 'selected="selected"';
-                        }
-
-                        echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
-                    }
-                    ?>
+                    <?php foreach ($this->get('languages') as $key => $value): ?>
+                        <?php if ($key == $this->get('contentLanguage')): ?>
+                            <?php continue; ?>
+                        <?php endif; ?>
+                        <option value="<?=$key ?>" <?=($this->originalInput('pageLanguage', ($entrie->getId()?$entrie->getLocale():''))) == $key ? 'selected=""' : '' ?>><?=$this->escape($value) ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
     <?php endif; ?>
-
     <h1><?=$this->getTrans('seo') ?></h1>
     <div class="form-group">
         <label for="description" class="col-lg-2 control-label">
@@ -67,7 +54,7 @@
         <div class="col-lg-4">
             <textarea class="form-control"
                       id="description"
-                      name="description"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getDescription()); } else { echo $this->get('post')['description']; } ?></textarea>
+                      name="description"><?=$this->escape($this->originalInput('description', ($entrie->getId()?$entrie->getDescription():''))) ?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -77,7 +64,7 @@
         <div class="col-lg-4">
             <textarea class="form-control"
                       id="keywords"
-                      name="keywords"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getKeywords()); } else { echo $this->get('post')['keywords']; } ?></textarea>
+                      name="keywords"><?=$this->escape($this->originalInput('keywords', ($entrie->getId()?$entrie->getKeywords():''))) ?></textarea>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
@@ -91,31 +78,21 @@
                        type="text"
                        id="permaLink"
                        name="permaLink"
-                       value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
+                       value="<?=$this->escape($this->originalInput('permaLink', ($entrie->getId()?$entrie->getPerma():''))) ?>" />
             </div>
         </div>
     </div>
-    <?php
-    if ($this->get('page') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?=($entrie->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 <?php
-$pageID = '';
-
-if ($this->get('page') != '') {
-    $pageID = $this->get('page')->getId();
-}
+$pageID = $entrie->getId() ?? '';
 ?>
 $('#pageTitle').change (
     function () {
-        var entityMap = {
+        const entityMap = {
             "&": "",
             "<": "",
             ">": "",
@@ -133,10 +110,10 @@ $('#pageTitle').change (
                 return entityMap[s];
             });
         }
-        var title = escapeHtml($('#pageTitle').val());
+
         $('#permaLink').val
         (
-            title
+            escapeHtml($('#pageTitle').val())
             .toLowerCase()+'.html'
         );
     }
@@ -149,10 +126,8 @@ $('#pageLanguage').change (
     }
 );
 
-$('#keywords').tokenfield();
-$('#keywords').on('tokenfield:createtoken', function (event) {
-    var existingTokens = $(this).tokenfield('getTokens');
-    $.each(existingTokens, function(index, token) {
+$('#keywords').tokenfield().on('tokenfield:createtoken', function (event) {
+    $.each($(this).tokenfield('getTokens'), function(index, token) {
         if (token.value === event.attrs.value)
             event.preventDefault();
     });

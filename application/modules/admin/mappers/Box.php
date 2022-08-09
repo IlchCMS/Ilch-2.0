@@ -1,147 +1,221 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Admin\Mappers;
 
-use Modules\Admin\Models\Box as BoxModel;
+use Modules\Admin\Models\Box as EntriesModel;
 
 class Box extends \Ilch\Mapper
 {
+    public $tablename = 'modules_boxes_content';
+    public $tablenameSelfBox = 'boxes';
+    public $tablenameSelfBoxContent = 'boxes_content';
+
     /**
-     * Get box lists for overview.
+     * returns if the module is installed.
      *
-     * @param string $locale
-     * @return BoxModel[]|array
-     * @throws \Ilch\Database\Exception
+     * @return boolean
      */
-    public function getBoxList($locale)
+    public function checkDBSelfBox(): bool
     {
-        $boxRows = $this->db()->select('*')
-            ->from('modules_boxes_content')
-            ->where(['locale' => $locale])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($boxRows)) {
-            return [];
-        }
-
-        $boxes = [];
-
-        foreach ($boxRows as $boxRow) {
-            $boxModel = new BoxModel();
-            $boxModel->setKey($boxRow['key']);
-            $boxModel->setModule($boxRow['module']);
-            $boxModel->setLocale($boxRow['locale']);
-            $boxModel->setName($boxRow['name']);
-
-            $boxes[] = $boxModel;
-        }
-
-        return $boxes;
+        return $this->db()->ifTableExists($this->tablenameSelfBox) && $this->db()->ifTableExists($this->tablenameSelfBoxContent);
     }
 
     /**
-     * Get box lists for overview.
+     * Gets the Entries by param.
      *
-     * @param string $locale
-     * @return BoxModel[]|array
-     * @throws \Ilch\Database\Exception
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return array|null
      */
-    public function getSelfBoxList($locale)
+    public function getSelfBoxEntriesBy($where = [], $orderBy = ['b.id' => 'DESC'], $pagination = null)
     {
-        $sql = 'SELECT bc.title, b.id FROM [prefix]_boxes as b
-                LEFT JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
-                AND bc.locale = "'.$this->db()->escape($locale).'"
-                GROUP BY b.id, bc.title
-                ORDER by b.id DESC';
-        $boxArray = $this->db()->queryArray($sql);
+        $select = $this->db()->select()
+            ->fields(['b.id', 'b.date_created'])
+            ->from(['b' => $this->tablenameSelfBox])
+            ->join(['bc' => $this->tablenameSelfBoxContent], 'b.id = bc.box_id', 'LEFT', ['bc.box_id', 'bc.content', 'bc.locale', 'bc.title'])
+            ->where($where)
+            ->group(['b.id', 'bc.title'])
+            ->order($orderBy);
 
-        if (empty($boxArray)) {
-            return [];
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
         }
 
-        $boxes = [];
-        foreach ($boxArray as $boxRow) {
-            $boxModel = new BoxModel();
-            $boxModel->setId($boxRow['id']);
-            $boxModel->setTitle($boxRow['title']);
-
-            $boxes[] = $boxModel;
-        }
-
-        return $boxes;
-    }
-
-    /**
-     * Returns box model with specific locale found by the key.
-     *
-     * @param string $key
-     * @param string $locale
-     * @return BoxModel|null
-     */
-    public function getBoxByIdLocale($key, $locale)
-    {
-        $boxRow = $this->db()->select('*')
-            ->from('modules_boxes_content')
-            ->where(['key' => $key, 'locale' => $locale])
-            ->execute()
-            ->fetchAssoc();
-
-        if (empty($boxRow)) {
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
             return null;
         }
+        $entrys = [];
 
-        $boxModel = new BoxModel();
-        $boxModel->setKey($boxRow['key']);
-        $boxModel->setModule($boxRow['module']);
-        $boxModel->setLocale($boxRow['locale']);
-        $boxModel->setName($boxRow['name']);
+        foreach ($entryArray as $entries) {
+            $entryModel = new EntriesModel();
 
-        return $boxModel;
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
+     * Get box lists for overview.
+     *
+     * @param string $locale
+     * @param array $orderBy
+     * @return array
+     * @throws \Ilch\Database\Exception
+     */
+    public function getSelfBoxList(string $locale, $orderBy = ['b.id' => 'DESC'])
+    {
+        return $this->getSelfBoxEntriesBy(['bc.locale' => $this->db()->escape($locale)], $orderBy);
+
     }
 
     /**
      * Returns box model found by the key.
      *
-     * @param string $id
+     * @param int $id
      * @param string $locale
-     * @return BoxModel|null
+     * @return EntriesModel|null
      * @throws \Ilch\Database\Exception
      */
-    public function getSelfBoxByIdLocale($id, $locale = '')
+    public function getSelfBoxByIdLocale(int $id, string $locale = '')
     {
-        $sql = 'SELECT * FROM [prefix]_boxes as b
-                INNER JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
-                WHERE b.`id` = "'.(int) $id.'" AND bc.locale = "'.$this->db()->escape($locale).'"';
-        $boxRow = $this->db()->queryRow($sql);
+        $entrys = $this->getSelfBoxEntriesBy(['b.id' => $id, 'bc.locale' => $this->db()->escape($locale)], []);
 
-        if (empty($boxRow)) {
-            return null;
+        if (!empty($entrys)) {
+            return reset($entrys);
         }
 
-        $boxModel = new BoxModel();
-        $boxModel->setId($boxRow['id']);
-        $boxModel->setTitle($boxRow['title']);
-        $boxModel->setContent($boxRow['content']);
-        $boxModel->setLocale($boxRow['locale']);
+        return null;
+    }
 
-        return $boxModel;
+    /**
+     * Inserts or updates a box model in the database.
+     *
+     * @param EntriesModel $box
+     * @throws \Ilch\Database\Exception
+     * @return int
+     */
+    public function save(EntriesModel $box): int
+    {
+        if ($box->getId()) {
+            if ($this->getSelfBoxByIdLocale($box->getId(), $box->getLocale())) {
+                $this->db()->update($this->tablenameSelfBoxContent)
+                    ->values(['title' => $box->getTitle(), 'content' => $box->getContent()])
+                    ->where(['box_id' => $box->getId(), 'locale' => $box->getLocale()])
+                    ->execute();
+            } else {
+                $this->db()->insert($this->tablenameSelfBoxContent)
+                    ->values(['box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()])
+                    ->execute();
+            }
+            return $box->getId();
+        } else {
+            $date = new \Ilch\Date();
+            $boxId = $this->db()->insert($this->tablenameSelfBox)
+                ->values(['date_created' => $date->toDb()])
+                ->execute();
+
+            $this->db()->insert($this->tablenameSelfBoxContent)
+                ->values(['box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()])
+                ->execute();
+            return $boxId;
+        }
+    }
+
+    /**
+     * Delete box with specific id.
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id): bool
+    {
+        $this->db()->delete($this->tablenameSelfBox)
+            ->where(['id' => $id])
+            ->execute();
+
+        return $this->db()->delete($this->tablenameSelfBoxContent)
+            ->where(['box_id' => $id])
+            ->execute();
+    }
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by param.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return array|null
+     */
+    public function getEntriesBy($where = [], $orderBy = ['key' => 'DESC'], $pagination = null)
+    {
+        $select = $this->db()->select()
+            ->fields(['key', 'module', 'locale', 'name'])
+            ->from([$this->tablename])
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new EntriesModel();
+
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
     }
 
     /**
      * Inserts box model in the database.
      *
-     * @param BoxModel $box
+     * @param EntriesModel $box
+     * @return bool
      */
-    public function install(BoxModel $box)
+    public function install(EntriesModel $box): bool
     {
-        foreach ($box->getContent() as $key => $content) {
+        if (is_array($box->getContent())) {
+            return false;
+        }
+        foreach ($box->getContent() ?? [] as $key => $content) {
             foreach ($content as $lang => $value) {
-                $this->db()->insert('modules_boxes_content')
+                $this->db()->insert($this->tablename)
                     ->values([
                         'key' => $key,
                         'module' => $box->getModule(),
@@ -151,40 +225,7 @@ class Box extends \Ilch\Mapper
                     ->execute();
             }
         }
-    }
-
-    /**
-     * Inserts or updates a box model in the database.
-     *
-     * @param BoxModel $box
-     * @throws \Ilch\Database\Exception
-     * @return int
-     */
-    public function save(BoxModel $box)
-    {
-        if ($box->getId()) {
-            if ($this->getSelfBoxByIdLocale($box->getId(), $box->getLocale())) {
-                $this->db()->update('boxes_content')
-                    ->values(['title' => $box->getTitle(), 'content' => $box->getContent()])
-                    ->where(['box_id' => $box->getId(), 'locale' => $box->getLocale()])
-                    ->execute();
-            } else {
-                $this->db()->insert('boxes_content')
-                    ->values(['box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()])
-                    ->execute();
-            }
-            return $box->getId();
-        } else {
-            $date = new \Ilch\Date();
-            $boxId = $this->db()->insert('boxes')
-                ->values(['date_created' => $date->toDb()])
-                ->execute();
-
-            $this->db()->insert('boxes_content')
-                ->values(['box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()])
-                ->execute();
-            return $boxId;
-        }
+        return true;
     }
 
     /**
@@ -195,28 +236,42 @@ class Box extends \Ilch\Mapper
      * @return bool
      * @since 2.1.19
      */
-    public function modulesBoxExists($key, $module)
+    public function modulesBoxExists(string $key, string $module): bool
     {
         return (boolean)$this->db()->select('COUNT(*)')
-            ->from('modules_boxes_content')
+            ->from($this->tablename)
             ->where(['key' => $key, 'module' => $module])
             ->execute()
             ->fetchCell();
     }
 
     /**
-     * Delete box with specific id.
+     * Get box lists for overview.
      *
-     * @param $id
+     * @param string $locale
+     * @return array
+     * @throws \Ilch\Database\Exception
      */
-    public function delete($id)
+    public function getBoxList(string $locale)
     {
-        $this->db()->delete('boxes')
-            ->where(['id' => $id])
-            ->execute();
+        return getEntriesBy(['locale' => $locale], []);
+    }
 
-        $this->db()->delete('boxes_content')
-            ->where(['box_id' => $id])
-            ->execute();
+    /**
+     * Returns box model with specific locale found by the key.
+     *
+     * @param string $key
+     * @param string $locale
+     * @return EntriesModel|null
+     */
+    public function getBoxByIdLocale(string $key, string $locale)
+    {
+        $entrys = getEntriesBy(['key' => $key, 'locale' => $locale], []);
+
+        if (!empty($entrys)) {
+            return reset($entrys);
+        }
+
+        return null;
     }
 }

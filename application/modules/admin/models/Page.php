@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,63 +13,99 @@ class Page extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The perma of the page.
      *
      * @var string
      */
-    protected $perma;
+    protected $perma = '';
 
     /**
      * The title of the page.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The content of the page.
      *
      * @var string
      */
-    protected $content;
+    protected $content = '';
 
     /**
      * The description of the page.
      *
      * @var string
      */
-    protected $description;
+    protected $description = '';
 
     /**
      * The keywords of the page.
      *
      * @var string
      */
-    protected $keywords;
+    protected $keywords = '';
 
     /**
      * The locale of the page.
      *
      * @var string
      */
-    protected $locale;
+    protected $locale = '';
 
     /**
      * The datetime when the page got created.
      *
-     * @var DateTime
+     * @var string
      */
-    protected $dateCreated;
+    protected $dateCreated = '';
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray($entries): Page
+    {
+        if (isset($entries['page_id'])) {
+            $this->setId($entries['page_id']);
+        }
+        if (isset($entries['description'])) {
+            $this->setDescription($entries['description']);
+        }
+        if (isset($entries['keywords'])) {
+            $this->setKeywords($entries['keywords']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['content'])) {
+            $this->setContent($entries['content']);
+        }
+        if (isset($entries['perma'])) {
+            $this->setPerma($entries['perma']);
+        }
+        if (isset($entries['locale'])) {
+            $this->setLocale($entries['locale']);
+        }
+        if (isset($entries['date_created'])) {
+            $this->setDateCreated($entries['date_created']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the page.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -78,10 +114,13 @@ class Page extends \Ilch\Model
      * Sets the id of the page.
      *
      * @param int $id
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Page
     {
-        $this->id = (int) $id;
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -89,7 +128,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getPerma()
+    public function getPerma(): string
     {
         return $this->perma;
     }
@@ -97,11 +136,14 @@ class Page extends \Ilch\Model
     /**
      * Sets the perma of the page.
      *
-     * @param int $perma
+     * @param string $perma
+     * @return $this
      */
-    public function setPerma($perma)
+    public function setPerma(string $perma): Page
     {
         $this->perma = $perma;
+
+        return $this;
     }
 
     /**
@@ -109,7 +151,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -118,10 +160,13 @@ class Page extends \Ilch\Model
      * Sets the page title.
      *
      * @param string $title
+     * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Page
     {
-        $this->title = (string) $title;
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -129,7 +174,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -138,10 +183,13 @@ class Page extends \Ilch\Model
      * Sets the content of the page.
      *
      * @param string $content
+     * @return $this
      */
-    public function setContent($content)
+    public function setContent(string $content): Page
     {
-        $this->content = (string) $content;
+        $this->content = $content;
+
+        return $this;
     }
 
     /**
@@ -149,7 +197,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -158,10 +206,13 @@ class Page extends \Ilch\Model
      * Sets the description of the page.
      *
      * @param string $description
+     * @return $this
      */
-    public function setDescription($description)
+    public function setDescription(string $description): Page
     {
-        $this->description = (string)$description;
+        $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -169,7 +220,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getKeywords()
+    public function getKeywords(): string
     {
         return $this->keywords;
     }
@@ -178,10 +229,13 @@ class Page extends \Ilch\Model
      * Sets the keywords of the page.
      *
      * @param string $keywords
+     * @return $this
      */
-    public function setKeywords($keywords)
+    public function setKeywords(string $keywords): Page
     {
-        $this->keywords = (string)$keywords;
+        $this->keywords = $keywords;
+
+        return $this;
     }
 
     /**
@@ -189,7 +243,7 @@ class Page extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -198,18 +252,21 @@ class Page extends \Ilch\Model
      * Sets the locale of the page.
      *
      * @param string $locale
+     * @return $this
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale): Page
     {
-        $this->locale = (string) $locale;
+        $this->locale = $locale;
+
+        return $this;
     }
 
     /**
      * Gets the date_created timestamp of the page.
      *
-     * @return DateTime
+     * @return string
      */
-    public function getDateCreated()
+    public function getDateCreated(): string
     {
         return $this->dateCreated;
     }
@@ -217,10 +274,35 @@ class Page extends \Ilch\Model
     /**
      * Sets the date_created date of the page.
      *
-     * @param DateTime $dateCreated
+     * @param string $dateCreated
+     * @return $this
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated(string $dateCreated): Page
     {
         $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true)
+    {
+        return array_merge(
+            ($withId ? ['page_id' => $this->getId()] : []),
+            [
+                'description' => $this->getDescription(),
+                'keywords' => $this->getKeywords(),
+                'title' => $this->getTitle(),
+                'content' => $this->getContent(),
+                'perma' => $this->getPerma(),
+                'locale' => $this->getLocale(),
+                'date_created' => $this->getDateCreated(),
+            ]
+        );
     }
 }
