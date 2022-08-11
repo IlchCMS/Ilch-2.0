@@ -9,32 +9,32 @@ namespace Ilch\Layout\Helper;
 class GetMedia
 {
     /**
-     * @var string|null
+     * @var string
      */
-    protected $mediaButton = null;
+    protected $mediaButton = '';
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected $actionButton = null;
+    protected $actionButton = '';
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected $uploadController = null;
+    protected $uploadController = '';
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected $inputId = null;
+    protected $inputId = '';
 
     /**
      * Sets the mediaButton.
      *
-     * @param string|null $mediaButton
+     * @param string $mediaButton
      * @return $this
      */
-    public function addMediaButton($mediaButton): GetMedia
+    public function addMediaButton(string $mediaButton): GetMedia
     {
         $this->mediaButton = $mediaButton;
 
@@ -44,10 +44,10 @@ class GetMedia
     /**
      * Sets the actionButton.
      *
-     * @param string|null $actionButton
+     * @param string $actionButton
      * @return GetMedia
      */
-    public function addActionButton($actionButton): GetMedia
+    public function addActionButton(string $actionButton): GetMedia
     {
         $this->actionButton = $actionButton;
 
@@ -57,10 +57,10 @@ class GetMedia
     /**
      * Sets the uploadController.
      *
-     * @param string|null $uploadController
+     * @param string $uploadController
      * @return GetMedia
      */
-    public function addUploadController($uploadController): GetMedia
+    public function addUploadController(string $uploadController): GetMedia
     {
         $this->uploadController = $uploadController;
 
@@ -70,10 +70,10 @@ class GetMedia
     /**
      * Sets the inputId.
      *
-     * @param string|null $inputId
+     * @param string $inputId
      * @return GetMedia
      */
-    public function addInputId($inputId): GetMedia
+    public function addInputId(string $inputId): GetMedia
     {
         $this->inputId = $inputId;
 
@@ -85,13 +85,13 @@ class GetMedia
         $actionButton = null,
         $inputId = null
     ) {
-        if ($mediaButton) {
+        if (is_string($mediaButton)) {
             $this->addMediaButton($mediaButton);
         }
-        if ($actionButton) {
+        if (is_string($actionButton)) {
             $this->addActionButton($actionButton);
         }
-        if ($inputId) {
+        if (is_string($inputId)) {
             $this->addInputId($inputId);
         }
     }
@@ -107,7 +107,7 @@ class GetMedia
         $_SESSION['media-url-action-button'] = $this->actionButton;
         $_SESSION['media-url-upload-controller'] = $this->uploadController;
         return "function media".$this->inputId."(id){ $('#mediaModal').modal('show');
-        var src = '".$_SESSION['media-url-media-button'] ?? ''."'+id;
+        var src = '".$_SESSION['media-url-media-button']."'+id;
         var height = '100%';
         var width = '100%';
 
