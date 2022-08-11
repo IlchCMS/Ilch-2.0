@@ -254,7 +254,7 @@ class Box extends \Ilch\Mapper
      */
     public function getBoxList(string $locale)
     {
-        return getEntriesBy(['locale' => $locale], []);
+        return $this->getEntriesBy(['locale' => $locale], []);
     }
 
     /**
@@ -266,7 +266,7 @@ class Box extends \Ilch\Mapper
      */
     public function getBoxByIdLocale(string $key, string $locale)
     {
-        $entrys = getEntriesBy(['key' => $key, 'locale' => $locale], []);
+        $entrys = $this->getEntriesBy(['key' => $key, 'locale' => $locale], []);
 
         if (!empty($entrys)) {
             return reset($entrys);

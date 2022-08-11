@@ -107,7 +107,7 @@ class GetMedia
         $_SESSION['media-url-action-button'] = $this->actionButton;
         $_SESSION['media-url-upload-controller'] = $this->uploadController;
         return "function media".$this->inputId."(id){ $('#mediaModal').modal('show');
-        var src = '".$_SESSION['media-url-media-button']."'+id;
+        var src = '".$_SESSION['media-url-media-button'] ?? ''."'+id;
         var height = '100%';
         var width = '100%';
 
