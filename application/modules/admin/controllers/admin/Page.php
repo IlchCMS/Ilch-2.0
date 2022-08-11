@@ -71,7 +71,7 @@ class Page extends \Ilch\Controller\Admin
          */
         $user = \Ilch\Registry::get('user');
 
-        foreach ($pages as $key => $page) {
+        foreach ($pages ?? [] as $key => $page) {
             if (!$user->hasAccess('page_'.$page->getId())) {
                 unset($user[$key]);
             }

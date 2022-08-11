@@ -71,7 +71,7 @@ class Boxes extends \Ilch\Controller\Admin
          */
         $user = \Ilch\Registry::get('user');
 
-        foreach ($boxes as $key => $box) {
+        foreach ($boxes ?? [] as $key => $box) {
             if (!$user->hasAccess('box_'.$box->getId())) {
                 unset($boxes[$key]);
             }
