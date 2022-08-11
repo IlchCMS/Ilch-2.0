@@ -73,7 +73,7 @@ class Page extends \Ilch\Mapper
      * @param array $orderBy
      * @return array
      */
-    public function getPageList(string $locale = '', $orderBy = ['b.id' => 'DESC'])
+    public function getPageList(string $locale = '', $orderBy = ['p.id' => 'DESC'])
     {
         return $this->getEntriesBy(['pc.locale' => $this->db()->escape($locale)], $orderBy);
     }
