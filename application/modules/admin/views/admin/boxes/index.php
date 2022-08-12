@@ -14,10 +14,16 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th><?=$this->getCheckAllCheckbox('check_boxes') ?></th>
+                    <th>
+                        <?=$this->getCheckAllCheckbox('check_boxes') ?>
+                    </th>
+                    <th>
+                        <a href="<?=$this->getUrl($this->get('sorter')->getUrlArray('id')) ?>" title=""><?=$this->get('sorter')->getArrowHtml('id') ?></a>
+                    </th>
                     <th></th>
-                    <th></th>
-                    <th><?=$this->getTrans('boxTitle') ?></th>
+                    <th>
+                        <a href="<?=$this->getUrl($this->get('sorter')->getUrlArray('title')) ?>" title="<?=$this->getTrans('boxTitle') ?>"><?=$this->get('sorter')->getArrowHtml('title') ?> <?=$this->getTrans('boxTitle') ?></a>&nbsp;
+                    </th>
                     <?php if ($this->get('multilingual')): ?>
                         <th class="text-right">
                             <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>

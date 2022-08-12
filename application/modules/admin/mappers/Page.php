@@ -1,73 +1,99 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Admin\Mappers;
 
-use Modules\Admin\Models\Page as PageModel;
+use Modules\Admin\Models\Page as EntriesModel;
 
 class Page extends \Ilch\Mapper
 {
+    public $tablename = 'pages';
+    public $tablenameContent = 'pages_content';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename) && $this->db()->ifTableExists($this->tablenameContent);
+    }
+
+    /**
+     * Gets the Entries by param.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return array|null
+     */
+    public function getEntriesBy($where = [], $orderBy = ['p.id' => 'DESC'], $pagination = null)
+    {
+        $select = $this->db()->select()
+            ->fields(['p.id', 'p.date_created'])
+            ->from(['p' => $this->tablename])
+            ->join(['pc' => $this->tablenameContent], 'p.id = pc.page_id', 'LEFT', ['pc.page_id', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.perma'])
+            ->where($where)
+            ->group(['p.id', 'pc.title', 'pc.perma'])
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new EntriesModel();
+
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
     /**
      * Get page lists for overview.
      *
      * @param string $locale
-     * @return PageModel[]|array
+     * @param array $orderBy
+     * @return array
      */
-    public function getPageList($locale = '')
+    public function getPageList(string $locale = '', $orderBy = ['p.id' => 'DESC'])
     {
-        $sql = 'SELECT pc.title, pc.perma, p.id FROM `[prefix]_pages` as p
-                LEFT JOIN `[prefix]_pages_content` as pc ON p.id = pc.page_id
-                    AND pc.locale = "'.$this->db()->escape($locale).'"
-                GROUP BY p.id, pc.title, pc.perma';
-        $pageArray = $this->db()->queryArray($sql);
-
-        if (empty($pageArray)) {
-            return [];
-        }
-
-        $pages = [];
-        foreach ($pageArray as $pageRow) {
-            $pageModel = new PageModel();
-            $pageModel->setId($pageRow['id']);
-            $pageModel->setTitle($pageRow['title']);
-            $pageModel->setPerma($pageRow['perma']);
-            $pages[] = $pageModel;
-        }
-
-        return $pages;
+        return $this->getEntriesBy(['pc.locale' => $this->db()->escape($locale)], $orderBy);
     }
 
     /**
      * Returns page model found by the key.
      *
-     * @param string $id
+     * @param int $id
      * @param string $locale
-     * @return PageModel|null
+     * @return EntriesModel|null
      */
-    public function getPageByIdLocale($id, $locale = '')
+    public function getPageByIdLocale(int $id, string $locale = '')
     {
-        $sql = 'SELECT * FROM [prefix]_pages as p
-                INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
-                WHERE p.`id` = "'.(int) $id.'" AND pc.locale = "'.$this->db()->escape($locale).'"';
-        $pageRow = $this->db()->queryRow($sql);
+        $entrys = $this->getEntriesBy(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)], []);
 
-        if (empty($pageRow)) {
-            return null;
+        if (!empty($entrys)) {
+            return reset($entrys);
         }
 
-        $pageModel = new PageModel();
-        $pageModel->setId($pageRow['id']);
-        $pageModel->setDescription($pageRow['description']);
-        $pageModel->setKeywords($pageRow['keywords']);
-        $pageModel->setTitle($pageRow['title']);
-        $pageModel->setContent($pageRow['content']);
-        $pageModel->setLocale($pageRow['locale']);
-        $pageModel->setPerma($pageRow['perma']);
-
-        return $pageModel;
+        return null;
     }
 
     /**
@@ -77,8 +103,12 @@ class Page extends \Ilch\Mapper
      */
     public function getPagePermas()
     {
-        $sql = 'SELECT page_id, locale, perma FROM `[prefix]_pages_content`';
-        $permas = $this->db()->queryArray($sql);
+        $permas = $this->db()->select()
+            ->fields(['page_id', 'locale', 'perma'])
+            ->from([$this->tablenameContent])
+            ->execute()
+            ->fetchRows();
+
         $permaArray = [];
 
         if (empty($permas)) {
@@ -95,14 +125,14 @@ class Page extends \Ilch\Mapper
     /**
      * Inserts or updates a page model in the database.
      *
-     * @param PageModel $page
+     * @param EntriesModel $page
      * @return int
      */
-    public function save(PageModel $page)
+    public function save(EntriesModel $page): int
     {
         if ($page->getId()) {
             if ($this->getPageByIdLocale($page->getId(), $page->getLocale())) {
-                $this->db()->update('pages_content')
+                $this->db()->update($this->tablenameContent)
                     ->values([
                         'title' => $page->getTitle(),
                         'description' => $page->getDescription(),
@@ -116,7 +146,7 @@ class Page extends \Ilch\Mapper
                     ])
                     ->execute();
             } else {
-                $this->db()->insert('pages_content')
+                $this->db()->insert($this->tablenameContent)
                     ->values([
                         'page_id' => $page->getId(),
                         'description' => $page->getDescription(),
@@ -131,11 +161,11 @@ class Page extends \Ilch\Mapper
             return $page->getId();
         } else {
             $date = new \Ilch\Date();
-            $pageId = $this->db()->insert('pages')
+            $pageId = $this->db()->insert($this->tablename)
                 ->values(['date_created' => $date->toDb()])
                 ->execute();
 
-            $this->db()->insert('pages_content')
+            $this->db()->insert($this->tablenameContent)
                 ->values([
                     'page_id' => $pageId,
                     'description' => $page->getDescription(),
@@ -150,13 +180,19 @@ class Page extends \Ilch\Mapper
         }
     }
 
-    public function delete($id)
+    /**
+     * Delete box with specific id.
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function delete(int $id): bool
     {
-        $this->db()->delete('pages')
+        $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
         
-        $this->db()->delete('pages_content')
+        return $this->db()->delete($this->tablenameContent)
             ->where(['page_id' => $id])
             ->execute();
     }

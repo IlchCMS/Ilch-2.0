@@ -551,11 +551,11 @@ class User extends \Ilch\Mapper
                 $dateuser = new \Ilch\Date($user->getSelectsDelete());
                 if ($dateuser->getTimestamp() <= $date->getTimestamp()) {
                     $this->delete($user->getId());
-                    $authTokenMapper->deleteAllAuthTokenOfUser($userId);
-                    $statisticMapper->deleteUserOnline($userId);
-                    $friendsMapper->deleteFriendsByUserId($userId);
-                    $friendsMapper->deleteFriendByFriendUserId($userId);
-                    $dialogMapper->deleteAllOfUser($userId);
+                    $authTokenMapper->deleteAllAuthTokenOfUser($user->getId());
+                    $statisticMapper->deleteUserOnline($user->getId());
+                    $friendsMapper->deleteFriendsByUserId($user->getId());
+                    $friendsMapper->deleteFriendByFriendUserId($user->getId());
+                    $dialogMapper->deleteAllOfUser($user->getId());
                 }
             }
         }

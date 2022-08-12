@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,63 +13,99 @@ class Box extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The key of the box.
      *
      * @var string
      */
-    protected $key;
+    protected $key = '';
 
     /**
      * The module of the box.
      *
      * @var string
      */
-    protected $module;
+    protected $module = '';
 
     /**
      * The name of the box.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * The title of the box.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The content of the box.
      *
-     * @var string
+     * @var array|string
      */
-    protected $content;
+    protected $content = '';
 
     /**
      * The locale of the box.
      *
      * @var string
      */
-    protected $locale;
+    protected $locale = '';
 
     /**
      * The datetime when the box got created.
      *
-     * @var DateTime
+     * @var string
      */
-    protected $dateCreated;
+    protected $dateCreated = '';
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray($entries): Box
+    {
+        if (isset($entries['box_id'])) {
+            $this->setId($entries['box_id']);
+        }
+        if (isset($entries['key'])) {
+            $this->setKey($entries['key']);
+        }
+        if (isset($entries['module'])) {
+            $this->setModule($entries['module']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['content'])) {
+            $this->setContent($entries['content']);
+        }
+        if (isset($entries['locale'])) {
+            $this->setLocale($entries['locale']);
+        }
+        if (isset($entries['date_created'])) {
+            $this->setDateCreated($entries['date_created']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the box.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -78,10 +114,13 @@ class Box extends \Ilch\Model
      * Sets the id of the box.
      *
      * @param int $id
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Box
     {
-        $this->id = (int) $id;
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -89,7 +128,7 @@ class Box extends \Ilch\Model
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -98,10 +137,13 @@ class Box extends \Ilch\Model
      * Sets the box key.
      *
      * @param string $key
+     * @return $this
      */
-    public function setKey($key)
+    public function setKey(string $key): Box
     {
-        $this->key = (string) $key;
+        $this->key = $key;
+
+        return $this;
     }
 
     /**
@@ -109,7 +151,7 @@ class Box extends \Ilch\Model
      *
      * @return string
      */
-    public function getModule()
+    public function getModule(): string
     {
         return $this->module;
     }
@@ -118,10 +160,13 @@ class Box extends \Ilch\Model
      * Sets the box module.
      *
      * @param string $module
+     * @return $this
      */
-    public function setModule($module)
+    public function setModule(string $module): Box
     {
-        $this->module = (string) $module;
+        $this->module = $module;
+
+        return $this;
     }
 
     /**
@@ -129,7 +174,7 @@ class Box extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -138,10 +183,13 @@ class Box extends \Ilch\Model
      * Sets the box name.
      *
      * @param string $name
+     * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Box
     {
-        $this->name = (string) $name;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -149,7 +197,7 @@ class Box extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -158,16 +206,19 @@ class Box extends \Ilch\Model
      * Sets the box title.
      *
      * @param string $title
+     * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Box
     {
-        $this->title = (string) $title;
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
      * Gets the content of the box.
      *
-     * @return string
+     * @return array|string
      */
     public function getContent()
     {
@@ -177,11 +228,14 @@ class Box extends \Ilch\Model
     /**
      * Sets the content of the box.
      *
-     * @param string $content
+     * @param array|string $content
+     * @return $this
      */
-    public function setContent($content)
+    public function setContent($content): Box
     {
-        $this->content = (string) $content;
+        $this->content = $content;
+
+        return $this;
     }
 
     /**
@@ -189,7 +243,7 @@ class Box extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -198,18 +252,21 @@ class Box extends \Ilch\Model
      * Sets the locale of the box.
      *
      * @param string $locale
+     * @return $this
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale): Box
     {
-        $this->locale = (string) $locale;
+        $this->locale = $locale;
+
+        return $this;
     }
 
     /**
      * Gets the date_created timestamp of the box.
      *
-     * @return DateTime
+     * @return string
      */
-    public function getDateCreated()
+    public function getDateCreated(): string
     {
         return $this->dateCreated;
     }
@@ -217,11 +274,14 @@ class Box extends \Ilch\Model
     /**
      * Sets the date_created date of the box.
      *
-     * @param DateTime $dateCreated
+     * @param string $dateCreated
+     * @return $this
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated(string $dateCreated): Box
     {
         $this->dateCreated = $dateCreated;
+
+        return $this;
     }
 
     /**
@@ -230,8 +290,27 @@ class Box extends \Ilch\Model
      * @param string $langKey
      * @param string $content
      */
-    public function addContent($langKey, $content)
+    public function addContent(string $langKey, string $content)
     {
         $this->content[$langKey] = $content;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true)
+    {
+        return array_merge(
+            ($withId && $this->getId() ? ['box_id' => $this->getId()] : []),
+            ($withId && $this->getKey() && $this->getModule() ? ['key' => $this->getKey(), 'module' => $this->getModule()] : []),
+            ($this->getName() ? ['name' => $this->getName()] : []),
+            ($this->getTitle() ? ['title' => $this->getTitle()] : []),
+            ($this->getContent() ? ['content' => $this->getContent()] : []),
+            ($this->getLocale() ? ['locale' => $this->getLocale()] : []),
+            ($this->getDateCreated() ? ['date_created' => $this->getDateCreated()] : []),
+        );
     }
 }

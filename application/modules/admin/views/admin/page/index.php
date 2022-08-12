@@ -15,9 +15,13 @@
             <thead>
                 <tr>
                     <th><?=$this->getCheckAllCheckbox('check_pages') ?></th>
+                    <th>
+                        <a href="<?=$this->getUrl($this->get('sorter')->getUrlArray('id')) ?>" title=""><?=$this->get('sorter')->getArrowHtml('id') ?></a>
+                    </th>
                     <th></th>
-                    <th></th>
-                    <th><?=$this->getTrans('pageTitle') ?></th>
+                    <th>
+                        <a href="<?=$this->getUrl($this->get('sorter')->getUrlArray('title')) ?>" title="<?=$this->getTrans('pageTitle') ?>"><?=$this->get('sorter')->getArrowHtml('title') ?> <?=$this->getTrans('pageTitle') ?></a>&nbsp;
+                    </th>
                     <?php
                     if ($this->get('multilingual')) {
                         echo '<th class="text-right">';

@@ -32,9 +32,9 @@ class GetMedia
      * Sets the mediaButton.
      *
      * @param string $mediaButton
-     * @return GetMedia
+     * @return $this
      */
-    public function addMediaButton(string $mediaButton)
+    public function addMediaButton(string $mediaButton): GetMedia
     {
         $this->mediaButton = $mediaButton;
 
@@ -47,7 +47,7 @@ class GetMedia
      * @param string $actionButton
      * @return GetMedia
      */
-    public function addActionButton(string $actionButton)
+    public function addActionButton(string $actionButton): GetMedia
     {
         $this->actionButton = $actionButton;
 
@@ -60,7 +60,7 @@ class GetMedia
      * @param string $uploadController
      * @return GetMedia
      */
-    public function addUploadController(string $uploadController)
+    public function addUploadController(string $uploadController): GetMedia
     {
         $this->uploadController = $uploadController;
 
@@ -73,7 +73,7 @@ class GetMedia
      * @param string $inputId
      * @return GetMedia
      */
-    public function addInputId(string $inputId)
+    public function addInputId(string $inputId): GetMedia
     {
         $this->inputId = $inputId;
 
@@ -85,13 +85,13 @@ class GetMedia
         $actionButton = null,
         $inputId = null
     ) {
-        if ($mediaButton) {
+        if (is_string($mediaButton)) {
             $this->addMediaButton($mediaButton);
         }
-        if ($actionButton) {
+        if (is_string($actionButton)) {
             $this->addActionButton($actionButton);
         }
-        if ($inputId) {
+        if (is_string($inputId)) {
             $this->addInputId($inputId);
         }
     }
@@ -106,7 +106,7 @@ class GetMedia
         $_SESSION['media-url-media-button'] = $this->mediaButton;
         $_SESSION['media-url-action-button'] = $this->actionButton;
         $_SESSION['media-url-upload-controller'] = $this->uploadController;
-        return 'function media' .$this->inputId."(id){ $('#mediaModal').modal('show');
+        return "function media".$this->inputId."(id){ $('#mediaModal').modal('show');
         var src = '".$_SESSION['media-url-media-button']."'+id;
         var height = '100%';
         var width = '100%';
