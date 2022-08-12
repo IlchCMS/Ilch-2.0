@@ -105,8 +105,9 @@ class Page extends \Ilch\Mapper
     {
         $permas = $this->db()->select()
             ->fields(['page_id', 'locale', 'perma'])
-            ->from(['p' => $this->tablenameContent])
-            ->execute();
+            ->from([$this->tablenameContent])
+            ->execute()
+            ->fetchRows();
 
         $permaArray = [];
 
