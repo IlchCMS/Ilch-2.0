@@ -288,9 +288,9 @@ class Box extends \Ilch\Model
      * Add content for given language.
      *
      * @param string $langKey
-     * @param string $content
+     * @param string|array $content
      */
-    public function addContent(string $langKey, string $content)
+    public function addContent(string $langKey, $content)
     {
         $this->content[$langKey] = $content;
     }
