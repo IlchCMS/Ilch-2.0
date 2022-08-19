@@ -48,7 +48,7 @@ class Box extends \Ilch\Model
      *
      * @var array|string
      */
-    protected $content = '';
+    protected $content = null;
 
     /**
      * The locale of the box.
