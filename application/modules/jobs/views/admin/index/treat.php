@@ -44,7 +44,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($this->get('jobs') != '') ? $this->escape($this->get('jobs')->getTitle()) : echo $this->escape($this->get('post')['title']) ?>" />
+                   value="<?=($this->get('jobs') != '') ? $this->escape($this->get('jobs')->getTitle()) : $this->escape($this->get('post')['title']) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">

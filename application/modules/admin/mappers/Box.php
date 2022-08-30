@@ -210,7 +210,7 @@ class Box extends \Ilch\Mapper
      */
     public function install(EntriesModel $box): bool
     {
-        if (is_array($box->getContent())) {
+        if (!is_array($box->getContent())) {
             return false;
         }
         foreach ($box->getContent() ?? [] as $key => $content) {
