@@ -1,7 +1,5 @@
 <?php
 $gamesMapper = $this->get('gamesMapper');
-$gamesMapper = $this->get('gamesMapper');
-$gamesMapper = $this->get('gamesMapper');
 ?>
 
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
