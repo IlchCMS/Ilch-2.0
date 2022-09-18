@@ -47,12 +47,12 @@ $searchExecuted = $this->get('searchExecuted');
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <?php foreach ($categories as $category):
-                        if (!($adminAccess == true || is_in_array($readAccess, explode(',', $category->getReadAccess())))) {
+                        if (!($adminAccess == true || is_in_array($readAccess, explode(',', $category->read_access)))) {
                             continue;
                         }
 
-                        $countFaqs = count($faqMapper->getFaqs(['cat_id' => $category->getId()]));
-                        if ($category->getId() == $this->get('firstCatId') || $category->getId() == $this->getRequest()->getParam('catId')) {
+                        $countFaqs = count($faqMapper->getFaqs(['cat_id' => $category->id]));
+                        if ($category->id == $this->get('firstCatId') || $category->id == $this->getRequest()->getParam('catId')) {
                             $active = 'class="active"';
                         } else {
                             $active = '';
@@ -60,8 +60,8 @@ $searchExecuted = $this->get('searchExecuted');
 
                         if ($countFaqs > 0): ?>
                             <li <?=$active ?>>
-                                <a href="<?=$this->getUrl('faq/index/index/catId/'.$category->getId()) ?>">
-                                    <b><?=$this->escape($category->getTitle()) ?></b>
+                                <a href="<?=$this->getUrl('faq/index/index/catId/'.$category->id) ?>">
+                                    <b><?=$this->escape($category->title) ?></b>
                                     <span class="badge"><?=$countFaqs ?></span>
                                 </a>
                             </li>
@@ -73,7 +73,7 @@ $searchExecuted = $this->get('searchExecuted');
     </nav>
     <ul class="list-group">
         <?php foreach ($faqs as $faq): ?>
-            <li class="list-group-item"><a href="<?=$this->getUrl('faq/index/show/id/'.$faq->getId()) ?>"><b><?=$this->escape($faq->getQuestion()) ?></b></a></li>
+            <li class="list-group-item"><a href="<?=$this->getUrl('faq/index/show/id/'.$faq->id) ?>"><b><?=$this->escape($faq->question) ?></b></a></li>
         <?php endforeach; ?>
     </ul>
 <?php else: ?>

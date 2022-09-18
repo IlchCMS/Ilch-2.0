@@ -31,19 +31,11 @@ class Category extends \Ilch\Mapper
     }
 
 
-    public function getId()
+    public function __get($property)
     {
-        return $this->id;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function getReadAccess()
-    {
-        return $this->read_access;
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
     }
 
 }

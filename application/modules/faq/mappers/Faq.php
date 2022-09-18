@@ -98,15 +98,15 @@ class Faq extends \Ilch\Mapper
     public function save(FaqModel $faq)
     {
         $fields = [
-            'cat_id' => $faq->getCatId(),
-            'question' => $faq->getQuestion(),
-            'answer' => $faq->getAnswer()
+            'cat_id' => $faq->catId,
+            'question' => $faq->question,
+            'answer' => $faq->answer
         ];
 
-        if ($faq->getId()) {
+        if ($faq->id) {
             $this->db()->update('faqs')
                 ->values($fields)
-                ->where(['id' => $faq->getId()])
+                ->where(['id' => $faq->id])
                 ->execute();
         } else {
             $this->db()->insert('faqs')

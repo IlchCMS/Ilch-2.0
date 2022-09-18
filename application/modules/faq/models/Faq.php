@@ -31,26 +31,11 @@ class Faq extends \Ilch\Model
     }
 
 
-    public function getId()
+    public function __get($property)
     {
-        return $this->id;
-    }
-
-    public function getCatId()
-    {
-        return $this->catId;
-    }
-
-
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-
-
-    public function getAnswer()
-    {
-        return $this->answer;
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
     }
 
 }
