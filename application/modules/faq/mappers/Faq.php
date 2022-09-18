@@ -30,12 +30,7 @@ class Faq extends \Ilch\Mapper
 
         $faqs = [];
         foreach ($faqArray as $faqRow) {
-            $faqModel = new FaqModel();
-            $faqModel->setId($faqRow['id']);
-            $faqModel->setCatId($faqRow['cat_id']);
-            $faqModel->setQuestion($faqRow['question']);
-            $faqModel->setAnswer($faqRow['answer']);
-
+            $faqModel = new FaqModel($faqRow);
             $faqs[] = $faqModel;
         }
 
@@ -64,12 +59,7 @@ class Faq extends \Ilch\Mapper
 
         $faqs = [];
         foreach ($faqArray as $faqRow) {
-            $faqModel = new FaqModel();
-            $faqModel->setId($faqRow['id']);
-            $faqModel->setCatId($faqRow['cat_id']);
-            $faqModel->setQuestion($faqRow['question']);
-            $faqModel->setAnswer($faqRow['answer']);
-
+            $faqModel = new FaqModel($faqRow);
             $faqs[] = $faqModel;
         }
 
