@@ -97,10 +97,10 @@ class Cats extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost()) {
-
+            $model = new CategoryModel();
 
             if ($this->getRequest()->getParam('id')) {
-                $model = new CategoryModel($this->getRequest()->getParam('id'));
+                $model->setId($this->getRequest()->getParam('id'));
             }
 
             $title = trim($this->getRequest()->getPost('title'));
@@ -113,8 +113,8 @@ class Cats extends \Ilch\Controller\Admin
             if (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
             } else {
-                $model = new CategoryModel(['title' => $title,'read_access' => $groups]);
-
+                $model->setTitle($title);
+                $model->setReadAccess($groups);
                 $categoryMapper->save($model);
 
                 $this->addMessage('saveSuccess');

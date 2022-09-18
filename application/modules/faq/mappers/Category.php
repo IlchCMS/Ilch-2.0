@@ -32,7 +32,11 @@ class Category extends \Ilch\Mapper
 
         $categories = [];
         foreach ($categoryArray as $categoryRow) {
-            $categoryModel = new CategoryModel($categoryRow);
+            $categoryModel = new CategoryModel();
+            $categoryModel->setId($categoryRow['id']);
+            $categoryModel->setTitle($categoryRow['title']);
+            $categoryModel->setReadAccess($categoryRow['read_access']);
+
             $categories[] = $categoryModel;
         }
 
@@ -66,16 +70,16 @@ class Category extends \Ilch\Mapper
         if ($category->getId()) {
             $this->db()->update('faqs_cats')
                 ->values([
-                    'title' => $category->title,
-                    'read_access' => $category->read_access
+                    'title' => $category->getTitle(),
+                    'read_access' => $category->getReadAccess()
                 ])
-                ->where(['id' => $category->id])
+                ->where(['id' => $category->getId()])
                 ->execute();
         } else {
             $this->db()->insert('faqs_cats')
                 ->values([
-                    'title' => $category->title,
-                    'read_access' => $category->read_access
+                    'title' => $category->getTitle(),
+                    'read_access' => $category->getReadAccess()
                 ])
                 ->execute();
         }

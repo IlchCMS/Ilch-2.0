@@ -83,9 +83,9 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
 
-            if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->read_access))) {
+            if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
                 $this->getLayout()->getHmenu()
-                    ->add($category->title, ['action' => 'index', 'catId' => $category->id]);
+                    ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()]);
             } else {
                 $this->redirect(['action' => 'index']);
             }
@@ -99,7 +99,7 @@ class Index extends \Ilch\Controller\Frontend
             $firstAllowedCategory = null;
 
             foreach ($categories as $category) {
-                if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->reas_access))) {
+                if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
                     $firstAllowedCategory = $category;
                     break;
                 }
@@ -108,15 +108,15 @@ class Index extends \Ilch\Controller\Frontend
             if ($firstAllowedCategory !== null) {
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
-                    ->add($firstAllowedCategory->title, ['action' => 'index', 'catId' => $firstAllowedCategory->id]);
+                    ->add($firstAllowedCategory->getTitle(), ['action' => 'index', 'catId' => $firstAllowedCategory->getId()]);
 
                 if ($sortQuestionsAlphabetically) {
-                    $faqs = $faqMapper->getFaqs(['cat_id' => $firstAllowedCategory->id], ['question' => 'ASC']);
+                    $faqs = $faqMapper->getFaqs(['cat_id' => $firstAllowedCategory->getId()], ['question' => 'ASC']);
                 } else {
-                    $faqs = $faqMapper->getFaqs(['cat_id' => $firstAllowedCategory->id]);
+                    $faqs = $faqMapper->getFaqs(['cat_id' => $firstAllowedCategory->getId()]);
                 }
 
-                $this->getView()->set('firstCatId', $firstAllowedCategory->id);
+                $this->getView()->set('firstCatId', $firstAllowedCategory->getId());
             } else {
                 $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
 
@@ -159,7 +159,7 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        $category = $categoryMapper->getCategoryById($faq->catId);
+        $category = $categoryMapper->getCategoryById($faq->getCatId());
 
         $adminAccess = null;
         if ($this->getUser()) {
@@ -169,10 +169,10 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
 
-        if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->read_access))) {
+        if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
             $this->getLayout()->getHmenu()
-                ->add($category->title, ['action' => 'index', 'catId' => $category->id])
-                ->add($faq->question, ['action' => 'show', 'id' => $faq->id]);
+                ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()])
+                ->add($faq->getQuestion(), ['action' => 'show', 'id' => $faq->getId()]);
         } else {
             $this->redirect(['action' => 'index']);
         }

@@ -30,7 +30,12 @@ class Faq extends \Ilch\Mapper
 
         $faqs = [];
         foreach ($faqArray as $faqRow) {
-            $faqModel = new FaqModel($faqRow);
+            $faqModel = new FaqModel();
+            $faqModel->setId($faqRow['id']);
+            $faqModel->setCatId($faqRow['cat_id']);
+            $faqModel->setQuestion($faqRow['question']);
+            $faqModel->setAnswer($faqRow['answer']);
+
             $faqs[] = $faqModel;
         }
 
@@ -59,7 +64,12 @@ class Faq extends \Ilch\Mapper
 
         $faqs = [];
         foreach ($faqArray as $faqRow) {
-            $faqModel = new FaqModel($faqRow);
+            $faqModel = new FaqModel();
+            $faqModel->setId($faqRow['id']);
+            $faqModel->setCatId($faqRow['cat_id']);
+            $faqModel->setQuestion($faqRow['question']);
+            $faqModel->setAnswer($faqRow['answer']);
+
             $faqs[] = $faqModel;
         }
 
@@ -98,15 +108,15 @@ class Faq extends \Ilch\Mapper
     public function save(FaqModel $faq)
     {
         $fields = [
-            'cat_id' => $faq->catId,
-            'question' => $faq->question,
-            'answer' => $faq->answer
+            'cat_id' => $faq->getCatId(),
+            'question' => $faq->getQuestion(),
+            'answer' => $faq->getAnswer()
         ];
 
-        if ($faq->id) {
+        if ($faq->getId()) {
             $this->db()->update('faqs')
                 ->values($fields)
-                ->where(['id' => $faq->id])
+                ->where(['id' => $faq->getId()])
                 ->execute();
         } else {
             $this->db()->insert('faqs')
