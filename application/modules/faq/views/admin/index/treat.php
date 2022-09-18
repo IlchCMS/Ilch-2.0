@@ -18,13 +18,13 @@
                     <?php foreach ($this->get('cats') as $model) {
                         $selected = '';
 
-                        if ($this->get('faq') != '' && $this->get('faq')->getCatId() == $model->getId()) {
+                        if ($this->get('faq') != '' && $this->get('faq')->catId == $model->id) {
                             $selected = 'selected="selected"';
-                        } elseif ($this->getRequest()->getParam('catId') != '' && $this->getRequest()->getParam('catId') == $model->getId()) {
+                        } elseif ($this->getRequest()->getParam('catId') != '' && $this->getRequest()->getParam('catId') == $model->id) {
                             $selected = 'selected="selected"';
                         }
 
-                        echo '<option '.$selected.' value="'.$model->getId().'">'.$this->escape($model->getTitle()).'</option>';
+                        echo '<option '.$selected.' value="'.$model->id.'">'.$this->escape($model->title).'</option>';
                     }
                     ?>
                 </select>
@@ -39,7 +39,7 @@
                        class="form-control"
                        id="question"
                        name="question"
-                       value="<?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getQuestion()); } else { echo $this->originalInput('question'); } ?>" />
+                       value="<?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->question); } else { echo $this->originalInput('question'); } ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('answer') ? 'has-error' : '' ?>">
@@ -52,7 +52,7 @@
                           name="answer"
                           cols="45"
                           rows="3"
-                          toolbar="ilch_html"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getAnswer()); } else { echo $this->originalInput('answer'); } ?></textarea>
+                          toolbar="ilch_html"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->answer); } else { echo $this->originalInput('answer'); } ?></textarea>
             </div>
         </div>
         <?php if (!empty($this->get('faq'))) {

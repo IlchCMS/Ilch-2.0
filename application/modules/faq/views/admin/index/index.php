@@ -24,13 +24,13 @@
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('faqs') as $faq): ?>
-                        <?php $faqsCats = $categoryMapper->getCategoryById($faq->getCatId()); ?>
+                        <?php $faqsCats = $categoryMapper->getCategoryById($faq->catId); ?>
                         <tr>
-                            <td><?=$this->getDeleteCheckbox('check_faqs', $faq->getId()) ?></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $faq->getId()]) ?></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'delfaq', 'id' => $faq->getId()]) ?></td>
-                            <td><?=$this->escape($faqsCats->getTitle()) ?></td>
-                            <td><?=$this->escape($faq->getQuestion()) ?></td>
+                            <td><?=$this->getDeleteCheckbox('check_faqs', $faq->id) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $faq->id]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delfaq', 'id' => $faq->id]) ?></td>
+                            <td><?=$this->escape($faq->title) ?></td>
+                            <td><?=$this->escape($faq->question) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

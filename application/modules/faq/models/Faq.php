@@ -8,123 +8,34 @@ namespace Modules\Faq\Models;
 
 class Faq extends \Ilch\Model
 {
-    /**
-     * The id of the faq.
-     *
-     * @var int
-     */
     protected $id;
-
-    /**
-     * The cat_id of the faq.
-     *
-     * @var int
-     */
     protected $catId;
-
-    /**
-     * The question of the faq.
-     *
-     * @var string
-     */
     protected $question;
-
-    /**
-     * The answer of the faq.
-     *
-     * @var string
-     */
     protected $answer;
 
-    /**
-     * Gets the id of the faq.
-     *
-     * @return int
-     */
-    public function getId()
+
+    public function __construct(array $data = [])
     {
-        return $this->id;
+        foreach ($data as $key => $value) {
+            $this->__set($key, $value);
+        }
     }
 
-    /**
-     * Sets the id of the faq.
-     *
-     * @param int $id
-     * @return this
-     */
-    public function setId($id)
+    public function __set($property, $value)
     {
-        $this->id = (int)$id;
+        if (property_exists($this, $property)) {
+            $this->$property = $value;
+        }
 
         return $this;
     }
 
-    /**
-     * Gets the catId of the faq.
-     *
-     * @return int
-     */
-    public function getCatId()
+
+    public function __get($property)
     {
-        return $this->catId;
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
     }
 
-    /**
-     * Sets the catId of the faq.
-     *
-     * @param int $catId
-     * @return this
-     */
-    public function setCatId($catId)
-    {
-        $this->catId = (int)$catId;
-
-        return $this;
-    }
-
-    /**
-     * Gets the question of the faq.
-     *
-     * @return string
-     */
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-
-    /**
-     * Sets the question of the faq.
-     *
-     * @param string $question
-     * @return this
-     */
-    public function setQuestion($question)
-    {
-        $this->question = (string)$question;
-
-        return $this;
-    }
-
-    /**
-     * Gets the answer of the faq.
-     *
-     * @return string
-     */
-    public function getAnswer()
-    {
-        return $this->answer;
-    }
-
-    /**
-     * Sets the answer of the faq.
-     *
-     * @param string $answer
-     * @return this
-     */
-    public function setAnswer($answer)
-    {
-        $this->answer = (string)$answer;
-
-        return $this;
-    }
 }
