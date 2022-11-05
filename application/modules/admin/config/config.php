@@ -848,7 +848,8 @@ class Config extends \Ilch\Config\Install
 
                 // Add new updateserver.
                 $this->db()->insert('admin_updateservers')
-                    ->values(['url' => 'https://www.ilch.de/development/updateserver/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
+                    ->values(['url' => 'https://www.ilch.de/ilch2_updates/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
+                    
                     ->execute();
                 break;
         }
