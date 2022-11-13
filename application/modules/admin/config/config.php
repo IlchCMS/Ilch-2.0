@@ -846,11 +846,12 @@ class Config extends \Ilch\Config\Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_articles_content` ADD CONSTRAINT `FK_[prefix]_articles_content_[prefix]_articles` FOREIGN KEY (`article_id`) REFERENCES `[prefix]_articles` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
-                // Add new updateserver.
-                $this->db()->insert('admin_updateservers')
-                    ->values(['url' => 'https://www.ilch.de/ilch2_updates/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
-                    
-                    ->execute();
+                // Add new updateserver if not exist.
+                if (!$this->db()->select('url', 'admin_updateservers', ['url' => 'https://www.ilch.de/ilch2_updates/stable/'])->execute()->getNumRows()) {
+                    $this->db()->insert('admin_updateservers')
+                        ->values(['url' => 'https://www.ilch.de/ilch2_updates/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
+                        ->execute();
+                }
                 break;
         }
 

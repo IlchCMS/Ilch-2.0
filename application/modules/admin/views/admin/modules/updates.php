@@ -16,14 +16,15 @@ if ($modulesOnUpdateServer === null) {
     $modulesOnUpdateServer = [];
 }
 
-function checkOthersDependencies($module, $dependencies) {
+function checkOthersDependencies(array $module, array $dependencies): array
+{
     $dependencyCheck = [];
     foreach ($dependencies as $dependency) {
         $key = key($module);
         if (array_key_exists($key, $dependency)) {
             $parsed = explode(',', $dependency[$key]);
             if (!version_compare($module[$key], $parsed[1], $parsed[0])) {
-                $dependencyCheck[array_search(array($key => $dependency[$key]), $dependencies)] = [$key => str_replace(',','', $dependency[$key])];
+                $dependencyCheck[array_search([$key => $dependency[$key]], $dependencies)] = [$key => str_replace(',','', $dependency[$key])];
             }
         }
     }
@@ -31,7 +32,8 @@ function checkOthersDependencies($module, $dependencies) {
     return $dependencyCheck;
 }
 
-function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
+function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): bool
+{
     if (empty($moduleOnUpdateServer->depends)) {
         return true;
     }
@@ -79,6 +81,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                     $moduleUpdate['local'] = json_decode(json_encode($configurations[$module->getKey()]));
                 }
 
+                $moduleOnUpdateServer = null;
                 foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
                     if ($moduleOnUpdateServer->key === $module->getKey()) {
                         $moduleUpdate['updateserver'] = $moduleOnUpdateServer;
@@ -111,7 +114,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('administrate') ?>">
                                 <i class="fa fa-pencil text-success"></i>
                             </a>
-                            <?php if ($module->getKey() === $moduleOnUpdateServer->key): ?>
+                            <?php if ($moduleOnUpdateServer && $module->getKey() === $moduleOnUpdateServer->key): ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-default">
                                         <i class="fa fa-info text-info"></i>
@@ -125,6 +128,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                 </span>
                             <?php endif; ?>
                             <?php
+                            $extensionCheck = [];
                             foreach($moduleUpdate as $source => $moduleUpdateInformation) {
                                 if (!empty($moduleUpdateInformation->phpExtensions)) {
                                     $extensionCheck = [];
