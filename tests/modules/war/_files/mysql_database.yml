@@ -1,0 +1,207 @@
+war:
+  -
+    id: 1
+    enemy: 1
+    group: 1
+    time: "2021-05-10 08:10:38"
+    maps: ""
+    server: "localhost"
+    password: ""
+    xonx: "1on1"
+    game: "CSS"
+    matchtype: "Train"
+    report: ""
+    status: 0
+    show: 1
+    lastaccepttime: 0
+  -
+    id: 2
+    enemy: 1
+    group: 2
+    time: "2021-05-09 08:10:38"
+    maps: ""
+    server: "localhost"
+    password: ""
+    xonx: "1on1"
+    game: "CSS"
+    matchtype: "Train"
+    report: ""
+    status: 0
+    show: 1
+    lastaccepttime: 0
+  -
+    id: 3
+    enemy: 2
+    group: 1
+    time: "2021-05-09 08:10:38"
+    maps: ""
+    server: "localhost"
+    password: ""
+    xonx: "1on1"
+    game: "CSS"
+    matchtype: "Train"
+    report: ""
+    status: 0
+    show: 1
+    lastaccepttime: 0
+  -
+    id: 4
+    enemy: 2
+    group: 2
+    time: "2021-05-09 08:10:38"
+    maps: ""
+    server: "localhost"
+    password: ""
+    xonx: "1on1"
+    game: "CSS"
+    matchtype: "Train"
+    report: ""
+    status: 0
+    show: 1
+    lastaccepttime: 0
+
+war_maps:
+  -
+    id: 1
+    name: "Map1"
+  -
+    id: 2
+    name: "Map2"
+
+war_enemy:
+  -
+    id: 1
+    name: "Testgegner1"
+    tag: "TG1"
+    homepage: ""
+    image: ""
+    contact_name: ""
+    contact_email: ""
+  -
+    id: 2
+    name: "Testgegner2"
+    tag: "TG2"
+    homepage: ""
+    image: ""
+    contact_name: ""
+    contact_email: ""
+
+war_groups:
+  -
+    id: 1
+    name: "Testgruppe1"
+    tag: "ILCH2-TG1"
+    image: ""
+    desc: ""
+    member: 2
+  -
+    id: 2
+    name: "Testgruppe2"
+    tag: "ILCH2-TG2"
+    image: ""
+    desc: ""
+    member: 1
+
+war_played:
+  -
+    id: 1
+    war_id: 1
+    map: 1
+    group_points: 2
+    enemy_points: 2
+  -
+    id: 2
+    war_id: 2
+    map: 2
+    group_points: 2
+    enemy_points: 2
+  -
+    id: 3
+    war_id: 3
+    map: 1
+    group_points: 2
+    enemy_points: 2
+  -
+    id: 4
+    war_id: 4
+    map: 2
+    group_points: 2
+    enemy_points: 2
+  -
+    id: 5
+    war_id: 4
+    map: 1
+    group_points: 1
+    enemy_points: 2
+
+war_accept:
+  -
+    id: 1
+    war_id: 1
+    user_id: 1
+    accept: 1
+    comment: ""
+    date_created: "2021-05-09 08:10:38"
+  -
+    id: 2
+    war_id: 1
+    user_id: 2
+    accept: 2
+    comment: ""
+    date_created: "2021-05-09 08:10:38"
+
+war_access:
+  -
+    war_id: 1
+    group_id: 1
+  -
+    war_id: 1
+    group_id: 2
+  -
+    war_id: 1
+    group_id: 3
+  -
+    war_id: 2
+    group_id: 1
+  -
+    war_id: 2
+    group_id: 3
+  -
+    war_id: 3
+    group_id: 1
+  -
+    war_id: 3
+    group_id: 2
+  -
+    war_id: 4
+    group_id: 1
+
+users:
+  -
+    id: 1
+    name: "admin"
+  -
+    id: 2
+    name: "User"
+
+groups:
+  -
+    id: 1
+    name: "Admin"
+  -
+    id: 2
+    name: "Guest"
+  -
+    id: 3
+    name: "User"
+
+users_groups:
+  -
+    user_id: 1
+    group_id: 1
+  -
+    user_id: 1
+    group_id: 3
+  -
+    user_id: 2
+    group_id: 3

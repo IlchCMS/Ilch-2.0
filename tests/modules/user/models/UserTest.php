@@ -161,5 +161,6 @@ class UserTest extends TestCase
         Registry::set('db', $dbMock);
 
         self::assertEquals(0, $user->hasAccess('module_user'));
+        Registry::remove('db');
     }
 }

@@ -3,12 +3,13 @@
 <?php if (!empty($this->get('modulesNotInstalled'))): ?>
     <?php
     $modulesList = url_get_contents($this->get('updateserver'));
-    $modulesOnUpdateServer = json_decode($modulesList) ?? [];
+    $modulesOnUpdateServer = json_decode($modulesList);
     $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
     $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 
-    function checkOwnDependencies($versionsOfModules, $dependencies) {
-        foreach ($dependencies as $key => $value) {
+    function checkOwnDependencies(array $versionsOfModules, ?array $dependencies): bool
+    {
+        foreach ($dependencies ?? [] as $key => $value) {
             $parsed = explode(',', $value);
             if (!version_compare($versionsOfModules[$key]['version'], $parsed[1], $parsed[0])) {
                 return false;
@@ -39,15 +40,17 @@
                     $content = $module->getContentForLocale($this->getTranslator()->getLocale());
 
                     $moduleOnUpdateServerFound = null;
-                    foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
+                    $moduleOnUpdateServer = null;
+                    foreach ($modulesOnUpdateServer ?? [] as $moduleOnUpdateServer) {
                         if ($moduleOnUpdateServer->key == $module->getKey()) {
                             $moduleOnUpdateServerFound = $moduleOnUpdateServer;
                             break;
                         }
                     }
 
+                    $extensionCheck = [];
+                    $phpExtension = [];
                     if ($module->getPHPExtension() != '') {
-                        $extensionCheck = [];
                         foreach ($module->getPHPExtension() as $extension) {
                             $extensionCheck[] = extension_loaded($extension);
                         }
@@ -106,7 +109,7 @@
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
                                     <i class="fa fa-save"></i>
                                 </button>
-                            <?php elseif (!checkOwnDependencies($this->get('versionsOfModules'), $this->get('dependencies')[$module->getKey()])): ?>
+                            <?php elseif (!checkOwnDependencies($this->get('versionsOfModules'), $this->get('dependencies')[$module->getKey()] ?? null)): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('dependencyError') ?>">
                                     <i class="fa fa-save"></i>
@@ -121,8 +124,8 @@
                                     </button>
                                 </form>
                             <?php endif; ?>
-                            <?php if ($module->getKey() == ($moduleOnUpdateServerFound ? $moduleOnUpdateServerFound->key : '')): ?>
-                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServerFound->id]) ?>" title="<?=$this->getTrans('info') ?>">
+                            <?php if ($moduleOnUpdateServer && $module->getKey() == $moduleOnUpdateServer->key): ?>
+                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-default">
                                         <i class="fa fa-info text-info"></i>
                                     </span>

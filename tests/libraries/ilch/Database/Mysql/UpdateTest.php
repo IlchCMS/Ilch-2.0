@@ -15,7 +15,7 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
      */
     protected $out;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

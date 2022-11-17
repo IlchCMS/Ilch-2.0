@@ -25,7 +25,7 @@ class ArticleTest extends DatabaseTestCase
     protected $phpunitDataset;
     private $articleMapper;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);

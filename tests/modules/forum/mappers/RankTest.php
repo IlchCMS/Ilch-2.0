@@ -21,7 +21,7 @@ class RankTest extends DatabaseTestCase
 {
     protected $phpunitDataset;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);

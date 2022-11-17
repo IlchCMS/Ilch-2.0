@@ -25,7 +25,7 @@ class ConfigTest extends TestCase
     /**
      * Initializes an empty config object.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->config = new Config();
     }
