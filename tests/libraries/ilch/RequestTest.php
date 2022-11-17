@@ -24,7 +24,7 @@ class RequestTest extends TestCase
     /**
      * Initializes an empty request object.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new Request();
         $_REQUEST = [];

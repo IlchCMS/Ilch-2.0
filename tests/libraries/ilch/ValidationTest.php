@@ -10,13 +10,13 @@ use PHPUnit\Ilch\TestCase;
 
 class ValidationTest extends TestCase
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         Registry::set('translator', new Translator());
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
         Registry::remove('translator');
