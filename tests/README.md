@@ -15,14 +15,14 @@ Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
         * Für Datenbanktests werden entsprechende Configeinträge benötigt!
 
         ```php
-		<?php
-		// Config for tests
-		$config["dbEngine"] = "Mysql";
-		$config["dbHost"] = "localhost";
-		$config["dbUser"] = "root";
-		$config["dbPassword"] = "root";
-		$config["dbName"] = "ilch2test";
-		$config["dbPrefix"] = "";
+        <?php
+        // Config for tests
+        $config["dbEngine"] = "Mysql";
+        $config["dbHost"] = "localhost";
+        $config["dbUser"] = "root";
+        $config["dbPassword"] = "root";
+        $config["dbName"] = "ilch2test";
+        $config["dbPrefix"] = "";
         ```
 
 3. **xDebug auf dem Server aktivieren.**
