@@ -42,7 +42,7 @@ echo "CREATE DATABASE ilch2; CREATE DATABASE ilch2test;" | mysql -uroot -proot
 apt-get -y install php php-curl php-gd php-intl php-mbstring php-mysql php-xdebug php-xml php-zip libapache2-mod-php
 
 # configure xdebug fore remote debugging
-cat /vagrant/development/vagrant/xdebug.ini | tee -a /etc/php/7.3/mods-available/xdebug.ini > /dev/null
+cat /vagrant/development/vagrant/xdebug.ini | tee -a /etc/php/7.4/mods-available/xdebug.ini > /dev/null
 
 # configure web server
 cp -f /vagrant/development/vagrant/000-default.conf /etc/apache2/sites-available/
