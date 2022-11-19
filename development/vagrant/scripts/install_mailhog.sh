@@ -11,13 +11,13 @@ chown mail:mail /opt/mailhog
 wget -q -O /opt/mailhog/mailhog https://github.com/mailhog/MailHog/releases/download/${VERSION}/MailHog_linux_amd64
 chmod +x /opt/mailhog/mailhog
 
-cat > /etc/php/7.3/mods-available/mailhog.ini <<'EOF'
+cat > /etc/php/7.4/mods-available/mailhog.ini <<'EOF'
 ; Mailhog replacement for sendmail -t -i
 sendmail_path = "/opt/mailhog/mailhog sendmail"
 EOF
 
-ln -s /etc/php/7.3/mods-available/mailhog.ini /etc/php/7.3/apache2/conf.d/20-mailhog.ini
-ln -s /etc/php/7.3/mods-available/mailhog.ini /etc/php/7.3/cli/conf.d/20-mailhog.ini
+ln -s /etc/php/7.4/mods-available/mailhog.ini /etc/php/7.4/apache2/conf.d/20-mailhog.ini
+ln -s /etc/php/7.4/mods-available/mailhog.ini /etc/php/7.4/cli/conf.d/20-mailhog.ini
 
 cat > /etc/init.d/mailhog <<'EOF'
 #! /bin/sh
