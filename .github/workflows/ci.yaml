@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  run-ci:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        php-versions: ['7.4', '8.0']
+        mysql-versions: ['5.7']
+
+    services:
+      mysql:
+        image: mysql:${{ matrix.mysql-versions }}
+        env:
+          MYSQL_RANDOM_ROOT_PASSWORD: yes
+          MYSQL_DATABASE: ilch2_test
+          MYSQL_USER: ilch2_test_user
+          MYSQL_PASSWORD: ilch2_test_password
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
+        ports:
+          - 3306:3306
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: xdebug
+          tools: composer
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-php${{ matrix.php-versions }}
+      - name: Install dependencies
+        run: composer install --prefer-dist
+      - name: Verify MySQL connection
+        env:
+          HOST: 127.0.0.1
+          PORT: ${{ job.services.mysql.ports[3306] }}
+        run: |
+          while ! mysqladmin ping -h"$HOST" -P"$PORT" --silent; do
+            sleep 1
+          done
+          envsubst '$HOST,$PORT' < development/ci/config.php > tests/config.php
+      - name: Execute tests
+        run: cd tests && ../vendor/bin/phpunit
