@@ -25,7 +25,7 @@ class TemplateTest extends DatabaseTestCase
     protected $phpunitDataset;
     private $templateMapper;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);

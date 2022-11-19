@@ -7,6 +7,8 @@
 namespace Ilch\Database;
 
 use Ilch\Database\Mysql as MySQL;
+use Modules\Admin\Config\Config as AdminConfig;
+use Modules\User\Config\Config as UserConfig;
 use PHPUnit\Ilch\PhpunitDataset;
 
 /**
@@ -19,11 +21,18 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
 {
     protected $phpunitDataset;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
         $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+    }
+
+    protected static function getSchemaSQLQueries()
+    {
+        $configAdmin = new AdminConfig();
+        $configUser = new UserConfig;
+        return $configAdmin->getInstallSql() . $configUser->getInstallSql();
     }
 
     /**

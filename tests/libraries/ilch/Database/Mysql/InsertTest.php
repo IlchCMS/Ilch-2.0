@@ -17,7 +17,7 @@ class InsertTest extends \PHPUnit\Framework\TestCase
 
     protected $lastInsetId = 5;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

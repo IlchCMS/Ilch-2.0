@@ -9,6 +9,8 @@ namespace Ilch\Database\Mysql;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use PHPUnit_Extensions_Database_DataSet_IDataSet;
+use Modules\User\Config\Config as UserConfig;
+use Modules\Admin\Config\Config as AdminConfig;
 
 class ResultTest extends DatabaseTestCase
 {
@@ -16,11 +18,18 @@ class ResultTest extends DatabaseTestCase
 
     protected $phpunitDataset;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
         $this->phpunitDataset->loadFromFile(__DIR__ . '/../../_files/mysql_database.yml');
+    }
+
+    protected static function getSchemaSQLQueries()
+    {
+        $configAdmin = new AdminConfig();
+        $configUser = new UserConfig;
+        return $configAdmin->getInstallSql() . $configUser->getInstallSql();
     }
 
     /**

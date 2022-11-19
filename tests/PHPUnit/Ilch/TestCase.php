@@ -24,7 +24,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Filling the config object with individual testcase data.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         TestHelper::setConfigInRegistry($this->configData);
 
@@ -34,7 +34,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
