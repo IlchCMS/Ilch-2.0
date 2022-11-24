@@ -8,8 +8,10 @@ if [ ! -f "composer.phar" ]; then
 else
     ./composer.phar self-update
 fi
+echo "--- Update Development Vendor"
 cd ..
-bin/composer.phar install
+php bin/composer.phar install
+echo "--- Update System Vendor"
 cd ..
-development/bin/composer.phar install
+php development/bin/composer.phar install
 cd ${START_PWD}
