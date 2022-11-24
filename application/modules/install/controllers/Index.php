@@ -166,7 +166,7 @@ class Index extends \Ilch\Controller\Frontend
     public function systemcheckAction()
     {
         $errors = [];
-        if (!version_compare(PHP_VERSION, '7.0', '>=')) {
+        if (!version_compare(PHP_VERSION, '7.3', '>=')) {
             $errors['version'] = true;
         }
 

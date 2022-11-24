@@ -6,11 +6,11 @@
     "minimum-stability": "stable",
     "config": {
         "platform": {
-            "php": "7.0"
+            "php": "7.3"
         }
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.3",
         "jbbcode/jbbcode": "^1.4",
         "ifsnop/mysqldump-php": "2.*",
         "kartik-v/bootstrap-star-rating": "^4.0",
@@ -26,8 +26,7 @@
     },
     "require-dev": {
         "maximebf/debugbar": "^1.15",
-        "sminnee/phpunit": "^5.7.29",
-        "sminnee/phpunit-mock-objects": "^3.4.10",
+        "phpunit/phpunit": "^9.5",
         "symfony/yaml": "^3.3.6"
     },
     "autoload": {

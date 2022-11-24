@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-if (!version_compare(PHP_VERSION, '7.0', '>=')) {
-    die('Ilch CMS 2 needs at least php version 7.0');
+if (!version_compare(PHP_VERSION, '7.3', '>=')) {
+    die('Ilch CMS 2 needs at least php version 7.3');
 }
 
 @ini_set('display_errors', 'on');
@@ -16,19 +16,14 @@ $isHttps = $isHttps && ( strcasecmp('on', $isHttps) == 0 || strcasecmp('https', 
 
 define('ISHTTPSPAGE', $isHttps);
 
-if (PHP_VERSION_ID >= 70300) {
-    session_set_cookie_params([
-        'lifetime' => 0,
-        'path' => '/',
-        'domain' => $_SERVER['SERVER_NAME'],
-        'samesite' => 'Lax',
-        'secure' => ISHTTPSPAGE,
-        'httponly' => true,
-    ]);
-} else {
-    // workaround syntax to set the SameSite attribute in PHP < 7.3
-    session_set_cookie_params(0, '/; SameSite=Lax', $_SERVER['SERVER_NAME'], ISHTTPSPAGE, true);
-}
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => $_SERVER['SERVER_NAME'],
+    'samesite' => 'Lax',
+    'secure' => ISHTTPSPAGE,
+    'httponly' => true,
+]);
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 $serverTimeZone = @date_default_timezone_get();
