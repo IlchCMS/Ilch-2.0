@@ -8,7 +8,7 @@ if [ ! -f "composer.phar" ]; then
     chmod +x composer.phar
 else
     php ./composer.phar self-update
-	chmod +x composer.phar
+    chmod +x composer.phar
 fi
 echo "--- Update Development Vendor"
 cd ..
