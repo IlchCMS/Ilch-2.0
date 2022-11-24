@@ -496,10 +496,5 @@ function setcookieIlch(string $name, string $value = '', int $expires = 0, $para
         }
     }
 
-    if (PHP_VERSION_ID >= 70300) {
-        return setcookie($name, $value, $params);
-    } else {
-        // workaround syntax to set the SameSite attribute in PHP < 7.3
-        return setcookie($name, $value, $params['expires'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
-    }
+    return setcookie($name, $value, $params);
 }

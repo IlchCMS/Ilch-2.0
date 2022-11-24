@@ -37,9 +37,9 @@ class RouterTest extends TestCase
         $pattern = Router::DEFAULT_REGEX_PATTERN;
         $pattern = '#^' . $pattern . '$#i';
 
-        self::assertRegExp($pattern, 'module/controller');
-        self::assertRegExp($pattern, 'module/controller/action');
-        self::assertRegExp($pattern, 'module/controller/action/param1/value1/param2/value2');
+        self::assertMatchesRegularExpression($pattern, 'module/controller');
+        self::assertMatchesRegularExpression($pattern, 'module/controller/action');
+        self::assertMatchesRegularExpression($pattern, 'module/controller/action/param1/value1/param2/value2');
     }
 
     public function testParamConvertingIntoArray()
