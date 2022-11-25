@@ -86,6 +86,16 @@ $directories = [
             'jquery-file-upload/LICENSE.txt',
         ]
     ],
+    'npm-asset' => [
+        'keep' => [
+            'jquery/dist/',
+            'jquery/LICENSE.txt',
+            'jquery-ui/dist/',
+            'jquery-ui/themes/',
+            'jquery-ui/ui/',
+            'jquery-ui/LICENSE.txt',
+        ]
+    ],
 ];
 
 /**
