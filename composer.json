@@ -18,7 +18,7 @@
         "fortawesome/font-awesome": "^5.13",
         "components/jquery": "^3.5",
         "ckeditor/ckeditor": "^4.14",
-        "components/jqueryui": "^1.12",
+        "npm-asset/jquery-ui": "^1.13",
         "phpmailer/phpmailer": "~6.1",
         "harvesthq/chosen": "^1.8",
         "ezyang/htmlpurifier": "^4.12",
@@ -35,5 +35,11 @@
     },
     "autoload-dev": {
         "psr-4": { "PHPUnit\\": "tests/PHPUnit" }
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }

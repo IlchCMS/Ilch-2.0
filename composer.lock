@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c13a207db1fe860b461dba1f79ada314",
+    "content-hash": "8ad103bdf132f6d695f711fd265c6859",
     "packages": [
         {
             "name": "blueimp/jquery-file-upload",
@@ -167,95 +167,6 @@
                 "wiki": "http://docs.jquery.com/"
             },
             "time": "2021-03-20T19:13:42+00:00"
-        },
-        {
-            "name": "components/jqueryui",
-            "version": "1.12.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/components/jqueryui.git",
-                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/components/jqueryui/zipball/44ecf3794cc56b65954cc19737234a3119d036cc",
-                "reference": "44ecf3794cc56b65954cc19737234a3119d036cc",
-                "shasum": ""
-            },
-            "require": {
-                "components/jquery": ">=1.6"
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "name": "jquery-ui",
-                    "scripts": [
-                        "jquery-ui.js"
-                    ],
-                    "files": [
-                        "ui/**",
-                        "themes/**",
-                        "jquery-ui.min.js"
-                    ],
-                    "shim": {
-                        "deps": [
-                            "jquery"
-                        ],
-                        "exports": "jQuery"
-                    }
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "jQuery UI Team",
-                    "homepage": "http://jqueryui.com/about"
-                },
-                {
-                    "name": "Joern Zaefferer",
-                    "email": "joern.zaefferer@gmail.com",
-                    "homepage": "http://bassistance.de"
-                },
-                {
-                    "name": "Scott Gonzalez",
-                    "email": "scott.gonzalez@gmail.com",
-                    "homepage": "http://scottgonzalez.com"
-                },
-                {
-                    "name": "Kris Borchers",
-                    "email": "kris.borchers@gmail.com",
-                    "homepage": "http://krisborchers.com"
-                },
-                {
-                    "name": "Mike Sherov",
-                    "email": "mike.sherov@gmail.com",
-                    "homepage": "http://mike.sherov.com"
-                },
-                {
-                    "name": "TJ VanToll",
-                    "email": "tj.vantoll@gmail.com",
-                    "homepage": "http://tjvantoll.com"
-                },
-                {
-                    "name": "Corey Frang",
-                    "email": "gnarf37@gmail.com",
-                    "homepage": "http://gnarf.net"
-                },
-                {
-                    "name": "Felix Nagel",
-                    "email": "info@felixnagel.com",
-                    "homepage": "http://www.felixnagel.com"
-                }
-            ],
-            "description": "jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library. Whether you're building highly interactive web applications or you just need to add a date picker to a form control, jQuery UI is the perfect choice.",
-            "support": {
-                "issues": "https://github.com/components/jqueryui/issues",
-                "source": "https://github.com/components/jqueryui/tree/master"
-            },
-            "time": "2016-09-16T05:47:55+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -603,6 +514,33 @@
                 }
             ],
             "time": "2021-09-20T03:06:01+00:00"
+        },
+        {
+            "name": "npm-asset/jquery",
+            "version": "3.6.1",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/jquery/-/jquery-3.6.1.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/jquery-ui",
+            "version": "1.13.2",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.13.2.tgz"
+            },
+            "require": {
+                "npm-asset/jquery": ">=1.8.0,<4.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "phpmailer/phpmailer",
