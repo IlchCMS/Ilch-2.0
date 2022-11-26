@@ -52,6 +52,7 @@ jobs:
           server: 'ilch.de'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           local_path: './Ilch-2.zip'
+          sftp_only: true
           remote_path: '/versions/master.zip'
           sftpArgs: '-o ConnectTimeout=5'
 
