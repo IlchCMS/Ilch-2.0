@@ -22,14 +22,13 @@ $directories = [
             'font-awesome/css/v4-shims.min.css',
             'font-awesome/metadata/icons.json',
             'font-awesome/webfonts/',
-            'font-awesome/README.md',
+            'font-awesome/LICENSE.txt',
         ],
     ],
     'ifsnop' => [
         'keep' => [
             'mysqldump-php/src/',
-            'mysqldump-php/README.md',
-            'mysqldump-php/composer.json',
+            'mysqldump-php/LICENSE',
         ]
     ],
     'jbbcode'  => [
@@ -59,7 +58,6 @@ $directories = [
             'bootstrap-star-rating/js/star-rating_locale_de.js',
             'bootstrap-star-rating/img/',
             'bootstrap-star-rating/LICENSE.md',
-            'bootstrap-star-rating/README.md',
         ],
     ],
     'twbs' => [
@@ -68,7 +66,6 @@ $directories = [
             'bootstrap/dist/js/bootstrap.min.js',
             'bootstrap/dist/fonts/',
             'bootstrap/LICENSE',
-            'bootstrap/README.md',
         ]
     ],
     'ezyang' => [
@@ -91,8 +88,6 @@ $directories = [
             'jquery/dist/',
             'jquery/LICENSE.txt',
             'jquery-ui/dist/',
-            'jquery-ui/themes/',
-            'jquery-ui/ui/',
             'jquery-ui/LICENSE.txt',
         ]
     ],
