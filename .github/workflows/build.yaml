@@ -1,0 +1,66 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - build-pipeline # TODO: remove before merge
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-*'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          tools: composer
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-php${{ matrix.php-versions }}
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
+      - name: Optimize vendor
+        run: php build/optimize_vendor.php
+      - name: Create archive
+        run: zip -r . Ilch-v2-master.zip
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ilch2-zip
+          path: |
+            Ilch-2.zip
+
+  create-draft:
+    runs-on: ubuntu-20.04
+    needs: [build]
+    if: ${{ github.ref_type == 'tag' }}
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ilch2-zip
+      - name: Prepare release
+        id: prepare-release
+        run: |
+          mv Ilch-2.zip Ilch-${{ github.ref_name }}.zip
+          echo "VERSION=${${{ github.ref_name }}/v/}" >> $GITHUB_OUTPUT
+      - name: Create release draft
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: ${{ format('Ilch-{0}.zip', github.ref_name) }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: true
+          name: ${{ format('Version {0}', steps.prepare-release.outputs.VERSION) }}
