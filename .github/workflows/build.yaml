@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - build-pipeline
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-*'
@@ -37,12 +38,22 @@ jobs:
         run: |
           git archive --format=zip HEAD > Ilch-2.zip
           zip -q -r Ilch-2.zip vendor
-      - name: Archive production artifacts
+      - name: Archive artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ilch2-zip
           path: |
             Ilch-2.zip
+      - name: Upload archive to ilch.de
+        if: ${{ github.ref_name == 'build-pipeline' }}
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: 'ilch2'
+          server: 'ilch.de'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          local_path: './Ilch-2.zip'
+          remote_path: '/versions/master.zip'
+          sftpArgs: '-o ConnectTimeout=5'
 
   create-draft:
     runs-on: ubuntu-20.04
