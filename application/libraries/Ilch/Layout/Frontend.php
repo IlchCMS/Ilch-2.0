@@ -298,9 +298,9 @@ class Frontend extends Base
                 <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/all.min.css').'" rel="stylesheet">
                 <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
-                <link href="'.$this->getVendorUrl('components/jqueryui/themes/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
-                <script src="'.$this->getVendorUrl('components/jquery/jquery.min.js').'"></script>
-                <script src="'.$this->getVendorUrl('components/jqueryui/jquery-ui.min.js').'"></script>
+                <link href="'.$this->getVendorUrl('npm-asset/jquery-ui/dist/themes/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
+                <script src="'.$this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js').'"></script>
+                <script src="'.$this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js').'"></script>
                 <script src="'.$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js').'"></script>
                 <script src="'.$this->getStaticUrl('js/ilch.js').'"></script>
                 <script src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>

@@ -367,7 +367,7 @@ abstract class Base
      */
     public function getVendorUrl(string $url = ''): string
     {
-        return $this->getBaseUrl('vendor/' . $url);
+        return $this->getBaseUrl('vendor/' . str_replace(['components/jquery/', 'components/jqueryui/'], ['npm-asset/jquery/dist/', 'npm-asset/jquery-ui/dist/'], $url));
     }
 
     /**
