@@ -76,7 +76,7 @@ class Keywords extends \Ilch\Controller\Frontend
 
         $keyword = $this->getRequest()->getParam('keyword');
 
-        if (!empty($keyword) && !$articleMapper->keywordExists($keyword)) {
+        if (empty($keyword) && !$articleMapper->keywordExists($keyword)) {
             $this->addMessage('unknownKeyword', 'danger');
             $this->redirect()
                 ->to(['action' => 'index']);
