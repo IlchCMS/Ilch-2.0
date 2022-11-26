@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - master
-      - build-pipeline # TODO: remove
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-*'
@@ -37,7 +36,7 @@ jobs:
       - name: Create archive
         run: |
           git archive --format=zip HEAD > Ilch-2.zip
-          zip -r Ilch-2.zip vendor
+          zip -q -r Ilch-2.zip vendor
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -58,7 +57,7 @@ jobs:
         id: prepare-release
         run: |
           mv Ilch-2.zip Ilch-${{ github.ref_name }}.zip
-          echo "VERSION=${${{ github.ref_name }}/v/}" >> $GITHUB_OUTPUT
+          echo "VERSION=${GITHUB_REF_NAME/v/}" >> $GITHUB_OUTPUT
       - name: Create release draft
         uses: ncipollo/release-action@v1
         with:
