@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - master
-      - build-pipeline # TODO: remove before merge
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-*'
@@ -35,7 +34,9 @@ jobs:
       - name: Optimize vendor
         run: php build/optimize_vendor.php
       - name: Create archive
-        run: zip -r . Ilch-v2-master.zip
+        run: |
+          git archive --format=zip HEAD > Ilch-2.zip
+          zip -r Ilch-2.zip vendor
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
