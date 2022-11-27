@@ -101,7 +101,7 @@ if ($this->get('article') != '') {
         <div class="col-lg-4">
             <textarea class="form-control" 
                       id="description" 
-                      name="description"><?=if ($this->get('article') != '') ? $this->escape($this->get('article')->getDescription()) : ''?></textarea>
+                      name="description"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getDescription()) : '' ?></textarea>
         </div>
     </div>
     <div class="form-group">

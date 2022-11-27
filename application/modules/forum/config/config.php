@@ -22,7 +22,7 @@ class Config extends \Ilch\Config\Install
             ],
             'en_EN' => [
                 'name' => 'Forum',
-                'description' => 'The forum module supplied ex works with many functions of a forum.',
+                'description' => 'The by default supplied forum module with many functions of a forum.',
             ],
         ],
         'boxes' => [
@@ -373,7 +373,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
                         ("forum", "post_reportedPost_mail", "Ein Beitrag wurde gemeldet", "<p>Hallo <b>{name}</b>,</p>
                               <p>&nbsp;</p>
-                              <p>Ein Beitrag im Forum auf <i>{sitetitle}</i> wurde gemeldet.</p>
+                              <p>ein Beitrag im Forum auf <i>{sitetitle}</i> wurde gemeldet.</p>
                               <p>Sie bekommen diese E-Mail, weil Sie entweder Administrator oder Adminrechte für das Forum haben.</p>
                               <p>Um direkt einen Blick auf den betreffenden Beitrag zu werfen, klicken Sie bitte auf folgenden Link:</p>
                               <a href=\"{url}\">Verwalte gemeldete Beiträge</a>
