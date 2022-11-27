@@ -1,0 +1,9 @@
+articles_cats:
+  -
+    id: 1
+    name: "TestName1"
+    sort: 0
+  -
+    id: 2
+    name: "TestName2"
+    sort: 1

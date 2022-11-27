@@ -28,7 +28,12 @@ class Rememberedposts extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('rememberedPosts', $rememberMapper->getRememberedPostsByUserId($this->getUser()->getId()));
+        if ($this->getUser()) {
+            $this->getView()->set('rememberedPosts', $rememberMapper->getRememberedPostsByUserId($this->getUser()->getId()));
+        } else {
+            // Return nothing if it is a guest or a not logged in user.
+            $this->getView()->set('rememberedPosts', []);
+        }
     }
 
     public function rememberAction()

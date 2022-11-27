@@ -37,14 +37,14 @@ class ArticleTest extends DatabaseTestCase
     /**
      * Tests if getArticles() returns all articles from the database.
      */
-    public function testgetArticlesAllRows()
+    public function testGetArticlesAllRows()
     {
         $articles = $this->articleMapper->getArticles();
 
         self::assertCount(3, $articles);
     }
 
-    public function testgetArticles()
+    public function testGetArticles()
     {
         $articles = $this->articleMapper->getArticles();
 
@@ -111,7 +111,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[2]->getVotes());
     }
 
-    public function testgetArticlesByAccess()
+    public function testGetArticlesByAccess()
     {
         $articles = $this->articleMapper->getArticlesByAccess('1,2,3');
 
@@ -178,28 +178,28 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[2]->getVotes());
     }
 
-    public function testgetArticlesByAccessArray()
+    public function testGetArticlesByAccessArray()
     {
         $articles = $this->articleMapper->getArticlesByAccess([1, 2, 3]);
 
         self::assertCount(3, $articles);
     }
 
-    public function testgetArticlesByAccessGuest()
+    public function testGetArticlesByAccessGuest()
     {
         $articles = $this->articleMapper->getArticlesByAccess([3]);
 
         self::assertCount(1, $articles);
     }
 
-    public function testgetArticlesByAccessGuestDefault()
+    public function testGetArticlesByAccessGuestDefault()
     {
         $articles = $this->articleMapper->getArticlesByAccess();
 
         self::assertCount(1, $articles);
     }
 
-    public function testgetArticlesByCats()
+    public function testGetArticlesByCats()
     {
         $articles = $this->articleMapper->getArticlesByCats('1');
 
@@ -246,14 +246,14 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[1]->getVotes());
     }
 
-    public function testgetArticlesByCatsNoResult()
+    public function testGetArticlesByCatsNoResult()
     {
         $articles = $this->articleMapper->getArticlesByCats('0');
 
         self::assertNull($articles);
     }
 
-    public function testgetArticlesByCatsAccess()
+    public function testGetArticlesByCatsAccess()
     {
         $articles = $this->articleMapper->getArticlesByCatsAccess('1', '1,2,3');
 
@@ -300,28 +300,28 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[1]->getVotes());
     }
 
-    public function testgetArticlesByCatsAccessArray()
+    public function testGetArticlesByCatsAccessArray()
     {
         $articles = $this->articleMapper->getArticlesByCatsAccess('1', [1, 2, 3]);
 
         self::assertCount(2, $articles);
     }
 
-    public function testgetArticlesByCatsAccessGuest()
+    public function testGetArticlesByCatsAccessGuest()
     {
         $articles = $this->articleMapper->getArticlesByCatsAccess('2', [3]);
 
         self::assertCount(1, $articles);
     }
 
-    public function testgetArticlesByCatsAccessGuestDefault()
+    public function testGetArticlesByCatsAccessGuestDefault()
     {
         $articles = $this->articleMapper->getArticlesByCatsAccess('2');
 
         self::assertCount(1, $articles);
     }
 
-    public function testgetArticlesByKeyword()
+    public function testGetArticlesByKeyword()
     {
         $articles = $this->articleMapper->getArticlesByKeyword('keyword1');
 
@@ -388,14 +388,14 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[2]->getVotes());
     }
 
-    public function testgetArticlesByKeywordNoResult()
+    public function testGetArticlesByKeywordNoResult()
     {
         $articles = $this->articleMapper->getArticlesByKeyword('NotExisting');
 
         self::assertNull($articles);
     }
 
-    public function testgetArticlesByKeywordAccess()
+    public function testGetArticlesByKeywordAccess()
     {
         $articles = $this->articleMapper->getArticlesByKeywordAccess('keyword1', '1,2,3');
 
@@ -462,14 +462,14 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[2]->getVotes());
     }
 
-    public function testgetArticlesByKeywordAccessGuest()
+    public function testGetArticlesByKeywordAccessGuest()
     {
         $articles = $this->articleMapper->getArticlesByKeywordAccess('keyword1', '3');
 
         self::assertCount(1, $articles);
     }
 
-    public function testgetArticlesByDate()
+    public function testGetArticlesByDate()
     {
         $articles = $this->articleMapper->getArticlesByDate(new \Ilch\Date('2021-05-09'));
 
@@ -516,7 +516,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[1]->getVotes());
     }
 
-    public function testgetArticlesByDatePagination()
+    public function testGetArticlesByDatePagination()
     {
         $pagination = new Pagination();
 
@@ -568,7 +568,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[1]->getVotes());
     }
 
-    public function testgetArticlesByDateAccess()
+    public function testGetArticlesByDateAccess()
     {
         $articles = $this->articleMapper->getArticlesByDateAccess(new \Ilch\Date('2021-05-09'), '1,2,3');
 
@@ -615,66 +615,66 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[1]->getVotes());
     }
 
-    public function testgetArticlesByDateAccessNoResult()
+    public function testGetArticlesByDateAccessNoResult()
     {
         $articles = $this->articleMapper->getArticlesByDateAccess(new \Ilch\Date('2021-05-09'), '3');
 
         self::assertNull($articles);
     }
 
-    public function testgetArticlesByDateAccessGuest()
+    public function testGetArticlesByDateAccessGuest()
     {
         $articles = $this->articleMapper->getArticlesByDateAccess(new \Ilch\Date('2021-05-09'), '2');
 
         self::assertCount(1, $articles);
     }
 
-    public function testgetCountArticlesByCatId()
+    public function testGetCountArticlesByCatId()
     {
         self::assertSame(2, $this->articleMapper->getCountArticlesByCatId("1"));
     }
 
-    public function testgetCountArticlesByCatIdNotExisting()
+    public function testGetCountArticlesByCatIdNotExisting()
     {
         self::assertSame(0, $this->articleMapper->getCountArticlesByCatId("3"));
     }
 
-    public function testgetCountArticlesByCatIdAccess()
+    public function testGetCountArticlesByCatIdAccess()
     {
         self::assertSame(2, $this->articleMapper->getCountArticlesByCatIdAccess("1", '1,2,3'));
     }
 
-    public function testgetCountArticlesByCatIdNotExistingAccess()
+    public function testGetCountArticlesByCatIdNotExistingAccess()
     {
         self::assertSame(0, $this->articleMapper->getCountArticlesByCatIdAccess("3"));
     }
 
-    public function testgetCountArticlesByMonthYear()
+    public function testGetCountArticlesByMonthYear()
     {
         self::assertSame(3, $this->articleMapper->getCountArticlesByMonthYear("2021-05-10 08:10:38"));
     }
 
-    public function testgetCountArticlesByMonthYearNotExisting()
+    public function testGetCountArticlesByMonthYearNotExisting()
     {
         self::assertSame(0, $this->articleMapper->getCountArticlesByMonthYear("2000-01-01 08:10:38"));
     }
 
-    public function testgetCountArticlesByMonthYearAccess()
+    public function testGetCountArticlesByMonthYearAccess()
     {
         self::assertSame(3, $this->articleMapper->getCountArticlesByMonthYearAccess("2021-05-10 08:10:38", '1,2,3'));
     }
 
-    public function testgetCountArticlesByMonthYearAccessGuest()
+    public function testGetCountArticlesByMonthYearAccessGuest()
     {
         self::assertSame(1, $this->articleMapper->getCountArticlesByMonthYearAccess("2021-05-10 08:10:38"));
     }
 
-    public function testgetCountArticlesByMonthYearAccessNotExisting()
+    public function testGetCountArticlesByMonthYearAccessNotExisting()
     {
         self::assertSame(0, $this->articleMapper->getCountArticlesByMonthYearAccess("2000-01-01 08:10:38"));
     }
 
-    public function testgetArticleDateList()
+    public function testGetArticleDateList()
     {
         $articles = $this->articleMapper->getArticleDateList(3);
 
@@ -683,7 +683,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('2021-05-10 08:10:38', $articles[0]->getDateCreated());
     }
 
-    public function testgetArticleDateListAccess()
+    public function testGetArticleDateListAccess()
     {
         $articles = $this->articleMapper->getArticleDateListAccess('1,2,3', 3);
 
@@ -702,7 +702,7 @@ class ArticleTest extends DatabaseTestCase
 //        self::assertSame('2021-05-10 08:10:38', $articles[0]->getDateCreated());
 //    }
 
-    public function testgetArticleByIdLocale()
+    public function testGetArticleByIdLocale()
     {
         $article = $this->articleMapper->getArticleByIdLocale(3);
 
@@ -727,14 +727,14 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $article->getVotes());
     }
 
-    public function testgetArticleByIdLocaleNotExisting()
+    public function testGetArticleByIdLocaleNotExisting()
     {
         $articles = $this->articleMapper->getArticleByIdLocale(0);
 
         self::assertNull($articles);
     }
 
-    public function testgetKeywordsList()
+    public function testGetKeywordsList()
     {
         $articles = $this->articleMapper->getKeywordsList(2);
 
@@ -744,7 +744,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('keyword1, keyword2', $articles[1]->getKeywords());
     }
 
-    public function testgetKeywordsListAccess()
+    public function testGetKeywordsListAccess()
     {
         $articles = $this->articleMapper->getKeywordsListAccess('1,2,3', 2);
 
@@ -754,7 +754,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('keyword1, keyword2', $articles[1]->getKeywords());
     }
 
-    public function testgetKeywordsListAccessGuest()
+    public function testGetKeywordsListAccessGuest()
     {
         $articles = $this->articleMapper->getKeywordsListAccess('3', 2);
 
@@ -763,19 +763,19 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('keyword1, keyword2', $articles[0]->getKeywords());
     }
 
-    public function testkeywordExists()
+    public function testKeywordExists()
     {
         self::assertTrue($this->articleMapper->keywordExists('keyword1'));
         self::assertTrue($this->articleMapper->keywordExists('keyword2'));
 
     }
 
-    public function testkeywordExistsNotExisting()
+    public function testKeywordExistsNotExisting()
     {
         self::assertFalse($this->articleMapper->keywordExists('notexisting'));
     }
 
-    public function testgetArticlePermas()
+    public function testGetArticlePermas()
     {
         $permas = $this->articleMapper->getArticlePermas();
 
@@ -786,14 +786,14 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('testtitle3.html', $permas['testtitle3.html']['perma']);
     }
 
-    public function testgetTopArticleNoTopArticle()
+    public function testGetTopArticleNoTopArticle()
     {
         $articles = $this->articleMapper->getTopArticle();
 
         self::assertNull($articles);
     }
 
-    public function testgetTopArticle()
+    public function testGetTopArticle()
     {
         $this->articleMapper->setTopArticle(1, 1);
         $article = $this->articleMapper->getTopArticle();
@@ -818,7 +818,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $article->getVotes());
     }
 
-    public function testgetTopArticles()
+    public function testGetTopArticles()
     {
         $this->articleMapper->setTopArticle(1, 1);
         $this->articleMapper->setTopArticle(2, 1);
@@ -865,7 +865,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $articles[1]->getVotes());
     }
 
-    public function testsaveVisits()
+    public function testSaveVisits()
     {
         $model = new ArticleModel();
 
@@ -880,7 +880,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame(20, $article->getVisits());
     }
 
-    public function testsaveVisitsEmptyVisits()
+    public function testSaveVisitsEmptyVisits()
     {
         $model = new ArticleModel();
 
@@ -894,7 +894,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame(1, $article->getVisits());
     }
 
-    public function testsaveNewArticle()
+    public function testSaveNewArticle()
     {
         $model = new ArticleModel();
         $model->setCatId(1);
@@ -935,7 +935,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('1,2,3', $article->getVotes());
     }
 
-    public function testsaveUpdateExistingArticle()
+    public function testSaveUpdateExistingArticle()
     {
         $model = new ArticleModel();
         $model->setId(1);
@@ -978,7 +978,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('1,2,3', $article->getVotes());
     }
 
-    public function testsaveExistingArticleNewLocale()
+    public function testSaveExistingArticleNewLocale()
     {
         $model = new ArticleModel();
         $model->setId(1);
@@ -1019,7 +1019,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('1,2,3', $article->getVotes());
     }
 
-    public function testsaveVotes()
+    public function testSaveVotes()
     {
         $this->articleMapper->saveVotes(1, 1);
         $this->articleMapper->saveVotes(1, 2);
@@ -1029,7 +1029,7 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('1,2,', $article->getVotes());
     }
 
-    public function testgetVotes()
+    public function testGetVotes()
     {
         $this->articleMapper->saveVotes(1, 1);
         $this->articleMapper->saveVotes(1, 2);
@@ -1037,12 +1037,12 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('1,2,', $this->articleMapper->getVotes(1));
     }
 
-    public function testgetVotesNoVotes()
+    public function testGetVotesNoVotes()
     {
         self::assertSame('', $this->articleMapper->getVotes(1));
     }
 
-    public function testdelete()
+    public function testDelete()
     {
         self::assertSame(1, $this->articleMapper->delete(1));
 

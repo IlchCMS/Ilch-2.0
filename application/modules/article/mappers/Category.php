@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -51,6 +51,10 @@ class Category extends \Ilch\Mapper
     {
         $cats = $this->getCategories(['id' => $id]);
 
+        if ($cats == null) {
+            return false;
+        }
+
         return reset($cats);
     }
 
@@ -59,10 +63,11 @@ class Category extends \Ilch\Mapper
      *
      * @param int $catId
      * @param int $key
+     * @return int affectedRows
      */
     public function sort($catId, $key)
     {
-        $this->db()->update('articles_cats')
+        return (int)$this->db()->update('articles_cats')
             ->values(['sort' => $key])
             ->where(['id' => $catId])
             ->execute();
@@ -72,6 +77,7 @@ class Category extends \Ilch\Mapper
      * Inserts or updates category model.
      *
      * @param CategoryModel $category
+     * @return int id of the category
      */
     public function save(CategoryModel $category)
     {
@@ -80,13 +86,15 @@ class Category extends \Ilch\Mapper
                 ->values(['name' => $category->getName()])
                 ->where(['id' => $category->getId()])
                 ->execute();
+
+            return $category->getId();
         } else {
             $lastSort = $this->db()->select('MAX(`sort`) AS maxSort')
                 ->from('articles_cats')
                 ->execute()
                 ->fetchAssoc();
 
-            $this->db()->insert('articles_cats')
+            return $this->db()->insert('articles_cats')
                 ->values(['name' => $category->getName(), 'sort' => $lastSort['maxSort']+1])
                 ->execute();
         }
@@ -96,10 +104,11 @@ class Category extends \Ilch\Mapper
      * Deletes category with given id.
      *
      * @param integer $id
+     * @return int affectedRows
      */
     public function delete($id)
     {
-        $this->db()->delete('articles_cats')
+        return (int)$this->db()->delete('articles_cats')
             ->where(['id' => $id])
             ->execute();
     }

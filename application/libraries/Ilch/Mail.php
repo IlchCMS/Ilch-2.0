@@ -338,7 +338,7 @@ class Mail
      */
     public function addStringAttachment($string, $filename)
     {
-        $this->stringAttachments[] = ['string' => $path, 'filename' => $name];
+        $this->stringAttachments[] = ['string' => $string, 'filename' => $filename];
         return $this;
     }
 

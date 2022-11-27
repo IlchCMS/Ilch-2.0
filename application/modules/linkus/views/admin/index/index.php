@@ -25,7 +25,7 @@
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $linkus->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $linkus->getId()]) ?></td>
                             <td>
-                                <img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" alt="<?=$this->escape($linkus->getTitle()) ?>" title="<?=$this->escape($linkus->getTitle()) ?>"></a>
+                                <img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" alt="<?=$this->escape($linkus->getTitle()) ?>" title="<?=$this->escape($linkus->getTitle()) ?>">
                                 <br />
                                 &raquo; <?=$this->escape($linkus->getTitle()) ?>
                             </td>

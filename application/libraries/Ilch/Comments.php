@@ -27,10 +27,10 @@ class Comments
         if (!isset($this->userCache[$userId])) {
             $userMapper = new UserMapper();
             $this->userCache[$userId] = $userMapper->getUserById($userId);
-        }
 
-        if (!isset($this->userCache[$userId])) {
-            return $userMapper->getDummyUser();
+            if (!isset($this->userCache[$userId])) {
+                return $userMapper->getDummyUser();
+            }
         }
 
         return $this->userCache[$userId];
