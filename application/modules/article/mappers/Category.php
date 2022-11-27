@@ -63,10 +63,11 @@ class Category extends \Ilch\Mapper
      *
      * @param int $catId
      * @param int $key
+     * @return int affectedRows
      */
     public function sort($catId, $key)
     {
-        $this->db()->update('articles_cats')
+        return (int)$this->db()->update('articles_cats')
             ->values(['sort' => $key])
             ->where(['id' => $catId])
             ->execute();

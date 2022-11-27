@@ -33,7 +33,7 @@ class CategoryTest extends DatabaseTestCase
         $this->categoryMapper = new CategoryMapper();
     }
 
-    public function testgetCategories()
+    public function testGetCategories()
     {
         $categories = $this->categoryMapper->getCategories();
 
@@ -44,7 +44,7 @@ class CategoryTest extends DatabaseTestCase
         self::assertSame('TestName2', $categories[1]->getName());
     }
 
-    public function testgetCategoryById()
+    public function testGetCategoryById()
     {
         $category = $this->categoryMapper->getCategoryById(1);
 
@@ -52,14 +52,44 @@ class CategoryTest extends DatabaseTestCase
         self::assertSame('TestName1', $category->getName());
     }
 
-    public function testgetCategoryByIdInvalid()
+    public function testGetCategoryByIdInvalid()
     {
         $category = $this->categoryMapper->getCategoryById(0);
 
         self::assertFalse($category);
     }
 
-    public function testsave()
+    public function testSortInvalidId()
+    {
+        $affectedRows = $this->categoryMapper->sort(-1, 2);
+        $categories = $this->categoryMapper->getCategories();
+
+        self::assertSame(0, $affectedRows);
+    }
+
+    public function testSort()
+    {
+        $affectedRows = $this->categoryMapper->sort(1, 2);
+        $categories = $this->categoryMapper->getCategories();
+
+        self::assertSame(1, $affectedRows);
+        self::assertCount(2, $categories);
+        self::assertSame(2, $categories[0]->getId());
+        self::assertSame(1, $categories[1]->getId());
+    }
+
+    public function testSortReturnValueNotId()
+    {
+        $affectedRows = $this->categoryMapper->sort(2, 3);
+        $categories = $this->categoryMapper->getCategories();
+
+        self::assertSame(1, $affectedRows);
+        self::assertCount(2, $categories);
+        self::assertSame(1, $categories[0]->getId());
+        self::assertSame(2, $categories[1]->getId());
+    }
+
+    public function testSave()
     {
         $model = new CategoryModel();
 
@@ -73,7 +103,7 @@ class CategoryTest extends DatabaseTestCase
         self::assertSame('TestName3', $category->getName());
     }
 
-    public function testdelete()
+    public function testDelete()
     {
         $affectedRows = $this->categoryMapper->delete(2);
         $category = $this->categoryMapper->getCategoryById(2);

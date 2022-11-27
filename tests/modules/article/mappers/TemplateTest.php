@@ -34,7 +34,7 @@ class TemplateTest extends DatabaseTestCase
         $this->templateMapper = new TemplateMapper();
     }
 
-    public function testgetTemplates()
+    public function testGetTemplates()
     {
         $templates = $this->templateMapper->getTemplates();
 
@@ -77,7 +77,7 @@ class TemplateTest extends DatabaseTestCase
         self::assertSame('', $templates[2]->getImageSource());
     }
 
-    public function testgetTemplatesLocale()
+    public function testGetTemplatesLocale()
     {
         $templates = $this->templateMapper->getTemplates('en_EN');
 
@@ -96,7 +96,7 @@ class TemplateTest extends DatabaseTestCase
         self::assertSame('', $templates[0]->getImageSource());
     }
 
-    public function testgetTemplatesEmptyString()
+    public function testGetTemplatesEmptyString()
     {
         $templates = $this->templateMapper->getTemplates('');
 
@@ -127,7 +127,7 @@ class TemplateTest extends DatabaseTestCase
         self::assertSame('', $templates[1]->getImageSource());
     }
 
-    public function testgetTemplatesPagination()
+    public function testGetTemplatesPagination()
     {
         $pagination = new Pagination();
 
@@ -162,7 +162,7 @@ class TemplateTest extends DatabaseTestCase
         self::assertSame('', $templates[1]->getImageSource());
     }
 
-    public function testgetTemplateById()
+    public function testGetTemplateById()
     {
         $template = $this->templateMapper->getTemplateById(1);
 
@@ -179,14 +179,14 @@ class TemplateTest extends DatabaseTestCase
         self::assertSame('', $template->getImageSource());
     }
 
-    public function testgetTemplateByIdNull()
+    public function testGetTemplateByIdNull()
     {
         $template = $this->templateMapper->getTemplateById(0);
 
         self::assertNull($template);
     }
 
-    public function testsave()
+    public function testSave()
     {
         $model = new ArticleModel();
 
@@ -220,7 +220,7 @@ class TemplateTest extends DatabaseTestCase
         self::assertSame('', $template->getImageSource());
     }
 
-    public function testdelete()
+    public function testDelete()
     {
         $affectedRows = $this->templateMapper->delete(3);
         $template = $this->templateMapper->getTemplateById(3);
