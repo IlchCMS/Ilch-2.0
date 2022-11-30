@@ -37,7 +37,7 @@ class Config extends \Ilch\Config\Install
         $date = new \Ilch\Date();
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('version', VERSION, 1)
-            ->set('updateserver', 'https://ilch2.de/development/updateserver/stable/')
+            ->set('updateserver', 'https://www.ilch.de/ilch2_updates/stable/')
             ->set('locale', $this->getTranslator()->getLocale(), 1)
             ->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1)
             ->set('timezone', $_SESSION['install']['timezone'])
@@ -210,7 +210,7 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
-            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://ilch2.de/development/updateserver/stable/", "corian (ilch-Team)", "Germany");';
+            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");';
     }
 
     public function getUpdate($installedVersion)
@@ -852,6 +852,9 @@ class Config extends \Ilch\Config\Install
                         ->values(['url' => 'https://www.ilch.de/ilch2_updates/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
                         ->execute();
                 }
+                
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('updateserver', 'https://www.ilch.de/ilch2_updates/stable/');
                 break;
         }
 
