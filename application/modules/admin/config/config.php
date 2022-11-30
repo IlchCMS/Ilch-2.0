@@ -855,6 +855,8 @@ class Config extends \Ilch\Config\Install
                 
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('updateserver', 'https://www.ilch.de/ilch2_updates/stable/');
+                
+                replaceVendorDirectory();
                 break;
         }
 
