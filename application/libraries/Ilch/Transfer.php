@@ -500,12 +500,13 @@ class Transfer
     }
 
     /**
-     * @return true/false
+     * @return true|false
      */
     public function install()
     {
+        $zip = new \ZipArchive();
+
         try {
-            $zip = new \ZipArchive();
             if ($zip->open($this->zipFile) !== true) {
                 return false;
             }
