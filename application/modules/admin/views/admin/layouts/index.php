@@ -46,7 +46,12 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                 <div class="clearfix">
                     <div class="pull-left">
                         <?php
-                        $ilchCoreTooOld = version_compare($coreVersion, $layout->getIlchCore(), '<');
+                        if (empty($layout->getIlchCore())) {
+                            $ilchCoreTooOld = false;
+                        } else {
+                            $ilchCoreTooOld = version_compare($coreVersion, $layout->getIlchCore(), '<');
+                        }
+
                         $moduleNotInstalled = ($layout->getModulekey() != '' && isset($modulesNotInstalled[$layout->getModulekey()]));
                         $layoutOnUpdateServerFound = null;
                         $layoutsOnUpdateServer = (empty($layoutsOnUpdateServer)) ? [] : $layoutsOnUpdateServer;
