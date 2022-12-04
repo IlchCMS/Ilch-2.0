@@ -29,6 +29,8 @@ return [
     'filter' => 'Tablefilters',
     'search' => 'Search',
     'userGroups' => 'Usergroups',
+    'UserGroupsList' => 'Memberlist',
+    'userGroupsAllowed' => 'Show usergroups in lists?',
     'save' => 'Save',
     'success' => 'Saved successfully',
     'notConfirmedYet' => 'Not confirmed, yet',
