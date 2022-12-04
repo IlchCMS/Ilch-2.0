@@ -2,6 +2,7 @@
     $updateservers = $this->get('updateservers');
     $index = 0;
     $isHTTPS = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+    $pages = (empty($this->get('pages')) ? [] : $this->get('pages'));
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
@@ -13,7 +14,7 @@
         <div class="col-lg-4">
             <select class="form-control" id="startPage" name="startPage">
                 <optgroup label="<?=$this->getTrans('pages') ?>">
-                    <?php foreach ($this->get('pages') as $page): ?>
+                    <?php foreach ($pages as $page): ?>
                         <?php $selected = ''; ?>
                         <?php if ($this->get('startPage') == 'page_'.$page->getID()): ?>
                             <?php $selected = 'selected="selected"'; ?>
