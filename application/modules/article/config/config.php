@@ -81,7 +81,7 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-                CREATE TABLE `[prefix]_articles_access` (
+                CREATE TABLE IF NOT EXISTS `[prefix]_articles_access` (
                     `article_id` INT(11) NOT NULL,
                     `group_id` INT(11) NOT NULL,
                     PRIMARY KEY (`article_id`, `group_id`) USING BTREE,

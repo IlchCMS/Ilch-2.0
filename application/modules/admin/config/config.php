@@ -492,7 +492,7 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.20":
                 // Add target column to menu_items
-                $this->db()->query('ALTER TABLE `[prefix]_menu_items` ADD COLUMN `target` VARCHAR(50) NULL DEFAULT NULL  AFTER `href`;');
+                $this->db()->query('ALTER TABLE `[prefix]_menu_items` ADD COLUMN `target` VARCHAR(50) NULL DEFAULT NULL AFTER `href`;');
 
                 replaceVendorDirectory();
                 break;
@@ -854,10 +854,18 @@ class Config extends \Ilch\Config\Install
                         ->values(['url' => 'https://www.ilch.de/ilch2_updates/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
                         ->execute();
                 }
-                
+
+                // Change updateserver to the new one if the current one is the old one.
+                // Don't change the server if that is not the case to avoid problems with maybe the rare case of an own
+                // updateservers with own certificate.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->set('updateserver', 'https://www.ilch.de/ilch2_updates/stable/');
-                
+                if ($databaseConfig->get('updateserver') === 'https://ilch2.de/development/updateserver/stable/') {
+                    $databaseConfig->set('updateserver', 'https://www.ilch.de/ilch2_updates/stable/');
+                }
+
+                // Remove the old updateserver.
+                $this->db()->query("DELETE FROM `[prefix]_admin_updateservers` WHERE `url` = 'https://ilch2.de/development/updateserver/stable/';");
+
                 replaceVendorDirectory();
                 break;
         }
