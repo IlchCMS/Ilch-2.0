@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ff13316ef8403663e1a46f5553d7276",
+    "content-hash": "8eba8f67e87e75ca602b78f407964dd8",
     "packages": [
         {
             "name": "blueimp/jquery-file-upload",
@@ -465,6 +465,65 @@
                 }
             ],
             "time": "2021-09-20T03:06:01+00:00"
+        },
+        {
+            "name": "nicolafranchini/venobox",
+            "version": "2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicolafranchini/VenoBox.git",
+                "reference": "1178b2b7687d53f3262992f0713c377ae050cf52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicolafranchini/VenoBox/zipball/1178b2b7687d53f3262992f0713c377ae050cf52",
+                "reference": "1178b2b7687d53f3262992f0713c377ae050cf52",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/venobox.min.js"
+                    ],
+                    "styles": [
+                        "dist/venobox.min.css"
+                    ],
+                    "files": [
+                        "dist/venobox.min.js",
+                        "dist/venobox.min.css"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Franchini",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Responsive JavaScript modal window plugin, touch swipe gallery",
+            "keywords": [
+                "gallery",
+                "lightbox",
+                "modal",
+                "no-jquery",
+                "plugin",
+                "popup",
+                "responsive",
+                "swipe",
+                "touch",
+                "vanilla",
+                "window"
+            ],
+            "support": {
+                "issues": "https://github.com/nicolafranchini/VenoBox/issues",
+                "source": "https://github.com/nicolafranchini/VenoBox/releases"
+            },
+            "time": "2021-12-16T16:26:31+00:00"
         },
         {
             "name": "npm-asset/jquery",
