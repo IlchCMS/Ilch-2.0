@@ -22,7 +22,8 @@
         "phpmailer/phpmailer": "~6.1",
         "harvesthq/chosen": "^1.8",
         "ezyang/htmlpurifier": "^4.12",
-        "blueimp/jquery-file-upload": "^10.30.0"
+        "blueimp/jquery-file-upload": "^10.30.0",
+        "nicolafranchini/venobox": "^2.0"
     },
     "require-dev": {
         "maximebf/debugbar": "^1.15",

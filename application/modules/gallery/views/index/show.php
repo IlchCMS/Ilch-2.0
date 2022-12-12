@@ -37,17 +37,27 @@
 }
 </style>
 
+<?php $commentMapper = new \Modules\Comment\Mappers\Comment(); ?>
+ 
+<link href="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.css') ?>" media="screen" rel="stylesheet">
+ 
 <div id="gallery">
     <?php foreach ($this->get('image') as $image): ?>
-        <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/'.$image->getId()); ?>
+ 
+        <?php $commentsCount = $commentMapper->getCountComments ('gallery/index/showimage/id/'.$image->getId()); ?>
+ 
         <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
             <div class="panel panel-default">
+ 
+                <a class="venobox" data-gall="gallery01" href="<?=$this->getUrl().'/' .$image->getImageUrl() ?>"title="<?=$image->getImageTitle() ?> ">
+ 
                 <div class="panel-image thumbnail">
-                    <a href="<?=$this->getUrl(['action' => 'showimage', 'id' => $image->getId()]) ?>">
-                        <?php $altText = (empty($image->getImageTitle())) ? basename($image->getImageUrl()) : $image->getImageTitle(); ?>
-                        <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$this->escape($altText) ?>" />
-                    </a>
+                        <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$image->getImageTitle()?>" />
                 </div>
+ 
+                <a href="<?=$this->getUrl(['action' => 'showimage', 'id' => $image->getId()]) ?>" title="<?=$this->getTrans('description')?>">
+ 
+ 
                 <div class="panel-footer text-center">
                     <i class="fa fa-comment-o"></i> <?=$commentsCount ?>
                     <i class="fa fa-eye"> <?=$image->getVisits() ?></i>
@@ -57,3 +67,15 @@
     <?php endforeach; ?>
 </div>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
+ 
+<script src="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.js') ?>"></script>
+ 
+<script>
+    new VenoBox({
+        selector: '.venobox',
+        numeration: true,
+        share: true,
+        navTouch: true,
+        spinner: 'pulse',
+    })
+    </script>
