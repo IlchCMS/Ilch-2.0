@@ -4,7 +4,7 @@ $commentsClass = new Ilch\Comments();
 ?>
 
 <link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
-<link href="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.min.css') ?>" media="screen" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/venobox/venobox.min.css') ?>" media="screen" rel="stylesheet">
 
 <div id="gallery">
     <div class="row">
@@ -18,7 +18,7 @@ $commentsClass = new Ilch\Comments();
 
 <?= $commentsClass->getComments($this->get('commentsKey'), $image, $this) ?>
 
-<script src="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/venobox/venobox.min.js') ?>"></script>
 <script>
     new VenoBox({
         selector: '.venobox',

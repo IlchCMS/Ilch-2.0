@@ -39,7 +39,7 @@
 
 <?php $commentMapper = new \Modules\Comment\Mappers\Comment(); ?>
 
-<link href="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.min.css') ?>" media="screen" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/venobox/venobox.min.css') ?>" media="screen" rel="stylesheet">
 
 <div id="gallery">
     <?php foreach ($this->get('image') as $image): ?>
@@ -68,8 +68,7 @@
 </div>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
 
-<script src="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.min.js') ?>"></script>
-
+<script src="<?=$this->getModuleUrl('static/venobox/venobox.min.js') ?>"></script>
 <script>
     new VenoBox({
         selector: '.venobox',

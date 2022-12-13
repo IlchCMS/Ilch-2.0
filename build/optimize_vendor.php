@@ -91,13 +91,6 @@ $directories = [
             'jquery-ui/LICENSE.txt',
         ]
     ],
-    'nicolafranchini' => [
-        'keep' => [
-            'venobox/dist/venobox.min.css',
-            'venobox/dist/venobox.min.js',
-            'venobox/LICENSE.txt',
-        ]
-    ],
 ];
 
 /**

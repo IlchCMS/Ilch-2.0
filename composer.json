@@ -22,8 +22,7 @@
         "phpmailer/phpmailer": "~6.1",
         "harvesthq/chosen": "^1.8",
         "ezyang/htmlpurifier": "^4.12",
-        "blueimp/jquery-file-upload": "^10.30.0",
-        "nicolafranchini/venobox": "^2.0"
+        "blueimp/jquery-file-upload": "^10.30.0"
     },
     "require-dev": {
         "maximebf/debugbar": "^1.15",
@@ -31,11 +30,17 @@
         "symfony/yaml": "^3.3.6"
     },
     "autoload": {
-        "psr-0": { "": "application/libraries/" },
-        "files": ["application/libraries/Ilch/Functions.php"]
+        "psr-0": {
+            "": "application/libraries/"
+        },
+        "files": [
+            "application/libraries/Ilch/Functions.php"
+        ]
     },
     "autoload-dev": {
-        "psr-4": { "PHPUnit\\": "tests/PHPUnit" }
+        "psr-4": {
+            "PHPUnit\\": "tests/PHPUnit"
+        }
     },
     "repositories": [
         {
