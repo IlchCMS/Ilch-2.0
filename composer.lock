@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8eba8f67e87e75ca602b78f407964dd8",
+    "content-hash": "8ff13316ef8403663e1a46f5553d7276",
     "packages": [
         {
             "name": "blueimp/jquery-file-upload",
@@ -465,65 +465,6 @@
                 }
             ],
             "time": "2021-09-20T03:06:01+00:00"
-        },
-        {
-            "name": "nicolafranchini/venobox",
-            "version": "2.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nicolafranchini/VenoBox.git",
-                "reference": "1178b2b7687d53f3262992f0713c377ae050cf52"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nicolafranchini/VenoBox/zipball/1178b2b7687d53f3262992f0713c377ae050cf52",
-                "reference": "1178b2b7687d53f3262992f0713c377ae050cf52",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "dist/venobox.min.js"
-                    ],
-                    "styles": [
-                        "dist/venobox.min.css"
-                    ],
-                    "files": [
-                        "dist/venobox.min.js",
-                        "dist/venobox.min.css"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicola Franchini",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Responsive JavaScript modal window plugin, touch swipe gallery",
-            "keywords": [
-                "gallery",
-                "lightbox",
-                "modal",
-                "no-jquery",
-                "plugin",
-                "popup",
-                "responsive",
-                "swipe",
-                "touch",
-                "vanilla",
-                "window"
-            ],
-            "support": {
-                "issues": "https://github.com/nicolafranchini/VenoBox/issues",
-                "source": "https://github.com/nicolafranchini/VenoBox/releases"
-            },
-            "time": "2021-12-16T16:26:31+00:00"
         },
         {
             "name": "npm-asset/jquery",
@@ -1053,16 +994,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "9.2.19",
+            "version": "9.2.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "c77b56b63e3d2031bd8997fcec43c1925ae46559"
+                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c77b56b63e3d2031bd8997fcec43c1925ae46559",
-                "reference": "c77b56b63e3d2031bd8997fcec43c1925ae46559",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/af7463c955007de36db0c5e26d03e2f933c2e980",
+                "reference": "af7463c955007de36db0c5e26d03e2f933c2e980",
                 "shasum": ""
             },
             "require": {
@@ -1118,7 +1059,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.19"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.20"
             },
             "funding": [
                 {
@@ -1126,7 +1067,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-11-18T07:47:47+00:00"
+            "time": "2022-12-13T07:49:28+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",

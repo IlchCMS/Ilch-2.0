@@ -79,8 +79,8 @@ class Index extends \Ilch\Controller\Admin
                     $sortArray = [];
 
                     foreach ($sortItems as $sortItem) {
-                        if ($sortItem->item_id !== null) {
-                            $sortArray[$sortItem->item_id] = (int)$sortItem->parent_id;
+                        if ($sortItem->id !== null) {
+                            $sortArray[$sortItem->id] = (int)$sortItem->parent_id;
                         }
                     }
 
