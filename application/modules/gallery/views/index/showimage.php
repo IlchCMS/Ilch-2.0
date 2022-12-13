@@ -2,10 +2,10 @@
 $image = $this->get('image');
 $commentsClass = new Ilch\Comments();
 ?>
- 
+
 <link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
-<link href="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.css') ?>" media="screen" rel="stylesheet">
- 
+<link href="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.min.css') ?>" media="screen" rel="stylesheet">
+
 <div id="gallery">
     <div class="row">
         <div class="col-md-6">
@@ -15,10 +15,10 @@ $commentsClass = new Ilch\Comments();
         </div>
     </div>
 </div>
- 
+
 <?= $commentsClass->getComments($this->get('commentsKey'), $image, $this) ?>
- 
-<script src="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.js') ?>"></script>
+
+<script src="<?=$this->getVendorUrl('nicolafranchini/venobox/dist/venobox.min.js') ?>"></script>
 <script>
     new VenoBox({
         selector: '.venobox',
