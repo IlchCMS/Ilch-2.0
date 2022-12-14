@@ -3,7 +3,10 @@ $profil = $this->get('profil');
 $profileFields = $this->get('profileFields');
 $profileFieldsContent = $this->get('profileFieldsContent');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
-$birthday = new \Ilch\Date($profil->getBirthday());
+$birthday = '';
+if (!empty($profil->getBirthday())) {
+    $birthday = new \Ilch\Date($profil->getBirthday());
+}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
@@ -87,11 +90,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         <input type="text"
                                class="form-control"
                                name="birthday"
-                               value="<?php if ($profil->getBirthday() != '') {
-    echo $birthday->format('d.m.Y');
-} else {
-    echo '';
-} ?>">
+                               value="<?=($birthday != '') ? $birthday->format('d.m.Y') : '' ?>">
                         <span class="input-group-addon">
                             <span class="fa fa-calendar"></span>
                         </span>
