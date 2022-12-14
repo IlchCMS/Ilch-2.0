@@ -33,6 +33,8 @@ jobs:
         run: composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
       - name: Optimize vendor
         run: php build/optimize_vendor.php
+      - name: Optimize root
+        run: php build/optimize_root.php
       - name: Create archive
         run: |
           git archive --format=zip HEAD > Ilch-2.zip
