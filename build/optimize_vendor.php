@@ -36,6 +36,10 @@ $directories = [
             'jbbcode/JBBCode/examples/',
             'jbbcode/JBBCode/tests/',
             'jbbcode/.gitignore',
+            'jbbcode/.coveralls.yml',
+            'jbbcode/composer.json',
+            'jbbcode/phpunit.xml.dist',
+            'jbbcode/README.md',
         ]
     ],
     'phpmailer' => [
@@ -43,12 +47,26 @@ $directories = [
             'phpmailer/docs/',
             'phpmailer/examples/',
             'phpmailer/test/',
+            'phpmailer/COMMITMENT',
+            'phpmailer/composer.json',
+            'phpmailer/README.md',
+            'phpmailer/SECURITY.md',
+            'phpmailer/VERSION',
         ]
     ],
     'ckeditor' => [
         'remove' => [
             'ckeditor/.github/',
+            'ckeditor/.npm/',
             'ckeditor/samples/',
+            'ckeditor/.npmignore',
+            'ckeditor/bender-runner.config.json',
+            'ckeditor/bower.json',
+            'ckeditor/CHANGES.md',
+            'ckeditor/composer.json',
+            'ckeditor/package.json',
+            'ckeditor/README.md',
+            'ckeditor/SECURITY.md',
         ]
     ],
     'kartik-v' => [
@@ -89,6 +107,16 @@ $directories = [
             'jquery/LICENSE.txt',
             'jquery-ui/dist/',
             'jquery-ui/LICENSE.txt',
+        ]
+    ],
+    'harvesthq' => [
+        'keep' => [
+            'chosen/chosen.min.css',
+            'chosen/chosen.jquery.min.js',
+            'chosen/chosen.proto.min.js',
+            'chosen/chosen-sprite.png',
+            'chosen/chosen-sprite@2x.png',
+            'chosen/LICENSE.md',
         ]
     ],
 ];
@@ -183,5 +211,25 @@ removeEmptySubFolders($vendorPath);
 echo sprintf(
     'Removed %d files from the vendor directory saving %s kB.',
     count($filesToDelete),
+    number_format($savedSpace / 1024, 2, '.', ' ')
+);
+
+// Further delete some handpicked files
+$savedSpace = 0;
+$removedFiles = 0;
+$rootPath = realpath(__DIR__ . '/../');
+$otherFilesToDelete = ['composer.json', 'composer.lock', 'CONTRIBUTING.md', 'README.md'];
+foreach ($otherFilesToDelete as $file) {
+    $path = $rootPath.'/'.$file;
+    if (file_exists($path)) {
+        $savedSpace += filesize($path);
+        $removedFiles += 1;
+        unlink($path);
+    }
+}
+
+echo sprintf(
+    ' Further removed %d handpicked files saving %s kB.',
+    $removedFiles,
     number_format($savedSpace / 1024, 2, '.', ' ')
 );
