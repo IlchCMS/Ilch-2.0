@@ -312,7 +312,7 @@ class Modules extends \Ilch\Controller\Admin
             $moduleMapper->updateVersion($key, $config->config['version']);
             $this->addMessage('updateSuccess');
         } catch (\Exception $e) {
-            $this->addMessage('moduleUpdateFailed');
+            $this->addMessage('moduleUpdateFailed', 'danger');
         } finally {
             if ($this->getRequest()->getPost('gotokey')) {
                 $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_' . $key]);
