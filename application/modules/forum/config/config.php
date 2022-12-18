@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.30.0',
+        'version' => '1.30.1',
         'icon_small' => 'fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -35,7 +35,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.36',
+        'ilchCore' => '2.1.46',
         'phpVersion' => '7.0'
     ];
 
@@ -439,6 +439,9 @@ class Config extends \Ilch\Config\Install
             case "1.25.0":
             case "1.26.0":
             case "1.27.0":
+            case "1.28.0":
+            case "1.29.0":
+            case "1.30.0":
         }
     }
 }
