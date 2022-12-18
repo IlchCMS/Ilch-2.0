@@ -569,7 +569,7 @@ class Config extends \Ilch\Config\Install
                     `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                     `user_id` INT(11) UNSIGNED NOT NULL,
                     `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                    `module` VARCHAR(255) NOT NULL,
+                    `module` VARCHAR(191) NOT NULL,
                     `message` VARCHAR(255) NOT NULL,
                     `url` VARCHAR(255) NOT NULL,
                     `type` VARCHAR(255) NOT NULL,
@@ -583,7 +583,7 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications_permission` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
                     `user_id` INT(11) UNSIGNED NOT NULL,
-                    `module` VARCHAR(255) NOT NULL,
+                    `module` VARCHAR(191) NOT NULL,
                     `type` VARCHAR(255) NOT NULL,
                     `granted` TINYINT(1) NOT NULL DEFAULT 1,
                     PRIMARY KEY (`id`) USING BTREE,
@@ -594,6 +594,19 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('userGroupList_allowed', '0');
+                break;
+            case "2.1.44":
+                break;
+            case "2.1.45":
+                $this->db()->queryMulti("
+                ALTER TABLE `[prefix]_users_notifications` DROP INDEX `FK_[prefix]_users_notifications_[prefix]_modules`;
+                ALTER TABLE `[prefix]_users_notifications` CHANGE `module` `module` VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+                ALTER TABLE `[prefix]_users_notifications` ADD CONSTRAINT `FK_[prefix]_users_notifications_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                
+                ALTER TABLE `[prefix]_users_notifications_permission` DROP INDEX `FK_[prefix]_users_notifications_[prefix]_modules`;
+                ALTER TABLE `[prefix]_users_notifications_permission` CHANGE `module` `module` VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+                ALTER TABLE `[prefix]_users_notifications_permission` ADD CONSTRAINT `FK_[prefix]_users_notifications_permission_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                ");
                 break;
         }
     }
