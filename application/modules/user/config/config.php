@@ -281,7 +281,7 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `user_id` INT(11) UNSIGNED NOT NULL,
                 `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                `module` VARCHAR(255) NOT NULL,
+                `module` VARCHAR(191) NOT NULL,
                 `message` VARCHAR(255) NOT NULL,
                 `url` VARCHAR(255) NOT NULL,
                 `type` VARCHAR(255) NOT NULL,
@@ -295,7 +295,7 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications_permission` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `user_id` INT(11) UNSIGNED NOT NULL,
-                `module` VARCHAR(255) NOT NULL,
+                `module` VARCHAR(191) NOT NULL,
                 `type` VARCHAR(255) NOT NULL,
                 `granted` TINYINT(1) NOT NULL DEFAULT 1,
                 PRIMARY KEY (`id`) USING BTREE,
