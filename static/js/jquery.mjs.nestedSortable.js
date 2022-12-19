@@ -746,7 +746,7 @@
 
 			if (!o.excludeRoot) {
 				ret.push({
-					"item_id": o.rootID,
+					"id": o.rootID,
 					"parent_id": null,
 					"depth": sDepth,
 					"left": left,
