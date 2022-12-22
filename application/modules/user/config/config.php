@@ -599,13 +599,10 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.45":
                 $this->db()->queryMulti("
-                ALTER TABLE `[prefix]_users_notifications` DROP INDEX `FK_[prefix]_users_notifications_[prefix]_modules`;
+                SET FOREIGN_KEY_CHECKS = 0;
                 ALTER TABLE `[prefix]_users_notifications` CHANGE `module` `module` VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
-                ALTER TABLE `[prefix]_users_notifications` ADD CONSTRAINT `FK_[prefix]_users_notifications_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE;
-                
-                ALTER TABLE `[prefix]_users_notifications_permission` DROP INDEX `FK_[prefix]_users_notifications_[prefix]_modules`;
                 ALTER TABLE `[prefix]_users_notifications_permission` CHANGE `module` `module` VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
-                ALTER TABLE `[prefix]_users_notifications_permission` ADD CONSTRAINT `FK_[prefix]_users_notifications_permission_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                SET FOREIGN_KEY_CHECKS = 1;
                 ");
                 break;
         }
