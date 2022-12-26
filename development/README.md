@@ -80,7 +80,7 @@ Um Fehler die mit phpcs gefunden worden automatisch zu beheben, kann php-cs-fixe
 Um Probleme zu vermeiden, falls das Ergebnis nicht der Erwartungen entspricht sollte man ggf. vorher mal die Datei(en)
 committen oder stagen, um wieder zum Ursprungszustand zurückkommen zu können.
 
-Beispiele (beide Befehle bewirken dasselbe, phpcsfix ist nutzt also PSR12):
+Beispiele (beide Befehle bewirken dasselbe, phpcsfix nutzt also PSR12):
 ```
 phpcsfix ./application/libraries/Ilch/Date.php
 php-cs-fixer fix ./application/libraries/Ilch/Date.php --level=psr12
