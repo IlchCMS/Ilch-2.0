@@ -55,13 +55,14 @@ Falls man seine VM noch umkonfigurieren will, sind dazu ggf. root Rechte notwend
 Der CodeSniffer kann verwendet werden, um Verstöße gegen den CodingStandard zu suchen.
 
 Da das Scannen aller Dateien sehr lange dauern kann, empfielt es sich auch der Übersichtlichkeit halber, nur einzelne Dateien zu scannen.
-phpcs auf der VM verwendet (durch die phpcs.xml) dabei als Standard automatisch PSR2. 
+phpcs auf der VM verwendet (durch die phpcs.xml) dabei als Standard automatisch PSR12. 
 
 Beispiel:
 ```
 phpcs ./application/libraries/Ilch/Date.php
 ```
 
+Siehe auch die Dokumentation zu PHP CodeSniffer: [Dokumentation auf github.com/squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
 ### PHP Code Beautifier and Fixer (phpcbf)
 Der Code Beautifier and Fixer kann verwendet werden, um Verstöße gegen den CodingStandard zu suchen und automatisch zu beheben.
 
@@ -79,11 +80,46 @@ Um Fehler die mit phpcs gefunden worden automatisch zu beheben, kann php-cs-fixe
 Um Probleme zu vermeiden, falls das Ergebnis nicht der Erwartungen entspricht sollte man ggf. vorher mal die Datei(en)
 committen oder stagen, um wieder zum Ursprungszustand zurückkommen zu können.
 
-Beispiele (beide Befehle bewirken dasselbe, phpcsfix ist nutzt also PSR2):
+Beispiele (beide Befehle bewirken dasselbe, phpcsfix nutzt also PSR12):
 ```
 phpcsfix ./application/libraries/Ilch/Date.php
-php-cs-fixer fix ./application/libraries/Ilch/Date.php --level=psr2
+php-cs-fixer fix ./application/libraries/Ilch/Date.php --level=psr12
 ```
+
+### PHP Compatibility Coding Standard for PHP CodeSniffer (phpcs)
+Dies ist eine Sammlung von "sniffs" für PHP CodeSniffer die auf PHP-Kompatibilität prüfen. Dies kann genutzt werden um den Code auf Kompatibilität mit höheren oder niedrigeren Versionen von PHP zu prüfen.
+Da das Scannen aller Dateien sehr lange dauern kann, empfielt es sich auch der Übersichtlichkeit halber, z.B. nur einzelne Module zu scannen.
+
+Beispiele:
+```
+// "PHPCompatibility" ist noch unbekannt.
+phpcs -p ./application/modules/* --standard=PHPCompatibility
+ERROR: the "PHPCompatibility" coding standard is not installed. The installed coding standards are MySource, PEAR, PSR1, PSR2, PSR12, Squiz and Zend
+
+// Hinzufügen von "PHPCompatibility"
+phpcs --config-set installed_paths /vagrant/development/vendor/phpcompatibility/php-compatibility/PHPCompatibility
+
+// Kontrollieren der genutzen Konfiguration
+phpcs --config-show
+
+// Kontrollieren der installierten Coding Standards
+phpcs -i
+
+// Verschiedene Beispiele für Befehle zur Prüfung auf PHP Kompatibilität. Durch Angabe von "--report=summary" wird erstmal nur eine Zusammenfassung angezeigt. Ohne diese Angabe wird der volle Bericht ausgegeben.
+phpcs -p ./application/modules/* --standard=PHPCompatibility --report=summary --runtime-set testVersion 7.0-
+
+phpcs -p ./application/modules/* --standard=PHPCompatibility --report=summary --runtime-set testVersion 7.3-
+
+phpcs -p ./application/modules/* --standard=PHPCompatibility --runtime-set testVersion 7.3-
+```
+
+Siehe auch die Dokumentation zu PHP CodeSniffer: [Dokumentation auf github.com/squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
+Siehe auch die Readme des Projekts: [Readme auf github.com/PHPCompatibility/PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility/blob/develop/README.md)
+
+Sinnvolle Prüfungen wären:
+* Ein Modul gibt eine Kompatibilität ab Version 7.0 an. Es empfielt sich dieses Modul durch Angabe von "--runtime-set testVersion 7.0-" auf Kompatibilität mit PHP 7.0 zu prüfen.
+* Ilch soll mit einer bestimmten Version PHP 7.3 und neuer unterstützen. Es empfielt sich durch Angabe von "--runtime-set testVersion 7.3-" auf Kompatibilität mit PHP 7.3 und neuer zu prüfen.
+* Es steht die Veröffentlichung von PHP 8.1 an. Es empfielt sich durch Angabe von "--runtime-set testVersion 8.1" auf Kompatibilität mit PHP 8.1 zu prüfen.
 
 ### PHPUnit (phpunit)
 Die Verwendung von phpunit wird in der tests/README.md beschrieben.

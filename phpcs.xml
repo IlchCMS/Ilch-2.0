@@ -12,11 +12,10 @@
     <exclude-pattern>./application/libraries/Captcha</exclude-pattern>
     <exclude-pattern>./application/libraries/jbbcode</exclude-pattern>
     <exclude-pattern>./application/libraries/Thumb</exclude-pattern>
-    <exclude-pattern>./application/libraries/password-compat</exclude-pattern>
 
     <arg name="extensions" value="php" />
     <arg name="report" value="summary"/>
     <arg value="np"/>
 
-    <rule ref="PSR2"/>
+    <rule ref="PSR12"/>
 </ruleset>
