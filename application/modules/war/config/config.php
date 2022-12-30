@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.15.1',
+        'version' => '1.15.2',
         'icon_small' => 'fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -44,7 +44,7 @@ class Config extends \Ilch\Config\Install
             ]
         ],
         'ilchCore' => '2.1.43',
-        'phpVersion' => '7.4'
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -224,7 +224,7 @@ class Config extends \Ilch\Config\Install
                 Sperrzeit in Minuten bis wann sich ein User eintagen kann
                 Game Icon verwaltung
                 */
-                //Create Maps Table and import from "war_played"
+                // Create maps table and import from "war_played"
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_war_maps` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `name` VARCHAR(32) NOT NULL,
@@ -294,7 +294,7 @@ class Config extends \Ilch\Config\Install
             // Delete old read_access column of table war.
             $this->db()->query('ALTER TABLE `[prefix]_war` DROP COLUMN `read_access`;');
 
-            //Deleting all old ID's
+            // Deleting all old ID's
             $idswar = $this->db()->select('id')
                 ->from('war')
                 ->execute()
@@ -346,7 +346,7 @@ class Config extends \Ilch\Config\Install
                 }
             }
 
-            //change TABLE
+            // Change TABLE
             $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD INDEX `FK_[prefix]_war_played_[prefix]_war` (`war_id`) USING BTREE;');
             $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD CONSTRAINT `FK_[prefix]_war_played_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
             $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD INDEX `FK_[prefix]_war_accept_[prefix]_war` (`war_id`) USING BTREE;');
