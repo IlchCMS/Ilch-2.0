@@ -361,6 +361,8 @@ class Config extends \Ilch\Config\Install
                 Code verbesseung
                 */
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `lastaccepttime`;');
+            case "1.15.1":
+                // no break
         }
     }
 }
