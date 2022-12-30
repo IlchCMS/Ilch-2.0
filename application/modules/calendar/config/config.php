@@ -14,7 +14,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.7.0',
+        'version' => '1.8.0',
         'icon_small' => 'fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -39,7 +39,7 @@ class Config extends \Ilch\Config\Install
             ]
         ],
         'ilchCore' => '2.1.43',
-        'phpVersion' => '7.4'
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -150,7 +150,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD `period_type` VARCHAR(100) NOT NULL AFTER `color`;');
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` CHANGE `period_day` `period_day` INT(11) NOT NULL;');
 
-                // Create new table for war read access.
+                // Create new table for calendar read access.
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_calendar_access` (
                         `calendar_id` INT(11) NOT NULL,
                         `group_id` INT(11) NOT NULL,
@@ -159,7 +159,8 @@ class Config extends \Ilch\Config\Install
                         CONSTRAINT `FK_[prefix]_calendar_access_[prefix]_calendar` FOREIGN KEY (`calendar_id`) REFERENCES `[prefix]_calendar` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
                         CONSTRAINT `FK_[prefix]_calendar_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
-                // Convert data from old read_access column of table war to the new war_access table.
+
+                // Convert data from old read_access column of table calendar to the new calendar_access table.
                 $readAccessRows = $this->db()->select(['id', 'read_access', 'period_day'])
                     ->from(['calendar'])
                     ->execute()
@@ -191,7 +192,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` DROP COLUMN `read_access`;');
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `period_day`;');
 
-                //add Box
+                // Add box
                 $boxMapper = new \Modules\Admin\Mappers\Box();
                 $boxModel = new \Modules\Admin\Models\Box();
                 $boxModel->setModule($this->config['key']);
@@ -199,6 +200,8 @@ class Config extends \Ilch\Config\Install
                 $boxMapper->install($boxModel);
 
                 removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar/');
+            case "1.7.0":
+                // no break
         }
     }
 }
