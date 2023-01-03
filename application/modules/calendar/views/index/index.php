@@ -40,9 +40,18 @@
                 }
             },
             headerToolbar: {
-                left: 'prev,next today,list',
+                left: 'prev,next today,list,listSevenDay',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek icalButton'
+                right: 'dayGridMonth,timeGridWeek,timeGridDay icalButton'
+            },
+            views: {
+                listSevenDay: {
+                    type: 'list',
+                    duration: {
+                        days: 7
+                    },
+                    buttonText: '<?=$this->getTrans('listweek') ?>'
+                }
             },
             locale: languagecalendar,
             navLinks: true, // can click day/week names to navigate views
