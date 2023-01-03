@@ -84,7 +84,7 @@ class Calendar extends \Ilch\Model
      * @param array $entries
      * @return $this
      */
-    public function setByArray($entries): Calendar
+    public function setByArray(array $entries): Calendar
     {
         if (isset($entries['id'])) {
             $this->setId($entries['id']);
@@ -355,7 +355,7 @@ class Calendar extends \Ilch\Model
      * @param bool $withId
      * @return array
      */
-    public function getArray(bool $withId = true)
+    public function getArray(bool $withId = true): array
     {
         return array_merge(
             ($withId ? ['id' => $this->getId()] : []),

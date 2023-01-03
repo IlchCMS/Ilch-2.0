@@ -8,11 +8,10 @@
         <input type="hidden" name="warGameIds[]" value="<?=$game->getId() ?>">
         <?php endif; ?>
         <div class="form-group">
-            <label class="col-lg-2 control-label" for="textinput">
+            <label class="col-lg-2 control-label" for="warMapPlayed[]">
                 <?=$this->getTrans('warMapName') ?>
                 <?php if ($game->getId()): ?>
-                <a name="warGamedel[]" 
-                    id="<?=$game->getId() ?>"
+                <a id="<?=$game->getId() ?>"
                    class="btn btn-danger btn-sm"
                    href="javascript:void(0)"
                    onclick="del(<?=$game->getId() ?>)">
@@ -32,12 +31,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-2 control-label" for="textinput">
+            <label class="col-lg-2 control-label" for="warErgebnis[]">
                 <?=$this->getTrans('warResult') ?>
             </label>
             <div class="col-lg-2">
                 <input type="number"
                        class="form-control"
+                       id="warErgebnisGroup[]"
                        name="warErgebnisGroup[]"
                        placeholder="<?=$this->getTrans('warResultWe') ?>"
                        value="<?=$game->getGroupPoints() ?>">
@@ -45,6 +45,7 @@
             <div class="col-lg-2">
                 <input type="number"
                        class="form-control"
+                       id="warErgebnisEnemy[]"
                        name="warErgebnisEnemy[]"
                        placeholder="<?=$this->getTrans('warResultEnemy') ?>"
                        value="<?=$game->getEnemyPoints() ?>">

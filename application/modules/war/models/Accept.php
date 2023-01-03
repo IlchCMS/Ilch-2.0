@@ -56,7 +56,7 @@ class Accept extends \Ilch\Model
      * @param array $entries
      * @return $this
      */
-    public function setByArray($entries): Accept
+    public function setByArray(array $entries): Accept
     {
         if (isset($entries['id'])) {
             $this->setId($entries['id']);
@@ -224,7 +224,7 @@ class Accept extends \Ilch\Model
      * @param bool $withId
      * @return array
      */
-    public function getArray(bool $withId = true)
+    public function getArray(bool $withId = true): array
     {
         return array_merge(
             ($withId ? ['id' => $this->getId()] : []),

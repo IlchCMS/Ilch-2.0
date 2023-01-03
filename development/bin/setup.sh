@@ -10,10 +10,16 @@ else
     php ./composer.phar self-update
     chmod +x composer.phar
 fi
+
+cd ..
 echo "--- Update Development Vendor"
-cd ..
 php bin/composer.phar install
-echo "--- Update System Vendor"
+
 cd ..
+echo "--- Update System Vendor"
 php development/bin/composer.phar install
+
+php build/optimize_vendor.php
+
+
 cd ${START_PWD}

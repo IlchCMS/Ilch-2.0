@@ -8,6 +8,7 @@ use Modules\User\Models\User;
 
 /**
  * Improves "var_dump" function with pre - tags.
+ * @return void
  */
 function dumpVar()
 {
@@ -38,7 +39,7 @@ function dumpVar()
  * @param int $skipEntries
  * @return string
  */
-function debug_backtrace_html($skipEntries = 1)
+function debug_backtrace_html(int $skipEntries = 1): string
 {
     $r = '';
 
@@ -80,7 +81,7 @@ function debug_backtrace_html($skipEntries = 1)
  * @param string $relativeToPath
  * @return string
  */
-function relativePath($absolutePath, $relativeToPath = ROOT_PATH)
+function relativePath(string $absolutePath, string $relativeToPath = ROOT_PATH): string
 {
     if (strpos($absolutePath, $relativeToPath) === 0) {
         return substr($absolutePath, strlen($relativeToPath) + 1);
@@ -89,28 +90,42 @@ function relativePath($absolutePath, $relativeToPath = ROOT_PATH)
 }
 
 /**
+ * @param string $segments,...
+ * @return string
+ * @since 2.1.46
+*/
+function buildPath(...$segments): string
+{
+    return join(DIRECTORY_SEPARATOR, $segments);
+}
+
+/**
  * Delete directory recursive.
  *
- * @param string $dir
+ * @param string $path
+ * @return bool
  */
-function removeDir($dir)
+function removeDir(string $path): bool
 {
-    if (is_dir($dir)) {
-        $dircontent = scandir($dir);
-
-        foreach ($dircontent as $c) {
-            if ($c !== '.' && $c !== '..') {
-                if (is_dir($dir.'/'.$c)) {
-                    removeDir($dir.'/'.$c);
-                } else {
-                    unlink($dir.'/'.$c);
-                }
+    if (is_dir($path)) {
+        $dircontent = array_diff(scandir($path), array('..', '.'));
+        $isEmpty = true;
+        foreach ($dircontent as $content) {
+            $filePath = buildPath($path, $content);
+            $returned = removeDir($filePath);
+            if (!$returned) {
+                $isEmpty = false;
             }
         }
-
-        rmdir($dir);
+        if ($isEmpty) {
+            return rmdir($path);
+        }
+        return false;
+    } elseif (is_file($path)) {
+        chmod($path, 0777);
+        return unlink($path);
     } else {
-        unlink($dir);
+        return false;
     }
 }
 
@@ -123,13 +138,13 @@ function removeDir($dir)
  *      foo.bar.baz > foo['bar']['baz']
  *
  * @param array     $data       The array
- * @param string    $key        The key to look for
+ * @param string|null    $key        The key to look for
  * @param mixed     $default    A default value if $key is not found
  * @return mixed
  *
  * @copyright <Taylor Otwell>
  */
-function array_dot($data = [], $key = null, $default = null)
+function array_dot($data = [], ?string $key = null, $default = null)
 {
     if ($key === null) {
         return $data;
@@ -156,7 +171,7 @@ function array_dot($data = [], $key = null, $default = null)
  * If no key is given to the method, the entire array will be replaced.
  *
  * @param  array   $array
- * @param  string  $key
+ * @param  string|null|int  $key
  * @param  mixed   $value
  * @return array
  *
@@ -210,10 +225,10 @@ function is_in_array($needle, $haystack)
  * @param string $url
  * @param bool $write_cache Set this to false if you don't want to write a cache file.
  * @param bool $ignoreCache Set this to true to ignore the cache and fetch from server.
- * @param integer $cache_time
+ * @param int $cache_time
  * @return mixed $data | FALSE
  */
-function url_get_contents($url, $write_cache = true, $ignoreCache = false, $cache_time = 21600)
+function url_get_contents(string $url, bool $write_cache = true, bool $ignoreCache = false, int $cache_time = 21600)
 {
     if (!function_exists('curl_init')) {
         die('CURL is not installed!');
@@ -227,7 +242,7 @@ function url_get_contents($url, $write_cache = true, $ignoreCache = false, $cach
     }
 
     $hash = md5($url);
-    $file = "$where/$hash.cache";
+    $file = buildPath($where, $hash.'.cache');
 
     // check the bloody file.
     $mtime = 0;
@@ -248,7 +263,7 @@ function url_get_contents($url, $write_cache = true, $ignoreCache = false, $cach
             CURLOPT_TIMEOUT        => 30,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
-            CURLOPT_CAINFO         => ROOT_PATH.'/certificate/cacert.pem',
+            CURLOPT_CAINFO         => buildPath(ROOT_PATH, 'certificate', 'cacert.pem'),
             CURLOPT_URL            => $url,
         ]);
         $output = curl_exec($ch);
@@ -270,7 +285,7 @@ function url_get_contents($url, $write_cache = true, $ignoreCache = false, $cach
  * @param string $indent
  * @return string
  */
-function var_export_short_syntax($var, $indent = '')
+function var_export_short_syntax($var, string $indent = ''): string
 {
     switch (gettype($var)) {
         case 'string':
@@ -296,7 +311,7 @@ function var_export_short_syntax($var, $indent = '')
  *
  * @return boolean
  */
-function loggedIn()
+function loggedIn(): bool
 {
     return \Ilch\Registry::get('user') !== null;
 }
@@ -317,7 +332,7 @@ function currentUser()
  *
  * @return bool
  */
-function captchaNeeded()
+function captchaNeeded(): bool
 {
     $user = \Ilch\Registry::get('user');
     $hideCaptchaFor = explode(',', \Ilch\Registry::get('config')->get('hideCaptchaFor'));
@@ -336,7 +351,7 @@ function captchaNeeded()
  * @param string $emailAddress
  * @return bool
  */
-function isEmailOnBlacklist($emailAddress)
+function isEmailOnBlacklist(string $emailAddress): bool
 {
     if (empty($emailAddress)) {
         return false;
@@ -363,16 +378,16 @@ function isEmailOnBlacklist($emailAddress)
 /**
  * Recursive glob()
  *
- * @param $pattern
+ * @param string $pattern
  * @param int $flags
  * @return array|false
  */
-function glob_recursive($pattern, $flags = 0)
+function glob_recursive($path, $flags = 0)
 {
-    $files = glob($pattern, $flags);
+    $files = glob($path, $flags);
 
-    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
-        $files = array_merge($files, glob_recursive($dir.'/'.basename($pattern), $flags));
+    foreach (glob(buildPath(dirname($path), '*'), GLOB_ONLYDIR|GLOB_NOSORT) as $dir){
+        $files = array_merge($files, glob_recursive(buildPath($dir, basename($path)), $flags));
     }
 
     return $files;
@@ -386,7 +401,7 @@ function glob_recursive($pattern, $flags = 0)
  * @param string $file Path to the file.
  * @return string|false Username of the owner on success, false on failure.
  */
-function owner($file)
+function owner(string $file)
 {
     $owneruid = @fileowner($file);
 
@@ -410,7 +425,7 @@ function owner($file)
  * @param string $file Path to the file.
  * @return string Mode of the file (the last 3 digits).
  */
-function getchmod($file)
+function getchmod(string $file): string
 {
     return substr(decoct(@fileperms($file)), -3);
 }
@@ -448,7 +463,7 @@ function group($file)
  * @param string $format
  * @return bool
  */
-function validateDate($date, $format = 'Y-m-d H:i:s')
+function validateDate($date, string $format = 'Y-m-d H:i:s'): bool
 {
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
@@ -462,11 +477,10 @@ function validateDate($date, $format = 'Y-m-d H:i:s')
  * @param string $tmpName temporary name of new vendor directory. Usually '_vendor'.
  * @return bool
  */
-function replaceVendorDirectory($tmpName = '_vendor')
+function replaceVendorDirectory(string $tmpName = '_vendor'): bool
 {
-    if (file_exists(ROOT_PATH . '/' . $tmpName) && rename(ROOT_PATH . '/vendor', ROOT_PATH . '/backup_vendor') && rename(ROOT_PATH . '/' . $tmpName, ROOT_PATH . '/vendor')) {
-        removeDir(ROOT_PATH.'/backup_vendor');
-        return true;
+    if (file_exists(buildPath(ROOT_PATH, $tmpName)) && rename(buildPath(ROOT_PATH, 'vendor'), buildPath(ROOT_PATH, 'backup_vendor')) && rename(buildPath(ROOT_PATH, $tmpName), buildPath(ROOT_PATH, 'vendor'))) {
+        return removeDir(buildPath(ROOT_PATH, 'backup_vendor'));
     }
 
     return false;
@@ -483,7 +497,7 @@ function replaceVendorDirectory($tmpName = '_vendor')
  * @param array $params
  * @return bool
  */
-function setcookieIlch(string $name, string $value = '', int $expires = 0, $params = null)
+function setcookieIlch(string $name, string $value = '', int $expires = 0, $params = null): bool
 {
     $params = $params ?? session_get_cookie_params();
     

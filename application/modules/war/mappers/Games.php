@@ -30,7 +30,7 @@ class Games extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['id' => 'DESC'], $pagination = null)
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])
@@ -69,7 +69,7 @@ class Games extends \Ilch\Mapper
      * @param int $id
      * @return null|array
      */
-    public function getGamesByWarId(int $id)
+    public function getGamesByWarId(int $id): ?array
     {
         return $this->getEntriesBy(['war_id' => $id], ['war_id' => 'DESC']);
     }
@@ -77,10 +77,10 @@ class Games extends \Ilch\Mapper
     /**
      * Gets the Games.
      *
-     * @param array
+     * @param array $where
      * @return null|array
      */
-    public function getGamesByWhere($where = [])
+    public function getGamesByWhere(array $where = []): ?array
     {
         return $this->getEntriesBy($where, ['war_id' => 'DESC']);
     }
@@ -102,7 +102,7 @@ class Games extends \Ilch\Mapper
                 ->execute();
             $result = $model->getId();
         } else {
-            $result = (int)$this->db()->insert($this->tablename)
+            $result = $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }

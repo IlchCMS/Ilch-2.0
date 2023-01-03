@@ -127,7 +127,7 @@ $directories = [
  * @param array|null $filter if given only directories in the array are scanned
  * @return array
  */
-function getFilesRecursive($dirname, array $filter = null)
+function getFilesRecursive(string $dirname, array $filter = null): array
 {
     $files = [];
     foreach (scandir($dirname) as $item) {
@@ -140,7 +140,7 @@ function getFilesRecursive($dirname, array $filter = null)
         } else {
             $files[] = $fullPath;
         }
-    };
+    }
     return $files;
 }
 
@@ -149,7 +149,7 @@ function getFilesRecursive($dirname, array $filter = null)
  * @param string $path
  * @return bool
  */
-function removeEmptySubFolders($path)
+function removeEmptySubFolders(string $path): bool
 {
     $empty = true;
     foreach (glob($path . DIRECTORY_SEPARATOR . "*") as $file) {
@@ -163,7 +163,7 @@ function removeEmptySubFolders($path)
  * @param string $fileOrDir
  * @return string
  */
-function quoteForPattern($fileOrDir)
+function quoteForPattern(string $fileOrDir): string
 {
     $isDir = $fileOrDir[strlen($fileOrDir) - 1] === DIRECTORY_SEPARATOR;
     $quoted = preg_quote($fileOrDir);
@@ -212,7 +212,7 @@ echo sprintf(
     'Removed %d files from the vendor directory saving %s kB.',
     count($filesToDelete),
     number_format($savedSpace / 1024, 2, '.', ' ')
-);
+).PHP_EOL;
 
 // Further delete some handpicked files
 $savedSpace = 0;
@@ -227,9 +227,8 @@ foreach ($otherFilesToDelete as $file) {
         unlink($path);
     }
 }
-
 echo sprintf(
     ' Further removed %d handpicked files saving %s kB.',
     $removedFiles,
     number_format($savedSpace / 1024, 2, '.', ' ')
-);
+).PHP_EOL;

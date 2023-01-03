@@ -30,7 +30,7 @@ class Group extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['g.id' => 'DESC'], $pagination = null)
+    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['g.id', 'g.name', 'g.tag', 'g.image', 'g.member', 'g.desc'])
@@ -71,7 +71,7 @@ class Group extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return null|array
      */
-    public function getGroups($where = [], $pagination = null)
+    public function getGroups(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['g.id' => 'DESC'], $pagination);
     }
@@ -82,7 +82,7 @@ class Group extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return null|array
      */
-    public function getGroupList($pagination = null)
+    public function getGroupList(?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy([], ['g.id' => 'DESC'], $pagination);
     }
@@ -93,7 +93,7 @@ class Group extends \Ilch\Mapper
      * @param int|EntriesModel $id
      * @return EntriesModel|null
      */
-    public function getGroupById($id)
+    public function getGroupById($id): ?EntriesModel
     {
         if (is_a($id, EntriesModel::class)) {
             $id = $id->getId();
@@ -125,7 +125,7 @@ class Group extends \Ilch\Mapper
                 ->execute();
             $result = $model->getId();
         } else {
-            $result = (int)$this->db()->insert($this->tablename)
+            $result = $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }

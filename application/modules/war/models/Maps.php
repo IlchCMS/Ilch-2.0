@@ -29,7 +29,7 @@ class Maps extends \Ilch\Model
      * @param array $entries
      * @return $this
      */
-    public function setByArray($entries): Maps
+    public function setByArray(array $entries): Maps
     {
         if (isset($entries['id'])) {
             $this->setId($entries['id']);
@@ -93,7 +93,7 @@ class Maps extends \Ilch\Model
      * @param bool $withId
      * @return array
      */
-    public function getArray(bool $withId = true)
+    public function getArray(bool $withId = true): array
     {
         return array_merge(
             ($withId ? ['id' => $this->getId()] : []),
