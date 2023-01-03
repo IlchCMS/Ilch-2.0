@@ -30,7 +30,7 @@ class Events extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['id' => 'DESC'], $pagination = null)
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], \Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])
@@ -69,7 +69,7 @@ class Events extends \Ilch\Mapper
      * @param array $where
      * @return array|null
      */
-    public function getEntries($where = [])
+    public function getEntries(array $where = []): ?array
     {
         return $this->getEntriesBy($where, []);
     }
@@ -80,7 +80,7 @@ class Events extends \Ilch\Mapper
      * @param int|EntriesModel $id
      * @return null|EntriesModel
      */
-    public function getEntryById(int $id)
+    public function getEntryById(int $id): ?EntriesModel
     {
         if (is_a($id, EntriesModel::class)) {
             $id = $id->getId();

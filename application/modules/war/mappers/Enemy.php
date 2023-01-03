@@ -30,7 +30,7 @@ class Enemy extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['e.id' => 'DESC'], $pagination = null)
+    public function getEntriesBy(array $where = [], array $orderBy = ['e.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['e.id', 'e.name', 'e.tag', 'e.image', 'e.homepage', 'e.contact_name', 'e.contact_email'])
@@ -71,7 +71,7 @@ class Enemy extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return null|array
      */
-    public function getEnemy($where = [], $pagination = null)
+    public function getEnemy(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['e.id' => 'DESC'], $pagination);
     }
@@ -82,7 +82,7 @@ class Enemy extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return null|array
      */
-    public function getEnemyList($pagination = null)
+    public function getEnemyList(?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy([], ['e.id' => 'DESC'], $pagination);
     }
@@ -93,7 +93,7 @@ class Enemy extends \Ilch\Mapper
      * @param int|EntriesModel $id
      * @return EntriesModel|null
      */
-    public function getEnemyById($id)
+    public function getEnemyById($id): ?EntriesModel
     {
         if (is_a($id, EntriesModel::class)) {
             $id = $id->getId();
@@ -125,7 +125,7 @@ class Enemy extends \Ilch\Mapper
                 ->execute();
             $result = $model->getId();
         } else {
-            $result = (int)$this->db()->insert($this->tablename)
+            $result = $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }

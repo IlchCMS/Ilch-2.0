@@ -30,7 +30,7 @@ class Calendar extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['c.id' => 'DESC'], $pagination = null)
+    public function getEntriesBy(array $where = [], array $orderBy = ['c.id' => 'DESC'], \Ilch\Pagination $pagination = null): ?array
     {
         $read_access = '';
         if (isset($where['ra.group_id'])) {
@@ -77,7 +77,7 @@ class Calendar extends \Ilch\Mapper
      * @param array $where
      * @return null|array
      */
-    public function getEntries($where = [])
+    public function getEntries(array $where = []): ?array
     {
         return $this->getEntriesBy($where, []);
     }
@@ -88,7 +88,7 @@ class Calendar extends \Ilch\Mapper
      * @param EntriesModel|int $id
      * @return EntriesModel|null
      */
-    public function getCalendarById($id)
+    public function getCalendarById($id): ?EntriesModel
     {
         if (is_a($id, EntriesModel::class)) {
             $id = $id->getId();
@@ -111,7 +111,7 @@ class Calendar extends \Ilch\Mapper
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return array|null
      */
-    public function getEntriesForJson($start, $end, $groupIds = '3')
+    public function getEntriesForJson($start, $end, $groupIds = '3'): ?array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -177,7 +177,7 @@ class Calendar extends \Ilch\Mapper
     }
 
     /**
-     * Update the entries for which user groups are allowed to read an Calendar.
+     * Update the entries for which user groups are allowed to read a Calendar.
      *
      * @param int $calendarId
      * @param string|array $readAccess example: "1,2,3"
@@ -191,11 +191,11 @@ class Calendar extends \Ilch\Mapper
         }
 
         // Delete possible old entries to later insert the new ones.
-        $this->db()->delete('calendar_access')
+        $this->db()->delete($this->tablename.'_access')
             ->where(['calendar_id' => $calendarId])
             ->execute();
 
-        $sql = 'INSERT INTO [prefix]_calendar_access (calendar_id, group_id) VALUES';
+        $sql = 'INSERT INTO [prefix]_'.$this->tablename.'_access (calendar_id, group_id) VALUES';
         $sqlWithValues = $sql;
         $rowCount = 0;
         $groupIds = [];

@@ -1,5 +1,5 @@
 <link href="<?=$this->getModuleUrl('static/css/calendar.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_0/lib/main.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_3/lib/main.min.css') ?>" rel="stylesheet">
 
 <div class="calendar">
     <div id="loading"></div>
@@ -7,8 +7,8 @@
     <div id='calendar'></div>
 </div>
 
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_0/lib/main.min.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_0/lib/locales-all.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_3/lib/main.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_3/lib/locales-all.js') ?>"></script>
 <script>
     if (typeof languagecalendar === 'undefined') {
         var languagecalendar = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
@@ -40,9 +40,18 @@
                 }
             },
             headerToolbar: {
-                left: 'prev,next today,list',
+                left: 'prev,next today,list,listSevenDay',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek icalButton'
+                right: 'dayGridMonth,timeGridWeek,timeGridDay icalButton'
+            },
+            views: {
+                listSevenDay: {
+                    type: 'list',
+                    duration: {
+                        days: 7
+                    },
+                    buttonText: '<?=$this->getTrans('listweek') ?>'
+                }
             },
             locale: languagecalendar,
             navLinks: true, // can click day/week names to navigate views

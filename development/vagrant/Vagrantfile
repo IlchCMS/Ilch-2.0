@@ -14,13 +14,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 8025, host: 8025
   config.vm.network "forwarded_port", guest: 3306, host: 13306
+ 
+#  # Use this option if you want an extended VM
+#  config.vm.network "public_network"
 
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
-#  config.vm.provider "virtualbox" do |vb|
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "Vagrant_Ilch2_debian11_php7_4"
 #    # Use VBoxManage to customize the VM. For example to change memory:
 #    vb.customize ["modifyvm", :id, "--memory", "1024"]
-#  end
+  end
 
   config.vm.provision "shell", path: "development/vagrant/scripts/install.sh"
   config.vm.provision "shell", path: "development/vagrant/scripts/setup.sh", privileged: false

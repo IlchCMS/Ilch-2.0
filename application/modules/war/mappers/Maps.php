@@ -31,7 +31,7 @@ class Maps extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['a.id' => 'DESC'], $pagination = null)
+    public function getEntriesBy(array $where = [], array $orderBy = ['a.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])
@@ -71,7 +71,7 @@ class Maps extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntries($where = [], $pagination = null)
+    public function getEntries(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['id' => 'ASC'], $pagination);
     }
@@ -82,7 +82,7 @@ class Maps extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return null|array
      */
-    public function getList($pagination = null)
+    public function getList(?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy([], ['id' => 'ASC'], $pagination);
     }
@@ -93,7 +93,7 @@ class Maps extends \Ilch\Mapper
      * @param int|EntriesModel $id
      * @return null|EntriesModel
      */
-    public function getEntryById(int $id)
+    public function getEntryById(int $id): ?EntriesModel
     {
         if (is_a($id, EntriesModel::class)) {
             $id = $id->getId();
@@ -125,7 +125,7 @@ class Maps extends \Ilch\Mapper
                 ->execute();
             $result = $model->getId();
         } else {
-            $result = (int)$this->db()->insert($this->tablename)
+            $result = $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }

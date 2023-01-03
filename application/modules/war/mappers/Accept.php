@@ -30,7 +30,7 @@ class Accept extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['id' => 'DESC'], $pagination = null)
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])
@@ -69,7 +69,7 @@ class Accept extends \Ilch\Mapper
      * @param array $where
      * @return null|array
      */
-    public function getAcceptByWhere($where = [])
+    public function getAcceptByWhere(array $where = []): ?array
     {
         return $this->getEntriesBy($where, ['id' => 'DESC']);
     }
@@ -81,7 +81,7 @@ class Accept extends \Ilch\Mapper
      * @param int $warId
      * @return null|array
      */
-    public function getAcceptListByGroupId(int $groupId, int $warId)
+    public function getAcceptListByGroupId(int $groupId, int $warId): ?array
     {
         $entryArray = $this->db()->select('*')
             ->fields(['u.group_id', 'u.user_id'])
@@ -125,7 +125,7 @@ class Accept extends \Ilch\Mapper
                 ->execute();
             $result = $model->getId();
         } else {
-            $result = (int)$this->db()->insert($this->tablename)
+            $result = $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }

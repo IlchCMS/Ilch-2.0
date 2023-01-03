@@ -6,6 +6,8 @@
 
 namespace Modules\War\Mappers;
 
+use Ilch\Database\Exception;
+use Ilch\Pagination;
 use Modules\War\Models\War as EntriesModel;
 use Modules\Comment\Mappers\Comment as Comments;
 
@@ -31,7 +33,7 @@ class War extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['g.id' => 'DESC'], $pagination = null)
+    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $read_access = '';
         if (isset($where['ra.group_id'])) {
@@ -80,7 +82,7 @@ class War extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return null|array
      */
-    public function getWars($where = [], $pagination = null)
+    public function getWars(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['w.time' => 'ASC'], $pagination);
     }
@@ -92,7 +94,7 @@ class War extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return null|array
      */
-    public function getNextWars($where = [], $pagination = null)
+    public function getNextWars(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['w.id' => 'DESC'], $pagination);
     }
@@ -103,7 +105,7 @@ class War extends \Ilch\Mapper
      * @param int|EntriesModel $id
      * @return EntriesModel|null
      */
-    public function getWarById($id)
+    public function getWarById($id): ?EntriesModel
     {
         if (is_a($id, EntriesModel::class)) {
             $id = $id->getId();
@@ -126,7 +128,7 @@ class War extends \Ilch\Mapper
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return array|null
      */
-    public function getWarsForJson($start, $end, $groupIds = '3')
+    public function getWarsForJson($start, $end, $groupIds = '3'): ?array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -155,11 +157,11 @@ class War extends \Ilch\Mapper
     /**
      * Gets wars by where
      *
-     * @param null|array $where
-     * @param int $pagination
+     * @param array $where
+     * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getWarsByWhere($where = null, $pagination = null)
+    public function getWarsByWhere(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['w.time' => 'DESC'], $pagination);
     }
@@ -181,7 +183,7 @@ class War extends \Ilch\Mapper
                 ->execute();
             $result = $model->getId();
         } else {
-            $result = (int)$this->db()->insert($this->tablename)
+            $result = $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -192,7 +194,7 @@ class War extends \Ilch\Mapper
     }
 
     /**
-     * Update the entries for which user groups are allowed to read an War.
+     * Update the entries for which user groups are allowed to read a War.
      *
      * @param int $warId
      * @param string|array $readAccess example: "1,2,3"
@@ -265,13 +267,13 @@ class War extends \Ilch\Mapper
     /**
      * Get a list of wars by status.
      *
-     * @param null|int $status
-     * @param null $pagination
+     * @param int|null $status
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getWarListByStatus($status = null, $pagination = null)
+    public function getWarListByStatus(?int $status = null, ?\Ilch\Pagination $pagination = null): ?array
     {
-        return $this->getEntriesBy(['status' => $status], ['w.time' => 'DESC'], $pagination);
+        return $this->getEntriesBy(($status ? ['status' => $status] : []), ['w.time' => 'DESC'], $pagination);
     }
 
     /**
@@ -279,9 +281,10 @@ class War extends \Ilch\Mapper
      *
      * @param null $pagination
      * @param string|array $readAccess A string like '1,2,3' or an array like [1,2,3]
+     * @param int|null $groupId
      * @return array|null
      */
-    public function getWarList($pagination = null, $readAccess = '3', int $groupId = null)
+    public function getWarList($pagination = null, $readAccess = '3', int $groupId = null): ?array
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
@@ -293,22 +296,31 @@ class War extends \Ilch\Mapper
     /**
      * Gets a number of wars to show them for example in a box.
      *
-     * @param null|int $status
-     * @param null|int $limit
+     * @param int|null $status
+     * @param int|null $limit
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $order
      * @return array|null
      */
-    public function getWarListByStatusAndLimt($status = null, $limit = null, $groupIds = '3', $order = 'ASC')
+    public function getWarListByStatusAndLimt(?int $status = null, ?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
         }
 
-        return $this->getEntriesBy(['status' => $this->db()->escape($status), 'ra.group_id' => $groupIds], ['w.time' => $order]);
+        $pagination = null;
+        if ($limit) {
+            $pagination = new \Ilch\Pagination();
+            $pagination->setRowsPerPage($limit);
+        }
+
+        return $this->getEntriesBy(($status ? ['status' => $this->db()->escape($status), 'ra.group_id' => $groupIds] : ['ra.group_id' => $groupIds]), ['w.time' => $order], $pagination);
     }
 
-    public function getWarOptDistinctXonx()
+    /**
+     * @return array|null
+     */
+    public function getWarOptDistinctXonx(): ?array
     {
         $warArray = $this->db()->queryArray('SELECT DISTINCT xonx FROM [prefix]_war');
 
@@ -327,7 +339,10 @@ class War extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getWarOptDistinctGame()
+    /**
+     * @return array|null
+     */
+    public function getWarOptDistinctGame(): ?array
     {
         $warArray = $this->db()->queryArray('SELECT DISTINCT game FROM [prefix]_war');
 
@@ -346,7 +361,10 @@ class War extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getWarOptDistinctMatchtype()
+    /**
+     * @return array|null
+     */
+    public function getWarOptDistinctMatchtype(): ?array
     {
         $warArray = $this->db()->queryArray('SELECT DISTINCT matchtype FROM [prefix]_war');
 

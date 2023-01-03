@@ -156,6 +156,5 @@ return [
     'menuGameIcon' => 'Game Icon',
     'manageGameIcon' => 'Game Icon bearbeiten',
     'manageNewGameIcon' => 'Neues Game Icon erstellen',
-    'treatMaps' => 'Game Icon bearbeiten',
     'menuActionNewGameIcon' => 'Neues Game Icon erstellen',
 ];

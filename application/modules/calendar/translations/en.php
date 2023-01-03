@@ -35,4 +35,6 @@ return [
     'monthly' => 'monthly',
     'quarterly' => 'quarterly',
     'days' => 'day',
+
+    'listweek' => 'Weekly List',
 ];

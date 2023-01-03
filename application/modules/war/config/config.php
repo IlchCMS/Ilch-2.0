@@ -282,12 +282,45 @@ class Config extends \Ilch\Config\Install
                     ->fetchList();
 
                 if ($readAccessRows) {
-                    $warMapper = new \Modules\War\Mappers\War();
-
                     foreach ($readAccessRows as $readAccessRow) {
-                        $groupIds = explode(',', $readAccessRow['read_access']);
-                        $groupIds = array_intersect($existingGroups, $groupIds);
-                        $warMapper->saveReadAccess($readAccessRow['id'], $groupIds);
+                        $readAccess = explode(',', $readAccessRow['read_access']);
+                        $readAccess = array_intersect($existingGroups, $readAccess);
+
+                        // Delete possible old entries to later insert the new ones.
+                        $this->db()->delete('war_access')
+                            ->where(['calendar_id' => $readAccessRow['id']])
+                            ->execute();
+
+                        $sql = 'INSERT INTO [prefix]_war_access (calendar_id, group_id) VALUES';
+                        $sqlWithValues = $sql;
+                        $rowCount = 0;
+                        $groupIds = [];
+                        if (!empty($readAccess)) {
+                            if (!in_array('all', $readAccess)) {
+                                $groupIds = $readAccess;
+                            }
+                        }
+                        if (!in_array('1', $groupIds)) {
+                            $groupIds[] = '1';
+                        }
+
+                        foreach ($groupIds as $groupId) {
+                            // There is a limit of 1000 rows per insert, but according to some benchmarks found online
+                            // the sweet spot seams to be around 25 rows per insert. So aim for that.
+                            if ($rowCount >= 25) {
+                                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+                                $this->db()->queryMulti($sqlWithValues);
+                                $rowCount = 0;
+                                $sqlWithValues = $sql;
+                            }
+
+                            $rowCount++;
+                            $sqlWithValues .= '(' . $readAccessRow['id'] . ',' . (int)$groupId . '),';
+                        }
+
+                        // Insert remaining rows.
+                        $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+                        $this->db()->queryMulti($sqlWithValues);
                     }
                 }
 

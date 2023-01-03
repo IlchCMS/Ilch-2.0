@@ -1,17 +1,17 @@
 # Vagrant einrichten und benutzen
 
-Vagrant ist ein Tool mit dem es möglich ist, einfach eine virtuelle Maschine einzurichten,
-so dass alle Entwickler mit dem gleichen System arbeiten und sich um deren Einrichtung nicht wirklich kümmern müssen.
+Vagrant ist ein Tool, mit dem es möglich ist, einfach eine virtuelle Maschine einzurichten,
+sodass alle Entwickler mit dem gleichen System arbeiten und sich um deren Einrichtung nicht wirklich kümmern müssen.
 
 1. Download und Installieren von [Vagrant](http://www.vagrantup.com) 
-2. Download und Installieren von [VirtualBox](https://www.virtualbox.org/wiki/Downloads), wobei auch das Extension Pack installiert werden sollte
+2. Download und Installieren von [VirtualBox](https://www.virtualbox.org/wiki/Downloads), wobei auch das Extension-Pack installiert werden sollte
 3. Kopiere die Datei development/vagrant/Vagrantfile aus dem development Ordner ins Hauptverzeichnis des Projektes
 4. Ändere die Datei Vagrantfile entsprechend deinen Wünschen, sie sollte aber auch ohne Änderungen funktionieren
 5. Starte eine Konsole (unter Windows möglichst PowerShell, GitBash oder CygWin verwenden)
 6. In das Hauptverzeichnis des Projektes per Shell wechseln
-7. _[optional]_ Installiere  das Plugin vagrant-vbguest, welches immer die aktuelle VirtualBox Guest Additions in die VM integriert, 
+7. _[optional]_ Installiere das Plugin vagrant-vbguest, welches immer die aktuelle VirtualBox Guest Additions in die VM integriert, 
    dafür muss `vagrant plugin install vagrant-vbguest` ausgeführt werden
-8. Die VM mit __vagrant up__ initialisieren (Dies dauert beim ersten mal eine ganze Weile, da einiges heruntergeladen werden muss)
+8. Die VM mit __vagrant up__ initialisieren (Dies dauert beim ersten Mal eine ganze Weile, da einiges heruntergeladen werden muss)
 9. VM kann im Browser über http://localhost:8080 aufgerufen werden, soweit du keinen anderen Port konfiguriert hast
 
 ## Benutzung nach Intialisierung
@@ -21,13 +21,25 @@ so dass alle Entwickler mit dem gleichen System arbeiten und sich um deren Einri
 * mit __vagrant suspend__ kann man die VM anhalten (muss nicht neu hochgefahren werden, beim nächsten *vagrant up*)
 * mit __vagrant halt__ kann man die VM herunterfahren
 * mit __vagrant reload__ kann man die VM neustarten
-* Um also Befehle in der VM auszuführen muss diese mit erst gestartet werden, um sich dann darauf verbinden zu können
+* Um also Befehle in der VM auszuführen, muss diese mit erst gestartet werden, um sich dann darauf verbinden zu können
 * Das Ilch Verzeichnis befindet sich auf der VM im Ordner /vagrant
 
 ## MySQL
-Das Passwort für den root User ist root. Es werden 2 Datenbanken angelegt: ilch2 und ilch2test.
+Es werden 3 Datenbanken angelegt: 
+- ilch2
+- ilch2test
+- phpmyadmin
+Benutzer:
+- User:ilch2 Passwort:ilch2 (zugriff auf: ilch2)
+- User:pma Passwort:password (zugriff auf: phpmyadmin)
+- User:root Passwort:root (zugriff auf: Alle)
+
 Die Vagrant Box wird so konfiguriert, dass eine Verbindung von außen also beispielsweise mit HeidiSQL möglich ist.
 Der Port zur Verbindung ist dann 13306, funktioniert aber wohl erst nach einem *vagrant reload*
+
+## PHPmyAdmin
+Um die Datenbanken einfach kontrollieren oder bearbeiten zu können, ist PHPmyAdmin vorkonfigugiert und ist unter der Adresse erreichbar:
+http://localhost:8080/phpmyadmin
 
 ## Mails (Mailhog)
 Um auch das Versenden von E-Mails einfach testen zu können wurde MailHog in die VM integriert.
@@ -44,8 +56,8 @@ was etwas mehr Komfort bieten sollte. Bei der Verwendung von putty sind die Para
 * port: 2222
 * user: vagrant
 * password: vagrant
-* alternativ zum Verwendung von Benutzer und Passwort kann auch ein Privatekey verwendet werden,
-  wo sich dieser befindet kann mit __vagrant ssh-config__ geprüft werden und mit Hilfe von PuttyGen zu einem Putty Key umgewandelt werden
+* alternativ zur Verwendung von Benutzer und Passwort kann auch ein Privatekey verwendet werden,
+  wo sich dieser befindet kann mit __vagrant ssh-config__ geprüft werden und mithilfe von PuttyGen zu einem Putty Key umgewandelt werden
 
 Nachdem man sich eingeloggt hat, sollte man sich im Verzeichnis /vagrant befinden, was zum Root des Ilch-2.0 Verzeichnises
 gelinkt ist.
@@ -77,7 +89,7 @@ phpcbf ./application/libraries/Ilch/Date.php
 
 ### PHP-CS-Fixer (php-cs-fixer)
 Um Fehler die mit phpcs gefunden worden automatisch zu beheben, kann php-cs-fixer verwendet werden.
-Um Probleme zu vermeiden, falls das Ergebnis nicht der Erwartungen entspricht sollte man ggf. vorher mal die Datei(en)
+Um Probleme zu vermeiden, falls das Ergebnis nicht der Erwartungen entspricht, sollte man ggf. vorher mal die Datei(en)
 committen oder stagen, um wieder zum Ursprungszustand zurückkommen zu können.
 
 Beispiele (beide Befehle bewirken dasselbe, phpcsfix nutzt also PSR12):
@@ -128,7 +140,7 @@ Der Befehl phpunit sollte verfügbar und xdebug konfiguriert sein.
 
 ### Hinweis zur Nutzung der Tools unter Windows
 Wenn man phpcs oder phpunit auch in seiner IDE unter Windows einbinden will, werden auch die .bat Dateien benötigt.
-Mit einer aktueller Composer Version ist die Erstellung der .bat Dateien nun auch aus der VM heraus möglich und wird gemacht.
+Mit einem aktuellen Composer Version ist die Erstellung der .bat Dateien nun auch aus der VM heraus möglich und wird gemacht.
 Die Tools können also auch unter Windows verwendet werden, wenn die Installation in der VM stattgefunden hat.
 
 # Nutzung der Tools ohne Vagrant
