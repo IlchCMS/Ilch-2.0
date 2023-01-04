@@ -20,11 +20,19 @@ class AfterDatabaseLoad
             $forumMapper = new ForumMapper();
             $permas = $forumMapper->getForumPermas();
             $url = $router->getQuery();
-            if (isset($permas[$url])) {
+            $urlParts = explode('/', $url);
+
+            if (isset($permas[$urlParts[0]])) {
                 $request->setModuleName('forum');
                 $request->setControllerName('showtopics');
                 $request->setActionName('index');
-                $request->setParam('forumid', $permas[$url]['id']);
+                $request->setParam('forumid', $permas[$urlParts[0]]['id']);
+                unset($urlParts[0]);
+
+                $result = $router->convertParamStringIntoArray(implode('/', $urlParts));
+                foreach ($result as $key => $value) {
+                    $request->setParam($key, $value);
+                }
             }
         }
     }

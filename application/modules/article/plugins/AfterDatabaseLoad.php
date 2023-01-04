@@ -19,13 +19,25 @@ class AfterDatabaseLoad
             $articleMapper = new ArticleMapper();
             $permas = $articleMapper->getArticlePermas();
             $url = $router->getQuery();
+            $urlParts = explode('/', $url);
 
-            if (isset($permas[$url])) {
+            if (isset($permas[$urlParts[0]])) {
                 $request->setModuleName('article');
                 $request->setControllerName('index');
                 $request->setActionName('show');
-                $request->setParam('id', $permas[$url]['article_id']);
-                $request->setParam('locale', $permas[$url]['locale']);
+                $request->setParam('id', $permas[$urlParts[0]]['article_id']);
+                if ($permas[$urlParts[0]]['locale']) {
+                    $request->setParam('locale', $permas[$urlParts[0]]['locale']);
+                }
+                unset($urlParts[0]);
+                if ($urlParts[1] === 'locale') {
+                    unset($urlParts[1]);
+                }
+
+                $result = $router->convertParamStringIntoArray(implode('/', $urlParts));
+                foreach ($result as $key => $value) {
+                    $request->setParam($key, $value);
+                }
             }
         }
     }

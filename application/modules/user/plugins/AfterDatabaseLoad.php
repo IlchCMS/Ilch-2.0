@@ -86,17 +86,23 @@ class AfterDatabaseLoad
 
         $request = $pluginData['request'];
 
-        if (!$request->isAdmin() && (strpos($site, 'user/ajax/checknewmessage') == false) && (strpos($site, 'user/ajax/checknewfriendrequests') == false)) {
+        if ($request->getParam('language')) {
+            $_SESSION['language'] = $request->getParam('language');
+            $Redirect = new \Ilch\Redirect($request);
+            $Redirect->to($request->unsetParam('language')->getArray());
+        }
+
+        if ($request->getParam('ilch_layout')) {
+            $_SESSION['layout'] = $pluginData['request']->getParam('ilch_layout');
+            $Redirect = new \Ilch\Redirect($request);
+            $Redirect->to($request->unsetParam('ilch_layout')->getArray());
+
+        }
+
+        if (!$request->isAdmin() && !strpos($site, 'user/ajax/checknewmessage') && !strpos($site,
+                'user/ajax/checknewfriendrequests')) {
             $statisticMapper = new Statistic();
             $statisticMapper->saveVisit(['user_id' => $userId, 'session_id' => session_id(), 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
-        }
-
-        if ($pluginData['request']->getParam('language')) {
-            $_SESSION['language'] = $pluginData['request']->getParam('language');
-        }
-
-        if ($pluginData['request']->getParam('ilch_layout')) {
-            $_SESSION['layout'] = $pluginData['request']->getParam('ilch_layout');
         }
 
         $pluginData['translator']->setLocale($pluginData['config']->get('locale'));
