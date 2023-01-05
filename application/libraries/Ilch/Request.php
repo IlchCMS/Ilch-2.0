@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -21,29 +21,29 @@ class Request
     /**
      * @var string
      */
-    protected $moduleName;
+    protected $moduleName = '';
 
     /**
      * @var string
      */
-    protected $controllerName;
+    protected $controllerName = '';
 
     /**
      * @var string
      */
-    protected $actionName;
+    protected $actionName = '';
 
     /**
      * @var array
      */
-    protected $params;
+    protected $params = [];
 
     /**
      * Form input from the last request.
      *
      * @var array
      */
-    protected $oldInput;
+    protected $oldInput = [];
 
     /**
      * Validation errors from the last request.
@@ -57,7 +57,6 @@ class Request
      */
     public function __construct()
     {
-        $this->oldInput = array();
         $this->validationErrors = new \Ilch\Validation\ErrorBag();
 
         $this->checkForOldInput();
@@ -66,35 +65,39 @@ class Request
 
     /**
      * Checks the session for old input data.
+     * @return $this
      */
-    public function checkForOldInput()
+    public function checkForOldInput(): Request
     {
         if (isset($_SESSION['ilch_old_input'])) {
             $this->oldInput = $_SESSION['ilch_old_input'];
             unset($_SESSION['ilch_old_input']);
         }
+        return $this;
     }
 
     /**
      * Checks the session for validation errors.
+     * @return $this
      */
-    public function checkForValidationErrors()
+    public function checkForValidationErrors(): Request
     {
         if (isset($_SESSION['ilch_validation_errors'])) {
             $this->validationErrors->setErrors($_SESSION['ilch_validation_errors']);
             unset($_SESSION['ilch_validation_errors']);
         }
+        return $this;
     }
 
     /**
      * Returns the old input for the given key.
      *
-     * @param string $key
+     * @param string|null $key
      * @param mixed  $default
      *
      * @return mixed
      */
-    public function getOldInput($key = null, $default = '')
+    public function getOldInput(?string $key = null, $default = '')
     {
         return array_dot($this->oldInput, $key, $default);
     }
@@ -104,7 +107,7 @@ class Request
      *
      * @return \Ilch\Validation\ErrorBag
      */
-    public function getErrors()
+    public function getErrors(): Validation\ErrorBag
     {
         return $this->validationErrors;
     }
@@ -112,9 +115,9 @@ class Request
     /**
      * Gets admin request flag.
      *
-     * @return string
+     * @return bool
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->isAdmin;
     }
@@ -123,10 +126,12 @@ class Request
      * Sets admin request flag.
      *
      * @param boolean $admin
+     * @return $this
      */
-    public function setIsAdmin($admin)
+    public function setIsAdmin(bool $admin): Request
     {
         $this->isAdmin = $admin;
+        return $this;
     }
 
     /**
@@ -134,7 +139,7 @@ class Request
      *
      * @return boolean
      */
-    public function isAjax()
+    public function isAjax(): bool
     {
         return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') || $this->isAjax;
     }
@@ -143,10 +148,12 @@ class Request
      * Sets ajax request flag.
      *
      * @param boolean $ajax
+     * @return $this
      */
-    public function setIsAjax($ajax)
+    public function setIsAjax(bool $ajax): Request
     {
         $this->isAjax = $ajax;
+        return $this;
     }
 
     /**
@@ -154,7 +161,7 @@ class Request
      *
      * @return string
      */
-    public function getModuleName()
+    public function getModuleName(): string
     {
         return $this->moduleName;
     }
@@ -163,10 +170,12 @@ class Request
      * Sets the current module name.
      *
      * @param string $name
+     * @return $this
      */
-    public function setModuleName($name)
+    public function setModuleName(string $name): Request
     {
         $this->moduleName = $name;
+        return $this;
     }
 
     /**
@@ -174,7 +183,7 @@ class Request
      *
      * @return string
      */
-    public function getControllerName()
+    public function getControllerName(): string
     {
         return $this->controllerName;
     }
@@ -183,10 +192,12 @@ class Request
      * Sets the current controller name.
      *
      * @param string $name
+     * @return $this
      */
-    public function setControllerName($name)
+    public function setControllerName(string $name): Request
     {
         $this->controllerName = $name;
+        return $this;
     }
 
     /**
@@ -194,7 +205,7 @@ class Request
      *
      * @return string
      */
-    public function getActionName()
+    public function getActionName(): string
     {
         return $this->actionName;
     }
@@ -203,10 +214,12 @@ class Request
      * Sets the current action name.
      *
      * @param string $name
+     * @return $this
      */
-    public function setActionName($name)
+    public function setActionName(string $name): Request
     {
         $this->actionName = $name;
+        return $this;
     }
 
     /**
@@ -215,7 +228,7 @@ class Request
      * @param string $key
      * @return string|null
      */
-    public function getParam($key)
+    public function getParam(string $key): ?string
     {
         return $this->params[$key] ?? null;
     }
@@ -224,11 +237,28 @@ class Request
      * Sets the param with the given key / value.
      *
      * @param string $key
-     * @param string $value
+     * @param string|null $value
+     * @return $this
      */
-    public function setParam($key, $value)
+    public function setParam(string $key, ?string $value): Request
     {
         $this->params[$key] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Unsets/deletes the param with the given key / value.
+     *
+     * @param string $key
+     * @return $this
+     */
+    public function unsetParam(string $key): Request
+    {
+        if (isset($this->params[$key])) {
+            unset($this->params[$key]);
+        }
+        return $this;
     }
 
     /**
@@ -236,7 +266,7 @@ class Request
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
@@ -245,18 +275,20 @@ class Request
      * Set key/value params.
      *
      * @param array $params
+     * @return $this
      */
-    public function setParams($params)
+    public function setParams(array $params): Request
     {
         $this->params = $params;
+        return $this;
     }
 
     /**
      * Checks if request is a POST - request.
      *
-     * @return boolean
+     * @return bool
      */
-    public function isPost()
+    public function isPost(): bool
     {
         return !empty($_POST);
     }
@@ -269,11 +301,11 @@ class Request
      *      foo.bar     > foo['bar']
      *      foo.bar.baz > foo['bar']['baz']
      *
-     * @param  string $key
-     * @param  string $default This gets returned if $key does not exist
+     * @param string|null $key
+     * @param  mixed $default This gets returned if $key does not exist
      * @return mixed
      */
-    public function getPost($key = null, $default = null)
+    public function getPost(?string $key = null, $default = null)
     {
         return array_dot($_POST, $key, $default);
     }
@@ -281,10 +313,10 @@ class Request
     /**
      * Get get-value by key.
      *
-     * @param  string $key
+     * @param string $key
      * @return mixed
      */
-    public function getQuery($key = '')
+    public function getQuery(string $key = '')
     {
         if ($key === '') {
             return $_GET;
@@ -298,7 +330,7 @@ class Request
      *
      * @return boolean
      */
-    public function isSecure()
+    public function isSecure(): bool
     {
         // Return false if ilch_token is empty or not a string.
         // Fixes "Illegal offset type in isset or empty"
@@ -325,5 +357,50 @@ class Request
         }
 
         return $returnValue;
+    }
+
+    /**
+     * Get an array of the current and provided url parts. Optionally reset parameters.
+     * 
+     * @param array $urlParts
+     * @param bool $resetParams
+     * @return array
+     * @since 2.1.46
+     */
+    public function getArray(array $urlParts = [], bool $resetParams = false): array
+    {
+        $currentUrlParts = [];
+
+        if (array_key_exists('module', $urlParts)) {
+            $currentUrlParts['module'] = $urlParts['module'];
+            unset($urlParts['module']);
+        } elseif ($this->getModuleName()) {
+            $currentUrlParts['module'] = $this->getModuleName();
+        }
+
+        if (array_key_exists('controller', $urlParts)) {
+            $currentUrlParts['controller'] = $urlParts['controller'];
+            unset($urlParts['controller']);
+        } elseif ($this->getModuleName()) {
+            $currentUrlParts['controller'] = $this->getControllerName();
+        }
+
+        if (array_key_exists('action', $urlParts)) {
+            $currentUrlParts['action'] = $urlParts['action'];
+            unset($urlParts['action']);
+        } elseif ($this->getModuleName()) {
+            $currentUrlParts['action'] = $this->getActionName();
+        }
+
+        $params = $this->getParams();
+        if (empty($params)) {
+            $resetParams = true;
+        }
+
+        return array_merge(
+            $currentUrlParts,
+            $resetParams ? [] : $params,
+            $urlParts
+        );
     }
 }

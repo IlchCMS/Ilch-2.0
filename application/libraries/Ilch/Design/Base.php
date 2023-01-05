@@ -6,6 +6,7 @@
 
 namespace Ilch\Design;
 
+use Ilch\Layout\Helper\GetMedia;
 use Ilch\Request;
 use Ilch\Router;
 use Ilch\Translator;
@@ -24,21 +25,21 @@ abstract class Base
      *
      * @var string
      */
-    private $layoutKey;
+    private $layoutKey = '';
 
     /**
      * Box url that will be used
      *
      * @var string
      */
-    private $boxUrl;
+    private $boxUrl = '';
 
     /**
      * Base url
      *
      * @var string
      */
-    private $baseUrl;
+    private $baseUrl = '';
 
     /**
      * Adds view/layout helper.
@@ -46,10 +47,12 @@ abstract class Base
      * @param string $name
      * @param string $type
      * @param mixed $obj
+     * @return $this
      */
-    public function addHelper(string $name, string $type, $obj)
+    public function addHelper(string $name, string $type, $obj): Base
     {
         $this->helpers[$type][$name] = $obj;
+        return $this;
     }
 
     /**
@@ -85,9 +88,9 @@ abstract class Base
     private $data = [];
 
     /**
-     * @var bool
+     * @var bool|null
      */
-    private $modRewrite;
+    private $modRewrite = null;
 
     /**
      * @var \HTMLPurifier_Config default object.
@@ -104,7 +107,7 @@ abstract class Base
      *
      * @return \HTMLPurifier
      */
-    public function getPurifier()
+    public function getPurifier(): \HTMLPurifier
     {
         return $this->purifier;
     }
@@ -135,7 +138,7 @@ abstract class Base
      * @param Router $router
      * @param string|null $baseUrl
      */
-    public function __construct(Request $request, Translator $translator, Router $router, $baseUrl = null)
+    public function __construct(Request $request, Translator $translator, Router $router, ?string $baseUrl = null)
     {
         $this->request = $request;
         $this->translator = $translator;
@@ -213,7 +216,7 @@ abstract class Base
      * @param mixed $value
      * @return $this
      */
-    public function set(string $key, $value)
+    public function set(string $key, $value): Base
     {
         $this->data[$key] = $value;
 
@@ -223,11 +226,14 @@ abstract class Base
     /**
      * Sets view data array.
      *
-     * @param mixed[] $data
+     * @param array $data
+     * @return $this
      */
-    public function setArray($data = [])
+    public function setArray(array $data = []): Base
     {
         $this->data = array_merge($this->data, $data);
+
+        return $this;
     }
 
     /**
@@ -235,7 +241,7 @@ abstract class Base
      *
      * @return Request
      */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }
@@ -245,7 +251,7 @@ abstract class Base
      *
      * @return Router
      */
-    public function getRouter()
+    public function getRouter(): Router
     {
         return $this->router;
     }
@@ -255,7 +261,7 @@ abstract class Base
      *
      * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
@@ -263,9 +269,9 @@ abstract class Base
     /**
      * Gets the user object.
      *
-     * @return \Modules\User\Models\User
+     * @return \Modules\User\Models\User|null
      */
-    public function getUser()
+    public function getUser(): ?\Modules\User\Models\User
     {
         return \Ilch\Registry::get('user');
     }
@@ -373,10 +379,10 @@ abstract class Base
     /**
      * Escape the given string.
      *
-     * @param  string $string
+     * @param null|string $string
      * @return string
      */
-    public function escape($string): string
+    public function escape(?string $string): string
     {
         return \htmlspecialchars($string ?? '', ENT_QUOTES, 'UTF-8', false);
     }
@@ -477,13 +483,19 @@ abstract class Base
     /**
      * Creates a full url for the given parts.
      *
-     * @param  array|string $url
-     * @param  string  $route
-     * @param  bool $secure
+     * @param array|string $url
+     * @param string|null $route
+     * @param bool $secure
      * @return string
      */
-    public function getUrl($url = [], string $route = null, bool $secure = false): string
+    public function getUrl($url = [], ?string $route = null, bool $secure = false): string
     {
+        $locale = '';
+        $config = \Ilch\Registry::get('config');
+        if ($config->get('multilingual_acp') && $this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
+            $locale = $this->layout->getTranslator()->getLocale();
+        }
+
         if ($this->modRewrite === null) {
             $config = \Ilch\Registry::get('config');
             if ($config !== null) {
@@ -501,25 +513,32 @@ abstract class Base
         if (is_array($url)) {
             $urlParts = [];
 
-            if (isset($url['module'])) {
-                $urlParts[] = $url['module'];
-                unset($url['module']);
+            if (isset($url['module']) && $url['module'] === 'admin' && isset($url['controller']) && $url['controller'] === 'page' && isset($url['action']) && $url['action'] === 'show' && isset($url['id'])) {
+                $pageMapper = new \Modules\Admin\Mappers\Page();
+                $page = $pageMapper->getPageByIdLocale((int)$url['id'], $locale);
+                $urlParts[] = $page->getPerma();
+                unset($url['module'], $url['controller'], $url['action'], $url['id']);
             } else {
-                $urlParts[] = $this->getRequest()->getModuleName();
-            }
+                if (isset($url['module'])) {
+                    $urlParts[] = $url['module'];
+                    unset($url['module']);
+                } else {
+                    $urlParts[] = $this->getRequest()->getModuleName();
+                }
 
-            if (isset($url['controller'])) {
-                $urlParts[] = $url['controller'];
-                unset($url['controller']);
-            } else {
-                $urlParts[] = $this->getRequest()->getControllerName();
-            }
+                if (isset($url['controller'])) {
+                    $urlParts[] = $url['controller'];
+                    unset($url['controller']);
+                } else {
+                    $urlParts[] = $this->getRequest()->getControllerName();
+                }
 
-            if (isset($url['action'])) {
-                $urlParts[] = $url['action'];
-                unset($url['action']);
-            } else {
-                $urlParts[] = $this->getRequest()->getActionName();
+                if (isset($url['action'])) {
+                    $urlParts[] = $url['action'];
+                    unset($url['action']);
+                } else {
+                    $urlParts[] = $this->getRequest()->getActionName();
+                }
             }
 
             foreach ($url as $key => $value) {
@@ -537,7 +556,7 @@ abstract class Base
 
             $url = implode('/', $urlParts);
 
-            if (($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route === 'admin')) {
+            if (($this->getRequest()->isAdmin() && $route === null) || ($route === 'admin')) {
                 $url = 'admin/' . $url;
                 $rewrite = false;
             }
@@ -616,12 +635,12 @@ abstract class Base
      * Gets the MediaModal.
      * Place inside Javascript tag.
      *
-     * @param string $mediaButton Define Media Button by given URL
-     * @param string $actionButton Define Action Button by given URL
-     * @param null|string $inputId
-     * @return \Ilch\Layout\Helper\GetMedia
+     * @param string|null $mediaButton Define Media Button by given URL
+     * @param string|null $actionButton Define Action Button by given URL
+     * @param string|null $inputId
+     * @return GetMedia
      */
-    public function getMedia(string $mediaButton = null, string $actionButton = null, $inputId = null): \Ilch\Layout\Helper\GetMedia
+    public function getMedia(?string $mediaButton = null, ?string $actionButton = null, ?string $inputId = null): \Ilch\Layout\Helper\GetMedia
     {
         return  new \Ilch\Layout\Helper\GetMedia($mediaButton, $actionButton, $inputId);
     }
@@ -714,13 +733,13 @@ abstract class Base
     /**
      * Gets the dialog.
      *
-     * @param $id
-     * @param $name
-     * @param $content
-     * @param null $submit
+     * @param string $id
+     * @param string $name
+     * @param string $content
+     * @param mixed $submit
      * @return string
      */
-    public function getDialog($id, $name, $content, $submit = null): string
+    public function getDialog(string $id, string $name, string $content, $submit = null): string
     {
         $html = '<div class="modal fade" id="'.$id.'">
             <div class="modal-dialog">

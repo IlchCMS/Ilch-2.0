@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -14,7 +14,7 @@ class Page extends \Ilch\Controller\Frontend
     {
         $pageMapper = new PageMapper();
         $id = $this->getRequest()->getParam('id');
-        $locale = $this->getRequest()->getParam('locale');
+        $locale = $this->getRequest()->getParam('locale') ?? '';
         $page = $pageMapper->getPageByIdLocale($id, $locale);
 
         if ($page == null) {
