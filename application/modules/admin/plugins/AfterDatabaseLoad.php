@@ -40,7 +40,7 @@ class AfterDatabaseLoad
             }
         }
 
-        // Log the entrys
+        // Log the entries
         $logsMapper = new LogsMapper();
         $currentUrl = $_SERVER['REQUEST_URI'];
 

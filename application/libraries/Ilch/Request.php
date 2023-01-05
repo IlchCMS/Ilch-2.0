@@ -248,7 +248,7 @@ class Request
     }
 
     /**
-     * Sets the param with the given key / value.
+     * Unsets/deletes the param with the given key / value.
      *
      * @param string $key
      * @return $this
@@ -360,6 +360,8 @@ class Request
     }
 
     /**
+     * Get an array of the current and provided url parts. Optionally reset parameters.
+     * 
      * @param array $urlParts
      * @param bool $resetParams
      * @return array
