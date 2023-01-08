@@ -140,4 +140,5 @@ return [
     'clock' => 'Uhr',
     'read' => 'gelesen',
     'unread' => 'ungelesen',
+    'confirmDeletePost' => 'Möchten Sie diesen Beitrag wirklich löschen?',
 ];

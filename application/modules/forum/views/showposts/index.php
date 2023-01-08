@@ -114,7 +114,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                     <?php if ($this->getUser()): ?>
                                         <?php if ($this->getUser()->isAdmin()): ?>
                                             <p class="delete-post">
-                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()]) ?>" class="btn btn-primary btn-xs">
+                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()], null, true) ?>" id="delete" class="btn btn-primary btn-xs">
                                                     <span class="btn-label">
                                                         <i class="fa fa-trash"></i>
                                                     </span><?=$this->getTrans('delete') ?>
@@ -350,6 +350,10 @@ $(document).ready(function() {
         $('#rememberPostStatus').empty();
         $('#rememberPostStatus').removeAttr("class");
         $('#note').val("");
+    });
+
+    $("a[id='delete']").click(function(){
+        return confirm('<?=$this->getTrans('confirmDeletePost') ?>');
     });
 });
 </script>

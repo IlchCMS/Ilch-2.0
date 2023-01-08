@@ -167,7 +167,8 @@ class Showposts extends \Ilch\Controller\Frontend
         $topicId = (int)$this->getRequest()->getParam('topicid');
         $forumId = (int)$this->getRequest()->getParam('forumid');
         $countPosts = $forumMapper->getCountPostsByTopicId($topicId);
-        if ($this->getUser() && $this->getUser()->isAdmin()) {
+
+        if ($this->getUser() && $this->getUser()->isAdmin() && $this->getRequest()->isSecure()) {
             $postMapper->deleteById($postId);
             if ($countPosts === '1') {
                 $topicMapper->deleteById($topicId);
@@ -177,7 +178,7 @@ class Showposts extends \Ilch\Controller\Frontend
             $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
         }
 
-        $this->addMessage('noAccess', 'danger');
+        $this->addMessage('noAccessDelete', 'danger');
         $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId, 'forumid' => $forumId]);
     }
 
