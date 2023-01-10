@@ -11,6 +11,8 @@ use Modules\Admin\Models\MenuItem;
 
 class Model
 {
+    protected $layout;
+
     /**
      * Id of the menu.
      *
