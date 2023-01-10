@@ -492,12 +492,11 @@ abstract class Base
     {
         $locale = '';
         $config = \Ilch\Registry::get('config');
-        if ($config->get('multilingual_acp') && $this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
+        if ($config !== null && $config->get('multilingual_acp') && $this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
             $locale = $this->layout->getTranslator()->getLocale();
         }
 
         if ($this->modRewrite === null) {
-            $config = \Ilch\Registry::get('config');
             if ($config !== null) {
                 $this->modRewrite = (bool) $config->get('mod_rewrite');
             } else {

@@ -173,13 +173,16 @@ class Redirect
     public function getUrl($url = [], ?string $route = null): string
     {
         $config = Registry::get('config');
-
         $locale = '';
-        if ($config->get('multilingual_acp') && $this->translator->getLocale() != $config->get('content_language')) {
-            $locale = $this->translator->getLocale();
-        }
+        $modRewrite = false;
 
-        $modRewrite = (bool)$config->get('mod_rewrite');
+        if ($config !== null) {
+            $modRewrite = (bool)$config->get('mod_rewrite');
+
+            if ($config->get('multilingual_acp') && $this->translator->getLocale() != $config->get('content_language')) {
+                $locale = $this->translator->getLocale();
+            }
+        }
 
         if (empty($url)) {
             return BASE_URL;
