@@ -30,8 +30,8 @@ class AfterDatabaseLoad
                     $request->setParam('locale', $permas[$urlParts[0]]['locale']);
                 }
                 unset($urlParts[0]);
-                if ($urlParts[1] === 'locale') {
-                    unset($urlParts[1]);
+                if (isset($urlParts[0]) && $urlParts[0] === 'locale') {
+                    unset($urlParts[0]);
                 }
 
                 $result = $router->convertParamStringIntoArray(implode('/', $urlParts));
