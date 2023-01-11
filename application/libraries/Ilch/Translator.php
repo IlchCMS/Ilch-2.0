@@ -22,7 +22,7 @@ class Translator
      * Key as the short locale, value as the translations array from the
      * translations file.
      *
-     * @var mixed[]
+     * @var array
      */
     private $translations = [];
 
@@ -53,9 +53,9 @@ class Translator
     /**
      * Sets the locale to use for the request.
      *
-     * @param string $locale
+     * @param string|null $locale
      */
-    public function __construct($locale = null)
+    public function __construct(string $locale = null)
     {
         // If a setting is given, set the locale to the given one.
         if ($locale !== null) {
@@ -66,10 +66,10 @@ class Translator
     /**
      * Loads a translation array for the set locale from the given directory.
      *
-     * @param  string  $transDir The directory where the translation resides.
-     * @return boolean True if the translations got loaded, false if not.
+     * @param string $transDir The directory where the translation resides.
+     * @return bool True if the translations got loaded, false if not.
      */
-    public function load($transDir)
+    public function load(string $transDir): bool
     {
         if (!is_dir($transDir)) {
             return false;
@@ -104,7 +104,7 @@ class Translator
      * @param [, mixed $args [, mixed $... ]]
      * @return string
      */
-    public function trans($key)
+    public function trans(string $key): string
     {
         $translatedText = $key;
 
@@ -121,9 +121,7 @@ class Translator
 
         $arguments = func_get_args();
         $arguments[0] = $translatedText;
-        $translatedText = sprintf(...$arguments);
-
-        return $translatedText;
+        return sprintf(...$arguments);
     }
 
     /**
@@ -139,15 +137,13 @@ class Translator
      * @return string
      * @since 2.1.32
      */
-    public function transOtherLayout($layoutKey, $key)
+    public function transOtherLayout(string $layoutKey, string $key): string
     {
         $translatedText = $this->translationsLayout[$key] ?? $key;
 
         $arguments = array_slice(func_get_args(), 1);
         $arguments[0] = $translatedText;
-        $translatedText = sprintf(...$arguments);
-
-        return $translatedText;
+        return sprintf(...$arguments);
     }
 
     /**
@@ -162,7 +158,7 @@ class Translator
     /**
      * Returns the translation array.
      */
-    public function getTranslations()
+    public function getTranslations(): array
     {
         return $this->translations;
     }
@@ -172,7 +168,7 @@ class Translator
      *
      * @return array
      */
-    public function getLocaleList()
+    public function getLocaleList(): array
     {
         return [
             'en_EN' => 'English',
@@ -183,10 +179,10 @@ class Translator
     /**
      * Shortens the locale so only the first to characters get returned.
      *
-     * @param  string $locale
+     * @param string $locale
      * @return string
      */
-    public function shortenLocale($locale)
+    public function shortenLocale(string $locale): string
     {
         return substr($locale, 0, 2);
     }
@@ -196,7 +192,7 @@ class Translator
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -204,10 +200,10 @@ class Translator
     /**
      * Sets the locale used for the translation.
      *
-     * @param string
+     * @param string $locale
      * @param bool $reloadTranslations
      */
-    public function setLocale($locale, $reloadTranslations = false)
+    public function setLocale(string $locale, bool $reloadTranslations = false)
     {
         $this->locale = $locale;
         if ($reloadTranslations) {
@@ -225,7 +221,7 @@ class Translator
      * @param string $currencyCode (ISO 4217)
      * @return string
      */
-    public function getFormattedCurrency($amount, $currencyCode)
+    public function getFormattedCurrency(float $amount, string $currencyCode): string
     {
         $numberFormatter = new \NumberFormatter($this->getLocale(), \NumberFormatter::CURRENCY);
         $returnValue = $numberFormatter->formatCurrency($amount, $currencyCode);
@@ -248,7 +244,7 @@ class Translator
      * @return bool
      * @since 2.1.31
      */
-    private function isCallFromLayout()
+    private function isCallFromLayout(): bool
     {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
 
