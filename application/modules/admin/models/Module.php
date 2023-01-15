@@ -8,6 +8,9 @@ namespace Modules\Admin\Models;
 
 class Module extends \Ilch\Model
 {
+
+    protected $content = [];
+
     /**
      * Key of the module.
      *
