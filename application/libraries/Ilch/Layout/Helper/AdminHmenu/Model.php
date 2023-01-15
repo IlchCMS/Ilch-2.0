@@ -8,6 +8,8 @@ namespace Ilch\Layout\Helper\AdminHmenu;
 
 class Model
 {
+    protected $layout;
+
     /**
      * @var array
      */
