@@ -140,4 +140,5 @@ return [
     'clock' => 'o\'clock',
     'read' => 'read',
     'unread' => 'unread',
+    'confirmDeletePost' => 'Do you really want to delete this post?',
 ];
