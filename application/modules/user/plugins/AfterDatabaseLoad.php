@@ -88,15 +88,15 @@ class AfterDatabaseLoad
 
         if ($request->getParam('language')) {
             $_SESSION['language'] = $request->getParam('language');
-            $Redirect = new \Ilch\Redirect($request);
+            $pluginData['translator']->setLocale($_SESSION['language']);
+            $Redirect = new \Ilch\Redirect($request, $pluginData['translator']);
             $Redirect->to($request->unsetParam('language')->getArray());
         }
 
         if ($request->getParam('ilch_layout')) {
             $_SESSION['layout'] = $pluginData['request']->getParam('ilch_layout');
-            $Redirect = new \Ilch\Redirect($request);
+            $Redirect = new \Ilch\Redirect($request, $pluginData['translator']);
             $Redirect->to($request->unsetParam('ilch_layout')->getArray());
-
         }
 
         if (!$request->isAdmin() && !strpos($site, 'user/ajax/checknewmessage') && !strpos($site,

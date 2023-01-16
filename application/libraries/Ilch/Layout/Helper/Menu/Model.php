@@ -229,7 +229,10 @@ class Model
 
                 if ($menuData['items'][$itemId]->isPageLink()) {
                     $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId(), $locale);
-                    $href = $this->layout->getUrl($page->getPerma());
+                    if (!$page) {
+                        $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId());
+                    }
+                    $href = $this->layout->getUrl($page ? $page->getPerma() : '');
                 } elseif ($menuData['items'][$itemId]->isModuleLink()) {
                     $href = $this->layout->getUrl(
                         ['module' => $menuData['items'][$itemId]->getModuleKey(), 'action' => 'index', 'controller' => 'index']

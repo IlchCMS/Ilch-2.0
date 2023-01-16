@@ -47,11 +47,16 @@ class Redirect
      * Constructor
      *
      * @param Request $request Request instance
+     * @param null|Translator $translator Translator instance
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, ?Translator $translator = null)
     {
         $this->request = $request;
-        $this->translator = Registry::get('translator');
+        if ($translator) {
+            $this->translator = $translator;
+        } else {
+            $this->translator = Registry::get('translator');
+        }
     }
 
     /**
@@ -197,7 +202,10 @@ class Redirect
         if (isset($url['module']) && $url['module'] === 'admin' && isset($url['controller']) && $url['controller'] === 'page' && isset($url['action']) && $url['action'] === 'show' && isset($url['id'])) {
             $pageMapper = new \Modules\Admin\Mappers\Page();
             $page = $pageMapper->getPageByIdLocale((int)$url['id'], $locale);
-            $urlParts[] = $page->getPerma();
+            if (!$page) {
+                $page = $pageMapper->getPageByIdLocale((int)$url['id']);
+            }
+            $urlParts[] = $page ? $page->getPerma() : '';
             unset($url['module'], $url['controller'], $url['action'], $url['id']);
         } else {
             if (isset($url['module'])) {
