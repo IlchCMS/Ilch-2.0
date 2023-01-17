@@ -492,8 +492,8 @@ abstract class Base
     {
         $locale = '';
         $config = \Ilch\Registry::get('config');
-        if ($config !== null && $config->get('multilingual_acp') && $this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
-            $locale = $this->layout->getTranslator()->getLocale();
+        if ($config !== null && $config->get('multilingual_acp') && $this->translator->getLocale() != $config->get('content_language')) {
+            $locale = $this->translator->getLocale();
         }
 
         if ($this->modRewrite === null) {
@@ -515,7 +515,10 @@ abstract class Base
             if (isset($url['module']) && $url['module'] === 'admin' && isset($url['controller']) && $url['controller'] === 'page' && isset($url['action']) && $url['action'] === 'show' && isset($url['id'])) {
                 $pageMapper = new \Modules\Admin\Mappers\Page();
                 $page = $pageMapper->getPageByIdLocale((int)$url['id'], $locale);
-                $urlParts[] = $page->getPerma();
+                if (!$page) {
+                    $page = $pageMapper->getPageByIdLocale((int)$url['id']);
+                }
+                $urlParts[] = $page ? $page->getPerma() : '';
                 unset($url['module'], $url['controller'], $url['action'], $url['id']);
             } else {
                 if (isset($url['module'])) {
