@@ -6,6 +6,8 @@
 
 namespace Modules\Admin\Mappers;
 
+use Ilch\Date;
+use Ilch\Pagination;
 use Modules\Admin\Models\Page as EntriesModel;
 
 class Page extends \Ilch\Mapper
@@ -16,7 +18,7 @@ class Page extends \Ilch\Mapper
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      */
     public function checkDB(): bool
     {
@@ -28,10 +30,10 @@ class Page extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy($where = [], $orderBy = ['p.id' => 'DESC'], $pagination = null)
+    public function getEntriesBy(array $where = [], array $orderBy = ['p.id' => 'DESC'], Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.date_created'])
@@ -50,20 +52,20 @@ class Page extends \Ilch\Mapper
             $result = $select->execute();
         }
 
-        $entryArray = $result->fetchRows();
-        if (empty($entryArray)) {
+        $entriesRows = $result->fetchRows();
+        if (empty($entriesRows)) {
             return null;
         }
-        $entrys = [];
+        $entries = [];
 
-        foreach ($entryArray as $entries) {
+        foreach ($entriesRows as $entryRow) {
             $entryModel = new EntriesModel();
 
-            $entryModel->setByArray($entries);
-
-            $entrys[] = $entryModel;
+            $entryModel->setByArray($entryRow);
+            $entries[] = $entryModel;
         }
-        return $entrys;
+
+        return $entries;
     }
 
     /**
@@ -73,7 +75,7 @@ class Page extends \Ilch\Mapper
      * @param array $orderBy
      * @return array
      */
-    public function getPageList(string $locale = '', $orderBy = ['p.id' => 'DESC'])
+    public function getPageList(string $locale = '', array $orderBy = ['p.id' => 'DESC']): ?array
     {
         return $this->getEntriesBy(['pc.locale' => $this->db()->escape($locale)], $orderBy);
     }
@@ -85,12 +87,12 @@ class Page extends \Ilch\Mapper
      * @param string $locale
      * @return EntriesModel|null
      */
-    public function getPageByIdLocale(int $id, string $locale = '')
+    public function getPageByIdLocale(int $id, string $locale = ''): ?EntriesModel
     {
-        $entrys = $this->getEntriesBy(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)], []);
+        $page = $this->getEntriesBy(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)], []);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($page)) {
+            return reset($page);
         }
 
         return null;
@@ -101,7 +103,7 @@ class Page extends \Ilch\Mapper
      *
      * @return array|null
      */
-    public function getPagePermas()
+    public function getPagePermas(): ?array
     {
         $permas = $this->db()->select()
             ->fields(['page_id', 'locale', 'perma'])
@@ -160,7 +162,7 @@ class Page extends \Ilch\Mapper
             }
             return $page->getId();
         } else {
-            $date = new \Ilch\Date();
+            $date = new Date();
             $pageId = $this->db()->insert($this->tablename)
                 ->values(['date_created' => $date->toDb()])
                 ->execute();
