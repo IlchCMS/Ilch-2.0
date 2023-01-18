@@ -191,16 +191,16 @@ class Group extends \Ilch\Controller\Admin
 
             if (!empty($groupId) && empty($groupData['id'])) {
                 $moduleMapper = new ModuleMapper();
-                $modules = $moduleMapper->getModules();
+                $modules = $moduleMapper->getModules() ?? [];
 
                 $pageMapper = new PageMapper();
-                $pages = $pageMapper->getPageList();
+                $pages = $pageMapper->getPageList() ?? [];
 
                 $articleMapper = new ArticleMapper();
-                $articles = $articleMapper->getArticles();
+                $articles = $articleMapper->getArticles() ?? [];
 
                 $boxMapper = new BoxMapper();
-                $boxes = $boxMapper->getSelfBoxList('');
+                $boxes = $boxMapper->getSelfBoxList('') ?? [];
 
                 $accessTypes = [
                     'module' => $modules,
@@ -308,16 +308,16 @@ class Group extends \Ilch\Controller\Admin
         }
 
         $moduleMapper = new ModuleMapper();
-        $modules = $moduleMapper->getModules();
+        $modules = $moduleMapper->getModules() ?? [];
 
         $pageMapper = new PageMapper();
-        $pages = $pageMapper->getPageList();
+        $pages = $pageMapper->getPageList() ?? [];
 
         $articleMapper = new ArticleMapper();
-        $articles = $articleMapper->getArticles();
+        $articles = $articleMapper->getArticles() ?? [];
 
         $boxMapper = new BoxMapper();
-        $boxes = $boxMapper->getSelfBoxList('');
+        $boxes = $boxMapper->getSelfBoxList('') ?? [];
 
         $accessTypes = [
             'module' => $modules,
