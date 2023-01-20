@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'history',
-        'version' => '1.7.0',
+        'version' => '1.8.0',
         'icon_small' => 'fa-history',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',

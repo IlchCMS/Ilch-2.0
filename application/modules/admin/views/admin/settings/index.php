@@ -264,23 +264,6 @@
         </div>
     </div>
 
-    <h1><?=$this->getTrans('fontAwesomePro') ?></h1>
-    <p><?=$this->getTrans('fontAwesomeProDescription') ?></p>
-    <div id="fontAwesomePro" class="form-group">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('fontAwesomePro') ?>:
-        </div>
-        <div class="col-lg-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="fontAwesomePro-on" name="fontAwesomePro" value="1" <?= ($this->get('fontAwesomePro')) ? 'checked="checked"' : '' ?> />
-                <label for="fontAwesomePro-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="fontAwesomePro-off" name="fontAwesomePro" value="0" <?= (!$this->get('fontAwesomePro')) ? 'checked="checked"' : '' ?> />
-                <label for="fontAwesomePro-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-        </div>
-    </div>
-
     <h1><?=$this->getTrans('updateserver') ?></h1>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
