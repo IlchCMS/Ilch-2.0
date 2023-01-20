@@ -1,3 +1,4 @@
+<?php $config = \Ilch\Registry::get('config'); ?>
 <!DOCTYPE html>
 <html lang="de">
     <head>
@@ -13,7 +14,14 @@
 
         <!-- STYLES -->
         <link href="<?=$this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
+    <?php if ($config->get('fontAwesomePro')) : ?>
         <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') ?>" rel="stylesheet">
+    <?php else : ?>
+        <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/fontawesome.min.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/solid.min.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/brands.min.css') ?>" rel="stylesheet">
+    <?php endif; ?>
+        <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/v5-font-face.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/main.css') ?>" rel="stylesheet">

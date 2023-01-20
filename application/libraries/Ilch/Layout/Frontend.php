@@ -293,9 +293,18 @@ class Frontend extends Base
             }
         }
 
+        if ($this->getConfigKey('fontAwesomePro')) {
+            $html .= '<link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/all.min.css').'" rel="stylesheet">';
+        } else {
+            $html .= '
+                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/fontawesome.min.css').'" rel="stylesheet">
+                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/solid.min.css').'" rel="stylesheet">
+                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/brands.min.css').'" rel="stylesheet">';
+        }
+
         $html .= '
                 <link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">
-                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/all.min.css').'" rel="stylesheet">
+                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/v5-font-face.min.css').'" rel="stylesheet">
                 <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getVendorUrl('npm-asset/jquery-ui/dist/themes/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">

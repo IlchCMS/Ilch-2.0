@@ -114,6 +114,7 @@ class Settings extends \Ilch\Controller\Admin
                 'defaultPaginationObjects' => 'numeric|integer|min:1',
                 'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
                 'htmlPurifier' => 'required|numeric|integer|min:0|max:1',
+                'fontAwesomePro' => 'required|numeric|integer|min:0|max:1',
                 'updateserver' => 'required|url',
                 'captcha' => 'required|numeric|integer|min:0|max:3'
             ];
@@ -143,6 +144,7 @@ class Settings extends \Ilch\Controller\Admin
                     $this->getConfig()->set('admin_layout_hmenu', '');
                 }
                 $this->getConfig()->set('disable_purifier', !$this->getRequest()->getPost('htmlPurifier'));
+                $this->getConfig()->set('fontAwesomePro', $this->getRequest()->getPost('fontAwesomePro'));
                 $this->getConfig()->set('updateserver', $this->getRequest()->getPost('updateserver'));
 
                 $this->addMessage('saveSuccess');
@@ -167,6 +169,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('pages', $pageMapper->getPageList());
         $this->getView()->set('hmenuFixed', $this->getConfig()->get('admin_layout_hmenu'));
         $this->getView()->set('htmlPurifier', !$this->getConfig()->get('disable_purifier'));
+        $this->getView()->set('fontAwesomePro', $this->getConfig()->get('fontAwesomePro'));
         $this->getView()->set('defaultPaginationObjects', $this->getConfig()->get('defaultPaginationObjects'));
         $this->getView()->set('hideCaptchaFor', explode(',', $this->getConfig()->get('hideCaptchaFor')));
         $this->getView()->set('captcha', (int)$this->getConfig()->get('captcha'));
