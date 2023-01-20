@@ -68,8 +68,6 @@ return [
                                   This can cause the output to not work or look different than expected.<br>
                                   <a href="https://github.com/IlchCMS/Ilch-2.0/wiki/Doku-Benutzer-Inhalt-eigene-Boxen-Seiten">See documentation for further information.</a></p>
                                   <p><strong>It is not recommended to disable this security measure.</strong></p>',
-    'fontAwesomePro' => 'Font Awesome Pro',
-    'fontAwesomeProDescription' => 'For the usage of all icons and existing styles you need a "Font Awesome Pro" license. Further information are on the official website of Font Awesome.',
     'timezone' => 'timezone',
     'home' => 'Start',
     'updateserver' => 'Updateserver',
