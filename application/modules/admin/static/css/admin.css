@@ -164,6 +164,10 @@ aside > nav > ul > li > ul > li:last-child {
     border-bottom: 1px solid #525151;
 }
 aside > nav > ul > li.active > a:before, aside > nav > ul > li > ul > li.active > a:before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f0d9";
+    right: -8px;
     margin-top: -13px;
     margin-right: -3px;
     font-size: 42px;
@@ -520,7 +524,7 @@ nav ul li.active > a:before {
     height: 27px;
     line-height: normal;
     position: absolute;
-    right: -1px;
+    right: -4px;
     font-size: 20px;
     color: #fff;
 }
