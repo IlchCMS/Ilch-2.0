@@ -28,7 +28,7 @@ if ($history != '') {
                    value="<?=($history != '') ? $date : $this->get('post')['date'] ?>"
                    readonly>
             <span class="input-group-addon">
-                <span class="fa fa-calendar"></span>
+                <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
@@ -71,7 +71,7 @@ if ($history != '') {
                    value="<?=($history != '') ? $this->escape($history->getType()) : $this->get('post')['symbol'] ?>"
                    readonly />
             <span class="input-group-addon">
-                <span class="fas fa-mouse-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
+                <span class="fa-solid fa-mouse-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
             </span>
         </div>
     </div>
@@ -85,7 +85,7 @@ if ($history != '') {
                    name="color"
                    value="<?=($history != '') ? $history->getColor() : '#75ce66' ?>">
             <span class="input-group-addon">
-                <span class="fa fa-undo" onclick="document.getElementById('color').color.fromString('75ce66')"></span>
+                <span class="fa-solid fa-undo" onclick="document.getElementById('color').color.fromString('75ce66')"></span>
             </span>
         </div>
     </div>
@@ -133,14 +133,14 @@ $(document).ready(function() {
 
         $.each(content, function(index, icon) {
             if (~icon.styles.indexOf('brands')) {
-                icons.push('fab fa-' + index);
+                icons.push('fa-brands fa-' + index);
             } else {
                 if (~icon.styles.indexOf('solid')) {
-                    icons.push('fas fa-' + index);
+                    icons.push('fa-solid fa-' + index);
                 }
 
                 if (~icon.styles.indexOf('regular')) {
-                    icons.push('far fa-' + index);
+                    icons.push('fa-regular fa-' + index);
                 }
             }
         })

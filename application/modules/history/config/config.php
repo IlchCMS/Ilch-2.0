@@ -24,8 +24,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'With this module you can tell the story of your website, club etc.',
             ],
         ],
-        'ilchCore' => '2.1.32',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -89,6 +89,8 @@ class Config extends \Ilch\Config\Install
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'history' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
+            case "1.7.0":
         }
     }
 }
