@@ -233,14 +233,14 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
 
     $.each(content, function(index, icon) {
         if (~icon.styles.indexOf('brands')) {
-            icons.push('fab fa-' + index);
+            icons.push('fa-brand fa-' + index);
         } else {
             if (~icon.styles.indexOf('solid')) {
-                icons.push('fas fa-' + index);
+                icons.push('fa-solid fa-' + index);
             }
 
             if (~icon.styles.indexOf('regular')) {
-                icons.push('far fa-' + index);
+                icons.push('fa-regular fa-' + index);
             }
         }
     })
