@@ -311,14 +311,14 @@ class Config extends \Ilch\Config\Install
                 (3, "Guest");
 
             INSERT INTO `[prefix]_profile_fields` (`id`, `key`, `type`, `icon`, `addition`, `show`, `position`) VALUES
-                (1, "website", 2, "fa-globe", "", 1, 0),
-                (2, "facebook", 2, "fa-facebook", "https://www.facebook.com/", 1, 1),
-                (3, "twitter", 2, "fa-twitter", "https://twitter.com/", 1, 2),
-                (4, "google+", 2, "fa-google-plus", "https://plus.google.com/", 1, 3),
-                (5, "steam", 2, "fa-steam-square", "https://steamcommunity.com/id/", 1, 4),
-                (6, "twitch", 2, "fa-twitch", "https://www.twitch.tv/", 1, 5),
-                (7, "teamspeak", 2, "fa-headphones", "ts3server://", 1, 6),
-                (8, "discord", 2, "fa-headphones", "https://discord.gg/", 1, 7);
+                (1, "website", 2, "fa-solid fa-globe", "", 1, 0),
+                (2, "facebook", 2, "fa-brands fa-facebook", "https://www.facebook.com/", 1, 1),
+                (3, "twitter", 2, "fa-brands fa-twitter", "https://twitter.com/", 1, 2),
+                (4, "google+", 2, "fa-brands fa-google-plus", "https://plus.google.com/", 1, 3),
+                (5, "steam", 2, "fa-brands fa-steam-square", "https://steamcommunity.com/id/", 1, 4),
+                (6, "twitch", 2, "fa-brands fa-twitch", "https://www.twitch.tv/", 1, 5),
+                (7, "teamspeak", 2, "fa-solid fa-headphones", "ts3server://", 1, 6),
+                (8, "discord", 2, "fa-brands fa-discord", "https://discord.gg/", 1, 7);
 
             INSERT INTO `[prefix]_profile_trans` (`field_id`, `locale`, `name`) VALUES
                 (1, "de_DE", "Webseite"),
@@ -605,6 +605,19 @@ class Config extends \Ilch\Config\Install
                 SET FOREIGN_KEY_CHECKS = 1;
                 ");
                 break;
+            case "2.1.47":
+                // convert icon to new icons
+                $this->db()->queryMulti("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-solid fa-globe' WHERE `icon` = 'fa-globe' OR `icon` = 'fas fa-globe';
+                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-facebook' WHERE `icon` = 'fa-facebook' OR `icon` = 'fab fa-facebook';
+                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-twitter' WHERE `icon` = 'fa-twitter' OR `icon` = 'fab fa-twitter';
+                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-google-plus' WHERE `icon` = 'fa-google-plus' OR `icon` = 'fab fa-google-plus';
+                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-steam-square' WHERE `icon` = 'fa-steam-square' OR `icon` = 'fab fa-steam-square';
+                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-twitch' WHERE `icon` = 'fa-twitch' OR `icon` = 'fab fa-twitch';
+                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-solid fa-headphones' WHERE `icon` = 'fa-headphones' OR `icon` = 'fas fa-headphones';
+                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-solid fa-microphone' WHERE `icon` = 'fas fa-microphone';
+                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fab fa-discord';");
+                $this->db()->queryMulti("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-microphone' AND `key` = 'discord';
+                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-headphones' AND `key` = 'discord';");
         }
     }
 }

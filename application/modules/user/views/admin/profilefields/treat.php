@@ -232,19 +232,25 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
     let icons = [];
 
     $.each(content, function(index, icon) {
-        if (icon.styles == 'brands') {
-            icons.push('fab fa-' + index);
-        } else if (icon.styles == 'solid') {
-            icons.push('fas fa-' + index);
-        } else if (icon.styles == 'regular') {
-            icons.push('far fa-' + index);
+        if (~icon.styles.indexOf('brands')) {
+            icons.push('fa-brand fa-' + index);
+        } else {
+            if (~icon.styles.indexOf('solid')) {
+                icons.push('fa-solid fa-' + index);
+            }
+
+            if (~icon.styles.indexOf('regular')) {
+                icons.push('fa-regular fa-' + index);
+            }
         }
     })
 
-    for (var x = 0; x < icons.length;) {
+    let div;
+    for (let x = 0; x < icons.length;) {
+        let y;
         div = '<div class="row">';
-        for (var y = x; y < x+6; y++) {
-            div += '<div class="icon col-lg-2"><i id="'+icons[y]+'" class="faicon '+icons[y]+' fa-2x"></i></div>';
+        for (y = x; y < x + 6; y++) {
+            div += '<div class="icon col-lg-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
         }
         div += '</div>';
         x = y;

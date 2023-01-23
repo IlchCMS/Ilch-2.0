@@ -105,12 +105,14 @@ $version = $this->get('version');
                         <col>
                     </colgroup>
                     <thead>
-                        <th><?=$this->getCheckAllCheckbox('check_notifications') ?></th>
-                        <th></th>
-                        <th></th>
-                        <th><?=$this->getTrans('date') ?></th>
-                        <th><?=$this->getTrans('module') ?></th>
-                        <th><?=$this->getTrans('message') ?></th>
+                        <tr>
+                            <th><?=$this->getCheckAllCheckbox('check_notifications') ?></th>
+                            <th></th>
+                            <th></th>
+                            <th><?=$this->getTrans('date') ?></th>
+                            <th><?=$this->getTrans('module') ?></th>
+                            <th><?=$this->getTrans('message') ?></th>
+                        </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($notifications as $notification): ?>
