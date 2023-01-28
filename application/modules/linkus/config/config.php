@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'linkus',
-        'version' => '1.5.0',
+        'version' => '1.6.0',
         'icon_small' => 'fa-link',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -24,8 +24,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Provides HTML code or BBCode for others to link to your website.',
             ],
         ],
-        'ilchCore' => '2.1.16',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()

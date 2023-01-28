@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'downloads',
-        'version' => '1.13.1',
+        'version' => '1.13.2',
         'icon_small' => 'fa-arrow-circle-o-down',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -24,8 +24,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'You can create downloads and add information to them. Further you can add them to categories.',
             ],
         ],
-        'ilchCore' => '2.1.46',
-        'phpVersion' => '7.0'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
