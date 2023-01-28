@@ -33,7 +33,7 @@
                        name="banner"
                        value="<?=($linkus != '') ? $this->escape($linkus->getBanner()) : $this->escape($this->get('post')['banner']) ?>"
                        readonly />
-                <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
     </div>

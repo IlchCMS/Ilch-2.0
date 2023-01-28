@@ -182,7 +182,7 @@
                             </li>
                             <li <?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'layouts') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'index']) ?>">
-                                    <i class="fa fa-picture-o hidden-sm hidden-md"></i> <?=$this->getTrans('menuLayouts') ?>
+                                    <i class="fa-regular fa-image hidden-sm hidden-md"></i> <?=$this->getTrans('menuLayouts') ?>
                                 </a>
                             </li>
                         <?php endif; ?>

@@ -77,7 +77,7 @@ if ($this->get('article') != '') {
                        id="selectedImage"
                        name="image"
                        value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getImage()) : $this->originalInput('image') ?>" />
-                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
     </div>

@@ -51,7 +51,7 @@
                        placeholder="<?=$this->getTrans('enemyImageInfo') ?>"
                        value="<?=$this->escape($this->originalInput('enemyImage', ($entrie->getId()?$entrie->getEnemyImage():''))) ?>" />
                 <span class="input-group-addon">
-                    <a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a>
+                    <a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a>
                 </span>
             </div>
         </div>

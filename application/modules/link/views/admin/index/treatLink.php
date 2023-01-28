@@ -47,7 +47,7 @@
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                        value="<?=($this->get('link') != '') ? $this->escape($this->get('link')->getBanner()) : $this->escape($this->get('post')['banner']) ?>" />
-                <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
     </div>
