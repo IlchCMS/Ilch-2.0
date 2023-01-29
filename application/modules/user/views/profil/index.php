@@ -56,7 +56,7 @@ foreach ($profil->getGroups() as $group) {
                     <a href="<?=$this->getUrl(['controller' => 'mail', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
                 <?php endif; ?>
                 <?php if ($this->get('gallery') != 0 && $profil->getOptGallery() != 0 && $this->get('galleryAllowed') != 0): ?>
-                    <a href="<?=$this->getUrl(['controller' => 'gallery', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa fa-picture-o" title="<?=$this->getTrans('gallery') ?>"></a>
+                    <a href="<?=$this->getUrl(['controller' => 'gallery', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa-regular fa-image" title="<?=$this->getTrans('gallery') ?>"></a>
                 <?php endif; ?>
 
                 <?php foreach ($profileIconFields as $profileIconField) {

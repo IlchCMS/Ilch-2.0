@@ -21,7 +21,7 @@
                 </span>
                 <span class="input-group-addon">
                     <a href="javascript:media_1()" id="media">
-                        <i class="fa fa-picture-o"></i>
+                        <i class="fa-regular fa-image"></i>
                     </a>
                 </span>
             </div>
@@ -47,7 +47,7 @@
                 </span>
                 <span class="input-group-addon">
                     <a href="javascript:media_2()" id="media">
-                        <i class="fa fa-picture-o"></i>
+                        <i class="fa-regular fa-image"></i>
                     </a>
                 </span>
             </div>

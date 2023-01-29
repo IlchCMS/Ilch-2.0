@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.15.2',
+        'version' => '1.15.3',
         'icon_small' => 'fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -43,7 +43,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.43',
+        'ilchCore' => '2.1.48',
         'phpVersion' => '7.3'
     ];
 

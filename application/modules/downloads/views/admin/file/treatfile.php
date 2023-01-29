@@ -45,7 +45,7 @@ if ($file->getFileImage() != '') {
                                        name="fileImage"
                                        placeholder="<?=$this->getTrans('fileImageInfo') ?>"
                                        value="<?=$this->escape($file->getFileImage()) ?>" />
-                                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
+                                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a></span>
                             </div>
                         </div>
                     </div>

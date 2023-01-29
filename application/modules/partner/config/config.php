@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'partner',
-        'version' => '1.11.0',
+        'version' => '1.12.0',
         'icon_small' => 'fa-handshake-o',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -34,8 +34,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.43',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()

@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'awards',
-        'version' => '1.8.0',
+        'version' => '1.9.0',
         'icon_small' => 'fa-trophy',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -25,8 +25,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can award users or teams an award.',
             ],
         ],
-        'ilchCore' => '2.1.16',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()

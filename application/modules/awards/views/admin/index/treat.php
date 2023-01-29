@@ -60,7 +60,7 @@ if ($awards != '') {
                     <span class="fa fa-times"></span>
                 </span>
                 <span class="input-group-addon">
-                    <a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a>
+                    <a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a>
                 </span>
             </div>
         </div>

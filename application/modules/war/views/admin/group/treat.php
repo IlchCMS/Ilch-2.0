@@ -39,7 +39,7 @@
                        placeholder="<?=$this->getTrans('groupImage') ?>"
                        value="<?=$this->escape($this->originalInput('groupImage', ($entrie->getId()?$entrie->getGroupImage():''))) ?>" />
                 <span class="input-group-addon">
-                    <a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a>
+                    <a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a>
                 </span>
             </div>
         </div>
