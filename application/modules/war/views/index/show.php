@@ -22,9 +22,9 @@ $commentsClass = new Ilch\Comments();
         </div>
         <div class="col-md-2 plays-vs">
             <h4>
-                <span class="fa-solid fa-arrow-circle-left "></span>
+                <span class="fa-solid fa-circle-arrow-left"></span>
                 <span>VS</span>
-                <span class="fa-solid fa-arrow-circle-right"></span>
+                <span class="fa-solid fa-circle-arrow-right"></span>
             </h4>
         </div>
         <div class="col-md-5">
@@ -158,7 +158,7 @@ $commentsClass = new Ilch\Comments();
                         ?>
                         <li class="list-group-item<?=$class ?>">
                             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: 
-                            <?=$text ?><?=$comment ?> <i class="fas fa-info-circle" data-toggle="popover" data-trigger="hover" data-content="<?=(new \Ilch\Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></i>
+                            <?=$text ?><?=$comment ?> <i class="fas fa-circle-info" data-toggle="popover" data-trigger="hover" data-content="<?=(new \Ilch\Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></i>
                         </li>
                     <?php endforeach; ?>
                     </ul>

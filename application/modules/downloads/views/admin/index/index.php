@@ -23,7 +23,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                 </span>
                 <span class="title">'.$item->getTitle().'</span>
                 <span class="item_delete">
-                    <i class="fa-solid fa-times-circle"></i>
+                    <i class="fa-solid fa-circle-xmark"></i>
                 </span><span class="item_edit">
                     <i class="fa-solid fa-edit"></i>
                 </span>
@@ -144,7 +144,7 @@ $(document).ready (
         });
         $('.disclose').on('click', function () {
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
-            $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
+            $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-circle-plus');
         });
         $('#downloadsForm').submit (
             function () {
@@ -217,7 +217,7 @@ $(document).ready (
                     +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
                     +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
                     +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
-                    +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa-solid fa-times-circle"></i></span></div></li>').appendTo(append);
+                    +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa-solid fa-circle-xmark"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
             }

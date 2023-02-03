@@ -57,7 +57,7 @@ if ($awards != '') {
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                        value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
                 <span class="input-group-addon">
-                    <span class="fa-solid fa-times"></span>
+                    <span class="fa-solid fa-xmark"></span>
                 </span>
                 <span class="input-group-addon">
                     <a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a>

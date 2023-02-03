@@ -24,37 +24,37 @@ class Enemy extends \Ilch\Controller\Admin
             [
                 'name' => 'menuEnemy',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'enemy', 'action' => 'index']),
                 [
                     'name' => 'menuActionNewEnemy',
                     'active' => false,
-                    'icon' => 'fa-solid fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'enemy', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'menuGroups',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'index'])
             ],
             [
                 'name' => 'menuMaps',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'maps', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuGameIcon',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'icons', 'action' => 'index'])
             ]
         ];
