@@ -91,6 +91,7 @@ return [
     'noWars' => 'Keine Wars vorhanden',
     'noGroup' => 'Keine Gruppen vorhanden',
     'noEnemy' => 'Keine Gegner vorhanden',
+    'noMaps' => 'Keine Karten vorhanden',
     'warEnemy' => 'Gegner wählen',
     'warGroup' => 'Gruppe wählen',
     'warTime' => 'Datum/Uhrzeit',

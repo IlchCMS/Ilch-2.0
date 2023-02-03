@@ -1,7 +1,7 @@
 <h1>
     <?=$this->getTrans('manage') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
-        <i class="fa fa-info"></i>
+        <i class="fa-solid fa-info"></i>
     </a>
 </h1>
 <?php if ($this->get('entries') != ''): ?>
@@ -62,7 +62,7 @@
                                     if ($this->get('badge') > 1) {
                                         $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
                                     }
-                                    echo '<a href="'.$this->getUrl($freeArray, null, true).'" title="'.$this->getTrans('setfree').'"><i class="fa fa-check-square-o text-success"></i></a>';
+                                    echo '<a href="'.$this->getUrl($freeArray, null, true).'" title="'.$this->getTrans('setfree').'"><i class="fa-solid fa-check-square-o text-success"></i></a>';
                                     ?>
                                 </td>
                             <?php endif; ?>

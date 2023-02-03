@@ -16,37 +16,37 @@ class Settings extends \Ilch\Controller\Admin
             [
                 'name' => 'menuWars',
                 'active' => false,
-                'icon' => 'fa fa-shield',
+                'icon' => 'fa-solid fa-shield',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuEnemy',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'enemy', 'action' => 'index'])
             ],
             [
                 'name' => 'menuGroups',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'index'])
             ],
             [
                 'name' => 'menuMaps',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'maps', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => true,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuGameIcon',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'icons', 'action' => 'index'])
             ]
         ];

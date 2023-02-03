@@ -36,7 +36,7 @@
         if (file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$war->getWarGame().'.png')) {
             $gameImg = '<img src="'.$this->getBoxUrl('static/img/'.urlencode($war->getWarGame()).'.png').'" title="'.$this->escape($war->getWarGame()).'" width="16" height="16">';
         } else {
-            $gameImg = '<i class="fa fa-question-circle text-muted" title="'.$this->escape($war->getWarGame()).'"></i>';
+            $gameImg = '<i class="fa-solid fa-question-circle text-muted" title="'.$this->escape($war->getWarGame()).'"></i>';
         }
         ?>
         <div class="lastwar-box">

@@ -45,7 +45,7 @@
                        value="<?=$this->escape($this->originalInput('warTime', ($entrie->getId()?(new \Ilch\Date($entrie->getWarTime()))->format("d.m.Y H:i"):''))) ?>"
                        readonly />
                 <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
+                    <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
         </div>

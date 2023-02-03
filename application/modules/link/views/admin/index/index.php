@@ -1,7 +1,7 @@
 <h1>
     <?=$this->getTrans('manage') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
-        <i class="fa fa-info"></i>
+        <i class="fa-solid fa-info"></i>
     </a>
 </h1>
 <form class="form-horizontal" id="downloadsForm" method="POST" action="">
