@@ -158,7 +158,7 @@ $commentsClass = new Ilch\Comments();
                         ?>
                         <li class="list-group-item<?=$class ?>">
                             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: 
-                            <?=$text ?><?=$comment ?> <i class="fas fa-circle-info" data-toggle="popover" data-trigger="hover" data-content="<?=(new \Ilch\Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></i>
+                            <?=$text ?><?=$comment ?> <i class="fa-solid fa-circle-info" data-toggle="popover" data-trigger="hover" data-content="<?=(new \Ilch\Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></i>
                         </li>
                     <?php endforeach; ?>
                     </ul>

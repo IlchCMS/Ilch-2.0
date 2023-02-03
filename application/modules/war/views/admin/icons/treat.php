@@ -14,19 +14,21 @@
                    value="<?=$this->escape($this->originalInput('gameName', ($entrie ?? ''))) ?>" />
         </div>
     </div>
-    <div class="<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
-        <label for="gameNameInput" class="col-lg-2 control-label">
+    <div class="form-group<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
+        <label for="gameIcon" class="col-lg-2 control-label">
             <?=$this->getTrans('iconSize') ?>: 16 Pixel <?=$this->getTrans('width') ?>, 16 Pixel <?=$this->getTrans('height') ?>.<br>
             <?=$this->getTrans('allowedFileExtensions') ?>: png
         </label>
         <div class="input-group col-lg-4">
             <span class="input-group-btn">
                 <span class="btn btn-primary btn-file">
-                    <?=$this->getTrans('browse') ?> <input type="file" name="icon" accept="image/png">
+                    <input type="file" name="icon" accept="image/png">
                 </span>
             </span>
             <input type="text" 
-                   class="form-control" 
+                   class="form-control"
+                   id="gameIcon"
+                   name="gameIcon"
                    readonly />
         </div>
     </div>
