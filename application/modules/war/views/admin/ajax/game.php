@@ -15,7 +15,7 @@
                    class="btn btn-danger btn-sm"
                    href="javascript:void(0)"
                    onclick="del(<?=$game->getId() ?>)">
-                    <i class="fa fa-trash-o"></i>
+                    <i class="fa-regular fa-trash-can"></i>
                 </a>
                 <?php endif; ?>
             </label>

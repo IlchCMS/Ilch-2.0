@@ -19,19 +19,19 @@ class Downloads extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => true,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'menuActionDownloadsInsertFile',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-plus-circle',
                     'url'  => 'javascript:media();'
                 ]
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];

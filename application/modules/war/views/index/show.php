@@ -22,9 +22,9 @@ $commentsClass = new Ilch\Comments();
         </div>
         <div class="col-md-2 plays-vs">
             <h4>
-                <span class="fa fa-arrow-circle-left "></span>
+                <span class="fa-solid fa-arrow-circle-left "></span>
                 <span>VS</span>
-                <span class="fa fa-arrow-circle-right"></span>
+                <span class="fa-solid fa-arrow-circle-right"></span>
             </h4>
         </div>
         <div class="col-md-5">

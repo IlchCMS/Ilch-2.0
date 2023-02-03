@@ -20,11 +20,11 @@ $teamsMapper = $this->get('teamsMapper');
                 <div class="award">
                     <div class="rank" align="center">
                         <?php if ($awards->getRank() == 1): ?>
-                            <i class="fa fa-trophy img_gold" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"></i>
+                            <i class="fa-solid fa-trophy img_gold" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"></i>
                         <?php elseif ($awards->getRank() == 2): ?>
-                            <i class="fa fa-trophy img_silver" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"></i>
+                            <i class="fa-solid fa-trophy img_silver" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"></i>
                         <?php elseif ($awards->getRank() == 3): ?>
-                            <i class="fa fa-trophy img_bronze" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"></i>
+                            <i class="fa-solid fa-trophy img_bronze" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"></i>
                         <?php else: ?>
                             <span title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"><?=$awards->getRank() ?></span>
                         <?php endif; ?>

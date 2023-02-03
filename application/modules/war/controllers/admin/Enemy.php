@@ -18,43 +18,43 @@ class Enemy extends \Ilch\Controller\Admin
             [
                 'name' => 'menuWars',
                 'active' => false,
-                'icon' => 'fa fa-shield',
+                'icon' => 'fa-solid fa-shield',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuEnemy',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'enemy', 'action' => 'index']),
                 [
                     'name' => 'menuActionNewEnemy',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'enemy', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'menuGroups',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'index'])
             ],
             [
                 'name' => 'menuMaps',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'maps', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuGameIcon',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'icons', 'action' => 'index'])
             ]
         ];
