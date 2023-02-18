@@ -256,7 +256,7 @@ function url_get_contents(string $url, bool $write_cache = true, bool $ignoreCac
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_USERAGENT      => 'Ilch 2 (+http://www.ilch.de)',
+            CURLOPT_USERAGENT      => 'Ilch 2 (+https://www.ilch.de)',
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS      => 5,
             CURLOPT_CONNECTTIMEOUT => 15,
@@ -378,7 +378,7 @@ function isEmailOnBlacklist(string $emailAddress): bool
 /**
  * Recursive glob()
  *
- * @param string $pattern
+ * @param string $path
  * @param int $flags
  * @return array|false
  */
@@ -511,4 +511,29 @@ function setcookieIlch(string $name, string $value = '', int $expires = 0, $para
     }
 
     return setcookie($name, $value, $params);
+}
+
+/**
+ * Generate a UUID v4.
+ *
+ * @since 2.1.48
+ *
+ * @param string|null $data
+ * @return string|void
+ * @throws Exception
+ * @see https://www.rfc-editor.org/rfc/rfc4122
+ */
+function generateUUID(string $data = null)
+{
+    // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
+    $data = $data ?? random_bytes(16);
+    assert(strlen($data) == 16);
+
+    // Set version to 0100
+    $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+    // Set bits 6-7 to 10
+    $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+
+    // Output the 36 character UUID.
+    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }

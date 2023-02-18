@@ -31,7 +31,7 @@ foreach ($this->get('calendarList') ?? [] as $calendarList) {
     $ical .=
 'BEGIN:VEVENT
 SUMMARY:' .$calendarList->getTitle(). '
-UID:' .$calendarList->getId(). '
+UID:' .generateUUID(). '
 DTSTART:' .date(DATE_ICAL, strtotime($calendarList->getStart())). '
 DTEND:' .date(DATE_ICAL, strtotime($calendarList->getEnd())). '
 LOCATION:' .$calendarList->getPlace(). '
@@ -48,7 +48,7 @@ END:VEVENT\n";
             $ical .=
 'BEGIN:VEVENT
 SUMMARY:' .$calendarList->getTitle(). '
-UID:' .$calendarList->getId(). '
+UID:' .generateUUID(). '
 DTSTART:' .date(DATE_ICAL, strtotime($calendarList->getStart())). '
 DTEND:' .date(DATE_ICAL, strtotime($calendarList->getEnd())). '
 LOCATION:' .$calendarList->getPlace(). '
