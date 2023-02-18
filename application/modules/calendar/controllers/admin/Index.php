@@ -91,9 +91,9 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             $validator = [
-                'title'           => 'required',
-                'start'           => 'required|date:d.m.Y H\:i',
-                'color'           => 'required',
+                'title' => 'required',
+                'start' => 'required|date:d.m.Y H\:i',
+                'color' => 'required',
             ];
 
             if ($this->getRequest()->getPost('periodType') == 'days') {
@@ -122,7 +122,8 @@ class Index extends \Ilch\Controller\Admin
                     }
                 }
 
-                $calendarModel->setTitle($this->getRequest()->getPost('title'))
+                $calendarModel->setUid(($this->getRequest()->getParam('id')) ? $calendarModel->getUid() : generateUUID())
+                    ->setTitle($this->getRequest()->getPost('title'))
                     ->setPlace($this->getRequest()->getPost('place'))
                     ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
                     ->setEnd($this->getRequest()->getPost('end') ? new \Ilch\Date($this->getRequest()->getPost('end')) : '1000-01-01 00:00:00')
@@ -130,6 +131,7 @@ class Index extends \Ilch\Controller\Admin
                     ->setColor($this->getRequest()->getPost('color'))
                     ->setPeriodDay($this->getRequest()->getPost('periodDay'))
                     ->setPeriodType($this->getRequest()->getPost('periodType'))
+                    ->setRepeatUntil($this->getRequest()->getPost('repeatUntil') ? new \Ilch\Date($this->getRequest()->getPost('repeatUntil')) : '1000-01-01 00:00:00')
                     ->setReadAccess($groups);
                 $calendarMapper->save($calendarModel);
 

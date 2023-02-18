@@ -15,7 +15,7 @@ class Events extends \Ilch\Mapper
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      */
     public function checkDB(): bool
     {
@@ -121,8 +121,8 @@ class Events extends \Ilch\Mapper
     }
 
     /**
-     * @param EntriesModel|integer $id
-     * @return boolean
+     * @param EntriesModel|int $id
+     * @return bool
      */
     public function delete($id): bool
     {

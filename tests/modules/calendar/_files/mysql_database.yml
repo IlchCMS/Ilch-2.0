@@ -1,6 +1,7 @@
 calendar:
   -
     id: 1
+    uid: "39efcc37-43dd-43b7-923a-06c4a0d98fc1"
     title: "Training 1"
     place: ""
     start: "2021-05-09 08:10:38"
@@ -11,6 +12,7 @@ calendar:
     read_access_all: 0
   -
     id: 2
+    uid: "39efcc37-43dd-43b7-923a-06c4a0d98fc2"
     title: "Training 2"
     place: ""
     start: "2021-05-09 09:10:38"
@@ -21,6 +23,7 @@ calendar:
     read_access_all: 0
   -
     id: 3
+    uid: "39efcc37-43dd-43b7-923a-06c4a0d98fc3"
     title: "Training 3"
     place: ""
     start: "2021-05-10 09:10:38"
@@ -28,6 +31,19 @@ calendar:
     text: ""
     color: "#32333B"
     period_day: 0
+    read_access_all: 1
+  -
+    id: 4
+    uid: "39efcc37-43dd-43b7-923a-06c4a0d98fc4"
+    title: "Training 4"
+    place: ""
+    start: "2021-05-10 18:00:00"
+    end: "2021-05-10 21:00:00"
+    text: ""
+    color: "#32333B"
+    period_type: "weekly"
+    period_day: 1
+    repeat_until: "2021-12-31 21:00:00"
     read_access_all: 1
 
 calendar_events:

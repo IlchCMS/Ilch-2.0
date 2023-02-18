@@ -35,7 +35,7 @@
                 icalButton: {
                     text: 'iCal',
                     click: function() {
-                        window.location = 'http://217.91.42.180/index.php/calendar/events/iCal/';
+                        window.location = '<?=BASE_URL.'/index.php/calendar/events/iCal/' ?>';
                     }
                 }
             },

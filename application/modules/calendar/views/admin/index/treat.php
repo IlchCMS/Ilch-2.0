@@ -13,9 +13,20 @@ $periodTypes = [
     'weekly' => $this->getTranslator()->trans('weekly'),
     'monthly' => $this->getTranslator()->trans('monthly'),
     'quarterly' => $this->getTranslator()->trans('quarterly'),
+    'yearly' => $this->getTranslator()->trans('yearly'),
     'days' => $this->getTranslator()->trans('days'),
 ];
-$entrie = $this->get('calendar');
+
+$periodAppendix = [
+    'daily' => $this->getTranslator()->trans('daily'),
+    'weekly' => $this->getTranslator()->trans('weeks'),
+    'monthly' => $this->getTranslator()->trans('months'),
+    'yearly' => $this->getTranslator()->trans('years'),
+    'quarterly' => $this->getTranslator()->trans('quarter'),
+    'days' => $this->getTranslator()->trans('days'),
+];
+
+$entry = $this->get('calendar');
  ?>
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
@@ -23,7 +34,7 @@ $entrie = $this->get('calendar');
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <h1>
-        <?=($entrie->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
+        <?=($entry->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
     </h1>
     <div class="form-group<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
         <label for="start" class="col-lg-2 control-label">
@@ -34,7 +45,7 @@ $entrie = $this->get('calendar');
                    class="form-control"
                    id="start"
                    name="start"
-                   value="<?=$this->escape($this->originalInput('start', ($entrie->getId()?(new \Ilch\Date($entrie->getStart()))->format("d.m.Y H:i"):''))) ?>"
+                   value="<?=$this->escape($this->originalInput('start', ($entry->getId()?(new \Ilch\Date($entry->getStart()))->format('d.m.Y H:i'):''))) ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
@@ -50,7 +61,7 @@ $entrie = $this->get('calendar');
                    class="form-control"
                    id="end"
                    name="end"
-                   value="<?=$this->escape($this->originalInput('end', ($entrie->getId()?($entrie->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entrie->getEnd()))->format("d.m.Y H:i") : ''):''))) ?>">
+                   value="<?=$this->escape($this->originalInput('end', ($entry->getId()?($entry->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getEnd()))->format('d.m.Y H:i') : ''):''))) ?>">
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
             </span>
@@ -65,7 +76,7 @@ $entrie = $this->get('calendar');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->escape($this->originalInput('title', ($entrie->getId()?$entrie->getTitle():''))) ?>" />
+                   value="<?=$this->escape($this->originalInput('title', ($entry->getId()?$entry->getTitle():''))) ?>" />
         </div>
     </div>
     <div class="form-group<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
@@ -77,43 +88,63 @@ $entrie = $this->get('calendar');
                    class="form-control"
                    id="place"
                    name="place"
-                   value="<?=$this->escape($this->originalInput('place', ($entrie->getId()?$entrie->getPlace():''))) ?>" />
+                   value="<?=$this->escape($this->originalInput('place', ($entry->getId()?$entry->getPlace():''))) ?>" />
         </div>
     </div>
     <div class="form-group<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
-        <label for="place" class="col-lg-2 control-label">
+        <label for="periodType" class="col-lg-2 control-label">
             <?=$this->getTrans('periodEntry') ?>:
         </label>
         <div class="col-lg-4">
             <select class="form-control" name="periodType" id="periodType">
-                <option value="" <?=($this->originalInput('periodType', ($entrie->getId()?$entrie->getPeriodType():''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
+                <option value="" <?=($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodTypes as $key => $value): ?>
-                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($entrie->getId()?$entrie->getPeriodType():''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
+                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
     </div>
     <div class="form-group<?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
-        <label for="place" class="col-lg-2 control-label"></label>
+        <label for="periodDays" class="col-lg-2 control-label"></label>
         <div class="col-lg-4">
             <select class="form-control" name="periodDays" id="periodDays">
-                <option value="0" <?=($this->originalInput('periodDay', ($entrie->getId()?$entrie->getPeriodDay():'0'))) == '0' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
+                <option value="0" <?=($this->originalInput('periodDay', ($entry->getId()?$entry->getPeriodDay():'0'))) == '0' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodDays as $key => $value): ?>
-                    <option value="<?=$key ?>" <?=($this->originalInput('periodDay', ($entrie->getId()?$entrie->getPeriodDay():'0'))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
+                    <option value="<?=$key ?>" <?=($this->originalInput('periodDay', ($entry->getId()?$entry->getPeriodDay():'0'))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
     </div>
     <div class="form-group<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
-        <label for="place" class="col-lg-2 control-label"></label>
-        <div class="col-lg-4">
+        <label for="periodDay" class="col-lg-2 control-label"></label>
+        <div class="col-lg-4 input-group">
+            <span class="input-group-addon"><?=$this->getTrans('periodEvery') ?></span>
             <input type="text"
                    class="form-control"
                    id="periodDay"
                    name="periodDay"
-                   value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($entrie->getId()?$entrie->getPeriodType():'')) == 'days'?'0':($entrie->getId()?$entrie->getPeriodDay():'1')))) ?>" />
+                   value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():'')) == 'days'?'0':($entry->getId()?$entry->getPeriodDay():'1')))) ?>" />
+            <span class="input-group-addon" id="periodDayAppendix"><?=(!empty($entry->getPeriodType())) ? $this->getTrans($periodAppendix[$entry->getPeriodType()]) : '' ?></span>
         </div>
     </div>
+
+    <div class="form-group<?=$this->validation()->hasError('repeatUntil') ? ' has-error' : '' ?>" id="repeatUntil_div">
+        <label for="repeatUntil" class="col-lg-2 control-label">
+            <?=$this->getTrans('repeatUntil') ?>:
+        </label>
+        <div class="col-lg-4 input-group ilch-date date form_datetime_3">
+            <input type="text"
+                   class="form-control"
+                   id="repeatUntil"
+                   name="repeatUntil"
+                   value="<?=$this->escape($this->originalInput('repeatUntil', ($entry->getId()?($entry->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getRepeatUntil()))->format('d.m.Y H:i') : ''):''))) ?>"
+                   readonly>
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
+        </div>
+    </div>
+
     <div class="form-group<?=$this->validation()->hasError('color') ? ' has-error' : '' ?>">
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('color') ?>:
@@ -122,7 +153,7 @@ $entrie = $this->get('calendar');
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"
-                   value="<?=$this->escape($this->originalInput('color', ($entrie->getId()?$entrie->getColor():'#32333B'))) ?>">
+                   value="<?=$this->escape($this->originalInput('color', ($entry->getId()?$entry->getColor():'#32333B'))) ?>">
             <span class="input-group-addon">
                 <span class="fa fa-undo" onclick="document.getElementById('color').color.fromString('32333B')"></span>
             </span>
@@ -152,10 +183,10 @@ $entrie = $this->get('calendar');
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?=$this->escape($this->originalInput('text', ($entrie->getId()?$entrie->getText():''))) ?></textarea>
+                      rows="5"><?=$this->escape($this->originalInput('text', ($entry->getId()?$entry->getText():''))) ?></textarea>
         </div>
     </div>
-    <?=($entrie->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=($entry->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
@@ -172,6 +203,8 @@ $entrie = $this->get('calendar');
 $('#access').chosen();
 
 $(document).ready(function() {
+    let jsPeriodAppendix = <?=json_encode($periodAppendix) ?>;
+
     $(".form_datetime_1").datetimepicker({
         format: "dd.mm.yyyy hh:ii",
         autoclose: true,
@@ -194,23 +227,39 @@ $(document).ready(function() {
         minDate: $(".form_datetime_1").data("datetimepicker").getDate()
     });
 
+    $(".form_datetime_3").datetimepicker({
+        format: "dd.mm.yyyy hh:ii",
+        startDate: new Date(),
+        autoclose: true,
+        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        minuteStep: 15,
+        todayHighlight: false,
+        useCurrent: false,
+        minDate: $(".form_datetime_2").data("datetimepicker").getDate()
+    });
 
     diasableDays();
 
-    document.getElementById('periodType').onchange = diasableDays;
+    document.getElementById("periodType").onchange = function() {
+        diasableDays();
+
+        document.getElementById("periodDayAppendix").textContent = jsPeriodAppendix[document.getElementById('periodType').value];
+    };
 
     function diasableDays() {
         if (document.getElementById('periodType').value !== '') {
-            if (document.getElementById('periodType').value === 'days') {
+            if (document.getElementById("periodType").value === 'days') {
                 document.getElementById("periodDays_div").style.display = "block";
                 document.getElementById("periodDay_div").style.display = "none";
             } else {
                 document.getElementById("periodDays_div").style.display = "none";
                 document.getElementById("periodDay_div").style.display = "block";
             }
+            document.getElementById("repeatUntil_div").style.display = "block";
         } else {
             document.getElementById("periodDays_div").style.display = "none";
             document.getElementById("periodDay_div").style.display = "none";
+            document.getElementById("repeatUntil_div").style.display = "none";
         }
     }
 });

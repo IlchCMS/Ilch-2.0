@@ -14,7 +14,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.8.0',
+        'version' => '1.9.0',
         'icon_small' => 'fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -38,7 +38,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.43',
+        'ilchCore' => '2.1.48',
         'phpVersion' => '7.3'
     ];
 
@@ -85,6 +85,7 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_calendar` (
           `id` INT(11) NOT NULL AUTO_INCREMENT,
+          `uid` VARCHAR(36) NOT NULL,
           `title` VARCHAR(100) NOT NULL,
           `place` VARCHAR(100) DEFAULT NULL,
           `start` DATETIME NOT NULL,
@@ -93,6 +94,7 @@ class Config extends \Ilch\Config\Install
           `color` VARCHAR(7) DEFAULT NULL,
           `period_type` VARCHAR(100) NOT NULL,
           `period_day` INT(11) NOT NULL,
+          `repeat_until` DATETIME DEFAULT NULL,
           `read_access_all` TINYINT(1) NOT NULL,
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -233,10 +235,17 @@ class Config extends \Ilch\Config\Install
                 $boxMapper->install($boxModel);
 
                 removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar/');
-            // no break
+                // no break
             case "1.7.0":
                 // no break
                 removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar_5_11_0/');
+            case "1.8.0":
+                // Add the uid column. This property defines the persistent, globally unique identifier for the calendar component.
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `uid` VARCHAR(36) NOT NULL AFTER `id`;');
+
+                // Add the repeat_unil column to save until what date an event should be repeated.
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `repeat_until` DATETIME DEFAULT NULL AFTER `period_day`;');
+                // no break
         }
     }
 }

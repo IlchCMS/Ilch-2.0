@@ -1,6 +1,6 @@
 <?php
 $calendar = $this->get('calendar');
-
+$iteration = $this->get('iteration');
 $periodDays = [
     '1' => $this->getTranslator()->trans('Monday'),
     '2' => $this->getTranslator()->trans('Tuesday'),
@@ -20,9 +20,14 @@ $periodTypes = [
 
 $startDate = new \Ilch\Date($calendar->getStart());
 $endDate = $calendar->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($calendar->getEnd()) : 1;
+$repeatUntil = $calendar->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($calendar->getRepeatUntil()) : 1;
 
-$days = $this->get('calendarMapper')->repeat($calendar->getPeriodType(), $startDate, $endDate, $calendar->getPeriodDay());
-$startDate = reset($days);
+if ($this->get('iteration') != '') {
+    $recurrence = $this->get('calendarMapper')->repeat($calendar->getPeriodType(), $startDate, $endDate, $repeatUntil, $calendar->getPeriodDay())[$iteration];
+    $startDate = $recurrence['start'];
+    $endDate = $recurrence['end'];
+}
+
 $endDate = is_numeric($endDate) ? null : $endDate;
 ?>
 
@@ -36,18 +41,13 @@ $endDate = is_numeric($endDate) ? null : $endDate;
     <?php endif; ?>
     <div class="form-group">
         <div class="col-lg-2"><?=$this->getTrans('start') ?></div>
-        <div class="col-lg-10"><?=$this->getTrans($startDate->format("l")).$startDate->format(", d. ").$this->getTrans($startDate->format("F")).$startDate->format(" Y") ?> <?=$this->getTrans('at') ?> <?=$startDate->format("H:i") ?> <?=$this->getTrans('clock') ?></div>
+        <div class="col-lg-10"><?=$this->getTrans($startDate->format('l')).$startDate->format(', d. ').$this->getTrans($startDate->format('F')).$startDate->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$startDate->format('H:i') ?> <?=$this->getTrans('clock') ?></div>
     </div>
     <?php if ($endDate): ?>
         <div class="form-group">
             <div class="col-lg-2"><?=$this->getTrans('end') ?></div>
             <div class="col-lg-10">
-                <?php
-                if ($startDate->format('d.m.Y') != $endDate->format('d.m.Y') && $startDate->format('H:i') != $endDate->format('H:i') && !$calendar->getPeriodType()) {
-                    echo $this->getTrans($endDate->format("l")) . $endDate->format(", d. ") . $this->getTrans($endDate->format("F")) . $endDate->format(" Y") . ' ' . $this->getTrans('at').' ';
-                }
-                echo $endDate->format("H:i").' '.$this->getTrans('clock');
-                ?>
+                <?=$this->getTrans($endDate->format('l')) . $endDate->format(', d. ') . $this->getTrans($endDate->format('F')) . $endDate->format(' Y') . ' ' . $this->getTrans('at').' '. $endDate->format('H:i').' '.$this->getTrans('clock') ?>
             </div>
         </div>
     <?php endif; ?>

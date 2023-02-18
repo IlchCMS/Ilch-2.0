@@ -72,7 +72,8 @@ class Events extends \Ilch\Controller\Frontend
                 ->add($calendar->getTitle(), ['controller' => 'events', 'action' => 'show', 'id' => $calendar->getId()]);
 
             $this->getView()->set('calendar', $calendar)
-                ->set('calendarMapper', $calendarMapper);
+                ->set('calendarMapper', $calendarMapper)
+                ->set('iteration', $this->getRequest()->getParam('iteration'));
         } else {
             $this->redirect()
                 ->withMessage('noCalendar', 'warning')
@@ -100,6 +101,7 @@ class Events extends \Ilch\Controller\Frontend
         $this->getLayout()->setFile('modules/calendar/layouts/iCal');
 
         $this->getView()->set('calendarList', $calendarMapper->getEntries(['ra.group_id' => $readAccess]))
-            ->set('calendarMapper', $calendarMapper);
+            ->set('calendarMapper', $calendarMapper)
+            ->set('iteration', $this->getRequest()->getParam('iteration'));
     }
 }

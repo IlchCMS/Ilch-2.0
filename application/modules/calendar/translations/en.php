@@ -20,6 +20,7 @@ return [
     'visibleFor' => 'Visible for',
     'periodEntry' => 'Cycle',
     'noPeriodEntry' => 'no cycle',
+    'repeatUntil' => 'Repeat until the',
 
     'calendarMonth' => 'Month',
     'calendarWeek' => 'Week',
@@ -30,11 +31,18 @@ return [
     'calendarLimitText' => 'more',
     'groupAll' => 'All',
 
-    'daily' => 'days',
-    'weekly' => 'Weekly',
+    'daily' => 'daily',
+    'weekly' => 'weekly',
     'monthly' => 'monthly',
     'quarterly' => 'quarterly',
+    'yearly' => 'yearly',
     'days' => 'day',
+
+    'periodEvery' => 'Every',
+    'weeks' => 'week(s)',
+    'months' => 'month(s)',
+    'quarter' => 'quarter',
+    'years' => 'year(s)',
 
     'listweek' => 'Weekly List',
 ];

@@ -30,6 +30,7 @@ $periodTypes = [
                     <col class="col-lg-2">
                     <col class="col-lg-2">
                     <col class="col-lg-2">
+                    <col class="col-lg-2">
                     <col />
                 </colgroup>
                 <thead>
@@ -40,6 +41,7 @@ $periodTypes = [
                         <th><?=$this->getTrans('start') ?></th>
                         <th><?=$this->getTrans('end') ?></th>
                         <th><?=$this->getTrans('periodEntry') ?></th>
+                        <th><?=$this->getTrans('repeatUntil') ?></th>
                         <th><?=$this->getTrans('title') ?></th>
                     </tr>
                 </thead>
@@ -48,9 +50,6 @@ $periodTypes = [
                     <?php
                         $startDate = new \Ilch\Date($calendar->getStart());
                         $endDate = $calendar->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($calendar->getEnd()) : 1;
-
-                        $days = $this->get('calendarMapper')->repeat($calendar->getPeriodType(), $startDate, $endDate, $calendar->getPeriodDay());
-                        $startDate = reset($days);
                         $endDate = is_numeric($endDate) ? null : $endDate;
                         ?>
                         <tr>
@@ -71,6 +70,7 @@ $periodTypes = [
                                 }
                                 ?>
                             </td>
+                            <td><?=($calendar->getPeriodType()) ? $this->escape($calendar->getRepeatUntil()) : '' ?></td>
                             <td><?=$this->escape($calendar->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
