@@ -41,13 +41,7 @@ class Icons extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'maps', 'action' => 'index'])
             ],
             [
-                'name' => 'menuSettings',
-                'active' => false,
-                'icon' => 'fa-solid fa-table-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
-            ],
-            [
-                'name' => 'menuGameIcon',
+                'name' => 'menuGameIcons',
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'icons', 'action' => 'index']),
@@ -57,13 +51,19 @@ class Icons extends \Ilch\Controller\Admin
                     'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'icons', 'action' => 'treat'])
                 ]
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa-solid fa-table-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
 
         if ($this->getRequest()->getActionName() === 'treat') {
-            $items[5][0]['active'] = true;
+            $items[4][0]['active'] = true;
         } else {
-            $items[5]['active'] = true;
+            $items[4]['active'] = true;
         }
 
         $this->getLayout()->addMenu(
@@ -83,7 +83,7 @@ class Icons extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-            ->add($this->getTranslator()->trans('manageGameIcon'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuGameIcons'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_icons')) {
             foreach ($this->getRequest()->getPost('check_icons') as $game) {
@@ -105,7 +105,7 @@ class Icons extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('key')) {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageGameIcon'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuGameIcons'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('treatGameIcon'), ['action' => 'treat']);
             if (in_array($this->getRequest()->getParam('key'), $this->icons)) {
                 $icon = $this->getRequest()->getParam('key');
@@ -115,13 +115,14 @@ class Icons extends \Ilch\Controller\Admin
             }
         } else {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageGameIcon'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manageNewGameIcon'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuGameIcons'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('createNewGameIcon'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'gameName' => 'required'
+                'gameName' => 'required',
+                'gameIcon' => 'required',
             ]);
 
             if (!empty($_FILES['icon']['name']) && file_exists($_FILES['icon']['tmp_name'])) {
