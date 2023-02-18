@@ -16,6 +16,15 @@ class Calendar extends \Ilch\Model
     protected $id = 0;
 
     /**
+     * The uid of the calendar.
+     * This property defines the persistent, globally unique identifier for the calendar component.
+     *
+     * @var string
+     * @see https://icalendar.org/New-Properties-for-iCalendar-RFC-7986/5-3-uid-property.html
+     */
+    protected $uid = '';
+
+    /**
      * The title of the calendar.
      *
      * @var string
@@ -105,6 +114,28 @@ class Calendar extends \Ilch\Model
     {
         $this->id = $id;
 
+        return $this;
+    }
+
+    /**
+     * Get the uid (UUID) of the calendar.
+     *
+     * @return string
+     */
+    public function getUid(): string
+    {
+        return $this->uid;
+    }
+
+    /**
+     * Set the uid (UUID) of the calendar.
+     *
+     * @param string $uid
+     * @return Calendar
+     */
+    public function setUid(string $uid): Calendar
+    {
+        $this->uid = $uid;
         return $this;
     }
 
@@ -345,6 +376,7 @@ class Calendar extends \Ilch\Model
         return array_merge(
             ($withId ? ['id' => $this->getId()] : []),
             [
+                'uid' => $this->getUid(),
                 'title' => $this->getTitle(),
                 'place' => $this->getPlace(),
                 'start' => $this->getStart(),
@@ -369,6 +401,9 @@ class Calendar extends \Ilch\Model
     {
         if (isset($entries['id'])) {
             $this->setId($entries['id']);
+        }
+        if (isset($entries['uid'])) {
+            $this->setUid($entries['uid']);
         }
         if (isset($entries['title'])) {
             $this->setTitle($entries['title']);

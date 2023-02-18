@@ -40,7 +40,7 @@ class Calendar extends \Ilch\Mapper
         }
 
         $select = $this->db()->select();
-        $select->fields(['c.id', 'c.title', 'c.place', 'c.start', 'c.end', 'c.text', 'c.color', 'c.period_type', 'c.period_day', 'c.repeat_until', 'c.read_access_all'])
+        $select->fields(['c.id', 'c.uid', 'c.title', 'c.place', 'c.start', 'c.end', 'c.text', 'c.color', 'c.period_type', 'c.period_day', 'c.repeat_until', 'c.read_access_all'])
             ->from(['c' => $this->tablename])
             ->join(['ra' => 'calendar_access'], 'c.id = ra.calendar_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->where(array_merge($where, ($read_access ? [$select->orX(['ra.group_id' => $read_access, 'c.read_access_all' => '1'])] : [])))

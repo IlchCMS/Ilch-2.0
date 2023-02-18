@@ -70,7 +70,7 @@ $periodTypes = [
                                 }
                                 ?>
                             </td>
-                            <td><?=$this->escape($calendar->getRepeatUntil()) ?></td>
+                            <td><?=($calendar->getPeriodType()) ? $this->escape($calendar->getRepeatUntil()) : '' ?></td>
                             <td><?=$this->escape($calendar->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>

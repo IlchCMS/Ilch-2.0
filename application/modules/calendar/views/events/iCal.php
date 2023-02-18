@@ -31,31 +31,29 @@ foreach ($this->get('calendarList') ?? [] as $calendarList) {
     $ical .=
 'BEGIN:VEVENT
 SUMMARY:' .$calendarList->getTitle(). '
-UID:' .generateUUID(). '
+UID:' .$calendarList->getUid(). '
 DTSTART:' .date(DATE_ICAL, strtotime($calendarList->getStart())). '
 DTEND:' .date(DATE_ICAL, strtotime($calendarList->getEnd())). '
 LOCATION:' .$calendarList->getPlace(). '
-DESCRIPTION:' .$description."
-END:VEVENT\n";
+DESCRIPTION:' .$description;
 
     if ($calendarList->getPeriodType() != '') {
-        $recurrentEvents = $this->get('calendarMapper')->repeat($calendarList->getPeriodType(), $startDate, $endDate,  $repeatUntil, $calendarList->getPeriodDay());
+        $freq = strtoupper($calendarList->getPeriodType());
+        $quarterlyFactor = 1;
 
-        foreach ($recurrentEvents as $event) {
-            $startDate = $event['start'];
-            $endDate = $event['end'];
-
-            $ical .=
-'BEGIN:VEVENT
-SUMMARY:' .$calendarList->getTitle(). '
-UID:' .generateUUID(). '
-DTSTART:' .date(DATE_ICAL, strtotime($calendarList->getStart())). '
-DTEND:' .date(DATE_ICAL, strtotime($calendarList->getEnd())). '
-LOCATION:' .$calendarList->getPlace(). '
-DESCRIPTION:' .$description."
-END:VEVENT\n";
+        if ($calendarList->getPeriodType() === 'quarterly') {
+            // 'quarterly' doesn't exist in iCal. Translate it to every 3 months.
+            $freq = 'MONTHLY';
+            $quarterlyFactor = 3;
         }
+        // FREQ=WEEKLY;INTERVAL=3;UNTIL=00000000T000000Z
+        // Supported for FREQ: "SECONDLY" / "MINUTELY" / "HOURLY" / "DAILY" / "WEEKLY" / "MONTHLY" / "YEARLY"
+        $ical .=
+"\n".'RRULE:FREQ='.strtoupper($calendarList->getPeriodType()).';INTERVAL='.($calendarList->getPeriodDay() * $quarterlyFactor).';UNTIL='.$repeatUntil->format(DATE_ICAL);
     }
+
+    $ical .=
+"\nEND:VEVENT\n";
 }
 
 $ical .= 'END:VCALENDAR';

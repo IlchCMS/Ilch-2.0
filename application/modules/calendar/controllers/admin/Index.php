@@ -122,7 +122,8 @@ class Index extends \Ilch\Controller\Admin
                     }
                 }
 
-                $calendarModel->setTitle($this->getRequest()->getPost('title'))
+                $calendarModel->setUid(($this->getRequest()->getParam('id')) ? $calendarModel->getUid() : generateUUID())
+                    ->setTitle($this->getRequest()->getPost('title'))
                     ->setPlace($this->getRequest()->getPost('place'))
                     ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
                     ->setEnd($this->getRequest()->getPost('end') ? new \Ilch\Date($this->getRequest()->getPost('end')) : '1000-01-01 00:00:00')

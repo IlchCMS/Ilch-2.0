@@ -52,6 +52,7 @@ class CalendarTest extends DatabaseTestCase
 
         $i = 0;
         self::assertEquals(1, $entrys[$i]->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc1', $entrys[$i]->getUid());
         self::assertSame('Training 1', $entrys[$i]->getTitle());
         self::assertSame('', $entrys[$i]->getPlace());
         self::assertSame('2021-05-09 08:10:38', $entrys[$i]->getStart());
@@ -63,6 +64,7 @@ class CalendarTest extends DatabaseTestCase
         
         $i++;
         self::assertEquals(2, $entrys[$i]->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc2', $entrys[$i]->getUid());
         self::assertSame('Training 2', $entrys[$i]->getTitle());
         self::assertSame('', $entrys[$i]->getPlace());
         self::assertSame('2021-05-09 09:10:38', $entrys[$i]->getStart());
@@ -74,6 +76,7 @@ class CalendarTest extends DatabaseTestCase
         
         $i++;
         self::assertEquals(3, $entrys[$i]->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc3', $entrys[$i]->getUid());
         self::assertSame('Training 3', $entrys[$i]->getTitle());
         self::assertSame('', $entrys[$i]->getPlace());
         self::assertSame('2021-05-10 09:10:38', $entrys[$i]->getStart());
@@ -85,6 +88,7 @@ class CalendarTest extends DatabaseTestCase
 
         $i++;
         self::assertEquals(4, $entrys[$i]->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc4', $entrys[$i]->getUid());
         self::assertSame('Training 4', $entrys[$i]->getTitle());
         self::assertSame('', $entrys[$i]->getPlace());
         self::assertSame('2021-05-10 18:00:00', $entrys[$i]->getStart());
@@ -121,6 +125,7 @@ class CalendarTest extends DatabaseTestCase
     public function testsaveNewCalendar()
     {
         $model = new EntriesModel();
+        $model->setUid('39efcc37-43dd-43b7-923a-06c4a0d98fc5');
         $model->setTitle('Training 5');
         $model->setPlace('');
         $model->setStart('2021-05-09 09:10:38');
@@ -134,6 +139,7 @@ class CalendarTest extends DatabaseTestCase
 
         self::assertNotNull($entry);
         self::assertEquals($id, $entry->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc5', $entry->getUid());
         self::assertSame('Training 5', $entry->getTitle());
         self::assertSame('', $entry->getPlace());
         self::assertSame('2021-05-09 09:10:38', $entry->getStart());
@@ -148,6 +154,7 @@ class CalendarTest extends DatabaseTestCase
     {
         $model = new EntriesModel();
         $model->setId(1);
+        $model->setUid('39efcc37-43dd-43b7-923a-06c4a0d98fc5');
         $model->setTitle('Training 5');
         $model->setPlace('');
         $model->setStart('2021-05-10 09:10:38');
@@ -162,6 +169,7 @@ class CalendarTest extends DatabaseTestCase
         self::assertNotNull($entry);
         self::assertEquals(1, $id);
         self::assertEquals($id, $entry->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc5', $entry->getUid());
         self::assertSame('Training 5', $entry->getTitle());
         self::assertSame('', $entry->getPlace());
         self::assertSame('2021-05-10 09:10:38', $entry->getStart());

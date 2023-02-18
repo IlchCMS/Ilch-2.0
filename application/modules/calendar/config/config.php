@@ -85,6 +85,7 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_calendar` (
           `id` INT(11) NOT NULL AUTO_INCREMENT,
+          `uid` VARCHAR(36) NOT NULL,
           `title` VARCHAR(100) NOT NULL,
           `place` VARCHAR(100) DEFAULT NULL,
           `start` DATETIME NOT NULL,
@@ -234,11 +235,15 @@ class Config extends \Ilch\Config\Install
                 $boxMapper->install($boxModel);
 
                 removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar/');
-            // no break
+                // no break
             case "1.7.0":
                 // no break
                 removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar_5_11_0/');
             case "1.8.0":
+                // Add the uid column. This property defines the persistent, globally unique identifier for the calendar component.
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `uid` VARCHAR(36) NOT NULL AFTER `id`;');
+
+                // Add the repeat_unil column to save until what date an event should be repeated.
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `repeat_until` DATETIME DEFAULT NULL AFTER `period_day`;');
                 // no break
         }
