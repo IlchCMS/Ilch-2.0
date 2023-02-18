@@ -65,62 +65,25 @@ class Calendar extends \Ilch\Model
     protected $periodDay = 0;
 
     /**
-     * Read access of the article.
+     * Read access of the calendar.
      *
      * @var string
      */
     protected $readAccess = '';
 
     /**
-     * Read access of the article.
+     * period day of the calendar.
      *
      * @var string
      */
     protected $periodType = '';
 
     /**
-     * Sets Model by Array.
+     * Repeat event until a specific date.
      *
-     * @param array $entries
-     * @return $this
+     * @var string
      */
-    public function setByArray(array $entries): Calendar
-    {
-        if (isset($entries['id'])) {
-            $this->setId($entries['id']);
-        }
-        if (isset($entries['title'])) {
-            $this->setTitle($entries['title']);
-        }
-        if (isset($entries['place'])) {
-            $this->setPlace($entries['place']);
-        }
-        if (isset($entries['start'])) {
-            $this->setStart($entries['start']);
-        }
-        if (isset($entries['end'])) {
-            $this->setEnd($entries['end']);
-        }
-        if (isset($entries['color'])) {
-            $this->setColor($entries['color']);
-        }
-        if (isset($entries['period_day'])) {
-            $this->setPeriodDay($entries['period_day']);
-        }
-        if (isset($entries['read_access'])) {
-            $this->setReadAccess($entries['read_access']);
-        }
-        if (isset($entries['read_access_all'])) {
-            if ($entries['read_access_all']) {
-                $this->setReadAccess('all');
-            }
-        }
-        if (isset($entries['period_type'])) {
-            $this->setPeriodType($entries['period_type']);
-        }
-
-        return $this;
-    }
+    protected $repeatUntil = '';
 
     /**
      * Gets the id of the calendar.
@@ -350,6 +313,28 @@ class Calendar extends \Ilch\Model
     }
 
     /**
+     * Gets the date of until which date the event should be repeated.
+     *
+     * @return string
+     */
+    public function getRepeatUntil(): string
+    {
+        return $this->repeatUntil;
+    }
+
+    /**
+     * Sets the date of until which date the event should be repeated.
+     *
+     * @param string $repeatUntil
+     * @return Calendar
+     */
+    public function setRepeatUntil(string $repeatUntil): Calendar
+    {
+        $this->repeatUntil = $repeatUntil;
+        return $this;
+    }
+
+    /**
      * Gets the Array of Model.
      *
      * @param bool $withId
@@ -367,9 +352,60 @@ class Calendar extends \Ilch\Model
                 'text' => $this->getText(),
                 'color' => $this->getColor(),
                 'period_day' => $this->getPeriodDay(),
-                'read_access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0),
                 'period_type' => $this->getPeriodType(),
+                'repeat_until' => $this->getRepeatUntil(),
+                'read_access_all' => ($this->getReadAccess() === 'all' ? 1 : 0),
             ]
         );
+    }
+
+    /**
+     * Sets Model by Array.
+     *
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Calendar
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['place'])) {
+            $this->setPlace($entries['place']);
+        }
+        if (isset($entries['start'])) {
+            $this->setStart($entries['start']);
+        }
+        if (isset($entries['end'])) {
+            $this->setEnd($entries['end']);
+        }
+        if (isset($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        if (isset($entries['color'])) {
+            $this->setColor($entries['color']);
+        }
+        if (isset($entries['period_day'])) {
+            $this->setPeriodDay($entries['period_day']);
+        }
+        if (isset($entries['read_access'])) {
+            $this->setReadAccess($entries['read_access']);
+        }
+        if (isset($entries['read_access_all'])) {
+            if ($entries['read_access_all']) {
+                $this->setReadAccess('all');
+            }
+        }
+        if (isset($entries['period_type'])) {
+            $this->setPeriodType($entries['period_type']);
+        }
+        if (isset($entries['repeat_until'])) {
+            $this->setRepeatUntil($entries['repeat_until']);
+        }
+
+        return $this;
     }
 }

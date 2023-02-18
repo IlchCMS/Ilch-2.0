@@ -20,6 +20,7 @@ return [
     'visibleFor' => 'Sichtbar für',
     'periodEntry' => 'Zyklus',
     'noPeriodEntry' => 'kein Zyklus',
+    'repeatUntil' => 'Wiederholen bis zum',
 
     'calendarMonth' => 'Monat',
     'calendarWeek' => 'Woche',
@@ -30,11 +31,18 @@ return [
     'calendarLimitText' => 'weitere',
     'groupAll' => 'Alle',
 
-    'daily' => 'Tage',
-    'weekly' => 'Wöchentlich',
-    'monthly' => 'Monatlich',
-    'quarterly' => 'Quartal',
+    'daily' => 'täglich',
+    'weekly' => 'wöchentlich',
+    'monthly' => 'monatlich',
+    'quarterly' => 'vierteljährlich',
+    'yearly' => 'jährlich',
     'days' => 'Tag',
+
+    'periodEvery' => 'Alle',
+    'weeks' => 'Woche(n)',
+    'months' => 'Monat(e)',
+    'quarter' => 'Quartal(e)',
+    'years' => 'Jahr(e)',
 
     'listweek' => 'Wochenliste',
 ];

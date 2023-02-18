@@ -6,6 +6,7 @@
 
 namespace Modules\Calendar\Mappers;
 
+use Ilch\Date;
 use Modules\Calendar\Models\Calendar as EntriesModel;
 
 class Calendar extends \Ilch\Mapper
@@ -15,7 +16,7 @@ class Calendar extends \Ilch\Mapper
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      */
     public function checkDB(): bool
     {
@@ -39,7 +40,7 @@ class Calendar extends \Ilch\Mapper
         }
 
         $select = $this->db()->select();
-        $select->fields(['c.id', 'c.title', 'c.place', 'c.start', 'c.end', 'c.text', 'c.color', 'c.period_type', 'c.period_day', 'c.read_access_all'])
+        $select->fields(['c.id', 'c.title', 'c.place', 'c.start', 'c.end', 'c.text', 'c.color', 'c.period_type', 'c.period_day', 'c.repeat_until', 'c.read_access_all'])
             ->from(['c' => $this->tablename])
             ->join(['ra' => 'calendar_access'], 'c.id = ra.calendar_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->where(array_merge($where, ($read_access ? [$select->orX(['ra.group_id' => $read_access, 'c.read_access_all' => '1'])] : [])))
@@ -94,10 +95,10 @@ class Calendar extends \Ilch\Mapper
             $id = $id->getId();
         }
 
-        $entrys = $this->getEntriesBy(['c.id' => (int)$id], []);
+        $entry = $this->getEntriesBy(['c.id' => (int)$id], []);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entry)) {
+            return reset($entry);
         }
 
         return null;
@@ -181,7 +182,7 @@ class Calendar extends \Ilch\Mapper
      *
      * @param int $calendarId
      * @param string|array $readAccess example: "1,2,3"
-     * @param boolean $addAdmin
+     * @param bool $addAdmin
      * @since 1.7.0
      */
     public function saveReadAccess(int $calendarId, $readAccess, bool $addAdmin = true)
@@ -228,8 +229,8 @@ class Calendar extends \Ilch\Mapper
     }
 
     /**
-     * @param EntriesModel|integer $id
-     * @return boolean
+     * @param EntriesModel|int $id
+     * @return bool
      */
     public function delete($id): bool
     {
@@ -243,93 +244,64 @@ class Calendar extends \Ilch\Mapper
     }
 
     /**
-     * Repeat Date Entry .
+     * Return start- and enddate for next recurrence.
      *
-     * @param String $type
-     * @param \Ilch\Date $startdate
-     * @param \Ilch\Date|int $enddate
-     * @param int $faktor
+     * @param string $type
+     * @param Date $startdate
+     * @param Date $enddate
+     * @param Date $untilDate
+     * @param int $factor
      * @return array
      */
-    public function repeat(String $type, \Ilch\Date $startdate, $enddate, int $faktor = 1)
+    public function repeat(string $type, \Ilch\Date $startdate, \Ilch\Date $enddate, \Ilch\Date $untilDate, int $factor = 1): array
     {
-        //type=daily/weekly/monthly_date/monthly_day/quarterly_date/quarterly_day - $start=yyyy-mm-dd hh-mm-ss - $end=yyyy-mm-dd hh-mm-ss/xx
-        $a = [];
-        $type = trim($type);
-        switch ($type) {
-            case "monthly":
-            case "daily":
-                $diff = 1;
-                break;
-            case "weekly":
-                $diff = 7;
-                break;
-            case "quarterly":
-                $diff = 3;
-                break;
-            case "days":
-                $daydiff = $faktor - $startdate->format('N');
-                if ($daydiff < 0) {
-                    $daydiff = 7 - $daydiff;
-                }
-                if ($daydiff < 7) {
-                    $startdate->modify('+' . $daydiff . ' day');
-                }
+        $recurrences = [];
+        $startdateRecurrence = clone $startdate;
+        $enddateRecurrence = clone $enddate;
 
-                $diff = 7;
-                $faktor = 1;
-                break;
-            default:
-                $diff = 0;
-        }
-        if ($diff > 0 && $faktor > 0) {
-            if (is_numeric($enddate)) {
-                $temp = clone $startdate;
+        while($startdateRecurrence <= $untilDate) {
+            $event = [];
+            switch ($type) {
+                case 'monthly':
+                    $startdateRecurrence->modify($factor . ' months');
+                    $enddateRecurrence->modify($factor . ' months');
+                    break;
+                case 'daily':
+                    $startdateRecurrence->modify($factor . ' days');
+                    $enddateRecurrence->modify($factor . ' days');
+                    break;
+                case 'weekly':
+                    $startdateRecurrence->modify($factor . ' weeks');
+                    $enddateRecurrence->modify($factor . ' weeks');
+                    break;
+                case 'quarterly':
+                    // work with a factor and 3 months as a quarter of a year is 3 months?
+                    $startdateRecurrence->modify(($factor * 3). ' months');
+                    $enddateRecurrence->modify(($factor * 3). ' months');
+                    break;
+                case 'yearly':
+                    $startdateRecurrence->modify($factor . ' years');
+                    $enddateRecurrence->modify($factor . ' years');
+                    break;
+                case 'days':
+                    $daydiff = $factor - $startdateRecurrence->format('N');
+                    if ($daydiff < 0) {
+                        $daydiff = 7 - $daydiff;
+                    }
+                    if ($daydiff < 7) {
+                        $startdateRecurrence->modify('+' . $daydiff . ' day');
+                        $enddateRecurrence->modify('+' . $daydiff . ' day');
+                    }
+                    break;
+            }
 
-                switch ($type) {
-                    case "weekly":
-                        $temp->modify(($diff * $faktor * 7) . " days");
-                        break;
-                    case "daily":
-                        $temp->modify(($diff * $faktor * 30) . " days");
-                        break;
-                    case "quarterly":
-                    case "monthly":
-                        $temp->modify(($diff * $faktor * 2 ) . " months");
-                        break;
-                    case "days":
-                        $temp->modify(($diff * 7)." days");
-                        break;
-                }
-                $enddate = $temp;
+            if ($startdateRecurrence <= $untilDate) {
+                $event['start'] = clone $startdateRecurrence;
+                $event['end'] = clone $enddateRecurrence;
+                $recurrences[] = $event;
             }
-            if (is_a($enddate, \Ilch\Date::class)) {
-                $end_ts = $enddate->getTimestamp();
-                $a[] = $startdate;
-                $temp = clone $startdate;
-                while ($temp->getTimestamp() < $end_ts) {
-                    $temp = clone $temp;
-                    switch ($type) {
-                        case "weekly":
-                        case "days":
-                        case "daily":
-                            $temp->modify(($diff * $faktor) . " days");
-                            break;
-                        case "quarterly":
-                        case "monthly":
-                            $temp->modify(($diff * $faktor) . " months");
-                            break;
-                    }
-                    if ($temp->getTimestamp() < $end_ts) {
-                        $a[] = $temp;
-                    }
-                }
-            } else {
-                $a[] = $startdate;
-            }
-        } else {
-            $a[] = $startdate;
         }
-        return $a;
+
+        return $recurrences;
     }
 }
