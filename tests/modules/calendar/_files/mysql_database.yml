@@ -29,6 +29,18 @@ calendar:
     color: "#32333B"
     period_day: 0
     read_access_all: 1
+  -
+    id: 4
+    title: "Training 4"
+    place: ""
+    start: "2021-05-10 18:00:00"
+    end: "2021-05-10 21:00:00"
+    text: ""
+    color: "#32333B"
+    period_type: "weekly"
+    period_day: 1
+    repeat_until: "2021-12-31 21:00:00"
+    read_access_all: 1
 
 calendar_events:
   -

@@ -93,7 +93,7 @@ class Config extends \Ilch\Config\Install
           `color` VARCHAR(7) DEFAULT NULL,
           `period_type` VARCHAR(100) NOT NULL,
           `period_day` INT(11) NOT NULL,
-          `repeatUntil` DATETIME DEFAULT NULL,
+          `repeat_until` DATETIME DEFAULT NULL,
           `read_access_all` TINYINT(1) NOT NULL,
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -239,7 +239,7 @@ class Config extends \Ilch\Config\Install
                 // no break
                 removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar_5_11_0/');
             case "1.8.0":
-                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `repeatUntil` DATETIME DEFAULT NULL AFTER `period_day`;');
+                $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `repeat_until` DATETIME DEFAULT NULL AFTER `period_day`;');
                 // no break
         }
     }
