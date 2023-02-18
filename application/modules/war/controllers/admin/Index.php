@@ -52,16 +52,16 @@ class Index extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'maps', 'action' => 'index'])
             ],
             [
+                'name' => 'menuGameIcons',
+                'active' => false,
+                'icon' => 'fa-solid fa-table-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'icons', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuSettings',
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
-            ],
-            [
-                'name' => 'menuGameIcon',
-                'active' => false,
-                'icon' => 'fa-solid fa-table-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'icons', 'action' => 'index'])
             ]
         ];
 

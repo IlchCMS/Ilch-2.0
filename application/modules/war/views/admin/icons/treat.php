@@ -1,43 +1,46 @@
-<?php $entrie = $this->get('icon'); ?>
-<h1><?=(!$entrie) ? $this->getTrans('manageNewGameIcon') : $this->getTrans('treatGameIcon') ?></h1>
+<?php $icon = $this->get('icon'); ?>
+<h1><?=(!$icon) ? $this->getTrans('createNewGameIcon') : $this->getTrans('treatGameIcon') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="form-group<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
         <label for="gameNameInput" class="col-lg-2 control-label">
-            <?=$this->getTrans('nextWarGame') ?>:
+            <?=$this->getTrans('gameName') ?>:
         </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
                    id="gameNameInput"
                    name="gameName"
-                   value="<?=$this->escape($this->originalInput('gameName', ($entrie ?? ''))) ?>" />
+                   value="<?=$this->escape($this->originalInput('gameName', ($icon ?? ''))) ?>" />
         </div>
     </div>
-    <div class="<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
-        <label for="gameNameInput" class="col-lg-2 control-label">
-            <?=$this->getTrans('iconSize') ?>: 16 Pixel <?=$this->getTrans('width') ?>, 16 Pixel <?=$this->getTrans('height') ?>.<br>
+    <div class="form-group<?=$this->validation()->hasError('gameIcon') ? ' has-error' : '' ?>">
+        <label for="gameIcon" class="col-lg-2 control-label">
+            <?=$this->getTrans('gameIcon') ?><br>
+            <?=$this->getTrans('iconSize') ?>: 16 Pixel <?=$this->getTrans('iconWidth') ?>, 16 Pixel <?=$this->getTrans('iconHeight') ?>.<br>
             <?=$this->getTrans('allowedFileExtensions') ?>: png
         </label>
         <div class="input-group col-lg-4">
             <span class="input-group-btn">
                 <span class="btn btn-primary btn-file">
-                    <?=$this->getTrans('browse') ?> <input type="file" name="icon" accept="image/png">
+                    <input type="file" name="icon" accept="image/png">
                 </span>
             </span>
             <input type="text" 
-                   class="form-control" 
+                   class="form-control"
+                   id="gameIcon"
+                   name="gameIcon"
                    readonly />
         </div>
     </div>
-    <?php if ($entrie && file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$entrie.'.png')): ?>
+    <?php if ($icon && file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$icon.'.png')): ?>
     <div>
         <div class="col-lg-6">
-            <img class="" src="<?=$this->getBaseUrl().'application/modules/war/static/img/'.$entrie.'.png' ?>" title="<?=$this->escape($entrie ?? '') ?>" alt="<?=$this->escape($entrie ?? '') ?>">
+            <img class="" src="<?=$this->getBaseUrl().'application/modules/war/static/img/'.$icon.'.png' ?>" title="<?=$this->escape($icon) ?>" alt="<?=$this->escape($icon) ?>">
         </div>
     </div>
     <?php endif; ?>
-    <?=($entrie) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=($icon) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
 <script>

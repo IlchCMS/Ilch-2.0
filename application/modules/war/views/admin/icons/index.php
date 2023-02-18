@@ -1,4 +1,4 @@
-<h1><?=$this->getTrans('manageGameIcon') ?></h1>
+<h1><?=$this->getTrans('menuGameIcons') ?></h1>
 <?php if ($this->get('icons')): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
