@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config = [
         'key' => 'war',
         'version' => '1.15.3',
-        'icon_small' => 'fa-shield',
+        'icon_small' => 'fa-solid fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
         'official' => true,
@@ -396,6 +396,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `lastaccepttime`;');
             case "1.15.1":
                 // no break
+            case "1.15.2":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-shield' WHERE `key` = 'war';");
         }
     }
 }

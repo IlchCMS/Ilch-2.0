@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config = [
         'key' => 'linkus',
         'version' => '1.6.0',
-        'icon_small' => 'fa-link',
+        'icon_small' => 'fa-solid fa-link',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -69,6 +69,8 @@ class Config extends \Ilch\Config\Install
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'linkus' AND `locale` = '%s';", $value['description'], $key));
                 }
+            case "1.5.0":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-link' WHERE `key` = 'linkus';");
         }
     }
 }

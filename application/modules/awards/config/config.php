@@ -11,9 +11,9 @@ class Config extends \Ilch\Config\Install
     public $config = [
         'key' => 'awards',
         'version' => '1.9.0',
-        'icon_small' => 'fa-trophy',
+        'icon_small' => 'fa-solid fa-trophy',
         'author' => 'Veldscholten, Kevin',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'official' => true,
         'languages' => [
             'de_DE' => [
@@ -65,6 +65,11 @@ class Config extends \Ilch\Config\Install
             case "1.4":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_awards` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            case '1.5.0':
+            case '1.6.0':
+            case '1.7.0':
+            case '1.8.0':
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-trophy' WHERE `key` = 'awards';");
         }
     }
 }

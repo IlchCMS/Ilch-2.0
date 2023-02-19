@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config = [
         'key' => 'link',
         'version' => '1.10.0',
-        'icon_small' => 'fa-external-link',
+        'icon_small' => 'fa-solid fa-arrow-up-right-from-square',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -89,6 +89,8 @@ class Config extends \Ilch\Config\Install
 
                 // Update possibly existing default Ilch entry
                 $this->db()->query("UPDATE `[prefix]_links` SET `banner` = 'https://www.ilch.de/include/images/linkus/468x60.png', `link` = 'https://ilch.de' WHERE `id` = 1 AND `banner` = 'http://www.ilch.de/include/images/linkus/468x60.png' AND `link` = 'http://ilch.de';");
+            case "1.9.0":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-arrow-up-right-from-square' WHERE `key` = 'link';");
         }
     }
 }

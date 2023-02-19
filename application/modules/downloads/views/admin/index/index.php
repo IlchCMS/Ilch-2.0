@@ -14,7 +14,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
     }
 
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
-    echo '<div><span class="disclose"><i class="fa-solid fa-minus-circle"></i>
+    echo '<div><span class="disclose"><i class="fa-solid fa-circle-minus"></i>
                     <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
                     <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
                     <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
@@ -144,7 +144,7 @@ $(document).ready (
         });
         $('.disclose').on('click', function () {
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
-            $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-circle-plus');
+            $(this).find('i').toggleClass('fa-circle-minus').toggleClass('fa-circle-plus');
         });
         $('#downloadsForm').submit (
             function () {

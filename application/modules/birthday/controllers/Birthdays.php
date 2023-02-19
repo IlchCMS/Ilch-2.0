@@ -17,7 +17,7 @@ class Birthdays extends \Ilch\Controller\Frontend
 
         $this->getLayout()->setFile('modules/calendar/layouts/events');
 
-        $birthdayList = '[]';
+        $birthdayList = [];
 
         if ($this->getUser() || $this->getConfig()->get('bday_visibleForGuest')) {
             $input = $this->getRequest()->getQuery();
