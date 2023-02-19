@@ -57,7 +57,7 @@ $periodTypes = [
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $calendar->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $calendar->getId()]) ?></td>
                             <td><?=$startDate->format('d.m.Y H:i') ?></td>
-                            <td><?=$endDate ? $endDate->format(($startDate->format('d.m.Y') == $endDate->format('d.m.Y') || $startDate->format('H:i') == $endDate->format('H:i') || $calendar->getPeriodType()) ? 'H:i' : 'd.m.Y H:i') : '' ?></td>
+                            <td><?=$endDate ? $endDate->format('d.m.Y H:i') : '' ?></td>
                             <td>
                                 <?php
                                 if ($calendar->getPeriodType()) {

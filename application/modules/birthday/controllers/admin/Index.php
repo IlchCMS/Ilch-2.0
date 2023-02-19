@@ -16,7 +16,7 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'settings',
                 'active' => true,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ]
         ];

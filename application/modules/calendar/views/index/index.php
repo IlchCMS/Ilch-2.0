@@ -8,7 +8,7 @@
 </div>
 
 <script src="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_3/lib/main.min.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_3/lib/locales-all.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_3/lib/locales-all.min.js') ?>"></script>
 <script>
     if (typeof languagecalendar === 'undefined') {
         var languagecalendar = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';

@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config = [
         'key' => 'downloads',
         'version' => '1.13.2',
-        'icon_small' => 'fa-arrow-circle-o-down',
+        'icon_small' => 'fa-regular fa-circle-down',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -88,6 +88,8 @@ class Config extends \Ilch\Config\Install
             case "1.11.0":
             case "1.12.0":
             case "1.13.0":
+            case "1.13.1":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-regular fa-circle-down' WHERE `key` = 'downloads';");
         }
     }
 }

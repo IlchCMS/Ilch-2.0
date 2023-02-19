@@ -15,7 +15,7 @@ class Config extends \Ilch\Config\Install
     public $config = [
         'key' => 'calendar',
         'version' => '1.9.0',
-        'icon_small' => 'fa-calendar',
+        'icon_small' => 'fa-solid fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -245,6 +245,8 @@ class Config extends \Ilch\Config\Install
 
                 // Add the repeat_unil column to save until what date an event should be repeated.
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `repeat_until` DATETIME DEFAULT NULL AFTER `period_day`;');
+
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-calendar' WHERE `key` = 'calendar';");
                 // no break
         }
     }

@@ -15,7 +15,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'user',
-        'icon_small' => 'fa-user',
+        'icon_small' => 'fa-solid fa-user',
         'system_module' => true,
         'languages' => [
             'de_DE' => [
@@ -618,6 +618,8 @@ class Config extends \Ilch\Config\Install
                     UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fab fa-discord';");
                 $this->db()->queryMulti("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-microphone' AND `key` = 'discord';
                     UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-headphones' AND `key` = 'discord';");
+
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-user' WHERE `key` = 'user';");
         }
     }
 }
