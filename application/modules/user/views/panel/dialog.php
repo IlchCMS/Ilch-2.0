@@ -10,7 +10,7 @@
             <?php else : ?>
                 <h1><?=$this->getTrans('dialogHiddenDialogs') ?></h1>
             <?php endif; ?>
-            <?=(($this->getRequest()->getParam('showhidden') != 1) && !empty($this->get('dialogsHidden'))) ? '<a href="'.$this->getUrl(['controller' => 'panel', 'action' => 'dialog', 'showhidden' => 1]).'"><i class="fas fa-eye-slash"></i> '.$this->getTrans('dialogsHidden').'</a>' : '' ?>
+            <?=(($this->getRequest()->getParam('showhidden') != 1) && !empty($this->get('dialogsHidden'))) ? '<a href="'.$this->getUrl(['controller' => 'panel', 'action' => 'dialog', 'showhidden' => 1]).'"><i class="fa-solid fa-eye-slash"></i> '.$this->getTrans('dialogsHidden').'</a>' : '' ?>
             <div id="uMessenger">
                 <div class="chat">
                     <div class="row chat-wrapper">
@@ -66,9 +66,9 @@
                                                         </div>
                                                     </a>
                                                     <?php if ($this->getRequest()->getParam('showhidden') == 1) : ?>
-                                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'unhidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('unhideDialog') ?>" class="hide_button"><span class="fas fa-eye"></span></a>
+                                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'unhidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('unhideDialog') ?>" class="hide_button"><span class="fa-solid fa-eye"></span></a>
                                                     <?php else : ?>
-                                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>" class="hide_button"><span class="fas fa-eye-slash"></span></a>
+                                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'hidedialog', 'id' => $dialog->getCId()], null, true) ?>" title="<?=$this->getTrans('hideDialog') ?>" class="hide_button"><span class="fa-solid fa-eye-slash"></span></a>
                                                     <?php endif; ?>
                                                     <?=$this->getDeleteIcon(['action' => 'deletedialog', 'id' => $dialog->getCId()]) ?>
                                                 </li>
@@ -90,7 +90,7 @@
                                 <div class="message-info">
                                     <span class="back-chat-list">
                                         <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialog']) ?>">
-                                            <i class="fa fa-chevron-left"></i>
+                                            <i class="fa-solid fa-chevron-left"></i>
                                         </a>
                                     </span>
                                     <span class="avatar">
@@ -125,7 +125,7 @@
                                                       name="ilch_bbcode"
                                                       toolbar="ilch_bbcode"<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>></textarea>
                                             <button class="btn btn-primary btn-sm pull-right" id="chatSendBtn">
-                                                <i class="fa fa-location-arrow"></i>
+                                                <i class="fa-solid fa-location-arrow"></i>
                                             </button>
                                         </div>
                                     </div>

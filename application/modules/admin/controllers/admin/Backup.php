@@ -19,61 +19,61 @@ class Backup extends \Ilch\Controller\Admin
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ],
             [
                 'name' => 'menuMaintenance',
                 'active' => false,
-                'icon' => 'fa fa-wrench',
+                'icon' => 'fa-solid fa-wrench',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'maintenance'])
             ],
             [
                 'name' => 'menuCustomCSS',
                 'active' => false,
-                'icon' => 'fa fa-file-code-o',
+                'icon' => 'fa-regular fa-file-code',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'customcss'])
             ],
             [
                 'name' => 'menuHtaccess',
                 'active' => false,
-                'icon' => 'fa fa-file-code-o',
+                'icon' => 'fa-regular fa-file-code',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'htaccess'])
             ],
             [
                 'name' => 'menuBackup',
                 'active' => false,
-                'icon' => 'fa fa-download',
+                'icon' => 'fa-solid fa-download',
                 'url' => $this->getLayout()->getUrl(['controller' => 'backup', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'backup', 'action' => 'create'])
                 ],
             ],
             [
                 'name' => 'menuUpdate',
                 'active' => false,
-                'icon' => 'fa fa-refresh',
+                'icon' => 'fa-solid fa-arrows-rotate',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'update'])
             ],
             [
                 'name' => 'menuNotifications',
                 'active' => false,
-                'icon' => 'fa fa-envelope-o',
+                'icon' => 'fa-regular fa-envelope',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'notifications'])
             ],
             [
                 'name' => 'menuEmails',
                 'active' => false,
-                'icon' => 'fa fa-envelope',
+                'icon' => 'fa-solid fa-envelope',
                 'url' => $this->getLayout()->getUrl(['controller' => 'emails', 'action' => 'index'])
             ],
             [
                 'name' => 'menuMail',
                 'active' => false,
-                'icon' => 'fa fa-newspaper-o',
+                'icon' => 'fa-regular fa-newspaper',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'mail'])
             ]
         ];

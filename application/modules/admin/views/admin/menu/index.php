@@ -55,7 +55,7 @@ function buildMenu($parentId, $menuData, View $view) {
             echo '<li id="list_'.$menuData['items'][$itemId]->getId().'" class="'.$class.'">';
             echo '<div>
                 <span class="disclose">
-                    <i class="fa fa-minus-circle"></i>
+                    <i class="fa-solid fa-circle-minus"></i>
                     <input type="hidden" class="hidden_id" name="items['.$menuData['items'][$itemId]->getId().'][id]" value="'.$menuData['items'][$itemId]->getId().'" />
                     <input type="hidden" class="hidden_title" name="items['.$menuData['items'][$itemId]->getId().'][title]" value="'.$view->escape($menuData['items'][$itemId]->getTitle()).'" />
                     <input type="hidden" class="hidden_href" name="items['.$menuData['items'][$itemId]->getId().'][href]" value="'.$menuData['items'][$itemId]->getHref().'" />
@@ -68,8 +68,8 @@ function buildMenu($parentId, $menuData, View $view) {
                     <span></span>
                 </span>
                 <span class="title">'.$view->escape($menuData['items'][$itemId]->getTitle()).'</span>
-                <span class="item_delete"><i class="fa fa-times-circle"></i></span>
-                <span class="item_edit"><i class="fa fa-edit"></i></span>
+                <span class="item_delete"><i class="fa-solid fa-times-circle"></i></span>
+                <span class="item_edit"><i class="fa-regular fa-pen-to-square"></i></span>
             </div>';
 
             if (isset($menuData['parents'][$itemId])) {
@@ -311,7 +311,7 @@ $(document).ready
                     +'<input type="hidden" class="hidden_modulekey" name="items[tmp_'+itemId+'][modulekey]" value="'+modulKeyValue+'" />'
                     +'<input type="hidden" class="hidden_menukey" name="items[tmp_'+itemId+'][menukey]" value="'+menuKey.val()+'" />'
                     +'<input type="hidden" class="hidden_access" name="items[tmp_'+itemId+'][access]" value="'+$('#access').val()+'" />'
-                    +'</span></span><span class="title">'+title+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
+                    +'</span></span><span class="title">'+title+'</span><span class="item_delete"><i class="fa-solid fa-times-circle"></i></span><span class="item_edit"><i class="fa-regular fa-pen-to-square"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
             }

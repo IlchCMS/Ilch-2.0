@@ -20,24 +20,24 @@ class Layouts extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fas fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSearch',
                 'active' => false,
-                'icon' => 'fas fa-search',
+                'icon' => 'fa-solid fa-magnifying-glass',
                 'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'search'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fas fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'settings']),
                 [
                     'name' => 'menuAdvSettings',
                     'active' => false,
-                    'icon' => 'fas fa-cogs',
+                    'icon' => 'fa-solid fa-gears',
                     'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'advSettings'])
                 ]
             ]

@@ -13,7 +13,7 @@
         <?=$this->getTokenField() ?>
         <div id="drop">
             <p><?=$this->getTrans('drag') ?></p>
-            <i class="fa fa-cloud-upload"></i>
+            <i class="fa-solid fa-cloud-arrow-up"></i>
             <p><?=$this->getTrans('or') ?></p>
             <a class="btn btn-small btn-primary"><?=$this->getTrans('browse') ?></a>
             <input type="file" name="upl" multiple />

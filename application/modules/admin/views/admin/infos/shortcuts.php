@@ -71,7 +71,7 @@
                 <td><?=$this->getTrans('shortcutCustumCSSMoveUpOrDown') ?></td>
             </tr>
             <tr>
-                <td><span class="key-shortcut"><?=$this->getTrans('keyCtrl') ?></span> + <i class="fa fa-mouse-pointer"></i></td>
+                <td><span class="key-shortcut"><?=$this->getTrans('keyCtrl') ?></span> + <i class="fa-solid fa-arrow-pointer"></i></td>
                 <td><?=$this->getTrans('shortcutCustumCSSMultiEdit') ?></td>
             </tr>
             <tr>

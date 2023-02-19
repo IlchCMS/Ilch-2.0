@@ -41,19 +41,19 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-5 col-xs-12">
                 <h3><?=$this->escape($profil->getName()) ?></h3>
                 <div class="detail">
-                    <i class="fas fa-sign-in-alt" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
+                    <i class="fa-solid fa-right-to-bracket" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
                     <?php $dateLastActivity = $profil->getDateLastActivity(); ?>
                     <?php if ($dateLastActivity != ''): ?>
-                        <i class="fa fa-eye" title="<?=$this->getTrans('dateLastVisited') ?>"></i> <?=$this->escape($profil->getDateLastActivity()) ?>
+                        <i class="fa-solid fa-eye" title="<?=$this->getTrans('dateLastVisited') ?>"></i> <?=$this->escape($profil->getDateLastActivity()) ?>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="col-lg-4 hidden-xs concatLinks-lg">
                 <?php if ($this->getUser() && $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
-                    <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId()]) ?>" class="fa fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
+                    <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId()]) ?>" class="fa-solid fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
                 <?php endif; ?>
                 <?php if ($this->getUser() && $profil->getOptMail() == 1 && $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
-                    <a href="<?=$this->getUrl(['controller' => 'mail', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
+                    <a href="<?=$this->getUrl(['controller' => 'mail', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa-solid fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
                 <?php endif; ?>
                 <?php if ($this->get('gallery') != 0 && $profil->getOptGallery() != 0 && $this->get('galleryAllowed') != 0): ?>
                     <a href="<?=$this->getUrl(['controller' => 'gallery', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa-regular fa-image" title="<?=$this->getTrans('gallery') ?>"></a>

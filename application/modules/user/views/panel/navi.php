@@ -20,7 +20,7 @@ function getTransKey($usermenuId)
 
 <div class="profile-sidebar active">
     <div class="push-menu">
-        <i class="fa fa-bars pull-right"></i>
+        <i class="fa-solid fa-bars pull-right"></i>
     </div>
     <div class="profile-userpic">
         <img src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" class="img-circle" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">

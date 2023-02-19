@@ -216,29 +216,29 @@ foreach ($modules as $module): ?>
         <div class="content_savebox">
             <?php if (!empty($module->phpextensions) && in_array(false, $extensionCheck)): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
-                    <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                    <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (!version_compare(PHP_VERSION, $module->phpVersion, '>=')): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpVersionError') ?>">
-                    <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                    <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (!version_compare($coreVersion, $module->ilchCore, '>=')): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('ilchCoreError') ?>">
-                    <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                    <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (!empty($dependencyCheck)): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('dependencyError') ?>">
-                    <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                    <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (in_array($module->key, $this->get('modules'))): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
-                    <i class="fa fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
+                    <i class="fa-solid fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
                 <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'search', 'key' => $module->key]) ?>">
                     <?=$this->getTokenField() ?>
                     <button type="submit" class="btn btn-default">
-                        <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                        <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>
             <?php endif; ?>

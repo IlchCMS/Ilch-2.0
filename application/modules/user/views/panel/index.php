@@ -32,8 +32,8 @@ $openFriendRequests = $this->get('openFriendRequests');
                         <tbody>
                         <?php foreach ($openFriendRequests as $openFriendRequest): ?>
                             <tr>
-                                <td><a href="<?=$this->getUrl(['action' => 'approveFriendRequest', 'id' => $openFriendRequest->getUserId()], null, true) ?>" title="<?=$this->getTrans('approveFriendRequest') ?>"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="<?=$this->getUrl(['action' => 'removeFriend', 'id' => $openFriendRequest->getUserId()], null, true) ?>" title="<?=$this->getTrans('declineFriendRequest') ?>"><i class="fa fa-ban text-danger"></i></a></td>
+                                <td><a href="<?=$this->getUrl(['action' => 'approveFriendRequest', 'id' => $openFriendRequest->getUserId()], null, true) ?>" title="<?=$this->getTrans('approveFriendRequest') ?>"><i class="fa-solid fa-check text-success"></i></a></td>
+                                <td><a href="<?=$this->getUrl(['action' => 'removeFriend', 'id' => $openFriendRequest->getUserId()], null, true) ?>" title="<?=$this->getTrans('declineFriendRequest') ?>"><i class="fa-solid fa-ban text-danger"></i></a></td>
                                 <td><a href="<?=$this->getUrl(['controller' => 'profil', 'action' => 'index', 'user' => $openFriendRequest->getUserId()]) ?>" title="<?=$this->escape($openFriendRequest->getName()) ?>s <?=$this->getTrans('profile') ?>"><?=$openFriendRequest->getName() ?></a></td>
                             </tr>
                         <?php endforeach; ?>
@@ -74,8 +74,8 @@ $openFriendRequests = $this->get('openFriendRequests');
                                 <tr>
                                     <td><?=$this->getDeleteCheckbox('check_notifications', $notification->getId()) ?></td>
                                     <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $notification->getId()]) ?></td>
-                                    <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermissionAll') ?>"><i class="fas fa-bell-slash text-danger"></i></a></td>
-                                    <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule(), 'type' => $notification->getType()], null, true) ?>" title="<?=$this->getTrans('revokePermissionType') ?>"><i class="far fa-bell-slash text-danger"></i></a></td>
+                                    <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermissionAll') ?>"><i class="fa-solid fa-bell-slash text-danger"></i></a></td>
+                                    <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule(), 'type' => $notification->getType()], null, true) ?>" title="<?=$this->getTrans('revokePermissionType') ?>"><i class="fa-solid fa-bell-slash text-danger"></i></a></td>
                                     <td><?=$date->format('d.m.Y H:i:s', true) ?></td>
                                     <td><a href="<?=$notification->getURL() ?>" target="_blank" rel="noopener" title="<?=$this->escape($notification->getModule()) ?>"><?=$this->escape($notification->getModule()) ?></a></td>
                                     <td><?=$this->escape($notification->getMessage()) ?></td>

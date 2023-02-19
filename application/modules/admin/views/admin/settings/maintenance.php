@@ -28,7 +28,7 @@
                    value="<?=date('d.m.Y H:i', strtotime($this->get('maintenanceDate'))) ?>"
                    readonly>
             <span class="input-group-addon">
-                <span class="fa fa-calendar"></span>
+                <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>

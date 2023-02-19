@@ -71,10 +71,10 @@ $userGroupList_allowed = $this->get('userGroupList_allowed');
                                 </td>
                                 <td>
                                     <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($userlist->getID())): ?>
-                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $userlist->getId()]) ?>" class="fa fa-comment fa-lg user-link" title="<?=$this->getTrans('privateMessage') ?>"></a>
+                                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $userlist->getId()]) ?>" class="fa-solid fa-comment fa-lg user-link" title="<?=$this->getTrans('privateMessage') ?>"></a>
                                     <?php endif; ?>
                                     <?php if ($userlist->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $userlist->getID()): ?>
-                                        <a href="<?=$this->getUrl(['controller' => 'mail', 'action' => 'index', 'user' => $userlist->getId()]) ?>" class="fa fa-envelope fa-lg user-link" title="<?=$this->getTrans('email') ?>"></a>
+                                        <a href="<?=$this->getUrl(['controller' => 'mail', 'action' => 'index', 'user' => $userlist->getId()]) ?>" class="fa-solid fa-envelope fa-lg user-link" title="<?=$this->getTrans('email') ?>"></a>
                                     <?php endif; ?>
 
                                     <?php foreach ($profileIconFields as $profileIconField) {

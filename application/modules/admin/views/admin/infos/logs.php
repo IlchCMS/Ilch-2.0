@@ -6,7 +6,7 @@ $userCache = [];
 <h1><?=$this->getTrans('logs') ?></h1>
 <p>
     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-        <i class="fas fa-filter"></i> <?=$this->getTrans('filter') ?>
+        <i class="fa-solid fa-filter"></i> <?=$this->getTrans('filter') ?>
     </a>
 </p>
 <div class="panel panel-default collapse" id="collapseExample">
@@ -25,7 +25,7 @@ $userCache = [];
                            value="<?=date('d.m.Y 00:00', strtotime( '-7 days' )) ?>"
                            readonly>
                     <span class="input-group-addon">
-                        <span class="fa fa-calendar"></span>
+                        <span class="fa-solid fa-calendar"></span>
                     </span>
                 </div>
             </div>
@@ -41,7 +41,7 @@ $userCache = [];
                            value="<?=date('d.m.Y 23:59') ?>"
                            readonly>
                     <span class="input-group-addon">
-                        <span class="fa fa-calendar"></span>
+                        <span class="fa-solid fa-calendar"></span>
                     </span>
                 </div>
             </div>

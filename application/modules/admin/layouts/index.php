@@ -79,17 +79,17 @@
                     <?php if ($this->hasSidebar()): ?>
                         <div id="hide-menu" class="btn-header pull-left">
                             <a id="toggleLeftMenu" title="Collapse Menu" data-toggle="collapse" data-target="#left-panel">
-                                <i class="fa fa-outdent"></i>
+                                <i class="fa-solid fa-outdent"></i>
                             </a>
                         </div>
                     <?php endif; ?>
                     <img title="Version <?=$config->get('version') ?>" class="pull-left logo hidden-sm" src="<?=$this->getStaticUrl('img/ilch_logo_2.png') ?>" />
                     <div class="hidden-md hidden-lg hidden-sm">
                         <a class="<?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') { echo 'active'; }?> home" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
-                            <i class="fa fa-home"></i>
+                            <i class="fa-solid fa-house"></i>
                         </a>
                         <button type="button" class="pull-right navbar-toggle" data-toggle="collapse" data-target="#rightbar">
-                            <i class="fa fa-th"></i>
+                            <i class="fa-solid fa-table-cells"></i>
                         </button>
                     </div>
                 </div>
@@ -99,13 +99,13 @@
                     <ul class="nav navbar-nav">
                         <li class="<?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') { echo 'active'; } ?> visible-md visible-lg">
                             <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
-                                <i class="fa fa-home"></i>
+                                <i class="fa-solid fa-house"></i>
                             </a>
                         </li>
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <li <?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'menu') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'menu', 'action' => 'index']) ?>">
-                                    <i class="fa fa-list-ol hidden-sm hidden-md"></i> <?=$this->getTrans('navigation') ?>
+                                    <i class="fa-solid fa-list-ol hidden-sm hidden-md"></i> <?=$this->getTrans('navigation') ?>
                                 </a>
                             </li>
                         <?php endif; ?>
@@ -141,13 +141,13 @@
                         <?php if (!empty($modulesHtml) || !empty($systemModuleHtml) || !empty($layoutModuleHtml)): ?>
                             <li id="ilch_dropdown" class="dropdown <?php if ($this->getRequest()->getModuleName() !== 'admin') { echo 'active'; } ?>">
                                 <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
-                                    <i class="fa fa-puzzle-piece hidden-sm hidden-md"></i> <?=$this->getTrans('modules') ?>
+                                    <i class="fa-solid fa-puzzle-piece hidden-sm hidden-md"></i> <?=$this->getTrans('modules') ?>
                                     <b class="caret"></b>
                                 </a>
                                 <ul role="menu" class="dropdown-menu full pre-scrollable">
                                     <?php if ($this->getUser()->isAdmin()): ?>
                                         <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'index']) ?>">
-                                            <i class="fa fa-list-ol"></i> <?=$this->getTrans('overview') ?>
+                                            <i class="fa-solid fa-list-ol"></i> <?=$this->getTrans('overview') ?>
                                         </a>
                                         <div class="divider"></div>
                                     <?php endif; ?>
@@ -172,12 +172,12 @@
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <li <?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'page') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'page', 'action' => 'index']) ?>">
-                                    <i class="fa fa-file-text-o hidden-sm hidden-md"></i> <?=$this->getTrans('menuSites') ?>
+                                    <i class="fa-regular fa-file-lines hidden-sm hidden-md"></i> <?=$this->getTrans('menuSites') ?>
                                 </a>
                             </li>
                             <li <?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'boxes') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'boxes', 'action' => 'index']) ?>">
-                                    <i class="fa fa-inbox hidden-sm hidden-md"></i> <?=$this->getTrans('menuBoxes') ?>
+                                    <i class="fa-solid fa-inbox hidden-sm hidden-md"></i> <?=$this->getTrans('menuBoxes') ?>
                                 </a>
                             </li>
                             <li <?php if ($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'layouts') { echo 'class="active"'; } ?>>
@@ -191,36 +191,36 @@
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <li class="<?php if ($this->getRequest()->getModuleName() === 'admin' && ($this->getRequest()->getControllerName() === 'settings' || $this->getRequest()->getControllerName() === 'backup' || $this->getRequest()->getControllerName() === 'emails')) { echo 'active'; } ?>">
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>">
-                                    <i class="fa fa-cogs"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuSettings') ?></span>
+                                    <i class="fa-solid fa-gears"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuSettings') ?></span>
                                 </a>
                             </li>
                         <?php endif; ?>
                         <li>
                             <a title="<?=$this->getTrans('openFrontend') ?>" target="_blank" href="<?=$this->getUrl() ?>">
-                                <i class="fa fa-share"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuFrontend') ?></span>
+                                <i class="fa-solid fa-share"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuFrontend') ?></span>
                             </a>
                         </li>
                         <li class="dropdown <?php if ($this->getRequest()->getModuleName() === 'admin' &&  $this->getRequest()->getControllerName() === 'infos') { echo 'active'; } ?>">
                             <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
-                                <i class="fa fa-question-circle"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuInfos') ?></span> <b class="caret"></b>
+                                <i class="fa-solid fa-circle-question"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuInfos') ?></span> <b class="caret"></b>
                             </a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
                                     <a href="https://www.ilch.de" target="_blank" rel="noopener">
-                                        <i class="fa fa-home"></i>
+                                        <i class="fa-solid fa-house"></i>
                                         <?=$this->getTrans('officialSite') ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="https://www.ilch.de/forum.html" target="_blank" rel="noopener">
-                                        <i class="fa fa-comments-o"></i>
+                                        <i class="fa-regular fa-comments"></i>
                                         <?=$this->getTrans('officialSupportForum') ?>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://github.com/IlchCMS/Ilch-2.0/wiki" target="_blank" rel="noopener">
-                                        <i class="fa fa-book"></i>
+                                        <i class="fa-solid fa-book"></i>
                                         <?=$this->getTrans('documentationFAQ') ?>
                                     </a>
                                 </li>
@@ -228,7 +228,7 @@
                                 <li class="divider"></li>
                                 <li>
                                     <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'index']) ?>">
-                                        <i class="fa fa-info-circle"></i>
+                                        <i class="fa-solid fa-circle-info"></i>
                                         <?=$this->getTrans('menuInfos') ?>
                                     </a>
                                 </li>
@@ -242,20 +242,20 @@
                         <?php endif; ?>
                         <li class="dropdown dropdown-user">
                             <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
-                                <i class="fa fa-user hidden-sm hidden-md"></i> <?=$this->escape($name) ?>
+                                <i class="fa-solid fa-user hidden-sm hidden-md"></i> <?=$this->escape($name) ?>
                                 <b class="caret"></b>
                             </a>
                             <ul role="menu" class="dropdown-menu">
                                 <li class="logout">
                                     <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'logout']) ?>">
-                                        <i class="fa fa-power-off"></i> <?=$this->getTrans('logout') ?>
+                                        <i class="fa-solid fa-power-off"></i> <?=$this->getTrans('logout') ?>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <!-- Search Block -->
                         <li>
-                            <i id="search-header" class="fa fa-search search-btn"><span class="search-text visible-xs-inline"><?=$this->getTrans('search') ?></span></i>
+                            <i id="search-header" class="fa-solid fa-magnifying-glass search-btn"><span class="search-text visible-xs-inline"><?=$this->getTrans('search') ?></span></i>
                             <div id="search-div" class="search-close">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
@@ -283,7 +283,7 @@
                         <?php
                         foreach ($this->getMenus() as $vals => $items) {
                             echo '<li class="heading">
-                                <i class="fa fa-puzzle-piece"></i> '.$this->getTrans($vals).'
+                                <i class="fa-solid fa-puzzle-piece"></i> '.$this->getTrans($vals).'
                             </li>';
                             foreach ($items as $key => $value) {
                                 $class = '';

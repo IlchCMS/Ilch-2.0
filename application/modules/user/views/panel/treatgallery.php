@@ -8,7 +8,7 @@
             <h1>
                 <?=$this->getTrans('gallery') ?>: <?=$this->get('galleryTitle') ?>
                 <a id="<?=$this->getRequest()->getParam('id') ?>" href="javascript:media(<?=$this->getRequest()->getParam('id') ?>)">
-                    <i class="fa fa-cloud-upload"></i>
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
                 </a>
             </h1>
             <?=$this->get('pagination')->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>

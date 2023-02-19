@@ -70,7 +70,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
 
 <div id="modules" class="table-responsive">
     <div class="col-lg-12 input-group">
-        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <span class="input-group-addon"><i class="fa-solid fa-magnifying-glass"></i></span>
         <input class="form-control hasclear" id="user-search" placeholder="<?=$this->getTrans('search') ?>" required>
     </div>
     <br />
@@ -112,7 +112,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                         <br /><br />
                         <?php
                         $isInstalled = in_array($moduleOnUpdateServer->key, $this->get('modules'));
-                        $iconClass = ($isInstalled) ? 'fa fa-refresh' : 'fa fa-download';
+                        $iconClass = ($isInstalled) ? 'fa-solid fa-arrows-rotate' : 'fa-solid fa-download';
 
                         if (!empty($moduleOnUpdateServer->phpExtensions) && in_array(false, $extensionCheck)): ?>
                             <button class="btn disabled"
@@ -132,7 +132,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                         <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '>=')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">
-                                <i class="fa fa-check text-success"></i>
+                                <i class="fa-solid fa-check text-success"></i>
                             </button>
                         <?php elseif ($isInstalled && !empty(checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies))): ?>
                             <button class="btn disabled"
@@ -153,7 +153,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                                 <button type="submit"
                                         class="btn btn-default showOverlay"
                                         title="<?=$this->getTrans('moduleUpdate') ?>">
-                                    <i class="fa fa-refresh"></i>
+                                    <i class="fa-solid fa-arrows-rotate"></i>
                                 </button>
                             </form>
                         <?php else: ?>
@@ -163,14 +163,14 @@ usort($modulesOnUpdateServer, 'custom_sort');
                                 <button type="submit"
                                         class="btn btn-default showOverlay"
                                         title="<?=$this->getTrans('moduleDownload') ?>">
-                                    <i class="fa fa-download"></i>
+                                    <i class="fa-solid fa-download"></i>
                                 </button>
                             </form>
                         <?php endif; ?>
 
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                             <span class="btn btn-default">
-                                <i class="fa fa-info text-info"></i>
+                                <i class="fa-solid fa-info text-info"></i>
                             </span>
                         </a>
                     </td>

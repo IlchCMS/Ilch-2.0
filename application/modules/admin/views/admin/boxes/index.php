@@ -59,9 +59,9 @@
                                         <?php endif; ?>
 
                                         <?php if ($this->get('boxMapper')->getSelfBoxByIdLocale($box->getId(), $key) != null): ?>
-                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa fa-edit"></i></a>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa-regular fa-pen-to-square"></i></a>
                                         <?php else: ?>
-                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa fa-plus-circle"></i></a>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa-solid fa-circle-plus"></i></a>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </td>

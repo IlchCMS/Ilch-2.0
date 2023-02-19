@@ -18,37 +18,37 @@ class Infos extends \Ilch\Controller\Admin
             [
                 'name' => 'menuPHPInfo',
                 'active' => false,
-                'icon' => 'fa fa-info-circle',
+                'icon' => 'fa-solid fa-circle-info',
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'index'])
             ],
             [
                 'name' => 'menuPHPExtensions',
                 'active' => false,
-                'icon' => 'fa fa-cubes',
+                'icon' => 'fa-solid fa-cubes',
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'phpextensions'])
             ],
             [
                 'name' => 'menuFolderRights',
                 'active' => false,
-                'icon' => 'fa fa-folder-open',
+                'icon' => 'fa-solid fa-folder-open',
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'folderrights'])
             ],
             [
                 'name' => 'menuLogs',
                 'active' => false,
-                'icon' => 'fa fa-folder-open',
+                'icon' => 'fa-solid fa-folder-open',
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'logs'])
             ],
             [
                 'name' => 'menuCertificate',
                 'active' => false,
-                'icon' => 'fa fa-key',
+                'icon' => 'fa-solid fa-key',
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'certificate'])
             ],
             [
                 'name' => 'menuKeyboardShortcuts',
                 'active' => false,
-                'icon' => 'fa fa-keyboard-o',
+                'icon' => 'fa-regular fa-keyboard',
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'shortcuts'])
             ]
         ];

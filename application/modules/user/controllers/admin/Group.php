@@ -25,43 +25,43 @@ class Group extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuGroup',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'index']),
                 [
                     'name' => 'menuActionNewGroup',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'treat'])
                 ],
                 [
                     'name' => 'menuAccess',
                     'active' => false,
-                    'icon' => 'fa fa-balance-scale',
+                    'icon' => 'fa-solid fa-scale-balanced',
                     'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'access'])
                 ]
             ],
             [
                 'name' => 'menuProfileFields',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url'  => $this->getLayout()->getUrl(['controller' => 'profilefields', 'action' => 'index'])
             ],
             [
                 'name' => 'menuAuthProviders',
                 'active' => false,
-                'icon' => 'fa fa-key',
+                'icon' => 'fa-solid fa-key',
                 'url'  => $this->getLayout()->getUrl(['controller' => 'providers', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];

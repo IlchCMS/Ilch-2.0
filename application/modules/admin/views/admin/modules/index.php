@@ -102,19 +102,19 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             </small>
                             <br /><br />
                             <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('administrate') ?>">
-                                <i class="fa fa-pencil text-success"></i>
+                                <i class="fa-solid fa-pencil text-success"></i>
                             </a>
                             <?php if (!empty($moduleOnUpdateServer) && $module->getKey() == $moduleOnUpdateServer->key): ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-default">
-                                        <i class="fa fa-info text-info"></i>
+                                        <i class="fa-solid fa-info text-info"></i>
                                     </span></a>
                             <?php else: ?>
                                 <span class="btn btn-default"
                                       data-toggle="modal"
                                       data-target="#infoModal<?=$module->getKey() ?>"
                                       title="<?=$this->getTrans('info') ?>">
-                                    <i class="fa fa-info text-info"></i>
+                                    <i class="fa-solid fa-info text-info"></i>
                                 </span>
                             <?php endif; ?>
                             <?php
@@ -126,7 +126,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                     }
                                 }
 
-                                $icon = ($source === 'local') ? 'fa fa-download': 'fa fa-cloud-download';
+                                $icon = ($source === 'local') ? 'fa-solid fa-download': 'fa-solid fa-cloud-arrow-down';
                                 if (!empty($moduleUpdateInformation->phpExtensions) && in_array(false, $extensionCheck)): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('phpExtensionError') ?>">
@@ -181,11 +181,11 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                         data-toggle="modal"
                                         data-target="#dependencyInfoModal<?=$module->getKey() ?>"
                                         title="<?=$this->getTrans('dependencyError') ?>">
-                                    <i class="fa fa-trash-o text-warning"></i>
+                                    <i class="fa-regular fa-trash-can text-warning"></i>
                                 </button>
                             <?php else: ?>
                                 <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('uninstall') ?>">
-                                    <i class="fa fa-trash-o text-warning"></i>
+                                    <i class="fa-regular fa-trash-can text-warning"></i>
                                 </a>
                             <?php endif; ?>
                         </td>

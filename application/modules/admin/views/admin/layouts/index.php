@@ -66,7 +66,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                             <?php if (version_compare($coreVersion, $layoutOnUpdateServerFound->ilchCore, '<')): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
-                                    <i class="fas fa-sync"></i>
+                                    <i class="fa-solid fa-arrows-rotate"></i>
                                 </button>
                             <?php else: ?>
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServerFound->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServerFound->key], 'newVersion' => $layoutOnUpdateServerFound->version, 'from' => 'index']) ?>">
@@ -74,14 +74,14 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                                     <button type="submit"
                                             class="btn btn-default"
                                             title="<?=$this->getTrans('layoutUpdate') ?>">
-                                        <i class="fas fa-sync"></i>
+                                        <i class="fa-solid fa-arrows-rotate"></i>
                                     </button>
                                 </form>
                             <?php endif; ?>
                         <?php else: ?>
                             <?php if ($this->get('defaultLayout') === $layout->getKey()): ?>
                                 <span class="btn disabled" title="<?=$this->getTrans('isDefault') ?>">
-                                    <i class="fas fa-check text-success"></i>
+                                    <i class="fa-solid fa-check text-success"></i>
                                 </span>
                             <?php else: ?>
                                 <?php if ($ilchCoreTooOld) : ?>
@@ -105,21 +105,21 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                         <?php if ($ilchCoreTooOld) : ?>
                             <button class="btn btn-default disabled"
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
-                                <i class="fas fa-cogs"></i>
+                                <i class="fa-solid fa-gears"></i>
                             </button>
                         <?php elseif ($moduleNotInstalled) : ?>
                             <button class="btn btn-default disabled"
                                     title="<?=$this->getTrans('layoutModuleNotInstalled') ?>">
-                                <i class="fas fa-cogs"></i>
+                                <i class="fa-solid fa-gears"></i>
                             </button>
                         <?php else: ?>
                             <?php if ($layout->getModulekey() != ''): ?>
                                 <a href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
-                                    <i class="fas fa-cogs"></i>
+                                    <i class="fa-solid fa-gears"></i>
                                 </a>
                             <?php elseif (!empty($layout->getSettings())): ?>
                                 <a href="<?=$this->getUrl(['action' => 'advSettingsShow', 'layoutKey' => $layout->getKey()]) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
-                                    <i class="fas fa-cogs"></i>
+                                    <i class="fa-solid fa-gears"></i>
                                 </a>
                             <?php endif; ?>
                         <?php endif; ?>
@@ -129,7 +129,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                               data-toggle="modal"
                               data-target="#infoModal<?=$layout->getKey() ?>"
                               title="<?=$this->getTrans('info') ?>">
-                            <i class="fas fa-info text-info"></i>
+                            <i class="fa-solid fa-info text-info"></i>
                         </span>
                         <?php if ($this->get('defaultLayout') !== $layout->getKey()): ?>
                             <span class="btn btn-default deleteLayout"
@@ -138,7 +138,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                                   data-target="#deleteModal"
                                   data-modaltext="<?=$this->escape($this->getTrans('askIfDeleteLayout', $layout->getKey())) ?>"
                                   title="<?=$this->getTrans('delete') ?>">
-                                <i class="far fa-trash-alt text-danger"></i>
+                                <i class="fa-regular fa-trash-can text-danger"></i>
                             </span>
                         <?php endif; ?>
                     </div>

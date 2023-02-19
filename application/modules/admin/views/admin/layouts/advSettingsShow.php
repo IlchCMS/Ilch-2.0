@@ -43,7 +43,7 @@ function getInput($name, $value, $settingsValues, $obj)
                                                id="selectedImage_%s"
                                                value="%s"
                                                readonly />
-                                        <span class="input-group-addon"><a id="media_%s" href="javascript:media_%s()"><i class="fas fa-image"></i></a></span>
+                                        <span class="input-group-addon"><a id="media_%s" href="javascript:media_%s()"><i class="fa-regular fa-image"></i></a></span>
                                     </div>', $name, $name, $settingsValue, $name, $name);
             $input .= '<script>'.$obj->getMedia()
                             ->addMediaButton($obj->getUrl('admin/media/iframe/index/type/single/input/_'.$name.'/'))

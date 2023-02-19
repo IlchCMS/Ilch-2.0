@@ -38,11 +38,11 @@ $index = 0;
                                 if ($notificationPermission->getGranted()) {
                                     $value = 'true';
                                     $translation = 'revokePermission';
-                                    $icon = 'fas fa-bell text-success';
+                                    $icon = 'fa-solid fa-bell text-success';
                                 } else {
                                     $value = 'false';
                                     $translation = 'grantPermission';
-                                    $icon = 'fas fa-bell-slash text-danger';
+                                    $icon = 'fa-solid fa-bell-slash text-danger';
                                 }
                                 ?>
                                 <tr>

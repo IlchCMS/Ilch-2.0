@@ -47,7 +47,7 @@ if ($group->getId()) {
                         <ol id="unassigned_users" class="sortable connectedSortable">
                         <?php foreach ($this->get('UsersList') as $user): ?>
                             <?php if (!in_array($user->getId(), $this->get('groupUsersList'))): ?>
-                            <li class="handle_li" value="<?=$user->getId() ?>"><div><span class="fa fa-sort"></span> <?=$user->getName() ?></div></li>
+                            <li class="handle_li" value="<?=$user->getId() ?>"><div><span class="fa-solid fa-sort"></span> <?=$user->getName() ?></div></li>
                             <?php endif; ?>
                         <?php endforeach; ?>
                         </ol>
@@ -61,7 +61,7 @@ if ($group->getId()) {
                                 <?php if (!$user) {
     $user = $userMapper->getDummyUser();
 } ?>
-                                <li class="handle_li" value="<?=$user_Id ?>"><div><span class="fa fa-sort"></span> <?=$user->getName() ?></div></li>
+                                <li class="handle_li" value="<?=$user_Id ?>"><div><span class="fa-solid fa-sort"></span> <?=$user->getName() ?></div></li>
                             <?php endforeach; ?>
                             </ol>
                         </div>

@@ -6,7 +6,7 @@
 <h1>
     <?=$this->getTrans('notifications') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
-        <i class="fa fa-info"></i>
+        <i class="fa-solid fa-info"></i>
     </a>
 </h1>
 <?php if ($notificationPermissions) : ?>
@@ -34,11 +34,11 @@
                         if ($notificationPermission->getGranted()) {
                             $value = 'true';
                             $translation = 'revokePermission';
-                            $icon = 'fa fa-check text-success';
+                            $icon = 'fa-solid fa-check text-success';
                         } else {
                             $value = 'false';
                             $translation = 'grantPermission';
-                            $icon = 'fa fa-square-o';
+                            $icon = 'fa-regular fa-square';
                         }
                         ?>
                         <tr>

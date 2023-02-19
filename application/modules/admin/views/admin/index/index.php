@@ -120,7 +120,7 @@ $version = $this->get('version');
                             <tr>
                                 <td><?=$this->getDeleteCheckbox('check_notifications', $notification->getId()) ?></td>
                                 <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $notification->getId()]) ?></td>
-                                <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermission') ?>"><i class="fa fa-check text-success"></i></a></td>
+                                <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermission') ?>"><i class="fa-solid fa-check text-success"></i></a></td>
                                 <td><?=$date->format('d.m.Y', true) ?></td>
                                 <td><a href="<?=$notification->getURL() ?>" target="_blank" rel="noopener" title="<?=$this->escape($notification->getModule()) ?>"><?=$this->escape($notification->getModule()) ?></a></td>
                                 <td><?=$this->escape($notification->getMessage()) ?></td>

@@ -20,7 +20,7 @@
             </label>
             <div class="col-lg-10">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
                     <input type="text"
                            class="form-control"
                            id="login_emailname"
@@ -35,7 +35,7 @@
             </label>
             <div class="col-lg-10">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
                     <input type="password"
                            class="form-control"
                            id="login_password"
@@ -56,11 +56,11 @@
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
                 <button type="submit" name="login" class="btn btn-default">
-                    <i class="fa fa-fw fa-sign-in"></i> <?=$this->getTrans('login') ?>
+                    <i class="fa-solid fa-fw fa-right-to-bracket"></i> <?=$this->getTrans('login') ?>
                 </button>
                 <span class="social-logins">
                     <?php if (count($this->get('providers')) > 0): ?>
-                        <i class="fa fa-fw fa-angle-right"></i>
+                        <i class="fa-solid fa-fw fa-angle-right"></i>
                     <?php endif; ?>
                     <?php foreach ($this->get('providers') as $provider): ?>
                         <a 
@@ -71,7 +71,7 @@
                                 'action' => $provider->getAuthAction()
                             ]) ?>"
                         >
-                            <i class="fa fa-2x fa-fw <?= $provider->getIcon() ?>"></i>
+                            <i class="fa-solid fa-2x fa-fw <?= $provider->getIcon() ?>"></i>
                         </a>
                     <?php endforeach; ?>
                 </span>
