@@ -51,13 +51,13 @@ if (empty($layoutsOnUpdateServer)) {
                         $ilchCoreTooOld = version_compare($coreVersion, $ilchCoreRequirement, '<');
                         if ($layoutExists && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '>=')): ?>
                             <span class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
-                                <i class="fas fa-check text-success"></i>
+                                <i class="fa-solid fa-check text-success"></i>
                             </span>
                         <?php elseif ($layoutExists && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '<')): ?>
                             <?php if ($ilchCoreTooOld): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
-                                    <i class="fas fa-sync"></i>
+                                    <i class="fa-solid fa-arrows-rotate"></i>
                                 </button>
                             <?php else: ?>
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServer->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServer->key], 'newVersion' => $layoutOnUpdateServer->version, 'from' => 'search']) ?>">
@@ -65,14 +65,14 @@ if (empty($layoutsOnUpdateServer)) {
                                     <button type="submit"
                                             class="btn btn-default"
                                             title="<?=$this->getTrans('layoutUpdate') ?>">
-                                        <i class="fas fa-sync"></i>
+                                        <i class="fa-solid fa-arrows-rotate"></i>
                                     </button>
                                 </form>
                             <?php endif; ?>
                         <?php elseif ($ilchCoreTooOld): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
-                                <i class="fas fa-download"></i>
+                                <i class="fa-solid fa-download"></i>
                             </button>
                         <?php else: ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $layoutOnUpdateServer->key, 'version' => $layoutOnUpdateServer->version]) ?>">
@@ -80,7 +80,7 @@ if (empty($layoutsOnUpdateServer)) {
                                 <button type="submit"
                                         class="btn btn-default"
                                         title="<?=$this->getTrans('layoutDownload') ?>">
-                                    <i class="fas fa-download"></i>
+                                    <i class="fa-solid fa-download"></i>
                                 </button>
                             </form>
                         <?php endif; ?>
@@ -88,7 +88,7 @@ if (empty($layoutsOnUpdateServer)) {
                     <div class="pull-right">
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                             <span class="btn btn-default">
-                                <i class="fas fa-info text-info"></i>
+                                <i class="fa-solid fa-info text-info"></i>
                             </span>
                         </a>
                     </div>

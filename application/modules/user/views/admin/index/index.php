@@ -60,7 +60,7 @@
                     <th><?=$this->getTrans('userEmail') ?></th>
                     <th><?=$this->getTrans('userDateCreated') ?></th>
                     <th><?=$this->getTrans('userDateLastActivity') ?></th>
-                    <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-toggle="modal" data-target="#infoModal"><i class="fa fa-info"></i></a></th><?php endif; ?>
+                    <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-toggle="modal" data-target="#infoModal"><i class="fa-solid fa-info"></i></a></th><?php endif; ?>
                     <th><?=$this->getTrans('userGroups') ?></th>
                 </tr>
             </thead>
@@ -98,11 +98,11 @@
                             <td><?=$this->getDeleteCheckbox('check_users', $user->getId()) ?></td>
                             <td>
                             <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
-                                <a href="<?=$this->getUrl(['action' => 'selectsdelete', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('deleteaccountreset') ?>"><i class="fa fa-check text-success"></i></a>
+                                <a href="<?=$this->getUrl(['action' => 'selectsdelete', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('deleteaccountreset') ?>"><i class="fa-solid fa-check text-success"></i></a>
                             <?php elseif ($this->getRequest()->getParam('showsetfree')): ?>
-                                <a href="<?=$this->getUrl(['action' => 'setfree', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa fa-check text-success"></i></a>
+                                <a href="<?=$this->getUrl(['action' => 'setfree', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa-solid fa-check text-success"></i></a>
                             <?php elseif ($this->getRequest()->getParam('showlocked')): ?>
-                                <a href="<?=$this->getUrl(['action' => 'unlock', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('unlock') ?>"><i class="fa fa-check text-success"></i></a>
+                                <a href="<?=$this->getUrl(['action' => 'unlock', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('unlock') ?>"><i class="fa-solid fa-check text-success"></i></a>
                             <?php else: ?>
                                 <?=((($user->isAdmin() and $this->getUser()->isAdmin()) or !$user->isAdmin())?$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]):'') ?>
                             <?php endif; ?>

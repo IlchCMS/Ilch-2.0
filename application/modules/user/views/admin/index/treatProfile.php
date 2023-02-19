@@ -2,7 +2,7 @@
     <?php $user = $this->get('user') ?>
     <?=$this->getTrans('editUserProfileOf', $user->getName()) ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
-        <i class="fas fa-info"></i>
+        <i class="fa-solid fa-info"></i>
     </a>
 </h1>
 
@@ -13,7 +13,7 @@
                 <b><?=$this->getTrans('profileFirstName') ?></b>
             </div>
             <div class="col-lg-10 detail">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'firstname'], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'firstname'], null, true) ?>"><i class="fa-regular fa-trash-can text-danger"></i></a>
                 <?=$this->escape($user->getFirstName()) ?>
             </div>
         </div>
@@ -24,7 +24,7 @@
                 <b><?=$this->getTrans('profileLastName') ?></b>
             </div>
             <div class="col-lg-10 detail">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'lastname'], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'lastname'], null, true) ?>"><i class="fa-regular fa-trash-can text-danger"></i></a>
                 <?=$this->escape($user->getLastName()) ?>
             </div>
         </div>
@@ -35,7 +35,7 @@
                 <b><?=$this->getTrans('profileCity') ?></b>
             </div>
             <div class="col-lg-10 detail">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'city'], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'default' => 'city'], null, true) ?>"><i class="fa-regular fa-trash-can text-danger"></i></a>
                 <?=$this->escape($user->getCity()) ?>
             </div>
         </div>
@@ -74,7 +74,7 @@ foreach ($profileFields as $profileField) {
             <b><?=$this->escape($profileFieldName) ?></b>
         </div>
         <div class="col-lg-10">
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'id' => $profileField->getId()], null, true) ?>"><i class="far fa-trash-alt text-danger"></i></a>
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteProfilefield', 'user' => $this->getRequest()->getParam('user'), 'id' => $profileField->getId()], null, true) ?>"><i class="fa-regular fa-trash-can text-danger"></i></a>
             <?=$this->escape($value) ?>
         </div>
     </div>

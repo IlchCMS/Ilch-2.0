@@ -92,7 +92,7 @@ if (!empty($profil->getBirthday())) {
                                name="birthday"
                                value="<?=($birthday != '') ? $birthday->format('d.m.Y') : '' ?>">
                         <span class="input-group-addon">
-                            <span class="fa fa-calendar"></span>
+                            <span class="fa-solid fa-calendar"></span>
                         </span>
                     </div>
                 </div>
@@ -133,7 +133,7 @@ if (!empty($profil->getBirthday())) {
                                           value="<?=$value ?>" />
                                     <?php if ($profileField->getShow() == 0): ?>
                                         <span class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
-                                            <span class="fa fa-eye-slash"></span>
+                                            <span class="fa-solid fa-eye-slash"></span>
                                         </span>
                                         </div>
                                     <?php endif; ?>

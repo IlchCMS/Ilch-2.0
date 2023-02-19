@@ -9,7 +9,7 @@
             <option value="private"><?=$this->getTrans('private') ?></option>
             <option value="clan" <?php if ($this->get('usage') === 'clan') { echo 'selected="selected"'; } ?>><?=$this->getTrans('clan') ?></option>
         </select>
-        <div class="input-group-addon custom" data-toggle="collapse" data-target="#modules" title="<?=$this->getTrans('custom') ?>"><i class="fa fa-info-circle"></i> <?=$this->getTrans('custom') ?></div>
+        <div class="input-group-addon custom" data-toggle="collapse" data-target="#modules" title="<?=$this->getTrans('custom') ?>"><i class="fa-solid fa-circle-info"></i> <?=$this->getTrans('custom') ?></div>
     </div>
 </div>
 

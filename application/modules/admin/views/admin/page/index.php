@@ -56,9 +56,9 @@
                                     }
 
                                     if ($this->get('pageMapper')->getPageByIdLocale($page->getId(), $key) != null) {
-                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa fa-edit"></i></a>';
+                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa-regular fa-pen-to-square"></i></a>';
                                     } else {
-                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa fa-plus-circle"></i></a>';
+                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa-solid fa-circle-plus"></i></a>';
                                     }
                                 }
                                 echo '</td>';

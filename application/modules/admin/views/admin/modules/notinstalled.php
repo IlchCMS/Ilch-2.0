@@ -97,22 +97,22 @@
                             <?php if ($module->getPHPExtension() != '' && in_array(false, $extensionCheck)): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('phpExtensionError') ?>">
-                                    <i class="fa fa-save"></i>
+                                    <i class="fa-regular fa-floppy-disk"></i>
                                 </button>
                             <?php elseif (!version_compare(PHP_VERSION, $module->getPHPVersion(), '>=')): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('phpVersionError') ?>">
-                                    <i class="fa fa-save"></i>
+                                    <i class="fa-regular fa-floppy-disk"></i>
                                 </button>
                             <?php elseif (!version_compare($this->get('coreVersion'), $module->getIlchCore(), '>=')): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
-                                    <i class="fa fa-save"></i>
+                                    <i class="fa-regular fa-floppy-disk"></i>
                                 </button>
                             <?php elseif (!checkOwnDependencies($this->get('versionsOfModules'), $this->get('dependencies')[$module->getKey()] ?? null)): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('dependencyError') ?>">
-                                    <i class="fa fa-save"></i>
+                                    <i class="fa-regular fa-floppy-disk"></i>
                                 </button>
                             <?php else: ?>
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey(), 'from' => 'notinstalled']) ?>">
@@ -120,14 +120,14 @@
                                     <button type="submit"
                                             class="btn btn-default showOverlay"
                                             title="<?=$this->getTrans('installModule') ?>">
-                                        <i class="fa fa-save"></i>
+                                        <i class="fa-regular fa-floppy-disk"></i>
                                     </button>
                                 </form>
                             <?php endif; ?>
                             <?php if ($moduleOnUpdateServer && $module->getKey() == $moduleOnUpdateServer->key): ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-default">
-                                        <i class="fa fa-info text-info"></i>
+                                        <i class="fa-solid fa-info text-info"></i>
                                     </span>
                                 </a>
                             <?php else: ?>
@@ -135,11 +135,11 @@
                                       data-toggle="modal"
                                       data-target="#infoModal<?=$module->getKey() ?>"
                                       title="<?=$this->getTrans('info') ?>">
-                                    <i class="fa fa-info text-info"></i>
+                                    <i class="fa-solid fa-info text-info"></i>
                                 </span>
                             <?php endif; ?>
                             <a href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('delete') ?>">
-                                <i class="fa fa-trash-o text-warning"></i>
+                                <i class="fa-regular fa-trash-can text-warning"></i>
                             </a>
                         </td>
                         <td><?=$module->getVersion() ?></td>

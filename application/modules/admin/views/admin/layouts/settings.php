@@ -16,7 +16,7 @@
                        readonly />
                 <span class="input-group-addon">
                     <a href="javascript:eraseValue('selectedImage_1')">
-                        <i class="fa fa-times"></i>
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                 </span>
                 <span class="input-group-addon">
@@ -42,7 +42,7 @@
                        readonly />
                 <span class="input-group-addon">
                     <a href="javascript:eraseValue('selectedImage_2')">
-                        <i class="fa fa-times"></i>
+                        <i class="fa-solid fa-xmark"></i>
                     </a>
                 </span>
                 <span class="input-group-addon">

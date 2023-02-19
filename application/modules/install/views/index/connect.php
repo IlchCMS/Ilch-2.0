@@ -20,7 +20,7 @@
                id="dbHost"
                name="dbHost"
                value="<?php if ($this->get('dbHost') != '') { echo $this->escape($this->get('dbHost')); } else { echo 'localhost'; } ?>" />
-        <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbHostInfo') ?>"><i class="fa fa-info-circle"></i></div>
+        <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbHostInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
     </div>
     <?php if (!empty($errors['dbConnection'])): ?>
         <span class="col-lg-offset-3 col-lg-9 help-block"><?=$this->getTrans($errors['dbConnection']) ?></span>
@@ -36,7 +36,7 @@
                id="dbUser"
                name="dbUser"
                value="<?php if ($this->get('dbUser') != '') { echo $this->escape($this->get('dbUser')); } ?>" />
-        <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbUserInfo') ?>"><i class="fa fa-info-circle"></i></div>
+        <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbUserInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
     </div>
     <?php if (!empty($errors['dbUser'])): ?>
         <span class="col-lg-offset-3 col-lg-9 help-block"><?=$this->getTrans($errors['dbUser']) ?></span>

@@ -288,7 +288,7 @@
                     } ?>
                     <tr>
                         <td><input type="radio" id="updateserver<?=$index ?>" name="updateserver" value="<?=$updateserver->getURL() ?>" <?=($updateserver->getURL() == $this->get('updateserver')) ? ' checked="checked"' : '' ?>></td>
-                        <td><?=(strpos($updateserver->getURL(), 'https://') !== false) ? '<span class="fa fa-lock"></span>': '<span class="fa fa-unlock-alt"></span>' ?></td>
+                        <td><?=(strpos($updateserver->getURL(), 'https://') !== false) ? '<span class="fa-solid fa-lock"></span>': '<span class="fa-solid fa-unlock"></span>' ?></td>
                         <td><?=$this->escape($updateserver->getURL()) ?></td>
                         <td><?=$this->escape($updateserver->getOperator()) ?></td>
                         <td><?=$this->escape($updateserver->getCountry()) ?></td>

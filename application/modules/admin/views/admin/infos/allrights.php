@@ -1,4 +1,4 @@
-<h1><?=$this->getTrans('allRights') ?> <a href="<?=$this->getUrl(['controller' => 'infos', 'action' => 'allrights'], null, true) ?>" title="<?=$this->getTrans('refreshAllRights') ?>"><i class="fas fa-sync"></i></a></h1>
+<h1><?=$this->getTrans('allRights') ?> <a href="<?=$this->getUrl(['controller' => 'infos', 'action' => 'allrights'], null, true) ?>" title="<?=$this->getTrans('refreshAllRights') ?>"><i class="fa-solid fa-arrows-rotate"></i></a></h1>
 <?php if (!empty($this->get('results'))) : ?>
 <div class="table-responsive">
     <table class="table table-hover table-striped">

@@ -6,7 +6,7 @@
     </div>
     <div class="panel-body">
         <div class="col-lg-2 fa-4x check">
-            <i class="fa fa-check-circle text-success" title="<?=$this->getTrans('finish') ?>"></i>
+            <i class="fa-solid fa-circle-check text-success" title="<?=$this->getTrans('finish') ?>"></i>
         </div>
         <div class="col-lg-10">
             <?=$this->getTranslator()->trans('registerThanks', $this->escape($_SESSION['name'] ?? '')) ?>

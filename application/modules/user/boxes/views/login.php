@@ -36,7 +36,7 @@
         <div class="form-group">
             <div class="col-lg-12">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
                     <input type="text"
                            class="form-control"
                            name="login_emailname"
@@ -48,7 +48,7 @@
         <div class="form-group">
             <div class="col-lg-12">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
                     <input type="password"
                            class="form-control"
                            name="login_password"
@@ -73,7 +73,7 @@
                 </button>
                 <span class="social-logins">
                     <?php if (count($this->get('providers')) > 0): ?>
-                        <i class="fa fa-fw fa-angle-right"></i>
+                        <i class="fa-solid fa-fw fa-angle-right"></i>
                     <?php endif; ?>
                     <?php foreach ($this->get('providers') as $provider): ?>
                         <a 
@@ -84,7 +84,7 @@
                                 'action' => $provider->getAuthAction()
                             ]) ?>"
                         >
-                            <i class="fa fa-2x fa-fw <?= $provider->getIcon() ?>"></i>
+                            <i class="fa-solid fa-2x fa-fw <?= $provider->getIcon() ?>"></i>
                         </a>
                     <?php endforeach; ?>
                 </span>

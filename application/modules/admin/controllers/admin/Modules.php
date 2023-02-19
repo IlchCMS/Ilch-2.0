@@ -22,25 +22,25 @@ class Modules extends \Ilch\Controller\Admin
             [
                 'name' => 'menuInstalled',
                 'active' => false,
-                'icon' => 'fa fa-folder',
+                'icon' => 'fa-solid fa-folder',
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'index'])
             ],
             [
                 'name' => 'menuNotInstalled',
                 'active' => false,
-                'icon' => 'fa fa-folder-open',
+                'icon' => 'fa-solid fa-folder-open',
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'notinstalled'])
             ],
             [
                 'name' => 'menuUpdates',
                 'active' => false,
-                'icon' => 'fa fa-refresh',
+                'icon' => 'fa-solid fa-arrows-rotate',
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'updates'])
             ],
             [
                 'name' => 'menuSearch',
                 'active' => false,
-                'icon' => 'fa fa-search',
+                'icon' => 'fa-solid fa-magnifying-glass',
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'search'])
             ]
         ];

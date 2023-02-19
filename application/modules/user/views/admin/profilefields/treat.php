@@ -19,7 +19,7 @@ var indexList = [];
 <h1>
     <?=($profileField->getId()) ? $this->getTrans('editProfileField') : $this->getTrans('addProfileField') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
-        <i class="fa fa-info"></i>
+        <i class="fa-solid fa-info"></i>
     </a>
 </h1>
 <form action="" method="POST" class="form-horizontal" id="profileFieldForm">
@@ -63,7 +63,7 @@ var indexList = [];
                    value="<?=($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'] ?>"
                    readonly />
             <span class="input-group-addon">
-                <span class="fas fa-mouse-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
+                <span class="fa-solid fa-arrow-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
             </span>
         </div>
     </div>

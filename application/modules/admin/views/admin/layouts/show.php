@@ -147,13 +147,13 @@ foreach ($layouts as $layout): ?>
         <div class="content_savebox">
             <?php if (in_array($layout->key, $this->get('layouts'))): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
-                    <i class="fa fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
+                    <i class="fa-solid fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
                 <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search', 'key' => $layout->key, 'version' => $layout->version]) ?>">
                     <?=$this->getTokenField() ?>
                     <button type="submit" class="btn btn-default">
-                        <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                        <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>
             <?php endif; ?>

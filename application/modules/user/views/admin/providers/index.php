@@ -21,15 +21,15 @@
                     <tr>
                         <td><?=$this->getEditIcon(['action' => 'edit', 'key' => $provider->getKey()]) ?></td>
                         <td><?=$this->getDeleteIcon(['action' => 'delete', 'key' => $provider->getKey()]) ?></td>
-                        <td><i class="fa fa-fw <?= $provider->getIcon() ?>"></i> <?=$this->escape($provider->getName()) ?></td>
+                        <td><i class="fa-solid fa-fw <?= $provider->getIcon() ?>"></i> <?=$this->escape($provider->getName()) ?></td>
                         <td>
                             <?php if (empty($provider->getModule())): ?>
                                 <span class="text-danger">
-                                    <i class="fa fa-remove fa-fw"></i> <?= $this->getTrans('providersNoModuleSelectedOrInstalled') ?>
+                                    <i class="fa-solid fa-xmark fa-fw"></i> <?= $this->getTrans('providersNoModuleSelectedOrInstalled') ?>
                                 </span>
                             <?php else: ?>
                                 <span class="text-success">
-                                    <i class="fa fa-check fa-fw"></i> <b><?=$this->escape($provider->module_name) ?></b> (<?= $provider->getModule() ?>)
+                                    <i class="fa-solid fa-check fa-fw"></i> <b><?=$this->escape($provider->module_name) ?></b> (<?= $provider->getModule() ?>)
                                 </span>
                             <?php endif; ?>
                         </td>

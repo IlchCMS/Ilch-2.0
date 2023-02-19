@@ -48,7 +48,7 @@ $entry = $this->get('calendar');
                    value="<?=$this->escape($this->originalInput('start', ($entry->getId()?(new \Ilch\Date($entry->getStart()))->format('d.m.Y H:i'):''))) ?>"
                    readonly>
             <span class="input-group-addon">
-                <span class="fa fa-calendar"></span>
+                <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
@@ -63,7 +63,7 @@ $entry = $this->get('calendar');
                    name="end"
                    value="<?=$this->escape($this->originalInput('end', ($entry->getId()?($entry->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getEnd()))->format('d.m.Y H:i') : ''):''))) ?>">
             <span class="input-group-addon">
-                <span class="fa fa-calendar"></span>
+                <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
@@ -140,7 +140,7 @@ $entry = $this->get('calendar');
                    value="<?=$this->escape($this->originalInput('repeatUntil', ($entry->getId()?($entry->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getRepeatUntil()))->format('d.m.Y H:i') : ''):''))) ?>"
                    readonly>
             <span class="input-group-addon">
-                <span class="fa fa-calendar"></span>
+                <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
@@ -155,7 +155,7 @@ $entry = $this->get('calendar');
                    name="color"
                    value="<?=$this->escape($this->originalInput('color', ($entry->getId()?$entry->getColor():'#32333B'))) ?>">
             <span class="input-group-addon">
-                <span class="fa fa-undo" onclick="document.getElementById('color').color.fromString('32333B')"></span>
+                <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('color').color.fromString('32333B')"></span>
             </span>
         </div>
     </div>

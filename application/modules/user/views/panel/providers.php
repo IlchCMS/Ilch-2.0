@@ -30,7 +30,7 @@
                             >
                                 <?=$this->getTokenField() ?>
                                 <button type="submit" class="btn btn-xs btn-default">
-                                    <i class="fa fa-remove fa-fw text-danger"></i> <?=$this->getTrans('providers.unlink') ?>
+                                    <i class="fa-solid fa-xmark fa-fw text-danger"></i> <?=$this->getTrans('providers.unlink') ?>
                                 </button>
                             </form>
                         </li>
@@ -44,7 +44,7 @@
                                 'controller' => $provider->getAuthController(),
                                 'action' => $provider->getAuthAction()
                             ]) ?>">
-                                <i class="fa fa-check fa-fw text-success"></i> <?=$this->getTrans('providers.link') ?>
+                                <i class="fa-solid fa-check fa-fw text-success"></i> <?=$this->getTrans('providers.link') ?>
                             </a>
                         </li>
                     <?php endif; ?>

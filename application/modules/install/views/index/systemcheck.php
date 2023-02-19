@@ -2,7 +2,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th><?php if (!empty($this->get('errors'))) { echo '<a href="" title="'.$this->getTrans('checkReload').'"><i class="fa fa-refresh"></i></a>'; } ?></th>
+                <th><?php if (!empty($this->get('errors'))) { echo '<a href="" title="'.$this->getTrans('checkReload').'"><i class="fa-solid fa-arrows-rotate"></i></a>'; } ?></th>
                 <th><?=$this->getTrans('required') ?></th>
                 <th><?=$this->getTrans('available') ?></th>
             </tr>
