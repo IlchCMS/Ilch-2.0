@@ -225,6 +225,9 @@ $(document).ready(function() {
         todayHighlight: false,
         useCurrent: false,
         minDate: $(".form_datetime_1").data("datetimepicker").getDate()
+    }).on('change.datetimepicker', function (e) {
+        let mindate = $(".form_datetime_2").data("datetimepicker").getDate();
+        $('.form_datetime_3').datetimepicker('minDate', mindate);
     });
 
     $(".form_datetime_3").datetimepicker({
@@ -244,7 +247,54 @@ $(document).ready(function() {
         diasableDays();
 
         document.getElementById("periodDayAppendix").textContent = jsPeriodAppendix[document.getElementById('periodType').value];
+
+        adjustRepeatUntilDate();
     };
+
+    document.getElementById("start").onchange = function() {
+        adjustRepeatUntilDate();
+    }
+
+    function adjustRepeatUntilDate() {
+        let value = document.getElementById('periodType').value;
+
+        if (value !== '') {
+            let repeatUntilDate;
+            let startValue = document.getElementById("start").value;
+
+            if (startValue !== '') {
+                // d.m.Y H:i
+                let startdateArray = startValue.split(' ');
+                let startDateArrayDateParts = startdateArray[0].split('.');
+                let startDateArrayTimeParts = startdateArray[1].split(':');
+
+                // new Date(year, monthIndex, day, hours, minutes)
+                repeatUntilDate = new Date(startDateArrayDateParts[2], startDateArrayDateParts[1] - 1, startDateArrayDateParts[0], startDateArrayTimeParts[0], startDateArrayTimeParts[1]);
+            } else {
+                repeatUntilDate = new Date();
+            }
+
+            switch (value) {
+                case 'daily':
+                    repeatUntilDate.setMonth(repeatUntilDate.getMonth() + 1);
+                    break;
+                case 'weekly':
+                case 'days':
+                    repeatUntilDate.setMonth(repeatUntilDate.getMonth() + 6);
+                    break;
+                case 'monthly':
+                    repeatUntilDate.setFullYear(repeatUntilDate.getFullYear() + 1);
+                    break;
+                case 'quarterly':
+                case 'yearly':
+                    repeatUntilDate.setFullYear(repeatUntilDate.getFullYear() + 5);
+                    break;
+            }
+
+            document.getElementById("repeatUntil").value = [repeatUntilDate.getDate().toString().padStart(2, '0'), (repeatUntilDate.getMonth() + 1).toString().padStart(2, '0'), repeatUntilDate.getFullYear()].join('.')
+                + ' ' + [repeatUntilDate.getHours().toString().padStart(2, '0'), repeatUntilDate.getMinutes().toString().padStart(2, '0')].join(':');
+        }
+    }
 
     function diasableDays() {
         if (document.getElementById('periodType').value !== '') {

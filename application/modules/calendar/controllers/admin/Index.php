@@ -103,6 +103,10 @@ class Index extends \Ilch\Controller\Admin
                 $validator['periodDay'] = 'required|numeric|min:1';
             }
 
+            if ($this->getRequest()->getPost('periodType') != '') {
+                $validator['repeatUntil'] = 'required|date:d.m.Y H\:i';
+            }
+
             if ($this->getRequest()->getPost('end')) {
                 $validator['end']= 'required|date:d.m.Y H\:i';
             }
