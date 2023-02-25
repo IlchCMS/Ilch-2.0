@@ -284,14 +284,21 @@ class Calendar extends \Ilch\Mapper
                     $enddateRecurrence->modify($factor . ' years');
                     break;
                 case 'days':
-                    $daydiff = $factor - $startdateRecurrence->format('N');
-                    if ($daydiff < 0) {
-                        $daydiff = 7 - $daydiff;
-                    }
-                    if ($daydiff < 7) {
-                        $startdateRecurrence->modify('+' . $daydiff . ' day');
-                        $enddateRecurrence->modify('+' . $daydiff . ' day');
-                    }
+                    $days = [
+                        1 => 'Monday',
+                        2 => 'Tuesday',
+                        3 => 'Wednesday',
+                        4 => 'Thursday',
+                        5 => 'Friday',
+                        6 => 'Saturday',
+                        7 => 'Sunday'
+                    ];
+
+                    $previousStartdate = clone $startdateRecurrence;
+
+                    $startdateRecurrence->modify('next ' . $days[$factor] . ' ' . $previousStartdate->format('H:i:s'));
+                    $daydiff = $previousStartdate->diff($startdateRecurrence, true);
+                    $enddateRecurrence->add($daydiff);
                     break;
             }
 
