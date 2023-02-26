@@ -129,7 +129,7 @@ if ($this->get('article')) {
         </div>
     <?php endif; ?>
     <h1><?=$this->getTrans('options') ?></h1>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
         <label for="access" class="col-lg-2 control-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>

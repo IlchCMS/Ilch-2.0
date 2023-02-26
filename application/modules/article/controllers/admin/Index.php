@@ -114,10 +114,15 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost()) {
+            Validation::setCustomFieldAliases([
+                'groups' => 'visibleFor',
+            ]);
+
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'cats' => 'required',
                 'title' => 'required',
                 'content' => 'required',
+                'groups' => 'required',
             ]);
 
             if ($validation->isValid()) {
