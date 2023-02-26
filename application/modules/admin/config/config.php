@@ -875,6 +875,9 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.46":
                 break;
+            case "2.1.47":
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
