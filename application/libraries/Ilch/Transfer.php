@@ -476,7 +476,9 @@ class Transfer
 
                 // Execute getUpdate() in config.php if needed.
                 if ($thisFileName == $thisFileDir.'/config.php') {
-                    include $thisFileName;
+                    $thisFileNameContent = file_get_contents($thisFileName);
+                    eval(str_replace('<?php', '', $thisFileNameContent));
+                    unset($thisFileNameContent);
 
                     $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
                     if (class_exists($configClass)) {
