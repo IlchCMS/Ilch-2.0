@@ -5,6 +5,8 @@
 # install phpmyadmin
 echo "Downloading phpMyAdmin..."
 
+apt-get install ca-certificates -y
+
 wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.zip -O phpmyadmin.zip
 unzip -qq phpmyadmin.zip
 rm phpmyadmin.zip
