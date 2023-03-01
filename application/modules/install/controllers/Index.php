@@ -30,7 +30,7 @@ class Index extends \Ilch\Controller\Frontend
             /*
              * Dont set a time limit for installer.
              */
-            @set_time_limit(0);
+            @set_time_limit(300);
 
             $menu = [
                 'index' => ['langKey' => 'menuWelcome'],
