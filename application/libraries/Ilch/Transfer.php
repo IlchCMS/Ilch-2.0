@@ -476,6 +476,7 @@ class Transfer
 
                 // Execute getUpdate() in config.php if needed.
                 if ($thisFileName == $thisFileDir.'/config.php') {
+                    invalidateOPCache($thisFileName, true);
                     include $thisFileName;
 
                     $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
@@ -517,6 +518,7 @@ class Transfer
                 $thisFileDir = dirname($thisFileName);
                 //If we need to run commands, then do it.
                 if ($thisFileName == $thisFileDir.'/config.php') {
+                    invalidateOpcache($thisFileName, true);
                     include $thisFileName;
                     $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
                     if (class_exists($configClass)) {

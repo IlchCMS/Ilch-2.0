@@ -537,3 +537,34 @@ function generateUUID(string $data = null)
     // Output the 36 character UUID.
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }
+
+/**
+ * Invalidate opcache if possible.
+ *
+ * @since 2.1.48
+ *
+ * @param string $filepath The path to the script being invalidated.
+ * @param bool $force If set to true, the script will be invalidated regardless of whether invalidation is necessary.
+ * @return bool Returns true if the opcode cache for filename was invalidated or if there was nothing to invalidate, or false if the opcode cache is disabled.
+ */
+function invalidateOpcache(string $filepath, bool $force = false): bool
+{
+    $invalidatePossible = false;
+
+    // Check if the function is available to call and if the host has restricted the ability to run the function.
+	if (function_exists('opcache_invalidate') && (!ini_get('opcache.restrict_api') || stripos(realpath($_SERVER['SCRIPT_FILENAME']), ini_get('opcache.restrict_api')) === 0)) {
+		$invalidatePossible = true;
+	}
+
+	// If invalidation is not available, return early.
+	if (!$invalidatePossible) {
+		return false;
+	}
+
+	// Verify that file to be invalidated has a PHP extension.
+	if ('.php' !== strtolower(substr($filepath, -4))) {
+		return false;
+	}
+
+    return opcache_invalidate($filepath, $force);
+}

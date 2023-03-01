@@ -607,17 +607,17 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.47":
                 // convert icon to new icons
-                $this->db()->queryMulti("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-solid fa-globe' WHERE `icon` = 'fa-globe' OR `icon` = 'fas fa-globe';
-                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-facebook' WHERE `icon` = 'fa-facebook' OR `icon` = 'fab fa-facebook';
-                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-twitter' WHERE `icon` = 'fa-twitter' OR `icon` = 'fab fa-twitter';
-                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-google-plus' WHERE `icon` = 'fa-google-plus' OR `icon` = 'fab fa-google-plus';
-                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-steam-square' WHERE `icon` = 'fa-steam-square' OR `icon` = 'fab fa-steam-square';
-                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-twitch' WHERE `icon` = 'fa-twitch' OR `icon` = 'fab fa-twitch';
-                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-solid fa-headphones' WHERE `icon` = 'fa-headphones' OR `icon` = 'fas fa-headphones';
-                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-solid fa-microphone' WHERE `icon` = 'fas fa-microphone';
-                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fab fa-discord';");
-                $this->db()->queryMulti("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-microphone' AND `key` = 'discord';
-                    UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-headphones' AND `key` = 'discord';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-solid fa-globe' WHERE `icon` = 'fa-globe' OR `icon` = 'fas fa-globe';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-facebook' WHERE `icon` = 'fa-facebook' OR `icon` = 'fab fa-facebook';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-twitter' WHERE `icon` = 'fa-twitter' OR `icon` = 'fab fa-twitter';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-google-plus' WHERE `icon` = 'fa-google-plus' OR `icon` = 'fab fa-google-plus';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-steam-square' WHERE `icon` = 'fa-steam-square' OR `icon` = 'fab fa-steam-square';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-twitch' WHERE `icon` = 'fa-twitch' OR `icon` = 'fab fa-twitch';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-solid fa-headphones' WHERE `icon` = 'fa-headphones' OR `icon` = 'fas fa-headphones';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-solid fa-microphone' WHERE `icon` = 'fas fa-microphone';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fab fa-discord';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-microphone' AND `key` = 'discord';");
+                $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-headphones' AND `key` = 'discord';");
 
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-user' WHERE `key` = 'user';");
         }

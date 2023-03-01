@@ -96,13 +96,25 @@ class Index extends \Ilch\Controller\Frontend
             if ($this->getRequest()->getPost('cats')) {
                 $catIds = implode(',', $this->getRequest()->getPost('cats'));
             }
+            
+            $groups = '';
+            if (!empty($this->getRequest()->getPost('groups'))) {
+                $groups = implode(',', $this->getRequest()->getPost('groups'));
+            }
 
             $article = new ArticleModel();
-            $article->setTitle($this->getRequest()->getPost('title'))
-                ->setTeaser($this->getRequest()->getPost('teaser'))
-                ->setCatId($catIds)
+            $article->setCatId($catIds)
+                ->setAuthorId($this->getUser()->getId())
+                ->setDescription($this->getRequest()->getPost('description'))
                 ->setKeywords($this->getRequest()->getPost('keywords'))
+                ->setTitle($this->getRequest()->getPost('title'))
+                ->setDateCreated(new \Ilch\Date($this->getRequest()->getPost('date_created')))
+                ->setTeaser($this->getRequest()->getPost('teaser'))
                 ->setContent($this->getRequest()->getPost('content'))
+                ->setPerma($this->getRequest()->getPost('permaLink'))
+                ->setTopArticle($this->getRequest()->getPost('topArticle'))
+                ->setCommentsDisabled($this->getRequest()->getPost('commentsDisabled'))
+                ->setReadAccess($groups)
                 ->setImage($this->getRequest()->getPost('image'))
                 ->setImageSource($this->getRequest()->getPost('imageSource'))
                 ->setVisits(0);
