@@ -103,9 +103,10 @@ $directories = [
     ],
     'npm-asset' => [
         'keep' => [
-            'jquery/dist/',
+            'jquery/dist/jquery.min.js',
             'jquery/LICENSE.txt',
-            'jquery-ui/dist/',
+            'jquery-ui/dist/themes/',
+            'jquery-ui/dist/jquery-ui.min.js',
             'jquery-ui/LICENSE.txt',
         ]
     ],
