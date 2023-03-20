@@ -106,7 +106,7 @@ class ValidationTest extends TestCase
                 'params'         => ['testField' => 7],
                 'expected'       => false,
                 'expectedErrors' => [
-                    'testField' => ['validation.errors.max.numeric']
+                    'testField' => ['validation.errors.max.numeric', 'validation.errors.same.fieldsDontMatch']
                 ]
             ],
         ];
