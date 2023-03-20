@@ -27,7 +27,7 @@
                         <td><?=$this->getDeleteCheckbox('check_teams', $team->getId()) ?></td>
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $team->getId()]) ?></td>
                         <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $team->getId()]) ?></td>
-                        <td><i class="fa fa-sort"></i></td>
+                        <td><i class="fa-solid fa-sort"></i></td>
                         <td><?=$this->escape($team->getName()) ?></td>
                     </tr>
                 <?php endforeach; ?>

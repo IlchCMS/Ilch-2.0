@@ -20,25 +20,25 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'applications',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index'])
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];

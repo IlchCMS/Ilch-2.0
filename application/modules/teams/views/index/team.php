@@ -57,10 +57,10 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                                         </td>
                                         <td class="contact-links">
                                             <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($user->getId())): ?>
-                                                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $user->getId()]) ?>" class="fa fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
+                                                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $user->getId()]) ?>" class="fa-solid fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
                                             <?php endif; ?>
                                             <?php if ($user->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $user->getID()): ?>
-                                                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'mail', 'action' => 'index', 'user' => $user->getId()]) ?>" class="fa fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
+                                                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'mail', 'action' => 'index', 'user' => $user->getId()]) ?>" class="fa-solid fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
                                             <?php endif; ?>
 
                                             <?php foreach ($profileIconFields as $profileIconField) {

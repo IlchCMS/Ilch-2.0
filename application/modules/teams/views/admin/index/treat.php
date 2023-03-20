@@ -3,7 +3,7 @@
 <h1>
     <?=($this->get('team') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
-        <i class="fa fa-info"></i>
+        <i class="fa-solid fa-info"></i>
     </a>
 </h1>
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">

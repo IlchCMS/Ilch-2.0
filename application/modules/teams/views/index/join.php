@@ -129,7 +129,7 @@ if ($this->getUser()) {
                            value="<?=$birthday->format('d.m.Y') ?>"
                            readonly />
                     <span class="input-group-addon">
-                        <span class="fa fa-calendar" disabled></span>
+                        <span class="fa-solid fa-calendar" disabled></span>
                     </span>
                 </div>
             <?php else: ?>
@@ -140,7 +140,7 @@ if ($this->getUser()) {
                            name="birthday"
                            value="<?=($this->originalInput('birthday') != '') ? $this->originalInput('birthday') : '' ?>" />
                     <span class="input-group-addon">
-                        <span class="fa fa-calendar"></span>
+                        <span class="fa-solid fa-calendar"></span>
                     </span>
                 </div>
             <?php endif; ?>
