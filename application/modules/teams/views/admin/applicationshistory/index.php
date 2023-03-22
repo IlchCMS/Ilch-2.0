@@ -1,10 +1,18 @@
 <?php
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Teams\Mappers\Teams $teamsMapper */
 $teamsMapper = $this->get('teamsMapper');
 $teamsCache = [];
-?>
 
+/** @var \Modules\Teams\Models\Joins[]|null $joins */
+$joins = $this->get('joins');
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <h1><?=$this->getTrans('history') ?></h1>
-<?php if ($this->get('joins')): ?>
+<?php if ($joins): ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -24,7 +32,10 @@ $teamsCache = [];
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->get('joins') as $join): ?>
+            <?php
+            /** @var \Modules\Teams\Models\Joins $join */
+            ?>
+                <?php foreach ($joins as $join): ?>
                     <?php
                     if (!array_key_exists($join->getTeamId(), $teamsCache)) {
                         $teamsCache[$join->getTeamId()] = $teamsMapper->getTeamById($join->getTeamId());
@@ -48,7 +59,7 @@ $teamsCache = [];
         </table>
     </div>
 
-    <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
+    <?=$pagination->getHtml($this, ['action' => 'index']) ?>
     <div class="content_savebox">
         <form class="form-horizontal" method="POST">
             <?=$this->getTokenField() ?>

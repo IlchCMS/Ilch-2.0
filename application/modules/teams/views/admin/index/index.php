@@ -1,5 +1,11 @@
+<?php
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Teams\Models\Teams[]|null $teams */
+$teams = $this->get('teams');
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if (!empty($this->get('teams'))): ?>
+<?php if ($teams): ?>
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -21,7 +27,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($this->get('teams') as $team): ?>
+                <?php
+                /** @var \Modules\Teams\Models\Teams $team */
+                ?>
+                <?php foreach ($teams as $team): ?>
                     <tr>
                         <input type="hidden" name="items[]" value="<?=$team->getId() ?>" />
                         <td><?=$this->getDeleteCheckbox('check_teams', $team->getId()) ?></td>

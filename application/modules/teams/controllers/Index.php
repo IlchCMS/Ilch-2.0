@@ -57,6 +57,13 @@ class Index extends \Ilch\Controller\Frontend
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
+        $team = $teamsMapper->getTeamById($this->getRequest()->getParam('id'));
+
+        if (!$team) {
+            $this->redirect()
+                ->to(['action' => 'index']);
+        }
+
         $this->getLayout()->header()
             ->css('static/css/teams.css');
         $this->getLayout()->getTitle()
@@ -71,7 +78,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('userMapper', $userMapper)
             ->set('groupMapper', $groupMapper)
             ->set('profileFieldsContentMapper', $profileFieldsContentMapper)
-            ->set('team', $teamsMapper->getTeamById($this->getRequest()->getParam('id')))
+            ->set('team', $team)
             ->set('profileIconFields', $profileIconFields)
             ->set('profileFieldsTranslation', $profileFieldsTranslation);
     }
@@ -113,10 +120,7 @@ class Index extends \Ilch\Controller\Frontend
                 }
             }
 
-            if ($this->getUser()) {
-                $validationRules['name'] = 'required|unique:teams_joins,name,0,undecided';
-                $validationRules['email'] = 'required|email|unique:teams_joins,email,0,undecided';
-            } else {
+            if (!$this->getUser()) {
                 $validationRules['name'] = 'required|unique:users,name|unique:teams_joins,name,0,undecided';
                 $validationRules['email'] = 'required|email|unique:users,email|unique:teams_joins,email,0,undecided';
             }

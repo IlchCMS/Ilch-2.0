@@ -13,98 +13,151 @@ class Joins extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The User Id from the User.
      *
      * @var int
      */
-    protected $userId;
+    protected $userId = 0;
 
     /**
      * The Name from the User.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * The E-Mail from the User.
      *
      * @var string
      */
-    protected $email;
+    protected $email = '';
 
     /**
      * The Gender from the User.
      *
      * @var int
      */
-    protected $gender;
+    protected $gender = 0;
 
     /**
      * The Birthday from the User.
      *
      * @var string
      */
-    protected $birthday;
+    protected $birthday = '';
 
     /**
      * The Place from the User.
      *
      * @var string
      */
-    protected $place;
+    protected $place = '';
 
     /**
      * The Skill from the User.
      *
      * @var int
      */
-    protected $skill;
+    protected $skill = 0;
 
     /**
      * The Team Id of the Join.
      *
      * @var int
      */
-    protected $teamId;
+    protected $teamId = 0;
 
     /**
      * The Locale of the Join.
      *
      * @var string
      */
-    protected $locale;
+    protected $locale = '';
 
     /**
      * The created Date of the Join.
      *
      * @var string
      */
-    protected $dateCreated;
+    protected $dateCreated = '';
 
     /**
      * The Text of the Join.
      *
      * @var string
      */
-    protected $text;
+    protected $text = '';
 
     /**
      * The decision of the Join.
      *
      * @var int
      */
-    protected $decision;
+    protected $decision = 0;
 
     /**
      * The value of undecided of the Join.
      *
      * @var int
      */
-    protected $undecided;
+    protected $undecided = 0;
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.22.0
+     */
+    public function setByArray(array $entries): Joins
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['userId'])) {
+            $this->setUserId($entries['userId']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (isset($entries['email'])) {
+            $this->setEmail($entries['email']);
+        }
+        if (isset($entries['gender'])) {
+            $this->setGender($entries['gender']);
+        }
+        if (isset($entries['birthday'])) {
+            $this->setBirthday($entries['birthday']);
+        }
+        if (isset($entries['place'])) {
+            $this->setPlace($entries['place']);
+        }
+        if (isset($entries['skill'])) {
+            $this->setSkill($entries['skill']);
+        }
+        if (isset($entries['teamId'])) {
+            $this->setTeamId($entries['teamId']);
+        }
+        if (isset($entries['locale'])) {
+            $this->setLocale($entries['locale']);
+        }
+        if (isset($entries['dateCreated'])) {
+            $this->setDateCreated($entries['dateCreated']);
+        }
+        if (isset($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        if (isset($entries['decision'])) {
+            $this->setDecision($entries['decision']);
+        }
+        if (isset($entries['undecided'])) {
+            $this->setUndecided($entries['undecided']);
+        }
+
+        return $this;
+    }
 
     /**
      * Sets the Id of the Join.
@@ -112,9 +165,9 @@ class Joins extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Joins
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -124,7 +177,7 @@ class Joins extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -134,7 +187,7 @@ class Joins extends \Ilch\Model
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -145,9 +198,9 @@ class Joins extends \Ilch\Model
      * @param int $userId
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Joins
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -157,7 +210,7 @@ class Joins extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -168,9 +221,9 @@ class Joins extends \Ilch\Model
      * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Joins
     {
-        $this->name = (string)$name;
+        $this->name = $name;
 
         return $this;
     }
@@ -180,7 +233,7 @@ class Joins extends \Ilch\Model
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -191,9 +244,9 @@ class Joins extends \Ilch\Model
      * @param string $email
      * @return $this
      */
-    public function setEmail($email)
+    public function setEmail(string $email): Joins
     {
-        $this->email = (string)$email;
+        $this->email = $email;
 
         return $this;
     }
@@ -203,7 +256,7 @@ class Joins extends \Ilch\Model
      *
      * @return int
      */
-    public function getGender()
+    public function getGender(): int
     {
         return $this->gender;
     }
@@ -214,9 +267,9 @@ class Joins extends \Ilch\Model
      * @param int $gender
      * @return $this
      */
-    public function setGender($gender)
+    public function setGender(int $gender): Joins
     {
-        $this->gender = (int)$gender;
+        $this->gender = $gender;
 
         return $this;
     }
@@ -224,9 +277,9 @@ class Joins extends \Ilch\Model
     /**
      * Gets the Birthday of the User.
      *
-     * @return \Ilch\Date
+     * @return string
      */
-    public function getBirthday()
+    public function getBirthday(): string
     {
         return $this->birthday;
     }
@@ -234,10 +287,10 @@ class Joins extends \Ilch\Model
     /**
      * Sets the Birthday of the User.
      *
-     * @param \Ilch\Date $birthday
+     * @param string $birthday
      * @return $this
      */
-    public function setBirthday($birthday)
+    public function setBirthday(string $birthday): Joins
     {
         $this->birthday = $birthday;
 
@@ -247,9 +300,9 @@ class Joins extends \Ilch\Model
     /**
      * Gets the Place of the User.
      *
-     * @return int
+     * @return string
      */
-    public function getPlace()
+    public function getPlace(): string
     {
         return $this->place;
     }
@@ -257,12 +310,12 @@ class Joins extends \Ilch\Model
     /**
      * Sets the Place of the User.
      *
-     * @param int $place
+     * @param string $place
      * @return $this
      */
-    public function setPlace($place)
+    public function setPlace(string $place): Joins
     {
-        $this->place = (string)$place;
+        $this->place = $place;
 
         return $this;
     }
@@ -272,7 +325,7 @@ class Joins extends \Ilch\Model
      *
      * @return int
      */
-    public function getSkill()
+    public function getSkill(): int
     {
         return $this->skill;
     }
@@ -283,9 +336,9 @@ class Joins extends \Ilch\Model
      * @param int $skill
      * @return $this
      */
-    public function setSkill($skill)
+    public function setSkill(int $skill): Joins
     {
-        $this->skill = (int)$skill;
+        $this->skill = $skill;
 
         return $this;
     }
@@ -295,7 +348,7 @@ class Joins extends \Ilch\Model
      *
      * @return int
      */
-    public function getTeamId()
+    public function getTeamId(): int
     {
         return $this->teamId;
     }
@@ -306,9 +359,9 @@ class Joins extends \Ilch\Model
      * @param int $teamId
      * @return $this
      */
-    public function setTeamId($teamId)
+    public function setTeamId(int $teamId): Joins
     {
-        $this->teamId = (int)$teamId;
+        $this->teamId = $teamId;
 
         return $this;
     }
@@ -318,7 +371,7 @@ class Joins extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -329,9 +382,9 @@ class Joins extends \Ilch\Model
      * @param string $locale
      * @return $this
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale): Joins
     {
-        $this->locale = (string)$locale;
+        $this->locale = $locale;
 
         return $this;
     }
@@ -339,10 +392,10 @@ class Joins extends \Ilch\Model
     /**
      * Sets the created Date of the Join.
      *
-     * @param \Ilch\Date $dateCreated
+     * @param string $dateCreated
      * @return $this
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated(string $dateCreated): Joins
     {
         $this->dateCreated = $dateCreated;
 
@@ -352,9 +405,9 @@ class Joins extends \Ilch\Model
     /**
      * Gets the created Date of the Join.
      *
-     * @return \Ilch\Date
+     * @return string
      */
-    public function getDateCreated()
+    public function getDateCreated(): string
     {
         return $this->dateCreated;
     }
@@ -364,7 +417,7 @@ class Joins extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -375,9 +428,9 @@ class Joins extends \Ilch\Model
      * @param string $text
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Joins
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -388,7 +441,7 @@ class Joins extends \Ilch\Model
      *
      * @return int
      */
-    public function getDecision()
+    public function getDecision(): int
     {
         return $this->decision;
     }
@@ -399,7 +452,7 @@ class Joins extends \Ilch\Model
      * @param int $decision
      * @return $this
      */
-    public function setDecision($decision)
+    public function setDecision(int $decision): Joins
     {
         $this->decision = $decision;
 
@@ -411,7 +464,7 @@ class Joins extends \Ilch\Model
      *
      * @return int
      */
-    public function getUndecided()
+    public function getUndecided(): int
     {
         return $this->undecided;
     }
@@ -422,10 +475,35 @@ class Joins extends \Ilch\Model
      * @param int $undecided
      * @return $this
      */
-    public function setUndecided($undecided)
+    public function setUndecided(int $undecided): Joins
     {
         $this->undecided = $undecided;
 
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.22.0
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(($withId ? ['id' => $this->getId()] : []),
+            [
+                'userId' => $this->getUserId(),
+                'name' => $this->getName(),
+                'email' => $this->getEmail(),
+                'gender' => $this->getGender(),
+                'birthday' => $this->getBirthday(),
+                'place' => $this->getPlace(),
+                'skill' => $this->getSkill(),
+                'teamId' => $this->getTeamId(),
+                'locale' => $this->getLocale(),
+                'dateCreated' => $this->getDateCreated(),
+                'text' => $this->getText(),
+                'decision' => $this->getDecision(),
+                'undecided' => $this->getUndecided()
+            ]);
     }
 }

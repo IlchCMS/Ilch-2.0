@@ -6,23 +6,39 @@
 
 namespace Modules\Teams\Mappers;
 
-use Modules\Teams\Models\Joins as JoinsModel;
+use Modules\Teams\Models\Joins as EntriesModel;
 
 class Joins extends \Ilch\Mapper
 {
     /**
-     * Gets the Joins.
-     *
-     * @param array $where
-     * @param \Ilch\Pagination|null $pagination
-     * @return JoinsModel[]|array
+     * @var string
+     * @since 1.22.0
      */
-    public function getApplications($where = [], $pagination = null)
+    public $tablename = 'teams_joins';
+
+    /**
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.22.0
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return EntriesModel[]|null
+     * @since 1.22.0
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select('*')
-            ->from('teams_joins')
+            ->from($this->tablename)
             ->where($where)
-            ->order(['id' => 'ASC']);
+            ->order($orderBy);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -38,27 +54,36 @@ class Joins extends \Ilch\Mapper
             return null;
         }
 
-        $teams = [];
+        $entrys = [];
+
         foreach ($entryArray as $entries) {
-            $entryModel = new JoinsModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setUserId($entries['userId']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setEmail($entries['email']);
-            $entryModel->setGender($entries['gender']);
-            $entryModel->setBirthday($entries['birthday']);
-            $entryModel->setPlace($entries['place']);
-            $entryModel->setSkill($entries['skill']);
-            $entryModel->setTeamId($entries['teamId']);
-            $entryModel->setLocale($entries['locale']);
-            $entryModel->setDateCreated($entries['dateCreated']);
-            $entryModel->setText($entries['text']);
-            $entryModel->setDecision($entries['decision']);
-            $entryModel->setUndecided($entries['undecided']);
-            $teams[] = $entryModel;
+            $entryModel = new EntriesModel();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
         }
 
-        return $teams;
+        return $entrys;
+    }
+
+    /**
+     * @param int|EntriesModel $id
+     * @return null|EntriesModel
+     * @since 1.22.0
+     */
+    public function getEntryById($id): ?EntriesModel
+    {
+        if (is_a($id, EntriesModel::class)) {
+            $id = $id->getId();
+        }
+
+        $entrys = $this->getEntriesBy(['id' => (int)$id], []);
+
+        if (!empty($entrys)) {
+            return reset($entrys);
+        }
+
+        return null;
     }
 
     /**
@@ -66,9 +91,21 @@ class Joins extends \Ilch\Mapper
      *
      * @param array $where
      * @param \Ilch\Pagination|null $pagination
-     * @return JoinsModel[]|array
+     * @return EntriesModel[]|null
      */
-    public function getJoins($where = [], $pagination = null)
+    public function getApplications(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        return $this->getEntriesBy($where, ['id' => 'ASC'], $pagination);
+    }
+
+    /**
+     * Gets the Joins.
+     *
+     * @param array $where
+     * @param \Ilch\Pagination|null $pagination
+     * @return EntriesModel[]|null
+     */
+    public function getJoins(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
     {
         $whereMerged = array_merge($where, ['undecided' => 1]);
         return $this->getApplications($whereMerged, $pagination);
@@ -78,9 +115,9 @@ class Joins extends \Ilch\Mapper
      * Gets the history of applications.
      *
      * @param \Ilch\Pagination|null $pagination
-     * @return JoinsModel[]|array
+     * @return EntriesModel[]|null
      */
-    public function getApplicationHistory($pagination = null)
+    public function getApplicationHistory(?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getApplications(['undecided' => 0], $pagination);
     }
@@ -88,27 +125,33 @@ class Joins extends \Ilch\Mapper
     /**
      * Get Join by given Id.
      *
-     * @param integer $id
-     * @return JoinsModel|null
+     * @param int|EntriesModel $id
+     * @return EntriesModel|null
      */
-    public function getJoinById($id)
+    public function getJoinById($id): ?EntriesModel
     {
-        $join = $this->getJoins(['id' => $id]);
-
-        return reset($join);
+        return $this->getEntryById($id);
     }
 
     /**
      * Get Join in history by given Id.
      *
-     * @param integer $id
-     * @return JoinsModel|null
+     * @param int|EntriesModel $id
+     * @return EntriesModel|null
      */
-    public function getJoinInHistoryById($id)
+    public function getJoinInHistoryById($id): ?EntriesModel
     {
-        $application = $this->getApplications(['id' => $id, 'undecided' => 0]);
+        if (is_a($id, EntriesModel::class)) {
+            $id = $id->getId();
+        }
 
-        return reset($application);
+        $entrys = $this->getApplications(['id' => (int)$id, 'undecided' => 0]);
+
+        if (!empty($entrys)) {
+            return reset($entrys);
+        }
+
+        return null;
     }
 
     /**
@@ -116,9 +159,9 @@ class Joins extends \Ilch\Mapper
      *
      * @param int $userId
      * @param \Ilch\Pagination|null $pagination
-     * @return JoinsModel[]|array
+     * @return EntriesModel[]|null
      */
-    public function getApplicationHistoryByUserId($userId, $pagination = null)
+    public function getApplicationHistoryByUserId(int $userId, ?\Ilch\Pagination $pagination = null): ?array
     {
         return $this->getApplications(['userId' => $userId, 'undecided' => 0], $pagination);
     }
@@ -126,24 +169,32 @@ class Joins extends \Ilch\Mapper
     /**
      * Get Age from date.
      *
-     * @param string $date
-     * @return JoinsModel|null
+     * @param string|\ilch\Date $date
+     * @return int
      */
-    public function getAge($date)
+    public function getAge($date): int
     {
-        return (int)date('Y', time() - strtotime($date)) - 1970;
+        if (!is_a($date, \ilch\Date::class)) {
+            $date = new \ilch\Date($date);
+        }
+        return (int)$date->format('Y') - 1970;
     }
 
     /**
      * Update status of join/application
      * 1 = accepted, 2 = declined
      *
-     * @param int $id
+     * @param int|EntriesModel $id
      * @param int $decision
+     * @return bool
      */
-    public function updateDecision($id, $decision)
+    public function updateDecision($id, int $decision): bool
     {
-        $this->db()->update('teams_joins')
+        if (is_a($id, EntriesModel::class)) {
+            $id = $id->getId();
+        }
+
+        return $this->db()->update($this->tablename)
             ->values(['decision' => $decision, 'undecided' => 0])
             ->where(['id' => $id])
             ->execute();
@@ -152,55 +203,38 @@ class Joins extends \Ilch\Mapper
     /**
      * Inserts Join Model.
      *
-     * @param JoinsModel $join
+     * @param EntriesModel $model
      * @return int
      */
-    public function save(JoinsModel $join)
+    public function save(EntriesModel $model): int
     {
-        $fields = [
-            'userId' => $join->getUserId(),
-            'name' => $join->getName(),
-            'email' => $join->getEmail(),
-            'gender' => $join->getGender(),
-            'birthday' => $join->getBirthday(),
-            'place' => $join->getPlace(),
-            'skill' => $join->getSkill(),
-            'teamId' => $join->getTeamId(),
-            'locale' => $join->getLocale(),
-            'dateCreated' => $join->getDateCreated(),
-            'text' => $join->getText(),
-            'decision' => $join->getDecision(),
-            'undecided' => $join->getUndecided()
-        ];
+        $fields = $model->getArray(false);
 
-        $id = (int)$this->db()->select('id')
-            ->from('teams_joins')
-            ->where(['id' => $join->getId()])
-            ->execute()
-            ->fetchCell();
-
-        if ($id) {
-            $this->db()->update('teams_joins')
+        if ($model->getId()) {
+            return $this->db()->update($this->tablename)
                 ->values($fields)
-                ->where(['id' => $id])
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
-            $id = $this->db()->insert('teams_joins')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
-
-        return $id;
     }
 
     /**
      * Delete Join with given Id.
      *
-     * @param integer $id
+     * @param int|EntriesModel $id
+     * @return bool
      */
-    public function delete($id)
+    public function delete($id): bool
     {
-        $this->db()->delete('teams_joins')
+        if (is_a($id, EntriesModel::class)) {
+            $id = $id->getId();
+        }
+
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }
@@ -209,10 +243,11 @@ class Joins extends \Ilch\Mapper
      * Delete all applications/joins from the history.
      * In other words these are the ones with undecided = 0 (accept, reject).
      *
+     * @return bool
      */
-    public function clearHistory()
+    public function clearHistory(): bool
     {
-        $this->db()->delete('teams_joins')
+        return $this->db()->delete($this->tablename)
             ->where(['undecided' => 0])
             ->execute();
     }

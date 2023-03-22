@@ -17,13 +17,13 @@ class Applicationshistory extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'applications',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index']),
                 [
                     'name' => 'history',
@@ -35,7 +35,7 @@ class Applicationshistory extends \Ilch\Controller\Admin
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa-solid fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -74,6 +74,10 @@ class Applicationshistory extends \Ilch\Controller\Admin
         $teamsMapper = new TeamsMapper();
 
         $join = $joinsMapper->getJoinInHistoryById($this->getRequest()->getParam('id'));
+
+        if (!$join) {
+            $this->redirect(['action' => 'index']);
+        }
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])

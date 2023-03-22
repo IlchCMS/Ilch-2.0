@@ -103,6 +103,14 @@ class ValidationTest extends TestCase
             ],
             '3 validators chained - 3rd not valid' => [
                 'validatorRules' => 'integer|max:5|same:4',
+                'params'         => ['testField' => 3],
+                'expected'       => false,
+                'expectedErrors' => [
+                    'testField' => ['validation.errors.same.fieldsDontMatch']
+                ]
+            ],
+            '3 validators chained - 2nd & 3rd not valid' => [
+                'validatorRules' => 'integer|max:5|same:4',
                 'params'         => ['testField' => 7],
                 'expected'       => false,
                 'expectedErrors' => [
@@ -166,11 +174,11 @@ class ValidationTest extends TestCase
                 ]
             ],
             '3 validators chained - 3rd not valid' => [
-                'validatorRules' => 'integer|max:5|same:4',
+                'validatorRules' => 'integer|max:7|same:4',
                 'params'         => ['testField' => 7],
                 'expected'       => false,
                 'expectedErrors' => [
-                    'testField' => ['validation.errors.max.numeric', 'validation.errors.same.fieldsDontMatch']
+                    'testField' => ['validation.errors.same.fieldsDontMatch']
                 ]
             ],
         ];

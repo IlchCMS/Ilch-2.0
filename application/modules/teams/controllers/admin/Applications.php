@@ -23,13 +23,13 @@ class Applications extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'applications',
                 'active' => true,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index']),
                 [
                     'name' => 'history',
@@ -41,7 +41,7 @@ class Applications extends \Ilch\Controller\Admin
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa-solid fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -83,6 +83,11 @@ class Applications extends \Ilch\Controller\Admin
         $userDeleted = false;
         $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
 
+        if (!$join) {
+            $this->redirect()
+                ->to(['action' => 'index']);
+        }
+
         if ($join->getUserId() && !$userMapper->userWithIdExists($join->getUserId())) {
             $userDeleted = true;
         }
@@ -111,6 +116,9 @@ class Applications extends \Ilch\Controller\Admin
             $passwordService = new PasswordService();
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
+            if (!$join) {
+                $this->redirect(['action' => 'index']);
+            }
             $name = $join->getName();
             $email = $join->getEmail();
             $team = $teamsMapper->getTeamById($join->getTeamId());
@@ -208,6 +216,9 @@ class Applications extends \Ilch\Controller\Admin
             $userMapper = new UserMapper();
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
+            if (!$join) {
+                $this->redirect(['action' => 'index']);
+            }
             $team = $teamsMapper->getTeamById($join->getTeamId());
             $name = $this->getLayout()->escape($join->getName());
             $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));

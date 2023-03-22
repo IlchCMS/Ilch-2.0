@@ -20,25 +20,25 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa-solid fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'applications',
                 'active' => false,
-                'icon' => 'fa-solid fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index'])
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa-solid fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -70,8 +70,8 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->getPost('saveTeams') && !empty($this->getRequest()->getPost('items'))) {
-            foreach ($this->getRequest()->getPost('items') as $i => $teamId) {
-                $teamsMapper->sort($teamId, $i);
+            foreach ($this->getRequest()->getPost('items') as $pos => $teamId) {
+                $teamsMapper->sort($teamId, $pos);
             }
 
             $this->redirect()
@@ -93,12 +93,19 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('team', $teamsMapper->getTeamById($this->getRequest()->getParam('id')));
+            $model = $teamsMapper->getTeamById($this->getRequest()->getParam('id'));
+
+            if (!$model) {
+                $this->redirect(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+
+            $model = new TeamsModel();
         }
+        $this->getView()->set('team', $model);
 
         if ($this->getRequest()->isPost()) {
             Validation::setCustomFieldAliases([
@@ -106,7 +113,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'name' => 'required|unique:teams,name,'.$this->getRequest()->getParam('id'),
+                'name' => 'required|unique:teams,name,'.$model->getId(),
                 'groupId' => 'required|numeric|integer|min:1',
                 'optIn' => 'required|numeric|integer|min:0|max:1',
                 'notifyLeader' => 'required|numeric|integer|min:0|max:1'
@@ -120,29 +127,23 @@ class Index extends \Ilch\Controller\Admin
             }
 
             if ($validation->isValid()) {
-                $model = new TeamsModel();
-
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-
                 if ($this->getRequest()->getPost('image_delete') != '') {
-                    $teamsMapper->delImageById($this->getRequest()->getParam('id'));
+                    $teamsMapper->delImageById($model, true);
                 }
 
-                if ($this->getRequest()->getPost('img') != '') {
+                if ($_FILES['upl']['name']) {
                     $allowedFiletypes = $this->getConfig()->get('teams_filetypes');
                     $imageMaxHeight = $this->getConfig()->get('teams_height');
                     $imageMaxWidth = $this->getConfig()->get('teams_width');
                     $path = $this->getConfig()->get('teams_uploadpath');
-                    $file = $_FILES['img']['name'];
-                    $file_tmpe = $_FILES['img']['tmp_name'];
+                    $file = $_FILES['upl']['name'];
+                    $file_tmpe = $_FILES['upl']['tmp_name'];
                     $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                     $imageInfo = getimagesize($file_tmpe);
 
                     if (strncmp($imageInfo['mime'], 'image/', 6) === 0 && in_array($extension, explode(' ', $allowedFiletypes))) {
-                        if ($this->getRequest()->getParam('id')) {
-                            $teamsMapper->delImageById($this->getRequest()->getParam('id'));
+                        if ($model->getId()) {
+                            $teamsMapper->delImageById($model, true);
                         }
 
                         $width = $imageInfo[0];

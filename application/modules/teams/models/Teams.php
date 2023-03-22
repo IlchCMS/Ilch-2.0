@@ -13,70 +13,121 @@ class Teams extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The position of th team.
      *
      * @var int
      */
-    protected $position;
+    protected $position = 0;
 
     /**
      * The Name of the Team.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * The Image of the Team.
      *
      * @var string
      */
-    protected $img;
+    protected $img = '';
 
     /**
      * The Leader of the Team.
      *
-     * @var int
+     * @var string
      */
-    protected $leader;
+    protected $leader = '';
 
     /**
      * The CoLeader of the Team.
      *
-     * @var int
+     * @var string
      */
-    protected $coLeader;
+    protected $coLeader = '';
 
     /**
      * The Group Id of the Team.
      *
      * @var int
      */
-    protected $groupId;
+    protected $groupId = 0;
 
     /**
      * The Opt Show of the Team.
      *
-     * @var int
+     * @var bool
      */
-    protected $optIn;
+    protected $optIn = false;
 
     /**
      * The value of notifyLeader of the Team.
      *
-     * @var int
+     * @var bool
      */
-    protected $notifyLeader;
+    protected $notifyLeader = false;
 
     /**
      * The Opt Show of the Team.
      *
-     * @var int
+     * @var bool
      */
-    protected $optShow;
+    protected $optShow = false;
+    
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.22.0
+     */
+    public function setByArray(array $entries): Teams
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['position'])) {
+            $this->setPosition($entries['position']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (isset($entries['img'])) {
+            $this->setImg($entries['img']);
+        }
+        if (isset($entries['leader'])) {
+            $this->setLeader($entries['leader']);
+        }
+        if (isset($entries['coLeader'])) {
+            $this->setCoLeader($entries['coLeader']);
+        }
+        if (isset($entries['groupId'])) {
+            $this->setGroupId($entries['groupId']);
+        }
+        if (isset($entries['optShow'])) {
+            $this->setOptShow($entries['optShow']);
+        }
+        if (isset($entries['optIn'])) {
+            $this->setOptIn($entries['optIn']);
+        }
+        if (isset($entries['notifyLeader'])) {
+            $this->setNotifyLeader($entries['notifyLeader']);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Gets the Id of the team.
+     *
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * Sets the Id of the Team.
@@ -84,9 +135,9 @@ class Teams extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Teams
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -96,7 +147,7 @@ class Teams extends \Ilch\Model
      *
      * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -107,9 +158,9 @@ class Teams extends \Ilch\Model
      * @param int $position
      * @return $this
      */
-    public function setPosition($position)
+    public function setPosition(int $position): Teams
     {
-        $this->position = (int)$position;
+        $this->position = $position;
 
         return $this;
     }
@@ -119,7 +170,7 @@ class Teams extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -130,9 +181,9 @@ class Teams extends \Ilch\Model
      * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Teams
     {
-        $this->name = (string)$name;
+        $this->name = $name;
 
         return $this;
     }
@@ -142,7 +193,7 @@ class Teams extends \Ilch\Model
      *
      * @return string
      */
-    public function getImg()
+    public function getImg(): string
     {
         return $this->img;
     }
@@ -153,9 +204,9 @@ class Teams extends \Ilch\Model
      * @param string $img
      * @return $this
      */
-    public function setImg($img)
+    public function setImg(string $img): Teams
     {
-        $this->img = (string)$img;
+        $this->img = $img;
 
         return $this;
     }
@@ -165,7 +216,7 @@ class Teams extends \Ilch\Model
      *
      * @return string
      */
-    public function getLeader()
+    public function getLeader(): string
     {
         return $this->leader;
     }
@@ -176,9 +227,9 @@ class Teams extends \Ilch\Model
      * @param string $leader
      * @return $this
      */
-    public function setLeader($leader)
+    public function setLeader(string $leader): Teams
     {
-        $this->leader = (string)$leader;
+        $this->leader = $leader;
 
         return $this;
     }
@@ -188,7 +239,7 @@ class Teams extends \Ilch\Model
      *
      * @return string
      */
-    public function getCoLeader()
+    public function getCoLeader(): string
     {
         return $this->coLeader;
     }
@@ -199,9 +250,9 @@ class Teams extends \Ilch\Model
      * @param string $coLeader
      * @return $this
      */
-    public function setCoLeader($coLeader)
+    public function setCoLeader(string $coLeader): Teams
     {
-        $this->coLeader = (string)$coLeader;
+        $this->coLeader = $coLeader;
 
         return $this;
     }
@@ -211,7 +262,7 @@ class Teams extends \Ilch\Model
      *
      * @return int
      */
-    public function getGroupId()
+    public function getGroupId(): int
     {
         return $this->groupId;
     }
@@ -222,9 +273,9 @@ class Teams extends \Ilch\Model
      * @param int $groupId
      * @return $this
      */
-    public function setGroupId($groupId)
+    public function setGroupId(int $groupId): Teams
     {
-        $this->groupId = (int)$groupId;
+        $this->groupId = $groupId;
 
         return $this;
     }
@@ -232,9 +283,9 @@ class Teams extends \Ilch\Model
     /**
      * Gets the Opt Show of the Team.
      *
-     * @return int
+     * @return bool
      */
-    public function getOptShow()
+    public function getOptShow(): bool
     {
         return $this->optShow;
     }
@@ -242,12 +293,12 @@ class Teams extends \Ilch\Model
     /**
      * Sets the Opt Show of the Team.
      *
-     * @param int $optShow
+     * @param bool $optShow
      * @return $this
      */
-    public function setOptShow($optShow)
+    public function setOptShow(bool $optShow): Teams
     {
-        $this->optShow = (int)$optShow;
+        $this->optShow = $optShow;
 
         return $this;
     }
@@ -255,9 +306,9 @@ class Teams extends \Ilch\Model
     /**
      * Gets the Opt In of the Team.
      *
-     * @return int
+     * @return bool
      */
-    public function getOptIn()
+    public function getOptIn(): bool
     {
         return $this->optIn;
     }
@@ -265,12 +316,12 @@ class Teams extends \Ilch\Model
     /**
      * Sets the Opt In of the Team.
      *
-     * @param int $optIn
+     * @param bool $optIn
      * @return $this
      */
-    public function setOptIn($optIn)
+    public function setOptIn(bool $optIn): Teams
     {
-        $this->optIn = (int)$optIn;
+        $this->optIn = $optIn;
 
         return $this;
     }
@@ -278,9 +329,9 @@ class Teams extends \Ilch\Model
     /**
      * Get value of notifyLeader
      *
-     * @return int
+     * @return bool
      */
-    public function getNotifyLeader()
+    public function getNotifyLeader(): bool
     {
         return $this->notifyLeader;
     }
@@ -288,12 +339,34 @@ class Teams extends \Ilch\Model
     /**
      * Set value of notifyLeader
      *
-     * @param int $notifyLeader
+     * @param bool $notifyLeader
      * @return Teams
      */
-    public function setNotifyLeader($notifyLeader)
+    public function setNotifyLeader(bool $notifyLeader): Teams
     {
         $this->notifyLeader = $notifyLeader;
+
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.22.0
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(($withId ? ['id' => $this->getId()] : []),
+            [
+                'name' => $this->getName(),
+                'position' => $this->getPosition(),
+                'img' => $this->getImg(),
+                'leader' => $this->getLeader(),
+                'coLeader' => $this->getCoLeader(),
+                'groupId' => $this->getGroupId(),
+                'optShow' => $this->getOptShow(),
+                'optIn' => $this->getOptIn(),
+                'notifyLeader' => $this->getNotifyLeader()
+            ]);
     }
 }

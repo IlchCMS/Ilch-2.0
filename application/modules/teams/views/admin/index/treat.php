@@ -1,7 +1,18 @@
+<?php
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Teams\Models\Teams $team */
+$team = $this->get('team');
+
+/** @var \Modules\User\Models\User[]|null $userList */
+$userList = $this->get('userList');
+/** @var \Modules\User\Models\Group[]|null $userGroupList */
+$userGroupList = $this->get('userGroupList');
+?>
 <link href="<?=$this->getModuleUrl('static/css/teams.css') ?>" rel="stylesheet">
 
 <h1>
-    <?=($this->get('team') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?>
+    <?=($team->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
@@ -17,18 +28,18 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=($this->get('team') != '') ? $this->escape($this->get('team')->getName()) : $this->escape($this->originalInput('name')) ?>" />
+                   value="<?=$this->escape($this->originalInput('name', $team->getName())) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('img') ? 'has-error' : '' ?>">
-        <label for="img" class="col-lg-2 control-label">
+    <div class="form-group <?=$this->validation()->hasError('upl') ? 'has-error' : '' ?>">
+        <label for="upl" class="col-lg-2 control-label">
             <?=$this->getTrans('img') ?>:
         </label>
         <div class="col-lg-4">
             <div class="row">
-                <?php if ($this->get('team') != '' && $this->get('team')->getImg() != ''): ?>
+                <?php if ($team->getImg() != ''): ?>
                     <div class="col-lg-12">
-                        <img src="<?=$this->getBaseUrl().$this->get('team')->getImg() ?>" alt="<?=$this->getTrans('img').' '.$this->escape($this->get('team')->getName()) ?>">
+                        <img src="<?=$this->getBaseUrl($team->getImg()) ?>" alt="<?=$this->getTrans('img').' '.$this->escape($team->getName()) ?>">
 
                         <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
                             <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('imageDelete') ?>
@@ -42,8 +53,8 @@
                         </span>
                     </span>
                     <input type="text"
-                           name="img"
-                           id="img"
+                           name="upl"
+                           id="upl"
                            class="form-control"
                            readonly />
                 </div>
@@ -60,20 +71,13 @@
                     name="leader[]"
                     data-placeholder="<?=$this->getTrans('selectLeader') ?>"
                     multiple>
-                <?php foreach ($this->get('userList') as $userList): ?>
-                    <option value="<?=$userList->getId() ?>"
-                        <?php
-                        if ($this->get('team') != '') {
-                            $leaderIds = explode(',', $this->get('team')->getLeader());
-                            foreach ($leaderIds as $leaderId) {
-                                if ($userList->getId() == $leaderId) {
-                                    echo 'selected="selected"';
-                                    break;
-                                }
-                            }
-                        }
-                        ?>>
-                        <?=$this->escape($userList->getName()) ?>
+                <?php
+                $leaderIds = explode(',', $team->getLeader()) ?? [];
+                /** @var \Modules\User\Models\User $user */
+                ?>
+                <?php foreach ($userList ?? [] as $user): ?>
+                    <option value="<?=$user->getId() ?>" <?=(in_array($user->getId(), $leaderIds) ? 'selected="selected"' : '') ?>>
+                        <?=$this->escape($user->getName()) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -89,19 +93,13 @@
                     name="coLeader[]"
                     data-placeholder="<?=$this->getTrans('selectCoLeader') ?>"
                     multiple>
-                <?php foreach ($this->get('userList') as $userList): ?>
-                    <option value="<?=$userList->getId() ?>"
-                        <?php if ($this->get('team') != '') {
-                            $coLeaderIds = explode(',', $this->get('team')->getCoLeader());
-                            foreach ($coLeaderIds as $coLeaderId) {
-                                if ($userList->getId() == $coLeaderId) {
-                                    echo 'selected="selected"';
-                                    break;
-                                }
-                            }
-                        }
-                        ?>>
-                        <?=$this->escape($userList->getName()) ?>
+                <?php
+                $coLeaderIds = explode(',', $team->getCoLeader()) ?? [];
+                /** @var \Modules\User\Models\User $user */
+                ?>
+                <?php foreach ($userList ?? [] as $user): ?>
+                    <option value="<?=$user->getId() ?>" <?=(in_array($user->getId(), $coLeaderIds) ? 'selected="selected"' : '') ?>>
+                        <?=$this->escape($user->getName()) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -114,15 +112,12 @@
         <div class="col-lg-4">
             <select class="form-control" id="groupId" name="groupId">
                 <optgroup label="<?=$this->getTrans('groups') ?>">
-                    <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                        <?php if ($groupList->getId() != 3): ?>
-                            <?php $selected = ''; ?>
-                            <?php if ($this->get('team') != ''): ?>
-                                <?php if ($this->get('team')->getGroupId() == $groupList->getId()): ?>
-                                    <?php $selected = 'selected="selected"'; ?>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                            <option <?=$selected ?> value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>
+                    <?php
+                    /** @var \Modules\User\Models\Group $group */
+                    ?>
+                    <?php foreach ($userGroupList ?? [] as $group): ?>
+                        <?php if ($group->getId() != 3): ?>
+                            <option <?=($team->getGroupId() == $group->getId() ? 'selected="selected"' : '') ?> value="<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </optgroup>
@@ -135,9 +130,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="optShow-on" name="optShow" value="1" <?=(($this->get('team') != '' && $this->get('team')->getOptShow() == '1') || $this->originalInput('optShow') == 1) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="optShow-on" name="optShow" value="1" <?=($this->originalInput('optShow', $team->getOptShow()) ? 'checked="checked"' : '') ?> />
                 <label for="optShow-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="optShow-off" name="optShow" value="0" <?=(($this->get('team') != '' && $this->get('team')->getOptShow() == '0') || $this->originalInput('optShow') == 0) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="optShow-off" name="optShow" value="0" <?=(!$this->originalInput('optShow', $team->getOptShow()) ? 'checked="checked"' : '') ?> />
                 <label for="optShow-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -149,9 +144,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="optIn-on" name="optIn" value="1" <?=(($this->get('team') != '' && $this->get('team')->getOptIn() == '1') || $this->originalInput('optIn') == 1) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="optIn-on" name="optIn" value="1" <?=($this->originalInput('optIn', $team->getOptIn()) ? 'checked="checked"' : '') ?> />
                 <label for="optIn-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="optIn-off" name="optIn" value="0" <?=(($this->get('team') != '' && $this->get('team')->getOptIn() == '0') || $this->originalInput('optIn') == 0) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="optIn-off" name="optIn" value="0" <?=(!$this->originalInput('optIn', $team->getOptIn()) ? 'checked="checked"' : '') ?> />
                 <label for="optIn-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -163,15 +158,15 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="notifyLeader-on" name="notifyLeader" value="1" <?=(($this->get('team') != '' && $this->get('team')->getNotifyLeader() == '1') || $this->originalInput('notifyLeader') == 1) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="notifyLeader-on" name="notifyLeader" value="1" <?=($this->originalInput('notifyLeader', $team->getNotifyLeader()) ? 'checked="checked"' : '') ?> />
                 <label for="notifyLeader-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="notifyLeader-off" name="notifyLeader" value="0" <?=(($this->get('team') != '' && $this->get('team')->getNotifyLeader() == '0') || $this->originalInput('notifyLeader') == 0) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="notifyLeader-off" name="notifyLeader" value="0" <?=(!$this->originalInput('notifyLeader', $team->getNotifyLeader()) ? 'checked="checked"' : '') ?> />
                 <label for="notifyLeader-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
-    <?=($this->get('team') != '') ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
+    <?=($team->getId()) ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
 
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('teamUsersInfoText')) ?>
@@ -208,4 +203,3 @@ $('#optIn-off').change(function() {
     $('#notifyLeader-off').prop('checked', true);
 });
 </script>
-

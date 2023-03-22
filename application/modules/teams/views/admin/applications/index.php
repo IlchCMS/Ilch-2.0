@@ -1,7 +1,14 @@
-<?php $teamsMapper = $this->get('teamsMapper'); ?>
+<?php
+/** @var \Ilch\View $this */
 
+/** @var \Modules\Teams\Mappers\Teams $teamsMapper */
+$teamsMapper = $this->get('teamsMapper');
+
+/** @var \Modules\Teams\Models\Joins[]|null $joins */
+$joins = $this->get('joins');
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('joins')): ?>
+<?php if ($joins): ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -16,7 +23,10 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->get('joins') as $join): ?>
+            <?php
+            /** @var \Modules\Teams\Models\Joins $join */
+            ?>
+                <?php foreach ($joins as $join): ?>
                     <?php $team = $teamsMapper->getTeamById($join->getTeamId()); ?>
                     <?php $date = new Ilch\Date($join->getDateCreated()); ?>
                     <tr>
@@ -31,3 +41,4 @@
 <?php else: ?>
     <?=$this->getTrans('noApplications') ?>
 <?php endif; ?>
+
