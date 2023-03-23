@@ -172,10 +172,10 @@ class Index extends \Ilch\Controller\Frontend
                         if (isset($_SESSION['layout'])) {
                             $layout = $_SESSION['layout'];
                         }
-                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/notifyLeader.php')) {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/notifyLeader.php');
+                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/notifyLeader.php')) {
+                            $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/notifyLeader.php');
                         } else {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/notifyLeader.php');
+                            $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/teams/layouts/mail/notifyLeader.php');
                         }
 
                         foreach ($leadersIds as $leaderId) {

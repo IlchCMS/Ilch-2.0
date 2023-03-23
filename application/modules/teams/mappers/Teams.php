@@ -85,7 +85,7 @@ class Teams extends \Ilch\Mapper
 
         return null;
     }
-    
+
     /**
      * Gets the Teams.
      *

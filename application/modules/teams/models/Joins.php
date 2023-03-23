@@ -489,7 +489,8 @@ class Joins extends \Ilch\Model
      */
     public function getArray(bool $withId = true): array
     {
-        return array_merge(($withId ? ['id' => $this->getId()] : []),
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
             [
                 'userId' => $this->getUserId(),
                 'name' => $this->getName(),
@@ -504,6 +505,7 @@ class Joins extends \Ilch\Model
                 'text' => $this->getText(),
                 'decision' => $this->getDecision(),
                 'undecided' => $this->getUndecided()
-            ]);
+            ]
+        );
     }
 }

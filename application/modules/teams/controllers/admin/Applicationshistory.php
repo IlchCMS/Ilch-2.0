@@ -88,7 +88,7 @@ class Applicationshistory extends \Ilch\Controller\Admin
             ->set('teamsMapper', $teamsMapper)
             ->set('join', $join);
     }
-    
+
     public function showuserhistoryAction()
     {
         $joinsMapper = new JoinsMapper();

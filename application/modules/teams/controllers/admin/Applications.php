@@ -165,10 +165,10 @@ class Applications extends \Ilch\Controller\Admin
                 $layout = $_SESSION['layout'];
             }
 
-            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/accept.php')) {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/accept.php');
+            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/accept.php')) {
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/accept.php');
             } else {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/accept.php');
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/teams/layouts/mail/accept.php');
             }
 
             $messageReplace = [
@@ -183,7 +183,7 @@ class Applications extends \Ilch\Controller\Admin
             ];
 
             if ($newUser) {
-                $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirm').'</a>';
+                $confirmCode = '<a href="' . BASE_URL . '/index.php/user/login/newpassword/selector/' . $selector . '/code/' . $confirmedCode . '" class="btn btn-primary btn-sm">' . $this->getTranslator()->trans('confirm') . '</a>';
                 $messageConfirm = ['{confirm}' => $confirmCode];
                 $messageReplace = array_merge($messageReplace, $messageConfirm);
             }
@@ -236,10 +236,10 @@ class Applications extends \Ilch\Controller\Admin
                 $layout = $_SESSION['layout'];
             }
 
-            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/reject.php')) {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/reject.php');
+            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/reject.php')) {
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/reject.php');
             } else {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/reject.php');
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/teams/layouts/mail/reject.php');
             }
             $messageReplace = [
                 '{content}' => $this->getLayout()->purify($mailContent->getText()),
@@ -274,7 +274,7 @@ class Applications extends \Ilch\Controller\Admin
             $joinsMapper = new JoinsMapper();
 
             $joinsMapper->delete($this->getRequest()->getParam('id'));
-            
+
             $this->redirect()
                 ->withMessage('deleteSuccess')
                 ->to(['action' => 'index']);

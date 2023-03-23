@@ -113,7 +113,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'name' => 'required|unique:teams,name,'.$model->getId(),
+                'name' => 'required|unique:teams,name,' . $model->getId(),
                 'groupId' => 'required|numeric|integer|min:1',
                 'optIn' => 'required|numeric|integer|min:0|max:1',
                 'notifyLeader' => 'required|numeric|integer|min:0|max:1'
@@ -150,7 +150,7 @@ class Index extends \Ilch\Controller\Admin
                         $height = $imageInfo[1];
                         do {
                             $newName = str_replace('.', '', uniqid(mt_rand(), true));
-                            $image = $path.$newName.'.'.$extension;
+                            $image = $path . $newName . '.' . $extension;
                         } while (file_exists($image));
 
                         if (move_uploaded_file($file_tmpe, $image)) {

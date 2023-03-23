@@ -77,7 +77,7 @@ class Teams extends \Ilch\Model
      * @var bool
      */
     protected $optShow = false;
-    
+
     /**
      * @param array $entries
      * @return $this
@@ -356,7 +356,8 @@ class Teams extends \Ilch\Model
      */
     public function getArray(bool $withId = true): array
     {
-        return array_merge(($withId ? ['id' => $this->getId()] : []),
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
             [
                 'name' => $this->getName(),
                 'position' => $this->getPosition(),
@@ -367,6 +368,7 @@ class Teams extends \Ilch\Model
                 'optShow' => $this->getOptShow(),
                 'optIn' => $this->getOptIn(),
                 'notifyLeader' => $this->getNotifyLeader()
-            ]);
+            ]
+        );
     }
 }

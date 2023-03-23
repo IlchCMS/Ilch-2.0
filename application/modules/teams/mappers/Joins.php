@@ -238,7 +238,7 @@ class Joins extends \Ilch\Mapper
             ->where(['id' => $id])
             ->execute();
     }
-    
+
     /**
      * Delete all applications/joins from the history.
      * In other words these are the ones with undecided = 0 (accept, reject).
