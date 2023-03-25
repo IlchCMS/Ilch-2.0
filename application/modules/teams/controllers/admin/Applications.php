@@ -23,25 +23,25 @@ class Applications extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'applications',
                 'active' => true,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index']),
                 [
                     'name' => 'history',
                     'active' => false,
-                    'icon' => 'fa fa-folder-open',
+                    'icon' => 'fa-solid fa-folder-open',
                     'url' => $this->getLayout()->getUrl(['controller' => 'applicationshistory', 'action' => 'index'])
                 ]
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -83,6 +83,12 @@ class Applications extends \Ilch\Controller\Admin
         $userDeleted = false;
         $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
 
+        if (!$join) {
+            $this->redirect()
+                ->withMessage('noTeam', 'danger')
+                ->to(['action' => 'index']);
+        }
+
         if ($join->getUserId() && !$userMapper->userWithIdExists($join->getUserId())) {
             $userDeleted = true;
         }
@@ -111,6 +117,11 @@ class Applications extends \Ilch\Controller\Admin
             $passwordService = new PasswordService();
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
+            if (!$join) {
+                $this->redirect()
+                    ->withMessage('noTeam', 'danger')
+                    ->to(['action' => 'index']);
+            }
             $name = $join->getName();
             $email = $join->getEmail();
             $team = $teamsMapper->getTeamById($join->getTeamId());
@@ -157,10 +168,10 @@ class Applications extends \Ilch\Controller\Admin
                 $layout = $_SESSION['layout'];
             }
 
-            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/accept.php')) {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/accept.php');
+            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/accept.php')) {
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/accept.php');
             } else {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/accept.php');
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/teams/layouts/mail/accept.php');
             }
 
             $messageReplace = [
@@ -175,7 +186,7 @@ class Applications extends \Ilch\Controller\Admin
             ];
 
             if ($newUser) {
-                $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirm').'</a>';
+                $confirmCode = '<a href="' . BASE_URL . '/index.php/user/login/newpassword/selector/' . $selector . '/code/' . $confirmedCode . '" class="btn btn-primary btn-sm">' . $this->getTranslator()->trans('confirm') . '</a>';
                 $messageConfirm = ['{confirm}' => $confirmCode];
                 $messageReplace = array_merge($messageReplace, $messageConfirm);
             }
@@ -208,6 +219,11 @@ class Applications extends \Ilch\Controller\Admin
             $userMapper = new UserMapper();
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
+            if (!$join) {
+                $this->redirect()
+                    ->withMessage('noTeam', 'danger')
+                    ->to(['action' => 'index']);
+            }
             $team = $teamsMapper->getTeamById($join->getTeamId());
             $name = $this->getLayout()->escape($join->getName());
             $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
@@ -225,10 +241,10 @@ class Applications extends \Ilch\Controller\Admin
                 $layout = $_SESSION['layout'];
             }
 
-            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/reject.php')) {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/reject.php');
+            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/reject.php')) {
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/reject.php');
             } else {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/reject.php');
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/teams/layouts/mail/reject.php');
             }
             $messageReplace = [
                 '{content}' => $this->getLayout()->purify($mailContent->getText()),
@@ -263,7 +279,7 @@ class Applications extends \Ilch\Controller\Admin
             $joinsMapper = new JoinsMapper();
 
             $joinsMapper->delete($this->getRequest()->getParam('id'));
-            
+
             $this->redirect()
                 ->withMessage('deleteSuccess')
                 ->to(['action' => 'index']);

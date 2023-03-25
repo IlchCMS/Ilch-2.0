@@ -17,25 +17,25 @@ class Applicationshistory extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'applications',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index']),
                 [
                     'name' => 'history',
                     'active' => true,
-                    'icon' => 'fa fa-folder-open',
+                    'icon' => 'fa-solid fa-folder-open',
                     'url' => $this->getLayout()->getUrl(['controller' => 'applicationshistory', 'action' => 'index'])
                 ]
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -75,6 +75,12 @@ class Applicationshistory extends \Ilch\Controller\Admin
 
         $join = $joinsMapper->getJoinInHistoryById($this->getRequest()->getParam('id'));
 
+        if (!$join) {
+            $this->redirect()
+                ->withMessage('noTeam', 'danger')
+                ->to(['action' => 'index']);
+        }
+
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuApplicationsHistory'), ['controller' => 'applications', 'action' => 'index'])
@@ -84,7 +90,7 @@ class Applicationshistory extends \Ilch\Controller\Admin
             ->set('teamsMapper', $teamsMapper)
             ->set('join', $join);
     }
-    
+
     public function showuserhistoryAction()
     {
         $joinsMapper = new JoinsMapper();

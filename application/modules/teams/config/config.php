@@ -6,14 +6,14 @@
 
 namespace Modules\Teams\Config;
 
-use \Ilch\Config\Database as IlchDatabase;
+use Ilch\Config\Database as IlchDatabase;
 
 class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.21.0',
-        'icon_small' => 'fa-users',
+        'version' => '1.22.0',
+        'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'official' => true,
@@ -27,13 +27,15 @@ class Config extends \Ilch\Config\Install
                 'description' => 'You can add or edit teams and manage applications for these teams.',
             ],
         ],
-        'ilchCore' => '2.1.43',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $this->db()->query('INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES ("teams", "static/upload/image");');
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('teams_uploadpath', 'application/modules/teams/static/upload/')
@@ -44,17 +46,23 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_teams`;
-             DROP TABLE `[prefix]_teams_joins`;');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'teams_uploadpath';
-             DELETE FROM `[prefix]_config` WHERE `key` = 'teams_height';
-             DELETE FROM `[prefix]_config` WHERE `key` = 'teams_width';
-             DELETE FROM `[prefix]_config` WHERE `key` = 'teams_filetypes';
-             DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'teams';
-             DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'teams'");
+        $this->db()->drop('teams', true);
+        $this->db()->drop('teams_joins', true);
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('teams_uploadpath')
+            ->delete('teams_height')
+            ->delete('teams_width')
+            ->delete('teams_filetypes');
+
+        $this->db()->queryMulti("DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'teams';
+            DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'teams'");
     }
 
-    public function getInstallSql()
+    /**
+     * @return string
+     */
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_teams` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -87,9 +95,6 @@ class Config extends \Ilch\Config\Install
                 `undecided` TINYINT(1) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-
-            INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES
-            ("teams", "static/upload/image");
 
             INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
             ("teams", "teams_accept_mail", "Bewerbung annehmen", "<p>Hallo <b>{name}</b>,</p>
@@ -146,7 +151,11 @@ class Config extends \Ilch\Config\Install
                   <p>Administrator</p>", "en_EN");';
     }
 
-    public function getUpdate($installedVersion)
+    /**
+     * @param string $installedVersion
+     * @return string
+     */
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -212,6 +221,10 @@ class Config extends \Ilch\Config\Install
                 }
                 // no break
             case "1.19.0":
+            case "1.20.0":
+            case "1.21.0":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-users' WHERE `key` = 'teams';");
         }
+        return 'Update function executed.';
     }
 }

@@ -1,28 +1,35 @@
 <?php
-$userMapper = $this->get('userMapper');
-$groupMapper = $this->get('groupMapper');
-$userId = 0;
+/** @var \Ilch\View $this */
 
+/** @var \Modules\User\Mappers\User $userMapper */
+$userMapper = $this->get('userMapper');
+/** @var \Modules\User\Mappers\Group $groupMapper */
+$groupMapper = $this->get('groupMapper');
+
+$userId = 0;
 if ($this->getUser()) {
-    $user = $userMapper->getUserById($this->getUser()->getId());
     $userId = $this->getUser()->getId();
 }
+
+/** @var \Modules\Teams\Models\Teams[]|null $teams */
+$teams = $this->get('teams');
 ?>
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuJoin') ?></h1>
-<?php if ($this->get('teams') != ''): ?>
+<?php if ($teams): ?>
     <form id="joinForm" name="joinForm" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="form-group hidden">
-            <label class="col-lg-2 control-label">
+            <label class="col-lg-2 control-label" for="bot">
                 <?=$this->getTrans('bot') ?>*
             </label>
             <div class="col-lg-8">
                 <input type="text"
                        class="form-control"
                        name="bot"
+                       id="bot"
                        placeholder="Bot" />
             </div>
         </div>
@@ -34,18 +41,18 @@ if ($this->getUser()) {
                 <select class="form-control" id="teamId" name="teamId">
                     <optgroup label="<?=$this->getTrans('teams') ?>">
                         <?php
-                        foreach ($this->get('teams') as $teamList) {
-                            $groupList = $groupMapper->getUsersForGroup($teamList->getGroupId());
-                            $leaderIds = explode(',', $teamList->getLeader());
-                            $coLeaderIds = explode(',', $teamList->getCoLeader());
+                        foreach ($teams as $team) {
+                            $groupList = $groupMapper->getUsersForGroup($team->getGroupId());
+                            $leaderIds = explode(',', $team->getLeader());
+                            $coLeaderIds = explode(',', $team->getCoLeader());
                             $groupList = array_unique(array_merge($leaderIds, $coLeaderIds, $groupList));
 
-                            if ($teamList->getOptIn() == 1 && (!in_array($userId, $groupList) || $userId == 0)) {
+                            if ($team->getOptIn() == 1 && (!in_array($userId, $groupList) || $userId == 0)) {
                                 $selected = '';
-                                if ($this->originalInput('teamId') == $teamList->getGroupId() || $this->getRequest()->getParam('id') == $teamList->getId()) {
+                                if ($this->originalInput('teamId') == $team->getGroupId() || $this->getRequest()->getParam('id') == $team->getId()) {
                                     $selected = 'selected="selected"';
                                 }
-                                echo '<option '.$selected.' value="'.$teamList->getId().'">'.$teamList->getName().'</option>';
+                                echo '<option '.$selected.' value="'.$team->getId().'">'.$team->getName().'</option>';
                             }
                         }
                         ?>
@@ -63,7 +70,7 @@ if ($this->getUser()) {
                        class="form-control"
                        id="name"
                        name="name"
-                       value="<?=$user->getName() ?>"
+                       value="<?=$this->getUser()->getName() ?>"
                        readonly />
             <?php else: ?>
                 <input type="text"
@@ -84,7 +91,7 @@ if ($this->getUser()) {
                            class="form-control"
                            id="email"
                            name="email"
-                           value="<?=$user->getEmail() ?>"
+                           value="<?=$this->getUser()->getEmail() ?>"
                            readonly />
                 <?php else: ?>
                     <input type="text"
@@ -96,15 +103,15 @@ if ($this->getUser()) {
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-2 control-label">
+            <label class="col-lg-2 control-label" for="gender">
                 <?=$this->getTrans('gender') ?>
             </label>
             <div class="col-lg-2">
                 <?php if ($this->getUser()): ?>
-                    <select class="form-control" id="gender" name="gender" <?=($user->getGender() == 0) ? '' : 'disabled="disabled"' ?>>
-                        <option value="1" <?=($user->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
-                        <option value="2" <?=($user->getGender() == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
-                        <option value="3" <?=($user->getGender() == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderNonBinary') ?></option>
+                    <select class="form-control" id="gender" name="gender" <?=($this->getUser()->getGender() == 0) ? '' : 'disabled="disabled"' ?>>
+                        <option value="1" <?=($this->getUser()->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
+                        <option value="2" <?=($this->getUser()->getGender() == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
+                        <option value="3" <?=($this->getUser()->getGender() == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderNonBinary') ?></option>
                     </select>
                 <?php else: ?>
                     <select class="form-control" id="gender" name="gender">
@@ -116,7 +123,7 @@ if ($this->getUser()) {
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('birthday') ? 'has-error' : '' ?>">
-            <label for="age" class="col-lg-2 control-label">
+            <label for="age" class="col-lg-2 control-label" for="birthday">
                 <?=$this->getTrans('birthday') ?>
             </label>
             <?php if ($this->getUser() && $this->getUser()->getBirthday() != '0000-00-00'): ?>
@@ -129,7 +136,7 @@ if ($this->getUser()) {
                            value="<?=$birthday->format('d.m.Y') ?>"
                            readonly />
                     <span class="input-group-addon">
-                        <span class="fa fa-calendar" disabled></span>
+                        <span class="fa-solid fa-calendar" disabled></span>
                     </span>
                 </div>
             <?php else: ?>
@@ -140,7 +147,7 @@ if ($this->getUser()) {
                            name="birthday"
                            value="<?=($this->originalInput('birthday') != '') ? $this->originalInput('birthday') : '' ?>" />
                     <span class="input-group-addon">
-                        <span class="fa fa-calendar"></span>
+                        <span class="fa-solid fa-calendar"></span>
                     </span>
                 </div>
             <?php endif; ?>

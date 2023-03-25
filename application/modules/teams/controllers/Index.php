@@ -57,6 +57,14 @@ class Index extends \Ilch\Controller\Frontend
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
+        $team = $teamsMapper->getTeamById($this->getRequest()->getParam('id'));
+
+        if (!$team) {
+            $this->redirect()
+                ->withMessage('noTeam', 'danger')
+                ->to(['action' => 'index']);
+        }
+
         $this->getLayout()->header()
             ->css('static/css/teams.css');
         $this->getLayout()->getTitle()
@@ -71,7 +79,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('userMapper', $userMapper)
             ->set('groupMapper', $groupMapper)
             ->set('profileFieldsContentMapper', $profileFieldsContentMapper)
-            ->set('team', $teamsMapper->getTeamById($this->getRequest()->getParam('id')))
+            ->set('team', $team)
             ->set('profileIconFields', $profileIconFields)
             ->set('profileFieldsTranslation', $profileFieldsTranslation);
     }
@@ -113,10 +121,7 @@ class Index extends \Ilch\Controller\Frontend
                 }
             }
 
-            if ($this->getUser()) {
-                $validationRules['name'] = 'required|unique:teams_joins,name,0,undecided';
-                $validationRules['email'] = 'required|email|unique:teams_joins,email,0,undecided';
-            } else {
+            if (!$this->getUser()) {
                 $validationRules['name'] = 'required|unique:users,name|unique:teams_joins,name,0,undecided';
                 $validationRules['email'] = 'required|email|unique:users,email|unique:teams_joins,email,0,undecided';
             }
@@ -168,10 +173,10 @@ class Index extends \Ilch\Controller\Frontend
                         if (isset($_SESSION['layout'])) {
                             $layout = $_SESSION['layout'];
                         }
-                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/notifyLeader.php')) {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/teams/layouts/mail/notifyLeader.php');
+                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/notifyLeader.php')) {
+                            $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/teams/layouts/mail/notifyLeader.php');
                         } else {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/notifyLeader.php');
+                            $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/teams/layouts/mail/notifyLeader.php');
                         }
 
                         foreach ($leadersIds as $leaderId) {

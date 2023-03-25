@@ -16,19 +16,19 @@ class Settings extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'applications',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index'])
             ],
             [
                 'name' => 'settings',
                 'active' => true,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -69,17 +69,14 @@ class Settings extends \Ilch\Controller\Admin
                         ->withMessage('saveSuccess')
                         ->to(['action' => 'index']);
                 } else {
-                    $this->redirect()
-                    ->withMessage('forbiddenExtension', 'danger')
-                    ->to(['action' => 'index']);
+                    $validation->getErrorBag()->addError('teams_filetypes', $this->getTranslator()->trans('forbiddenExtension'));
                 }
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
-                    ->to(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('teams_height', $this->getConfig()->get('teams_height'))

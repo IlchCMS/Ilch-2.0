@@ -160,9 +160,9 @@ class Validation
     protected function parseRules()
     {
         foreach ($this->rules as $field => $rules) {
-            foreach (explode('|', $rules) as $validator) {
+            foreach (explode('|', $rules) as $i => $validator) {
                 if (strpos($validator, ':') === false) {
-                    $this->validationRules[$field][$validator] = null;
+                    $this->validationRules[$field][$validator][$i] = null;
 
                     continue;
                 }
@@ -175,14 +175,14 @@ class Validation
                 $validator = $parts[0];
                 $params = explode(',', $parts[1]);
 
-                $this->validationRules[$field][$validator] = null;
+                $this->validationRules[$field][$validator][$i] = null;
 
                 foreach ($params as $param) {
                     if (empty($param) && $param !== '0') {
                         continue;
                     }
 
-                    $this->validationRules[$field][$validator][] = $param;
+                    $this->validationRules[$field][$validator][$i][] = $param;
                 }
             }
         }
@@ -194,22 +194,24 @@ class Validation
     public function validateRules()
     {
         foreach ($this->validationRules as $field => $validators) {
-            foreach ($validators as $validator => $parameters) {
-                $data = new stdClass();
-                $data->field = $field;
-                $data->parameters = $parameters;
-                $data->input = $this->input;
+            foreach ($validators as $validator => $i_validator) {
+                foreach ($i_validator as $parameters) {
+                    $data = new stdClass();
+                    $data->field = $field;
+                    $data->parameters = $parameters;
+                    $data->input = $this->input;
 
-                $data->invertResult = false;
-                if (strtolower(substr($validator, 0, 3)) === 'not') {
-                    $validator = substr($validator, 3);
-                    $data->invertResult = true;
-                }
+                    $data->invertResult = false;
+                    if (strtolower(substr($validator, 0, 3)) === 'not') {
+                        $validator = substr($validator, 3);
+                        $data->invertResult = true;
+                    }
 
-                $result = $this->checkResult($this->validate($validator, $data));
+                    $result = $this->checkResult($this->validate($validator, $data));
 
-                if (self::$breakChain && !$result) {
-                    break;
+                    if (self::$breakChain && !$result) {
+                        break;
+                    }
                 }
             }
         }

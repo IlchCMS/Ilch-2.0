@@ -1,3 +1,6 @@
+<?php
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
@@ -29,7 +32,7 @@
                    required />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('image_filetypes') ? 'has-error' : '' ?>">
         <label for="image_filetypes" class="col-lg-2 control-label">
             <?=$this->getTrans('allowedFileExtensions') ?>
         </label>

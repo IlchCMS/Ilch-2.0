@@ -11,147 +11,197 @@ use Modules\Teams\Models\Teams as TeamsModel;
 class Teams extends \Ilch\Mapper
 {
     /**
-     * Gets the Teams.
+     * @var string
+     * @since 1.22.0
+     */
+    public $tablename = 'teams';
+
+    /**
+     * Check if DB-Table exists
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.22.0
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Get Teams by given Params.
      *
      * @param array $where
-     * @return TeamsModel[]|array
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return TeamsModel[]|null
+     * @since 1.22.0
      */
-    public function getTeams($where = [])
+    public function getEntriesBy(array $where = [], array $orderBy = ['position' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
     {
-        $entryArray = $this->db()->select('*')
-            ->from('teams')
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
             ->where($where)
-            ->order(['position' => 'ASC'])
-            ->execute()
-            ->fetchRows();
+            ->order($orderBy);
 
-        $teams = [];
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
 
+        $entryArray = $result->fetchRows();
         if (empty($entryArray)) {
-            return $teams;
+            return null;
         }
 
-        foreach ($entryArray as $entries) {
+        $entries = [];
+
+        foreach ($entryArray as $rows) {
             $entryModel = new TeamsModel();
-            $entryModel->setId($entries['id'])
-                ->setPosition($entries['position'])
-                ->setName($entries['name'])
-                ->setImg($entries['img'])
-                ->setLeader($entries['leader'])
-                ->setCoLeader($entries['coLeader'])
-                ->setGroupId($entries['groupId'])
-                ->setOptShow($entries['optShow'])
-                ->setOptIn($entries['optIn'])
-                ->setNotifyLeader($entries['notifyLeader']);
-            $teams[] = $entryModel;
+            $entryModel->setByArray($rows);
+
+            $entries[] = $entryModel;
         }
 
-        return $teams;
+        return $entries;
     }
 
     /**
      * Get Team by given Id.
      *
-     * @param integer $id
+     * @param int|TeamsModel $id
+     * @return null|TeamsModel
+     * @since 1.22.0
+     */
+    public function getEntryById($id): ?TeamsModel
+    {
+        if (is_a($id, TeamsModel::class)) {
+            $id = $id->getId();
+        }
+
+        $entries = $this->getEntriesBy(['id' => (int)$id], []);
+
+        if (!empty($entries)) {
+            return reset($entries);
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the Teams.
+     *
+     * @param array $where
+     * @return TeamsModel[]|null
+     */
+    public function getTeams(array $where = []): ?array
+    {
+        return $this->getEntriesBy($where);
+    }
+
+    /**
+     * Get Team by given Id.
+     *
+     * @param int|TeamsModel $id
      * @return TeamsModel|null
      */
-    public function getTeamById($id)
+    public function getTeamById($id): ?TeamsModel
     {
-        $team = $this->getTeams(['id' => $id]);
-
-        return reset($team);
+        return $this->getEntryById($id);
     }
 
     /**
      * Get Team by given group id.
      *
-     * @param integer $id
+     * @param int|TeamsModel $groupId
      * @return TeamsModel|null
      */
-    public function getTeamByGroupId($id)
+    public function getTeamByGroupId($groupId): ?TeamsModel
     {
-        $team = $this->getTeams(['groupId' => $id]);
+        if (is_a($groupId, TeamsModel::class)) {
+            $groupId = $groupId->getGroupId();
+        }
 
-        return reset($team);
-    }
+        $entries = $this->getEntriesBy(['groupId' => $groupId], []);
 
-    /**
-     * Updates the position of the team.
-     *
-     * @param int $id , int $position
-     * @param int $position
-     */
-    public function updatePositionById($id, $position)
-    {
-        $this->db()->update('teams')
-            ->values(['position' => $position])
-            ->where(['id' => $id])
-            ->execute();
+        if (!empty($entries)) {
+            return reset($entries);
+        }
+
+        return null;
     }
 
     /**
      * Delete/Unlink Image by Id.
      *
-     * @param int $id
+     * @param int|TeamsModel $id
+     * @param bool $noUpdate
+     * @return bool
      */
-    public function delImageById($id)
+    public function delImageById($id, bool $noUpdate = false): bool
     {
-        $row = $this->db()->select('*')
-            ->from('teams')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
-
-        if (file_exists($row['img'])) {
-            unlink($row['img']);
+        if (is_a($id, TeamsModel::class)) {
+            $entry = $id;
+        } else {
+            $entry = $this->getTeamById($id);
         }
 
-        $this->db()->update('teams')
-            ->values(['img' => ''])
-            ->where(['id' => $id])
-            ->execute();
+        if (!$entry) {
+            return false;
+        }
+
+        if (file_exists($entry->getImg())) {
+            unlink($entry->getImg());
+        }
+
+        if (!$noUpdate) {
+            $entry->setImg('');
+            return $this->save($entry);
+        } else {
+            return (!file_exists($entry->getImg()));
+        }
     }
 
     /**
      * Sort teams.
      *
-     * @param int $teamId
-     * @param int $key
+     * @param int|TeamsModel $id
+     * @param int $pos
+     * @return bool
      */
-    public function sort($teamId, $key)
+    public function sort($id, int $pos): bool
     {
-        $this->db()->update('teams')
-            ->values(['position' => $key])
-            ->where(['id' => $teamId])
+        if (is_a($id, TeamsModel::class)) {
+            $id = $id->getId();
+        }
+
+        return $this->db()->update($this->tablename)
+            ->values(['position' => $pos])
+            ->where(['id' => $id])
             ->execute();
     }
 
     /**
      * Inserts or updates Team Model.
      *
-     * @param TeamsModel $team
+     * @param TeamsModel $model
+     * @return int
      */
-    public function save(TeamsModel $team)
+    public function save(TeamsModel $model): int
     {
-        $fields = [
-            'name' => $team->getName(),
-            'position' => $team->getPosition(),
-            'img' => $team->getImg(),
-            'leader' => $team->getLeader(),
-            'coLeader' => $team->getCoLeader(),
-            'groupId' => $team->getGroupId(),
-            'optShow' => $team->getOptShow(),
-            'optIn' => $team->getOptIn(),
-            'notifyLeader' => $team->getNotifyLeader()
-        ];
+        $fields = $model->getArray(false);
 
-        if ($team->getId()) {
-            $this->db()->update('teams')
+        if ($model->getId()) {
+            return $this->db()->update($this->tablename)
                 ->values($fields)
-                ->where(['id' => $team->getId()])
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('teams')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -160,21 +210,24 @@ class Teams extends \Ilch\Mapper
     /**
      * Delete Team with given Id.
      *
-     * @param integer $id
+     * @param int|TeamsModel $id
+     * @return bool
      */
-    public function delete($id)
+    public function delete($id): bool
     {
-        $row = $this->db()->select('*')
-            ->from('teams')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
-
-        if (file_exists($row['img'])) {
-            unlink($row['img']);
+        if (is_a($id, TeamsModel::class)) {
+            $entry = $id;
+        } else {
+            $entry = $this->getTeamById($id);
         }
 
-        $this->db()->delete('teams')
+        if (!$entry) {
+            return false;
+        }
+
+        $this->delImageById($entry, true);
+
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }
