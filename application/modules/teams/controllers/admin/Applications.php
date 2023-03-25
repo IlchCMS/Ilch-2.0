@@ -85,6 +85,7 @@ class Applications extends \Ilch\Controller\Admin
 
         if (!$join) {
             $this->redirect()
+                ->withMessage('noTeam', 'danger')
                 ->to(['action' => 'index']);
         }
 
@@ -117,7 +118,9 @@ class Applications extends \Ilch\Controller\Admin
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
             if (!$join) {
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('noTeam', 'danger')
+                    ->to(['action' => 'index']);
             }
             $name = $join->getName();
             $email = $join->getEmail();
@@ -217,7 +220,9 @@ class Applications extends \Ilch\Controller\Admin
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
             if (!$join) {
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('noTeam', 'danger')
+                    ->to(['action' => 'index']);
             }
             $team = $teamsMapper->getTeamById($join->getTeamId());
             $name = $this->getLayout()->escape($join->getName());

@@ -61,6 +61,7 @@ class Index extends \Ilch\Controller\Frontend
 
         if (!$team) {
             $this->redirect()
+                ->withMessage('noTeam', 'danger')
                 ->to(['action' => 'index']);
         }
 

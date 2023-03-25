@@ -76,7 +76,9 @@ class Applicationshistory extends \Ilch\Controller\Admin
         $join = $joinsMapper->getJoinInHistoryById($this->getRequest()->getParam('id'));
 
         if (!$join) {
-            $this->redirect(['action' => 'index']);
+            $this->redirect()
+                ->withMessage('noTeam', 'danger')
+                ->to(['action' => 'index']);
         }
 
         $this->getLayout()->getAdminHmenu()

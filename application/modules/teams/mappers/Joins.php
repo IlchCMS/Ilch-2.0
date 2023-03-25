@@ -6,7 +6,7 @@
 
 namespace Modules\Teams\Mappers;
 
-use Modules\Teams\Models\Joins as EntriesModel;
+use Modules\Teams\Models\Joins as JoinsModel;
 
 class Joins extends \Ilch\Mapper
 {
@@ -17,6 +17,8 @@ class Joins extends \Ilch\Mapper
     public $tablename = 'teams_joins';
 
     /**
+     * Check if DB-Table exists
+     *
      * @return boolean
      * @throws \Ilch\Database\Exception
      * @since 1.22.0
@@ -27,10 +29,12 @@ class Joins extends \Ilch\Mapper
     }
 
     /**
+     * Get Joins by given Params.
+     *
      * @param array $where
      * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
-     * @return EntriesModel[]|null
+     * @return JoinsModel[]|null
      * @since 1.22.0
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
@@ -54,33 +58,35 @@ class Joins extends \Ilch\Mapper
             return null;
         }
 
-        $entrys = [];
+        $entries = [];
 
-        foreach ($entryArray as $entries) {
-            $entryModel = new EntriesModel();
-            $entryModel->setByArray($entries);
+        foreach ($entryArray as $rows) {
+            $entryModel = new JoinsModel();
+            $entryModel->setByArray($rows);
 
-            $entrys[] = $entryModel;
+            $entries[] = $entryModel;
         }
 
-        return $entrys;
+        return $entries;
     }
 
     /**
-     * @param int|EntriesModel $id
-     * @return null|EntriesModel
+     * Get Join by given Id.
+     *
+     * @param int|JoinsModel $id
+     * @return null|JoinsModel
      * @since 1.22.0
      */
-    public function getEntryById($id): ?EntriesModel
+    public function getEntryById($id): ?JoinsModel
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, JoinsModel::class)) {
             $id = $id->getId();
         }
 
-        $entrys = $this->getEntriesBy(['id' => (int)$id], []);
+        $entries = $this->getEntriesBy(['id' => (int)$id], []);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
         return null;
@@ -91,7 +97,7 @@ class Joins extends \Ilch\Mapper
      *
      * @param array $where
      * @param \Ilch\Pagination|null $pagination
-     * @return EntriesModel[]|null
+     * @return JoinsModel[]|null
      */
     public function getApplications(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
     {
@@ -103,7 +109,7 @@ class Joins extends \Ilch\Mapper
      *
      * @param array $where
      * @param \Ilch\Pagination|null $pagination
-     * @return EntriesModel[]|null
+     * @return JoinsModel[]|null
      */
     public function getJoins(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
     {
@@ -115,7 +121,7 @@ class Joins extends \Ilch\Mapper
      * Gets the history of applications.
      *
      * @param \Ilch\Pagination|null $pagination
-     * @return EntriesModel[]|null
+     * @return JoinsModel[]|null
      */
     public function getApplicationHistory(?\Ilch\Pagination $pagination = null): ?array
     {
@@ -125,10 +131,10 @@ class Joins extends \Ilch\Mapper
     /**
      * Get Join by given Id.
      *
-     * @param int|EntriesModel $id
-     * @return EntriesModel|null
+     * @param int|JoinsModel $id
+     * @return JoinsModel|null
      */
-    public function getJoinById($id): ?EntriesModel
+    public function getJoinById($id): ?JoinsModel
     {
         return $this->getEntryById($id);
     }
@@ -136,19 +142,19 @@ class Joins extends \Ilch\Mapper
     /**
      * Get Join in history by given Id.
      *
-     * @param int|EntriesModel $id
-     * @return EntriesModel|null
+     * @param int|JoinsModel $id
+     * @return JoinsModel|null
      */
-    public function getJoinInHistoryById($id): ?EntriesModel
+    public function getJoinInHistoryById($id): ?JoinsModel
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, JoinsModel::class)) {
             $id = $id->getId();
         }
 
-        $entrys = $this->getApplications(['id' => (int)$id, 'undecided' => 0]);
+        $entries = $this->getApplications(['id' => (int)$id, 'undecided' => 0]);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
         return null;
@@ -159,7 +165,7 @@ class Joins extends \Ilch\Mapper
      *
      * @param int $userId
      * @param \Ilch\Pagination|null $pagination
-     * @return EntriesModel[]|null
+     * @return JoinsModel[]|null
      */
     public function getApplicationHistoryByUserId(int $userId, ?\Ilch\Pagination $pagination = null): ?array
     {
@@ -184,13 +190,13 @@ class Joins extends \Ilch\Mapper
      * Update status of join/application
      * 1 = accepted, 2 = declined
      *
-     * @param int|EntriesModel $id
+     * @param int|JoinsModel $id
      * @param int $decision
      * @return bool
      */
     public function updateDecision($id, int $decision): bool
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, JoinsModel::class)) {
             $id = $id->getId();
         }
 
@@ -203,10 +209,10 @@ class Joins extends \Ilch\Mapper
     /**
      * Inserts Join Model.
      *
-     * @param EntriesModel $model
+     * @param JoinsModel $model
      * @return int
      */
-    public function save(EntriesModel $model): int
+    public function save(JoinsModel $model): int
     {
         $fields = $model->getArray(false);
 
@@ -225,12 +231,12 @@ class Joins extends \Ilch\Mapper
     /**
      * Delete Join with given Id.
      *
-     * @param int|EntriesModel $id
+     * @param int|JoinsModel $id
      * @return bool
      */
     public function delete($id): bool
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, JoinsModel::class)) {
             $id = $id->getId();
         }
 

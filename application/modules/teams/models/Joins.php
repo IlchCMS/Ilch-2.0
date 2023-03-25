@@ -107,6 +107,8 @@ class Joins extends \Ilch\Model
     protected $undecided = 0;
 
     /**
+     * Set this Model by Array
+     *
      * @param array $entries
      * @return $this
      * @since 1.22.0
@@ -483,6 +485,8 @@ class Joins extends \Ilch\Model
     }
 
     /**
+     * Get Array of this Model
+     *
      * @param bool $withId
      * @return array
      * @since 1.22.0
