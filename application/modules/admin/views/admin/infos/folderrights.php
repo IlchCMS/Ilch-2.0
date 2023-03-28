@@ -134,5 +134,5 @@
 
 <div id="allRights">
     <p><?=$this->getTrans('allRightsInfo') ?></p>
-    <a href="<?=$this->getUrl(['controller' => 'infos', 'action' => 'allrights'], null, true) ?>" title="<?=$this->getTrans('allRights') ?>"><i class="fa-solid fa-folder"> <?=$this->getTrans('checkAllRights') ?></i></a>
+    <a href="<?=$this->getUrl(['controller' => 'infos', 'action' => 'allrights'], null, true) ?>" title="<?=$this->getTrans('allRights') ?>"><i class="fa-solid fa-folder"></i> <?=$this->getTrans('checkAllRights') ?></a>
 </div>
