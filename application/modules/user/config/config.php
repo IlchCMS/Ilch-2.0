@@ -60,7 +60,8 @@ class Config extends \Ilch\Config\Install
             ->set('usergallery_uploadpath', 'application/modules/user/static/upload/gallery/')
             ->set('usergallery_filetypes', 'jpg jpeg png gif')
             ->set('userdeletetime', '5')
-            ->set('userGroupList_allowed', '0');
+            ->set('userGroupList_allowed', '0')
+            ->set('userAvatarList_allowed', '0');
 
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
@@ -620,6 +621,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-headphones' AND `key` = 'discord';");
 
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-user' WHERE `key` = 'user';");
+			case "2.1.48":
+                $databaseConfig->set('userAvatarList_allowed', '0');
         }
     }
 }

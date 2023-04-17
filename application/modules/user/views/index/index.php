@@ -6,7 +6,7 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 $group = $this->get('group');
 $groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape($group->getName()).')' : '';
 $userGroupList_allowed = $this->get('userGroupList_allowed');
-
+$userAvatarList_allowed = $this->get('userAvatarList_allowed');
 
 ?>
 
@@ -19,25 +19,18 @@ $userGroupList_allowed = $this->get('userGroupList_allowed');
             <div class="col-lg-12">
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
-                        <colgroup>
-                            <col class="col-lg-3" />
-                            <col class="col-lg-3" />
-                            <col class="col-lg-3" />
-                            <col class="col-lg-3" />
-                        </colgroup>
                         <thead>
                         <tr>
+                            <?php if ($userAvatarList_allowed == 1): ?>
+                            <th><?=$this->getTrans('userAvatars') ?></th>
+                            <?php endif; ?>
                             <th><?=$this->getTrans('userlistName') ?></th>
                             <th><?=$this->getTrans('userlistRegist') ?></th>
                             <th><?=$this->getTrans('userDateLastActivity') ?></th>
                             <th><?=$this->getTrans('userlistContact') ?></th>
-
-                            <!-- Tabellenkopf -->
                             <?php if ($userGroupList_allowed == 1): ?>
                             <th><?=$this->getTrans('userGroups') ?></th>
                             <?php endif; ?>
-                            <!-- Tabellenkopf Ende -->
-
                         </tr>
                         </thead>
                         <tbody>
@@ -60,6 +53,13 @@ $userGroupList_allowed = $this->get('userGroupList_allowed');
                             <?php $ilchLastDate = (!empty($userlist->getDateLastActivity())) ? new Ilch\Date($userlist->getDateLastActivity()) : ''; ?>
                             <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($userlist->getId()); ?>
                             <tr>
+                                <?php
+                                if ($userAvatarList_allowed == true):
+                                ?>
+                                <td>
+                                    <img class="profile-image" src="<?=$this->getBaseUrl().$this->escape($userlist->getAvatar()) ?>" title="<?=$this->escape($userlist->getName()) ?>">
+                                </td>
+                                <?php endif; ?>
                                 <td>
                                     <a href="<?=$this->getUrl(['controller' => 'profil', 'action' => 'index', 'user' => $userlist->getId()]) ?>" title="<?=$this->escape($userlist->getName()) ?>s <?=$this->getTrans('profile') ?>" class="user-link"><?=$this->escape($userlist->getName()) ?></a>
                                 </td>
@@ -97,7 +97,6 @@ $userGroupList_allowed = $this->get('userGroupList_allowed');
                             }
                                     ?>
                                 </td>
-                                <!-- Neue Spalte -->
                                 <?php
                                 if ($userGroupList_allowed == true):
                                 ?>
@@ -105,7 +104,6 @@ $userGroupList_allowed = $this->get('userGroupList_allowed');
                                     <?=$this->escape($groups) ?>
                                 </td>
                                 <?php endif; ?>
-                                <!-- Spalte Ende -->
                             </tr>
                         <?php endforeach; ?>
                         </tbody>

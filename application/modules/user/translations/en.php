@@ -31,6 +31,8 @@ return [
     'userGroups' => 'Usergroups',
     'UserGroupsList' => 'Memberlist',
     'userGroupsAllowed' => 'Show usergroups in lists?',
+    'userAvatars' => 'Profile pictures',
+    'userAvatarsAllowed' => 'Show avatars in list?',
     'save' => 'Save',
     'success' => 'Saved successfully',
     'notConfirmedYet' => 'Not confirmed, yet',
