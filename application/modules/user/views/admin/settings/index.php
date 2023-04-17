@@ -208,6 +208,25 @@
             </div>
         </div>
     </div>
+	<div class="form-group">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('userAvatarsAllowed') ?>:
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="userAvatarList-allowed-yes" name="userAvatarList_allowed" value="1" <?php if ($this->get('userAvatarList_allowed') == '1') {
+    echo 'checked="checked"';
+} ?> />
+                <label for="userAvatarList-allowed-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+
+                <input type="radio" class="flipswitch-input" id="userAvatarList-allowed-no" name="userAvatarList_allowed" value="0" <?php if ($this->get('userAvatarList_allowed') != '1') {
+    echo 'checked="checked"';
+} ?> />
+                <label for="userAvatarList-allowed-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 

@@ -61,8 +61,13 @@ class Settings extends \Ilch\Controller\Admin
             } else {
                 $this->getConfig()->set('userGroupList_allowed', 0);
             }
-
-
+			
+            if ($this->getRequest()->getPost('userAvatarList_allowed') == 1) {
+                $this->getConfig()->set('userAvatarList_allowed', 1);
+                $this->addMessage('saveSuccess');
+            } else {
+                $this->getConfig()->set('userAvatarList_allowed', 0);
+            }
 
             // Don't allow adding forbidden file extensions.
             $forbiddenExtensionFound = false;
@@ -116,6 +121,7 @@ class Settings extends \Ilch\Controller\Admin
             ->set('regist_rules', $this->getConfig()->get('regist_rules'))
             ->set('picturesPerPage', $this->getConfig()->get('user_picturesPerPage'))
             ->set('delete_time', $this->getConfig()->get('userdeletetime'))
-            ->set('userGroupList_allowed', $this->getConfig()->get('userGroupList_allowed'));
+            ->set('userGroupList_allowed', $this->getConfig()->get('userGroupList_allowed'))
+            ->set('userAvatarList_allowed', $this->getConfig()->get('userAvatarList_allowed'));
     }
 }

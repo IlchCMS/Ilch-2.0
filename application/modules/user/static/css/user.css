@@ -46,14 +46,21 @@
 .userlist .user-link {
     margin-right: 5px;
 }
+
 .userlist .user-link:last-child {
     margin-right: 0;
 }
+
 .userlist .user-link:hover,
 .userlist .userLuser-linkinks:focus {
     text-decoration: none;
 }
 
+.userlist img.profile-image {
+    width: 60px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
 
 .check {
     margin-top: -5px;
@@ -62,6 +69,7 @@
 .panel-profile-image {
     width: 100%;
 }
+
 #panel .nav > li > a.active {
     text-decoration: none;
     background-color: #eeeeee;

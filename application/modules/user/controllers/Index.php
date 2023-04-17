@@ -29,7 +29,7 @@ class Index extends \Ilch\Controller\Frontend
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $userGroupList_allowed = $this->getConfig()->get('userGroupList_allowed');
-
+        $userAvatarList_allowed = $this->getConfig()->get('userAvatarList_allowed');
 
         $groupId = $this->getRequest()->getParam('groupid');
         if ($groupId) {
@@ -52,6 +52,7 @@ class Index extends \Ilch\Controller\Frontend
             ->set('profileIconFields', $profileIconFields)
             ->set('profileFieldsTranslation', $profileFieldsTranslation)
             ->set('pagination', $pagination)
-            ->set('userGroupList_allowed', $userGroupList_allowed);
+            ->set('userGroupList_allowed', $userGroupList_allowed)
+            ->set('userAvatarList_allowed', $userAvatarList_allowed);
     }
 }
