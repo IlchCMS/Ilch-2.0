@@ -621,7 +621,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_profile_fields` SET `icon` = 'fa-brands fa-discord' WHERE `icon` = 'fa-solid fa-headphones' AND `key` = 'discord';");
 
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-user' WHERE `key` = 'user';");
-			case "2.1.48":
+            case "2.1.48":
                 $databaseConfig->set('userAvatarList_allowed', '0');
         }
     }

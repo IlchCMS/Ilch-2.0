@@ -35,7 +35,6 @@ class Index extends \Ilch\Controller\Frontend
         if ($groupId) {
             $groupMapper = new GroupMapper();
 
-
             $userlist = $userMapper->getUserListByGroupId($groupId, 1, $pagination);
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('Gruppe'), ['action' => 'index', 'groupid' => $groupId]);

@@ -61,7 +61,7 @@ class Settings extends \Ilch\Controller\Admin
             } else {
                 $this->getConfig()->set('userGroupList_allowed', 0);
             }
-			
+
             if ($this->getRequest()->getPost('userAvatarList_allowed') == 1) {
                 $this->getConfig()->set('userAvatarList_allowed', 1);
                 $this->addMessage('saveSuccess');
