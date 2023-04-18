@@ -53,11 +53,9 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                             <?php $ilchLastDate = (!empty($userlist->getDateLastActivity())) ? new Ilch\Date($userlist->getDateLastActivity()) : ''; ?>
                             <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($userlist->getId()); ?>
                             <tr>
-                                <?php
-                                if ($userAvatarList_allowed == true):
-                                ?>
+                                <?php if ($userAvatarList_allowed): ?>
                                 <td>
-                                    <img class="profile-image" src="<?=$this->getBaseUrl().$this->escape($userlist->getAvatar()) ?>" title="<?=$this->escape($userlist->getName()) ?>">
+                                    <img class="profile-image" src="<?=$this->getBaseUrl().$this->escape($userlist->getAvatar()) ?>" title="<?=$this->escape($userlist->getName()) ?>" alt="<?=$this->escape($this->getTrans('userAvatars') . ' ' . $userlist->getName()) ?>">
                                 </td>
                                 <?php endif; ?>
                                 <td>
