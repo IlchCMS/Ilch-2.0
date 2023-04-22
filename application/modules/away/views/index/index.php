@@ -52,7 +52,7 @@ if ($this->getUser()) {
                                     <div><?=$this->getTrans($startDate->format('l', true)) ?></div>
                                     <div class="shortdate"><?=$this->getTrans($startDate->format('F', true)).$startDate->format(', Y', true) ?></div>
                                 </div>
-                                <div class="agenda-arrow"><i class="fa fa-chevron-right"></i></div>
+                                <div class="agenda-arrow"><i class="fa-solid fa-chevron-right"></i></div>
                                 <div>
                                     <div class="dayofmonth"><?=$endDate->format('d', true) ?></div>
                                     <div><?=$this->getTrans($endDate->format('l', true)) ?></div>
@@ -72,11 +72,11 @@ if ($this->getUser()) {
                                         <?php if ($away->getStart() >= date('Y-m-d') || $away->getEnd() >= date('Y-m-d')): ?>
                                             <?php if ($away->getStatus() == 1): ?>
                                                 <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
-                                                    <span class="fa fa-check-square-o text-info"></span>
+                                                    <span class="fa-regular fa-square-check text-info"></span>
                                                 </a>
                                             <?php else: ?>
                                                 <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
-                                                    <span class="fa fa-square-o text-info"></span>
+                                                    <span class="fa-regular fa-square text-info"></span>
                                                 </a>
                                             <?php endif; ?>
                                         <?php endif; ?>
@@ -134,7 +134,7 @@ if ($this->getUser()) {
                        size="16"
                        readonly>
                 <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
+                    <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
             <div class="col-lg-3 input-group ilch-date date form_datetime">
@@ -145,7 +145,7 @@ if ($this->getUser()) {
                        size="16"
                        readonly>
                 <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
+                    <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
         </div>
