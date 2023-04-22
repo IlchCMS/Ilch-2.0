@@ -35,11 +35,11 @@
                             <td>
                                 <?php if ($away->getStatus() == 1): ?>
                                     <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
-                                        <span class="fa fa-check-square-o text-info"></span>
+                                        <span class="fa-regular fa-square-check text-info"></span>
                                     </a>
                                 <?php else: ?>
                                     <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
-                                        <span class="fa fa-square-o text-info"></span>
+                                        <span class="fa-regular fa-square text-info"></span>
                                     </a>
                                 <?php endif; ?>
                             </td>
