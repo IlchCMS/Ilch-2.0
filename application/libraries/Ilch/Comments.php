@@ -11,6 +11,9 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\User\Models\User;
 
+/**
+ * Comments class to add comments to various modules by just calling getComments().
+ */
 class Comments
 {
     private $userCache = [];
@@ -22,7 +25,7 @@ class Comments
      * @param int $userId
      * @return User|null
      */
-    private function getUser($userId)
+    private function getUser(int $userId): ?User
     {
         if (!isset($this->userCache[$userId])) {
             $userMapper = new UserMapper();
@@ -37,25 +40,24 @@ class Comments
     }
 
     /**
-     * @param integer $id
-     * @param integer $commentId
-     * @param integer $uid
-     * @param integer $req
+     * @param int $id
+     * @param int $commentId
+     * @param int $uid
+     * @param int $req
      * @param $obj
      * @return string
      */
-    private function rec($id, $commentId, $uid, $req, $obj): string
+    private function rec(int $id, int $commentId, int $uid, int $req, $obj): string
     {
         $commentMappers = new CommentMapper();
-        $userMapper = new UserMapper();
         $fk_comments = $commentMappers->getCommentsByFKId($commentId);
         $user_rep = $this->getUser($uid);
-        $config = \Ilch\Registry::get('config');
-        $nowDate = new \Ilch\Date();
+        $config = Registry::get('config');
+        $nowDate = new Date();
         $commentsHtml = '';
 
         foreach ($fk_comments as $fk_comment) {
-            $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
+            $commentDate = new Date($fk_comment->getDateCreated());
             $user = $this->getUser($fk_comment->getUserId());
             $voted = explode(',', $fk_comment->getVoted());
             if ($req >= $config->get('comment_nesting')) {
@@ -83,9 +85,9 @@ class Comments
                                     <i class="fa fa-reply fa-flip-vertical"></i> '.$user_rep->getName().'
                                 </div>
                             </div>
-                            <p>'.nl2br($fk_comment->getText()).'</p>
+                            <p>'.nl2br($obj->escape($fk_comment->getText())).'</p>
                             <div>';
-            if ($obj->getUser() && in_array($obj->getUser()->getId(), $voted) == false) {
+            if ($obj->getUser() && !in_array($obj->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-default btn-hover-success" href="'.$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'up']).'" title="'.$obj->getTrans('iLike').'">
@@ -179,7 +181,7 @@ class Comments
             }
             $i = 1;
 
-            foreach ($fkk_comments as $fkk_comment) {
+            foreach ($fkk_comments as $ignored) {
                 if ($i == 1) {
                     $commentsHtml .= $this->rec($id, $fk_comment->getId(), $fk_comment->getUserId(), $req, $obj);
                     $i++;
@@ -199,20 +201,19 @@ class Comments
      * This function returns the complete html for the comments.
      *
      * @param string $key comment key e.g. "article/index/show/id/1"
-     * @param $object e.g. an article model
-     * @param $layout $this from within the view.
+     * @param mixed $object e.g. an article model
+     * @param mixed $layout $this from within the view.
      * @return string the complete html for the comments
      * @throws Database\Exception
      * @since 2.1.37
      */
-    public function getComments($key, $object, $layout): string
+    public function getComments(string $key, $object, $layout): string
     {
-        $userMapper = new UserMapper();
         $commentMapper = new CommentMapper();
         $comments = $commentMapper->getCommentsByKey($key);
         $commentsCount = $commentMapper->getCountComments($key);
-        $config = \Ilch\Registry::get('config');
-        $nowDate = new \Ilch\Date();
+        $config = Registry::get('config');
+        $nowDate = new Date();
 
         $commentsHtml = '
 <div class="row">
@@ -265,7 +266,7 @@ class Comments
 
         foreach ($comments as $comment) {
             $user = $this->getUser($comment->getUserId());
-            $commentDate = new \Ilch\Date($comment->getDateCreated());
+            $commentDate = new Date($comment->getDateCreated());
             $voted = explode(',', $comment->getVoted());
 
             $commentsHtml .= '
@@ -287,7 +288,7 @@ class Comments
                                 <p>'.nl2br($layout->escape($comment->getText())).'</p>
                                 <div>';
 
-            if ($layout->getUser() && in_array($layout->getUser()->getId(), $voted) == false) {
+            if ($layout->getUser() && !in_array($layout->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
                                     <div class="btn-group">
                                         <a class="btn btn-sm btn-default btn-hover-success" href="'.$layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'up']).'" title="'.$layout->getTrans('iLike').'">
@@ -402,7 +403,7 @@ function slideReply(thechosenone) {
      * @param int $userId id of the user.
      * @since 2.1.37
      */
-    public function saveComment($key, $text, $userId)
+    public function saveComment(string $key, string $text, int $userId)
     {
         $splittedKey = explode('/', $key);
         $fkId = null;
@@ -414,13 +415,11 @@ function slideReply(thechosenone) {
         }
 
         $commentMapper = new CommentMapper();
-        $date = new \Ilch\Date();
+        $date = new Date();
         $commentModel = new CommentModel();
+        $commentModel->setKey($key);
         if ($fkId) {
-            $commentModel->setKey($key);
             $commentModel->setFKId($fkId);
-        } else {
-            $commentModel->setKey($key);
         }
         $commentModel->setText($text);
         $commentModel->setDateCreated($date);
@@ -436,7 +435,7 @@ function slideReply(thechosenone) {
      * @param bool $upVote true if an upvote, false if downvote.
      * @since 2.1.37
      */
-    public function saveVote($id, $userId, $upVote)
+    public function saveVote(int $id, int $userId, bool $upVote)
     {
         $commentMapper = new CommentMapper();
         $oldComment = $commentMapper->getCommentById($id);
