@@ -122,7 +122,7 @@ if ($this->getUser()) {
                        value="<?=($this->get('post') != '') ? $this->get('post')['reason'] : '' ?>" />
             </div>
         </div>
-        <div class="form-group <?=(in_array('start', $this->get('errorFields')) or in_array('end', $this->get('errorFields'))) ? 'has-error' : '' ?>">
+        <div class="form-group <?=in_array('when', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="start" class="col-md-2 control-label">
                 <?=$this->getTrans('when') ?>:
             </label>

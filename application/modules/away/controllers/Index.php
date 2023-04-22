@@ -36,29 +36,29 @@ class Index extends \Ilch\Controller\Frontend
         ];
 
         if ($this->getRequest()->getPost('saveAway')) {
-            $post = [
-                'reason' => trim($this->getRequest()->getPost('reason')),
-                'start' => new \Ilch\Date(trim($this->getRequest()->getPost('start'))),
-                'end' => new \Ilch\Date(trim($this->getRequest()->getPost('end'))),
-                'text' => trim($this->getRequest()->getPost('text')),
-                'calendarShow' => trim($this->getRequest()->getPost('calendarShow'))
-            ];
-
             Validation::setCustomFieldAliases([
                 'start' => 'when',
                 'end' => 'when',
                 'text' => 'description'
             ]);
 
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'reason' => 'required',
-                'start' => 'required',
-                'end' => 'required',
+                'start' => 'required|date:d.m.Y',
+                'end' => 'required|date:d.m.Y',
                 'text' => 'required',
                 'calendarShow' => 'numeric|integer|min:1|max:1'
             ]);
 
             if ($validation->isValid()) {
+                $post = [
+                    'reason' => trim($this->getRequest()->getPost('reason')),
+                    'start' => new \Ilch\Date(trim($this->getRequest()->getPost('start'))),
+                    'end' => new \Ilch\Date(trim($this->getRequest()->getPost('end'))),
+                    'text' => trim($this->getRequest()->getPost('text')),
+                    'calendarShow' => trim($this->getRequest()->getPost('calendarShow'))
+                ];
+
                 $awayModel = new AwayModel();
                 $awayModel->setUserId($this->getUser()->getId());
                 $awayModel->setReason($post['reason']);
