@@ -10,9 +10,9 @@ use PHPUnit\Ilch\TestCase;
 use stdClass;
 
 /**
- * Tests for the numeric validator
+ * Tests for the required validator
  */
-class NumericTest extends TestCase
+class RequiredTest extends TestCase
 {
     /**
      * @dataProvider dpForTestValidator
@@ -24,7 +24,7 @@ class NumericTest extends TestCase
      */
     public function testValidator(stdClass $data, bool $expectedIsValid, string $expectedErrorKey = '', array $expectedErrorParameters = [])
     {
-        $validator = new Numeric($data);
+        $validator = new Required($data);
         $validator->run();
         self::assertSame($expectedIsValid, $validator->isValid());
         if (!empty($expectedErrorKey)) {
@@ -39,49 +39,27 @@ class NumericTest extends TestCase
     public function dpForTestValidator(): array
     {
         return [
-            'valid numeric' => [
-                'data'                    => $this->createData(1),
+            'valid' => [
+                'data'                    => $this->createData('test'),
                 'expectedIsValid'         => true
             ],
-            'valid numeric string' => [
-                'data'                    => $this->createData('1'),
-                'expectedIsValid'         => true
-            ],
-            'valid numeric empty' => [
+            'invalid' => [
                 'data'                    => $this->createData(''),
-                'expectedIsValid'         => true
-            ],
-            'valid numeric float' => [
-                'data'                    => $this->createData(1.5),
-                'expectedIsValid'         => true
-            ],
-            'valid numeric float string' => [
-                'data'                    => $this->createData('1.5'),
-                'expectedIsValid'         => true
-            ],
-            'invalid numeric string' => [
-                'data'                    => $this->createData('a'),
                 'expectedIsValid'         => false,
-                'expectedErrorKey'        => 'validation.errors.numeric.mustBeNumeric',
+                'expectedErrorKey'        => 'validation.errors.required.fieldIsRequired',
                 'expectedErrorParameters' => []
             ],
-            'valid numeric invert' => [
-                'data'                    => $this->createData(1.5, true),
-                'expectedIsValid'         => false,
-                'expectedErrorKey'        => 'validation.errors.numeric.mustBeNumeric',
-                'expectedErrorParameters' => []
-            ],
-            'invalid numeric invert' => [
-                'data'                    => $this->createData('a', true),
+            'invalid inverted' => [
+                'data'                    => $this->createData('', true),
                 'expectedIsValid'         => true
-            ],
+            ]
         ];
     }
 
     /**
      * Helper function for creating data object
      *
-     * @param string|int $value
+     * @param mixed $value
      * @param bool $invertResult
      * @return stdClass
      */

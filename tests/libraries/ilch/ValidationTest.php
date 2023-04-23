@@ -27,9 +27,9 @@ class ValidationTest extends TestCase
      *
      * @param array $params
      * @param bool $expected
-     * @param bool $expected
+     * @param bool $inverted
      */
-    public function testValidationWithSingleValidator(array $params, $expected, $inverted)
+    public function testValidationWithSingleValidator(array $params, bool $expected, bool $inverted)
     {
         $validation = Validation::create($params, ['testField' => ($inverted ? 'NOT' : '').'integer']);
 
@@ -42,7 +42,7 @@ class ValidationTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidationWithSingleValidator()
+    public function dpForTestValidationWithSingleValidator(): array
     {
         return [
             'int'                            => ['params' => ['testField' => 5], 'expected' => true, 'inverted' => false],
@@ -66,7 +66,7 @@ class ValidationTest extends TestCase
     public function testValidationWithValidatorChainWithBreakingChain(
         $validatorRules,
         array $params,
-        $expected,
+        bool $expected,
         array $expectedErrors = []
     ) {
         $validation = Validation::create($params, ['testField' => $validatorRules]);
@@ -131,7 +131,7 @@ class ValidationTest extends TestCase
     public function testValidationWithValidatorChainWithoutBreakingChain(
         $validatorRules,
         array $params,
-        $expected,
+        bool $expected,
         array $expectedErrors = []
     ) {
         $this->addTearDownCallback(
@@ -152,7 +152,7 @@ class ValidationTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidationWithValidatorChainWithoutBreakingChain()
+    public function dpForTestValidationWithValidatorChainWithoutBreakingChain(): array
     {
         return [
             '2 validators chained - correct'       => [
