@@ -7,18 +7,22 @@
 namespace Ilch\Validation\Validators;
 
 use PHPUnit\Ilch\TestCase;
+use stdClass;
 
+/**
+ * Tests for the max validator
+ */
 class MaxTest extends TestCase
 {
     /**
      * @dataProvider dpForTestValidator
      *
-     * @param \stdClass $data
+     * @param stdClass $data
      * @param bool $expectedIsValid
      * @param string $expectedErrorKey
      * @param array $expectedErrorParameters
      */
-    public function testValidator($data, $expectedIsValid, $expectedErrorKey = '', $expectedErrorParameters = [])
+    public function testValidator(stdClass $data, bool $expectedIsValid, string $expectedErrorKey = '', array $expectedErrorParameters = [])
     {
         $validator = new Max($data);
         $validator->run();
@@ -32,7 +36,7 @@ class MaxTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator()
+    public function dpForTestValidator(): array
     {
         return [
             // string validations
@@ -87,14 +91,15 @@ class MaxTest extends TestCase
 
     /**
      * Helper function for creating data object
-     * @param string $value
+     *
+     * @param mixed $value
      * @param int $max
      * @param bool $forceString
-     * @return \stdClass
+     * @return stdClass
      */
-    private function createData($value, $max, $forceString = false)
+    private function createData($value, int $max, bool $forceString = false): stdClass
     {
-        $data = new \stdClass();
+        $data = new stdClass();
         $data->field = 'fieldName';
         $data->parameters = [$max];
         if ($forceString) {

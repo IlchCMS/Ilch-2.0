@@ -7,18 +7,22 @@
 namespace Ilch\Validation\Validators;
 
 use PHPUnit\Ilch\TestCase;
+use stdClass;
 
+/**
+ * Tests for the date validator
+ */
 class DateTest extends TestCase
 {
     /**
      * @dataProvider dpForTestValidator
      *
-     * @param \stdClass $data
+     * @param stdClass $data
      * @param bool $expectedIsValid
      * @param string $expectedErrorKey
      * @param array $expectedErrorParameters
      */
-    public function testValidator($data, $expectedIsValid, $expectedErrorKey = '', $expectedErrorParameters = [])
+    public function testValidator(stdClass $data, bool $expectedIsValid, string $expectedErrorKey = '', array $expectedErrorParameters = [])
     {
         $validator = new Date($data);
         $validator->run();
@@ -32,7 +36,7 @@ class DateTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator()
+    public function dpForTestValidator(): array
     {
         return [
             // date validations
@@ -80,13 +84,14 @@ class DateTest extends TestCase
 
     /**
      * Helper function for creating data object
+     *
      * @param string $value
      * @param string $parameter
-     * @return \stdClass
+     * @return stdClass
      */
-    private function createData($value, $parameter = 'Y-m-d')
+    private function createData(string $value, string $parameter = 'Y-m-d'): stdClass
     {
-        $data = new \stdClass();
+        $data = new stdClass();
         $data->field = 'fieldName';
         $data->parameters = [$parameter];
         $data->input = ['fieldName' => $value];
