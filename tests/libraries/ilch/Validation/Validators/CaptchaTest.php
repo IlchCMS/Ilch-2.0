@@ -14,6 +14,8 @@ use stdClass;
  */
 class CaptchaTest extends TestCase
 {
+    protected $backupGlobals = false;
+
     /**
      * @dataProvider dpForTestValidator
      *
@@ -70,9 +72,6 @@ class CaptchaTest extends TestCase
         $data->field = 'fieldName';
         $data->parameters = [''];
         $data->input = ['fieldName' => $value];
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
-        }
         $_SESSION['captcha'] = 'test';
         return $data;
     }
