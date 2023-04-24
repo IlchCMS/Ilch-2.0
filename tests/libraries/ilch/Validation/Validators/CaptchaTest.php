@@ -14,8 +14,6 @@ use stdClass;
  */
 class CaptchaTest extends TestCase
 {
-    protected $backupGlobals = false;
-
     /**
      * @dataProvider dpForTestValidator
      *
@@ -26,6 +24,7 @@ class CaptchaTest extends TestCase
      */
     public function testValidator(stdClass $data, bool $expectedIsValid, string $expectedErrorKey = '', array $expectedErrorParameters = [])
     {
+        $_SESSION['captcha'] = 'test';
         $validator = new Captcha($data);
         $validator->run();
         self::assertSame($expectedIsValid, $validator->isValid());
@@ -72,7 +71,6 @@ class CaptchaTest extends TestCase
         $data->field = 'fieldName';
         $data->parameters = [''];
         $data->input = ['fieldName' => $value];
-        $_SESSION['captcha'] = 'test';
         return $data;
     }
 }
