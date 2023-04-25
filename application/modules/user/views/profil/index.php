@@ -136,30 +136,34 @@ foreach ($profil->getGroups() as $group) {
         </div>
 
         <?php foreach ($profileFields as $profileField) {
-                    if (!$profileField->getShow()) {
-                        continue;
+            if (!$profileField->getShow()) {
+                continue;
+            }
+            $profileFieldName = $profileField->getKey();
+            $value = '';
+            foreach ($profileFieldsContent as $profileFieldContent) {
+                if ($profileFieldContent->getValue() && $profileField->getId() == $profileFieldContent->getFieldId()) {
+                    if ($profileField->getType() == 4) {
+                        $value = implode(', ', unserialize($profileFieldContent->getValue()));
+                    } else {
+                        $value = $profileFieldContent->getValue();
                     }
-
-                    $profileFieldName = $profileField->getKey();
-                    if (!$profileField->getType()) {
-                        $value = '';
-                        foreach ($profileFieldsContent as $profileFieldContent) {
-                            if ($profileFieldContent->getValue() && $profileField->getId() == $profileFieldContent->getFieldId()) {
-                                $value = $profileFieldContent->getValue();
-                            }
-                        }
+                }
+            }
+            if ($profileField->getType() == 1 || ($profileField->getType() != 1 && !empty($value))) {
+                foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                    if ($profileField->getId() == $profileFieldTrans->getFieldId()) {
+                        $profileFieldName = $profileFieldTrans->getName();
+                        break;
                     }
+                }
+            }
 
-                    if ($profileField->getType() || (!$profileField->getType() && !empty($value))) {
-                        foreach ($profileFieldsTranslation as $profileFieldTrans) {
-                            if ($profileField->getId() == $profileFieldTrans->getFieldId()) {
-                                $profileFieldName = $profileFieldTrans->getName();
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!$profileField->getType() && !empty($value)): ?>
+            if ($profileField->getType() == 1) : ?>
+                <div class="clearfix"></div>
+                <br />
+                <h1><?=$this->escape($profileFieldName) ?></h1>
+            <?php elseif ($profileField->getType() != 1 && !empty($value)) : ?>
                 <div class="row">
                     <div class="col-lg-2 detail bold">
                         <?=$this->escape($profileFieldName) ?>
@@ -168,15 +172,10 @@ foreach ($profil->getGroups() as $group) {
                         <?=$this->escape($value) ?>
                     </div>
                 </div>
-            <?php elseif ($profileField->getType()): ?>
-                <div class="clearfix"></div>
-                <br />
-                <h1><?=$this->escape($profileFieldName) ?></h1>
             <?php endif;
-                }
-        ?>
+        } ?>
 
-        <?php if ($profil->getSignature() != ''): ?>
+        <?php if ($profil->getSignature() != '') : ?>
             <div class="clearfix"></div>
             <br />
             <h1><?=$this->getTrans('profileSignature') ?></h1>

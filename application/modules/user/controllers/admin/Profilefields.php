@@ -130,6 +130,13 @@ class ProfileFields extends \Ilch\Controller\Admin
                 $profileFieldData['addition'] = '';
             }
 
+			$muliTypes = [3, 4, 5];
+			if (in_array($profileFieldData['type'], $muliTypes)) {
+                $profileFieldData['options'] = serialize(array_filter($postData['profileFieldOptions']));
+			} else {
+                $profileFieldData['options'] = '';
+			}
+
             $profileField = $profileFieldsMapper->loadFromArray($profileFieldData);
             $profileFieldId = $profileFieldsMapper->save($profileField);
 

@@ -42,6 +42,13 @@ class ProfileField extends \Ilch\Model
      * @var string
      */
     protected $addition;
+	
+    /**
+     * The options of the profile-field.
+     *
+     * @var text
+     */
+    protected $options;
 
     /**
      * The show status of the profile-field.
@@ -175,6 +182,29 @@ class ProfileField extends \Ilch\Model
     public function setAddition($addition)
     {
         $this->addition = $addition;
+
+        return $this;
+    }
+
+    /**
+     * Returns the options of the profile-field.
+     *
+     * @return text
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * Sets the options.
+     *
+     * @param text $options
+     * @return ProfileField
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
 
         return $this;
     }

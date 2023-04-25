@@ -135,6 +135,7 @@ class Config extends \Ilch\Config\Install
                 `type` TINYINT(1) NOT NULL,
                 `icon` VARCHAR(255) NOT NULL DEFAULT \'\',
                 `addition` VARCHAR(255) NOT NULL DEFAULT \'\',
+                `options` TEXT NOT NULL DEFAULT \'\',
                 `show` TINYINT(1) NOT NULL DEFAULT 1,
                 `hidden` TINYINT(1) NOT NULL DEFAULT 0,
                 `position` INT(11) UNSIGNED NOT NULL,
@@ -311,15 +312,15 @@ class Config extends \Ilch\Config\Install
                 (2, "User"),
                 (3, "Guest");
 
-            INSERT INTO `[prefix]_profile_fields` (`id`, `key`, `type`, `icon`, `addition`, `show`, `position`) VALUES
-                (1, "website", 2, "fa-solid fa-globe", "", 1, 0),
-                (2, "facebook", 2, "fa-brands fa-facebook", "https://www.facebook.com/", 1, 1),
-                (3, "twitter", 2, "fa-brands fa-twitter", "https://twitter.com/", 1, 2),
-                (4, "google+", 2, "fa-brands fa-google-plus", "https://plus.google.com/", 1, 3),
-                (5, "steam", 2, "fa-brands fa-steam-square", "https://steamcommunity.com/id/", 1, 4),
-                (6, "twitch", 2, "fa-brands fa-twitch", "https://www.twitch.tv/", 1, 5),
-                (7, "teamspeak", 2, "fa-solid fa-headphones", "ts3server://", 1, 6),
-                (8, "discord", 2, "fa-brands fa-discord", "https://discord.gg/", 1, 7);
+            INSERT INTO `[prefix]_profile_fields` (`id`, `key`, `type`, `icon`, `addition`, `options`, `show`, `position`) VALUES
+                (1, "website", 2, "fa-solid fa-globe", "", "", 1, 0),
+                (2, "facebook", 2, "fa-brands fa-facebook", "https://www.facebook.com/", "", 1, 1),
+                (3, "twitter", 2, "fa-brands fa-twitter", "https://twitter.com/", "", 1, 2),
+                (4, "google+", 2, "fa-brands fa-google-plus", "https://plus.google.com/", "", 1, 3),
+                (5, "steam", 2, "fa-brands fa-steam-square", "https://steamcommunity.com/id/", "", 1, 4),
+                (6, "twitch", 2, "fa-brands fa-twitch", "https://www.twitch.tv/", "", 1, 5),
+                (7, "teamspeak", 2, "fa-solid fa-headphones", "ts3server://", "", 1, 6),
+                (8, "discord", 2, "fa-brands fa-discord", "https://discord.gg/", "", 1, 7);
 
             INSERT INTO `[prefix]_profile_trans` (`field_id`, `locale`, `name`) VALUES
                 (1, "de_DE", "Webseite"),
@@ -623,6 +624,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-user' WHERE `key` = 'user';");
             case "2.1.48":
                 $databaseConfig->set('userAvatarList_allowed', '0');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `options` TEXT NOT NULL DEFAULT \'\' AFTER `addition`;');
         }
     }
 }

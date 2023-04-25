@@ -1,10 +1,15 @@
+<?php
+$typeArray = ['Textfeld', 'Kategorie', 'Icon', 'Radioboxen', 'Checkboxen', 'Dropdown', 'Datum'];
+$iconArray = ['fa-regular fa-square', 'fa fa-list', 'fa-regular fa-face-smile', 'fa-regular fa-circle-check', 'fa-regular fa-square-check', 'far fa-caret-square-down', 'fa-regular fa-calendar-days'];
+?>
+<link href="<?=$this->getModuleUrl('static/css/profile-fields.css') ?>" rel="stylesheet">
 <h1>
     <?=$this->getTrans('menuProfileFields') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
-<form class="form-horizontal" id="downloadsForm" method="POST">
+<form class="form-horizontal" id="catsIndexForm" method="POST">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
@@ -14,6 +19,8 @@
                 <col class="icon_width" />
                 <col class="icon_width" />
                 <col />
+                <col />
+                <col class="icon_width" />
             </colgroup>
             <thead>
                 <tr>
@@ -22,6 +29,8 @@
                     <th></th>
                     <th></th>
                     <th><?=$this->getTrans('profileFieldName') ?></th>
+                    <th><?=$this->getTrans('profileFieldType') ?></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="sortable">
@@ -67,11 +76,14 @@
                     }
                     ?>
 
-                    <?php if ($profileField->getType() != 1): ?>
+                    <?php if ($profileField->getType() != 1) : ?>
                         <td><?=$this->escape($profileFieldName) ?></td>
+                        <td><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$typeArray[$profileField->getType()] ?></td>
                     <?php else: ?>
                         <td><b><?=$this->escape($profileFieldName) ?></b></td>
+                        <td><b><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$typeArray[$profileField->getType()] ?></b></td>
                     <?php endif; ?>
+                        <td><i class="fa-solid fa-up-down fa-xs"></i></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -80,7 +92,7 @@
     </div>
 
     <div class="content_savebox">
-        <button type="submit" class="btn btn-default" name="save" value="save">
+        <button type="submit" class="btn btn-default sortbtn" name="save" value="save">
             <?=$this->getTrans('saveButton') ?>
         </button>
         <input type="hidden" class="content_savebox_hidden" name="action" value="" />
@@ -99,24 +111,36 @@
 
 <script>
 $(function() {
-$( "#sortable" ).sortable();
-$( "#sortable" ).disableSelection();
-});
+	let sortableSelector = $('#sortable');
 
-$('#downloadsForm').submit (
+	sortableSelector.sortable({
+		opacity: .75,
+		placeholder: 'placeholder',
+		helper: function(e, tr) {
+			const $originals = tr.children();
+			const $helper = tr.clone();
+			$helper.children().each(function(index) {
+				$(this).width($originals.eq(index).width()+16);
+			});
+			return $helper;
+		},
+		update: function () {
+			$('.sortbtn').addClass('save_button');
+		}
+	});
+	sortableSelector.disableSelection();
+});
+$('#catsIndexForm').submit (
     function () {
         var items = $("#sortable tr");
-
-        var linkIDs = [items.length];
+        var catIDs = [items.length];
         var index = 0;
-
         items.each(
             function(intIndex) {
-                linkIDs[index] = $(this).attr("id");
+                catIDs[index] = $(this).attr("id");
                 index++;
             });
-
-        $('#hiddenMenu').val(linkIDs.join(","));
+        $('#hiddenMenu').val(catIDs.join(","));
     }
 );
 </script>
