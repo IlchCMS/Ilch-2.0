@@ -1,6 +1,6 @@
 <?php
 $typeArray = ['profileFieldField', 'profileFieldCat', 'profileFieldIcon', 'profileFieldRadio', 'profileFieldCheck', 'profileFieldDrop', 'profileFieldDate'];
-$iconArray = ['fa-regular fa-square', 'fa fa-list', 'fa-regular fa-face-smile', 'fa-regular fa-circle-check', 'fa-regular fa-square-check', 'far fa-caret-square-down', 'fa-regular fa-calendar-days'];
+$iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa-icons', 'fa-regular fa-circle-check', 'fa-regular fa-square-check', 'fa-regular fa-square-caret-down', 'fa-regular fa-calendar-days'];
 ?>
 <link href="<?=$this->getModuleUrl('static/css/profile-fields.css') ?>" rel="stylesheet">
 <h1>
@@ -83,7 +83,7 @@ $iconArray = ['fa-regular fa-square', 'fa fa-list', 'fa-regular fa-face-smile', 
                         <td><b><?=$this->escape($profileFieldName) ?></b></td>
                         <td><b><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$this->getTrans($typeArray[$profileField->getType()]) ?></b></td>
                     <?php endif; ?>
-                        <td><i class="fa-solid fa-up-down fa-xs"></i></td>
+                        <td><i class="fa-solid fa-up-down"></i></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

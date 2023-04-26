@@ -60,7 +60,7 @@ foreach ($profileFields as $profileField) {
     foreach ($profileFieldsContent as $profileFieldContent) {
         if ($profileFieldContent->getValue() && $profileField->getId() == $profileFieldContent->getFieldId()) {
             if ($profileField->getType() == 4) {
-                $value = implode(', ', unserialize($profileFieldContent->getValue()));
+                $value = implode(', ', json_decode($profileFieldContent->getValue(), true));
             } else {
                 $value = $profileFieldContent->getValue();
             }

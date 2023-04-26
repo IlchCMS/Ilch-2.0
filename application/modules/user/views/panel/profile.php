@@ -106,7 +106,7 @@ if (!empty($profil->getBirthday())) {
                         }
                     }
                     if ($profileField->getType() != 1) :
-                        $value = '';
+                        $value = ($profileField->getType() == 4) ? [] : '';
                         $index = 'profileField'.$profileField->getId();
                         if ($this->originalInput($index) != '') {
                             $value = $this->escape($this->originalInput($index));
@@ -114,7 +114,7 @@ if (!empty($profil->getBirthday())) {
                             foreach ($profileFieldsContent as $profileFieldContent) { 
                                 if ($profileField->getId() == $profileFieldContent->getFieldId()) {
                                     if ($profileField->getType() == 4) {
-                                        $value = unserialize($profileFieldContent->getValue());
+                                        $value = json_decode($profileFieldContent->getValue(), true);
                                     } else { 
                                         $value = $this->escape($profileFieldContent->getValue());
                                         break;
@@ -129,7 +129,7 @@ if (!empty($profil->getBirthday())) {
                             <div class="col-lg-8">
                             <!-- radio -->
                             <?php if ($profileField->getType() == 3) :
-                                $options = unserialize($profileField->getOptions());
+                                $options = json_decode($profileField->getOptions(), true);
                                 foreach ($options as $optValue): ?>
                                     <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '<div class="form-check">' ?>
                                         <input type="radio" name="<?=$index ?>" id="<?=$optValue ?>" value="<?=$optValue ?>" class="form-check-input" <?=($optValue == $value) ? 'checked' : '' ?>/>
@@ -143,10 +143,10 @@ if (!empty($profil->getBirthday())) {
                                 <?php endforeach; ?>
                             <!-- check -->
                             <?php elseif ($profileField->getType() == 4) :
-                                $options = unserialize($profileField->getOptions());
+                                $options = json_decode($profileField->getOptions(), true);
                                 foreach ($options as $optKey => $optValue) : ?>
                                     <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '<div class="form-check">' ?>
-                                        <input type="checkbox" name="<?=$index ?>[<?=$optKey?>]" id="<?=$optValue ?>" value="<?=$optValue ?>" class="form-check-input" <?=(in_array($optValue, $value)) ? 'checked' : '' ?>/>
+                                        <input type="checkbox" name="<?=$index ?>[<?=$optKey ?>]" id="<?=$optValue ?>" value="<?=$optValue ?>" class="form-check-input" <?=in_array($optValue, $value) ? 'checked' : '' ?>/>
                                         <label class="form-check-label" for="<?=$optValue ?>"><?=$this->escape($optValue) ?></label>
                                         <?php if ($profileField->getShow() == 0) : ?>
                                             <span class="input-group-addon check" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
@@ -157,7 +157,7 @@ if (!empty($profil->getBirthday())) {
                                 <?php endforeach; ?>
                             <!-- drop -->
                             <?php elseif ($profileField->getType() == 5) : 
-                                $options = unserialize($profileField->getOptions());?>
+                                $options = json_decode($profileField->getOptions(), true);?>
                                 <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '<div class="form-check">' ?>
                                     <select class="form-control" id="<?=$index ?>" name="<?=$index ?>">
                                         <?php foreach ($options as $optValue) : ?>

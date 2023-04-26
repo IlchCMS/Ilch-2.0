@@ -109,7 +109,7 @@ class Panel extends BaseController
                         continue;
                     }
                     if ($profileField->getType() == 4) {
-                        $post[$index] = serialize($this->getRequest()->getPost($index));
+                        $post[$index] = json_encode($this->getRequest()->getPost($index));
                     } else {
                         $post[$index] = trim($this->getRequest()->getPost($index));
                     }

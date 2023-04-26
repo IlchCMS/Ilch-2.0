@@ -13,12 +13,12 @@ $type = [
     6 => 'profileFieldDate'
 ];
 $iconArray = [
-    0 => 'fa-regular fa-square',
-    1 => 'fa fa-list',
-    2 => 'fa-regular fa-face-smile',
+    0 => 'fa-regular fa-pen-to-square',
+    1 => 'fa-solid fa-heading',
+    2 => 'fa-solid fa-icons',
     3 => 'fa-regular fa-circle-check',
     4 => 'fa-regular fa-square-check',
-    5 => 'far fa-caret-square-down',
+    5 => 'fa-regular fa-square-caret-down',
     6 => 'fa-regular fa-calendar-days'
 ];
 ?>
@@ -183,7 +183,7 @@ var indexList = [];
     <?php $multiArr = [3, 4, 5]; ?>
     <div class="profileFieldsMulti <?=(in_array($profileField->getType(), $multiArr)) ? '' : 'hidden' ?>">
         <?php if ($profileField->getOptions()) { 
-            $options = unserialize($profileField->getOptions());
+            $options = json_decode($profileField->getOptions(), true);
             $optionsAnz = 1; ?>
             <div class="form-group">
                 <label for="profileFieldOptions" class="col-lg-2 control-label">
@@ -279,7 +279,7 @@ $('select#profileFieldType').change(function() {
     var typeDesc5 = '<?=$this->getTrans('profileFieldTypeDesc5') ?>';
     var typeDesc6 = '<?=$this->getTrans('profileFieldTypeDesc6') ?>';
     var typeDesc7 = '<?=$this->getTrans('profileFieldTypeDesc7') ?>';
-    var iconArray = ['fa-regular fa-square','fa fa-list','fa-regular fa-face-smile','fa-regular fa-circle-check','fa-regular fa-square-check','far fa-caret-square-down','fa-regular fa-calendar-days'];
+    var iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa-icons', 'fa-regular fa-circle-check', 'fa-regular fa-square-check', 'fa-regular fa-square-caret-down', 'fa-regular fa-calendar-days'];
     $('.typeinfo').html('<span class="'+iconArray[typeKey]+'"></span>');
     $('.typedesc').val(eval("typeDesc"+typeKey));
 });

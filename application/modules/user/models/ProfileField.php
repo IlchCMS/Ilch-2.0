@@ -46,7 +46,7 @@ class ProfileField extends \Ilch\Model
     /**
      * The options of the profile-field.
      *
-     * @var text
+     * @var string
      */
     protected $options;
 
@@ -189,7 +189,7 @@ class ProfileField extends \Ilch\Model
     /**
      * Returns the options of the profile-field.
      *
-     * @return text
+     * @return string
      */
     public function getOptions()
     {
@@ -199,7 +199,7 @@ class ProfileField extends \Ilch\Model
     /**
      * Sets the options.
      *
-     * @param text $options
+     * @param string $options
      * @return ProfileField
      */
     public function setOptions($options)
