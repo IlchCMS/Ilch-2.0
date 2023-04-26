@@ -185,7 +185,7 @@
         </div>
     </div>
 
-	<div class="form-group">
+    <div class="form-group">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('userAvatarsAllowed') ?>:
         </div>
