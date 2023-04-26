@@ -42,7 +42,7 @@ class ProfileField extends \Ilch\Model
      * @var string
      */
     protected $addition;
-	
+
     /**
      * The options of the profile-field.
      *

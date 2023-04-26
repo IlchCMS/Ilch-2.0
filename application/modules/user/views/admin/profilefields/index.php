@@ -111,24 +111,24 @@ $iconArray = ['fa-regular fa-square', 'fa fa-list', 'fa-regular fa-face-smile', 
 
 <script>
 $(function() {
-	let sortableSelector = $('#sortable');
+    let sortableSelector = $('#sortable');
 
-	sortableSelector.sortable({
-		opacity: .75,
-		placeholder: 'placeholder',
-		helper: function(e, tr) {
-			const $originals = tr.children();
-			const $helper = tr.clone();
-			$helper.children().each(function(index) {
-				$(this).width($originals.eq(index).width()+16);
-			});
-			return $helper;
-		},
-		update: function () {
-			$('.sortbtn').addClass('save_button');
-		}
-	});
-	sortableSelector.disableSelection();
+    sortableSelector.sortable({
+        opacity: .75,
+        placeholder: 'placeholder',
+        helper: function(e, tr) {
+            const $originals = tr.children();
+            const $helper = tr.clone();
+            $helper.children().each(function(index) {
+                $(this).width($originals.eq(index).width()+16);
+            });
+            return $helper;
+        },
+        update: function () {
+            $('.sortbtn').addClass('save_button');
+        }
+    });
+    sortableSelector.disableSelection();
 });
 $('#catsIndexForm').submit (
     function () {

@@ -51,21 +51,21 @@ var indexList = [];
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-				<select class="form-control" id="profileFieldType" name="profileField[type]">
-					<?php foreach ($type as $key => $value): ?>
-						<option value="<?=$key ?>"
+                <select class="form-control" id="profileFieldType" name="profileField[type]">
+                    <?php foreach ($type as $key => $value): ?>
+                        <option value="<?=$key ?>"
                             <?=($profileField->getId() && $profileField->getType() == $key) ? ' selected' : '' ?>
                             <?=($profileField->getId() && $profileField->getType() != $key) ? ' disabled' : '' ?>
                             >
                             <?=$this->getTrans($value) ?>
                         </option>
-					<?php endforeach; ?>
-				</select>
-				<span class="input-group-addon typeinfo">
+                    <?php endforeach; ?>
+                </select>
+                <span class="input-group-addon typeinfo">
                     <span class="<?=($profileField->getType()!==null) ? $iconArray[$profileField->getType()] : $iconArray[0] ?>"></span>
                 </span>
-			</div>
-		</div>
+            </div>
+        </div>
     </div>
 
     <!-- field description -->
@@ -77,7 +77,7 @@ var indexList = [];
             <textarea class="form-control typedesc" rows="2" readonly /><?=($profileField->getType()!==null) ? $this->getTrans('profileFieldTypeDesc'.$profileField->getType()) : $this->getTrans('profileFieldTypeDesc0') ?></textarea>
         </div>
     </div>
-	
+    
     <!-- icon selection -->
     <div class="form-group <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldIcons">
         <label for="profileFieldIcon" class="col-lg-2 control-label">
@@ -117,7 +117,7 @@ var indexList = [];
             </div>
         </div>
     </div>
-	
+    
     <!-- icon addition -->
     <div class="form-group <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldAddition">
         <label for="profileFieldLinkAddition" class="col-lg-2 control-label">
@@ -204,7 +204,7 @@ var indexList = [];
                             <button type="button" class="btn btn-success btn-add">+</button>
                         </span>
                     </div>
-                </div>	
+                </div>    
             </div>
         <?php } else { ?>
         <div class="form-group">
@@ -253,35 +253,35 @@ var index = <?=$i ?>;
 $('#profileFieldForm').validate();
 
 $('[name="profileField[type]"]').click(function () {
-	var keysArr = ['3','4','5'];
-	var thisKey = $(this).val();
+    var keysArr = ['3','4','5'];
+    var thisKey = $(this).val();
     if (thisKey == "2") {
         $('#profileFieldIcons, #profileFieldAddition').removeClass('hidden');
     } else {
         $('#profileFieldIcons, #profileFieldAddition').addClass('hidden');
     };
-	if (jQuery.inArray(thisKey, keysArr) !== -1) {
+    if (jQuery.inArray(thisKey, keysArr) !== -1) {
         $('.profileFieldsSingle').addClass('hidden');
-		$('.profileFieldsMulti').removeClass('hidden');
+        $('.profileFieldsMulti').removeClass('hidden');
     } else {
-		$('.profileFieldsSingle').removeClass('hidden');
-		$('.profileFieldsMulti').addClass('hidden');
+        $('.profileFieldsSingle').removeClass('hidden');
+        $('.profileFieldsMulti').addClass('hidden');
     };
 });
 
 $('select#profileFieldType').change(function() {
     var typeKey = $('#profileFieldType').find(':selected').val();
-	var typeDesc0 = '<?=$this->getTrans('profileFieldTypeDesc0') ?>';
-	var typeDesc1 = '<?=$this->getTrans('profileFieldTypeDesc1') ?>';
-	var typeDesc2 = '<?=$this->getTrans('profileFieldTypeDesc2') ?>';
-	var typeDesc3 = '<?=$this->getTrans('profileFieldTypeDesc3') ?>';
-	var typeDesc4 = '<?=$this->getTrans('profileFieldTypeDesc4') ?>';
-	var typeDesc5 = '<?=$this->getTrans('profileFieldTypeDesc5') ?>';
-	var typeDesc6 = '<?=$this->getTrans('profileFieldTypeDesc6') ?>';
-	var typeDesc7 = '<?=$this->getTrans('profileFieldTypeDesc7') ?>';
+    var typeDesc0 = '<?=$this->getTrans('profileFieldTypeDesc0') ?>';
+    var typeDesc1 = '<?=$this->getTrans('profileFieldTypeDesc1') ?>';
+    var typeDesc2 = '<?=$this->getTrans('profileFieldTypeDesc2') ?>';
+    var typeDesc3 = '<?=$this->getTrans('profileFieldTypeDesc3') ?>';
+    var typeDesc4 = '<?=$this->getTrans('profileFieldTypeDesc4') ?>';
+    var typeDesc5 = '<?=$this->getTrans('profileFieldTypeDesc5') ?>';
+    var typeDesc6 = '<?=$this->getTrans('profileFieldTypeDesc6') ?>';
+    var typeDesc7 = '<?=$this->getTrans('profileFieldTypeDesc7') ?>';
     var iconArray = ['fa-regular fa-square','fa fa-list','fa-regular fa-face-smile','fa-regular fa-circle-check','fa-regular fa-square-check','far fa-caret-square-down','fa-regular fa-calendar-days'];
     $('.typeinfo').html('<span class="'+iconArray[typeKey]+'"></span>');
-	$('.typedesc').val(eval("typeDesc"+typeKey));
+    $('.typedesc').val(eval("typeDesc"+typeKey));
 });
 
 function isDuplicate(test) {
@@ -318,9 +318,9 @@ function addTranslations() {
                     '<input type="hidden"'+
                         'name="profileFieldTrans'+index+'[field_id]"'+
                         'value="<?=$profileField->getId() ?>" />'+
-						'<label for="" class="col-lg-2 control-label"><?=$this->getTrans('profileFieldName') ?></label>'+
+                        '<label for="" class="col-lg-2 control-label"><?=$this->getTrans('profileFieldName') ?></label>'+
                     '<div class="col-lg-4">'+
-					'<div class="input-group">'+
+                    '<div class="input-group">'+
                         '<select class="form-control input-group-addon" name="profileFieldTrans'+index+'[locale]" onchange="isDuplicate()" required>'+
                             '<option selected="true" disabled><?=$this->getTrans('pleaseSelect') ?></option>'+
                         <?php
@@ -329,9 +329,9 @@ function addTranslations() {
                         <?php next($localeList);
                         endforeach; ?>
                         '</select>'+
-						'<span class="input-group-btn">'+
-						    '<button type="button" class="btn" onclick="deleteTranslation('+index+')">-</button>'+
-					    '</span>'+
+                        '<span class="input-group-btn">'+
+                            '<button type="button" class="btn" onclick="deleteTranslation('+index+')">-</button>'+
+                        '</span>'+
                         '<input type="text"'+
                                'class="form-control"'+
                                'id="profileFieldName'+index+'"'+
@@ -339,7 +339,7 @@ function addTranslations() {
                                'placeholder="<?=$this->getTrans('profileFieldName') ?>"'+
                                'value="" />'+
                         '</div>'+
-					'</div>'+
+                    '</div>'+
                 '</div>';
     var d1 = document.getElementById('addTranslations');
     d1.insertAdjacentHTML('beforeend', html);
@@ -440,14 +440,14 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
         $(document).on('click', '.btn-add', addFormGroup);
         $(document).on('click', '.btn-remove', removeFormGroup);
     });
-	
-	$(function () {
-		$('[data-toggle="event-popover"]').popover({
-			container: 'body',
-			trigger: 'hover',
-			placement: 'top',
-		});
-	});
+    
+    $(function () {
+        $('[data-toggle="event-popover"]').popover({
+            container: 'body',
+            trigger: 'hover',
+            placement: 'top',
+        });
+    });
 
 })(jQuery);
 
