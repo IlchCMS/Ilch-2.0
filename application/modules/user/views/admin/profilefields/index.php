@@ -1,5 +1,5 @@
 <?php
-$typeArray = ['Textfeld', 'Kategorie', 'Icon', 'Radioboxen', 'Checkboxen', 'Dropdown', 'Datum'];
+$typeArray = ['profileFieldField', 'profileFieldCat', 'profileFieldIcon', 'profileFieldRadio', 'profileFieldCheck', 'profileFieldDrop', 'profileFieldDate'];
 $iconArray = ['fa-regular fa-square', 'fa fa-list', 'fa-regular fa-face-smile', 'fa-regular fa-circle-check', 'fa-regular fa-square-check', 'far fa-caret-square-down', 'fa-regular fa-calendar-days'];
 ?>
 <link href="<?=$this->getModuleUrl('static/css/profile-fields.css') ?>" rel="stylesheet">
@@ -78,10 +78,10 @@ $iconArray = ['fa-regular fa-square', 'fa fa-list', 'fa-regular fa-face-smile', 
 
                     <?php if ($profileField->getType() != 1) : ?>
                         <td><?=$this->escape($profileFieldName) ?></td>
-                        <td><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$typeArray[$profileField->getType()] ?></td>
+                        <td><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$this->getTrans($typeArray[$profileField->getType()]) ?></td>
                     <?php else: ?>
                         <td><b><?=$this->escape($profileFieldName) ?></b></td>
-                        <td><b><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$typeArray[$profileField->getType()] ?></b></td>
+                        <td><b><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$this->getTrans($typeArray[$profileField->getType()]) ?></b></td>
                     <?php endif; ?>
                         <td><i class="fa-solid fa-up-down fa-xs"></i></td>
                 </tr>
