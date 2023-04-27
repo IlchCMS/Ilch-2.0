@@ -182,12 +182,11 @@ var indexList = [];
     <!-- multi options -->
     <?php $multiArr = [3, 4, 5]; ?>
     <div class="profileFieldsMulti <?=(in_array($profileField->getType(), $multiArr)) ? '' : 'hidden' ?>">
-        <?php if ($profileField->getOptions()) { 
-            $options = json_decode($profileField->getOptions(), true);
-            $optionsAnz = 1; ?>
+        <?php if ($profileField->getOptions()) : ?>
+            <?php $options = json_decode($profileField->getOptions(), true); ?>
             <div class="form-group">
                 <label for="profileFieldOptions" class="col-lg-2 control-label">
-                    <?=($optionsAnz == 1) ? $this->getTrans('profileFieldOptions') : ''; $optionsAnz++; ?>
+                    <?=$this->getTrans('profileFieldOptions')  ?>
                 </label>
                 <div class="col-lg-4">
                     <?php foreach ($options as $key => $value): ?>
@@ -206,21 +205,21 @@ var indexList = [];
                     </div>
                 </div>    
             </div>
-        <?php } else { ?>
+        <?php else : ?>
         <div class="form-group">
             <label for="profileFieldOptions" class="col-lg-2 control-label">
                 <?=$this->getTrans('profileFieldOptions') ?>
             </label>
             <div class="col-lg-4">
                 <div class="form-group input-group">
-                    <input type="text" name="profileFieldOptions[]" class="form-control">
+                    <input type="text" name="profileFieldOptions[]" id="profileFieldOptions" class="form-control">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-success btn-add">+</button>
                     </span>
                 </div>
             </div>
         </div>
-        <?php } ?>
+        <?php endif; ?>
     </div>
 
     <!-- save -->
