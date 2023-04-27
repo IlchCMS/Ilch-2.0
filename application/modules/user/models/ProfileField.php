@@ -190,8 +190,9 @@ class ProfileField extends \Ilch\Model
      * Returns the options of the profile-field.
      *
      * @return string
+     * @since 2.1.50
      */
-    public function getOptions()
+    public function getOptions(): string
     {
         return $this->options;
     }
@@ -201,8 +202,9 @@ class ProfileField extends \Ilch\Model
      *
      * @param string $options
      * @return ProfileField
+     * @since 2.1.50
      */
-    public function setOptions($options)
+    public function setOptions(string $options): ProfileField
     {
         $this->options = $options;
 

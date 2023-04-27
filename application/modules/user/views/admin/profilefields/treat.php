@@ -70,11 +70,11 @@ var indexList = [];
 
     <!-- field description -->
     <div class="form-group">
-        <label for="profileFieldKey" class="col-lg-2 control-label">
+        <label for="profileFieldDescription" class="col-lg-2 control-label">
             <?=$this->getTrans('profileFieldDescription') ?>
         </label>
         <div class="col-lg-4">
-            <textarea class="form-control typedesc" rows="2" readonly /><?=($profileField->getType()!==null) ? $this->getTrans('profileFieldTypeDesc'.$profileField->getType()) : $this->getTrans('profileFieldTypeDesc0') ?></textarea>
+            <textarea class="form-control typedesc" id="profileFieldDescription" rows="2" readonly><?=($profileField->getType()!==null) ? $this->getTrans('profileFieldTypeDesc'.$profileField->getType()) : $this->getTrans('profileFieldTypeDesc0') ?></textarea>
         </div>
     </div>
     

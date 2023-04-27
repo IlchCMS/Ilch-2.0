@@ -130,8 +130,8 @@ class ProfileFields extends \Ilch\Controller\Admin
                 $profileFieldData['addition'] = '';
             }
 
-            $muliTypes = [3, 4, 5];
-            if (in_array($profileFieldData['type'], $muliTypes)) {
+            $multiTypes = [3, 4, 5];
+            if (in_array($profileFieldData['type'], $multiTypes)) {
                 $profileFieldData['options'] = json_encode(array_filter($postData['profileFieldOptions']));
             } else {
                 $profileFieldData['options'] = '';
