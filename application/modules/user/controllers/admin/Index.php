@@ -414,7 +414,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat'])
                 ->add($this->getTranslator()->trans('editUserProfile'), ['action' => 'treatProfile', 'user' => $this->getRequest()->getParam('user')]);
 
-            $profileFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
+            $profileFields = $profileFieldsMapper->getProfileFields();
             $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getRequest()->getParam('user'));
             $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
 

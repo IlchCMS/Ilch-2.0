@@ -109,6 +109,7 @@ class ProfileFields extends \Ilch\Mapper
             $fields['type'] = $profileField->getType();
             $fields['icon'] = $profileField->getIcon();
             $fields['addition'] = $profileField->getAddition();
+            $fields['options'] = $profileField->getOptions();
             $fields['show'] = $profileField->getShow();
             $fields['position'] = $profileField->getPosition();
         }
@@ -237,6 +238,10 @@ class ProfileFields extends \Ilch\Mapper
             $profileField->setAddition($profileFieldRow['addition']);
         }
 
+        if (isset($profileFieldRow['options'])) {
+            $profileField->setOptions($profileFieldRow['options']);
+        }
+
         if (isset($profileFieldRow['show'])) {
             $profileField->setShow($profileFieldRow['show']);
         }
@@ -248,7 +253,6 @@ class ProfileFields extends \Ilch\Mapper
         if (isset($profileFieldRow['position'])) {
             $profileField->setPosition($profileFieldRow['position']);
         }
-
 
         return $profileField;
     }

@@ -6,6 +6,11 @@
     </a>
 </h1>
 
+<style>
+    .row { padding: 5px 0; }
+    .row:nth-of-type(odd) { background-color: rgba(0,0,0,.05); }
+</style>
+
 <div class="profil-content">
     <?php if (!empty($user->getFirstName())) : ?>
         <div class="row">
@@ -50,15 +55,17 @@ foreach ($profileFields as $profileField) {
     if (!$profileField->getShow()) {
         continue;
     }
-
     $profileFieldName = $profileField->getKey();
     $value = '';
     foreach ($profileFieldsContent as $profileFieldContent) {
         if ($profileFieldContent->getValue() && $profileField->getId() == $profileFieldContent->getFieldId()) {
-            $value = $profileFieldContent->getValue();
+            if ($profileField->getType() == 4) {
+                $value = implode(', ', json_decode($profileFieldContent->getValue(), true));
+            } else {
+                $value = $profileFieldContent->getValue();
+            }
         }
     }
-
     if (!empty($value)) {
         foreach ($profileFieldsTranslation as $profileFieldTrans) {
             if ($profileField->getId() == $profileFieldTrans->getFieldId()) {
@@ -67,9 +74,8 @@ foreach ($profileFields as $profileField) {
             }
         }
     }
-
     if (!empty($value)): ?>
-    <div class="row">
+    <div class="row grid-striped">
         <div class="col-lg-2">
             <b><?=$this->escape($profileFieldName) ?></b>
         </div>

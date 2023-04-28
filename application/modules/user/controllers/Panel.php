@@ -108,7 +108,11 @@ class Panel extends BaseController
                         // Skip this profile field so the value doesn't get deleted.
                         continue;
                     }
-                    $post[$index] = trim($this->getRequest()->getPost($index));
+                    if ($profileField->getType() == 4) {
+                        $post[$index] = json_encode($this->getRequest()->getPost($index));
+                    } else {
+                        $post[$index] = trim($this->getRequest()->getPost($index));
+                    }
                 }
             }
 

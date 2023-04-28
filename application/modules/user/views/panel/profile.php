@@ -10,6 +10,7 @@ if (!empty($profil->getBirthday())) {
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
+<style>.input-group-addon.check {border-left: 1px solid #ccc !important; border-top-left-radius: 4px; border-bottom-left-radius: 4px;}</style>
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <div class="row">
@@ -61,7 +62,7 @@ if (!empty($profil->getBirthday())) {
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileGender') ?>
                     </label>
-                    <div class="col-lg-2">
+                    <div class="col-lg-8">
                         <select class="form-control" id="gender" name="gender">
                             <option value="0" <?=(($this->originalInput('gender') != '' && $this->originalInput('gender') == 0) || $profil->getGender() == 0) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderUnknown') ?></option>
                             <option value="1" <?=(($this->originalInput('gender') != '' && $this->originalInput('gender') == 1) || $profil->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderMale') ?></option>
@@ -86,7 +87,7 @@ if (!empty($profil->getBirthday())) {
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileBirthday') ?>
                     </label>
-                    <div class="col-lg-2 input-group ilch-date date form_datetime">
+                    <div class="col-lg-8 input-group ilch-date date form_datetime">
                         <input type="text"
                                class="form-control"
                                name="birthday"
@@ -96,52 +97,113 @@ if (!empty($profil->getBirthday())) {
                         </span>
                     </div>
                 </div>
-                <?php foreach ($profileFields as $profileField):
-                        $profileFieldName = $profileField->getKey();
-                        foreach ($profileFieldsTranslation as $profileFieldTranslation) {
-                            if ($profileField->getId() == $profileFieldTranslation->getFieldId()) {
-                                $profileFieldName = $profileFieldTranslation->getName();
-                                break;
-                            }
+                <?php foreach ($profileFields as $profileField) :
+                    $profileFieldName = $profileField->getKey();
+                    foreach ($profileFieldsTranslation as $profileFieldTranslation) {
+                        if ($profileField->getId() == $profileFieldTranslation->getFieldId()) {
+                            $profileFieldName = $profileFieldTranslation->getName();
+                            break;
                         }
-
-                        if ($profileField->getType() != 1):
-                            $value = '';
-                            $index = 'profileField'.$profileField->getId();
-                            if ($this->originalInput($index) != '') {
-                                $value = $this->escape($this->originalInput($index));
-                            } else {
-                                foreach ($profileFieldsContent as $profileFieldContent) {
-                                    if ($profileField->getId() == $profileFieldContent->getFieldId()) {
+                    }
+                    if ($profileField->getType() != 1) :
+                        $value = ($profileField->getType() == 4) ? [] : '';
+                        $index = 'profileField'.$profileField->getId();
+                        if ($this->originalInput($index) != '') {
+                            $value = $this->escape($this->originalInput($index));
+                        } else {
+                            foreach ($profileFieldsContent as $profileFieldContent) { 
+                                if ($profileField->getId() == $profileFieldContent->getFieldId()) {
+                                    if ($profileField->getType() == 4) {
+                                        $value = json_decode($profileFieldContent->getValue(), true);
+                                    } else { 
                                         $value = $this->escape($profileFieldContent->getValue());
                                         break;
                                     }
                                 }
-                            } ?>
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">
-                                    <?=$this->escape($profileFieldName) ?>
-                                </label>
-                                <div class="col-lg-8">
-                                    <?php if ($profileField->getShow() == 0): ?>
-                                        <div class="input-group">
-                                    <?php endif; ?>
-                                   <input type="text"
-                                          class="form-control"
-                                          name="<?=$index ?>"
-                                          placeholder="<?=$value ?>"
-                                          value="<?=$value ?>" />
-                                    <?php if ($profileField->getShow() == 0): ?>
-                                        <span class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
-                                            <span class="fa-solid fa-eye-slash"></span>
-                                        </span>
-                                        </div>
-                                    <?php endif; ?>
+                            }
+                        } ?>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">
+                                <?=$this->escape($profileFieldName) ?>
+                            </label>
+                            <div class="col-lg-8">
+                            <!-- radio -->
+                            <?php if ($profileField->getType() == 3) :
+                                $options = json_decode($profileField->getOptions(), true);
+                                foreach ($options as $optValue): ?>
+                                    <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '<div class="form-check">' ?>
+                                        <input type="radio" name="<?=$index ?>" id="<?=$optValue ?>" value="<?=$optValue ?>" class="form-check-input" <?=($optValue == $value) ? 'checked' : '' ?>/>
+                                        <label class="form-check-label" for="<?=$optValue ?>"><?=$this->escape($optValue) ?></label>
+                                        <?php if ($profileField->getShow() == 0) : ?>
+                                            <span class="input-group-addon check" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                                <span class="fa-solid fa-eye-slash"></span>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            <!-- check -->
+                            <?php elseif ($profileField->getType() == 4) :
+                                $options = json_decode($profileField->getOptions(), true);
+                                foreach ($options as $optKey => $optValue) : ?>
+                                    <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '<div class="form-check">' ?>
+                                        <input type="checkbox" name="<?=$index ?>[<?=$optKey ?>]" id="<?=$optValue ?>" value="<?=$optValue ?>" class="form-check-input" <?=in_array($optValue, $value) ? 'checked' : '' ?>/>
+                                        <label class="form-check-label" for="<?=$optValue ?>"><?=$this->escape($optValue) ?></label>
+                                        <?php if ($profileField->getShow() == 0) : ?>
+                                            <span class="input-group-addon check" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                                <span class="fa-solid fa-eye-slash"></span>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; ?>
+                            <!-- drop -->
+                            <?php elseif ($profileField->getType() == 5) : 
+                                $options = json_decode($profileField->getOptions(), true);?>
+                                <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '<div class="form-check">' ?>
+                                    <select class="form-control" id="<?=$index ?>" name="<?=$index ?>">
+                                        <?php foreach ($options as $optValue) : ?>
+                                            <option value="<?=$optValue ?>" <?=($optValue == $value) ? 'selected' : '' ?>><?=$this->escape($optValue) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                <?php if ($profileField->getShow() == 0) : ?>
+                                    <span class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                        <span class="fa-solid fa-eye-slash"></span>
+                                    </span>
+                                <?php endif; ?>
                                 </div>
+                            <!-- date -->
+                            <?php elseif ($profileField->getType() == 6) : ?>
+                                <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '' ?>
+                                    <input type="text"
+                                           class="form-control ilch-date date form_datetime"
+                                           name="<?=$index ?>"
+                                           placeholder="<?=$value ?>"
+                                           value="<?=$value ?>">
+                                <?php if ($profileField->getShow() == 0) : ?>
+                                    <span class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                        <span class="fa-solid fa-eye-slash"></span>
+                                    </span>
+                                </div>
+                                <?php endif; ?>
+                            <!-- field -->        
+                            <?php else : ?>
+                                <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '' ?>
+                                <input type="text"
+                                       class="form-control"
+                                       name="<?=$index ?>"
+                                       placeholder="<?=$value ?>"
+                                       value="<?=$value ?>" />
+                                <?php if ($profileField->getShow() == 0) : ?>
+                                    <span class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                        <span class="fa-solid fa-eye-slash"></span>
+                                    </span>
+                                </div>
+                                <?php endif; ?>
+                            <?php endif; ?>
                             </div>
-                        <?php else: ?>
-                            <h1><?=$this->escape($profileFieldName) ?></h1>
-                        <?php endif;
+                        </div>
+                    <?php else : ?>
+                        <h1><?=$this->escape($profileFieldName) ?></h1>
+                    <?php endif;
                 endforeach; ?>
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
