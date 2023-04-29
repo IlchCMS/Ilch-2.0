@@ -67,30 +67,30 @@ class UniqueTest extends DatabaseTestCase
     {
         return [
             'unique value for name' => [
-                'data'                    => $this->createData(['groups'], 'Moderator'),
+                'data'                    => $this->createData(['groups'], 'moderator'),
                 'expectedIsValid'         => true
             ],
             'existing value for name ignored' => [
-                'data'                    => $this->createData(['groups', 'name', 1], 'Admin'),
+                'data'                    => $this->createData(['groups', 'name', 1], 'admin'),
                 'expectedIsValid'         => true
             ],
             'existing value for name ignore different id' => [
-                'data'                    => $this->createData(['groups', 'name', 2], 'Admin'),
+                'data'                    => $this->createData(['groups', 'name', 2], 'admin'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.unique.valueExists',
-                'expectedErrorParameters' => ['Admin']
+                'expectedErrorParameters' => ['admin']
             ],
             'existing value for name' => [
-                'data'                    => $this->createData(['groups'], 'Admin'),
+                'data'                    => $this->createData(['groups'], 'admin'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.unique.valueExists',
-                'expectedErrorParameters' => ['Admin']
+                'expectedErrorParameters' => ['admin']
             ],
             'unique value for name inverted' => [
-                'data'                    => $this->createData(['groups'], 'Moderator', true),
+                'data'                    => $this->createData(['groups'], 'moderator', true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.unique.valueExists',
-                'expectedErrorParameters' => ['Moderator']
+                'expectedErrorParameters' => ['moderator']
             ],
         ];
     }
