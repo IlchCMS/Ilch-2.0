@@ -25,6 +25,9 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     protected $out;
     protected $phpunitDataset;
 
+    /**
+     * Filling the config object with individual testcase data.
+     */
     public function setUp(): void
     {
         parent::setUp();
