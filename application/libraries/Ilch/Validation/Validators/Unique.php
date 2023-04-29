@@ -59,7 +59,7 @@ class Unique extends Base
 
         $whereLeft = 'LOWER(`'.$column.'`)';
         $whereMiddle = '=';
-        $whereRight = $db->escape(strtolower($this->getValue()), true);
+        $whereRight = $db->escape($this->getValue(), true);
 
         $where = new \Ilch\Database\Mysql\Expression\Comparison($whereLeft, $whereMiddle, $whereRight);
 
