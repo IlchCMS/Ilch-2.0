@@ -31,7 +31,7 @@ class Same extends Base
      * @var string
      * @since 2.1.43
      */
-    protected $invertErrorKey = 'validation.errors.required.fieldsMatch';
+    protected $invertErrorKey = 'validation.errors.same.fieldsMatch';
 
     /**
      * Minimum parameter count needed.

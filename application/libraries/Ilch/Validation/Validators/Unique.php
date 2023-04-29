@@ -33,7 +33,7 @@ class Unique extends Base
      * @var string
      * @since 2.1.43
      */
-    protected $invertErrorKey = 'validation.errors.required.valueNotExists';
+    protected $invertErrorKey = 'validation.errors.unique.valueNotExists';
 
     /**
      * Minimum parameter count needed.

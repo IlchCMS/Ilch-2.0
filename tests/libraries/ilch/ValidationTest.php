@@ -223,6 +223,20 @@ class ValidationTest extends TestCase
     {
         // Excluding the validators Captcha, Grecaptcha, Integer (already covered above), Exists and Unique.
         return [
+            // Integer validator inverted
+            'integer validator - valid inverted' => [
+                'validatorRules' => 'NOTinteger',
+                'params'         => ['testField' => 1.5],
+                'expected'       => true
+            ],
+            'integer validator - invalid inverted' => [
+                'validatorRules' => 'NOTinteger',
+                'params'         => ['testField' => 1],
+                'expected'       => false,
+                'expectedErrors' => [
+                    'testField' => ['validation.errors.integer.dontBeInteger']
+                ]
+            ],
             // Date validator
             'date validator - valid' => [
                 'validatorRules' => 'date',
@@ -421,6 +435,19 @@ class ValidationTest extends TestCase
                     'testField' => ['validation.errors.numeric.mustBeNumeric']
                 ]
             ],
+            'Numeric validator - not valid inverted' => [
+                'validatorRules' => 'NOTnumeric',
+                'params'         => ['testField' => 1],
+                'expected'       => false,
+                'expectedErrors' => [
+                    'testField' => ['validation.errors.required.dontBeNumeric']
+                ]
+            ],
+            'Numeric validator - valid inverted' => [
+                'validatorRules' => 'NOTnumeric',
+                'params'         => ['testField' => 'a'],
+                'expected'       => true
+            ],
             // Required validator
             'Required validator - valid' => [
                 'validatorRules' => 'required',
@@ -438,6 +465,19 @@ class ValidationTest extends TestCase
             'Required validator - valid numeric' => [
                 'validatorRules' => 'required',
                 'params'         => ['testField' => 1],
+                'expected'       => true
+            ],
+            'Required validator - not valid inverted' => [
+                'validatorRules' => 'NOTrequired',
+                'params'         => ['testField' => 'a'],
+                'expected'       => false,
+                'expectedErrors' => [
+                    'testField' => ['validation.errors.required.fieldIsNotRequired']
+                ]
+            ],
+            'Required validator - valid inverted' => [
+                'validatorRules' => 'NOTrequired',
+                'params'         => ['testField' => ''],
                 'expected'       => true
             ],
             // Same validator
@@ -462,6 +502,19 @@ class ValidationTest extends TestCase
                 'expected'       => false,
                 'expectedErrors' => [
                     'testField' => ['validation.errors.same.fieldsDontMatch']
+                ]
+            ],
+            'Same validator - valid inverted' => [
+                'validatorRules' => 'NOTsame:password',
+                'params'         => ['password' => 'a', 'testField' => 'b'],
+                'expected'       => true
+            ],
+            'Same validator - not valid inverted' => [
+                'validatorRules' => 'NOTsame:password',
+                'params'         => ['password' => 'a', 'testField' => 'a'],
+                'expected'       => false,
+                'expectedErrors' => [
+                    'testField' => ['validation.errors.same.fieldsMatch']
                 ]
             ],
             // Size validator

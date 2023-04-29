@@ -31,7 +31,7 @@ class Integer extends Base
      * @var string
      * @since 2.1.43
      */
-    protected $invertErrorKey = 'validation.errors.required.dontBeInteger';
+    protected $invertErrorKey = 'validation.errors.integer.dontBeInteger';
 
     /**
      * Runs the validation.
