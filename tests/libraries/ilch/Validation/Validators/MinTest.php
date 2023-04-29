@@ -7,18 +7,22 @@
 namespace Ilch\Validation\Validators;
 
 use PHPUnit\Ilch\TestCase;
+use stdClass;
 
+/**
+ * Tests for the min validator
+ */
 class MinTest extends TestCase
 {
     /**
      * @dataProvider dpForTestValidator
      *
-     * @param \stdClass $data
+     * @param stdClass $data
      * @param bool $expectedIsValid
      * @param string $expectedErrorKey
      * @param array $expectedErrorParameters
      */
-    public function testValidator($data, $expectedIsValid, $expectedErrorKey = '', $expectedErrorParameters = [])
+    public function testValidator(stdClass $data, bool $expectedIsValid, string $expectedErrorKey = '', array $expectedErrorParameters = [])
     {
         $validator = new Min($data);
         $validator->run();
@@ -32,21 +36,21 @@ class MinTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator()
+    public function dpForTestValidator(): array
     {
         return [
             // string validations
-            'string correct'                    => [
+            'string correct'              => [
                 'data'                    => $this->createData('abcdef', 5),
                 'expectedIsValid'         => true
             ],
-            'string too short'                  => [
+            'string too short'            => [
                 'data'                    => $this->createData('abcd', 5),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.min.string',
                 'expectedErrorParameters' => [5]
             ],
-            'number string as string correct'   => [
+            'number string as string correct' => [
                 'data'                    => $this->createData('12345', 5, true),
                 'expectedIsValid'         => true
             ],
@@ -57,44 +61,49 @@ class MinTest extends TestCase
                 'expectedErrorParameters' => [5]
             ],
             // numeric
-            'number (int) correct'              => [
+            'number (int) correct'        => [
                 'data'                    => $this->createData(5, 5),
                 'expectedIsValid'         => true
             ],
-            'number string correct'             => [
+            'number string correct'       => [
                 'data'                    => $this->createData('5', 5),
                 'expectedIsValid'         => true
             ],
-            'number too low'                    => [
+            'number too low'              => [
                 'data'                    => $this->createData('4', 5),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.min.numeric',
                 'expectedErrorParameters' => [5]
             ],
             //array
-            'array correct'                     => [
+            'array correct'               => [
                 'data'                    => $this->createData([1, 2, 3], 3),
                 'expectedIsValid'         => true
             ],
-            'array too small'                   => [
+            'array bigger than needed'    => [
                 'data'                    => $this->createData([1, 2, 3], 2),
-                'expectedIsValid'         => true,
+                'expectedIsValid'         => true
+            ],
+            'array too small'             => [
+                'data'                    => $this->createData([1, 2], 3),
+                'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.min.array',
-                'expectedErrorParameters' => [2]
+                'expectedErrorParameters' => [3]
             ],
         ];
     }
 
     /**
      * Helper function for creating data object
-     * @param string $value
+     *
+     * @param mixed $value
      * @param int $min
      * @param bool $forceString
-     * @return \stdClass
+     * @return stdClass
      */
-    private function createData($value, $min, $forceString = false)
+    private function createData($value, int $min, bool $forceString = false): stdClass
     {
-        $data = new \stdClass();
+        $data = new stdClass();
         $data->field = 'fieldName';
         $data->parameters = [$min];
         if ($forceString) {
