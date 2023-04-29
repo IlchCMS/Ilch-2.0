@@ -198,6 +198,7 @@ class ValidationTest extends TestCase
         bool $expected,
         array $expectedErrors = []
     ) {
+        $_SESSION['captcha'] = 'test';
         // Needed for Url validator
         $_SERVER['HTTP_HOST'] = '127.0.0.1';
 
@@ -221,20 +222,20 @@ class ValidationTest extends TestCase
      */
     public function dpForTestValidationWithVariousValidators(): array
     {
-        // Excluding the validators Captcha, Grecaptcha, Integer (already covered above), Exists and Unique.
+        // Excluding the validators Grecaptcha, Integer (not inverted; already covered above), Exists and Unique.
         return [
-            // Integer validator inverted
-            'integer validator - valid inverted' => [
-                'validatorRules' => 'NOTinteger',
-                'params'         => ['testField' => 1.5],
+            // Captcha validator
+            'captcha validator - valid' => [
+                'validatorRules' => 'captcha',
+                'params'         => ['testField' => 'test'],
                 'expected'       => true
             ],
-            'integer validator - invalid inverted' => [
-                'validatorRules' => 'NOTinteger',
-                'params'         => ['testField' => 1],
+            'captcha validator - not valid' => [
+                'validatorRules' => 'captcha',
+                'params'         => ['testField' => 'a'],
                 'expected'       => false,
                 'expectedErrors' => [
-                    'testField' => ['validation.errors.integer.dontBeInteger']
+                    'testField' => ['validation.errors.captcha.wrongCaptcha']
                 ]
             ],
             // Date validator
@@ -281,6 +282,20 @@ class ValidationTest extends TestCase
                 'expected'       => false,
                 'expectedErrors' => [
                     'testField' => ['validation.errors.email.noValidEmail']
+                ]
+            ],
+            // Integer validator inverted
+            'integer validator - valid inverted' => [
+                'validatorRules' => 'NOTinteger',
+                'params'         => ['testField' => 1.5],
+                'expected'       => true
+            ],
+            'integer validator - invalid inverted' => [
+                'validatorRules' => 'NOTinteger',
+                'params'         => ['testField' => 1],
+                'expected'       => false,
+                'expectedErrors' => [
+                    'testField' => ['validation.errors.integer.dontBeInteger']
                 ]
             ],
             // Max validator
