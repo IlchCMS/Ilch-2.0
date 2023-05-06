@@ -38,12 +38,12 @@ class Required extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Required
     {
         $value = $this->getValue();
         $value = is_string($value) ? trim($value) : $value;
 
-        $this->setIsValid(!($value === null || $value === [] || $value === ''));
+        $this->setIsValid(!($value === null || $value == [] || $value === ''));
 
         return $this;
     }

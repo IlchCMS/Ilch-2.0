@@ -38,7 +38,7 @@ class Numeric extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Numeric
     {
         $this->setIsValid($this->getValue() === '' || is_numeric($this->getValue()));
 

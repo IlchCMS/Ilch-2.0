@@ -5,6 +5,7 @@
 
 namespace Ilch\Validation\Validators;
 
+use InvalidArgumentException;
 use stdClass;
 
 /**
@@ -30,7 +31,7 @@ abstract class Base
     /**
      * The current fields value.
      *
-     * @var string
+     * @var mixed
      */
     protected $value;
 
@@ -117,7 +118,7 @@ abstract class Base
         }
 
         if (($this->minParams !== null && is_array($this->getParameters()) && count($this->getParameters()) < $this->minParams)) {
-            throw new \InvalidArgumentException(get_class($this).' expects at least '.$this->minParams.' parameter(s) given: '
+            throw new InvalidArgumentException(get_class($this).' expects at least '.$this->minParams.' parameter(s) given: '
                 .count($this->getParameters()));
         }
     }
@@ -136,7 +137,7 @@ abstract class Base
      *
      * @return string
      */
-    public function getField()
+    public function getField(): string
     {
         return $this->field;
     }
@@ -148,7 +149,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setField($field)
+    public function setField(string $field): Base
     {
         $this->field = $field;
 
@@ -158,7 +159,7 @@ abstract class Base
     /**
      * Get the value of The current fields value.
      *
-     * @return string
+     * @return mixed
      */
     public function getValue()
     {
@@ -168,11 +169,11 @@ abstract class Base
     /**
      * Set the value of The current fields value.
      *
-     * @param string $value
+     * @param mixed $value
      *
      * @return self
      */
-    public function setValue($value)
+    public function setValue($value): Base
     {
         $this->value = $value;
 
@@ -184,7 +185,7 @@ abstract class Base
      *
      * @return array
      */
-    public function getInput()
+    public function getInput(): array
     {
         return $this->input;
     }
@@ -196,7 +197,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setInput(array $input)
+    public function setInput(array $input): Base
     {
         $this->input = $input;
 
@@ -208,7 +209,7 @@ abstract class Base
      *
      * @return array|null
      */
-    public function getParameters()
+    public function getParameters(): ?array
     {
         return $this->parameters;
     }
@@ -220,7 +221,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setParameters($parameters)
+    public function setParameters(?array $parameters): Base
     {
         $this->parameters = $parameters;
 
@@ -233,7 +234,7 @@ abstract class Base
      * @return bool
      * @since 2.1.43
      */
-    public function getInvertResult()
+    public function getInvertResult(): bool
     {
         return $this->invertResult;
     }
@@ -245,7 +246,7 @@ abstract class Base
      * @return self
      * @since 2.1.43
      */
-    public function setInvertResult(bool $invertResult)
+    public function setInvertResult(bool $invertResult): Base
     {
         $this->invertResult = $invertResult;
 
@@ -257,7 +258,7 @@ abstract class Base
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         return ($this->invertResult ? !$this->result : $this->result);
     }
@@ -269,7 +270,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setIsValid($result)
+    public function setIsValid(bool $result): Base
     {
         $this->result = $result;
 
@@ -281,7 +282,7 @@ abstract class Base
      *
      * @return string
      */
-    public function getErrorKey()
+    public function getErrorKey(): string
     {
         return $this->errorKey;
     }
@@ -293,7 +294,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setErrorKey($errorKey)
+    public function setErrorKey(string $errorKey): Base
     {
         $this->errorKey = $errorKey;
 
@@ -306,7 +307,7 @@ abstract class Base
      * @return string
      * @since 2.1.43
      */
-    public function getInvertErrorKey()
+    public function getInvertErrorKey(): string
     {
         return $this->invertErrorKey;
     }
@@ -318,7 +319,7 @@ abstract class Base
      * @return self
      * @since 2.1.43
      */
-    public function setInvertErrorKey($invertErrorKey)
+    public function setInvertErrorKey(string $invertErrorKey): Base
     {
         $this->invertErrorKey = $invertErrorKey;
 
@@ -330,7 +331,7 @@ abstract class Base
      *
      * @return array
      */
-    public function getErrorParameters()
+    public function getErrorParameters(): array
     {
         return $this->errorParameters;
     }
@@ -342,7 +343,7 @@ abstract class Base
      *
      * @return self
      */
-    public function setErrorParameters(array $errorParameters)
+    public function setErrorParameters(array $errorParameters): Base
     {
         $this->errorParameters = $errorParameters;
 
@@ -354,7 +355,7 @@ abstract class Base
      *
      * @return string Class name (without namespace) in lowercase
      */
-    public function getName()
+    public function getName(): string
     {
         $class = explode('\\', get_class($this));
 
@@ -368,7 +369,7 @@ abstract class Base
      *
      * @return mixed
      */
-    public function getParameter($key)
+    public function getParameter(int $key)
     {
         return $this->parameters[$key] ?? null;
     }

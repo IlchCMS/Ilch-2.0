@@ -22,7 +22,7 @@ class Date extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Date
     {
         $format = $this->getParameter(0) ?? 'Y-m-d';
 

@@ -5,6 +5,8 @@
 
 namespace Ilch\Validation\Validators;
 
+use Captcha\DefaultCaptcha;
+
 /**
  * Captcha validation class.
  */
@@ -29,9 +31,9 @@ class Captcha extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Captcha
     {
-        $defaultcaptcha = new \Captcha\DefaultCaptcha();
+        $defaultcaptcha = new DefaultCaptcha();
         $this->setIsValid($defaultcaptcha->validate($this->getValue(), $this->sessionKey));
 
         return $this;

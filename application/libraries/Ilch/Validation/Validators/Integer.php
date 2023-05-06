@@ -38,7 +38,7 @@ class Integer extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): self
     {
         $this->setIsValid($this->getValue() === '' || filter_var($this->getValue(), FILTER_VALIDATE_INT) !== false);
 

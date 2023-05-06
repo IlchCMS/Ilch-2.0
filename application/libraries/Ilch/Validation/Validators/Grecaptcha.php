@@ -6,6 +6,9 @@
 
 namespace Ilch\Validation\Validators;
 
+use Captcha\GoogleCaptcha;
+use Ilch\Registry;
+
 /**
  * Captcha validation class.
  */
@@ -23,11 +26,11 @@ class Grecaptcha extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Grecaptcha
     {
-        $config = \Ilch\Registry::get('config');
+        $config = Registry::get('config');
 
-        $googlecaptcha = new \Captcha\GoogleCaptcha($config->get('captcha_apikey'), $config->get('captcha_seckey'), (int)$config->get('captcha'));
+        $googlecaptcha = new GoogleCaptcha($config->get('captcha_apikey'), $config->get('captcha_seckey'), (int)$config->get('captcha'));
         $this->setIsValid($googlecaptcha->validate($this->getValue(), $this->getParameter(0)));
 
         return $this;

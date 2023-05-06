@@ -29,7 +29,7 @@ class Min extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Min
     {
         $numberString = $this->getParameter(1) === 'string';
 
@@ -43,11 +43,11 @@ class Min extends Base
      * Gets the size.
      *
      * @param string|int|array $value        The value to check
-     * @param bool             $numberString Is it a number string?
+     * @param bool $numberString Is it a number string?
      *
      * @return int The size of the value
      */
-    protected function getSize($value, $numberString)
+    protected function getSize($value, bool $numberString): int
     {
         if (is_numeric($value) && !$numberString) {
             return (int) $value;

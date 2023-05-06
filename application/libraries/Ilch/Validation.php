@@ -5,6 +5,7 @@
 
 namespace Ilch;
 
+use Closure;
 use Ilch\Validation\Validators\Base;
 use Ilch\Validation\Validators\Captcha;
 use Ilch\Validation\Validators\Grecaptcha;
@@ -20,6 +21,7 @@ use Ilch\Validation\Validators\Size;
 use Ilch\Validation\Validators\Unique;
 use Ilch\Validation\Validators\Url;
 use Ilch\Validation\Validators\Exists;
+use InvalidArgumentException;
 use stdClass;
 use Ilch\Validation\ErrorBag;
 
@@ -102,14 +104,14 @@ class Validation
     /**
      * Holds error messages.
      *
-     * @var \Ilch\Validation\ErrorBag
+     * @var ErrorBag
      */
     protected $errorBag;
 
     /**
      * The translator instance.
      *
-     * @var \Ilch\Translator
+     * @var Translator
      */
     protected $translator;
 
@@ -118,14 +120,7 @@ class Validation
      *
      * @var array
      */
-    protected $validationRules = array();
-
-    /**
-     * Validation state.
-     *
-     * @var bool
-     */
-    protected $passes = true;
+    protected $validationRules = [];
 
     /**
      * Creates a new validation instance.
@@ -224,7 +219,7 @@ class Validation
      *
      * @return bool
      */
-    protected function checkResult(Base $validator)
+    protected function checkResult(Base $validator): bool
     {
         if ($validator->isValid() === false) {
             $this->handleError($validator);
@@ -275,11 +270,11 @@ class Validation
      * Performs a validation.
      *
      * @param string $validator An alias of an existing validator
-     * @param stdClass $data      A Data-Object with validation data
+     * @param stdClass $data A Data-Object with validation data
      *
      * @return Base
      */
-    protected function validate($validator, stdClass $data)
+    protected function validate(string $validator, stdClass $data)
     {
         $validatorClass = $this->getValidator($validator);
         /** @var Base $validator */
@@ -294,7 +289,7 @@ class Validation
      *
      * @return array An array with translated error messages
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->getErrorBag()->getErrors();
     }
@@ -305,9 +300,9 @@ class Validation
      * @param array $input An array with inputs (e.g. user inputs)
      * @param array $rules An array with validation rules
      *
-     * @return \Ilch\Validation A new Validation Object
+     * @return Validation A new Validation Object
      */
-    public static function create(array $input, array $rules)
+    public static function create(array $input, array $rules): Validation
     {
         return new self($input, $rules);
     }
@@ -317,7 +312,7 @@ class Validation
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         return !$this->getErrorBag()->hasErrors();
     }
@@ -329,7 +324,7 @@ class Validation
      *
      * @return bool
      */
-    public function hasError($field)
+    public function hasError(string $field): bool
     {
         return $this->getErrorBag()->hasError($field);
     }
@@ -339,7 +334,7 @@ class Validation
      *
      * @return array
      */
-    public function getFieldsWithError()
+    public function getFieldsWithError(): array
     {
         return $this->getErrorBag()->getErrorFields();
     }
@@ -347,18 +342,18 @@ class Validation
     /**
      * Adds the specified validator.
      *
-     * @param string        $alias     An alias for this validator
+     * @param string $alias An alias for this validator
      * @param object|string $validator This must be a string pointing to a valid class or a Closure
      */
-    public static function addValidator($alias, $validator)
+    public static function addValidator(string $alias, $validator)
     {
         if (isset(self::$builtInValidators[$alias]) || isset(self::$validators[$alias])) {
-            throw new \InvalidArgumentException('Validator alias "'.$alias.'" is already in use.');
+            throw new InvalidArgumentException('Validator alias "'.$alias.'" is already in use.');
         }
 
-        if (!(is_object($validator) && ($validator instanceof \Closure))
+        if (!(($validator instanceof Closure))
             && (is_string($validator) && !class_exists($validator))) {
-            throw new \InvalidArgumentException('Validator "'.$alias.'" is not a valid class or closure');
+            throw new InvalidArgumentException('Validator "'.$alias.'" is not a valid class or closure');
         }
 
         self::$validators[$alias] = $validator;
@@ -367,9 +362,9 @@ class Validation
     /**
      * Gets all validators (added and builtIn combined).
      *
-     * @return Base[] All Validators known at this time during runtime
+     * @return array All Validators known at this time during runtime
      */
-    public static function getValidators()
+    public static function getValidators(): array
     {
         return self::$validators + self::$builtInValidators;
     }
@@ -377,9 +372,9 @@ class Validation
     /**
      * Sets custom field aliases (instead of field name).
      *
-     * @param string $aliases
+     * @param string[] $aliases
      */
-    public static function setCustomFieldAliases($aliases)
+    public static function setCustomFieldAliases(array $aliases)
     {
         self::$customFieldAliases = $aliases;
     }
@@ -387,9 +382,9 @@ class Validation
     /**
      * Sets custom error keys.
      *
-     * @param string $errorKeys
+     * @param array[] $errorKeys
      */
-    public static function setCustomErrorKeys($errorKeys)
+    public static function setCustomErrorKeys(array $errorKeys)
     {
         self::$customErrorKeys = $errorKeys;
     }
@@ -397,9 +392,9 @@ class Validation
     /**
      * Returns the ErrorBag instance.
      *
-     * @return \Ilch\Validation\ErrorBag
+     * @return ErrorBag
      */
-    public function getErrorBag()
+    public function getErrorBag(): ErrorBag
     {
         return $this->errorBag;
     }
@@ -407,9 +402,9 @@ class Validation
     /**
      * Returns the Translator instance.
      *
-     * @return \Ilch\Translator
+     * @return Translator
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         return $this->translator;
     }
@@ -419,7 +414,7 @@ class Validation
      *
      * @param bool $breakChain
      */
-    public static function setBreakChain($breakChain)
+    public static function setBreakChain(bool $breakChain)
     {
         self::$breakChain = $breakChain;
     }
@@ -429,7 +424,7 @@ class Validation
      *
      * @param bool $autoRun
      */
-    public static function setAutoRun($autoRun)
+    public static function setAutoRun(bool $autoRun)
     {
         self::$autoRun = $autoRun;
     }
@@ -438,11 +433,11 @@ class Validation
      * @param string $name
      * @return string
      */
-    private function getValidator($name)
+    private function getValidator(string $name): string
     {
         $validators = self::getValidators();
         if (!isset($validators[$name])) {
-            throw new \InvalidArgumentException(sprintf('No validator with name "%s" is registered', $name));
+            throw new InvalidArgumentException(sprintf('No validator with name "%s" is registered', $name));
         }
 
         return $validators[$name];
