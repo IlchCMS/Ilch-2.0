@@ -1,12 +1,12 @@
 <?php
 /**
- * Script para la generaci�n de CAPTCHAS
+ * Script para la generación de CAPTCHAS
  *
- * @author  Jose Rodriguez <jose.rodriguez@exec.cl>
+ * @author  Jose Rodriguez <josecl@gmail.com>
  * @license GPLv3
- * @link    http://code.google.com/p/cool-php-captcha
+ * @link    https://github.com/josecl/cool-php-captcha
  * @package captcha
- * @version 0.3
+ * @version 0.3.2
  *
  */
 
@@ -22,11 +22,19 @@ $captcha->CreateImage();
  * SimpleCaptcha class
  *
  */
-
 class Captcha
 {
+    /**
+     * Difficulty level (if used, keep 'Wave configuracion' on default)
+     * normal = 1
+     * closer to 0 is more easy, for ex: 0.4
+     * closer to 2 is more hard, for ex: 1.8
+     * smaller then 0 and bigger than 2 is caped to min or max
+     */
+    public $difficulty = 1;
+
     /** Width of the image */
-    public $width  = 200;
+    public $width = 200;
 
     /** Height of the image */
     public $height = 70;
@@ -62,9 +70,9 @@ class Captcha
 
     /** Foreground colors in RGB-array */
     public $colors = [
-        [27,78,181], // blue
-        [22,163,35], // green
-        [214,36,7],  // red
+        [27, 78, 181], // blue
+        [22, 163, 35], // green
+        [214, 36, 7],  // red
     ];
 
     /** Shadow color in RGB-array or null */
@@ -82,21 +90,21 @@ class Captcha
      * - maxSize: max font size
      */
     public $fonts = [
-        'Antykwa'  => ['spacing' => -3, 'minSize' => 27, 'maxSize' => 30, 'font' => 'AntykwaBold.ttf'],
-        'Candice'  => ['spacing' =>-1.5,'minSize' => 28, 'maxSize' => 31, 'font' => 'Candice.ttf'],
+        'Antykwa' => ['spacing' => -3, 'minSize' => 27, 'maxSize' => 30, 'font' => 'AntykwaBold.ttf'],
+        'Candice' => ['spacing' => -1.5, 'minSize' => 28, 'maxSize' => 31, 'font' => 'Candice.ttf'],
         'DingDong' => ['spacing' => -2, 'minSize' => 24, 'maxSize' => 30, 'font' => 'Ding-DongDaddyO.ttf'],
-        'Duality'  => ['spacing' => -2, 'minSize' => 30, 'maxSize' => 38, 'font' => 'Duality.ttf'],
+        'Duality' => ['spacing' => -2, 'minSize' => 30, 'maxSize' => 38, 'font' => 'Duality.ttf'],
         'Heineken' => ['spacing' => -2, 'minSize' => 24, 'maxSize' => 34, 'font' => 'Heineken.ttf'],
-        'Jura'     => ['spacing' => -2, 'minSize' => 28, 'maxSize' => 32, 'font' => 'Jura.ttf'],
-        'StayPuft' => ['spacing' =>-1.5,'minSize' => 28, 'maxSize' => 32, 'font' => 'StayPuft.ttf'],
-        'Times'    => ['spacing' => -2, 'minSize' => 28, 'maxSize' => 34, 'font' => 'TimesNewRomanBold.ttf'],
+        'Jura' => ['spacing' => -2, 'minSize' => 28, 'maxSize' => 32, 'font' => 'Jura.ttf'],
+        'StayPuft' => ['spacing' => -1.5, 'minSize' => 28, 'maxSize' => 32, 'font' => 'StayPuft.ttf'],
+        'Times' => ['spacing' => -2, 'minSize' => 28, 'maxSize' => 34, 'font' => 'TimesNewRomanBold.ttf'],
         'VeraSans' => ['spacing' => -1, 'minSize' => 20, 'maxSize' => 28, 'font' => 'VeraSansBold.ttf'],
     ];
 
     /** Wave configuracion in X and Y axes */
-    public $Yperiod    = 12;
+    public $Yperiod = 12;
     public $Yamplitude = 14;
-    public $Xperiod    = 11;
+    public $Xperiod = 11;
     public $Xamplitude = 5;
 
     /** letter rotation clockwise */
@@ -123,6 +131,21 @@ class Captcha
     /** GD image */
     public $im;
 
+    /**
+     * @var float|int|mixed
+     */
+    private $textFinalX;
+
+    /**
+     * @var false|int
+     */
+    private $GdShadowColor;
+
+    /**
+     * @var false|int
+     */
+    private $GdFgColor;
+
     public function __construct($config = [])
     {
     }
@@ -131,12 +154,21 @@ class Captcha
     {
         $ini = microtime(true);
 
+        // cap difficulty
+        if ($this->difficulty > 2) {
+            $this->difficulty = 2;
+        }
+
+        if ($this->difficulty <= 0) {
+            $this->difficulty = 0.1;
+        }
+
         /** Initialization */
         $this->ImageAllocate();
 
         /** Text insertion */
         $text = $this->GetCaptchaText();
-        $fontcfg  = $this->fonts[array_rand($this->fonts)];
+        $fontcfg = $this->fonts[array_rand($this->fonts)];
         $this->WriteText($text, $fontcfg);
 
         $_SESSION[$this->session_var] = $text;
@@ -153,12 +185,8 @@ class Captcha
 
 
         if ($this->debug) {
-            imagestring(
-                $this->im,
-                1,
-                1,
-                $this->height-8,
-                "$text {$fontcfg['font']} ".round((microtime(true)-$ini)*1000)."ms",
+            imagestring($this->im, 1, 1, $this->height - 8,
+                "$text {$fontcfg['font']} " . round((microtime(true) - $ini) * 1000) . 'ms',
                 $this->GdFgColor
             );
         }
@@ -179,25 +207,23 @@ class Captcha
             imagedestroy($this->im);
         }
 
-        $this->im = imagecreatetruecolor($this->width*$this->scale, $this->height*$this->scale);
+        $this->im = imagecreatetruecolor($this->width * $this->scale, $this->height * $this->scale);
 
         // Background color
-        $this->GdBgColor = imagecolorallocate(
-            $this->im,
+        $GdBgColor = imagecolorallocate($this->im,
             $this->backgroundColor[0],
             $this->backgroundColor[1],
             $this->backgroundColor[2]
         );
-        imagefilledrectangle($this->im, 0, 0, $this->width*$this->scale, $this->height*$this->scale, $this->GdBgColor);
+        imagefilledrectangle($this->im, 0, 0, $this->width * $this->scale, $this->height * $this->scale, $GdBgColor);
 
         // Foreground color
-        $color           = $this->colors[mt_rand(0, sizeof($this->colors)-1)];
+        $color = $this->colors[mt_rand(0, sizeof($this->colors) - 1)];
         $this->GdFgColor = imagecolorallocate($this->im, $color[0], $color[1], $color[2]);
 
         // Shadow color
         if (!empty($this->shadowColor) && is_array($this->shadowColor) && sizeof($this->shadowColor) >= 3) {
-            $this->GdShadowColor = imagecolorallocate(
-                $this->im,
+            $this->GdShadowColor = imagecolorallocate($this->im,
                 $this->shadowColor[0],
                 $this->shadowColor[1],
                 $this->shadowColor[2]
@@ -220,39 +246,12 @@ class Captcha
     }
 
     /**
-     * Random text generation
-     *
-     * @return string Text
-     */
-    protected function GetRandomCaptchaText($length = null)
-    {
-        if (empty($length)) {
-            $length = rand($this->minWordLength, $this->maxWordLength);
-        }
-
-        $words  = "abcdefghijlmnopqrstvwyz";
-        $vocals = "aeiou";
-
-        $text  = "";
-        $vocal = rand(0, 1);
-        for ($i=0; $i<$length; $i++) {
-            if ($vocal) {
-                $text .= substr($vocals, mt_rand(0, 4), 1);
-            } else {
-                $text .= substr($words, mt_rand(0, 22), 1);
-            }
-            $vocal = !$vocal;
-        }
-        return $text;
-    }
-
-    /**
      * Random dictionary word generation
      *
-     * @param boolean $extended Add extended "fake" words
+     * @param bool $extended Add extended "fake" words
      * @return string Word
      */
-    public function GetDictionaryCaptchaText($extended = false)
+    public function GetDictionaryCaptchaText(bool $extended = false)
     {
         if (empty($this->wordsFile)) {
             return false;
@@ -262,29 +261,28 @@ class Captcha
         if (substr($this->wordsFile, 0, 1) == '/') {
             $wordsfile = $this->wordsFile;
         } else {
-            $wordsfile = $this->resourcesPath.'/'.$this->wordsFile;
+            $wordsfile = $this->resourcesPath . '/' . $this->wordsFile;
         }
 
         if (!file_exists($wordsfile)) {
             return false;
         }
 
-        $fp     = fopen($wordsfile, "r");
+        $fp = fopen($wordsfile, 'r');
         $length = strlen(fgets($fp));
         if (!$length) {
             return false;
         }
-        $line   = rand(1, (filesize($wordsfile)/$length)-2);
-        if (fseek($fp, $length*$line) == -1) {
+        $line = rand(1, round((filesize($wordsfile) / $length) - 2));
+        if (fseek($fp, $length * $line) == -1) {
             return false;
         }
         $text = trim(fgets($fp));
         fclose($fp);
 
-
         /** Change ramdom volcals */
         if ($extended) {
-            $text   = preg_split('//', $text, -1, PREG_SPLIT_NO_EMPTY);
+            $text = preg_split('//', $text, -1, PREG_SPLIT_NO_EMPTY);
             $vocals = ['a', 'e', 'i', 'o', 'u'];
             foreach ($text as $i => $char) {
                 if (mt_rand(0, 1) && in_array($char, $vocals)) {
@@ -298,19 +296,30 @@ class Captcha
     }
 
     /**
-     * Horizontal line insertion
+     * Random text generation
+     *
+     * @return string Text
      */
-    protected function WriteLine()
+    protected function GetRandomCaptchaText($length = null): string
     {
-        $x1 = $this->width*$this->scale*.15;
-        $x2 = $this->textFinalX;
-        $y1 = rand($this->height*$this->scale*.40, $this->height*$this->scale*.65);
-        $y2 = rand($this->height*$this->scale*.40, $this->height*$this->scale*.65);
-        $width = $this->lineWidth/2*$this->scale;
-
-        for ($i = $width*-1; $i <= $width; $i++) {
-            imageline($this->im, $x1, $y1+$i, $x2, $y2+$i, $this->GdFgColor);
+        if (empty($length)) {
+            $length = rand($this->minWordLength, $this->maxWordLength);
         }
+
+        $words = 'abcdefghijlmnopqrstvwyz';
+        $vocals = 'aeiou';
+
+        $text = '';
+        $vocal = rand(0, 1);
+        for ($i = 0; $i < $length; $i++) {
+            if ($vocal) {
+                $text .= substr($vocals, mt_rand(0, 4), 1);
+            } else {
+                $text .= substr($words, mt_rand(0, 22), 1);
+            }
+            $vocal = !$vocal;
+        }
+        return $text;
     }
 
     /**
@@ -320,52 +329,54 @@ class Captcha
     {
         if (empty($fontcfg)) {
             // Select the font configuration
-            $fontcfg  = $this->fonts[array_rand($this->fonts)];
+            $fontcfg = $this->fonts[array_rand($this->fonts)];
         }
 
         // Full path of font file
-        $fontfile = dirname(__FILE__).'/'.$this->resourcesPath.'/fonts/'.$fontcfg['font'];
+        $fontfile = $this->resourcesPath . '/fonts/' . $fontcfg['font'];
 
 
         /** Increase font-size for shortest words: 9% for each glyp missing */
-        $lettersMissing = $this->maxWordLength-strlen($text);
-        $fontSizefactor = 1+($lettersMissing*0.09);
+        $lettersMissing = $this->maxWordLength - strlen($text);
+        $fontSizefactor = 1 + ($lettersMissing * 0.09);
 
         // Text generation (char by char)
-        $x      = 20*$this->scale;
-        $y      = round(($this->height*27/40)*$this->scale);
+        $x = 20 * $this->scale;
+        $y = round(($this->height * 27 / 40) * $this->scale);
         $length = strlen($text);
-        for ($i=0; $i<$length; $i++) {
-            $degree   = rand($this->maxRotation*-1, $this->maxRotation);
-            $fontsize = rand($fontcfg['minSize'], $fontcfg['maxSize'])*$this->scale*$fontSizefactor;
-            $letter   = substr($text, $i, 1);
+        for ($i = 0; $i < $length; $i++) {
+            $degree = rand($this->maxRotation * -1, $this->maxRotation) * $this->difficulty;
+            $fontsize = rand($fontcfg['minSize'], $fontcfg['maxSize']) * $this->scale * $fontSizefactor;
+            $letter = substr($text, $i, 1);
 
             if ($this->shadowColor) {
-                $coords = imagettftext(
-                    $this->im,
-                    $fontsize,
-                    $degree,
-                    $x+$this->scale,
-                    $y+$this->scale,
-                    $this->GdShadowColor,
-                    $fontfile,
-                    $letter
-                );
+                $coords = imagettftext($this->im, $fontsize, $degree,
+                    $x + $this->scale, $y + $this->scale,
+                    $this->GdShadowColor, $fontfile, $letter);
             }
-            $coords = imagettftext(
-                $this->im,
-                $fontsize,
-                $degree,
-                $x,
-                $y,
-                $this->GdFgColor,
-                $fontfile,
-                $letter
-            );
-            $x += ($coords[2]-$x) + ($fontcfg['spacing']*$this->scale);
+            $coords = imagettftext($this->im, $fontsize, $degree,
+                $x, $y,
+                $this->GdFgColor, $fontfile, $letter);
+            $x += ($coords[2] - $x) + ($fontcfg['spacing'] * $this->scale);
         }
 
         $this->textFinalX = $x;
+    }
+
+    /**
+     * Horizontal line insertion
+     */
+    protected function WriteLine()
+    {
+        $x1 = $this->width * $this->scale * .15;
+        $x2 = $this->textFinalX;
+        $y1 = rand($this->height * $this->scale * .40, $this->height * $this->scale * .65);
+        $y2 = rand($this->height * $this->scale * .40, $this->height * $this->scale * .65);
+        $width = $this->lineWidth / 2 * $this->scale;
+
+        for ($i = $width * -1; $i <= $width; $i++) {
+            imageline($this->im, $x1, $y1 + $i, $x2, $y2 + $i, $this->GdFgColor);
+        }
     }
 
     /**
@@ -373,36 +384,27 @@ class Captcha
      */
     protected function WaveImage()
     {
+        // create wave difficulty
+        $wdf = 1;
+        if ($this->difficulty < 1) $wdf = 1 / $this->difficulty * (0.9 / $this->difficulty);
+        if ($this->difficulty > 1) $wdf = (1 / ($this->difficulty * 1.7)) + 0.5;
+
         // X-axis wave generation
-        $xp = $this->scale*$this->Xperiod*rand(1, 3);
-        $k = rand(0, 100);
-        for ($i = 0; $i < ($this->width*$this->scale); $i++) {
-            imagecopy(
-                $this->im,
-                $this->im,
-                $i-1,
-                sin($k+$i/$xp) * ($this->scale*$this->Xamplitude),
-                $i,
-                0,
-                1,
-                $this->height*$this->scale
-            );
+        $xp = $this->scale * $this->Xperiod * rand(1, 3) * $wdf;
+        $k = rand(1, 100);
+        for ($i = 0; $i < ($this->width * $this->scale); $i++) {
+            imagecopy($this->im, $this->im,
+                $i - 1, round(sin($k + $i / $xp) * ($this->scale * $this->Xamplitude)),
+                $i, 0, 1, $this->height * $this->scale);
         }
 
         // Y-axis wave generation
         $k = rand(0, 100);
-        $yp = $this->scale*$this->Yperiod*rand(1, 2);
-        for ($i = 0; $i < ($this->height*$this->scale); $i++) {
-            imagecopy(
-                $this->im,
-                $this->im,
-                sin($k+$i/$yp) * ($this->scale*$this->Yamplitude),
-                $i-1,
-                0,
-                $i,
-                $this->width*$this->scale,
-                1
-            );
+        $yp = $this->scale * ($this->Yperiod) * rand(1, 2) * $wdf;
+        for ($i = 0; $i < ($this->height * $this->scale); $i++) {
+            imagecopy($this->im, $this->im,
+                round(sin($k + $i / $yp) * ($this->scale * $this->Yamplitude)), $i - 1,
+                0, $i, $this->width * $this->scale, 1);
         }
     }
 
@@ -411,19 +413,12 @@ class Captcha
      */
     protected function ReduceImage()
     {
-        // Reduzco el tama�o de la imagen
+        // Reduzco el tamaño de la imagen
         $imResampled = imagecreatetruecolor($this->width, $this->height);
-        imagecopyresampled(
-            $imResampled,
-            $this->im,
-            0,
-            0,
-            0,
-            0,
-            $this->width,
-            $this->height,
-            $this->width*$this->scale,
-            $this->height*$this->scale
+        imagecopyresampled($imResampled, $this->im,
+            0, 0, 0, 0,
+            $this->width, $this->height,
+            $this->width * $this->scale, $this->height * $this->scale
         );
         imagedestroy($this->im);
         $this->im = $imResampled;
@@ -435,10 +430,10 @@ class Captcha
     protected function WriteImage()
     {
         if ($this->imageFormat == 'png' && function_exists('imagepng')) {
-            header("Content-type: image/png");
+            header('Content-Type: image/png');
             imagepng($this->im);
         } else {
-            header("Content-type: image/jpeg");
+            header('Content-Type: image/jpeg');
             imagejpeg($this->im, null, 80);
         }
     }
