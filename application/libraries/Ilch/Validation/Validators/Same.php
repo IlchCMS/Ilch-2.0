@@ -45,7 +45,7 @@ class Same extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Same
     {
         $strict = $this->getParameter(1);
 

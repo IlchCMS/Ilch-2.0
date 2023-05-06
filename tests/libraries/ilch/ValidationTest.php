@@ -8,14 +8,23 @@ namespace Ilch;
 
 use PHPUnit\Ilch\TestCase;
 
+/**
+ * Tests for the validation class.
+ */
 class ValidationTest extends TestCase
 {
+    /**
+     * This method is called before the first test of this test class is run.
+     */
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         Registry::set('translator', new Translator());
     }
 
+    /**
+     * This method is called after the last test of this test class is run.
+     */
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
@@ -64,10 +73,10 @@ class ValidationTest extends TestCase
      * @param array $expectedErrors
      */
     public function testValidationWithValidatorChainWithBreakingChain(
-        $validatorRules,
-        array $params,
-        bool $expected,
-        array $expectedErrors = []
+        string $validatorRules,
+        array  $params,
+        bool   $expected,
+        array  $expectedErrors = []
     ) {
         $validation = Validation::create($params, ['testField' => $validatorRules]);
 
@@ -80,7 +89,7 @@ class ValidationTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidationWithValidatorChainBreakingChain()
+    public function dpForTestValidationWithValidatorChainBreakingChain(): array
     {
         return [
             '2 validators chained - correct'       => [
@@ -129,10 +138,10 @@ class ValidationTest extends TestCase
      * @param array $expectedErrors
      */
     public function testValidationWithValidatorChainWithoutBreakingChain(
-        $validatorRules,
-        array $params,
-        bool $expected,
-        array $expectedErrors = []
+        string $validatorRules,
+        array  $params,
+        bool   $expected,
+        array  $expectedErrors = []
     ) {
         $this->addTearDownCallback(
             function () {
@@ -193,10 +202,10 @@ class ValidationTest extends TestCase
      * @param array $expectedErrors
      */
     public function testValidationWithVariousValidators(
-        $validatorRules,
-        array $params,
-        bool $expected,
-        array $expectedErrors = []
+        string $validatorRules,
+        array  $params,
+        bool   $expected,
+        array  $expectedErrors = []
     ) {
         $_SESSION['captcha'] = 'test';
         // Needed for Url validator
@@ -667,6 +676,11 @@ class ValidationTest extends TestCase
         ];
     }
 
+    /**
+     * Test translation
+     *
+     * @return void
+     */
     public function testTranslation()
     {
         $this->addTearDownCallback(
@@ -691,4 +705,74 @@ class ValidationTest extends TestCase
 
         self::assertSame(['Das Feld muss mindestens 3 betragen.'], $errorMessages);
     }
+
+    /**
+     * Test overwriting field name translations.
+     *
+     * @return void
+     */
+    public function testCustomFieldAliases()
+    {
+        $this->addTearDownCallback(
+            function () {
+                Registry::remove('translator');
+                Registry::set('translator', new Translator());
+            }
+        );
+        $translator = new Translator();
+        $translator->setTranslations(
+            [
+                'alias'                     => 'Alias',
+                'testField'                 => 'TestField',
+                'validation.errors.min.numeric' => '%s muss mindestens %s betragen.'
+            ]
+        );
+        Registry::remove('translator');
+        Registry::set('translator', $translator);
+
+        Validation::setCustomFieldAliases([
+            'testField' => 'alias',
+        ]);
+
+        $validation = Validation::create(['testField' => '2'], ['testField' => 'integer|min:3']);
+
+        $errorMessages = $validation->getErrorBag()->getErrorMessages();
+
+        self::assertSame(['Alias muss mindestens 3 betragen.'], $errorMessages);
+    }
+
+    /**
+     * Test hasError()
+     *
+     * @return void
+     */
+    public function testHasError()
+    {
+        $validation = Validation::create(['testField' => '2'], ['testField' => 'integer|min:3']);
+        $errorBag = $validation->getErrorBag();
+        self::assertFalse($errorBag->hasError('name'));
+        self::assertTrue($errorBag->hasError('testField'));
+    }
+
+//    /**
+//     * Test overwriting error messages.
+//     *
+//     * @return void
+//     */
+//    public function testCustomErrorKeys()
+//    {
+//        Validation::setCustomErrorKeys([
+//            'testField' => [
+//                'min' => [
+//                    'validation.errors.min.numeric' => 'validation.errors.captcha.wrongCaptcha',
+//                ],
+//            ],
+//        ]);
+//
+//        $validation = Validation::create(['testField' => 2], ['testField' => 'min:3']);
+//
+//        $errorMessages = $validation->getErrorBag()->getErrorMessages();
+//
+//        self::assertSame(['validation.errors.captcha.wrongCaptcha'], $errorMessages);
+//    }
 }

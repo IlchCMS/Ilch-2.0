@@ -22,7 +22,7 @@ class Email extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Email
     {
         $value = $this->getValue();
 

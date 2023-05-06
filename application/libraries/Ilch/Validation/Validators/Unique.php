@@ -5,6 +5,7 @@
 
 namespace Ilch\Validation\Validators;
 
+use Ilch\Database\Mysql\Expression\Comparison;
 use Ilch\Registry;
 
 /**
@@ -47,7 +48,7 @@ class Unique extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Unique
     {
         $db = Registry::get('db');
 
@@ -61,7 +62,7 @@ class Unique extends Base
         $whereMiddle = '=';
         $whereRight = $db->escape(strtolower($this->getValue()), true);
 
-        $where = new \Ilch\Database\Mysql\Expression\Comparison($whereLeft, $whereMiddle, $whereRight);
+        $where = new Comparison($whereLeft, $whereMiddle, $whereRight);
 
         $result = $db->select()
             ->from($table)

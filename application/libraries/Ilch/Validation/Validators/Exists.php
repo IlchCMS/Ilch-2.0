@@ -5,7 +5,9 @@
 
 namespace Ilch\Validation\Validators;
 
-use \Ilch\Registry;
+use Ilch\Database\Mysql\Select;
+use Ilch\Registry;
+use InvalidArgumentException;
 
 /**
  * Exists validation class.
@@ -29,7 +31,7 @@ class Exists extends Base
     /**
      * Select instance
      *
-     * @var Ilch\Database\Mysql\Select
+     * @var Select
      */
     protected $query;
 
@@ -54,7 +56,7 @@ class Exists extends Base
      *
      * @return self
      */
-    public function run()
+    public function run(): Exists
     {
         if (empty($this->getValue()) && $this->getValue() !== 0 && $this->getValue() !== '0') {
             $this->setIsValid(true);
@@ -89,11 +91,10 @@ class Exists extends Base
         $conditions = $this->getConditions();
 
         if (count($conditions) % 2 !== 0) {
-            throw new \InvalidArgumentException(get_class($this).': Wrong parameter count.');
+            throw new InvalidArgumentException(get_class($this).': Wrong parameter count.');
         }
 
         $chunks = array_chunk($conditions, 2);
-        $conditions = array();
 
         foreach ($chunks as $chunk) {
             $this->query->andWhere([$chunk[0] => $chunk[1]]);
@@ -103,9 +104,9 @@ class Exists extends Base
     /**
      * Returns true if there are conditions in the rule definition
      *
-     * @return boolean
+     * @return bool
      */
-    protected function hasConditions()
+    protected function hasConditions(): bool
     {
         return count($this->getParameters()) > 2;
     }
@@ -115,7 +116,7 @@ class Exists extends Base
      *
      * @return array
      */
-    protected function getConditions()
+    protected function getConditions(): array
     {
         return array_slice($this->getParameters(), 2);
     }
