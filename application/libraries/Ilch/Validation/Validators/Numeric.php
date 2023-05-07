@@ -31,7 +31,7 @@ class Numeric extends Base
      * @var string
      * @since 2.1.43
      */
-    protected $invertErrorKey = 'validation.errors.required.dontBeNumeric';
+    protected $invertErrorKey = 'validation.errors.numeric.dontBeNumeric';
 
     /**
      * Runs the validation.
