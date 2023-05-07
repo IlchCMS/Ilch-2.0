@@ -464,7 +464,7 @@ class ValidationTest extends TestCase
                 'params'         => ['testField' => 1],
                 'expected'       => false,
                 'expectedErrors' => [
-                    'testField' => ['validation.errors.required.dontBeNumeric']
+                    'testField' => ['validation.errors.numeric.dontBeNumeric']
                 ]
             ],
             'Numeric validator - valid inverted' => [
