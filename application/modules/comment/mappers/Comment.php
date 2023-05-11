@@ -293,9 +293,9 @@ class Comment extends \Ilch\Mapper
      * Get the id of a comment with a specific fk_id.
      *
      * @param int $fk_id
-     * @return int $id
+     * @return int|null id
      */
-    public function getCommentIdbyFKid(int $fk_id): int
+    public function getCommentIdbyFKid(int $fk_id): ?int
     {
         return $this->db()->select('id', 'comments', ['fk_id' => $fk_id])
             ->execute()
