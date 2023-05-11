@@ -78,11 +78,11 @@ class Comments
                                         $obj->escape($user->getName()).'
                                     </a>
                                     <p class="text-muted small">
-                                        <i class="fa fa-clock-o" title="'.$obj->getTrans('commentDateTime').'"></i> '.$commentDate->format('d.m.Y - H:i', true).'
+                                        <i class="fa-regular fa-clock" title="'.$obj->getTrans('commentDateTime').'"></i> '.$commentDate->format('d.m.Y - H:i', true).'
                                     </p>
                                 </div>
                                 <div class="pull-right text-muted small">
-                                    <i class="fa fa-reply fa-flip-vertical"></i> '.$user_rep->getName().'
+                                    <i class="fa-solid fa-reply fa-flip-vertical"></i> '.$user_rep->getName().'
                                 </div>
                             </div>
                             <p>'.nl2br($obj->escape($fk_comment->getText())).'</p>
@@ -91,20 +91,20 @@ class Comments
                 $commentsHtml .= '
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-default btn-hover-success" href="'.$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'up']).'" title="'.$obj->getTrans('iLike').'">
-                                        <i class="fa fa-thumbs-up"></i> '.$obj->escape($fk_comment->getUp()).'
+                                        <i class="fa-solid fa-thumbs-up"></i> '.$obj->escape($fk_comment->getUp()).'
                                     </a>
                                     <a class="btn btn-sm btn-default btn-hover-danger" href="'.$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'down']).'" title="'.$obj->getTrans('notLike').'">
-                                        <i class="fa fa-thumbs-down"></i> '.$obj->escape($fk_comment->getDown()).'
+                                        <i class="fa-solid fa-thumbs-down"></i> '.$obj->escape($fk_comment->getDown()).'
                                     </a>
                                 </div>';
             } else {
                 $commentsHtml .= '
                                 <div class="btn-group">
                                     <button class="btn btn-sm btn-default btn-success">
-                                        <i class="fa fa-thumbs-up"></i> '.$obj->escape($fk_comment->getUp()).'
+                                        <i class="fa-solid fa-thumbs-up"></i> '.$obj->escape($fk_comment->getUp()).'
                                     </button>
                                     <button class="btn btn-sm btn-default btn-danger">
-                                        <i class="fa fa-thumbs-down"></i> '.$obj->escape($fk_comment->getDown()).'
+                                        <i class="fa-solid fa-thumbs-down"></i> '.$obj->escape($fk_comment->getDown()).'
                                     </button>
                                 </div>';
             }
@@ -112,7 +112,7 @@ class Comments
             if ($obj->getUser() && $config->get('comment_reply') == 1 && $req < $config->get('comment_nesting')-1) {
                 $commentsHtml .= '
                                 <a href="javascript:slideReply(\'reply_'.$fk_comment->getId().'\');" class="btn btn-sm btn-default btn-hover-primary">
-                                    <i class="fa fa-reply"></i> '.$obj->getTrans('reply').'
+                                    <i class="fa-solid fa-reply"></i> '.$obj->getTrans('reply').'
                                 </a>';
             }
 
@@ -140,11 +140,11 @@ class Comments
                                                         $obj->escape($obj->getUser()->getName()).'
                                                     </a>
                                                     <p class="text-muted small">
-                                                        <i class="fa fa-clock-o" title="'.$obj->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
+                                                        <i class="fa-regular fa-clock" title="'.$obj->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
                                                     </p>
                                                 </div>
                                                 <div class="pull-right text-muted small">
-                                                    <i class="fa fa-reply fa-flip-vertical"></i> '.$user->getName().'
+                                                    <i class="fa-solid fa-reply fa-flip-vertical"></i> '.$user->getName().'
                                                 </div>
                                             </div>
                                             <p>
@@ -238,7 +238,7 @@ class Comments
                 $layout->escape($layout->getUser()->getName()).'
                                         </a>
                                         <p class="text-muted small">
-                                            <i class="fa fa-clock-o" title="'.$layout->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
+                                            <i class="fa-regular fa-clock" title="'.$layout->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
                                         </p>
                                     </div>
                                     <p>
@@ -282,7 +282,7 @@ class Comments
                                 <div>
                                     <a href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]).'" title="'.$layout->escape($user->getName()).'">'.$layout->escape($user->getName()).'</a>
                                     <p class="text-muted small">
-                                        <i class="fa fa-clock-o" title="'.$layout->getTrans('commentDateTime').'"></i> '.$commentDate->format('d.m.Y - H:i', true).'
+                                        <i class="fa-regular fa-clock" title="'.$layout->getTrans('commentDateTime').'"></i> '.$commentDate->format('d.m.Y - H:i', true).'
                                     </p>
                                 </div>
                                 <p>'.nl2br($layout->escape($comment->getText())).'</p>
@@ -292,20 +292,20 @@ class Comments
                 $commentsHtml .= '
                                     <div class="btn-group">
                                         <a class="btn btn-sm btn-default btn-hover-success" href="'.$layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'up']).'" title="'.$layout->getTrans('iLike').'">
-                                            <i class="fa fa-thumbs-up"></i> '.$comment->getUp().'
+                                            <i class="fa-solid fa-thumbs-up"></i> '.$comment->getUp().'
                                         </a>
                                         <a class="btn btn-sm btn-default btn-hover-danger" href="'.$layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'down']).'" title="'.$layout->getTrans('notLike').'">
-                                            <i class="fa fa-thumbs-down"></i> '.$comment->getDown().'
+                                            <i class="fa-solid fa-thumbs-down"></i> '.$comment->getDown().'
                                         </a>
                                     </div>';
             } else {
                 $commentsHtml .= '
                                     <div class="btn-group">
                                         <button class="btn btn-sm btn-default btn-success">
-                                            <i class="fa fa-thumbs-up"></i> '.$comment->getUp().'
+                                            <i class="fa-solid fa-thumbs-up"></i> '.$comment->getUp().'
                                         </button>
                                         <button class="btn btn-sm btn-default btn-danger">
-                                            <i class="fa fa-thumbs-down"></i> '.$comment->getDown().'
+                                            <i class="fa-solid fa-thumbs-down"></i> '.$comment->getDown().'
                                         </button>
                                     </div>';
             }
@@ -313,7 +313,7 @@ class Comments
             if ($layout->getUser() && $config->get('comment_reply') == 1 && $config->get('comment_nesting') > 0) {
                 $commentsHtml .= '
                                     <a href="javascript:slideReply(\'reply_'.$comment->getId().'\');" class="btn btn-sm btn-default btn-hover-primary">
-                                        <i class="fa fa-reply"></i> '.$layout->getTrans('reply').'
+                                        <i class="fa-solid fa-reply"></i> '.$layout->getTrans('reply').'
                                     </a>';
             }
             $commentsHtml .= '
@@ -337,11 +337,11 @@ class Comments
                                                                 $layout->escape($layout->getUser()->getName()).'
                                                             </a>
                                                             <p class="text-muted small">
-                                                                <i class="fa fa-clock-o" title="'.$layout->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
+                                                                <i class="fa-regular fa-clock" title="'.$layout->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
                                                             </p>
                                                         </div>
                                                         <div class="pull-right text-muted small">
-                                                            <i class="fa fa-reply fa-flip-vertical"></i> '.$layout->escape($user->getName()).'
+                                                            <i class="fa-solid fa-reply fa-flip-vertical"></i> '.$layout->escape($user->getName()).'
                                                         </div>
                                                     </div>
                                                     <p>
@@ -401,10 +401,22 @@ function slideReply(thechosenone) {
      * @param string $key key for the comment e.g. "article/index/show/id/1"
      * @param string $text text of the comment
      * @param int $userId id of the user.
+     * @return bool true if sucessfully saved. currently false if it triggered the flooding protection.
      * @since 2.1.37
+     * @since 2.1.50 boolean return value. true if sucessfully saved. false if it triggered the flooding protection.
      */
-    public function saveComment(string $key, string $text, int $userId)
+    public function saveComment(string $key, string $text, int $userId): bool
     {
+        $commentMapper = new CommentMapper();
+
+        $config = Registry::get('config');
+        $dateCreated = $commentMapper->getDateOfLastCommentByUserId($userId);
+        $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser($userId)->getGroups()), explode(',', $config->get('comment_excludeFloodProtection')));
+
+        if ($config->get('comment_floodInterval') > 0 && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$config->get('comment_floodInterval')))) {
+            return false;
+        }
+
         $splittedKey = explode('/', $key);
         $fkId = null;
 
@@ -414,7 +426,6 @@ function slideReply(thechosenone) {
             }
         }
 
-        $commentMapper = new CommentMapper();
         $date = new Date();
         $commentModel = new CommentModel();
         $commentModel->setKey($key);
@@ -425,6 +436,8 @@ function slideReply(thechosenone) {
         $commentModel->setDateCreated($date);
         $commentModel->setUserId($userId);
         $commentMapper->save($commentModel);
+
+        return true;
     }
 
     /**
