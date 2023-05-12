@@ -16,7 +16,7 @@ class Comment extends \Ilch\Mapper
      * @param string $key
      * @return CommentModel[]|array
      */
-    public function getCommentsByKey($key)
+    public function getCommentsByKey(string $key): array
     {
         $key = $this->addMissingSlashIfNeeded($key);
 
@@ -51,7 +51,7 @@ class Comment extends \Ilch\Mapper
      * @param string $key
      * @return CommentModel[]|array
      */
-    public function getCommentsLikeKey($key)
+    public function getCommentsLikeKey(string $key): array
     {
         $key = $this->addMissingSlashIfNeeded($key);
 
@@ -82,10 +82,10 @@ class Comment extends \Ilch\Mapper
     /**
      * Get comments by specific id.
      *
-     * @param integer $id
+     * @param int $id
      * @return CommentModel|null
      */
-    public function getCommentById($id)
+    public function getCommentById(int $id): ?CommentModel
     {
         $commentRow = $this->db()->select('*')
             ->from('comments')
@@ -114,10 +114,10 @@ class Comment extends \Ilch\Mapper
     /**
      * Get comments by fkid
      *
-     * @param integer $fkid
+     * @param int $fkid
      * @return array
      */
-    public function getCommentsByFKid($fkid)
+    public function getCommentsByFKid(int $fkid): array
     {
         $commentsArray = $this->db()->select('*')
             ->from('comments')
@@ -147,10 +147,10 @@ class Comment extends \Ilch\Mapper
     /**
      * Get comments.
      *
-     * @param integer $limit
+     * @param int|null $limit
      * @return CommentModel[]
      */
-    public function getComments($limit = null)
+    public function getComments(int $limit = null): array
     {
         $select = $this->db()->select('*')
             ->from('comments')
@@ -185,9 +185,9 @@ class Comment extends \Ilch\Mapper
      * Gets the count of all comments with given $key.
      *
      * @param string $key
-     * @return integer
+     * @return int
      */
-    public function getCountComments($key)
+    public function getCountComments(string $key): int
     {
         $key = $this->addMissingSlashIfNeeded($key);
 
@@ -196,6 +196,30 @@ class Comment extends \Ilch\Mapper
             ->where(['key LIKE' => $key.'%'])
             ->execute()
             ->fetchCell();
+    }
+
+    /**
+     * Get date of last comment of a user.
+     *
+     * @param int $userId
+     * @return int|string
+     * @since 2.1.50
+     */
+    public function getDateOfLastCommentByUserId(int $userId)
+    {
+        $select = $this->db()->select('date_created')
+            ->from('comments')
+            ->where(['user_id' => $userId])
+            ->order(['id' => 'DESC'])
+            ->limit(1)
+            ->execute()
+            ->fetchCell();
+
+        if (empty($select)) {
+            return 0;
+        }
+
+        return $select;
     }
 
     /**
@@ -241,9 +265,9 @@ class Comment extends \Ilch\Mapper
     /**
      * Delete comment.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         do {
             $this->db()->delete('comments')
@@ -258,7 +282,7 @@ class Comment extends \Ilch\Mapper
      *
      * @param string $key
      */
-    public function deleteByKey($key)
+    public function deleteByKey(string $key)
     {
         $this->db()->delete('comments')
             ->where(['key LIKE' => $key.'%'])
@@ -268,10 +292,11 @@ class Comment extends \Ilch\Mapper
     /**
      * Get the id of a comment with a specific fk_id.
      *
-     * @param integer $fk_id
-     * @return integer $id
+     * @param int $fk_id
+     * @return int|null id
      */
-    public function getCommentIdbyFKid($fk_id) {
+    public function getCommentIdbyFKid(int $fk_id): ?int
+    {
         return $this->db()->select('id', 'comments', ['fk_id' => $fk_id])
             ->execute()
             ->fetchCell();
@@ -283,7 +308,7 @@ class Comment extends \Ilch\Mapper
      * @param string $key
      * @return string key with slash at the end
      */
-    private function addMissingSlashIfNeeded($key)
+    private function addMissingSlashIfNeeded(string $key): string
     {
         if (!(strlen($key) - (strrpos($key, '/')) === 0)) {
             // Add missing slash at the end to usually terminate the id.

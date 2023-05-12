@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'comment',
-        'icon_small' => 'fa-comments-o',
+        'icon_small' => 'fa-regular fa-comments',
         'system_module' => true,
         'hide_menu' => true,
         'languages' => [
@@ -43,6 +43,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('comment_reply', '1');
         $databaseConfig->set('comment_nesting', '5');
         $databaseConfig->set('comment_box_comments_limit', '5');
+        $databaseConfig->set('comment_floodInterval', '10');
+        $databaseConfig->set('comment_excludeFloodProtection', '1');
     }
 
     public function getInstallSql()
