@@ -414,6 +414,9 @@ function slideReply(thechosenone) {
         $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser($userId)->getGroups()), explode(',', $config->get('comment_excludeFloodProtection')));
 
         if ($config->get('comment_floodInterval') > 0 && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$config->get('comment_floodInterval')))) {
+            $translator = new \Ilch\Translator();
+            $translator->load(APPLICATION_PATH.'/modules/comment/translations/');
+            $_SESSION['messages'][] = ['text' => $translator->trans('floodError'), 'type' => 'danger'];
             return false;
         }
 
