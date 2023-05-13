@@ -1,5 +1,5 @@
 <link href="<?=$this->getBaseUrl('application/modules/partner/static/css/partners.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.css') ?>" rel="stylesheet">
+<link href="<?=$this->getBaseUrl('application/modules/partner/static/js/jquery.bxslider/jquery.bxslider.min.css') ?>" rel="stylesheet">
 <style>
 .partner-box .partnersslider .bx-viewport {
     height: <?=$this->get('boxHeight') ?>px !important;
@@ -52,14 +52,13 @@
     <?php endif; ?>
 </div>
 
-<script src="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.min.js') ?>"></script>
+<script src="<?=$this->getBaseUrl('application/modules/partner/static/js/jquery.bxslider/jquery.bxslider.min.js') ?>"></script>
 <script>
 $('.bxslider').bxSlider({
     mode: '<?=$this->get('sliderMode') ?>',
     ticker: true,
     slideMargin: 10,
     speed: <?=$this->get('sliderSpeed') ?>,
-    useCSS: false,
     tickerHover: true
 });
 </script>
