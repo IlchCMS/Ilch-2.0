@@ -9,12 +9,13 @@
     margin-right: 15px !important;
     margin-bottom: 0;
 }
-
 .partner-box .partnersslider .bx-wrapper {
     margin: 0;
 }
 .partner-box .partnersslider .bx-viewport {
-    border: 0;
-    box-shadow: none !important;
     left: 0;
+}
+.bx-wrapper {
+    border: 0 !important;
+    box-shadow: none !important;
 }

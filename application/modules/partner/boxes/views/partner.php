@@ -59,7 +59,6 @@ $('.bxslider').bxSlider({
     ticker: true,
     slideMargin: 10,
     speed: <?=$this->get('sliderSpeed') ?>,
-    useCSS: false,
     tickerHover: true
 });
 </script>
