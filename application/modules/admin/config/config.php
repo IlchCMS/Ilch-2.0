@@ -882,6 +882,7 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
                 break;
             case "2.1.49":
+                replaceVendorDirectory();
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('comment_floodInterval', '10');
                 $databaseConfig->set('comment_excludeFloodProtection', '1');
