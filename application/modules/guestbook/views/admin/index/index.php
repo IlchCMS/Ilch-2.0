@@ -61,7 +61,7 @@
                                 $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
                             }
 
-                            echo '<a href="'.$this->getUrl($freeArray, null, true).'" title="'.$this->getTrans('setfree').'"><span class="fa fa-check-square-o text-success"></span></a>';
+                            echo '<a href="'.$this->getUrl($freeArray, null, true).'" title="'.$this->getTrans('setfree').'"><span class="fa-regular fa-square-check text-success"></span></a>';
                             echo '</td>';
                         }
 

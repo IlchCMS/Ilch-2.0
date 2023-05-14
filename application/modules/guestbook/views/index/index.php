@@ -20,12 +20,12 @@
                 <div class="col-sm-6 col-lg-3">
                     <?php if ($this->getUser() && $this->getUser()->isAdmin()) : ?>
                         <a target="_blank" href="mailto:<?=$this->escape($entry->getEmail()) ?>">
-                            <i class="fa fa-envelope"></i>
+                            <i class="fa-solid fa-envelope"></i>
                         </a>
                     <?php endif; ?>
                     <?php if ($entry->getHomepage() != ''): ?>
                         <a target="_blank" rel="noopener" href="<?=$this->escape($entry->getHomepage()) ?>">
-                            <i class="fa fa-home"></i>
+                            <i class="fa-solid fa-house"></i>
                         </a>
                     <?php endif; ?>
                 </div>

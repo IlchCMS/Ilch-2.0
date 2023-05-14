@@ -6,6 +6,7 @@
 
 namespace Modules\Guestbook\Mappers;
 
+use Ilch\Database\Mysql\Result;
 use Modules\Guestbook\Models\Entry as GuestbookModel;
 
 class Guestbook extends \Ilch\Mapper
@@ -17,7 +18,7 @@ class Guestbook extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return GuestbookModel[]|array
      */
-    public function getEntries($where = [], $pagination = null)
+    public function getEntries(array $where = [], \Ilch\Pagination $pagination = null): array
     {
         $select = $this->db()->select('*')
             ->from('gbook')
@@ -82,9 +83,10 @@ class Guestbook extends \Ilch\Mapper
     /**
      * Deletes the guestbook entry.
      *
-     * @param integer $id
+     * @param int $id
+     * @return Result|int
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         return $this->db()->delete('gbook')
             ->where(['id' => $id])
@@ -94,12 +96,12 @@ class Guestbook extends \Ilch\Mapper
     /**
      * Reset the Vote counts.
      *
-     * @param null|integer $setfree
-     * @return boolean
+     * @param int|null $setfree
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.11.0
      */
-    public function reset($setfree = null)
+    public function reset(int $setfree = null): bool
     {
         if ($setfree == null) {
             $this->db()->truncate('[prefix]_gbook');
