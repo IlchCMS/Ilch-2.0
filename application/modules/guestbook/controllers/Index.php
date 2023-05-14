@@ -35,7 +35,7 @@ class Index extends \Ilch\Controller\Frontend
     public function newEntryAction()
     {
         $guestbookMapper = new GuestbookMapper();
-        $ilchDate = new \Ilch\Date;
+        $ilchDate = new \Ilch\Date();
         $captchaNeeded = captchaNeeded();
 
         $this->getLayout()->getTitle()

@@ -11,7 +11,7 @@ class Entry extends \Ilch\Model
     /**
      * The id of the entry.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -53,16 +53,16 @@ class Entry extends \Ilch\Model
     /**
      * The setfee of the entry.
      *
-     * @var integer
+     * @var int
      */
     protected $setFree;
 
     /**
      * Gets the id of the entry.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -72,7 +72,7 @@ class Entry extends \Ilch\Model
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -82,7 +82,7 @@ class Entry extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -92,7 +92,7 @@ class Entry extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -102,7 +102,7 @@ class Entry extends \Ilch\Model
      *
      * @return string
      */
-    public function getHomepage()
+    public function getHomepage(): string
     {
         return $this->homepage;
     }
@@ -112,7 +112,7 @@ class Entry extends \Ilch\Model
      *
      * @return string
      */
-    public function getDatetime()
+    public function getDatetime(): string
     {
         return $this->datetime;
     }
@@ -120,9 +120,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the setfree of the entry.
      *
-     * @return string
+     * @return int
      */
-    public function getFree()
+    public function getFree(): int
     {
         return $this->setFree;
     }
@@ -130,12 +130,12 @@ class Entry extends \Ilch\Model
     /**
      * Sets the id of the entry.
      *
-     * @param integer $id
+     * @param int $id
      * @return Entry
      */
-    public function setId($id)
+    public function setId(int $id): Entry
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -146,9 +146,9 @@ class Entry extends \Ilch\Model
      * @param string $email
      * @return Entry
      */
-    public function setEmail($email)
+    public function setEmail(string $email): Entry
     {
-        $this->email = (string)$email;
+        $this->email = $email;
 
         return $this;
     }
@@ -159,9 +159,9 @@ class Entry extends \Ilch\Model
      * @param string $text
      * @return Entry
      */
-    public function setText($text)
+    public function setText(string $text): Entry
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -172,9 +172,9 @@ class Entry extends \Ilch\Model
      * @param string $name
      * @return Entry
      */
-    public function setName($name)
+    public function setName(string $name): Entry
     {
-        $this->name = (string)$name;
+        $this->name = $name;
 
         return $this;
     }
@@ -185,9 +185,9 @@ class Entry extends \Ilch\Model
      * @param string $homepage
      * @return Entry
      */
-    public function setHomepage($homepage)
+    public function setHomepage(string $homepage): Entry
     {
-        $this->homepage = (string)$homepage;
+        $this->homepage = $homepage;
 
         return $this;
     }
@@ -198,9 +198,9 @@ class Entry extends \Ilch\Model
      * @param string $datetime
      * @return Entry
      */
-    public function setDatetime($datetime)
+    public function setDatetime(string $datetime): Entry
     {
-        $this->datetime = (string)$datetime;
+        $this->datetime = $datetime;
 
         return $this;
     }
@@ -208,12 +208,12 @@ class Entry extends \Ilch\Model
     /**
      * Sets the free of the entry.
      *
-     * @param integer $free
+     * @param int $free
      * @return Entry
      */
-    public function setFree($free)
+    public function setFree(int $free): Entry
     {
-        $this->setFree = (integer)$free;
+        $this->setFree = $free;
 
         return $this;
     }

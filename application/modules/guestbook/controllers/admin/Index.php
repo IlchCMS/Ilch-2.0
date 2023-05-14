@@ -18,19 +18,19 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'reset',
                     'active' => false,
-                    'icon' => 'fas fa-trash-alt',
+                    'icon' => 'fa-solid fa-trash-can',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'reset'])
                 ]
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -111,11 +111,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id')) && is_numeric($this->getRequest()->getParam('id'))) {
             $guestbookMapper = new GuestbookMapper();
 
             $guestbookMapper->delete($this->getRequest()->getParam('id'));
-
             $this->addMessage('deleteSuccess');
         }
 
@@ -128,7 +127,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function setfreeAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id')) && is_numeric($this->getRequest()->getParam('id'))) {
             $guestbookMapper = new GuestbookMapper();
 
             $model = new GuestbookModel();
@@ -146,8 +145,6 @@ class Index extends \Ilch\Controller\Admin
 
     public function resetAction()
     {
-        $guestbookMapper = new GuestbookMapper();
-
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('reset'), ['action' => 'clear']);

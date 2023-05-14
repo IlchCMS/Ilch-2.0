@@ -3,60 +3,65 @@
 <form id="guestbookForm" name="guestbookForm" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group hidden">
-        <label class="col-lg-2 control-label">
+        <label for="bot" class="col-lg-2 control-label">
             <?=$this->getTrans('bot') ?>*
         </label>
         <div class="col-lg-8">
             <input type="text"
                    class="form-control"
                    name="bot"
+                   id="bot"
                    placeholder="Bot" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label class="col-lg-2 control-label">
+        <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>*
         </label>
         <div class="col-lg-8">
             <input type="text"
                    class="form-control"
                    name="name"
+                   id="name"
                    placeholder="<?=$this->getTrans('name') ?>"
                    value="<?=$this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
-        <label class="col-lg-2 control-label">
+        <label for="email" class="col-lg-2 control-label">
             <?=$this->getTrans('email') ?>*
         </label>
         <div class="col-lg-8">
             <input type="email"
                    class="form-control"
                    name="email"
+                   id="email"
                    placeholder="<?=$this->getTrans('emailVisibleForAdmins') ?>"
                    value="<?=$this->escape($this->originalInput('email')) ?>" />
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
-        <label class="col-lg-2 control-label">
+        <label for="homepage" class="col-lg-2 control-label">
             <?=$this->getTrans('page') ?>
         </label>
         <div class="col-lg-8">
            <input type="text"
                   class="form-control"
                   name="homepage"
+                  id="homepage"
                   placeholder="<?=$this->getTrans('page') ?>"
                   value="<?=$this->escape($this->originalInput('homepage')) ?>" />
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label class="col-lg-2 control-label">
+        <label for="text" class="col-lg-2 control-label">
             <?=$this->getTrans('message') ?>*
         </label>
         <div class="col-lg-8">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="text"
+                      id="text"
                       toolbar="ilch_bbcode"
                       required><?=$this->escape($this->originalInput('text')) ?></textarea>
         </div>

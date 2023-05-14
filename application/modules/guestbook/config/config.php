@@ -10,8 +10,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'version' => '1.11.0',
-        'icon_small' => 'fa-book',
+        'version' => '1.12.0',
+        'icon_small' => 'fa-solid fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
         'official' => true,
@@ -22,11 +22,11 @@ class Config extends \Ilch\Config\Install
             ],
             'en_EN' => [
                 'name' => 'Guestbook',
-                'description' => 'A guestbook with optional welcome message. New entries can be shown only after approval if wished. ',
+                'description' => 'A guestbook with optional welcome message. New entries can be shown only after approval if wished.',
             ],
         ],
-        'ilchCore' => '2.1.43',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -80,6 +80,8 @@ class Config extends \Ilch\Config\Install
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'guestbook' AND `locale` = '%s';", $value['description'], $key));
                 }
+            case "1.11.0":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-book' WHERE `key` = 'guestbook';");
         }
     }
 }

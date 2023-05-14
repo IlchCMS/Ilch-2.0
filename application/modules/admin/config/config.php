@@ -886,6 +886,7 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('comment_floodInterval', '10');
                 $databaseConfig->set('comment_excludeFloodProtection', '1');
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-regular fa-comments' WHERE `key` = 'comment';");
                 break;
         }
 
