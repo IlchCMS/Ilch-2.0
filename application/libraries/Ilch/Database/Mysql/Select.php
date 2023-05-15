@@ -11,17 +11,17 @@ use Ilch\Database\Mysql as DB;
 class Select extends QueryBuilder
 {
     /**
-     * @var integer|null
+     * @var int|null
      */
     protected $limit;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     protected $offset;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     protected $page;
 
@@ -51,7 +51,7 @@ class Select extends QueryBuilder
     /**
      * Create Select Statement Query Builder
      *
-     * @param \Ilch\Database\Mysql $db
+     * @param DB $db
      * @param array|string|null $fields
      * @param string|null $table table without prefix
      * @param array|null $where conditions @see QueryBuilder::where()
@@ -59,12 +59,12 @@ class Select extends QueryBuilder
      * @param array|int|null $limit
      */
     public function __construct(
-        DB $db,
-        $fields = null,
-        $table = null,
-        $where = null,
-        array $orderBy = null,
-        $limit = null
+        DB     $db,
+               $fields = null,
+        string $table = null,
+        array  $where = null,
+        array  $orderBy = null,
+               $limit = null
     ) {
         parent::__construct($db);
 
@@ -89,9 +89,9 @@ class Select extends QueryBuilder
      * Adds table to query builder.
      *
      * @param string|array $table table without prefix (as array with alias as key)
-     * @return \Ilch\Database\Mysql\Select
+     * @return Select
      */
-    public function from($table)
+    public function from($table): Select
     {
         $this->table = $table;
 
@@ -102,12 +102,12 @@ class Select extends QueryBuilder
      * Adds fields to query builder.
      *
      * @param array|string $fields
-     * @param boolean $replace [default: true]
+     * @param bool $replace [default: true]
      *
-     * @return \Ilch\Database\Mysql\Select
+     * @return Select
      * @throws \InvalidArgumentException for invalid $fields parameter
      */
-    public function fields($fields, $replace = true)
+    public function fields($fields, bool $replace = true): Select
     {
         if ($fields === '*') {
             return $this;
@@ -128,9 +128,9 @@ class Select extends QueryBuilder
      * Adds order to query builder.
      *
      * @param array $order [field => direction]
-     * @return \Ilch\Database\Mysql\Select
+     * @return Select
      */
-    public function order(array $order)
+    public function order(array $order): Select
     {
         $this->order = $order;
 
@@ -140,9 +140,9 @@ class Select extends QueryBuilder
     /**
      * Sets page for query builder (offset will be used first)
      * @param int $page
-     * @return \Ilch\Database\Mysql\Select
+     * @return Select
      */
-    public function page($page)
+    public function page(int $page): Select
     {
         $this->page = (int) $page;
         return $this;
@@ -151,10 +151,10 @@ class Select extends QueryBuilder
     /**
      * Adds limit to query builder.
      *
-     * @param array|integer $limit if array -> [offset, limit]
-     * @return \Ilch\Database\Mysql\Select
+     * @param array|int $limit if array -> [offset, limit]
+     * @return Select
      */
-    public function limit($limit)
+    public function limit($limit): Select
     {
         if (\is_array($limit)) {
             $limitCount = \count($limit);
@@ -175,9 +175,9 @@ class Select extends QueryBuilder
      * Sets offset for query builder
      *
      * @param int $offset
-     * @return \Ilch\Database\Mysql\Select
+     * @return Select
      */
-    public function offset($offset)
+    public function offset(int $offset): Select
     {
         $this->offset = (int) $offset;
         return $this;
@@ -187,9 +187,9 @@ class Select extends QueryBuilder
      * Adds a join to the query (builder)
      *
      * @param Expression\Join $join
-     * @return \Ilch\Database\Mysql\Select
+     * @return Select
      */
-    public function addJoin(Expression\Join $join)
+    public function addJoin(Expression\Join $join): Select
     {
         $this->joins[] = $join;
         return $this;
@@ -200,7 +200,7 @@ class Select extends QueryBuilder
      * @param string $type
      * @return Expression\Join
      */
-    public function createJoin($table, $type = Expression\Join::INNER)
+    public function createJoin($table, string $type = Expression\Join::INNER): Expression\Join
     {
         return new Expression\Join($table, $type);
     }
@@ -211,10 +211,10 @@ class Select extends QueryBuilder
      * @param string|array $table
      * @param string|array $conditions
      * @param string $type
-     * @param array $fields
-     * @return \Ilch\Database\Mysql\Select
+     * @param array|null $fields
+     * @return Select
      */
-    public function join($table, $conditions, $type = Expression\Join::INNER, array $fields = null)
+    public function join($table, $conditions, string $type = Expression\Join::INNER, array $fields = null): Select
     {
         $join = $this->createJoin($table, $type);
         if (\is_string($conditions)) {
@@ -231,12 +231,10 @@ class Select extends QueryBuilder
      * Add GROUP BY to the query (builder)
      *
      * @param array $fields ['field' => 'DESC|ASC', 'field2']
-     * @param boolean $replace
-     * @deprecated providing a sort order like 'field' => 'DESC|ASC' is deprecated.
-     *
-     * @return \Ilch\Database\Mysql\Select
+     * @param bool $replace
+     * @return Select
      */
-    public function group(array $fields, $replace = true)
+    public function group(array $fields, bool $replace = true): Select
     {
         if ($replace) {
             $this->groupByFields = $fields;
@@ -248,10 +246,10 @@ class Select extends QueryBuilder
     }
 
     /**
-     * @param $useFoundRows
-     * @return \Ilch\Database\Mysql\Select
+     * @param bool $useFoundRows
+     * @return Select
      */
-    public function useFoundRows($useFoundRows = true)
+    public function useFoundRows(bool $useFoundRows = true): Select
     {
         $this->useFoundRows = (bool) $useFoundRows;
         return $this;
@@ -260,9 +258,9 @@ class Select extends QueryBuilder
     /**
      * Execute the generated query
      *
-     * @return \Ilch\Database\Mysql\Result
+     * @return Result
      */
-    public function execute()
+    public function execute(): Result
     {
         $result = new Result($this->db->query($this->generateSql()), $this->db);
 
@@ -281,7 +279,7 @@ class Select extends QueryBuilder
      * @return array
      * @since 2.1.43
      */
-    private function generateSqlForJoins($fields): array
+    private function generateSqlForJoins(array $fields): array
     {
         $joinSql = [];
 
@@ -343,7 +341,7 @@ class Select extends QueryBuilder
      * @throws \RuntimeException if sql could not be generated
      * @throws \InvalidArgumentException if invalid parts were configured
      */
-    public function generateSql()
+    public function generateSql(): string
     {
         if (empty($this->table)) {
             throw new \RuntimeException('table must be set');
@@ -393,10 +391,10 @@ class Select extends QueryBuilder
     /**
      * Create the field part for the given array.
      *
-     * @param  array $fields
+     * @param array $fields
      * @return string
      */
-    protected function getFieldsSql($fields)
+    protected function getFieldsSql(array $fields): string
     {
         if (empty($fields)) {
             return '*';
@@ -406,9 +404,7 @@ class Select extends QueryBuilder
 
         foreach ($fields as $key => $value) {
             if (!$value instanceof Expression\Expression) {
-                if (strpos($value, '(') !== false) {
-                    $value = $value;
-                } else {
+                if (strpos($value, '(') === false) {
                     $value = $this->db->quote($value);
                 }
             }
@@ -429,7 +425,7 @@ class Select extends QueryBuilder
      *
      * @return string
      */
-    protected function getTableSql($table)
+    protected function getTableSql($table): string
     {
         if (\is_array($table)) {
             $tableName = reset($table);
@@ -454,7 +450,7 @@ class Select extends QueryBuilder
      * @return array
      * @throws \InvalidArgumentException
      */
-    protected function createFieldsArray($fields)
+    protected function createFieldsArray($fields): array
     {
         if (\is_string($fields)) {
             //function like COUNT()
@@ -480,8 +476,9 @@ class Select extends QueryBuilder
     /**
      * @return string
      * @throws \InvalidArgumentException
+     * @since 2.1.50 supports for functions in group by
      */
-    protected function generateGroupBySql()
+    protected function generateGroupBySql(): string
     {
         $sql = '';
         // add GROUP BY to sql
@@ -490,13 +487,15 @@ class Select extends QueryBuilder
             $fields = [];
             foreach ($this->groupByFields as $key => $value) {
                 if (\is_int($key)) {
-                    $fields[] = $this->db->quote($value);
-                } else {
-                    if (!\in_array($value, ['ASC', 'DESC'])) {
-                        throw new \InvalidArgumentException('Invalid GROUP BY option: ' . $value . ' Note: a sort order within GROUP BY is deprecated.');
+                    // Regular expression to detect a function call like AVG().
+                    if (preg_match('([a-zA-Z_]+\(.*\))', $value) === 1) {
+                        $fields[] = $value;
+                    } else {
+                        $fields[] = $this->db->quote($value);
                     }
-                    $this->order[$key] = $value; // TODO: Remove this line when support for 'field' => 'DESC|ASC' in group() gets removed.
-                    $fields[] = $this->db->quote($key);
+                } else {
+                    // A key => value pair like 'field' => 'DESC' is no longer supported. $key should always be an integer.
+                    throw new \InvalidArgumentException('Invalid GROUP BY option: ' . $value);
                 }
             }
             $sql .= implode(',', $fields);
@@ -509,7 +508,7 @@ class Select extends QueryBuilder
      * @throws \InvalidArgumentException
      * @since 2.1.43
      */
-    protected function generateOrderBySql()
+    protected function generateOrderBySql(): string
     {
         $sql = '';
         // add ORDER BY to sql
@@ -517,7 +516,7 @@ class Select extends QueryBuilder
             $sql .= ' ORDER BY ';
             $fields = [];
             foreach ($this->order as $column => $direction) {
-                //function with ( )
+                // function with ( )
                 if (strpos($column, '(') !== false) {
                     $fields[] = $column . ' ' . $direction;
                 } else {

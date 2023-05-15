@@ -21,7 +21,7 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
 
         $db = $this->getMockBuilder('\Ilch\Database\Mysql')
             ->disableOriginalConstructor()
-            ->setMethods(['escape'])
+            ->onlyMethods(['escape'])
             ->getMockForAbstractClass();
         $db->method('escape')
             ->willReturnCallback(function ($value, $addQuotes = false) {

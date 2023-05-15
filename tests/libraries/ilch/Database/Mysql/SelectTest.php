@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -22,7 +22,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
 
         $db = $this->getMockBuilder('\Ilch\Database\Mysql')
             ->disableOriginalConstructor()
-            ->setMethods(['escape'])
+            ->onlyMethods(['escape'])
             ->getMockForAbstractClass();
         $db->method('escape')
             ->willReturnCallback(function ($value, $addQuotes = false) {
@@ -46,10 +46,10 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dpForTable
      *
-     * @param string $table
+     * @param string|string[] $table
      * @param string $expectedSqlPart
      */
-    public function testGenerateSqlForTable($table, $expectedSqlPart)
+    public function testGenerateSqlForTable($table, string $expectedSqlPart)
     {
         $this->out->from($table);
 
@@ -61,7 +61,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForTable()
+    public function dpForTable(): array
     {
         return [
             'simple tablename' => [
@@ -85,7 +85,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * @param string|array $fields
      * @param string $expectedSqlPart
      */
-    public function testGenerateSqlForFields($fields, $expectedSqlPart)
+    public function testGenerateSqlForFields($fields, string $expectedSqlPart)
     {
         $this->out->from('Test')
             ->fields($fields);
@@ -98,7 +98,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForFields()
+    public function dpForFields(): array
     {
         return [
             'string all' => [
@@ -144,9 +144,9 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      *
      * @param array|callable $where
      * @param string $expectedSqlPart
-     * @param string $type
+     * @param string|null $type
      */
-    public function testGenerateSqlForWhere($where, $expectedSqlPart, $type = null)
+    public function testGenerateSqlForWhere($where, string $expectedSqlPart, string $type = null)
     {
         if (\is_callable($where)) {
             $where = $where($this->out);
@@ -169,7 +169,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * Data provider for testGenerateSqlForWhere
      * @return array
      */
-    public function dpForWhere()
+    public function dpForWhere(): array
     {
         return [
             'simple condition'  => [
@@ -243,7 +243,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      *
      * @param string $operator
      */
-    public function testGenerateSqlForWhereWithSpecialOperator($operator)
+    public function testGenerateSqlForWhereWithSpecialOperator(string $operator)
     {
         $this->out->from('Test')
             ->where(['field1 ' . $operator => 5]);
@@ -258,7 +258,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * Operator data provider
      * @return array
      */
-    public function dpOperators()
+    public function dpOperators(): array
     {
         return [['='], ['<='], ['>='], ['<'], ['>'], ['!='], ['<>'], ['LIKE'], ['NOT LIKE']];
     }
@@ -266,12 +266,12 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dpForOrWhere
      *
-     * @param array $where
-     * @param string $type
+     * @param array|bool $where
+     * @param string|bool $type
      * @param array $orWhere
      * @param string $expectedSqlPart
      */
-    public function testGenerateSqlForOrWhere($where, $type, $orWhere, $expectedSqlPart)
+    public function testGenerateSqlForOrWhere($where, $type, array $orWhere, string $expectedSqlPart)
     {
         $this->out->from('Test');
         if (!empty($where)) {
@@ -288,7 +288,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForOrWhere()
+    public function dpForOrWhere(): array
     {
         return [
             'with empty where and single condition' => [
@@ -324,7 +324,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * @param array $order
      * @param string $expectedSqlPart
      */
-    public function testGenerateSqlForOrderBy(array $order, $expectedSqlPart)
+    public function testGenerateSqlForOrderBy(array $order, string $expectedSqlPart)
     {
         $this->out->from('Test')
             ->order($order);
@@ -337,7 +337,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForTestGenerateSqlForOrderBy()
+    public function dpForTestGenerateSqlForOrderBy(): array
     {
         return [
             'field without table' => [
@@ -354,10 +354,10 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dpForLimit
      *
-     * @param integer|array $limit
+     * @param int|array $limit
      * @param string $expectedSqlPart
      */
-    public function testGenerateSqlForLimitWithInteger($limit, $expectedSqlPart)
+    public function testGenerateSqlForLimitWithInteger($limit, string $expectedSqlPart)
     {
         $this->out->from('Test')
             ->limit($limit);
@@ -371,7 +371,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForLimit()
+    public function dpForLimit(): array
     {
         return [
             'with integer'  => [
@@ -400,10 +400,10 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dpForLimitWithPage
      *
-     * @param integer $page
-     * @param integer $expectedOffset
+     * @param int $page
+     * @param int $expectedOffset
      */
-    public function testGenerateSqlForLimitWithPage($page, $expectedOffset)
+    public function testGenerateSqlForLimitWithPage(int $page, int $expectedOffset)
     {
         $this->out->from('Test')
             ->limit(10)
@@ -419,7 +419,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * Data provider for testGenerateSqlForLimitWithPage
      * @return array
      */
-    public function dpForLimitWithPage()
+    public function dpForLimitWithPage(): array
     {
         //expected offset for limit 10
         return [
@@ -438,7 +438,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * @param array $groupByFields
      * @param string $expectedSqlPart
      */
-    public function testGenerateSqlWithGroup($groupByFields, $expectedSqlPart)
+    public function testGenerateSqlWithGroup(array $groupByFields, string $expectedSqlPart)
     {
         $this->out->from('Test')
             ->group($groupByFields);
@@ -452,7 +452,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForTestGenerateSqlWithGroup()
+    public function dpForTestGenerateSqlWithGroup(): array
     {
         return [
             'one field' => [
@@ -463,41 +463,21 @@ class SelectTest extends \PHPUnit\Framework\TestCase
                 'groupByFields' => ['field1', 'table.field2'],
                 'expectedSqlPart' => '`field1`,`table`.`field2`'
             ],
-            'one field with direction (conversion to separate ORDER BY)' => [
-                'groupByFields' => ['table.field1' => 'DESC'],
-                'expectedSqlPart' => '`table`.`field1` ORDER BY `table`.`field1` DESC'
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dpForTestGenerateSqlWithGroupDirectionAndOrder
-     *
-     * @param array $groupByFields
-     * @param string $expectedSqlPart
-     */
-    public function testGenerateSqlWithGroupDirectionAndOrder($groupByFields, $orderByFields, $expectedSqlPart)
-    {
-        $this->out->from('Test')
-            ->group($groupByFields)
-            ->order($orderByFields);
-
-        $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' GROUP BY ' . $expectedSqlPart;
-
-        self::assertEquals($expected, $this->out->generateSql());
-    }
-
-    /**
-     * @return array
-     */
-    public function dpForTestGenerateSqlWithGroupDirectionAndOrder()
-    {
-        return [
-            'one field with direction (conversion to separate ORDER BY)' => [
-                'groupByFields' => ['table.field1' => 'DESC'],
-                'orderByFields' => ['table.field2' => 'DESC'],
-                'expectedSqlPart' => '`table`.`field1` ORDER BY `table`.`field2` DESC,`table`.`field1` DESC'
+            'one field with aggregate function in group by' => [
+                'groupByFields' => ['GROUP_CONCAT(field1)'],
+                'expectedSqlPart' => 'GROUP_CONCAT(field1)'
+            ],
+            'multiple fields with table and aggregate function in group by' => [
+                'groupByFields' => ['GROUP_CONCAT(field1)', 'GROUP_CONCAT(table.field2)'],
+                'expectedSqlPart' => 'GROUP_CONCAT(field1),GROUP_CONCAT(table.field2)'
+            ],
+            'one field with COUNT(DISTINCT) aggregate function in group by' => [
+                'groupByFields' => ['COUNT(DISTINCT field1)'],
+                'expectedSqlPart' => 'COUNT(DISTINCT field1)'
+            ],
+            'multiple fields with table and COUNT(DISTINCT) aggregate function in group by' => [
+                'groupByFields' => ['COUNT(DISTINCT field1)', 'COUNT(DISTINCT table.field2)'],
+                'expectedSqlPart' => 'COUNT(DISTINCT field1),COUNT(DISTINCT table.field2)'
             ]
         ];
     }
@@ -505,10 +485,10 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider dpForJoinConditions
      *
-     * @param array $conditions
+     * @param string|string[] $conditions
      * @param string $expectedSqlPart
      */
-    public function testGenerateSqlForJoinConditions($conditions, $expectedSqlPart)
+    public function testGenerateSqlForJoinConditions($conditions, string $expectedSqlPart)
     {
         $this->out->from(['a' => 'Test']);
         $this->out->join(['b' => 'Table2'], $conditions);
@@ -522,7 +502,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForJoinConditions()
+    public function dpForJoinConditions(): array
     {
         return [
             'single field comparison' => [
@@ -555,5 +535,14 @@ class SelectTest extends \PHPUnit\Framework\TestCase
             . ' INNER JOIN `[prefix]_Table3` AS `c` ON `a`.`field1` = `c`.`field2`';
 
         self::assertEquals($expectedSql, $this->out->generateSql());
+    }
+
+    public function testExpectedExceptionGroupBySortOrder()
+    {
+        $this->out->from('Test')
+            ->group(['table.field1' => 'DESC']);
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('Invalid GROUP BY option: DESC');
+        $this->out->generateSql();
     }
 }

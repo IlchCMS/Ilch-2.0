@@ -23,7 +23,7 @@ class InsertTest extends \PHPUnit\Framework\TestCase
 
         $db = $this->getMockBuilder('\Ilch\Database\Mysql')
             ->disableOriginalConstructor()
-            ->setMethods(['escape', 'getLastInsertId'])
+            ->onlyMethods(['escape', 'getLastInsertId'])
             ->getMockForAbstractClass();
         $db->method('escape')
             ->willReturnCallback(function ($value, $addQuotes = false) {
