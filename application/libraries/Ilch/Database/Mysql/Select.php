@@ -232,8 +232,6 @@ class Select extends QueryBuilder
      *
      * @param array $fields ['field' => 'DESC|ASC', 'field2']
      * @param boolean $replace
-     * @deprecated providing a sort order like 'field' => 'DESC|ASC' is deprecated.
-     *
      * @return \Ilch\Database\Mysql\Select
      */
     public function group(array $fields, $replace = true)
@@ -490,13 +488,15 @@ class Select extends QueryBuilder
             $fields = [];
             foreach ($this->groupByFields as $key => $value) {
                 if (\is_int($key)) {
-                    $fields[] = $this->db->quote($value);
-                } else {
-                    if (!\in_array($value, ['ASC', 'DESC'])) {
-                        throw new \InvalidArgumentException('Invalid GROUP BY option: ' . $value . ' Note: a sort order within GROUP BY is deprecated.');
+                    // Regular expression to detect a function call like AVG().
+                    if (preg_match('([a-zA-Z_]+\(.*\))', $value) === 1) {
+                        $fields[] = $value;
+                    } else {
+                        $fields[] = $this->db->quote($value);
                     }
-                    $this->order[$key] = $value; // TODO: Remove this line when support for 'field' => 'DESC|ASC' in group() gets removed.
-                    $fields[] = $this->db->quote($key);
+                } else {
+                    // A key => value pair like 'field' => 'DESC' is no longer supported. $key should always be an integer.
+                    throw new \InvalidArgumentException('Invalid GROUP BY option: ' . $value);
                 }
             }
             $sql .= implode(',', $fields);
@@ -517,7 +517,7 @@ class Select extends QueryBuilder
             $sql .= ' ORDER BY ';
             $fields = [];
             foreach ($this->order as $column => $direction) {
-                //function with ( )
+                // function with ( )
                 if (strpos($column, '(') !== false) {
                     $fields[] = $column . ' ' . $direction;
                 } else {

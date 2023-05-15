@@ -463,41 +463,21 @@ class SelectTest extends \PHPUnit\Framework\TestCase
                 'groupByFields' => ['field1', 'table.field2'],
                 'expectedSqlPart' => '`field1`,`table`.`field2`'
             ],
-            'one field with direction (conversion to separate ORDER BY)' => [
-                'groupByFields' => ['table.field1' => 'DESC'],
-                'expectedSqlPart' => '`table`.`field1` ORDER BY `table`.`field1` DESC'
-            ]
-        ];
-    }
-
-    /**
-     * @dataProvider dpForTestGenerateSqlWithGroupDirectionAndOrder
-     *
-     * @param array $groupByFields
-     * @param string $expectedSqlPart
-     */
-    public function testGenerateSqlWithGroupDirectionAndOrder($groupByFields, $orderByFields, $expectedSqlPart)
-    {
-        $this->out->from('Test')
-            ->group($groupByFields)
-            ->order($orderByFields);
-
-        $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' GROUP BY ' . $expectedSqlPart;
-
-        self::assertEquals($expected, $this->out->generateSql());
-    }
-
-    /**
-     * @return array
-     */
-    public function dpForTestGenerateSqlWithGroupDirectionAndOrder()
-    {
-        return [
-            'one field with direction (conversion to separate ORDER BY)' => [
-                'groupByFields' => ['table.field1' => 'DESC'],
-                'orderByFields' => ['table.field2' => 'DESC'],
-                'expectedSqlPart' => '`table`.`field1` ORDER BY `table`.`field2` DESC,`table`.`field1` DESC'
+            'one field with aggregate function in group by' => [
+                'groupByFields' => ['GROUP_CONCAT(field1)'],
+                'expectedSqlPart' => 'GROUP_CONCAT(field1)'
+            ],
+            'multiple fields with table and aggregate function in group by' => [
+                'groupByFields' => ['GROUP_CONCAT(field1)', 'GROUP_CONCAT(table.field2)'],
+                'expectedSqlPart' => 'GROUP_CONCAT(field1),GROUP_CONCAT(table.field2)'
+            ],
+            'one field with COUNT(DISTINCT) aggregate function in group by' => [
+                'groupByFields' => ['COUNT(DISTINCT field1)'],
+                'expectedSqlPart' => 'COUNT(DISTINCT field1)'
+            ],
+            'multiple fields with table and COUNT(DISTINCT) aggregate function in group by' => [
+                'groupByFields' => ['COUNT(DISTINCT field1)', 'COUNT(DISTINCT table.field2)'],
+                'expectedSqlPart' => 'COUNT(DISTINCT field1),COUNT(DISTINCT table.field2)'
             ]
         ];
     }
@@ -555,5 +535,14 @@ class SelectTest extends \PHPUnit\Framework\TestCase
             . ' INNER JOIN `[prefix]_Table3` AS `c` ON `a`.`field1` = `c`.`field2`';
 
         self::assertEquals($expectedSql, $this->out->generateSql());
+    }
+
+    public function testExpectedExceptionGroupBySortOrder()
+    {
+        $this->out->from('Test')
+            ->group(['table.field1' => 'DESC']);
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('Invalid GROUP BY option: DESC');
+        $this->out->generateSql();
     }
 }
