@@ -414,6 +414,11 @@ function owner(string $file)
     }
 
     $ownerarray = posix_getpwuid($owneruid);
+
+    if ($ownerarray === false) {
+        return false;
+    }
+
     return $ownerarray['name'];
 }
 
