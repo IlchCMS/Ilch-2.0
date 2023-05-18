@@ -195,6 +195,76 @@ class Frontend extends Base
     }
 
     /**
+     * Get the script tag as string.
+     *
+     * @param string $key
+     * @return string
+     * @since 2.1.50
+     */
+    public function getScriptTagString(string $key): string
+    {
+        /** @var Helper\ScriptTag\Model $scriptTagModel */
+        $scriptTagModel = $this->get('scriptTags')[$key];
+        $scriptTagString = '<script';
+
+        // When used to include data blocks, the data must be embedded inline, the format of the data must be given using the type attribute,
+        // and the contents of the script element must conform to the requirements defined for the format used.
+        if ($scriptTagModel->getType()) {
+            $scriptTagString .= sprintf(' type="%s"', $this->escape($scriptTagModel->getType()));
+        }
+
+        if ($scriptTagModel->getBlocking()) {
+            // As of implementing this there is just one valid value ("render"), but implement this with more
+            // valid values in the future in mind.
+            $scriptTagString .= sprintf(' blocking="%s"', $this->escape($scriptTagModel->getBlocking()));
+        }
+
+        // For import map script elements, the src, async, nomodule, defer, crossorigin, integrity, and referrerpolicy attributes must not be specified.
+        // A document must not have more than one import map script element.
+        // For data blocks: The src, async, nomodule, defer, crossorigin, integrity, referrerpolicy, and fetchpriority attributes must not be specified.
+        if (strcasecmp($scriptTagModel->getType(), 'importmap') !== 0 && !$scriptTagModel->isDataBlock()) {
+            if ($scriptTagModel->getCrossorigin()) {
+                $scriptTagString .= sprintf(' crossorigin="%s"', $this->escape($scriptTagModel->getCrossorigin()));
+            }
+
+            if ($scriptTagModel->getSrc()) {
+                $scriptTagString .= sprintf(' src="%s"', $this->escape($scriptTagModel->getSrc()));
+            }
+
+            if ($scriptTagModel->getIntegrity() && $scriptTagModel->getSrc()) {
+                // The integrity attribute must not be specified when the src attribute is not specified.
+                $scriptTagString .= sprintf(' integrity="%s"', $this->escape($scriptTagModel->getIntegrity()));
+            }
+
+            if ($scriptTagModel->getReferrerpolicy()) {
+                $scriptTagString .= sprintf(' referrerpolicy="%s"', $this->escape($scriptTagModel->getReferrerpolicy()));
+            }
+
+            if ($scriptTagModel->isAsync() && $scriptTagModel->getSrc()) {
+                // Classic scripts may specify defer or async, but must not specify either unless the src attribute is present.
+                $scriptTagString .= ' async';
+            }
+
+            if ($scriptTagModel->isDefer() && $scriptTagModel->getSrc() && strcasecmp($scriptTagModel->getType(), 'module') !== 0) {
+                // Classic scripts may specify defer or async, but must not specify either unless the src attribute is present.
+                // Module scripts may specify the async attribute, but must not specify the defer attribute.
+                $scriptTagString .= ' defer';
+            }
+
+            if ($scriptTagModel->isNomodule() && strcasecmp($scriptTagModel->getType(), 'module') !== 0) {
+                // The nomodule attribute must not be specified on module scripts (and will be ignored if it is).
+                $scriptTagString .= ' nomodule';
+            }
+        }
+
+        if ($scriptTagModel->getFetchpriority() && !$scriptTagModel->isDataBlock()) {
+            $scriptTagString .= sprintf(' fetchpriority="%s"', $this->escape($scriptTagModel->getFetchpriority()));
+        }
+
+        return $scriptTagString . '>';
+    }
+
+    /**
      * Get key from config.
      *
      * @param $key
@@ -305,6 +375,13 @@ class Frontend extends Base
                 <script src="'.$this->getStaticUrl('js/ilch.js').'"></script>
                 <script src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
                 <script src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';
+
+        if (is_array($this->get('scriptTags'))) {
+            foreach ($this->get('scriptTags') as $key => $scriptTag) {
+                $html .= '
+                '.$this->getScriptTagString($key);
+            }
+        }
 
         $html .= $this->header();
 
