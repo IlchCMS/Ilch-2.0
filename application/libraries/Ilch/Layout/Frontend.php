@@ -19,7 +19,7 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 
  * @method \Ilch\Layout\Helper\Title\Model getTitle() get the title model
  * @method \Ilch\Layout\Helper\Header\Model header() get the header model
- * @method string getMenu(int $menuId, string $tpl = '', array $options = array()) rendering of a menu
+ * @method string getMenu(int $menuId, string $tpl = '', array $options = []) rendering of a menu
  * @method \Ilch\Layout\Helper\Menu\Model[] getMenus() get all menus
  * @method \Ilch\Layout\Helper\Hmenu\Model getHmenu() get the hmenu
  */
@@ -338,7 +338,6 @@ class Frontend extends Base
     /**
      * Gets the header.
      *
-     * //TODO: rework loading of css and jss to be more dynamic!!!
      * @return string
      */
     public function getHeader()
@@ -456,7 +455,7 @@ class Frontend extends Base
      * Loads a layout file.
      *
      * @param string $file
-     * @param mixed[] $data
+     * @param array $data
      */
     public function load($file, $data = [])
     {
