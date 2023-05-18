@@ -6,8 +6,6 @@
 
 namespace Ilch\Layout\Helper\ScriptTag;
 
-use http\Exception\InvalidArgumentException;
-
 /**
  * A model for a script tag.
  *
@@ -39,6 +37,11 @@ class Model
         'text/x-javascript'];
 
     /**
+     * @var bool
+     */
+    private $isDataBlock = false;
+
+    /**
      * Address of the resource
      *
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-src
@@ -60,7 +63,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule
      * @var bool
      */
-    protected $nomodule;
+    protected $nomodule = false;
 
     /**
      * Execute script when available, without blocking while fetching
@@ -68,7 +71,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-async
      * @var bool
      */
-    protected $async;
+    protected $async = false;
 
     /**
      * Defer script execution
@@ -76,7 +79,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-defer
      * @var bool
      */
-    protected $defer;
+    protected $defer = false;
 
     /**
      * How the element handles crossorigin requests
@@ -123,6 +126,13 @@ class Model
     protected $fetchpriority;
 
     /**
+     * For example the inline script code.
+     *
+     * @var string
+     */
+    protected $inline;
+
+    /**
      * If type specifies a data block then this holds the data.
      *
      * @see https://html.spec.whatwg.org/multipage/scripting.html#data-block
@@ -135,7 +145,7 @@ class Model
      *
      * @return string
      */
-    public function getSrc(): string
+    public function getSrc(): ?string
     {
         return $this->src;
     }
@@ -157,7 +167,7 @@ class Model
      *
      * @return string
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -180,6 +190,8 @@ class Model
     public function setType(string $type): Model
     {
         $this->type = $type;
+        $this->isDataBlock = $this->checkIfDataBlock();
+
         return $this;
     }
 
@@ -261,7 +273,7 @@ class Model
      *
      * @return string
      */
-    public function getCrossorigin(): string
+    public function getCrossorigin(): ?string
     {
         return $this->crossorigin;
     }
@@ -278,7 +290,7 @@ class Model
     public function setCrossorigin(string $crossorigin): Model
     {
         if (!in_array(strtolower($crossorigin), self::validCrossOrigin)) {
-            throw new InvalidArgumentException('Invalid value for crossorigin.');
+            throw new \InvalidArgumentException('Invalid value for crossorigin.');
         }
 
         $this->crossorigin = strtolower($crossorigin);
@@ -290,7 +302,7 @@ class Model
      *
      * @return string
      */
-    public function getIntegrity(): string
+    public function getIntegrity(): ?string
     {
         return $this->integrity;
     }
@@ -314,7 +326,7 @@ class Model
      *
      * @return string
      */
-    public function getReferrerpolicy(): string
+    public function getReferrerpolicy(): ?string
     {
         return $this->referrerpolicy;
     }
@@ -330,7 +342,7 @@ class Model
     public function setReferrerpolicy(string $referrerpolicy): Model
     {
         if (!in_array(strtolower($referrerpolicy), self::validReferrerPolicy)) {
-            throw new InvalidArgumentException('Invalid referrer policy.');
+            throw new \InvalidArgumentException('Invalid referrer policy.');
         }
 
         $this->referrerpolicy = strtolower($referrerpolicy);
@@ -342,7 +354,7 @@ class Model
      *
      * @return string
      */
-    public function getBlocking(): string
+    public function getBlocking(): ?string
     {
         return $this->blocking;
     }
@@ -357,7 +369,7 @@ class Model
     public function setBlocking(string $blocking): Model
     {
         if (!in_array(strtolower($blocking), self::validBlocking)) {
-            throw new InvalidArgumentException('Invalid value for blocking.');
+            throw new \InvalidArgumentException('Invalid value for blocking.');
         }
 
         $this->blocking = strtolower($blocking);
@@ -369,7 +381,7 @@ class Model
      *
      * @return string
      */
-    public function getFetchpriority(): string
+    public function getFetchpriority(): ?string
     {
         return $this->fetchpriority;
     }
@@ -385,7 +397,7 @@ class Model
     public function setFetchpriority(string $fetchpriority): Model
     {
         if (!in_array(strtolower($fetchpriority), self::validFetchPriority)) {
-            throw new InvalidArgumentException('Invalid value for fetchpriority.');
+            throw new \InvalidArgumentException('Invalid value for fetchpriority.');
         }
 
         $this->fetchpriority = strtolower($fetchpriority);
@@ -393,7 +405,31 @@ class Model
     }
 
     /**
-     * Returns true if it is a DataBlock and not a classic script, module or importmap.
+     * Get the inline script code
+     *
+     * @return string
+     */
+    public function getInline(): string
+    {
+        return $this->inline;
+    }
+
+    /**
+     * Sets the inline code, import map JSON representation format, data block, ...
+     * Import Map: The JSON object must conform to the Import map JSON representation format.
+     * Authors must use a valid MIME type string that is not a JavaScript MIME type essence match to denote data blocks.
+     *
+     * @param string $inline
+     * @return Model
+     */
+    public function setInline(string $inline): Model
+    {
+        $this->inline = $inline;
+        return $this;
+    }
+
+    /**
+     * True if it is a DataBlock and not a classic script, module or importmap.
      *
      * Setting the [type] attribute to any other value means that the script is a data block, which is not processed.
      * None of the script attributes (except type itself) have any effect on data blocks.
@@ -403,6 +439,16 @@ class Model
      * @see https://mimesniff.spec.whatwg.org/#javascript-mime-type-essence-match
      */
     public function isDataBlock(): bool
+    {
+        return $this->isDataBlock;
+    }
+
+    /**
+     * Returns true if it is a DataBlock and not a classic script, module or importmap.
+     *
+     * @return bool
+     */
+    private function checkIfDataBlock(): bool
     {
         // Empty type equals classic script.
         if (!$this->getType()) {
@@ -416,29 +462,5 @@ class Model
 
         // If it has a valid JavaScript MIME type it's not a datablock.
         return !in_array(strtolower($this->getType()), self::validJavaScriptMIMEType);
-    }
-
-    /**
-     * Get the data stored when used as a data block.
-     *
-     * @return string
-     */
-    public function getData(): string
-    {
-        return $this->data;
-    }
-
-    /**
-     * Set the data stored when used as a data block.
-     * Authors must use a valid MIME type string that is not a JavaScript MIME type essence match to denote data blocks.
-     *
-     * @param string $data
-     * @return Model
-     * @see https://html.spec.whatwg.org/multipage/scripting.html#data-block
-     */
-    public function setData(string $data): Model
-    {
-        $this->data = $data;
-        return $this;
     }
 }

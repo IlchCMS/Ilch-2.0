@@ -213,22 +213,16 @@ class Frontend extends Base
             $scriptTagString .= sprintf(' type="%s"', $this->escape($scriptTagModel->getType()));
         }
 
-        if ($scriptTagModel->getBlocking()) {
-            // As of implementing this there is just one valid value ("render"), but implement this with more
-            // valid values in the future in mind.
-            $scriptTagString .= sprintf(' blocking="%s"', $this->escape($scriptTagModel->getBlocking()));
-        }
-
         // For import map script elements, the src, async, nomodule, defer, crossorigin, integrity, and referrerpolicy attributes must not be specified.
         // A document must not have more than one import map script element.
         // For data blocks: The src, async, nomodule, defer, crossorigin, integrity, referrerpolicy, and fetchpriority attributes must not be specified.
         if (strcasecmp($scriptTagModel->getType(), 'importmap') !== 0 && !$scriptTagModel->isDataBlock()) {
-            if ($scriptTagModel->getCrossorigin()) {
-                $scriptTagString .= sprintf(' crossorigin="%s"', $this->escape($scriptTagModel->getCrossorigin()));
-            }
-
             if ($scriptTagModel->getSrc()) {
                 $scriptTagString .= sprintf(' src="%s"', $this->escape($scriptTagModel->getSrc()));
+            }
+
+            if ($scriptTagModel->getCrossorigin()) {
+                $scriptTagString .= sprintf(' crossorigin="%s"', $this->escape($scriptTagModel->getCrossorigin()));
             }
 
             if ($scriptTagModel->getIntegrity() && $scriptTagModel->getSrc()) {
@@ -240,8 +234,9 @@ class Frontend extends Base
                 $scriptTagString .= sprintf(' referrerpolicy="%s"', $this->escape($scriptTagModel->getReferrerpolicy()));
             }
 
-            if ($scriptTagModel->isAsync() && $scriptTagModel->getSrc()) {
+            if ($scriptTagModel->isAsync() && $scriptTagModel->getSrc() || ($scriptTagModel->isAsync() && strcasecmp($scriptTagModel->getType(), 'module') === 0)) {
                 // Classic scripts may specify defer or async, but must not specify either unless the src attribute is present.
+                // Module scripts are not affected by the defer attribute, but are affected by the async attribute (regardless of the state of the src attribute).
                 $scriptTagString .= ' async';
             }
 
@@ -257,16 +252,26 @@ class Frontend extends Base
             }
         }
 
+        if ($scriptTagModel->getBlocking()) {
+            // As of implementing this there is just one valid value ("render"), but implement this with more
+            // valid values in the future in mind.
+            $scriptTagString .= sprintf(' blocking="%s"', $this->escape($scriptTagModel->getBlocking()));
+        }
+
         if ($scriptTagModel->getFetchpriority() && !$scriptTagModel->isDataBlock()) {
             $scriptTagString .= sprintf(' fetchpriority="%s"', $this->escape($scriptTagModel->getFetchpriority()));
         }
 
         $scriptTagString .= '>';
 
-        if ($scriptTagModel->isDataBlock()) {
-            $scriptTagString .= sprintf('%s</script>', $this->escape($scriptTagModel->getData()));
+        if (!$scriptTagModel->getSrc() || strcasecmp($scriptTagModel->getType(), 'importmap') === 0 || $scriptTagModel->isDataBlock()) {
+            // This can be inline code, import map JSON representation format, data block, ...
+            // Normally if a source is specified there can't be inline "text", but allow this for import maps and data blocks
+            // if the type points to an import map or a data block.
+            $scriptTagString .= sprintf('%s', $scriptTagModel->getInline());
         }
 
+        $scriptTagString .= '</script>';
         return $scriptTagString;
     }
 
