@@ -19,7 +19,7 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 
  * @method \Ilch\Layout\Helper\Title\Model getTitle() get the title model
  * @method \Ilch\Layout\Helper\Header\Model header() get the header model
- * @method string getMenu(int $menuId, string $tpl = '', array $options = array()) rendering of a menu
+ * @method string getMenu(int $menuId, string $tpl = '', array $options = []) rendering of a menu
  * @method \Ilch\Layout\Helper\Menu\Model[] getMenus() get all menus
  * @method \Ilch\Layout\Helper\Hmenu\Model getHmenu() get the hmenu
  */
@@ -195,6 +195,87 @@ class Frontend extends Base
     }
 
     /**
+     * Get the script tag as string.
+     *
+     * @param string $key
+     * @return string
+     * @since 2.1.50
+     */
+    public function getScriptTagString(string $key): string
+    {
+        /** @var Helper\ScriptTag\Model $scriptTagModel */
+        $scriptTagModel = $this->get('scriptTags')[$key];
+        $scriptTagString = '<script';
+
+        // When used to include data blocks, the data must be embedded inline, the format of the data must be given using the type attribute,
+        // and the contents of the script element must conform to the requirements defined for the format used.
+        if ($scriptTagModel->getType()) {
+            $scriptTagString .= sprintf(' type="%s"', $this->escape($scriptTagModel->getType()));
+        }
+
+        // For import map script elements, the src, async, nomodule, defer, crossorigin, integrity, and referrerpolicy attributes must not be specified.
+        // A document must not have more than one import map script element.
+        // For data blocks: The src, async, nomodule, defer, crossorigin, integrity, referrerpolicy, and fetchpriority attributes must not be specified.
+        if (strcasecmp($scriptTagModel->getType(), 'importmap') !== 0 && !$scriptTagModel->isDataBlock()) {
+            if ($scriptTagModel->getSrc()) {
+                $scriptTagString .= sprintf(' src="%s"', $this->escape($scriptTagModel->getSrc()));
+            }
+
+            if ($scriptTagModel->getCrossorigin()) {
+                $scriptTagString .= sprintf(' crossorigin="%s"', $this->escape($scriptTagModel->getCrossorigin()));
+            }
+
+            if ($scriptTagModel->getIntegrity() && $scriptTagModel->getSrc()) {
+                // The integrity attribute must not be specified when the src attribute is not specified.
+                $scriptTagString .= sprintf(' integrity="%s"', $this->escape($scriptTagModel->getIntegrity()));
+            }
+
+            if ($scriptTagModel->getReferrerpolicy()) {
+                $scriptTagString .= sprintf(' referrerpolicy="%s"', $this->escape($scriptTagModel->getReferrerpolicy()));
+            }
+
+            if ($scriptTagModel->isAsync() && $scriptTagModel->getSrc() || ($scriptTagModel->isAsync() && strcasecmp($scriptTagModel->getType(), 'module') === 0)) {
+                // Classic scripts may specify defer or async, but must not specify either unless the src attribute is present.
+                // Module scripts are not affected by the defer attribute, but are affected by the async attribute (regardless of the state of the src attribute).
+                $scriptTagString .= ' async';
+            }
+
+            if ($scriptTagModel->isDefer() && $scriptTagModel->getSrc() && strcasecmp($scriptTagModel->getType(), 'module') !== 0) {
+                // Classic scripts may specify defer or async, but must not specify either unless the src attribute is present.
+                // Module scripts may specify the async attribute, but must not specify the defer attribute.
+                $scriptTagString .= ' defer';
+            }
+
+            if ($scriptTagModel->isNomodule() && strcasecmp($scriptTagModel->getType(), 'module') !== 0) {
+                // The nomodule attribute must not be specified on module scripts (and will be ignored if it is).
+                $scriptTagString .= ' nomodule';
+            }
+        }
+
+        if ($scriptTagModel->getBlocking()) {
+            // As of implementing this there is just one valid value ("render"), but implement this with more
+            // valid values in the future in mind.
+            $scriptTagString .= sprintf(' blocking="%s"', $this->escape($scriptTagModel->getBlocking()));
+        }
+
+        if ($scriptTagModel->getFetchpriority() && !$scriptTagModel->isDataBlock()) {
+            $scriptTagString .= sprintf(' fetchpriority="%s"', $this->escape($scriptTagModel->getFetchpriority()));
+        }
+
+        $scriptTagString .= '>';
+
+        if (!$scriptTagModel->getSrc() || strcasecmp($scriptTagModel->getType(), 'importmap') === 0 || $scriptTagModel->isDataBlock()) {
+            // This can be inline code, import map JSON representation format, data block, ...
+            // Normally if a source is specified there can't be inline "text", but allow this for import maps and data blocks
+            // if the type points to an import map or a data block.
+            $scriptTagString .= sprintf('%s', $scriptTagModel->getInline());
+        }
+
+        $scriptTagString .= '</script>';
+        return $scriptTagString;
+    }
+
+    /**
      * Get key from config.
      *
      * @param $key
@@ -268,7 +349,6 @@ class Frontend extends Base
     /**
      * Gets the header.
      *
-     * //TODO: rework loading of css and jss to be more dynamic!!!
      * @return string
      */
     public function getHeader()
@@ -305,6 +385,13 @@ class Frontend extends Base
                 <script src="'.$this->getStaticUrl('js/ilch.js').'"></script>
                 <script src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
                 <script src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';
+
+        if (is_array($this->get('scriptTags'))) {
+            foreach ($this->get('scriptTags') as $key => $scriptTag) {
+                $html .= '
+                '.$this->getScriptTagString($key);
+            }
+        }
 
         $html .= $this->header();
 
@@ -379,7 +466,7 @@ class Frontend extends Base
      * Loads a layout file.
      *
      * @param string $file
-     * @param mixed[] $data
+     * @param array $data
      */
     public function load($file, $data = [])
     {
