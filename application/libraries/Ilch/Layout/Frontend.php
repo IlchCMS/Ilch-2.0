@@ -261,7 +261,13 @@ class Frontend extends Base
             $scriptTagString .= sprintf(' fetchpriority="%s"', $this->escape($scriptTagModel->getFetchpriority()));
         }
 
-        return $scriptTagString . '>';
+        $scriptTagString .= '>';
+
+        if ($scriptTagModel->isDataBlock()) {
+            $scriptTagString .= sprintf('%s</script>', $this->escape($scriptTagModel->getData()));
+        }
+
+        return $scriptTagString;
     }
 
     /**

@@ -123,6 +123,14 @@ class Model
     protected $fetchpriority;
 
     /**
+     * If type specifies a data block then this holds the data.
+     *
+     * @see https://html.spec.whatwg.org/multipage/scripting.html#data-block
+     * @var string
+     */
+    protected $data;
+
+    /**
      * Gets the address of the resource.
      *
      * @return string
@@ -408,5 +416,29 @@ class Model
 
         // If it has a valid JavaScript MIME type it's not a datablock.
         return !in_array(strtolower($this->getType()), self::validJavaScriptMIMEType);
+    }
+
+    /**
+     * Get the data stored when used as a data block.
+     *
+     * @return string
+     */
+    public function getData(): string
+    {
+        return $this->data;
+    }
+
+    /**
+     * Set the data stored when used as a data block.
+     * Authors must use a valid MIME type string that is not a JavaScript MIME type essence match to denote data blocks.
+     *
+     * @param string $data
+     * @return Model
+     * @see https://html.spec.whatwg.org/multipage/scripting.html#data-block
+     */
+    public function setData(string $data): Model
+    {
+        $this->data = $data;
+        return $this;
     }
 }
