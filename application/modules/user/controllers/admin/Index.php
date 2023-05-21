@@ -423,7 +423,7 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('profileFieldsContent', $profileFieldsContent);
             $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
         } else {
-            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'User', 'errorText' => 'notFound']);
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'User', 'errorText' => 'notFound'], '');
         }
     }
 
