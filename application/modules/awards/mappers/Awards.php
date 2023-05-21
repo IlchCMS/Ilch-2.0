@@ -1,14 +1,21 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Awards\Mappers;
 
+use Ilch\Database\Exception;
+use Ilch\Database\Mysql\Result;
+use Ilch\Mapper;
 use Modules\Awards\Models\Awards as AwardsModel;
+use Modules\Awards\Models\Recipient as RecipientModel;
 
-class Awards extends \Ilch\Mapper
+/**
+ * The awards mapper.
+ */
+class Awards extends Mapper
 {
     /**
      * Gets the Awards entries.
@@ -16,11 +23,13 @@ class Awards extends \Ilch\Mapper
      * @param array $where
      * @return AwardsModel[]|array
      */
-    public function getAwards($where = [])
+    public function getAwards(array $where = []): array
     {
-        $awardsArray = $this->db()->select('*')
-            ->from('awards')
+        $awardsArray = $this->db()->select(['a.id', 'a.date', 'a.rank', 'a.image', 'a.event', 'a.url'])
+            ->from(['a' => 'awards'])
             ->where($where)
+            ->join(['r' => 'awards_recipients'], 'a.id = r.award_id', 'INNER', ['utIds' => 'GROUP_CONCAT(r.ut_id)', 'types' => 'GROUP_CONCAT(r.typ)'])
+            ->group(['a.id'])
             ->order(['date' => 'DESC'])
             ->execute()
             ->fetchRows();
@@ -37,9 +46,19 @@ class Awards extends \Ilch\Mapper
                 ->setRank($entries['rank'])
                 ->setImage($entries['image'])
                 ->setEvent($entries['event'])
-                ->setURL($entries['url'])
-                ->setUTId($entries['ut_id'])
-                ->setTyp($entries['typ']);
+                ->setURL($entries['url']);
+
+            $recipients = [];
+            $types = explode(',', $entries['types']);
+            foreach(explode(',', $entries['utIds']) as $key => $id) {
+                $recipientModel = new RecipientModel();
+                $recipientModel->setAwardId($entries['id'])
+                    ->setUtId($id)
+                    ->setTyp($types[$key]);
+                $recipients[] = $recipientModel;
+                $awardsModel->setRecipients($recipients);
+            }
+
             $awards[] = $awardsModel;
         }
 
@@ -49,14 +68,16 @@ class Awards extends \Ilch\Mapper
     /**
      * Gets awards.
      *
-     * @param integer $id
+     * @param int $id
      * @return AwardsModel|null
      */
-    public function getAwardsById($id)
+    public function getAwardsById(int $id): ?AwardsModel
     {
-        $awardsRow = $this->db()->select('*')
-            ->from('awards')
-            ->where(['id' => $id])
+        $awardsRow = $this->db()->select(['a.id', 'a.date', 'a.rank', 'a.image', 'a.event', 'a.url'])
+            ->from(['a' => 'awards'])
+            ->where(['a.id' => $id])
+            ->join(['r' => 'awards_recipients'], 'a.id = r.award_id', 'INNER', ['utIds' => 'GROUP_CONCAT(r.ut_id)', 'types' => 'GROUP_CONCAT(r.typ)'])
+            ->group(['a.id'])
             ->execute()
             ->fetchAssoc();
 
@@ -70,9 +91,18 @@ class Awards extends \Ilch\Mapper
             ->setRank($awardsRow['rank'])
             ->setImage($awardsRow['image'])
             ->setEvent($awardsRow['event'])
-            ->setURL($awardsRow['url'])
-            ->setUTId($awardsRow['ut_id'])
-            ->setTyp($awardsRow['typ']);
+            ->setURL($awardsRow['url']);
+
+        $recipients = [];
+        $types = explode(',', $awardsRow['types']);
+        foreach(explode(',', $awardsRow['utIds']) as $key => $id) {
+            $recipientModel = new RecipientModel();
+            $recipientModel->setAwardId($awardsRow['id'])
+                ->setUtId($id)
+                ->setTyp($types[$key]);
+            $recipients[] = $recipientModel;
+            $awardsModel->setRecipients($recipients);
+        }
 
         return $awardsModel;
     }
@@ -81,6 +111,7 @@ class Awards extends \Ilch\Mapper
      * Inserts or updates awards model.
      *
      * @param AwardsModel $awards
+     * @return Result|int
      */
     public function save(AwardsModel $awards)
     {
@@ -89,24 +120,29 @@ class Awards extends \Ilch\Mapper
             'rank' => $awards->getRank(),
             'image' => $awards->getImage(),
             'event' => $awards->getEvent(),
-            'url' => $awards->getURL(),
-            'ut_id' => $awards->getUTId(),
-            'typ' => $awards->getTyp()
+            'url' => $awards->getURL()
         ];
 
         if ($awards->getId()) {
-            $this->db()->update('awards')
+            return $this->db()->update('awards')
                 ->values($fields)
                 ->where(['id' => $awards->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('awards')
+            return $this->db()->insert('awards')
                 ->values($fields)
                 ->execute();
         }
     }
 
-    public function existsTable($table)
+    /**
+     * Check if a table exists. This is used to look for the teams table of the teams module.
+     *
+     * @param $table
+     * @return bool
+     * @throws Exception
+     */
+    public function existsTable($table): bool
     {
         return $this->db()->ifTableExists('[prefix]_'.$table);
     }
@@ -114,9 +150,9 @@ class Awards extends \Ilch\Mapper
     /**
      * Deletes awards with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('awards')
             ->where(['id' => $id])

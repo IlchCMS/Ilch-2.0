@@ -1,11 +1,14 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Awards\Models;
 
+/**
+ * Awards model
+ */
 class Awards extends \Ilch\Model
 {
     /**
@@ -51,25 +54,16 @@ class Awards extends \Ilch\Model
     protected $url;
 
     /**
-     * The utId of the awards.
-     *
-     * @var int
+     * @var array
      */
-    protected $utId;
-
-    /**
-     * The typ of the awards.
-     *
-     * @var int
-     */
-    protected $typ;
+    protected $recipients;
 
     /**
      * Gets the id of the awards.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -80,9 +74,9 @@ class Awards extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Awards
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -92,7 +86,7 @@ class Awards extends \Ilch\Model
      *
      * @return string
      */
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
     }
@@ -103,9 +97,9 @@ class Awards extends \Ilch\Model
      * @param string $date
      * @return $this
      */
-    public function setDate($date)
+    public function setDate(string $date): Awards
     {
-        $this->date = (string)$date;
+        $this->date = $date;
 
         return $this;
     }
@@ -115,7 +109,7 @@ class Awards extends \Ilch\Model
      *
      * @return int
      */
-    public function getRank()
+    public function getRank(): int
     {
         return $this->rank;
     }
@@ -126,9 +120,9 @@ class Awards extends \Ilch\Model
      * @param int $rank
      * @return $this
      */
-    public function setRank($rank)
+    public function setRank(int $rank): Awards
     {
-        $this->rank = (int)$rank;
+        $this->rank = $rank;
 
         return $this;
     }
@@ -138,7 +132,7 @@ class Awards extends \Ilch\Model
      *
      * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->image;
     }
@@ -149,7 +143,7 @@ class Awards extends \Ilch\Model
      * @param string $image
      * @return $this
      */
-    public function setImage($image)
+    public function setImage(string $image): Awards
     {
         $this->image = $image;
 
@@ -161,7 +155,7 @@ class Awards extends \Ilch\Model
      *
      * @return string
      */
-    public function getEvent()
+    public function getEvent(): string
     {
         return $this->event;
     }
@@ -172,9 +166,9 @@ class Awards extends \Ilch\Model
      * @param string $event
      * @return $this
      */
-    public function setEvent($event)
+    public function setEvent(string $event): Awards
     {
-        $this->event = (string)$event;
+        $this->event = $event;
 
         return $this;
     }
@@ -184,7 +178,7 @@ class Awards extends \Ilch\Model
      *
      * @return string
      */
-    public function getURL()
+    public function getURL(): string
     {
         return $this->url;
     }
@@ -195,55 +189,32 @@ class Awards extends \Ilch\Model
      * @param string $url
      * @return $this
      */
-    public function setURL($url)
+    public function setURL(string $url): Awards
     {
-        $this->url = (string)$url;
+        $this->url = $url;
 
         return $this;
     }
 
     /**
-     * Gets the utId of the awards.
+     * Get the recipients of this award.
      *
-     * @return int
+     * @return array
      */
-    public function getUTid()
+    public function getRecipients(): array
     {
-        return $this->utId;
+        return $this->recipients;
     }
 
     /**
-     * Sets the utId of the awards.
+     * Sets the recipients of this award.
      *
-     * @param int $utId
+     * @param array $recipients
      * @return $this
      */
-    public function setUTId($utId)
+    public function setRecipients(array $recipients): Awards
     {
-        $this->utId = (int)$utId;
-
-        return $this;
-    }
-
-    /**
-     * Gets the typ of the awards.
-     *
-     * @return int
-     */
-    public function getTyp()
-    {
-        return $this->typ;
-    }
-
-    /**
-     * Sets the typ of the awards.
-     *
-     * @param int $typ
-     * @return $this
-     */
-    public function setTyp($typ)
-    {
-        $this->typ = (int)$typ;
+        $this->recipients = $recipients;
 
         return $this;
     }

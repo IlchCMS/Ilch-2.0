@@ -13,7 +13,13 @@
     font-size: 32px;
     font-weight: bold;
 }
-.rank_info {
+.rank_show {
+    float: left;
+    padding: 15px;
+    font-size: 32px;
+    font-weight: bold;
+}
+.rank_info .rank_info_show {
     padding: 5px;
 }
 .rank_image {

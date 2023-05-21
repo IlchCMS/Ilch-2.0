@@ -57,7 +57,7 @@ if ($awards != '') {
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                        value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
                 <span class="input-group-addon">
-                    <span class="fa-solid fa-xmark"></span>
+                    <span id="clearImage" class="fa-solid fa-xmark"></span>
                 </span>
                 <span class="input-group-addon">
                     <a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a>
@@ -65,29 +65,45 @@ if ($awards != '') {
             </div>
         </div>
     </div>
-    <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
         <label for="user" class="col-lg-2 control-label">
             <?=$this->getTrans('userTeam') ?>:
         </label>
         <div class="col-lg-2">
-            <select class="form-control" id="user" name="utId">
+            <select class="form-control" id="user" name="utId[]" multiple>
                 <optgroup label="<?=$this->getTrans('user') ?>">
                     <?php foreach ($this->get('users') as $user) {
                             $selected = '';
-                            if (($this->get('awards') != '' && $this->get('awards')->getUTId() == $user->getId() && $this->get('awards')->getTyp() == 1) || $this->originalInput('utId') == '1_'.$user->getId()) {
+                            if ($this->validation()->hasErrors() && in_array('1_'.$user->getId(), $this->originalInput('utId'))) {
                                 $selected = 'selected="selected"';
+                            } elseif (!$this->validation()->hasErrors() && $awards) {
+                                foreach($awards->getRecipients() as $recipient) {
+                                    if ($recipient->getUtId() === $user->getId() && $recipient->getTyp() === 1) {
+                                        $selected = 'selected="selected"';
+                                        break;
+                                    }
+                                }
                             }
+
                             echo '<option '.$selected.' value="1_'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
                         }
                     ?>
                 </optgroup>
-                <?php if ($awardsMapper->existsTable('teams') == true && $this->get('teams') != ''): ?>
+                <?php if ($awardsMapper->existsTable('teams') && $this->get('teams') != ''): ?>
                     <optgroup label="<?=$this->getTrans('team') ?>">
                         <?php foreach ($this->get('teams') as $team) {
                             $selected = '';
-                            if (($this->get('awards') != '' && $this->get('awards')->getUTId() == $team->getId() && $this->get('awards')->getTyp() == 2) || $this->originalInput('utId') == '2_'.$team->getId()) {
+                            if ($this->validation()->hasErrors() && in_array('2_'.$team->getId(), $this->originalInput('utId'))) {
                                 $selected = 'selected="selected"';
+                            } elseif (!$this->validation()->hasErrors() && $awards) {
+                                foreach($awards->getRecipients() as $recipient) {
+                                    if ($recipient->getUtId() === $team->getId() && $recipient->getTyp() === 2) {
+                                        $selected = 'selected="selected"';
+                                        break;
+                                    }
+                                }
                             }
+
                             echo '<option '.$selected.' value="2_'.$team->getId().'">'.$this->escape($team->getName()).'</option>';
                         }
                         ?>
@@ -117,7 +133,7 @@ if ($awards != '') {
                    class="form-control"
                    name="page"
                    id="page"
-                   placeholder="http://"
+                   placeholder="https://"
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getURL()) : $this->escape($this->originalInput('page')) ?>" />
         </div>
     </div>
@@ -141,6 +157,10 @@ $(document).ready(function() {
         language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
         minView: 2,
         todayHighlight: true
+    });
+
+    $("#clearImage").click(function(){
+            $("#selectedImage").val('');
     });
 });
 
