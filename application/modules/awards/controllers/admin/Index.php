@@ -167,7 +167,6 @@ class Index extends \Ilch\Controller\Admin
                     $recipientModel->setAwardId((!$this->getRequest()->getParam('id')) ? $idOrAffectedRows : $awardsModel->getId())
                         ->setUtId(substr($value, 2))
                         ->setTyp(substr($value, 0, 1));
-//                    $recipientMapper->save($recipientModel);
                     $recipientModels[] = $recipientModel;
                 }
                 $recipientMapper->saveMulti($recipientModels);

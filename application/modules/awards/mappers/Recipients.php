@@ -6,8 +6,8 @@
 
 namespace Modules\Awards\Mappers;
 
-use http\Exception\InvalidArgumentException;
 use Ilch\Mapper;
+use InvalidArgumentException;
 use Modules\Awards\Models\Recipient as RecipientModel;
 
 /**
