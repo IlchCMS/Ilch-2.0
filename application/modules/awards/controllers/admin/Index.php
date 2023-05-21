@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -8,6 +8,8 @@ namespace Modules\Awards\Controllers\Admin;
 
 use Modules\Awards\Mappers\Awards as AwardsMapper;
 use Modules\Awards\Models\Awards as AwardsModel;
+use Modules\Awards\Mappers\Recipients as RecipientsMapper;
+use Modules\Awards\Models\Recipient as RecipientModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Teams\Mappers\Teams as TeamsMapper;
 use Ilch\Validation;
@@ -49,9 +51,10 @@ class Index extends \Ilch\Controller\Admin
         $awardsMapper = new AwardsMapper();
         $userMapper = new UserMapper();
 
-        if ($awardsMapper->existsTable('teams') == true) {
-            $teamsMapper = new TeamsMapper();
-        }
+        $userIds = [];
+        $users = [];
+        $teams = [];
+        $teamIds = [];
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
@@ -63,12 +66,29 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        if ($awardsMapper->existsTable('teams') == true) {
-            $this->getView()->set('teamsMapper', $teamsMapper);
+        $awards = $awardsMapper->getAwards();
+        foreach ($awards as $award) {
+            foreach($award->getRecipients() as $recipient) {
+                if ($recipient->getTyp() == 1) {
+                    $userIds[] = $recipient->getUtId();
+                } else {
+                    $teamIds[] = $recipient->getUtId();
+                }
+            }
+
+            if (!empty($userIds)) {
+                $users[$award->getId()] = $userMapper->getUserList(['id' => $userIds]);
+            }
+
+            if ($awardsMapper->existsTable('teams') && !empty($teamIds)) {
+                $teamsMapper = new TeamsMapper();
+                $teams[$award->getId()] = $teamsMapper->getTeams(['id' => $teamIds]);
+            }
         }
 
-        $this->getView()->set('userMapper', $userMapper)
-            ->set('awards', $awardsMapper->getAwards());
+        $this->getView()->set('awards', $awards)
+            ->set('users', $users)
+            ->set('teams', $teams);
     }
 
     public function treatAction()
@@ -76,16 +96,20 @@ class Index extends \Ilch\Controller\Admin
         $awardsMapper = new AwardsMapper();
         $userMapper = new UserMapper();
 
-        if ($awardsMapper->existsTable('teams') == true) {
-            $teamsMapper = new TeamsMapper();
-        }
-
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('awards', $awardsMapper->getAwardsById($this->getRequest()->getParam('id')));
+            $awards = $awardsMapper->getAwardsById($this->getRequest()->getParam('id'));
+
+            if (!$awards) {
+                $this->redirect()
+                    ->withMessage('awardNotFound', 'danger')
+                    ->to(['action' => 'index']);
+            }
+
+            $this->getView()->set('awards', $awards);
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
@@ -103,7 +127,7 @@ class Index extends \Ilch\Controller\Admin
                 'date' => trim($this->getRequest()->getPost('date')),
                 'rank' => trim($this->getRequest()->getPost('rank')),
                 'image' => $image,
-                'utId' => trim($this->getRequest()->getPost('utId')),
+                'utId' => $this->getRequest()->getPost('utId'),
                 'event' => trim($this->getRequest()->getPost('event')),
                 'page' => trim($this->getRequest()->getPost('page'))
             ];
@@ -124,21 +148,28 @@ class Index extends \Ilch\Controller\Admin
             $post['image'] = trim($this->getRequest()->getPost('image'));
 
             if ($validation->isValid()) {
-                $typ = substr($post['utId'], 0, 1);
-                $userTeamId = substr($post['utId'], 2);
+                $recipientMapper = new RecipientsMapper();
 
-                $model = new AwardsModel();
+                $awardsModel = new AwardsModel();
                 if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
+                    $awardsModel->setId($this->getRequest()->getParam('id'));
                 }
-                $model->setDate(new \Ilch\Date($post['date']))
+                $awardsModel->setDate(new \Ilch\Date($post['date']))
                     ->setRank($post['rank'])
-                    ->setTyp($typ)
                     ->setImage($post['image'])
-                    ->setUTId($userTeamId)
                     ->setEvent($post['event'])
                     ->setURL($post['page']);
-                $awardsMapper->save($model);
+                $idOrAffectedRows = $awardsMapper->save($awardsModel);
+
+                $recipientModels = [];
+                foreach($post['utId'] as $value) {
+                    $recipientModel = new RecipientModel();
+                    $recipientModel->setAwardId((!$this->getRequest()->getParam('id')) ? $idOrAffectedRows : $awardsModel->getId())
+                        ->setUtId(substr($value, 2))
+                        ->setTyp(substr($value, 0, 1));
+                    $recipientModels[] = $recipientModel;
+                }
+                $recipientMapper->saveMulti($recipientModels);
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
@@ -149,10 +180,11 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
+                ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
         }
 
-        if ($awardsMapper->existsTable('teams') == true) {
+        if ($awardsMapper->existsTable('teams')) {
+            $teamsMapper = new TeamsMapper();
             $this->getView()->set('teams', $teamsMapper->getTeams());
         }
 

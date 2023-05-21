@@ -1,6 +1,7 @@
 <?php
-$userMapper = $this->get('userMapper');
-$teamsMapper = $this->get('teamsMapper');
+$teams = $this->get('teams');
+$users = $this->get('users');
+$recipientToDisplayLimit = 6;
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
@@ -15,52 +16,63 @@ $teamsMapper = $this->get('teamsMapper');
                 </div>
             </div>
         </div>
-        <?php foreach ($this->get('awards') as $awards): ?>
+        <?php foreach ($this->get('awards') as $award): ?>
             <div class="col-lg-6">
                 <div class="award">
                     <div class="rank" align="center">
-                        <?php if ($awards->getRank() == 1): ?>
-                            <i class="fa-solid fa-trophy img_gold" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"></i>
-                        <?php elseif ($awards->getRank() == 2): ?>
-                            <i class="fa-solid fa-trophy img_silver" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"></i>
-                        <?php elseif ($awards->getRank() == 3): ?>
-                            <i class="fa-solid fa-trophy img_bronze" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"></i>
+                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $award->getId()]) ?>">
+                        <?php if ($award->getRank() == 1): ?>
+                            <i class="fa-solid fa-trophy img_gold" title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>"></i>
+                        <?php elseif ($award->getRank() == 2): ?>
+                            <i class="fa-solid fa-trophy img_silver" title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>"></i>
+                        <?php elseif ($award->getRank() == 3): ?>
+                            <i class="fa-solid fa-trophy img_bronze" title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>"></i>
                         <?php else: ?>
-                            <span title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>"><?=$awards->getRank() ?></span>
+                            <span title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>"><?=$award->getRank() ?></span>
                         <?php endif; ?>
+                        </a>
                     </div>
                     <div class="rank_info">
-                        <?php if ($awards->getTyp() == 2): ?>
-                            <?php $team = $teamsMapper->getTeamById($awards->getUTId()); ?>
-                            <?php if ($team) : ?>
-                                <a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a>
-                            <?php else: ?>
-                                <?=$this->getTrans('formerTeam') ?>
+                        <?php $recipientsDisplayed = 0 ?>
+                        <?php foreach($award->getRecipients() as $recipient) : ?>
+                            <?php if ($recipientsDisplayed >= $recipientToDisplayLimit): ?>
+                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $award->getId()]) ?>">...</a>
+                                <?php break; ?>
                             <?php endif; ?>
-                        <?php else: ?>
-                            <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
-                            <?php if ($user) : ?>
-                                <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a>
+                            <?php if ($recipient->getTyp() == 2): ?>
+                                <?php foreach($teams[$award->getId()] as $team) : ?>
+                                    <?php if ($team->getId() === $recipient->getUtId()) : ?>
+                                        <a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a>
+                                        <?php break; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             <?php else: ?>
-                                <?=$this->getTrans('formerUser') ?>
+                                <?php foreach($users[$award->getId()] as $user) : ?>
+                                    <?php if ($user->getId() === $recipient->getUtId()) : ?>
+                                        <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a>
+                                        <?php break; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             <?php endif; ?>
-                        <?php endif; ?>
-                        <br />
-                        <?=date('d.m.Y', strtotime($awards->getDate())) ?><br />
+                            <?php $recipientsDisplayed++ ?>
+                        <?php endforeach; ?>
 
-                        <?php if ($awards->getEvent() != ''): ?>
-                            <?php if ($awards->getURL() != ''): ?>
-                                <a href="<?=$this->escape($awards->getURL()) ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank" rel="noopener"><?=$this->escape($awards->getEvent()) ?></a>
+                        <br />
+                        <?=date('d.m.Y', strtotime($award->getDate())) ?><br />
+
+                        <?php if ($award->getEvent() != ''): ?>
+                            <?php if ($award->getURL() != ''): ?>
+                                <a href="<?=$this->escape($award->getURL()) ?>" title="<?=$this->escape($award->getEvent()) ?>" target="_blank" rel="noopener"><?=$this->escape($award->getEvent()) ?></a>
                             <?php else: ?>
-                                <?=$this->escape($awards->getEvent()) ?>
+                                <?=$this->escape($award->getEvent()) ?>
                             <?php endif; ?>
                         <?php else: ?>
                             <br />
                         <?php endif; ?>
                     </div>
-                    <?php if ($awards->getImage() != ''): ?>
+                    <?php if ($award->getImage() != ''): ?>
                         <div class="rank_image">
-                            <img src="<?=(strncmp($awards->getImage(), 'application', 11) === 0) ? $this->getBaseUrl($awards->getImage()) : $this->escape($awards->getImage()) ?>" alt="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" />
+                            <img src="<?=(strncmp($award->getImage(), 'application', 11) === 0) ? $this->getBaseUrl($award->getImage()) : $this->escape($award->getImage()) ?>" alt="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>" title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>" />
                         </div>
                     <?php endif; ?>
                 </div>

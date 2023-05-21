@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'awards',
-        'version' => '1.9.0',
+        'version' => '1.10.0',
         'icon_small' => 'fa-solid fa-trophy',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -36,7 +36,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_awards`');
+        $this->db()->queryMulti('DROP TABLE `[prefix]_awards_recipients`;
+            DROP TABLE `[prefix]_awards`;');
     }
 
     public function getInstallSql()
@@ -48,10 +49,16 @@ class Config extends \Ilch\Config\Install
                   `image` VARCHAR(255) NOT NULL,
                   `event` VARCHAR(100) NOT NULL,
                   `url` VARCHAR(150) NOT NULL,
-                  `ut_id` INT(11) NOT NULL,
-                  `typ` TINYINT(1) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_awards_recipients` (
+                    `award_id` INT(11) NOT NULL,
+                    `ut_id` INT(11) NOT NULL,
+                    `typ` TINYINT(1) NOT NULL,
+                    INDEX `FK_[prefix]_awards_recipients_[prefix]_awards` (`award_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_awards_recipients_[prefix]_awards` FOREIGN KEY (`award_id`) REFERENCES `[prefix]_awards` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB COLLATE=utf8mb4_unicode_ci;';
     }
 
     public function getUpdate($installedVersion)
@@ -70,6 +77,37 @@ class Config extends \Ilch\Config\Install
             case '1.7.0':
             case '1.8.0':
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-trophy' WHERE `key` = 'awards';");
+            case '1.9.0':
+                // Create new table awards_recipients.
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_awards_recipients` (
+                    `award_id` INT(11) NOT NULL,
+                    `ut_id` INT(11) NOT NULL,
+                    `typ` TINYINT(1) NOT NULL,
+                    INDEX `FK_[prefix]_awards_recipients_[prefix]_awards` (`award_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_awards_recipients_[prefix]_awards` FOREIGN KEY (`award_id`) REFERENCES `[prefix]_awards` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB COLLATE=utf8mb4_unicode_ci;');
+
+                // Copy existing recipients in chunks of 25 recipients at a time to the new table.
+                $existingRecipientsRows = $this->db()->select(['id', 'ut_id', 'typ'])
+                    ->from(['awards'])
+                    ->execute()
+                    ->fetchRows();
+
+                $existingRecipients = [];
+                foreach ($existingRecipientsRows as $recipientsRow) {
+                    $existingRecipients[] = [$recipientsRow['id'], $recipientsRow['ut_id'], $recipientsRow['typ']];
+                }
+
+                $existingRecipients = array_chunk($existingRecipients, 25);
+                foreach($existingRecipients as $existingRecipientsChunk) {
+                    $this->db()->insert('awards_recipients')
+                        ->columns(['award_id', 'ut_id', 'typ'])
+                        ->values($existingRecipientsChunk)
+                        ->execute();
+                }
+
+                // Delete no longer needed columns of the awards table
+                $this->db()->query('ALTER TABLE `[prefix]_awards` DROP COLUMN `ut_id`, DROP COLUMN `typ`');
         }
     }
 }

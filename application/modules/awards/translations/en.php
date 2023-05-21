@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -22,6 +22,6 @@ return [
     'awards' => 'Awards',
     'currentlyThereAre' => 'Currently, there are',
     'invalidUserTeam' => 'User or team',
-    'formerTeam' => 'former team',
-    'formerUser' => 'former user',
+    'awardNotFound' => 'Award not found',
+    'recipientsOfAward' => 'Recipients of this award',
 ];
