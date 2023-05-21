@@ -40,11 +40,13 @@ $users = $this->get('users');
     <br>
     <p><?=$this->getTrans('recipientsOfAward') ?>:</p>
     <div class="award_recipients_show">
+    <?php $recipientsDisplayed = 0 ?>
     <?php foreach($award->getRecipients() as $recipient) : ?>
         <?php if ($recipient->getTyp() == 2): ?>
             <?php foreach($teams as $team) : ?>
                 <?php if ($team->getId() === $recipient->getUtId()) : ?>
                     <a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a>
+                    <?php $recipientsDisplayed++ ?>
                     <?php break; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
@@ -52,11 +54,15 @@ $users = $this->get('users');
             <?php foreach($users as $user) : ?>
                 <?php if ($user->getId() === $recipient->getUtId()) : ?>
                     <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a>
+                    <?php $recipientsDisplayed++ ?>
                     <?php break; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         <?php endif; ?>
     <?php endforeach; ?>
+    <?php if ($recipientsDisplayed === 0) : ?>
+        <?=$this->getTrans('formerUsersOrTeams') ?>
+    <?php endif; ?>
     </div>
 <?php else: ?>
     <?=$this->getTrans('awardNotFound') ?>

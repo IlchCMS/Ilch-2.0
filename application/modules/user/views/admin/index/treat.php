@@ -161,6 +161,7 @@ if ($user->getId()) {
             </select>
         </div>
     </div>
+    <?php if ($user->getId()) : ?>
     <div class="form-group">
         <label for="assignedGroups" class="col-lg-3 control-label">
             <?=$this->getTrans('userProfile') ?>
@@ -169,6 +170,7 @@ if ($user->getId()) {
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treatProfile', 'user' => $user->getId()]) ?>" class="btn"><?=$this->getTrans('editUserProfile') ?></a>
         </div>
     </div>
+    <?php endif; ?>
     <?=$this->getSaveBar() ?>
 </form>
 

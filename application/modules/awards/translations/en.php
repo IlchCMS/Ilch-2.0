@@ -22,6 +22,7 @@ return [
     'awards' => 'Awards',
     'currentlyThereAre' => 'Currently, there are',
     'invalidUserTeam' => 'User or team',
+    'formerUsersOrTeams' => 'Former users or teams',
     'awardNotFound' => 'Award not found',
     'recipientsOfAward' => 'Recipients of this award',
 ];
