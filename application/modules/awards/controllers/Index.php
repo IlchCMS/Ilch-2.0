@@ -62,7 +62,8 @@ class Index extends \Ilch\Controller\Frontend
         $award = null;
 
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+            ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuAward'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
         if ($this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $award = $awardsMapper->getAwardsById($this->getRequest()->getParam('id'));

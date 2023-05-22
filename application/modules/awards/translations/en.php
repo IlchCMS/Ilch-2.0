@@ -6,6 +6,7 @@
 
 return [    
     'menuAwards' => 'Awards',
+    'menuAward' => 'Award',
     'date' => 'Date',
     'rank' => 'Rank',
     'user' => 'User',
