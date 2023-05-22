@@ -6,11 +6,12 @@
 
 return [
     'menuAwards' => 'Auszeichnungen',
+    'menuAward' => 'Auszeichnung',
     'date' => 'Datum',
     'rank' => 'Rang',
     'user' => 'User',
     'team' => 'Team',
-    'userTeam' => 'User / Team',
+    'userTeam' => 'Benutzer / Team',
     'image' => 'Bild',
     'event' => 'Veranstaltung',
     'page' => 'Homepage',

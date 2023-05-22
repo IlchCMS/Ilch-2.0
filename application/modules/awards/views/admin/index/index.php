@@ -16,7 +16,7 @@ $recipientToDisplayLimit = 6;
                     <col class="icon_width">
                     <col class="col-lg-1">
                     <col class="col-lg-1">
-                    <col class="col-lg-2">
+                    <col class="col-lg-3">
                     <col>
                 </colgroup>
                 <thead>
@@ -49,7 +49,7 @@ $recipientToDisplayLimit = 6;
                                 <?php if ($recipient->getTyp() == 2): ?>
                                     <?php foreach($teams[$award->getId()] as $team) : ?>
                                         <?php if ($team->getId() === $recipient->getUtId()) : ?>
-                                            <a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a>
+                                            <i class="fa-solid fa-users"></i> <a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a>
                                             <?php $recipientsDisplayed++ ?>
                                             <?php break; ?>
                                         <?php endif; ?>
@@ -57,7 +57,7 @@ $recipientToDisplayLimit = 6;
                                 <?php else: ?>
                                     <?php foreach($users[$award->getId()] as $user) : ?>
                                         <?php if ($user->getId() === $recipient->getUtId()) : ?>
-                                            <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a>
+                                            <i class="fa-solid fa-user"></i> <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
                                             <?php $recipientsDisplayed++ ?>
                                             <?php break; ?>
                                         <?php endif; ?>
