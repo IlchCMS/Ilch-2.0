@@ -130,8 +130,9 @@ class Frontend extends Base
      * @return string
      * @since 2.1.0
      */
-    public function getMetaTagString($key)
+    public function getMetaTagString(string $key): string
     {
+        /** @var Helper\MetaTag\Model $metaTagModel */
         $metaTagModel = $this->get('metaTags')[$key];
 
         // If either name or http-equiv is specified, then the content attribute must also be specified. Otherwise, it must be omitted.
@@ -153,19 +154,29 @@ class Frontend extends Base
      * @return string
      * @since 2.1.22
      */
-    public function getLinkTagString($key)
+    public function getLinkTagString(string $key): string
     {
+        /** @var Helper\LinkTag\Model $linkTagModel */
         $linkTagModel = $this->get('linkTags')[$key];
 
         // If the rel attribute is absent, has no keywords, or if none of the keywords used are allowed according
         // to the definitions in this specification, then the element does not create any links.
         // The href attribute must be present and must contain a valid non-empty URL potentially surrounded by spaces.
         // If the href attribute is absent, then the element does not define a link.
-        if (empty($linkTagModel->getRel()) || empty($linkTagModel->getHref())) {
+        // If both the href and imagesrcset attributes are absent, then the element does not define a link.
+        if (empty($linkTagModel->getRel()) && empty($linkTagModel->getHref())) {
             return '';
         }
 
-        $linkTagString = sprintf('<link rel="%s" href="%s"', $this->escape($linkTagModel->getRel()), $this->escape($linkTagModel->getHref()));
+        $linkTagString = '<link';
+
+        if ($linkTagModel->getRel()) {
+            $linkTagString .= sprintf(' rel="%s"', $this->escape($linkTagModel->getRel()));
+        }
+
+        if ($linkTagModel->getHref()) {
+            $linkTagString .= sprintf(' href="%s"', $this->escape($linkTagModel->getHref()));
+        }
 
         if ($linkTagModel->getCrossorigin()) {
             $linkTagString .= sprintf(' crossorigin="%s"', $this->escape($linkTagModel->getCrossorigin()));
@@ -175,7 +186,8 @@ class Frontend extends Base
             $linkTagString .= sprintf(' hreflang="%s"', $this->escape($linkTagModel->getHreflang()));
         }
 
-        if ($linkTagModel->getSizes()) {
+        if (((strpos($linkTagModel->getRel(), 'icon') !== false) || (strpos($linkTagModel->getRel(), 'apple-touch-icon') !== false)) && $linkTagModel->getSizes()) {
+            // The attribute must only be specified on link elements that have a rel attribute that specifies the icon keyword or the apple-touch-icon keyword.
             $linkTagString .= sprintf(' sizes="%s"', $this->escape($linkTagModel->getSizes()));
         }
 
@@ -189,6 +201,51 @@ class Frontend extends Base
 
         if ($linkTagModel->getTitle()) {
             $linkTagString .= sprintf(' title="%s"', $this->escape($linkTagModel->getTitle()));
+        }
+
+        if (((strpos($linkTagModel->getRel(), 'stylesheet') !== false) || (strpos($linkTagModel->getRel(), 'preload') !== false) || (strpos($linkTagModel->getRel(), 'modulepreload') !== false)) && $linkTagModel->getIntegrity()) {
+            // The attribute must only be specified on link elements that have a rel attribute that contains the stylesheet, preload, or modulepreload keyword.
+            $linkTagString .= sprintf(' integrity="%s"', $this->escape($linkTagModel->getIntegrity()));
+        }
+
+        if ($linkTagModel->getReferrerpolicy()) {
+            $linkTagString .= sprintf(' referrerpolicy="%s"', $this->escape($linkTagModel->getReferrerpolicy()));
+        }
+
+        if ((strpos($linkTagModel->getRel(), 'preload') !== false) && (strcasecmp($linkTagModel->getAs(), 'image') === 0)) {
+            // The imagesrcset and imagesizes attributes must only be specified on link elements that have both a rel attribute that specifies the preload keyword, as well as an as attribute in the "image" state.
+            if ($linkTagModel->getImagesrcset()) {
+                $linkTagString .= sprintf(' imagesrcset="%s"', $this->escape($linkTagModel->getImagesrcset()));
+            }
+
+            if ($linkTagModel->getImagesizes()) {
+                $linkTagString .= sprintf(' imagesizes="%s"', $this->escape($linkTagModel->getImagesizes()));
+            }
+        }
+
+        if (((strpos($linkTagModel->getRel(), 'preload') !== false) || (strpos($linkTagModel->getRel(), 'modulepreload') !== false)) && $linkTagModel->getAs()) {
+            // The attribute must be specified on link elements that have a rel attribute that contains the preload keyword.
+            // It may be specified on link elements that have a rel attribute that contains the modulepreload keyword; in such cases it must have a value which is a script-like destination.
+            // For other link elements, it must not be specified.
+            $linkTagString .= sprintf(' as="%s"', $this->escape($linkTagModel->getAs()));
+        }
+
+        if ((strpos($linkTagModel->getRel(), 'stylesheet') !== false) && $linkTagModel->getBlocking()) {
+            // It is used by link type stylesheet, and it must only be specified on link elements that have a rel attribute containing that keyword.
+            $linkTagString .= sprintf(' blocking="%s"', $this->escape($linkTagModel->getBlocking()));
+        }
+
+        if ((strpos($linkTagModel->getRel(), 'mask-icon') !== false) && $linkTagModel->getColor()) {
+            // The attribute must only be specified on link elements that have a rel attribute that contains the mask-icon keyword.
+            $linkTagString .= sprintf(' color="%s"', $this->escape($linkTagModel->getColor()));
+        }
+
+        if ($linkTagModel->isDisabled()) {
+            $linkTagString .= ' disabled';
+        }
+
+        if ($linkTagModel->getFetchpriority()) {
+            $linkTagString .= sprintf(' fetchpriority="%s"', $this->escape($linkTagModel->getFetchpriority()));
         }
 
         return $linkTagString . '>';
