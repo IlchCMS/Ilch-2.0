@@ -1,0 +1,180 @@
+.d-inblock {
+    display:inline-block;
+}
+#sortable td:hover {
+	cursor:move;
+}
+#sortable .placeholder {
+    outline: 0;
+    border: 0;
+	background-image: linear-gradient(135deg, #eeeeee 8.33%, #ffffff 8.33%, #ffffff 50%, #eeeeee 50%, #eeeeee 58.33%, #ffffff 58.33%, #ffffff 100%);
+	background-size: 12.00px 12.00px;
+}
+#sortTable th.sort {
+    cursor: pointer;
+}
+#sortTable th.sort:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline;
+    content: ' \f0dc';
+    color: #ccc;
+}
+#sortTable th.sort:hover::after,
+#sortTable th.sort.asc:hover::after,
+#sortTable th.sort.desc:hover::after {
+    color: #f00;
+}
+#sortTable th.sort.asc:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline;
+    content: ' \f0dd';
+    color: #000;
+}
+#sortTable th.sort.desc:after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline;
+    content: ' \f0de';
+    color: #000;
+}
+div.input-group.filter {
+    top: -3px;
+    width: 300px;
+    float: right;
+}
+div.input-group.filter input:not(:placeholder-shown) {
+    font-weight: bold;
+    color: #a94442;
+    background: #f2dede;
+}
+button.stock {
+    min-width: 50px;
+}
+.item_image {
+    height: 30px !important;
+    width: auto !important;
+    border: 1px solid #ddd;
+}
+.order .table td {
+    border-bottom: 1px solid #F0F0F0;
+    padding: 10px;
+}
+.order .table td.finish {
+    background: #fff;
+    border-top: none !important;
+    border-bottom: none !important;
+    padding: 3px 10px;
+}
+.order .table td.finished {
+    background: #fff;
+    border-top: 2px solid #ddd !important;
+    border-bottom: none !important;
+}
+.flipswitch-input#status-on:checked + .flipswitch-label {
+    color: #3c763d;
+}
+.flipswitch-input#status-on:checked ~ span.flipswitch-selection {
+    background-color: #dff0d8;
+}
+.flipswitch-input#status-off:checked + .flipswitch-label {
+    color: #a94442;
+}
+.flipswitch-input#status-off:checked ~ span.flipswitch-selection {
+    background-color: #f2dede;
+}
+.cordon-line {
+    width: 20px;
+    height: 5px;
+    position: absolute;
+    top: 11px;
+    left: 22px;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.cordon-flipswitch {
+    display: inline-block;
+    float: left;
+}
+.cordon-text {
+    width: 35% !important;
+    margin-left: 5px;
+}
+.cordon-color {
+    width: 30% !important;
+}
+select.cordon-color option[value="green"] {
+    color: #155724;
+    background-color: #d4edda;
+}
+.item_image.green {
+    border-left: 2px double #155724;
+    box-shadow: -5px 0 0 0 #d4edda;
+}
+input[type="text"].green {
+    color: #155724;
+    background-color: #d4edda;
+}
+select.cordon-color option[value="yellow"] {
+    color: #856404;
+    background-color: #fff3cd;
+}
+.item_image.yellow {
+    border-left: 2px solid #856404;
+    box-shadow: -5px 0 0 0 #fff3cd;
+}
+input[type="text"].yellow {
+    color: #856404;
+    background-color: #fff3cd;
+}
+select.cordon-color option[value="red"] {
+    color: #721c24;
+    background-color: #f8d7da;
+}
+.item_image.red {
+    border-left: 2px solid #721c24;
+    box-shadow: -5px 0 0 0 #f8d7da;
+}
+input[type="text"].red {
+    color: #721c24;
+    background-color: #f8d7da;
+}
+select.cordon-color option[value="blue"] {
+    color: #004085;
+    background-color: #cce5ff;
+}
+.item_image.blue {
+    border-left: 2px solid #004085;
+    box-shadow: -5px 0 0 0 #cce5ff;
+}
+input[type="text"].blue {
+    color: #004085;
+    background-color: #cce5ff;
+}
+select.cordon-color option[value="grey"] {
+    color: #383d41;
+    background-color: #e2e3e5;
+}
+.item_image.grey {
+    border-left: 2px solid #383d41;
+    box-shadow: -5px 0 0 0 #e2e3e5;
+}
+input[type="text"].grey {
+    color: #383d41;
+    background-color: #e2e3e5;
+}
+.media-body {
+    height: 175px;
+}
+input.btn.del:hover {
+    color: #a94442;
+    background-color: #f2dede;
+}
+input.btn.keep:hover {
+    color: #3c763d;
+    background-color: #dff0d8;
+}
