@@ -132,6 +132,7 @@ class Frontend extends Base
      */
     public function getMetaTagString(string $key): string
     {
+        /** @var Helper\MetaTag\Model $metaTagModel */
         $metaTagModel = $this->get('metaTags')[$key];
 
         // If either name or http-equiv is specified, then the content attribute must also be specified. Otherwise, it must be omitted.
@@ -162,11 +163,20 @@ class Frontend extends Base
         // to the definitions in this specification, then the element does not create any links.
         // The href attribute must be present and must contain a valid non-empty URL potentially surrounded by spaces.
         // If the href attribute is absent, then the element does not define a link.
-        if (empty($linkTagModel->getRel()) || empty($linkTagModel->getHref())) {
+        // If both the href and imagesrcset attributes are absent, then the element does not define a link.
+        if (empty($linkTagModel->getRel()) && empty($linkTagModel->getHref())) {
             return '';
         }
 
-        $linkTagString = sprintf('<link rel="%s" href="%s"', $this->escape($linkTagModel->getRel()), $this->escape($linkTagModel->getHref()));
+        $linkTagString = '<link';
+
+        if ($linkTagModel->getRel()) {
+            $linkTagString .= sprintf(' rel="%s"', $this->escape($linkTagModel->getRel()));
+        }
+
+        if ($linkTagModel->getHref()) {
+            $linkTagString .= sprintf(' href="%s"', $this->escape($linkTagModel->getHref()));
+        }
 
         if ($linkTagModel->getCrossorigin()) {
             $linkTagString .= sprintf(' crossorigin="%s"', $this->escape($linkTagModel->getCrossorigin()));

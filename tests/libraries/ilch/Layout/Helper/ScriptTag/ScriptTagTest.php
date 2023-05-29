@@ -242,6 +242,7 @@ class ScriptTagTest extends TestCase
 
     /**
      * Tests a classic external script with integrity (usually a hash/checksum).
+     *
      * @return void
      */
     public function testClassicScriptIntegrity()

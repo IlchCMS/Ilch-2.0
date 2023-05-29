@@ -202,10 +202,10 @@ class Model
 
     /**
      * Get href for the link tag.
-     * @return string
+     * @return null|string
      * @since 2.1.22
      */
-    public function getHref(): string
+    public function getHref(): ?string
     {
         return $this->href;
     }
