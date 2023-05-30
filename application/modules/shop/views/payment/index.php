@@ -57,13 +57,13 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
                     $currency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')->getName()));
                     $pdfOrderData[] = [
                         $pdfOrderNr++,
-                        utf8_decode($itemName),
+                        mb_convert_encoding($itemName, 'ISO-8859-1', 'UTF-8'),
                         number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
                         $itemTax.' %',
                         number_format($itemPrice, 2, '.', '').' '.$currency,
                         $orderItem->getQuantity(),
                         number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '').' '.$currency,
-                        utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber];
+                        mb_convert_encoding($this->getTrans('itemNumberShort').' '.$itemNumber, 'ISO-8859-1', 'UTF-8')];
                     ?>
                     <tr>
                         <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>

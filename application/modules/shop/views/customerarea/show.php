@@ -15,7 +15,7 @@ $itemsMapper = $this->get('itemsMapper');
     $invoiceNr = $ilchDate->format('ymd').'-'.$order->getId();
 
     $invoiceFilename = '';
-    $nameInvoice = utf8_decode($this->getTrans('invoice'));
+    $nameInvoice = mb_convert_encoding($this->getTrans('invoice'), 'ISO-8859-1', 'UTF-8');
     $shopInvoicePath = '/application/modules/shop/static/invoice/';
 
     if (empty($order->getInvoiceFIlename())) {
@@ -54,7 +54,7 @@ $itemsMapper = $this->get('itemsMapper');
             <tr>
                 <th><?=$this->getTrans('invoice') ?></th>
                 <td>
-                    <?=$this->getTrans('invoice') ?> - <?=utf8_decode($this->getTrans('numberShort')) ?> <?=$invoiceNr ?>
+                    <?=$this->getTrans('invoice') ?> - <?=$this->getTrans('numberShort') ?> <?=$invoiceNr ?>
                     <?php if (file_exists($file_location)) : ?>
                     <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
                         <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
@@ -124,13 +124,13 @@ $itemsMapper = $this->get('itemsMapper');
                 $currency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')));
                 $pdfOrderData[] = [
                     $pdfOrderNr++,
-                    utf8_decode($itemName),
+                    mb_convert_encoding($itemName, 'ISO-8859-1', 'UTF-8'),
                     number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
                     $itemTax.' %',
                     number_format($itemPrice, 2, '.', '').' '.$currency,
                     $orderItem->getQuantity(),
                     number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '').' '.$currency,
-                    utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber];
+                    mb_convert_encoding($this->getTrans('itemNumberShort').' '.$itemNumber, 'ISO-8859-1', 'UTF-8')];
                 ?>
                 <tr>
                     <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>

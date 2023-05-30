@@ -110,13 +110,13 @@ $settingsMapper = $this->get('settingsMapper');
                     $currency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')));
                     $pdfOrderData[] = [
                         $pdfOrderNr++,
-                        utf8_decode($itemName),
+                        mb_convert_encoding($itemName, 'ISO-8859-1', 'UTF-8'),
                         number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
                         $itemTax.' %',
                         number_format($itemPrice, 2, '.', '').' '.$currency,
                         $orderItem->getQuantity(),
                         number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '').' '.$currency,
-                        utf8_decode($this->getTrans('itemNumberShort')).' '.$itemNumber];
+                        mb_convert_encoding($this->getTrans('itemNumberShort').' '.$itemNumber, 'ISO-8859-1', 'UTF-8')];
                 ?>
                 <tr>
                     <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>
@@ -216,7 +216,7 @@ $settingsMapper = $this->get('settingsMapper');
                 </td>
             </tr>
             <tr>
-                <th><?=$this->getTrans('invoice') ?> - <?=utf8_decode($this->getTrans('numberShort')) ?> <?=$invoiceNr ?></th>
+                <th><?=$this->getTrans('invoice') ?> - <?=$this->getTrans('numberShort') ?> <?=$invoiceNr ?></th>
             </tr>
             <tr>
                 <td>
@@ -227,7 +227,7 @@ $settingsMapper = $this->get('settingsMapper');
                     <form class="form-horizontal" method="POST" action="">
                         <?php
                         $invoiceFilename = '';
-                        $nameInvoice = utf8_decode($this->getTrans('invoice'));
+                        $nameInvoice = mb_convert_encoding($this->getTrans('invoice'), 'ISO-8859-1', 'UTF-8');
                         $shopInvoicePath = '/application/modules/shop/static/invoice/';
 
                         if (empty($order->getInvoiceFIlename())) {
@@ -466,68 +466,68 @@ $settingsMapper = $this->get('settingsMapper');
         } else {
             $pdf->shopLogo = ROOT_PATH.'/application/modules/shop/static/img/empty.jpg';
         }
-        $pdf->nameDateInvoice = utf8_decode($this->getTrans('dateOfInvoice'));
+        $pdf->nameDateInvoice = mb_convert_encoding($this->getTrans('dateOfInvoice'), 'ISO-8859-1', 'UTF-8');
         $pdf->DateInvoice = $dateInvoice = date('d.m.Y', time());
-        $pdf->nameDeliveryDate = utf8_decode($this->getTrans('expectedDelivery'));
+        $pdf->nameDeliveryDate = mb_convert_encoding($this->getTrans('expectedDelivery'), 'ISO-8859-1', 'UTF-8');
               $maxDeliveryTime = max($arrayShippingTime);
               $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
-        $pdf->DeliveryDate = utf8_decode($this->getTrans('approx')).' '.date('d.m.Y', $sumDeliveryTime);
-        $pdf->ReceiverPrename = utf8_decode($this->escape($order->getInvoiceAddress()->getPrename()));
-        $pdf->ReceiverLastname = utf8_decode($this->escape($order->getInvoiceAddress()->getLastname()));
-        $pdf->ReceiverStreet = utf8_decode($this->escape($order->getInvoiceAddress()->getStreet()));
+        $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8').' '.date('d.m.Y', $sumDeliveryTime);
+        $pdf->ReceiverPrename = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getPrename()), 'ISO-8859-1', 'UTF-8');
+        $pdf->ReceiverLastname = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getLastname()), 'ISO-8859-1', 'UTF-8');
+        $pdf->ReceiverStreet = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getStreet()), 'ISO-8859-1', 'UTF-8');
         $pdf->ReceiverPostcode = $this->escape($order->getInvoiceAddress()->getPostcode());
-        $pdf->ReceiverCity = utf8_decode($this->escape($order->getInvoiceAddress()->getCity()));
-        $pdf->ReceiverCountry = utf8_decode($this->escape($order->getInvoiceAddress()->getCountry()));
-        $pdf->nameByEmail = utf8_decode($this->getTrans('byEmail'));
+        $pdf->ReceiverCity = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getCity()), 'ISO-8859-1', 'UTF-8');
+        $pdf->ReceiverCountry = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getCountry()), 'ISO-8859-1', 'UTF-8');
+        $pdf->nameByEmail = mb_convert_encoding($this->getTrans('byEmail'), 'ISO-8859-1', 'UTF-8');
         $pdf->ReceiverEmail = $this->escape($order->getEmail());
-        $pdf->nameDeliveryPlace = utf8_decode($this->getTrans('placeOfDelivery'));
-        $pdf->DeliveryPrename = utf8_decode($this->escape($order->getDeliveryAddress()->getPrename()));
-        $pdf->DeliveryLastname = utf8_decode($this->escape($order->getDeliveryAddress()->getLastname()));
-        $pdf->DeliveryStreet = utf8_decode($this->escape($order->getDeliveryAddress()->getStreet()));
+        $pdf->nameDeliveryPlace = mb_convert_encoding($this->getTrans('placeOfDelivery'), 'ISO-8859-1', 'UTF-8');
+        $pdf->DeliveryPrename = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getPrename()), 'ISO-8859-1', 'UTF-8');
+        $pdf->DeliveryLastname = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getLastname()), 'ISO-8859-1', 'UTF-8');
+        $pdf->DeliveryStreet = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getStreet()), 'ISO-8859-1', 'UTF-8');
         $pdf->DeliveryPostcode = $this->escape($order->getDeliveryAddress()->getPostcode());
-        $pdf->DeliveryCity = utf8_decode($this->escape($order->getDeliveryAddress()->getCity()));
-        $pdf->DeliveryCountry = utf8_decode($this->escape($order->getDeliveryAddress()->getCountry()));
+        $pdf->DeliveryCity = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getCity()), 'ISO-8859-1', 'UTF-8');
+        $pdf->DeliveryCountry = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getCountry()), 'ISO-8859-1', 'UTF-8');
         $pdf->nameInvoice = strtoupper($nameInvoice);
-        $pdf->nameOrder = $nameOrder = utf8_decode($this->getTrans('order'));
-        $pdf->nameFrom = $nameFrom = utf8_decode($this->getTrans('from'));
+        $pdf->nameOrder = $nameOrder = mb_convert_encoding($this->getTrans('order'), 'ISO-8859-1', 'UTF-8');
+        $pdf->nameFrom = $nameFrom = mb_convert_encoding($this->getTrans('from'), 'ISO-8859-1', 'UTF-8');
         $pdf->orderDate = $orderDateInvoice;
-        $pdf->nameNumber = $nameNumber = utf8_decode($this->getTrans('numberShort'));
+        $pdf->nameNumber = $nameNumber = mb_convert_encoding($this->getTrans('numberShort'), 'ISO-8859-1', 'UTF-8');
         $pdf->invoiceNr = $invoiceNr;
-        $pdf->invoiceTextTop = utf8_decode($settingsMapper->getSettings()->getInvoiceTextTop());
+        $pdf->invoiceTextTop = mb_convert_encoding($settingsMapper->getSettings()->getInvoiceTextTop(), 'ISO-8859-1', 'UTF-8');
         $pdf->OrderHeader = ['#',
-              utf8_decode($this->getTrans('productName')),
-              utf8_decode($this->getTrans('singlePrice')),
-              utf8_decode($this->getTrans('taxShort')),
-              utf8_decode($this->getTrans('singlePrice')),
-              utf8_decode($this->getTrans('entries')),
-              utf8_decode($this->getTrans('total'))];
+              mb_convert_encoding($this->getTrans('productName'), 'ISO-8859-1', 'UTF-8'),
+              mb_convert_encoding($this->getTrans('singlePrice'), 'ISO-8859-1', 'UTF-8'),
+              mb_convert_encoding($this->getTrans('taxShort'), 'ISO-8859-1', 'UTF-8'),
+              mb_convert_encoding($this->getTrans('singlePrice'), 'ISO-8859-1', 'UTF-8'),
+              mb_convert_encoding($this->getTrans('entries'), 'ISO-8859-1', 'UTF-8'),
+              mb_convert_encoding($this->getTrans('total'), 'ISO-8859-1', 'UTF-8')];
         $pdf->OrderData = $pdfOrderData;
         $pdf->OrderCurrency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')));
-        $pdf->nameDeliveryCosts = utf8_decode($this->getTrans('deliveryCosts')).':';
+        $pdf->nameDeliveryCosts = mb_convert_encoding($this->getTrans('deliveryCosts'), 'ISO-8859-1', 'UTF-8').':';
         $pdf->DeliveryCosts = number_format($shipping_costs, 2, '.', '');
-        $pdf->nameSubTotalTax = utf8_decode($this->getTrans('subtotal')).' '.utf8_decode($this->getTrans('withTax')).':';
+        $pdf->nameSubTotalTax = mb_convert_encoding($this->getTrans('subtotal').' '.$this->getTrans('withTax'), 'ISO-8859-1', 'UTF-8').':';
         $pdf->OrderTotalPrice = number_format($total_price, 2, '.', '');
-        $pdf->nameSubTotalWithoutTax = utf8_decode($this->getTrans('subtotal')).' '.utf8_decode($this->getTrans('withoutTax')).':';
+        $pdf->nameSubTotalWithoutTax = mb_convert_encoding($this->getTrans('subtotal').' '.$this->getTrans('withoutTax'), 'ISO-8859-1', 'UTF-8').':';
         $pdf->OrderPriceWithoutTax = number_format($sumPricewithoutTax, 2, '.', '');
-        $pdf->nameTax = utf8_decode($this->getTrans('tax')).':';
+        $pdf->nameTax = mb_convert_encoding($this->getTrans('tax'), 'ISO-8859-1', 'UTF-8').':';
         $pdf->OrderDifferenzTax = number_format($differenzTax, 2, '.', '');
-        $pdf->nameTotalPrice = utf8_decode($this->getTrans('totalPrice')).':';
-        $pdf->invoiceTextBottom = utf8_decode($settingsMapper->getSettings()->getInvoiceTextBottom());
-        $pdf->payInfoGreetings = utf8_decode($this->getTrans('greetings'));
-        $pdf->nameSite = utf8_decode($this->getTrans('site'));
-        $pdf->shopName = $shopName = utf8_decode($settingsMapper->getSettings()->getShopName());
-        $pdf->shopStreet = utf8_decode($settingsMapper->getSettings()->getShopStreet());
-        $pdf->shopPLZ = utf8_decode($settingsMapper->getSettings()->getShopPLZ());
-        $pdf->shopCity = utf8_decode($settingsMapper->getSettings()->getShopCity());
-        $pdf->shopStNr = utf8_decode($settingsMapper->getSettings()->getShopStNr());
-        $pdf->shopTel = utf8_decode($settingsMapper->getSettings()->getShopTel());
-        $pdf->shopFax = utf8_decode($settingsMapper->getSettings()->getShopFax());
-        $pdf->shopMail = utf8_decode($settingsMapper->getSettings()->getShopMail());
-        $pdf->shopWeb = $shopWeb = utf8_decode($settingsMapper->getSettings()->getShopWeb());
-        $pdf->bankName = utf8_decode($settingsMapper->getSettings()->getBankName());
-        $pdf->bankIBAN = utf8_decode($settingsMapper->getSettings()->getBankIBAN());
-        $pdf->bankBIC = utf8_decode($settingsMapper->getSettings()->getBankBIC());
-        $pdf->bankOwner = utf8_decode($settingsMapper->getSettings()->getBankOwner());
+        $pdf->nameTotalPrice = mb_convert_encoding($this->getTrans('totalPrice'), 'ISO-8859-1', 'UTF-8').':';
+        $pdf->invoiceTextBottom = mb_convert_encoding($settingsMapper->getSettings()->getInvoiceTextBottom(), 'ISO-8859-1', 'UTF-8');
+        $pdf->payInfoGreetings = mb_convert_encoding($this->getTrans('greetings'), 'ISO-8859-1', 'UTF-8');
+        $pdf->nameSite = mb_convert_encoding($this->getTrans('site'), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopName = $shopName = mb_convert_encoding($settingsMapper->getSettings()->getShopName(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopStreet = mb_convert_encoding($settingsMapper->getSettings()->getShopStreet(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopPLZ = mb_convert_encoding($settingsMapper->getSettings()->getShopPLZ(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopCity = mb_convert_encoding($settingsMapper->getSettings()->getShopCity(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopStNr = mb_convert_encoding($settingsMapper->getSettings()->getShopStNr(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopTel = mb_convert_encoding($settingsMapper->getSettings()->getShopTel(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopFax = mb_convert_encoding($settingsMapper->getSettings()->getShopFax(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopMail = mb_convert_encoding($settingsMapper->getSettings()->getShopMail(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopWeb = $shopWeb = mb_convert_encoding($settingsMapper->getSettings()->getShopWeb(), 'ISO-8859-1', 'UTF-8');
+        $pdf->bankName = mb_convert_encoding($settingsMapper->getSettings()->getBankName(), 'ISO-8859-1', 'UTF-8');
+        $pdf->bankIBAN = mb_convert_encoding($settingsMapper->getSettings()->getBankIBAN(), 'ISO-8859-1', 'UTF-8');
+        $pdf->bankBIC = mb_convert_encoding($settingsMapper->getSettings()->getBankBIC(), 'ISO-8859-1', 'UTF-8');
+        $pdf->bankOwner = mb_convert_encoding($settingsMapper->getSettings()->getBankOwner(), 'ISO-8859-1', 'UTF-8');
         //
         $pdf->AliasNbPages();
         $pdf->AddPage();
@@ -674,46 +674,46 @@ $settingsMapper = $this->get('settingsMapper');
         } else {
             $pdf->shopLogo = ROOT_PATH.'/application/modules/shop/static/img/empty.jpg';
         }
-        $pdf->nameShippingDate = utf8_decode($this->getTrans('shippingDate'));
+        $pdf->nameShippingDate = mb_convert_encoding($this->getTrans('shippingDate'), 'ISO-8859-1', 'UTF-8');
         $pdf->shippingDate = date('d.m.Y', time());
-        $pdf->nameDeliveryDate = utf8_decode($this->getTrans('expectedDelivery'));
+        $pdf->nameDeliveryDate = mb_convert_encoding($this->getTrans('expectedDelivery'), 'ISO-8859-1', 'UTF-8');
               $maxDeliveryTime = max($arrayShippingTime);
               $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
-        $pdf->DeliveryDate = utf8_decode($this->getTrans('approx')).' '.date('d.m.Y', $sumDeliveryTime);
-              $nameDeliveryNote = utf8_decode($this->getTrans('deliveryNote'));
+        $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8').' '.date('d.m.Y', $sumDeliveryTime);
+              $nameDeliveryNote = mb_convert_encoding($this->getTrans('deliveryNote'), 'ISO-8859-1', 'UTF-8');
 		$pdf->nameDeliveryNote = strtoupper($nameDeliveryNote);
-        $pdf->DeliveryPrename = utf8_decode($this->escape($order->getDeliveryAddress()->getPrename()));
-        $pdf->DeliveryLastname = utf8_decode($this->escape($order->getDeliveryAddress()->getLastname()));
-        $pdf->DeliveryStreet = utf8_decode($this->escape($order->getDeliveryAddress()->getStreet()));
+        $pdf->DeliveryPrename = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getPrename()), 'ISO-8859-1', 'UTF-8');
+        $pdf->DeliveryLastname = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getLastname()), 'ISO-8859-1', 'UTF-8');
+        $pdf->DeliveryStreet = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getStreet()), 'ISO-8859-1', 'UTF-8');
         $pdf->DeliveryPostcode = $this->escape($order->getDeliveryAddress()->getPostcode());
-        $pdf->DeliveryCity = utf8_decode($this->escape($order->getDeliveryAddress()->getCity()));
-        $pdf->DeliveryCountry = utf8_decode($this->escape($order->getDeliveryAddress()->getCountry()));
-        $pdf->nameOrder = $nameOrder = utf8_decode($this->getTrans('order'));
-        $pdf->nameFrom = $nameFrom = utf8_decode($this->getTrans('from'));
+        $pdf->DeliveryCity = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getCity()), 'ISO-8859-1', 'UTF-8');
+        $pdf->DeliveryCountry = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getCountry()), 'ISO-8859-1', 'UTF-8');
+        $pdf->nameOrder = $nameOrder = mb_convert_encoding($this->getTrans('order'), 'ISO-8859-1', 'UTF-8');
+        $pdf->nameFrom = $nameFrom = mb_convert_encoding($this->getTrans('from'), 'ISO-8859-1', 'UTF-8');
         $pdf->orderDate = $orderDateInvoice;
-        $pdf->nameNumber = $nameNumber = utf8_decode($this->getTrans('numberShort'));
+        $pdf->nameNumber = $nameNumber = mb_convert_encoding($this->getTrans('numberShort'), 'ISO-8859-1', 'UTF-8');
         $pdf->invoiceNr = $invoiceNr;
-        $pdf->deliveryTextTop = utf8_decode($settingsMapper->getSettings()->getDeliveryTextTop());
+        $pdf->deliveryTextTop = mb_convert_encoding($settingsMapper->getSettings()->getDeliveryTextTop(), 'ISO-8859-1', 'UTF-8');
         $pdf->OrderHeader = ['#',
-              utf8_decode($this->getTrans('productName')),
-			  utf8_decode($this->getTrans('itemNumber')),
-              utf8_decode($this->getTrans('amount'))];
+              mb_convert_encoding($this->getTrans('productName'), 'ISO-8859-1', 'UTF-8'),
+			  mb_convert_encoding($this->getTrans('itemNumber'), 'ISO-8859-1', 'UTF-8'),
+              mb_convert_encoding($this->getTrans('amount'), 'ISO-8859-1', 'UTF-8')];
         $pdf->OrderData = $pdfOrderData;
-        $pdf->deliveryInfoGreetings = utf8_decode($this->getTrans('greetings'));
-        $pdf->nameSite = utf8_decode($this->getTrans('site'));
-        $pdf->shopName = $shopName = utf8_decode($settingsMapper->getSettings()->getShopName());
-        $pdf->shopStreet = utf8_decode($settingsMapper->getSettings()->getShopStreet());
-        $pdf->shopPLZ = utf8_decode($settingsMapper->getSettings()->getShopPLZ());
-        $pdf->shopCity = utf8_decode($settingsMapper->getSettings()->getShopCity());
-        $pdf->shopStNr = utf8_decode($settingsMapper->getSettings()->getShopStNr());
-        $pdf->shopTel = utf8_decode($settingsMapper->getSettings()->getShopTel());
-        $pdf->shopFax = utf8_decode($settingsMapper->getSettings()->getShopFax());
-        $pdf->shopMail = utf8_decode($settingsMapper->getSettings()->getShopMail());
-        $pdf->shopWeb = $shopWeb = utf8_decode($settingsMapper->getSettings()->getShopWeb());
-        $pdf->bankName = utf8_decode($settingsMapper->getSettings()->getBankName());
-        $pdf->bankIBAN = utf8_decode($settingsMapper->getSettings()->getBankIBAN());
-        $pdf->bankBIC = utf8_decode($settingsMapper->getSettings()->getBankBIC());
-        $pdf->bankOwner = utf8_decode($settingsMapper->getSettings()->getBankOwner());
+        $pdf->deliveryInfoGreetings = mb_convert_encoding($this->getTrans('greetings'), 'ISO-8859-1', 'UTF-8');
+        $pdf->nameSite = mb_convert_encoding($this->getTrans('site'), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopName = $shopName = mb_convert_encoding($settingsMapper->getSettings()->getShopName(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopStreet = mb_convert_encoding($settingsMapper->getSettings()->getShopStreet(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopPLZ = mb_convert_encoding($settingsMapper->getSettings()->getShopPLZ(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopCity = mb_convert_encoding($settingsMapper->getSettings()->getShopCity(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopStNr = mb_convert_encoding($settingsMapper->getSettings()->getShopStNr(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopTel = mb_convert_encoding($settingsMapper->getSettings()->getShopTel(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopFax = mb_convert_encoding($settingsMapper->getSettings()->getShopFax(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopMail = mb_convert_encoding($settingsMapper->getSettings()->getShopMail(), 'ISO-8859-1', 'UTF-8');
+        $pdf->shopWeb = $shopWeb = mb_convert_encoding($settingsMapper->getSettings()->getShopWeb(), 'ISO-8859-1', 'UTF-8');
+        $pdf->bankName = mb_convert_encoding($settingsMapper->getSettings()->getBankName(), 'ISO-8859-1', 'UTF-8');
+        $pdf->bankIBAN = mb_convert_encoding($settingsMapper->getSettings()->getBankIBAN(), 'ISO-8859-1', 'UTF-8');
+        $pdf->bankBIC = mb_convert_encoding($settingsMapper->getSettings()->getBankBIC(), 'ISO-8859-1', 'UTF-8');
+        $pdf->bankOwner = mb_convert_encoding($settingsMapper->getSettings()->getBankOwner(), 'ISO-8859-1', 'UTF-8');
         //
         $pdf->AliasNbPages();
         $pdf->AddPage();
