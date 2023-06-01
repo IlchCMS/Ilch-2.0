@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -14,7 +15,7 @@ class Order extends Model
     /**
      * The id of the order.
      *
-     * @var int
+     * @var int|null
      */
     protected $id;
 
@@ -23,21 +24,21 @@ class Order extends Model
      *
      * @var string
      */
-    protected $datetime;
+    protected $datetime = '';
 
     /**
      * The currency id of the order.
      *
      * @var int
      */
-    protected $currencyId;
+    protected $currencyId = 0;
 
     /**
      * The customer id of the order.
      *
      * @var int
      */
-    protected $customerId;
+    protected $customerId = 0;
 
     /**
      * The invoice address of the order.
@@ -58,19 +59,19 @@ class Order extends Model
      *
      * @var string
      */
-    protected $email;
+    protected $email = '';
 
     /**
      * The array of the order details models.
      *
      * @var Orderdetails[]
      */
-    protected $orderdetails;
+    protected $orderdetails = [];
 
     /**
      * The filename of the invoice.
      *
-     * @var string
+     * @var string|null
      */
     protected $invoicefilename;
 
@@ -79,26 +80,26 @@ class Order extends Model
      *
      * @var string
      */
-    protected $datetimeInvoiceSent;
+    protected $datetimeInvoiceSent = '';
 
     /**
      * A 18 char long selector.
      *
-     * @var string
+     * @var string|null
      */
     protected $selector;
 
     /**
      * A 64 char long confirmCode.
      *
-     * @var string
+     * @var string|null
      */
     protected $confirmCode;
 
     /**
      * The status of the order.
      *
-     * @var int
+     * @var int|null
      */
     protected $status;
 
@@ -282,7 +283,7 @@ class Order extends Model
      * @param Orderdetails[] $orderdetails
      * @return Order
      */
-    public function setOrderdetails(Array $orderdetails): Order
+    public function setOrderdetails(array $orderdetails): Order
     {
         $this->orderdetails = $orderdetails;
         return $this;
@@ -291,7 +292,7 @@ class Order extends Model
     /**
      * Gets the filename of the invoice.
      *
-     * @return string
+     * @return string|null
      */
     public function getInvoiceFilename(): ?string
     {
@@ -337,7 +338,7 @@ class Order extends Model
     /**
      * Get the 18 char long selector.
      *
-     * @return string
+     * @return string|null
      */
     public function getSelector(): ?string
     {
@@ -359,7 +360,7 @@ class Order extends Model
     /**
      * Get the 64 char long confirm code.
      *
-     * @return string
+     * @return string|null
      */
     public function getConfirmCode(): ?string
     {
@@ -381,7 +382,7 @@ class Order extends Model
     /**
      * Gets the status of the order.
      *
-     * @return int
+     * @return int|null
      */
     public function getStatus(): ?int
     {
@@ -400,5 +401,4 @@ class Order extends Model
 
         return $this;
     }
-
 }

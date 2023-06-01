@@ -12,7 +12,7 @@ $itemsMapper = $this->get('itemsMapper');
     $ilchDate = new Ilch\Date($this->escape($order->getDatetime()));
     $orderTime = $ilchDate->format(' H:i ', true);
     $orderDate = $ilchDate->format('d.m.Y ', true);
-    $invoiceNr = $ilchDate->format('ymd').'-'.$order->getId();
+    $invoiceNr = $ilchDate->format('ymd') . '-' . $order->getId();
 
     $invoiceFilename = '';
     $nameInvoice = mb_convert_encoding($this->getTrans('invoice'), 'ISO-8859-1', 'UTF-8');
@@ -20,11 +20,11 @@ $itemsMapper = $this->get('itemsMapper');
 
     if (empty($order->getInvoiceFIlename())) {
         $hash = bin2hex(random_bytes(32));
-        $invoiceFilename = $nameInvoice.'_'.$invoiceNr.'_'.$hash;
+        $invoiceFilename = $nameInvoice . '_' . $invoiceNr . '_' . $hash;
     } else {
         $invoiceFilename = $order->getInvoiceFIlename();
     }
-    $file_location = ROOT_PATH.$shopInvoicePath.$invoiceFilename.'.pdf';
+    $file_location = ROOT_PATH . $shopInvoicePath . $invoiceFilename . '.pdf';
     ?>
 
     <h4><?=$this->getTrans('customerAreaInfoBuyer') ?></h4>
@@ -49,7 +49,7 @@ $itemsMapper = $this->get('itemsMapper');
             </tr>
             <tr>
                 <th><?=$this->getTrans('date') ?></th>
-                <td><?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime .$this->getTrans('dateTimeoClock') ?></td>
+                <td><?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime . $this->getTrans('dateTimeoClock') ?></td>
             </tr>
             <tr>
                 <th><?=$this->getTrans('invoice') ?></th>
@@ -100,7 +100,7 @@ $itemsMapper = $this->get('itemsMapper');
             $orderItems = $order->getOrderdetails();
             $subtotal_price = 0;
             $pdfOrderNr = 1;
-            foreach ($orderItems as $orderItem):
+            foreach ($orderItems as $orderItem) :
                 $itemId = $orderItem->getItemId();
                 $item = $itemsMapper->getShopItemById($itemId);
                 $itemImg = $item->getImage();
@@ -116,21 +116,22 @@ $itemsMapper = $this->get('itemsMapper');
                 $arrayPrices[] = $itemPrice * $orderItem->getQuantity();
                 $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $orderItem->getQuantity();
                 $shopImgPath = '/application/modules/shop/static/img/';
-                if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
-                    $img = BASE_URL.'/'.$itemImg;
+                if ($itemImg && file_exists(ROOT_PATH . '/' . $itemImg)) {
+                    $img = BASE_URL . '/' . $itemImg;
                 } else {
-                    $img = BASE_URL.$shopImgPath.'noimg.jpg';
+                    $img = BASE_URL . $shopImgPath . 'noimg.jpg';
                 }
                 $currency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')));
                 $pdfOrderData[] = [
                     $pdfOrderNr++,
                     mb_convert_encoding($itemName, 'ISO-8859-1', 'UTF-8'),
-                    number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
-                    $itemTax.' %',
-                    number_format($itemPrice, 2, '.', '').' '.$currency,
+                    number_format($itemPriceWithoutTax, 2, '.', '') . ' ' . $currency,
+                    $itemTax . ' %',
+                    number_format($itemPrice, 2, '.', '') . ' ' . $currency,
                     $orderItem->getQuantity(),
-                    number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '').' '.$currency,
-                    mb_convert_encoding($this->getTrans('itemNumberShort').' '.$itemNumber, 'ISO-8859-1', 'UTF-8')];
+                    number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '') . ' ' . $currency,
+                    mb_convert_encoding($this->getTrans('itemNumberShort') . ' ' . $itemNumber, 'ISO-8859-1', 'UTF-8')
+                ];
                 ?>
                 <tr>
                     <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>

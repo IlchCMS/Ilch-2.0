@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -91,12 +92,12 @@ class Settings extends Mapper
     public function updateSettingBank(SettingsModel $settingBank)
     {
         $this->db()->update('shop_settings')
-            ->values([ 
-                      'bankName' => $settingBank->getBankName(),
-                      'bankOwner' => $settingBank->getBankOwner(),
-                      'bankIBAN' => $settingBank->getBankIBAN(),
-                      'bankBIC' => $settingBank->getBankBIC()
-                    ])
+            ->values([
+                    'bankName' => $settingBank->getBankName(),
+                    'bankOwner' => $settingBank->getBankOwner(),
+                    'bankIBAN' => $settingBank->getBankIBAN(),
+                    'bankBIC' => $settingBank->getBankBIC()
+                ])
             ->where(['id' => '1'])
             ->execute();
     }

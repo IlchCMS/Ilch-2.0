@@ -48,7 +48,7 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($this->get('addresses') as $address): ?>
+        <?php foreach ($this->get('addresses') as $address) : ?>
             <tr>
                 <td><?=$this->escape($address->getPrename()) ?></td>
                 <td><?=$this->escape($address->getLastname()) ?></td>
@@ -83,14 +83,14 @@
             <th></th>
             <th class="sort"><?=$this->getTrans('status') ?></th>
             <th class="sort"><?=$this->getTrans('orderDate') ?></th>
-            <th class="sort"><?=$this->getTrans('invoice').' '.$this->getTrans('numberShort') ?></th>
+            <th class="sort"><?=$this->getTrans('invoice') . ' ' . $this->getTrans('numberShort') ?></th>
             <th class="sort"><?=$this->getTrans('name') ?></th>
             <th class="sort"><?=$this->getTrans('deliveryAddress') ?></th>
             <th class="sort"><?=$this->getTrans('invoiceAddress') ?></th>
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($this->get('orders') as $order): ?>
+        <?php foreach ($this->get('orders') as $order) : ?>
             <tr class="filter">
                 <td><?=$this->getEditIcon(['controller' => 'orders', 'action' => 'treat', 'id' => $order->getId()]) ?></td>
                 <td><?=$this->getDeleteIcon(['controller' => 'orders', 'action' => 'delorder', 'id' => $order->getId()]) ?></td>
@@ -129,7 +129,7 @@
                 </td>
                 <?php
                 $orderDate = date_format($myDateTime, 'd.m.Y');
-                $invoiceNr = date_format($myDateTime, 'ymd').'-'.$order->getId();
+                $invoiceNr = date_format($myDateTime, 'ymd') . '-' . $order->getId();
                 ?>
                 <td>
                     <?=$invoiceNr ?>

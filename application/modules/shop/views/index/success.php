@@ -1,4 +1,5 @@
 <?php
+
 /* delete session */
 unset($_SESSION['shopping_cart']); ?>
 

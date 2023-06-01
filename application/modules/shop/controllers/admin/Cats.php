@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -79,8 +80,7 @@ class Cats extends Admin
             $items[4]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuShops',
             $items
         );
@@ -97,7 +97,7 @@ class Cats extends Admin
 
         if ($this->getRequest()->getPost('action') === 'delete') {
             $errorDelCat = 0;
-            
+
             foreach ($this->getRequest()->getPost('check_cats') as $catId) {
                 $countItems = count($itemsMapper->getShopItems(['cat_id' => $catId]));
                 if ($countItems == 0) {
@@ -106,7 +106,7 @@ class Cats extends Admin
                     $errorDelCat = 1;
                 }
             }
-            
+
             if ($errorDelCat == 0) {
                 $this->addMessage('deleteSuccess');
             } else {
@@ -114,7 +114,6 @@ class Cats extends Admin
             }
 
             $this->redirect(['action' => 'index']);
-            
         } elseif ($this->getRequest()->getPost('save') && $this->getRequest()->getPost('positions')) {
             $postData = $this->getRequest()->getPost('positions');
             $positions = explode(',', $postData);
@@ -123,7 +122,7 @@ class Cats extends Admin
             }
             $this->addMessage('saveSuccess');
             $this->redirect(['action' => 'index']);
-        } 
+        }
 
         $this->getView()->set('itemsMapper', $itemsMapper);
         $this->getView()->set('cats', $categoryMapper->getCategories());

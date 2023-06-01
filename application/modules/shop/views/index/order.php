@@ -3,9 +3,9 @@ $itemsMapper = $this->get('itemsMapper');
 
 /* show shopcart */
 $cart_badge = '';
-if(!empty($_SESSION['shopping_cart'])) {
+if (!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
-    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
+    $cart_badge = ($cart_count > 0) ? '<a class="activecart" href="' . $this->getUrl('shop/index/cart') . '#shopAnker">' . $this->getTrans('menuCart') . '<i class="fa-solid fa-shopping-cart"><span class="badge">' . $cart_count . '</span></i></a>' : '';
 }
 ?>
 
@@ -321,12 +321,11 @@ if(!empty($_SESSION['shopping_cart'])) {
                             $arrayPrices[] = $itemPrice * $product['quantity'];
                             $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $product['quantity'];
                             $shopImgPath = '/application/modules/shop/static/img/';
-                            if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
-                                $img = BASE_URL.'/'.$itemImg;
+                            if ($itemImg && file_exists(ROOT_PATH . '/' . $itemImg)) {
+                                $img = BASE_URL . '/' . $itemImg;
                             } else {
-                                $img = BASE_URL.$shopImgPath.'noimg.jpg';
-                            }
-                        ?>
+                                $img = BASE_URL . $shopImgPath . 'noimg.jpg';
+                            } ?>
                         <tr>
                             <td data-label="<?=$this->getTrans('productImage') ?>">
                                 <img src="<?=$img ?>" alt="<?=$this->escape($itemName) ?>"/>
@@ -348,8 +347,8 @@ if(!empty($_SESSION['shopping_cart'])) {
                                 <b><?=number_format($itemPrice * $product['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                             </td>
                         </tr>
-                        <?php
-                        $subtotal_price += round($itemPrice * $product['quantity'], 2);
+                            <?php
+                            $subtotal_price += round($itemPrice * $product['quantity'], 2);
                         }
                         ?>
                     </tbody>
@@ -414,7 +413,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                            class="form-control acceptcheckbox"
                            id="acceptOrder"
                            name="acceptOrder"
-                           value="1" 
+                           value="1"
                            <?=($this->originalInput('acceptOrder') != '' ? 'checked' : '') ?> />
                 </div>
             </div>
@@ -492,7 +491,8 @@ if(!empty($_SESSION['shopping_cart'])) {
             </div>
         </form>
     <?php } ?>
-<?php } else { ?>
+    <?php
+} else { ?>
     <?=$this->getTrans('noProductInCart') ?>
     <div class="row space20"></div>
     <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-default">

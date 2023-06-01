@@ -19,13 +19,13 @@
                 <th></th>
                 <th class="sort"><?=$this->getTrans('status') ?></th>
                 <th class="sort"><?=$this->getTrans('orderDate') ?></th>
-                <th class="sort"><?=$this->getTrans('invoice').' '.$this->getTrans('numberShort') ?></th>
+                <th class="sort"><?=$this->getTrans('invoice') . ' ' . $this->getTrans('numberShort') ?></th>
                 <th class="sort"><?=$this->getTrans('invoiceAddress') ?></th>
                 <th class="sort"><?=$this->getTrans('deliveryAddress') ?></th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($this->get('orders') as $order): ?>
+            <?php foreach ($this->get('orders') as $order) : ?>
                 <tr class="filter">
                     <td><a href="<?=$this->getUrl(['action' => 'show', 'id' => $order->getId()]) ?>" title="<?=$this->getTrans('showOrderDetails') ?>"><i class="fa-regular fa-folder-open"></i></a></td>
                     <td>
@@ -46,7 +46,7 @@
                         <?=$ilchDate->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock') ?>
                     </td>
                     <td>
-                        <?=$ilchDate->format('ymd').'-'.$order->getId() ?>
+                        <?=$ilchDate->format('ymd') . '-' . $order->getId() ?>
                     </td>
                     <td>
                         <?=$this->escape($order->getInvoiceAddress()->getPrename()) ?> <?=$this->escape($order->getInvoiceAddress()->getLastname()) ?>,

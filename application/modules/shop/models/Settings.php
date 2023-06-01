@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,7 +14,7 @@ class Settings extends Model
     /**
      * The id of the settings.
      *
-     * @var int
+     * @var int|null
      */
     protected $id;
 
@@ -22,159 +23,159 @@ class Settings extends Model
      *
      * @var string
      */
-    protected $shopName;
+    protected $shopName = '';
 
     /**
      * The shopLogo of the settings.
      *
      * @var string
      */
-    protected $shopLogo;
+    protected $shopLogo = '';
 
     /**
      * The shopStreet of the settings.
      *
      * @var string
      */
-    protected $shopStreet;
+    protected $shopStreet = '';
 
     /**
      * The shopPlz of the settings.
      *
      * @var string
      */
-    protected $shopPlz;
+    protected $shopPlz = '';
 
     /**
      * The shopCity of the settings.
      *
      * @var string
      */
-    protected $shopCity;
+    protected $shopCity = '';
 
     /**
      * The shopTel of the settings.
      *
      * @var string
      */
-    protected $shopTel;
+    protected $shopTel = '';
 
     /**
      * The shopFax of the settings.
      *
      * @var string
      */
-    protected $shopFax;
+    protected $shopFax = '';
 
     /**
      * The shopMail of the settings.
      *
      * @var string
      */
-    protected $shopMail;
+    protected $shopMail = '';
 
     /**
      * The shopWeb of the settings.
      *
      * @var string
      */
-    protected $shopWeb;
+    protected $shopWeb = '';
 
     /**
      * The shopStNr of the settings.
      *
      * @var string
      */
-    protected $shopStNr;
+    protected $shopStNr = '';
 
     /**
      * The bankName of the settings.
      *
      * @var string
      */
-    protected $bankName;
+    protected $bankName = '';
 
     /**
      * The bankOwner of the settings.
      *
      * @var string
      */
-    protected $bankOwner;
+    protected $bankOwner = '';
 
     /**
      * The bankIBAN of the settings.
      *
      * @var string
      */
-    protected $bankIBAN;
+    protected $bankIBAN = '';
 
     /**
      * The bankBIC of the settings.
      *
      * @var string
      */
-    protected $bankBIC;
+    protected $bankBIC = '';
 
     /**
      * The deliveryTextTop of the settings.
      *
      * @var string
      */
-    protected $deliveryTextTop;
+    protected $deliveryTextTop = '';
 
     /**
      * The invoiceTextTop of the settings.
      *
      * @var string
      */
-    protected $invoiceTextTop;
+    protected $invoiceTextTop = '';
 
     /**
      * The invoiceTextBottom of the settings.
      *
      * @var string
      */
-    protected $invoiceTextBottom;
+    protected $invoiceTextBottom = '';
 
     /**
      * The agb of the settings.
      *
      * @var string
      */
-    protected $agb;
+    protected $agb = '';
 
     /**
      * The fixTax of the settings.
      *
      * @var int
      */
-    protected $fixTax;
+    protected $fixTax = 0;
 
     /**
      * The fixShippingCosts of the settings.
      *
      * @var string
      */
-    protected $fixShippingCosts;
+    protected $fixShippingCosts = '';
 
     /**
      * The fixShippingTime of the settings.
      *
      * @var int
      */
-    protected $fixShippingTime;
+    protected $fixShippingTime = 0;
 
     /**
      * The paypal client id of the settings.
      *
-     * @var string
+     * @var string|null
      */
     protected $clientID;
 
     /**
      * The paypal.me name.
      *
-     * @var string
+     * @var string|null
      */
     protected $paypalMe;
 
@@ -183,21 +184,21 @@ class Settings extends Model
      *
      * @var bool
      */
-    protected $paypalMePresetAmount;
+    protected $paypalMePresetAmount = false;
 
     /**
      * The ifSampleData of the settings.
      *
      * @var int
      */
-    protected $ifSampleData;
+    protected $ifSampleData = 0;
 
     /**
      * Gets the id of the settings.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -633,7 +634,7 @@ class Settings extends Model
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getClientID(): ?string
     {
@@ -651,7 +652,7 @@ class Settings extends Model
     /**
      * Get the PayPal.Me name.
      *
-     * @return string
+     * @return string|null
      */
     public function getPayPalMe(): ?string
     {

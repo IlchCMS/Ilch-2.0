@@ -46,7 +46,7 @@
                    class="form-control"
                    id="id"
                    name="id"
-                   value="<?=(empty($currency->getId())) ? '' :$this->escape($currency->getId()) ?>" />
+                   value="<?=(empty($currency->getId())) ? '' : $this->escape($currency->getId()) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

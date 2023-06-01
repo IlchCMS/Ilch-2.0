@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,7 +14,7 @@ class Category extends Model
     /**
      * The id of the category.
      *
-     * @var int
+     * @var int|null
      */
     private $id;
 
@@ -22,21 +23,21 @@ class Category extends Model
      *
      * @var int
      */
-    private $pos;
+    private $pos = 0;
 
     /**
      * The title of the category.
      *
      * @var string
      */
-    private $title;
+    private $title = '';
 
     /**
      * Value for read_access.
      *
      * @var string
      */
-    private $read_access;
+    private $read_access = '';
 
     /**
      * Gets the category id.

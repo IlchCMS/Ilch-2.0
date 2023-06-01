@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -82,8 +83,7 @@ class Items extends Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuShops',
             $items
         );
@@ -116,12 +116,12 @@ class Items extends Admin
                 }
                 if ($itemInUse == 0) {
                     $itemsMapper->delete($itemId);
-                } 
+                }
             }
             if ($itemInUse == 0) {
-                    $this->addMessage('deleteSuccess');
-                } else {
-                    $this->addMessage('deleteItemsFailed', 'danger');
+                $this->addMessage('deleteSuccess');
+            } else {
+                $this->addMessage('deleteItemsFailed', 'danger');
             }
         }
 
@@ -246,5 +246,4 @@ class Items extends Admin
         }
         $this->redirect(['action' => 'index']);
     }
-
 }

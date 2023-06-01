@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -67,8 +68,7 @@ class Index extends Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuShops',
             $items
         );

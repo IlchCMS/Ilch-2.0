@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -79,8 +80,7 @@ class Currency extends Admin
             $items[5]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuCurrencies',
             $items
         );
@@ -100,12 +100,12 @@ class Currency extends Admin
                 $orders = $ordersMapper->getOrders();
                 $currencyIds = [];
 
-                foreach($orders as $order) {
+                foreach ($orders as $order) {
                     $currencyIds[] = $order->getCurrencyId();
                 }
-                $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('shop_currency'));
-
                 foreach ($this->getRequest()->getPost('check_currencies') as $id) {
+                    $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('shop_currency'));
+
                     if ($currencyInUse) {
                         $this->addMessage('currencyInUse', 'danger');
                         continue;
@@ -142,7 +142,7 @@ class Currency extends Admin
             $orders = $ordersMapper->getOrders();
             $currencyIds = [];
 
-            foreach($orders as $order) {
+            foreach ($orders as $order) {
                 $currencyIds[] = $order->getCurrencyId();
             }
             $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('shop_currency'));
@@ -216,7 +216,7 @@ class Currency extends Admin
             $orders = $ordersMapper->getOrders();
             $currencyIds = [];
 
-            foreach($orders as $order) {
+            foreach ($orders as $order) {
                 $currencyIds[] = $order->getCurrencyId();
             }
             $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('shop_currency'));

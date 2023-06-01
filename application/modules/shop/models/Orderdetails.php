@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -16,7 +17,7 @@ class Orderdetails extends Model
     /**
      * The id of the order detail.
      *
-     * @var int
+     * @var int|null
      */
     protected $id;
 
@@ -25,47 +26,47 @@ class Orderdetails extends Model
      *
      * @var int
      */
-    protected $orderId;
+    protected $orderId = 0;
 
     /**
      * The id of the item.
      *
      * @var int
      */
-    protected $itemId;
+    protected $itemId = 0;
 
     /**
      * The price of the item.
      *
-     * @var double
+     * @var float
      */
-    protected $price;
+    protected $price = 0.0;
 
     /**
      * The quantity of the item ordered.
      *
      * @var int
      */
-    protected $quantity;
+    protected $quantity = 0;
 
     /**
      * The tax on the item.
      *
      * @var int
      */
-    protected $tax;
+    protected $tax = 0;
 
     /**
      * The shipping costs for this item.
      *
-     * @var double
+     * @var float
      */
-    protected $shippingCosts;
+    protected $shippingCosts = 0.0;
 
     /**
      * Gets the id of the order.
      *
-     * @return int
+     * @return int|null
      */
     public function getId(): ?int
     {

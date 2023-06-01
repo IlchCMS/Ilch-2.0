@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -63,8 +64,7 @@ class Note extends Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuNote',
             $items
         );
@@ -76,5 +76,4 @@ class Note extends Admin
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuNote'), ['action' => 'note']);
     }
-
 }

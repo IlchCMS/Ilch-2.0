@@ -13,7 +13,7 @@
     </div>
 </h1>
 
-<?php if (!empty($this->get('shopItems'))): ?>
+<?php if (!empty($this->get('shopItems'))) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -44,28 +44,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('shopItems') as $shopItem): ?>
-                        <?php 
-                            $shopCats = $categoryMapper->getCategoryById($shopItem->getCatId());
-                            $shopImgPath = '/application/modules/shop/static/img/';
-                            if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) {
-                                $img = BASE_URL.'/'.$shopItem->getImage();
-                            } else {
-                                $img = BASE_URL.$shopImgPath.'noimg.jpg';
-                            }
+                    <?php foreach ($this->get('shopItems') as $shopItem) : ?>
+                        <?php
+                        $shopCats = $categoryMapper->getCategoryById($shopItem->getCatId());
+                        $shopImgPath = '/application/modules/shop/static/img/';
+                        if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage())) {
+                            $img = BASE_URL . '/' . $shopItem->getImage();
+                        } else {
+                            $img = BASE_URL . $shopImgPath . 'noimg.jpg';
+                        }
                         ?>
                         <tr class="filter">
                             <td><?=$this->getDeleteCheckbox('check_shops', $shopItem->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $shopItem->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delshop', 'id' => $shopItem->getId()]) ?></td>
                             <td class="text-center">
-                            <?php if ($shopItem->getStatus()==1) {
-                                echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]).'" class="btn btn-xs alert-success" title="'.$this->getTrans('active').'"><i class="fa-solid fa-eye"></i></a>';
+                            <?php
+                            if ($shopItem->getStatus() == 1) {
+                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-xs alert-success" title="' . $this->getTrans('active') . '"><i class="fa-solid fa-eye"></i></a>';
                             } else {
-                                echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]).'" class="btn btn-xs alert-danger" title="'.$this->getTrans('inactive').'"><i class="fa-solid fa-eye-slash inactiv"></i></a>';
-                            } ?>
+                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-xs alert-danger" title="' . $this->getTrans('inactive') . '"><i class="fa-solid fa-eye-slash inactiv"></i></a>';
+                            }
+                            ?>
                             </td>
-                            <td class="text-center"><a href="<?=$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) ?>"><img src="<?=$img ?>" class="item_image <?=($shopItem->getCordon()==1)?$shopItem->getCordonColor():''; ?>" alt="<?=$this->escape($shopItem->getName()) ?>"/></a></td>
+                            <td class="text-center"><a href="<?=$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) ?>"><img src="<?=$img ?>" class="item_image <?=($shopItem->getCordon() == 1) ? $shopItem->getCordonColor() : ''; ?>" alt="<?=$this->escape($shopItem->getName()) ?>"/></a></td>
                             <td><?=$this->escape($shopItem->getName()) ?></td>
                             <td><?=$this->escape($shopItem->getItemnumber()) ?></td>
                             <td><?=($shopCats) ? $this->escape($shopCats->getTitle()) : ''; ?></td>
@@ -120,6 +122,6 @@
         });
     });
     </script>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noItems') ?>
 <?php endif; ?>

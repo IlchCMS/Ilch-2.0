@@ -12,7 +12,7 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
 </h1>
 
 <div class="panel panel-default">
-    <div class="panel-heading" id="orderHeading" data-toggle="collapse" data-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(),0,strrpos($order->getInvoiceFilename(), '_')), $invoiceSentDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock'), $orderDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock')) ?><span class="pull-right clickable"><i class="fa-solid fa-chevron-down"></i></span></div>
+    <div class="panel-heading" id="orderHeading" data-toggle="collapse" data-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(), 0, strrpos($order->getInvoiceFilename(), '_')), $invoiceSentDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock'), $orderDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock')) ?><span class="pull-right clickable"><i class="fa-solid fa-chevron-down"></i></span></div>
     <div class="panel-body collapse" id="orderDetails">
         <div class="table-responsive order">
             <table class="table table-striped">
@@ -33,7 +33,7 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
                 $orderItems = $order->getOrderdetails();
                 $subtotal_price = 0;
                 $pdfOrderNr = 1;
-                foreach ($orderItems as $orderItem):
+                foreach ($orderItems as $orderItem) :
                     $itemId = $orderItem->getItemId();
                     $item = $itemsMapper->getShopItemById($itemId);
                     $itemImg = $item->getImage();
@@ -49,21 +49,22 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
                     $arrayPrices[] = $itemPrice * $orderItem->getQuantity();
                     $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $orderItem->getQuantity();
                     $shopImgPath = '/application/modules/shop/static/img/';
-                    if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
-                        $img = BASE_URL.'/'.$itemImg;
+                    if ($itemImg && file_exists(ROOT_PATH . '/' . $itemImg)) {
+                        $img = BASE_URL . '/' . $itemImg;
                     } else {
-                        $img = BASE_URL.$shopImgPath.'noimg.jpg';
+                        $img = BASE_URL . $shopImgPath . 'noimg.jpg';
                     }
                     $currency = iconv('UTF-8', 'windows-1252', $this->escape($this->get('currency')->getName()));
                     $pdfOrderData[] = [
                         $pdfOrderNr++,
                         mb_convert_encoding($itemName, 'ISO-8859-1', 'UTF-8'),
-                        number_format($itemPriceWithoutTax, 2, '.', '').' '.$currency,
-                        $itemTax.' %',
-                        number_format($itemPrice, 2, '.', '').' '.$currency,
+                        number_format($itemPriceWithoutTax, 2, '.', '') . ' ' . $currency,
+                        $itemTax . ' %',
+                        number_format($itemPrice, 2, '.', '') . ' ' . $currency,
                         $orderItem->getQuantity(),
-                        number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '').' '.$currency,
-                        mb_convert_encoding($this->getTrans('itemNumberShort').' '.$itemNumber, 'ISO-8859-1', 'UTF-8')];
+                        number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '') . ' ' . $currency,
+                        mb_convert_encoding($this->getTrans('itemNumberShort') . ' ' . $itemNumber, 'ISO-8859-1', 'UTF-8')
+                    ];
                     ?>
                     <tr>
                         <td><img src="<?=$img ?>" class="item_image" alt="<?=$this->escape($itemName) ?>"> </td>
@@ -145,18 +146,20 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
 </div>
 
 <?php if (!$this->get('settings')->getClientID() && $this->get('settings')->getPayPalMe()) : ?>
-<?php $presetAmount = ($this->get('settings')->isPaypalMePresetAmount()) ? '/' . number_format($total_price, 2, '.', '') . $this->get('currency')->getCode() : '' ?>
+    <?php
+    $presetAmount = ($this->get('settings')->isPaypalMePresetAmount()) ? '/' . number_format($total_price, 2, '.', '') . $this->get('currency')->getCode() : ''
+    ?>
 <a href="https://paypal.me/<?=urlencode($this->get('settings')->getPayPalMe()) . urlencode($presetAmount) ?>"><?=$this->getTrans('paymentInvoiceLink') ?></a>
 <?php else : ?>
-<?php
-// Create "purchase_units" for PayPal.
-$purchaseUnits['amount']['value'] = number_format($total_price, 2, '.', '');
-$purchaseUnits['amount']['currency_code'] = $this->escape($this->get('currency')->getCode());
-$purchaseUnits['amount']['breakdown']['item_total']['value'] = $purchaseUnits['amount']['value'];
-$purchaseUnits['amount']['breakdown']['item_total']['currency_code'] = $purchaseUnits['amount']['currency_code'];
+    <?php
+    // Create "purchase_units" for PayPal.
+    $purchaseUnits['amount']['value'] = number_format($total_price, 2, '.', '');
+    $purchaseUnits['amount']['currency_code'] = $this->escape($this->get('currency')->getCode());
+    $purchaseUnits['amount']['breakdown']['item_total']['value'] = $purchaseUnits['amount']['value'];
+    $purchaseUnits['amount']['breakdown']['item_total']['currency_code'] = $purchaseUnits['amount']['currency_code'];
 
-$purchaseUnits['invoice_id'] = substr($order->getInvoiceFilename(),0, strrpos($order->getInvoiceFilename(), '_'));
-?>
+    $purchaseUnits['invoice_id'] = substr($order->getInvoiceFilename(), 0, strrpos($order->getInvoiceFilename(), '_'));
+    ?>
 
 <script src="https://www.paypal.com/sdk/js?client-id=<?=urlencode($this->get('settings')->getClientID()) ?>&currency=<?=urlencode($this->get('currency')->getCode()) ?>"></script>
 

@@ -8,7 +8,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
     <?=(!empty($this->get('shopItem'))) ? $this->getTrans('edit') : $this->getTrans('add'); ?>
 </h1>
 
-<?php if ($this->get('cats') != ''): ?>
+<?php if ($this->get('cats') != '') : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
 
@@ -33,7 +33,8 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </label>
             <div class="col-lg-5">
                 <select class="form-control" id="catId" name="catId">
-                    <?php foreach ($this->get('cats') as $model) {
+                    <?php
+                    foreach ($this->get('cats') as $model) {
                         $selected = '';
 
                         if ($this->get('shopItem') != '' && $this->get('shopItem')->getCatId() == $model->getId()) {
@@ -42,7 +43,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                             $selected = 'selected="selected"';
                         }
 
-                        echo '<option '.$selected.' value="'.$model->getId().'">'.$this->escape($model->getTitle()).'</option>';
+                        echo '<option ' . $selected . ' value="' . $model->getId() . '">' . $this->escape($model->getTitle()) . '</option>';
                     }
                     ?>
                 </select>
@@ -120,11 +121,11 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getCordonText()) : $this->escape($this->originalInput('cordonText')) ?>" />
                     <select class="form-control selectpicker cordon-color" id="cordonColor" name="cordonColor">
                         <option selected disabled><?=$this->getTrans('chooseColor') ?></option>
-                        <option value="grey" class="grey" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'grey')?'selected="selected"':''; ?>><?=$this->getTrans('grey') ?></option>
-                        <option value="green" class="green" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'green')?'selected="selected"':''; ?>><?=$this->getTrans('green') ?></option>
-                        <option value="yellow" class="yellow" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'yellow')?'selected="selected"':''; ?>><?=$this->getTrans('yellow') ?></option>
-                        <option value="red" class="red" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'red')?'selected="selected"':''; ?>><?=$this->getTrans('red') ?></option>
-                        <option value="blue" class="blue" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'blue')?'selected="selected"':''; ?>><?=$this->getTrans('blue') ?></option>
+                        <option value="grey" class="grey" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'grey') ? 'selected="selected"' : ''; ?>><?=$this->getTrans('grey') ?></option>
+                        <option value="green" class="green" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'green') ? 'selected="selected"' : ''; ?>><?=$this->getTrans('green') ?></option>
+                        <option value="yellow" class="yellow" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'yellow') ? 'selected="selected"' : ''; ?>><?=$this->getTrans('yellow') ?></option>
+                        <option value="red" class="red" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'red') ? 'selected="selected"' : ''; ?>><?=$this->getTrans('red') ?></option>
+                        <option value="blue" class="blue" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'blue') ? 'selected="selected"' : ''; ?>><?=$this->getTrans('blue') ?></option>
                     </select>
                 </div>
             </div>
@@ -166,12 +167,12 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            min="1"
                            placeholder="<?=($this->escape($this->get('settings')->getFixTax()) != '') ? $this->escape($this->get('settings')->getFixTax()) : '' ?>"
                            value="<?php if ($this->get('shopItem') != '') {
-                                   echo $this->escape($this->get('shopItem')->getTax());
-                               } elseif ($this->escape($this->originalInput('tax'))) {
-                               echo $this->escape($this->originalInput('tax'));
-                           } else {
-                               echo $this->escape($this->get('settings')->getFixTax());
-                           } ?>" />
+                                      echo $this->escape($this->get('shopItem')->getTax());
+                                  } elseif ($this->escape($this->originalInput('tax'))) {
+                                      echo $this->escape($this->originalInput('tax'));
+                                  } else {
+                                      echo $this->escape($this->get('settings')->getFixTax());
+                                  } ?>" />
                     <span class="input-group-addon">
                         <b><?=$this->getTrans('percent') ?> (%)</b>
                     </span>
@@ -195,12 +196,12 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            pattern="^\d*(\.\d{2}$)?" 
                            placeholder="<?=($this->escape($this->get('settings')->getFixShippingCosts()) != '') ? $this->escape($this->get('settings')->getFixShippingCosts()) : '' ?>"
                            value="<?php if ($this->get('shopItem') != '') {
-                                   echo $this->escape($this->get('shopItem')->getShippingCosts());
-                               } elseif ($this->escape($this->originalInput('shippingCosts'))) {
-                               echo $this->escape($this->originalInput('shippingCosts'));
-                           } else {
-                               echo $this->escape($this->get('settings')->getFixShippingCosts());
-                           } ?>" />
+                                      echo $this->escape($this->get('shopItem')->getShippingCosts());
+                                  } elseif ($this->escape($this->originalInput('shippingCosts'))) {
+                                      echo $this->escape($this->originalInput('shippingCosts'));
+                                  } else {
+                                      echo $this->escape($this->get('settings')->getFixShippingCosts());
+                                  } ?>" />
                     <span class="input-group-addon">
                         <b><?=$this->escape($this->get('currency')) ?></b>
                     </span>
@@ -221,12 +222,12 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            min="1"
                            placeholder="<?=($this->escape($this->get('settings')->getFixShippingTime()) != '') ? $this->escape($this->get('settings')->getFixShippingTime()) : '' ?>"
                            value="<?php if ($this->get('shopItem') != '') {
-                                   echo $this->escape($this->get('shopItem')->getShippingTime());
-                               } elseif ($this->escape($this->originalInput('shippingTime'))) {
-                               echo $this->escape($this->originalInput('shippingTime'));
-                           } else {
-                               echo $this->escape($this->get('settings')->getFixShippingTime());
-                           } ?>" />
+                                      echo $this->escape($this->get('shopItem')->getShippingTime());
+                                  } elseif ($this->escape($this->originalInput('shippingTime'))) {
+                                      echo $this->escape($this->originalInput('shippingTime'));
+                                  } else {
+                                      echo $this->escape($this->get('settings')->getFixShippingTime());
+                                  } ?>" />
                     <span class="input-group-addon">
                         <b><?=$this->getTrans('days') ?></b>
                     </span>
@@ -242,10 +243,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 <div class="input-group">
                     <span class="input-group-addon">
                         <?php
-                        if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage() && file_exists(ROOT_PATH.'/'.$this->get('shopItem')->getImage())) {
-                            $img = BASE_URL.'/'.$this->get('shopItem')->getImage();
+                        if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage() && file_exists(ROOT_PATH . '/' . $this->get('shopItem')->getImage())) {
+                            $img = BASE_URL . '/' . $this->get('shopItem')->getImage();
                         } else {
-                            $img = BASE_URL.$shopImgPath.'noimg.jpg';
+                            $img = BASE_URL . $shopImgPath . 'noimg.jpg';
                         } ?>
                         <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img ?>"></span>
                     </span>
@@ -279,10 +280,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 <div class="input-group">
                     <span class="input-group-addon">
                         <?php
-                        if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage1() && file_exists(ROOT_PATH.'/'.$this->get('shopItem')->getImage1())) {
-                            $img1 = BASE_URL.'/'.$this->get('shopItem')->getImage1();
+                        if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage1() && file_exists(ROOT_PATH . '/' . $this->get('shopItem')->getImage1())) {
+                            $img1 = BASE_URL . '/' . $this->get('shopItem')->getImage1();
                         } else {
-                            $img1 = BASE_URL.$shopImgPath.'noimg.jpg';
+                            $img1 = BASE_URL . $shopImgPath . 'noimg.jpg';
                         } ?>
                         <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img1 ?>"></span>
                     </span>
@@ -316,10 +317,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 <div class="input-group">
                     <span class="input-group-addon">
                         <?php
-                        if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage2() && file_exists(ROOT_PATH.'/'.$this->get('shopItem')->getImage2())) {
-                            $img2 = BASE_URL.'/'.$this->get('shopItem')->getImage2();
+                        if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage2() && file_exists(ROOT_PATH . '/' . $this->get('shopItem')->getImage2())) {
+                            $img2 = BASE_URL . '/' . $this->get('shopItem')->getImage2();
                         } else {
-                            $img2 = BASE_URL.$shopImgPath.'noimg.jpg';
+                            $img2 = BASE_URL . $shopImgPath . 'noimg.jpg';
                         } ?>
                         <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img2 ?>"></span>
                     </span>
@@ -353,10 +354,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 <div class="input-group">
                     <span class="input-group-addon">
                         <?php
-                        if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage3() && file_exists(ROOT_PATH.'/'.$this->get('shopItem')->getImage3())) {
-                            $img3 = BASE_URL.'/'.$this->get('shopItem')->getImage3();
+                        if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage3() && file_exists(ROOT_PATH . '/' . $this->get('shopItem')->getImage3())) {
+                            $img3 = BASE_URL . '/' . $this->get('shopItem')->getImage3();
                         } else {
-                            $img3 = BASE_URL.$shopImgPath.'noimg.jpg';
+                            $img3 = BASE_URL . $shopImgPath . 'noimg.jpg';
                         } ?>
                         <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img3 ?>"></span>
                     </span>
@@ -416,7 +417,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
 
         <?=(!empty($this->get('shopItem'))) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton'); ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noCategory') ?>
 <?php endif; ?>
 

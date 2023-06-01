@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,7 +14,7 @@ class Customer extends Model
     /**
      * The id of the customer.
      *
-     * @var int
+     * @var int|null
      */
     protected $id;
 
@@ -22,19 +23,19 @@ class Customer extends Model
      *
      * @var int
      */
-    protected $userId;
+    protected $userId = 0;
 
     /**
      * The email of the customer.
      *
      * @var string
      */
-    protected $email;
+    protected $email = '';
 
     /**
      * Gets the id of the customer.
      *
-     * @return int
+     * @return int|null
      */
     public function getId(): ?int
     {

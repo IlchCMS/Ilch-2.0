@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -82,7 +83,7 @@ class Orderdetails extends Mapper
      * @param OrderdetailsModel[] $orderdetailsArray
      * @return int number of affected rows
      */
-    public function save(Array $orderdetailsArray): int
+    public function save(array $orderdetailsArray): int
     {
         $fields = [];
 

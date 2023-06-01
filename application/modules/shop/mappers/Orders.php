@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -41,14 +42,14 @@ class Orders extends Mapper
         }
 
         $orderIds = [];
-        foreach($ordersArray as $orderRow) {
+        foreach ($ordersArray as $orderRow) {
             $orderIds[] = $orderRow['id'];
         }
 
         $orderdetails = $orderdetailsMapper->getOrderdetailsBy(['orderId' => $orderIds]);
 
         $orderdetailsAssoc = [];
-        foreach($orderdetails as $orderdetail) {
+        foreach ($orderdetails as $orderdetail) {
             $orderdetailsAssoc[$orderdetail->getOrderId()][] = $orderdetail;
         }
 
@@ -165,11 +166,11 @@ class Orders extends Mapper
                 ->execute();
         } else {
             $id = $this->db()->insert('shop_orders')
-                ->values($fields)
-                ->execute();
+            ->values($fields)
+            ->execute();
         }
 
-        foreach($order->getOrderdetails() as $orderdetail) {
+        foreach ($order->getOrderdetails() as $orderdetail) {
             $orderdetail->setOrderId($id);
         }
 

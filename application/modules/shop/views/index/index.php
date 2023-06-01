@@ -40,7 +40,7 @@ $cart_badge = '';
 if(!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
     $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
-} 
+}
 ?>
 
 <h1>
@@ -49,7 +49,7 @@ if(!empty($_SESSION['shopping_cart'])) {
     <div id="shopAnker"></div>
 </h1>
 
-<?php if (!empty($shopItems) && !empty($categories)): ?>
+<?php if (!empty($shopItems) && !empty($categories)) : ?>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -67,7 +67,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$this->getTrans('menuCats') ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <?php foreach ($categories as $category):
+                            <?php foreach ($categories as $category) :
                                 $countCat = (isset($countCats[$category->getId()])) ? $countCats[$category->getId()] : 0;
                                 if ($category->getId() == $this->get('firstCatId') || $category->getId() == $this->getRequest()->getParam('catId')) {
                                     $active = 'class="active"';
@@ -75,9 +75,9 @@ if(!empty($_SESSION['shopping_cart'])) {
                                     $active = '';
                                 }
 
-                                if ($countCat > 0): ?>
+                                if ($countCat > 0) : ?>
                                     <li <?=$active ?>>
-                                        <a href="<?=$this->getUrl('shop/index/index/catId/'.$category->getId()) ?>#shopAnker">
+                                        <a href="<?=$this->getUrl('shop/index/index/catId/' . $category->getId()) ?>#shopAnker">
                                             <?=$this->escape($category->getTitle()) ?>
                                             <span class="countItems">[<?=$countCat ?>]</span>
                                         </a>
@@ -94,17 +94,17 @@ if(!empty($_SESSION['shopping_cart'])) {
                     <li>
                         <input type="text" id="search-items" class="form-control" placeholder="<?=$this->getTrans('itemSearch') ?>">
                         <ul id="item-list" class="dropdown-menu">
-                            <?php 
+                            <?php
                             $allItems = $itemsMapper->getShopItems(['status' => 1]);
-                            foreach ($allItems as $listItem):
+                            foreach ($allItems as $listItem) :
                                 $shopImgPath = '/application/modules/shop/static/img/';
-                                if ($listItem->getImage() AND file_exists(ROOT_PATH.'/'.$listItem->getImage())) {
-                                    $img = BASE_URL.'/'.$listItem->getImage();
+                                if ($listItem->getImage() && file_exists(ROOT_PATH . '/' . $listItem->getImage())) {
+                                    $img = BASE_URL . '/' . $listItem->getImage();
                                 } else {
-                                    $img = BASE_URL.$shopImgPath.'noimg.jpg';
+                                    $img = BASE_URL . $shopImgPath . 'noimg.jpg';
                                 } ?>
                                 <li>
-                                    <a href="<?=$this->getUrl('shop/index/show/id/'.$listItem->getId()) ?>#shopAnker">
+                                    <a href="<?=$this->getUrl('shop/index/show/id/' . $listItem->getId()) ?>#shopAnker">
                                         <img class="listImg" src="<?=$img ?>" alt="<?=$this->escape($listItem->getName()) ?>" />
                                         <span><?=$this->escape($listItem->getName()) ?></span>
                                     </a>
@@ -122,20 +122,19 @@ if(!empty($_SESSION['shopping_cart'])) {
 </div>
 
 <div class="row">
-    <?php foreach ($shopItems as $shopItem): ?>
-    
+    <?php foreach ($shopItems as $shopItem) : ?>
     <div class="col-xs-6 col-md-4">
         <?php if ($shopItem->getCordon() && $shopItem->getCordon() == 1) { ?>
             <div class="cordon-wrapper">
                 <div class="cordon <?=$this->escape($shopItem->getCordonColor()) ?>"><?=$this->escape($shopItem->getCordonText()) ?></div>
             </div>
         <?php } ?>
-        <a class="thumbnail" href="<?=$this->getUrl('shop/index/show/id/'.$shopItem->getId()) ?>#shopAnker">
+        <a class="thumbnail" href="<?=$this->getUrl('shop/index/show/id/' . $shopItem->getId()) ?>#shopAnker">
             <?php $shopImgPath = '/application/modules/shop/static/img/';
-            if ($shopItem->getImage() AND file_exists(ROOT_PATH.'/'.$shopItem->getImage())) {
-                $img = BASE_URL.'/'.$shopItem->getImage();
+            if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage())) {
+                $img = BASE_URL . '/' . $shopItem->getImage();
             } else {
-                $img = BASE_URL.$shopImgPath.'noimg.jpg';
+                $img = BASE_URL . $shopImgPath . 'noimg.jpg';
             } ?>
             <img src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>" />
             <div class="caption">
@@ -184,7 +183,7 @@ $(document).ready(function () {
         if (this.value.length > 0) {
             $("ul#item-list li").hide();
             $("ul#item-list span").removeClass("match").hide().filter(function () {
-                return $(this).text().toLowerCase().indexOf($("#search-items").val().toLowerCase()) != -1;
+                return $(this).text().toLowerCase().indexOf($("#search-items").val().toLowerCase()) !== -1;
             }).addClass("match").show().closest("li").show();
             highlight(this.value);
             $("ul#item-list").show();
@@ -195,6 +194,6 @@ $(document).ready(function () {
     
 });
 </script>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noItems') ?>
 <?php endif; ?>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -54,7 +55,7 @@ class Items extends Mapper
             $itemModel->setInfo($itemRow['info']);
             $itemModel->setDesc($itemRow['desc']);
             $itemModel->setStatus($itemRow['status']);
-            
+
             $items[] = $itemModel;
         }
 
@@ -91,7 +92,7 @@ class Items extends Mapper
 
         $itemCounts = [];
 
-        foreach($itemsArray as $item) {
+        foreach ($itemsArray as $item) {
             $itemCounts[$item['cat_id']] = $item['count'];
         }
 
@@ -107,7 +108,7 @@ class Items extends Mapper
     public function save(ItemsModel $item): int
     {
         $fields = [
-            'code' => strtolower(preg_replace('/[^a-z0-9]/i', '', $item->getName())).'_'.time(),
+            'code' => strtolower(preg_replace('/[^a-z0-9]/i', '', $item->getName())) . '_' . time(),
             'cat_id' => $item->getCatId(),
             'name' => $item->getName(),
             'itemnumber' => $item->getItemnumber(),
@@ -126,7 +127,7 @@ class Items extends Mapper
             'image3' => $item->getImage3(),
             'info' => $item->getInfo(),
             'desc' => $item->getDesc(),
-            'status' => $item->getStatus(),          
+            'status' => $item->getStatus(),
         ];
 
         if ($item->getId()) {

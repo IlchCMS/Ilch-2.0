@@ -43,9 +43,9 @@
                 <?php
                 foreach ($this->get('currencies') as $currency) {
                     if ($this->get('shopCurrency') != $currency->getId()) {
-                        echo '<option value="'.$currency->getId().'">'.$this->escape($currency->getName()).'</option>';
+                        echo '<option value="' . $currency->getId() . '">' . $this->escape($currency->getName()) . '</option>';
                     } else {
-                        echo '<option value="'.$currency->getId().'" selected>'.$this->escape($currency->getName()).'</option>';
+                        echo '<option value="' . $currency->getId() . '" selected>' . $this->escape($currency->getName()) . '</option>';
                     }
                 }
                 ?>

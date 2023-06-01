@@ -6,10 +6,10 @@ $status = '';
 
 if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
     if (isset($_POST['action']) && $_POST['action'] == 'remove') {
-        foreach($_SESSION['shopping_cart'] as $key => $value) {
+        foreach ($_SESSION['shopping_cart'] as $key => $value) {
             if (isset($_POST['code']) && $_POST['code'] == $key) {
                 unset($_SESSION['shopping_cart'][$key]);
-                $status = '<div id="infobox" class="alert alert-danger" role="alert">'.$this->getTrans('theProduct').' <b>'.$_POST['name'].'</b> '.$this->getTrans('removedFromCart').'</div>';
+                $status = '<div id="infobox" class="alert alert-danger" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $_POST['name'] . '</b> ' . $this->getTrans('removedFromCart') . '</div>';
             }
             if (empty($_SESSION['shopping_cart'])) {
                 unset($_SESSION['shopping_cart']);
@@ -18,7 +18,7 @@ if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
     }
 
     if (isset($_POST['action']) && $_POST['action'] == 'change') {
-        foreach($_SESSION['shopping_cart'] as &$value) {
+        foreach ($_SESSION['shopping_cart'] as &$value) {
             if (isset($_POST['code']) && $value['code'] === $_POST['code']) {
                 $_POST['quantity'] = ($_POST['quantity'] <= 0) ? 1 : $_POST['quantity'];
                 $value['quantity'] = $_POST['quantity'];
@@ -32,8 +32,8 @@ if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
 $cart_badge = '';
 if (!empty($_SESSION['shopping_cart'])) {
     $cart_count = count(array_keys($_SESSION['shopping_cart']));
-    $cart_badge = ($cart_count>0)?'<a class="activecart" href="'.$this->getUrl('shop/index/cart').'#shopAnker">'.$this->getTrans('menuCart').'<i class="fa-solid fa-shopping-cart"><span class="badge">'.$cart_count.'</span></i></a>':'';
-} 
+    $cart_badge = ($cart_count > 0) ? '<a class="activecart" href="' . $this->getUrl('shop/index/cart') . '#shopAnker">' . $this->getTrans('menuCart') . '<i class="fa-solid fa-shopping-cart"><span class="badge">' . $cart_count . '</span></i></a>' : '';
+}
 ?>
 
 <h1>
@@ -63,47 +63,47 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $itemIds = [];
-                foreach ($_SESSION['shopping_cart'] as $product) {
-                    $itemIds[] = $product['id'];
-                }
+        <?php
+        $itemIds = [];
+        foreach ($_SESSION['shopping_cart'] as $product) {
+            $itemIds[] = $product['id'];
+        }
 
-                $itemsAssoc = [];
-                $items = $itemsMapper->getShopItems(['id' => $itemIds]);
-                foreach ($items as $item) {
-                    $itemsAssoc[$item->getId()] = $item;
-                }
+        $itemsAssoc = [];
+        $items = $itemsMapper->getShopItems(['id' => $itemIds]);
+        foreach ($items as $item) {
+            $itemsAssoc[$item->getId()] = $item;
+        }
 
-                foreach ($_SESSION['shopping_cart'] as $product) {
-                    $itemId = $product['id'];
-                    $item = $itemsAssoc[$itemId];
-                    $itemCode = '';
-                    $itemName = '';
-                    $itemPrice = 0;
-                    $itemNumber = '';
-                    $itemImg = '';
-                    $itemMaxStock = '';
+        foreach ($_SESSION['shopping_cart'] as $product) {
+            $itemId = $product['id'];
+            $item = $itemsAssoc[$itemId];
+            $itemCode = '';
+            $itemName = '';
+            $itemPrice = 0;
+            $itemNumber = '';
+            $itemImg = '';
+            $itemMaxStock = '';
 
-                    if ($item) {
-                        $itemCode = $item->getCode();
-                        $itemName = $item->getName();
-                        $itemPrice = $item->getPrice();
-                        $itemNumber = $item->getItemnumber();
-                        $itemImg = $item->getImage();
-                        $itemMaxStock = $item->getStock();
-                        $arrayShippingCosts[] = $item->getShippingCosts();
-                    }
+            if ($item) {
+                $itemCode = $item->getCode();
+                $itemName = $item->getName();
+                $itemPrice = $item->getPrice();
+                $itemNumber = $item->getItemnumber();
+                $itemImg = $item->getImage();
+                $itemMaxStock = $item->getStock();
+                $arrayShippingCosts[] = $item->getShippingCosts();
+            }
 
-                    $shopImgPath = '/application/modules/shop/static/img/';
-                    if ($itemImg AND file_exists(ROOT_PATH.'/'.$itemImg)) {
-                        $img = BASE_URL.'/'.$itemImg;
-                    } else {
-                        $img = BASE_URL.$shopImgPath.'noimg.jpg';
-                    } ?>
+            $shopImgPath = '/application/modules/shop/static/img/';
+            if ($itemImg and file_exists(ROOT_PATH . '/' . $itemImg)) {
+                $img = BASE_URL . '/' . $itemImg;
+            } else {
+                $img = BASE_URL . $shopImgPath . 'noimg.jpg';
+            } ?>
                 <tr>
                     <td data-label="<?=$this->getTrans('productImage') ?>">
-                        <a href="<?=$this->getUrl('shop/index/show/id/'.$product['id']) ?>#shopAnker">
+                        <a href="<?=$this->getUrl('shop/index/show/id/' . $product['id']) ?>#shopAnker">
                             <img src="<?=$img ?>" alt="<?=$this->escape($itemName) ?>"/>
                         </a>
                     </td>
@@ -149,10 +149,9 @@ if (!empty($_SESSION['shopping_cart'])) {
                         <b><?=number_format($itemPrice * $product['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
-                <?php
-                $subtotal_price += round($itemPrice * $product['quantity'], 2);
-                }
-                ?>
+                    <?php
+                        $subtotal_price += round($itemPrice * $product['quantity'], 2);
+        } ?>
             </tbody>
         </table>
         <table class="sum">
@@ -181,13 +180,14 @@ if (!empty($_SESSION['shopping_cart'])) {
                 <button class="btn btn-warning"><?=$this->getTrans('completePurchase') ?> <i class="fa-solid fa-forward"></i></button>
             </div>
         </form>
-    <?php } else { ?>
-    <?=$this->getTrans('cartEmpty') ?>
+        <?php
+    } else { ?>
+        <?=$this->getTrans('cartEmpty') ?>
     <div class="row space20"></div>
     <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-default">
         <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
     </a>
-<?php } ?>
+    <?php } ?>
 </div>
 <script>
 $(document).ready(function () {

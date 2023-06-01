@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,7 +14,7 @@ class Currency extends Model
     /**
      * The id of the currency.
      *
-     * @var int
+     * @var int|null
      */
     protected $id;
 
@@ -28,14 +29,14 @@ class Currency extends Model
      * The currency code according to ISO 4217.
      *
      * @link https://www.six-group.com/en/products-services/financial-information/data-standards.html
-     * @var string
+     * @var string|null
      */
-    protected $code = '';
+    protected $code;
 
     /**
      * Gets the id of the currency.
      *
-     * @return int
+     * @return int|null
      */
     public function getId(): ?int
     {
@@ -76,7 +77,7 @@ class Currency extends Model
      * Gets the currency code according to ISO 4217.
      *
      * @link https://www.six-group.com/en/products-services/financial-information/data-standards.html
-     * @return string
+     * @return string|null
      */
     public function getCode(): ?string
     {

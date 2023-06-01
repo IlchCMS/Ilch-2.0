@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -55,12 +56,12 @@ class Config extends Install
 
         $this->db()->queryMulti("DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'shop';");
 
-        require(ROOT_PATH.'/application/modules/shop/static/class/fpdf/fpdf.php');
+        require(ROOT_PATH . '/application/modules/shop/static/class/fpdf/fpdf.php');
 
-        array_map('unlink', glob(ROOT_PATH.'/application/modules/shop/static/invoice/*.pdf'));
+        array_map('unlink', glob(ROOT_PATH . '/application/modules/shop/static/invoice/*.pdf'));
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_shop_cats` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -324,7 +325,7 @@ class Config extends Install
 /***   example entries   ***/';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion)
     {
         switch ($installedVersion) {
             case '1.0.0':

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -71,8 +72,7 @@ class Orders extends Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuOrders',
             $items
         );
@@ -182,7 +182,7 @@ class Orders extends Admin
         }
 
         set_time_limit(0);
-        $shopInvoicePath = ROOT_PATH.'/application/modules/shop/static/invoice/';
+        $shopInvoicePath = ROOT_PATH . '/application/modules/shop/static/invoice/';
 
         $id = $this->getRequest()->getParam('id');
 
@@ -191,7 +191,7 @@ class Orders extends Admin
             $order = $ordersMapper->getOrderById($id);
 
             if ($order !== null) {
-                $fullPath = $shopInvoicePath.$order->getInvoiceFilename().'.pdf';
+                $fullPath = $shopInvoicePath . $order->getInvoiceFilename() . '.pdf';
                 $fd = fopen($fullPath, 'rb');
                 if ($fd) {
                     $path_parts = pathinfo($fullPath);
@@ -199,11 +199,11 @@ class Orders extends Admin
                     $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
 
                     header('Content-type: application/pdf');
-                    header('Content-Disposition: filename="' .$publicFileName. '"');
-                    header('Content-length: ' .filesize($fullPath));
+                    header('Content-Disposition: filename="' . $publicFileName . '"');
+                    header('Content-length: ' . filesize($fullPath));
                     // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
                     header('Cache-control: private');
-                    while(!feof($fd)) {
+                    while (!feof($fd)) {
                         $buffer = fread($fd, 2048);
                         echo $buffer;
                     }
@@ -238,7 +238,7 @@ class Orders extends Admin
         $order->setConfirmCode(bin2hex(random_bytes(32)));
 
         $shopInvoicePath = '/application/modules/shop/static/invoice/';
-        $pathInvoice = ROOT_PATH.$shopInvoicePath.$order->getInvoiceFilename().'.pdf';
+        $pathInvoice = ROOT_PATH . $shopInvoicePath . $order->getInvoiceFilename() . '.pdf';
         $path_parts = pathinfo($pathInvoice);
         $publicFileNameInvoice = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
 
@@ -260,17 +260,17 @@ class Orders extends Admin
 
         $layout = $_SESSION['layout'] ?? '';
 
-        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/'.$templateName)) {
-            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/'.$templateName);
+        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/shop/layouts/mail/' . $templateName)) {
+            $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/shop/layouts/mail/' . $templateName);
         } else {
-            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/shop/layouts/mail/'.$templateName);
+            $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/shop/layouts/mail/' . $templateName);
         }
         $messageReplace = [
             '{content}' => $this->getLayout()->purify($mailContent->getText()),
             '{shopname}' => $this->getLayout()->escape($settings->getShopName()),
             '{date}' => $date->format('l, d. F Y', true),
             '{name}' => $name,
-            '{paymentLink}' => '<a href="'.BASE_URL.'/index.php/shop/payment/index/selector/'.$order->getSelector().'/code/'.$order->getConfirmCode().'">'.$this->getTranslator()->trans('paymentInvoiceLink').'</a>',
+            '{paymentLink}' => '<a href="' . BASE_URL . '/index.php/shop/payment/index/selector/' . $order->getSelector() . '/code/' . $order->getConfirmCode() . '">' . $this->getTranslator()->trans('paymentInvoiceLink') . '</a>',
             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
         ];
 

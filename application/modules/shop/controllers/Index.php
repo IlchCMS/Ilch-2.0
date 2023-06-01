@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -111,7 +112,7 @@ class Index extends Frontend
     public function agbAction()
     {
         $settingsMapper = new SettingsMapper();
-        
+
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
@@ -192,7 +193,7 @@ class Index extends Frontend
                 ];
 
                 $itemIds = [];
-                foreach($arrayOrder as $orderItem) {
+                foreach ($arrayOrder as $orderItem) {
                     $validation = Validation::create($orderItem, $validationRules);
                     if (!$validation->isValid()) {
                         $arrayOrderValid = false;
@@ -236,14 +237,14 @@ class Index extends Frontend
 
                     $items = $itemsMapper->getShopItems(['id' => $itemIds]);
                     $itemDetails = [];
-                    foreach($items as $item) {
+                    foreach ($items as $item) {
                         $itemDetails[$item->getId()]['price'] = $item->getPrice();
                         $itemDetails[$item->getId()]['tax'] = $item->getTax();
                         $itemDetails[$item->getId()]['shippingCosts'] = $item->getShippingCosts();
                     }
 
                     $orderdetails = [];
-                    foreach($arrayOrder as $orderItem) {
+                    foreach ($arrayOrder as $orderItem) {
                         $orderdetail = new OrderdetailsModel();
                         // orderId is unknown at this point and gets added in the save function of the order mapper.
                         $orderdetail->setItemId($orderItem['id']);
@@ -345,10 +346,10 @@ class Index extends Frontend
 
                     $layout = $_SESSION['layout'] ?? '';
 
-                    if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/orderconfirmed.php')) {
-                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/shop/layouts/mail/orderconfirmed.php');
+                    if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/shop/layouts/mail/orderconfirmed.php')) {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/shop/layouts/mail/orderconfirmed.php');
                     } else {
-                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/shop/layouts/mail/orderconfirmed.php');
+                        $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/shop/layouts/mail/orderconfirmed.php');
                     }
                     $messageReplace = [
                         '{content}' => $this->getLayout()->purify($mailContent->getText()),
@@ -389,7 +390,7 @@ class Index extends Frontend
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('itemsMapper', $itemsMapper);
     }
-    
+
     public function successAction()
     {
         $this->getLayout()->header()->css('static/css/style_front.css');

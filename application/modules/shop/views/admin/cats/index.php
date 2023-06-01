@@ -7,7 +7,7 @@
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
-<?php if (!empty($this->get('cats'))): ?>
+<?php if (!empty($this->get('cats'))) : ?>
     <form class="form-horizontal" id="catsIndexForm" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
                 <tbody id="sortable">
-                    <?php foreach ($this->get('cats') as $cat): ?>
+                    <?php foreach ($this->get('cats') as $cat) : ?>
                         <?php $countItems = count($itemsMapper->getShopItems(['cat_id' => $cat->getId()])); ?>
                         <tr id="<?=$this->escape($cat->getId()) ?>">
                             <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
@@ -96,7 +96,7 @@
             }
         );
     </script>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noCategory') ?>
 <?php endif; ?>
 

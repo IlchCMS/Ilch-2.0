@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (count($currencies) > 0): ?>
+            <?php if (count($currencies) > 0) : ?>
                 <?php foreach ($currencies as $currency) : ?>
                     <tr>
                         <td><?=$this->getDeleteCheckbox('check_currencies', $currency->getId()) ?></td>
@@ -32,7 +32,7 @@
                         <td><?=$this->escape($currency->getCode()) ?></td>
                     </tr>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <tr>
                     <td colspan="4"><?=$this->getTrans('noCurrenciesExist') ?></td>
                 </tr>

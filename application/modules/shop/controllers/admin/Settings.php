@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -67,8 +68,7 @@ class Settings extends Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuSettings',
             $items
         );
@@ -77,7 +77,7 @@ class Settings extends Admin
     public function indexAction()
     {
         $settingsMapper = new SettingsMapper();
-        
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
@@ -162,7 +162,7 @@ class Settings extends Admin
     {
         $currencyMapper = new CurrencyMapper();
         $settingsMapper = new SettingsMapper();
-        
+
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
 
         $this->getLayout()->getAdminHmenu()

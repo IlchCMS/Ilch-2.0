@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,7 +14,7 @@ class Address extends Model
     /**
      * The id of the address.
      *
-     * @var int
+     * @var int|null
      */
     protected $id;
 
@@ -22,54 +23,54 @@ class Address extends Model
      *
      * @var int
      */
-    protected $customerID;
+    protected $customerID = 0;
 
     /**
      * The prename of the address.
      *
      * @var string
      */
-    protected $prename;
+    protected $prename = '';
 
     /**
      * The lastname of the address.
      *
      * @var string
      */
-    protected $lastname;
+    protected $lastname = '';
 
     /**
      * The street of the address.
      *
      * @var string
      */
-    protected $street;
+    protected $street = '';
 
     /**
      * The postcode of the address.
      *
      * @var string
      */
-    protected $postcode;
+    protected $postcode = '';
 
     /**
      * The city of the address.
      *
      * @var string
      */
-    protected $city;
+    protected $city = '';
 
     /**
      * The country of the address.
      *
      * @var string
      */
-    protected $country;
+    protected $country = '';
 
     /**
      * Gets the id of the address.
      *
-     * @return int
+     * @return int|null
      */
     public function getId(): ?int
     {

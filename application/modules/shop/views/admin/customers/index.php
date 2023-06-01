@@ -22,7 +22,7 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($this->get('customers') as $customer): ?>
+        <?php foreach ($this->get('customers') as $customer) : ?>
             <tr id="<?=$this->escape($customer->getId()) ?>">
                 <td><?=$this->getDeleteCheckbox('check_customers', $customer->getId()) ?></td>
                 <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $customer->getId()]) ?></td>

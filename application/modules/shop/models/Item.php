@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,7 +14,7 @@ class Item extends Model
     /**
      * The id of the item.
      *
-     * @var int
+     * @var int|null
      */
     protected $id;
 
@@ -22,141 +23,141 @@ class Item extends Model
      *
      * @var int
      */
-    protected $catId;
+    protected $catId = 0;
 
     /**
      * The name of the item.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
-     /**
-     * The code of the item.
-     *
-     * @var string
-     */
-    protected $code;
+    /**
+    * The code of the item.
+    *
+    * @var string
+    */
+    protected $code = '';
 
-     /**
-     * The itemnumber of the item.
-     *
-     * @var string
-     */
-    protected $itemnumber;
+    /**
+    * The itemnumber of the item.
+    *
+    * @var string
+    */
+    protected $itemnumber = '';
 
-     /**
-     * The stock of the item.
-     *
-     * @var int
-     */
-    protected $stock;
+    /**
+    * The stock of the item.
+    *
+    * @var int
+    */
+    protected $stock = 0;
 
-     /**
-     * The unitName of the item.
-     *
-     * @var string
-     */
-    protected $unitName;
+    /**
+    * The unitName of the item.
+    *
+    * @var string
+    */
+    protected $unitName = '';
 
-     /**
-     * The cordon of the item.
-     *
-     * @var int
-     */
-    protected $cordon;
+    /**
+    * The cordon of the item.
+    *
+    * @var int
+    */
+    protected $cordon = 0;
 
-     /**
-     * The cordonText of the item.
-     *
-     * @var string
-     */
-    protected $cordonText;
+    /**
+    * The cordonText of the item.
+    *
+    * @var string
+    */
+    protected $cordonText = '';
 
-     /**
-     * The cordonColor of the item.
-     *
-     * @var string
-     */
+    /**
+    * The cordonColor of the item.
+    *
+    * @var string|null
+    */
     protected $cordonColor;
 
-     /**
-     * The price of the item.
-     *
-     * @var string
-     */
-    protected $price;
+    /**
+    * The price of the item.
+    *
+    * @var string
+    */
+    protected $price = '';
 
-     /**
-     * The tax of the item.
-     *
-     * @var int
-     */
-    protected $tax;
+    /**
+    * The tax of the item.
+    *
+    * @var int
+    */
+    protected $tax = 0;
 
-     /**
-     * The shippingCosts of the item.
-     *
-     * @var string
-     */
-    protected $shippingCosts;
+    /**
+    * The shippingCosts of the item.
+    *
+    * @var string
+    */
+    protected $shippingCosts = '';
 
-     /**
-     * The shippingTime of the item.
-     *
-     * @var int
-     */
-    protected $shippingTime;
+    /**
+    * The shippingTime of the item.
+    *
+    * @var int
+    */
+    protected $shippingTime = 0;
 
-     /**
-     * The image of the item.
-     *
-     * @var string
-     */
-    protected $image;
+    /**
+    * The image of the item.
+    *
+    * @var string
+    */
+    protected $image = '';
 
-     /**
-     * The image1 of the item.
-     *
-     * @var string
-     */
-    protected $image1;
+    /**
+    * The image1 of the item.
+    *
+    * @var string
+    */
+    protected $image1 = '';
 
-     /**
-     * The image2 of the item.
-     *
-     * @var string
-     */
-    protected $image2;
+    /**
+    * The image2 of the item.
+    *
+    * @var string
+    */
+    protected $image2 = '';
 
-     /**
-     * The image3 of the item.
-     *
-     * @var string
-     */
-    protected $image3;
+    /**
+    * The image3 of the item.
+    *
+    * @var string
+    */
+    protected $image3 = '';
 
-     /**
-     * The info of the item.
-     *
-     * @var string
-     */
-    protected $info;
+    /**
+    * The info of the item.
+    *
+    * @var string
+    */
+    protected $info = '';
 
-     /**
-     * The desc of the item.
-     *
-     * @var string
-     */
-    protected $desc;
+    /**
+    * The desc of the item.
+    *
+    * @var string
+    */
+    protected $desc = '';
 
-     /**
-     * The status of the item.
-     *
-     * @var int
-     */
-    protected $status;
-    
+    /**
+    * The status of the item.
+    *
+    * @var int
+    */
+    protected $status = 0;
+
     /**
      * Gets the id of the item.
      *
@@ -488,7 +489,7 @@ class Item extends Model
     {
         return $this->image;
     }
-    
+
     /**
      * Sets the preview image of the item.
      *
@@ -586,13 +587,13 @@ class Item extends Model
      *
      * @param string $info
      * @return $this
-     */  
+     */
     public function setInfo(string $info): Item
     {
         $this->info = $info;
 
         return $this;
-    }  
+    }
 
     /**
      * Gets the description of the item.
@@ -609,13 +610,13 @@ class Item extends Model
      *
      * @param string $desc
      * @return $this
-     */ 
+     */
     public function setDesc(string $desc): Item
     {
         $this->desc = $desc;
 
         return $this;
-    }    
+    }
 
     /**
      * Gets the status of the item.
@@ -632,12 +633,11 @@ class Item extends Model
      *
      * @param int $status
      * @return $this
-     */ 
+     */
     public function setStatus(int $status): Item
     {
         $this->status = $status;
 
         return $this;
-    } 
-
+    }
 }

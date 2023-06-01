@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -85,7 +86,8 @@ class Category extends Mapper
      * @param int $id
      * @param int $position
      */
-    public function updatePositionById(int $id, int $position) {
+    public function updatePositionById(int $id, int $position)
+    {
         $this->db()->update('shop_cats')
             ->values(['pos' => $position])
             ->where(['id' => $id])
@@ -112,11 +114,11 @@ class Category extends Mapper
                       ->from('shop_cats')
                       ->execute()
                       ->fetchCell();
-                      
+
             $id = $this->db()->insert('shop_cats')
                 ->values([
                     'title' => $category->getTitle(),
-                    'pos' => $maxPos+1
+                    'pos' => $maxPos + 1
                 ])
                 ->execute();
         }

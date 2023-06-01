@@ -12,7 +12,7 @@
     </div>
 </h1>
 
-<?php if ($this->get('ordersMapper')): ?>
+<?php if ($this->get('ordersMapper')) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -37,13 +37,13 @@
                         <th></th>
                         <th class="sort"><?=$this->getTrans('status') ?></th>
                         <th class="sort"><?=$this->getTrans('orderDate') ?></th>
-                        <th class="sort"><?=$this->getTrans('invoice').' '.$this->getTrans('numberShort') ?></th>
+                        <th class="sort"><?=$this->getTrans('invoice') . ' ' . $this->getTrans('numberShort') ?></th>
                         <th class="sort"><?=$this->getTrans('invoiceAddress') ?></th>
                         <th class="sort"><?=$this->getTrans('deliveryAddress') ?></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('ordersMapper') as $order): ?>
+                    <?php foreach ($this->get('ordersMapper') as $order) : ?>
                         <tr class="filter">
                             <td><?=$this->getDeleteCheckbox('check_orders', $order->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $order->getId()]) ?></td>
@@ -81,7 +81,7 @@
                                 <?=$ilchDate->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock') ?>
                             </td>
                             <td>
-                                <?=$ilchDate->format('ymd').'-'.$order->getId() ?>
+                                <?=$ilchDate->format('ymd') . '-' . $order->getId() ?>
                             </td>
                             <td>
                                 <?=$this->escape($order->getInvoiceAddress()->getPrename()) ?> <?=$this->escape($order->getInvoiceAddress()->getLastname()) ?>,
@@ -136,6 +136,6 @@
         });
     });
     </script>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noOrders') ?>
 <?php endif; ?>
