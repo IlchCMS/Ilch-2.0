@@ -888,6 +888,11 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('comment_excludeFloodProtection', '1');
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-regular fa-comments' WHERE `key` = 'comment';");
                 break;
+            case "2.1.50":
+                // Remove jquery.bxslider. The only known usage is the partner module. With the last version of that module bxslider got
+                // integrated into the module.
+                removeDir(ROOT_PATH . '/static/js/jquery.bxslider');
+                break;
         }
 
         return 'Update function executed.';
