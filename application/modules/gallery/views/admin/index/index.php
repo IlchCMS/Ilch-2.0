@@ -13,7 +13,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     }
 
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
-    echo '<div><span class="disclose"><i class="fa fa-minus-circle"></i>
+    echo '<div><span class="disclose"><i class="fa-solid fa-circle-minus"></i>
                     <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
                     <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
                     <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
@@ -22,18 +22,18 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                 </span>
                 <span class="title">'.$item->getTitle().'</span>
                 <span class="item_delete">
-                    <i class="fa fa-times-circle"></i>
+                    <i class="fa-solid fa-circle-xmark"></i>
                 </span><span class="item_edit">
-                    <i class="fa fa-edit"></i>
+                    <i class="fa-solid fa-pen-to-square"></i>
                 </span>
                 <span class="upload" style="float:right; margin-right: 6px;">
                     <a href="javascript:media('.$item->getId().')">
-                        <i class="fa fa-cloud-upload"></i>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
                     </a>
                 </span>
                 <span class="view" style="float:right; margin-right: 6px;">
                     <a href="'.$obj->getUrl(['controller' => 'gallery', 'action' => 'treatgallery','id' => $item->getId()]).'">
-                        <i class="fa fa-eye"></i>
+                        <i class="fa-solid fa-eye"></i>
                     </a>
                 </span>
                 <span class="count" style="float:right; margin-right: 6px;">'. $imageMapper->getCountImageById($item->getId()) .'</span>
@@ -216,7 +216,7 @@ $(document).ready (
                     +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
                     +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
                     +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
-                    +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span></div></li>').appendTo(append);
+                    +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa-solid fa-circle-xmark"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
             }

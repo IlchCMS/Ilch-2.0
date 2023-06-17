@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -16,19 +16,19 @@ class Image extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'menuGalleryBack',
                     'active' => false,
-                    'icon' => 'fa fa-arrow-left',
+                    'icon' => 'fa-solid fa-arrow-left',
                     'url' => $this->getLayout()->getUrl(['controller' => 'gallery', 'action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')])
                 ]
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];

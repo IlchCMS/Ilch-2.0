@@ -41,7 +41,7 @@ $('.dropdown-menu').each( function( i, buttonGroup ) {
   $buttonGroup.on('click', 'li', function() {
     $buttonGroup.find('.active').removeClass('active');
 	var text = $(this).text();
-	$('.dropdown-toggle').html('<i class="fa fa-image"></i> '+text);
+	$('.dropdown-toggle').html('<i class="fa-solid fa-image"></i> '+text);
 	$('.catinfo').html('&raquo; '+text);
     $(this).addClass('active');
   });

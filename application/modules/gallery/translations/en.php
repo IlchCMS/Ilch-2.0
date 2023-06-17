@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -55,4 +55,6 @@ return [
     'pictureOfXRandom' => 'Random picture',
     'noPictures' => 'No pictures available.',
     'pictureMissing' => 'Picture not found.',
+    'imageNotFound' => 'Image not found.',
+    'galleryNotFound' => 'Gallery not found.',
 ];

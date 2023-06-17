@@ -13,7 +13,7 @@ function recCategory($item, $galleryMapper, $obj, $imageMapper)
 
     if ($item->getType() === 0) {
         echo '<li>
-                <a href="#filter" data-filter=".X'.$obj->escape($item->getId()).'X"><i class="fa fa-image"></i> '.$obj->escape($item->getTitle()).'</a>
+                <a href="#filter" data-filter=".X'.$obj->escape($item->getId()).'X"><i class="fa-solid fa-image"></i> '.$obj->escape($item->getTitle()).'</a>
               </li>';
     }
     if (!empty($subItems)) {
@@ -88,9 +88,9 @@ function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle
     <div id="navbar-collapse" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown active">
-          <a class="dropdown-toggle" href="#" id="dropdownConfig" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-arrow-down"></i> <?=$this->getTrans('allCat') ?></a>
+          <a class="dropdown-toggle" href="#" id="dropdownConfig" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-arrow-down"></i> <?=$this->getTrans('allCat') ?></a>
           <ul id="filters" class="dropdown-menu" aria-labelledby="dropdownConfig">
-            <li class="active"><a href="#filter" data-filter="*"><i class="fa fa-image"></i> <?=$this->getTrans('allCat') ?></a></li>
+            <li class="active"><a href="#filter" data-filter="*"><i class="fa-solid fa-image"></i> <?=$this->getTrans('allCat') ?></a></li>
             <?php if (!empty($galleryItems)): ?>
               <?php foreach ($galleryItems as $item): ?>
                 <?php recCategory($item, $galleryMapper, $this, $imageMapper); ?>
@@ -98,7 +98,7 @@ function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle
             <?php endif; ?>
           </ul>
         </li>
-        <li id="sorts"><a href="#filter" data-sort-direction="asc" data-sort-by="name"><i class="sorticon fa fa-sort-numeric-desc"></i> <?=$this->getTrans('sort') ?></a></li>
+        <li id="sorts"><a href="#filter" data-sort-direction="asc" data-sort-by="name"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
       </ul>
       <form class="nav navbar-form navbar-right">
         <input type="text" id="quicksearch" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
