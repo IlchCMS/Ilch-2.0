@@ -10,8 +10,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.19.0',
-        'icon_small' => 'fa-picture-o',
+        'version' => '1.20.0',
+        'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
         'official' => true,
@@ -35,8 +35,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.45',
-        'phpVersion' => '7.0'
+        'ilchCore' => '2.1.49',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -125,6 +125,10 @@ class Config extends \Ilch\Config\Install
             case "1.14.0":
             case "1.15.0":
             case "1.16.0":
+            case "1.17.0":
+            case "1.18.0":
+            case "1.19.0":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-regular fa-image' WHERE `key` = 'gallery';");
         }
     }
 }

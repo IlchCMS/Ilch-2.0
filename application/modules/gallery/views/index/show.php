@@ -59,8 +59,8 @@
  
  
                 <div class="panel-footer text-center">
-                    <i class="fa fa-comment-o"></i> <?=$commentsCount ?>
-                    <i class="fa fa-eye"> <?=$image->getVisits() ?></i>
+                    <i class="fa-regular fa-comment"></i> <?=$commentsCount ?>
+                    <i class="fa-solid fa-eye"> <?=$image->getVisits() ?></i>
                 </div>
             </div>
         </div>

@@ -38,7 +38,21 @@ class Index extends \Ilch\Controller\Frontend
         $pagination = new \Ilch\Pagination();
 
         $id = $this->getRequest()->getParam('id');
+
+        if (empty($id) || !is_numeric($id)) {
+            $this->addMessage('galleryNotFound', 'danger');
+            $this->redirect(['action' => 'index']);
+            return;
+        }
+
         $gallery = $galleryMapper->getGalleryById($id);
+
+        if (empty($gallery)) {
+            $this->addMessage('galleryNotFound', 'danger');
+            $this->redirect(['action' => 'index']);
+            return;
+        }
+
         $pagination->setRowsPerPage(!$this->getConfig()->get('gallery_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gallery_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
@@ -58,10 +72,23 @@ class Index extends \Ilch\Controller\Frontend
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
-        $commentMapper = new CommentMapper;
 
         $id = $this->getRequest()->getParam('id');
+
+        if (empty($id) || !is_numeric($id)) {
+            $this->addMessage('imageNotFound', 'danger');
+            $this->redirect(['action' => 'index']);
+            return;
+        }
+
         $image = $imageMapper->getImageById($id);
+
+        if (empty($image)) {
+            $this->addMessage('imageNotFound', 'danger');
+            $this->redirect(['action' => 'index']);
+            return;
+        }
+
         $gallery = $galleryMapper->getGalleryById($image->getCat());
 
         $this->getLayout()->getTitle()
