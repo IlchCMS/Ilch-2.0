@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,42 +14,67 @@ class Entry extends \Ilch\Model
      *
      * @var integer
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The datetime of the entry.
      *
      * @var string
      */
-    protected $datetime;
+    protected $datetime = '';
 
     /**
      * The name of the entry.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * The usage of the entry.
      *
      * @var string
      */
-    protected $usage;
+    protected $usage = '';
 
     /**
      * The amount of the entry.
      *
-     * @var string
+     * @var float
      */
-    protected $amount;
+    protected $amount = 0.0;
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Entry
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['date_created'])) {
+            $this->setDatetime($entries['date_created']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (isset($entries['usage'])) {
+            $this->setUsage($entries['usage']);
+        }
+        if (isset($entries['amount'])) {
+            $this->setAmount($entries['amount']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the entry.
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -58,7 +84,7 @@ class Entry extends \Ilch\Model
      *
      * @return string
      */
-    public function getDatetime()
+    public function getDatetime(): string
     {
         return $this->datetime;
     }
@@ -68,7 +94,7 @@ class Entry extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -78,7 +104,7 @@ class Entry extends \Ilch\Model
      *
      * @return string
      */
-    public function getUsage()
+    public function getUsage(): string
     {
         return $this->usage;
     }
@@ -86,9 +112,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the amount of the entry.
      *
-     * @return string
+     * @return float
      */
-    public function getAmount()
+    public function getAmount(): float
     {
         return $this->amount;
     }
@@ -97,49 +123,81 @@ class Entry extends \Ilch\Model
      * Sets the id of the entry.
      *
      * @param integer $id
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Entry
     {
-        $this->id = (int)$id;
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
      * Sets the datetime of the entry.
      *
      * @param string $datetime
+     * @return $this
      */
-    public function setDatetime($datetime)
+    public function setDatetime(string $datetime): Entry
     {
-        $this->datetime = (string)$datetime;
+        $this->datetime = $datetime;
+
+        return $this;
     }
 
     /**
      * Sets the name of the entry.
      *
      * @param string $name
+     * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Entry
     {
-        $this->name = (string)$name;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
      * Sets the usage of the entry.
      *
      * @param string $usage
+     * @return $this
      */
-    public function setUsage($usage)
+    public function setUsage(string $usage): Entry
     {
-        $this->usage = (string)$usage;
+        $this->usage = $usage;
+
+        return $this;
     }
 
     /**
      * Sets the amount of the entry.
      *
-     * @param string $amount
+     * @param float $amount
+     * @return $this
      */
-    public function setAmount($amount)
+    public function setAmount(float $amount): Entry
     {
-        $this->amount = (string)$amount;
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'date_created'    => $this->getDatetime(),
+                'name'    => $this->getName(),
+                'usage'    => $this->getUsage(),
+                'amount'    => $this->getAmount(),
+            ]
+        );
     }
 }

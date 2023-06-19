@@ -1,8 +1,18 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Checkoutbasic\Models\Entry $checkout */
+$checkout = $this->get('checkout');
+?>
+
 <h1><?=$this->getTrans('treatpayment') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <?php foreach ($this->get('checkout') as $checkout): ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+        <label for="name" class="col-lg-2 control-label">
+            <?=$this->getTrans('name') ?>
+        </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -13,6 +23,9 @@
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('datetime') ? 'has-error' : '' ?>">
+        <label for="datetime" class="col-lg-2 control-label">
+            <?=$this->getTrans('datetime') ?>
+        </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -23,6 +36,9 @@
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
+        <label for="usage" class="col-lg-2 control-label">
+            <?=$this->getTrans('usage') ?>
+        </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -32,16 +48,10 @@
                    value="<?=($this->originalInput('usage') != '') ? $this->escape($this->originalInput('usage')) : $this->escape($checkout->getUsage()) ?>" />
         </div>
     </div>
-    <div class="form-group hidden">
-        <div class="col-lg-4">
-            <input type="text"
-                   class="form-control"
-                   id="id"
-                   name="id"
-                   value="<?=$this->escape($checkout->getId()) ?>" />
-        </div>
-    </div>
     <div class="form-group <?=$this->validation()->hasError('amount') ? 'has-error' : '' ?>">
+        <label for="amount" class="col-lg-2 control-label">
+            <?=$this->getTrans('amount') ?>
+        </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -56,7 +66,6 @@
                    value="<?=($this->originalInput('amount') != '') ? $this->escape($this->originalInput('amount')) : $this->escape($checkout->getAmount()) ?>" />
         </div>
     </div>
-    <?php endforeach; ?>
     <?=$this->getSaveBar('updateButton') ?>
 </form>
 

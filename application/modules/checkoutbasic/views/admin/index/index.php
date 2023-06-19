@@ -1,12 +1,17 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $currency = $this->escape($this->get('currency'));
-$date;
 ?>
 
 <h1><?=$this->getTrans('bookings') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+        <label for="name" class="col-lg-2 control-label">
+            <?=$this->getTrans('name') ?>
+        </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -17,6 +22,9 @@ $date;
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('checkoutdate') ? 'has-error' : '' ?>">
+        <label for="datetime" class="col-lg-2 control-label">
+            <?=$this->getTrans('datetime') ?>
+        </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -27,6 +35,9 @@ $date;
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
+        <label for="usage" class="col-lg-2 control-label">
+            <?=$this->getTrans('usage') ?>
+        </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -37,6 +48,9 @@ $date;
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('amount') ? 'has-error' : '' ?>">
+        <label for="amount" class="col-lg-2 control-label">
+            <?=$this->getTrans('amount') ?>
+        </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -60,24 +74,24 @@ $date;
                 <strong>
                     <?php
                     if ($this->get('amount') != '') {
-                        echo $this->getTrans('balancetotal'),': ', $this->get('amount'), ' '.$currency ;
+                        echo $this->getTrans('balancetotal'), ': ', $this->get('amount'), ' ' . $currency ;
                     } else {
                         echo $this->getTrans('balancetotal'), ': 0 ', $currency ;
                     }
                     ?>
                 </strong>
                 <br>
-                <?php 
+                    <?php
                     if ($this->get('amountplus') != '') {
-                        echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), ' '.$currency ;
+                        echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), ' ' . $currency ;
                     } else {
                         echo $this->getTrans('totalpaid'), ': 0 ', $currency ;
                     }
-                ?>
+                    ?>
                 <br>
-                <?php 
+                <?php
                 if ($this->get('amountminus') != '') {
-                    echo $this->getTrans('totalpaidout'),': ', $this->get('amountminus'), ' '.$currency ;
+                    echo $this->getTrans('totalpaidout'), ': ', $this->get('amountminus'), ' ' . $currency ;
                 } else {
                     echo $this->getTrans('totalpaidout'), ': 0 ', $currency ;
                 }
@@ -107,7 +121,7 @@ $date;
                 </tr>
             </thead>
             <tbody>
-            <?php foreach ($this->get('checkout') as $checkout): ?>
+            <?php foreach ($this->get('checkout') as $checkout) : ?>
                 <?php $date = new \Ilch\Date($checkout->getDatetime()); ?>
                 <tr>
                     <td><?=$this->getEditIcon(['action' => 'treatPayment', 'id' => $this->escape($checkout->getId())]) ?></td>

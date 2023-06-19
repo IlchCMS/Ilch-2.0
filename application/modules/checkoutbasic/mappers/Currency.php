@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -11,89 +12,122 @@ use Modules\Checkoutbasic\Models\Currency as CurrencyModel;
 class Currency extends \Ilch\Mapper
 {
     /**
+     * @var string
+     */
+    public $tablename = 'checkoutbasic_currencies';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return CurrencyModel[]|null
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['name' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new CurrencyModel();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
      * Gets the currencies.
      *
      * @param array $where
-     * @return CurrencyModel[]|array
+     * @return CurrencyModel[]|null
      */
-    public function getCurrencies($where = [])
+    public function getCurrencies(array $where = []): ?array
     {
-        $currenciesArray = $this->db()->select('*')
-            ->from('checkoutbasic_currencies')
-            ->where($where)
-            ->order(['name' => 'ASC'])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($currenciesArray)) {
-            return [];
-        }
-
-        $currencies = [];
-
-        foreach ($currenciesArray as $currency) {
-            $currencyModel = new CurrencyModel();
-            $currencyModel->setId($currency['id']);
-            $currencyModel->setName($currency['name']);
-            $currencies[] = $currencyModel;
-        }
-
-        return $currencies;
+        return $this->getEntriesBy($where);
     }
 
     /**
      * Gets the currencies by id.
      *
      * @param int $id
-     * @return CurrencyModel[]|array
+     * @return CurrencyModel|null
      */
-    public function getCurrencyById($id)
+    public function getCurrencyById(int $id): ?CurrencyModel
     {
-        $currency = $this->getCurrencies(['id' => $id]);
-        return $currency;
-    }
+        $entrys = $this->getEntriesBy(['id' => $id], []);
 
-    /**
-     * Checks if a currency with a specific name exists.
-     *
-     * @param string $name
-     * @return boolean
-     */
-    public function currencyWithNameExists($name)
-    {
-        return (boolean) $this->db()->select('COUNT(*)', 'checkoutbasic_currencies', ['name' => $name])
-            ->execute()
-            ->fetchCell();
+        if (!empty($entrys)) {
+            return reset($entrys);
+        }
+
+        return null;
     }
 
     /**
      * Insert or update currencies.
      *
      * @param CurrencyModel $model
+     * @return int
      */
-    public function save(CurrencyModel $model)
+    public function save(CurrencyModel $model): int
     {
+        $fields = $model->getArray(false);
+
         if ($model->getId()) {
-            $this->db()->update('checkoutbasic_currencies')
-                ->values(['name' => $model->getName()])
+            $this->db()->update($this->tablename)
+                ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
+            $result = $model->getId();
         } else {
-            $this->db()->insert('checkoutbasic_currencies')
-                ->values(['name' => $model->getName()])
+            $result = $this->db()->insert($this->tablename)
+                ->values($fields)
                 ->execute();
         }
+
+        return $result;
     }
 
     /**
      * Deletes the currency by id.
      *
-     * @param integer $id
+     * @param int $id
      * @return \Ilch\Database\Mysql\Result|int
      */
-    public function deleteCurrencyById($id)
+    public function deleteCurrencyById(int $id)
     {
-        return $this->db()->delete('checkoutbasic_currencies')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }

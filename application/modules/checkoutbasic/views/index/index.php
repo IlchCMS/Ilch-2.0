@@ -1,6 +1,8 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $currency = $this->escape($this->get('currency'));
-$date;
 ?>
 
 <h1><?=$this->getTrans('accountdata') ?></h1>
@@ -12,24 +14,24 @@ $date;
     <strong>
         <?php
         if ($this->get('amount') != '') {
-            echo $this->getTrans('balancetotal'),': ', $this->get('amount'), ' '.$currency ;
+            echo $this->getTrans('balancetotal'), ': ', $this->get('amount'), ' ' . $currency ;
         } else {
             echo $this->getTrans('balancetotal'), ': 0 ', $currency ;
         }
         ?>
     </strong>
     <br>
-    <?php
+        <?php
         if ($this->get('amountplus') != '') {
-            echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), ' '.$currency ;
+            echo $this->getTrans('totalpaid'), ': ', $this->get('amountplus'), ' ' . $currency ;
         } else {
             echo $this->getTrans('totalpaid'), ': 0 ', $currency ;
         }
-    ?>
+        ?>
     <br>
     <?php
     if ($this->get('amountminus') != '') {
-        echo $this->getTrans('totalpaidout'),': ', $this->get('amountminus'), ' '.$currency ;
+        echo $this->getTrans('totalpaidout'), ': ', $this->get('amountminus'), ' ' . $currency ;
     } else {
         echo $this->getTrans('totalpaidout'), ': 0 ', $currency ;
     }
@@ -54,7 +56,9 @@ $date;
         </tr>
     </thead>
     <tbody>
-    <?php foreach ($this->get('checkout') as $checkout): ?>
+    <?php
+    foreach ($this->get('checkout') as $checkout) :
+        ?>
         <?php $date = new \Ilch\Date($checkout->getDatetime()); ?>
         <tr>
             <td><?=$this->escape($date->format(null, true)) ?></td>
@@ -62,6 +66,8 @@ $date;
             <td><?=$this->escape(number_format($checkout->getAmount(), 2, '.', '')) ?> <?=$currency ?></td>
             <td><?=$this->escape($checkout->getUsage()) ?></td>
         </tr>
-    <?php endforeach; ?>
+        <?php
+    endforeach;
+    ?>
     </tbody>
 </table>

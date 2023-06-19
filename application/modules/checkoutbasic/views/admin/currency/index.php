@@ -1,4 +1,10 @@
-<?php $currencies = $this->get('currencies'); ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Checkout\Models\Currency[]|null $currencies */
+$currencies = $this->get('currencies');
+?>
 
 <h1><?=$this->getTrans('currencies') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
@@ -19,20 +25,30 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (count($currencies) > 0): ?>
-                <?php foreach ($currencies as $currency) : ?>
+            <?php
+            if ($currencies) :
+                ?>
+                <?php
+                foreach ($currencies as $currency) :
+                    ?>
                     <tr>
                         <td><?=$this->getDeleteCheckbox('check_currencies', $currency->getId()) ?></td>
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $currency->getId()]) ?></td>
                         <td> <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $currency->getId()]) ?></td>
                         <td><?=$this->escape($currency->getName()) ?></td>
                     </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+                    <?php
+                endforeach;
+                ?>
+                <?php
+            else :
+                ?>
                 <tr>
                     <td colspan="4"><?=$this->getTrans('noCurrenciesExist') ?></td>
                 </tr>
-            <?php endif; ?>
+                <?php
+            endif;
+            ?>
         </tbody>
     </table>
     <?=$this->getListBar(['delete' => 'delete']) ?>
