@@ -56,9 +56,7 @@ $currency = $this->escape($this->get('currency'));
         </tr>
     </thead>
     <tbody>
-    <?php
-    foreach ($this->get('checkout') as $checkout) :
-        ?>
+    <?php foreach ($this->get('checkout') as $checkout) : ?>
         <?php $date = new \Ilch\Date($checkout->getDatetime()); ?>
         <tr>
             <td><?=$this->escape($date->format(null, true)) ?></td>
@@ -66,8 +64,6 @@ $currency = $this->escape($this->get('currency'));
             <td><?=$this->escape(number_format($checkout->getAmount(), 2, '.', '')) ?> <?=$currency ?></td>
             <td><?=$this->escape($checkout->getUsage()) ?></td>
         </tr>
-        <?php
-    endforeach;
-    ?>
+        <?php endforeach; ?>
     </tbody>
 </table>

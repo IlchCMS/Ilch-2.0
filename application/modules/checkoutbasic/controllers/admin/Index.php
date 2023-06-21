@@ -55,6 +55,8 @@ class Index extends \Ilch\Controller\Admin
         $checkoutMapper = new CheckoutMapper();
         $currencyMapper = new CurrencyMapper();
 
+        $checkoutCurrency = $this->getConfig()->get('checkoutbasic_currency') ?? 0;
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
@@ -88,14 +90,14 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkoutbasic_currency'));
+        $currency = $currencyMapper->getCurrencyById($checkoutCurrency);
 
         $this->getView()->set('checkout', $checkoutMapper->getEntries())
             ->set('checkoutdate', $ilchdate->toDb())
             ->set('amount', $checkoutMapper->getAmount())
             ->set('amountplus', $checkoutMapper->getAmountPlus())
             ->set('amountminus', $checkoutMapper->getAmountMinus())
-            ->set('checkoutCurrency', $this->getConfig()->get('checkoutbasic_currency'))
+            ->set('checkoutCurrency', $checkoutCurrency)
             ->set('currency', $currency->getName());
     }
 
