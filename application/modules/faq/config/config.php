@@ -73,7 +73,7 @@ class Config extends \Ilch\Config\Install
             `cat_id` INT(11) NOT NULL,
             `group_id` INT(11) NOT NULL,
             PRIMARY KEY (`cat_id`, `group_id`) USING BTREE,
-            INDEX `FK_[prefix]_articles_access_[prefix]_groups` (`group_id`) USING BTREE,
+            INDEX `FK_[prefix]_faqs_cats_access_[prefix]_groups` (`group_id`) USING BTREE,
             CONSTRAINT `FK_[prefix]_faqs_cats_access_[prefix]_faqs_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_faqs_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
             CONSTRAINT `FK_[prefix]_faqs_cats_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -108,13 +108,13 @@ class Config extends \Ilch\Config\Install
 
                 // Create new table for read access.
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_faqs_cats_access` (
-            `cat_id` INT(11) NOT NULL,
-            `group_id` INT(11) NOT NULL,
-            PRIMARY KEY (`cat_id`, `group_id`) USING BTREE,
-            INDEX `FK_[prefix]_articles_access_[prefix]_groups` (`group_id`) USING BTREE,
-            CONSTRAINT `FK_[prefix]_faqs_cats_access_[prefix]_faqs_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_faqs_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
-            CONSTRAINT `FK_[prefix]_faqs_cats_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+                        `cat_id` INT(11) NOT NULL,
+                        `group_id` INT(11) NOT NULL,
+                        PRIMARY KEY (`cat_id`, `group_id`) USING BTREE,
+                        INDEX `FK_[prefix]_faqs_cats_access_[prefix]_groups` (`group_id`) USING BTREE,
+                        CONSTRAINT `FK_[prefix]_faqs_cats_access_[prefix]_faqs_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_faqs_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                        CONSTRAINT `FK_[prefix]_faqs_cats_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
 
                 // Convert data from old read_access column of table articles to the new articles_access table.
                 $readAccessRows = $this->db()->select(['id', 'read_access'])
@@ -164,8 +164,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` DROP COLUMN `read_access`;');
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `title`;');
 
-                // Add constraint to articles_content after deleting orphaned rows in it (rows with an article id not
-                // existing in the articles table) as this would lead to an error.
+                // Add constraint to faq after deleting orphaned rows in it (rows with an article id not
+                // existing in the faq table) as this would lead to an error.
                 $idsCats = $this->db()->select('id')
                     ->from('faqs_cats')
                     ->execute()

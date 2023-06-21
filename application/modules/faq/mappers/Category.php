@@ -122,8 +122,6 @@ class Category extends \Ilch\Mapper
         return null;
     }
 
-
-
     /**
      * Inserts or updates entry.
      *
@@ -152,7 +150,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Update the entries for which user groups are allowed to read a War.
+     * Update the entries for which user groups are allowed to read a Cat.
      *
      * @param int $warId
      * @param string|array $readAccess example: "1,2,3"
