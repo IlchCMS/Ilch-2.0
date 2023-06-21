@@ -13,6 +13,7 @@ class Currency extends \Ilch\Mapper
 {
     /**
      * @var string
+     * @since 1.5.0
      */
     public $tablename = 'checkoutbasic_currencies';
 
@@ -21,6 +22,7 @@ class Currency extends \Ilch\Mapper
      *
      * @return boolean
      * @throws \Ilch\Database\Exception
+     * @since 1.5.0
      */
     public function checkDB(): bool
     {
@@ -34,6 +36,7 @@ class Currency extends \Ilch\Mapper
      * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
      * @return CurrencyModel[]|null
+     * @since 1.5.0
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['name' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
     {

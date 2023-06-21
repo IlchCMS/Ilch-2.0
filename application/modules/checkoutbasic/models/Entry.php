@@ -47,6 +47,7 @@ class Entry extends \Ilch\Model
     /**
      * @param array $entries
      * @return $this
+     * @since 1.5.0
      */
     public function setByArray(array $entries): Entry
     {
@@ -187,6 +188,7 @@ class Entry extends \Ilch\Model
     /**
      * @param bool $withId
      * @return array
+     * @since 1.5.0
      */
     public function getArray(bool $withId = true): array
     {
