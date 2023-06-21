@@ -1,13 +1,17 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Faq\Models\Category|null $cat */
+$cat = $this->get('cat');
+?>
+
 <h1>
-    <?php if ($this->get('cat') != ''): ?>
-        <?=$this->getTrans('edit') ?>
-   <?php else: ?>
-        <?=$this->getTrans('add') ?>
-    <?php endif; ?>
+    <?=($cat) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -16,26 +20,25 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('cat') != '') { echo $this->escape($this->get('cat')->getTitle()); } ?>" />
+                   value="<?=$this->escape($this->originalInput('title', $cat->getTitle())) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
         <label for="access" class="col-lg-2 control-label">
             <?=$this->getTrans('visibleFor') ?>:
         </label>
         <div class="col-lg-3">
             <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
-                <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('groups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
+                <?php foreach ($this->get('userGroupList') as $groupList) : ?>
+                    <?php if ($groupList->getId() != 1) : ?>
+                        <option value="<?=$groupList->getId() ?>" <?=in_array($groupList->getId(), $this->originalInput('groups', $this->get('groups'))) ? 'selected=""' : '' ?>><?=$groupList->getName() ?></option>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </select>
         </div>
     </div>
-    <?php if ($this->get('cat') != ''): ?>
-        <?=$this->getSaveBar('updateButton') ?>
-    <?php else: ?>
-        <?=$this->getSaveBar('addButton') ?>
-    <?php endif; ?>
+    <?=($cat->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
 <script>

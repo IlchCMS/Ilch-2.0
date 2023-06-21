@@ -1,27 +1,41 @@
 <?php
+/** @var \Ilch\View $this */
+
+/** @var Modules\Faq\Models\Category[]|null $categories */
 $categories = $this->get('categories');
+
+/** @var Modules\Faq\Models\Faq[]|null $faqs */
 $faqs = $this->get('faqs');
+
+/** @var Modules\Faq\Mappers\Faq $faqMapper */
 $faqMapper = $this->get('faqMapper');
-$readAccess = $this->get('readAccess');
-$adminAccess = $this->get('adminAccess');
+
+/** @var Modules\Faq\Models\Faq[]|null $searchresult */
 $searchresult = $this->get('searchresult');
-$searchExecuted = $this->get('searchExecuted');
+
+/** @var bool $searchExecuted */
+$searchExecuted = $this->get('searchExecuted') ?? false;
+
+/** @var array $readAccess */
+$readAccess = $this->get('readAccess');
 ?>
 
 <h1><?=$this->getTrans('faqFrequentlyAskedQuestions') ?></h1>
 
-<?php if (!empty($searchresult)) : ?>
-    <?=$this->getTrans('mightAnswerYourQuestion') ?>
+<?php if ($searchExecuted) : ?>
+    <?php if ($searchresult) : ?>
+        <?=$this->getTrans('mightAnswerYourQuestion') ?>
     <ul>
-    <?php foreach ($searchresult as $result) : ?>
-        <li><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $result->getId()]) ?>"><b><?=$this->escape($result->getQuestion()) ?></b></a></li>
-    <?php endforeach; ?>
+        <?php foreach ($searchresult as $result) : ?>
+        <li><a href="<?=$this->getUrl(['action' => 'show', 'id' => $result->getId()]) ?>"><b><?=$this->escape($result->getQuestion()) ?></b></a></li>
+        <?php endforeach; ?>
     </ul>
-<?php elseif ($searchExecuted) : ?>
+    <?php else : ?>
     <p><?=$this->getTrans('noSearchResult') ?></p>
+    <?php endif; ?>
 <?php endif; ?>
 
-<?php if (!empty($faqs)): ?>
+<?php if ($faqs) : ?>
     <form class="form-horizontal" role="search" method="POST">
         <?=$this->getTokenField() ?>
         <div class="form-group">
@@ -46,21 +60,17 @@ $searchExecuted = $this->get('searchExecuted');
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <?php foreach ($categories as $category):
-                        if (!($adminAccess == true || is_in_array($readAccess, explode(',', $category->getReadAccess())))) {
-                            continue;
-                        }
-
-                        $countFaqs = count($faqMapper->getFaqs(['cat_id' => $category->getId()]));
-                        if ($category->getId() == $this->get('firstCatId') || $category->getId() == $this->getRequest()->getParam('catId')) {
+                    <?php foreach ($categories as $category) :
+                        $countFaqs = count($faqMapper->getFaqs(['f.cat_id' => $category->getId()], ['f.id' => 'ASC'], $readAccess));
+                        if ($category->getId() == $this->getRequest()->getParam('catId')) {
                             $active = 'class="active"';
                         } else {
                             $active = '';
                         }
 
-                        if ($countFaqs > 0): ?>
+                        if ($countFaqs > 0) : ?>
                             <li <?=$active ?>>
-                                <a href="<?=$this->getUrl('faq/index/index/catId/'.$category->getId()) ?>">
+                                <a href="<?=$this->getUrl(['action' => 'index', 'catId' => $category->getId()]) ?>">
                                     <b><?=$this->escape($category->getTitle()) ?></b>
                                     <span class="badge"><?=$countFaqs ?></span>
                                 </a>
@@ -72,11 +82,11 @@ $searchExecuted = $this->get('searchExecuted');
         </div>
     </nav>
     <ul class="list-group">
-        <?php foreach ($faqs as $faq): ?>
-            <li class="list-group-item"><a href="<?=$this->getUrl('faq/index/show/id/'.$faq->getId()) ?>"><b><?=$this->escape($faq->getQuestion()) ?></b></a></li>
+        <?php foreach ($faqs as $faq) : ?>
+            <li class="list-group-item"><a href="<?=$this->getUrl(['action' => 'show', 'id' => $faq->getId()]) ?>"><b><?=$this->escape($faq->getQuestion()) ?></b></a></li>
         <?php endforeach; ?>
     </ul>
-<?php else: ?>
+<?php else : ?>
     <ul class="list-group">
         <li class="list-group-item"><?=$this->getTrans('noFaqs') ?></li>
     </ul>

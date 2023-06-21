@@ -1,7 +1,16 @@
-<?php $faqMapper = $this->get('faqMapper'); ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Faq\Mappers\Faq $faqMapper */
+$faqMapper = $this->get('faqMapper');
+
+/** @var Modules\Faq\Models\Category $cats */
+$cats = $this->get('cats');
+?>
 
 <h1><?=$this->getTrans('menuCats') ?></h1>
-<?php if (!empty($this->get('cats'))): ?>
+<?php if ($cats) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -23,13 +32,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('cats') as $cat): ?>
-                        <?php $countFaqs = count($faqMapper->getFaqs(['cat_id' => $cat->getId()])); ?>
+                    <?php foreach ($cats as $cat) : ?>
+                        <?php $countFaqs = count($faqMapper->getFaqsByCatId($cat->getId())); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
-                            <td align="center"><?=$countFaqs ?></td>
+                            <td class="text-center"><?=$countFaqs ?></td>
                             <td><?=$this->escape($cat->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -38,6 +47,6 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noCategory') ?>
 <?php endif; ?>

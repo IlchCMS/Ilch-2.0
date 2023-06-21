@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -26,4 +27,5 @@ return [
     'placeHolderSearch' => 'Enter a search term',
     'search' => 'Search',
     'noSearchResult' => 'Sadly no search result.',
+    'groupAll' => 'All',
 ];
