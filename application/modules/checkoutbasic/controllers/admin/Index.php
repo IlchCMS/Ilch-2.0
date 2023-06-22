@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -19,19 +20,19 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'currencies',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'index'])
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'settings'])
             ]
         ];
@@ -50,63 +51,54 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
-        $ilchdate = new IlchDate;
+        $ilchdate = new IlchDate();
         $checkoutMapper = new CheckoutMapper();
         $currencyMapper = new CurrencyMapper();
+
+        $checkoutCurrency = $this->getConfig()->get('checkoutbasic_currency') ?? 0;
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        $post = [
-            'name' => '',
-            'datetime' => '',
-            'usage' => '',
-            'amount' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'name' => $this->getRequest()->getPost('name'),
-                'datetime' => trim($this->getRequest()->getPost('datetime')),
-                'usage' => trim($this->getRequest()->getPost('usage')),
-                'amount' => trim($this->getRequest()->getPost('amount'))
-            ];
+            $_POST['usage'] = trim($this->getRequest()->getPost('usage'));
 
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required',
-                'datetime' => 'required',
+                'datetime' => 'required|date:Y-m-d H\:i\:s',
                 'usage' => 'required',
                 'amount' => 'required|numeric'
             ]);
 
             if ($validation->isValid()) {
                 $model = new \Modules\Checkoutbasic\Models\Entry();
-                $model->setName($post['name']);
-                $model->setDatetime($post['datetime']);
-                $model->setUsage($post['usage']);
-                $model->setAmount($post['amount']);
+                $model->setName($this->getRequest()->getPost('name'))
+                    ->setDatetime($this->getRequest()->getPost('datetime'))
+                    ->setUsage($this->getRequest()->getPost('usage'))
+                    ->setAmount($this->getRequest()->getPost('amount'));
                 $checkoutMapper->save($model);
 
                 $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'index']);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
-                    ->withInput($post)
+                    ->withInput($this->getRequest()->getPost())
                     ->withErrors($validation->getErrorBag())
                     ->to(['action' => 'index']);
             }
         }
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkoutbasic_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($checkoutCurrency);
 
-        $this->getView()->set('checkout', $checkoutMapper->getEntries());
-        $this->getView()->set('checkoutdate', $ilchdate->toDb());
-        $this->getView()->set('amount', $checkoutMapper->getAmount());
-        $this->getView()->set('amountplus', $checkoutMapper->getAmountPlus());
-        $this->getView()->set('amountminus', $checkoutMapper->getAmountMinus());
-        $this->getView()->set('checkoutCurrency', $this->getConfig()->get('checkoutbasic_currency'));
-        $this->getView()->set('currency', $currency->getName());
+        $this->getView()->set('checkout', $checkoutMapper->getEntries())
+            ->set('checkoutdate', $ilchdate->toDb())
+            ->set('amount', $checkoutMapper->getAmount())
+            ->set('amountplus', $checkoutMapper->getAmountPlus())
+            ->set('amountminus', $checkoutMapper->getAmountMinus())
+            ->set('checkoutCurrency', $checkoutCurrency)
+            ->set('currency', $currency->getName());
     }
 
     public function settingsAction()
@@ -124,9 +116,10 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('checkoutbasic_contact', $this->getRequest()->getPost('checkoutContact'));
-                $this->getConfig()->set('checkoutbasic_currency', $this->getRequest()->getPost('checkoutCurrency'));
+                $this->getConfig()->set('checkoutbasic_contact', $this->getRequest()->getPost('checkoutContact'))
+                    ->set('checkoutbasic_currency', $this->getRequest()->getPost('checkoutCurrency'));
                 $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'settings']);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
@@ -136,9 +129,9 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('currencies', $currencyMapper->getCurrencies());
-        $this->getView()->set('checkoutContact', $this->getConfig()->get('checkoutbasic_contact'));
-        $this->getView()->set('checkoutCurrency', $this->getConfig()->get('checkoutbasic_currency'));
+        $this->getView()->set('currencies', $currencyMapper->getCurrencies())
+            ->set('checkoutContact', $this->getConfig()->get('checkoutbasic_contact'))
+            ->set('checkoutCurrency', $this->getConfig()->get('checkoutbasic_currency'));
     }
 
     public function treatPaymentAction()
@@ -148,54 +141,45 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('treatpayment'), ['action' => 'treatpayment', 'id' => $this->getRequest()->getParam('id')]);
 
         $checkoutMapper = new CheckoutMapper();
-        $id = $this->getRequest()->getParam('id');
 
-        $post = [
-            'name' => '',
-            'datetime' => '',
-            'usage' => '',
-            'amount' => '',
-            'id' => ''
-        ];
+        $model = null;
+        if ($this->getRequest()->getParam('id')) {
+            $model = $checkoutMapper->getEntryById($this->getRequest()->getParam('id'));
+        }
 
-        if ($this->getRequest()->isPost()) {
-            $post = [
-                'name' => $this->getRequest()->getPost('name'),
-                'datetime' => trim($this->getRequest()->getPost('datetime')),
-                'usage' => trim($this->getRequest()->getPost('usage')),
-                'amount' => trim($this->getRequest()->getPost('amount')),
-                'id' => trim($this->getRequest()->getPost('id'))
-            ];
+        if (!$model) {
+            $this->redirect()
+                ->withMessage('notfound', 'danger')
+                ->to(['action' => 'index']);
+        }
 
-            $validation = Validation::create($post, [
+        if ($this->getRequest()->isPost() && $model->getId()) {
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required',
-                'datetime' => 'required',
+                'datetime' => 'required|date:Y-m-d H\:i\:s',
                 'usage' => 'required',
                 'amount' => 'required|numeric',
-                'id' => 'required|numeric|integer|min:1'
             ]);
 
             if ($validation->isValid()) {
-                $model = new \Modules\Checkoutbasic\Models\Entry();
-                $model->setId($post['id']);
-                $model->setName($post['name']);
-                $model->setDatetime($post['datetime']);
-                $model->setUsage($post['usage']);
-                $model->setAmount($post['amount']);
+                $model->setName($this->getRequest()->getPost('name'))
+                    ->setDatetime($this->getRequest()->getPost('datetime'))
+                    ->setUsage($this->getRequest()->getPost('usage'))
+                    ->setAmount($this->getRequest()->getPost('amount'));
                 $checkoutMapper->save($model);
 
                 $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'index']);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
-                    ->withInput($post)
+                    ->withInput($this->getRequest()->getPost())
                     ->withErrors($validation->getErrorBag())
-                    ->to(['action' => 'treatPayment', 'id' => $id]);
+                    ->to(['action' => 'treatPayment', 'id' => $model->getId()]);
             }
         }
 
-        $this->getView()->set('checkout', $checkoutMapper->getEntryById($id));
-        $this->getView()->set('checkout_currency', $this->getConfig()->get('checkoutbasic_currency'));
+        $this->getView()->set('checkout', $model);
     }
 
     public function delAction()
@@ -206,7 +190,7 @@ class Index extends \Ilch\Controller\Admin
             $checkoutMapper->deleteById($id);
 
             $this->addMessage('deleteSuccess');
-            $this->redirect(['action' => 'index']);
         }
+        $this->redirect(['action' => 'index']);
     }
 }

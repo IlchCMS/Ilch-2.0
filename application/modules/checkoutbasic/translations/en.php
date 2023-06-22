@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -31,4 +32,5 @@ return [
     'treatCurrency' => 'Edit currency',
     'currencyInUse' => 'This currency is currently in use and therefore can not be deleted.',
     'alreadyExisting' => 'A currency with this name already exists.',
+    'notfound' => 'Entry not found',
 ];

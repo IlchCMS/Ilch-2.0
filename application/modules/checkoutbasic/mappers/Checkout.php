@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -11,107 +12,153 @@ use Modules\Checkoutbasic\Models\Entry as CheckoutModel;
 class Checkout extends \Ilch\Mapper
 {
     /**
+     * @var string
+     * @since 1.5.0
+     */
+    public $tablename = 'checkoutbasic';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.5.0
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return CheckoutModel[]|null
+     * @since 1.5.0
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['date_created' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new CheckoutModel();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
      * Gets the Checkout entries.
      *
      * @param array $where
      * @return CheckoutModel[]|array
      */
-    public function getEntries($where = [])
+    public function getEntries(array $where = []): ?array
     {
-        $entryArray = $this->db()->select('*')
-            ->from('checkoutbasic')
-            ->where($where)
-            ->order(['date_created' => 'DESC'])
-            ->execute()
-            ->fetchRows();
+        return $this->getEntriesBy($where);
+    }
 
-        if (empty($entryArray)) {
-            return [];
+    /**
+     * @param int $id
+     * @return null|CheckoutModel
+     */
+    public function getEntryById(int $id): ?CheckoutModel
+    {
+        $entrys = $this->getEntriesBy(['id' => $id], []);
+
+        if (!empty($entrys)) {
+            return reset($entrys);
         }
 
-        $entry = [];
-
-        foreach ($entryArray as $entries) {
-            $entryModel = new CheckoutModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setDatetime($entries['date_created']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setUsage($entries['usage']);
-            $entryModel->setAmount($entries['amount']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
+        return null;
     }
 
     /**
-     * @param $id
-     * @return array|CheckoutModel[]
+     * @return float|null
      */
-    public function getEntryById($id)
+    public function getAmount(): ?float
     {
-        $entry = $this->getEntries(['id' => $id]);
-        return $entry;
-    }
-
-    /**
-     * @return false|string|null
-     */
-    public function getAmount()
-    {
-        return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutbasic')
+        return $this->db()->select('ROUND(SUM(amount),2)', $this->tablename)
             ->execute()
-            ->fetchCell();
+            ->fetchCell() ?? null;
     }
 
     /**
-     * @return false|string|null
+     * @return float|null
      */
-    public function getAmountPlus()
+    public function getAmountPlus(): ?float
     {
-        return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutbasic', ['amount >' => 0])
+        return $this->db()->select('ROUND(SUM(amount),2)', $this->tablename, ['amount >' => 0])
             ->execute()
-            ->fetchCell();
+            ->fetchCell() ?? null;
     }
 
     /**
-     * @return false|string|null
+     * @return float|null
      */
-    public function getAmountMinus()
+    public function getAmountMinus(): ?float
     {
-        return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutbasic', ['amount <' => 0])
+        return $this->db()->select('ROUND(SUM(amount),2)', $this->tablename, ['amount <' => 0])
             ->execute()
-            ->fetchCell();
+            ->fetchCell() ?? null;
     }
 
     /**
      * Inserts or updates Checkout entry.
      *
      * @param CheckoutModel $model
+     * @return int
      */
-    public function save(CheckoutModel $model)
+    public function save(CheckoutModel $model): int
     {
+        $fields = $model->getArray(false);
+
         if ($model->getId()) {
-            $this->db()->update('checkoutbasic')
-                ->values(['name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()])
+            $this->db()->update($this->tablename)
+                ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
+            $result = $model->getId();
         } else {
-            $this->db()->insert('checkoutbasic')
-                ->values(['name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()])
+            $result = $this->db()->insert($this->tablename)
+                ->values($fields)
                 ->execute();
         }
+
+        return $result;
     }
 
     /**
      * Deletes the Checkout entry.
      *
-     * @param integer $id
-     * @return \Ilch\Database\Mysql\Result|int
+     * @param int $id
+     * @return bool
      */
-    public function deleteById($id)
+    public function deleteById(int $id): bool
     {
-        return $this->db()->delete('checkoutbasic')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,8 +11,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'checkoutbasic',
-        'version' => '1.4.2',
-        'icon_small' => 'fa-credit-card',
+        'version' => '1.5.0',
+        'icon_small' => 'fa-regular fa-credit-card',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -24,8 +25,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'The basic version of the checkout-module. Here you can manage your clan cash.',
             ],
         ],
-        'ilchCore' => '2.1.26',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -33,19 +34,21 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('checkoutbasic_contact', '<p>Kontoinhaber: Max Mustermann</p><p>Bankname: Muster Sparkasse</p><p>Kontonummer: 123</p><p>Bankleitzahl: 123</p><p>BIC: 123</p><p>IBAN: 123</p><p>Verwendungszweck: Spende f&uuml;r ilch.de ;-)</p>');
-        $databaseConfig->set('checkoutbasic_currency', '1');
+        $databaseConfig->set('checkoutbasic_contact', '<p>Kontoinhaber: Max Mustermann</p><p>Bankname: Muster Sparkasse</p><p>Kontonummer: 123</p><p>Bankleitzahl: 123</p><p>BIC: 123</p><p>IBAN: 123</p><p>Verwendungszweck: Spende f&uuml;r ilch.de ;-)</p>')
+            ->set('checkoutbasic_currency', '1');
     }
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_checkoutbasic`');
-        $this->db()->queryMulti('DROP TABLE `[prefix]_checkoutbasic_currencies`');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'checkoutbasic_contact'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'checkoutbasic_currency'");
+        $this->db()->drop('checkoutbasic', true);
+        $this->db()->drop('checkoutbasic_currencies', true);
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('checkoutbasic_contact')
+            ->delete('checkoutbasic_currency');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
@@ -70,7 +73,7 @@ class Config extends \Ilch\Config\Install
                 INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (6, "CHF");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -83,6 +86,12 @@ class Config extends \Ilch\Config\Install
             case "1.3.0":
             case "1.4.0":
                 $this->db()->update('modules')->values(['link' => $this->config['link']])->where(['key' => $this->config['key']])->execute();
+                // no break
+            case "1.4.1":
+            case "1.4.2":
+                $this->db()->update('modules')->values(['icon_small' => $this->config['icon_small']])->where(['key' => $this->config['key']])->execute();
         }
+
+        return 'Update function executed.';
     }
 }

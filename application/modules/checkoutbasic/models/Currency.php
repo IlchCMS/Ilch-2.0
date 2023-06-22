@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -11,23 +12,40 @@ class Currency extends \Ilch\Model
     /**
      * The id of the currency.
      *
-     * @var integer
+     * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The name of the currency.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.5.0
+     */
+    public function setByArray(array $entries): Currency
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the currency.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -37,7 +55,7 @@ class Currency extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -45,20 +63,41 @@ class Currency extends \Ilch\Model
     /**
      * Sets the id of the currency.
      *
-     * @param integer $id
+     * @param int $id
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Currency
     {
-        $this->id = (int)$id;
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
      * Sets the name of the currency.
      *
      * @param string $name
+     * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Currency
     {
-        $this->name = (string)$name;
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.5.0
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'name'    => $this->getName(),
+            ]
+        );
     }
 }

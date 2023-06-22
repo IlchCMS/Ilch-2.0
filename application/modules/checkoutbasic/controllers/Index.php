@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -8,7 +9,6 @@ namespace Modules\Checkoutbasic\Controllers;
 
 use Modules\Checkoutbasic\Mappers\Checkout as CheckoutMapper;
 use Modules\Checkoutbasic\Mappers\Currency as CurrencyMapper;
-use Ilch\Date as IlchDate;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -21,14 +21,14 @@ class Index extends \Ilch\Controller\Frontend
         $amount = $checkoutMapper->getAmount();
         $amountplus = $checkoutMapper->getAmountPlus();
         $amountminus = $checkoutMapper->getAmountMinus();
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkoutbasic_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkoutbasic_currency') ?? 0);
 
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('checkout'), ['action' => 'index']);
-        $this->getView()->set('checkout', $checkout);
-        $this->getView()->set('amount', $amount);
-        $this->getView()->set('amountplus', $amountplus);
-        $this->getView()->set('amountminus', $amountminus);
-        $this->getView()->set('checkout_contact', $this->getConfig()->get('checkoutbasic_contact'));
-        $this->getView()->set('currency', $currency->getName());
+        $this->getView()->set('checkout', $checkout)
+            ->set('amount', $amount)
+            ->set('amountplus', $amountplus)
+            ->set('amountminus', $amountminus)
+            ->set('checkout_contact', $this->getConfig()->get('checkoutbasic_contact'))
+            ->set('currency', $currency->getName());
     }
 }
