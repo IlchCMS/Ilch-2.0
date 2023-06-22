@@ -116,7 +116,7 @@ class Config extends \Ilch\Config\Install
                         CONSTRAINT `FK_[prefix]_faqs_cats_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
 
-                // Convert data from old read_access column of table articles to the new articles_access table.
+                // Convert data from old read_access column of table faqs_cats to the new faqs_cats_access table.
                 $readAccessRows = $this->db()->select(['id', 'read_access'])
                     ->from(['faqs_cats'])
                     ->execute()
@@ -160,7 +160,7 @@ class Config extends \Ilch\Config\Install
                     $this->db()->queryMulti($sqlWithValues);
                 }
 
-                // Delete old read_access column of table articles.
+                // Delete old read_access column of table faqs_cats.
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` DROP COLUMN `read_access`;');
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `title`;');
 

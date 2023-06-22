@@ -195,9 +195,11 @@ class Category extends \Ilch\Mapper
             $sqlWithValues .= '(' . $warId . ',' . (int)$groupId . '),';
         }
 
-        // Insert remaining rows.
-        $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-        $this->db()->queryMulti($sqlWithValues);
+        if ($sqlWithValues != $sql) {
+            // Insert remaining rows.
+            $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+            $this->db()->queryMulti($sqlWithValues);
+        }
     }
 
     /**
