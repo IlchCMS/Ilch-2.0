@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,49 +14,100 @@ class Vote extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The question of the vote.
      *
      * @var string
      */
-    protected $question;
+    protected $question = '';
 
     /**
      * The key of the vote.
      *
      * @var string
      */
-    protected $key;
+    protected $key = '';
 
     /**
      * The groups of the vote.
      *
      * @var string
      */
-    protected $groups;
+    protected $groups = '';
 
     /**
      * The read access of the vote.
      *
      * @var string
      */
-    protected $readAccess;
+    protected $readAccess = '2,3';
 
     /**
      * The status of the vote.
      *
+     * @var bool
+     */
+    protected $status = false;
+
+    /**
+     * The read access all of the vote.
+     *
      * @var int
      */
-    protected $status;
+    protected $read_access_all = 0;
+
+    /**
+     * The multiple reply of the vote.
+     *
+     * @var int
+     */
+    protected $multiple_reply = 0;
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.12.0
+     */
+    public function setByArray(array $entries): Vote
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['question'])) {
+            $this->setQuestion($entries['question']);
+        }
+        if (isset($entries['key'])) {
+            $this->setKey($entries['key']);
+        }
+        if (isset($entries['status'])) {
+            $this->setStatus($entries['status']);
+        }
+        if (isset($entries['multiple_reply'])) {
+            $this->setMultipleReply($entries['multiple_reply']);
+        }
+        if (isset($entries['groups'])) {
+            $this->setGroups($entries['groups']);
+        }
+        if (isset($entries['read_access'])) {
+            $this->setReadAccess($entries['read_access']);
+        }
+        if (isset($entries['read_access_all'])) {
+            if ($entries['read_access_all']) {
+                $this->setReadAccess('all');
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the vote.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -67,9 +119,9 @@ class Vote extends \Ilch\Model
      *
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Vote
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -79,7 +131,7 @@ class Vote extends \Ilch\Model
      *
      * @return string
      */
-    public function getQuestion()
+    public function getQuestion(): string
     {
         return $this->question;
     }
@@ -91,9 +143,9 @@ class Vote extends \Ilch\Model
      *
      * @return $this
      */
-    public function setQuestion($question)
+    public function setQuestion(string $question): Vote
     {
-        $this->question = (string)$question;
+        $this->question = $question;
 
         return $this;
     }
@@ -103,7 +155,7 @@ class Vote extends \Ilch\Model
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -115,9 +167,9 @@ class Vote extends \Ilch\Model
      *
      * @return $this
      */
-    public function setKey($key)
+    public function setKey(string $key): Vote
     {
-        $this->key = (string)$key;
+        $this->key = $key;
 
         return $this;
     }
@@ -127,7 +179,7 @@ class Vote extends \Ilch\Model
      *
      * @return string
      */
-    public function getGroups()
+    public function getGroups(): string
     {
         return $this->groups;
     }
@@ -139,9 +191,9 @@ class Vote extends \Ilch\Model
      *
      * @return $this
      */
-    public function setGroups($groups)
+    public function setGroups(string $groups): Vote
     {
-        $this->groups = (string)$groups;
+        $this->groups = $groups;
 
         return $this;
     }
@@ -149,9 +201,9 @@ class Vote extends \Ilch\Model
     /**
      * Gets the read access of the event.
      *
-     * @return int
+     * @return string
      */
-    public function getReadAccess()
+    public function getReadAccess(): string
     {
         return $this->readAccess;
     }
@@ -163,9 +215,9 @@ class Vote extends \Ilch\Model
      *
      * @return $this
      */
-    public function setReadAccess($readAccess)
+    public function setReadAccess(string $readAccess): Vote
     {
-        $this->readAccess = (string)$readAccess;
+        $this->readAccess = $readAccess;
 
         return $this;
     }
@@ -173,9 +225,9 @@ class Vote extends \Ilch\Model
     /**
      * Gets the status of the vote.
      *
-     * @return int
+     * @return bool
      */
-    public function getStatus()
+    public function getStatus(): bool
     {
         return $this->status;
     }
@@ -183,14 +235,58 @@ class Vote extends \Ilch\Model
     /**
      * Sets the status of the vote.
      *
-     * @param int $status
+     * @param bool $status
      *
      * @return $this
      */
-    public function setStatus($status)
+    public function setStatus(bool $status): Vote
     {
-        $this->status = (int)$status;
+        $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * Gets the multiple reply of the vote.
+     *
+     * @return bool
+     */
+    public function getMultipleReply(): bool
+    {
+        return $this->multiple_reply;
+    }
+
+    /**
+     * Sets the multiple reply of the vote.
+     *
+     * @param bool $multiple_reply
+     *
+     * @return $this
+     */
+    public function setMultipleReply(bool $multiple_reply): Vote
+    {
+        $this->multiple_reply = $multiple_reply;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.12.0
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'question' => $this->getQuestion(),
+                'key' => $this->getKey(),
+                'status' => $this->getStatus(),
+                'groups' => $this->getGroups(),
+                'read_access_all'   => ($this->getReadAccess() === 'all' ? 1 : 0),
+                'multiple_reply' => $this->getMultipleReply(),
+            ]
+        );
     }
 }

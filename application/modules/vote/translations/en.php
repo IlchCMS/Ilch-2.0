@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -17,4 +18,5 @@ return [
     'lock' => 'Close vote',
     'unlock' => 'Open vote',
     'reset' => 'Reset',
+    'multiplereply' => 'Multiple choice'
 ];

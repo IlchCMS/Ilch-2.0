@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -21,12 +22,12 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
             ]
@@ -55,9 +56,12 @@ class Index extends \Ilch\Controller\Admin
             foreach ($this->getRequest()->getPost('check_vote') as $voteId) {
                 $voteMapper->delete($voteId);
             }
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('vote', $voteMapper->getVotes());
+        $this->getView()->set('votes', $voteMapper->getVotes([], null));
     }
 
     public function treatAction()
@@ -66,62 +70,59 @@ class Index extends \Ilch\Controller\Admin
         $resultMapper = new ResultMapper();
         $groupMapper = new GroupMapper();
 
+        $voteModel = new VoteModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-
-            $this->getView()->set('vote', $voteMapper->getVoteById($this->getRequest()->getParam('id')));
+            $voteModel = $voteMapper->getVoteById($this->getRequest()->getParam('id'));
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('vote', $voteModel);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'question' => 'required',
-                'reply'    => 'required'
+                'reply'    => 'required',
+                'groups'    => 'required',
+                'access'    => 'required',
+                'multiplereply' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             if ($validation->isValid()) {
-                $voteModel = new VoteModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $voteModel->setId($this->getRequest()->getParam('id'));
-                }
-
                 $groups = '';
                 if (!empty($this->getRequest()->getPost('groups'))) {
-                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                    if (in_array('all', $this->getRequest()->getPost('groups'))) {
+                        $groups = 'all';
+                    } else {
+                        $groups = implode(',', $this->getRequest()->getPost('groups'));
+                    }
                 }
 
-                $participationGroups = '';
-                if (!empty($this->getRequest()->getPost('participationGroups'))) {
-                    $participationGroups = implode(',', $this->getRequest()->getPost('participationGroups'));
+                $access = '';
+                if (!empty($this->getRequest()->getPost('access'))) {
+                    $access = implode(',', $this->getRequest()->getPost('access'));
                 }
 
                 $voteModel->setQuestion($this->getRequest()->getPost('question'))
                     ->setKey('vote/index/index')
-                    ->setGroups($participationGroups)
-                    ->setReadAccess($groups);
-                $voteMapper->save($voteModel);
+                    ->setGroups($groups)
+                    ->setReadAccess($access)
+                    ->setMultipleReply($this->getRequest()->getPost('multiplereply'));
+                $id = $voteMapper->save($voteModel);
 
-                if ($this->getRequest()->getParam('id')) {
-                    $resultMapper->delete($this->getRequest()->getParam('id'));
+                $voteModel->setId($id);
 
-                    foreach ($this->getRequest()->getPost('reply') as $key => $reply) {
-                        $resultModel = new ResultModel();
-                        $resultModel->setPollId($this->getRequest()->getParam('id'))
-                            ->setReply($reply);
-                        $resultMapper->saveReply($resultModel);
-                    }
-                } else {
-                    foreach ($this->getRequest()->getPost('reply') as $key => $reply) {
-                        $resultModel = new ResultModel();
-                        $resultModel->setPollId($voteMapper->getLastId())
-                            ->setReply($reply);
-                        $resultMapper->saveReply($resultModel);
-                    }
+                $resultMapper->delete($voteModel->getId());
+
+                foreach ($this->getRequest()->getPost('reply') as $reply) {
+                    $resultModel = new ResultModel();
+                    $resultModel->setPollId($voteModel->getId())
+                        ->setReply($reply);
+                    $resultMapper->saveReply($resultModel);
                 }
 
                 $this->redirect()
@@ -136,17 +137,7 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
         }
 
-        if ($this->getRequest()->getParam('id')) {
-            $groups = explode(',', $voteMapper->getVoteById($this->getRequest()->getParam('id'))->getReadAccess());
-            $participationGroups = explode(',', $voteMapper->getVoteById($this->getRequest()->getParam('id'))->getGroups());
-        } else {
-            $groups = [2,3];
-            $participationGroups = [];
-        }
-
-        $this->getView()->set('userGroupList', $groupMapper->getGroupList())
-            ->set('groups', $groups)
-            ->set('participationGroups', $participationGroups);
+        $this->getView()->set('userGroupList', $groupMapper->getGroupList());
     }
 
     public function lockAction()

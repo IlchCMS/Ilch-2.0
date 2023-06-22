@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,8 +11,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'vote',
-        'version' => '1.11.0',
-        'icon_small' => 'fa-tasks',
+        'version' => '1.12.0',
+        'icon_small' => 'fa-solid fa-bars-progress',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -34,8 +35,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.16',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -45,22 +46,33 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_poll`;
-            DROP TABLE `[prefix]_poll_res`;
-            DROP TABLE `[prefix]_poll_ip`;');
+        $this->db()->drop('poll_access', true);
+        $this->db()->drop('poll', true);
+        $this->db()->drop('poll_res', true);
+        $this->db()->drop('poll_ip', true);
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return "CREATE TABLE IF NOT EXISTS `[prefix]_poll` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `question` VARCHAR(255) NOT NULL,
                 `key` VARCHAR(255) NOT NULL,
                 `groups` VARCHAR(255) NOT NULL DEFAULT '0',
-                `read_access` VARCHAR(255) NOT NULL DEFAULT '2,3',
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
+                `read_access_all` TINYINT(1) NOT NULL,
+                `multiple_reply` TINYINT(1) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_poll_access` (
+                `poll_id` INT(11) NOT NULL,
+                `group_id` INT(11) NOT NULL,
+                PRIMARY KEY (`poll_id`, `group_id`) USING BTREE,
+                INDEX `FK_[prefix]_poll_access_[prefix]_groups` (`group_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_poll_access_[prefix]_poll` FOREIGN KEY (`poll_id`) REFERENCES `[prefix]_poll` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_poll_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_poll_res` (
                 `poll_id` INT(11) NOT NULL,
@@ -75,7 +87,7 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;";
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -103,6 +115,70 @@ class Config extends \Ilch\Config\Install
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'vote' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
+            case '1.11.0':
+                $this->db()->update('modules')->values(['icon_small' => $this->config['icon_small']])->where(['key' => $this->config['key']])->execute();
+
+                // Create new table for read access.
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_poll_access` (
+                `poll_id` INT(11) NOT NULL,
+                `group_id` INT(11) NOT NULL,
+                PRIMARY KEY (`poll_id`, `group_id`) USING BTREE,
+                INDEX `FK_[prefix]_poll_access_[prefix]_groups` (`group_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_poll_access_[prefix]_poll` FOREIGN KEY (`poll_id`) REFERENCES `[prefix]_poll` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_poll_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // Convert data from old read_access column of table poll to the new poll_access table.
+                $readAccessRows = $this->db()->select(['id', 'read_access'])
+                    ->from(['poll'])
+                    ->execute()
+                    ->fetchRows();
+
+                $existingGroups = $this->db()->select('id')
+                    ->from(['groups'])
+                    ->execute()
+                    ->fetchList();
+
+                $sql = 'INSERT INTO [prefix]_poll_access (poll_id, group_id) VALUES';
+                $sqlWithValues = $sql;
+                $rowCount = 0;
+
+                foreach ($readAccessRows as $readAccessRow) {
+                    $readAccessArray = [];
+                    $readAccessArray[$readAccessRow['id']] = explode(',', $readAccessRow['read_access']);
+                    foreach ($readAccessArray as $articleId => $groupIds) {
+                        // There is a limit of 1000 rows per insert, but according to some benchmarks found online
+                        // the sweet spot seams to be around 25 rows per insert. So aim for that.
+                        if ($rowCount >= 25) {
+                            $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+                            $this->db()->queryMulti($sqlWithValues);
+                            $rowCount = 0;
+                            $sqlWithValues = $sql;
+                        }
+
+                        // Don't try to add a groupId that doesn't exist in the groups table as this would
+                        // lead to an error (foreign key constraint).
+                        $groupIds = array_intersect($existingGroups, $groupIds);
+                        $rowCount += \count($groupIds);
+
+                        foreach ($groupIds as $groupId) {
+                            $sqlWithValues .= '(' . $articleId . ',' . $groupId . '),';
+                        }
+                    }
+                }
+                if ($sqlWithValues != $sql) {
+                    // Insert remaining rows.
+                    $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
+                    $this->db()->queryMulti($sqlWithValues);
+                }
+
+                // Delete old read_access column of table poll.
+                $this->db()->query('ALTER TABLE `[prefix]_poll` DROP COLUMN `read_access`;');
+                $this->db()->query('ALTER TABLE `[prefix]_poll` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `status`;');
+                $this->db()->query('ALTER TABLE `[prefix]_poll` ADD `multiple_reply` TINYINT(1) NOT NULL AFTER `read_access_all`;');
         }
+
+        return 'Update function executed.';
     }
 }

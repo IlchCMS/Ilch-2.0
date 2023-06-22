@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -20,15 +21,13 @@ class Vote extends \Ilch\Box
         $ipMapper = new IpMapper();
         $userMapper = new UserMapper();
 
-        $user = null;
+        $readAccess = [3];
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
-        }
-
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
+            if ($user) {
+                foreach ($user->getGroups() as $us) {
+                    $readAccess[] = $us->getId();
+                }
             }
         }
 
@@ -36,7 +35,7 @@ class Vote extends \Ilch\Box
             ->set('resultMapper', $resultMapper)
             ->set('ipMapper', $ipMapper)
             ->set('userMapper', $userMapper)
-            ->set('vote', $voteMapper->getVotes(['status' => 0]))
+            ->set('votes', $voteMapper->getVotes(['status' => 0], $readAccess))
             ->set('readAccess', $readAccess);
     }
 }

@@ -1,10 +1,21 @@
 <?php
-$vote = $this->get('vote');
-$voteMapper = $this->get('voteMapper');
-$resultMapper = $this->get('resultMapper');
-$ipMapper = $this->get('ipMapper');
-$userMapper = $this->get('userMapper');
 
+/** @var \Ilch\View $this */
+
+/** @var Modules\Vote\Mappers\Vote $voteMapper */
+$voteMapper = $this->get('voteMapper');
+/** @var Modules\Vote\Mappers\Result $resultMapper */
+$resultMapper = $this->get('resultMapper');
+/** @var Modules\Vote\Mappers\Ip $ipMapper */
+$ipMapper = $this->get('ipMapper');
+
+/** @var Modules\Vote\Models\Vote[]|null $votes */
+$votes = $this->get('votes');
+
+/** @var array $groupIds */
+$groupIds = $this->get('readAccess');
+
+/** @var string $clientIP */
 if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
     $clientIP = $_SERVER['REMOTE_ADDR'];
 } else {
@@ -16,26 +27,14 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuVote') ?></h1>
-<?php if ($vote != ''):
+<?php if ($votes) :
     $userId = null;
-    $groupIds = [];
-    $admin = false;
-    $i = 0;
 
     if ($this->getUser()) {
-        $admin = $this->getUser()->isAdmin();
         $userId = $this->getUser()->getId();
-        $user = $userMapper->getUserById($userId);
-
-        foreach ($user->getGroups() as $groups) {
-            $groupIds[] = $groups->getId();
-        }
-    } else {
-        $groupIds = [3];
     }
     ?>
-    <?php foreach ($vote as $groupVote): ?>
-        <?php if (is_in_array($this->get('readAccess'), explode(',', $groupVote->getReadAccess())) || $admin == true): ?>
+    <?php foreach ($votes as $groupVote) : ?>
             <div class="row">
                 <div class="col-lg-12">
                     <form class="form-horizontal" method="POST">
@@ -44,23 +43,24 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                             <div class="panel-heading">
                                 <h4 class="panel-title"><?=$this->escape($groupVote->getQuestion()) ?></h4>
                             </div>
-                            <?php $voteRes = $resultMapper->getVoteRes($groupVote->getId()); ?>
-                            <?php $ip = $ipMapper->getIP($groupVote->getId(), $clientIP); ?>
-                            <?php $votedUser = $ipMapper->getVotedUser($groupVote->getId(), $userId); ?>
-                            <?php (in_array('0', explode(',', $groupVote->getGroups()))) ? $groupIds[] = 0 : ''; ?>
-                            <?php if ($ip != '' || $votedUser != '' || $groupVote->getStatus() != 0 || !is_in_array(explode(',', $groupVote->getGroups()), $groupIds)): ?>
+                            <?php
+                            $voteRes = $resultMapper->getVoteRes($groupVote->getId());
+                            $ip = $ipMapper->getIP($groupVote->getId(), $clientIP);
+                            $votedUser = $ipMapper->getVotedUser($groupVote->getId(), $userId);
+                            ?>
+                            <?php if ($ip || $votedUser || $groupVote->getStatus() != 0 || !is_in_array(explode(',', $groupVote->getGroups()), array_merge($groupIds, ($groupVote->getGroups() == 'all' ? ['all'] : [])))) : ?>
                                 <div class="vote-body">
                                     <div class="list-group">
-                                        <?php foreach ($voteRes as $voteRes): ?>
-                                            <?php $result = $resultMapper->getResultByIdAndReply($groupVote->getId(), $voteRes->getReply()); ?>
+                                        <?php foreach ($voteRes as $voteResModel) : ?>
+                                            <?php $result = $resultMapper->getResultByIdAndReply($groupVote->getId(), $voteResModel->getReply()); ?>
                                             <?php $totalResult = $resultMapper->getResultById($groupVote->getId()); ?>
-                                            <?php if ($result != 0 && $totalResult != 0): ?>
+                                            <?php if ($result != 0 && $totalResult != 0) : ?>
                                                 <?php $percent = $resultMapper->getPercent($result, $totalResult); ?>
-                                            <?php else: ?>
+                                            <?php else : ?>
                                                 <?php $percent = 0; ?>
                                             <?php endif; ?>
                                             <div class="list-group-item">
-                                                <?=$this->escape($voteRes->getReply()) ?> (<?=$result ?>)
+                                                <?=$this->escape($voteResModel->getReply()) ?> (<?=$result ?>)
                                                 <div class="radio">
                                                     <div class="progress">
                                                         <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$percent ?>"></div>
@@ -70,20 +70,31 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
-                            <?php else: ?>
+                            <?php else : ?>
                                 <div class="vote-body">
                                     <div class="list-group">
-                                        <?php foreach ($voteRes as $voteRes): ?>
+                                        <input type="hidden" name="id" value="<?=$groupVote->getId() ?>" />
+                                        <?php foreach ($voteRes as $voteResModel) : ?>
                                             <div class="list-group-item">
-                                                <div class="radio">
-                                                    <label for="box_<?=$this->escape($voteRes->getReply()) ?>">
-                                                        <input type="radio"
-                                                               name="reply"
-                                                               id="box_<?=$this->escape($voteRes->getReply()) ?>"
-                                                               value="<?=$this->escape($voteRes->getReply()) ?>" /> <?=$this->escape($voteRes->getReply()) ?>
-                                                    </label>
-                                                    <input type="hidden" name="id" value="<?=$groupVote->getId() ?>" />
-                                                </div>
+                                                <?php if ($groupVote->getMultipleReply()) : ?>
+                                                    <div class="checkbox">
+                                                        <label for="box_<?=$this->escape($voteResModel->getReply()) ?>">
+                                                            <input type="checkbox"
+                                                                   name="reply[]"
+                                                                   id="box_<?=$this->escape($voteResModel->getReply()) ?>"
+                                                                   value="<?=$this->escape($voteResModel->getReply()) ?>"> <?=$this->escape($voteResModel->getReply()) ?>
+                                                        </label>
+                                                    </div>
+                                                <?php else : ?>
+                                                    <div class="radio">
+                                                        <label for="box_<?=$this->escape($voteResModel->getReply()) ?>">
+                                                            <input type="radio"
+                                                                   name="reply[]"
+                                                                   id="box_<?=$this->escape($voteResModel->getReply()) ?>"
+                                                                   value="<?=$this->escape($voteResModel->getReply()) ?>" /> <?=$this->escape($voteResModel->getReply()) ?>
+                                                        </label>
+                                                    </div>
+                                                <?php endif; ?>
                                             </div>
                                         <?php endforeach; ?>
                                         <div class="panel-footer">
@@ -96,14 +107,8 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                     </form>
                 </div>
             </div>
-            <?php $i++; ?>
-        <?php endif; ?>
     <?php endforeach; ?>
-
-    <?php if ($i < '1'): ?>
-        <?=$this->getTrans('noVote') ?>
-    <?php endif; ?>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noVote') ?>
 <?php endif; ?>
 

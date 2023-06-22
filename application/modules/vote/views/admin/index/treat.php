@@ -1,40 +1,49 @@
-<?php $vote = $this->get('vote'); ?>
+<?php
 
-<h1><?=($vote != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+/** @var \Ilch\View $this */
+
+/** @var Modules\Vote\Models\Vote|null $vote */
+$vote = $this->get('vote');
+?>
+
+<h1><?=($vote->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form role="form" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
         <label for="group" class="col-lg-2 control-label">
             <?=$this->getTrans('participationGroup') ?>
         </label>
         <div class="col-lg-4">
             <select class="chosen-select form-control"
-                    id="group" name="participationGroups[]"
+                    id="group" name="groups[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
                     multiple>
-                <option value="0" <?=($vote != '' and $this->escape($vote->getGroups()) == '0') ? 'selected="selected"' : '' ?>>
+                <option value="all" <?=in_array('all', $this->originalInput('group', explode(',', $vote->getGroups()))) ? 'selected="selected"' : '' ?>>
                     <?=$this->getTrans('groupAll') ?>
                 </option>
-            <?php foreach ($this->get('userGroupList') as $group): ?>
-                <option value="<?=$group->getId() ?>" <?=(in_array($group->getId(), $this->get('participationGroups'))) ? ' selected' : '' ?>>
+            <?php foreach ($this->get('userGroupList') as $group) : ?>
+                <option value="<?=$group->getId() ?>" <?=in_array($group->getId(), $this->originalInput('group', explode(',', $vote->getGroups()))) ? ' selected' : '' ?>>
                     <?=$this->escape($group->getName()) ?>
                 </option>
             <?php endforeach; ?>
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('access') ? 'has-error' : '' ?>">
         <label for="access" class="col-lg-2 control-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-lg-4">
             <select class="chosen-select form-control"
-                    id="access" name="groups[]"
+                    id="access" name="access[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
                     multiple>
-            <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                <?php if ($groupList->getId() != 1): ?>
-                    <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                <option value="all" <?=in_array('all', $this->originalInput('access', explode(',', $vote->getReadAccess()))) ? 'selected="selected"' : '' ?>>
+                    <?=$this->getTrans('groupAll') ?>
+                </option>
+            <?php foreach ($this->get('userGroupList') as $groupList) : ?>
+                <?php if ($groupList->getId() != 1) : ?>
+                    <option value="<?=$groupList->getId() ?>"<?=in_array($groupList->getId(), $this->originalInput('access', explode(',', $vote->getReadAccess()))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
                 <?php endif; ?>
             <?php endforeach; ?>
             </select>
@@ -49,36 +58,48 @@
                    type="text"
                    id="question"
                    name="question"
-                   value="<?php if ($vote != '') {
-    echo $this->escape($vote->getQuestion());
-} ?>" />
+                   value="<?=$this->escape($this->originalInput('question', $vote->getQuestion())) ?>" />
+        </div>
+    </div>
+    <div class="form-group <?=$this->validation()->hasError('multiplereply') ? 'has-error' : '' ?>">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('multiplereply') ?>
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="multiplereply-on" name="multiplereply" value="1" <?=($this->originalInput('multiplereply', $vote->getMultipleReply())) ? 'checked="checked"' : '' ?> />
+                <label for="multiplereply-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="multiplereply-off" name="multiplereply" value="0" <?=(!$this->originalInput('multiplereply', $vote->getMultipleReply())) ? 'checked="checked"' : '' ?> />
+                <label for="multiplereply-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
         <label for="reply" class="col-lg-2 control-label">
             <?=$this->getTrans('reply') ?>
         </label>
-        <?php if ($vote != ''): ?>
+        <?php if ($vote->getId()) : ?>
             <?php $resultMapper = new \Modules\Vote\Mappers\Result(); ?>
             <?php $voteRes = $resultMapper->getVoteRes($vote->getId()); ?>
             <?php $countRes = count($voteRes); ?>
             <?php $i = 0; ?>
             <div class="col-lg-4">
-                <?php foreach ($voteRes as $voteRes): ?>
+                <?php foreach ($voteRes as $voteResModel) : ?>
                     <?php $i++; ?>
                     <div class="form-group input-group">
-                        <input type="text" name="reply[]" class="form-control" value="<?=$this->escape($voteRes->getReply()) ?>">
+                        <input type="text" name="reply[]" class="form-control" value="<?=$this->escape($voteResModel->getReply()) ?>">
                         <span class="input-group-btn">
-                            <?php if ($i == $countRes): ?>
+                            <?php if ($i == $countRes) : ?>
                                 <button type="button" class="btn btn-success btn-add">+</button>
-                            <?php else: ?>
+                            <?php else : ?>
                                 <button type="button" class="btn btn-danger btn-remove">-</button>
                             <?php endif; ?>
                         </span>
                     </div>
                 <?php endforeach; ?>
             </div>
-        <?php else: ?>
+        <?php else : ?>
             <div class="col-lg-4">
                 <div class="form-group input-group">
                     <input type="text" name="reply[]" class="form-control">
@@ -90,7 +111,7 @@
         <?php endif; ?>
     </div>
 
-    <?=($vote != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=($vote->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
 <script>
@@ -99,12 +120,12 @@ $('#group').chosen();
 
 (function ($) {
     $(function () {
-        var addFormGroup = function (event) {
+        let addFormGroup = function (event) {
             event.preventDefault();
 
-            var $formGroup = $(this).closest('.form-group');
-            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-            var $formGroupClone = $formGroup.clone();
+            let $formGroup = $(this).closest('.form-group');
+            let $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+            let $formGroupClone = $formGroup.clone();
 
             $(this)
                 .toggleClass('btn-success btn-add btn-danger btn-remove')
@@ -113,19 +134,19 @@ $('#group').chosen();
             $formGroupClone.find('input').val('');
             $formGroupClone.insertAfter($formGroup);
 
-            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            let $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
             if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
                 $lastFormGroupLast.find('.btn-add').attr('disabled', true);
             }
         };
 
-        var removeFormGroup = function (event) {
+        let removeFormGroup = function (event) {
             event.preventDefault();
 
-            var $formGroup = $(this).closest('.form-group');
-            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+            let $formGroup = $(this).closest('.form-group');
+            let $multipleFormGroup = $formGroup.closest('.multiple-form-group');
 
-            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            let $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
             if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
                 $lastFormGroupLast.find('.btn-add').attr('disabled', false);
             }
@@ -133,7 +154,7 @@ $('#group').chosen();
             $formGroup.remove();
         };
 
-        var countFormGroup = function ($form) {
+        let countFormGroup = function ($form) {
             return $form.find('.form-group').length;
         };
 
