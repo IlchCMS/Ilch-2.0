@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,6 +7,7 @@
 
 namespace Modules\Faq\Controllers\Admin;
 
+use Ilch\Validation;
 use Modules\Faq\Mappers\Category as CategoryMapper;
 use Modules\Faq\Models\Category as CategoryModel;
 use Modules\Faq\Mappers\Faq as FaqMapper;
@@ -19,25 +21,25 @@ class Cats extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCats',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -48,18 +50,17 @@ class Cats extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuFaqs',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $categoryMapper = new CategoryMapper();
         $faqMapper = new FaqMapper();
-        
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuFaqs'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
@@ -74,59 +75,67 @@ class Cats extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('faqMapper', $faqMapper);
-        $this->getView()->set('cats', $categoryMapper->getCategories());
+        $this->getView()->set('cats', $categoryMapper->getEntriesBy());
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $categoryMapper = new CategoryMapper();
         $groupMapper = new GroupMapper();
 
+        $model = new CategoryModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-        
-            $this->getView()->set('cat', $categoryMapper->getCategoryById($this->getRequest()->getParam('id')));
+
+            $model = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('cat', $model);
 
         if ($this->getRequest()->isPost()) {
-            $model = new CategoryModel();
+            $_POST['title'] = trim($this->getRequest()->getPost('title'));
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'title' => 'required|unique:' . $categoryMapper->tablename . ',title,' . $model->getId(),
+                'groups' => 'required',
+            ]);
 
-            $title = trim($this->getRequest()->getPost('title'));
+            if ($validation->isValid()) {
+                $groups = '';
+                if (!empty($this->getRequest()->getPost('groups'))) {
+                    if (in_array('all', $this->getRequest()->getPost('groups'))) {
+                        $groups = 'all';
+                    } else {
+                        $groups = implode(',', $this->getRequest()->getPost('groups'));
+                    }
+                }
 
-            $groups = '';
-            if (!empty($this->getRequest()->getPost('groups'))) {
-                $groups = implode(',', $this->getRequest()->getPost('groups'));
-            }
-
-            if (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } else {
-                $model->setTitle($title);
-                $model->setReadAccess($groups);
+                $model->setTitle($this->getRequest()->getPost('title'))
+                    ->setReadAccess($groups);
                 $categoryMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput($this->getRequest()->getPost())
+                    ->withErrors($validation->getErrorBag())
+                    ->to(array_merge(['action' => 'treat'], ($model->getId() ? ['id' => $model->getId()] : [])));
             }
         }
 
-        if ($this->getRequest()->getParam('id')) {
-            $groups = explode(',', $categoryMapper->getCategoryById($this->getRequest()->getParam('id'))->getReadAccess());
+        if ($model->getId()) {
+            $groups = explode(',', $model->getReadAccess());
         } else {
-            $groups = [1,2,3];
+            $groups = [2, 3];
         }
 
         $this->getView()->set('groups', $groups);
@@ -135,18 +144,18 @@ class Cats extends \Ilch\Controller\Admin
 
     public function delCatAction()
     {
-        $faqMapper = new FaqMapper();
-        $countFaqs = count($faqMapper->getFaqs(['cat_id' => $this->getRequest()->getParam('id')]));
+        if ($this->getRequest()->isSecure()) {
+            $faqMapper = new FaqMapper();
+            $countFaqs = count($faqMapper->getFaqsByCatId($this->getRequest()->getParam('id')) ?? []);
 
-        if ($countFaqs == 0) {
-            if ($this->getRequest()->isSecure()) {
+            if ($countFaqs == 0) {
                 $categoryMapper = new CategoryMapper();
                 $categoryMapper->delete($this->getRequest()->getParam('id'));
 
                 $this->addMessage('deleteSuccess');
+            } else {
+                $this->addMessage('deleteFailed', 'danger');
             }
-        } else {
-            $this->addMessage('deleteFailed', 'danger'); 
         }
 
         $this->redirect(['action' => 'index']);

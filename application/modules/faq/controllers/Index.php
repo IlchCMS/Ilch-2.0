@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -18,21 +19,14 @@ class Index extends \Ilch\Controller\Frontend
         $faqMapper = new FaqMapper();
         $userMapper = new UserMapper();
 
-        $user = null;
+        $readAccess = [3];
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
-        }
-
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
+            if ($user) {
+                foreach ($user->getGroups() as $us) {
+                    $readAccess[] = $us->getId();
+                }
             }
-        }
-
-        $adminAccess = null;
-        if ($this->getUser()) {
-            $adminAccess = $this->getUser()->isAdmin();
         }
 
         if ($this->getRequest()->isPost()) {
@@ -40,26 +34,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('searchExecuted', true);
 
             if (!empty($searchTerm)) {
-                $tmpSearchResult = $faqMapper->search(['question LIKE' => '%'.$searchTerm.'%']);
-                $categoriesReadAccessCache = [];
-
-                foreach ($tmpSearchResult as $result) {
-                    if (!isset($categoriesReadAccessCache[$result->getCatId()])) {
-                        $category = $categoryMapper->getCategoryById($result->getCatId());
-                        if ($category !== null) {
-                            $categoriesReadAccessCache[$result->getCatId()] = $category->getReadAccess();
-                        } else {
-                            $categoriesReadAccessCache[$result->getCatId()] = '';
-                        }
-                    }
-
-                    if (!($adminAccess == true || is_in_array($readAccess, explode(',', $categoriesReadAccessCache[$result->getCatId()])))) {
-                        continue;
-                    }
-
-                    $searchResult[] = $result;
-                }
-
+                $searchResult = $faqMapper->search($searchTerm, $readAccess);
                 $this->getView()->set('searchresult', $searchResult);
             }
         }
@@ -68,63 +43,37 @@ class Index extends \Ilch\Controller\Frontend
         $sortQuestionsAlphabetically = ($this->getConfig()->get('faq_sortQuestionsAlphabetically') === '1');
 
         if ($sortCategoriesAlphabetically) {
-            $categories = $categoryMapper->getCategories([], ['title' => 'ASC']);
+            $categories = $categoryMapper->getCategories([], ['title' => 'ASC'], $readAccess);
         } else {
-            $categories = $categoryMapper->getCategories();
+            $categories = $categoryMapper->getCategories([], ['id' => 'ASC'], $readAccess);
+        }
+        if (!$categories) {
+            $categories = [];
         }
 
         if ($this->getRequest()->getParam('catId')) {
-            $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
+            $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'), $readAccess);
 
             if (!$category) {
                 $this->redirect(['action' => 'index']);
             }
 
             $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
-
-            if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
-                $this->getLayout()->getHmenu()
-                    ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()]);
-            } else {
-                $this->redirect(['action' => 'index']);
-            }
+                ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
+                ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()]);
 
             if ($sortQuestionsAlphabetically) {
-                $faqs = $faqMapper->getFaqs(['cat_id' => $this->getRequest()->getParam('catId')], ['question' => 'ASC']);
+                $faqs = $faqMapper->getFaqs(['f.cat_id' => $this->getRequest()->getParam('catId')], ['f.question' => 'ASC'], $readAccess);
             } else {
-                $faqs = $faqMapper->getFaqs(['cat_id' => $this->getRequest()->getParam('catId')]);
+                $faqs = $faqMapper->getFaqs(['f.cat_id' => $this->getRequest()->getParam('catId')], ['f.id' => 'ASC'], $readAccess);
             }
         } else {
-            $firstAllowedCategory = null;
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
 
-            foreach ($categories as $category) {
-                if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
-                    $firstAllowedCategory = $category;
-                    break;
-                }
-            }
-
-            if ($firstAllowedCategory !== null) {
-                $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
-                    ->add($firstAllowedCategory->getTitle(), ['action' => 'index', 'catId' => $firstAllowedCategory->getId()]);
-
-                if ($sortQuestionsAlphabetically) {
-                    $faqs = $faqMapper->getFaqs(['cat_id' => $firstAllowedCategory->getId()], ['question' => 'ASC']);
-                } else {
-                    $faqs = $faqMapper->getFaqs(['cat_id' => $firstAllowedCategory->getId()]);
-                }
-
-                $this->getView()->set('firstCatId', $firstAllowedCategory->getId());
+            if ($sortQuestionsAlphabetically) {
+                $faqs = $faqMapper->getFaqs([], ['f.question' => 'ASC'], $readAccess);
             } else {
-                $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
-
-                if ($sortQuestionsAlphabetically) {
-                    $faqs = $faqMapper->getFaqs([], ['question' => 'ASC']);
-                } else {
-                    $faqs = $faqMapper->getFaqs();
-                }
+                $faqs = $faqMapper->getFaqs([], ['f.id' => 'ASC'], $readAccess);
             }
         }
 
@@ -132,7 +81,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('faqs', $faqs);
         $this->getView()->set('categories', $categories);
         $this->getView()->set('readAccess', $readAccess);
-        $this->getView()->set('adminAccess', $adminAccess);
     }
 
     public function showAction()
@@ -147,35 +95,26 @@ class Index extends \Ilch\Controller\Frontend
             $this->redirect(['action' => 'index']);
         }
 
-        $user = null;
+        $readAccess = [3];
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
-        }
-
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
+            if ($user) {
+                foreach ($user->getGroups() as $us) {
+                    $readAccess[] = $us->getId();
+                }
             }
         }
 
-        $category = $categoryMapper->getCategoryById($faq->getCatId());
+        $category = $categoryMapper->getCategoryById($faq->getCatId(), $readAccess);
 
-        $adminAccess = null;
-        if ($this->getUser()) {
-            $adminAccess = $this->getUser()->isAdmin();
+        if (!$category) {
+            $this->redirect(['action' => 'index']);
         }
 
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
-
-        if ($adminAccess === true || is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
-            $this->getLayout()->getHmenu()
-                ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()])
-                ->add($faq->getQuestion(), ['action' => 'show', 'id' => $faq->getId()]);
-        } else {
-            $this->redirect(['action' => 'index']);
-        }
+            ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
+            ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()])
+            ->add($faq->getQuestion(), ['action' => 'show', 'id' => $faq->getId()]);
 
         $this->getView()->set('faq', $faq);
     }

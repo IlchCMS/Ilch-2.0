@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -7,10 +8,6 @@
 namespace Modules\Faq\Controllers\Admin;
 
 use Ilch\Validation;
-use Modules\Faq\Mappers\Category as CategoryMapper;
-use Modules\Faq\Models\Category as CategoryModel;
-use Modules\Faq\Mappers\Faq as FaqMapper;
-use Modules\User\Mappers\Group as GroupMapper;
 
 class Settings extends \Ilch\Controller\Admin
 {
@@ -20,19 +17,19 @@ class Settings extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCats',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -45,18 +42,14 @@ class Settings extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuFaqs',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
-        $categoryMapper = new CategoryMapper();
-        $faqMapper = new FaqMapper();
-
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuFaqs'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);

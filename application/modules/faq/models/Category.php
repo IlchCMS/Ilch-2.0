@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,28 +14,53 @@ class Category extends \Ilch\Mapper
      *
      * @var int
      */
-    private $id;
+    private $id = 0;
 
     /**
      * The title of the category.
      *
      * @var string
      */
-    private $title;
+    private $title = '';
 
     /**
      * Value for read_access.
      *
      * @var string
      */
-    private $read_access;
+    private $read_access = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.9.0
+     */
+    public function setByArray(array $entries): Category
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['read_access'])) {
+            $this->setReadAccess($entries['read_access']);
+        }
+        if (isset($entries['read_access_all'])) {
+            if ($entries['read_access_all']) {
+                $this->setReadAccess('all');
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the category id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -43,10 +69,12 @@ class Category extends \Ilch\Mapper
      * Sets the id of the category.
      *
      * @param int $id
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Category
     {
-        $this->id = (int)$id;
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -54,7 +82,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -63,10 +91,12 @@ class Category extends \Ilch\Mapper
      * Sets the title of the category.
      *
      * @param string $title
+     * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Category
     {
-        $this->title = (string)$title;
+        $this->title = $title;
+        return $this;
     }
 
     /**
@@ -74,7 +104,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getReadAccess()
+    public function getReadAccess(): string
     {
         return $this->read_access;
     }
@@ -85,9 +115,25 @@ class Category extends \Ilch\Mapper
      * @param string $read_access
      * @return $this
      */
-    public function setReadAccess($read_access)
+    public function setReadAccess(string $read_access): Category
     {
         $this->read_access = $read_access;
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.9.0
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'title'             => $this->getTitle(),
+                'read_access_all'   => ($this->getReadAccess() === 'all' ? 1 : 0),
+            ]
+        );
     }
 }

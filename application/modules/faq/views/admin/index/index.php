@@ -1,7 +1,15 @@
-<?php $categoryMapper = $this->get('categoryMapper'); ?>
+<?php
 
+/** @var \Ilch\View $this */
+
+/** @var Modules\Faq\Mappers\Category $categoryMapper */
+$categoryMapper = $this->get('categoryMapper');
+
+/** @var Modules\Faq\Models\Faq $faqs */
+$faqs = $this->get('faqs');
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if (!empty($this->get('faqs'))): ?>
+<?php if ($faqs) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -23,8 +31,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('faqs') as $faq): ?>
-                        <?php $faqsCats = $categoryMapper->getCategoryById($faq->getCatId()); ?>
+                    <?php foreach ($faqs as $faq) : ?>
+                        <?php $faqsCats = $categoryMapper->getCategoryById($faq->getCatId(), null); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_faqs', $faq->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $faq->getId()]) ?></td>
@@ -38,6 +46,6 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noFaqs') ?>
 <?php endif; ?>

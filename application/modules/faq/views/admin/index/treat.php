@@ -1,12 +1,18 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Faq\Models\Faq|null $faq */
+$faq = $this->get('faq');
+
+/** @var Modules\Faq\Models\Category[]|null $cats */
+$cats = $this->get('cats');
+?>
+
 <h1>
-    <?php if (!empty($this->get('faq'))) {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
+    <?=($faq) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
-<?php if ($this->get('cats') != ''): ?>
+<?php if ($cats) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="form-group <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
@@ -15,18 +21,9 @@
             </label>
             <div class="col-lg-2">
                 <select class="form-control" id="catId" name="catId">
-                    <?php foreach ($this->get('cats') as $model) {
-                        $selected = '';
-
-                        if ($this->get('faq') != '' && $this->get('faq')->getCatId() == $model->getId()) {
-                            $selected = 'selected="selected"';
-                        } elseif ($this->getRequest()->getParam('catId') != '' && $this->getRequest()->getParam('catId') == $model->getId()) {
-                            $selected = 'selected="selected"';
-                        }
-
-                        echo '<option '.$selected.' value="'.$model->getId().'">'.$this->escape($model->getTitle()).'</option>';
-                    }
-                    ?>
+                    <?php foreach ($cats as $model) : ?>
+                        <option value="<?=$model->getId() ?>" <?=($this->originalInput('catId', ($faq->getId() ? $faq->getCatId() : 0))) == $model->getId() ? 'selected=""' : '' ?>><?=$this->escape($model->getTitle()) ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -39,7 +36,7 @@
                        class="form-control"
                        id="question"
                        name="question"
-                       value="<?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getQuestion()); } else { echo $this->originalInput('question'); } ?>" />
+                       value="<?=$this->escape($this->originalInput('question', $faq->getQuestion())) ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('answer') ? 'has-error' : '' ?>">
@@ -52,18 +49,12 @@
                           name="answer"
                           cols="45"
                           rows="3"
-                          toolbar="ilch_html"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getAnswer()); } else { echo $this->originalInput('answer'); } ?></textarea>
+                          toolbar="ilch_html"><?=$this->originalInput('answer', $faq->getAnswer()) ?></textarea>
             </div>
         </div>
-        <?php if (!empty($this->get('faq'))) {
-            echo $this->getSaveBar('updateButton');
-        } else {
-            echo $this->getSaveBar('addButton');
-        }
-        ?>
+        <?=($faq->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
     </form>
-<?php else: ?>
+    <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
+<?php else : ?>
     <?=$this->getTrans('noCategory') ?>
 <?php endif; ?>
-
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
