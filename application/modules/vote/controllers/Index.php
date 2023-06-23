@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -27,28 +28,38 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index']);
 
+        $userId = 0;
+        $readAccess = [3];
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+            if ($user) {
+                $userId = $this->getUser()->getId();
+                foreach ($user->getGroups() as $us) {
+                    $readAccess[] = $us->getId();
+                }
+            }
+        }
+
         if ($this->getRequest()->getPost('saveVote')) {
             $resultModel = new ResultModel();
             $ipModel = new IpModel();
             $resultMapper = new ResultMapper();
             $ipMapper = new IpMapper();
 
-            $result = $resultMapper->getResultByIdAndReply($this->getRequest()->getPost('id'), $this->getRequest()->getPost('reply'));
-            $resultModel->setPollId($this->getRequest()->getPost('id'))
-                ->setReply($this->getRequest()->getPost('reply'))
-                ->setResult($result + 1);
-            $resultMapper->saveResult($resultModel);
+            foreach ($this->getRequest()->getPost('reply') as $reply) {
+                $result = $resultMapper->getResultByIdAndReply($this->getRequest()->getPost('id'), $reply);
+                $resultModel->setPollId($this->getRequest()->getPost('id'))
+                    ->setReply($reply)
+                    ->setResult($result + 1);
+                $resultMapper->saveResult($resultModel);
+            }
 
-            if (! isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                 $clientIP = $_SERVER['REMOTE_ADDR'];
             } else {
                 $clientIP = $_SERVER['HTTP_X_FORWARDED_FOR'];
             }
 
-            $userId = null;
-            if ($this->getUser()) {
-                $userId = $this->getUser()->getId();
-            }
             $ipModel->setPollId($this->getRequest()->getPost('id'))
                 ->setIP($clientIP)
                 ->setUserId($userId);
@@ -59,23 +70,11 @@ class Index extends \Ilch\Controller\Frontend
                 ->to(['action' => 'index']);
         }
 
-        $user = null;
-        if ($this->getUser()) {
-            $user = $userMapper->getUserById($this->getUser()->getId());
-        }
-
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
-            }
-        }
-
         $this->getView()->set('voteMapper', $voteMapper)
             ->set('resultMapper', $resultMapper)
             ->set('ipMapper', $ipMapper)
             ->set('userMapper', $userMapper)
-            ->set('vote', $voteMapper->getVotes())
+            ->set('votes', $voteMapper->getVotes([], $readAccess))
             ->set('readAccess', $readAccess);
     }
 }

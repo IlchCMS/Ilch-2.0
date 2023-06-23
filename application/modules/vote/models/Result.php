@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,28 +14,48 @@ class Result extends \Ilch\Model
      *
      * @var int
      */
-    protected $pollId;
+    protected $pollId = 0;
 
     /**
      * The reply of the Vote.
      *
      * @var string
      */
-    protected $reply;
+    protected $reply = '';
 
     /**
      * The result of the Vote.
      *
      * @var int
      */
-    protected $result;
+    protected $result = 0;
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.12.0
+     */
+    public function setByArray(array $entries): Result
+    {
+        if (isset($entries['poll_id'])) {
+            $this->setPollId($entries['poll_id']);
+        }
+        if (isset($entries['reply'])) {
+            $this->setReply($entries['reply']);
+        }
+        if (isset($entries['result'])) {
+            $this->setResult($entries['result']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the pollId of the Vote.
      *
      * @return int
      */
-    public function getPollId()
+    public function getPollId(): int
     {
         return $this->pollId;
     }
@@ -46,9 +67,9 @@ class Result extends \Ilch\Model
      *
      * @return $this
      */
-    public function setPollId($pollId)
+    public function setPollId(int $pollId): Result
     {
-        $this->pollId = (int)$pollId;
+        $this->pollId = $pollId;
 
         return $this;
     }
@@ -58,7 +79,7 @@ class Result extends \Ilch\Model
      *
      * @return string
      */
-    public function getReply()
+    public function getReply(): string
     {
         return $this->reply;
     }
@@ -70,9 +91,9 @@ class Result extends \Ilch\Model
      *
      * @return $this
      */
-    public function setReply($reply)
+    public function setReply(string $reply): Result
     {
-        $this->reply = (string)$reply;
+        $this->reply = $reply;
 
         return $this;
     }
@@ -82,7 +103,7 @@ class Result extends \Ilch\Model
      *
      * @return int
      */
-    public function getResult()
+    public function getResult(): int
     {
         return $this->result;
     }
@@ -94,10 +115,23 @@ class Result extends \Ilch\Model
      *
      * @return $this
      */
-    public function setResult($result)
+    public function setResult(int $result): Result
     {
-        $this->result = (int)$result;
+        $this->result = $result;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     * @since 1.12.0
+     */
+    public function getArray(): array
+    {
+        return [
+            'poll_id' => $this->getPollId(),
+            'reply' => $this->getReply(),
+            'result' => $this->getResult(),
+        ];
     }
 }

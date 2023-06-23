@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,42 +11,97 @@ use Modules\Vote\Models\Result as ResultModel;
 
 class Result extends \Ilch\Mapper
 {
-    public function getVoteRes($pollId)
-    {
-        $entryArray = $this->db()->select('*')
-            ->from('poll_res')
-            ->where(['poll_id' => $pollId])
-            ->execute()
-            ->fetchRows();
+    /**
+     * @var string
+     * @since 1.12.0
+     */
+    public $tablename = 'poll_res';
 
+    /**
+     * returns if the module is installed.
+     *
+     * @return bool
+     * @throws \Ilch\Database\Exception
+     * @since 1.12.0
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return ResultModel[]|null
+     * @since 1.12.0
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = [], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select();
+        $select->fields(['poll_id', 'reply', 'result'])
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
         if (empty($entryArray)) {
             return null;
         }
+        $entrys = [];
 
-        $result = [];
         foreach ($entryArray as $entries) {
             $entryModel = new ResultModel();
-            $entryModel->setReply($entries['reply']);
-            $result[] = $entryModel;
-        }
+            $entryModel->setByArray($entries);
 
-        return $result;
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
     }
 
-    public function getResultById($pollId)
+    /**
+     * @param int $pollId
+     * @return ResultModel[]|null
+     */
+    public function getVoteRes(int $pollId): ?array
+    {
+        return $this->getEntriesBy(['poll_id' => $pollId]);
+    }
+
+    /**
+     * @param int $pollId
+     * @return int
+     */
+    public function getResultById(int $pollId): int
     {
         return $this->db()->select('SUM(result)')
-            ->from('poll_res')
-            ->where(['poll_id' => (int)$pollId])
+            ->from($this->tablename)
+            ->where(['poll_id' => $pollId])
             ->group(['poll_id'])
             ->execute()
             ->fetchCell();
     }
 
-    public function getResultByIdAndReply($pollId, $reply)
+    /**
+     * @param int $pollId
+     * @param string $reply
+     * @return int
+     */
+    public function getResultByIdAndReply(int $pollId, string $reply): int
     {
         $result = $this->db()->select('result')
-            ->from('poll_res')
+            ->from($this->tablename)
             ->where(['poll_id' => $pollId, 'reply' => $reply])
             ->execute()
             ->fetchAssoc();
@@ -53,19 +109,30 @@ class Result extends \Ilch\Mapper
         return $result['result'];
     }
 
-    public function resetResult($pollId)
+    /**
+     * @param int $pollId
+     * @return bool
+     */
+    public function resetResult(int $pollId): bool
     {
-        $this->db()->update('poll_res')
+        $ipMapper = new Ip();
+
+        $this->db()->update($this->tablename)
             ->values(['result' => 0])
             ->where(['poll_id' => $pollId])
             ->execute();
 
-        $this->db()->delete('poll_ip')
+        return $this->db()->delete($ipMapper->tablename)
             ->where(['poll_id' => $pollId])
             ->execute();
     }
 
-    public function getPercent($count, $totalcount)
+    /**
+     * @param int $count
+     * @param int $totalcount
+     * @return float
+     */
+    public function getPercent(int $count, int $totalcount): float
     {
         return round(($count / $totalcount) * 100);
     }
@@ -77,8 +144,10 @@ class Result extends \Ilch\Mapper
      */
     public function saveResult(ResultModel $result)
     {
-        $this->db()->update('poll_res')
-            ->values(['result' => $result->getResult()])
+        $fields = $result->getArray();
+
+        $this->db()->update($this->tablename)
+            ->values($fields)
             ->where(['poll_id' => $result->getPollId(), 'reply' => $result->getReply()])
             ->execute();
     }
@@ -90,12 +159,9 @@ class Result extends \Ilch\Mapper
      */
     public function saveReply(ResultModel $result)
     {
-        $fields = [
-            'poll_id' => $result->getPollId(),
-            'reply' => $result->getReply()
-        ];
+        $fields = $result->getArray();
 
-        $this->db()->insert('poll_res')
+        $this->db()->insert($this->tablename)
             ->values($fields)
             ->execute();
     }
@@ -103,15 +169,17 @@ class Result extends \Ilch\Mapper
     /**
      * Deletes result with given poll id.
      *
-     * @param integer $pollId
+     * @param int $pollId
      */
-    public function delete($pollId)
+    public function delete(int $pollId)
     {
-        $this->db()->delete('poll_res')
+        $ipMapper = new Ip();
+
+        $this->db()->delete($this->tablename)
             ->where(['poll_id' => $pollId])
             ->execute();
 
-        $this->db()->delete('poll_ip')
+        $this->db()->delete($ipMapper->tablename)
             ->where(['poll_id' => $pollId])
             ->execute();
     }
