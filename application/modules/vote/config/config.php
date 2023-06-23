@@ -46,10 +46,10 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->drop('poll_access', true);
-        $this->db()->drop('poll', true);
         $this->db()->drop('poll_res', true);
         $this->db()->drop('poll_ip', true);
+        $this->db()->drop('poll_access', true);
+        $this->db()->drop('poll', true);
     }
 
     public function getInstallSql(): string
@@ -77,13 +77,17 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_poll_res` (
                 `poll_id` INT(11) NOT NULL,
                 `reply` VARCHAR(255) NOT NULL,
-                `result` INT(11) NOT NULL
+                `result` INT(11) NOT NULL,
+                INDEX `FK_[prefix]_poll_res_[prefix]_poll` (`poll_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_poll_res_[prefix]_poll` FOREIGN KEY (`poll_id`) REFERENCES `[prefix]_poll` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_poll_ip` (
                 `poll_id` INT(11) NOT NULL,
                 `ip` VARCHAR(255) NOT NULL,
-                `user_id` INT(11) NOT NULL
+                `user_id` INT(11) NOT NULL,
+                INDEX `FK_[prefix]_poll_ip_[prefix]_poll` (`poll_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_poll_ip_[prefix]_poll` FOREIGN KEY (`poll_id`) REFERENCES `[prefix]_poll` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;";
     }
 
@@ -177,6 +181,43 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_poll` DROP COLUMN `read_access`;');
                 $this->db()->query('ALTER TABLE `[prefix]_poll` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `status`;');
                 $this->db()->query('ALTER TABLE `[prefix]_poll` ADD `multiple_reply` TINYINT(1) NOT NULL AFTER `read_access_all`;');
+
+                // Add constraint to poll_ip and poll_res after deleting orphaned rows in them (rows with an poll_id not
+                // existing in the poll table) as this would lead to an error.
+                $ids = $this->db()->select('id')
+                    ->from('poll')
+                    ->execute()
+                    ->fetchList();
+
+                $idsPoll = $this->db()->select('poll_id')
+                    ->from('poll_ip')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($idsPoll ?? [], $ids ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('poll_ip')
+                        ->where(['poll_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $idsPoll = $this->db()->select('poll_id')
+                    ->from('poll_res')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($idsPoll ?? [], $ids ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('poll_res')
+                        ->where(['poll_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $this->db()->query('ALTER TABLE `[prefix]_poll_ip` ADD INDEX `FK_[prefix]_poll_ip_[prefix]_poll` (`poll_id`) USING BTREE;');
+                $this->db()->query('ALTER TABLE `[prefix]_poll_ip` ADD CONSTRAINT `FK_[prefix]_poll_ip_[prefix]_poll` FOREIGN KEY (`poll_id`) REFERENCES `[prefix]_poll` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                $this->db()->query('ALTER TABLE `[prefix]_poll_res` ADD INDEX `FK_[prefix]_poll_res_[prefix]_poll` (`poll_id`) USING BTREE;');
+                $this->db()->query('ALTER TABLE `[prefix]_poll_res` ADD CONSTRAINT `FK_[prefix]_poll_res_[prefix]_poll` FOREIGN KEY (`poll_id`) REFERENCES `[prefix]_poll` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
         }
 
         return 'Update function executed.';

@@ -26,7 +26,7 @@ class Vote extends \Ilch\Mapper
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.12.0
      */
@@ -193,7 +193,7 @@ class Vote extends \Ilch\Mapper
      *
      * @param int $voteId
      * @param string|array $readAccess example: "1,2,3"
-     * @param boolean $addAdmin
+     * @param bool $addAdmin
      * @since 1.12.0
      */
     public function saveReadAccess(int $voteId, $readAccess, bool $addAdmin = true)
@@ -249,19 +249,8 @@ class Vote extends \Ilch\Mapper
      */
     public function delete(int $id): bool
     {
-        $ipMapper = new Ip();
-        $resultMapper = new Result();
-
-        $this->db()->delete($this->tablename)
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
-            ->execute();
-
-        $this->db()->delete($resultMapper->tablename)
-            ->where(['poll_id' => $id])
-            ->execute();
-
-        return $this->db()->delete($ipMapper->tablename)
-            ->where(['poll_id' => $id])
             ->execute();
     }
 }

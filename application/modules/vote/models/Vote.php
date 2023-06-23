@@ -250,6 +250,7 @@ class Vote extends \Ilch\Model
      * Gets the multiple reply of the vote.
      *
      * @return bool
+     * @since 1.12.0
      */
     public function getMultipleReply(): bool
     {
@@ -262,6 +263,7 @@ class Vote extends \Ilch\Model
      * @param bool $multiple_reply
      *
      * @return $this
+     * @since 1.12.0
      */
     public function setMultipleReply(bool $multiple_reply): Vote
     {

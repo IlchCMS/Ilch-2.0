@@ -20,7 +20,7 @@ class Result extends \Ilch\Mapper
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.12.0
      */
