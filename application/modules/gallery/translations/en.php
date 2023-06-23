@@ -57,4 +57,5 @@ return [
     'pictureMissing' => 'Picture not found.',
     'imageNotFound' => 'Image not found.',
     'galleryNotFound' => 'Gallery not found.',
+    'noMediaAlt' => 'No thumbnail available.',
 ];

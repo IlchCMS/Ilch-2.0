@@ -9,6 +9,9 @@ namespace Modules\Gallery\Mappers;
 use Ilch\Pagination;
 use Modules\Gallery\Models\Image as ImageModel;
 
+/**
+ * Image mapper
+ */
 class Image extends \Ilch\Mapper
 {
     /**
@@ -16,12 +19,12 @@ class Image extends \Ilch\Mapper
      * @return ImageModel|null
      * @throws \Ilch\Database\Exception
      */
-    public function getImageById($id)
+    public function getImageById(int $id): ?ImageModel
     {
         $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.visits', 'g.image_title', 'g.image_description', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'gallery_imgs'])
             ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.id' => (int)$id])
+            ->where(['g.id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -49,12 +52,12 @@ class Image extends \Ilch\Mapper
      * @return ImageModel|null
      * @throws \Ilch\Database\Exception
      */
-    public function getLastImageByGalleryId($id)
+    public function getLastImageByGalleryId(int $id): ?ImageModel
     {
         $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'g.visits', 'g.image_title', 'g.image_description', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'gallery_imgs'])
             ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.cat' => (int)$id])
+            ->where(['g.cat' => $id])
             ->order(['g.id' => 'DESC'])
             ->limit(1)
             ->execute()
@@ -81,7 +84,7 @@ class Image extends \Ilch\Mapper
      * @return int
      * @throws \Ilch\Database\Exception
      */
-    public function getCountImageById($id)
+    public function getCountImageById(int $id): int
     {
         return (int)$this->db()->select('COUNT(*)', 'gallery_imgs')
             ->where(['cat' => $id])
@@ -112,16 +115,16 @@ class Image extends \Ilch\Mapper
      * Get images by gallery id.
      *
      * @param int $id
-     * @param null|Pagination $pagination
+     * @param Pagination|null $pagination
      * @return array
      * @throws \Ilch\Database\Exception
      */
-    public function getImageByGalleryId($id, $pagination = NULL)
+    public function getImageByGalleryId(int $id, Pagination $pagination = NULL): array
     {
         $select = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'gallery_imgs'])
             ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.cat' => (int)$id])
+            ->where(['g.cat' => $id])
             ->order(['g.id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -157,7 +160,7 @@ class Image extends \Ilch\Mapper
      * @param array $where
      * @return string[]
      */
-    public function getListOfValidIds($where = [])
+    public function getListOfValidIds(array $where = []): array
     {
         return $this->db()->select('id')
             ->from('gallery_imgs')

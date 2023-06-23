@@ -16,35 +16,35 @@ class GalleryItem extends \Ilch\Model
     /**
      * Id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * Sort of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $sort;
 
     /**
      * Type of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $type;
 
     /**
      * GalleryId of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $galleryId;
 
     /**
      * ParentId of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $parentId;
 
@@ -65,9 +65,9 @@ class GalleryItem extends \Ilch\Model
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -75,19 +75,19 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
-        $this->id = (int) $id;
+        $this->id = $id;
     }
 
     /**
      * Gets the sort.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getSort()
+    public function getSort(): ?int
     {
         return $this->sort;
     }
@@ -95,19 +95,19 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the sort.
      *
-     * @param integer $sort
+     * @param int $sort
      */
-    public function setSort($sort)
+    public function setSort(int $sort)
     {
-        $this->sort = (int)$sort;
+        $this->sort = $sort;
     }
 
     /**
      * Gets the type.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getType()
+    public function getType(): ?int
     {
         return $this->type;
     }
@@ -115,19 +115,19 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the type.
      *
-     * @param integer $type
+     * @param int $type
      */
-    public function setType($type)
+    public function setType(int $type)
     {
-        $this->type = (int)$type;
+        $this->type = $type;
     }
 
     /**
      * Gets the gallery id.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getGalleryId()
+    public function getGalleryId(): ?int
     {
         return $this->galleryId;
     }
@@ -135,19 +135,19 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the gallery id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function setGalleryId($id)
+    public function setGalleryId(int $id)
     {
-        $this->galleryId = (int) $id;
+        $this->galleryId = $id;
     }
 
     /**
      * Gets the parent id.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getParentId()
+    public function getParentId(): ?int
     {
         return $this->parentId;
     }
@@ -155,19 +155,19 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the parent id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function setParentId($id)
+    public function setParentId(int $id)
     {
-        $this->parentId = (int) $id;
+        $this->parentId = $id;
     }
 
     /**
      * Gets the title.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -177,17 +177,17 @@ class GalleryItem extends \Ilch\Model
      *
      * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
-        $this->title = (string) $title;
+        $this->title = $title;
     }
 
     /**
      * Gets the desc.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDesc()
+    public function getDesc(): ?string
     {
         return $this->desc;
     }
@@ -197,8 +197,8 @@ class GalleryItem extends \Ilch\Model
      *
      * @param string $desc
      */
-    public function setDesc($desc)
+    public function setDesc(string $desc)
     {
-        $this->desc = (string)$desc;
+        $this->desc = $desc;
     }
 }

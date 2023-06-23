@@ -30,22 +30,6 @@ $('#sorts').on( 'click', 'a', function() {
   var span = $(this).find('.sorticon');
   span.toggleClass('fa-sort-numeric-desc fa-sort-numeric-asc');
 });
-// search field
-var $quicksearch = $('#quicksearch').keyup( debounce( function() {
-  qsRegex = new RegExp( $quicksearch.val(), 'gi' );
-  $grid.isotope();
-}) );
-// checked class on buttons
-$('.dropdown-menu').each( function( i, buttonGroup ) {
-  var $buttonGroup = $( buttonGroup );
-  $buttonGroup.on('click', 'li', function() {
-    $buttonGroup.find('.active').removeClass('active');
-	var text = $(this).text();
-	$('.dropdown-toggle').html('<i class="fa-solid fa-image"></i> '+text);
-	$('.catinfo').html('&raquo; '+text);
-    $(this).addClass('active');
-  });
-});
 // debounce filtering
 function debounce( fn, threshold ) {
   var timeout;
@@ -60,3 +44,19 @@ function debounce( fn, threshold ) {
     timeout = setTimeout( delayed, threshold );
   };
 }
+// search field
+var $quicksearch = $('#quicksearch').keyup( debounce( function() {
+  qsRegex = new RegExp( $quicksearch.val(), 'gi' );
+  $grid.isotope();
+}) );
+// checked class on buttons
+$('.dropdown-menu').each( function( i, buttonGroup ) {
+  var $buttonGroup = $( buttonGroup );
+  $buttonGroup.on('click', 'li', function() {
+    $buttonGroup.find('.active').removeClass('active');
+	var text = $(this).text();
+    $('.catinfo').html('&raquo; ').append(document.createTextNode(text));
+    $('.dropdown-toggle').html('<i class="fa-solid fa-image"></i> ').append(document.createTextNode(text));
+    $(this).addClass('active');
+  });
+});

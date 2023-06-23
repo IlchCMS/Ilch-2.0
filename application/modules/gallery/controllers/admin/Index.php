@@ -9,6 +9,7 @@ namespace Modules\Gallery\Controllers\Admin;
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Modules\Gallery\Mappers\Image as ImageMapper;
 use Ilch\Validation;
+use Modules\Gallery\Models\GalleryItem;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -85,7 +86,7 @@ class Index extends \Ilch\Controller\Admin
                     }
 
                     foreach ($items as $item) {
-                        $galleryItem = new \Modules\Gallery\Models\GalleryItem;
+                        $galleryItem = new GalleryItem();
 
                         if (strpos($item['id'], 'tmp_') !== false) {
                             $tmpId = str_replace('tmp_', '', $item['id']);
@@ -116,7 +117,7 @@ class Index extends \Ilch\Controller\Admin
                     $sort = 0;
 
                     foreach ($sortArray as $id => $parent) {
-                        $galleryItem = new \Modules\Gallery\Models\GalleryItem();
+                        $galleryItem = new GalleryItem();
                         $galleryItem->setId($id);
                         $galleryItem->setSort($sort);
                         $galleryItem->setParentId($parent);

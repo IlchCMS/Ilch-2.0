@@ -8,6 +8,9 @@ namespace Modules\Gallery\Mappers;
 
 use Modules\Gallery\Models\GalleryItem;
 
+/**
+ * Gallery mapper.
+ */
 class Gallery extends \Ilch\Mapper
 {
     /**
@@ -17,7 +20,7 @@ class Gallery extends \Ilch\Mapper
      * @param $itemId
      * @return array|null
      */
-    public function getGalleryItemsByParent($galleryId, $itemId)
+    public function getGalleryItemsByParent($galleryId, $itemId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
@@ -85,7 +88,7 @@ class Gallery extends \Ilch\Mapper
      * @param $id
      * @return GalleryItem|null
      */
-    public function getGalleryById($id)
+    public function getGalleryById($id): ?GalleryItem
     {
         $itemRows = $this->db()->select('*')
                 ->from('gallery_items')
@@ -114,9 +117,9 @@ class Gallery extends \Ilch\Mapper
      * Save one gallery item.
      *
      * @param  GalleryItem $galleryItem
-     * @return integer
+     * @return int
      */
-    public function saveItem(GalleryItem $galleryItem)
+    public function saveItem(GalleryItem $galleryItem): int
     {
         $fields = [
             'title' => $galleryItem->getTitle(),
@@ -156,9 +159,9 @@ class Gallery extends \Ilch\Mapper
     /**
      * Delete the given gallery item.
      *
-     * @param  GalleryItem $galleryItem
+     * @param GalleryItem $galleryItem
      */
-    public function deleteItem($galleryItem)
+    public function deleteItem(GalleryItem $galleryItem)
     {
         $this->db()->delete('gallery_items')
             ->where(['id' => $galleryItem->getId()])
@@ -171,7 +174,7 @@ class Gallery extends \Ilch\Mapper
      * @param $galleryId
      * @return array|null
      */
-    public function getGalleryItems($galleryId)
+    public function getGalleryItems($galleryId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')

@@ -57,4 +57,5 @@ return [
     'pictureMissing' => 'Bild nicht gefunden.',
     'pictureNotFound' => 'Bild nicht gefunden.',
     'galleryNotFound' => 'Galerie nicht gefunden.',
+    'noMediaAlt' => 'Kein Vorschaubild verfügbar.',
 ];

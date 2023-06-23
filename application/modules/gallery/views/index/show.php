@@ -3,12 +3,12 @@
 <style>
 @media (max-width: 990px) {
     #gallery > [class*="col-"] {
-        padding: 0px !important;
+        padding: 0 !important;
     }
 }
 
 .panel-heading ~ .panel-image img.panel-image-preview {
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 .panel-body {
@@ -16,7 +16,7 @@
 }
 
 .panel-image ~ .panel-footer a {
-    padding: 0px 10px;
+    padding: 0 10px;
     font-size: 1.3em;
     color: rgb(100, 100, 100);
 }
@@ -33,7 +33,7 @@
 .thumbnail {
     position:relative;
     overflow:hidden;
-    margin-bottom: 0px !important;
+    margin-bottom: 0 !important;
 }
 </style>
 

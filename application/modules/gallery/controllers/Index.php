@@ -10,8 +10,6 @@ use Ilch\Comments;
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Modules\Gallery\Models\Image as ImageModel;
 use Modules\Gallery\Mappers\Image as ImageMapper;
-use Modules\Comment\Mappers\Comment as CommentMapper;
-use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {

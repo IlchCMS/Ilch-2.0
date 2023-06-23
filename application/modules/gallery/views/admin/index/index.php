@@ -15,12 +15,12 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
     echo '<div><span class="disclose"><i class="fa-solid fa-circle-minus"></i>
                     <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
-                    <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
+                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$obj->escape($item->getTitle()).'" />
+                    <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$obj->escape($item->getDesc()).'" />
                     <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
                     <span></span>
                 </span>
-                <span class="title">'.$item->getTitle().'</span>
+                <span class="title">'.$obj->escape($item->getTitle()).'</span>
                 <span class="item_delete">
                     <i class="fa-solid fa-circle-xmark"></i>
                 </span><span class="item_edit">
@@ -123,7 +123,25 @@ function resetBox() {
 
 $(document).ready (
     function () {
-        var itemId = 999;
+        let itemId = 999;
+
+        let entityMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#x2F;',
+            '`': '&#x60;',
+            '=': '&#x3D;'
+        };
+
+        function escapeHtml (string) {
+            return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+                return entityMap[s];
+            });
+        }
+
         $('.sortable').nestedSortable ({
             forcePlaceholderSize: true,
             handle: 'div',
@@ -155,11 +173,11 @@ $(document).ready (
         });
 
         $('#galleryForm').on('change', '#type', function() {
-            var options = '';
+            let options = '';
 
             $('#sortable').find('li').each(function() {
                 if ($(this).find('input.hidden_type:first').val() == 0) {
-                    options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+$(this).find('input.hidden_title:first').val()+'</option>';
+                    options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+escapeHtml($(this).find('input.hidden_title:first').val())+'</option>';
                 }
             });
 
@@ -169,7 +187,7 @@ $(document).ready (
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
+            let menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
                         <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
@@ -185,10 +203,10 @@ $(document).ready (
                         return;
                     }
 
-            append = '#sortable';
+            let append = '#sortable';
 
             if ($('#type').val() != 0 && $('#menukey').val() != 0 ) {
-                id = $('#menukey').val();
+                let id = $('#menukey').val();
 
                 if ($('#sortable #'+id+' ol').length > 0) {
 
@@ -211,12 +229,14 @@ $(document).ready (
 
             }
 
+            let escapedTitle = escapeHtml($('#title').val());
+
             $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
                     +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
-                    +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
-                    +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
+                    +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+escapedTitle+'" />'
+                    +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+escapeHtml($('#desc').val())+'" />'
                     +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
-                    +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa-solid fa-circle-xmark"></i></span></div></li>').appendTo(append);
+                    +'</span></span><span class="title">'+escapedTitle+'</span><span class="item_delete"><i class="fa-solid fa-circle-xmark"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
             }
@@ -261,8 +281,8 @@ $(document).ready (
 ?>
 
 function reload() {
-    setTimeout(function(){window.location.reload(1);}, 1000);
-};
+    setTimeout(function(){window.location.reload();}, 1000);
+}
 </script>
 
 <style>
@@ -293,7 +313,6 @@ ol.sortable {
 }
 
 .sortable li div  {
-    border: 1px solid #d4d4d4;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
