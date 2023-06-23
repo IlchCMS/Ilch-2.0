@@ -54,7 +54,7 @@ $('.dropdown-menu').each( function( i, buttonGroup ) {
   var $buttonGroup = $( buttonGroup );
   $buttonGroup.on('click', 'li', function() {
     $buttonGroup.find('.active').removeClass('active');
-	var text = $(this).text();
+    var text = $(this).text();
     $('.catinfo').html('&raquo; ').append(document.createTextNode(text));
     $('.dropdown-toggle').html('<i class="fa-solid fa-image"></i> ').append(document.createTextNode(text));
     $(this).addClass('active');
