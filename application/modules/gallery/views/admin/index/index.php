@@ -18,6 +18,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                     <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$obj->escape($item->getTitle()).'" />
                     <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$obj->escape($item->getDesc()).'" />
                     <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
+                    <input type="hidden" class="hidden_parentid" name="items['.$item->getId().'][parentid]" value="'.$item->getParentId().'" />
                     <span></span>
                 </span>
                 <span class="title">'.$obj->escape($item->getTitle()).'</span>
@@ -112,12 +113,12 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 function resetBox() {
-    $(':input','.changeBox')
-    .not(':button, :submit, :reset, :hidden')
-    .val('')
-    .removeAttr('checked')
-    .removeAttr('selected');
-
+    $(':input', '.changeBox')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected')
+        .removeAttr('disabled');
     $('#type').change();
 }
 
@@ -242,14 +243,16 @@ $(document).ready (
             }
         );
 
-        $('.sortable').on('click', '.item_edit', function() {
-           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
+        $('.sortable').on('click', '.item_edit', function () {
+            let parentId = $(this).parent().find('.hidden_parentid').val();
+            $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
                                <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
-           $('#title').val($(this).parent().find('.hidden_title').val());
-           $('#desc').val($(this).parent().find('.hidden_desc').val());
-           $('#type').val($(this).parent().find('.hidden_type').val());
-           $('#id').val($(this).closest('li').attr('id'));
-           $('#type').change();
+            $('#title').val($(this).parent().find('.hidden_title').val());
+            $('#desc').val($(this).parent().find('.hidden_desc').val());
+            $('#type').val($(this).parent().find('.hidden_type').val()).change();
+            $('#menukey option[value='+parentId+']').attr('selected', 'selected');
+            $('#menukey').attr('disabled', 'disabled');
+            $('#id').val($(this).closest('li').attr('id'));
         });
 
         $('#galleryForm').on('click', '#menuItemEdit', function () {
