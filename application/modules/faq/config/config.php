@@ -64,7 +64,7 @@ class Config extends \Ilch\Config\Install
           `cat_id` INT(11) NULL DEFAULT 0,
           `question` VARCHAR(100) NOT NULL,
           `answer` MEDIUMTEXT NOT NULL,
-          PRIMARY KEY (`id`)
+          PRIMARY KEY (`id`),
           INDEX `FK_[prefix]_faqs_[prefix]_faqs_cats` (`cat_id`) USING BTREE,
           CONSTRAINT `FK_[prefix]_faqs_[prefix]_faqs_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_faqs_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
