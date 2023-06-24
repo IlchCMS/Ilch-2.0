@@ -80,9 +80,9 @@ class Image extends \Ilch\Model
     /**
      * Gets the imageId of the image.
      *
-     * @return string
+     * @return int
      */
-    public function getImageId(): string
+    public function getImageId(): int
     {
         return $this->image_id;
     }
@@ -120,9 +120,9 @@ class Image extends \Ilch\Model
     /**
      * Gets the gallery id of the image.
      *
-     * @return string
+     * @return int
      */
-    public function getGalleryId(): string
+    public function getGalleryId(): int
     {
         return $this->gallery_id;
     }
@@ -160,9 +160,9 @@ class Image extends \Ilch\Model
     /**
      * Sets the imageId of the image.
      *
-     * @param string $image_id
+     * @param int $image_id
      */
-    public function setImageId(string $image_id)
+    public function setImageId(int $image_id)
     {
         $this->image_id = $image_id;
     }

@@ -64,7 +64,7 @@ class Config extends \Ilch\Config\Install
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_gallery_imgs` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
-                    `image_id` VARCHAR(150) NOT NULL,
+                    `image_id` INT(11) NOT NULL DEFAULT 0,
                     `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
                     `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
                     `gallery_id` INT(11) NOT NULL DEFAULT 0,
@@ -136,6 +136,9 @@ class Config extends \Ilch\Config\Install
 
                 // Change column name 'cat' to 'gallery_id' in the gallery_imgs table. Change data type to INT(11) NOT NULL DEFAULT 0 as that is the data type for the ids.
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` CHANGE COLUMN `cat` `gallery_id` INT(11) NOT NULL DEFAULT 0;');
+
+                // Change data type of column image_id of the gallery_imgs table.
+                $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` CHANGE COLUMN `image_id` `image_id` INT(11) NOT NULL DEFAULT 0;');
 
                 // Add constraint to the gallery_imgs table after deleting orphaned rows in it (rows with an gallery id not
                 // existing in the gallery items table) as this would lead to an error. Fixes orphaned entries in gallery_imgs when deleting a gallery.
