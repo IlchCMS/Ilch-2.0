@@ -56,6 +56,6 @@
 ?>
 
 function reload() {
-    setTimeout(function(){window.location.reload();}, 1000);
+    setTimeout(function(){window.location=window.location;}, 1000);
 }
 </script>
