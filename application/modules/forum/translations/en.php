@@ -141,4 +141,6 @@ return [
     'read' => 'read',
     'unread' => 'unread',
     'confirmDeletePost' => 'Do you really want to delete this post?',
+    'postNotFound' => 'Post not found.',
+    'topicNotFound' => 'Topic not found.',
 ];

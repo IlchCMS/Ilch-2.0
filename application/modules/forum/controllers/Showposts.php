@@ -188,12 +188,39 @@ class Showposts extends \Ilch\Controller\Frontend
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
 
-        $postId = (int)$this->getRequest()->getParam('id');
-        $topicId = (int)$this->getRequest()->getParam('topicid');
+        $postId = $this->getRequest()->getParam('id');
+        $topicId = $this->getRequest()->getParam('topicid');
+
         $forum = $forumMapper->getForumByTopicId($topicId);
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
-        $topic = $topicMapper->getTopicById($topicId);
+
+        if (empty($postId) || !is_numeric($postId)) {
+            $this->addMessage('postNotFound', 'danger');
+            $this->redirect(['controller' => 'index', 'action' => 'index']);
+            return;
+        }
+
         $post = $postMapper->getPostById($postId);
+
+        if (empty($post)) {
+            $this->addMessage('postNotFound', 'danger');
+            $this->redirect(['controller' => 'index', 'action' => 'index']);
+            return;
+        }
+
+        if (empty($topicId) || !is_numeric($topicId)) {
+            $this->addMessage('topicNotFound', 'danger');
+            $this->redirect(['controller' => 'index', 'action' => 'index']);
+            return;
+        }
+
+        $topic = $topicMapper->getTopicById($topicId);
+
+        if (empty($topic)) {
+            $this->addMessage('topicNotFound', 'danger');
+            $this->redirect(['controller' => 'index', 'action' => 'index']);
+            return;
+        }
 
         if ($this->getUser()) {
             if ($this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum') || $this->getUser()->getId() == $post->getAutor()->getId()) {
