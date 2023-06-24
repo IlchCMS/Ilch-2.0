@@ -214,7 +214,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                             <p class="remember-post">
                                 <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
                             <span class="btn-label">
-                                <i class="fas fa-bookmark"></i>
+                                <i class="fa-solid fa-bookmark"></i>
                             </span><?=$this->getTrans('remember') ?>
                                 </button>
                             </p>
