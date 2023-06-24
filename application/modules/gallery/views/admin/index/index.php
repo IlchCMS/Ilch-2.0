@@ -118,7 +118,8 @@ function resetBox() {
         .val('')
         .removeAttr('checked')
         .removeAttr('selected')
-        .removeAttr('disabled');
+        .removeAttr('disabled')
+        .removeAttr('title');
     $('#type').change();
 }
 
@@ -250,8 +251,11 @@ $(document).ready (
             $('#title').val($(this).parent().find('.hidden_title').val());
             $('#desc').val($(this).parent().find('.hidden_desc').val());
             $('#type').val($(this).parent().find('.hidden_type').val()).change();
+            $('#type').attr('disabled', 'disabled');
+            $('#type').attr('title', <?=json_encode($this->getTrans('titleCannotChangeTypeOnEdit')) ?>);
             $('#menukey option[value='+parentId+']').attr('selected', 'selected');
             $('#menukey').attr('disabled', 'disabled');
+            $('#menukey').attr('title', <?=json_encode($this->getTrans('titleCannotChangeCategoryOnEdit')) ?>);
             $('#id').val($(this).closest('li').attr('id'));
         });
 

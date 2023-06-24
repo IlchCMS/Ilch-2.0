@@ -126,8 +126,7 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'index']);
         }
 
-        $galleryItems = $galleryMapper->getGalleryItemsByParent(0);
-        $this->getView()->set('galleryItems', $galleryItems);
+        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent(0));
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
     }
