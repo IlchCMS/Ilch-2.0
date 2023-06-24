@@ -18,6 +18,7 @@ class Gallery extends \Ilch\Mapper
      *
      * @param int $itemId
      * @return array|null
+     * @since 1.20.0 Removal of galleryId parameter.
      */
     public function getGalleryItemsByParent(int $itemId): ?array
     {
