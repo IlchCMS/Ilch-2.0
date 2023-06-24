@@ -47,11 +47,11 @@ class Image extends \Ilch\Model
     protected $image_desc;
 
     /**
-     * The cat of the image.
+     * The gallery id of the image.
      *
      * @var string
      */
-    protected $cat;
+    protected $gallery_id;
 
     /**
      * The visits of the image.
@@ -118,13 +118,13 @@ class Image extends \Ilch\Model
     }
 
     /**
-     * Gets the cat of the image.
+     * Gets the gallery id of the image.
      *
      * @return string
      */
-    public function getCat(): string
+    public function getGalleryId(): string
     {
-        return $this->cat;
+        return $this->gallery_id;
     }
 
     /**
@@ -198,13 +198,13 @@ class Image extends \Ilch\Model
     }
 
     /**
-     * Sets the cat of the image.
+     * Sets the gallery id of the image.
      *
-     * @param string $cat
+     * @param int $galleryId
      */
-    public function setCat(string $cat)
+    public function setGalleryId(int $galleryId)
     {
-        $this->cat = $cat;
+        $this->gallery_id = $galleryId;
     }
 
     /**

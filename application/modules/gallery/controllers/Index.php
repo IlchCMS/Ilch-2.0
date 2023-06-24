@@ -24,7 +24,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index']);
 
-        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent(1, 0));
+        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent(0));
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
     }
@@ -87,7 +87,7 @@ class Index extends \Ilch\Controller\Frontend
             return;
         }
 
-        $gallery = $galleryMapper->getGalleryById($image->getCat());
+        $gallery = $galleryMapper->getGalleryById($image->getGalleryId());
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('gallery'))

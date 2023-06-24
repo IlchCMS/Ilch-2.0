@@ -50,31 +50,32 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti('DROP TABLE `[prefix]_gallery_items`');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_gallery_imgs` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `image_id` VARCHAR(150) NOT NULL,
-                  `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
-                  `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
-                  `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
-                  `visits` INT(11) NOT NULL DEFAULT 0,
-                  PRIMARY KEY (`id`)
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_gallery_items` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `sort` INT(11) NULL DEFAULT 0,
+                    `parent_id` INT(11) NULL DEFAULT 0,
+                    `type` TINYINT(1) NOT NULL,
+                    `title` VARCHAR(255) NOT NULL,
+                    `description` VARCHAR(255) NOT NULL,
+                    PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-                
-                CREATE TABLE IF NOT EXISTS `[prefix]_gallery_items` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `gallery_id` INT(11) NOT NULL DEFAULT 0,
-                  `sort` INT(11) NULL DEFAULT 0,
-                  `parent_id` INT(11) NULL DEFAULT 0,
-                  `type` TINYINT(1) NOT NULL,
-                  `title` VARCHAR(255) NOT NULL,
-                  `description` VARCHAR(255) NOT NULL,
-                  PRIMARY KEY (`id`)
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_gallery_imgs` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `image_id` VARCHAR(150) NOT NULL,
+                    `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
+                    `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
+                    `gallery_id` INT(11) NOT NULL DEFAULT 0,
+                    `visits` INT(11) NOT NULL DEFAULT 0,
+                    PRIMARY KEY (`id`),
+                    INDEX `FK_[prefix]_gallery_imgs_[prefix]_gallery_items` (`gallery_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_gallery_imgs_[prefix]_gallery_items` FOREIGN KEY (`gallery_id`) REFERENCES `[prefix]_gallery_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion)
     {
         switch ($installedVersion) {
             case "1.0":
@@ -129,6 +130,35 @@ class Config extends \Ilch\Config\Install
             case "1.18.0":
             case "1.19.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-regular fa-image' WHERE `key` = 'gallery';");
+
+                // Drop useless column that had always the value of 1.
+                $this->db()->query('ALTER TABLE `[prefix]_gallery_items` DROP COLUMN `gallery_id`;');
+
+                // Change column name 'cat' to 'gallery_id' in the gallery_imgs table. Change data type to INT(11) NOT NULL DEFAULT 0 as that is the data type for the ids.
+                $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` CHANGE COLUMN `cat` `gallery_id` INT(11) NOT NULL DEFAULT 0;');
+
+                // Add constraint to the gallery_imgs table after deleting orphaned rows in it (rows with an gallery id not
+                // existing in the gallery items table) as this would lead to an error. Fixes orphaned entries in gallery_imgs when deleting a gallery.
+                $idsGalleries = $this->db()->select('id')
+                    ->from('gallery_items')
+                    ->where(['type' => 1])
+                    ->execute()
+                    ->fetchList();
+
+                $galleryIdsImages = $this->db()->select('gallery_id')
+                    ->from('gallery_imgs')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($galleryIdsImages ?? [], $idsGalleries ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('gallery_imgs')
+                        ->where(['gallery_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` ADD INDEX `FK_[prefix]_gallery_imgs_[prefix]_gallery_items` (`gallery_id`) USING BTREE;');
+                $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` ADD CONSTRAINT `FK_[prefix]_gallery_imgs_[prefix]_gallery_items` FOREIGN KEY (`gallery_id`) REFERENCES `[prefix]_gallery_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
         }
     }
 }

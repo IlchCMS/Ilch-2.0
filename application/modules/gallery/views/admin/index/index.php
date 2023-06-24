@@ -5,7 +5,7 @@ $imageMapper = $this->get('imageMapper');
 
 function rec($item, $galleryMapper, $obj, $imageMapper)
 {
-    $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
+    $subItems = $galleryMapper->getGalleryItemsByParent($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (empty($subItems)) {
@@ -284,7 +284,7 @@ $(document).ready (
 ?>
 
 function reload() {
-    setTimeout(function(){window.location.reload();}, 1000);
+    setTimeout(function(){window.location=window.location;}, 1000);
 }
 </script>
 
@@ -377,9 +377,5 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 
 .placeholder {
     outline: 1px dashed #4183C4;
-    /*-webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    margin: -1px;*/
 }
 </style>

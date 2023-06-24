@@ -63,16 +63,12 @@ class Index extends \Ilch\Controller\Admin
                     }
                 }
 
-                $oldItems = $galleryMapper->getGalleryItems(1);
+                $oldItems = $galleryMapper->getGalleryItems();
 
-                /*
-                 * Deletes old entries from database.
-                 */
-                if (!empty($oldItems)) {
-                    foreach ($oldItems as $oldItem) {
-                        if (!isset($items[$oldItem->getId()])) {
-                            $galleryMapper->deleteItem($oldItem);
-                        }
+                // Delete no longer existing items.
+                foreach($oldItems as $oldItem) {
+                    if (!key_exists($oldItem->getId(), $items)) {
+                        $galleryMapper->deleteItem($oldItem);
                     }
                 }
 
@@ -94,7 +90,6 @@ class Index extends \Ilch\Controller\Admin
                             $galleryItem->setId($item['id']);
                         }
 
-                        $galleryItem->setGalleryId(1);
                         $galleryItem->setType($item['type']);
                         $galleryItem->setTitle($item['title']);
                         $galleryItem->setDesc($item['desc']);
@@ -131,7 +126,7 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'index']);
         }
 
-        $galleryItems = $galleryMapper->getGalleryItemsByParent(1, 0);
+        $galleryItems = $galleryMapper->getGalleryItemsByParent(0);
         $this->getView()->set('galleryItems', $galleryItems);
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);

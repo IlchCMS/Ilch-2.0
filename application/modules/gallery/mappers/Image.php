@@ -21,7 +21,7 @@ class Image extends \Ilch\Mapper
      */
     public function getImageById(int $id): ?ImageModel
     {
-        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.visits', 'g.image_title', 'g.image_description', 'm.url', 'm.id', 'm.url_thumb'])
+        $imageRow = $this->db()->select(['g.image_id', 'g.gallery_id', 'imgid' => 'g.id', 'g.visits', 'g.image_title', 'g.image_description', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'gallery_imgs'])
             ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
             ->where(['g.id' => $id])
@@ -39,7 +39,7 @@ class Image extends \Ilch\Mapper
         $imageModel->setImageThumb($imageRow['url_thumb']);
         $imageModel->setImageTitle($imageRow['image_title']);
         $imageModel->setImageDesc($imageRow['image_description']);
-        $imageModel->setCat($imageRow['cat']);
+        $imageModel->setGalleryId($imageRow['gallery_id']);
         $imageModel->setVisits($imageRow['visits']);
 
         return $imageModel;
@@ -54,10 +54,10 @@ class Image extends \Ilch\Mapper
      */
     public function getLastImageByGalleryId(int $id): ?ImageModel
     {
-        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'g.visits', 'g.image_title', 'g.image_description', 'm.id', 'm.url_thumb'])
+        $imageRow = $this->db()->select(['g.image_id', 'g.gallery_id', 'g.visits', 'g.image_title', 'g.image_description', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'gallery_imgs'])
             ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.cat' => $id])
+            ->where(['g.gallery_id' => $id])
             ->order(['g.id' => 'DESC'])
             ->limit(1)
             ->execute()
@@ -87,7 +87,7 @@ class Image extends \Ilch\Mapper
     public function getCountImageById(int $id): int
     {
         return (int)$this->db()->select('COUNT(*)', 'gallery_imgs')
-            ->where(['cat' => $id])
+            ->where(['gallery_id' => $id])
             ->execute()
             ->fetchCell();
     }
@@ -101,12 +101,12 @@ class Image extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('gallery_imgs')
-                ->values(['image_id' => $model->getImageId(), 'cat' => $model->getCat()])
+                ->values(['image_id' => $model->getImageId(), 'gallery_id' => $model->getGalleryId()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('gallery_imgs')
-                ->values(['image_id' => $model->getImageId(), 'cat' => $model->getCat()])
+                ->values(['image_id' => $model->getImageId(), 'gallery_id' => $model->getGalleryId()])
                 ->execute();
         }
     }
@@ -121,10 +121,10 @@ class Image extends \Ilch\Mapper
      */
     public function getImageByGalleryId(int $id, Pagination $pagination = NULL): array
     {
-        $select = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+        $select = $this->db()->select(['g.image_id', 'g.gallery_id', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'gallery_imgs'])
             ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.cat' => $id])
+            ->where(['g.gallery_id' => $id])
             ->order(['g.id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -147,7 +147,7 @@ class Image extends \Ilch\Mapper
             $entryModel->setImageTitle($entries['image_title']);
             $entryModel->setImageDesc($entries['image_description']);
             $entryModel->setVisits($entries['visits']);
-            $entryModel->setCat($entries['cat']);
+            $entryModel->setGalleryId($entries['gallery_id']);
             $entry[] = $entryModel;
         }
 
@@ -170,10 +170,12 @@ class Image extends \Ilch\Mapper
     }
 
     /**
-     * @param $id
+     * Delete entries for images by id.
+     *
+     * @param int $id
      * @return \Ilch\Database\Mysql\Result|int
      */
-    public function deleteById($id)
+    public function deleteById(int $id)
     {
         return $this->db()->delete('gallery_imgs')
             ->where(['id' => $id])

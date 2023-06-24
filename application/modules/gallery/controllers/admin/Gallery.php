@@ -72,7 +72,7 @@ class Gallery extends \Ilch\Controller\Admin
                 $catId = $this->getRequest()->getParam('id');
                 $model = new \Modules\Gallery\Models\Image();
                 $model->setImageId($imageId);
-                $model->setCat($catId);
+                $model->setGalleryId($catId);
                 $imageMapper->save($model);
             }
         }

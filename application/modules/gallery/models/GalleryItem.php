@@ -35,13 +35,6 @@ class GalleryItem extends \Ilch\Model
     protected $type;
 
     /**
-     * GalleryId of the item.
-     *
-     * @var int
-     */
-    protected $galleryId;
-
-    /**
      * ParentId of the item.
      *
      * @var int
@@ -120,26 +113,6 @@ class GalleryItem extends \Ilch\Model
     public function setType(int $type)
     {
         $this->type = $type;
-    }
-
-    /**
-     * Gets the gallery id.
-     *
-     * @return int|null
-     */
-    public function getGalleryId(): ?int
-    {
-        return $this->galleryId;
-    }
-
-    /**
-     * Sets the gallery id.
-     *
-     * @param int $id
-     */
-    public function setGalleryId(int $id)
-    {
-        $this->galleryId = $id;
     }
 
     /**

@@ -9,7 +9,7 @@ $catID = $catTitle;
 
 function recCategory($item, $galleryMapper, $obj, $imageMapper)
 {   
-    $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
+    $subItems = $galleryMapper->getGalleryItemsByParent($item->getId());
 
     if ($item->getType() === 0) {
         echo '<li>
@@ -25,7 +25,7 @@ function recCategory($item, $galleryMapper, $obj, $imageMapper)
 
 function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle)
 {
-    $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
+    $subItems = $galleryMapper->getGalleryItemsByParent($item->getId());
 
     if ($item->getType() === 0) {
         $catID = $obj->escape($item->getId());
