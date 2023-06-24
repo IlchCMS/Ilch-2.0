@@ -21,21 +21,21 @@ $postsPerPage = $this->get('postsPerPage');
     
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
-            <i class="fa fa-chevron-right"></i> <?=$forum->getTitle() ?>
+            <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
+            <i class="fa-solid fa-chevron-right"></i> <?=$forum->getTitle() ?>
         </h1>
         <div class="topic-actions">
             <?php if ($this->getUser()): ?>
                 <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary">
                     <span class="btn-label">
-                        <i class="fa fa-plus"></i>
+                        <i class="fa-solid fa-plus"></i>
                     </span><?=$this->getTrans('createNewTopic') ?>
                 </a>
             <?php else: ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                 <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
                     <span class="btn-label">
-                        <i class="fa fa-user"></i>
+                        <i class="fa-solid fa-user"></i>
                     </span><?=$this->getTrans('loginTopic') ?>
                 </a>
             <?php endif; ?>
@@ -99,7 +99,7 @@ $postsPerPage = $this->get('postsPerPage');
                                         <?=$this->escape($topic->getTopicTitle()) ?>
                                     </a>
                                     <?php if ($topic->getType() == '1'): ?>
-                                        <i class="fa fa-thumb-tack"></i>
+                                        <i class="fa-solid fa-table-cellsumb-tack"></i>
                                     <?php endif; ?>
                                     <br>
                                     <div class="small">
@@ -156,14 +156,14 @@ $postsPerPage = $this->get('postsPerPage');
             <?php if ($this->getUser()): ?>
                 <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary">
                     <span class="btn-label">
-                        <i class="fa fa-plus"></i>
+                        <i class="fa-solid fa-plus"></i>
                     </span><?=$this->getTrans('createNewTopic') ?>
                 </a>
             <?php else: ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                 <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
                     <span class="btn-label">
-                        <i class="fa fa-user"></i>
+                        <i class="fa-solid fa-user"></i>
                     </span><?=$this->getTrans('loginTopic') ?>
                 </a>
             <?php endif; ?>

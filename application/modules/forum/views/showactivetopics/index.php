@@ -19,7 +19,7 @@ $postsPerPage = $this->get('postsPerPage');
 <div id="forum">
     <h1>
         <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-        <i class="fa fa-chevron-right"></i> <?=$this->getTrans('showActiveTopics') ?>
+        <i class="fa-solid fa-chevron-right"></i> <?=$this->getTrans('showActiveTopics') ?>
     </h1>
     <div class="forabg">
         <ul class="topiclist">
@@ -74,7 +74,7 @@ $postsPerPage = $this->get('postsPerPage');
                                         <?=$topic->getTopicTitle() ?>
                                     </a>
                                     <?php if ($topic->getType() == '1'): ?>
-                                        <i class="fa fa-thumb-tack"></i>
+                                        <i class="fa-solid fa-table-cellsumb-tack"></i>
                                     <?php endif; ?>
                                     <br>
                                     <div class="small">
