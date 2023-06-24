@@ -159,7 +159,7 @@ function rec($item, $obj, $readAccess, $i)
     <div class="statistic">
         <div class="header ilch-head-dark"><?=$this->getTrans('currentInfo') ?></div>
         <div class="content ilch-border">
-            <h5><i class="fa fa-user"></i> <?=$this->getTrans('activeUser') ?></h5>
+            <h5><i class="fa-solid fa-user"></i> <?=$this->getTrans('activeUser') ?></h5>
             <div class="statistics">
                 <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>" class="ilch-link"><?=$usersOnline+$guestOnline ?> <?=$this->getTrans('usersOnline') ?></a>. <?=$this->getTrans('registeredUsers') ?>: <?=$usersOnline ?>, <?=$this->getTrans('guests') ?>: <?=$guestOnline ?><br />
                 <ul class="user-list">
@@ -174,7 +174,7 @@ function rec($item, $obj, $readAccess, $i)
                 <br />
                 <div class="small">
                     <ul class="group-legend">
-                        <li><i class="fas fa-bars"></i> <?=$this->getTrans('legend') ?>:</li>
+                        <li><i class="fa-solid fa-bars"></i> <?=$this->getTrans('legend') ?>:</li>
                         <?php foreach ($this->get('listGroups') as $group): ?>
                             <?php if ($group->getName() !== 'Guest'): ?>
                                 <li class="group"><span class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></span></li>
@@ -184,7 +184,7 @@ function rec($item, $obj, $readAccess, $i)
                 </div>
             </div>
             <hr />
-            <h5><i class="fa fa-users"></i> <?=$this->getTrans('whoWasHere') ?></h5>
+            <h5><i class="fa-solid fa-users"></i> <?=$this->getTrans('whoWasHere') ?></h5>
             <div class="statistics">
                 <ul class="user-list">
                     <?php foreach ($usersWhoWasOnline as $user): ?>
@@ -194,7 +194,7 @@ function rec($item, $obj, $readAccess, $i)
             </div>
             <hr />
             <div class="stats">
-                <h5><i class="fa fa-pie-chart"></i> <?=$this->getTrans('statistics') ?></h5>
+                <h5><i class="fa-solid fa-chart-pie"></i> <?=$this->getTrans('statistics') ?></h5>
                 <ul class="statistics">
                     <li><?=$this->getTrans('totalPosts') ?>: <?=$forumStatistics->getCountPosts() ?></li>
                     <li><?=$this->getTrans('totalTopics') ?>: <?=$forumStatistics->getCountTopics() ?></li>
@@ -204,7 +204,7 @@ function rec($item, $obj, $readAccess, $i)
             </div>
             <hr />
             <div class="legend">
-                <h5><i class="fas fa-bars"></i> <?=$this->getTrans('legend') ?></h5>
+                <h5><i class="fa-solid fa-bars"></i> <?=$this->getTrans('legend') ?></h5>
                 <ul class="statistics">
                     <li><img src="<?=$this->getModuleUrl('static/img/topic_unread.png') ?>" class="legendIcon"> <?=$this->getTrans('legendNewPost') ?></li>
                     <li><img src="<?=$this->getModuleUrl('static/img/topic_read.png') ?>" class="legendIcon"> <?=$this->getTrans('legendReadPost') ?></li>

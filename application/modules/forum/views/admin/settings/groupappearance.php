@@ -30,7 +30,7 @@ $appearances = $this->get('appearances');
                         <input type="checkbox" id="active<?=$group->getId() ?>" name="appearances[<?=$group->getId() ?>][active]" <?=(isset($appearances[$group->getId()]['active'])) ? 'checked' : '' ?>>
                         <label for="active<?=$group->getId() ?>" style="display:none"><?=$this->getTrans('active') ?></label>
                     </td>
-                    <td><i class="fas fa-sort"></i></td>
+                    <td><i class="fa-solid fa-sort"></i></td>
                     <td><?=$group->getName() ?></td>
                     <td>
                         <input type="color" id="textcolor<?=$group->getId() ?>" name="appearances[<?=$group->getId() ?>][textcolor]"

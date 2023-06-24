@@ -10,8 +10,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.31.0',
-        'icon_small' => 'fa-list',
+        'version' => '1.32.0',
+        'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
         'official' => true,
@@ -35,8 +35,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.46',
-        'phpVersion' => '7.0'
+        'ilchCore' => '2.1.49',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -443,6 +443,8 @@ class Config extends \Ilch\Config\Install
             case "1.29.0":
             case "1.30.0":
             case "1.30.1":
+            case "1.31.0":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-list' WHERE `key` = 'forum';");
         }
     }
 }

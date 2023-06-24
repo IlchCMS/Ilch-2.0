@@ -12,7 +12,7 @@ function rec($item, $forumMapper, $obj)
     }
 
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">
-        <div><span class="disclose"><i class="fa fa-minus-circle"></i>
+        <div><span class="disclose"><i class="fa-solid fa-circle-minus"></i>
             <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
             <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
             <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
@@ -25,9 +25,9 @@ function rec($item, $forumMapper, $obj)
         </span>
         <span class="title">'.$item->getTitle().'</span>
         <span class="item_delete">
-            <i class="fa fa-times-circle"></i>
+            <i class="fa-solid fa-circle-xmark"></i>
         </span><span class="item_edit">
-            <i class="fa fa-edit"></i>
+            <i class="fa-regular fa-pen-to-square"></i>
         </span>
     </div>';
 
@@ -239,7 +239,7 @@ $(document).ready (
                 +'<input type="hidden" class="hidden_read_access" name="items[tmp_'+itemId+'][readAccess]" value="'+$('#assignedGroupsRead').val()+'" />'
                 +'<input type="hidden" class="hidden_replay_access" name="items[tmp_'+itemId+'][replayAccess]" value="'+$('#assignedGroupsReplay').val()+'" />'
                 +'<input type="hidden" class="hidden_create_access" name="items[tmp_'+itemId+'][createAccess]" value="'+$('#assignedGroupsCreate').val()+'" />'
-                +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span></div></li>').appendTo(append);
+                +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa-solid fa-circle-xmark"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
         });

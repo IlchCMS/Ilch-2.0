@@ -117,7 +117,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
 <div id="forum">
     <h1>
         <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-        <i class="fa fa-chevron-right"></i> <?=$cat->getTitle() ?>
+        <i class="fa-solid fa-chevron-right"></i> <?=$cat->getTitle() ?>
     </h1>
     <?php
     $adminAccess = null;

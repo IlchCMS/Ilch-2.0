@@ -35,9 +35,9 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$this->escape($cat->getTitle()) ?></a>
-            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$this->escape($forum->getTitle()) ?></a>
-            <i class="fa fa-chevron-right"></i> <?=$this->escape($prefix.$topicpost->getTopicTitle()) ?>
+            <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$this->escape($cat->getTitle()) ?></a>
+            <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$this->escape($forum->getTitle()) ?></a>
+            <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($prefix.$topicpost->getTopicTitle()) ?>
         </h1>
         <div class="row">
             <div class="col-lg-12">
@@ -46,20 +46,20 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
                             <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                 <span class="btn-label">
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fa-solid fa-plus"></i>
                                 </span><?=$this->getTrans('createNewPost') ?>
                             </a>
                             <?php if ($this->get('topicSubscription')) : ?>
                                 <?php if ($this->get('isSubscribed')) : ?>
                                     <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                     <span class="btn-label">
-                                        <i class="fas fa-bell-slash"></i>
+                                        <i class="fa-solid fa-bell-slash"></i>
                                     </span><?=$this->getTrans('unsubscribe') ?>
                                     </a>
                                 <?php else : ?>
                                     <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                     <span class="btn-label">
-                                        <i class="fas fa-bell"></i>
+                                        <i class="fa-solid fa-bell"></i>
                                     </span><?=$this->getTrans('subscribe') ?>
                                     </a>
                                 <?php endif; ?>
@@ -69,14 +69,14 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
                             <span class="btn-label">
-                                <i class="fa fa-user"></i>
+                                <i class="fa-solid fa-user"></i>
                             </span><?=$this->getTrans('loginPost') ?>
                         </a>
                     <?php endif; ?>
                 <?php else: ?>
                     <div class="btn btn-primary">
                         <span class="btn-label">
-                            <i class="fa fa-lock"></i>
+                            <i class="fa-solid fa-lock"></i>
                         </span><?=$this->getTrans('lockPost') ?>
                     </div>
                 <?php endif; ?>
@@ -116,7 +116,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                             <p class="delete-post">
                                                 <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()], null, true) ?>" id="delete" class="btn btn-primary btn-xs">
                                                     <span class="btn-label">
-                                                        <i class="fa fa-trash"></i>
+                                                        <i class="fa-regular fa-trash-can"></i>
                                                     </span><?=$this->getTrans('delete') ?>
                                                 </a>
                                             </p>
@@ -129,7 +129,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                             <p class="edit-post">
                                                 <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-xs">
                                                     <span class="btn-label">
-                                                        <i class="fa fa-pencil"></i>
+                                                        <i class="fa-solid fa-pencil"></i>
                                                     </span><?=$this->getTrans('edit') ?>
                                                 </a>
                                             </p>
@@ -178,11 +178,11 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     ?>
                     <?php if ($this->getUser() && in_array($this->getUser()->getId(), $votes) == false) : ?>
                         <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
-                            <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                            <i class="fa-solid fa-table-cellsumbs-up"></i> <?=$countOfVotes ?>
                         </a>
                     <?php else: ?>
                         <button class="btn btn-sm btn-default btn-success">
-                            <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                            <i class="fa-solid fa-table-cellsumbs-up"></i> <?=$countOfVotes ?>
                         </button>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -203,7 +203,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                 <p class="report-post">
                                     <a href="<?=$this->getUrl(['action' => 'report','topicid' => $this->getRequest()->getParam('topicid'), 'postid' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
                         <span class="btn-label">
-                            <i class="fas fa-flag"></i>
+                            <i class="fa-solid fa-flag"></i>
                         </span><?=$this->getTrans('report') ?>
                                     </a>
                                 </p>
@@ -229,20 +229,20 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                             <span class="btn-label">
-                                <i class="fa fa-plus"></i>
+                                <i class="fa-solid fa-plus"></i>
                             </span><?=$this->getTrans('createNewPost') ?>
                         </a>
                         <?php if ($this->get('topicSubscription')) : ?>
                             <?php if ($this->get('isSubscribed')) : ?>
                                 <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                     <span class="btn-label">
-                                        <i class="fas fa-bell-slash"></i>
+                                        <i class="fa-solid fa-bell-slash"></i>
                                     </span><?=$this->getTrans('unsubscribe') ?>
                                 </a>
                             <?php else : ?>
                                 <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                     <span class="btn-label">
-                                        <i class="fas fa-bell"></i>
+                                        <i class="fa-solid fa-bell"></i>
                                     </span><?=$this->getTrans('subscribe') ?>
                                 </a>
                             <?php endif; ?>
@@ -252,14 +252,14 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
                         <span class="btn-label">
-                            <i class="fa fa-user"></i>
+                            <i class="fa-solid fa-user"></i>
                         </span><?=$this->getTrans('loginPost') ?>
                     </a>
                 <?php endif; ?>
             <?php else: ?>
                 <div class="btn btn-primary">
                     <span class="btn-label">
-                        <i class="fa fa-lock"></i>
+                        <i class="fa-solid fa-lock"></i>
                     </span><?=$this->getTrans('lockPost') ?>
                 </div>
             <?php endif; ?>

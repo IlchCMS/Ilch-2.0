@@ -6,34 +6,46 @@
 
 namespace Modules\Forum\Mappers;
 
+use Ilch\Database\Exception;
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\Remember as RememberMapper;
 
 class Post extends \Ilch\Mapper
 {
-    public function getPostById($id)
+    /**
+     * Get post by id.
+     *
+     * @param int $id
+     * @return PostModel|null
+     * @throws Exception
+     */
+    public function getPostById(int $id): ?PostModel
     {
-        $fileRow = $this->db()->select('*')
+        $postRow = $this->db()->select('*')
             ->from('forum_posts')
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
+        if (empty($postRow)) {
+            return null;
+        }
+
         $postModel = new PostModel();
         $userMapper = new UserMapper();
-        $postModel->setId($fileRow['id']);
-        $postModel->setText($fileRow['text']);
-        $postModel->setVotes($fileRow['votes']);
-        $postModel->setDateCreated($fileRow['date_created']);
-        $postModel->setForumId($fileRow['forum_id']);
-        $user = $userMapper->getUserById($fileRow['user_id']);
+        $postModel->setId($postRow['id']);
+        $postModel->setText($postRow['text']);
+        $postModel->setVotes($postRow['votes']);
+        $postModel->setDateCreated($postRow['date_created']);
+        $postModel->setForumId($postRow['forum_id']);
+        $user = $userMapper->getUserById($postRow['user_id']);
         if ($user) {
             $postModel->setAutor($user);
         } else {
             $postModel->setAutor($userMapper->getDummyUser());
         }
-        $postModel->setAutorAllPost($this->getAllPostsByUserId($fileRow['user_id']));
+        $postModel->setAutorAllPost($this->getAllPostsByUserId($postRow['user_id']));
 
         return $postModel;
     }
