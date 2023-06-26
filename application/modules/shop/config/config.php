@@ -14,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'shop',
-        'version' => '1.0.0',
+        'version' => '1.0.1',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',

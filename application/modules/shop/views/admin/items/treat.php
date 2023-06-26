@@ -236,7 +236,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
         </div>
 
         <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
-            <label for="selectedImage" class="col-lg-2 control-label">
+            <label for="selectedImage_image" class="col-lg-2 control-label">
                 <?=$this->getTrans('productThumbnail') ?>:
             </label>
             <div class="col-lg-5">
@@ -257,7 +257,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa-solid fa-xmark"></span>
+                        <span class="fa-solid fa-xmark clearImage"></span>
                     </span>
                     <span class="input-group-addon">
                         <a id="media_image" href="javascript:media_image()"><i class="fa-regular fa-image"></i></a>
@@ -273,7 +273,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
         </div>
 
         <div class="form-group <?=$this->validation()->hasError('image1') ? 'has-error' : '' ?>">
-            <label for="selectedImage_1" class="col-lg-2 control-label">
+            <label for="selectedImage_image1" class="col-lg-2 control-label">
                 <?=$this->getTrans('productImage') ?> 1:
             </label>
             <div class="col-lg-5">
@@ -294,7 +294,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage1()) : $this->escape($this->originalInput('image1')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa-solid fa-xmark"></span>
+                        <span class="fa-solid fa-xmark clearImage"></span>
                     </span>
                     <span class="input-group-addon">
                         <a id="media_image1" href="javascript:media_image1()"><i class="fa-regular fa-image"></i></a>
@@ -310,7 +310,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
         </div>
 
         <div class="form-group <?=$this->validation()->hasError('image2') ? 'has-error' : '' ?>">
-            <label for="selectedImage_2" class="col-lg-2 control-label">
+            <label for="selectedImage_image2" class="col-lg-2 control-label">
                 <?=$this->getTrans('productImage') ?> 2:
             </label>
             <div class="col-lg-5">
@@ -331,7 +331,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage2()) : $this->escape($this->originalInput('image2')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa-solid fa-xmark"></span>
+                        <span class="fa-solid fa-xmark clearImage"></span>
                     </span>
                     <span class="input-group-addon">
                         <a id="media_image2" href="javascript:media_image2()"><i class="fa-regular fa-image"></i></a>
@@ -347,7 +347,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
         </div>
 
         <div class="form-group <?=$this->validation()->hasError('image3') ? 'has-error' : '' ?>">
-            <label for="selectedImage_3" class="col-lg-2 control-label">
+            <label for="selectedImage_image3" class="col-lg-2 control-label">
                 <?=$this->getTrans('productImage') ?> 3:
             </label>
             <div class="col-lg-5">
@@ -368,7 +368,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage3()) : $this->escape($this->originalInput('image3')) ?>" />
                     <span class="input-group-addon">
-                        <span class="fa-solid fa-xmark"></span>
+                        <span class="fa-solid fa-xmark clearImage"></span>
                     </span>
                     <span class="input-group-addon">
                         <a id="media_image3" href="javascript:media_image3()"><i class="fa-regular fa-image"></i></a>
@@ -434,6 +434,9 @@ $(function () {
         trigger: 'hover',
         placement: 'top',
         content: function () { return '<img src="' + $(this).data('img') + '" width="200" />'; }
+    });
+    $("span .clearImage").click(function(){
+        $(this).parent().siblings('input[type="text"]').val('');
     });
 });
 </script>
