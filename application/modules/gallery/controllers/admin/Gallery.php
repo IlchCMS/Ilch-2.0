@@ -69,10 +69,9 @@ class Gallery extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost()) {
             foreach ($this->getRequest()->getPost('check_image') as $imageId ) {
-                $catId = $this->getRequest()->getParam('id');
                 $model = new \Modules\Gallery\Models\Image();
                 $model->setImageId($imageId);
-                $model->setCat($catId);
+                $model->setGalleryId($this->getRequest()->getParam('id'));
                 $imageMapper->save($model);
             }
         }

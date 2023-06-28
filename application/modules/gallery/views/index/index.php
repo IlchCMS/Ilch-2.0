@@ -9,7 +9,7 @@ $catID = $catTitle;
 
 function recCategory($item, $galleryMapper, $obj, $imageMapper)
 {   
-    $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
+    $subItems = $galleryMapper->getGalleryItemsByParent($item->getId());
 
     if ($item->getType() === 0) {
         echo '<li>
@@ -25,7 +25,7 @@ function recCategory($item, $galleryMapper, $obj, $imageMapper)
 
 function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle)
 {
-    $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
+    $subItems = $galleryMapper->getGalleryItemsByParent($item->getId());
 
     if ($item->getType() === 0) {
         $catID = $obj->escape($item->getId());
@@ -33,6 +33,7 @@ function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle
     }
     if ($item->getType() != 0) {
         $lastImage = $imageMapper->getLastImageByGalleryId($item->getId());
+        $imageTitle = (!empty($lastImage)) ? $obj->escape($lastImage->getImageTitle()) : $obj->getTrans('noMediaAlt');
 
         if ($lastImage !== null && $lastImage->getImageThumb() != '') {
             $image = $obj->getBaseUrl($lastImage->getImageThumb());
@@ -44,7 +45,7 @@ function recGallery($item, $galleryMapper, $obj, $imageMapper, $catID, $catTitle
                     <div class="row box-shadow">
                         <div class="col-md-3">
                             <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
-                                <img class="lib-img-show" src="'.$image.'">
+                                <img class="lib-img-show" src="'.$image.'" alt="'.$imageTitle.'" >
                             </a>
                         </div>
                         <div class="col-md-8">

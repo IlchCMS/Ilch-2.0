@@ -57,4 +57,7 @@ return [
     'pictureMissing' => 'Picture not found.',
     'imageNotFound' => 'Image not found.',
     'galleryNotFound' => 'Gallery not found.',
+    'noMediaAlt' => 'No thumbnail available.',
+    'titleCannotChangeTypeOnEdit' => 'Changing the type afterwards is not possible.',
+    'titleCannotChangeCategoryOnEdit' => 'On the left side you can assign the gallery to another category by drag and drop.',
 ];

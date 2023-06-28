@@ -57,4 +57,7 @@ return [
     'pictureMissing' => 'Bild nicht gefunden.',
     'pictureNotFound' => 'Bild nicht gefunden.',
     'galleryNotFound' => 'Galerie nicht gefunden.',
+    'noMediaAlt' => 'Kein Vorschaubild verfügbar.',
+    'titleCannotChangeTypeOnEdit' => 'Nachträgliches Ändern des Typs ist nicht möglich.',
+    'titleCannotChangeCategoryOnEdit' => 'Sie können links per Ziehen und Ablegen die Zuordnung zu einer Kategorie ändern.',
 ];

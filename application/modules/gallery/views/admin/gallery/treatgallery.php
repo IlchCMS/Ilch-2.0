@@ -27,12 +27,12 @@
                     <?php foreach ($this->get('image') as $image): ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_gallery', $image->getId()) ?></td>
-                            <td><?=$this->getEditIcon(['controller' => 'image', 'action' => 'treatimage', 'gallery' => $image->getCat(), 'id' => $image->getId()]) ?></td>
+                            <td><?=$this->getEditIcon(['controller' => 'image', 'action' => 'treatimage', 'gallery' => $image->getGalleryId(), 'id' => $image->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $image->getId(), 'gallery' => $this->getRequest()->getParam('id')]) ?></td>
                             <?php if (file_exists($image->getImageThumb())): ?>
-                                <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>"/></td>
+                                <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/></td>
                             <?php else: ?>
-                                <td><img class="image thumbnail img-responsive" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"/></td>
+                                <td><img class="image thumbnail img-responsive" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$this->getTrans('noMediaAlt') ?>"/></td>
                             <?php endif; ?>
                             <td><?=$this->escape($image->getImageTitle()) ?></td>
                             <td><div class="table_text"><?=$this->escape($image->getImageDesc()) ?></div></td>
@@ -56,6 +56,6 @@
 ?>
 
 function reload() {
-    setTimeout(function(){window.location.reload(1);}, 1000);
-};
+    setTimeout(function(){window.location=window.location;}, 1000);
+}
 </script>

@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-4">
                 <a href="<?=$this->getUrl().'/'.$image->getImageUrl() ?>">
-                    <img class="thumbnail" src="<?=$this->getUrl().'/'.$image->getImageUrl() ?>"/>
+                    <img class="thumbnail" src="<?=$this->getUrl().'/'.$image->getImageUrl() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/>
                 </a>
             </div>
             <div class="col-md-8">

@@ -10,8 +10,6 @@ use Ilch\Comments;
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Modules\Gallery\Models\Image as ImageModel;
 use Modules\Gallery\Mappers\Image as ImageMapper;
-use Modules\Comment\Mappers\Comment as CommentMapper;
-use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -26,7 +24,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index']);
 
-        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent(1, 0));
+        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent(0));
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
     }
@@ -89,7 +87,7 @@ class Index extends \Ilch\Controller\Frontend
             return;
         }
 
-        $gallery = $galleryMapper->getGalleryById($image->getCat());
+        $gallery = $galleryMapper->getGalleryById($image->getGalleryId());
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('gallery'))

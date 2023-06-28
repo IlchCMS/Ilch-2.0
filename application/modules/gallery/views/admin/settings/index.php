@@ -16,7 +16,7 @@
     </div>
     <h1><?=$this->getTrans('box') ?>: <?=$this->getTrans('pictureOfX') ?></h1>
     <div class="form-group <?=$this->validation()->hasError('pictureOfXSource') ? 'has-error' : '' ?>">
-        <label for="galleries" class="col-lg-2 control-label">
+        <label for="pictureOfXSource" class="col-lg-2 control-label">
             <?=$this->getTrans('pictureOfXSource') ?>:
         </label>
         <div class="col-lg-4">
