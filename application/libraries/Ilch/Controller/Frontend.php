@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -25,8 +26,8 @@ class Frontend extends Base
         $layoutFile = '';
 
         if (!empty($layoutKey)) {
-            if (is_file(APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php')) {
-                $configClass = '\\Layouts\\'.ucfirst(basename($layoutKey)).'\\Config\\Config';
+            if (is_file(APPLICATION_PATH . '/layouts/' . $layoutKey . '/config/config.php')) {
+                $configClass = '\\Layouts\\' . ucfirst(basename($layoutKey)) . '\\Config\\Config';
                 $layoutConfig = new $configClass($this->getTranslator());
                 if (array_key_exists('layouts', $layoutConfig->config)) {
                     $config['layouts'] = $layoutConfig->config['layouts'];
@@ -89,7 +90,7 @@ class Frontend extends Base
                 $layoutFile = 'index';
             }
 
-            $this->getLayout()->setFile('layouts/'.$layoutKey.'/'.$layoutFile, $layoutKey);
+            $this->getLayout()->setFile('layouts/' . $layoutKey . '/' . $layoutFile, $layoutKey);
 
             if (Registry::has('db')) {
                 // CMS is installed. Load possibly existing layout settings.

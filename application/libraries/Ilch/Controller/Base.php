@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -24,7 +25,7 @@ class Base
     private $translator;
 
     /**
-     * @var \Ilch\Layout\Base
+     * @var \Ilch\Layout\Base|\Ilch\Layout\Admin|\Ilch\Layout\Frontend
      */
     private $layout;
 
@@ -36,21 +37,21 @@ class Base
     /**
      * The currently logged in user or null if the user is a guest.
      *
-     * @var \Modules\User\Models\User
+     * @var \Modules\User\Models\User|null
      */
     private $user;
 
     /**
      * Injects the layout/view to the controller.
      *
-     * @param \Ilch\Layout\Base $layout
+     * @param \Ilch\Layout\Base|\Ilch\Layout\Admin|\Ilch\Layout\Frontend $layout
      * @param \Ilch\View        $view
      * @param \Ilch\Request     $request
      * @param \Ilch\Router      $router
      * @param \Ilch\Translator  $translator
      */
     public function __construct(
-        \Ilch\Layout\Base $layout,
+        $layout,
         \Ilch\View $view,
         \Ilch\Request $request,
         \Ilch\Router $router,
@@ -67,11 +68,11 @@ class Base
     /**
      * Redirect to given url or url params.
      *
-     * @param array|string  $url
-     * @param string        $route
+     * @param array|string|null  $url
+     * @param string|null $route
      * @return \Ilch\Redirect
      */
-    public function redirect($url = null, $route = null)
+    public function redirect($url = null, ?string $route = null): \Ilch\Redirect
     {
         $redirector = new \Ilch\Redirect($this->getRequest());
 
@@ -87,7 +88,7 @@ class Base
      *
      * @return \Ilch\Request
      */
-    public function getRequest()
+    public function getRequest(): \Ilch\Request
     {
         return $this->request;
     }
@@ -97,7 +98,7 @@ class Base
      *
      * @return \Ilch\Router
      */
-    public function getRouter()
+    public function getRouter(): \Ilch\Router
     {
         return $this->router;
     }
@@ -107,7 +108,7 @@ class Base
      *
      * @return \Ilch\Config\Database
      */
-    public function getConfig()
+    public function getConfig(): \Ilch\Config\Database
     {
         return \Ilch\Registry::get('config');
     }
@@ -117,7 +118,7 @@ class Base
      *
      * @return \Ilch\Translator
      */
-    public function getTranslator()
+    public function getTranslator(): \Ilch\Translator
     {
         return $this->translator;
     }
@@ -125,7 +126,7 @@ class Base
     /**
      * Gets the layout object.
      *
-     * @return \Ilch\Layout\Base
+     * @return \Ilch\Layout\Base|\Ilch\Layout\Admin|\Ilch\Layout\Frontend
      */
     public function getLayout()
     {
@@ -137,7 +138,7 @@ class Base
      *
      * @return \Ilch\View
      */
-    public function getView()
+    public function getView(): \Ilch\View
     {
         return $this->view;
     }
@@ -145,9 +146,9 @@ class Base
     /**
      * Gets the user object.
      *
-     * @return \Modules\User\Models\User
+     * @return \Modules\User\Models\User|null
      */
-    public function getUser()
+    public function getUser(): ?\Modules\User\Models\User
     {
         return \Ilch\Registry::get('user');
     }
@@ -156,12 +157,12 @@ class Base
      * Adds a flash message.
      *
      * @param string|array      $message
-     * @param string|null       $type
+     * @param string|null $type
      * @param bool|false|string $validationError
      */
-    public function addMessage($message, $type = 'success', $validationError = false)
+    public function addMessage($message, ?string $type = 'success', $validationError = false)
     {
-        if ($validationError == true && is_array($message)) {
+        if ($validationError && is_array($message)) {
             $_SESSION['messages'][] = ['text' => $message, 'type' => $type, 'validationError' => $validationError];
         } elseif (!is_array($message)) {
             $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans($message), 'type' => $type];
@@ -175,7 +176,7 @@ class Base
      * @return string
      * @since 2.1.43
      */
-    public function getDefaultUrl($page = null)
+    public function getDefaultUrl(?string $page = null): string
     {
         if (!$page) {
             $page = $this->getConfig()->get('start_page');
