@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -8,19 +9,22 @@ namespace Ilch\Layout\Helper\AdminHmenu;
 
 class Model
 {
+    /**
+     * @var \Ilch\Layout\Admin
+     */
     protected $layout;
 
     /**
      * @var array
      */
-    protected $data;
+    protected $data = [];
 
     /**
      * Injects the layout.
      *
-     * @param Ilch\Layout $layout
+     * @param \Ilch\Layout\Admin $layout
      */
-    public function __construct($layout)
+    public function __construct(\Ilch\Layout\Admin $layout)
     {
         $this->layout = $layout;
     }
@@ -29,10 +33,10 @@ class Model
      * Adds breadcrumb to hnav.
      *
      * @param string $key
-     * @param string $value
-     * @return \Ilch\Layout\Helper\AdminHmenu\Model
+     * @param string|array $value
+     * @return $this
      */
-    public function add($key, $value = '')
+    public function add(string $key, $value = ''): Model
     {
         $this->data[$key] = $value;
 
@@ -47,14 +51,14 @@ class Model
     public function __toString()
     {
         if (empty($this->data)) {
-            return '<ol class="breadcrumb">&raquo; <li><a href="'.$this->layout->getUrl('admin/admin/index/index').'">Admincenter</a></li></ol>';
+            return '<ol class="breadcrumb">&raquo; <li><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li></ol>';
         }
-        $html = '<ol class="breadcrumb">&raquo; <li><a href="'.$this->layout->getUrl('admin/admin/index/index').'">Admincenter</a></li>';
+        $html = '<ol class="breadcrumb">&raquo; <li><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li>';
         foreach ($this->data as $key => $value) {
             if (empty($value)) {
                 $html .= $this->layout->escape($key);
             } else {
-                $html .= '<li><a href="'.$this->layout->getUrl($value).'">'.$this->layout->escape($key).'</a></li>';
+                $html .= '<li><a href="' . $this->layout->getUrl($value) . '">' . $this->layout->escape($key) . '</a></li>';
             }
         }
         $html .= '</ol>';

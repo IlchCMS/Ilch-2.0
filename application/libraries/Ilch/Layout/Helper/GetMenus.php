@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -29,7 +30,7 @@ class GetMenus
      *
      * @return \Ilch\Layout\Helper\Menu\Model[]
      */
-    public function getMenus()
+    public function getMenus(): array
     {
         $helperMapper = new Mapper($this->layout);
 

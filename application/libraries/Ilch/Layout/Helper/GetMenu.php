@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -12,7 +13,7 @@ use Modules\Admin\Mappers\Menu as MenuMapper;
 
 class GetMenu
 {
-    const DEFAULT_OPTIONS = [
+    public const DEFAULT_OPTIONS = [
         'menus' => [
             'ul-class-root' => 'list-unstyled ilch_menu_ul',
             'ul-class-child' => 'list-unstyled ilch_menu_ul',
@@ -27,8 +28,6 @@ class GetMenu
             'render' => true,
         ],
     ];
-
-
 
     /** @var Layout */
     private $layout;
@@ -46,12 +45,12 @@ class GetMenu
     /**
      * Gets the menu for the given position.
      *
-     * @param integer $menuId
+     * @param int $menuId
      * @param string $tpl
      * @param array $options
      * @return string
      */
-    public function getMenu($menuId, $tpl = '', array $options = [])
+    public function getMenu(int $menuId, string $tpl = '', array $options = []): string
     {
         $helperMapper = new MapperHelper($this->layout);
         $menuMapper = new MenuMapper();

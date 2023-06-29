@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,6 +11,12 @@ use Ilch\Request;
 use Ilch\Router;
 use Ilch\Translator;
 
+/**
+ * Class Admin
+ * @package Ilch\Layout
+
+ * @method \Ilch\Layout\Helper\AdminHmenu\Model getAdminHmenu() get the Admin Hmenu model
+ */
 class Admin extends Base
 {
     /**
@@ -23,14 +30,14 @@ class Admin extends Base
     private $menuActions = [];
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $showSidebar = true;
 
     /**
      * @return array
      */
-    public function getMenus()
+    public function getMenus(): array
     {
         return $this->menus;
     }
@@ -38,13 +45,13 @@ class Admin extends Base
     /**
      * Adds layout helper.
      *
-     * @todo adds helper dynamic from folder.
      * @param Request $request
      * @param Translator $translator
      * @param Router $router
      * @param string|null $baseUrl
+     *@todo adds helper dynamic from folder.
      */
-    public function __construct(Request $request, Translator $translator, Router $router, $baseUrl = null)
+    public function __construct(Request $request, Translator $translator, Router $router, ?string $baseUrl = null)
     {
         parent::__construct($request, $translator, $router, $baseUrl);
 
@@ -55,45 +62,51 @@ class Admin extends Base
      * Add menu to layout.
      *
      * @param string $headKey
-     * @param array  $items
+     * @param array $items
+     * @return $this
      */
-    public function addMenu($headKey, $items)
+    public function addMenu(string $headKey, array $items): Admin
     {
         $this->menus[$headKey] = $items;
+        return $this;
     }
 
     /**
      * Add menu action to layout.
      *
      * @param array $actionArray
+     * @return $this
      */
-    public function addMenuAction($actionArray)
+    public function addMenuAction(array $actionArray): Admin
     {
         $this->menuActions[] = $actionArray;
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function getMenuAction()
+    public function getMenuAction(): array
     {
         return $this->menuActions;
     }
 
     /**
      * Removes sidebar on the left side.
+     * @return $this
      */
-    public function removeSidebar()
+    public function removeSidebar(): Admin
     {
         $this->showSidebar = false;
+        return $this;
     }
 
     /**
      * Defines if sidebar is shown or not.
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasSidebar()
+    public function hasSidebar(): bool
     {
         return $this->showSidebar;
     }

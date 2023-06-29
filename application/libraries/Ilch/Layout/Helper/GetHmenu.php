@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -30,7 +31,7 @@ class GetHmenu
      * Gets the hmenu
      * @return Model
      */
-    public function getHmenu()
+    public function getHmenu(): Model
     {
         return $this->model;
     }

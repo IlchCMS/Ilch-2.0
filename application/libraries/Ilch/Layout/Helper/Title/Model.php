@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -17,9 +18,9 @@ class Model
      * Adds value to title.
      *
      * @param string $value
-     * @return \Ilch\Layout\Helper\Title\Model
+     * @return Model
      */
-    public function add($value)
+    public function add(string $value): Model
     {
         $this->data[] = $value;
 
@@ -33,6 +34,7 @@ class Model
      */
     public function __toString()
     {
+        /** @var \Ilch\Config\Database $config */
         $config = \Ilch\Registry::get('config');
 
         if (empty($this->data)) {
@@ -48,6 +50,6 @@ class Model
         }
         $configTitle = $config->get('page_title');
 
-        return $html.$configTitle;
+        return $html . $configTitle;
     }
 }

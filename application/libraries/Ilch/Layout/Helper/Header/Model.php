@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -36,9 +37,9 @@ class Model
      * @param string $value
      * @return Model
      */
-    public function css($value)
+    public function css(string $value): Model
     {
-        $this->data[] = '<link href="'.$this->layout->getModuleUrl($value).'" rel="stylesheet">';
+        $this->data[] = '<link href="' . $this->layout->getModuleUrl($value) . '" rel="stylesheet">';
 
         return $this;
     }
@@ -49,9 +50,9 @@ class Model
      * @param string $value
      * @return Model
      */
-    public function js($value)
+    public function js(string $value): Model
     {
-        $this->data[] = '<script src="'.$this->layout->getModuleUrl($value).'"></script>';
+        $this->data[] = '<script src="' . $this->layout->getModuleUrl($value) . '"></script>';
 
         return $this;
     }
@@ -64,12 +65,7 @@ class Model
     public function __toString()
     {
         if ($this->data) {
-            $html = '';
-            foreach ($this->data as $value) {
-                $html .= $value;
-            }
-
-            return $html;
+            return implode('', $this->data);
         }
 
         return '';

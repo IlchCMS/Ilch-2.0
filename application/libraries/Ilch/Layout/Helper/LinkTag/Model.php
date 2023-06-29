@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -28,7 +29,7 @@ class Model
      * Must be present and must contain a valid non-empty URL potentially surrounded by spaces.
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-href
-     * @var string
+     * @var string|null
      * @since 2.1.22
      */
     protected $href;
@@ -38,7 +39,7 @@ class Model
      * How the element handles crossorigin requests
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-crossorigin
-     * @var string
+     * @var string|null
      * @since 2.1.22
      */
     protected $crossorigin;
@@ -49,7 +50,7 @@ class Model
      * A link element must have a rel attribute.
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-rel
-     * @var string
+     * @var string|null
      * @since 2.1.22
      */
     protected $rel;
@@ -59,7 +60,7 @@ class Model
      * Applicable media
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-media
-     * @var string
+     * @var string|null
      * @since 2.1.22
      */
     protected $media;
@@ -68,7 +69,7 @@ class Model
      * Integrity metadata used in Subresource Integrity checks
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-integrity
-     * @var string
+     * @var string|null
      * @since 2.1.50
      */
     protected $integrity;
@@ -78,7 +79,7 @@ class Model
      * Language of the linked resource
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-hreflang
-     * @var string
+     * @var string|null
      * @since 2.1.22
      */
     protected $hreflang;
@@ -90,7 +91,7 @@ class Model
      * The value must be a valid MIME type.
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-type
-     * @var string
+     * @var string|null
      * @since 2.1.22
      */
     protected $type;
@@ -99,7 +100,7 @@ class Model
      * Referrer policy for fetches initiated by the element
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-referrerpolicy
-     * @var string
+     * @var string|null
      * @since 2.1.50
      */
     protected $referrerpolicy;
@@ -109,7 +110,7 @@ class Model
      * Sizes of the icons (for rel="icon")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-sizes
-     * @var string
+     * @var string|null
      * @since 2.1.22
      */
     protected $sizes;
@@ -118,7 +119,7 @@ class Model
      * Images to use in different situations, e.g., high-resolution displays, small monitors, etc. (for rel="preload")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesrcset
-     * @var string
+     * @var string|null
      * @since 2.1.50
      */
     protected $imagesrcset;
@@ -127,7 +128,7 @@ class Model
      * Image sizes for different page layouts (for rel="preload")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesizes
-     * @var string
+     * @var string|null
      * @since 2.1.50
      */
     protected $imagesizes;
@@ -136,7 +137,7 @@ class Model
      * Potential destination for a preload request (for rel="preload" and rel="modulepreload")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-as
-     * @var string
+     * @var string|null
      * @since 2.1.50
      */
     protected $as;
@@ -145,7 +146,7 @@ class Model
      * Whether the element is potentially render-blocking
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-blocking
-     * @var string
+     * @var string|null
      * @since 2.1.50
      */
     protected $blocking;
@@ -154,7 +155,7 @@ class Model
      * Color to use when customizing a site's icon (for rel="mask-icon")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-color
-     * @var string
+     * @var string|null
      * @since 2.1.50
      */
     protected $color;
@@ -172,7 +173,7 @@ class Model
      * Sets the priority for fetches initiated by the element
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-fetchpriority
-     * @var string
+     * @var string|null
      * @since 2.1.50
      */
     protected $fetchpriority;
@@ -182,7 +183,7 @@ class Model
      * title attribute has special semantics on this element: Title of the link; alternative style sheet set name.
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-title
-     * @var string
+     * @var string|null
      * @since 2.1.22
      */
     protected $title;

@@ -1,12 +1,11 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Ilch\Layout\Helper\MetaTag;
-
-use Ilch\Layout\Base as Layout;
 
 /**
  * A model for a meta tag.
@@ -21,7 +20,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-http-equiv
      * @var string
      */
-    protected $httpEquiv;
+    protected $httpEquiv = '';
 
     /**
      * The name of the meta tag.
@@ -29,7 +28,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-name
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * The content of the meta tag.
@@ -37,7 +36,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-content
      * @var string
      */
-    protected $content;
+    protected $content = '';
 
     /**
      * The charset of the meta tag.
@@ -45,7 +44,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-charset
      * @var string
      */
-    protected $charset;
+    protected $charset = '';
 
     /**
      * Gets the http-equiv of the meta tag.
@@ -53,7 +52,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-http-equiv
      * @return string
      */
-    public function getHTTPEquiv()
+    public function getHTTPEquiv(): string
     {
         return $this->httpEquiv;
     }
@@ -65,7 +64,7 @@ class Model
      * @param string $httpEquiv
      * @return $this
      */
-    public function setHTTPEquiv($httpEquiv)
+    public function setHTTPEquiv(string $httpEquiv): Model
     {
         $this->httpEquiv = $httpEquiv;
 
@@ -78,7 +77,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-name
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -90,7 +89,7 @@ class Model
      * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Model
     {
         $this->name = $name;
 
@@ -103,7 +102,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-content
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -115,7 +114,7 @@ class Model
      * @param string $content
      * @return $this
      */
-    public function setContent($content)
+    public function setContent(string $content): Model
     {
         $this->content = $content;
 
@@ -128,7 +127,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-charset
      * @return string
      */
-    public function getCharset()
+    public function getCharset(): string
     {
         return $this->charset;
     }
@@ -140,7 +139,7 @@ class Model
      * @param string $charset
      * @return $this
      */
-    public function setCharset($charset)
+    public function setCharset(string $charset): Model
     {
         $this->charset = $charset;
 

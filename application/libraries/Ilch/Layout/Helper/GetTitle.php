@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -22,14 +23,14 @@ class GetTitle
      */
     public function __construct(Layout $title)
     {
-        $this->model = new \Ilch\Layout\Helper\Title\Model($title);
+        $this->model = new \Ilch\Layout\Helper\Title\Model();
     }
 
     /**
      * Gets the title
      * @return \Ilch\Layout\Helper\Title\Model
      */
-    public function getTitle()
+    public function getTitle(): Title\Model
     {
         return $this->model;
     }

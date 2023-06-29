@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -23,7 +24,7 @@ class Mapper
      *
      * @param \Ilch\Layout\Base $layout
      */
-    public function __construct($layout)
+    public function __construct(\Ilch\Layout\Base $layout)
     {
         $this->db = \Ilch\Registry::get('db');
         $this->layout = $layout;
@@ -32,9 +33,9 @@ class Mapper
     /**
      * Gets the menus.
      *
-     * @return \Ilch\Layout\Helper\Menu\Model[]
+     * @return Model[]
      */
-    public function getMenus()
+    public function getMenus(): array
     {
         $menus = [];
         $menuRows = $this->db->select(['id'])
@@ -54,11 +55,11 @@ class Mapper
      * Gets the menu for the given id.
      *
      * @param int $menuId
-     * @return \Ilch\Layout\Helper\Menu\Model
+     * @return Model
      */
-    public function getMenu($menuId)
+    public function getMenu(int $menuId): Model
     {
-        $menu = new \Ilch\Layout\Helper\Menu\Model($this->layout);
+        $menu = new Model($this->layout);
 
         $menuRow = $this->db->select(['id', 'title'])
             ->from('menu')
