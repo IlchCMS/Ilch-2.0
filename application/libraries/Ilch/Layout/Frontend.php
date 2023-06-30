@@ -7,11 +7,12 @@
 
 namespace Ilch\Layout;
 
-use Ilch\Database\Exception;
+use Ilch\Accesses;
 use Ilch\Request;
 use Ilch\Router;
 use Ilch\Translator;
 use Modules\Admin\Mappers\LayoutAdvSettings;
+use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Admin\Models\Box;
 use Modules\Admin\Models\LayoutAdvSettings as LayoutAdvSettingsModel;
 use Modules\Admin\Mappers\Box as BoxMapper;
@@ -351,50 +352,161 @@ class Frontend extends Base
      */
     public function getBox(string $moduleKey, string $boxKey = '', ?string $customView = null): string
     {
-        if (empty($boxKey)) {
-            $boxKey = $moduleKey;
+        $accessMapper = new Accesses($this->getRequest());
+
+        if ($accessMapper->hasAccess('Module', $moduleKey, $accessMapper::TYPE_MODULE)) {
+            if (empty($boxKey)) {
+                $boxKey = $moduleKey;
+            }
+
+            $class = '\\Modules\\' . ucfirst($moduleKey) . '\\Boxes\\' . ucfirst($boxKey);
+            $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
+            $this->getTranslator()->load(APPLICATION_PATH . '/modules/' . $moduleKey . '/translations');
+            $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
+            $boxObj->render();
+
+            if ($customView !== null) {
+                $viewPath = APPLICATION_PATH . '/' . dirname($this->getFile()) . '/views/modules/' . $moduleKey . '/boxes/views/' . $customView . '.php';
+            } elseif (file_exists(APPLICATION_PATH . '/' . dirname($this->getFile()) . '/views/modules/' . $moduleKey . '/boxes/views/' . $boxKey . '.php')) {
+                $viewPath = APPLICATION_PATH . '/' . dirname($this->getFile()) . '/views/modules/' . $moduleKey . '/boxes/views/' . $boxKey . '.php';
+            } else {
+                $viewPath = APPLICATION_PATH . '/modules/' . $moduleKey . '/boxes/views/' . $boxKey . '.php';
+            }
+
+            $view->setLayoutKey($this->getLayoutKey());
+            $view->setBoxUrl('application/modules/' . $moduleKey);
+
+            return $view->loadScript($viewPath);
         }
-
-        $class = '\\Modules\\' . ucfirst($moduleKey) . '\\Boxes\\' . ucfirst($boxKey);
-        $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
-        $this->getTranslator()->load(APPLICATION_PATH . '/modules/' . $moduleKey . '/translations');
-        $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
-        $boxObj->render();
-
-        if ($customView !== null) {
-            $viewPath = APPLICATION_PATH . '/' . dirname($this->getFile()) . '/views/modules/' . $moduleKey . '/boxes/views/' . $customView . '.php';
-        } elseif (file_exists(APPLICATION_PATH . '/' . dirname($this->getFile()) . '/views/modules/' . $moduleKey . '/boxes/views/' . $boxKey . '.php')) {
-            $viewPath = APPLICATION_PATH . '/' . dirname($this->getFile()) . '/views/modules/' . $moduleKey . '/boxes/views/' . $boxKey . '.php';
-        } else {
-            $viewPath = APPLICATION_PATH . '/modules/' . $moduleKey . '/boxes/views/' . $boxKey . '.php';
-        }
-
-        $view->setLayoutKey($this->getLayoutKey());
-        $view->setBoxUrl('application/modules/' . $moduleKey);
-
-        return $view->loadScript($viewPath);
+        return '';
     }
 
     /**
      * Gets the self box with the given id.
      *
      * @param int $id
-     * @return Box $boxMapper
-     * @throws Exception
+     * @param string|null $tpl
+     * @return string|Box|null
      * @since 2.1.42
      */
-    public function getSelfBoxById(int $id): Box
+    public function getSelfBoxById(int $id, ?string $tpl = null)
     {
-        /** @var \Ilch\Config\Database $config */
-        $config = \Ilch\Registry::get('config');
-        $locale = '';
+        $accessMapper = new Accesses($this->getRequest());
 
-        if ((bool)$config->get('multilingual_acp') && $this->getTranslator()->getLocale() != $config->get('content_language')) {
-            $locale = $this->getTranslator()->getLocale();
+        if ($accessMapper->hasAccess('Module', $id, $accessMapper::TYPE_BOX)) {
+            /** @var \Ilch\Config\Database $config */
+            $config = \Ilch\Registry::get('config');
+            $locale = '';
+
+            if ((bool)$config->get('multilingual_acp') && $this->getTranslator()->getLocale() != $config->get('content_language')) {
+                $locale = $this->getTranslator()->getLocale();
+            }
+            $boxMapper = new BoxMapper();
+            $model = $boxMapper->getSelfBoxByIdLocale($id, $locale);
+            if ($model) {
+                if ($tpl) {
+                    return str_replace(['%s', '%c'], [$this->escape($model->getTitle()), $model->getContent()], $tpl);
+                } else {
+                    return $model;
+                }
+            }
+        }
+        return $tpl ? '' : null;
+    }
+
+    /**
+     * Gets the self Page with the given id.
+     *
+     * @param int $id
+     * @param string|null $tpl
+     * @return \Modules\Admin\Models\Page|string|null
+     * @since 2.1.51
+     */
+    public function getSelfPageById(int $id, ?string $tpl = null)
+    {
+        $accessMapper = new Accesses($this->getRequest());
+        if ($accessMapper->hasAccess('Module', $id, $accessMapper::TYPE_PAGE)) {
+            /** @var \Ilch\Config\Database $config */
+            $config = \Ilch\Registry::get('config');
+            $locale = '';
+
+            if ((bool)$config->get('multilingual_acp') && $this->getTranslator()->getLocale() != $config->get('content_language')) {
+                $locale = $this->getTranslator()->getLocale();
+            }
+
+            $pageMapper = new PageMapper();
+            $page = $pageMapper->getPageByIdLocale($id, $locale);
+
+            if ($tpl) {
+                return str_replace(['%s', '%c'], [$this->escape($page->getTitle()), $page->getContent()], $tpl);
+            } else {
+                return $page;
+            }
+        }
+        return $tpl ? '' : null;
+    }
+
+    /**
+     * Gets the self Page with the given id.
+     *
+     * @param string $moduleName
+     * @param string|null $tpl
+     * @param string $controllerName
+     * @param string $actionName
+     * @return string|null
+     * @since 2.1.51
+     */
+    public function getModuleContent(string $moduleName, ?string $tpl = null, string $controllerName = 'index', string $actionName = 'index'): ?string
+    {
+        $findSub = strpos($controllerName, '_');
+        $dir = '';
+
+        if ($findSub !== false) {
+            $controllerParts = explode('_', $controllerName);
+            $controllerName = $controllerParts[1];
+            $dir = ucfirst($controllerParts[0]) . '\\';
         }
 
-        $boxMapper = new BoxMapper();
-        return $boxMapper->getSelfBoxByIdLocale($id, $locale);
+        $accessMapper = new Accesses($this->getRequest());
+
+        if ($accessMapper->hasAccess('Module', $moduleName, $accessMapper::TYPE_MODULE) && $this->getRequest()->getModuleName() != $moduleName) {
+            $controller = '\\Modules\\' . ucfirst($moduleName) . '\\Controllers\\' . $dir . ucfirst($controllerName);
+
+            $request = new Request(false);
+            $request->setModuleName($moduleName)->setControllerName($controllerName)->setActionName($actionName);
+            $router = new Router($request);
+            $view = new \Ilch\View($request, $this->getTranslator(), $router);
+            $frontend = new Frontend($request, $view->getTranslator(), $router);
+
+            // Check if module exists.
+            if (is_dir(APPLICATION_PATH . '/modules/' . $moduleName) && class_exists($controller)) {
+                $controller = new $controller($frontend, $view, $request, $router, $frontend->getTranslator());
+                $action = $actionName . 'Action';
+                if (method_exists($controller, 'init')) {
+                    $controller->init();
+                }
+
+                if (method_exists($controller, $action)) {
+                    $controller->$action();
+                }
+                $this->getTranslator()->load(APPLICATION_PATH . '/modules/' . $moduleName . '/translations');
+
+                $viewPath = APPLICATION_PATH . '/' . dirname($controller->getLayout()->getFile()) . '/views/modules/' . $moduleName . '/' . $dir . $controllerName . '/' . $actionName . '.php';
+
+                if (!file_exists($viewPath)) {
+                    $viewPath = APPLICATION_PATH . '/modules/' . $moduleName . '/views/' . $dir . $controllerName . '/' . $actionName . '.php';
+                }
+
+                $viewOutput = $view->loadScript($viewPath);
+
+                if ($tpl) {
+                    return str_replace('%c', $viewOutput, $tpl);
+                } else {
+                    return $viewOutput;
+                }
+            }
+        }
+        return $tpl ? '' : null;
     }
 
     /**

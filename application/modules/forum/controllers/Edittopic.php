@@ -51,9 +51,7 @@ class Edittopic extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('topicMove'), ['action' => 'index', 'forumid' => $forumId]);
 
         if ($this->getUser()) {
-            $access = new Accesses($this->getRequest());
-
-            if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
+            if ($this->getUser()->hasAccess('module_forum') || $this->getUser()->isAdmin()) {
                 if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('edittopic')) {
                     $topicMapper = new TopicMapper();
                     $topicModel = new TopicModel();
@@ -93,8 +91,7 @@ class Edittopic extends \Ilch\Controller\Frontend
         $topicMapper = new TopicMapper();
 
         if ($this->getUser()) {
-            $access = new Accesses($this->getRequest());
-            if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
+            if ($this->getUser()->hasAccess('module_forum') || $this->getUser()->isAdmin()) {
                 if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicChangeStatus') === 'topicChangeStatus') {
                     foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
                         $topicMapper->updateStatus($topicId);
@@ -113,8 +110,7 @@ class Edittopic extends \Ilch\Controller\Frontend
         $topicMapper = new TopicMapper();
 
         if ($this->getUser()) {
-            $access = new Accesses($this->getRequest());
-            if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
+            if ($this->getUser()->hasAccess('module_forum') || $this->getUser()->isAdmin()) {
                 if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicChangeType') === 'topicChangeType') {
                     foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
                         $topicMapper->updateType($topicId);

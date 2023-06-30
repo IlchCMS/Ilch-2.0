@@ -7,6 +7,8 @@
 
 namespace Ilch\Controller;
 
+use Ilch\Accesses;
+
 class Base
 {
     /**
@@ -42,6 +44,11 @@ class Base
     private $user;
 
     /**
+     * @var Accesses
+     */
+    private $accesses;
+
+    /**
      * Injects the layout/view to the controller.
      *
      * @param \Ilch\Layout\Base|\Ilch\Layout\Admin|\Ilch\Layout\Frontend $layout
@@ -63,6 +70,7 @@ class Base
         $this->router = $router;
         $this->translator = $translator;
         $this->user = \Ilch\Registry::get('user');
+        $this->accesses = new Accesses($this->request);
     }
 
     /**
@@ -151,6 +159,16 @@ class Base
     public function getUser(): ?\Modules\User\Models\User
     {
         return \Ilch\Registry::get('user');
+    }
+
+    /**
+     * Gets the user object.
+     *
+     * @return Accesses
+     */
+    public function getAccesses(): Accesses
+    {
+        return $this->accesses;
     }
 
     /**

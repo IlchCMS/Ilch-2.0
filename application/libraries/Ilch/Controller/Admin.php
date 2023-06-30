@@ -19,5 +19,6 @@ class Admin extends Base
         $this->getLayout()->set('menu', []);
         $this->getLayout()->setFile('modules/admin/layouts/index');
         $this->getLayout()->set('modules', $moduleMapper->getModules());
+        $this->getLayout()->set('accesses', $this->getAccesses());
     }
 }

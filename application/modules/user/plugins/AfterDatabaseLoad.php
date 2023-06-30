@@ -105,7 +105,7 @@ class AfterDatabaseLoad
             $statisticMapper->saveVisit(['user_id' => $userId, 'session_id' => session_id(), 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
         }
 
-        $pluginData['translator']->setLocale($pluginData['config']->get('locale'));
+        $pluginData['translator']->setLocale($pluginData['config']->get('locale') ?? '');
 
         if (!empty($_SESSION['language'])) {
             $pluginData['translator']->setLocale($_SESSION['language']);

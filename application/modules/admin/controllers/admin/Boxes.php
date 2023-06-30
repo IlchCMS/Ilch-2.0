@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -23,23 +24,25 @@ class Boxes extends \Ilch\Controller\Admin
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'index']),
-                [
-                    'name' => 'add',
-                    'active' => false,
-                    'icon' => 'fa-solid fa-circle-plus',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'treat'])
-                ]
             ]
         ];
 
-        if ($this->getRequest()->getActionName() === 'treat') {
+        if ($this->getUser()->isAdmin()) {
+            $items[0][] = [
+                'name' => 'add',
+                'active' => false,
+                'icon' => 'fa-solid fa-circle-plus',
+                'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'treat'])
+            ];
+        }
+
+        if ($this->getRequest()->getActionName() === 'treat' && $this->getUser()->isAdmin()) {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuBoxes',
             $items
         );
@@ -48,16 +51,19 @@ class Boxes extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $boxMapper = new BoxMapper();
-        $menuMapper = New MenuMapper();
-        $sorter = New Sorter($this->getRequest(), ['id', 'title', 'date_created']);
+        $menuMapper = new MenuMapper();
+        $sorter = new Sorter($this->getRequest(), ['id', 'title', 'date_created']);
+        $user = \Ilch\Registry::get('user');
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuBoxes'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_boxes')) {
             foreach ($this->getRequest()->getPost('check_boxes') as $boxId) {
-                $boxMapper->delete($boxId);
-                $menuMapper->deleteItemByBoxId($boxId);
+                if ($user->hasAccess('box_' . $boxId)) {
+                    $boxMapper->delete($boxId);
+                    $menuMapper->deleteItemByBoxId($boxId);
+                }
             }
             $this->redirect()
                 ->withMessage('deleteSuccess')
@@ -69,10 +75,8 @@ class Boxes extends \Ilch\Controller\Admin
         /*
          * Filtering boxes out which are not allowed for the user.
          */
-        $user = \Ilch\Registry::get('user');
-
         foreach ($boxes ?? [] as $key => $box) {
-            if (!$user->hasAccess('box_'.$box->getId())) {
+            if (!$user->hasAccess('box_' . $box->getId())) {
                 unset($boxes[$key]);
             }
         }
@@ -99,7 +103,7 @@ class Boxes extends \Ilch\Controller\Admin
 
             $user = \Ilch\Registry::get('user');
 
-            if (!$user->hasAccess('box_'.$this->getRequest()->getParam('id'))) {
+            if (!$user->hasAccess('box_' . $this->getRequest()->getParam('id'))) {
                 $this->redirect(['action' => 'index']);
             }
 
@@ -116,6 +120,9 @@ class Boxes extends \Ilch\Controller\Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
         } else {
+            if (!$this->getUser()->isAdmin()) {
+                $this->redirect(['action' => 'index']);
+            }
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuBoxes'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
@@ -139,7 +146,7 @@ class Boxes extends \Ilch\Controller\Admin
                 $boxId = $boxMapper->save($model);
 
                 if (!$model->getId()) {
-                    foreach ($groups as $key => $group) {
+                    foreach ($groups as $group) {
                         if ($group->getId() !== 1) {
                             $groupMapper->saveAccessData($group->getId(), $boxId, 1, 'box');
                         }
@@ -154,7 +161,7 @@ class Boxes extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'treat'], ($model->getId()?['id' => $model->getId()]:[])));
+                ->to(array_merge(['action' => 'treat'], ($model->getId() ? ['id' => $model->getId()] : [])));
         }
 
         $this->getView()->set('box', $model)
@@ -172,9 +179,9 @@ class Boxes extends \Ilch\Controller\Admin
     {
         $user = \Ilch\Registry::get('user');
 
-        if ($user->hasAccess('box_'.$this->getRequest()->getParam('id')) && $this->getRequest()->isSecure()) {
+        if ($user->hasAccess('box_' . $this->getRequest()->getParam('id')) && $this->getRequest()->isSecure()) {
             $boxMapper = new BoxMapper();
-            $menuMapper = New MenuMapper();
+            $menuMapper = new MenuMapper();
 
             $boxMapper->delete($this->getRequest()->getParam('id'));
             $menuMapper->deleteItemByBoxId($this->getRequest()->getParam('id'));

@@ -75,7 +75,6 @@ class Showtopics extends \Ilch\Controller\Frontend
         $this->getView()->set('topics', $topicMapper->getTopicsByForumId($forumId, $pagination));
         $this->getView()->set('groupIdsArray', $groupIds);
         $this->getView()->set('pagination', $pagination);
-        $this->getView()->set('userAccess', new Accesses($this->getRequest()));
         $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
         $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }
@@ -86,8 +85,7 @@ class Showtopics extends \Ilch\Controller\Frontend
         $topicSubscriptionMapper = new TopicSubscriptionMapper();
 
         if ($this->getUser()) {
-            $access = new Accesses($this->getRequest());
-            if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
+            if ($this->getUser()->hasAccess('module_forum') || $this->getUser()->isAdmin()) {
                 if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicDelete') === 'topicDelete') {
                     foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
                         $topicMapper->deleteById($topicId);

@@ -9,7 +9,6 @@ $groupIdsArray = $this->get('groupIdsArray');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
-    $userAccess = $this->get('userAccess');
 }
 $DESCPostorder = $this->get('DESCPostorder');
 $postsPerPage = $this->get('postsPerPage');
@@ -170,7 +169,7 @@ $postsPerPage = $this->get('postsPerPage');
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>
         <div class="topic-actions">
-            <?php if ($adminAccess || (!empty($userAccess) && $userAccess->hasAccess('forum'))): ?>
+            <?php if ($adminAccess || ($this->getUser() && $this->getUser()->hasAccess('module_forum'))): ?>
                 <?php if (!$forumEdit): ?>
                     <form method="post">
                         <?=$this->getTokenField() ?>

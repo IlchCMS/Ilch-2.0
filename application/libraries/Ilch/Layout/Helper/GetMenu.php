@@ -54,7 +54,7 @@ class GetMenu
     {
         $helperMapper = new MapperHelper($this->layout);
         $menuMapper = new MenuMapper();
-        $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId));
+        $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId) ?? 0);
 
         //TODO: optimize loading of menus (less queries!!!)
 

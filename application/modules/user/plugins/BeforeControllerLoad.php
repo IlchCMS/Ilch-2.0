@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -18,11 +19,11 @@ class BeforeControllerLoad
      */
     public function __construct(array $pluginData)
     {
-        if (!isset($pluginData['router'], $pluginData['config'])) {
+        if (!isset($pluginData['router'], $pluginData['config'], $pluginData['accesses'])) {
             return;
         }
 
-        $userId = null;
+        $userId = 0;
 
         if (isset($_SESSION['user_id'])) {
             $userId = (int) $_SESSION['user_id'];
@@ -53,15 +54,25 @@ class BeforeControllerLoad
             /*
              * Not admins have only access to modules.
              */
-            if ($request->getModuleName() === 'admin' && !\in_array($request->getControllerName(), ['index', 'login'])) {
-                $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
+            if ($request->getModuleName() === 'admin' && !\in_array($request->getControllerName(), ['index', 'login', 'page', 'boxes'])) {
+                $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
+            }
+
+            if ($request->getModuleName() === 'admin' && $request->getControllerName() === 'page' && !$pluginData['accesses']->hasAccess('Admin', null, $pluginData['accesses']::TYPE_PAGE)) {
+                $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
+            }
+            if ($request->getModuleName() === 'admin' && $request->getControllerName() === 'boxes' && !$pluginData['accesses']->hasAccess('Admin', null, $pluginData['accesses']::TYPE_BOX)) {
+                $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
+            }
+            if ($request->getModuleName() === 'article' && !$pluginData['accesses']->hasAccess('Admin', null, $pluginData['accesses']::TYPE_ARTICLE) && !$user->hasAccess('module_article')) {
+                $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
 
             /*
              * Check if user has right for this module.
              */
-            if (!$user->hasAccess('module_'.$request->getModuleName()) && $request->getModuleName() !== 'admin') {
-                $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
+            if (!$user->hasAccess('module_' . $request->getModuleName()) && $request->getModuleName() !== 'admin' && $request->getModuleName() !== 'article') {
+                $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
         }
     }

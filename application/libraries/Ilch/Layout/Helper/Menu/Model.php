@@ -7,6 +7,7 @@
 
 namespace Ilch\Layout\Helper\Menu;
 
+use Ilch\Accesses;
 use Ilch\Layout\Base as Layout;
 use Modules\Admin\Models\MenuItem;
 
@@ -47,6 +48,10 @@ class Model
      * @var string
      */
     protected $currentUrl = '';
+    /**
+     * @var Accesses
+     */
+    protected $accessMapper;
 
     /**
      * Injects the layout.
@@ -56,10 +61,10 @@ class Model
     public function __construct(Layout $layout)
     {
         $this->layout = $layout;
-
         $this->menuMapper = new \Modules\Admin\Mappers\Menu();
         $this->boxMapper = new \Modules\Admin\Mappers\Box();
         $this->pageMapper = new \Modules\Admin\Mappers\Page();
+        $this->accessMapper = new Accesses($layout->getRequest());
         $this->currentUrl = $layout->getCurrentUrl();
     }
 
@@ -130,7 +135,6 @@ class Model
             return '';
         }
 
-        /** @var \Ilch\Config\Database $config */
         $config = \Ilch\Registry::get('config');
 
         $html = '';
@@ -149,6 +153,9 @@ class Model
                         continue;
                     }
                     if ($item->getBoxId()) {
+                        if (!$this->accessMapper->hasAccess('Module', $item->getBoxId(), $this->accessMapper::TYPE_BOX)) {
+                            continue;
+                        }
                         $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale);
                         // purify content of user created box
                         $contentHtml = $this->layout->purify($box->getContent());
@@ -233,12 +240,21 @@ class Model
                 $noopener = '';
 
                 if ($menuData['items'][$itemId]->isPageLink()) {
+                    if (!$this->accessMapper->hasAccess('Module', $menuData['items'][$itemId]->getSiteId(), $this->accessMapper::TYPE_PAGE)) {
+                        continue;
+                    }
+
                     $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId(), $locale);
                     if (!$page) {
                         $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId());
                     }
+
                     $href = $this->layout->getUrl($page ? $page->getPerma() : '');
                 } elseif ($menuData['items'][$itemId]->isModuleLink()) {
+                    if (!$this->accessMapper->hasAccess('Module', $menuData['items'][$itemId]->getModuleKey())) {
+                        continue;
+                    }
+
                     $href = $this->layout->getUrl(
                         ['module' => $menuData['items'][$itemId]->getModuleKey(), 'action' => 'index', 'controller' => 'index']
                     );
