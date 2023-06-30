@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,6 +11,10 @@ use Ilch\Request;
 use Ilch\Accesses;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
+use Modules\User\Config\Config as UserConfig;
+use Modules\User\Mappers\User as UserMapper;
+use Modules\Admin\Config\Config as AdminConfig;
+use Modules\Article\Config\Config as ArticleConfig;
 
 class AccessesTest extends DatabaseTestCase
 {
@@ -20,65 +25,7 @@ class AccessesTest extends DatabaseTestCase
      */
     protected $request;
 
-    protected $_SESSION;
-
     protected $phpunitDataset;
-
-    protected static function getSchemaSQLQueries()
-    {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_groups` (
-                `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
-                PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2;
-
-            CREATE TABLE IF NOT EXISTS `[prefix]_users` (
-                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
-                `password` VARCHAR(255) NOT NULL,
-                `email` VARCHAR(255) NOT NULL,
-                `first_name` VARCHAR(255) NOT NULL DEFAULT "",
-                `last_name` VARCHAR(255) NOT NULL DEFAULT "",
-                `gender` TINYINT(1) NOT NULL DEFAULT 0,
-                `city` VARCHAR(255) NOT NULL DEFAULT "",
-                `birthday` DATE NULL DEFAULT NULL,
-                `avatar` VARCHAR(255) NOT NULL DEFAULT "",
-                `signature` VARCHAR(255) NOT NULL DEFAULT "",
-                `locale` VARCHAR(255) NOT NULL DEFAULT "",
-                `opt_mail` TINYINT(1) DEFAULT 1,
-                `opt_gallery` TINYINT(1) DEFAULT 1,
-                `date_created` DATETIME NOT NULL,
-                `date_confirmed` DATETIME NULL DEFAULT NULL,
-                `date_last_activity` DATETIME NULL DEFAULT NULL,
-                `confirmed` TINYINT(1) DEFAULT 1,
-                `confirmed_code` VARCHAR(255) NULL DEFAULT NULL,
-                `selector` char(18),
-                `expires` DATETIME,
-                `locked` TINYINT(1) NOT NULL DEFAULT 0,
-                `selectsdelete` DATETIME,
-                PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-
-            CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
-                `user_id` INT(11) NOT NULL,
-                `group_id` INT(11) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-            CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
-                `group_id` INT(11) NOT NULL,
-                `page_id` INT(11) DEFAULT 0,
-                `module_key` VARCHAR(191) DEFAULT 0,
-                `article_id` INT(11) DEFAULT 0,
-                `box_id` INT(11) DEFAULT 0,
-                `access_level` INT(11) DEFAULT 0,
-                PRIMARY KEY (`group_id`, `page_id`, `module_key`, `article_id`, `box_id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
-            INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
-                (1, "Administrator"),
-                (2, "User"),
-                (3, "Guest");';
-    }
 
     public function setUp(): void
     {
@@ -86,12 +33,48 @@ class AccessesTest extends DatabaseTestCase
         $this->phpunitDataset = new PhpunitDataset($this->db);
         $this->phpunitDataset->loadFromFile(__DIR__ . '/_files/mysql_accesses.yml');
         $this->request = new Request();
-        $_SESSION = [];
+
+        $this->request->setControllerName('index');
+        $this->request->setActionName('index');
+    }
+
+    /**
+     * Check if hasAccess() returns true for a module when the user has access_level 2.
+     *
+     * @param int $uid
+     */
+    private function setUser(int $uid)
+    {
+        /** @var \Modules\User\Models\User $user */
+        $user = \Ilch\Registry::get('user');
+        if ($user && $user->getId() === $uid) {
+            return;
+        }
+
+        $userMapper = new UserMapper();
+        $user = $userMapper->getUserById($uid);
+        if ($user) {
+            if (\Ilch\Registry::has('user')) {
+                \Ilch\Registry::remove('user');
+            }
+            \Ilch\Registry::set('user', $user);
+        } else {
+            \Ilch\Registry::remove('user');
+        }
+    }
+
+    public function testHasAccessAdmin()
+    {
+        $this->setUser(2);
+        $accesses = new Accesses($this->request);
+
+        $result = $accesses->hasAccess('Admin');
+        self::assertTrue($result, 'An admin should have access.');
     }
 
     public function testHasAccessModule()
     {
-        $_SESSION['user_id'] = 1;
+        $this->setUser(1);
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Module');
@@ -103,7 +86,7 @@ class AccessesTest extends DatabaseTestCase
      */
     public function testHasAccessModuleArticle()
     {
-        $_SESSION['user_id'] = 2;
+        $this->setUser(2);
         $this->request->setModuleName('article');
         $accesses = new Accesses($this->request);
 
@@ -116,7 +99,7 @@ class AccessesTest extends DatabaseTestCase
      */
     public function testHasAccessModuleCheckout()
     {
-        $_SESSION['user_id'] = 2;
+        $this->setUser(2);
         $this->request->setModuleName('checkout');
         $accesses = new Accesses($this->request);
 
@@ -129,21 +112,13 @@ class AccessesTest extends DatabaseTestCase
      */
     public function testHasAccessModuleForumNoAccess()
     {
-        $_SESSION['user_id'] = 2;
+        $this->setUser(2);
         $this->request->setModuleName('forum');
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Module');
+        var_dump($result);
         self::assertFalse($result, 'User 2 should not have access to the forum module.');
-    }
-
-    public function testHasAccessAdmin()
-    {
-        $_SESSION['user_id'] = 1;
-        $accesses = new Accesses($this->request);
-
-        $result = $accesses->hasAccess('Admin');
-        self::assertTrue($result, 'An admin should have access.');
     }
 
     /**
@@ -151,7 +126,7 @@ class AccessesTest extends DatabaseTestCase
      */
     public function testHasAccessPage()
     {
-        $_SESSION['user_id'] = 2;
+        $this->setUser(2);
         $this->request->setModuleName('admin');
         $this->request->setControllerName('page');
         $this->request->setParam('id', 1);
@@ -167,7 +142,7 @@ class AccessesTest extends DatabaseTestCase
      */
     public function testHasAccessPageNoAccess()
     {
-        $_SESSION['user_id'] = 2;
+        $this->setUser(2);
         $this->request->setModuleName('admin');
         $this->request->setControllerName('page');
         $this->request->setParam('id', 2);
@@ -175,5 +150,19 @@ class AccessesTest extends DatabaseTestCase
 
         $result = $accesses->hasAccess('Module');
         self::assertFalse($result, 'User 2 should not have access to the page.');
+    }
+
+    /**
+     * Returns database schema sql statements to initialize database
+     *
+     * @return string
+     */
+    protected static function getSchemaSQLQueries(): string
+    {
+        $configUser = new UserConfig();
+        $configAdmin = new AdminConfig();
+        $configArticle = new ArticleConfig();
+
+        return $configAdmin->getInstallSql() . $configUser->getInstallSql() . $configArticle->getInstallSql();
     }
 }

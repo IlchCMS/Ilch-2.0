@@ -12,6 +12,10 @@ use Ilch\Router;
 use Ilch\Translator;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
+use Modules\User\Config\Config as UserConfig;
+use Modules\User\Mappers\User as UserMapper;
+use Modules\Admin\Config\Config as AdminConfig;
+use Modules\Article\Config\Config as ArticleConfig;
 
 class GetMenuTest extends DatabaseTestCase
 {
@@ -24,12 +28,6 @@ class GetMenuTest extends DatabaseTestCase
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
         $this->phpunitDataset->loadFromFile(__DIR__ . '/../../_files/mysql_menu.yml');
-    }
-
-    protected static function getSchemaSQLQueries()
-    {
-        $adminConfig = new \Modules\Admin\Config\Config();
-        return $adminConfig->getInstallSql();
     }
 
     /**
@@ -153,5 +151,19 @@ class GetMenuTest extends DatabaseTestCase
                 'currentUrlModule' => 'jobs'
             ],
         ];
+    }
+
+    /**
+     * Returns database schema sql statements to initialize database
+     *
+     * @return string
+     */
+    protected static function getSchemaSQLQueries(): string
+    {
+        $configUser = new UserConfig();
+        $configAdmin = new AdminConfig();
+        $configArticle = new ArticleConfig();
+
+        return $configAdmin->getInstallSql() . $configUser->getInstallSql() . $configArticle->getInstallSql();
     }
 }
