@@ -251,7 +251,7 @@ class Model
 
                     $href = $this->layout->getUrl($page ? $page->getPerma() : '');
                 } elseif ($menuData['items'][$itemId]->isModuleLink()) {
-                    if (!$this->accessMapper->hasAccess('Module', $menuData['items'][$itemId]->getModuleKey())) {
+                    if (!$this->accessMapper->hasAccess('Module', $menuData['items'][$itemId]->getModuleKey(), $this->accessMapper::TYPE_MODULE)) {
                         continue;
                     }
 

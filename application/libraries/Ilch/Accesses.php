@@ -93,13 +93,20 @@ class Accesses
      * @param int $type
      * @return bool
      */
-    public function hasAccess(string $getAccessTo = '', ?string $key = null, int $type = 0): bool
+    public function hasAccess(string $getAccessTo = '', ?string $key = null, int $type = self::TYPE_MODULE): bool
     {
         if ($key === null) {
             $isPage = $this->request->getModuleName() === 'admin' && $this->request->getControllerName() === 'page';
             $key = $isPage ? $this->request->getParam('id', 0) : $this->request->getModuleName();
             if ($isPage) {
                 $type = $this::TYPE_PAGE;
+            }
+        } else {
+            $findSub = strpos($key, '_');
+            if ($findSub !== false) {
+                $keyParts = explode('_', $key);
+                $key = $keyParts[1];
+                $getAccessTo = $keyParts[0];
             }
         }
 

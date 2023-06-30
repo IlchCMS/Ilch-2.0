@@ -1,10 +1,14 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\User\Models;
+
+use Ilch\Accesses;
+use Ilch\Request;
 
 class User extends \Ilch\Model
 {
@@ -157,7 +161,7 @@ class User extends \Ilch\Model
     /**
      * The associated user group object.
      *
-     * @var \Modules\User\Models\Group[]
+     * @var Group[]
      */
     protected $groups = [];
 
@@ -167,7 +171,7 @@ class User extends \Ilch\Model
      * @var int
      */
     protected $locked;
-    
+
     /**
      * Selects Delete timestamp of the user.
      *
@@ -191,7 +195,7 @@ class User extends \Ilch\Model
      * @param int $id
      * @return User
      */
-    public function setId($id)
+    public function setId($id): User
     {
         $this->id = (int)$id;
 
@@ -214,7 +218,7 @@ class User extends \Ilch\Model
      * @param string $username
      * @return User
      */
-    public function setName($username)
+    public function setName($username): User
     {
         $this->name = (string)$username;
 
@@ -237,7 +241,7 @@ class User extends \Ilch\Model
      * @param string $email
      * @return User
      */
-    public function setEmail($email)
+    public function setEmail($email): User
     {
         $this->email = (string)$email;
 
@@ -260,7 +264,7 @@ class User extends \Ilch\Model
      * @param string $password
      * @return User
      */
-    public function setPassword($password)
+    public function setPassword($password): User
     {
         $this->password = (string)$password;
 
@@ -283,7 +287,7 @@ class User extends \Ilch\Model
      * @param string $locale
      * @return User
      */
-    public function setLocale($locale)
+    public function setLocale($locale): User
     {
         $this->locale = (string)$locale;
 
@@ -306,7 +310,7 @@ class User extends \Ilch\Model
      * @param int $opt_mail
      * @return User
      */
-    public function setOptMail($opt_mail)
+    public function setOptMail($opt_mail): User
     {
         $this->opt_mail = (string)$opt_mail;
 
@@ -329,7 +333,7 @@ class User extends \Ilch\Model
      * @param int $opt_gallery
      * @return User
      */
-    public function setOptGallery($opt_gallery)
+    public function setOptGallery($opt_gallery): User
     {
         $this->opt_gallery = (string)$opt_gallery;
 
@@ -352,7 +356,7 @@ class User extends \Ilch\Model
      * @param int $confirmed
      * @return User
      */
-    public function setConfirmed($confirmed)
+    public function setConfirmed($confirmed): User
     {
         $this->confirmed = (int)$confirmed;
 
@@ -375,7 +379,7 @@ class User extends \Ilch\Model
      * @param string $confirmedCode
      * @return User
      */
-    public function setConfirmedCode($confirmedCode)
+    public function setConfirmedCode($confirmedCode): User
     {
         $this->confirmedCode = (string)$confirmedCode;
 
@@ -398,7 +402,7 @@ class User extends \Ilch\Model
      * @param string $selector
      * @return User
      */
-    public function setSelector($selector)
+    public function setSelector($selector): User
     {
         $this->selector = (string)$selector;
 
@@ -421,7 +425,7 @@ class User extends \Ilch\Model
      * @param $expires
      * @return User
      */
-    public function setExpires($expires)
+    public function setExpires($expires): User
     {
         $this->expires = $expires;
 
@@ -433,7 +437,7 @@ class User extends \Ilch\Model
      *
      * @return Group[]
      */
-    public function getGroups()
+    public function getGroups(): array
     {
         return $this->groups;
     }
@@ -444,7 +448,7 @@ class User extends \Ilch\Model
      * @param Group[] $groups
      * @return User
      */
-    public function setGroups($groups)
+    public function setGroups($groups): User
     {
         $this->groups = $groups;
 
@@ -457,7 +461,7 @@ class User extends \Ilch\Model
      * @param Group $group
      * @return User
      */
-    public function addGroup(Group $group)
+    public function addGroup(Group $group): User
     {
         if (!isset($this->groups[$group->getId()])) {
             $this->groups[$group->getId()] = $group;
@@ -469,10 +473,10 @@ class User extends \Ilch\Model
     /**
      * Checks if user has the given group.
      *
-     * @param integer $groupId
-     * @return boolean
+     * @param int $groupId
+     * @return bool
      */
-    public function hasGroup($groupId)
+    public function hasGroup($groupId): bool
     {
         if (!isset($this->groups[$groupId])) {
             return false;
@@ -497,7 +501,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $dateCreated
      * @return User
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated($dateCreated): User
     {
         $this->dateCreated = $dateCreated;
 
@@ -520,7 +524,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $dateConfirmed
      * @return User
      */
-    public function setDateConfirmed($dateConfirmed)
+    public function setDateConfirmed($dateConfirmed): User
     {
         $this->dateConfirmed = $dateConfirmed;
 
@@ -543,7 +547,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $dateLastActivity
      * @return User
      */
-    public function setDateLastActivity($dateLastActivity)
+    public function setDateLastActivity($dateLastActivity): User
     {
         $this->dateLastActivity = $dateLastActivity;
 
@@ -566,7 +570,7 @@ class User extends \Ilch\Model
      * @param string $firstname
      * @return User
      */
-    public function setFirstName($firstname)
+    public function setFirstName($firstname): User
     {
         $this->firstname = (string)$firstname;
 
@@ -589,7 +593,7 @@ class User extends \Ilch\Model
      * @param string $lastname
      * @return User
      */
-    public function setLastName($lastname)
+    public function setLastName($lastname): User
     {
         $this->lastname = (string)$lastname;
 
@@ -612,7 +616,7 @@ class User extends \Ilch\Model
      * @param int $gender
      * @return User
      */
-    public function setGender($gender)
+    public function setGender($gender): User
     {
         $this->gender = (int)$gender;
 
@@ -635,7 +639,7 @@ class User extends \Ilch\Model
      * @param string $avatar
      * @return User
      */
-    public function setAvatar($avatar)
+    public function setAvatar($avatar): User
     {
         $this->avatar = (string)$avatar;
 
@@ -658,7 +662,7 @@ class User extends \Ilch\Model
      * @param string $signature
      * @return User
      */
-    public function setSignature($signature)
+    public function setSignature($signature): User
     {
         $this->signature = (string)$signature;
 
@@ -681,7 +685,7 @@ class User extends \Ilch\Model
      * @param string $city
      * @return User
      */
-    public function setCity($city)
+    public function setCity($city): User
     {
         $this->city = (string)$city;
 
@@ -707,7 +711,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $birthday
      * @return User
      */
-    public function setBirthday($birthday)
+    public function setBirthday($birthday): User
     {
         $this->birthday = $birthday;
 
@@ -730,13 +734,13 @@ class User extends \Ilch\Model
      * @param mixed $locked
      * @return User
      */
-    public function setLocked($locked)
+    public function setLocked($locked): User
     {
         $this->locked = $locked;
-        
+
         return $this;
     }
-    
+
     /**
      * Returns the selectsdelete \Ilch\Date of the user.
      *
@@ -753,7 +757,7 @@ class User extends \Ilch\Model
      * @param \Ilch\Date $selectsdelete
      * @return User
      */
-    public function setSelectsDelete($selectsdelete)
+    public function setSelectsDelete($selectsdelete): User
     {
         $this->selectsdelete = $selectsdelete;
         return $this;
@@ -762,9 +766,9 @@ class User extends \Ilch\Model
     /**
      * Checks if user has admin group.
      *
-     * @return boolean
+     * @return bool
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         if (\array_key_exists(1, $this->getGroups())) {
             return true;
@@ -776,54 +780,38 @@ class User extends \Ilch\Model
     /**
      * Returns whether the user has access to a specific key.
      *
+     * @param string $key A module-key, page-id or article-id prefixed by either one of these: "module_", "page_", "article_".
+     * @param  bool $isInAdmin Whether the user is in the admin backend currently.
+     *
+     * @return bool            True if access granted, false otherwise.
+     *
      * @todo Remove from user model and create acl class
-     * @param  string $key A module-key, page-id or article-id prefixed by either one of these: "module_", "page_", "article_".
-     * @param  boolean $isInAdmin Whether the user is in the admin backend currently.
-     *
-     * @return boolean            True if access granted, false otherwise.
-     *
      * @todo refactor -> kein Abhängigkeiten zu anderen Klassen, die keine Models sind
      */
-    public function hasAccess($key, $isInAdmin = true)
+    public function hasAccess(string $key, bool $isInAdmin = true): bool
     {
-        if ($this->isAdmin()) {
-            /*
-             * The user is an admin, allow him everything.
-             */
-            return true;
+        $findSub = strpos($key, '_');
+        if ($findSub !== false) {
+            $keyParts = explode('_', $key);
+            $key = $keyParts[1];
+            $type = $keyParts[0];
+        } else {
+            $type = 'module';
         }
 
-        /** @var \Ilch\Database\Mysql $db */
-        $db = \Ilch\Registry::get('db');
+        $accesses = new Accesses(new Request(false));
+        $accesses->setUser($this);
 
-        $sql = 'SELECT ga.access_level
-                FROM [prefix]_groups_access AS ga';
-
-        if (strpos($key, 'module_') !== false) {
-            $moduleKey = substr($key, 7);
-            $sqlJoin = ' INNER JOIN `[prefix]_modules` AS m ON ga.module_key = m.key';
-            $sqlWhere = ' WHERE m.key = "' . $db->escape($moduleKey) . '"';
-        } elseif (strpos($key, 'page_') !== false) {
-            $pageId = (int)substr($key, 5);
-            $sqlJoin = ' INNER JOIN `[prefix]_pages` AS p ON ga.page_id = p.id';
-            $sqlWhere = ' WHERE p.id = ' . $pageId;
-        } elseif (strpos($key, 'article_') !== false) {
-            $articleId = (int)substr($key, 8);
-            $sqlJoin = ' INNER JOIN [prefix]_articles AS a ON ga.article_id = a.id';
-            $sqlWhere = ' WHERE a.id = ' . $articleId;
-        } elseif (strpos($key, 'box_') !== false) {
-            $boxId = (int)substr($key, 4);
-            $sqlJoin = ' INNER JOIN [prefix]_boxes AS b ON ga.box_id = b.id';
-            $sqlWhere = ' WHERE b.id = ' . $boxId;
+        if ($type == 'page') {
+            $type = $accesses::TYPE_PAGE;
+        } elseif ($type == 'box') {
+            $type = $accesses::TYPE_BOX;
+        } elseif ($type == 'article') {
+            $type = $accesses::TYPE_ARTICLE;
+        } else {
+            $type = $accesses::TYPE_MODULE;
         }
 
-        $sql .= $sqlJoin . $sqlWhere . '
-                AND ga.group_id IN (' . implode(',', array_keys($this->getGroups())) . ')
-                ORDER BY access_level DESC
-                LIMIT 1';
-
-        $accessLevel = (int)$db->queryCell($sql);
-
-        return ($isInAdmin && $accessLevel === 2) || (!$isInAdmin && $accessLevel >= 1);
+        return $accesses->hasAccess($isInAdmin ? 'Admin' : 'Module', $key, $type);
     }
 }
