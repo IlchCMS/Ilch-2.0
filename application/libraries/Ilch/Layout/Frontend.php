@@ -38,13 +38,13 @@ class Frontend extends Base
      * @param Translator $translator
      * @param Router $router
      * @param string|null $baseUrl
-     *@todo adds helper dynamic from folder.
+     * @todo adds helper dynamic from folder.
      */
     public function __construct(Request $request, Translator $translator, Router $router, ?string $baseUrl = null)
     {
         parent::__construct($request, $translator, $router, $baseUrl);
 
-        $this->addHelper('getTitle', 'layout', new \Ilch\Layout\Helper\GetTitle($this));
+        $this->addHelper('getTitle', 'layout', new \Ilch\Layout\Helper\GetTitle());
         $this->addHelper('header', 'layout', new \Ilch\Layout\Helper\Header($this));
         $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
         $this->addHelper('getMenu', 'layout', new \Ilch\Layout\Helper\GetMenu($this));

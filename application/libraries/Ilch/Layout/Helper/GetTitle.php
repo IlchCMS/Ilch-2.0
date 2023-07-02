@@ -19,9 +19,8 @@ class GetTitle
     /**
      * Injects the title.
      *
-     * @param Layout $title
      */
-    public function __construct(Layout $title)
+    public function __construct()
     {
         $this->model = new \Ilch\Layout\Helper\Title\Model();
     }
