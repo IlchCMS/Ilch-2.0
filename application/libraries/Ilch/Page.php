@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -9,22 +10,22 @@ namespace Ilch;
 class Page
 {
     /**
-     * @var \Ilch\Request
+     * @var Request
      */
     private $request;
 
     /**
-     * @var \Ilch\Translator
+     * @var Translator
      */
     private $translator;
 
     /**
-     * @var \Ilch\Router
+     * @var Router
      */
     private $router;
 
     /**
-     * @var \Ilch\Plugin
+     * @var Plugin
      */
     private $plugin;
 
@@ -34,7 +35,7 @@ class Page
     private $layout;
 
     /**
-     * @var \Ilch\View
+     * @var View
      */
     private $view;
 
@@ -43,6 +44,9 @@ class Page
      */
     private $fileConfig;
 
+    /**
+     * @var Accesses
+     */
     private $accesses;
 
     /**
@@ -78,6 +82,7 @@ class Page
         $this->plugin->addPluginData('request', $this->request);
         $this->plugin->addPluginData('layout', $this->layout);
         $this->plugin->addPluginData('router', $this->router);
+        $this->plugin->addPluginData('accesses', $this->accesses);
     }
 
     /**
@@ -85,7 +90,7 @@ class Page
      */
     public function loadCms()
     {
-        $this->fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+        $this->fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
 
         if (($this->fileConfig->get('dbUser')) !== null) {
             // Cms is installed
@@ -120,15 +125,15 @@ class Page
      */
     public function loadPage()
     {
-        $this->translator->load(APPLICATION_PATH.'/libraries/Ilch/Translations');
+        $this->translator->load(APPLICATION_PATH . '/libraries/Ilch/Translations');
         if ($this->request->isAdmin()) {
-            $this->translator->load(APPLICATION_PATH.'/modules/admin/translations');
+            $this->translator->load(APPLICATION_PATH . '/modules/admin/translations');
         }
-        $this->translator->load(APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/translations');
+        $this->translator->load(APPLICATION_PATH . '/modules/' . $this->request->getModuleName() . '/translations');
 
         Registry::set('translator', $this->translator);
         $controller = $this->loadController();
-        $this->translator->load(APPLICATION_PATH.'/'.dirname($controller->getLayout()->getFile()).'/translations');
+        $this->translator->load(APPLICATION_PATH . '/' . dirname($controller->getLayout()->getFile()) . '/translations');
         $controllerName = $this->request->getControllerName();
         $findSub = strpos($controllerName, '_');
         $dir = '';
@@ -136,28 +141,28 @@ class Page
         if ($findSub !== false) {
             $controllerParts = explode('_', $this->request->getControllerName());
             $controllerName = $controllerParts[1];
-            $dir = ucfirst($controllerParts[0]).'\\';
+            $dir = ucfirst($controllerParts[0]) . '\\';
         }
 
         $this->plugin->addPluginData('controller', $controller);
         $this->plugin->execute('AfterControllerLoad');
 
         if ($this->request->isAdmin()) {
-            $viewOutput = $this->view->loadScript(APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/views/admin/'.$dir.$controllerName.'/'.$this->request->getActionName().'.php');
+            $viewOutput = $this->view->loadScript(APPLICATION_PATH . '/modules/' . $this->request->getModuleName() . '/views/admin/' . $dir . $controllerName . '/' . $this->request->getActionName() . '.php');
         } else {
-            $viewPath = APPLICATION_PATH.'/'.dirname($controller->getLayout()->getFile()).'/views/modules/'.$this->request->getModuleName().'/'.$dir.$controllerName.'/'.$this->request->getActionName().'.php';
+            $viewPath = APPLICATION_PATH . '/' . dirname($controller->getLayout()->getFile()) . '/views/modules/' . $this->request->getModuleName() . '/' . $dir . $controllerName . '/' . $this->request->getActionName() . '.php';
 
             if (!file_exists($viewPath)) {
-                $viewPath = APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/views/'.$dir.$controllerName.'/'.$this->request->getActionName().'.php';
+                $viewPath = APPLICATION_PATH . '/modules/' . $this->request->getModuleName() . '/views/' . $dir . $controllerName . '/' . $this->request->getActionName() . '.php';
             }
 
             $viewOutput = $this->view->loadScript($viewPath);
         }
-        $this->fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+        $this->fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
 
         if (($this->fileConfig->get('dbUser')) !== null) {
             // Always allow access to registration (previously no access for guests to the user module lead to them being unable to register)
-            $accesses = ($this->request->getModuleName() === 'user' && ($this->request->getControllerName() === 'regist' || $this->request->getControllerName() === 'login')) || $accesses = $this->accesses->hasAccess('Module');
+            $accesses = ($this->request->getModuleName() === 'user' && ($this->request->getControllerName() === 'regist' || $this->request->getControllerName() === 'login')) || $this->accesses->hasAccess('Module');
         } else {
             $accesses = true;
         }
@@ -168,7 +173,7 @@ class Page
             } elseif ($accesses) {
                 $controller->getLayout()->setContent($viewOutput);
             } else {
-                $this->translator->load(APPLICATION_PATH.'/modules/user/translations/');
+                $this->translator->load(APPLICATION_PATH . '/modules/user/translations/');
 
                 $controller->getLayout()->setContent($this->accesses->getErrorPage($this->translator->trans('noAccessPage')));
             }
@@ -178,7 +183,7 @@ class Page
             echo $viewOutput;
         } elseif ($controller->getLayout()->getDisabled() === false) {
             if ($controller->getLayout()->getFile() != '') {
-                $this->layout->loadScript(APPLICATION_PATH.'/'.$controller->getLayout()->getFile().'.php');
+                $this->layout->loadScript(APPLICATION_PATH . '/' . $controller->getLayout()->getFile() . '.php');
             }
         }
     }
@@ -186,7 +191,8 @@ class Page
     /**
      * Loads controller defined by the request object.
      *
-     * @return \Ilch\Controller\Base
+     * @return \Ilch\Controller\Base|null
+     * @noinspection PhpMissingReturnTypeInspection
      */
     protected function loadController()
     {
@@ -197,17 +203,17 @@ class Page
         if ($findSub !== false) {
             $controllerParts = explode('_', $this->request->getControllerName());
             $controllerName = $controllerParts[1];
-            $dir = ucfirst($controllerParts[0]).'\\';
+            $dir = ucfirst($controllerParts[0]) . '\\';
         }
 
         if ($this->request->isAdmin()) {
-            $controller = '\\Modules\\'.ucfirst($this->request->getModuleName()).'\\Controllers\\Admin\\'.$dir.ucfirst($controllerName);
+            $controller = '\\Modules\\' . ucfirst($this->request->getModuleName()) . '\\Controllers\\Admin\\' . $dir . ucfirst($controllerName);
         } else {
-            $controller = '\\Modules\\'.ucfirst($this->request->getModuleName()).'\\Controllers\\'.$dir.ucfirst($controllerName);
+            $controller = '\\Modules\\' . ucfirst($this->request->getModuleName()) . '\\Controllers\\' . $dir . ucfirst($controllerName);
         }
 
         // Check if module exists.
-        if (!is_dir(APPLICATION_PATH.'/modules/'.$this->request->getModuleName())) {
+        if (!is_dir(APPLICATION_PATH . '/modules/' . $this->request->getModuleName())) {
             $errorModule = $this->request->getModuleName();
 
             $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
@@ -220,11 +226,9 @@ class Page
 
             $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
             $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Controller', 'errorText' => $errorController]);
-        }
-
-        if (class_exists($controller)) {
+        } else {
             $controller = new $controller($this->layout, $this->view, $this->request, $this->router, $this->translator);
-            $action = $this->request->getActionName().'Action';
+            $action = $this->request->getActionName() . 'Action';
 
             $this->plugin->addPluginData('controller', $controller);
             $this->plugin->execute('BeforeControllerLoad');
@@ -239,14 +243,15 @@ class Page
 
             return $controller;
         }
+        return null;
     }
 
     /**
      * Returns the view object.
      *
-     * @return \Ilch\View
+     * @return View
      */
-    public function getView()
+    public function getView(): View
     {
         return $this->view;
     }
@@ -254,9 +259,9 @@ class Page
     /**
      * Returns the request object.
      *
-     * @return \Ilch\Request
+     * @return Request
      */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -336,7 +337,7 @@ abstract class Base
       */
     public function getLayoutUrl(string $url = ''): string
     {
-        return $this->getBaseUrl('application/layouts/'.$this->getLayoutKey().'/'.$url);
+        return $this->getBaseUrl('application/layouts/' . $this->getLayoutKey() . '/' . $url);
     }
 
     /**
@@ -607,7 +608,7 @@ abstract class Base
      */
     public function getTokenField(): string
     {
-        return '<input type="hidden" name="ilch_token" value="'.$this->generateToken().'" />'."\n";
+        return '<input type="hidden" name="ilch_token" value="' . $this->generateToken() . '" />' . "\n";
     }
 
     /**
@@ -630,7 +631,7 @@ abstract class Base
      */
     public function getCaptchaField(): string
     {
-        return '<img src="'.$this->getUrl().'/application/libraries/Captcha/Captcha.php" id="captcha" />';
+        return '<img src="' . $this->getUrl() . '/application/libraries/Captcha/Captcha.php" id="captcha" />';
     }
 
     /**
@@ -642,9 +643,9 @@ abstract class Base
      * @param string|null $inputId
      * @return GetMedia
      */
-    public function getMedia(?string $mediaButton = null, ?string $actionButton = null, ?string $inputId = null): \Ilch\Layout\Helper\GetMedia
+    public function getMedia(?string $mediaButton = null, ?string $actionButton = null, ?string $inputId = null): GetMedia
     {
-        return  new \Ilch\Layout\Helper\GetMedia($mediaButton, $actionButton, $inputId);
+        return  new GetMedia($mediaButton, $actionButton, $inputId);
     }
 
     /**
@@ -684,7 +685,7 @@ abstract class Base
             return $str;
         }
 
-        return \preg_replace('/[^ ]*$/', '', substr($str, 0, $length)).'...';
+        return \preg_replace('/[^ ]*$/', '', substr($str, 0, $length)) . '...';
     }
 
     /**
@@ -716,10 +717,10 @@ abstract class Base
     public function getBoxUrl(string $url = ''): string
     {
         if (empty($url)) {
-            return $this->getUrl().'/'.$this->boxUrl;
+            return $this->getUrl() . '/' . $this->boxUrl;
         }
 
-        return $this->getUrl().'/'.$this->boxUrl.'/'.$url;
+        return $this->getUrl() . '/' . $this->boxUrl . '/' . $url;
     }
 
     /**
@@ -743,7 +744,7 @@ abstract class Base
      */
     public function getDialog(string $id, string $name, string $content, $submit = null): string
     {
-        $html = '<div class="modal fade" id="'.$id.'">
+        $html = '<div class="modal fade" id="' . $id . '">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -752,26 +753,26 @@ abstract class Base
                                 data-dismiss="modal"
                                 aria-hidden="true">&times;
                         </button>
-                        <h4 class="modal-title" id="modalLabel">'.$name.'</h4>
+                        <h4 class="modal-title" id="modalLabel">' . $name . '</h4>
                     </div>
                     <div class="modal-body">
-                        '.$content.'
+                        ' . $content . '
                     </div>
                     <div class="modal-footer">';
         if ($submit != null) {
             $html .= '<button type="button"
                                  class="btn btn-primary"
-                                 id="modalButton">'.$this->getTrans('ack').'
+                                 id="modalButton">' . $this->getTrans('ack') . '
                             </button>
                             <button type="button"
                                     class="btn btn-default"
-                                    data-dismiss="modal">'.$this->getTrans('cancel').'
+                                    data-dismiss="modal">' . $this->getTrans('cancel') . '
                             </button>';
         } else {
             $html .= '<button type="button"
                                 class="btn btn-primary"
                                 data-dismiss="modal">
-                            '.$this->getTrans('close').'
+                            ' . $this->getTrans('close') . '
                             </button>';
         }
         $html .= '</div>

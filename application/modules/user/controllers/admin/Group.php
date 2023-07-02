@@ -134,7 +134,7 @@ class Group extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'index']);
         }
 
-        if ($groupMapper->groupWithIdExists($groupId)) {
+        if ($groupId && is_numeric($groupId) && $groupMapper->groupWithIdExists($groupId)) {
             $group = $groupMapper->getGroupById($groupId);
             $groupUsers = $groupMapper->getUsersForGroup($group->getId());
         } else {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -6,25 +7,35 @@
 
 namespace Modules\User\Models;
 
-use PHPUnit\Ilch\TestCase;
-use Ilch\Registry;
-use Ilch\Database\Mysql;
+use Ilch\Request;
+use PHPUnit\Ilch\DatabaseTestCase;
+use PHPUnit\Ilch\PhpunitDataset;
+use Modules\User\Config\Config as UserConfig;
+use Modules\Admin\Config\Config as AdminConfig;
+use Modules\Article\Config\Config as ArticleConfig;
 
 /**
  * Tests the user model class.
  *
  * @package ilch_phpunit
  */
-class UserTest extends TestCase
+class UserTest extends DatabaseTestCase
 {
     /**
-     * Filling the timezone which the Ilch_Date object will use.
+     * The object to test with.
      *
-     * @var array
+     * @var Request
      */
-    protected $configData = [
-        'timezone' => 'Europe/Berlin'
-    ];
+    protected $request;
+
+    protected $phpunitDataset;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->phpunitDataset = new PhpunitDataset($this->db);
+        $this->phpunitDataset->loadFromFile(__DIR__ . '/../../../libraries/ilch/_files/mysql_accesses.yml');
+    }
 
     /**
      * Tests if the user id can be set and returned again.
@@ -143,24 +154,20 @@ class UserTest extends TestCase
         $user->setId(123);
         $user->addGroup($group);
 
-        $dbMock = $this->createPartialMock(Mysql::class, ['queryCell', 'escape']);
-        $dbMock->expects(self::once())
-            ->method('escape')
-            ->willReturnArgument(0);
-        $dbMock->expects(self::once())
-            ->method('queryCell')
-            ->with(
-                self::logicalAnd(
-                    self::stringContains('FROM [prefix]_groups_access'),
-                    self::stringContains('INNER JOIN `[prefix]_modules`'),
-                    self::stringContains('user')
-                )
-            )
-            ->willReturn('0');
-        Registry::remove('db');
-        Registry::set('db', $dbMock);
+        self::assertFalse($user->hasAccess('module_user'));
+    }
 
-        self::assertEquals(0, $user->hasAccess('module_user'));
-        Registry::remove('db');
+    /**
+     * Returns database schema sql statements to initialize database
+     *
+     * @return string
+     */
+    protected static function getSchemaSQLQueries(): string
+    {
+        $configUser = new UserConfig();
+        $configAdmin = new AdminConfig();
+        $configArticle = new ArticleConfig();
+
+        return $configAdmin->getInstallSql() . $configUser->getInstallSql() . $configArticle->getInstallSql();
     }
 }

@@ -1,13 +1,13 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Admin\Plugins;
 
 use Modules\User\Mappers\User as UserMapper;
-use Ilch\Accesses;
 
 /**
  * Does admin operations before the controller loads.
@@ -35,7 +35,7 @@ class BeforeControllerLoad
 
             $userMapper = new UserMapper();
             $translator = new \Ilch\Translator();
-            $translator->load(APPLICATION_PATH.'/modules/admin/translations');
+            $translator->load(APPLICATION_PATH . '/modules/admin/translations');
             $user = $userMapper->getUserById($userId);
 
             if ($config->get('maintenance_mode') && !$request->isAdmin()) {
@@ -57,8 +57,7 @@ class BeforeControllerLoad
             // User is logged in but wants to go to the login, redirect him to the admincenter.
             $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
         } elseif ($user && $request->getModuleName() === 'admin' && $request->getControllerName() !== 'login' && $request->getControllerName() !== 'page' && $request->getActionName() !== 'logout' && !$user->isAdmin()) {
-            $access = new Accesses($pluginData['request']);
-            if (!$access->hasAccess('Admin')) {
+            if (!$pluginData['accesses']->hasAccess('Admin')) {
                 $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to([], 'frontend');
             }
         }

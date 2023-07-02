@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -16,9 +17,9 @@ class GetAdminHmenu
     /**
      * Injects the layout.
      *
-     * @param Ilch\Layout $layout
+     * @param \Ilch\Layout\Admin $layout
      */
-    public function __construct($layout)
+    public function __construct(\Ilch\Layout\Admin $layout)
     {
         $this->model = new \Ilch\Layout\Helper\AdminHmenu\Model($layout);
     }
@@ -27,7 +28,7 @@ class GetAdminHmenu
      * Gets the hmenu
      * @return \Ilch\Layout\Helper\AdminHmenu\Model
      */
-    public function getAdminHmenu()
+    public function getAdminHmenu(): AdminHmenu\Model
     {
         return $this->model;
     }

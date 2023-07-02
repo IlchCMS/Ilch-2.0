@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -11,7 +12,7 @@ abstract class Base extends \Ilch\Design\Base
     /**
      * Defines if layout is disabled.
      *
-     * @var boolean
+     * @var bool
      */
     protected $disabled = false;
 
@@ -27,7 +28,7 @@ abstract class Base extends \Ilch\Design\Base
      *
      * @var string
      */
-    protected $file;
+    protected $file = '';
 
     /**
      * Loads layout helper.
@@ -36,7 +37,7 @@ abstract class Base extends \Ilch\Design\Base
      * @param array $args
      * @return mixed|null
      */
-    public function __call($name, array $args)
+    public function __call(string $name, array $args)
     {
         $layout = $this->getHelper($name, 'layout');
 
@@ -50,19 +51,21 @@ abstract class Base extends \Ilch\Design\Base
     /**
      * Set layout disabled flag.
      *
-     * @param boolean $disabled
+     * @param bool $disabled
+     * @return $this
      */
-    public function setDisabled($disabled)
+    public function setDisabled(bool $disabled): Base
     {
         $this->disabled = $disabled;
+        return $this;
     }
 
     /**
      * Get layout disabled flag.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getDisabled()
+    public function getDisabled(): bool
     {
         return $this->disabled;
     }
@@ -71,10 +74,12 @@ abstract class Base extends \Ilch\Design\Base
      * Sets the view output.
      *
      * @param string $content
+     * @return $this
      */
-    public function setContent($content)
+    public function setContent(string $content): Base
     {
         $this->content = $content;
+        return $this;
     }
 
     /**
@@ -82,7 +87,7 @@ abstract class Base extends \Ilch\Design\Base
      *
      * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         $html = '';
         $messages = [];
@@ -92,36 +97,33 @@ abstract class Base extends \Ilch\Design\Base
         }
 
         foreach ($messages as $key => $message) {
-            if (!empty($message['validationError']) and $message['validationError'] == true) {
-                $text = '';
-                $text .= '<b>'.$this->getTrans('errorsOccured').'</b>';
+            if (!empty($message['validationError']) && $message['validationError'] == true) {
+                $text = '<b>' . $this->getTrans('errorsOccured') . '</b>';
                 $text .= '<ul>';
                 foreach ($message['text'] as $messageText) {
-                    $text .= '<li>'.$messageText.'</li>';
+                    $text .= '<li>' . $messageText . '</li>';
                 }
                 $text .= '</ul>';
-                $html .= '<div class="alert alert-'.$message['type'].' alert-dismissable">
+                $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                '.$text.'</div>';
-                unset($_SESSION['messages'][$key]);
+                ' . $text . '</div>';
             } else {
-                $html .= '<div class="alert alert-'.$message['type'].' alert-dismissable">
+                $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                '.$this->escape($message['text']).'</div>';
-                unset($_SESSION['messages'][$key]);
+                ' . $this->escape($message['text']) . '</div>';
             }
+            unset($_SESSION['messages'][$key]);
         }
 
-        return $html.$this->content;
+        return $html . $this->content;
     }
 
     /**
      * Loads a view script.
      *
-     * @param  string $loadScript
-     * @return string
+     * @param string $loadScript
      */
-    public function loadScript($loadScript)
+    public function loadScript(string $loadScript)
     {
         if (file_exists($loadScript)) {
             include $loadScript;
@@ -133,11 +135,13 @@ abstract class Base extends \Ilch\Design\Base
      *
      * @param string $file
      * @param string $layoutKey
+     * @return $this
      */
-    public function setFile($file, $layoutKey = '')
+    public function setFile(string $file, string $layoutKey = ''): Base
     {
         $this->setLayoutKey($layoutKey);
         $this->file = $file;
+        return $this;
     }
 
     /**
@@ -145,7 +149,7 @@ abstract class Base extends \Ilch\Design\Base
      *
      * @return string
      */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }

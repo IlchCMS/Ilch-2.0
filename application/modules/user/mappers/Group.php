@@ -1,31 +1,79 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\User\Mappers;
 
 use Modules\User\Models\Group as GroupModel;
+use Modules\User\Models\User;
 
 class Group extends \Ilch\Mapper
 {
     /**
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 2.1.51
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists('groups') && $this->db()->ifTableExists('users_groups');
+    }
+
+    /**
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return GroupModel[]|null
+     * @since 2.1.51
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['a.id' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select()
+            ->fields(['a.id', 'a.name'])
+            ->from(['a' => 'groups'])
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entries = [];
+
+        foreach ($entryArray as $rows) {
+            $entryModel = new GroupModel();
+
+            $entryModel->setByArray($rows);
+
+            $entries[] = $entryModel;
+        }
+        return $entries;
+    }
+
+    /**
      * Returns user model found by the id or false if none found.
      *
-     * @param  int $id
+     * @param int $id
      * @return null|GroupModel
      */
-    public function getGroupById($id)
+    public function getGroupById(int $id): ?GroupModel
     {
-        $where = [
-            'id' => (int) $id,
-        ];
+        $entries = $this->getEntriesBy(['id' => $id]);
 
-        $groups = $this->getBy($where);
-
-        if (!empty($groups)) {
-            return reset($groups);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
         return null;
@@ -34,22 +82,18 @@ class Group extends \Ilch\Mapper
     /**
      * Returns user model found by the name or false if none found.
      *
-     * @param  string           $name
-     * @return false|GroupModel
+     * @param string $name
+     * @return null|GroupModel
      */
-    public function getGroupByName($name)
+    public function getGroupByName(string $name): ?GroupModel
     {
-        $where = [
-            'name' => $name,
-        ];
+        $entries = $this->getEntriesBy(['name' => $name]);
 
-        $groups = $this->getBy($where);
-
-        if (!empty($groups)) {
-            return reset($groups);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -57,40 +101,22 @@ class Group extends \Ilch\Mapper
      * none found.
      *
      * @param array $where
-     * @return false|GroupModel[]
+     * @return GroupModel[]|null
      */
-    protected function getBy($where = [])
+    protected function getBy(array $where = []): ?array
     {
-        $groupRows = $this->db()->select('*')
-            ->from('groups')
-            ->where($where)
-            ->execute()
-            ->fetchRows();
-
-        if (!empty($groupRows)) {
-            return array_map([$this, 'loadFromArray'], $groupRows);
-        }
-
-        return false;
+        return $this->getEntriesBy($where);
     }
-
     /**
      * Returns a user group created using an array with user group data.
      *
      * @param array $groupRow
      * @return GroupModel
      */
-    public function loadFromArray($groupRow = [])
+    public function loadFromArray(array $groupRow = []): GroupModel
     {
         $group = new GroupModel();
-
-        if (isset($groupRow['id'])) {
-            $group->setId($groupRow['id']);
-        }
-
-        if (isset($groupRow['name'])) {
-            $group->setName($groupRow['name']);
-        }
+        $group->setByArray($groupRow);
 
         return $group;
     }
@@ -101,7 +127,7 @@ class Group extends \Ilch\Mapper
      * @param int $groupId
      * @return string[]
      */
-    public function getUsersForGroup($groupId)
+    public function getUsersForGroup(int $groupId): array
     {
         return $this->db()->select('user_id', 'users_groups', ['group_id' => $groupId])
             ->execute()
@@ -114,58 +140,43 @@ class Group extends \Ilch\Mapper
      * @param GroupModel $group
      * @return int
      */
-    public function save(GroupModel $group)
+    public function save(GroupModel $group): int
     {
-        $fields = [];
-        $name = $group->getName();
+        $fields = $group->getArray(false);
 
-        if (!empty($name)) {
-            $fields['name'] = $group->getName();
-        }
-
-        $groupId = (int) $this->db()->select('id', 'groups', ['id' => $group->getId()])
-            ->execute()
-            ->fetchCell();
-
-        if ($groupId) {
-            /*
-             * Group does exist already, update.
-             */
+        if ($group->getId()) {
             $this->db()->update('groups')
                 ->values($fields)
-                ->where(['id' => $groupId])
+                ->where(['id' => $group->getId()])
                 ->execute();
+
+            return $group->getId();
         } else {
-            /*
-             * Group does not exist yet, insert.
-             */
-            $groupId = $this->db()->insert('groups')
+            return $this->db()->insert('groups')
                 ->values($fields)
                 ->execute();
         }
-
-        return $groupId;
     }
 
     /**
-     * Returns a array of all group model objects.
+     * Returns an array of all group model objects.
      *
-     * @return groupModel[]
+     * @return groupModel[]|null
      */
-    public function getGroupList()
+    public function getGroupList(): ?array
     {
-        return $this->getBy();
+        return $this->getEntriesBy();
     }
 
     /**
      * Returns whether a group with the given id exists in the database.
      *
-     * @param  int $groupId
-     * @return boolean
+     * @param int $groupId
+     * @return bool
      */
-    public function groupWithIdExists($groupId)
+    public function groupWithIdExists(int $groupId): bool
     {
-        return (boolean) $this->db()->select('COUNT(*)', 'groups', ['id' => (int)$groupId])
+        return (bool) $this->db()->select('COUNT(*)', 'groups', ['id' => $groupId])
             ->execute()
             ->fetchCell();
     }
@@ -175,9 +186,9 @@ class Group extends \Ilch\Mapper
      *
      * @param  int|GroupModel $groupId
      *
-     * @return boolean True of success, otherwise false.
+     * @return bool True of success, otherwise false.
      */
-    public function delete($groupId)
+    public function delete($groupId): bool
     {
         if (is_a($groupId, GroupModel::class)) {
             $groupId = $groupId->getId();
@@ -199,17 +210,18 @@ class Group extends \Ilch\Mapper
     /**
      * Returns the group access list from the database.
      *
-     * @param  int $groupId
+     * @param int $groupId
      * @return array
-     * @throws \Ilch\Database\Exception
      */
-    public function getGroupAccessList($groupId)
+    public function getGroupAccessList(int $groupId): array
     {
-        $sql = 'SELECT g.name AS group_name, ga.*
-                FROM [prefix]_groups_access AS ga
-                INNER JOIN [prefix]_groups AS g ON ga.group_id = g.id
-                WHERE ga.group_id = '.(int)$groupId;
-        $accessDbList = $this->db()->queryArray($sql);
+        $select = $this->db()->select()
+            ->fields(['group_name' => 'g.name', 'ga.group_id', 'ga.access_level', 'ga.module_key', 'ga.page_id', 'ga.article_id', 'ga.box_id'])
+            ->from(['ga' => 'groups_access'])
+            ->join(['g' => 'groups'], 'ga.group_id = g.id', 'INNER')
+            ->where(['ga.group_id' => $groupId]);
+
+        $accessDbList = $select->execute()->fetchRows();
         $accessList = [];
         $accessList['entries'] = [
             'page' => [],
@@ -233,13 +245,11 @@ class Group extends \Ilch\Mapper
             }
 
             foreach ($accessTypes as $accessType) {
-                if (!empty($accessDbListEntry[$accessType.'_id'])) {
-                    $accessList['entries'][$accessType][$accessDbListEntry[$accessType.'_id']] = $accessDbListEntry['access_level'];
+                if ($accessType === 'module' && !empty($accessDbListEntry[$accessType . '_key']) && !is_numeric($accessDbListEntry[$accessType . '_key'])) {
+                    $accessList['entries'][$accessType][$accessDbListEntry[$accessType . '_key']] = $accessDbListEntry['access_level'];
                     break;
-                }
-                
-                if (!empty($accessDbListEntry[$accessType.'_key'])) {
-                    $accessList['entries'][$accessType][$accessDbListEntry[$accessType.'_key']] = $accessDbListEntry['access_level'];
+                } elseif (!empty($accessDbListEntry[$accessType . '_id'])) {
+                    $accessList['entries'][$accessType][$accessDbListEntry[$accessType . '_id']] = $accessDbListEntry['access_level'];
                     break;
                 }
             }
@@ -247,42 +257,43 @@ class Group extends \Ilch\Mapper
 
         return $accessList;
     }
-    
-    /**
-     * Returns the access access list from the database.
-     *
-     * @param  string $Type
-     * @param  string $Id
-     * @return array
-     * @throws \Ilch\Database\Exception
-     */
-    public function getAccessAccessList($Type, $Id)
-    {
-        $sqlwhere = '';
-        if ($Type === 'module') {
-            $sqlwhere = 'module_key';
-        } elseif ($Type === 'article') {
-            $sqlwhere = 'article_id';
-        } elseif ($Type === 'page') {
-            $sqlwhere = 'page_id';
-        } elseif ($Type === 'box') {
-            $sqlwhere = 'box_id';
-        }
 
-        if ($sqlwhere == '') {
+    /**
+     * Returns the access list from the database.
+     *
+     * @param string $type
+     * @param string|int $id
+     * @return null|array
+     */
+    public function getAccessAccessList(string $type, $id): ?array
+    {
+        if (!in_array($type, ['module', 'page', 'article', 'box'])) {
             return null;
         }
 
-        $sql = 'SELECT g.name AS group_name, ga.*
-                FROM [prefix]_groups_access AS ga
-                INNER JOIN [prefix]_groups AS g ON ga.group_id = g.id
-                WHERE ga.'.$sqlwhere.' = "'.$this->db()->escape($Id).'"';
-        $accessDbList = $this->db()->queryArray($sql);
+        $where = [];
+        if ($type === 'module') {
+            $where['ga.module_key'] = $this->db()->escape($id);
+        } elseif ($type === 'page') {
+            $where['ga.page_id'] = (int)$id;
+        } elseif ($type === 'article') {
+            $where['ga.article_id'] = (int)$id;
+        } elseif ($type === 'box') {
+            $where['ga.box_id'] = (int)$id;
+        }
+
+        $select = $this->db()->select()
+            ->fields(['group_name' => 'g.name', 'ga.group_id', 'ga.access_level'])
+            ->from(['ga' => 'groups_access'])
+            ->join(['g' => 'groups'], 'ga.group_id = g.id', 'INNER')
+            ->where($where);
+
+        $accessDbList = $select->execute()->fetchRows();
         $accessList = [];
         $accessList['entries'] = [];
 
-        $accessList['Type'] = $Type;
-        $accessList['Id'] = $Id;
+        $accessList['Type'] = $type;
+        $accessList['Id'] = $id;
 
         foreach ($accessDbList as $accessDbListEntry) {
             $accessList['entries'][$accessDbListEntry['group_id']] = (int)$accessDbListEntry['access_level'];
@@ -293,25 +304,26 @@ class Group extends \Ilch\Mapper
     /**
      * Saves or updates an access data entry to the db.
      *
-     * @param  int    $groupId
-     * @param  mixed  $value
+     * @param int $groupId
+     * @param  string|int  $value
      * @param  int    $accessLevel
-     * @param  string $type
+     * @param string $type
+     * @return bool
      */
-    public function saveAccessData($groupId, $value, $accessLevel, $type)
+    public function saveAccessData(int $groupId, $value, int $accessLevel, string $type): bool
     {
         $rec = [
-            'group_id' => (int)$groupId,
+            'group_id' => $groupId,
         ];
 
         if ($type === 'module') {
             $rec['module_key'] = $value;
         } else {
-            $rec[$type.'_id'] = (int)$value;
+            $rec[$type . '_id'] = (int)$value;
         }
 
         $fields = $rec;
-        $fields['access_level'] = (int)$accessLevel;
+        $fields['access_level'] = $accessLevel;
         $entryExists = (bool)$this->db()->select('COUNT(*)')
             ->from('groups_access')
             ->where($rec)
@@ -319,14 +331,71 @@ class Group extends \Ilch\Mapper
             ->fetchCell();
 
         if ($entryExists) {
-            $this->db()->update('groups_access')
+            return $this->db()->update('groups_access')
                 ->values($fields)
                 ->where($rec)
                 ->execute();
         } else {
-            $this->db()->insert('groups_access')
+            return $this->db()->insert('groups_access')
                 ->values($fields)
                 ->execute();
         }
+    }
+
+    /**
+     * Gets the AccessLevel by given Param
+     *
+     * @param string $key A module-key, page-id or article-id prefixed by either one of these: "module_", "page_", "article_", "box_".
+     * @param User $user
+     * @param int $default
+     * @return int
+     * @since 2.1.51
+     */
+    public function getAccessLevel(string $key, User $user, int $default = 1): int
+    {
+        if ($user->isAdmin()) {
+            /*
+             * The user is an admin, allow him everything.
+             */
+            return 2;
+        }
+
+        $select = $this->db()->select()
+            ->fields(['ga.access_level'])
+            ->from(['ga' => 'groups_access'])
+            ->order(['ga.access_level' => 'DESC'])
+            ->limit(1);
+
+        $readAccess = [];
+        foreach ($user->getGroups() as $us) {
+            $readAccess[] = $us->getId();
+        }
+        $where = ['ga.group_id' => $readAccess];
+
+        if (strpos($key, 'module_') !== false) {
+            $moduleKey = substr($key, 7);
+            $select->join(['m' => 'modules'], 'ga.module_key = m.key', 'INNER');
+            $where['m.key'] = $this->db()->escape($moduleKey);
+        } elseif (strpos($key, 'page_') !== false) {
+            $pageId = (int)substr($key, 5);
+            $select->join(['p' => 'pages'], 'ga.page_id = p.id', 'INNER');
+            $where['p.id'] = $pageId;
+        } elseif (strpos($key, 'article_') !== false) {
+            $articleId = (int)substr($key, 8);
+            $select->join(['a' => 'articles'], 'ga.article_id = a.id', 'INNER');
+            $where['a.id'] = $articleId;
+        } elseif (strpos($key, 'box_') !== false) {
+            $boxId = (int)substr($key, 4);
+            $select->join(['b' => 'boxes'], 'ga.box_id = b.id', 'INNER');
+            $where['b.id'] = $boxId;
+        }
+        $select->where($where);
+        $accessLevel = $select->execute()->fetchCell();
+
+        if (!is_numeric($accessLevel)) {
+            $accessLevel = $default;
+        }
+
+        return (int)$accessLevel;
     }
 }

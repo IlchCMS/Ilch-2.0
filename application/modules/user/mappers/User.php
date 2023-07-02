@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -20,10 +21,10 @@ class User extends \Ilch\Mapper
      * Returns user model found by the id.
      *
      * @param  int $id
-     * @return null|\Modules\User\Models\User
+     * @return null|UserModel
      * @throws \Ilch\Database\Exception
      */
-    public function getUserById($id)
+    public function getUserById($id): ?UserModel
     {
         $where = [
             'id' => (int)$id,
@@ -42,10 +43,10 @@ class User extends \Ilch\Mapper
      * Returns user model found by the username.
      *
      * @param  string $name
-     * @return null|\Modules\User\Models\User
+     * @return null|UserModel
      * @throws \Ilch\Database\Exception
      */
-    public function getUserByName($name)
+    public function getUserByName($name): ?UserModel
     {
         $where = [
             'name' => (string)$name,
@@ -64,10 +65,10 @@ class User extends \Ilch\Mapper
      * Returns user model found by the email.
      *
      * @param  string $email
-     * @return null|\Modules\User\Models\User
+     * @return null|UserModel
      * @throws \Ilch\Database\Exception
      */
-    public function getUserByEmail($email)
+    public function getUserByEmail($email): ?UserModel
     {
         $where = [
             'email' => (string)$email,
@@ -86,10 +87,10 @@ class User extends \Ilch\Mapper
      * Returns user model found by the selector.
      *
      * @param  string $selector
-     * @return null|\Modules\User\Models\User
+     * @return null|UserModel
      * @throws \Ilch\Database\Exception
      */
-    public function getUserBySelector($selector)
+    public function getUserBySelector($selector): ?UserModel
     {
         $where = [
             'selector' => (string)$selector,
@@ -113,7 +114,7 @@ class User extends \Ilch\Mapper
      * @return array
      * @since 2.1.20
      */
-    public function getUserListByGroupId($groupId, $confirmed = 0, $pagination = null)
+    public function getUserListByGroupId($groupId, $confirmed = 0, $pagination = null): array
     {
         $select = $this->db()->select()
             ->fields(['u.id', 'u.name', 'u.opt_mail', 'u.date_created', 'u.date_last_activity', 'u.confirmed'])
@@ -150,10 +151,10 @@ class User extends \Ilch\Mapper
      *
      * @param  array $where
      * @param null $pagination
-     * @return null|\Modules\User\Models\User[]
+     * @return null|UserModel[]
      * @throws \Ilch\Database\Exception
      */
-    protected function getBy($where = [], $pagination = null)
+    protected function getBy($where = [], $pagination = null): ?array
     {
         $select = $this->db()->select('*')
             ->from('users')
@@ -201,7 +202,7 @@ class User extends \Ilch\Mapper
      * @param array $userRow
      * @return UserModel
      */
-    public function loadFromArray($userRow = [])
+    public function loadFromArray($userRow = []): UserModel
     {
         $user = new UserModel();
 
@@ -313,7 +314,7 @@ class User extends \Ilch\Mapper
      *
      * @return int The userId of the updated or inserted user.
      */
-    public function save(UserModel $user)
+    public function save(UserModel $user): int
     {
         $fields = [];
         $name = $user->getName();
@@ -426,7 +427,7 @@ class User extends \Ilch\Mapper
      * @param string $homepage
      * @return string
      */
-    public function getHomepage($homepage)
+    public function getHomepage($homepage): string
     {
         $homepage = trim($homepage);
         if (preg_match('~^https?://~', $homepage) === 0) {
@@ -439,11 +440,11 @@ class User extends \Ilch\Mapper
     /**
      * Gets the counter of all users with group "administrator".
      *
-     * @return integer
+     * @return int
      */
-    public function getAdministratorCount()
+    public function getAdministratorCount(): int
     {
-        return (int)$this->db()->select('COUNT(*)', 'users_groups', ['group_id' => 1])
+        return $this->db()->select('COUNT(*)', 'users_groups', ['group_id' => 1])
             ->execute()
             ->fetchCell();
     }
@@ -456,7 +457,7 @@ class User extends \Ilch\Mapper
      * @return UserModel[]
      * @throws \Ilch\Database\Exception
      */
-    public function getUserList($where = [], $pagination = null)
+    public function getUserList($where = [], $pagination = null): ?array
     {
         return $this->getBy($where, $pagination);
     }
@@ -465,9 +466,9 @@ class User extends \Ilch\Mapper
      * Returns whether a user exists.
      *
      * @param  int $userId
-     * @return boolean True if a user with this id exists, false otherwise.
+     * @return bool True if a user with this id exists, false otherwise.
      */
-    public function userWithIdExists($userId)
+    public function userWithIdExists($userId): bool
     {
         return (bool)$this->db()->select('id')
             ->from('users')
@@ -517,12 +518,12 @@ class User extends \Ilch\Mapper
      * @param  string $deletedate
      * @return int affected rows
      */
-    public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00')
+    public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00'): int
     {
         if (is_a($userId, UserModel::class)) {
             $userId = $userId->getId();
         }
-        
+
         return $this->db()->update('users')
                 ->values(['selectsdelete' => $deletedate])
                 ->where(['id' => $userId])
@@ -533,9 +534,9 @@ class User extends \Ilch\Mapper
      * Delete all Selects Delete finally.
      *
      * @param  int $timetodelete
-     * @return boolean True if success, otherwise false.
+     * @return bool True if success, otherwise false.
      */
-    public function deleteselectsdelete($timetodelete = 5)
+    public function deleteselectsdelete($timetodelete = 5): bool
     {
         $date = new \Ilch\Date();
         $authTokenMapper = new AuthTokenMapper();
@@ -543,7 +544,7 @@ class User extends \Ilch\Mapper
         $friendsMapper = new FriendsMapper();
         $dialogMapper = new DialogMapper();
 
-        $date->modify('-'.$timetodelete.' days');
+        $date->modify('-' . $timetodelete . ' days');
         $entries = $this->getUserList(['selectsdelete >' => '1000-01-01 00:00:00', 'selectsdelete <=' => $date]);
 
         foreach ($entries as $user) {
@@ -567,9 +568,9 @@ class User extends \Ilch\Mapper
      * Deletes a given user or a user with the given id.
      *
      * @param  int|UserModel $userId
-     * @return boolean True of success, otherwise false.
+     * @return bool True of success, otherwise false.
      */
-    public function delete($userId)
+    public function delete($userId): bool
     {
         if (is_a($userId, UserModel::class)) {
             $userId = $userId->getId();
@@ -605,7 +606,7 @@ class User extends \Ilch\Mapper
      *
      * @return UserModel
      */
-    public function getDummyUser()
+    public function getDummyUser(): UserModel
     {
         $user = new UserModel();
         $groups = new GroupMapper();
@@ -614,7 +615,7 @@ class User extends \Ilch\Mapper
         $user->setAvatar('static/img/noavatar.jpg');
         //$user->setGroups(array(3));
 
-        $user->setGroups($groups->getGroupById(3));
+        $user->setGroups([$groups->getGroupById(3)]);
 
         return $user;
     }

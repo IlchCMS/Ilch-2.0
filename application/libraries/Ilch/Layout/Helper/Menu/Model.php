@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,26 +7,30 @@
 
 namespace Ilch\Layout\Helper\Menu;
 
+use Ilch\Accesses;
 use Ilch\Layout\Base as Layout;
 use Modules\Admin\Models\MenuItem;
 
 class Model
 {
+    /**
+     * @var Layout
+     */
     protected $layout;
 
     /**
      * Id of the menu.
      *
-     * @var integer
+     * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * Title of the menu.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * @var \Modules\Admin\Mappers\Menu
@@ -42,7 +47,11 @@ class Model
     /**
      * @var string
      */
-    protected $currentUrl;
+    protected $currentUrl = '';
+    /**
+     * @var Accesses
+     */
+    protected $accessMapper;
 
     /**
      * Injects the layout.
@@ -52,29 +61,29 @@ class Model
     public function __construct(Layout $layout)
     {
         $this->layout = $layout;
-
         $this->menuMapper = new \Modules\Admin\Mappers\Menu();
         $this->boxMapper = new \Modules\Admin\Mappers\Box();
         $this->pageMapper = new \Modules\Admin\Mappers\Page();
+        $this->accessMapper = new Accesses($layout->getRequest());
         $this->currentUrl = $layout->getCurrentUrl();
     }
 
     /**
      * Sets the menu id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
-        $this->id = (int)$id;
+        $this->id = $id;
     }
 
     /**
      * Gets the menu id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -84,9 +93,9 @@ class Model
      *
      * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
-        $this->title = (string)$title;
+        $this->title = $title;
     }
 
     /**
@@ -94,7 +103,7 @@ class Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -106,7 +115,7 @@ class Model
      * @param array $options
      * @return string
      */
-    public function getItems($tpl = '', $options = [])
+    public function getItems(string $tpl = '', array $options = []): string
     {
         $groupIds = [3];
         $adminAccess = '';
@@ -144,6 +153,9 @@ class Model
                         continue;
                     }
                     if ($item->getBoxId()) {
+                        if (!$this->accessMapper->hasAccess('Module', $item->getBoxId(), $this->accessMapper::TYPE_BOX)) {
+                            continue;
+                        }
                         $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale);
                         // purify content of user created box
                         $contentHtml = $this->layout->purify($box->getContent());
@@ -181,13 +193,13 @@ class Model
      * Gets the menu items as html-string.
      *
      * @param int $parentId
-     * @param $menuData
-     * @param $locale
+     * @param array $menuData
+     * @param string $locale
      * @param array $options
      * @param int|null $parentType
      * @return string
      */
-    protected function buildMenu($parentId, $menuData, $locale, $options = [], $parentType = null)
+    protected function buildMenu(int $parentId, array $menuData, string $locale, array $options = [], ?int $parentType = null): string
     {
         $html = '';
         $groupIds = [3];
@@ -228,18 +240,27 @@ class Model
                 $noopener = '';
 
                 if ($menuData['items'][$itemId]->isPageLink()) {
+                    if (!$this->accessMapper->hasAccess('Module', $menuData['items'][$itemId]->getSiteId(), $this->accessMapper::TYPE_PAGE)) {
+                        continue;
+                    }
+
                     $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId(), $locale);
                     if (!$page) {
                         $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId());
                     }
+
                     $href = $this->layout->getUrl($page ? $page->getPerma() : '');
                 } elseif ($menuData['items'][$itemId]->isModuleLink()) {
+                    if (!$this->accessMapper->hasAccess('Module', $menuData['items'][$itemId]->getModuleKey(), $this->accessMapper::TYPE_MODULE)) {
+                        continue;
+                    }
+
                     $href = $this->layout->getUrl(
                         ['module' => $menuData['items'][$itemId]->getModuleKey(), 'action' => 'index', 'controller' => 'index']
                     );
                 } elseif ($menuData['items'][$itemId]->isLink()) {
                     $href = $menuData['items'][$itemId]->getHref();
-                    $target = ' target="'.$menuData['items'][$itemId]->getTarget().'"';
+                    $target = ' target="' . $menuData['items'][$itemId]->getTarget() . '"';
                     if ($menuData['items'][$itemId]->getTarget() === '_blank') {
                         $noopener = ' rel="noopener"';
                     }
@@ -253,8 +274,7 @@ class Model
                 }
 
                 if (!is_in_array($groupIds, explode(',', $menuData['items'][$itemId]->getAccess())) || $adminAccess) {
-                    $contentHtml = '<a' .$this->createClassAttribute(array_dot($options, 'menus.a-class')) .' href="' . $href . '"' . $target . $noopener . '>' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
-                    $subItemsHtml = '';
+                    $contentHtml = '<a' . $this->createClassAttribute(array_dot($options, 'menus.a-class')) . ' href="' . $href . '"' . $target . $noopener . '>' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
 
                     // find childitems recursively
                     $subItemsHtml = $this->buildMenu($itemId, $menuData, $locale, $options, $menuData['items'][$itemId]->getType());
@@ -280,7 +300,7 @@ class Model
      * @param array|string $classes
      * @return string
      */
-    private function createClassAttribute($classes)
+    private function createClassAttribute($classes): string
     {
         if (is_array($classes)) {
             $classes = array_filter($classes);
@@ -301,7 +321,7 @@ class Model
      * @param MenuItem $item
      * @return \Modules\Admin\Models\Box
      */
-    protected function loadBoxFromModule($item)
+    protected function loadBoxFromModule(MenuItem $item): \Modules\Admin\Models\Box
     {
         $parts = explode('_', $item->getBoxKey());
         $moduleKey = $parts[0];

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -30,7 +31,7 @@ class Header
      * Gets the header
      * @return Model
      */
-    public function header()
+    public function header(): Model
     {
         return $this->model;
     }

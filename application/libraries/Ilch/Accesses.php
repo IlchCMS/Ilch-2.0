@@ -1,17 +1,32 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Ilch;
 
+use Modules\User\Models\User;
+
 class Accesses
 {
     /**
-     * @var
+     * @var int
      */
-    private $groupIds;
+    public const TYPE_MODULE = 1;
+    /**
+     * @var int
+     */
+    public const TYPE_PAGE = 2;
+    /**
+     * @var int
+     */
+    public const TYPE_BOX = 3;
+    /**
+     * @var int
+     */
+    public const TYPE_ARTICLE = 4;
 
     /**
      * @var Request
@@ -19,160 +34,207 @@ class Accesses
     private $request;
 
     /**
+     * @var User
+     */
+    private $user;
+
+    /**
+     * @var array
+     */
+    private $accessLevel = [];
+
+
+    /**
+     * @param Request $request
      * Initialize all needed objects.
      */
-    public function __construct(\Ilch\Request $request)
+    public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
     /**
-     * @return mixed
+     * @return User
      */
-    private function getGroupIds()
+    public function getUser(): User
     {
-        return $this->groupIds;
+        if (!$this->user) {
+            $user = currentUser();
+            if ($user) {
+                $this->setUser($user);
+            }
+        }
+
+        if (!$this->user) {
+            $user = new \Modules\User\Mappers\User();
+            $user = $user->getDummyUser();
+            $this->setUser($user);
+        }
+
+        return $this->user;
     }
 
     /**
-     * @param $id
+     * @param User $user
+     * @return $this
      */
-    private function setGroupIds($id)
+    public function setUser(User $user): Accesses
     {
-        $this->groupIds = $id;
+        $this->user = $user;
+
+        return $this;
     }
 
     /**
      * Check access rights for modules, pages and more.
      *
-     * @todo expansion and more functions
-     * @param $getAccessTo string Module, Admin
+     * @param string $getAccessTo Module, Admin
+     * @param string|null $key
+     * @param int $type
      * @return bool
      */
-    public function hasAccess($getAccessTo = '')
+    public function hasAccess(string $getAccessTo = '', ?string $key = null, int $type = self::TYPE_MODULE): bool
     {
-        $userId = '';
-        $groupAccessList = [];
-        $groupIds = [3];
-
-        if (isset($_SESSION['user_id'])) {
-            $userId = $_SESSION['user_id'];
-        }
-
-        $userMapper = new \Modules\User\Mappers\User();
-        $groupMapper = new \Modules\User\Mappers\Group();
-
-        if ($userId) {
-            $user = $userMapper->getUserById($userId);
-
-            if ($user !== null) {
-                $groupIds = [];
-                foreach ($user->getGroups() as $groups) {
-                    $groupIds[] = $groups->getId();
-                    $groupAccessList[] = $groupMapper->getGroupAccessList($groups->getId());
-                }
-            } else {
-                // User doesn't exist anymore. "Downgrade" to guest.
-                $groupAccessList[] = $groupMapper->getGroupAccessList('3');
+        if ($key === null) {
+            $isPage = $this->request->getModuleName() === 'admin' && $this->request->getControllerName() === 'page';
+            $key = $isPage ? $this->request->getParam('id', 0) : $this->request->getModuleName();
+            if ($isPage) {
+                $type = $this::TYPE_PAGE;
             }
         } else {
-            $groupAccessList[] = $groupMapper->getGroupAccessList('3');
+            $findSub = strpos($key, '_');
+            if ($findSub !== false) {
+                $keyParts = explode('_', $key);
+                $key = $keyParts[1];
+                $getAccessTo = $keyParts[0];
+            }
         }
 
-        $this->setGroupIds($groupIds);
+        $this->getUser();
 
         if ($getAccessTo === 'Module') {
-            $getAccessTo = $this->getAccessModule($groupAccessList);
+            return $this->checkAccessUser($key, $type);
         } else {
-            $getAccessTo = $this->getAccessAdmin($groupAccessList);
+            return $this->checkAccessAdmin(($getAccessTo === 'Admin' ? '' : $key), $type);
         }
-        return $getAccessTo;
     }
 
     /**
-     * Check if user has the rights to access the module.
+     * Gets the AccessLevel by given Param
      *
-     * @param $array
+     * @param string $key A module-key, page-id or article-id prefixed by either one of these: "module_", "page_", "article_", "box_".
+     * @param User|null $user
+     * @return int
+     * @since 2.1.51
+     */
+    public function getAccessLevel(string $key, ?User $user = null): int
+    {
+        if (!isset($this->accessLevel[$key])) {
+            if ($key === 'module_admin') {
+                $this->accessLevel[$key] = $this->checkAccessAdmin('', 0);
+            } else {
+                $groupMapper = new \Modules\User\Mappers\Group();
+                $this->accessLevel[$key] = $groupMapper->getAccessLevel($key, $user ?? $this->getUser());
+            }
+        }
+
+        return $this->accessLevel[$key];
+    }
+
+    /**
+     * Validate AccessLevel
+     *
+     * @param string $key
+     * @param int $type
+     * @return int
+     */
+    private function checkAccessLevel(string $key, int $type): int
+    {
+        if ($type === $this::TYPE_PAGE) {
+            $accessLevel = $this->getAccessLevel('page_' . $key);
+        } elseif ($type === $this::TYPE_BOX) {
+            $accessLevel = $this->getAccessLevel('box_' . $key);
+        } elseif ($type === $this::TYPE_ARTICLE) {
+            $accessLevel = $this->getAccessLevel('article_' . $key);
+        } else {
+            $accessLevel = $this->getAccessLevel('module_' . $key);
+        }
+
+        return $accessLevel;
+    }
+
+    /**
+     * Check if user has rights to access the Modul/Page/Box.
+     *
+     * @param string $key
+     * @param int $type
      * @return bool
      */
-    private function getAccessModule($array)
+    private function checkAccessUser(string $key, int $type): bool
     {
-        foreach ($array as $kay => $value) {
-            $entries[] = $value['entries'];
-            foreach ($entries as $value) {
-                foreach ($value['module'] as $key => $Access) {
-                    if (!isset($entrie[$key]) || (int)$Access > (int)$entrie[$key]) {
-                        $entrie[$key] = $Access;
+        return $this->checkAccessLevel($key, $type) >= 1;
+    }
+
+    /**
+     * Check if user has Admin rights to access the Modul/Page/Box.
+     *
+     * @param string $key
+     * @param int $type
+     * @return bool
+     */
+    private function checkAccessAdmin(string $key, int $type): bool
+    {
+        if ($key !== '') {
+            return $this->checkAccessLevel($key, $type) === 2;
+        } else {
+            if ($this->getUser()->isAdmin()) {
+                return true;
+            }
+
+            $groupAccessList = [];
+
+            $groupMapper = new \Modules\User\Mappers\Group();
+            foreach ($this->getUser()->getGroups() as $groups) {
+                $groupAccessList[] = $groupMapper->getGroupAccessList($groups->getId());
+            }
+
+            $accessTypes = [
+                $this::TYPE_MODULE => 'module',
+                $this::TYPE_PAGE => 'page',
+                $this::TYPE_ARTICLE => 'article',
+                $this::TYPE_BOX => 'box',
+            ];
+
+            $entrie = [];
+            foreach ($groupAccessList as $accessList) {
+                $entries = $accessList['entries'];
+                foreach ($accessTypes as $typeid => $accessType) {
+                    if ($type === 0 || $type === $typeid) {
+                        foreach ($entries[$accessType] as $key => $Access) {
+                            if ($typeid !== $this::TYPE_MODULE) {
+                                $key = $accessType . '_' . $key;
+                            }
+                            if (!isset($entrie[$key]) || (int)$Access > (int)$entrie[$key]) {
+                                $entrie[$key] = $Access;
+                            }
+                        }
                     }
                 }
             }
+            return in_array('2', $entrie);
         }
-
-        if (!isset($entrie[$this->request->getModuleName()]) || empty($entrie) || $this->request->getModuleName() === 'admin') {
-            if ($this->request->getControllerName() === 'page') {
-                return $this->getAccessPage($array);
-            }
-
-            return true;
-        }
-
-        return ($entrie[$this->request->getModuleName()] == '1' || $entrie[$this->request->getModuleName()] == '2' || is_in_array($this->getGroupIds(), ['1']));
-    }
-
-    /**
-     * Check if user has the rights to access the page.
-     *
-     * @param $array
-     * @return bool
-     */
-    private function getAccessPage($array)
-    {
-        $entrie = [];
-        foreach ($array as $kay => $value) {
-            $entries[] = $value['entries'];
-            foreach ($entries as $value) {
-                $entrie[] = $value['page'];
-            }
-        }
-
-        if (is_in_array($this->getGroupIds(), ['1'])) {
-            return true;
-        }
-
-        return in_array('1', array_column($entrie, (int)$this->request->getParam('id'))) || in_array('2', array_column($entrie, (int)$this->request->getParam('id')));
-    }
-
-    /**
-     * @param $array
-     * @return bool
-     */
-    private function getAccessAdmin($array)
-    {
-        $entrie = [];
-        foreach ($array as $kay => $value) {
-            $entries[] = $value['entries'];
-            foreach ($entries as $value) {
-                foreach ($value['module'] as $key => $Access) {
-                    if (!isset($entrie[$key]) || (int)$Access > (int)$entrie[$key]) {
-                        $entrie[$key] = $Access;
-                    }
-                }
-            }
-        }
-
-        return in_array('2', $entrie);
     }
 
     /**
      * @param string $text
      * @return string
      */
-    public function getErrorPage($text = '')
+    public function getErrorPage(string $text = ''): string
     {
         return '<div class="centering text-center error-container">
                     <div class="text-center">
                         <h2 class="without-margin"><span class="text-warning">403</span> Access denied.</h2>
-                        <h4 class="text-warning">'.$text.'</h4>
+                        <h4 class="text-warning">' . $text . '</h4>
                     </div>
                  </div>';
     }

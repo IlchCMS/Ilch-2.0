@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -34,10 +35,10 @@ class Model
      * Adds breadcrumb to hnav.
      *
      * @param string $key
-     * @param string $value
-     * @return \Ilch\Layout\Helper\Hmenu\Model
+     * @param string|array $value
+     * @return Model
      */
-    public function add($key, $value = '')
+    public function add(string $key, $value = ''): Model
     {
         $this->data[$key] = $value;
 
@@ -59,23 +60,22 @@ class Model
         $begin = '<ol class="breadcrumb">';
 
         $html = '<li>';
-        $html .= '<a href="'.$this->layout->getUrl().'">Start</a>';
+        $html .= '<a href="' . $this->layout->getUrl() . '">Start</a>';
         $html .= '';
 
         foreach ($this->data as $key => $value) {
             if (empty($value)) {
                 $html .= '<li class="active">';
                 $html .= $this->layout->escape($key);
-                $html .= '</li>';
             } else {
                 $html .= '<li>';
-                $html .= '<a href="'.$this->layout->escape($this->layout->getUrl($value)).'">'.$this->layout->escape($key).'</a>';
-                $html .= '</li>';
+                $html .= '<a href="' . $this->layout->escape($this->layout->getUrl($value)) . '">' . $this->layout->escape($key) . '</a>';
             }
+            $html .= '</li>';
         }
 
         $end = '</ol>';
 
-        return $begin.$html.$end;
+        return $begin . $html . $end;
     }
 }

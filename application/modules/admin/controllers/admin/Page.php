@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -23,23 +24,25 @@ class Page extends \Ilch\Controller\Admin
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'page', 'action' => 'index']),
-                [
-                    'name' => 'add',
-                    'active' => false,
-                    'icon' => 'fa-solid fa-circle-plus',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'page', 'action' => 'treat'])
-                ]
             ]
         ];
 
-        if ($this->getRequest()->getActionName() === 'treat') {
+        if ($this->getUser()->isAdmin()) {
+            $items[0][] = [
+                'name' => 'add',
+                'active' => false,
+                'icon' => 'fa-solid fa-circle-plus',
+                'url' => $this->getLayout()->getUrl(['controller' => 'page', 'action' => 'treat'])
+            ];
+        }
+
+        if ($this->getRequest()->getActionName() === 'treat' && $this->getUser()->isAdmin()) {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuSites',
             $items
         );
@@ -48,16 +51,20 @@ class Page extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $pageMapper = new PageMapper();
-        $menuMapper = New MenuMapper();
-        $sorter = New Sorter($this->getRequest(), ['id', 'title', 'date_created']);
+        $menuMapper = new MenuMapper();
+        $sorter = new Sorter($this->getRequest(), ['id', 'title', 'date_created']);
+        $user = \Ilch\Registry::get('user');
+
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_pages')) {
             foreach ($this->getRequest()->getPost('check_pages') as $pageId) {
-                $pageMapper->delete($pageId);
-                $menuMapper->deleteItemByPageId($pageId);
+                if ($user->hasAccess('page_' . $pageId)) {
+                    $pageMapper->delete($pageId);
+                    $menuMapper->deleteItemByPageId($pageId);
+                }
             }
             $this->redirect()
                 ->withMessage('deleteSuccess')
@@ -69,11 +76,9 @@ class Page extends \Ilch\Controller\Admin
         /*
          * Filtering boxes out which are not allowed for the user.
          */
-        $user = \Ilch\Registry::get('user');
-
         foreach ($pages ?? [] as $key => $page) {
-            if (!$user->hasAccess('page_'.$page->getId())) {
-                unset($user[$key]);
+            if (!$user->hasAccess('page_' . $page->getId())) {
+                unset($pages[$key]);
             }
         }
 
@@ -99,7 +104,7 @@ class Page extends \Ilch\Controller\Admin
 
             $user = \Ilch\Registry::get('user');
 
-            if (!$user->hasAccess('page_'.$this->getRequest()->getParam('id'))) {
+            if (!$user->hasAccess('page_' . $this->getRequest()->getParam('id'))) {
                 $this->redirect(['action' => 'index']);
             }
 
@@ -116,6 +121,9 @@ class Page extends \Ilch\Controller\Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
         } else {
+            if (!$this->getUser()->isAdmin()) {
+                $this->redirect(['action' => 'index']);
+            }
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
@@ -138,7 +146,7 @@ class Page extends \Ilch\Controller\Admin
             $permaLink = strtr($this->getRequest()->getPost('permaLink'), $entityMap);
 
             if ($permaLink != '') {
-                $permaLinkUrl = BASE_URL.'/index.php/'.$permaLink;
+                $permaLinkUrl = BASE_URL . '/index.php/' . $permaLink;
             } else {
                 $permaLinkUrl = '';
             }
@@ -172,7 +180,7 @@ class Page extends \Ilch\Controller\Admin
                 $pageId = $pageMapper->save($model);
 
                 if (!$model->getId()) {
-                    foreach ($groups as $key => $group) {
+                    foreach ($groups as $group) {
                         if ($group->getId() !== 1) {
                             $groupMapper->saveAccessData($group->getId(), $pageId, 1, 'page');
                         }
@@ -187,7 +195,7 @@ class Page extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'treat'], ($model->getId()?['id' => $model->getId()]:[])));
+                ->to(array_merge(['action' => 'treat'], ($model->getId() ? ['id' => $model->getId()] : [])));
         }
 
         $this->getView()->set('page', $model)
@@ -200,9 +208,9 @@ class Page extends \Ilch\Controller\Admin
     {
         $user = \Ilch\Registry::get('user');
 
-        if ($user->hasAccess('box_'.$this->getRequest()->getParam('id')) && $this->getRequest()->isSecure()) {
+        if ($user->hasAccess('box_' . $this->getRequest()->getParam('id')) && $this->getRequest()->isSecure()) {
             $pageMapper = new PageMapper();
-            $menuMapper = New MenuMapper();
+            $menuMapper = new MenuMapper();
 
             $pageMapper->delete($this->getRequest()->getParam('id'));
             $menuMapper->deleteItemByPageId($this->getRequest()->getParam('id'));

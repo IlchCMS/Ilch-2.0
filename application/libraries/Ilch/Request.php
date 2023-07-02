@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -54,13 +55,16 @@ class Request
 
     /**
      * Constructor
+     * @param bool $check
      */
-    public function __construct()
+    public function __construct(bool $check = true)
     {
         $this->validationErrors = new \Ilch\Validation\ErrorBag();
 
-        $this->checkForOldInput();
-        $this->checkForValidationErrors();
+        if ($check) {
+            $this->checkForOldInput();
+            $this->checkForValidationErrors();
+        }
     }
 
     /**
@@ -226,11 +230,12 @@ class Request
      * Gets param with given key.
      *
      * @param string $key
+     * @param string|null $default
      * @return string|null
      */
-    public function getParam(string $key): ?string
+    public function getParam(string $key, ?string $default = null): ?string
     {
-        return $this->params[$key] ?? null;
+        return $this->params[$key] ?? $default;
     }
 
     /**
@@ -344,8 +349,7 @@ class Request
 
         $returnValue = false;
 
-        if (isset($_SESSION['token'][$this->getPost('ilch_token')])
-               || isset($_SESSION['token'][$this->getParam('ilch_token')])) {
+        if (isset($_SESSION['token'][$this->getPost('ilch_token')]) || isset($_SESSION['token'][$this->getParam('ilch_token')])) {
             $returnValue = true;
         }
 
@@ -361,7 +365,7 @@ class Request
 
     /**
      * Get an array of the current and provided url parts. Optionally reset parameters.
-     * 
+     *
      * @param array $urlParts
      * @param bool $resetParams
      * @return array

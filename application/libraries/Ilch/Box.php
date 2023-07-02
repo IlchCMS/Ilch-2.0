@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -16,12 +17,12 @@ abstract class Box extends Controller\Base
     private $db;
 
     /**
-     * @var integer
+     * @var int
      */
     private $boxUniqid;
 
     /**
-     * @var integer
+     * @var int
      */
     private static $staticBoxUniqid;
 
@@ -58,7 +59,7 @@ abstract class Box extends Controller\Base
      *
      * @return string
      */
-    public function getUniqid()
+    public function getUniqid(): string
     {
         return 'box_' . $this->boxUniqid;
     }
@@ -68,7 +69,7 @@ abstract class Box extends Controller\Base
      *
      * @return \Ilch\Database\Mysql
      */
-    public function db()
+    public function db(): Database\Mysql
     {
         return $this->db;
     }
@@ -76,12 +77,11 @@ abstract class Box extends Controller\Base
     /**
      * Dummy function for original redirect.
      *
-     * @param array $url
-     * @param string $route
-     * @param boolean $rewrite
+     * @param array|string|null  $url
+     * @param string|null $route
      * @throws \LogicException
      */
-    public function redirect($url = [], $route = null, $rewrite = false)
+    public function redirect($url = [], string $route = null): Redirect
     {
         throw new \LogicException('php redirect is not possible in boxes');
     }
