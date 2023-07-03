@@ -30,7 +30,7 @@
                    class="form-control"
                    id="email"
                    name="email"
-                   value="<?($this->get('receiver') != '') ? $this->escape($this->get('receiver')->getEmail()) : $this->escape($this->originalInput('email')) ?>" />
+                   value="<?=($this->get('receiver') != '') ? $this->escape($this->get('receiver')->getEmail()) : $this->escape($this->originalInput('email')) ?>" />
         </div>
     </div>
     <?=($this->get('receiver') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
