@@ -107,6 +107,7 @@ abstract class Base
      * Get object of HTML Purifier with default configuration.
      *
      * @return \HTMLPurifier
+     * @since 2.1.26
      */
     public function getPurifier(): \HTMLPurifier
     {
@@ -119,6 +120,7 @@ abstract class Base
      *
      * @param string $content
      * @return string
+     * @since 2.1.26
      */
     public function purify(string $content): string
     {
@@ -128,6 +130,21 @@ abstract class Base
             return $content;
         }
 
+        return $this->getPurifier()->purify($content);
+    }
+
+    /**
+     * Use HTMLPurifier to always purify the content.
+     * Isn't affected by the "disable_purifier" setting.
+     * Use this function if you want to make sure that the
+     * content always gets purified.
+     *
+     * @param string $content
+     * @return string
+     * @since 2.1.51
+     */
+    public function alwaysPurify($content)
+    {
         return $this->getPurifier()->purify($content);
     }
 
