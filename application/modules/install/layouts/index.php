@@ -1,3 +1,7 @@
+<?php
+
+/** @var $this \Ilch\Layout\Frontend */
+?>
 <!DOCTYPE html>
 <html lang="de">
     <head>
@@ -25,15 +29,19 @@
                 <form autocomplete="off" class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => urlencode($this->getRequest()->getActionName())]) ?>">
                     <?=$this->getTokenField() ?>
                     <div class="col-lg-4 col-md-3 col-sm-3 hidden-xs verticalLine install_step">
-                        <?php $done = 1; ?>
-                        <?php $menuCounter = count($this->get('menu')); ?>
-                        <?php $lastAction = ''; ?>
-                        <?php foreach ($this->get('menu') as $key => $values): ?>
-                            <?php if (isset($values['done'])): ?>
+                        <?php
+                        $done = 1;
+                        /** @var array $menu */
+                        $menu = $this->get('menu');
+                        $menuCounter = count($menu);
+                        $lastAction = '';
+                        ?>
+                        <?php foreach ($menu as $key => $values) : ?>
+                            <?php if (isset($values['done'])) : ?>
                                 <?php $done++; ?>
                                 <?php $lastAction = $key; ?>
                             <?php endif; ?>
-                            <div class="step-item <?=isset($values['done']) ? 'done': '' ?><?=$this->getRequest()->getActionName() == $key ? 'active': '' ?>">
+                            <div class="step-item <?=isset($values['done']) ? 'done' : '' ?><?=$this->getRequest()->getActionName() == $key ? 'active' : '' ?>">
                                 <div class="step-content">
                                     <?=$this->getTrans($values['langKey']) ?>
                                 </div>
@@ -41,8 +49,8 @@
                         <?php endforeach; ?>
                     </div>
                     <div class="col-lg-8 col-md-9 col-sm-9">
-                        <?php foreach ($this->get('menu') as $key => $values): ?>
-                            <?php if ($this->getRequest()->getActionName() == $key): ?>
+                        <?php foreach ($menu as $key => $values) : ?>
+                            <?php if ($this->getRequest()->getActionName() == $key) : ?>
                                 <h2><?=$this->getTrans($values['langKey']) ?></h2>
                             <?php endif; ?>
                         <?php endforeach; ?>
@@ -52,17 +60,17 @@
 
 
                     <div class="save_box">
-                        <?php if (!in_array($this->getRequest()->getActionName(), ['index', 'finish'])): ?>
+                        <?php if (!in_array($this->getRequest()->getActionName(), ['index', 'finish'])) : ?>
                             <a href="<?=$this->getUrl(['action' => $lastAction]) ?>" class="btn btn-default pull-left">
                                 <?=$this->getTrans('backButton') ?>
                             </a>
                         <?php endif; ?>
 
-                        <?php if ($this->getRequest()->getActionName() !== 'finish'): ?>
+                        <?php if ($this->getRequest()->getActionName() !== 'finish' && !$this->get('mysqliExtensionMissing')) : ?>
                             <button type="submit" class="btn btn-primary pull-right" name="save">
                                 <?php $buttonTrans = 'nextButton'; ?>
 
-                                <?php if ($this->getRequest()->getActionName() === 'configuration'): ?>
+                                <?php if ($this->getRequest()->getActionName() === 'configuration') : ?>
                                     <?php $buttonTrans = 'installButton'; ?>
                                 <?php endif; ?>
 
@@ -70,12 +78,12 @@
                             </button>
                         <?php endif; ?>
 
-                        <?php if ($this->getRequest()->getActionName() === 'finish'): ?>
+                        <?php if ($this->getRequest()->getActionName() === 'finish') : ?>
                             <div class="pull-right">
                                 <a target="_blank" href="<?=$this->getUrl() ?>" class="btn btn-success">
                                     Frontend
                                 </a>
-                                <a target="_blank" href="<?=$this->getUrl().'/admin' ?>" class="btn btn-primary">
+                                <a target="_blank" href="<?=$this->getUrl() . '/admin' ?>" class="btn btn-primary">
                                     Administration
                                 </a>
                             </div>

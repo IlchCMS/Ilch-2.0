@@ -1,18 +1,31 @@
-<div class="form-group <?php if ($this->get('error') != '') { echo 'has-error'; } ?>">
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var array $languages */
+$languages = $this->get('languages');
+
+/** @var bool|null $licenseMissing */
+$licenseMissing = $this->get('licenseMissing');
+
+/** @var string $licenseText */
+$licenseText = $this->get('licenseText');
+?>
+<div class="form-group <?=$this->validation()->hasError('licenseAccepted') ? 'has-error' : '' ?>">
     <div class="col-lg-12">
-        <?php if ($this->get('licenseMissing') != ''): ?>
+        <?php if ($this->get('licenseMissing')) : ?>
             <div class="alert alert-danger" role="alert">
-                <?=$this->getTrans($this->get('licenseMissing')) ?>
+                <?=$this->getTrans('licenseMissing') ?>
             </div>
-        <?php else: ?>
+        <?php else : ?>
             <div class="form-control license" disabled>
-                <?=$this->get('licenseText') ?>
+                <?=$licenseText ?>
             </div>
         <?php endif; ?>
     </div>
-    <?php if ($this->get('licenseMissing') == ''): ?>
-        <label class="col-lg-12 checkbox inline <?php if ($this->get('error') != '') { echo 'text-danger'; } ?>" style="margin-left: 20px;">
-            <input type="checkbox" name="licenseAccepted" value="1" <?php if ($this->get('licenseAccepted') != '') { echo 'checked'; } ?>> <?=$this->getTrans('acceptLicense') ?>
+    <?php if (!$this->get('licenseMissing')) : ?>
+        <label class="col-lg-12 checkbox inline <?=$this->validation()->hasError('licenseAccepted') ? 'text-danger' : '' ?>" style="margin-left: 20px;">
+            <input type="checkbox" name="licenseAccepted" value="1" <?=$this->originalInput('licenseAccepted', $this->get('licenseAccepted')) ? 'checked' : '' ?>> <?=$this->getTrans('acceptLicense') ?>
         </label>
     <?php endif; ?>
 </div>
