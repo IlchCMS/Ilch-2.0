@@ -197,10 +197,12 @@ class Index extends \Ilch\Controller\Frontend
         $port = (!empty($hostParts[1])) ? $hostParts[1] : null;
         $dbLinkIdentifier = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
         $dbVersion = mysqli_get_server_info($dbLinkIdentifier);
-        if (strpos(mysqli_get_server_info($dbLinkIdentifier), 'MariaDB') !== false) {
+        if (strpos($dbVersion, 'MariaDB') !== false) {
             $requiredVersion = '5.5';
+            $this->getView()->set('dbServerInfo', ' MariaDB');
         } else {
             $requiredVersion = '5.5.3';
+            $this->getView()->set('dbServerInfo', 'MySQL');
         }
         if (!version_compare($dbVersion, $requiredVersion, '>=')) {
             $errors['dbVersion'] = true;
@@ -278,8 +280,6 @@ class Index extends \Ilch\Controller\Frontend
         if (!extension_loaded('curl')) {
             $errors['curl'] = true;
         }
-
-
 
         if ($this->getRequest()->isPost() && empty($errors)) {
             $this->redirect(['action' => 'database']);
@@ -484,7 +484,7 @@ class Index extends \Ilch\Controller\Frontend
 
                 foreach ($modulesToInstall as $module) {
                     /*
-                     * Will not linked in menu
+                     * Will not be linked in the menu
                      */
                     if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'newsletter', 'statistic', 'cookieconsent', 'error', 'contact', 'imprint', 'privacy'])) {
                         continue;

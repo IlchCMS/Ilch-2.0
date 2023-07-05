@@ -23,7 +23,7 @@ $errors = $this->get('errors')
                 </td>
             </tr>
             <tr>
-                <td><?=$this->getTrans('dbVersion') ?></td>
+                <td><?=$this->getTrans('dbVersion') ?> (<?=$this->get('dbServerInfo') ?>)</td>
                 <td class="text-success">>= <?=$this->get('requiredVersion') ?></td>
                 <td class="<?=!($errors['dbVersion'] ?? false) ? 'text-success' : 'text-danger' ?>">
                     <?=$this->get('dbVersion') ?>
