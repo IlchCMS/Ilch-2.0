@@ -247,23 +247,23 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         if (!extension_loaded('gd')) {
-            $errors['gd'] = true;
+            $errors['gdExtension'] = true;
         }
 
         if (!extension_loaded('mysqli')) {
-            $errors['mysqli'] = true;
+            $errors['mysqliExtension'] = true;
         }
 
         if (!extension_loaded('mbstring')) {
-            $errors['mbstring'] = true;
+            $errors['mbstringExtension'] = true;
         }
 
         if (!extension_loaded('zip')) {
-            $errors['zip'] = true;
+            $errors['zipExtension'] = true;
         }
 
         if (!extension_loaded('openssl')) {
-            $errors['openssl'] = true;
+            $errors['opensslExtension'] = true;
         } else {
             if (file_exists(ROOT_PATH . '/certificate/Certificate.crt')) {
                 $public_key = file_get_contents(ROOT_PATH . '/certificate/Certificate.crt');
@@ -278,7 +278,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         if (!extension_loaded('curl')) {
-            $errors['curl'] = true;
+            $errors['curlExtension'] = true;
         }
 
         if ($this->getRequest()->isPost() && empty($errors)) {

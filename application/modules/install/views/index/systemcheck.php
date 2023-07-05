@@ -33,49 +33,49 @@ $errors = $this->get('errors')
                 <td>PHP-<?=$this->getTrans('extension') ?> cURL</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <span class="<?=!($errors['curl'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['curl'] ?? false) ? 'existing' : 'missing') ?></span>
+                    <span class="<?=!($errors['curlExtension'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['curlExtension'] ?? false) ? 'existing' : 'missing') ?></span>
                 </td>
             </tr>
             <tr>
                 <td>PHP-<?=$this->getTrans('extension') ?> gd</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <span class="<?=!($errors['gd'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['gd'] ?? false) ? 'existing' : 'missing') ?></span>
+                    <span class="<?=!($errors['gdExtension'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['gdExtension'] ?? false) ? 'existing' : 'missing') ?></span>
                 </td>
             </tr>
             <tr>
                 <td>PHP-<?=$this->getTrans('extension') ?> Multibyte String (mbstring)</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <span class="<?=!($errors['mbstring'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['mbstring'] ?? false) ? 'existing' : 'missing') ?></span>
+                    <span class="<?=!($errors['mbstringExtension'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['mbstringExtension'] ?? false) ? 'existing' : 'missing') ?></span>
                 </td>
             </tr>
             <tr>
                 <td>PHP-<?=$this->getTrans('extension') ?> MySQLi (mysqli)</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <span class="<?=!($errors['mysqli'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['mysqli'] ?? false) ? 'existing' : 'missing') ?></span>
+                    <span class="<?=!($errors['mysqliExtension'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['mysqliExtension'] ?? false) ? 'existing' : 'missing') ?></span>
                 </td>
             </tr>
             <tr>
                 <td>PHP-<?=$this->getTrans('extension') ?> OpenSSL</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <span class="<?=!($errors['openssl'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['openssl'] ?? false) ? 'existing' : 'missing') ?></span>
+                    <span class="<?=!($errors['opensslExtension'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['opensslExtension'] ?? false) ? 'existing' : 'missing') ?></span>
                 </td>
             </tr>
             <tr>
                 <td>PHP-<?=$this->getTrans('extension') ?> Zip</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <span class="<?=!($errors['zip'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['zip'] ?? false) ? 'existing' : 'missing') ?></span>
+                    <span class="<?=!($errors['zipExtension'] ?? false) ? 'text-success' : 'text-danger' ?>"><?=$this->getTrans(!($errors['zipExtension'] ?? false) ? 'existing' : 'missing') ?></span>
                 </td>
             </tr>
             <tr>
                 <td><?=$this->getTrans('certificate') ?></td>
                 <td class="text-success"><?=$this->getTrans('valid') ?></td>
                 <td>
-                    <?php if (!($errors['openssl'] ?? false)) : ?>
+                    <?php if (!($errors['opensslExtension'] ?? false)) : ?>
                         <?php if (!($errors['missingCert'] ?? false)) : ?>
                             <?php if (!($errors['expiredCert'] ?? false)) : ?>
                                 <span class="text-success"><?=$this->getTrans('valid') ?></span>
