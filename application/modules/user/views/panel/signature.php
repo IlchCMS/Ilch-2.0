@@ -15,7 +15,7 @@
                         <textarea class="form-control ckeditor"
                                   id="ck_1"
                                   name="signature"
-                                  toolbar="ilch_bbcode"><?=$this->escape($profil->getSignature()) ?></textarea>
+                                  toolbar="ilch_html_frontend"><?=$this->escape($profil->getSignature()) ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">
