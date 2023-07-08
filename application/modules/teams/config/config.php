@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.22.0',
+        'version' => '1.23.0',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -27,7 +27,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'You can add or edit teams and manage applications for these teams.',
             ],
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.1.52',
         'phpVersion' => '7.3'
     ];
 

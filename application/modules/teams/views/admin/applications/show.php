@@ -108,7 +108,7 @@ $userDeleted = $this->get('userDeleted');
             <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-lg-12">
-            <?=nl2br($this->getHtmlFromBBCode($this->escape($join->getText()))) ?>
+            <?=$this->alwaysPurify($join->getText()) ?>
         </div>
     </div>
 

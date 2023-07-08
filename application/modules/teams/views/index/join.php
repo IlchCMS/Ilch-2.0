@@ -185,7 +185,7 @@ $teams = $this->get('teams');
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
-                          toolbar="ilch_bbcode"
+                          toolbar="ilch_html_frontend"
                           rows="5"><?=$this->originalInput('text') ?></textarea>
             </div>
         </div>
