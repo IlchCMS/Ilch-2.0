@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'version' => '1.12.0',
+        'version' => '1.13.0',
         'icon_small' => 'fa-solid fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'A guestbook with optional welcome message. New entries can be shown only after approval if wished.',
             ],
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.1.52',
         'phpVersion' => '7.3'
     ];
 
