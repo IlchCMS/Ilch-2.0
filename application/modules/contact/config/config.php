@@ -56,7 +56,7 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('contact_welcomeMessage', '');
                 break;
-            case "2.1.50":
+            case "2.1.51":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-regular fa-envelope' WHERE `key` = 'contact';");
                 break;
         }
