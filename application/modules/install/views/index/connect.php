@@ -1,16 +1,18 @@
-<?php $errors = $this->get('errors'); ?>
+<?php
 
-<div class="form-group">
+/** @var \Ilch\View $this */
+?>
+<div class="form-group <?=$this->validation()->hasError('dbEngine') ? 'has-error' : '' ?>">
     <label for="dbEngine" class="col-lg-3 control-label">
         <?=$this->getTrans('dbEngine') ?>:
     </label>
     <div class="col-lg-9">
         <select class="form-control" id="dbEngine" name="dbEngine">
-            <option value="Mysql">Mysql</option>
+            <option <?=($this->originalInput('dbEngine', $this->get('dbEngine')) == 'Mysql') ? 'selected="selected"' : '' ?> value="Mysql">Mysql</option>
         </select>
     </div>
 </div>
-<div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; } ?>">
+<div class="form-group <?=$this->validation()->hasError('dbHost') ? 'has-error' : '' ?>">
     <label for="dbHost" class="col-lg-3 control-label">
         <?=$this->getTrans('dbHost') ?>:
     </label>
@@ -19,14 +21,11 @@
                class="form-control"
                id="dbHost"
                name="dbHost"
-               value="<?php if ($this->get('dbHost') != '') { echo $this->escape($this->get('dbHost')); } else { echo 'localhost'; } ?>" />
+               value="<?=$this->escape($this->originalInput('dbHost', $this->get('dbHost'))) ?>" />
         <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbHostInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
     </div>
-    <?php if (!empty($errors['dbConnection'])): ?>
-        <span class="col-lg-offset-3 col-lg-9 help-block"><?=$this->getTrans($errors['dbConnection']) ?></span>
-    <?php endif; ?>
 </div>
-<div class="form-group <?php if (!empty($errors['dbConnection']) || !empty($errors['dbUser'])) { echo 'has-error'; } ?>">
+<div class="form-group <?=$this->validation()->hasError('dbUser') ? 'has-error' : '' ?>">
     <label for="dbUser" class="col-lg-3 control-label">
         <?=$this->getTrans('dbUser') ?>:
     </label>
@@ -35,14 +34,11 @@
                class="form-control"
                id="dbUser"
                name="dbUser"
-               value="<?php if ($this->get('dbUser') != '') { echo $this->escape($this->get('dbUser')); } ?>" />
+               value="<?=$this->escape($this->originalInput('dbUser', $this->get('dbUser'))) ?>" />
         <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbUserInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
     </div>
-    <?php if (!empty($errors['dbUser'])): ?>
-        <span class="col-lg-offset-3 col-lg-9 help-block"><?=$this->getTrans($errors['dbUser']) ?></span>
-    <?php endif; ?>
 </div>
-<div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; } ?>">
+<div class="form-group <?=$this->validation()->hasError('dbPassword') ? 'has-error' : '' ?>">
     <label for="dbPassword" class="col-lg-3 control-label">
         <?=$this->getTrans('dbPassword') ?>:
     </label>
@@ -51,7 +47,7 @@
                class="form-control"
                id="dbPassword"
                name="dbPassword"
-               value="<?php if ($this->get('dbPassword') != '') { echo $this->escape($this->get('dbPassword')); } ?>" />
+               value="<?=$this->escape($this->originalInput('dbPassword', $this->get('dbPassword'))) ?>" />
     </div>
 </div>
 

@@ -114,9 +114,9 @@ class Base
     /**
      * Gets the config object.
      *
-     * @return \Ilch\Config\Database
+     * @return \Ilch\Config\Database|null
      */
-    public function getConfig(): \Ilch\Config\Database
+    public function getConfig(): ?\Ilch\Config\Database
     {
         return \Ilch\Registry::get('config');
     }
