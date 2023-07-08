@@ -67,7 +67,7 @@ if ($this->getUser()) {
                                     <textarea class="form-control ckeditor"
                                               id="ck_1"
                                               name="text"
-                                              toolbar="ilch_bbcode"><?=$this->originalInput('text') ?></textarea>
+                                              toolbar="ilch_html_frontend"><?=$this->originalInput('text') ?></textarea>
                                     </div>
                                 </div>
                                 <?php if ($this->getUser()->isAdmin()): ?>
