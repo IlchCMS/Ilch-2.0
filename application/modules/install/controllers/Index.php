@@ -19,19 +19,13 @@ class Index extends \Ilch\Controller\Frontend
         $fileConfig = new File();
         $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
         if ($fileConfig->get('dbUser') !== null && $this->getRequest()->getActionName() !== 'finish') {
-            /*
-             * Cms is installed
-             */
+            // Cms is installed
             $this->redirect()->to(null);
         } else {
-            /*
-             * Cms not installed yet.
-             */
+            // Cms not installed yet.
             $this->getLayout()->setFile('modules/install/layouts/index');
 
-            /*
-             * Dont set a time limit for installer.
-             */
+            // Set a resonable time limit for the installer
             @set_time_limit(300);
 
             $menu = [
@@ -386,9 +380,7 @@ class Index extends \Ilch\Controller\Frontend
                     $_SESSION['install'][$name] = $this->getRequest()->getPost($name);
                 }
 
-                /*
-                 * Write install config.
-                 */
+                // Write install config.
                 $fileConfig = new File();
                 $fileConfig->set('dbEngine', $_SESSION['install']['dbEngine']);
                 $fileConfig->set('dbHost', $_SESSION['install']['dbHost']);
@@ -398,9 +390,7 @@ class Index extends \Ilch\Controller\Frontend
                 $fileConfig->set('dbPrefix', $_SESSION['install']['dbPrefix']);
                 $fileConfig->saveConfigToFile(CONFIG_PATH . '/config.php');
 
-                /*
-                 * Initialize install database.
-                 */
+                // Initialize install database.
                 $dbFactory = new \Ilch\Database\Factory();
                 $db = $dbFactory->getInstanceByConfig($fileConfig);
                 \Ilch\Registry::set('db', $db);
@@ -483,9 +473,7 @@ class Index extends \Ilch\Controller\Frontend
                 $menuMapper->saveItem($menuItem);
 
                 foreach ($modulesToInstall as $module) {
-                    /*
-                     * Will not be linked in the menu
-                     */
+                    // Will not be linked in the menu
                     if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'newsletter', 'statistic', 'cookieconsent', 'error', 'contact', 'imprint', 'privacy'])) {
                         continue;
                     }
@@ -542,9 +530,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getRequest()->setIsAjax(true);
         $modules = [];
 
-        /*
-         * System-Modules
-         */
+        // System modules
         $modules['user']['types'] = [];
         $modules['article']['types'] = [];
         $modules['media']['types'] = [];
@@ -555,9 +541,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['cookieconsent']['types'] = [];
         $modules['statistic']['types'] = [];
 
-        /*
-         * Optional-Modules.
-         */
+        // Optional modules
         // calendar module needs to be installed early, so that the table calendar_events exists for modules that use it.
         $modules['calendar']['types'] = ['clan', 'private'];
         $modules['checkoutbasic']['types'] = ['clan'];
