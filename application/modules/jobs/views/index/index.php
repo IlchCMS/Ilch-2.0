@@ -10,7 +10,7 @@
     <div class="row">
         <?php foreach ($this->get('jobs') as $jobs): ?>
             <div class="col-lg-2">
-                <i class="fa fa-briefcase fa-4x briefcase"></i>
+                <i class="fa-solid fa-briefcase fa-4x briefcase"></i>
             </div>
             <div class="col-lg-10" style="margin-bottom: 35px;">
                 <h1>

@@ -15,7 +15,7 @@ $jobs = $this->get('jobs');
 <?php if ($job != ''): ?>
     <div class="row">
         <div class="col-lg-2">
-            <i class="fa fa-briefcase fa-4x briefcase"></i>
+            <i class="fa-solid fa-briefcase fa-4x briefcase"></i>
         </div>
         <div class="col-lg-10" style="margin-bottom: 35px;">
             <h1><?=$this->escape($job->getTitle()) ?></h1>
@@ -49,7 +49,7 @@ $jobs = $this->get('jobs');
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
-                          toolbar="ilch_bbcode"
+                          toolbar="ilch_html_frontend"
                           rows="5"></textarea>
             </div>
         </div>

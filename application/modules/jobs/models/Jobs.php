@@ -6,6 +6,9 @@
 
 namespace Modules\Jobs\Models;
 
+/**
+ * Job model
+ */
 class Jobs extends \Ilch\Model
 {
     /**
@@ -48,7 +51,7 @@ class Jobs extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -57,11 +60,11 @@ class Jobs extends \Ilch\Model
      * Sets the id of the jobs.
      *
      * @param int $id
-     * @return this
+     * @return Jobs
      */
-    public function setId($id)
+    public function setId(int $id): Jobs
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -71,7 +74,7 @@ class Jobs extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -80,11 +83,11 @@ class Jobs extends \Ilch\Model
      * Sets the title of the jobs.
      *
      * @param string $title
-     * @return this
+     * @return Jobs
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Jobs
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -94,7 +97,7 @@ class Jobs extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -103,11 +106,11 @@ class Jobs extends \Ilch\Model
      * Sets the text of the jobs.
      *
      * @param string $text
-     * @return this
+     * @return Jobs
      */
-    public function setText($text)
+    public function setText(string $text): Jobs
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -117,7 +120,7 @@ class Jobs extends \Ilch\Model
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -126,11 +129,11 @@ class Jobs extends \Ilch\Model
      * Sets the email of the jobs.
      *
      * @param string $email
-     * @return this
+     * @return Jobs
      */
-    public function setEmail($email)
+    public function setEmail(string $email): Jobs
     {
-        $this->email = (string)$email;
+        $this->email = $email;
 
         return $this;
     }
@@ -140,7 +143,7 @@ class Jobs extends \Ilch\Model
      *
      * @return int
      */
-    public function getShow()
+    public function getShow(): int
     {
         return $this->show;
     }
@@ -149,11 +152,11 @@ class Jobs extends \Ilch\Model
      * Sets the show of the jobs.
      *
      * @param int $show
-     * @return this
+     * @return Jobs
      */
-    public function setShow($show)
+    public function setShow(int $show): Jobs
     {
-        $this->show = (int)$show;
+        $this->show = $show;
 
         return $this;
     }

@@ -8,6 +8,9 @@ namespace Modules\Jobs\Mappers;
 
 use Modules\Jobs\Models\Jobs as JobsModel;
 
+/**
+ * Jobs mapper
+ */
 class Jobs extends \Ilch\Mapper
 {
     /**
@@ -16,7 +19,7 @@ class Jobs extends \Ilch\Mapper
      * @param array $where
      * @return JobsModel[]|array
      */
-    public function getJobs($where = [])
+    public function getJobs(array $where = []): ?array
     {
         $jobsArray = $this->db()->select('*')
             ->from('jobs')
@@ -45,10 +48,10 @@ class Jobs extends \Ilch\Mapper
     /**
      * Gets jobs.
      *
-     * @param integer $id
+     * @param int $id
      * @return JobsModel|null
      */
-    public function getJobsById($id)
+    public function getJobsById(int $id): ?JobsModel
     {
         $jobsRow = $this->db()->select('*')
             ->from('jobs')
@@ -99,9 +102,9 @@ class Jobs extends \Ilch\Mapper
     /**
      * Updates jobs with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function update($id)
+    public function update(int $id)
     {
         $show = (int) $this->db()->select('show')
                         ->from('jobs')
@@ -125,9 +128,9 @@ class Jobs extends \Ilch\Mapper
     /**
      * Deletes jobs with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('jobs')
             ->where(['id' => $id])
