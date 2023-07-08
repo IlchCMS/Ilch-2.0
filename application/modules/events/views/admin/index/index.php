@@ -33,7 +33,7 @@
                         ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_entries', $event->getId()) ?></td>
-                            <td><a href="<?=$this->getURL('events/index/treat/id/'.$event->getId()) ?>" target="_blank" title="<?=$this->getTrans('edit') ?>"><i class="fas fa-edit text-success"></i></a></td>
+                            <td><a href="<?=$this->getURL('events/index/treat/id/'.$event->getId()) ?>" target="_blank" title="<?=$this->getTrans('edit') ?>"><i class="fa-solid fa-pen-to-square text-success"></i></a></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $event->getId()]) ?></td>
                             <td>
                                 <?=date('d.m.Y H:i', strtotime($event->getStart())) ?>

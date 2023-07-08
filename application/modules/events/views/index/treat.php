@@ -80,7 +80,7 @@ $types = $this->get('types');
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } elseif ($this->originalInput('start') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('start'))); } ?>"
                        readonly>
                 <span class="input-group-addon">
-                    <span class="far fa-calendar"></span>
+                    <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
         </div>
@@ -97,10 +97,10 @@ $types = $this->get('types');
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getEnd())); } elseif ($this->originalInput('end') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('end'))); } ?>"
                        readonly>
                 <span class="input-group-addon">
-                    <span class="fas fa-times"></span>
+                    <span class="fa-solid fa-xmark"></span>
                 </span>
                 <span class="input-group-addon">
-                    <span class="far fa-calendar"></span>
+                    <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
         </div>
@@ -171,7 +171,7 @@ $types = $this->get('types');
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
-                          toolbar="ilch_bbcode"
+                          toolbar="ilch_html_frontend"
                           rows="5"><?=($this->get('event') != '') ? $this->escape($this->get('event')->getText()) : $this->escape($this->originalInput('text')) ?></textarea>
             </div>
         </div>
@@ -211,7 +211,7 @@ $types = $this->get('types');
         </div>
         <div class="form-group <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
             <label for="userLimit" class="col-lg-2 control-label">
-                <?=$this->getTrans('userLimit') ?> <div class="badge" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fas fa-info"></i></div>
+                <?=$this->getTrans('userLimit') ?> <div class="badge" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
             </label>
             <div class="col-lg-2">
                 <input type="number"
