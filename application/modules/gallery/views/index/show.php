@@ -43,25 +43,30 @@
 
 <div id="gallery">
     <?php foreach ($this->get('image') as $image): ?>
- 
         <?php $commentsCount = $commentMapper->getCountComments ('gallery/index/showimage/id/'.$image->getId()); ?>
  
         <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
             <div class="panel panel-default">
- 
-                <a class="venobox" data-gall="gallery01" href="<?=$this->getUrl().'/' .$image->getImageUrl() ?>"title="<?=$image->getImageTitle() ?> ">
- 
-                <div class="panel-image thumbnail">
-                        <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$image->getImageTitle()?>" />
-                </div>
- 
+            <?php if (file_exists($image->getImageThumb())): ?>
+                <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" title="<?= $image->getImageTitle() ?> ">
+                    <div class="panel-image thumbnail">
+                        <img src="<?= $this->getUrl() . '/' . $image->getImageThumb() ?>" class="panel-image-preview" alt="<?= $this->escape($image->getImageTitle()) ?>" />
+                    </div>
+                </a>
+            <?php else: ?>
+                <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" title="<?= $image->getImageTitle() ?> ">
+                    <div class="panel-image thumbnail">
+                        <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" class="panel-image-preview" alt="<?=$this->getTrans('noMediaAlt') ?>" />
+                    </div>
+                </a>
+            <?php endif; ?>
+
                 <a href="<?=$this->getUrl(['action' => 'showimage', 'id' => $image->getId()]) ?>" title="<?=$this->getTrans('description')?>">
- 
- 
-                <div class="panel-footer text-center">
-                    <i class="fa-regular fa-comment"></i> <?=$commentsCount ?>
-                    <i class="fa-solid fa-eye"> <?=$image->getVisits() ?></i>
-                </div>
+                    <div class="panel-footer text-center">
+                        <i class="fa-regular fa-comment"></i> <?=$commentsCount ?>
+                        <i class="fa-solid fa-eye"></i> <?=$image->getVisits() ?>
+                    </div>
+                </a>
             </div>
         </div>
     <?php endforeach; ?>
@@ -77,4 +82,4 @@
         navTouch: true,
         spinner: 'pulse',
     })
-    </script>
+</script>
