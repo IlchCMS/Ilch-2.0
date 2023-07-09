@@ -35,8 +35,8 @@ class Image extends \Ilch\Mapper
         $imageModel = new ImageModel();
         $imageModel->setId($imageRow['imgid']);
         $imageModel->setImageId($imageRow['image_id']);
-        $imageModel->setImageUrl($imageRow['url']);
-        $imageModel->setImageThumb($imageRow['url_thumb']);
+        $imageModel->setImageUrl((string)$imageRow['url']);
+        $imageModel->setImageThumb((string)$imageRow['url_thumb']);
         $imageModel->setImageTitle($imageRow['image_title']);
         $imageModel->setImageDesc($imageRow['image_description']);
         $imageModel->setGalleryId($imageRow['gallery_id']);
@@ -69,7 +69,7 @@ class Image extends \Ilch\Mapper
 
         $imageModel = new ImageModel();
         $imageModel->setImageId($imageRow['image_id']);
-        $imageModel->setImageThumb($imageRow['url_thumb']);
+        $imageModel->setImageThumb((string)$imageRow['url_thumb']);
         $imageModel->setImageTitle($imageRow['image_title']);
         $imageModel->setImageDesc($imageRow['image_description']);
         $imageModel->setVisits($imageRow['visits']);
@@ -141,8 +141,8 @@ class Image extends \Ilch\Mapper
 
         foreach ($imageArray as $entries) {
             $entryModel = new ImageModel();
-            $entryModel->setImageUrl($entries['url']);
-            $entryModel->setImageThumb($entries['url_thumb']);
+            $entryModel->setImageUrl((string)$entries['url']);
+            $entryModel->setImageThumb((string)$entries['url_thumb']);
             $entryModel->setId($entries['imgid']);
             $entryModel->setImageTitle($entries['image_title']);
             $entryModel->setImageDesc($entries['image_description']);
