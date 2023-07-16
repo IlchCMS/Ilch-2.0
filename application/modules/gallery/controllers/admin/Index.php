@@ -42,13 +42,11 @@ class Index extends \Ilch\Controller\Admin
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
 
-        /*
-         * Saves the item tree to database.
-         */
+        // Saves the item tree to database.
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
-                $items = $this->getRequest()->getPost('items');
+                $items = $this->getRequest()->getPost('items') ?? [];
 
                 foreach ($items as $item) {
                     $validation = Validation::create($item, [
