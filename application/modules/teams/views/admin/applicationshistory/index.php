@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\View $this */
 
 /** @var \Modules\Teams\Mappers\Teams $teamsMapper */
@@ -12,7 +13,7 @@ $joins = $this->get('joins');
 $pagination = $this->get('pagination');
 ?>
 <h1><?=$this->getTrans('history') ?></h1>
-<?php if ($joins): ?>
+<?php if ($joins) : ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -35,18 +36,18 @@ $pagination = $this->get('pagination');
             <?php
             /** @var \Modules\Teams\Models\Joins $join */
             ?>
-                <?php foreach ($joins as $join): ?>
+                <?php foreach ($joins as $join) : ?>
                     <?php
                     if (!array_key_exists($join->getTeamId(), $teamsCache)) {
                         $teamsCache[$join->getTeamId()] = $teamsMapper->getTeamById($join->getTeamId());
                     }
                     $team = $teamsCache[$join->getTeamId()];
-                    
+
                     $date = new Ilch\Date($join->getDateCreated()); ?>
                     <tr>
                     <?php if ($join->getUserId()) : ?>
                         <td><a href="<?=$this->getUrl(['action' => 'showuserhistory', 'userId' => $join->getUserId()]) ?>" title="<?=$this->getTrans('show') ?>"><?=$this->escape($join->getName()) ?></a></td>
-                    <?php else: ?>
+                    <?php else : ?>
                         <td><?=$this->escape($join->getName()) ?></td>
                     <?php endif; ?>
                         <td><?=(!empty($team)) ? $this->escape($team->getName()) : $this->getTrans('noTeam') ?></td>
@@ -66,6 +67,6 @@ $pagination = $this->get('pagination');
             <button type="submit" name="clearHistory" class="btn btn-default"><?=$this->getTrans('clearHistory') ?></button>
         </form>
     </div>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noApplications') ?>
 <?php endif; ?>

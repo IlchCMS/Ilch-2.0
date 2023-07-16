@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\View $this */
 
 /** @var \Modules\Teams\Models\Teams $team */
@@ -37,9 +38,9 @@ $userGroupList = $this->get('userGroupList');
         </label>
         <div class="col-lg-4">
             <div class="row">
-                <?php if ($team->getImg() != ''): ?>
+                <?php if ($team->getImg() != '') : ?>
                     <div class="col-lg-12">
-                        <img src="<?=$this->getBaseUrl($team->getImg()) ?>" alt="<?=$this->getTrans('img').' '.$this->escape($team->getName()) ?>">
+                        <img src="<?=$this->getBaseUrl($team->getImg()) ?>" alt="<?=$this->getTrans('img') . ' ' . $this->escape($team->getName()) ?>">
 
                         <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
                             <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('imageDelete') ?>
@@ -75,7 +76,7 @@ $userGroupList = $this->get('userGroupList');
                 $leaderIds = explode(',', $team->getLeader()) ?? [];
                 /** @var \Modules\User\Models\User $user */
                 ?>
-                <?php foreach ($userList ?? [] as $user): ?>
+                <?php foreach ($userList ?? [] as $user) : ?>
                     <option value="<?=$user->getId() ?>" <?=(in_array($user->getId(), $leaderIds) ? 'selected="selected"' : '') ?>>
                         <?=$this->escape($user->getName()) ?>
                     </option>
@@ -97,7 +98,7 @@ $userGroupList = $this->get('userGroupList');
                 $coLeaderIds = explode(',', $team->getCoLeader()) ?? [];
                 /** @var \Modules\User\Models\User $user */
                 ?>
-                <?php foreach ($userList ?? [] as $user): ?>
+                <?php foreach ($userList ?? [] as $user) : ?>
                     <option value="<?=$user->getId() ?>" <?=(in_array($user->getId(), $coLeaderIds) ? 'selected="selected"' : '') ?>>
                         <?=$this->escape($user->getName()) ?>
                     </option>
@@ -115,8 +116,8 @@ $userGroupList = $this->get('userGroupList');
                     <?php
                     /** @var \Modules\User\Models\Group $group */
                     ?>
-                    <?php foreach ($userGroupList ?? [] as $group): ?>
-                        <?php if ($group->getId() != 3): ?>
+                    <?php foreach ($userGroupList ?? [] as $group) : ?>
+                        <?php if ($group->getId() != 3) : ?>
                             <option <?=($team->getGroupId() == $group->getId() ? 'selected="selected"' : '') ?> value="<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>

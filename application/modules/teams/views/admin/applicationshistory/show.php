@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\View $this */
 
 /** @var \Modules\Teams\Mappers\Joins $joinsMapper */
@@ -62,7 +63,7 @@ $birthday = new Ilch\Date($join->getBirthday());
             ?>
         </div>
     </div>
-    <?php if ($join->getBirthday()): ?>
+    <?php if ($join->getBirthday()) : ?>
         <div class="form-group">
             <label class="col-lg-2">
                 <?=$this->getTrans('birthday') ?>:
@@ -72,7 +73,7 @@ $birthday = new Ilch\Date($join->getBirthday());
             </div>
         </div>
     <?php endif; ?>
-    <?php if ($join->getPlace()): ?>
+    <?php if ($join->getPlace()) : ?>
         <div class="form-group">
             <label class="col-lg-2">
                 <?=$this->getTrans('place') ?>:

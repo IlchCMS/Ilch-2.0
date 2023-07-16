@@ -124,7 +124,7 @@ $accesses = $this->get('accesses');
 
                 /** @var \Modules\Admin\Models\Module $module */
                 foreach ($this->get('modules') as $module) {
-                    if ($user->hasAccess('module_' . $module->getKey()) || ($module->getKey() == 'article' && $accesses->hasAccess('Admin', null, $accesses::TYPE_ARTICLE))) {
+                    if ($user->hasAccess('module_' . $module->getKey()) || ($module->getKey() == 'article' && ($accesses && $accesses->hasAccess('Admin', null, $accesses::TYPE_ARTICLE)))) {
                         $content = $module->getContentForLocale($this->getTranslator()->getLocale());
                         if (strncmp($module->getIconSmall(), 'fa-', 3) === 0) {
                             $smallIcon = '<i class="fa ' . $module->getIconSmall() . '" style="padding-right: 5px;"></i>';
@@ -179,14 +179,14 @@ $accesses = $this->get('accesses');
                         </ul>
                     </li>
                 <?php endif; ?>
-                <?php if ($accesses->hasAccess('Admin', null, $accesses::TYPE_PAGE)) : ?>
+                <?php if ($accesses && $accesses->hasAccess('Admin', null, $accesses::TYPE_PAGE)) : ?>
                     <li <?=($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'page') ? 'class="active"' : '' ?>>
                         <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'page', 'action' => 'index']) ?>">
                             <i class="fa-regular fa-file-lines hidden-sm hidden-md"></i> <?=$this->getTrans('menuSites') ?>
                         </a>
                     </li>
                 <?php endif; ?>
-                <?php if ($accesses->hasAccess('Admin', null, $accesses::TYPE_BOX)) : ?>
+                <?php if ($accesses && $accesses->hasAccess('Admin', null, $accesses::TYPE_BOX)) : ?>
                     <li <?=($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'boxes') ? 'class="active"' : '' ?>>
                         <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'boxes', 'action' => 'index']) ?>">
                             <i class="fa-solid fa-inbox hidden-sm hidden-md"></i> <?=$this->getTrans('menuBoxes') ?>

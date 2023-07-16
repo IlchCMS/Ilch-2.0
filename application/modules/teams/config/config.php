@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -12,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.22.0',
+        'version' => '1.22.1',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -37,7 +38,7 @@ class Config extends \Ilch\Config\Install
 
         $this->db()->query('INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES ("teams", "static/upload/image");');
 
-        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig = new IlchDatabase($this->db());
         $databaseConfig->set('teams_uploadpath', 'application/modules/teams/static/upload/')
             ->set('teams_height', '80')
             ->set('teams_width', '530')
@@ -49,7 +50,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->drop('teams', true);
         $this->db()->drop('teams_joins', true);
 
-        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig = new IlchDatabase($this->db());
         $databaseConfig->delete('teams_uploadpath')
             ->delete('teams_height')
             ->delete('teams_width')
@@ -167,25 +168,37 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY `optIn` TINYINT NOT NULL;');
                 // no break
             case "1.1":
+                // no break
             case "1.2":
+                // no break
             case "1.3":
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `optShow` TINYINT(1) NOT NULL AFTER `groupId`;');
                 // no break
             case "1.4":
+                // no break
             case "1.5":
+                // no break
             case "1.6":
+                // no break
             case "1.7":
+                // no break
             case "1.8":
+                // no break
             case "1.9":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_teams` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 // no break
             case "1.10.0":
+                // no break
             case "1.11.0":
+                // no break
             case "1.12.0":
+                // no break
             case "1.13.0":
+                // no break
             case "1.14.0":
+                // no break
             case "1.15.0":
                 // Add notifyLeader column
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `notifyLeader` TINYINT(1) NOT NULL AFTER `optIn`;');
@@ -213,7 +226,9 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('teams_filetypes', implode(' ', $imageExtensions));
                 // no break
             case "1.16.0":
+                // no break
             case "1.17.0":
+                // no break
             case "1.18.0":
                 // Update description
                 foreach ($this->config['languages'] as $key => $value) {
@@ -221,9 +236,14 @@ class Config extends \Ilch\Config\Install
                 }
                 // no break
             case "1.19.0":
+                // no break
             case "1.20.0":
+                // no break
             case "1.21.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-users' WHERE `key` = 'teams';");
+                // no break
+            case "1.22.0":
+                // no break
         }
         return 'Update function executed.';
     }
