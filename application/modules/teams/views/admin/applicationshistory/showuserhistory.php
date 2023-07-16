@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\View $this */
 
 /** @var \Modules\Teams\Mappers\Teams $teamsMapper */
@@ -12,7 +13,7 @@ $joins = $this->get('joins');
 $pagination = $this->get('pagination');
 ?>
 <h1><?=$this->getTrans('historyOfUser') ?></h1>
-<?php if ($joins): ?>
+<?php if ($joins) : ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -35,13 +36,13 @@ $pagination = $this->get('pagination');
             <?php
             /** @var \Modules\Teams\Models\Joins $join */
             ?>
-                <?php foreach ($joins as $join): ?>
+                <?php foreach ($joins as $join) : ?>
                     <?php
                     if (!array_key_exists($join->getTeamId(), $teamsCache)) {
                         $teamsCache[$join->getTeamId()] = $teamsMapper->getTeamById($join->getTeamId());
                     }
                     $team = $teamsCache[$join->getTeamId()];
-                    
+
                     $date = new Ilch\Date($join->getDateCreated()); ?>
                     <tr>
                         <td><?=$this->escape($join->getName()) ?></td>
@@ -55,7 +56,7 @@ $pagination = $this->get('pagination');
         </table>
     </div>
     <?=$pagination->getHtml($this, ['action' => 'showuserhistory', 'userId' => $join->getUserId()]) ?>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noApplications') ?>
 <?php endif; ?>
 

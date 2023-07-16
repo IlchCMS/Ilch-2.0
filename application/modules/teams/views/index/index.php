@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\View $this */
 
 /** @var \Modules\User\Mappers\User $userMapper */
@@ -17,15 +18,15 @@ $teams = $this->get('teams');
 ?>
 <h1><?=$this->getTrans('menuTeams') ?></h1>
 <div class="teams">
-    <?php if ($teams): ?>
+    <?php if ($teams) : ?>
         <div class="row">
-            <?php foreach ($teams as $team): ?>
-                <?php if ($team->getOptShow() == 1): ?>
+            <?php foreach ($teams as $team) : ?>
+                <?php if ($team->getOptShow() == 1) : ?>
                     <div class="col-lg-12 team-name">
                         <a href="<?=$this->getUrl(['action' => 'team', 'id' => $team->getId()]) ?>">
-                        <?php if ($team->getImg() != ''): ?>
-                            <img src="<?=$this->getBaseUrl().$team->getImg() ?>" alt="<?=$this->escape($team->getName()) ?>" title="<?=$this->escape($team->getName()) ?>" />
-                        <?php else: ?>
+                        <?php if ($team->getImg() != '') : ?>
+                            <img src="<?=$this->getBaseUrl() . $team->getImg() ?>" alt="<?=$this->escape($team->getName()) ?>" title="<?=$this->escape($team->getName()) ?>" />
+                        <?php else : ?>
                             <h3><?=$this->escape($team->getName()) ?></h3>
                         <?php endif; ?>
                         </a>
@@ -45,9 +46,9 @@ $teams = $this->get('teams');
                                     <col />
                                 </colgroup>
                                 <tbody>
-                                <?php foreach ($groupList as $userId): ?>
+                                <?php foreach ($groupList as $userId) : ?>
                                     <?php $user = $userMapper->getUserById($userId); ?>
-                                    <?php if ($user && $user->getConfirmed() == 1): ?>
+                                    <?php if ($user && $user->getConfirmed() == 1) : ?>
                                         <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($user->getId()); ?>
                                         <tr>
                                             <td>
@@ -67,10 +68,10 @@ $teams = $this->get('teams');
                                                 ?>
                                             </td>
                                             <td class="contact-links">
-                                                <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($user->getId())): ?>
+                                                <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($user->getId())) : ?>
                                                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $user->getId()]) ?>" class="fa-solid fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
                                                 <?php endif; ?>
-                                                <?php if ($user->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $user->getID()): ?>
+                                                <?php if ($user->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $user->getID()) : ?>
                                                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'mail', 'action' => 'index', 'user' => $user->getId()]) ?>" class="fa-solid fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
                                                 <?php endif; ?>
 
@@ -86,7 +87,7 @@ $teams = $this->get('teams');
                                                                     }
                                                                 }
 
-                                                                echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" rel="noopener" class="fa '.$profileIconField->getIcon().'" title="'.$profileFieldName.'"></a>';
+                                                                echo '<a href="' . $profileIconField->getAddition() . $profileFieldContent->getValue() . '" target="_blank" rel="noopener" class="fa ' . $profileIconField->getIcon() . '" title="' . $profileFieldName . '"></a>';
                                                                 break;
                                                             }
                                                         }
@@ -99,7 +100,7 @@ $teams = $this->get('teams');
                                 <?php endforeach; ?>
 
                                 <?php ($this->getUser()) ? $userId = $this->getUser()->getId() : $userId = 0 ?>
-                                <?php  if ($team->getOptIn() == 1 && (!in_array($userId, $groupList) || $userId == 0)): ?>
+                                <?php  if ($team->getOptIn() == 1 && (!in_array($userId, $groupList) || $userId == 0)) : ?>
                                     <tr>
                                         <td colspan="3"><a href="<?=$this->getUrl(['action' => 'join', 'id' => $team->getId()]) ?>"><?=$this->getTrans('apply') ?></a></td>
                                     </tr>
@@ -111,7 +112,7 @@ $teams = $this->get('teams');
                 <?php endif; ?>
             <?php endforeach; ?>
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <?=$this->getTrans('noTeams') ?>
     <?php endif; ?>
 </div>

@@ -1,16 +1,18 @@
 <?php
+
 /** @var \Ilch\View $this */
 
 /** @var \Modules\Teams\Models\Teams[]|null $teams */
 $teams = $this->get('teams');
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($teams): ?>
+<?php if ($teams) : ?>
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
+                    <col class="icon_width" />
                     <col class="icon_width" />
                     <col class="icon_width" />
                     <col class="icon_width" />
@@ -23,6 +25,7 @@ $teams = $this->get('teams');
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                     <th><?=$this->getTrans('menuTeam') ?></th>
                 </tr>
                 </thead>
@@ -30,12 +33,17 @@ $teams = $this->get('teams');
                 <?php
                 /** @var \Modules\Teams\Models\Teams $team */
                 ?>
-                <?php foreach ($teams as $team): ?>
+                <?php foreach ($teams as $team) : ?>
                     <tr>
                         <input type="hidden" name="items[]" value="<?=$team->getId() ?>" />
                         <td><?=$this->getDeleteCheckbox('check_teams', $team->getId()) ?></td>
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $team->getId()]) ?></td>
                         <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $team->getId()]) ?></td>
+                        <td>
+                            <a href="<?=$this->getUrl(['action' => 'update', 'id' => $team->getId()], null, true) ?>">
+                                <span class="fa-regular fa-square<?=($team->getOptShow() ? '-check' : '') ?> text-info"></span>
+                            </a>
+                        </td>
                         <td><i class="fa-solid fa-sort"></i></td>
                         <td><?=$this->escape($team->getName()) ?></td>
                     </tr>
@@ -58,7 +66,7 @@ $teams = $this->get('teams');
             </button>
         </div>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noTeams') ?>
 <?php endif; ?>
 

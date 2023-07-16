@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -126,6 +127,8 @@ class Applications extends \Ilch\Controller\Admin
             $email = $join->getEmail();
             $team = $teamsMapper->getTeamById($join->getTeamId());
             $newUser = false;
+            $selector = '';
+            $confirmedCode = '';
 
             if ($join->getUserId()) {
                 $user = $userMapper->getUserById($join->getUserId());

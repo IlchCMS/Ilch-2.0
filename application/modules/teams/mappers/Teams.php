@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -182,6 +183,42 @@ class Teams extends \Ilch\Mapper
         return $this->db()->update($this->tablename)
             ->values(['position' => $pos])
             ->where(['id' => $id])
+            ->execute();
+    }
+
+    /**
+     * @param int|TeamsModel $id
+     * @param int $show
+     * @return boolean
+     */
+    public function updateShow($id, int $show = -1): bool
+    {
+        if ($show !== -1) {
+            $showNow = $show;
+        } else {
+            if (is_a($id, TeamsModel::class)) {
+                $show = $id->getOptShow();
+            } else {
+                $show = (int) $this->db()->select('a.optShow')
+                    ->from(['a' => $this->tablename])
+                    ->where(['a.id' => (int)$id])
+                    ->execute()
+                    ->fetchCell();
+            }
+
+            if ($show === 1) {
+                $showNow = 0;
+            } else {
+                $showNow = 1;
+            }
+        }
+        if (is_a($id, EntriesModel::class)) {
+            $id = $id->getId();
+        }
+
+        return $this->db()->update($this->tablename)
+            ->values(['optShow' => $showNow])
+            ->where(['id' => (int)$id])
             ->execute();
     }
 

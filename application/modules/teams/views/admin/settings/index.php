@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\View $this */
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
