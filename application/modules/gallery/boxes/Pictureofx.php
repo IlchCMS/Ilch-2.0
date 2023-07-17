@@ -14,7 +14,7 @@ class Pictureofx extends \Ilch\Box
     {
         $imageMapper = new ImageMapper();
         $galleries = explode(',', $this->getConfig()->get('gallery_pictureOfXSource'));
-        $imageIds = $imageMapper->getListOfValidIds(['cat' => $galleries]);
+        $imageIds = $imageMapper->getListOfValidIds(['gallery_id' => $galleries]);
 
         if (!empty($imageIds)) {
             $currentPicOfX = explode(',', $this->getConfig()->get('gallery_currentPicOfX'));
