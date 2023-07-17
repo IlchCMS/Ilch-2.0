@@ -3,6 +3,9 @@
 /** @var \Ilch\View $this */
 
 $currency = $this->escape($this->get('currency'));
+
+/** @var \Modules\Checkoutbasic\Models\Entry[]|null $checkouts */
+$checkouts = $this->get('checkout');
 ?>
 
 <h1><?=$this->getTrans('bookings') ?></h1>
@@ -121,7 +124,7 @@ $currency = $this->escape($this->get('currency'));
                 </tr>
             </thead>
             <tbody>
-            <?php foreach ($this->get('checkout') as $checkout) : ?>
+            <?php foreach ($checkouts ?? [] as $checkout) : ?>
                 <?php $date = new \Ilch\Date($checkout->getDatetime()); ?>
                 <tr>
                     <td><?=$this->getEditIcon(['action' => 'treatPayment', 'id' => $this->escape($checkout->getId())]) ?></td>

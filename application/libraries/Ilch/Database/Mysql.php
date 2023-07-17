@@ -512,7 +512,7 @@ class Mysql
 
         foreach ($tables as $table) {
             $tableName = \array_values($table);
-            $this->drop(\reset($tableName));
+            $this->drop(\reset($tableName), true);
         }
     }
 

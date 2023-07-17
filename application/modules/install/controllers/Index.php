@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  */
@@ -6,6 +7,7 @@
 namespace Modules\Install\Controllers;
 
 use Ilch\Config\File;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -15,21 +17,15 @@ class Index extends \Ilch\Controller\Frontend
             die('Ilch CMS 2.* needs at least the PHP openssl extension to try an install.');
         }
         $fileConfig = new File();
-        $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+        $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
         if ($fileConfig->get('dbUser') !== null && $this->getRequest()->getActionName() !== 'finish') {
-            /*
-             * Cms is installed
-             */
+            // Cms is installed
             $this->redirect()->to(null);
         } else {
-            /*
-             * Cms not installed yet.
-             */
+            // Cms not installed yet.
             $this->getLayout()->setFile('modules/install/layouts/index');
 
-            /*
-             * Dont set a time limit for installer.
-             */
+            // Set a resonable time limit for the installer
             @set_time_limit(300);
 
             $menu = [
@@ -56,109 +52,128 @@ class Index extends \Ilch\Controller\Frontend
 
     public function indexAction()
     {
-        $local = $this->getRequest()->getParam('language');
-        if ($local) {
-            $this->getTranslator()->setLocale($local);
-            $_SESSION['language'] = $local;
+        if ($this->getRequest()->getParam('language')) {
+            $this->getTranslator()->setLocale($this->getRequest()->getParam('language'));
+            $_SESSION['language'] = $this->getRequest()->getParam('language');
             $this->redirect(['action' => 'index']);
         }
-
         if ($this->getRequest()->isPost()) {
-            $_SESSION['install']['timezone'] = $this->getRequest()->getPost('timezone');
-            $this->redirect(['action' => 'license']);
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'language' => 'required',
+                'timezone' => 'required',
+            ]);
+
+            if ($validation->isValid()) {
+                $_SESSION['language'] = $this->getRequest()->getPost('language');
+                $_SESSION['install']['timezone'] = $this->getRequest()->getPost('timezone');
+                $this->redirect(['action' => 'license']);
+            }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
+        $timezone = SERVER_TIMEZONE;
         if (!empty($_SESSION['install']['timezone'])) {
-            $this->getView()->set('timezone', $_SESSION['install']['timezone']);
-        } else {
-            $this->getView()->set('timezone', SERVER_TIMEZONE);
+            $timezone = $_SESSION['install']['timezone'];
         }
 
-        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
-        $this->getView()->set('timezones', \DateTimeZone::listIdentifiers());
+        $this->getView()->set('timezone', $timezone)
+            ->set('languages', $this->getTranslator()->getLocaleList())
+            ->set('timezones', \DateTimeZone::listIdentifiers());
     }
 
     public function licenseAction()
     {
-        $licenseFile = ROOT_PATH.'/LICENSE';
+        $licenseFile = ROOT_PATH . '/LICENSE';
         if (file_exists($licenseFile)) {
             $license = file_get_contents($licenseFile);
-
-            $search = ['<', '>'];
-            $replace   = ['"', '"'];
-            $licenseContent = str_replace($search, $replace, $license);
-            $licenseContent = nl2br($licenseContent);
+            $licenseContent = nl2br(str_replace(['<', '>'], ['"', '"'], $license));
 
             $this->getView()->set('licenseText', $licenseContent);
         } else {
-            $this->getView()->set('licenseMissing', 'licenseMissing');
+            $this->getView()->set('licenseMissing', true);
         }
 
         if ($this->getRequest()->isPost()) {
-            $_SESSION['install']['licenseAccepted'] = $this->getRequest()->getPost('licenseAccepted');
+            Validation::setCustomFieldAliases([
+                'licenseAccepted' => 'acceptLicense',
+            ]);
 
-            if (empty($_SESSION['install']['licenseAccepted'])) {
-                $this->getView()->set('error', true);
-            } else {
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'licenseAccepted' => 'required|numeric|min:1|max:1',
+            ]);
+
+            if ($validation->isValid()) {
+                $_SESSION['install']['licenseAccepted'] = $this->getRequest()->getPost('licenseAccepted');
                 $this->redirect(['action' => 'connect']);
             }
+            unset($_SESSION['install']['licenseAccepted']);
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'license']);
         }
 
         if (!empty($_SESSION['install']['licenseAccepted'])) {
-            $this->getView()->set('licenseAccepted', $_SESSION['install']['licenseAccepted']);
+            $this->getView()->set('licenseAccepted', true);
         }
     }
 
     public function connectAction()
     {
-        $errors = [];
-
         if (!extension_loaded('mysqli')) {
-            $this->addMessage('mysqliExtensionMissing', 'danger');
-            $errors['mysqliExtensionMissing'] = true;
-            return;
-        }
+            $this->addMessage($this->getTranslator()->trans('mysqliExtensionMissing'), 'danger');
+            $this->getView()->set('mysqliExtensionMissing', true);
+        } else {
+            $fields = ['dbEngine' => 'Mysql', 'dbHost' => 'localhost', 'dbUser' => '', 'dbPassword' => ''];
 
-        if ($this->getRequest()->isPost()) {
-            $_SESSION['install']['dbEngine'] = $this->getRequest()->getPost('dbEngine');
-            $_SESSION['install']['dbHost'] = $this->getRequest()->getPost('dbHost');
-            $_SESSION['install']['dbUser'] = $this->getRequest()->getPost('dbUser');
-            $_SESSION['install']['dbPassword'] = $this->getRequest()->getPost('dbPassword');
+            if ($this->getRequest()->isPost()) {
+                $validation = Validation::create($this->getRequest()->getPost(), [
+                    'dbEngine' => 'required',
+                    'dbHost' => 'required',
+                    'dbUser' => 'required',
+                ]);
 
-            if (empty($_SESSION['install']['dbUser'])) {
-                $errors['dbUser'] = 'fieldEmpty';
+                if ($validation->isValid()) {
+                    $ilch = new \Ilch\Database\Factory();
+                    $db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
+                    $hostParts = explode(':', $this->getRequest()->getPost('dbHost'));
+                    $port = null;
+
+                    if (!empty($hostParts[1])) {
+                        $port = $hostParts[1];
+                    }
+
+                    try {
+                        $db->connect(
+                            reset($hostParts),
+                            $this->getRequest()->getPost('dbUser'),
+                            $this->getRequest()->getPost('dbPassword'),
+                            $port
+                        );
+
+                        foreach ($fields as $name => $default) {
+                            $_SESSION['install'][$name] = $this->getRequest()->getPost($name);
+                        }
+
+                        $this->redirect(['action' => 'systemcheck']);
+                    } catch (\RuntimeException $ex) {
+                        $validation->getErrorBag()->addError('dbEngine', $this->getTranslator()->trans('dbConnectionError'));
+                    }
+                }
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'connect']);
             }
 
-            $ilch = new \Ilch\Database\Factory();
-            $db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
-            $hostParts = explode(':', $this->getRequest()->getPost('dbHost'));
-            $port = null;
-
-            if (!empty($hostParts[1])) {
-                $port = $hostParts[1];
-            }
-
-            try {
-                $db->connect(
-                    reset($hostParts),
-                    $this->getRequest()->getPost('dbUser'),
-                    $this->getRequest()->getPost('dbPassword'),
-                    $port
-                );
-            } catch (\RuntimeException $ex) {
-                $errors['dbConnection'] = 'dbConnectionError';
-            }
-
-            if (empty($errors)) {
-                $this->redirect(['action' => 'systemcheck']);
-            }
-
-            $this->getView()->set('errors', $errors);
-        }
-
-        foreach (['dbHost', 'dbUser', 'dbPassword'] as $name) {
-            if (!empty($_SESSION['install'][$name])) {
-                $this->getView()->set($name, $_SESSION['install'][$name]);
+            foreach ($fields as $name => $default) {
+                $this->getView()->set($name, $_SESSION['install'][$name] ?? $default);
             }
         }
     }
@@ -166,24 +181,25 @@ class Index extends \Ilch\Controller\Frontend
     public function systemcheckAction()
     {
         $errors = [];
-        if (!version_compare(PHP_VERSION, '7.3', '>=')) {
-            $errors['version'] = true;
+        $phpVersion = '7.3';
+        $this->getView()->set('phpVersion', $phpVersion);
+        if (!version_compare(PHP_VERSION, $phpVersion, '>=')) {
+            $errors['phpVersion'] = true;
         }
 
         $hostParts = explode(':', $_SESSION['install']['dbHost']);
         $port = (!empty($hostParts[1])) ? $hostParts[1] : null;
         $dbLinkIdentifier = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
         $dbVersion = mysqli_get_server_info($dbLinkIdentifier);
-        if (strpos(mysqli_get_server_info($dbLinkIdentifier), 'MariaDB') !== false) {
+        if (strpos($dbVersion, 'MariaDB') !== false) {
             $requiredVersion = '5.5';
-            if (!version_compare($dbVersion, $requiredVersion, '>=')) {
-                $errors['mariadbVersion'] = true;
-            }
+            $this->getView()->set('dbServerInfo', ' MariaDB');
         } else {
             $requiredVersion = '5.5.3';
-            if (!version_compare($dbVersion, $requiredVersion, '>=')) {
-                $errors['mysqlVersion'] = true;
-            }
+            $this->getView()->set('dbServerInfo', 'MySQL');
+        }
+        if (!version_compare($dbVersion, $requiredVersion, '>=')) {
+            $errors['dbVersion'] = true;
         }
         $this->getView()->set('requiredVersion', $requiredVersion);
         $this->getView()->set('dbVersion', $dbVersion);
@@ -196,83 +212,82 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableConfig'] = true;
         }
 
-        if (!is_writable(ROOT_PATH.'/backups/')) {
+        if (!is_writable(ROOT_PATH . '/backups/')) {
             $errors['writableBackups'] = true;
         }
 
-        if (!is_writable(ROOT_PATH.'/updates/')) {
+        if (!is_writable(ROOT_PATH . '/updates/')) {
             $errors['writableUpdates'] = true;
         }
 
-        if (!is_writable(ROOT_PATH.'/.htaccess')) {
+        if (!is_writable(ROOT_PATH . '/.htaccess')) {
             $errors['writableHtaccess'] = true;
         }
 
-        if (!is_writable(APPLICATION_PATH.'/modules/media/static/upload/')) {
+        if (!is_writable(APPLICATION_PATH . '/modules/media/static/upload/')) {
             $errors['writableMedia'] = true;
         }
 
-        if (!is_writable(APPLICATION_PATH.'/modules/user/static/upload/avatar/')) {
+        if (!is_writable(APPLICATION_PATH . '/modules/user/static/upload/avatar/')) {
             $errors['writableAvatar'] = true;
         }
 
-        if (!is_writable(APPLICATION_PATH.'/modules/user/static/upload/gallery/')) {
-            $errors['writableAvatar'] = true;
+        if (!is_writable(APPLICATION_PATH . '/modules/user/static/upload/gallery/')) {
+            $errors['writableGallery'] = true;
         }
 
-        if (!is_writable(ROOT_PATH.'/certificate/')) {
+        if (!is_writable(ROOT_PATH . '/certificate/')) {
             $errors['writableCertificate'] = true;
         }
 
         if (!extension_loaded('gd')) {
-            $errors['gdExtensionMissing'] = true;
+            $errors['gdExtension'] = true;
         }
 
         if (!extension_loaded('mysqli')) {
-            $errors['mysqliExtensionMissing'] = true;
+            $errors['mysqliExtension'] = true;
         }
 
         if (!extension_loaded('mbstring')) {
-            $errors['mbstringExtensionMissing'] = true;
+            $errors['mbstringExtension'] = true;
         }
 
         if (!extension_loaded('zip')) {
-            $errors['zipExtensionMissing'] = true;
+            $errors['zipExtension'] = true;
         }
 
         if (!extension_loaded('openssl')) {
-            $errors['opensslExtensionMissing'] = true;
-            $errors['expiredCertUnknown'] = true;
-        }
-
-        if (!extension_loaded('curl')) {
-            $errors['cURLExtensionMissing'] = true;
-        }
-
-        if (file_exists(ROOT_PATH.'/certificate/Certificate.crt')) {
-            if (!array_key_exists('opensslExtensionMissing', $errors)) {
-                $public_key = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
+            $errors['opensslExtension'] = true;
+        } else {
+            if (file_exists(ROOT_PATH . '/certificate/Certificate.crt')) {
+                $public_key = file_get_contents(ROOT_PATH . '/certificate/Certificate.crt');
                 $certinfo = openssl_x509_parse($public_key);
                 $validTo = $certinfo['validTo_time_t'];
                 if ($validTo < time()) {
                     $errors['expiredCert'] = true;
                 }
+            } else {
+                $errors['missingCert'] = true;
             }
-        } else {
-            $errors['missingCert'] = true;
+        }
+
+        if (!extension_loaded('curl')) {
+            $errors['curlExtension'] = true;
         }
 
         if ($this->getRequest()->isPost() && empty($errors)) {
             $this->redirect(['action' => 'database']);
+        } elseif ($this->getRequest()->isPost()) {
+            $this->redirect(['action' => 'systemcheck']);
         } else {
             $this->getView()->set('errors', $errors);
         }
-
-        $this->getView()->set('phpVersion', PHP_VERSION);
     }
 
     public function databaseAction()
     {
+        $fields = ['dbName' => '', 'dbPrefix' => 'ilch_'];
+
         $port = null;
         $hostParts = explode(':', $_SESSION['install']['dbHost']);
 
@@ -293,46 +308,51 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        $errors = [];
         if ($this->getRequest()->isPost()) {
-            $_SESSION['install']['dbName'] = $this->getRequest()->getPost('dbName');
-            $_SESSION['install']['dbPrefix'] = $this->getRequest()->getPost('dbPrefix');
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'dbName' => 'required',
+                'dbPrefix' => 'required',
+            ]);
 
-            try {
-                $ilch = new \Ilch\Database\Factory();
-                $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
+            if ($validation->isValid()) {
+                if (in_array($this->getRequest()->getPost('dbName'), $dbList)) {
+                    try {
+                        $ilch = new \Ilch\Database\Factory();
+                        $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
 
-                $db->connect(
-                    reset($hostParts),
-                    $_SESSION['install']['dbUser'],
-                    $_SESSION['install']['dbPassword'],
-                    $port
-                );
+                        $db->connect(
+                            reset($hostParts),
+                            $_SESSION['install']['dbUser'],
+                            $_SESSION['install']['dbPassword'],
+                            $port
+                        );
 
-                $selectDb = $db->setDatabase($_SESSION['install']['dbName']);
-            } catch (\Exception $e) {
-                $errors['dbDatabase'] = 'dbDatabaseCouldNotConnect';
+                        if ($db->setDatabase($this->getRequest()->getPost('dbName'))) {
+                            foreach ($fields as $name => $default) {
+                                $_SESSION['install'][$name] = $this->getRequest()->getPost($name);
+                            }
+                        } else {
+                            $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
+                        }
+
+                        $this->redirect(['action' => 'configuration']);
+                    } catch (\Exception $e) {
+                        $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseCouldNotConnect'));
+                    }
+                } else {
+                    $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
+                }
             }
 
-            if (!$selectDb) {
-                $errors['dbDatabase'] = 'dbDatabaseDoesNotExist';
-            }
-
-            if (empty($_SESSION['install']['dbName'])) {
-                $errors['dbDatabase'] = 'dbDatabaseError';
-            }
-
-            if (empty($errors)) {
-                $this->redirect(['action' => 'configuration']);
-            }
-
-            $this->getView()->set('errors', $errors);
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'database']);
         }
 
-        foreach (['dbName', 'dbPrefix'] as $name) {
-            if (!empty($_SESSION['install'][$name])) {
-                $this->getView()->set($name, $_SESSION['install'][$name]);
-            }
+        foreach ($fields as $name => $default) {
+            $this->getView()->set($name, $_SESSION['install'][$name] ?? $default);
         }
 
         $this->getView()->set('database', $dbList);
@@ -340,62 +360,46 @@ class Index extends \Ilch\Controller\Frontend
 
     public function configurationAction()
     {
-        $errors = [];
+        $fields = ['usage' => '', 'adminName' => '', 'adminPassword' => '', 'adminPassword2' => '', 'adminEmail' => ''];
+        $systemModules = ['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'];
+
         if ($this->getRequest()->isPost()) {
-            $_SESSION['install']['usage'] = $this->getRequest()->getPost('usage');
-            $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']] = $this->getRequest()->getPost('modulesToInstall');
-            $_SESSION['install']['adminName'] = $this->getRequest()->getPost('adminName');
-            $_SESSION['install']['adminPassword'] = $this->getRequest()->getPost('adminPassword');
-            $_SESSION['install']['adminPassword2'] = $this->getRequest()->getPost('adminPassword2');
-            $_SESSION['install']['adminEmail'] = $this->getRequest()->getPost('adminEmail');
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'usage' => 'required',
+                'adminName' => 'required',
+                'adminPassword' => 'required|min:6,string|max:30,string',
+                'adminPassword2' => 'required|same:adminPassword|min:6,string|max:30,string',
+                'adminEmail' => 'required|email',
+            ]);
 
-            if (empty($_SESSION['install']['adminName'])) {
-                $errors['adminName'] = 'fieldEmpty';
+            if ($this->getRequest()->getPost('modulesToInstall')) {
+                $_SESSION['install']['modulesToInstall'][$this->getRequest()->getPost('usage')] = $this->getRequest()->getPost('modulesToInstall');
             }
+            if ($validation->isValid()) {
+                foreach ($fields as $name => $default) {
+                    $_SESSION['install'][$name] = $this->getRequest()->getPost($name);
+                }
 
-            if (empty($_SESSION['install']['adminPassword'])) {
-                $errors['adminPassword'] = 'fieldEmpty';
-            }
-
-            if (empty($_SESSION['install']['adminPassword2'])) {
-                $errors['adminPassword2'] = 'fieldEmpty';
-            }
-
-            if ($_SESSION['install']['adminPassword'] !== $_SESSION['install']['adminPassword2']) {
-                $errors['adminPassword2'] = 'fieldDiffersPassword';
-            }
-
-            if (empty($_SESSION['install']['adminEmail'])) {
-                $errors['adminEmail'] = 'fieldEmpty';
-            } elseif (!filter_var($_SESSION['install']['adminEmail'], FILTER_VALIDATE_EMAIL)) {
-                $errors['adminEmail'] = 'fieldEmail';
-            }
-
-            if (empty($errors)) {
-                /*
-                 * Write install config.
-                 */
-                $fileConfig = new \Ilch\Config\File();
+                // Write install config.
+                $fileConfig = new File();
                 $fileConfig->set('dbEngine', $_SESSION['install']['dbEngine']);
                 $fileConfig->set('dbHost', $_SESSION['install']['dbHost']);
                 $fileConfig->set('dbUser', $_SESSION['install']['dbUser']);
                 $fileConfig->set('dbPassword', $_SESSION['install']['dbPassword']);
                 $fileConfig->set('dbName', $_SESSION['install']['dbName']);
                 $fileConfig->set('dbPrefix', $_SESSION['install']['dbPrefix']);
-                $fileConfig->saveConfigToFile(CONFIG_PATH.'/config.php');
+                $fileConfig->saveConfigToFile(CONFIG_PATH . '/config.php');
 
-                /*
-                 * Initialize install database.
-                 */
+                // Initialize install database.
                 $dbFactory = new \Ilch\Database\Factory();
                 $db = $dbFactory->getInstanceByConfig($fileConfig);
                 \Ilch\Registry::set('db', $db);
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
                 if (!empty($modulesToInstall)) {
-                    $modulesToInstall = array_merge(['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'], $modulesToInstall);
+                    $modulesToInstall = array_merge($systemModules, $modulesToInstall);
                 } else {
-                    $modulesToInstall = ['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'];
+                    $modulesToInstall = $systemModules;
                 }
 
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
@@ -406,7 +410,7 @@ class Index extends \Ilch\Controller\Frontend
                 $db->dropTablesByPrefix($db->getPrefix());
 
                 foreach ($modulesToInstall as $module) {
-                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\Config';
+                    $configClass = '\\Modules\\' . ucfirst($module) . '\\Config\\Config';
                     $config = new $configClass($this->getTranslator());
                     $config->install();
 
@@ -468,15 +472,13 @@ class Index extends \Ilch\Controller\Frontend
                 $menuItem->setType(0);
                 $menuMapper->saveItem($menuItem);
 
-                /*
-                 * Will not linked in menu
-                 */
                 foreach ($modulesToInstall as $module) {
+                    // Will not be linked in the menu
                     if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'newsletter', 'statistic', 'cookieconsent', 'error', 'contact', 'imprint', 'privacy'])) {
                         continue;
                     }
 
-                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\Config';
+                    $configClass = '\\Modules\\' . ucfirst($module) . '\\Config\\Config';
                     $config = new $configClass($this->getTranslator());
 
                     $menuItem = new \Modules\Admin\Models\MenuItem();
@@ -499,34 +501,36 @@ class Index extends \Ilch\Controller\Frontend
                     (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', ''),
                     (2, 30, 0, 0, 0, 'article_archive', 4, 'Archiv', '', ''),
                     (2, 40, 0, 0, 0, 'article_categories', 4, 'Kategorien', '', ''),
-                    (2, 50, 0, 0, 0, 'article_keywords', 4, 'Keywords', '', '');
-
-                    SET FOREIGN_KEY_CHECKS = 1;";
-                $db->queryMulti($boxes);
+                    (2, 50, 0, 0, 0, 'article_keywords', 4, 'Keywords', '', '');";
+                $db->query($boxes);
+                $db->query('SET FOREIGN_KEY_CHECKS = 1;');
 
                 unset($_SESSION['install']);
                 $this->redirect(['action' => 'finish']);
             }
 
-            $this->getView()->set('errors', $errors);
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'configuration']);
         }
 
-        foreach (['modulesToInstall', 'usage', 'adminName', 'adminPassword', 'adminPassword2', 'adminEmail'] as $name) {
-            if (!empty($_SESSION['install'][$name])) {
-                $this->getView()->set($name, $_SESSION['install'][$name]);
-            }
+        foreach ($fields as $name => $default) {
+            $this->getView()->set($name, $_SESSION['install'][$name] ?? $default);
         }
+        $this->getView()->set('modulesToInstall', $_SESSION['install']['modulesToInstall'] ?? '')
+            ->set('usages', ['clan', 'private']);
     }
 
     public function ajaxconfigAction()
     {
+        $reload = $this->getRequest()->getParam('reload') ?? false;
         $type = $this->getRequest()->getParam('type');
         $this->getRequest()->setIsAjax(true);
         $modules = [];
 
-        /*
-         * System-Modules
-         */
+        // System modules
         $modules['user']['types'] = [];
         $modules['article']['types'] = [];
         $modules['media']['types'] = [];
@@ -537,9 +541,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['cookieconsent']['types'] = [];
         $modules['statistic']['types'] = [];
 
-        /*
-         * Optional-Modules.
-         */
+        // Optional modules
         // calendar module needs to be installed early, so that the table calendar_events exists for modules that use it.
         $modules['calendar']['types'] = ['clan', 'private'];
         $modules['checkoutbasic']['types'] = ['clan'];
@@ -566,25 +568,30 @@ class Index extends \Ilch\Controller\Frontend
         $modules['vote']['types'] = ['clan', 'private'];
         $modules['shop']['types'] = ['clan', 'private'];
 
+        $modulesToInstall = [];
+        if (!empty($_SESSION['install']['modulesToInstall'][$type])) {
+            if ($reload) {
+                unset($_SESSION['install']['modulesToInstall'][$type]);
+            } else {
+                    $modulesToInstall = $_SESSION['install']['modulesToInstall'][$type];
+            }
+        }
+
+        $dependencies = [];
         foreach ($modules as $key => $module) {
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $modules[$key]['config'] = $config;
             $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
 
-            if (in_array($type, $module['types'])) {
+            if (in_array($type, $module['types']) && (empty($modulesToInstall) || in_array($key, $modulesToInstall))) {
                 $modules[$key]['checked'] = true;
             }
         }
 
-        $modulesToInstall = [];
-        if (!empty($_SESSION['install']['modulesToInstall'][$type])) {
-            $modulesToInstall = $_SESSION['install']['modulesToInstall'][$type];
-        }
-
         $this->getView()->set('modulesToInstall', $modulesToInstall);
-        $this->getView()->set('modules', $modules);
-        $this->getView()->set('dependencies', $dependencies);
+        $this->getView()->set('modules', $modules)
+            ->set('dependencies', $dependencies);
     }
 
     public function finishAction()

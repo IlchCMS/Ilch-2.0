@@ -1,1 +1,5 @@
-<center><h3><?=$this->getTrans('successInstalled') ?>!</h3></center>
+<?php
+
+/** @var \Ilch\View $this */
+?>
+<h3 class="text-center"><?=$this->getTrans('successInstalled') ?>!</h3>

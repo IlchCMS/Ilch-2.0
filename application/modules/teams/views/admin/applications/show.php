@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\View $this */
 
 /** @var \Modules\Teams\Mappers\Joins $joinsMapper */
@@ -65,7 +66,7 @@ $userDeleted = $this->get('userDeleted');
             ?>
         </div>
     </div>
-    <?php if ($join->getBirthday()): ?>
+    <?php if ($join->getBirthday()) : ?>
         <div class="form-group">
             <label class="col-lg-2">
                 <?=$this->getTrans('birthday') ?>:
@@ -75,7 +76,7 @@ $userDeleted = $this->get('userDeleted');
             </div>
         </div>
     <?php endif; ?>
-    <?php if ($join->getPlace()): ?>
+    <?php if ($join->getPlace()) : ?>
         <div class="form-group">
             <label class="col-lg-2">
                 <?=$this->getTrans('place') ?>:
@@ -120,7 +121,7 @@ $userDeleted = $this->get('userDeleted');
         <a href="<?=$this->getUrl(['action' => 'reject', 'id' => $join->getId()], null, true) ?>" class="delete_button btn btn-default">
             <?=$this->getTrans('reject') ?>
         </a>
-        <?php else: ?>
+        <?php else : ?>
         <a href="<?=$this->getUrl(['action' => 'delete', 'id' => $join->getId()], null, true) ?>" class="delete_button btn btn-default">
             <?=$this->getTrans('delete') ?>
         </a>

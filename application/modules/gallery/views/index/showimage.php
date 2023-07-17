@@ -9,9 +9,15 @@ $commentsClass = new Ilch\Comments();
 <div id="gallery">
     <div class="row">
         <div class="col-md-6">
-            <a class="venobox" href="<?=$this->getUrl().'/'.$image->getImageUrl() ?>">
-                <img src="<?=$this->getUrl().'/'.$image->getImageUrl() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/>
+        <?php if ($image->getImageUrl()): ?>
+            <a class="venobox" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>">
+                <img src="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" alt="<?= $this->escape($image->getImageTitle()) ?>" />
             </a>
+        <?php else: ?>
+            <a class="venobox" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>">
+                <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$this->getTrans('noMediaAlt') ?>" />
+            </a>
+        <?php endif; ?>
         </div>
     </div>
 </div>

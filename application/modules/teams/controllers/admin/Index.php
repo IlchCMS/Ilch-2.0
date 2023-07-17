@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -224,6 +225,19 @@ class Index extends \Ilch\Controller\Admin
 
         $this->getView()->set('userList', $userMapper->getUserList())
             ->set('userGroupList', $userGroupMapper->getGroupList());
+    }
+
+
+    public function updateAction()
+    {
+        $teamsMapper = new TeamsMapper();
+        if ($this->getRequest()->isSecure()) {
+            $teamsMapper->updateShow($this->getRequest()->getParam('id'));
+
+            $this->addMessage('saveSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 
     public function delAction()

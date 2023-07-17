@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\View $this */
 
 /** @var \Modules\User\Mappers\User $userMapper */
@@ -18,7 +19,7 @@ $teams = $this->get('teams');
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuJoin') ?></h1>
-<?php if ($teams): ?>
+<?php if ($teams) : ?>
     <form id="joinForm" name="joinForm" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="form-group hidden">
@@ -52,7 +53,7 @@ $teams = $this->get('teams');
                                 if ($this->originalInput('teamId') == $team->getGroupId() || $this->getRequest()->getParam('id') == $team->getId()) {
                                     $selected = 'selected="selected"';
                                 }
-                                echo '<option '.$selected.' value="'.$team->getId().'">'.$team->getName().'</option>';
+                                echo '<option ' . $selected . ' value="' . $team->getId() . '">' . $team->getName() . '</option>';
                             }
                         }
                         ?>
@@ -65,14 +66,14 @@ $teams = $this->get('teams');
                 <?=$this->getTrans('name') ?>
             </label>
             <div class="col-lg-6">
-            <?php if ($this->getUser()): ?>
+            <?php if ($this->getUser()) : ?>
                 <input type="text"
                        class="form-control"
                        id="name"
                        name="name"
                        value="<?=$this->getUser()->getName() ?>"
                        readonly />
-            <?php else: ?>
+            <?php else : ?>
                 <input type="text"
                        class="form-control"
                        id="name"
@@ -86,14 +87,14 @@ $teams = $this->get('teams');
                 <?=$this->getTrans('email') ?>
             </label>
             <div class="col-lg-6">
-                <?php if ($this->getUser()): ?>
+                <?php if ($this->getUser()) : ?>
                     <input type="text"
                            class="form-control"
                            id="email"
                            name="email"
                            value="<?=$this->getUser()->getEmail() ?>"
                            readonly />
-                <?php else: ?>
+                <?php else : ?>
                     <input type="text"
                            class="form-control"
                            id="email"
@@ -107,13 +108,13 @@ $teams = $this->get('teams');
                 <?=$this->getTrans('gender') ?>
             </label>
             <div class="col-lg-2">
-                <?php if ($this->getUser()): ?>
+                <?php if ($this->getUser()) : ?>
                     <select class="form-control" id="gender" name="gender" <?=($this->getUser()->getGender() == 0) ? '' : 'disabled="disabled"' ?>>
                         <option value="1" <?=($this->getUser()->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
                         <option value="2" <?=($this->getUser()->getGender() == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
                         <option value="3" <?=($this->getUser()->getGender() == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderNonBinary') ?></option>
                     </select>
-                <?php else: ?>
+                <?php else : ?>
                     <select class="form-control" id="gender" name="gender">
                         <option value="1" <?=($this->originalInput('gender') != '' && $this->originalInput('gender') == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
                         <option value="2" <?=($this->originalInput('gender') != '' && $this->originalInput('gender') == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
@@ -126,7 +127,7 @@ $teams = $this->get('teams');
             <label for="age" class="col-lg-2 control-label" for="birthday">
                 <?=$this->getTrans('birthday') ?>
             </label>
-            <?php if ($this->getUser() && $this->getUser()->getBirthday() != '0000-00-00'): ?>
+            <?php if ($this->getUser() && $this->getUser()->getBirthday() && $this->getUser()->getBirthday() != '0000-00-00') : ?>
                 <div class="col-lg-2 input-group ilch-date">
                     <?php $birthday = new \Ilch\Date($this->getUser()->getBirthday()); ?>
                     <input type="text"
@@ -139,7 +140,7 @@ $teams = $this->get('teams');
                         <span class="fa-solid fa-calendar" disabled></span>
                     </span>
                 </div>
-            <?php else: ?>
+            <?php else : ?>
                 <div class="col-lg-2 input-group ilch-date date form_datetime">
                     <input type="text"
                            class="form-control"
@@ -195,26 +196,26 @@ $teams = $this->get('teams');
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-8">
                 <?php
-                    if ($this->get('captchaNeeded')) {
-                        if ($this->get('googlecaptcha')) {
-                            echo $this->get('googlecaptcha')->setForm('joinForm')->getCaptcha($this, 'apply', 'join');
-                        } else {
-                            echo $this->getSaveBar('apply', 'join');
-                        }
+                if ($this->get('captchaNeeded')) {
+                    if ($this->get('googlecaptcha')) {
+                        echo $this->get('googlecaptcha')->setForm('joinForm')->getCaptcha($this, 'apply', 'join');
                     } else {
                         echo $this->getSaveBar('apply', 'join');
                     }
+                } else {
+                    echo $this->getSaveBar('apply', 'join');
+                }
                 ?>
             </div>
         </div>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noTeams') ?>
 <?php endif; ?>
 
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
     $(document).ready(function() {

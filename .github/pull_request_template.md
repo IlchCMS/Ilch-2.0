@@ -19,4 +19,3 @@ Please delete options that are not relevant.
 - [ ] Firefox
 - [ ] Opera
 - [ ] Edge
-- [ ] IE
