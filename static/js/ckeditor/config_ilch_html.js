@@ -12,9 +12,9 @@ CKEDITOR.plugins.addExternal('ilchmedia', basePath+'application/modules/media/st
 CKEDITOR.editorConfig = function( config ) {
     if (typeof ilchPsPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal('ilchps', ilchPsPlugin);
-        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,emojione,ilchmedia,ilchps";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,codesnippet,tableresize,emojione,ilchmedia,ilchps";
     } else {
-        config.extraPlugins = "justify,font,colorbutton,colordialog,tableresize,emojione,ilchmedia";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,codesnippet,tableresize,emojione,ilchmedia";
     }
 
     config.protectedSource.push(/<i[^>]*><\/i>/g);
@@ -27,8 +27,8 @@ CKEDITOR.editorConfig = function( config ) {
         '/',
         { name: 'basicstyles', groups: [ 'basicstyles', 'alignment', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'RemoveFormat' ] },
         { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
-        { name: 'links', items: [ 'Link', 'Unlink', 'Emojione', 'Anchor' ] },
-        { name: 'insert', items: [ 'Table', 'HorizontalRule' ] },
+        { name: 'links', items: [ 'Link', 'Unlink', 'SpecialChar', 'Emojione', 'Anchor' ] },
+        { name: 'insert', items: [ 'CodeSnippet', 'Table', 'HorizontalRule' ] },
         '/',
         { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
         { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
