@@ -324,6 +324,8 @@ class Dialog extends \Ilch\Mapper
                     ->execute();
             }
         }
+
+        return 0;
     }
 
     /**
@@ -398,6 +400,8 @@ class Dialog extends \Ilch\Mapper
             ->execute();
 
         $this->markAllAsRead($c_id, $userId);
+
+        return 0;
     }
 
     /**
