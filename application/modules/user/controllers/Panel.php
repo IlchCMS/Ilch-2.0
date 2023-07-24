@@ -284,7 +284,7 @@ class Panel extends BaseController
             if ($validation->isValid()) {
                 // Delete all stored authTokens of a user when he changes his password.
                 // This will invalidate all possibly stolen rememberMe-cookies.
-                $authTokenMapper = new \Modules\User\Mappers\AuthToken();
+                $authTokenMapper = new AuthTokenMapper();
                 $authTokenMapper->deleteAllAuthTokenOfUser($this->getUser()->getId());
 
                 $model = new UserModel();
@@ -415,7 +415,7 @@ class Panel extends BaseController
     public function dialogAction()
     {
         $dialogMapper = new DialogMapper();
-        $ilchdate = new IlchDate;
+        $ilchdate = new IlchDate();
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
@@ -493,7 +493,6 @@ class Panel extends BaseController
             $c_id = $this->getRequest()->getParam('id');
 
             $dialogMapper = new DialogMapper();
-            $dialog = $dialogMapper->getDialogCheckByCId($c_id);
 
             $dialogMapper->unhideDialog($c_id, $this->getUser()->getId());
 
@@ -545,7 +544,7 @@ class Panel extends BaseController
     public function dialognewAction()
     {
         $DialogMapper = new DialogMapper();
-        $ilchdate = new IlchDate;
+        $ilchdate = new IlchDate();
 
         $user_one = $this->getUser()->getId();
         $user_two = $this->getRequest()->getParam('id');
@@ -837,7 +836,6 @@ class Panel extends BaseController
     {
         if ($this->getRequest()->isSecure()) {
             $notificationPermissionMapper = new NotificationPermissionMapper();
-            $notificationsMapper = new NotificationsMapper();
 
             $value = !($this->getRequest()->getParam('revoke') === 'true');
             $notificationPermissionMapper->updatePermissionGrantedById([$this->getRequest()->getParam('id')], $this->getUser()->getId(), $value);
