@@ -1,45 +1,62 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\User\Models;
 
+/**
+ * Model for the dialog feature.
+ */
 class Dialog extends \Ilch\Model
 {
     /**
      * ID of the dialog
+     *
+     * @var int
      */
     private $id;
 
     /**
      * C_ID of the dialog
+     *
+     * @var int
      */
     private $c_id;
 
     /**
      * CR_ID of the dialog
+     *
+     * @var int
      */
     private $cr_id;
 
     /**
      * The TEXT of the dialog
+     *
+     * @var string
      */
     private $text;
 
     /**
-     * USER_ONE of the dialog
+     * user_one of the dialog
+     *
+     * @var int
      */
     private $user_one;
 
     /**
-     * USER_TWO of the dialog
+     * user_two of the dialog
+     *
+     * @var int
      */
     private $user_two;
 
     /**
-     * TIME when the message was sent (TIMESTAMP)
+     * time when the message was sent (TIMESTAMP)
+     *
+     * @var string
      */
     private $time;
 
@@ -51,21 +68,33 @@ class Dialog extends \Ilch\Model
     private $hidden;
 
     /**
-     * NAME of the user
+     * Name of the user
+     *
+     * @var string
      */
     private $name;
 
     /**
-     * READ
+     * read status
+     *
+     * @var bool
      */
     private $read;
 
     /**
+     * avatar of the user.
+     *
+     * @var string
+     */
+    private $avatar;
+
+    /**
      * Set the ID of the message
+     *
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Dialog
     {
         $this->id = $id;
 
@@ -74,19 +103,21 @@ class Dialog extends \Ilch\Model
 
     /**
      * Get the ID of the message
-     * @return ID
+     *
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Set the CONVERSATION_ID of the dialog
+     *
      * @param int $cid
      * @return $this
      */
-    public function setCId($cid)
+    public function setCId(int $cid): Dialog
     {
         $this->c_id = $cid;
 
@@ -95,19 +126,21 @@ class Dialog extends \Ilch\Model
 
     /**
      * Get the CONVERSATION_ID of the dialog
+     *
      * @return int
      */
-    public function getCId()
+    public function getCId(): int
     {
         return $this->c_id;
     }
 
     /**
      * Set the CONVERSATION_REPLY_ID of the dialog
+     *
      * @param int $crid
      * @return $this
      */
-    public function setCrId($crid)
+    public function setCrId(int $crid): Dialog
     {
         $this->cr_id = $crid;
 
@@ -116,19 +149,21 @@ class Dialog extends \Ilch\Model
 
     /**
      * Get the CONVERSATION_REPLY_ID of the dialog
+     *
      * @return int
      */
-    public function getCrId()
+    public function getCrId(): int
     {
         return $this->cr_id;
     }
 
     /**
      * Set the senttime of the dialog
-     * @param int $time
+     *
+     * @param string $time
      * @return $this
      */
-    public function setTime($time)
+    public function setTime(string $time): Dialog
     {
         $this->time = $time;
 
@@ -137,9 +172,10 @@ class Dialog extends \Ilch\Model
 
     /**
      * Get the senttime of the message
-     * @return int
+     *
+     * @return string
      */
-    public function getTime()
+    public function getTime(): string
     {
         return $this->time;
     }
@@ -169,10 +205,11 @@ class Dialog extends \Ilch\Model
 
     /**
      * Set the USER_ONE of the dialog
+     *
      * @param int $userone
      * @return $this
      */
-    public function setUserOne($userone)
+    public function setUserOne(int $userone): Dialog
     {
         $this->user_one = $userone;
 
@@ -181,19 +218,21 @@ class Dialog extends \Ilch\Model
 
     /**
      * Get the USER_ONE of the dialog
-     * @return void
+     *
+     * @return int|null
      */
-    public function getUserOne()
+    public function getUserOne(): ?int
     {
         return $this->user_one;
     }
 
     /**
      * Set the USER_TWO of the dialog
+     *
      * @param int $usertwo
      * @return $this
      */
-    public function setUserTwo($usertwo)
+    public function setUserTwo(int $usertwo): Dialog
     {
         $this->user_two = $usertwo;
 
@@ -202,19 +241,21 @@ class Dialog extends \Ilch\Model
 
     /**
      * Get the USER_ONE of the dialog
-     * @return void
+     *
+     * @return int|null
      */
-    public function getUserTwo()
+    public function getUserTwo(): ?int
     {
         return $this->user_two;
     }
 
     /**
      * Set the TEXT of the dialog
-     * @param String $text
+     *
+     * @param string $text
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Dialog
     {
         $this->text = $text;
 
@@ -223,40 +264,44 @@ class Dialog extends \Ilch\Model
 
     /**
      * Get the text of the dialog
-     * @return text
+     *
+     * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
     /**
      * Get the avatar of the user.
-     * @return $this
+     *
+     * @return string
      */
-    public function getAvatar()
+    public function getAvatar(): string
     {
         return $this->avatar;
     }
 
     /**
-     * Set the AVATAR of the dialog
-     * @param $avatar
+     * Set the avatar of the dialog
+     *
+     * @param string $avatar
      * @return $this
      */
-    public function setAvatar($avatar)
+    public function setAvatar(string $avatar): Dialog
     {
-        $this->avatar = (string)$avatar;
+        $this->avatar = $avatar;
 
         return $this;
     }
 
     /**
-     * Set the NAME of the user
+     * Set the name of the user
+     *
      * @param string $name
      * @return Dialog
      */
-    public function setName($name)
+    public function setName(string $name): Dialog
     {
         $this->name = $name;
 
@@ -264,20 +309,22 @@ class Dialog extends \Ilch\Model
     }
 
     /**
-     * Get the NAME of the user
-     * @return $this
+     * Get the name of the user
+     *
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Set the read
-     * @param string $read
+     *
+     * @param bool $read
      * @return $this
      */
-    public function setRead($read)
+    public function setRead(bool $read): Dialog
     {
         $this->read = $read;
 
@@ -286,9 +333,10 @@ class Dialog extends \Ilch\Model
 
     /**
      * Get the read
-     * @return int
+     *
+     * @return bool
      */
-    public function getRead()
+    public function getRead(): bool
     {
         return $this->read;
     }

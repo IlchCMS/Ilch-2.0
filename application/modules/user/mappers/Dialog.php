@@ -8,6 +8,9 @@ namespace Modules\User\Mappers;
 
 use Modules\User\Models\Dialog as DialogModel;
 
+/**
+ * Mapper for the dialog feature.
+ */
 class Dialog extends \Ilch\Mapper
 {
     /**
@@ -15,10 +18,10 @@ class Dialog extends \Ilch\Mapper
      *
      * @param int $userid the user
      * @param bool $showHidden
-     * @return null|\Modules\User\Models\Dialog
+     * @return null|DialogModel[]
      * @throws \Ilch\Database\Exception
      */
-    public function getDialog($userid, $showHidden = true)
+    public function getDialog(int $userid, bool $showHidden = true): ?array
     {
         $sql = 'SELECT u.id, u.avatar, c.c_id, u.name, c.time, h.c_id AS hidden
         FROM [prefix]_users_dialog c
@@ -54,7 +57,7 @@ class Dialog extends \Ilch\Mapper
                 $dialogModel->setName('No longer exists');
             }
             $readLastOneDialog = $this->getReadLastOneDialog($dialog['c_id']);
-            $dialogModel->setRead($readLastOneDialog);
+            $dialogModel->setRead($readLastOneDialog->getRead() ?? false);
             if (file_exists($dialog['avatar'])) {
                 $dialogModel->setAvatar($dialog['avatar']);
             } else {
@@ -82,7 +85,7 @@ class Dialog extends \Ilch\Mapper
      * @return DialogModel|null
      * @throws \Ilch\Database\Exception
      */
-    public function getDialogByCId($cId)
+    public function getDialogByCId(int $cId): ?DialogModel
     {
         $sql = 'SELECT u.id, u.avatar, u.name
         FROM [prefix]_users_dialog c
@@ -116,9 +119,9 @@ class Dialog extends \Ilch\Mapper
      * Get the last dialog
      *
      * @param int $c_id
-     * @return null|\Modules\User\Models\Dialog
+     * @return null|DialogModel
      */
-    public function getLastOneDialog($c_id)
+    public function getLastOneDialog(int $c_id): ?DialogModel
     {
         $dialog = $this->db()->select(['R.time', 'R.reply'])
             ->from(['R' => 'users_dialog_reply'])
@@ -145,7 +148,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $c_id
      * @return null|dialogModel
      */
-    public function getReadLastOneDialog($c_id)
+    public function getReadLastOneDialog(int $c_id): ?DialogModel
     {
         $dialog = $this->db()->select(['R.cr_id', 'R.time', 'R.reply', 'R.read', 'R.user_id_fk'])
             ->from(['R' => 'users_dialog_reply'])
@@ -175,7 +178,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $user_id
      * @return int
      */
-    public function getCountOfUnreadMessagesByUser($user_id)
+    public function getCountOfUnreadMessagesByUser(int $user_id): int
     {
         return (int)$this->db()->select('COUNT(*)')
             ->from(['r' => 'users_dialog_reply', 'u' => 'users_dialog'])
@@ -190,9 +193,9 @@ class Dialog extends \Ilch\Mapper
      * Get the dialog message
      *
      * @param int $c_id the user
-     * @return null|\Modules\User\Models\Dialog
+     * @return null|DialogModel[]
      */
-    public function getDialogMessage($c_id)
+    public function getDialogMessage(int $c_id): ?array
     {
         $dialogArray = $this->db()->select(['R.cr_id', 'R.time', 'R.reply', 'U.id', 'U.name', 'U.avatar'])
             ->from(['R' => 'users_dialog_reply'])
@@ -234,7 +237,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId
      * @return bool
      */
-    public function isMessageOfUser($cr_id, $userId)
+    public function isMessageOfUser(int $cr_id, int $userId): bool
     {
         $messageRow = $this->db()->select(['cr_id'])
             ->from('users_dialog_reply')
@@ -255,7 +258,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $cr_id
      * @param int $userId
      */
-    public function deleteMessageOfUser($cr_id, $userId)
+    public function deleteMessageOfUser(int $cr_id, int $userId)
     {
         $this->db()->delete('users_dialog_reply', ['cr_id' => $cr_id, 'user_id_fk' => $userId])
             ->execute();
@@ -295,7 +298,7 @@ class Dialog extends \Ilch\Mapper
      * @return int
      * @since 2.1.43
      */
-    private function deleteDialog(int $c_id, int $userId)
+    private function deleteDialog(int $c_id, int $userId): int
     {
         if ($c_id && $userId) {
             $dialog = $this->db()->select()
@@ -359,7 +362,7 @@ class Dialog extends \Ilch\Mapper
 
             if ($dialog['id_other_user_permanent']) {
                 // Delete dialog if other user has already "deleted" it.
-                $this->db()->delete('users_dialog', ['c_id' => $c_id])
+                $this->db()->delete('users_dialog', ['c_id' => $dialog['c_id']])
                     ->execute();
             }
         }
@@ -373,7 +376,7 @@ class Dialog extends \Ilch\Mapper
      * @return int
      * @since 2.1.43
      */
-    public function permanentlyHideOrDeleteDialog(int $c_id, int $userId)
+    public function permanentlyHideOrDeleteDialog(int $c_id, int $userId): int
     {
         $this->deleteMessagesOfUserInDialog($c_id, $userId);
         $affectedRows = $this->deleteDialog($c_id, $userId);
@@ -417,7 +420,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $c_id
      * @param int $userId
      */
-    public function hideDialog($c_id, $userId)
+    public function hideDialog(int $c_id, int $userId)
     {
         $dialogHiddenRow = $this->db()->select('c_id')
             ->from('users_dialog_hidden')
@@ -436,11 +439,11 @@ class Dialog extends \Ilch\Mapper
      * Check if user has hidden a dialog.
      *
      * @param int $userId
-     * @param null|bool $includePermanent
+     * @param bool|null $includePermanent
      * @return bool
      * @since $includePermanent since 2.1.43
      */
-    public function hasHiddenDialog($userId, $includePermanent = null)
+    public function hasHiddenDialog(int $userId, bool $includePermanent = null): bool
     {
         $dialogHiddenRow = $this->db()->select('user_id')
             ->from('users_dialog_hidden')
@@ -458,7 +461,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId
      * @return int count of affected rows.
      */
-    public function unhideDialog($c_id, $userId)
+    public function unhideDialog(int $c_id, int $userId): int
     {
         return $this->db()->delete('users_dialog_hidden', ['c_id' => $c_id, 'user_id' => $userId])->execute();
     }
@@ -470,7 +473,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId
      * @return int
      */
-    public function unhideAllDialogsByUser($userId)
+    public function unhideAllDialogsByUser(int $userId): int
     {
         return $this->db()->delete('users_dialog_hidden', ['user_id' => $userId])->execute();
     }
@@ -482,7 +485,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $c_id
      * @return int
      */
-    public function unhideDialogById(int $c_id)
+    public function unhideDialogById(int $c_id): int
     {
         return $this->db()->delete('users_dialog_hidden', ['c_id' => $c_id])->execute();
     }
@@ -491,9 +494,9 @@ class Dialog extends \Ilch\Mapper
      * Check if a dialog exists by $c_id
      *
      * @param int $c_id
-     * @return null|\Modules\User\Models\Dialog
+     * @return null|DialogModel
      */
-    public function getDialogCheckByCId($c_id)
+    public function getDialogCheckByCId(int $c_id): ?DialogModel
     {
         $row = $this->db()->select(['user_one', 'user_two'])
             ->from('users_dialog')
@@ -520,7 +523,7 @@ class Dialog extends \Ilch\Mapper
      * @return DialogModel|null
      * @throws \Ilch\Database\Exception
      */
-    public function getDialogCheck($user_one, $user_two)
+    public function getDialogCheck(int $user_one, int $user_two): ?DialogModel
     {
         $select = $this->db()->select(['c_id', 'user_one', 'user_two'])
             ->from('users_dialog')
@@ -545,9 +548,9 @@ class Dialog extends \Ilch\Mapper
     * Get the dialog id
      *
     * @param int $user_one
-    * @return null|\Modules\User\Models\Dialog
+    * @return null|DialogModel
     */
-    public function getDialogId($user_one)
+    public function getDialogId(int $user_one): ?DialogModel
     {
         $row = $this->db()->select(['c_id'])
             ->from('users_dialog')
