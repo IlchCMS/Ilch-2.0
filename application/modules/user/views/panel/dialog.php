@@ -139,33 +139,9 @@
     </div>
 </div>
 
-<script src="<?=$this->getModuleUrl('static/js/jquery.nicescroll.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/jquery.nicescroll.min.js') ?>"></script>
 <script>
     let urlPathArray = window.location.pathname.split('/');
-
-    $(function(){
-        $(".chat-list-wrapper, .message-list-wrapper").niceScroll();
-    });
-
-    $("ul.chat-list li").click(function() {
-        location.href = $(this).find("a.dialog-link").attr("href");
-    });
-
-    $('ul.chat-list li .delete_button').click(function(event) {
-        if (!confirm(<?=json_encode($this->getTrans('deleteDialogConfirm')) ?>)) {
-            event.preventDefault();
-        }
-    });
-
-    CKEDITOR.on('instanceReady', function(e) {
-        $('.cke_contents iframe').contents().keyup(function(){
-            if (CKEDITOR.instances.ck_1.getData().trim() === '') {
-                $(".chat-textarea").find('#chatSendBtn').hide();
-            } else {
-                $(".chat-textarea").find('#chatSendBtn').show();
-            }
-        });
-    });
 
     if (urlPathArray[urlPathArray.length - 2] === 'id' && Number.isInteger(parseInt(urlPathArray[urlPathArray.length - 1]))) {
         const normalPollingRate = 3000, lowActivityPollingRate = 10000, lowActivityTreshold = 20;
@@ -178,6 +154,34 @@
             let hidden, visibilityChange;
             let getMessageTimer = null;
             let counterNothingNew = 0;
+
+            $(function(){
+                $(".chat-list-wrapper, .message-list-wrapper").niceScroll();
+            });
+
+            $(".chat-list-wrapper, .message-list-wrapper").mouseover(function() {
+                $(".chat-list-wrapper, .message-list-wrapper").getNiceScroll().resize();
+            });
+
+            $("ul.chat-list li").click(function() {
+                location.href = $(this).find("a.dialog-link").attr("href");
+            });
+
+            $('ul.chat-list li .delete_button').click(function(event) {
+                if (!confirm(<?=json_encode($this->getTrans('deleteDialogConfirm')) ?>)) {
+                    event.preventDefault();
+                }
+            });
+
+            CKEDITOR.on('instanceReady', function(e) {
+                $('.cke_contents iframe').contents().keyup(function(){
+                    if (CKEDITOR.instances.ck_1.getData().trim() === '') {
+                        $(".chat-textarea").find('#chatSendBtn').hide();
+                    } else {
+                        $(".chat-textarea").find('#chatSendBtn').show();
+                    }
+                });
+            });
 
             function getNewMessages()
             {
@@ -220,7 +224,7 @@
                 if (document[hidden]) {
                     clearTimeout(getMessageTimer);
                 } else {
-                    getNewMessages()
+                    getNewMessages();
                 }
             }
 
