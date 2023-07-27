@@ -6,6 +6,8 @@
 
 namespace Modules\Admin\Config;
 
+use Ilch\View;
+
 class Config extends \Ilch\Config\Install
 {
     public $config = [
@@ -892,6 +894,23 @@ class Config extends \Ilch\Config\Install
                 // Remove jquery.bxslider. The only known usage is the partner module. With the last version of that module bxslider got
                 // integrated into the module.
                 removeDir(ROOT_PATH . '/static/js/jquery.bxslider');
+                break;
+            case "2.1.51":
+                // Add notification in the admincenter regarding the available bbcodeconvert module.
+                $notificationsMapper = new \Modules\Admin\Mappers\Notifications();
+                $notificationModel = new \Modules\Admin\Models\Notification();
+
+                $message = [
+                    'de' => 'Das Modul "BBCode-Konvertierung" steht zur Installation zur Verfügung.',
+                    'en' => 'The module "BBCode Conversion" is available for installation.'
+                ];
+
+                $notificationModel->setModule('bbcodeconvert');
+                $notificationModel->setMessage($message[$this->getTranslator()->shortenLocale($this->getTranslator()->getLocale())]);
+                $notificationModel->setURL(BASE_URL . '/' . 'admin/admin/modules/notinstalled');
+                $notificationModel->setType('bbcodeconvertAvailableForInstallation');
+
+                $notificationsMapper->addNotification($notificationModel);
                 break;
         }
 
