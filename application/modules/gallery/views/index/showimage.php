@@ -22,6 +22,11 @@ $commentsClass = new Ilch\Comments();
     </div>
 </div>
 
+<div class="galleryImageDetails">
+    <p><strong><?=$this->getTrans('imageTitle') ?>: </strong><?= $this->escape($image->getImageTitle()) ?></p>
+    <p><strong><?=$this->getTrans('imageDesc') ?>: </strong><?= $this->escape($image->getImageDesc()) ?></p>
+</div>
+
 <?= $commentsClass->getComments($this->get('commentsKey'), $image, $this) ?>
 
 <script src="<?=$this->getModuleUrl('static/venobox/venobox.min.js') ?>"></script>

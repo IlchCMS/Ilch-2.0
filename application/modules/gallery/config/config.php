@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.20.1',
+        'version' => '1.21.0',
         'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -162,6 +162,8 @@ class Config extends \Ilch\Config\Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` ADD INDEX `FK_[prefix]_gallery_imgs_[prefix]_gallery_items` (`gallery_id`) USING BTREE;');
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` ADD CONSTRAINT `FK_[prefix]_gallery_imgs_[prefix]_gallery_items` FOREIGN KEY (`gallery_id`) REFERENCES `[prefix]_gallery_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+            case "1.20.0":
+            case "1.20.1":
         }
     }
 }
