@@ -61,7 +61,7 @@
                                                                 </small>
                                                             </div>
                                                             <p>
-                                                                <?=nl2br($this->getHtmlFromBBCode($this->escape($dialog->getText()))) ?>
+                                                                <?=$this->alwaysPurify($dialog->getText()) ?>
                                                             </p>
                                                         </div>
                                                     </a>
@@ -122,8 +122,8 @@
                                             <?=$this->getTokenField() ?>
                                             <textarea class="form-control input-sm ckeditor"
                                                       id="ck_1"
-                                                      name="ilch_bbcode"
-                                                      toolbar="ilch_bbcode"<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>></textarea>
+                                                      name="dialog_message"
+                                                      toolbar="ilch_html_frontend"<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>></textarea>
                                             <button class="btn btn-primary btn-sm pull-right" id="chatSendBtn">
                                                 <i class="fa-solid fa-location-arrow"></i>
                                             </button>

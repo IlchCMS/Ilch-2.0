@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,7 +13,7 @@ class Backup extends \Ilch\Mapper
     /**
      * Gets all backups.
      */
-    public function getBackups()
+    public function getBackups(): ?array
     {
         $array = $this->db()->select('*')
                 ->from('backup')
@@ -41,8 +41,9 @@ class Backup extends \Ilch\Mapper
      * Gets a backup by id.
      *
      * @param int $id
+     * @return BackupModel|null
      */
-    public function getBackupById($id)
+    public function getBackupById(int $id): ?BackupModel
     {
         $result = $this->db()->select('*')
                 ->from('backup')
@@ -59,6 +60,33 @@ class Backup extends \Ilch\Mapper
         $backupModel->setName($result['name']);
         $backupModel->setDate($result['date']);
         
+        return $backupModel;
+    }
+
+    /**
+     * Get the newest backup.
+     *
+     * @return BackupModel|null
+     * @since 2.1.51
+     */
+    public function getLastBackup(): ?BackupModel
+    {
+        $result = $this->db()->select('*')
+            ->from('backup')
+            ->limit(1)
+            ->order(['id' => 'DESC'])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($result)) {
+            return null;
+        }
+
+        $backupModel = new BackupModel();
+        $backupModel->setId($result['id']);
+        $backupModel->setName($result['name']);
+        $backupModel->setDate($result['date']);
+
         return $backupModel;
     }
 
@@ -82,9 +110,9 @@ class Backup extends \Ilch\Mapper
     /**
      * Deletes backup with the given id.
      *
-     * @param string $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('backup')
             ->where(['id' => $id])

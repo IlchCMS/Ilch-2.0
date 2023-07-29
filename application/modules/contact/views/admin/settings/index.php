@@ -9,7 +9,7 @@
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="welcomeMessage"
-                      toolbar="ilch_bbcode"
+                      toolbar="ilch_html"
                       required><?=($this->escape($this->get('welcomeMessage')) != '') ? $this->escape($this->get('welcomeMessage')) : $this->escape($this->originalInput('welcomeMessage')) ?></textarea>
         </div>
     </div>

@@ -84,7 +84,7 @@
                             <?=$this->escape($entry->getDateTime()) ?>
                         </td>
                         <td>
-                            <?=nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))) ?>
+                            <?=$this->alwaysPurify($entry->getText()) ?>
                         </td>
                     </tr>
                     </tbody>

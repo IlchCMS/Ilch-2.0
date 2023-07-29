@@ -7,7 +7,7 @@
                     <?php if ($inbox->getId() == ($this->getUser()->getId())): ?>
                         <div id="deletemessage<?=$inbox->getCrId() ?>" data-crid="<?=$inbox->getCrId() ?>" class="deletemessage delete_button" title="<?=$this->getTrans('delete') ?>"><span class="fa-regular fa-trash-can"></span></div>
                     <?php endif; ?>
-                    <?=nl2br($this->getHtmlFromBBCode($this->escape($inbox->getText()))) ?>
+                    <?=$this->alwaysPurify($inbox->getText()) ?>
                 </div>
             </div>
             <small class="timestamp">

@@ -1,12 +1,14 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Admin\Models;
 
-class Backup extends \Ilch\Model
+use Ilch\Model;
+
+class Backup extends Model
 {
     /**
      * The backup of the backup.
@@ -34,7 +36,7 @@ class Backup extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -44,9 +46,9 @@ class Backup extends \Ilch\Model
      *
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
-        $this->id = (int) $id;
+        $this->id = $id;
     }
 
     /**
@@ -54,7 +56,7 @@ class Backup extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -64,9 +66,9 @@ class Backup extends \Ilch\Model
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name)
     {
-        $this->name = (string) $name;
+        $this->name = $name;
     }
 
     /**
@@ -74,7 +76,7 @@ class Backup extends \Ilch\Model
      **
      * @return string
      */
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
     }
@@ -84,7 +86,7 @@ class Backup extends \Ilch\Model
      *
      * @param string $date
      */
-    public function setDate($date)
+    public function setDate(string $date)
     {
         $this->date = $date;
     }

@@ -31,11 +31,11 @@
                             <td>
                                 <?php if ($jobs->getShow() == 1): ?>
                                     <a href="<?=$this->getUrl(['action' => 'update', 'id' => $jobs->getId()], null, true) ?>">
-                                        <span class="fa fa-check-square-o text-info" title="<?=$this->getTrans('hide') ?>"></span>
+                                        <span class="fa-regular fa-square-check text-info" title="<?=$this->getTrans('hide') ?>"></span>
                                     </a>
                                 <?php else: ?>
                                     <a href="<?=$this->getUrl(['action' => 'update', 'id' => $jobs->getId()], null, true) ?>">
-                                        <span class="fa fa-square-o text-info" title="<?=$this->getTrans('show') ?>"></span>
+                                        <span class="fa-regular fa-square text-info" title="<?=$this->getTrans('show') ?>"></span>
                                     </a>
                                 <?php endif; ?>
                             </td>

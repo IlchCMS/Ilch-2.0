@@ -54,7 +54,7 @@ $post = $this->get('post');
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
                                       name="text"
-                                      toolbar="ilch_bbcode"><?=$this->escape($post->getText()) ?></textarea>
+                                      toolbar="ilch_html_frontend"><?=$this->escape($post->getText()) ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">

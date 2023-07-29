@@ -67,8 +67,8 @@ class Newpost extends \Ilch\Controller\Frontend
                 }
 
                 if (is_in_array($readAccess, explode(',', $forum->getReadAccess())) || ($this->getUser() && $this->getUser()->isAdmin())) {
-                    $postTextAsQuote = '[quote][b]'.$post->getAutor()->getName().' '.$this->getTranslator()->trans('wrote').':[/b]
-                                       '.$post->getText().'[/quote]';
+                    $postTextAsQuote = '<blockquote><cite>' . $post->getAutor()->getName() . ' ' . $this->getTranslator()->trans('wrote') . ':</cite>'
+                        . $post->getText() . '</blockquote>';
                 } else {
                     $this->redirect()
                         ->withMessage('noAccessForum', 'danger')

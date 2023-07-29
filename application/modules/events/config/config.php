@@ -12,8 +12,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.21.2',
-        'icon_small' => 'fa-ticket',
+        'version' => '1.22.0',
+        'icon_small' => 'fa-solid fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'official' => true,
@@ -37,8 +37,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.26',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.52',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -193,6 +193,8 @@ class Config extends \Ilch\Config\Install
                 foreach($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'events' AND `locale` = '%s';", $value['description'], $key));
                 }
+            case "1.21.2":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-ticket' WHERE `key` = 'events';");
         }
     }
 }

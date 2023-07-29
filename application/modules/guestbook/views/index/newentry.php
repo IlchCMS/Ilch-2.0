@@ -62,7 +62,7 @@
                       id="ck_1"
                       name="text"
                       id="text"
-                      toolbar="ilch_bbcode"
+                      toolbar="ilch_html_frontend"
                       required><?=$this->escape($this->originalInput('text')) ?></textarea>
         </div>
     </div>

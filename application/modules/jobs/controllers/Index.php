@@ -70,7 +70,7 @@ class Index extends \Ilch\Controller\Frontend
                     '{senderMail}' => $this->getLayout()->escape($user->getEmail()),
                     '{senderName}' => $this->getLayout()->escape($user->getName()),
                     '{sitetitle}' => $siteTitle,
-                    '{date}' => $date->format("l, d. F Y", true),
+                    '{date}' => $date->format('l, d. F Y', true),
                     '{writeBackLink}' => $this->getTranslator()->trans('mailWriteBackLink'),
                     '{reply}' => $this->getTranslator()->trans('reply'),
                     '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
@@ -84,7 +84,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->setToEmail($this->getLayout()->escape($job->getEmail()))
                     ->setSubject($this->getTranslator()->trans('applyAs').' '.$jobTitle)
                     ->setMessage($message)
-                    ->sent();
+                    ->send();
 
                 $this->addMessage('sendSuccess');
                 $this->redirect(['action' => 'index']);

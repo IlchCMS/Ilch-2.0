@@ -18,19 +18,19 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'menuReceivers',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];

@@ -45,7 +45,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
                                       name="text"
-                                      toolbar="ilch_bbcode"><?=(!empty($postTextAsQuote)) ? $this->escape($postTextAsQuote) : $this->originalInput('text') ?></textarea>
+                                      toolbar="ilch_html_frontend"><?=(!empty($postTextAsQuote)) ? $this->escape($postTextAsQuote) : $this->originalInput('text') ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">

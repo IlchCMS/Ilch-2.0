@@ -111,7 +111,7 @@ if (!empty($event)) {
                     <?php $eventDate = $start->format('H:i'); ?>
                 <?php endif; ?>
 
-                <i class="far fa-clock"></i> <?=$this->getTrans($start->format('l')).$start->format(', d. ').$this->getTrans($start->format('F')).$start->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
+                <i class="fa-regular fa-clock"></i> <?=$this->getTrans($start->format('l')).$start->format(', d. ').$this->getTrans($start->format('F')).$start->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
             </div>
             <div class="eventBoxBottom">
                 <?=$this->escape($event->getType()) ?>
@@ -120,7 +120,7 @@ if (!empty($event)) {
                 <?php $place = $this->escape($event->getPlace()); ?>
                 <?php $place = explode(', ', $place, 2); ?>
                 <div class="eventPlaceMarker">
-                    <i class="fas fa-map-marker-alt"></i>
+                    <i class="fa-solid fa-location-dot"></i>
                 </div>
                 <?php
                 if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != '') {
@@ -141,7 +141,7 @@ if (!empty($event)) {
 
             <?php if ($event->getWebsite()): ?>
                 <div class="eventBoxBottom">
-                    <i class="fas fa-globe"></i> <a href="<?=$userMapper->getHomepage($event->getWebsite()) ?>" target="_blank" rel="noopener"><?=$this->getTrans('website') ?></a>
+                    <i class="fa-solid fa-earth-americas"></i> <a href="<?=$userMapper->getHomepage($event->getWebsite()) ?>" target="_blank" rel="noopener"><?=$this->getTrans('website') ?></a>
                 </div>
             <?php endif; ?>
 
@@ -169,7 +169,7 @@ if (!empty($event)) {
 
             <?php if ($event->getUserLimit() > 0): ?>
                 <div class="eventBoxBottom">
-                    <i class="fas fa-users"></i> <?=$eventEntrantsCount ?> / <?=$event->getUserLimit() ?>
+                    <i class="fa-solid fa-users"></i> <?=$eventEntrantsCount ?> / <?=$event->getUserLimit() ?>
                 </div>
             <?php endif; ?>
             <br />
@@ -216,7 +216,7 @@ if (!empty($event)) {
                 <strong><?=$this->getTrans('description') ?></strong>
             </div>
             <div class="eventBoxContent">
-                <?=nl2br($this->getHtmlFromBBCode($this->escape($event->getText()))) ?>
+                <?=$this->alwaysPurify($event->getText()) ?>
             </div>
         </div>
 

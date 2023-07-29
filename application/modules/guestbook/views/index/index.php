@@ -6,7 +6,7 @@
 </h1>
 <?php if (!empty($this->get('welcomeMessage'))) : ?>
 <div class="panel panel-default">
-    <div class="panel-body welcomeMessage"><?=nl2br($this->getHtmlFromBBCode($this->escape($this->get('welcomeMessage')))) ?></div>
+    <div class="panel-body welcomeMessage"><?=$this->purify($this->get('welcomeMessage')) ?></div>
 </div>
 <?php endif; ?>
 <?php foreach ($this->get('entries') as $entry): ?>
@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <?=nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))) ?>
+            <?=$this->alwaysPurify($entry->getText()) ?>
         </div>
     </div>
 <?php endforeach; ?>
