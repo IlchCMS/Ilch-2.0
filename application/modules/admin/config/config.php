@@ -6,8 +6,6 @@
 
 namespace Modules\Admin\Config;
 
-use Ilch\View;
-
 class Config extends \Ilch\Config\Install
 {
     public $config = [
@@ -57,6 +55,8 @@ class Config extends \Ilch\Config\Install
             ->set('maintenance_status', '0')
             ->set('maintenance_date', $date->format('Y-m-d H:i:s'))
             ->set('maintenance_text', '<p>Die Seite befindet sich im Wartungsmodus</p>')
+            ->set('mod_rewrite', '0')
+            ->set('multilingual_acp', '0')
             ->set('custom_css', '')
             ->set('emailBlacklist', '')
             ->set('disable_purifier', '0');
@@ -911,6 +911,12 @@ class Config extends \Ilch\Config\Install
                 $notificationModel->setType('bbcodeconvertAvailableForInstallation');
 
                 $notificationsMapper->addNotification($notificationModel);
+
+                // Set a default value if it hasn't a value for 'mod_rewrite' and 'multilingual_acp' as it is causing a lot of database queries if not set and therefore not gets cached.
+                // Example: Reduction of db queries from 218 to 124 ('multilingual_acp' set) and further down to 115 ('mod_rewrite' set) for the forum module index action in this dev environment.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->get('mod_rewrite') ?? $databaseConfig->set('mod_rewrite', '0');
+                $databaseConfig->get('multilingual_acp') ?? $databaseConfig->set('multilingual_acp', '0');
                 break;
         }
 

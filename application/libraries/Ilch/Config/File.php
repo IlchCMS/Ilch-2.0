@@ -28,7 +28,7 @@ class File
      * Sets the config for given key/vale.
      *
      * @param string         $key
-     * @param string|integer $value
+     * @param string|int $value
      */
     public function set($key, $value)
     {

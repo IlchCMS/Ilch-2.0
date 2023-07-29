@@ -91,35 +91,36 @@ class Post extends \Ilch\Mapper
             $result = $select->execute();
         }
 
-        $fileArray = $result->fetchRows();
+        $postsArray = $result->fetchRows();
         $postEntry = [];
-        $user = null;
         $dummyUser = null;
-        $userCache = [];
+        $cache = [];
 
-        foreach ($fileArray as $entries) {
-            $entryModel = new PostModel();
-            $userMapper = new UserMapper();
-            $entryModel->setId($entries['id']);
-            $entryModel->setText($entries['text']);
-            $entryModel->setVotes($entries['votes']);
-            $entryModel->setDateCreated($entries['date_created']);
-            if (\array_key_exists($entries['user_id'], $userCache)) {
-                $entryModel->setAutor($userCache[$entries['user_id']]);
+        foreach ($postsArray as $post) {
+            $postModel = new PostModel();
+            $postModel->setId($post['id']);
+            $postModel->setText($post['text']);
+            $postModel->setVotes($post['votes']);
+            $postModel->setDateCreated($post['date_created']);
+            if (\array_key_exists($post['user_id'], $cache)) {
+                $postModel->setAutor($cache[$post['user_id']]['user']);
             } else {
-                $user = $userMapper->getUserById($entries['user_id']);
+                $userMapper = new UserMapper();
+                $user = $userMapper->getUserById($post['user_id']);
                 if ($user) {
-                    $userCache[$entries['user_id']] = $user;
-                    $entryModel->setAutor($user);
+                    $cache[$post['user_id']]['user'] = $user;
+                    $postModel->setAutor($user);
+                    $cache[$post['user_id']]['allPosts'] = $this->getAllPostsByUserId($post['user_id']);
+                    $postModel->setAutorAllPost($cache[$post['user_id']]['allPosts']);
                 } else {
                     if (!$dummyUser) {
                         $dummyUser = $userMapper->getDummyUser();
                     }
-                    $entryModel->setAutor($dummyUser);
+                    $postModel->setAutor($dummyUser);
                 }
             }
-            $entryModel->setAutorAllPost($this->getAllPostsByUserId($entries['user_id']));
-            $postEntry[] = $entryModel;
+
+            $postEntry[] = $postModel;
         }
 
         return $postEntry;
