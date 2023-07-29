@@ -896,6 +896,22 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH . '/static/js/jquery.bxslider');
                 break;
             case "2.1.51":
+                // Add notification in the admincenter regarding the available bbcodeconvert module.
+                $notificationsMapper = new \Modules\Admin\Mappers\Notifications();
+                $notificationModel = new \Modules\Admin\Models\Notification();
+
+                $message = [
+                    'de' => 'Das Modul "BBCode-Konvertierung" steht zur Installation zur Verfügung.',
+                    'en' => 'The module "BBCode Conversion" is available for installation.'
+                ];
+
+                $notificationModel->setModule('bbcodeconvert');
+                $notificationModel->setMessage($message[$this->getTranslator()->shortenLocale($this->getTranslator()->getLocale())]);
+                $notificationModel->setURL(BASE_URL . '/' . 'admin/admin/modules/notinstalled');
+                $notificationModel->setType('bbcodeconvertAvailableForInstallation');
+
+                $notificationsMapper->addNotification($notificationModel);
+
                 // Set a default value if it hasn't a value for 'mod_rewrite' and 'multilingual_acp' as it is causing a lot of database queries if not set and therefore not gets cached.
                 // Example: Reduction of db queries from 218 to 124 ('multilingual_acp' set) and further down to 115 ('mod_rewrite' set) for the forum module index action in this dev environment.
                 $databaseConfig = new \Ilch\Config\Database($this->db());

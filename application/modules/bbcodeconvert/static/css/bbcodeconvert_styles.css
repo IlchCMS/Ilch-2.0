@@ -1,0 +1,63 @@
+#sortable td:hover {
+    cursor:move;
+}
+#sortable .placeholder {
+    outline: 0;
+    border: 0;
+    background-image: linear-gradient(135deg, #eeeeee 8.33%, #ffffff 8.33%, #ffffff 50%, #eeeeee 50%, #eeeeee 58.33%, #ffffff 58.33%, #ffffff 100%);
+    background-size: 12px 12px;
+}
+#sortTable th.sort {
+    cursor: pointer;
+}
+#sortTable th.sort:after {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    display: inline;
+    content: ' \f0dc';
+    color: #ccc;
+}
+#sortTable th.sort:hover::after,
+#sortTable th.sort.asc:hover::after,
+#sortTable th.sort.desc:hover::after {
+    color: #f00;
+}
+#sortTable th.sort.asc:after {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    display: inline;
+    content: ' \f0dd';
+    color: #000;
+}
+#sortTable th.sort.desc:after {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    display: inline;
+    content: ' \f0de';
+    color: #000;
+}
+div.input-group.filter {
+    top: -3px;
+    width: 300px;
+    float: right;
+}
+div.input-group.filter input:not(:placeholder-shown) {
+    font-weight: bold;
+    color: #a94442;
+    background: #f2dede;
+}
+.order .table td {
+    border-bottom: 1px solid #F0F0F0;
+    padding: 10px;
+}
+.order .table td.finish {
+    background: #fff;
+    border-top: none !important;
+    border-bottom: none !important;
+    padding: 3px 10px;
+}
+.order .table td.finished {
+    background: #fff;
+    border-top: 2px solid #ddd !important;
+    border-bottom: none !important;
+}
