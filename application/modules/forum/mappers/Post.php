@@ -129,7 +129,7 @@ class Post extends \Ilch\Mapper
     /**
      * Get first post of topic.
      *
-     * @param $topicId
+     * @param int $topicId
      * @return PostModel
      * @throws \Ilch\Database\Exception
      */
@@ -162,7 +162,7 @@ class Post extends \Ilch\Mapper
     /**
      * Get date of last post created by user.
      *
-     * @param $userId
+     * @param int $userId
      * @return false|null|string
      */
     public function getDateOfLastPostByUserId($userId)
@@ -185,7 +185,7 @@ class Post extends \Ilch\Mapper
     /**
      * Get the votes/likes for a post.
      *
-     * @param integer $id
+     * @param int $id
      * @return false|null|string
      */
     public function getVotes($id)
@@ -243,8 +243,8 @@ class Post extends \Ilch\Mapper
     /**
      * Save post vote/like.
      *
-     * @param integer $id
-     * @param integer $userId
+     * @param int $id
+     * @param int $userId
      */
     public function saveVotes($id, $userId)
     {
