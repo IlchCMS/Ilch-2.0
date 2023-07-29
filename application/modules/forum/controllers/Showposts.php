@@ -32,7 +32,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $postMapper = new PostMapper();
         $topicMapper = new TopicMapper();
         $forumMapper = new ForumMapper();
-        $topicModel = new ForumTopicModel;
+        $topicModel = new ForumTopicModel();
         $pagination = new \Ilch\Pagination();
         $rankMapper = new RankMapper();
         $reportsMapper = new ReportsMapper();
@@ -95,13 +95,12 @@ class Showposts extends \Ilch\Controller\Frontend
         $userId = null;
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();
-            $postMapper = new PostMapper;
-            $postModel = new ForumPostModel;
+            $postModel = new ForumPostModel();
 
             $lastPost = $topicMapper->getLastPostByTopicId($topicId);
 
             $lastRead = $lastPost->getRead();
-            if (\in_array($this->getUser()->getId(), explode(',', $lastRead)) == false) {
+            if (!\in_array($this->getUser()->getId(), explode(',', $lastRead))) {
                 $postModel->setId($lastPost->getId());
                 $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
                 $postMapper->saveRead($postModel);
@@ -251,7 +250,7 @@ class Showposts extends \Ilch\Controller\Frontend
                     $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
                     if ($validation->isValid()) {
-                        $postModel = new ForumPostModel;
+                        $postModel = new ForumPostModel();
                         $postModel->setId($postId)
                             ->setTopicId($topicId)
                             ->setText($this->getRequest()->getPost('text'));
@@ -417,7 +416,7 @@ class Showposts extends \Ilch\Controller\Frontend
                                 ->setToEmail($this->getLayout()->escape($user->getEmail()))
                                 ->setSubject($this->getLayout()->escape($mailContent->getDesc()))
                                 ->setMessage($message)
-                                ->sent();
+                                ->send();
 
                             $receivedMail[] = $user->getId();
                         }

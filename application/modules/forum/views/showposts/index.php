@@ -31,7 +31,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReadAccess()))): ?>
+<?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReadAccess()))): ?>
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
@@ -43,7 +43,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             <div class="col-lg-12">
                 <?php if ($topicpost->getStatus() == 0): ?>
                     <?php if ($this->getUser()): ?>
-                        <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
+                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
                             <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                 <span class="btn-label">
                                     <i class="fa-solid fa-plus"></i>
@@ -176,7 +176,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     $votes = explode(',', $post->getVotes());
                     $countOfVotes = count($votes) - 1;
                     ?>
-                    <?php if ($this->getUser() && in_array($this->getUser()->getId(), $votes) == false) : ?>
+                    <?php if ($this->getUser() && !in_array($this->getUser()->getId(), $votes)) : ?>
                         <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
                             <i class="fa-solid fa-table-cellsumbs-up"></i> <?=$countOfVotes ?>
                         </a>
@@ -188,7 +188,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                 <?php endif; ?>
                 <?php if ($this->getUser()): ?>
                     <div class="quote">
-                        <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
+                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
                             <p class="quote-post">
                                 <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
                         <span class="btn-label">
@@ -226,7 +226,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
         <div class="topic-actions">
             <?php if ($topicpost->getStatus() == 0): ?>
                 <?php if ($this->getUser()): ?>
-                    <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
+                    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                             <span class="btn-label">
                                 <i class="fa-solid fa-plus"></i>
