@@ -31,8 +31,8 @@ class Database
     /**
      * Gets the config for given key.
      *
-     * @param  string     $key
-     * @param  boolean    $alwaysLoad
+     * @param string $key
+     * @param bool $alwaysLoad
      * @return mixed|null
      */
     public function get(string $key, bool $alwaysLoad = false)
@@ -60,9 +60,9 @@ class Database
     /**
      * Sets the config for given key/vale.
      *
-     * @param string         $key
-     * @param string|integer $value
-     * @param integer        $autoload
+     * @param string $key
+     * @param string|int $value
+     * @param int $autoload
      *
      * @return $this
      */
@@ -118,9 +118,9 @@ class Database
     /**
      * delete the config for given key.
      *
-     * @param   string|array    $keys
-     * @return  $this
-     * @since   2.1.43
+     * @param string|array $keys
+     * @return $this
+     * @since 2.1.43
      */
     public function delete($keys)
     {
@@ -138,9 +138,9 @@ class Database
     /**
      * delete the config for given key.
      *
-     * @param   string  $key
-     * @return  boolean
-     * @since   2.1.43
+     * @param string $key
+     * @return bool
+     * @since 2.1.43
      */
     protected function deleteKey(string $key)
     {
