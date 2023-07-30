@@ -341,11 +341,11 @@ class Config extends \Ilch\Config\Install
                 (8, "en_EN", "Discord");
 
             INSERT INTO `[prefix]_user_menu` (`id`, `key`, `icon`, `position`) VALUES
-                (1, "user/panel/index", "fa-home", 1),
-                (2, "user/panel/dialog", "fa-envelope", 2),
-                (3, "user/panel/gallery", "fa-picture-o", 3),
-                (4, "user/panel/friends", "fa-users", 4),
-                (5, "user/panel/settings", "fa-cogs", 5);
+                (1, "user/panel/index", "fa-solid fa-house", 1),
+                (2, "user/panel/dialog", "fa-solid fa-envelope", 2),
+                (3, "user/panel/gallery", "fa-regular fa-image", 3),
+                (4, "user/panel/friends", "fa-solid fa-users", 4),
+                (5, "user/panel/settings", "fa-solid fa-gears", 5);
 
             INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
                 ("user", "regist_confirm_mail", "Registrierbestätigung", "<p>Hallo <b>{name}</b>,</p>
@@ -629,7 +629,15 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `options` TEXT NOT NULL DEFAULT \'\' AFTER `addition`;');
                 break;
             case "2.1.51":
+                // Delete no longer used file. This got replaced by an updated and minified version called jquery.nicescroll.min.js
                 unlink(ROOT_PATH . '/application/modules/user/static/js/jquery.nicescroll.js');
+
+                // update icons in user_menu
+                $this->db()->query("UPDATE `[prefix]_user_menu` SET `icon` = 'fa-solid fa-house' WHERE `icon` = 'fa-home';");
+                $this->db()->query("UPDATE `[prefix]_user_menu` SET `icon` = 'fa-solid fa-envelope' WHERE `icon` = 'fa-envelope';");
+                $this->db()->query("UPDATE `[prefix]_user_menu` SET `icon` = 'fa-regular fa-image' WHERE `icon` = 'fa-picture-o';");
+                $this->db()->query("UPDATE `[prefix]_user_menu` SET `icon` = 'fa-solid fa-users' WHERE `icon` = 'fa-users';");
+                $this->db()->query("UPDATE `[prefix]_user_menu` SET `icon` = 'fa-solid fa-gears' WHERE `icon` = 'fa-cogs';");
                 break;
         }
     }
