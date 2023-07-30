@@ -91,7 +91,11 @@ CKEDITOR.dialog.add('ilchYoutubeHtmlDialog', function (editor) {
             }
 
             if (videoId) {
-                url = videoId + '?' + params.join('&');
+                if (params.length > 0) {
+                    url = videoId + '?' + params.join('&');
+                } else {
+                    url = videoId;
+                }
             }
 
             let custlink = CKEDITOR.dom.element.createFromHtml('<div class="ckeditor-youtube"><iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/' + url + '" frameborder="0" allowfullscreen width="' + width + '" height="' + height + '" ></iframe></div>');
