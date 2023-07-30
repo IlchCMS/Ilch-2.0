@@ -1,3 +1,15 @@
+
+/**
+ * JavaScript function to match (and return) the video Id
+ * of any valid Youtube Url, given as input string.
+ * @author: Stephan Schmitz <eyecatchup@gmail.com>
+ * @url: http://stackoverflow.com/a/10315969/624466
+ */
+function ytVidId(url) {
+    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    return (url.match(p)) ? RegExp.$1 : false;
+}
+
 CKEDITOR.dialog.add('ilchYoutubeHtmlDialog', function (editor) {
     return {
         title: 'YouTube',
@@ -54,11 +66,6 @@ CKEDITOR.dialog.add('ilchYoutubeHtmlDialog', function (editor) {
                         default: 'checked',
                         label : editor.lang.ilchyoutubehtml.controlLabel
                     },
-                    // {
-                    //     id : 'autoplay',
-                    //     type : 'checkbox',
-                    //     label : editor.lang.ilchyoutubehtml.autoplayLabel
-                    // },
                     {
                         id : 'rel',
                         type : 'checkbox',
@@ -75,11 +82,7 @@ CKEDITOR.dialog.add('ilchYoutubeHtmlDialog', function (editor) {
             let height = this.getValueOf('ilchYoutubeHtml', 'height');
             let control = this.getValueOf('ilchYoutubeHtml', 'control');
             let rel = this.getValueOf('ilchYoutubeHtml', 'rel');
-            // let autoplay = this.getValueOf('ilchYoutubeHtml', 'autoplay');
 
-            // if (autoplay === true) {
-            //     params.push('autoplay=1');
-            // }
             if (control === false) {
                 params.push('controls=0');
             }
@@ -87,7 +90,7 @@ CKEDITOR.dialog.add('ilchYoutubeHtmlDialog', function (editor) {
                 params.push('rel=0');
             }
 
-            if (params.length > 0) {
+            if (videoId) {
                 url = videoId + '?' + params.join('&');
             }
 
@@ -96,14 +99,3 @@ CKEDITOR.dialog.add('ilchYoutubeHtmlDialog', function (editor) {
         }
     };
 });
-
-/**
- * JavaScript function to match (and return) the video Id
- * of any valid Youtube Url, given as input string.
- * @author: Stephan Schmitz <eyecatchup@gmail.com>
- * @url: http://stackoverflow.com/a/10315969/624466
- */
-function ytVidId(url) {
-    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    return (url.match(p)) ? RegExp.$1 : false;
-}
