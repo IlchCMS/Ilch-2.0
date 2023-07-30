@@ -23,7 +23,7 @@ function getTransKey($usermenuId)
         <i class="fa-solid fa-bars pull-right"></i>
     </div>
     <div class="profile-userpic">
-        <img src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" class="img-circle" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
+        <img src="<?=$this->getStaticUrl() . '../' . $this->escape($profil->getAvatar()) ?>" class="img-circle" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
     </div>
     <div class="profile-usertitle">
         <div class="profile-name">
@@ -40,7 +40,7 @@ function getTransKey($usermenuId)
 
     if ($usermenu->getKey() === 'user/panel/gallery' && ($this->get('galleryAllowed') == 0 || $profil->getOptGallery() == 0)) {
     } else {
-        echo '<li class="'.$class.'"><a href="'.$this->getUrl($usermenu->getKey()).'">'.$this->getTrans(getTransKey($usermenu->getId())).' <i class="fa '.$usermenu->getIcon().' pull-right"></i></a></li>';
+        echo '<li class="' . $class . '"><a href="' . $this->getUrl($usermenu->getKey()) . '">' . $this->getTrans(getTransKey($usermenu->getId())) . ' <i class="' . $usermenu->getIcon() . ' pull-right"></i></a></li>';
     }
 } ?>
         </ul>
