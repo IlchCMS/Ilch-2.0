@@ -917,6 +917,9 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->get('mod_rewrite') ?? $databaseConfig->set('mod_rewrite', '0');
                 $databaseConfig->get('multilingual_acp') ?? $databaseConfig->set('multilingual_acp', '0');
+
+                // Delete old version of harvesthq/chosen
+                removeDir(ROOT_PATH . '/static/js/chosen');
                 break;
         }
 
