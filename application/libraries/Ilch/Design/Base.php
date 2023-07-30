@@ -141,9 +141,9 @@ abstract class Base
      *
      * @param string $content
      * @return string
-     * @since 2.1.51
+     * @since 2.1.52
      */
-    public function alwaysPurify($content)
+    public function alwaysPurify(string $content): string
     {
         return $this->getPurifier()->purify($content);
     }
