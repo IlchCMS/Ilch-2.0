@@ -117,7 +117,6 @@ class AccessesTest extends DatabaseTestCase
         $accesses = new Accesses($this->request);
 
         $result = $accesses->hasAccess('Module');
-        var_dump($result);
         self::assertFalse($result, 'User 2 should not have access to the forum module.');
     }
 
