@@ -920,6 +920,8 @@ class Config extends \Ilch\Config\Install
 
                 // Delete old version of harvesthq/chosen
                 removeDir(ROOT_PATH . '/static/js/chosen');
+                unlink(ROOT_PATH . '/static/css/chosen/chosen.css');
+                unlink(ROOT_PATH . '/static/css/chosen/chosen-sprite.png');
                 break;
         }
 
