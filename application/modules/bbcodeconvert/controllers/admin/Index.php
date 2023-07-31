@@ -33,6 +33,15 @@ class Index extends Admin
     // Number of items per batch (work is splitted up).
     private const batch = 100;
 
+    // Worst case character limits for utf8mb4 (all asian characters or emojis). An utf8mb4 character set can require up to four bytes per character.
+    // L: the byte length of the string
+    // L + 2 bytes, where L < 2^16 (65,535 / 4 = 16,383)
+    // L + 3 bytes, where L < 2^24 (16,777,215 / 4 = 4,194,303)
+    // L + 2 bytes, where L < 2^32 (4,294,967,295 / 4 = 1,073,741,823)
+    private const limitText = 16383;
+    private const limitMediumText = 4194303;
+    private const limitLongText = 1073741823;
+
     public function init()
     {
         $items = [
@@ -243,8 +252,7 @@ class Index extends Admin
                 // table: config, column: value, datatype: TEXT
                 $convertedText = $this->getView()->getHtmlFromBBCode($this->getConfig()->get('contact_welcomeMessage'));
 
-                // L + 2 bytes, where L < 2^16
-                if (strlen($convertedText) <= ((65535 / 5) - 2)) {
+                if (strlen($convertedText) <= self::limitText) {
                     $this->getConfig()->set('contact_welcomeMessage', $convertedText);
                 }
                 return ['completed' => true, 'index' => 0, 'progress' => 1];
@@ -256,8 +264,8 @@ class Index extends Admin
 
                 foreach($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
-                    // L + 4 bytes, where L < 2^32
-                    if (strlen($convertedText) <= ((4294967295 / 5) - 4)) {
+
+                    if (strlen($convertedText) <= self::limitLongText) {
                         $textsMapper->updateText($text['id'], $convertedText);
                     }
                 }
@@ -276,8 +284,7 @@ class Index extends Admin
                 foreach($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
-                    // L + 2 bytes, where L < 2^16
-                    if (strlen($convertedText) <= ((65535 / 5) - 2)) {
+                    if (strlen($convertedText) <= self::limitText) {
                         $textsMapper->updateText($text['id'], $convertedText);
                     }
                 }
@@ -296,8 +303,7 @@ class Index extends Admin
                 foreach($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
-                    // L + 3 bytes, where L < 2^24
-                    if (strlen($convertedText) <= ((16777215 / 5) - 3)) {
+                    if (strlen($convertedText) <= self::limitMediumText) {
                         $textsMapper->updateText($text['id'], $convertedText);
                     }
                 }
@@ -316,8 +322,7 @@ class Index extends Admin
                 foreach($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
-                    // L + 3 bytes, where L < 2^24
-                    if (strlen($convertedText) <= ((16777215 / 5) - 3)) {
+                    if (strlen($convertedText) <= self::limitMediumText) {
                         $textsMapper->updateText($text['id'], $convertedText);
                     }
                 }
@@ -336,8 +341,7 @@ class Index extends Admin
                 foreach($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
-                    // L + 3 bytes, where L < 2^24
-                    if (strlen($convertedText) <= ((16777215 / 5) - 3)) {
+                    if (strlen($convertedText) <= self::limitLongText) {
                         $textsMapper->updateText($text['id'], $convertedText);
                     }
                 }
@@ -378,8 +382,7 @@ class Index extends Admin
                 foreach($replies as $reply) {
                     $convertedReply = $this->getView()->getHtmlFromBBCode($reply['reply']);
 
-                    // L + 2 bytes, where L < 2^16
-                    if (strlen($convertedReply) <= ((65535 / 5) - 2)) {
+                    if (strlen($convertedReply) <= self::limitText) {
                         $userMapper->updateReply($reply['id'], $convertedReply);
                     }
                 }
@@ -397,8 +400,7 @@ class Index extends Admin
                 $model[] = $layoutAdvSettingsMapper->getSetting('privatlayout', 'siteInfo');
                 $model[0]->setValue(nl2br($this->getView()->getHtmlFromBBCode($model[0]->getValue())));
 
-                // L + 2 bytes, where L < 2^16
-                if (strlen($model[0]->getValue()) <= ((65535 / 5) - 2)) {
+                if (strlen($model[0]->getValue()) <= self::limitText) {
                     $layoutAdvSettingsMapper->save($model);
                 }
 
