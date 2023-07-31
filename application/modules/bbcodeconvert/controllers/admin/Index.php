@@ -240,10 +240,11 @@ class Index extends Admin
     {
         switch ($key) {
             case 'contact':
-                // table: config, column: value, datatype: VARCHAR(191)
+                // table: config, column: value, datatype: TEXT
                 $convertedText = $this->getView()->getHtmlFromBBCode($this->getConfig()->get('contact_welcomeMessage'));
 
-                if (strlen($convertedText) <= 191) {
+                // L + 2 bytes, where L < 2^16
+                if (strlen($convertedText) <= ((65535 / 5) - 2)) {
                     $this->getConfig()->set('contact_welcomeMessage', $convertedText);
                 }
                 return ['completed' => true, 'index' => 0, 'progress' => 1];
