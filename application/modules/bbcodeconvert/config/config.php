@@ -27,7 +27,7 @@ class Config extends Install
                 'description' => 'Module to convert BBCode to HTML.',
             ],
         ],
-        'ilchCore' => '2.1.51',
+        'ilchCore' => '2.1.52',
         'phpVersion' => '7.3'
     ];
 

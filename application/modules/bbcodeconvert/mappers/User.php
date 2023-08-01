@@ -27,7 +27,7 @@ class User extends Mapper
             ->from('users')
             ->limit([$offset, $limit])
             ->execute()
-            ->fetchRows('id');
+            ->fetchRows();
 
         if (empty($signatures)) {
             return [];
@@ -45,11 +45,11 @@ class User extends Mapper
      */
     public function getReplies(int $offset, int $limit): array
     {
-        $replies = $this->db()->select(['id', 'reply'])
+        $replies = $this->db()->select(['cr_id', 'reply'])
             ->from('users_dialog_reply')
             ->limit([$offset, $limit])
             ->execute()
-            ->fetchRows('id');
+            ->fetchRows();
 
         if (empty($replies)) {
             return [];
@@ -104,7 +104,7 @@ class User extends Mapper
     {
         return $this->db()->update()->table('users_dialog_reply')
             ->values(['reply' => $reply])
-            ->where(['id' => $id])
+            ->where(['cr_id' => $id])
             ->execute();
     }
 }

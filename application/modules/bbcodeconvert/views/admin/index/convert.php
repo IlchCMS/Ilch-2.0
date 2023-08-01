@@ -18,7 +18,7 @@
                 <td><?=$this->getTrans($moduleOrLayout['key']) ?></td>
                 <td>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: <?=($moduleOrLayout['progress']/$moduleOrLayout['count']) * 100 ?>%" aria-valuenow="<?=$moduleOrLayout['progress'] ?>" aria-valuemin="0" aria-valuemax="<?=$moduleOrLayout['count'] ?>"></div>
+                        <div class="progress-bar" role="progressbar" style="width: <?=(!$moduleOrLayout['completed'] && $moduleOrLayout['count']) ? ($moduleOrLayout['progress']/$moduleOrLayout['count']) * 100 : 100 ?>%" aria-valuenow="<?=$moduleOrLayout['progress'] ?>" aria-valuemin="0" aria-valuemax="<?=$moduleOrLayout['count'] ?>"></div>
                     </div>
                 </td>
             </tr>
