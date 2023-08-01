@@ -383,7 +383,7 @@ class Index extends Admin
                     $convertedReply = $this->getView()->getHtmlFromBBCode($reply['reply']);
 
                     if (strlen($convertedReply) <= self::limitText) {
-                        $userMapper->updateReply($reply['id'], $convertedReply);
+                        $userMapper->updateReply($reply['cr_id'], $convertedReply);
                     }
                 }
 
