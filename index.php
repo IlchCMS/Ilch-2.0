@@ -4,6 +4,11 @@
  * @package ilch
  */
 
+use Ilch\DebugBar;
+use Ilch\Loader;
+use Ilch\Page;
+use Ilch\Registry;
+
 if (!version_compare(PHP_VERSION, '7.3', '>=')) {
     die('Ilch CMS 2 needs at least php version 7.3');
 }
@@ -12,7 +17,6 @@ if (!version_compare(PHP_VERSION, '7.3', '>=')) {
 error_reporting(E_ALL);
 
 define('ISHTTPSPAGE', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https'));
-
 
 session_set_cookie_params([
     'lifetime' => 0,
@@ -25,7 +29,6 @@ session_set_cookie_params([
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 
-
 date_default_timezone_set('UTC');
 
 define('VERSION', '2.1.51');
@@ -36,30 +39,30 @@ define('DEBUG_MODE', true);
 
 // Path could not be under root.
 define('ROOT_PATH', __DIR__);
-define('APPLICATION_PATH', __DIR__.'/application');
+define('APPLICATION_PATH', __DIR__ . '/application');
 define('CONFIG_PATH', APPLICATION_PATH);
 
 $rewriteBaseParts = explode('index.php', str_ireplace('Index.php', 'index.php', $_SERVER['PHP_SELF']));
 define('REWRITE_BASE', rtrim(reset($rewriteBaseParts), '/'));
 
 $protocol = ISHTTPSPAGE ? 'https' : 'http';
-define('BASE_URL', $protocol.'://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
+define('BASE_URL', $protocol . '://' . $_SERVER['HTTP_HOST'] . REWRITE_BASE);
 
 //Get Platform-Version from User-Agent Client Hints
 header("Accept-CH: Sec-CH-UA, Sec-CH-UA-Platform-Version");
 
 // register autoloaders
 require ROOT_PATH . '/vendor/autoload.php';
-$loader = new \Ilch\Loader();
+$loader = new Loader();
 
 if (DEBUG_MODE) {
-    \Ilch\DebugBar::init();
+    DebugBar::init();
 }
 
-\Ilch\Registry::set('startTime', microtime(true));
+Registry::set('startTime', microtime(true));
 
 try {
-    $page = new \Ilch\Page();
+    $page = new Page();
     $page->loadCms();
     $page->loadPage();
 } catch (Exception $ex) {
