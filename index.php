@@ -11,10 +11,8 @@ if (!version_compare(PHP_VERSION, '7.3', '>=')) {
 @ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
-$isHttps = $_SERVER['HTTPS'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? null;
-$isHttps = $isHttps && ( strcasecmp('on', $isHttps) == 0 || strcasecmp('https', $isHttps) == 0);
+define('ISHTTPSPAGE', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https'));
 
-define('ISHTTPSPAGE', $isHttps);
 
 session_set_cookie_params([
     'lifetime' => 0,
