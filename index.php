@@ -24,11 +24,12 @@ session_set_cookie_params([
 ]);
 session_start();
 header('Content-Type: text/html; charset=utf-8');
-$serverTimeZone = @date_default_timezone_get();
+
+
 date_default_timezone_set('UTC');
 
 define('VERSION', '2.1.51');
-define('SERVER_TIMEZONE', $serverTimeZone);
+define('SERVER_TIMEZONE', @date_default_timezone_get());
 define('DEFAULT_MODULE', 'page');
 define('DEFAULT_LAYOUT', 'index');
 define('DEBUG_MODE', true);
