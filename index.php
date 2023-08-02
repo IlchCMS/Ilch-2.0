@@ -39,10 +39,9 @@ define('ROOT_PATH', __DIR__);
 define('APPLICATION_PATH', __DIR__.'/application');
 define('CONFIG_PATH', APPLICATION_PATH);
 
-$rewriteBaseParts = explode('index.php', str_replace('Index.php', 'index.php', $_SERVER['PHP_SELF']));
-$rewriteBaseParts = rtrim(reset($rewriteBaseParts), '/');
+$rewriteBaseParts = explode('index.php', str_ireplace('Index.php', 'index.php', $_SERVER['PHP_SELF']));
+define('REWRITE_BASE', rtrim(reset($rewriteBaseParts), '/'));
 
-define('REWRITE_BASE', $rewriteBaseParts);
 $protocol = ISHTTPSPAGE ? 'https' : 'http';
 define('BASE_URL', $protocol.'://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 
