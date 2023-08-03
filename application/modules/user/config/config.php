@@ -315,7 +315,7 @@ class Config extends \Ilch\Config\Install
             INSERT INTO `[prefix]_profile_fields` (`id`, `key`, `type`, `icon`, `addition`, `options`, `show`, `position`) VALUES
                 (1, "website", 2, "fa-solid fa-globe", "", "", 1, 0),
                 (2, "facebook", 2, "fa-brands fa-facebook", "https://www.facebook.com/", "", 1, 1),
-                (3, "twitter", 2, "fa-brands fa-twitter", "https://twitter.com/", "", 1, 2),
+                (3, "X", 2, "fa-brands fa-x-twitter", "https://x.com/", "", 1, 2),
                 (4, "google+", 2, "fa-brands fa-google-plus", "https://plus.google.com/", "", 1, 3),
                 (5, "steam", 2, "fa-brands fa-steam-square", "https://steamcommunity.com/id/", "", 1, 4),
                 (6, "twitch", 2, "fa-brands fa-twitch", "https://www.twitch.tv/", "", 1, 5),
@@ -327,8 +327,8 @@ class Config extends \Ilch\Config\Install
                 (1, "en_EN", "Website"),
                 (2, "de_DE", "Facebook"),
                 (2, "en_EN", "Facebook"),
-                (3, "de_DE", "Twitter"),
-                (3, "en_EN", "Twitter"),
+                (3, "de_DE", "X"),
+                (3, "en_EN", "X"),
                 (4, "de_DE", "Google+"),
                 (4, "en_EN", "Google+"),
                 (5, "de_DE", "Steam"),
@@ -638,6 +638,30 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_user_menu` SET `icon` = 'fa-regular fa-image' WHERE `icon` = 'fa-picture-o';");
                 $this->db()->query("UPDATE `[prefix]_user_menu` SET `icon` = 'fa-solid fa-users' WHERE `icon` = 'fa-users';");
                 $this->db()->query("UPDATE `[prefix]_user_menu` SET `icon` = 'fa-solid fa-gears' WHERE `icon` = 'fa-cogs';");
+
+                // Rename twitter to X, update url, icon and translation if there isn't already an entry with the key x.
+                $exists = (bool)$this->db()->select('key')
+                    ->from('profile_fields')
+                    ->where(['key' => 'x'])
+                    ->execute()
+                    ->fetchCell();
+
+                if (!$exists) {
+                    $updated = $this->db()->update()
+                        ->table('profile_fields')
+                        ->values(['icon' => 'fa-brands fa-x-twitter', 'key' => 'x', 'addition' => 'https://x.com/'])
+                        ->where(['id' => 3, 'key' => 'twitter'])
+                        ->execute();
+
+                    if ($updated) {
+                        // Update the translation if the row with the id 3 in profile_fields appear to be twitter.
+                        $this->db()->update()
+                            ->table('profile_trans')
+                            ->values(['name' => 'X'])
+                            ->where(['field_id' => 3])
+                            ->execute();
+                    }
+                }
                 break;
         }
     }
