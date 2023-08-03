@@ -315,7 +315,7 @@ class Config extends \Ilch\Config\Install
             INSERT INTO `[prefix]_profile_fields` (`id`, `key`, `type`, `icon`, `addition`, `options`, `show`, `position`) VALUES
                 (1, "website", 2, "fa-solid fa-globe", "", "", 1, 0),
                 (2, "facebook", 2, "fa-brands fa-facebook", "https://www.facebook.com/", "", 1, 1),
-                (3, "X", 2, "fa-brands fa-x-twitter", "https://x.com/", "", 1, 2),
+                (3, "x", 2, "fa-brands fa-x-twitter", "https://x.com/", "", 1, 2),
                 (4, "google+", 2, "fa-brands fa-google-plus", "https://plus.google.com/", "", 1, 3),
                 (5, "steam", 2, "fa-brands fa-steam-square", "https://steamcommunity.com/id/", "", 1, 4),
                 (6, "twitch", 2, "fa-brands fa-twitch", "https://www.twitch.tv/", "", 1, 5),
