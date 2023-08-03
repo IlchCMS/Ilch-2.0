@@ -366,7 +366,7 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
 
     $.each(content, function(index, icon) {
         if (~icon.styles.indexOf('brands')) {
-            icons.push('fa-brand fa-' + index);
+            icons.push('fa-brands fa-' + index);
         } else {
             if (~icon.styles.indexOf('solid')) {
                 icons.push('fa-solid fa-' + index);
