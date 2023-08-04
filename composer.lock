@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33231b1d580656bf1ac9eddcea65ae88",
+    "content-hash": "a8001487a27961ffca72473f6ad1d1dd",
     "packages": [
         {
             "name": "blueimp/jquery-file-upload",
@@ -550,59 +550,22 @@
             "time": "2023-03-06T14:43:22+00:00"
         },
         {
-            "name": "twbs/bootstrap",
-            "version": "v3.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e"
-            },
+            "name": "twbs/bootstrap3",
+            "version": "3.4.1",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/68b0d231a13201eb14acd3dc84e51543d16e5f7e",
-                "reference": "68b0d231a13201eb14acd3dc84e51543d16e5f7e",
-                "shasum": ""
+                "url": "https://github.com/twbs/bootstrap/archive/v3.4.1.zip"
             },
-            "replace": {
-                "twitter/bootstrap": "self.version"
+            "type": "library"
+        },
+        {
+            "name": "twbs/bootstrap5",
+            "version": "5.3.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/twbs/bootstrap/archive/v5.3.0.zip"
             },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.4.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                },
-                {
-                    "name": "Mark Otto",
-                    "email": "markdotto@gmail.com"
-                }
-            ],
-            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-            "homepage": "https://getbootstrap.com/",
-            "keywords": [
-                "JS",
-                "css",
-                "framework",
-                "front-end",
-                "less",
-                "mobile-first",
-                "responsive",
-                "web"
-            ],
-            "support": {
-                "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v3.4.1"
-            },
-            "time": "2019-02-13T15:55:38+00:00"
+            "type": "library"
         }
     ],
     "packages-dev": [

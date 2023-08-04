@@ -14,7 +14,8 @@
         "jbbcode/jbbcode": "^1.4",
         "ifsnop/mysqldump-php": "2.*",
         "kartik-v/bootstrap-star-rating": "^4.0",
-        "twbs/bootstrap": "^3.4",
+        "twbs/bootstrap3": "3.4.1",
+        "twbs/bootstrap5": "5.3.0",
         "fortawesome/font-awesome": "^6.2.1",
         "npm-asset/jquery": "^3.5",
         "npm-asset/jquery-ui": "^1.13",
@@ -30,7 +31,7 @@
         "symfony/yaml": "^3.3.6"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "": "application/libraries/"
         },
         "files": [
@@ -46,6 +47,28 @@
         {
             "type": "composer",
             "url": "https://asset-packagist.org"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "twbs/bootstrap3",
+                "version": "3.4.1",
+                "dist": {
+                    "url": "https://github.com/twbs/bootstrap/archive/v3.4.1.zip",
+                    "type": "zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "twbs/bootstrap5",
+                "version": "5.3.0",
+                "dist": {
+                    "url": "https://github.com/twbs/bootstrap/archive/v5.3.0.zip",
+                    "type": "zip"
+                }
+            }
         }
     ]
 }

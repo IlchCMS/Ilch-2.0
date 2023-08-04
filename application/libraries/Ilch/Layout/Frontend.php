@@ -596,6 +596,17 @@ class Frontend extends Base
         return $html;
     }
 
+    public function getBootstrap()
+    {
+        if ($this->getConfigKey('bootstrapVersion') == '3') {
+            return '<link rel="stylesheet" type="text/css" href="' . $this->getVendorUrl('twbs/bootstrap3/dist/css/bootstrap.css') . '"></style>
+                    <script src="' . $this->getVendorUrl('twbs/bootstrap3/dist/js/bootstrap.js') . '"></script>';
+        }return '<link rel="stylesheet" type="text/css" href="' . $this->getVendorUrl('twbs/bootstrap5/dist/css/bootstrap.css') . '"></style>
+                 <script src="' . $this->getVendorUrl('twbs/bootstrap5/dist/js/bootstrap.bundle.js') . '"></script>';
+
+    }
+
+
     /**
      * Gets the custom css.
      *
