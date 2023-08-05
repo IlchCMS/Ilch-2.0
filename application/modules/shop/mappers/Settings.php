@@ -52,6 +52,7 @@ class Settings extends Mapper
         $model->setFixTax($serverRow['fixTax']);
         $model->setFixShippingCosts($serverRow['fixShippingCosts']);
         $model->setFixShippingTime($serverRow['fixShippingTime']);
+        $model->setAllowWillCollect($serverRow['allowWillCollect']);
         $model->setClientID($serverRow['paymentClientID']);
         $model->setPayPalMe($serverRow['paypalMe']);
         $model->setPaypalMePresetAmount($serverRow['paypalMePresetAmount']);
@@ -111,12 +112,13 @@ class Settings extends Mapper
     {
         $this->db()->update('shop_settings')
             ->values([
-                      'fixTax' => $settingDefault->getFixTax(),
-                      'fixShippingCosts' => $settingDefault->getFixShippingCosts(),
-                      'fixShippingTime' => $settingDefault->getFixShippingTime(),
-                      'invoiceTextTop' => $settingDefault->getInvoiceTextTop(),
-                      'invoiceTextBottom' => $settingDefault->getInvoiceTextBottom()
-                    ])
+                'fixTax' => $settingDefault->getFixTax(),
+                'fixShippingCosts' => $settingDefault->getFixShippingCosts(),
+                'fixShippingTime' => $settingDefault->getFixShippingTime(),
+                'allowWillCollect' => $settingDefault->getAllowWillCollect(),
+                'invoiceTextTop' => $settingDefault->getInvoiceTextTop(),
+                'invoiceTextBottom' => $settingDefault->getInvoiceTextBottom()
+            ])
             ->where(['id' => '1'])
             ->execute();
     }

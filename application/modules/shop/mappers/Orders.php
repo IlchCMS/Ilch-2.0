@@ -26,7 +26,7 @@ class Orders extends Mapper
         $orderdetailsMapper = new OrderdetailsMapper();
 
         $ordersArray = $this->db()->select()
-            ->fields(['o.id', 'o.invoiceAddressId', 'o.deliveryAddressId', 'o.datetime', 'o.invoicefilename', 'o.datetimeInvoiceSent', 'o.selector', 'o.confirmCode', 'o.status'])
+            ->fields(['o.id', 'o.invoiceAddressId', 'o.deliveryAddressId', 'o.datetime', 'o.invoicefilename', 'o.datetimeInvoiceSent', 'o.willCollect', 'o.selector', 'o.confirmCode', 'o.status'])
             ->from(['o' => 'shop_orders'])
             ->join(['c' => 'shop_customers'], 'o.customerId = c.id', 'INNER', ['customerId' => 'c.id', 'c.email'])
             ->join(['cu' => 'shop_currencies'], 'o.currencyId = cu.id', 'INNER', ['currencyId' => 'cu.id'])
@@ -87,6 +87,7 @@ class Orders extends Mapper
             $orderModel->setOrderdetails($orderdetailsAssoc[$orderRow['id']]);
             $orderModel->setInvoiceFilename($orderRow['invoicefilename']);
             $orderModel->setDatetimeInvoiceSent($orderRow['datetimeInvoiceSent']);
+            $orderModel->setWillCollect($orderRow['willCollect']);
             $orderModel->setSelector($orderRow['selector'] ?? '');
             $orderModel->setConfirmCode($orderRow['confirmCode'] ?? '');
             $orderModel->setStatus($orderRow['status']);
@@ -154,6 +155,7 @@ class Orders extends Mapper
             'deliveryAddressId' => $order->getDeliveryAddress()->getId(),
             'invoicefilename' => $order->getInvoiceFilename(),
             'datetimeInvoiceSent' => $order->getDatetimeInvoiceSent(),
+            'willCollect' => $order->getWillCollect(),
             'selector' => $order->getSelector(),
             'confirmCode' => $order->getConfirmCode(),
             'status' => $order->getStatus(),

@@ -1,5 +1,9 @@
 <?php
 $itemsMapper = $this->get('itemsMapper');
+// Checking this here doesn't really add any security but we are trying to avoid showing the customer an order without a delivery fee
+// when it might not be possible. The final check is done in the controller and an order is aborted if will collect is selected
+// and the feature disabled.
+$willCollectAllowedAndChecked = $this->get('allowWillCollect') && isset($_SESSION['shopping_willCollect']);
 
 /* show shopcart */
 $cart_badge = '';
@@ -21,11 +25,15 @@ if (!empty($_SESSION['shopping_cart'])) {
     <?php if ($this->getUser() !== null) { ?>
         <h4><?=$this->getTrans('hello') ?> <b><?=$this->escape($this->getUser()->getName()) ?></b></h4>
         <p><?=$this->getTrans('infoFormOrder') ?></p>
+        <?php if ($willCollectAllowedAndChecked) : ?>
+        <p><?=$this->getTrans('infoFormOrderWillCollect') ?></p>
+        <?php endif; ?>
 
         <form class="form-horizontal order" action="#shopAnker" method="POST">
             <?=$this->getTokenField() ?>
             <?php $order = str_replace('"', "'", json_encode($_SESSION['shopping_cart'])); ?>
             <input type="hidden" name="order" value="<?=$order ?>" />
+            <input type="hidden" name="willCollect" value="<?=($willCollectAllowedAndChecked) ? 1 : 0 ?>" />
             <input type="checkbox" id="differentInvoiceAddress" name="differentInvoiceAddress" <?=($this->originalInput('differentInvoiceAddress') != '' ? 'checked' : '') ?> />
             <label for="differentInvoiceAddress"><?=$this->getTrans('differentInvoiceAddress') ?></label>
 
@@ -359,7 +367,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                             <?=$this->getTrans('deliveryCosts') ?>
                         </th>
                         <td data-label="<?=$this->getTrans('deliveryCosts') ?>" class="text-right">
-                            <?php $shipping_costs = max($arrayShippingCosts); ?>
+                            <?php $shipping_costs = ($willCollectAllowedAndChecked) ? 0 : max($arrayShippingCosts); ?>
                             <?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                         </td>
                     </tr>

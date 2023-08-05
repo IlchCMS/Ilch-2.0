@@ -166,6 +166,13 @@ class Settings extends Model
     protected $fixShippingTime = 0;
 
     /**
+     * Allow will collect or not.
+     *
+     * @var int
+     */
+    protected $allowWillCollect = 0;
+
+    /**
      * The paypal client id of the settings.
      *
      * @var string|null
@@ -631,6 +638,30 @@ class Settings extends Model
     public function setFixShippingTime(int $fixShippingTime)
     {
         $this->fixShippingTime = $fixShippingTime;
+    }
+
+    /**
+     * Get the value for allow will collect.
+     * 0: not allowed
+     * 1: allowed
+     *
+     * @return int
+     */
+    public function getAllowWillCollect(): int
+    {
+        return $this->allowWillCollect;
+    }
+
+    /**
+     * Set the value for allow will collect.
+     *
+     * @param int $allowWillCollect 0: not allowed, 1: allowed
+     * @return Settings
+     */
+    public function setAllowWillCollect(int $allowWillCollect): Settings
+    {
+        $this->allowWillCollect = $allowWillCollect;
+        return $this;
     }
 
     /**

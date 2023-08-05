@@ -8,6 +8,7 @@ $itemsMapper = $this->get('itemsMapper');
 
 <?php if (!empty($this->get('order'))) : ?>
     <?php
+    /** @var \Modules\Shop\Models\Order $order */
     $order = $this->get('order');
     $ilchDate = new Ilch\Date($this->escape($order->getDatetime()));
     $orderTime = $ilchDate->format(' H:i ', true);
@@ -26,6 +27,13 @@ $itemsMapper = $this->get('itemsMapper');
     }
     $file_location = ROOT_PATH . $shopInvoicePath . $invoiceFilename . '.pdf';
     ?>
+
+    <?php if ($order->getWillCollect()) : ?>
+        <div class="alert alert-info">
+            <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
+            <b><?=$this->getTrans('infoCustomerChoseWillCollect') ?></b>
+        </div>
+    <?php endif; ?>
 
     <h4><?=$this->getTrans('customerAreaInfoBuyer') ?></h4>
     <div class="table-responsive">
@@ -160,7 +168,7 @@ $itemsMapper = $this->get('itemsMapper');
                     <b><?=$this->getTrans('deliveryCosts') ?>:</b>
                 </td>
                 <td colspan="1" class="text-right finished">
-                    <?php $shipping_costs = max($arrayShippingCosts); ?>
+                    <?php $shipping_costs = ($order->getWillCollect()) ? 0 : max($arrayShippingCosts); ?>
                     <b><?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                 </td>
             </tr>

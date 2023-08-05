@@ -7,6 +7,7 @@ $settingsMapper = $this->get('settingsMapper');
 <?php if ($this->get('order') != '') : ?>
     <h1><?=$this->getTrans('editOrder'); ?></h1>
     <?php
+    /** @var \Modules\Shop\Models\Order $order */
     $order = $this->get('order');
     $ilchDate = new Ilch\Date($this->escape($order->getDatetime()));
     $orderTime = $ilchDate->format(' H:i ', true);
@@ -39,6 +40,12 @@ $settingsMapper = $this->get('settingsMapper');
             &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime . $this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderFinished') ?>
         </div>
     <?php } ?>
+    <?php if ($order->getWillCollect()) : ?>
+        <div class="alert alert-info">
+            <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
+            <b><?=$this->getTrans('infoCustomerChoseWillCollect') ?></b>
+        </div>
+    <?php endif; ?>
     <h4><?=$this->getTrans('infoBuyer') ?></h4>
     <div class="table-responsive">
         <table class="table">
@@ -146,7 +153,7 @@ $settingsMapper = $this->get('settingsMapper');
                         <b><?=$this->getTrans('deliveryCosts') ?>:</b>
                     </td>
                     <td colspan="1" class="text-right finished">
-                        <?php $shipping_costs = max($arrayShippingCosts); ?>
+                        <?php $shipping_costs = ($order->getWillCollect()) ? 0 : max($arrayShippingCosts); ?>
                         <b><?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
