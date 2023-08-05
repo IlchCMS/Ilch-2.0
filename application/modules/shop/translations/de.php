@@ -193,6 +193,7 @@ return [
     'remove' => 'Entfernen',
     'removedFromCart' => 'wurde aus dem Warenkorb entfernt!',
     'willCollect' => 'Bestellung wird abgeholt (Versand- und Verpackungskosten fallen nicht an.)',
+    'willCollectShort' => 'Selbstabholung',
     'salesUnit' => 'Verkaufseinheit',
     'saveSort' => 'Sortierung speichern',
     'sendButton' => 'Absenden',

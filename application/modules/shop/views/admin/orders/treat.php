@@ -336,9 +336,11 @@ $settingsMapper = $this->get('settingsMapper');
                 $this->Cell(130, 5, $this->ReceiverCountry, 0, 0, 'L');
                 $this->SetFont('Arial', '', 10);
                 $this->Cell(40, 5, $this->DeliveryDate, 0, 1, 'R');
-                $this->Ln(4);
+                $this->Cell(130, 5);
+                $this->Cell(40, 5, $this->willCollectNote, 0, 1, 'R');
                 $this->SetFont('Arial', 'I', 9);
-                $this->Cell(130, 5, $this->nameByEmail . ': ' . $this->ReceiverEmail, 0, 0, 'L');
+                $this->Cell(130, 5, $this->nameByEmail . ': ' . $this->ReceiverEmail, 0, 1, 'L');
+                $this->Cell(130, 5);
                 $this->SetFont('Arial', 'B', 11);
                 $this->Cell(40, 5, $this->nameDeliveryPlace, 0, 1, 'R');
                 $this->SetFont('Arial', '', 10);
@@ -482,9 +484,15 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->nameDateInvoice = mb_convert_encoding($this->getTrans('dateOfInvoice'), 'ISO-8859-1', 'UTF-8');
         $pdf->DateInvoice = $dateInvoice = date('d.m.Y', time());
         $pdf->nameDeliveryDate = mb_convert_encoding($this->getTrans('expectedDelivery'), 'ISO-8859-1', 'UTF-8');
-        $maxDeliveryTime = max($arrayShippingTime);
-        $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
-        $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8') . ' ' . date('d.m.Y', $sumDeliveryTime);
+        if ($order->getWillCollect()) {
+            $sumDeliveryTime = time();
+            $pdf->DeliveryDate = date('d.m.Y', $sumDeliveryTime);
+            $pdf->willCollectNote = mb_convert_encoding($this->getTrans('willCollectShort'), 'ISO-8859-1', 'UTF-8');
+        } else {
+            $maxDeliveryTime = max($arrayShippingTime);
+            $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
+            $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8') . ' ' . date('d.m.Y', $sumDeliveryTime);
+        }
         $pdf->ReceiverPrename = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getPrename()), 'ISO-8859-1', 'UTF-8');
         $pdf->ReceiverLastname = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getLastname()), 'ISO-8859-1', 'UTF-8');
         $pdf->ReceiverStreet = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getStreet()), 'ISO-8859-1', 'UTF-8');
@@ -696,9 +704,14 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->nameShippingDate = mb_convert_encoding($this->getTrans('shippingDate'), 'ISO-8859-1', 'UTF-8');
         $pdf->shippingDate = date('d.m.Y', time());
         $pdf->nameDeliveryDate = mb_convert_encoding($this->getTrans('expectedDelivery'), 'ISO-8859-1', 'UTF-8');
-        $maxDeliveryTime = max($arrayShippingTime);
-        $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
-        $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8') . ' ' . date('d.m.Y', $sumDeliveryTime);
+        if ($order->getWillCollect()) {
+            $sumDeliveryTime = time();
+            $pdf->DeliveryDate = date('d.m.Y', $sumDeliveryTime);
+        } else {
+            $maxDeliveryTime = max($arrayShippingTime);
+            $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
+            $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8') . ' ' . date('d.m.Y', $sumDeliveryTime);
+        }
         $nameDeliveryNote = mb_convert_encoding($this->getTrans('deliveryNote'), 'ISO-8859-1', 'UTF-8');
         $pdf->nameDeliveryNote = strtoupper($nameDeliveryNote);
         $pdf->DeliveryPrename = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getPrename()), 'ISO-8859-1', 'UTF-8');
