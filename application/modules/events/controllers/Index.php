@@ -214,7 +214,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->to(['action' => 'treat']);
         }
 
-        if ($eventMapper->existsTable('calendar') == true) {
+        if ($eventMapper->existsTable('calendar')) {
             $this->getView()->set('calendarShow', 1);
         }
 

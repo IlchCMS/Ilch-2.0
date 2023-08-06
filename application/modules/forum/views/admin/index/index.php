@@ -313,7 +313,7 @@ $(document).ready (
 
 function reload() {
     setTimeout(function(){window.location.reload(1);}, 1000);
-};
+}
 </script>
 
 <style>
@@ -344,7 +344,7 @@ ol.sortable {
 }
 
 .sortable li div  {
-    border: 1px solid #d4d4d4;
+    border: 1px solid;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;

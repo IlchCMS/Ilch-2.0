@@ -550,7 +550,6 @@ legend .forum.fa {
 #forum dl.icon {
     min-height: 35px;
     height: auto !important;
-    height: 35px;
     background-repeat: no-repeat;
 }
 
@@ -575,7 +574,7 @@ legend .forum.fa {
     height: 1%;
     width: auto;
     text-align: right;
-    margin-top: 0px;
+    margin-top: 0;
     float: right;
 }
 

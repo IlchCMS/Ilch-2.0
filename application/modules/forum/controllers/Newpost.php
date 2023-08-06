@@ -160,7 +160,7 @@ class Newpost extends \Ilch\Controller\Frontend
                             ->setToEmail($this->getLayout()->escape($subscriber->getEmailAddress()))
                             ->setSubject($this->getLayout()->escape($mailContent->getDesc()))
                             ->setMessage($message)
-                            ->sent();
+                            ->send();
 
                         $topicSubscriptionMapper->updateLastNotification($topicId, $subscriber->getId());
                     }

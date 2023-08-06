@@ -134,13 +134,13 @@
         });
     });
 
-    $("#filterClear").click(function(){
+    $("#filterClear").click(function() {
         $("#sortTable tr.filter").show(function() {
             $("#filterInput").val('');
         });
     });
 
-    $('.listConvert a').click(function(){
+    $('.listConvert a').click(function() {
         if (confirm(<?=json_encode($this->getTrans('confirmConvert')) ?>)) {
             $(this).closest('form').submit();
         }

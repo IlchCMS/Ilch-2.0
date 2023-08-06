@@ -74,10 +74,10 @@ class Shownewposts extends \Ilch\Controller\Frontend
             foreach ($topicMapper->getTopics() as $topic) {
                 $forum = $forumMapper->getForumById($topic->getTopicId());
                 $lastPost = $topicMapper->getLastPostByTopicId($topic->getId());
-                if ($adminAccess == true || is_in_array($groupIds, explode(',', $forum->getReadAccess()))) {
+                if ($adminAccess || is_in_array($groupIds, explode(',', $forum->getReadAccess()))) {
                     if (!\in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))) {
                         $lastRead = $lastPost->getRead();
-                        if (\in_array($this->getUser()->getId(), explode(',', $lastRead)) == false) {
+                        if (!\in_array($this->getUser()->getId(), explode(',', $lastRead))) {
                             $postModel->setId($lastPost->getId());
                             $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
                             $postMapper->saveRead($postModel);

@@ -11,7 +11,7 @@ if ($this->getUser()) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $forum->getCreateAccess()))): ?>
+<?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getCreateAccess()))): ?>
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>

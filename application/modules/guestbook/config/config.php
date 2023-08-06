@@ -80,8 +80,10 @@ class Config extends \Ilch\Config\Install
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'guestbook' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
             case "1.11.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-book' WHERE `key` = 'guestbook';");
+                // no break
         }
     }
 }

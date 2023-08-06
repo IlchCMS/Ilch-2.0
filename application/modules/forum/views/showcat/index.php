@@ -37,7 +37,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
         </ul>
     <?php endif; ?>
 
-    <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
+    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
         <?php if ($item->getType() != 0): ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
@@ -78,7 +78,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
                                 <?php $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId()) ?>
                                 <div class="pull-left">
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
-                                        <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
+                                        <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                     </a>
                                 </div>
                                 <div class="pull-left">
@@ -126,12 +126,12 @@ function rec($item, $forumMapper, $obj, $readAccess)
     }
     $subItemsFalse = false;
         foreach ($forumItems as $subItem) {
-            if ($adminAccess == true || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
+            if ($adminAccess || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
                 $subItemsFalse = true;
             }
         }
     ?>
-    <?php if (!empty($forumItems) && $subItemsFalse == true): ?>
+    <?php if (!empty($forumItems) && $subItemsFalse): ?>
         <div class="forabg">
             <ul class="forenlist">
                 <li class="header">
