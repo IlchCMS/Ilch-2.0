@@ -11,7 +11,7 @@
     cursor: pointer;
 }
 #sortTable th.sort:after {
-    font-family: "Font Awesome 6 Free";
+    font-family: "Font Awesome 6 Free", sans-serif;
     font-weight: 900;
     display: inline;
     content: ' \f0dc';
@@ -23,14 +23,14 @@
     color: #f00;
 }
 #sortTable th.sort.asc:after {
-    font-family: "Font Awesome 6 Free";
+    font-family: "Font Awesome 6 Free", sans-serif;
     font-weight: 900;
     display: inline;
     content: ' \f0dd';
     color: #000;
 }
 #sortTable th.sort.desc:after {
-    font-family: "Font Awesome 6 Free";
+    font-family: "Font Awesome 6 Free", sans-serif;
     font-weight: 900;
     display: inline;
     content: ' \f0de';

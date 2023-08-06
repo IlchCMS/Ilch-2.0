@@ -111,7 +111,7 @@ class Remember extends \Ilch\Mapper
     /**
      * Check if there is an entry for a specific post.
      *
-     * @param int $id
+     * @param int $postId
      * @return bool
      */
     public function hasRememberedPostWithPostId($postId)

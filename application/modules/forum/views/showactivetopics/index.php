@@ -36,7 +36,7 @@ $postsPerPage = $this->get('postsPerPage');
                 <?php $forum = $forumMapper->getForumById($topic->getTopicId()); ?>
                 <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
                 <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
-                <?php if ($adminAccess == true || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
+                <?php if ($adminAccess || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
                     <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
                     <?php if ($lastPost->getDateCreated() < $date->format('Y-m-d H:i:s', true) && $lastPost->getDateCreated() > $dateLessHours->format('Y-m-d H:i:s', true)): ?>
                         <li class="row ilch-border ilch-bg--hover">
@@ -101,7 +101,7 @@ $postsPerPage = $this->get('postsPerPage');
                                 <dd class="lastpost small">
                                     <div class="pull-left">
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
-                                            <img style="width:40px; padding-right: 5px;" src="<?=$this->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
+                                            <img style="width:40px; padding-right: 5px;" src="<?=$this->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                         </a>
                                     </div>
                                     <div class="pull-left">

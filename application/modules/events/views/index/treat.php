@@ -23,7 +23,7 @@ $types = $this->get('types');
                 <?php if ($this->get('event') != '' && $this->escape($this->get('event')->getImage()) != ''): ?>
                     <div class="col-lg-7 col-sm-7 col-7">
                         <div class="row">
-                            <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>">
+                            <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>" alt="<?=$this->escape($this->get('event')->getTitle()) ?>">
                         </div>
                     </div>
                 <?php endif; ?>
@@ -159,7 +159,7 @@ $types = $this->get('types');
                        class="form-control"
                        id="website"
                        name="website"
-                       placeholder="http://"
+                       placeholder="https://"
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getWebsite()) : $this->escape($this->originalInput('website')) ?>" />
             </div>
         </div>

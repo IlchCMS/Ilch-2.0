@@ -6,7 +6,7 @@
 
 namespace Modules\Events\Config;
 
-use \Ilch\Config\Database as IlchDatabase;
+use Ilch\Config\Database as IlchDatabase;
 
 class Config extends \Ilch\Config\Install
 {
@@ -147,6 +147,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `website` VARCHAR(255) NOT NULL AFTER `place`;');
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `show`;');
                 unlink(APPLICATION_PATH.'/modules/events/views/show/my.php');
+                // no break
             case "1.1":
             case "1.2":
             case "1.3":
@@ -154,6 +155,7 @@ class Config extends \Ilch\Config\Install
             case "1.5":
             case "1.6":
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `user_limit` INT(11) NOT NULL AFTER `show`;');
+                // no break
             case "1.7":
             case "1.8":
                 // Convert tables to new character set and collate
@@ -162,6 +164,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_events_currencies` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
                 $this->db()->query('INSERT INTO `[prefix]_config` (`key`, `value`) VALUES ("event_show_members_accesses", "2,3");');
+                // no break
             case "1.9.0":
             case "1.10.0":
             case "1.11.0":
@@ -170,6 +173,7 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('event_upcoming_event_limit', '5')
                     ->set('event_current_event_limit', '5')
                     ->set('event_past_event_limit', '5');
+                // no break
             case "1.12.0":
             case "1.13.0":
                 // Remove forbidden file extensions.
@@ -178,6 +182,7 @@ class Config extends \Ilch\Config\Install
                 $imageExtensions = explode(' ', $databaseConfig->get('event_filetypes'));
                 $imageExtensions = array_diff($imageExtensions, $blacklist);
                 $databaseConfig->set('event_filetypes', implode(' ', $imageExtensions));
+                // no break
             case "1.14.0":
             case "1.15.0":
             case "1.16.0":
@@ -185,6 +190,7 @@ class Config extends \Ilch\Config\Install
             case "1.18.0":
                 // Add new type column.
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `type` VARCHAR(255) NOT NULL AFTER `place`;');
+                // no break
             case "1.19.0":
             case "1.20.0":
             case "1.21.0":
@@ -193,6 +199,7 @@ class Config extends \Ilch\Config\Install
                 foreach($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'events' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
             case "1.21.2":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-ticket' WHERE `key` = 'events';");
         }

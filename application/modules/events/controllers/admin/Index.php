@@ -68,21 +68,6 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('event', $eventMapper->getEntries());
     }
 
-    public function showAction()
-    {
-        $eventMapper = new EventMapper();
-
-        if ($this->getRequest()->isPost('delete')) {
-            $eventMapper->delete($this->getRequest()->getParam('id'));
-
-            $this->redirect()
-                ->withMessage('deleteSuccess')
-                ->to(['action' => 'index']);
-        }
-
-        $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
-    }
-
     public function delAction()
     {
         if ($this->getRequest()->isSecure()) {

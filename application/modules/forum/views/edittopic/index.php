@@ -14,16 +14,16 @@ function rec($item, $obj, $readAccess, $i)
     $subItemsFalse = false;
     if (!empty($subItems) && ($item->getType() === 0)) {
         foreach ($subItems as $subItem) {
-            if ($adminAccess == true || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
+            if ($adminAccess || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
                 $subItemsFalse = true;
             }
         }
     } ?>
-    <?php if ($subItemsFalse == true && $item->getType() === 0): ?>
+    <?php if ($subItemsFalse && $item->getType() === 0): ?>
         <optgroup label="<?=$item->getTitle() ?>"></optgroup>
     <?php endif; ?>
 
-    <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
+    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
         <?php if ($item->getType() != 0): ?>
             <?php $selected = ''; ?>
             <?php if ($item->getId() == $obj->getRequest()->getParam('forumid')): ?>

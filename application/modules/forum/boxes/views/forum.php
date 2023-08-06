@@ -14,7 +14,7 @@ $postsPerPage = $this->get('postsPerPage');
     <ul class="list-unstyled">
         <?php foreach ($this->get('topics') as $topic): ?>
             <?php $forum = $forumMapper->getForumById($topic['forum_id']); ?>
-            <?php if ($adminAccess == true || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
+            <?php if ($adminAccess || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
                 <?php $lastPost = $topicMapper->getLastPostByTopicId($topic['topic_id']) ?>
                 <?php $date = new \Ilch\Date($lastPost->getDateCreated()); ?>
                 <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic['topic_id']) ?>

@@ -1,6 +1,5 @@
 <?php
 $job = $this->get('job');
-$jobs = $this->get('jobs');
 ?>
 
 <style>
@@ -36,9 +35,9 @@ $jobs = $this->get('jobs');
             </label>
             <div class="col-lg-3">
                 <select class="form-control" id="title" name="title">
-                    <?php foreach ($jobs as $jobs): ?>
-                        <option value="<?=$jobs->getTitle() ?>" <?=($this->getRequest()->getParam('id') == $jobs->getId()) ? 'selected="selected"' : '' ?>>
-                            <?=$this->escape($jobs->getTitle()) ?>
+                    <?php foreach ($this->get('jobs') as $job): ?>
+                        <option value="<?=$job->getTitle() ?>" <?=($this->getRequest()->getParam('id') == $job->getId()) ? 'selected="selected"' : '' ?>>
+                            <?=$this->escape($job->getTitle()) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

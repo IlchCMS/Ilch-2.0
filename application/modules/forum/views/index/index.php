@@ -24,13 +24,13 @@ function rec($item, $obj, $readAccess, $i)
     $subItemsFalse = false;
     if (!empty($subItems) && ($item->getType() === 0)) {
         foreach ($subItems as $subItem) {
-            if ($adminAccess == true || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
+            if ($adminAccess || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
                 $subItemsFalse = true;
             }
         }
     }
 ?>
-    <?php if ($subItemsFalse == true && $item->getType() === 0): ?>
+    <?php if ($subItemsFalse && $item->getType() === 0): ?>
         <ul class="forenlist">
             <li class="header">
                 <dl class="title ilch-head">
@@ -49,7 +49,7 @@ function rec($item, $obj, $readAccess, $i)
         </ul>
     <?php endif; ?>
 
-    <?php if ($adminAccess == true || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
+    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
         <?php if ($item->getType() != 0): ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
@@ -93,7 +93,7 @@ function rec($item, $obj, $readAccess, $i)
                                 ?>
                                 <div class="pull-left">
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
-                                        <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
+                                        <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                     </a>
                                 </div>
                                 <div class="pull-left">
@@ -206,9 +206,9 @@ function rec($item, $obj, $readAccess, $i)
             <div class="legend">
                 <h5><i class="fa-solid fa-bars"></i> <?=$this->getTrans('legend') ?></h5>
                 <ul class="statistics">
-                    <li><img src="<?=$this->getModuleUrl('static/img/topic_unread.png') ?>" class="legendIcon"> <?=$this->getTrans('legendNewPost') ?></li>
-                    <li><img src="<?=$this->getModuleUrl('static/img/topic_read.png') ?>" class="legendIcon"> <?=$this->getTrans('legendReadPost') ?></li>
-                    <li><img src="<?=$this->getModuleUrl('static/img/topic_read_locked.png') ?>" class="legendIcon"> <?=$this->getTrans('legendThreadLocked') ?></li>
+                    <li><img src="<?=$this->getModuleUrl('static/img/topic_unread.png') ?>" class="legendIcon" alt="<?=$this->getTrans('legendNewPost') ?>"> <?=$this->getTrans('legendNewPost') ?></li>
+                    <li><img src="<?=$this->getModuleUrl('static/img/topic_read.png') ?>" class="legendIcon" alt="<?=$this->getTrans('legendReadPost') ?>"> <?=$this->getTrans('legendReadPost') ?></li>
+                    <li><img src="<?=$this->getModuleUrl('static/img/topic_read_locked.png') ?>" class="legendIcon" alt="<?=$this->getTrans('legendThreadLocked') ?>"> <?=$this->getTrans('legendThreadLocked') ?></li>
                 </ul>
             </div>
         </div>

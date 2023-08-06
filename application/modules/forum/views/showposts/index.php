@@ -346,7 +346,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#rememberDialog").on('hidden.bs.modal', function (e) {
+    $("#rememberDialog").on('hidden.bs.modal', function () {
         $('#rememberPostStatus').empty();
         $('#rememberPostStatus').removeAttr("class");
         $('#note').val("");

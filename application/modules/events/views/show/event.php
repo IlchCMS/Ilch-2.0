@@ -255,7 +255,7 @@ if (!empty($event)) {
                         <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
                             <?php if ($this->getUser()): ?>
                                 <?php if ($event->getUserId() == $this->getUser()->getId() || $commentUser->getId() == $this->getUser()->getId()): ?>
-                                    <div class="pull-right" style="height: 40px; top: 0px;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
+                                    <div class="pull-right" style="height: 40px; top: 0;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
                                 <?php endif; ?>
                             <?php endif; ?>
                             <div class="pull-left"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
@@ -367,7 +367,7 @@ if (!empty($event)) {
                 <?php $place = $this->escape($event->getPlace()); ?>
                 <?php $infoPlace = str_replace(', ', '<br />', $place); ?>
                 <?php $infoRoutePlace = str_replace(' ', '+', $place); ?>
-                var infoWindowContent = '<div class="poi-info-window"><div class="title"><?=$this->escape($event->getTitle()) ?></div><div class="address"><?=$infoPlace ?><br /><a href="http://maps.google.com?daddr=<?=$infoRoutePlace ?>" target="_blank" rel="noopener"><?=$this->getTrans('googleMapsPlanRoute') ?></a></div></div>';
+                var infoWindowContent = '<div class="poi-info-window"><div class="title"><?=$this->escape($event->getTitle()) ?></div><div class="address"><?=$infoPlace ?><br /><a href="https://maps.google.com?daddr=<?=$infoRoutePlace ?>" target="_blank" rel="noopener"><?=$this->getTrans('googleMapsPlanRoute') ?></a></div></div>';
                 var infowindow = new google.maps.InfoWindow({
                     content: infoWindowContent
                 });
