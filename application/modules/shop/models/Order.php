@@ -83,6 +83,13 @@ class Order extends Model
     protected $datetimeInvoiceSent = '';
 
     /**
+     * Wether the customer collects the order or it needs to be shipped.
+     *
+     * @var int
+     */
+    protected $willCollect = 0;
+
+    /**
      * A 18 char long selector.
      *
      * @var string|null
@@ -332,6 +339,30 @@ class Order extends Model
     {
         $this->datetimeInvoiceSent = $datetimeInvoiceSent;
 
+        return $this;
+    }
+
+    /**
+     * Get the value of will collect.
+     * 1: customer collects the order
+     * 0: shipping
+     *
+     * @return int
+     */
+    public function getWillCollect(): int
+    {
+        return $this->willCollect;
+    }
+
+    /**
+     * Set the value of will collect.
+     *
+     * @param int $willCollect 0: shipping, 1: customer collects the order
+     * @return Order
+     */
+    public function setWillCollect(int $willCollect): Order
+    {
+        $this->willCollect = $willCollect;
         return $this;
     }
 

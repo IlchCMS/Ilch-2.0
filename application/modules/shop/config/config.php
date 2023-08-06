@@ -14,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'shop',
-        'version' => '1.0.1',
+        'version' => '1.1.0',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',
@@ -141,9 +141,10 @@ class Config extends Install
                     `deliveryAddressId` INT(11) NOT NULL,
                     `invoicefilename` VARCHAR(255) NOT NULL,
                     `datetimeInvoiceSent` DATETIME NOT NULL,
+                    `willCollect` TINYINT(1) NULL DEFAULT 0,
                     `selector` char(18),
                     `confirmCode` char(64),
-                    `status` INT(1) NULL DEFAULT 0,
+                    `status` TINYINT(1) NULL DEFAULT 0,
                     PRIMARY KEY (`id`) USING BTREE,
                     INDEX `FK_[prefix]_shop_orders_[prefix]_shop_customers` (`customerId`) USING BTREE,
                     CONSTRAINT `FK_[prefix]_shop_orders_[prefix]_shop_customers` FOREIGN KEY (`customerId`) REFERENCES `[prefix]_shop_customers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
@@ -182,6 +183,7 @@ class Config extends Install
                     `fixTax` INT(11) NOT NULL,
                     `fixShippingCosts` DOUBLE(9,2) NOT NULL,
                     `fixShippingTime` INT(11) NOT NULL,
+                    `allowWillCollect` TINYINT(1) NOT NULL DEFAULT 0,
                     `deliveryTextTop` MEDIUMTEXT NOT NULL,
                     `invoiceTextTop` MEDIUMTEXT NOT NULL,
                     `invoiceTextBottom` MEDIUMTEXT NOT NULL,
@@ -329,6 +331,16 @@ class Config extends Install
     {
         switch ($installedVersion) {
             case '1.0.0':
+                // no break
+            case '1.0.1':
+                // Add column for "will collect". This means the customer picks up his order and therefore no shipping costs are applied to the invoice.
+                $this->db()->query('ALTER TABLE `[prefix]_shop_orders` ADD COLUMN `willCollect` TINYINT(1) NOT NULL DEFAULT 0 AFTER `datetimeInvoiceSent`;');
+
+                // Add column "allowWillCollect" to shop_settings for the setting to enable or disable this feature.
+                $this->db()->query('ALTER TABLE `[prefix]_shop_settings` ADD COLUMN `allowWillCollect` TINYINT(1) NOT NULL DEFAULT 0 AFTER `fixShippingTime`;');
+
+                // Change datatype for the status column as it doesn't need to be of type INT for the expected values 0, 1, 2 and 3.
+                $this->db()->query('ALTER TABLE `[prefix]_shop_orders` MODIFY COLUMN `status` TINYINT(1) NULL DEFAULT 0;');
                 // no break
         }
     }

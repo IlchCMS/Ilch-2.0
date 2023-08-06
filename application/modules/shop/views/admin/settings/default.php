@@ -112,6 +112,20 @@
             </div>
         </div>
     </div>
+    <div class="form-group <?=$this->validation()->hasError('allowWillCollect') ? 'has-error' : '' ?>">
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('allowWillCollect') ?>
+        </div>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="allowWillCollect-on" name="allowWillCollect" value="1" <?=($this->get('settings')->getAllowWillCollect() == '1') ? 'checked="checked"' : '' ?> />
+                <label for="allowWillCollect-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="allowWillCollect-off" name="allowWillCollect" value="0" <?=($this->get('settings')->getAllowWillCollect() != '1') ? 'checked="checked"' : '' ?> />
+                <label for="allowWillCollect-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <hr />
     <div class="form-group <?=$this->validation()->hasError('invoiceTextTop') ? 'has-error' : '' ?>">
         <label for="invoiceTextTop" class="col-lg-2 control-label">

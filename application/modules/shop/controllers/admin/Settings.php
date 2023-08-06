@@ -175,6 +175,7 @@ class Settings extends Admin
                 'fixTax' => 'required|numeric|integer|min:1',
                 'fixShippingCosts' => 'required',
                 'fixShippingTime' => 'required|numeric|integer|min:1',
+                'allowWillCollect' => 'required|numeric|integer|min:0|max:1',
                 'deliveryTextTop' => 'required',
                 'invoiceTextTop' => 'required',
                 'invoiceTextBottom' => 'required'
@@ -185,6 +186,7 @@ class Settings extends Admin
                 $model->setFixTax($this->getRequest()->getPost('fixTax'));
                 $model->setFixShippingCosts($this->getRequest()->getPost('fixShippingCosts'));
                 $model->setFixShippingTime($this->getRequest()->getPost('fixShippingTime'));
+                $model->setAllowWillCollect($this->getRequest()->getPost('allowWillCollect'));
                 $model->setDeliveryTextTop($this->getRequest()->getPost('deliveryTextTop'));
                 $model->setInvoiceTextTop($this->getRequest()->getPost('invoiceTextTop'));
                 $model->setInvoiceTextBottom($this->getRequest()->getPost('invoiceTextBottom'));

@@ -98,6 +98,7 @@ class Index extends Frontend
     {
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
+        $settingsMapper = new SettingsMapper();
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
 
         $this->getLayout()->header()->css('static/css/style_front.css');
@@ -107,6 +108,7 @@ class Index extends Frontend
 
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('itemsMapper', $itemsMapper);
+        $this->getView()->set('allowWillCollect', $settingsMapper->getSettings()->getAllowWillCollect());
     }
 
     public function agbAction()
@@ -158,7 +160,8 @@ class Index extends Frontend
                 'postcode' => 'required',
                 'city' => 'required',
                 'email' => 'required|email',
-                'acceptOrder' =>  'required'
+                'acceptOrder' => 'required',
+                'willCollect' => 'required|integer|min:0|max:1'
             ];
 
             if ($this->getRequest()->getPost('dropdownDeliveryAddress')) {
@@ -183,6 +186,15 @@ class Index extends Frontend
 
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
             if ($validation->isValid()) {
+                if (!$settingsMapper->getSettings()->getAllowWillCollect() && $this->getRequest()->getPost('willCollect')) {
+                    // Either the will collect feature got disabled between the order view and the customers click on "complete purchase"
+                    // or we are dealing with malicious intent. Redirect with error.
+                    $this->addMessage('InvalidOrderWillCollectDisabled', 'danger');
+                    $this->redirect()
+                        ->withInput()
+                        ->to(['action' => 'order']);
+                }
+
                 $arrayOrder = json_decode(str_replace("'", '"', $this->getRequest()->getPost('order')), true);
                 $arrayOrderValid = true;
 
@@ -330,6 +342,7 @@ class Index extends Frontend
                     $model->setCustomerId($customer->getId());
                     $model->getDeliveryAddress()->setCustomerID($customer->getId());
                     $model->getInvoiceAddress()->setCustomerID($customer->getId());
+                    $model->setWillCollect($this->getRequest()->getPost('willCollect'));
                     $ordersMapper->save($model);
 
                     foreach ($arrayOrder as $product) {
@@ -389,6 +402,7 @@ class Index extends Frontend
         $this->getView()->set('captchaNeeded', $captchaNeeded);
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('itemsMapper', $itemsMapper);
+        $this->getView()->set('allowWillCollect', $settingsMapper->getSettings()->getAllowWillCollect());
     }
 
     public function successAction()

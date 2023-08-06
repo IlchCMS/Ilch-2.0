@@ -25,6 +25,8 @@ if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
                 break;
             }
         }
+
+        $_SESSION['shopping_willCollect'] = $_POST['willCollect'];
     }
 }
 
@@ -126,6 +128,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                         <form method="post" action="#shopAnker" class="quantity">
                             <?=$this->getTokenField() ?>
                             <input type="hidden" name="code" value="<?=$this->escape($itemCode); ?>" />
+                            <input type="hidden" name="willCollect" value="<?=($this->get('allowWillCollect') && isset($_SESSION['shopping_willCollect'])) ? 'true' : '' ?>" />
                             <input type="hidden" name="action" value="change" />
                             <div class="input-group">
                                 <input type="hidden" name="maxStock" value="<?=$itemMaxStock; ?>" />
@@ -159,21 +162,41 @@ if (!empty($_SESSION['shopping_cart'])) {
                 <th>
                     <?=$this->getTrans('deliveryCosts') ?>
                 </th>
-                <td data-label="<?=$this->getTrans('deliveryCosts') ?>" class="text-right">
+                <td data-label="<?=$this->getTrans('deliveryCosts') ?>" class="text-right" id="deliveryCosts">
                     <?php $shipping_costs = max($arrayShippingCosts); ?>
-                    <?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
+                    <?php if (isset($_SESSION['shopping_willCollect'])) : ?>
+                        <?=number_format(0, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
+                    <?php else : ?>
+                        <?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
+                    <?php endif; ?>
                 </td>
             </tr>
             <tr>
                 <th>
                     <b><?=$this->getTrans('totalPrice') ?></b>
                 </th>
-                <td data-label="<?=$this->getTrans('totalPrice') ?>" class="text-right">
+                <td data-label="<?=$this->getTrans('totalPrice') ?>" class="text-right" id="totalPrice">
                     <?php $total_price = $subtotal_price + $shipping_costs; ?>
-                    <b><?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
+                    <?php if (isset($_SESSION['shopping_willCollect'])) : ?>
+                        <b><?=number_format($total_price - $shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
+                    <?php else : ?>
+                        <b><?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
+                    <?php endif; ?>
                 </td>
             </tr>
         </table>
+
+        <?php if ($this->get('allowWillCollect')) : ?>
+        <form method="post" action="#shopAnker">
+            <?=$this->getTokenField() ?>
+            <input type="hidden" name="action" value="change" />
+            <input type="checkbox" id="willCollect" name="willCollect" <?=(isset($_SESSION['shopping_willCollect'])) ? ' checked' : '' ?> />
+            <label for="willCollect"><?=$this->getTrans('willCollect') ?></label>
+        </form>
+        <?php else : ?>
+            <?php unset($_SESSION['shopping_willCollect']) ?>
+        <?php endif; ?>
+
         <form method="post" action="order#shopAnker" class="text-right">
             <div class="btn-group btn-group-sm">
                 <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
@@ -190,10 +213,31 @@ if (!empty($_SESSION['shopping_cart'])) {
     <?php } ?>
 </div>
 <script>
+let willCollect = $('#willCollect');
+
 $(document).ready(function () {
     setTimeout(function() {
         $('#infobox').slideUp("slow");
     }, 5000);
+
+    willCollect.change(function() {
+        willCollect.val(this.checked);
+        if (willCollect.is(':checked')) {
+            $('#deliveryCosts').text(<?=json_encode(number_format(0, 2, '.', '') . ' ' . $this->escape($this->get('currency'))) ?>);
+            $('#totalPrice').find('b').text(<?=json_encode(number_format($total_price - $shipping_costs, 2, '.', '') . ' ' . $this->escape($this->get('currency'))) ?>);
+        } else {
+            $('#deliveryCosts').text(<?=json_encode(number_format(max($arrayShippingCosts), 2, '.', '') . ' ' . $this->escape($this->get('currency'))) ?>);
+            $('#totalPrice').find('b').text(<?=json_encode(number_format($total_price, 2, '.', '') . ' ' . $this->escape($this->get('currency'))) ?>);
+        }
+
+        const form = $(this).closest('form');
+        const url = form.attr('action');
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize()
+        });
+    });
 });
 $('.minus-btn').on('click', function(e) {
     e.preventDefault();

@@ -7,6 +7,7 @@ $settingsMapper = $this->get('settingsMapper');
 <?php if ($this->get('order') != '') : ?>
     <h1><?=$this->getTrans('editOrder'); ?></h1>
     <?php
+    /** @var \Modules\Shop\Models\Order $order */
     $order = $this->get('order');
     $ilchDate = new Ilch\Date($this->escape($order->getDatetime()));
     $orderTime = $ilchDate->format(' H:i ', true);
@@ -39,6 +40,12 @@ $settingsMapper = $this->get('settingsMapper');
             &emsp;|&emsp;<?=$orderDate . $this->getTrans('dateTimeAt') . $orderTime . $this->getTrans('dateTimeoClock') ?>&emsp;|&emsp;<?=$this->getTrans('infoOrderFinished') ?>
         </div>
     <?php } ?>
+    <?php if ($order->getWillCollect()) : ?>
+        <div class="alert alert-info">
+            <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
+            <b><?=$this->getTrans('infoCustomerChoseWillCollect') ?></b>
+        </div>
+    <?php endif; ?>
     <h4><?=$this->getTrans('infoBuyer') ?></h4>
     <div class="table-responsive">
         <table class="table">
@@ -146,7 +153,7 @@ $settingsMapper = $this->get('settingsMapper');
                         <b><?=$this->getTrans('deliveryCosts') ?>:</b>
                     </td>
                     <td colspan="1" class="text-right finished">
-                        <?php $shipping_costs = max($arrayShippingCosts); ?>
+                        <?php $shipping_costs = ($order->getWillCollect()) ? 0 : max($arrayShippingCosts); ?>
                         <b><?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
@@ -302,6 +309,63 @@ $settingsMapper = $this->get('settingsMapper');
 
         class PDF extends FPDF
         {
+            public $bankBIC;
+            public $bankIBAN;
+            public $bankName;
+            public $bankOwner;
+            public $DateInvoice;
+            public $DeliveryCity;
+            public $DeliveryCosts;
+            public $DeliveryCountry;
+            public $DeliveryDate;
+            public $DeliveryLastname;
+            public $DeliveryPostcode;
+            public $DeliveryPrename;
+            public $DeliveryStreet;
+            public $invoiceNr;
+            public $invoiceTextBottom;
+            public $invoiceTextTop;
+            public $nameByEmail;
+            public $nameDateInvoice;
+            public $nameDeliveryCosts;
+            public $nameDeliveryDate;
+            public $nameDeliveryPlace;
+            public $nameFrom;
+            public $nameInvoice;
+            public $nameNumber;
+            public $nameOrder;
+            public $nameSite;
+            public $nameSubTotalTax;
+            public $nameSubTotalWithoutTax;
+            public $nameTax;
+            public $nameTotalPrice;
+            public $OrderCurrency;
+            public $OrderData;
+            public $orderDate;
+            public $OrderDifferenzTax;
+            public $OrderHeader;
+            public $OrderPriceWithoutTax;
+            public $OrderTotalPrice;
+            public $payInfoGreetings;
+            public $ReceiverCity;
+            public $ReceiverCountry;
+            public $ReceiverEmail;
+            public $ReceiverLastname;
+            public $ReceiverPostcode;
+            public $ReceiverPrename;
+            public $ReceiverStreet;
+            public $shopCity;
+            public $shopFax;
+            public $shopLogo;
+            public $shopMail;
+            public $shopName;
+            public $shopPLZ;
+            public $shopStNr;
+            public $shopStreet;
+            public $shopTel;
+            public $shopWeb;
+            public $willCollectNote;
+
             public function Header()
             {
                 $this->SetMargins(20, 20, 20);
@@ -329,9 +393,11 @@ $settingsMapper = $this->get('settingsMapper');
                 $this->Cell(130, 5, $this->ReceiverCountry, 0, 0, 'L');
                 $this->SetFont('Arial', '', 10);
                 $this->Cell(40, 5, $this->DeliveryDate, 0, 1, 'R');
-                $this->Ln(4);
+                $this->Cell(130, 5);
+                $this->Cell(40, 5, $this->willCollectNote, 0, 1, 'R');
                 $this->SetFont('Arial', 'I', 9);
-                $this->Cell(130, 5, $this->nameByEmail . ': ' . $this->ReceiverEmail, 0, 0, 'L');
+                $this->Cell(130, 5, $this->nameByEmail . ': ' . $this->ReceiverEmail, 0, 1, 'L');
+                $this->Cell(130, 5);
                 $this->SetFont('Arial', 'B', 11);
                 $this->Cell(40, 5, $this->nameDeliveryPlace, 0, 1, 'R');
                 $this->SetFont('Arial', '', 10);
@@ -475,9 +541,15 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->nameDateInvoice = mb_convert_encoding($this->getTrans('dateOfInvoice'), 'ISO-8859-1', 'UTF-8');
         $pdf->DateInvoice = $dateInvoice = date('d.m.Y', time());
         $pdf->nameDeliveryDate = mb_convert_encoding($this->getTrans('expectedDelivery'), 'ISO-8859-1', 'UTF-8');
-        $maxDeliveryTime = max($arrayShippingTime);
-        $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
-        $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8') . ' ' . date('d.m.Y', $sumDeliveryTime);
+        if ($order->getWillCollect()) {
+            $sumDeliveryTime = time();
+            $pdf->DeliveryDate = date('d.m.Y', $sumDeliveryTime);
+            $pdf->willCollectNote = mb_convert_encoding($this->getTrans('willCollectShort'), 'ISO-8859-1', 'UTF-8');
+        } else {
+            $maxDeliveryTime = max($arrayShippingTime);
+            $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
+            $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8') . ' ' . date('d.m.Y', $sumDeliveryTime);
+        }
         $pdf->ReceiverPrename = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getPrename()), 'ISO-8859-1', 'UTF-8');
         $pdf->ReceiverLastname = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getLastname()), 'ISO-8859-1', 'UTF-8');
         $pdf->ReceiverStreet = mb_convert_encoding($this->escape($order->getInvoiceAddress()->getStreet()), 'ISO-8859-1', 'UTF-8');
@@ -570,6 +642,68 @@ $settingsMapper = $this->get('settingsMapper');
 
         class PDF extends FPDF
         {
+            public $bankBIC;
+            public $bankIBAN;
+            public $bankName;
+            public $bankOwner;
+            public $DateInvoice;
+            public $DeliveryCity;
+            public $DeliveryCosts;
+            public $DeliveryCountry;
+            public $DeliveryDate;
+            public $deliveryInfoGreetings;
+            public $DeliveryLastname;
+            public $DeliveryPostcode;
+            public $DeliveryPrename;
+            public $DeliveryStreet;
+            public $deliveryTextTop;
+            public $invoiceNr;
+            public $invoiceTextBottom;
+            public $invoiceTextTop;
+            public $nameByEmail;
+            public $nameDateInvoice;
+            public $nameDeliveryCosts;
+            public $nameDeliveryDate;
+            public $nameDeliveryNote;
+            public $nameDeliveryPlace;
+            public $nameFrom;
+            public $nameInvoice;
+            public $nameNumber;
+            public $nameOrder;
+            public $nameShippingDate;
+            public $nameSite;
+            public $nameSubTotalTax;
+            public $nameSubTotalWithoutTax;
+            public $nameTax;
+            public $nameTotalPrice;
+            public $OrderCurrency;
+            public $OrderData;
+            public $orderDate;
+            public $OrderDifferenzTax;
+            public $OrderHeader;
+            public $OrderPriceWithoutTax;
+            public $OrderTotalPrice;
+            public $payInfoGreetings;
+            public $ReceiverCity;
+            public $ReceiverCountry;
+            public $ReceiverEmail;
+            public $ReceiverLastname;
+            public $ReceiverPostcode;
+            public $ReceiverPrename;
+            public $ReceiverStreet;
+            public $shippingDate;
+            public $shopCity;
+            public $shopFax;
+            public $shopLogo;
+            public $shopMail;
+            public $shopName;
+            public $shopPLZ;
+            public $shopStNr;
+            public $shopStreet;
+            public $shopTel;
+            public $shopWeb;
+            public $willCollectNote;
+
             public function Header()
             {
                 $this->SetMargins(20, 20, 20);
@@ -689,9 +823,14 @@ $settingsMapper = $this->get('settingsMapper');
         $pdf->nameShippingDate = mb_convert_encoding($this->getTrans('shippingDate'), 'ISO-8859-1', 'UTF-8');
         $pdf->shippingDate = date('d.m.Y', time());
         $pdf->nameDeliveryDate = mb_convert_encoding($this->getTrans('expectedDelivery'), 'ISO-8859-1', 'UTF-8');
-        $maxDeliveryTime = max($arrayShippingTime);
-        $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
-        $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8') . ' ' . date('d.m.Y', $sumDeliveryTime);
+        if ($order->getWillCollect()) {
+            $sumDeliveryTime = time();
+            $pdf->DeliveryDate = date('d.m.Y', $sumDeliveryTime);
+        } else {
+            $maxDeliveryTime = max($arrayShippingTime);
+            $sumDeliveryTime = time() + ($maxDeliveryTime * 24 * 60 * 60);
+            $pdf->DeliveryDate = mb_convert_encoding($this->getTrans('approx'), 'ISO-8859-1', 'UTF-8') . ' ' . date('d.m.Y', $sumDeliveryTime);
+        }
         $nameDeliveryNote = mb_convert_encoding($this->getTrans('deliveryNote'), 'ISO-8859-1', 'UTF-8');
         $pdf->nameDeliveryNote = strtoupper($nameDeliveryNote);
         $pdf->DeliveryPrename = mb_convert_encoding($this->escape($order->getDeliveryAddress()->getPrename()), 'ISO-8859-1', 'UTF-8');
