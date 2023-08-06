@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'statistic',
-        'icon_small' => 'fa-pie-chart',
+        'icon_small' => 'fa-solid fa-chart-pie',
         'system_module' => true,
         'languages' => [
             'de_DE' => [
@@ -52,7 +52,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('statistic_visibleStats', '1,1,1,1,1,1');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_visits_online` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -85,7 +85,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "2.1.19":
@@ -93,6 +93,11 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_visits_stats` ADD COLUMN `user_id` INT(11) NOT NULL DEFAULT 0 AFTER `id`;');
                 $this->db()->query('ALTER TABLE `[prefix]_visits_stats` ADD COLUMN `session_id` VARCHAR(255) NOT NULL DEFAULT \'\' AFTER `user_id`;');
                 break;
+            case "2.1.51":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
+                break;
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

@@ -1,95 +1,29 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Statistic\Models\Statisticconfig $statistic_config */
+$statistic_config = $this->get('statistic_config');
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('siteStatistic') ? 'has-error' : '' ?>">
+    <?php foreach ($statistic_config->configNames as $names) : ?>
+    <div class="form-group <?=$this->validation()->hasError($names) ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
-            <?=$this->getTrans('siteStatistic') ?>:
+            <?=$this->getTrans($names) ?>:
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="siteStatistic-on" name="siteStatistic" value="1" <?=($this->get('siteStatistic') == '1') ? 'checked="checked"' : '' ?> />
-                <label for="siteStatistic-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="siteStatistic-off" name="siteStatistic" value="0" <?=($this->get('siteStatistic') != '1') ? 'checked="checked"' : '' ?> />
-                <label for="siteStatistic-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <input type="radio" class="flipswitch-input" id="<?=$names ?>-on" name="<?=$names ?>" value="1" <?=$this->originalInput($names, $statistic_config->getConfigBy($names)) ? 'checked="checked"' : '' ?> />
+                <label for="<?=$names ?>-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="<?=$names ?>-off" name="<?=$names ?>" value="0" <?=!$this->originalInput($names, $statistic_config->getConfigBy($names)) ? 'checked="checked"' : '' ?> />
+                <label for="<?=$names ?>-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
-
-    <div class="form-group <?=$this->validation()->hasError('ilchVersionStatistic') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('ilchVersionStatistic') ?>:
-        </div>
-        <div class="col-lg-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="ilchVersionStatistic-on" name="ilchVersionStatistic" value="1" <?=($this->get('ilchVersionStatistic') == '1') ? 'checked="checked"' : '' ?> />
-                <label for="ilchVersionStatistic-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="ilchVersionStatistic-off" name="ilchVersionStatistic" value="0" <?=($this->get('ilchVersionStatistic') != '1') ? 'checked="checked"' : '' ?> />
-                <label for="ilchVersionStatistic-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group <?=$this->validation()->hasError('modulesStatistic') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('modulesStatistic') ?>:
-        </div>
-        <div class="col-lg-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="modulesStatistic-on" name="modulesStatistic" value="1" <?=($this->get('modulesStatistic') == '1') ? 'checked="checked"' : '' ?> />
-                <label for="modulesStatistic-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="modulesStatistic-off" name="modulesStatistic" value="0" <?=($this->get('modulesStatistic') != '1') ? 'checked="checked"' : '' ?> />
-                <label for="modulesStatistic-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group <?=$this->validation()->hasError('visitsStatistic') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('visitsStatistic') ?>:
-        </div>
-        <div class="col-lg-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="visitsStatistic-on" name="visitsStatistic" value="1" <?=($this->get('visitsStatistic') == '1') ? 'checked="checked"' : '' ?> />
-                <label for="visitsStatistic-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="visitsStatistic-off" name="visitsStatistic" value="0" <?=($this->get('visitsStatistic') != '1') ? 'checked="checked"' : '' ?> />
-                <label for="visitsStatistic-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group <?=$this->validation()->hasError('browserStatistic') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('browserStatistic') ?>:
-        </div>
-        <div class="col-lg-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="browserStatistic-on" name="browserStatistic" value="1" <?=($this->get('browserStatistic') == '1') ? 'checked="checked"' : '' ?> />
-                <label for="browserStatistic-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="browserStatistic-off" name="browserStatistic" value="0" <?=($this->get('browserStatistic') != '1') ? 'checked="checked"' : '' ?> />
-                <label for="browserStatistic-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group <?=$this->validation()->hasError('osStatistic') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('osStatistic') ?>:
-        </div>
-        <div class="col-lg-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="osStatistic-on" name="osStatistic" value="1" <?=($this->get('osStatistic') == '1') ? 'checked="checked"' : '' ?> />
-                <label for="osStatistic-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="osStatistic-off" name="osStatistic" value="0" <?=($this->get('osStatistic') != '1') ? 'checked="checked"' : '' ?> />
-                <label for="osStatistic-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-        </div>
-    </div>
+    <?php endforeach; ?>
     <?=$this->getSaveBar() ?>
 </form>
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -8,23 +9,44 @@ namespace Modules\Statistic\Controllers;
 
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\Admin\Mappers\Module as ModuleMapper;
+use Modules\Statistic\Models\Statisticconfig;
 use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
+        $userMapper = new UserMapper();
+        $statisticconfig = new Statisticconfig();
         $statisticMapper = new StatisticMapper();
         $moduleMapper = new ModuleMapper();
         $date = new \Ilch\Date();
+
+        $user = null;
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+        }
+
+        $readAccess = [3];
+        if ($user) {
+            foreach ($user->getGroups() as $us) {
+                $readAccess[] = $us->getId();
+            }
+        }
+
+        $locale = '';
+
+        if ((bool)$this->getConfig()->get('multilingual_acp') && $this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
+            $locale = $this->getTranslator()->getLocale();
+        }
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index']);
 
         $this->getView()->set('dateCmsInstalled', $this->getConfig()->get('date_cms_installed'));
         $this->getView()->set('registUserCount', $statisticMapper->getRegistUserCount());
-        $this->getView()->set('registNewUser', $statisticMapper->getRegistNewUser());
-        $this->getView()->set('articlesCount', $statisticMapper->getArticlesCount());
+        $this->getView()->set('registNewUser', $userMapper->getUserById($statisticMapper->getRegistNewUser()) ?? $userMapper->getDummyUser());
+        $this->getView()->set('articlesCount', $statisticMapper->getArticlesCount($readAccess, $locale));
         $this->getView()->set('commentsCount', $statisticMapper->getCommentsCount());
         $this->getView()->set('modulesCount', $statisticMapper->getModulesCount());
         $this->getView()->set('CMSVersion', $this->getConfig()->get('version'));
@@ -47,13 +69,8 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($date->format('Y', true)));
         $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($date->format('Y', true)));
 
-        $visibilitySettings = explode(',', $this->getConfig()->get('statistic_visibleStats'));
-        $this->getView()->set('siteStatistic', $visibilitySettings[0]);
-        $this->getView()->set('ilchVersionStatistic', $visibilitySettings[1]);
-        $this->getView()->set('modulesStatistic', $visibilitySettings[2]);
-        $this->getView()->set('visitsStatistic', $visibilitySettings[3]);
-        $this->getView()->set('browserStatistic', $visibilitySettings[4]);
-        $this->getView()->set('osStatistic', $visibilitySettings[5]);
+        $statisticconfig->setByArray();
+        $this->getView()->set('statistic_config', $statisticconfig);
     }
 
     public function showAction()
@@ -96,7 +113,7 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($os != '') {
             if ($month != '') {
-                $date = new \Ilch\Date($year.'-'.$month.'-01');
+                $date = new \Ilch\Date($year . '-' . $month . '-01');
 
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
@@ -104,7 +121,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($os, ['action' => 'show', 'year' => $year, 'month' => $month, 'os' => $os]);
             } else {
-                $date = new \Ilch\Date($year.'-01-01');
+                $date = new \Ilch\Date($year . '-01-01');
 
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
@@ -115,15 +132,15 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($browser != '') {
             if ($month != '') {
-                $date = new \Ilch\Date($year.'-'.$month.'-01');
+                $date = new \Ilch\Date($year . '-' . $month . '-01');
 
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans($date->format('F', true)), ['action' => 'show', 'year' => $year, 'month' => $month])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($browser, ['action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $browser]);
-            } elseif ($month == '') {
-                $date = new \Ilch\Date($year.'-01-01');
+            } else {
+                $date = new \Ilch\Date($year . '-01-01');
 
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
@@ -134,14 +151,14 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($browser == '' && $os == '') {
             if ($month != '') {
-                $date = new \Ilch\Date($year.'-'.$month.'-01');
+                $date = new \Ilch\Date($year . '-' . $month . '-01');
 
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans($date->format('F', true)), ['action' => 'show', 'year' => $year, 'month' => $month])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year]);
             } else {
-                $date = new \Ilch\Date($year.'-01-01');
+                $date = new \Ilch\Date($year . '-01-01');
 
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
@@ -154,13 +171,13 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('statisticOSVersionList', $statisticMapper->getVisitsOS($year, $month, $os));
         } elseif ($year != '' && $os != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
-            $this->getView()->set('statisticOSVersionList', $statisticMapper->getVisitsOS($year, '', $os));
+            $this->getView()->set('statisticOSVersionList', $statisticMapper->getVisitsOS($year, 0, $os));
         } elseif ($month != '' && $year != '' && $browser != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year, $month));
             $this->getView()->set('statisticBrowserVersionList', $statisticMapper->getVisitsBrowser($year, $month, $browser));
         } elseif ($year != '' && $browser != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
-            $this->getView()->set('statisticBrowserVersionList', $statisticMapper->getVisitsBrowser($year, '', $browser));
+            $this->getView()->set('statisticBrowserVersionList', $statisticMapper->getVisitsBrowser($year, 0, $browser));
         } elseif ($year != '' && $month != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsMonthCount($year, $month));
             $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour($year, $month));
