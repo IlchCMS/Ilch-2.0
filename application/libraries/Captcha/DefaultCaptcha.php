@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @since 2.1.43
@@ -6,9 +7,10 @@
 
 namespace Captcha;
 
+use Ilch\View;
+
 class DefaultCaptcha
 {
-
     /**
      * The Form.
      *
@@ -17,9 +19,9 @@ class DefaultCaptcha
     protected $form = '';
 
     /**
-     * Start Default Capcha.
+     * Start Default Captcha.
      *
-     * @return this
+     * @return $this
      */
     public function __construct()
     {
@@ -35,13 +37,14 @@ class DefaultCaptcha
     {
         return $this->form;
     }
+
     /**
      * Sets the Form.
      *
      * @param string $form
      * @return $this
      */
-    public function setForm(string $form): GoogleCaptcha
+    public function setForm(string $form): DefaultCaptcha
     {
         $this->form = $form;
 
@@ -49,16 +52,14 @@ class DefaultCaptcha
     }
 
     /**
-     * Get Default Capcha.
+     * Get Default Captcha.
      *
-     * @param \Ilch\View $view
-     * @param string|null $action
-     * @param float $score
-     * @return bool
+     * @param View $view
+     * @return string
      */
-    public function getCaptcha(\Ilch\View $view)
+    public function getCaptcha(View $view): string
     {
-        $str = '<div class="form-group ' . ($view->validation()->hasError('captcha') ? 'has-error' : '') . '">
+        return '<div class="form-group ' . ($view->validation()->hasError('captcha') ? 'has-error' : '') . '">
             <label class="col-lg-2 control-label">
                 ' . $view->getTrans('captcha') . '
             </label>
@@ -84,19 +85,16 @@ class DefaultCaptcha
                 </span>
             </div>
         </div>';
-        
-        return $str;
     }
 
     /**
-     * Validate Google Capcha.
+     * Validate Google Captcha.
      *
      * @param string $token
-     * @param string|null $action
-     * @param float $score
+     * @param string $sessionKey
      * @return bool
      */
-    public function validate($token, $sessionKey = 'captcha')
+    public function validate(string $token, string $sessionKey = 'captcha'): bool
     {
         $result = false;
         if (isset($_SESSION[$sessionKey])) {
