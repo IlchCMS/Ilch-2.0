@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -21,6 +22,7 @@ class Shoutbox extends \Ilch\Box
         if ($this->getRequest()->getPost('uniqid')) {
             $uniqid = $this->getRequest()->getPost('uniqid');
         }
+        $captchaNeeded = captchaNeeded();
 
         $userId = null;
         if ($this->getUser()) {
@@ -36,22 +38,34 @@ class Shoutbox extends \Ilch\Box
             }
         }
 
-        if (($this->getRequest()->getPost('form_'.$uniqid) || $this->getRequest()->isAjax()) && $this->getRequest()->getPost('bot') === '') {
-            $validation = Validation::create($this->getRequest()->getPost(), [
-                'shoutbox_name'     => 'required',
-                'shoutbox_textarea' => 'required'
+        $validation = null;
+        if (($this->getRequest()->getPost('saveshoutboxbox_' . $uniqid) || $this->getRequest()->isAjax()) && $this->getRequest()->getPost('bot') === '') {
+            Validation::setCustomFieldAliases([
+                'grecaptcha' => 'token',
             ]);
 
-            if ($validation->isValid()) {
-                $uid = 0;
-                if ($this->getUser() !== null) {
-                    $uid = $this->getUser()->getId();
-                }
+            $validationRules = [
+                'shoutbox_name'     => 'required',
+                'shoutbox_textarea' => 'required',
+            ];
 
+            if ($captchaNeeded) {
+                if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+                    $validationRules['token'] = 'required|grecaptcha:saveshoutbox' . $uniqid;
+                } else {
+                    $validationRules['captcha'] = 'required|captcha';
+                }
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
+
+            if ($validation->isValid()) {
+                $date = new \Ilch\Date();
                 $shoutboxModel = new ShoutboxModel();
-                $shoutboxModel->setUid($uid)
-                    ->setName($this->getRequest()->getPost('shoutbox_name'))
-                    ->setTextarea($this->getRequest()->getPost('shoutbox_textarea'));
+                $shoutboxModel->setUid($userId ?? 0)
+                    ->setName($userId ? $user->getName() : $this->getRequest()->getPost('shoutbox_name'))
+                    ->setTextarea($this->getRequest()->getPost('shoutbox_textarea'))
+                    ->setTime($date->toDb());
                 $shoutboxMapper->save($shoutboxModel);
             }
         }
@@ -60,7 +74,18 @@ class Shoutbox extends \Ilch\Box
             'uniqid'         => $uniqid,
             'shoutbox'       => $shoutboxMapper->getShoutboxLimit($this->getConfig()->get('shoutbox_limit')),
             'maxwordlength'  => $this->getConfig()->get('shoutbox_maxwordlength'),
-            'writeAccess'    => $ids
+            'writeAccess'    => $ids,
+            'captchaNeeded'    => $captchaNeeded,
+            'validation'    => $validation
         ]);
+        if ($captchaNeeded) {
+            if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
+                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $this->getView()->set('googlecaptcha', $googlecaptcha);
+            } else {
+                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $this->getView()->set('defaultcaptcha', $defaultcaptcha);
+            }
+        }
     }
 }

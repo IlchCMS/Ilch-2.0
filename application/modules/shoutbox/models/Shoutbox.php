@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,42 +14,67 @@ class Shoutbox extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The uid of the shoutbox.
      *
-     * @var string
+     * @var int
      */
-    protected $uid;
+    protected $uid = 0;
 
     /**
      * The name of the shoutbox.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * The textarea of the shoutbox.
      *
      * @var string
      */
-    protected $textarea;
+    protected $textarea = '';
 
     /**
      * The time of the shoutbox.
      *
      * @var string
      */
-    protected $time;
+    protected $time = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     *  @since 1.5.0
+     */
+    public function setByArray(array $entries): Shoutbox
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['user_id'])) {
+            $this->setUid($entries['user_id']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (isset($entries['textarea'])) {
+            $this->setTextarea($entries['textarea']);
+        }
+        if (isset($entries['time'])) {
+            $this->setTime($entries['time']);
+        }
+        return $this;
+    }
 
     /**
      * Gets the id of the shoutbox.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -59,9 +85,9 @@ class Shoutbox extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Shoutbox
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -69,9 +95,9 @@ class Shoutbox extends \Ilch\Model
     /**
      * Gets the uid of the shoutbox.
      *
-     * @return string
+     * @return int
      */
-    public function getUid()
+    public function getUid(): int
     {
         return $this->uid;
     }
@@ -79,12 +105,12 @@ class Shoutbox extends \Ilch\Model
     /**
      * Sets the uid of the shoutbox.
      *
-     * @param string $uid
+     * @param int $uid
      * @return $this
      */
-    public function setUid($uid)
+    public function setUid(int $uid): Shoutbox
     {
-        $this->uid = (string)$uid;
+        $this->uid = $uid;
 
         return $this;
     }
@@ -94,7 +120,7 @@ class Shoutbox extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -105,9 +131,9 @@ class Shoutbox extends \Ilch\Model
      * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Shoutbox
     {
-        $this->name = (string)$name;
+        $this->name = $name;
 
         return $this;
     }
@@ -117,7 +143,7 @@ class Shoutbox extends \Ilch\Model
      *
      * @return string
      */
-    public function getTextarea()
+    public function getTextarea(): string
     {
         return $this->textarea;
     }
@@ -128,9 +154,9 @@ class Shoutbox extends \Ilch\Model
      * @param string $textarea
      * @return $this
      */
-    public function setTextarea($textarea)
+    public function setTextarea(string $textarea): Shoutbox
     {
-        $this->textarea = (string)$textarea;
+        $this->textarea = $textarea;
 
         return $this;
     }
@@ -140,7 +166,7 @@ class Shoutbox extends \Ilch\Model
      *
      * @return string
      */
-    public function getTime()
+    public function getTime(): string
     {
         return $this->time;
     }
@@ -151,10 +177,28 @@ class Shoutbox extends \Ilch\Model
      * @param string $time
      * @return $this
      */
-    public function setTime($time)
+    public function setTime(string $time): Shoutbox
     {
-        $this->time = (string)$time;
+        $this->time = $time;
 
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.5.0
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'user_id' => $this->getUid(),
+                'name' => $this->getName(),
+                'textarea' => $this->getTextarea(),
+                'time' => $this->getTime(),
+            ]
+        );
     }
 }

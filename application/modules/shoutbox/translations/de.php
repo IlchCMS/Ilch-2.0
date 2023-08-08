@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -20,4 +21,6 @@ return [
     'writeAccess' => 'Schreibrechte',
     'missingName' => 'Bitte einen Namen eingeben.',
     'missingMessage' => 'Bitte eine Nachricht eingeben.',
+    'missingCaptcha' => 'Bitte eine Captcha eingeben.',
+    'reset' => 'Zurücksetzen',
 ];

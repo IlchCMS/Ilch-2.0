@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -11,97 +12,132 @@ use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
 class Shoutbox extends \Ilch\Mapper
 {
     /**
-     * Gets the Shoutbox.
-     *
-     * @return ShoutboxModel[]|array
+     * @var string
+     * @since 1.5.0
      */
-    public function getShoutbox()
-    {
-        $entryArray = $this->db()->select('*')
-                ->from('shoutbox')
-                ->order(['id' => 'DESC'])
-                ->execute()
-                ->fetchRows();
+    public $tablename = 'shoutbox';
 
+    /**
+     * Check if DB-Table exists
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     *  @since 1.5.0
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return ShoutboxModel[]|null
+     *  @since 1.5.0
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['text' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
         if (empty($entryArray)) {
             return null;
         }
 
-        $shoutbox = [];
-        foreach ($entryArray as $entries) {
+        $entries = [];
+
+        foreach ($entryArray as $rows) {
             $entryModel = new ShoutboxModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setUid($entries['user_id']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setTextarea($entries['textarea']);
-            $entryModel->setTime($entries['time']);
-            $shoutbox[] = $entryModel;
+            $entryModel->setByArray($rows);
+
+            $entries[] = $entryModel;
         }
 
-        return $shoutbox;
+        return $entries;
     }
 
     /**
      * Gets the Shoutbox.
      *
-     * @param null|int $limit
-     * @return ShoutboxModel[]|array
+     * @return ShoutboxModel[]|null
      */
-    public function getShoutboxLimit($limit = null)
+    public function getShoutbox(): ?array
     {
-        $entryArray = $this->db()->select('*')
-                ->from('shoutbox')
-                ->order(['id' => 'DESC'])
-                ->limit($limit)
-                ->execute()
-                ->fetchRows();
+        return $this->getEntriesBy([], ['id' => 'DESC']);
+    }
 
-        if (empty($entryArray)) {
-            return [];
+    /**
+     * Gets the Shoutbox.
+     *
+     * @param int|null $limit
+     * @return ShoutboxModel[]|null
+     */
+    public function getShoutboxLimit(?int $limit = null): ?array
+    {
+        $pagination = null;
+        if ($limit) {
+            $pagination = new \Ilch\Pagination();
+            $pagination->setRows($limit);
         }
-
-        $shoutbox = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new ShoutboxModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setUid($entries['user_id']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setTextarea($entries['textarea']);
-            $entryModel->setTime($entries['time']);
-            $shoutbox[] = $entryModel;
-        }
-
-        return $shoutbox;
+        return $this->getEntriesBy([], ['id' => 'DESC'], $pagination);
     }
 
     /**
      * Insert shoutbox model.
      *
      * @param ShoutboxModel $shoutbox
+     * @return int
      */
-    public function save(ShoutboxModel $shoutbox)
+    public function save(ShoutboxModel $shoutbox): int
     {
-        $date = new \Ilch\Date();
+        $fields = $shoutbox->getArray(false);
 
-        $this->db()->insert('shoutbox')
-            ->values([
-                'user_id' => $shoutbox->getUid(),
-                'name' => $shoutbox->getName(),
-                'textarea' => $shoutbox->getTextarea(),
-                'time' => $date->toDb(),
-            ])
-            ->execute();
+        if ($shoutbox->getId()) {
+            $this->db()->update($this->tablename)
+                ->values($fields)
+                ->where(['id' => $shoutbox->getId()])
+                ->execute();
+            return $shoutbox->getId();
+        } else {
+            return $this->db()->insert($this->tablename)
+                ->values($fields)
+                ->execute();
+        }
     }
 
     /**
      * Deletes shoutbox with given id.
      *
      * @param integer $id
+     * @return bool
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('shoutbox')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all shoutbox entries.
+     *
+     * @return bool
+     */
+    public function truncate(): bool
+    {
+        return $this->db()->truncate($this->tablename);
     }
 }

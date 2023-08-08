@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
@@ -11,7 +15,7 @@
                    id="limit"
                    name="limit"
                    min="1"
-                   value="<?=$this->get('limit') ?>">
+                   value="<?=$this->originalInput('limit', $this->get('limit')) ?>">
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('maxwordlength') ? 'has-error' : '' ?>">
@@ -24,7 +28,7 @@
                    id="maxwordlength"
                    name="maxwordlength"
                    min="1"
-                   value="<?=$this->get('maxwordlength') ?>">
+                   value="<?=$this->originalInput('maxwordlength', $this->get('maxwordlength')) ?>">
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('maxtextlength') ? 'has-error' : '' ?>">
@@ -37,11 +41,11 @@
                    id="maxtextlength"
                    name="maxtextlength"
                    min="1"
-                   value="<?=$this->get('maxtextlength') ?>">
+                   value="<?=$this->originalInput('maxtextlength', $this->get('maxtextlength')) ?>">
         </div>
     </div>
-    <div class="form-group">
-        <label for="assignedGroups" class="col-lg-2 control-label">
+    <div class="form-group <?=$this->validation()->hasError('writeAccess') ? 'has-error' : '' ?>">
+        <label for="writeAccess" class="col-lg-2 control-label">
             <?=$this->getTrans('writeAccess') ?>
         </label>
         <div class="col-lg-3">
@@ -50,9 +54,11 @@
                     name="writeAccess[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
                     multiple>
-                <?php foreach ($this->get('userGroupList') as $groupList): ?>
+                <?php
+                /** @var \Modules\User\Models\Group $groupList */
+                foreach ($this->get('userGroupList') as $groupList) : ?>
                     <option value="<?=$groupList->getId() ?>"
-                        <?php $writeAccess = explode(',', $this->get('writeAccess'));
+                        <?php $writeAccess = explode(',', $this->originalInput('writeAccess', $this->get('writeAccess')));
                         foreach ($writeAccess as $access) {
                             if ($groupList->getId() == $access) {
                                 echo 'selected="selected"';
@@ -70,5 +76,5 @@
 </form>
 
 <script>
-$('#writeAccess').chosen();
+    $('#writeAccess').chosen();
 </script>

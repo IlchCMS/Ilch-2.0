@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -17,13 +18,19 @@ class Settings extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'reset',
+                'active' => false,
+                'icon' => 'fa-solid fa-trash-can',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'reset'])
             ],
             [
                 'name' => 'settings',
                 'active' => true,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -33,7 +40,7 @@ class Settings extends \Ilch\Controller\Admin
             $items
         );
     }
-    
+
     public function indexAction()
     {
         $userGroupMapper = new UserGroupMapper();

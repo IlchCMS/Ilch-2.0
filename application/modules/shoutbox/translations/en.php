@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -20,4 +21,6 @@ return [
     'writeAccess' => 'Write access',
     'missingName' => 'Please enter a name.',
     'missingMessage' => 'Please enter the message.',
+    'missingCaptcha' => 'Please enter the captcha.',
+    'reset' => 'Reset to default',
 ];
