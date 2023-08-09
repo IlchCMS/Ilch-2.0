@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,105 +14,153 @@ class Statistic extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The userId of the Statistic.
      *
      * @var int
      */
-    protected $userId;
+    protected $userId = 0;
 
     /**
      * The sessionId of the Statistic.
      *
      * @var string
      */
-    protected $sessionId;
+    protected $sessionId = '';
 
     /**
      * The visits of the Statistic.
      *
      * @var int
      */
-    protected $visits;
+    protected $visits = 0;
 
     /**
      * The site of the Statistic.
      *
      * @var string
      */
-    protected $site;
+    protected $site = '';
 
     /**
      * The referer.
      *
      * @var string
      */
-    protected $referer;
+    protected $referer = '';
 
     /**
      * The ip address of the Statistic.
      *
      * @var string
      */
-    protected $ipAddress;
+    protected $ipAddress = '';
 
     /**
      * The os of the Statistic.
      *
      * @var string
      */
-    protected $os;
+    protected $os = '';
 
     /**
      * The os version of the Statistic.
      *
      * @var string
      */
-    protected $osVersion;
+    protected $osVersion = '';
 
     /**
      * The browser of the Statistic.
      *
      * @var string
      */
-    protected $browser;
+    protected $browser = '';
 
     /**
      * The browser version of the Statistic.
      *
      * @var string
      */
-    protected $browserVersion;
+    protected $browserVersion = '';
 
     /**
      * The lang of the Statistic.
      *
      * @var string
      */
-    protected $lang;
+    protected $lang = '';
 
     /**
      * The Date last Activity of the Statistic.
      *
      * @var string
      */
-    protected $dateLastActivity;
+    protected $dateLastActivity = '';
 
     /**
      * The date.
      *
      * @var string
      */
-    protected $date;
+    protected $date = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Statistic
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['user_id'])) {
+            $this->setUserId($entries['user_id']);
+        }
+        if (isset($entries['session_id'])) {
+            $this->setSessionId($entries['session_id']);
+        }
+        if (isset($entries['site'])) {
+            $this->setSite($entries['site']);
+        }
+        if (isset($entries['os'])) {
+            $this->setOS($entries['os']);
+        }
+        if (isset($entries['os_version'])) {
+            $this->setOSVersion($entries['os_version']);
+        }
+        if (isset($entries['browser'])) {
+            $this->setBrowser($entries['browser']);
+        }
+        if (isset($entries['browser_version'])) {
+            $this->setBrowserVersion($entries['browser_version']);
+        }
+        if (isset($entries['ip_address'])) {
+            $this->setIPAdress($entries['ip_address']);
+        }
+        if (isset($entries['lang'])) {
+            $this->setLang($entries['lang']);
+        }
+        if (isset($entries['date_last_activity'])) {
+            $this->setDateLastActivity($entries['date_last_activity']);
+        }
+        if (isset($entries['referer'])) {
+            $this->setReferer($entries['referer']);
+        }
+        if (isset($entries['date'])) {
+            $this->setDate($entries['date']);
+        }
+        return $this;
+    }
 
     /**
      * Returns the id of the Statistic.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -120,11 +169,11 @@ class Statistic extends \Ilch\Model
      * Saves the id of the Statistic.
      *
      * @param int $id
-     * @return Statistic
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Statistic
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -134,7 +183,7 @@ class Statistic extends \Ilch\Model
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -143,11 +192,11 @@ class Statistic extends \Ilch\Model
      * Saves the userId of the Statistic.
      *
      * @param int $userId
-     * @return Statistic
+     * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Statistic
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -159,7 +208,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getSessionId()
+    public function getSessionId(): string
     {
         return $this->sessionId;
     }
@@ -168,9 +217,9 @@ class Statistic extends \Ilch\Model
      * Set the php session id of the guest or user.
      *
      * @param string $sessionId
-     * @return Statistic
+     * @return $this
      */
-    public function setSessionId($sessionId)
+    public function setSessionId(string $sessionId): Statistic
     {
         $this->sessionId = $sessionId;
 
@@ -182,7 +231,7 @@ class Statistic extends \Ilch\Model
      *
      * @return int
      */
-    public function getVisits()
+    public function getVisits(): int
     {
         return $this->visits;
     }
@@ -191,11 +240,11 @@ class Statistic extends \Ilch\Model
      * Saves the visits of the Statistic.
      *
      * @param int $visits
-     * @return Statistic
+     * @return $this
      */
-    public function setVisits($visits)
+    public function setVisits(int $visits): Statistic
     {
-        $this->visits = (int)$visits;
+        $this->visits = $visits;
 
         return $this;
     }
@@ -205,7 +254,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getSite()
+    public function getSite(): string
     {
         return $this->site;
     }
@@ -214,11 +263,11 @@ class Statistic extends \Ilch\Model
      * Saves the site.
      *
      * @param string $site
-     * @return Statistic
+     * @return $this
      */
-    public function setSite($site)
+    public function setSite(string $site): Statistic
     {
-        $this->site = (string)$site;
+        $this->site = $site;
 
         return $this;
     }
@@ -228,7 +277,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getReferer()
+    public function getReferer(): string
     {
         return $this->referer;
     }
@@ -237,11 +286,11 @@ class Statistic extends \Ilch\Model
      * Saves the referer.
      *
      * @param string $referer
-     * @return Statistic
+     * @return $this
      */
-    public function setReferer($referer)
+    public function setReferer(string $referer): Statistic
     {
-        $this->referer = (string)$referer;
+        $this->referer = $referer;
 
         return $this;
     }
@@ -251,7 +300,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getIPAdress()
+    public function getIPAdress(): string
     {
         return $this->ipAddress;
     }
@@ -260,11 +309,11 @@ class Statistic extends \Ilch\Model
      * Saves the ipAdress.
      *
      * @param string $ipAddress
-     * @return Statistic
+     * @return $this
      */
-    public function setIPAdress($ipAddress)
+    public function setIPAdress(string $ipAddress): Statistic
     {
-        $this->ipAddress = (string)$ipAddress;
+        $this->ipAddress = $ipAddress;
 
         return $this;
     }
@@ -274,7 +323,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getOS()
+    public function getOS(): string
     {
         return $this->os;
     }
@@ -283,11 +332,11 @@ class Statistic extends \Ilch\Model
      * Saves the os.
      *
      * @param string $os
-     * @return Statistic
+     * @return $this
      */
-    public function setOS($os)
+    public function setOS(string $os): Statistic
     {
-        $this->os = (string)$os;
+        $this->os = $os;
 
         return $this;
     }
@@ -297,7 +346,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getOSVersion()
+    public function getOSVersion(): string
     {
         return $this->osVersion;
     }
@@ -306,11 +355,11 @@ class Statistic extends \Ilch\Model
      * Saves the os.
      *
      * @param string $osVersion
-     * @return Statistic
+     * @return $this
      */
-    public function setOSVersion($osVersion)
+    public function setOSVersion(string $osVersion): Statistic
     {
-        $this->osVersion = (string)$osVersion;
+        $this->osVersion = $osVersion;
 
         return $this;
     }
@@ -320,7 +369,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getBrowser()
+    public function getBrowser(): string
     {
         return $this->browser;
     }
@@ -329,11 +378,11 @@ class Statistic extends \Ilch\Model
      * Saves the browser.
      *
      * @param string $browser
-     * @return Statistic
+     * @return $this
      */
-    public function setBrowser($browser)
+    public function setBrowser(string $browser): Statistic
     {
-        $this->browser = (string)$browser;
+        $this->browser = $browser;
 
         return $this;
     }
@@ -343,7 +392,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getBrowserVersion()
+    public function getBrowserVersion(): string
     {
         return $this->browserVersion;
     }
@@ -352,11 +401,11 @@ class Statistic extends \Ilch\Model
      * Saves the browser version.
      *
      * @param string $browserVersion
-     * @return Statistic
+     * @return $this
      */
-    public function setBrowserVersion($browserVersion)
+    public function setBrowserVersion(string $browserVersion): Statistic
     {
-        $this->browserVersion = (string)$browserVersion;
+        $this->browserVersion = $browserVersion;
 
         return $this;
     }
@@ -366,7 +415,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getLang()
+    public function getLang(): string
     {
         return $this->lang;
     }
@@ -375,11 +424,11 @@ class Statistic extends \Ilch\Model
      * Saves the lang.
      *
      * @param string $lang
-     * @return Statistic
+     * @return $this
      */
-    public function setLang($lang)
+    public function setLang(string $lang): Statistic
     {
-        $this->lang = (string)$lang;
+        $this->lang = $lang;
 
         return $this;
     }
@@ -389,7 +438,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getDateLastActivity()
+    public function getDateLastActivity(): string
     {
         return $this->dateLastActivity;
     }
@@ -398,11 +447,11 @@ class Statistic extends \Ilch\Model
      * Saves the Date last Activity.
      *
      * @param string $dateLastActivity
-     * @return Statistic
+     * @return $this
      */
-    public function setDateLastActivity($dateLastActivity)
+    public function setDateLastActivity(string $dateLastActivity): Statistic
     {
-        $this->dateLastActivity = (string)$dateLastActivity;
+        $this->dateLastActivity = $dateLastActivity;
 
         return $this;
     }
@@ -412,7 +461,7 @@ class Statistic extends \Ilch\Model
      *
      * @return string
      */
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
     }
@@ -421,11 +470,11 @@ class Statistic extends \Ilch\Model
      * Saves the Date.
      *
      * @param string $date
-     * @return Statistic
+     * @return $this
      */
-    public function setDate($date)
+    public function setDate(string $date): Statistic
     {
-        $this->date = (string)$date;
+        $this->date = $date;
 
         return $this;
     }

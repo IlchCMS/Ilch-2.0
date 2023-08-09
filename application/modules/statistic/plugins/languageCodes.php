@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -8,7 +9,12 @@ namespace Modules\Statistic\Plugins;
 
 class LanguageCodes
 {
-    public function statisticLanguage($language, $locale)
+    /**
+     * @param string $language
+     * @param string $locale
+     * @return string
+     */
+    public function statisticLanguage(string $language, string $locale = ''): string
     {
         $languageDEArray = [
             'aa' => 'Fern',
