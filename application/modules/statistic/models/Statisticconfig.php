@@ -7,7 +7,7 @@
 
 namespace Modules\Statistic\Models;
 
-class Statisticconfig extends \Ilch\Model
+class StatistiCconfig extends \Ilch\Model
 {
     /**
      * @var array

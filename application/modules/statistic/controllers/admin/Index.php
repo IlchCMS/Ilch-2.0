@@ -8,7 +8,7 @@
 namespace Modules\Statistic\Controllers\Admin;
 
 use Ilch\Validation;
-use Modules\Statistic\Models\Statisticconfig;
+use Modules\Statistic\Models\StatisticConfig as StatisticConfigModel;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -31,18 +31,18 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
-        $statisticconfig = new Statisticconfig();
+        $statisticConfigModel = new StatisticConfigModel();
         if ($this->getRequest()->isPost()) {
             $validationRules = [];
-            foreach ($statisticconfig->configNames as $name) {
+            foreach ($statisticConfigModel->configNames as $name) {
                 $validationRules[$name] = 'required|numeric|integer|min:0|max:1';
             }
 
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
-                $statisticconfig->setByArray($this->getRequest()->getPost());
-                $this->getConfig()->set('statistic_visibleStats', $statisticconfig->getConfigString());
+                $statisticConfigModel->setByArray($this->getRequest()->getPost());
+                $this->getConfig()->set('statistic_visibleStats', $statisticConfigModel->getConfigString());
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
@@ -56,7 +56,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $statisticconfig->setByArray();
-        $this->getView()->set('statistic_config', $statisticconfig);
+        $statisticConfigModel->setByArray();
+        $this->getView()->set('statistic_config', $statisticConfigModel);
     }
 }

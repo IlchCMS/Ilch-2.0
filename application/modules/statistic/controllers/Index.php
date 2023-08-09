@@ -9,7 +9,7 @@ namespace Modules\Statistic\Controllers;
 
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\Admin\Mappers\Module as ModuleMapper;
-use Modules\Statistic\Models\Statisticconfig;
+use Modules\Statistic\Models\StatisticConfig as StatisticConfigModel;
 use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
@@ -17,7 +17,7 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $userMapper = new UserMapper();
-        $statisticconfig = new Statisticconfig();
+        $statisticConfigModel = new StatisticConfigModel();
         $statisticMapper = new StatisticMapper();
         $moduleMapper = new ModuleMapper();
         $date = new \Ilch\Date();
@@ -69,8 +69,8 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($date->format('Y', true)));
         $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($date->format('Y', true)));
 
-        $statisticconfig->setByArray();
-        $this->getView()->set('statistic_config', $statisticconfig);
+        $statisticConfigModel->setByArray();
+        $this->getView()->set('statistic_config', $statisticConfigModel);
     }
 
     public function showAction()
