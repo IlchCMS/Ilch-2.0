@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,8 +11,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.4.2',
-        'icon_small' => 'fa-bullhorn',
+        'version' => '1.5.0',
+        'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -34,8 +35,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.16',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -51,14 +52,16 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_shoutbox`');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_limit';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_maxtextlength';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_maxwordlength';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_writeaccess'");
+        $this->db()->drop('shoutbox', true);
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('shoutbox_limit')
+            ->delete('shoutbox_maxtextlength')
+            ->delete('shoutbox_maxwordlength')
+            ->delete('shoutbox_writeaccess');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_shoutbox` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -70,22 +73,32 @@ class Config extends \Ilch\Config\Install
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
+                // no break
             case "1.1":
+                // no break
             case "1.2":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_shoutbox` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 // no break
             case "1.3.0":
+                // no break
             case "1.4.0":
+                // no break
             case "1.4.1":
                 // Update description
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'shoutbox' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
+            case "1.4.2":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
+                // no break
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

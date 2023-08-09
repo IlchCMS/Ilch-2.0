@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @since 2.1.43
@@ -10,35 +11,30 @@ namespace Captcha;
 
 class GoogleCaptcha
 {
-
     /**
      * The Version.
      *
      * @var int
      */
     protected $version = 3;
-
     /**
      * The Hide.
      *
      * @var bool
      */
     protected $hide = true;
-
     /**
      * The Form.
      *
      * @var string
      */
     protected $form = '';
-
     /**
      * The Key.
      *
      * @var string|null
      */
     protected $key;
-
     /**
      * The Secret.
      *
@@ -47,14 +43,14 @@ class GoogleCaptcha
     protected $secret;
 
     /**
-     * Start Google Capcha.
+     * Start Google Captcha.
      *
      * @param array|string|null $key
      * @param string|null $secret
      * @param int|null $version
-     * @return this
+     * @param bool|null $hide
      */
-    public function __construct($key = null, $secret = null, $version = null, $hide = null)
+    public function __construct($key = null, ?string $secret = null, ?int $version = null, ?bool $hide = null)
     {
         // if params were passed as array
         if (is_array($key)) {
@@ -90,6 +86,7 @@ class GoogleCaptcha
     {
         return $this->version;
     }
+
     /**
      * Sets the Version.
      *
@@ -114,6 +111,7 @@ class GoogleCaptcha
     {
         return $this->hide;
     }
+
     /**
      * Sets the Hide.
      *
@@ -123,7 +121,6 @@ class GoogleCaptcha
     public function setHide(bool $hide): GoogleCaptcha
     {
         $this->hide = $hide;
-
         return $this;
     }
 
@@ -145,7 +142,6 @@ class GoogleCaptcha
     public function setForm(string $form): GoogleCaptcha
     {
         $this->form = $form;
-
         return $this;
     }
 
@@ -154,10 +150,11 @@ class GoogleCaptcha
      *
      * @return string|null
      */
-    public function getKey()
+    public function getKey(): ?string
     {
         return $this->key;
     }
+
     /**
      * Sets the Key.
      *
@@ -167,7 +164,6 @@ class GoogleCaptcha
     public function setKey(string $key): GoogleCaptcha
     {
         $this->key = $key;
-
         return $this;
     }
 
@@ -176,7 +172,7 @@ class GoogleCaptcha
      *
      * @return string|null
      */
-    public function getSecret()
+    public function getSecret(): ?string
     {
         return $this->secret;
     }
@@ -189,27 +185,27 @@ class GoogleCaptcha
     public function setSecret(string $secret): GoogleCaptcha
     {
         $this->secret = $secret;
-
         return $this;
     }
 
     /**
-     * Get Google Capcha.
+     * Get Google Captcha.
      *
      * @param \Ilch\View $view
      * @param string $saveKey
-     * @param string $nameKey
-     * @return bool
+     * @param string|null $nameKey
+     * @return string
      */
-    public function getCaptcha(\Ilch\View $view, $saveKey = 'saveButton', $nameKey = 'grecaptcha')
+    public function getCaptcha(\Ilch\View $view, string $saveKey = 'saveButton', ?string $nameKey = 'grecaptcha'): string
     {
+        $nameKey = $nameKey ?? '';
         if (!$this->getForm()) {
-            $this->setForm('form'.$nameKey);
+            $this->setForm('form' . $nameKey);
         }
-        
+
         $str = '';
         if ($this->getVersion() === 3) {
-            $str .= '<script async src="https://www.google.com/recaptcha/api.js?render=' . $this->getKey() . '"></script>
+            $str .= '<script async src="https://www.google.com/recaptcha/api.js?render=' . urlencode($this->getKey() ?? '') . '"></script>
             <script>
                 $(\'#' . $this->getForm() . '\').submit(function(event) {
                     event.preventDefault();
@@ -246,43 +242,35 @@ class GoogleCaptcha
                 }</style>';
             }
         }
-        
+
         return $str;
     }
 
     /**
-     * Validate Google Capcha.
+     * Validate Google Captcha.
      *
      * @param string $token
      * @param string|null $action
      * @param float $score
      * @return bool
      */
-    public function validate($token, $action = null, $score = 0.5)
+    public function validate(string $token, ?string $action = null, float $score = 0.5): bool
     {
         if (!$this->getSecret()) {
             return false;
         }
-        //urlencode(
-        
-        $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $this->getSecret() . '&response=' . $token);
+
+        $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->getSecret()) . '&response=' . urlencode($token));
         $recaptcha = json_decode($recaptcha);
         if (!$recaptcha) {
             return false;
         }
 
         if ($this->getVersion() === 3) {
-            if ($recaptcha->success == true && $recaptcha->score >= $score && (($action && $recaptcha->action == $action) || !$action)) {
-                return true;
-            } else {
-                return false;
-            }
+            return ($recaptcha->success && $recaptcha->score >= $score && (($action && $recaptcha->action == $action) || !$action));
         } elseif ($this->getVersion() === 2) {
-            if ($recaptcha->success == true) {
-                return true;
-            } else {
-                return false;
-            }
+            return $recaptcha->success;
         }
+        return false;
     }
 }

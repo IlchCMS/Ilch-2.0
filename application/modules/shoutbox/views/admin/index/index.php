@@ -1,7 +1,11 @@
-<?php $userMapper = $this->get('userMapper'); ?>
+<?php
 
+/** @var \Ilch\View $this */
+
+$userMapper = $this->get('userMapper');
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('shoutbox') != ''): ?>
+<?php if ($this->get('shoutbox') != '') : ?>
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -23,16 +27,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('shoutbox') as $shoutbox): ?>
-                        <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
+                    <?php
+                    /** @var \Modules\Shoutbox\Models\Shoutbox $shoutbox */
+                    foreach ($this->get('shoutbox') as $shoutbox) : ?>
                         <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_entries', $shoutbox->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $shoutbox->getId()]) ?></td>
-                            <?php if ($shoutbox->getUid() == '0' || empty($user)): ?>
+                            <?php if ($shoutbox->getUid() == '0') : ?>
                                 <td><?=$this->escape($shoutbox->getName()) ?></td>
-                            <?php else: ?>
-                                <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
+                            <?php else : ?>
+                                <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
+                                <td><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$this->escape($user ? $user->getName() : $userMapper->getDummyUser()->getName()) ?></a></td>
                             <?php endif; ?>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
                             <td><?=$this->escape($shoutbox->getTextarea()) ?></td>
@@ -43,6 +49,6 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noEntrys') ?>
 <?php endif; ?>

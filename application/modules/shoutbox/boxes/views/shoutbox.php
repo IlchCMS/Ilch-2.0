@@ -1,71 +1,95 @@
-<script >
-$(function() {
-    var $shoutboxContainer = $('#shoutbox-container<?=$this->get('uniqid') ?>'),
-        showForm = function() {
-            $("#shoutbox-button-container<?=$this->get('uniqid') ?>").slideUp(200, function() {
-                $("#shoutbox-form-container<?=$this->get('uniqid') ?>").slideDown(400);
-            });
-        },
-        hideForm = function(afterHide) {
-            $("#shoutbox-form-container<?=$this->get('uniqid') ?>").slideUp(400, function() {
-                $("#shoutbox-button-container<?=$this->get('uniqid') ?>").slideDown(200, afterHide);
-            });
-        };
+<?php
+
+/** @var \Ilch\View $this */
 
 
-    //slideup-down
-    $shoutboxContainer.on('click', '#shoutbox-slide-down<?=$this->get('uniqid') ?>', showForm);
+$userMapper = new \Modules\User\Mappers\User();
 
-    //slideup-down reset on click out
-    $(document.body).on('mousedown', function(event) {
-        var target = $(event.target);
+$config = \Ilch\Registry::get('config');
+?>
+<script>
+    $(function() {
+        let $shoutboxContainer = $('#shoutbox-container<?=$this->get('uniqid') ?>'),
+            showForm = function() {
+                $("#shoutbox-button-container<?=$this->get('uniqid') ?>").slideUp(200, function() {
+                    $("#shoutbox-form-container<?=$this->get('uniqid') ?>").slideDown(400);
+                });
+            },
+            hideForm = function(afterHide) {
+                $("#shoutbox-form-container<?=$this->get('uniqid') ?>").slideUp(400, function() {
+                    $("#shoutbox-button-container<?=$this->get('uniqid') ?>").slideDown(200, afterHide);
+                });
+            };
 
-        if (!target.parents().addBack().is('#shoutbox-container<?=$this->get('uniqid') ?>')) {
-            hideForm();
-        }
-    });
 
-    //ajax send
-    $shoutboxContainer.on('click', 'button[type=submit]', function(ev) {
-        ev.preventDefault();
-        var $btn = $(this),
-            $form = $btn.closest('form'),
-            dataString = $form.serialize();
+        //slideup-down
+        $shoutboxContainer.on('click', '#shoutbox-slide-down<?=$this->get('uniqid') ?>', showForm);
 
-        if ($form.find('[name=shoutbox_name]').val() == '') {
-            alert(<?=json_encode($this->getTrans('missingName')) ?>);
-        } else if ($form.find('[name=shoutbox_textarea]').val() == '') {
-            alert(<?=json_encode($this->getTrans('missingMessage')) ?>);
-        } else {
+        //slideup-down reset on click out
+        $(document.body).on('mousedown', function(event) {
+            let target = $(event.target);
+
+            if (!target.parents().addBack().is('#shoutbox-container<?=$this->get('uniqid') ?>')) {
+                hideForm();
+            }
+        });
+
+        function sendRequest(dataString) {
             $.ajax({
                 type: "POST",
                 url: "<?=$this->getUrl('shoutbox/index/ajax') ?>",
                 data: dataString,
                 cache: false,
                 success: function(html) {
-                    var $htmlWithoutScript = $(html).filter('#shoutbox-container<?=$this->get('uniqid') ?>');
+                    let $htmlWithoutScript = $(html).filter('#shoutbox-container<?=$this->get('uniqid') ?>');
                     hideForm(function() {
                         $shoutboxContainer.html($htmlWithoutScript.html());
                     });
                 }
             });
         }
+
+        //ajax send
+        $shoutboxContainer.on('click', 'button[type=submit]', function(ev) {
+            ev.preventDefault();
+
+            let $btn = $(this),
+                $form = $btn.closest('form');
+
+            if ($form.find('[name=shoutbox_name]').val() === '') {
+                alert(<?=json_encode($this->getTrans('missingName')) ?>);
+            } else if ($form.find('[name=shoutbox_textarea]').val() === '') {
+                alert(<?=json_encode($this->getTrans('missingMessage')) ?>);
+            }
+
+            <?php if ($this->get('googlecaptcha') && $this->get('googlecaptcha')->getVersion() === 3) : ?>
+            grecaptcha.ready(function() {
+                grecaptcha.execute('<?=$this->get('googlecaptcha')->getKey() ?>', {action: 'saveshoutbox<?=$this->get('uniqid') ?>'}).then(function(token) {
+                    $form.prepend('<input type="hidden" name="token" value="' + token + '">');
+                    $form.prepend('<input type="hidden" name="action" value="saveshoutbox<?=$this->get('uniqid') ?>">');
+                    sendRequest($form.serialize());
+                });
+            });
+            <?php elseif ($this->get('googlecaptcha') && $this->get('googlecaptcha')->getVersion() === 2) : ?>
+            $form.prepend('<input type="hidden" name="token" value="' + grecaptcha.getResponse() + '">');
+            $form.prepend('<input type="hidden" name="action" value="saveshoutbox<?=$this->get('uniqid') ?>">');
+            sendRequest($form.serialize());
+            <?php else : ?>
+            sendRequest($form.serialize());
+            <?php endif; ?>
+        });
     });
-});
 </script>
-
-<?php $config = \Ilch\Registry::get('config'); ?>
-
 <div id="shoutbox-container<?=$this->get('uniqid') ?>">
     <div id="shoutbox-button-container<?=$this->get('uniqid') ?>" class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-12">
-                <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))): ?>
+                <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))) : ?>
                     <div class="pull-left">
                         <button class="btn" id="shoutbox-slide-down<?=$this->get('uniqid') ?>"><?=$this->getTrans('answer') ?></button>
                     </div>
                 <?php endif; ?>
-                <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
+                <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')) : ?>
                     <div class="pull-right">
                         <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
                     </div>
@@ -74,19 +98,20 @@ $(function() {
         </div>
     </div>
 
-    <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))): ?>
+    <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))) : ?>
         <div id="shoutbox-form-container<?=$this->get('uniqid') ?>" style="display: none;">
-            <form class="form-horizontal" method="post">
+            <form id="shoutboxForm_<?=$this->get('uniqid') ?>" name="shoutboxForm_<?=$this->get('uniqid') ?>" class="form-horizontal" method="post">
                 <input type="hidden" name="uniqid" value="<?=$this->get('uniqid') ?>">
                <?=$this->getTokenField() ?>
                 <div class="form-group hidden">
-                    <label class="col-lg-2 control-label">
+                    <label class="col-lg-2 control-label" for="bot">
                         <?=$this->getTrans('bot') ?>
                     </label>
                     <div class="col-lg-8">
                         <input type="text"
                                class="form-control"
                                name="bot"
+                               id="bot"
                                placeholder="Bot" />
                     </div>
                 </div>
@@ -114,12 +139,23 @@ $(function() {
                 </div>
                 <div class="form-group">
                     <div class="col-lg-12">
+                        <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
+                            <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
+                        <?php endif; ?>
                         <div class="pull-left">
-                            <button type="submit" class="btn" name="form_<?=$this->get('uniqid') ?>">
-                                <?=$this->getTrans('answer') ?>
-                            </button>
+                            <?php
+                            if ($this->get('captchaNeeded')) {
+                                if ($this->get('googlecaptcha')) {
+                                    echo $this->get('googlecaptcha')->setForm('shoutboxForm_' . $this->get('uniqid'))->getCaptcha($this, 'answer', 'shoutbox' . $this->get('uniqid'));
+                                } else {
+                                    echo $this->getSaveBar('answer', 'shoutbox' . $this->get('uniqid'));
+                                }
+                            } else {
+                                echo $this->getSaveBar('answer', 'shoutbox' . $this->get('uniqid'));
+                            }
+                            ?>
                         </div>
-                        <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
+                        <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')) : ?>
                             <div class="pull-right">
                                 <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
                             </div>
@@ -132,20 +168,21 @@ $(function() {
 
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
-            <?php if (!empty($this->get('shoutbox'))): ?>
-                <?php foreach ($this->get('shoutbox') as $shoutbox): ?>
-                    <?php $userMapper = new \Modules\User\Mappers\User() ?>
+            <?php if (!empty($this->get('shoutbox'))) : ?>
+                <?php
+                /** @var \Modules\Shoutbox\Models\Shoutbox $shoutbox */
+                foreach ($this->get('shoutbox') as $shoutbox) : ?>
                     <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
                     <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
                     <tr>
-                        <?php if ($shoutbox->getUid() == '0' || empty($user)): ?>
+                        <?php if ($shoutbox->getUid() == '0' || empty($user)) : ?>
                             <td>
                                 <b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
                                 <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
                             </td>
-                        <?php else: ?>
+                        <?php else : ?>
                             <td>
-                                <b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></b>:<br />
+                                <b><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></b>:<br />
                                 <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
                             </td>
                         <?php endif; ?>
@@ -159,7 +196,7 @@ $(function() {
                         <td><?=preg_replace('/([^\s]{' . $this->get('maxwordlength') . '})(?=[^\s])/', "$1\n", $this->escape($shoutbox->getTextarea())) ?></td>
                     </tr>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <tr>
                     <td><?=$this->getTrans('noEntrys') ?></td>
                 </tr>
