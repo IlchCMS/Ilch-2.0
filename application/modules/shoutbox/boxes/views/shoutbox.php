@@ -2,6 +2,9 @@
 
 /** @var \Ilch\View $this */
 
+
+$userMapper = new \Modules\User\Mappers\User();
+
 $config = \Ilch\Registry::get('config');
 ?>
 <script>
@@ -166,8 +169,9 @@ $config = \Ilch\Registry::get('config');
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <?php if (!empty($this->get('shoutbox'))) : ?>
-                <?php foreach ($this->get('shoutbox') as $shoutbox) : ?>
-                    <?php $userMapper = new \Modules\User\Mappers\User() ?>
+                <?php
+                /** @var \Modules\Shoutbox\Models\Shoutbox $shoutbox */
+                foreach ($this->get('shoutbox') as $shoutbox) : ?>
                     <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
                     <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
                     <tr>

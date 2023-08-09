@@ -87,7 +87,7 @@ class Config extends \Ilch\Config\Install
             case "1.3.0":
                 // no break
             case "1.4.0":
-            // no break
+                // no break
             case "1.4.1":
                 // Update description
                 foreach ($this->config['languages'] as $key => $value) {

@@ -205,7 +205,7 @@ class GoogleCaptcha
 
         $str = '';
         if ($this->getVersion() === 3) {
-            $str .= '<script async src="https://www.google.com/recaptcha/api.js?render=' . $this->getKey() . '"></script>
+            $str .= '<script async src="https://www.google.com/recaptcha/api.js?render=' . urlencode($this->getKey() ?? '') . '"></script>
             <script>
                 $(\'#' . $this->getForm() . '\').submit(function(event) {
                     event.preventDefault();
@@ -260,7 +260,7 @@ class GoogleCaptcha
             return false;
         }
 
-        $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $this->getSecret() . '&response=' . $token);
+        $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->getSecret()) . '&response=' . urlencode($token));
         $recaptcha = json_decode($recaptcha);
         if (!$recaptcha) {
             return false;
