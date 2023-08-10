@@ -10,6 +10,8 @@ return [
     'forum' => 'Forum',
     'guestbook' => 'Gästebuch',
     'jobs' => 'Jobs',
+    'kvticket' => 'Tickets',
+    'radiohoerercharts' => 'Radio Hörer Charts',
     'teams' => 'Teams',
     'user' => 'Benutzer',
     'menuConvert' => 'BBCode-Konvertierung',

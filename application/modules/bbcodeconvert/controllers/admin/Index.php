@@ -22,12 +22,14 @@ class Index extends Admin
         'forum' => ['1.33.0'],
         'guestbook' => ['1.13.0'],
         'jobs' => ['1.6.0'],
+        'kvticket' => ['1.5.0'],
+        'radiohoerercharts' => ['1.8.0'],
         'teams' => ['1.23.0'],
         'user' => ['2.1.52']
     ];
 
     private const supportedLayouts = [
-        'privatlayout' => ['1.1.0']
+        'privatlayout' => ['1.1.0', '1.1.1']
     ];
 
     // Number of items per batch (work is splitted up).
@@ -98,9 +100,7 @@ class Index extends Admin
         }
 
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
-            file_put_contents('php://stderr', print_r($layoutPath.PHP_EOL, TRUE));
             if (is_dir($layoutPath)) {
-                file_put_contents('php://stderr', print_r('is_dir true'.PHP_EOL, TRUE));
                 $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
                 $model = new LayoutModel();
@@ -198,7 +198,7 @@ class Index extends Admin
 
         switch ($key) {
             case 'contact':
-                // table: config, column: value, datatype: VARCHAR(191)
+                // table: config, column: value, datatype: TEXT
                 return 1;
             case 'events':
                 // table: events, column: text, datatype: LONGTEXT
@@ -216,6 +216,13 @@ class Index extends Admin
                 // table: jobs, column: text, datatype: MEDIUMTEXT
                 $textsMapper->table = 'jobs';
                 break;
+            case 'kvticket':
+                // table: kvticket, column: text, datatype: MEDIUMTEXT
+                $textsMapper->table = 'kvticket';
+                break;
+            case 'radiohoerercharts':
+                // table: config, column: value, datatype: VARCHAR(191)
+                return 2;
             case 'teams':
                 // table: teams_joins, column: text, datatype: LONGTEXT
                 $textsMapper->table = 'teams_joins';
@@ -255,6 +262,7 @@ class Index extends Admin
                 if (strlen($convertedText) <= self::limitText) {
                     $this->getConfig()->set('contact_welcomeMessage', $convertedText);
                 }
+
                 return ['completed' => true, 'index' => 0, 'progress' => 1];
             case 'events':
                 // table: events, column: text, datatype: LONGTEXT
@@ -332,6 +340,36 @@ class Index extends Admin
                 }
 
                 return ['completed' => false, 'index' => $index + count($texts), 'progress' => $index + count($texts)];
+            case 'kvticket':
+                // table: kvticket, column: text, datatype: MEDIUMTEXT
+                $textsMapper = new TextsMapper();
+                $textsMapper->table = 'kvticket';
+                $texts = $textsMapper->getTexts($index, self::batch);
+
+                foreach($texts as $text) {
+                    $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
+
+                    if (strlen($convertedText) <= self::limitMediumText) {
+                        $textsMapper->updateText($text['id'], $convertedText);
+                    }
+                }
+
+                if (empty($texts)) {
+                    return ['completed' => true, 'index' => $index];
+                }
+
+                return ['completed' => false, 'index' => $index + count($texts), 'progress' => $index + count($texts)];
+            case 'radiohoerercharts':
+                // table: config, column: value, datatype: TEXT
+                foreach(['radio_hoerercharts_votetext_de', 'radio_hoerercharts_votetext_en'] as $voteTextKey) {
+                    $convertedText = $this->getView()->getHtmlFromBBCode($this->getConfig()->get($voteTextKey));
+
+                    if (strlen($convertedText) <= self::limitText) {
+                        $this->getConfig()->set($voteTextKey, $convertedText);
+                    }
+                }
+
+                return ['completed' => true, 'index' => 0, 'progress' => 2];
             case 'teams':
                 // table: teams_joins, column: text, datatype: LONGTEXT
                 $textsMapper = new TextsMapper();
