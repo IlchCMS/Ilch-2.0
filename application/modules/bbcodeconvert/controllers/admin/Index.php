@@ -135,7 +135,7 @@ class Index extends Admin
             ->set('installedSupportedLayouts', $installedSupportedLayouts)
             ->set('maintenanceModeEnabled', $this->getConfig()->get('maintenance_mode'))
             ->set('lastBackup', $backupMapper->getLastBackup())
-            ->set('converted', (json_decode($this->getConfig()->get('bbcodeconvert_converted'), true)) ?? [])
+            ->set('converted', (json_decode($this->getConfig()->get('bbcodeconvert_converted') ?? '', true)) ?? [])
             ->set('getHtmlFromBBCodeExists', $getHtmlFromBBCodeExists);
     }
 
