@@ -14,6 +14,7 @@ return [
     'radiohoerercharts' => 'Radio Hörer Charts',
     'teams' => 'Teams',
     'user' => 'Benutzer',
+    'privatlayout' => 'Ilch-Privat',
     'menuConvert' => 'BBCode-Konvertierung',
     'menuOverview' => 'Übersicht',
     'menuNote' => 'Hinweis',
