@@ -98,7 +98,7 @@ $postsPerPage = $this->get('postsPerPage');
                                         <?=$this->escape($topic->getTopicTitle()) ?>
                                     </a>
                                     <?php if ($topic->getType() == '1'): ?>
-                                        <i class="fa-solid fa-table-cellsumb-tack"></i>
+                                        <i class="fa-solid fa-thumbtack"></i>
                                     <?php endif; ?>
                                     <br>
                                     <div class="small">

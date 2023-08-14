@@ -178,11 +178,11 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     ?>
                     <?php if ($this->getUser() && !in_array($this->getUser()->getId(), $votes)) : ?>
                         <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
-                            <i class="fa-solid fa-table-cellsumbs-up"></i> <?=$countOfVotes ?>
+                            <i class="fa-solid fa-thumbs-up"></i> <?=$countOfVotes ?>
                         </a>
                     <?php else: ?>
                         <button class="btn btn-sm btn-default btn-success">
-                            <i class="fa-solid fa-table-cellsumbs-up"></i> <?=$countOfVotes ?>
+                            <i class="fa-solid fa-thumbs-up"></i> <?=$countOfVotes ?>
                         </button>
                     <?php endif; ?>
                 <?php endif; ?>
