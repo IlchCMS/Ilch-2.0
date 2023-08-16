@@ -221,7 +221,7 @@ class Index extends Admin
                 $textsMapper->table = 'kvticket';
                 break;
             case 'radiohoerercharts':
-                // table: config, column: value, datatype: VARCHAR(191)
+                // table: config, column: value, datatype: TEXT
                 return 2;
             case 'teams':
                 // table: teams_joins, column: text, datatype: LONGTEXT
@@ -435,11 +435,14 @@ class Index extends Admin
                 // table: admin_layoutadvsettings, column: value, datatype: TEXT
                 $layoutAdvSettingsMapper = new LayoutAdvSettings();
 
-                $model[] = $layoutAdvSettingsMapper->getSetting('privatlayout', 'siteInfo');
-                $model[0]->setValue(nl2br($this->getView()->getHtmlFromBBCode($model[0]->getValue())));
+                $model = $layoutAdvSettingsMapper->getSetting('privatlayout', 'siteInfo');
 
-                if (strlen($model[0]->getValue()) <= self::limitText) {
-                    $layoutAdvSettingsMapper->save($model);
+                if (!empty($model)) {
+                    $model->setValue(nl2br($this->getView()->getHtmlFromBBCode($model->getValue())));
+
+                    if (strlen($model->getValue()) <= self::limitText) {
+                        $layoutAdvSettingsMapper->save([$model]);
+                    }
                 }
 
                 return ['completed' => true, 'index' => 0, 'progress' => 1];
