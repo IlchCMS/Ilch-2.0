@@ -20,7 +20,7 @@ class Shoutbox extends \Ilch\Mapper
     /**
      * Check if DB-Table exists
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      *  @since 1.5.0
      */
@@ -33,7 +33,7 @@ class Shoutbox extends \Ilch\Mapper
      * @param array $where
      * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
-     * @return ShoutboxModel[]|null
+     * @return ShoutboxModel[]|array
      *  @since 1.5.0
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['text' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
@@ -54,7 +54,7 @@ class Shoutbox extends \Ilch\Mapper
 
         $entryArray = $result->fetchRows();
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
 
         $entries = [];
@@ -121,7 +121,7 @@ class Shoutbox extends \Ilch\Mapper
     /**
      * Deletes shoutbox with given id.
      *
-     * @param integer $id
+     * @param int $id
      * @return bool
      */
     public function delete(int $id): bool
