@@ -30,12 +30,4 @@ $commentsClass = new Ilch\Comments();
 <?= $commentsClass->getComments($this->get('commentsKey'), $image, $this) ?>
 
 <script src="<?=$this->getModuleUrl('static/venobox/venobox.min.js') ?>"></script>
-<script>
-    new VenoBox({
-        selector: '.venobox',
-        numeration: true,
-        share: true,
-        navTouch: true,
-        spinner: 'pulse',
-    })
-</script>
+
