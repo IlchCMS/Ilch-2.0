@@ -32,6 +32,7 @@
 
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
+    <?php if (!empty($this->get('installedSupportedModules'))) : ?>
     <div class="table-responsive">
         <table id="sortTable" class="table table-hover table-striped">
             <colgroup>
@@ -60,7 +61,11 @@
             </tbody>
         </table>
     </div>
+    <?php else : ?>
+    <p><?=$this->getTrans('noModulesToConvert') ?></p>
+    <?php endif; ?>
 
+    <?php if (!empty($this->get('installedSupportedLayouts'))) : ?>
     <div class="table-responsive">
         <table id="sortTable" class="table table-hover table-striped">
             <colgroup>
@@ -89,6 +94,10 @@
             </tbody>
         </table>
     </div>
+    <?php else : ?>
+    <p><?=$this->getTrans('noLayoutsToConvert') ?></p>
+    <?php endif; ?>
+
 
     <div class="content_savebox">
         <input type="hidden" class="content_savebox_hidden" name="action" value="convert" />
