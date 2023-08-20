@@ -169,7 +169,7 @@ class Index extends Admin
             $converted[$value['key']] = $value['completed'];
         }
 
-        $knownConverted = (json_decode($this->getConfig()->get('bbcodeconvert_converted'), true)) ?? [];
+        $knownConverted = (json_decode($this->getConfig()->get('bbcodeconvert_converted') ?? '', true)) ?? [];
         $knownConverted = array_merge($knownConverted, $converted);
         $this->getConfig()->set('bbcodeconvert_converted', json_encode($knownConverted));
 
