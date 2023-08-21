@@ -83,20 +83,17 @@ class Items extends Mapper
      */
     public function getCountOfItemsPerCategory(array $catIds = [], int $status = 1): array
     {
+        if (empty($catIds)){
+            return [];
+        }
         $itemsArray = $this->db()->select(['cat_id', 'count' => 'COUNT(id)'])
             ->from('shop_items')
             ->where(['cat_id' => $catIds, 'status' => $status])
             ->group(['cat_id'])
             ->execute()
             ->fetchRows();
-
-        $itemCounts = [];
-
-        foreach ($itemsArray as $item) {
-            $itemCounts[$item['cat_id']] = $item['count'];
-        }
-
-        return $itemCounts;
+        
+        return array_column($itemsArray, 'count', 'cat_id');
     }
 
     /**
