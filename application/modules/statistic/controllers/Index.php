@@ -9,7 +9,7 @@ namespace Modules\Statistic\Controllers;
 
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\Admin\Mappers\Module as ModuleMapper;
-use Modules\Statistic\Models\StatisticConfig as StatisticConfigModel;
+use Modules\Statistic\Models\Statisticconfig as StatisticConfigModel;
 use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend

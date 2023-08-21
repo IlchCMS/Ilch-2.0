@@ -8,7 +8,7 @@
 namespace Modules\Statistic\Controllers\Admin;
 
 use Ilch\Validation;
-use Modules\Statistic\Models\StatisticConfig as StatisticConfigModel;
+use Modules\Statistic\Models\Statisticconfig as StatisticConfigModel;
 
 class Index extends \Ilch\Controller\Admin
 {
