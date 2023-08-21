@@ -13,7 +13,9 @@ use Modules\Gallery\Mappers\Image as ImageMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
-    public function indexAction() 
+
+
+    public function indexAction()
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
@@ -34,6 +36,18 @@ class Index extends \Ilch\Controller\Frontend
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
         $pagination = new \Ilch\Pagination();
+
+        //Venobox Instanz Optionen
+        $venoboxOptions = [
+            'numeration' => $this->getConfig()->get('venoboxNumeration'),
+            'infinigall' => $this->getConfig()->get('venoboxInfinigall'),
+            'bgcolor' => $this->getConfig()->get('venoboxBgcolor'),
+            'overlayColor' => $this->getConfig()->get('venoboxOverlayColor'),
+            'border' => $this->getConfig()->get('venoboxBorder'),
+            'titleattr' => $this->getConfig()->get('venoboxTitleattr'),
+            ];
+        $this->getView()->set('venoboxOptions', $venoboxOptions);
+
 
         $id = $this->getRequest()->getParam('id');
 
