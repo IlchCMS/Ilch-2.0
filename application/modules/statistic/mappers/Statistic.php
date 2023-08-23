@@ -10,13 +10,16 @@ namespace Modules\Statistic\Mappers;
 use Modules\Statistic\Models\Statistic as StatisticModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Article\Mappers\Article as ArticleMapper;
+use Modules\User\Models\User;
+use Ilch\Database\Exception;
 
 class Statistic extends \Ilch\Mapper
 {
     /**
      * Returns all online users.
      *
-     * @return \Modules\User\Models\User[]
+     * @return array []|User[]
+     * @throws Exception
      */
     public function getVisitsOnlineUser(): array
     {
@@ -24,15 +27,14 @@ class Statistic extends \Ilch\Mapper
         $date = new \Ilch\Date();
         $date->modify('-5 minutes');
 
-        $select = $this->db()->select(['*'])
+        $select = $this->db()->select(['date_last_activity', 'user_id'])
             ->from('visits_online')
             ->where(['date_last_activity >' => $date->format('Y-m-d H:i:s', true), 'user_id >' => 0]);
-
         $rows = $select->execute()->fetchRows();
 
         $users = [];
         foreach ($rows as $row) {
-            if ($userMapper->getUserById($row['user_id'])) {
+            if ($row['user_id']) {
                 $users[] = $userMapper->getUserById($row['user_id']);
             }
         }
@@ -75,7 +77,7 @@ class Statistic extends \Ilch\Mapper
     /**
      * Returns all users who were online.
      *
-     * @return \Modules\User\Models\User[]
+     * @return User[]
      * @since 2.1.20
      */
     public function getWhoWasOnline(): array
