@@ -6,6 +6,8 @@
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
+use Ilch\Date;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
@@ -14,7 +16,7 @@ use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
 
-class Newtopic extends \Ilch\Controller\Frontend
+class Newtopic extends Frontend
 {
     public function indexAction()
     {
@@ -36,7 +38,7 @@ class Newtopic extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('newTopicTitle'), ['controller' => 'newtopic','action' => 'index', 'id' => $id]);
 
         if ($this->getRequest()->getPost('saveNewTopic')) {
-            $postMapper = new PostMapper;
+            $postMapper = new PostMapper();
             $dateCreated = $postMapper->getDateOfLastPostByUserId($this->getUser()->getId());
             $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser()->getGroups()), explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
 
@@ -53,22 +55,18 @@ class Newtopic extends \Ilch\Controller\Frontend
 
                 if ($validation->isValid()) {
                     $topicMapper = new TopicMapper();
-                    $dateTime = new \Ilch\Date();
+                    $dateTime = new Date();
 
                     $topicModel = new ForumTopicModel();
-                    $topicModel->setTopicPrefix($this->getRequest()->getPost('topicPrefix'))
+                    $topicModel->setTopicPrefix($this->getRequest()->getPost('topicPrefix') ?? '')
                         ->setTopicTitle($this->getRequest()->getPost('topicTitle'))
-                        ->setTopicId($id)
                         ->setForumId($id)
-                        ->setCat($id)
                         ->setCreatorId($this->getUser()->getId())
-                        ->setType($this->getRequest()->getPost('fix'))
+                        ->setType($this->getRequest()->getPost('fix') ?? 0)
                         ->setDateCreated($dateTime);
-                    $topicMapper->save($topicModel);
+                    $lastid = $topicMapper->save($topicModel);
 
-                    $lastid = $topicMapper->getLastInsertId();
-
-                    $postModel = new ForumPostModel;
+                    $postModel = new ForumPostModel();
                     $postModel->setTopicId($lastid)
                         ->setUserId($this->getUser()->getId())
                         ->setText($this->getRequest()->getPost('text'))

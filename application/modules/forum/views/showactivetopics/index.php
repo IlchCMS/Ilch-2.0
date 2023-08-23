@@ -1,10 +1,19 @@
 <?php
+
+use Ilch\Date;
+use Modules\Forum\Mappers\Forum;
+use Modules\Forum\Mappers\Topic;
+use Modules\Forum\Mappers\Post;
+
 $topics = $this->get('topics');
+/** @var Forum $forumMapper */
 $forumMapper = $this->get('forumMapper');
+/** @var Topic $topicMapper */
 $topicMapper = $this->get('topicMapper');
+/** @var Post $postMapper */
 $postMapper = $this->get('postMapper');
-$date = new \Ilch\Date();
-$dateLessHours = new \Ilch\Date('-1 day');
+$date = new Date();
+$dateLessHours = new Date('-1 day');
 $groupIdsArray = $this->get('groupIdsArray');
 $adminAccess = null;
 if ($this->getUser()) {
@@ -33,18 +42,18 @@ $postsPerPage = $this->get('postsPerPage');
         </ul>
         <ul class="topiclist topics">
             <?php foreach ($topics as $topic): ?>
-                <?php $forum = $forumMapper->getForumById($topic->getTopicId()); ?>
+                <?php $forum = $forumMapper->getForumById($topic->getForumId()); ?>
                 <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
-                <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
+                <?php $lastPost = ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic->getId(), $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                 <?php if ($adminAccess || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
                     <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
                     <?php if ($lastPost->getDateCreated() < $date->format('Y-m-d H:i:s', true) && $lastPost->getDateCreated() > $dateLessHours->format('Y-m-d H:i:s', true)): ?>
                         <li class="row ilch-border ilch-bg--hover">
                             <dl class="icon 
                                 <?php if ($this->getUser()): ?>
-                                    <?php if ($topic->getStatus() == 0 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
+                                    <?php if ($topic->getStatus() == 0 && $lastPost->getRead()): ?>
                                         topic-read
-                                    <?php elseif ($topic->getStatus() == 1 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
+                                    <?php elseif ($topic->getStatus() == 1 && $lastPost->getRead()): ?>
                                         topic-read-locked
                                     <?php elseif ($topic->getStatus() == 1): ?>
                                         topic-unread-locked
@@ -93,7 +102,7 @@ $postsPerPage = $this->get('postsPerPage');
                                         <?=$this->getTrans('views') ?>:
                                     </div>
                                     <div class="pull-left text-justify">
-                                        <?=$countPosts -1 ?>
+                                        <?=$countPosts - 1 ?>
                                         <br />
                                         <?=$topic->getVisits() ?>
                                     </div>
@@ -109,7 +118,7 @@ $postsPerPage = $this->get('postsPerPage');
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                             <?=$this->escape($lastPost->getAutor()->getName()) ?>
                                         </a>
-                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => ($DESCPostorder?1:ceil($countPosts/$postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
+                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId(), 'page' => ($DESCPostorder ? 1 : ceil($countPosts/$postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
                                             <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
                                         </a>
                                         <br>

@@ -1,10 +1,12 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Plugins;
+
+use Ilch\Translator;
 
 /**
  * Does forum operations before the controller loads.
@@ -21,7 +23,7 @@ class BeforeControllerLoad
         $request = $pluginData['request'];
 
         if (($request->getModuleName() === 'forum') && $request->getParam('access')) {
-            $translator = new \Ilch\Translator();
+            $translator = new Translator();
             $_SESSION['messages'][] = ['text' => $translator->trans('noAccessForum'), 'type' => 'danger'];
         }
     }

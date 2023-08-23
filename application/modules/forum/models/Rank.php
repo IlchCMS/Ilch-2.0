@@ -1,22 +1,24 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Models;
+
+use Ilch\Model;
 
 /**
  * The rank model class.
  *
  * @package ilch
  */
-class Rank extends \Ilch\Model
+class Rank extends Model
 {
     /**
      * The id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -30,16 +32,16 @@ class Rank extends \Ilch\Model
     /**
      * The number of posts needed for this rank.
      *
-     * @var integer
+     * @var int
      */
     protected $posts;
 
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int|null $id
      */
-    public function setId($id)
+    public function setId(?int $id)
     {
         $this->id = $id;
     }
@@ -47,9 +49,9 @@ class Rank extends \Ilch\Model
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -59,7 +61,7 @@ class Rank extends \Ilch\Model
      *
      * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }
@@ -69,7 +71,7 @@ class Rank extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -77,9 +79,9 @@ class Rank extends \Ilch\Model
     /**
      * Sets the number of posts needed.
      *
-     * @param integer $posts
+     * @param int $posts
      */
-    public function setPosts($posts)
+    public function setPosts(int $posts)
     {
         $this->posts = $posts;
     }
@@ -87,9 +89,9 @@ class Rank extends \Ilch\Model
     /**
      * Gets the number of posts needed.
      *
-     * @return integer
+     * @return int
      */
-    public function getPosts()
+    public function getPosts(): int
     {
         return $this->posts;
     }

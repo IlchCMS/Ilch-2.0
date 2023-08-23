@@ -1,7 +1,14 @@
 <?php
+use Modules\Forum\Mappers\Forum;
+use Modules\Forum\Mappers\Topic;
+use Modules\Forum\Mappers\Post;
+
 $topics = $this->get('topics');
+/** @var Forum $forumMapper */
 $forumMapper = $this->get('forumMapper');
+/** @var Topic $topicMapper */
 $topicMapper = $this->get('topicMapper');
+/** @var Post $postMapper */
 $postMapper = $this->get('postMapper');
 $groupIdsArray = $this->get('groupIdsArray');
 $adminAccess = null;
@@ -31,20 +38,16 @@ $postsPerPage = $this->get('postsPerPage');
         </ul>
         <ul class="topiclist topics">
             <?php foreach ($topics as $topic): ?>
-                <?php $forum = $forumMapper->getForumById($topic->getTopicId()); ?>
+                <?php $forum = $forumMapper->getForumById($topic->getForumId()); ?>
                 <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
-                <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
+                <?php $lastPost = ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic->getId(), $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                 <?php if ($adminAccess || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
                     <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
-                    <?php if (!in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
+                    <?php if (!$lastPost->getRead()): ?>
                         <li class="row ilch-border ilch-bg--hover">
                             <dl class="icon 
                                 <?php if ($this->getUser()): ?>
-                                    <?php if ($topic->getStatus() == 0 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
-                                        topic-read
-                                    <?php elseif ($topic->getStatus() == 1 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
-                                        topic-read-locked
-                                    <?php elseif ($topic->getStatus() == 1): ?>
+                                    <?php if ($topic->getStatus() == 1): ?>
                                         topic-unread-locked
                                     <?php else: ?>
                                         topic-unread

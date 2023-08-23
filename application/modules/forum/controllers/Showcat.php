@@ -6,10 +6,11 @@
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Showcat extends \Ilch\Controller\Frontend
+class Showcat extends Frontend
 {
     public function indexAction()
     {
@@ -28,7 +29,7 @@ class Showcat extends \Ilch\Controller\Frontend
             return;
         }
 
-        $forumItems = $forumMapper->getForumItemsByParent($catId);
+        $forumItems = $forumMapper->getForumItemsByParent($catId, ($this->getUser()) ? $this->getUser()->getId() : null);
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))

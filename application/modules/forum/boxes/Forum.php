@@ -1,16 +1,17 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Boxes;
 
+use Ilch\Box;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Forum extends \Ilch\Box
+class Forum extends Box
 {
     public function render()
     {

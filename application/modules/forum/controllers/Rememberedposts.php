@@ -6,11 +6,12 @@
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
 use Ilch\Validation;
 use Modules\Forum\Mappers\Remember as RememberMapper;
 use Modules\Forum\Models\Remember as RememberModel;
 
-class Rememberedposts extends \Ilch\Controller\Frontend
+class Rememberedposts extends Frontend
 {
     public function indexAction()
     {

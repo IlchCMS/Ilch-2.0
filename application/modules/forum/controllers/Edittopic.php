@@ -6,15 +6,15 @@
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Models\ForumTopic as TopicModel;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Models\ForumPost as PostModel;
-use Ilch\Accesses;
 
-class Edittopic extends \Ilch\Controller\Frontend
+class Edittopic extends Frontend
 {
     public function indexAction()
     {
@@ -26,7 +26,6 @@ class Edittopic extends \Ilch\Controller\Frontend
         $forum = $forumMapper->getForumById($forumId);
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
-        $userId = null;
         $groupIds = [3];
 
         if ($this->getUser()) {
@@ -61,7 +60,6 @@ class Edittopic extends \Ilch\Controller\Frontend
                     $topics = $this->getRequest()->getPost('topicids');
                     foreach ($topics as $topic) {
                         $topicModel->setId($topic)
-                            ->setTopicId($this->getRequest()->getPost('edit'))
                             ->setForumId($this->getRequest()->getPost('edit'));
                         $topicMapper->save($topicModel);
 

@@ -1,21 +1,22 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Mappers;
 
+use Ilch\Mapper;
 use Modules\Forum\Models\Rank as RankModel;
 
-class Rank extends \Ilch\Mapper
+class Rank extends Mapper
 {
     /**
      * Get all ranks.
      *
      * @return RankModel[]|array
      */
-    public function getRanks()
+    public function getRanks(): array
     {
         $ranksArray = $this->db()->select('*')
             ->from('forum_ranks')
@@ -39,22 +40,26 @@ class Rank extends \Ilch\Mapper
     /**
      * Get rank by id.
      *
-     * @param integer $id
-     * @return RankModel
+     * @param int $id
+     * @return RankModel|null
      */
-    public function getRankById($id)
+    public function getRankById(int $id): ?RankModel
     {
-        $fileRow = $this->db()->select('*')
+        $rank = $this->db()->select('*')
             ->from('forum_ranks')
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
+        if (empty($rank)) {
+            return null;
+        }
+
         $rankModel = new RankModel();
 
-        $rankModel->setId($fileRow['id']);
-        $rankModel->setTitle($fileRow['title']);
-        $rankModel->setPosts($fileRow['posts']);
+        $rankModel->setId($rank['id']);
+        $rankModel->setTitle($rank['title']);
+        $rankModel->setPosts($rank['posts']);
 
         return $rankModel;
     }
@@ -62,23 +67,27 @@ class Rank extends \Ilch\Mapper
     /**
      * Get rank by posts.
      *
-     * @param integer $posts
-     * @return RankModel
+     * @param int $posts
+     * @return RankModel|null
      */
-    public function getRankByPosts($posts)
+    public function getRankByPosts(int $posts): ?RankModel
     {
-        $fileRow = $this->db()->select('*')
+        $rank = $this->db()->select('*')
             ->from('forum_ranks')
             ->where(['posts <=' => $posts])
             ->order(['posts' => 'DESC'])
             ->execute()
             ->fetchAssoc();
 
+        if (empty($rank)) {
+            return null;
+        }
+
         $rankModel = new RankModel();
 
-        $rankModel->setId($fileRow['id']);
-        $rankModel->setTitle($fileRow['title']);
-        $rankModel->setPosts($fileRow['posts']);
+        $rankModel->setId($rank['id']);
+        $rankModel->setTitle($rank['title']);
+        $rankModel->setPosts($rank['posts']);
 
         return $rankModel;
     }
@@ -105,9 +114,9 @@ class Rank extends \Ilch\Mapper
     /**
      * Deletes rank with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('forum_ranks')
             ->where(['id' => $id])

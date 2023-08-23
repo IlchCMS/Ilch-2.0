@@ -55,7 +55,7 @@ function rec($item, $obj, $readAccess, $i)
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
                         <?php if ($lastPost && $obj->getUser()): ?>
-                            <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
+                            <?php if ($lastPost->getRead()): ?>
                                 topic-read
                             <?php else: ?>
                                 topic-unread
@@ -151,7 +151,7 @@ function rec($item, $obj, $readAccess, $i)
         </ul>
         <?php if ($this->getUser()): ?>          
             <div class="pull-right">
-                <a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'markallasread']) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
+                <a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'markallasread'], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
             </div>
         <?php endif; ?>
     </div>

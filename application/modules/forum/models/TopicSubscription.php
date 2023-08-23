@@ -1,43 +1,45 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Models;
+
+use Ilch\Model;
 
 /**
  * The topic subscription model class.
  *
  * @package ilch
  */
-class TopicSubscription extends \Ilch\Model
+class TopicSubscription extends Model
 {
     /**
      * The id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * The topic id.
      *
-     * @var integer
+     * @var int
      */
     protected $topic_id;
 
     /**
      * The user id.
      *
-     * @var integer
+     * @var int
      */
     protected $user_id;
 
     /**
      * Date of last notification
      *
-     * @var integer
+     * @var string
      */
     protected $last_notification;
 
@@ -65,9 +67,9 @@ class TopicSubscription extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
@@ -75,9 +77,9 @@ class TopicSubscription extends \Ilch\Model
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -88,7 +90,7 @@ class TopicSubscription extends \Ilch\Model
      * @param int $topic_id
      * @return TopicSubscription
      */
-    public function setTopicId($topic_id)
+    public function setTopicId(int $topic_id): TopicSubscription
     {
         $this->topic_id = $topic_id;
         return $this;
@@ -99,7 +101,7 @@ class TopicSubscription extends \Ilch\Model
      *
      * @return int
      */
-    public function getTopicId()
+    public function getTopicId(): int
     {
         return $this->topic_id;
     }
@@ -110,7 +112,7 @@ class TopicSubscription extends \Ilch\Model
      * @param int $user_id
      * @return TopicSubscription
      */
-    public function setUserId($user_id)
+    public function setUserId(int $user_id): TopicSubscription
     {
         $this->user_id = $user_id;
         return $this;
@@ -121,7 +123,7 @@ class TopicSubscription extends \Ilch\Model
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->user_id;
     }
@@ -129,10 +131,10 @@ class TopicSubscription extends \Ilch\Model
     /**
      * Sets the date of the last notification.
      *
-     * @param int $last_notification
+     * @param string $last_notification
      * @return TopicSubscription
      */
-    public function setLastNotification($last_notification)
+    public function setLastNotification(string $last_notification): TopicSubscription
     {
         $this->last_notification = $last_notification;
         return $this;
@@ -141,9 +143,9 @@ class TopicSubscription extends \Ilch\Model
     /**
      * Gets the date of the last notification.
      *
-     * @return int
+     * @return string
      */
-    public function getLastNotification()
+    public function getLastNotification(): string
     {
         return $this->last_notification;
     }
@@ -154,7 +156,7 @@ class TopicSubscription extends \Ilch\Model
      * @param string $username
      * @return TopicSubscription
      */
-    public function setUsername($username)
+    public function setUsername(string $username): TopicSubscription
     {
         $this->username = $username;
         return $this;
@@ -165,7 +167,7 @@ class TopicSubscription extends \Ilch\Model
      *
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -176,7 +178,7 @@ class TopicSubscription extends \Ilch\Model
      * @param string $emailAddress
      * @return TopicSubscription
      */
-    public function setEmailAddress($emailAddress)
+    public function setEmailAddress(string $emailAddress): TopicSubscription
     {
         $this->emailAddress = $emailAddress;
         return $this;
@@ -187,7 +189,7 @@ class TopicSubscription extends \Ilch\Model
      *
      * @return string
      */
-    public function getEmailAddress()
+    public function getEmailAddress(): string
     {
         return $this->emailAddress;
     }
@@ -196,7 +198,7 @@ class TopicSubscription extends \Ilch\Model
      * @param string $lastActivity
      * @return TopicSubscription
      */
-    public function setLastActivity($lastActivity)
+    public function setLastActivity(string $lastActivity): TopicSubscription
     {
         $this->lastActivity = $lastActivity;
         return $this;
@@ -205,7 +207,7 @@ class TopicSubscription extends \Ilch\Model
     /**
      * @return string
      */
-    public function getLastActivity()
+    public function getLastActivity(): string
     {
         return $this->lastActivity;
     }

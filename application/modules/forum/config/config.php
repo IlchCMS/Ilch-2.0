@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.33.0',
+        'version' => '1.34.0',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -68,13 +68,17 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti("DROP TABLE `[prefix]_forum_topics`;
-            DROP TABLE `[prefix]_forum_groupranking`;
-            DROP TABLE `[prefix]_forum_items`;
-            DROP TABLE `[prefix]_forum_posts`;
-            DROP TABLE `[prefix]_forum_ranks`;
-            DROP TABLE `[prefix]_forum_topicsubscription`;
+        $this->db()->queryMulti("DROP TABLE `[prefix]_forum_topics_read`;
+            DROP TABLE `[prefix]_forum_read`;
+            DROP TABLE `[prefix]_forum_votes`;
             DROP TABLE `[prefix]_forum_remember`;
+            DROP TABLE `[prefix]_forum_posts`;
+            DROP TABLE `[prefix]_forum_topicsubscription`;
+            DROP TABLE `[prefix]_forum_topics`;
+            DROP TABLE `[prefix]_forum_groupranking`;
+            DROP TABLE `[prefix]_forum_accesses`;
+            DROP TABLE `[prefix]_forum_items`;
+            DROP TABLE `[prefix]_forum_ranks`;
             DROP TABLE `[prefix]_forum_reports`;
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_floodInterval';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_excludeFloodProtection';
@@ -105,15 +109,21 @@ class Config extends \Ilch\Config\Install
                 `title` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
                 `prefix` VARCHAR(255) NOT NULL,
-                `read_access` VARCHAR(255) NOT NULL,
-                `replay_access` VARCHAR(255) NOT NULL,
-                `create_access` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_accesses` (
+                `item_id` INT(11) NOT NULL,
+                `group_id` INT(11) NOT NULL,
+                `access_type` TINYINT(1) NOT NULL,
+                INDEX `FK_[prefix]_forum_items` (`item_id`) USING BTREE,
+                INDEX `FK_[prefix]_groups` (`group_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_topics` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `topic_id` INT(11) NOT NULL,
                 `topic_prefix` INT(11) NOT NULL DEFAULT 0,
                 `topic_title` VARCHAR(255) NOT NULL,
                 `visits` INT(11) NOT NULL DEFAULT 0,
@@ -128,22 +138,25 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_topicsubscription` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `topic_id` INT(11) NULL DEFAULT NULL,
-                `user_id` INT(11) NULL DEFAULT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL,
                 `last_notification` DATETIME NOT NULL,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_topicsubscription_[prefix]_forum_topics` (`topic_id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_topicsubscription_[prefix]_users` (`user_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_topicsubscription_[prefix]_forum_topics` FOREIGN KEY (`topic_id`) REFERENCES `[prefix]_forum_topics` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_forum_topicsubscription_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_posts` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `topic_id` VARCHAR(150) NOT NULL,
+                `topic_id` INT(11) NOT NULL,
                 `text` TEXT NOT NULL,
-                `visits` INT(11) NOT NULL DEFAULT 0,
-                `votes` LONGTEXT NOT NULL,
                 `user_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
                 `forum_id` INT(11) NOT NULL DEFAULT 0,
-                `read` VARCHAR(255) NOT NULL DEFAULT \'\',
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_posts_[prefix]_forum_topics` (`topic_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_topics` FOREIGN KEY (`topic_id`) REFERENCES `[prefix]_forum_topics` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_ranks` (
@@ -158,8 +171,12 @@ class Config extends \Ilch\Config\Install
                 `date` DATETIME NOT NULL,
                 `post_id` INT(11) NOT NULL,
                 `note` VARCHAR(255) NOT NULL DEFAULT \'\',
-                `user_id` INT(11) NOT NULL,
-                PRIMARY KEY (`id`)
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_remember_[prefix]_forum_posts` (`post_id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_remember_[prefix]_users` (`user_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_remember_[prefix]_forum_posts` FOREIGN KEY (`post_id`) REFERENCES `[prefix]_forum_posts` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_forum_remember_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_reports` (
@@ -172,15 +189,45 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-            INSERT INTO `[prefix]_forum_items` (`id`, `sort`, `parent_id`, `type`, `title`, `description`, `read_access`, `replay_access`, `create_access`) VALUES
-                (1, 0, 0, 0, "Meine Kategorie", "Meine erste Kategorie", "", "", ""),
-                (2, 10, 1, 1, "Mein Forum", "Mein erstes Forum", "2,3", 2, 2);
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_votes` (
+                `post_id` INT(11) NOT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                INDEX `FK_[prefix]_forum_votes_[prefix]_forum_posts` (`post_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_votes_[prefix]_forum_posts` FOREIGN KEY (`post_id`) REFERENCES `[prefix]_forum_posts` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-            INSERT INTO `[prefix]_forum_topics` (`id`, `topic_id`, `topic_title`, `creator_id`, `date_created`, `forum_id`) VALUES
-                (1, 2, "Willkommen bei Ilch!", 0, NOW(), 2);
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_topics_read` (
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                `forum_id` INT(11) NOT NULL,
+                `topic_id` INT(11) NOT NULL,
+                `datetime` DATETIME NOT NULL,
+                INDEX `FK_[prefix]_forum_topics_read_[prefix]_users` (`user_id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_topics_read_[prefix]_forum_topics` (`topic_id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_topics_read_[prefix]_forum_items` (`forum_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_topics_read_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_forum_topics_read_[prefix]_forum_topics` FOREIGN KEY (`topic_id`) REFERENCES `[prefix]_forum_topics` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_forum_topics_read_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_read` (
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                `forum_id` INT(11) NOT NULL,
+                `datetime` DATETIME NOT NULL,
+                INDEX `FK_[prefix]_forum_read_[prefix]_users` (`user_id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_read_[prefix]_forum_items` (`forum_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_read_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_forum_read_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+            INSERT INTO `[prefix]_forum_items` (`id`, `sort`, `parent_id`, `type`, `title`, `description`) VALUES
+                (1, 0, 0, 0, "Meine Kategorie", "Meine erste Kategorie"),
+                (2, 10, 1, 1, "Mein Forum", "Mein erstes Forum");
+
+            INSERT INTO `[prefix]_forum_topics` (`id`, `topic_title`, `creator_id`, `date_created`, `forum_id`) VALUES
+                (1, "Willkommen bei Ilch!", 0, NOW(), 2);
 
             INSERT INTO `[prefix]_forum_posts` (`id`, `topic_id`, `text`, `user_id`, `date_created`, `forum_id`) VALUES
-                (1, 1, "Willkommen im Ilch 2 Forum!\n\nBei Fragen oder Probleme im [url=https://www.ilch.de/forum.html]Ilch Forum[/url] melden.
+                (1, 1, "Willkommen im Ilch 2 Forum!\n\nBei Fragen oder Probleme im <a target="_blank" href="https://www.ilch.de/forum.html" rel="noopener">Ilch Forum</a> melden.
 
                         Viel Erfolg
                         Ilch", 0, NOW(), 2);
@@ -445,6 +492,264 @@ class Config extends \Ilch\Config\Install
             case "1.30.1":
             case "1.31.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-list' WHERE `key` = 'forum';");
+                // no break
+            case "1.32.0":
+            case "1.33.0":
+                // Create new table 'forum_votes' to keep track of what users voted for a post.
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_forum_votes` (
+                            `post_id` INT(11) NOT NULL,
+                            `user_id` INT(11) UNSIGNED NOT NULL,
+                            INDEX `FK_[prefix]_forum_votes_[prefix]_forum_posts` (`post_id`) USING BTREE,
+                            CONSTRAINT `FK_[prefix]_forum_votes_[prefix]_forum_posts` FOREIGN KEY (`post_id`) REFERENCES `[prefix]_forum_posts` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // Get all users that voted for each post.
+                $votesRows = $this->db()->select(['id', 'votes'])
+                    ->from(['forum_posts'])
+                    ->where(['votes !=' => ''])
+                    ->execute()
+                    ->fetchList('votes', 'id');
+
+                if (!empty($votesRows)) {
+                    // Prepare rows for inserting them in chunks later. Remove potential duplicated user ids.
+                    $rowsToImport = [];
+                    foreach ($votesRows as $postId => $votes) {
+                        $userIdsInVotes = array_unique(explode(',', $votes));
+
+                        foreach ($userIdsInVotes as $userId) {
+                            $rowsToImport[] = [$postId, $userId];
+                        }
+                    }
+
+                    // Add votes in chunks of 25 rows to the 'forum_votes' table
+                    $chunks = array_chunk($rowsToImport, 25);
+                    foreach ($chunks as $chunk) {
+                        $this->db()->insert('forum_votes')
+                            ->columns(['post_id', 'user_id'])
+                            ->values($chunk)
+                            ->execute();
+                    }
+                }
+
+                // Change type of column 'topic_id' of the table 'forum_posts' to INT from VARCHAR.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` CHANGE COLUMN `topic_id` `topic_id` INT(11) NOT NULL;');
+
+                // Create new table 'forum_accesses' to store the accesses rights for read, create and reply of a forum item.
+                $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_forum_accesses` (
+                            `item_id` INT(11) NOT NULL,
+                            `group_id` INT(11) NOT NULL,
+                            `access_type` TINYINT(1) NOT NULL,
+                            INDEX `FK_[prefix]_forum_items` (`item_id`) USING BTREE,
+                            INDEX `FK_[prefix]_groups` (`group_id`) USING BTREE,
+                            CONSTRAINT `FK_[prefix]_forum_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                            CONSTRAINT `FK_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // Get all current stored values for 'read_access', 'replay_access' and 'create_access' for each item.
+                $currentAccesses = $this->db()->select(['id', 'read_access', 'replay_access', 'create_access'])
+                    ->from('forum_items')
+                    ->execute()
+                    ->fetchRows('id');
+
+                if (!empty($currentAccesses)) {
+                    $readAccessesToImport = [];
+                    $types = ['read_access' => 0, 'replay_access' => 1, 'create_access' => 2];
+                    $columns = ['read_access', 'replay_access', 'create_access'];
+
+                    // Get all existing group ids.
+                    $existingGroupIds = $this->db()->select('id')
+                        ->from('groups')
+                        ->execute()
+                        ->fetchList();
+
+                    foreach($currentAccesses as $item_id => $accesses) {
+                        // Prepare rows for inserting them in chunks later. Remove potential duplicates and group ids of groups that no longer exist.
+                        foreach($columns as $column) {
+                            $groupIds = array_intersect(array_unique(explode(',', $accesses[$column])), $existingGroupIds);
+
+                            foreach ($groupIds as $groupId) {
+                                $readAccessesToImport[] = [$item_id, $groupId, $types[$column]];
+                            }
+                        }
+                    }
+
+                    // Add votes in chunks of 25 rows to the 'forum_accesses' table
+                    $chunks = array_chunk($readAccessesToImport, 25);
+                    foreach ($chunks as $chunk) {
+                        $this->db()->insert('forum_accesses')
+                            ->columns(['item_id', 'group_id', 'access_type'])
+                            ->values($chunk)
+                            ->execute();
+                    }
+                }
+
+                // Delete no longer needed columns 'read_access', 'replay_access' and 'create_access' of the table 'forum_items'.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_items` DROP COLUMN `read_access`, DROP COLUMN `replay_access`, DROP COLUMN `create_access`;');
+
+                // Create new tables
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_topics_read` (
+                            `user_id` INT(11) UNSIGNED NOT NULL,
+                            `forum_id` INT(11) NOT NULL,
+                            `topic_id` INT(11) NOT NULL,
+                            `datetime` DATETIME NOT NULL,
+                            INDEX `FK_[prefix]_forum_topics_read_[prefix]_users` (`user_id`) USING BTREE,
+                            INDEX `FK_[prefix]_forum_topics_read_[prefix]_forum_topics` (`topic_id`) USING BTREE,
+                            INDEX `FK_[prefix]_forum_topics_read_[prefix]_forum_items` (`forum_id`) USING BTREE,
+                            CONSTRAINT `FK_[prefix]_forum_topics_read_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                            CONSTRAINT `FK_[prefix]_forum_topics_read_[prefix]_forum_topics` FOREIGN KEY (`topic_id`) REFERENCES `[prefix]_forum_topics` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                            CONSTRAINT `FK_[prefix]_forum_topics_read_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+                        CREATE TABLE IF NOT EXISTS `[prefix]_forum_read` (
+                            `user_id` INT(11) UNSIGNED NOT NULL,
+                            `forum_id` INT(11) NOT NULL,
+                            `datetime` DATETIME NOT NULL,
+                            INDEX `FK_[prefix]_forum_read_[prefix]_users` (`user_id`) USING BTREE,
+                            INDEX `FK_[prefix]_forum_read_[prefix]_forum_items` (`forum_id`) USING BTREE,
+                            CONSTRAINT `FK_[prefix]_forum_read_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                            CONSTRAINT `FK_[prefix]_forum_read_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // Get the needed information of all posts.
+                $readPosts = $this->db()->select(['id', 'topic_id', 'date_created', 'forum_id', 'read'])
+                    ->from('forum_posts')
+                    ->order(['id' => 'DESC'])
+                    ->execute()
+                    ->fetchRows();
+
+                // Get all userIds
+                $existingUserIds = $this->db()->select('id')
+                    ->from('users')
+                    ->execute()
+                    ->fetchList();
+
+                // Find the newest read post of a topic for a user.
+                $readTopics = [];
+                $toc = [];
+                foreach ($readPosts as $post) {
+                    foreach (array_intersect(array_unique(explode(',', $post['read'])), $existingUserIds) as $userId) {
+                        // Table of content (toc) is used to check if there is already a value for the topic and user.
+                        // In this case we already have the newest read post of the topic for the user.
+                        if (!isset($toc[$post['topic_id']][$userId])) {
+                            $toc[$post['topic_id']][$userId] = true;
+                            $readTopics[] = [$userId, $post['forum_id'], $post['topic_id'], $post['date_created']];
+                        }
+                    }
+                }
+
+                // Add read topics in chunks of 25 rows to the 'forum_topics_read' table
+                $chunks = array_chunk($readTopics, 25);
+                foreach ($chunks as $chunk) {
+                    $this->db()->insert('forum_topics_read')
+                        ->columns(['user_id', 'forum_id', 'topic_id', 'datetime'])
+                        ->values($chunk)
+                        ->execute();
+                }
+
+                // Delete no longer needed column 'votes' of the table 'forum_posts'.
+                // Delete not used column 'visits' of the table 'forum_posts'.
+                // Delete no longer needed column 'read' of the table 'forum_posts'.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` DROP COLUMN `votes`, DROP COLUMN `visits`, DROP COLUMN `read`;');
+
+                // Delete wrong column 'topic_id' of the table 'forum_topics'
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` DROP COLUMN `topic_id`;');
+
+
+                // Get ids of existing topics.
+                $existingTopics = $this->db()->select('id')
+                    ->from('forum_topics')
+                    ->execute()
+                    ->fetchList();
+
+                // Add FKC for the 'topic_id' column in the 'forum_posts' table after deleting possibly orphaned posts.
+                $posts = $this->db()->select('topic_id')
+                    ->from('forum_posts')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($posts ?? [], $existingTopics ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('forum_posts')
+                        ->where(['topic_id' => $orphanedRows])
+                        ->execute();
+                }
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_topics` FOREIGN KEY (`topic_id`) REFERENCES `[prefix]_forum_topics` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+
+                // Add FKC for the 'topic_id' and 'user_id' columns in the 'forum_topicsubscription' table after deleting possibly orphaned subscriptions.
+                $subscriptions = $this->db()->select('topic_id')
+                    ->from('forum_topicsubscription')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($subscriptions ?? [], $existingTopics ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('forum_topicsubscription')
+                        ->where(['topic_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $subscriptions = $this->db()->select('user_id')
+                    ->from('forum_topicsubscription')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($subscriptions ?? [], $existingUserIds ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('forum_topicsubscription')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Change type of column 'user_id' of the table 'forum_topicsubscription' to match the column 'id' of the table 'users'.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topicsubscription` CHANGE COLUMN `user_id` `user_id` INT(11) UNSIGNED NOT NULL;');
+
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topicsubscription` ADD CONSTRAINT `FK_[prefix]_forum_topicsubscription_[prefix]_forum_topics` FOREIGN KEY (`topic_id`) REFERENCES `[prefix]_forum_topics` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topicsubscription` ADD CONSTRAINT `FK_[prefix]_forum_topicsubscription_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+
+                // Add FKC for the 'topic_id' and 'user_id' columns in the 'forum_topicsubscription' table after deleting possibly orphaned remembered posts.
+                $existingPosts = $this->db()->select('id')
+                    ->from('forum_posts')
+                    ->execute()
+                    ->fetchList();
+
+                $rememberedPosts = $this->db()->select('post_id')
+                    ->from('forum_remember')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($rememberedPosts ?? [], $existingPosts ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('forum_remember')
+                        ->where(['post_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $rememberedPostsUsers = $this->db()->select('user_id')
+                    ->from('forum_remember')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($rememberedPostsUsers ?? [], $existingUserIds ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('forum_remember')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Change type of column 'user_id' of the table 'forum_remember' to match the column 'id' of the table 'users'.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_remember` CHANGE COLUMN `user_id` `user_id` INT(11) UNSIGNED NOT NULL;');
+
+                $this->db()->query('ALTER TABLE `[prefix]_forum_remember` ADD CONSTRAINT `FK_[prefix]_forum_remember_[prefix]_forum_posts` FOREIGN KEY (`post_id`) REFERENCES `[prefix]_forum_posts` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_remember` ADD CONSTRAINT `FK_[prefix]_forum_remember_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // no break
         }
     }
 }

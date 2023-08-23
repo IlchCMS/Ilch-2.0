@@ -6,11 +6,13 @@
 
 namespace Modules\Forum\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Forum\Mappers\Forum as ForumMapper;
+use Modules\Forum\Models\ForumItem;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
 
-class Index extends \Ilch\Controller\Admin
+class Index extends Admin
 {
     public function init()
     {
@@ -55,9 +57,7 @@ class Index extends \Ilch\Controller\Admin
         $forumMapper = new ForumMapper();
         $userGroupMapper = new UserGroupMapper();
 
-        /*
-         * Saves the item tree to database.
-         */
+        // Saves the item tree to database.
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
@@ -68,7 +68,7 @@ class Index extends \Ilch\Controller\Admin
                         'type' => 'required|numeric|integer',
                         'title' => 'required',
                         'readAccess' => 'min:0',
-                        'replayAccess' => 'min:0',
+                        'replyAccess' => 'min:0',
                     ]);
                     if (!$validation->isValid()) {
                         $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
@@ -80,13 +80,11 @@ class Index extends \Ilch\Controller\Admin
 
                 $oldItems = $forumMapper->getForumItems();
 
-                /*
-                 * Deletes old entries from database.
-                 */
+                // Deletes old entries from database.
                 if (!empty($oldItems)) {
                     foreach ($oldItems as $oldItem) {
                         if (!isset($items[$oldItem->getId()])) {
-                            $forumMapper->deleteItem($oldItem);
+                            $forumMapper->deleteItem($oldItem->getId());
                         }
                     }
                 }
@@ -101,7 +99,7 @@ class Index extends \Ilch\Controller\Admin
                     }
 
                     foreach ($items as $item) {
-                        $forumItem = new \Modules\Forum\Models\ForumItem;
+                        $forumItem = new ForumItem();
 
                         if (strpos($item['id'], 'tmp_') !== false) {
                             $tmpId = str_replace('tmp_', '', $item['id']);
@@ -112,13 +110,14 @@ class Index extends \Ilch\Controller\Admin
                         $forumItem->setType($item['type']);
                         $forumItem->setTitle($item['title']);
                         $forumItem->setDesc($item['desc']);
-                        // Don't try to store these values for a categorie. This avoids storing "undefined" from JS in the database.
+                        // Don't try to store these values for a category. This avoids storing "undefined" from JS in the database.
                         if ($item['type'] != 0) {
                             $forumItem->setPrefix($item['prefix']);
                             $forumItem->setReadAccess($item['readAccess']);
-                            $forumItem->setReplayAccess($item['replayAccess']);
+                            $forumItem->setReplyAccess($item['replyAccess']);
                             $forumItem->setCreateAccess($item['createAccess']);
                         }
+
                         $newId = $forumMapper->saveItem($forumItem);
 
                         if (isset($tmpId)) {
@@ -138,7 +137,7 @@ class Index extends \Ilch\Controller\Admin
                     $sort = 0;
 
                     foreach ($sortArray as $id => $parent) {
-                        $forumItem = new \Modules\Forum\Models\ForumItem();
+                        $forumItem = new ForumItem();
                         $forumItem->setId($id);
                         $forumItem->setSort($sort);
                         $forumItem->setParentId($parent);
@@ -152,11 +151,8 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'index']);
         }
 
-        $forumItems = $forumMapper->getForumItemsByParent(0);
-        $this->getView()->set('forumItems', $forumItems);
+        $this->getView()->set('forumItems', $forumMapper->getForumItemsByParent(0));
         $this->getView()->set('forumMapper', $forumMapper);
-
-        $userGroupList = $userGroupMapper->getGroupList();
-        $this->getView()->set('userGroupList', $userGroupList);
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
     }
 }
