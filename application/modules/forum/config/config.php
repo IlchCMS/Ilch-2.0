@@ -227,7 +227,7 @@ class Config extends \Ilch\Config\Install
                 (1, "Willkommen bei Ilch!", 0, NOW(), 2);
 
             INSERT INTO `[prefix]_forum_posts` (`id`, `topic_id`, `text`, `user_id`, `date_created`, `forum_id`) VALUES
-                (1, 1, "Willkommen im Ilch 2 Forum!\n\nBei Fragen oder Probleme im <a target="_blank" href="https://www.ilch.de/forum.html" rel="noopener">Ilch Forum</a> melden.
+                (1, 1, "Willkommen im Ilch 2 Forum!\n\nBei Fragen oder Probleme im <a target=\"_blank\" href=\"https://www.ilch.de/forum.html\" rel=\"noopener\">Ilch Forum</a> melden.
 
                         Viel Erfolg
                         Ilch", 0, NOW(), 2);
