@@ -25,21 +25,45 @@ class Forum extends Mapper
      */
     public function getForumItemsByParent(int $itemId, int $userId = null): array
     {
-        $items = [];
-        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.prefix'])
-                ->from(['i' => 'forum_items'])
-                ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
-                ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
-                ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
-                ->where(['i.parent_id' => $itemId])
-                ->group(['i.id'])
-                ->order(['i.sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+        return $this->getForumItemsByParentIds([$itemId], $userId);
+    }
+
+    /**
+     * Get all forumItems by their parent ids (specified by their ids)
+     *
+     * @param int[] $itemIds An array of parent ids.
+     * @param int|null $userId
+     * @return array
+     * @throws Exception
+     */
+    public function getForumItemsByParentIds(array $itemIds, int $userId = null): array
+    {
+        $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description', 'i.prefix'])
+            ->from(['i' => 'forum_items'])
+            ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
+            ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
+            ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+            ->join(['t' => 'forum_topics'], 'i.id = t.forum_id', 'LEFT', ['topicCount' => 'COUNT(DISTINCT t.id)'])
+            ->join(['p' => 'forum_posts'], 'i.id = p.forum_id', 'LEFT', ['postCount' => 'COUNT(DISTINCT p.id)'])
+            ->where(['i.parent_id' => $itemIds], 'or')
+            ->group(['i.id'])
+            ->order(['i.sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return [];
         }
+
+        $subItemsIds = array_column($itemRows, 'id');
+        $subItems = $this->getForumItemsByParentIds($subItemsIds, $userId);
+
+        $subItemsRelation = [];
+        foreach ($subItems as $subItem) {
+            $subItemsRelation[$subItem->getParentId()][] = $subItem;
+        }
+
+        $items = [];
 
         foreach ($itemRows as $itemRow) {
             $itemModel = new ForumItem();
@@ -47,15 +71,17 @@ class Forum extends Mapper
             $itemModel->setType($itemRow['type']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
-            $itemModel->setParentId($itemId);
+            $itemModel->setParentId($itemRow['parent_id']);
             $itemModel->setPrefix($itemRow['prefix']);
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
-            $itemModel->setSubItems($this->getForumItemsByParent($itemRow['id'], $userId));
-            $itemModel->setTopics($this->getCountTopicsById($itemRow['id']));
-            $itemModel->setLastPost($this->getLastPostByForumId($itemRow['id'], $userId));
-            $itemModel->setPosts($this->getCountPostsById($itemRow['id']));
+            $itemModel->setSubItems($subItemsRelation[$itemRow['id']] ?? []);
+            $itemModel->setTopics($itemRow['topicCount']);
+            if ($itemRow['type'] == 1) {
+                $itemModel->setLastPost($this->getLastPostByForumId($itemRow['id'], $userId));
+            }
+            $itemModel->setPosts($itemRow['postCount']);
             $items[] = $itemModel;
         }
 
