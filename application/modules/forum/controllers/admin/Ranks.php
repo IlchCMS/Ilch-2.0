@@ -6,11 +6,12 @@
 
 namespace Modules\Forum\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Forum\Mappers\Rank as RankMapper;
 use Modules\Forum\Models\Rank as RankModel;
 use Ilch\Validation;
 
-class Ranks extends \Ilch\Controller\Admin
+class Ranks extends Admin
 {
     public function init()
     {
@@ -96,7 +97,7 @@ class Ranks extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'title' => 'required',
-                'posts' => 'required|numeric|integer|min:0'
+                'posts' => 'required|numeric|integer|min:0|max:2147483647'
             ]);
 
             if ($validation->isValid()) {
@@ -104,7 +105,7 @@ class Ranks extends \Ilch\Controller\Admin
                 $rankModel->setTitle($this->getRequest()->getPost('title'));
                 $rankModel->setPosts($this->getRequest()->getPost('posts'));
                 $rankMapper->save($rankModel);
-                
+
                 $this->redirect()
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'index']);
@@ -117,7 +118,7 @@ class Ranks extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat']);
         }
 
-        $this->getView()->set('rank', $rankMapper->getRankById($this->getRequest()->getParam('id')));
+        $this->getView()->set('rank', ($this->getRequest()->getParam('id')) ? $rankMapper->getRankById($this->getRequest()->getParam('id')) : null);
     }
 
     public function deleteAction()

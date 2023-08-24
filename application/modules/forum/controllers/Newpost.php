@@ -6,22 +6,26 @@
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
+use Ilch\Date;
+use Ilch\Mail;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
+use Modules\Forum\Mappers\TrackRead as TrackReadMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Ilch\Validation;
 
-class Newpost extends \Ilch\Controller\Frontend
+class Newpost extends Frontend
 {
     public function indexAction()
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
-        $postMapper = new PostMapper;
+        $postMapper = new PostMapper();
 
         $topicId = (int)$this->getRequest()->getParam('topicid');
         $forum = $forumMapper->getForumByTopicId($topicId);
@@ -96,9 +100,9 @@ class Newpost extends \Ilch\Controller\Frontend
                 ]);
 
                 if ($validation->isValid()) {
-                    $dateTime = new \Ilch\Date();
+                    $dateTime = new Date();
 
-                    $postModel = new ForumPostModel;
+                    $postModel = new ForumPostModel();
                     $postModel->setTopicId($topicId)
                         ->setUserId($this->getUser()->getId())
                         ->setText($this->getRequest()->getPost('text'))
@@ -106,9 +110,13 @@ class Newpost extends \Ilch\Controller\Frontend
                         ->setDateCreated($dateTime);
                     $postMapper->save($postModel);
 
+                    // Mark topic as read.
+                    $trackReadMapper = new TrackReadMapper();
+                    $trackReadMapper->markTopicAsRead($this->getUser()->getId(), $topicId, $forum->getId());
+
                     $postsPerPage = (empty($this->getConfig()->get('forum_postsPerPage'))) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage');
                     $countPosts = $forumMapper->getCountPostsByTopicId($topicId);
-                    $page = ($this->getConfig()->get('forum_DESCPostorder')?1:ceil($countPosts/$postsPerPage));
+                    $page = ($this->getConfig()->get('forum_DESCPostorder') ? 1 : ceil($countPosts / $postsPerPage));
 
                     // Notify subscribers
                     $topicSubscriptionMapper = new TopicSubscriptionMapper();
@@ -125,7 +133,7 @@ class Newpost extends \Ilch\Controller\Frontend
                             continue;
                         }
 
-                        $date = new \Ilch\Date(date('Y-m-d H:i:s', strtotime('-5 minutes')));
+                        $date = new Date(date('Y-m-d H:i:s', strtotime('-5 minutes')));
                         if (strtotime($subscriber->getLastActivity()) >= strtotime($date->toDb(true))) {
                             // Skip if user was active within the last 5 minutes.
                             continue;
@@ -135,7 +143,7 @@ class Newpost extends \Ilch\Controller\Frontend
 
                         $sitetitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
                         $subscriberUsername = $this->getLayout()->escape($subscriber->getUsername());
-                        $date = new \Ilch\Date();
+                        $date = new Date();
                         $mailContent = $emailsMapper->getEmail('forum', 'topic_subscription_mail', $this->getTranslator()->getLocale());
                         $layout = $_SESSION['layout'] ?? '';
                         if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/topicsubscription.php')) {
@@ -153,7 +161,7 @@ class Newpost extends \Ilch\Controller\Frontend
                             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                         ];
                         $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
-                        $mail = new \Ilch\Mail();
+                        $mail = new Mail();
                         $mail->setFromName($sitetitle)
                             ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
                             ->setToName($subscriberUsername)

@@ -6,10 +6,11 @@
 
 namespace Modules\Forum\Mappers;
 
+use Ilch\Mapper;
 use Modules\User\Models\Group as GroupModel;
 use Modules\Forum\Models\GroupRank as GroupRankModel;
 
-class GroupRanking extends \Ilch\Mapper
+class GroupRanking extends Mapper
 {
     /**
      * Get the group ranking.
@@ -17,7 +18,7 @@ class GroupRanking extends \Ilch\Mapper
      * @param array $where
      * @return GroupRankModel[]|[]
      */
-    public function getGroupRanking($where = [])
+    public function getGroupRanking(array $where = []): array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
@@ -45,10 +46,10 @@ class GroupRanking extends \Ilch\Mapper
     /**
      * Get GroupRanking by group id.
      *
-     * @param $group_id
-     * @return mixed
+     * @param int $group_id
+     * @return false|GroupRankModel
      */
-    public function getGroupRankingByGroupId($group_id)
+    public function getGroupRankingByGroupId(int $group_id)
     {
         $groupRanking = $this->getGroupRanking(['group_id' => $group_id]);
 
@@ -58,10 +59,10 @@ class GroupRanking extends \Ilch\Mapper
     /**
      * Return the highest ranked group of an array of groups.
      *
-     * @param [] $group_ids
+     * @param array $group_ids
      * @return GroupRankModel|null
      */
-    public function getHighestRankOfGroups($group_ids)
+    public function getHighestRankOfGroups(array $group_ids): ?GroupRankModel
     {
         $select = $this->db()->select('*')
             ->from('forum_groupranking');
@@ -93,7 +94,7 @@ class GroupRanking extends \Ilch\Mapper
      *
      * @return array|GroupModel[]
      */
-    public function getUserGroupsSortedByRank()
+    public function getUserGroupsSortedByRank(): array
     {
         $groupRows = $this->db()->select('*')
             ->from(['r' => 'forum_groupranking'])
@@ -120,9 +121,9 @@ class GroupRanking extends \Ilch\Mapper
     /**
      * Save group rankings.
      *
-     * @param $groups
+     * @param array $groups
      */
-    public function saveGroupRanking($groups)
+    public function saveGroupRanking(array $groups)
     {
         foreach ($groups as $rank => $group_id) {
             $groupRanking = $this->getGroupRankingByGroupId($group_id);

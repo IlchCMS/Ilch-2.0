@@ -6,10 +6,10 @@
 
 namespace Modules\Forum\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Forum\Mappers\Reports as ReportMapper;
-use Ilch\Validation;
 
-class Reports extends \Ilch\Controller\Admin
+class Reports extends Admin
 {
     public function init()
     {

@@ -6,19 +6,23 @@
 
 namespace Modules\Forum\Models;
 
-class ForumPost extends \Ilch\Model
+use Ilch\Date;
+use Ilch\Model;
+use Modules\User\Models\User;
+
+class ForumPost extends Model
 {
     /**
      * The id of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * The topic d of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $topic_id;
 
@@ -37,30 +41,9 @@ class ForumPost extends \Ilch\Model
     protected $text;
 
     /**
-     * The cat of the post.
-     *
-     * @var integer
-     */
-    protected $cat;
-
-    /**
-     * The visits of the post.
-     *
-     * @var string
-     */
-    protected $visits;
-
-    /**
-     * The votes of the post.
-     *
-     * @var string
-     */
-    protected $votes;
-
-    /**
      * The forum id of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $forum_id;
 
@@ -72,30 +55,9 @@ class ForumPost extends \Ilch\Model
     protected $read;
 
     /**
-     * The page of the post.
-     *
-     * @var string
-     */
-    protected $page;
-
-    /**
-     * The avatar of the post.
-     *
-     * @var string
-     */
-    protected $avatar;
-
-    /**
-     * The imageUrl of the post.
-     *
-     * @var string
-     */
-    protected $signature;
-
-    /**
      * The user id of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $user_id;
 
@@ -109,7 +71,7 @@ class ForumPost extends \Ilch\Model
     /**
      * The autor of the post.
      *
-     * @var string
+     * @var User
      */
     protected $autor;
 
@@ -121,23 +83,63 @@ class ForumPost extends \Ilch\Model
     protected $autorallpost;
 
     /**
-      * Gets the id of the post.
-      *
-      * @return integer
-      */
-    public function getId()
+     * Count of votes.
+     *
+     * @var int
+     */
+    protected $countOfVotes;
+
+    /**
+     * User has voted for this post?
+     *
+     * @var bool
+     */
+    protected $userHasVoted;
+
+    /**
+     * Gets the id of the post.
+     *
+     * @return int|null
+     */
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
+     * Sets the id of the post.
+     *
+     * @param int $id
+     * @return $this
+     */
+    public function setId(int $id): ForumPost
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Gets the topic id of the post.
      *
-     * @return string
+     * @return int
      */
-    public function getTopicId()
+    public function getTopicId(): int
     {
         return $this->topic_id;
+    }
+
+    /**
+     * Sets the topic id of the post.
+     *
+     * @param int $topic_id
+     * @return $this
+     */
+    public function setTopicId(int $topic_id): ForumPost
+    {
+        $this->topic_id = $topic_id;
+
+        return $this;
     }
 
     /**
@@ -145,155 +147,9 @@ class ForumPost extends \Ilch\Model
      *
      * @return string
      */
-    public function getRead()
+    public function getRead(): string
     {
         return $this->read;
-    }
-
-    /**
-     * Gets the title of the post.
-     *
-     * @return string
-     */
-    public function getTopicTitle()
-    {
-        return $this->topic_title;
-    }
-
-    /**
-     * Gets the file text of the post.
-     *
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * Gets the cat of the post.
-     *
-     * @return string
-     */
-    public function getCat()
-    {
-        return $this->cat;
-    }
-
-    /**
-     * Gets the visits of the post.
-     *
-     * @return string
-     */
-    public function getVisits()
-    {
-        return $this->visits;
-    }
-
-    /**
-     * Gets the votes of the post.
-     *
-     * @return string
-     */
-    public function getVotes()
-    {
-        return $this->votes;
-    }
-
-    /**
-     * Gets the forum id of the post.
-     *
-     * @return string
-     */
-    public function getForumId()
-    {
-        return $this->forum_id;
-    }
-
-    /**
-     * Gets the user id of the post.
-     *
-     * @return integer
-     */
-    public function getUserId()
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * Gets the avatar of the post.
-     *
-     * @return string
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * Gets the signature of the post.
-     *
-     * @return string
-     */
-    public function getSignature()
-    {
-        return $this->signature;
-    }
-
-    /**
-     * Returns the date created \Ilch\Date of the post.
-     *
-     * @return \Ilch\Date
-     */
-    public function getDateCreated()
-    {
-        return $this->date_created;
-    }
-
-    /**
-     * Returns the autor of the post.
-     *
-     * @return string
-     */
-    public function getAutor()
-    {
-        return $this->autor;
-    }
-
-    /**
-     * Returns the autor all of the post.
-     *
-     * @return string
-     */
-    public function getAutorAllPost()
-    {
-        return $this->autorallpost;
-    }
-
-    /**
-     * Sets the id of the post.
-     *
-     * @param integer $id
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->id = (int) $id;
-
-        return $this;
-    }
-
-    /**
-     * Sets the topic id of the post.
-     *
-     * @param string $topic_id
-     * @return $this
-     */
-    public function setTopicId($topic_id)
-    {
-        $this->topic_id = (string) $topic_id;
-
-        return $this;
     }
 
     /**
@@ -302,11 +158,21 @@ class ForumPost extends \Ilch\Model
      * @param string $read
      * @return $this
      */
-    public function setRead($read)
+    public function setRead(string $read): ForumPost
     {
         $this->read = $read;
 
         return $this;
+    }
+
+    /**
+     * Gets the title of the post.
+     *
+     * @return string
+     */
+    public function getTopicTitle(): string
+    {
+        return $this->topic_title;
     }
 
     /**
@@ -315,11 +181,21 @@ class ForumPost extends \Ilch\Model
      * @param string $topicTitle
      * @return $this
      */
-    public function setTopicTitle($topicTitle)
+    public function setTopicTitle(string $topicTitle): ForumPost
     {
-        $this->topic_title = (string) $topicTitle;
+        $this->topic_title = $topicTitle;
 
         return $this;
+    }
+
+    /**
+     * Gets the text of the post.
+     *
+     * @return string
+     */
+    public function getText(): string
+    {
+        return $this->text;
     }
 
     /**
@@ -328,50 +204,21 @@ class ForumPost extends \Ilch\Model
      * @param string $text
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): ForumPost
     {
-        $this->text = (string) $text;
+        $this->text = $text;
 
         return $this;
     }
 
     /**
-     * Sets the cat of the post.
+     * Gets the forum id of the post.
      *
-     * @param string $cat
-     * @return $this
+     * @return int
      */
-    public function setCat($cat)
+    public function getForumId(): int
     {
-        $this->cat = (string)$cat;
-
-        return $this;
-    }
-
-    /**
-     * Sets the visits of the post.
-     *
-     * @param string $visits
-     * @return $this
-     */
-    public function setVisits($visits)
-    {
-        $this->visits = (string) $visits;
-
-        return $this;
-    }
-
-    /**
-     * Sets the votes of the post.
-     *
-     * @param string $votes
-     * @return $this
-     */
-    public function setVotes($votes)
-    {
-        $this->votes = $votes;
-
-        return $this;
+        return $this->forum_id;
     }
 
     /**
@@ -380,11 +227,21 @@ class ForumPost extends \Ilch\Model
      * @param int $forumId
      * @return $this
      */
-    public function setForumId($forumId)
+    public function setForumId(int $forumId): ForumPost
     {
-        $this->forum_id = (int) $forumId;
+        $this->forum_id = $forumId;
 
         return $this;
+    }
+
+    /**
+     * Gets the user id of the post.
+     *
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->user_id;
     }
 
     /**
@@ -393,46 +250,30 @@ class ForumPost extends \Ilch\Model
      * @param int $userId
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): ForumPost
     {
-        $this->user_id = (int) $userId;
+        $this->user_id = $userId;
 
         return $this;
     }
 
     /**
-     * Sets the avatar of the post.
+     * Returns the date created \Ilch\Date of the post.
      *
-     * @param string $avatar
-     * @return $this
+     * @return string
      */
-    public function setAvatar($avatar)
+    public function getDateCreated(): string
     {
-        $this->avatar = (string) $avatar;
-
-        return $this;
-    }
-
-    /**
-     * Sets the signature of the post.
-     *
-     * @param string $signature
-     * @return $this
-     */
-    public function setSignature($signature)
-    {
-        $this->signature = (string) $signature;
-
-        return $this;
+        return $this->date_created;
     }
 
     /**
      * Saves the date created \Ilch\Date of the post.
      *
-     * @param \Ilch\Date $dateCreated
+     * @param Date|string $dateCreated
      * @return $this
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated($dateCreated): ForumPost
     {
         $this->date_created = $dateCreated;
 
@@ -440,16 +281,36 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
+     * Returns the autor of the post.
+     *
+     * @return User
+     */
+    public function getAutor(): User
+    {
+        return $this->autor;
+    }
+
+    /**
      * Saves the $autor of the post.
      *
-     * @param $autor
+     * @param User $autor
      * @return $this
      */
-    public function setAutor($autor)
+    public function setAutor(User $autor): ForumPost
     {
         $this->autor = $autor;
 
         return $this;
+    }
+
+    /**
+     * Returns the autor all of the post.
+     *
+     * @return string|null
+     */
+    public function getAutorAllPost(): ?string
+    {
+        return $this->autorallpost;
     }
 
     /**
@@ -458,10 +319,56 @@ class ForumPost extends \Ilch\Model
      * @param $autorAllPost
      * @return $this
      */
-    public function setAutorAllPost($autorAllPost)
+    public function setAutorAllPost($autorAllPost): ForumPost
     {
         $this->autorallpost = $autorAllPost;
 
+        return $this;
+    }
+
+    /**
+     * Get count of votes.
+     *
+     * @return int
+     */
+    public function getCountOfVotes(): int
+    {
+        return $this->countOfVotes;
+    }
+
+
+    /**
+     * Set count of votes.
+     *
+     * @param int $count
+     * @return ForumPost
+     */
+    public function setCountOfVotes(int $count): ForumPost
+    {
+        $this->countOfVotes = $count;
+
+        return $this;
+    }
+
+    /**
+     * User has voted for this post?
+     *
+     * @return bool
+     */
+    public function isUserHasVoted(): bool
+    {
+        return $this->userHasVoted;
+    }
+
+    /**
+     * Set if the user has voted for the post.
+     *
+     * @param bool $userHasVoted
+     * @return ForumPost
+     */
+    public function setUserHasVoted(bool $userHasVoted): ForumPost
+    {
+        $this->userHasVoted = $userHasVoted;
         return $this;
     }
 }

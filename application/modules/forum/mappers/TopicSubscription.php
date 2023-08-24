@@ -1,14 +1,16 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Mappers;
 
+use Ilch\Date;
+use Ilch\Mapper;
 use Modules\Forum\Models\TopicSubscription as TopicSubscriptionModel;
 
-class TopicSubscription extends \Ilch\Mapper
+class TopicSubscription extends Mapper
 {
 
     /**
@@ -16,9 +18,9 @@ class TopicSubscription extends \Ilch\Mapper
      * Call this when you need to know who should get a notification.
      *
      * @param int $topic_id
-     * @return array
+     * @return array|TopicSubscriptionModel[]
      */
-    public function getSubscriptionsForTopic($topic_id)
+    public function getSubscriptionsForTopic(int $topic_id): array
     {
         $subscriptionRows = $this->db()->select()
             ->fields(['f.id', 'f.topic_id', 'f.user_id', 'f.last_notification'])
@@ -55,7 +57,7 @@ class TopicSubscription extends \Ilch\Mapper
      * @param int $topic_id
      * @param int $user_id
      */
-    public function addSubscription($topic_id, $user_id)
+    public function addSubscription(int $topic_id, int $user_id)
     {
         $this->db()->insert('forum_topicsubscription')
             ->values(['topic_id' => $topic_id, 'user_id' => $user_id])
@@ -68,9 +70,9 @@ class TopicSubscription extends \Ilch\Mapper
      * @param int $topic_id
      * @param int $user_id
      */
-    public function updateLastNotification($topic_id, $user_id)
+    public function updateLastNotification(int $topic_id, int $user_id)
     {
-        $date = new \Ilch\Date();
+        $date = new Date();
 
         $this->db()->update('forum_topicsubscription')
             ->values(['last_notification' => $date->format('Y-m-d H:i:s', true)])
@@ -85,7 +87,7 @@ class TopicSubscription extends \Ilch\Mapper
      * @param int $user_id
      * @return bool
      */
-    public function isSubscribedToTopic($topic_id, $user_id)
+    public function isSubscribedToTopic(int $topic_id, int $user_id): bool
     {
         $subscriptionRow = $this->db()->select('*')
             ->from('forum_topicsubscription')
@@ -106,46 +108,10 @@ class TopicSubscription extends \Ilch\Mapper
      * @param int $topic_id
      * @param int $user_id
      */
-    public function deleteSubscription($topic_id, $user_id)
+    public function deleteSubscription(int $topic_id, int $user_id)
     {
         $this->db()->delete('forum_topicsubscription')
             ->where(['topic_id' => $topic_id, 'user_id' => $user_id])
             ->execute();
-    }
-
-    /**
-     * Delete all subscriptions of a user.
-     * Call this when the user gets deleted.
-     *
-     * @param int $user_id
-     */
-    public function deleteAllSubscriptionsOfUser($user_id)
-    {
-        $this->db()->delete('forum_topicsubscription')
-            ->where(['user_id' => $user_id])
-            ->execute();
-    }
-
-    /**
-     * Delete all subscriptions for a topic.
-     * Call this when the topic gets deleted.
-     *
-     * @param int $topic_id
-     */
-    public function deleteAllSubscriptionsForTopic($topic_id)
-    {
-        $this->db()->delete('forum_topicsubscription')
-            ->where(['topic_id' => $topic_id])
-            ->execute();
-    }
-
-    /**
-     * Delete all subscriptions.
-     * You might call this when the feature gets disabled by an administrator.
-     *
-     */
-    public function deleteAllSubscriptions()
-    {
-        $this->db()->truncate('[prefix]_forum_topicsubscription');
     }
 }

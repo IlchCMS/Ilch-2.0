@@ -6,40 +6,42 @@
 
 namespace Modules\Forum\Models;
 
+use Ilch\Model;
+
 /**
  * The Downloads item model class.
  *
  * @package ilch
  */
-class ForumStatistics extends \Ilch\Model
+class ForumStatistics extends Model
 {
     /**
      * Id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $countPosts;
 
     /**
      * Id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $countTopics;
 
     /**
      * Id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $countUsers;
 
     /**
      * Sets the id.
      *
-     * @param integer $countPosts
+     * @param int $countPosts
      */
-    public function setCountPosts($countPosts)
+    public function setCountPosts(int $countPosts)
     {
         $this->countPosts = $countPosts;
     }
@@ -47,9 +49,9 @@ class ForumStatistics extends \Ilch\Model
     /**
      * Gets the sort.
      *
-     * @return integer
+     * @return int
      */
-    public function getCountPosts()
+    public function getCountPosts(): int
     {
         return $this->countPosts;
     }
@@ -57,9 +59,9 @@ class ForumStatistics extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $countTopics
+     * @param int $countTopics
      */
-    public function setCountTopics($countTopics)
+    public function setCountTopics(int $countTopics)
     {
         $this->countTopics = $countTopics;
     }
@@ -67,18 +69,18 @@ class ForumStatistics extends \Ilch\Model
     /**
      * Gets the sort.
      *
-     * @return integer
+     * @return int
      */
-    public function getCountTopics()
+    public function getCountTopics(): int
     {
         return $this->countTopics;
     }
     /**
      * Sets the id.
      *
-     * @param integer $countUsers
+     * @param int $countUsers
      */
-    public function setCountUsers($countUsers)
+    public function setCountUsers(int $countUsers)
     {
         $this->countUsers = $countUsers;
     }
@@ -86,9 +88,9 @@ class ForumStatistics extends \Ilch\Model
     /**
      * Gets the sort.
      *
-     * @return integer
+     * @return int
      */
-    public function getCountUsers()
+    public function getCountUsers(): int
     {
         return $this->countUsers;
     }

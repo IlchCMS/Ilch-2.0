@@ -1,42 +1,22 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Mappers;
 
+use Ilch\Database\Exception;
+use Ilch\Mapper;
 use Modules\Forum\Models\ForumStatistics as ForumStatisticsModel;
 
-class ForumStatistics extends \Ilch\Mapper
+class ForumStatistics extends Mapper
 {
-    public function getForumStatisticsTopics()
-    {
-        $sql = 'SELECT COUNT(id)
-                FROM [prefix]_forum_topics';
-        $topics = $this->db()->queryCell($sql);
-
-        if (empty($topics)) {
-            return '0';
-        }
-
-        return $topics;
-    }
-
-    public function getForumStatisticsPosts()
-    {
-        $sql = 'SELECT COUNT(id)
-                FROM [prefix]_forum_posts';
-        $topics = $this->db()->queryCell($sql);
-
-        if (empty($topics)) {
-            return '0';
-        }
-
-        return $topics;
-    }
-
-    public function getForumStatistics()
+    /**
+     * @return ForumStatisticsModel
+     * @throws Exception
+     */
+    public function getForumStatistics(): ForumStatisticsModel
     {
         $sql = 'SELECT
                     (
@@ -52,12 +32,12 @@ class ForumStatistics extends \Ilch\Mapper
                         FROM [prefix]_users
                     )AS uid
                 ';
-        $fileRow = $this->db()->queryRow($sql);
+        $statisticsRow = $this->db()->queryRow($sql);
 
         $entryModel = new ForumStatisticsModel();
-        $entryModel->setCountPosts($fileRow['pid']);
-        $entryModel->setCountTopics($fileRow['tid']);
-        $entryModel->setCountUsers($fileRow['uid']);
+        $entryModel->setCountPosts($statisticsRow['pid']);
+        $entryModel->setCountTopics($statisticsRow['tid']);
+        $entryModel->setCountUsers($statisticsRow['uid']);
 
         return $entryModel;
     }

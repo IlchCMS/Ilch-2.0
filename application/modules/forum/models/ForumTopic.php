@@ -6,33 +6,23 @@
 
 namespace Modules\Forum\Models;
 
-class ForumTopic extends \Ilch\Model
+use Ilch\Date;
+use Ilch\Model;
+use Modules\User\Models\User;
+
+class ForumTopic extends Model
 {
     /**
      * The id of the topic.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
-     * The last insert id of the topic.
-     *
-     * @var integer
-     */
-    protected $last_insert_id;
-
-    /**
-     * The topic id of the topic.
-     *
-     * @var string
-     */
-    protected $topic_id;
-
-    /**
      * The Prefix of the topic.
      *
-     * @var integer
+     * @var string
      */
     protected $topic_prefix;
 
@@ -46,63 +36,35 @@ class ForumTopic extends \Ilch\Model
     /**
      * The author of the topic.
      *
-     * @var string
+     * @var User
      */
     protected $author;
 
     /**
-     * The image of the topic.
-     *
-     * @var string
-     */
-    protected $topic_image;
-
-    /**
-     * The cat of the topic.
-     *
-     * @var string
-     */
-    protected $cat;
-
-    /**
      * The visits of the topic.
      *
-     * @var string
+     * @var int
      */
     protected $visits;
 
     /**
      * The forum id of the topic.
      *
-     * @var string
+     * @var int
      */
     protected $forum_id;
 
     /**
-     * The url of the topic.
-     *
-     * @var string
-     */
-    protected $topic_url;
-
-    /**
      * The type of the topic.
      *
-     * @var string
+     * @var int
      */
     protected $type;
 
     /**
-     * The read of the topic.
-     *
-     * @var string
-     */
-    protected $read;
-
-    /**
      * The creator id of the topic.
      *
-     * @var string
+     * @var int
      */
     protected $creator_id;
 
@@ -116,56 +78,26 @@ class ForumTopic extends \Ilch\Model
     /**
      * The status of the topic.
      *
-     * @var integer
+     * @var int
      */
     protected $status;
 
     /**
       * Gets the id of the topic.
       *
-      * @return integer
+      * @return int|null
       */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * Gets the last insert id of the topic.
-     *
-     * @return integer
-     */
-    public function getLastInsertId()
-    {
-        return $this->last_insert_id;
-    }
-
-    /**
-     * Gets the id of the topic.
-     *
-     * @return string
-     */
-    public function getTopicId()
-    {
-        return $this->topic_id;
-    }
-
-    /**
-     * Gets the thumb of the topic.
-     *
-     * @return string
-     */
-    public function getTopicThumb()
-    {
-        return $this->topicThumb;
-    }
-
-    /**
      * Gets the prefix of the topic.
      *
-     * @return integer
+     * @return string
      */
-    public function getTopicPrefix()
+    public function getTopicPrefix(): string
     {
         return $this->topic_prefix;
     }
@@ -175,7 +107,7 @@ class ForumTopic extends \Ilch\Model
      *
      * @return string
      */
-    public function getTopicTitle()
+    public function getTopicTitle(): string
     {
         return $this->topic_title;
     }
@@ -183,39 +115,19 @@ class ForumTopic extends \Ilch\Model
     /**
      * Gets the author of the topic.
      *
-     * @return string
+     * @return User
      */
-    public function getAuthor()
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
     /**
-     * Gets the image of the topic.
-     *
-     * @return string
-     */
-    public function getTopicImage()
-    {
-        return $this->topic_image;
-    }
-
-    /**
-     * Gets the cat of the topic.
-     *
-     * @return string
-     */
-    public function getCat()
-    {
-        return $this->cat;
-    }
-
-    /**
      * Gets the visits of the topic.
      *
-     * @return string
+     * @return int
      */
-    public function getVisits()
+    public function getVisits(): int
     {
         return $this->visits;
     }
@@ -223,29 +135,19 @@ class ForumTopic extends \Ilch\Model
     /**
      * Gets the visits of the topic.
      *
-     * @return string
+     * @return int
      */
-    public function getForumId()
+    public function getForumId(): int
     {
         return $this->forum_id;
     }
 
     /**
-     * Gets the FileUrl of the topic.
-     *
-     * @return string
-     */
-    public function getTopicUrl()
-    {
-        return $this->topic_url;
-    }
-
-    /**
      * Gets the id of the topic.
      *
-     * @return integer
+     * @return int
      */
-    public function getCreatorId()
+    public function getCreatorId(): int
     {
         return $this->creator_id;
     }
@@ -255,27 +157,17 @@ class ForumTopic extends \Ilch\Model
      *
      * @return int
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }
 
     /**
-     * Gets the read of the topic.
+     * Returns the date_created \Ilch\Date of the topic.
      *
      * @return string
      */
-    public function getRead()
-    {
-        return $this->read;
-    }
-
-    /**
-     * Returns the date_created \Ilch\Date of the topic.
-     *
-     * @return \Ilch\Date
-     */
-    public function getDateCreated()
+    public function getDateCreated(): string
     {
         return $this->date_created;
     }
@@ -283,51 +175,12 @@ class ForumTopic extends \Ilch\Model
     /**
      * Sets the id of the topic.
      *
-     * @param integer $id
+     * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): ForumTopic
     {
-        $this->id = (int)$id;
-
-        return $this;
-    }
-
-    /**
-     * Sets the last insert id of the topic.
-     *
-     * @param int $lastInsertId
-     * @return $this
-     */
-    public function setLastInsertId($lastInsertId)
-    {
-        $this->last_insert_id = (int) $lastInsertId;
-
-        return $this;
-    }
-
-    /**
-     * Sets the id of the topic.
-     *
-     * @param string $topic_id
-     * @return $this
-     */
-    public function setTopicId($topic_id)
-    {
-        $this->topic_id = (string) $topic_id;
-
-        return $this;
-    }
-
-    /**
-     * Sets the thumb of the topic.
-     *
-     * @param string $topicThumb
-     * @return $this
-     */
-    public function setTopicThumb($topicThumb)
-    {
-        $this->topicthumb = (string) $topicThumb;
+        $this->id = $id;
 
         return $this;
     }
@@ -335,12 +188,12 @@ class ForumTopic extends \Ilch\Model
     /**
      * Sets the prefix of the topic.
      *
-     * @param int $topicPrefix
+     * @param string $topicPrefix
      * @return $this
      */
-    public function setTopicPrefix($topicPrefix)
+    public function setTopicPrefix(string $topicPrefix): ForumTopic
     {
-        $this->topic_prefix = (int) $topicPrefix;
+        $this->topic_prefix = $topicPrefix;
 
         return $this;
     }
@@ -351,9 +204,9 @@ class ForumTopic extends \Ilch\Model
      * @param string $topicTitle
      * @return $this
      */
-    public function setTopicTitle($topicTitle)
+    public function setTopicTitle(string $topicTitle): ForumTopic
     {
-        $this->topic_title = (string) $topicTitle;
+        $this->topic_title = $topicTitle;
 
         return $this;
     }
@@ -361,10 +214,10 @@ class ForumTopic extends \Ilch\Model
     /**
      * Sets the author of the topic.
      *
-     * @param string $author
+     * @param User $author
      * @return $this
      */
-    public function setAuthor($author)
+    public function setAuthor(User $author): ForumTopic
     {
         $this->author = $author;
 
@@ -372,40 +225,14 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Sets the image of the topic.
-     *
-     * @param string $topicImage
-     * @return $this
-     */
-    public function setTopicImage($topicImage)
-    {
-        $this->topic_image = (string) $topicImage;
-
-        return $this;
-    }
-
-    /**
-     * Sets the cat of the topic.
-     *
-     * @param string $cat
-     * @return $this
-     */
-    public function setCat($cat)
-    {
-        $this->cat = (string) $cat;
-
-        return $this;
-    }
-
-    /**
      * Sets the visits of the topic.
      *
-     * @param string $visits
+     * @param int $visits
      * @return $this
      */
-    public function setVisits($visits)
+    public function setVisits(int $visits): ForumTopic
     {
-        $this->visits = (string) $visits;
+        $this->visits = $visits;
 
         return $this;
     }
@@ -416,22 +243,9 @@ class ForumTopic extends \Ilch\Model
      * @param int $forumId
      * @return $this
      */
-    public function setForumId($forumId)
+    public function setForumId(int $forumId): ForumTopic
     {
-        $this->forum_id = (int) $forumId;
-
-        return $this;
-    }
-
-    /**
-     * Sets the url of the topic.
-     *
-     * @param string $topicUrl
-     * @return $this
-     */
-    public function setTopicUrl($topicUrl)
-    {
-        $this->topic_url = (string) $topicUrl;
+        $this->forum_id = $forumId;
 
         return $this;
     }
@@ -442,9 +256,9 @@ class ForumTopic extends \Ilch\Model
      * @param int $creatorId
      * @return $this
      */
-    public function setCreatorId($creatorId)
+    public function setCreatorId(int $creatorId): ForumTopic
     {
-        $this->creator_id = (int) $creatorId;
+        $this->creator_id = $creatorId;
 
         return $this;
     }
@@ -455,22 +269,9 @@ class ForumTopic extends \Ilch\Model
      * @param int $type
      * @return $this
      */
-    public function setType($type)
+    public function setType(int $type): ForumTopic
     {
-        $this->type = (int) $type;
-
-        return $this;
-    }
-
-    /**
-     * Sets the read of the topic.
-     *
-     * @param string $read
-     * @return $this
-     */
-    public function setRead($read)
-    {
-        $this->read = (string) $read;
+        $this->type = $type;
 
         return $this;
     }
@@ -478,10 +279,10 @@ class ForumTopic extends \Ilch\Model
     /**
      * Saves the date_created \Ilch\Date of the topic.
      *
-     * @param \Ilch\Date $dateCreated
+     * @param Date|string $dateCreated
      * @return $this
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated($dateCreated): ForumTopic
     {
         $this->date_created = $dateCreated;
 
@@ -493,7 +294,7 @@ class ForumTopic extends \Ilch\Model
      *
      * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -504,9 +305,9 @@ class ForumTopic extends \Ilch\Model
      * @param int $status
      * @return $this
      */
-    public function setStatus($status)
+    public function setStatus(int $status): ForumTopic
     {
-        $this->status = (int) $status;
+        $this->status = $status;
 
         return $this;
     }

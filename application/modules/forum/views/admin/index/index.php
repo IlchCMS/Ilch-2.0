@@ -1,8 +1,11 @@
 <?php
+
+use Modules\Forum\Models\ForumItem;
+
 $forumMapper = $this->get('forumMapper');
 $forumItems = $this->get('forumItems');
 
-function rec($item, $forumMapper, $obj)
+function rec(ForumItem $item, $forumMapper, $obj)
 {
     $subItems = $forumMapper->getforumItemsByParent($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
@@ -19,7 +22,7 @@ function rec($item, $forumMapper, $obj)
             <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
             <input type="hidden" class="hidden_prefix" name="items['.$item->getId().'][prefix]" value="'.$item->getPrefix().'" />
             <input type="hidden" class="hidden_read_access" name="items['.$item->getId().'][readAccess]" value="'.$item->getReadAccess().'" />
-            <input type="hidden" class="hidden_replay_access" name="items['.$item->getId().'][replayAccess]" value="'.$item->getReplayAccess().'" />
+            <input type="hidden" class="hidden_reply_access" name="items['.$item->getId().'][replyAccess]" value="'.$item->getReplyAccess().'" />
             <input type="hidden" class="hidden_create_access" name="items['.$item->getId().'][createAccess]" value="'.$item->getCreateAccess().'" />
             <span></span>
         </span>
@@ -170,8 +173,8 @@ $(document).ready (
                         <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
-                        <div class="form-group"><label for="assignedGroupsReplay" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
-                        <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsReplay" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
+                        <div class="form-group"><label for="assignedGroupsReply" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
+                        <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsReply" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
@@ -198,7 +201,7 @@ $(document).ready (
                     });
                 });
                 $('#assignedGroupsRead').chosen();
-                $('#assignedGroupsReplay').chosen();
+                $('#assignedGroupsReply').chosen();
                 $('#assignedGroupsCreate').chosen();
             }
         });
@@ -237,7 +240,7 @@ $(document).ready (
                 +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
                 +'<input type="hidden" class="hidden_prefix" name="items[tmp_'+itemId+'][prefix]" value="'+$('#prefix').val()+'" />'
                 +'<input type="hidden" class="hidden_read_access" name="items[tmp_'+itemId+'][readAccess]" value="'+$('#assignedGroupsRead').val()+'" />'
-                +'<input type="hidden" class="hidden_replay_access" name="items[tmp_'+itemId+'][replayAccess]" value="'+$('#assignedGroupsReplay').val()+'" />'
+                +'<input type="hidden" class="hidden_reply_access" name="items[tmp_'+itemId+'][replyAccess]" value="'+$('#assignedGroupsReply').val()+'" />'
                 +'<input type="hidden" class="hidden_create_access" name="items[tmp_'+itemId+'][createAccess]" value="'+$('#assignedGroupsCreate').val()+'" />'
                 +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa-solid fa-circle-xmark"></i></span></div></li>').appendTo(append);
             itemId++;
@@ -261,12 +264,12 @@ $(document).ready (
              });
             $('#assignedGroupsRead').trigger("chosen:updated");
 
-            $.each($(this).parent().find('.hidden_replay_access').val().split(","), function(index, element) {
+            $.each($(this).parent().find('.hidden_reply_access').val().split(","), function(index, element) {
                 if (element) {
-                    $('#assignedGroupsReplay > option[value=' + element + ']').prop("selected", true);
+                    $('#assignedGroupsReply > option[value=' + element + ']').prop("selected", true);
                 }
              });
-            $('#assignedGroupsReplay').trigger("chosen:updated");
+            $('#assignedGroupsReply').trigger("chosen:updated");
 
             $.each($(this).parent().find('.hidden_create_access').val().split(","), function(index, element) {
                 if (element) {
@@ -275,8 +278,6 @@ $(document).ready (
              });
             $('#assignedGroupsCreate').trigger("chosen:updated");
 
-            //$('#assignedGroupsReplay').val($(this).parent().find('.hidden_replay_access').val());
-            //$('#assignedGroupsCreate').val($(this).parent().find('.hidden_create_access').val());
             $('#id').val($(this).closest('li').attr('id'));
         });
 
@@ -292,7 +293,7 @@ $(document).ready (
             $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
             $('#'+$('#id').val()).find('.hidden_prefix:first').val($('#prefix').val());
             $('#'+$('#id').val()).find('.hidden_read_access:first').val($('#assignedGroupsRead').val());
-            $('#'+$('#id').val()).find('.hidden_replay_access:first').val($('#assignedGroupsReplay').val());
+            $('#'+$('#id').val()).find('.hidden_reply_access:first').val($('#assignedGroupsReply').val());
             $('#'+$('#id').val()).find('.hidden_create_access:first').val($('#assignedGroupsCreate').val());
             resetBox();
         });

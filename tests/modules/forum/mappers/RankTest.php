@@ -172,7 +172,40 @@ class RankTest extends DatabaseTestCase
                 `desc` VARCHAR(255) NOT NULL,
                 `text` TEXT NOT NULL,
                 `locale` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_groups` (
+                            `id` INT(11) NOT NULL AUTO_INCREMENT,
+                            `name` VARCHAR(255) NOT NULL,
+                            PRIMARY KEY (`id`)
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_users` (
+                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `name` VARCHAR(255) NOT NULL,
+                `password` VARCHAR(255) NOT NULL,
+                `email` VARCHAR(255) NOT NULL,
+                `first_name` VARCHAR(255) NOT NULL DEFAULT "",
+                `last_name` VARCHAR(255) NOT NULL DEFAULT "",
+                `gender` TINYINT(1) NOT NULL DEFAULT 0,
+                `city` VARCHAR(255) NOT NULL DEFAULT "",
+                `birthday` DATE NULL DEFAULT NULL,
+                `avatar` VARCHAR(255) NOT NULL DEFAULT "",
+                `signature` VARCHAR(255) NOT NULL DEFAULT "",
+                `locale` VARCHAR(255) NOT NULL DEFAULT "",
+                `opt_mail` TINYINT(1) DEFAULT 1,
+                `opt_gallery` TINYINT(1) DEFAULT 1,
+                `date_created` DATETIME NOT NULL,
+                `date_confirmed` DATETIME NULL DEFAULT NULL,
+                `date_last_activity` DATETIME NULL DEFAULT NULL,
+                `confirmed` TINYINT(1) DEFAULT 1,
+                `confirmed_code` VARCHAR(255) NULL DEFAULT NULL,
+                `selector` char(18),
+                `expires` DATETIME,
+                `locked` TINYINT(1) NOT NULL DEFAULT 0,
+                `selectsdelete` DATETIME,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
 
         $config = new ModuleConfig();
         return $installSql.$config->getInstallSql();

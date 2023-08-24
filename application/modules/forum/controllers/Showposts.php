@@ -6,6 +6,10 @@
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
+use Ilch\Date;
+use Ilch\Mail;
+use Ilch\Pagination;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
@@ -14,6 +18,7 @@ use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
 use Modules\Forum\Mappers\Reports as ReportsMapper;
 use Modules\Forum\Mappers\Remember as RememberMapper;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Forum\Mappers\TrackRead as TrackReadMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Ilch\Layout\Helper\LinkTag\Model as LinkTagModel;
@@ -25,7 +30,7 @@ use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Ilch\Accesses;
 use Ilch\Validation;
 
-class Showposts extends \Ilch\Controller\Frontend
+class Showposts extends Frontend
 {
     public function indexAction()
     {
@@ -33,7 +38,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $topicMapper = new TopicMapper();
         $forumMapper = new ForumMapper();
         $topicModel = new ForumTopicModel();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
         $rankMapper = new RankMapper();
         $reportsMapper = new ReportsMapper();
         $rememberMapper = new RememberMapper();
@@ -47,27 +52,25 @@ class Showposts extends \Ilch\Controller\Frontend
             return;
         }
 
-        $forumId = $forumMapper->getForumByTopicId($topicId);
-        if ($forumId === null) {
+        $forum = $forumMapper->getForumByTopicId($topicId);
+        if ($forum === null) {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Topic', 'errorText' => 'notFound']);
             return;
         }
 
-        $forum = $forumMapper->getForumById($forumId->getId());
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
-
-        $posts = $postMapper->getPostsByTopicId($topicId, $pagination, $this->getConfig()->get('forum_DESCPostorder'));
+        $posts = $postMapper->getPostsByTopicId($topicId, $pagination, $this->getConfig()->get('forum_DESCPostorder'), ($this->getUser()) ? $this->getUser()->getId() : null);
         $post = $topicMapper->getTopicById($topicId);
 
         $prefix = '';
-        if ($forumId->getPrefix() != '' && $post->getTopicPrefix() > 0) {
-            $prefix = explode(',', $forumId->getPrefix());
+        if ($forum->getPrefix() != '' && $post->getTopicPrefix() > 0) {
+            $prefix = explode(',', $forum->getPrefix());
             array_unshift($prefix, '');
 
             foreach ($prefix as $key => $value) {
                 if ($post->getTopicPrefix() == $key) {
                     $value = trim($value);
-                    $prefix = '['.$value.'] ';
+                    $prefix = '[' . $value . '] ';
                 }
             }
         }
@@ -81,7 +84,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                 ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
-                ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId->getId()])
+                ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()])
                 ->add($prefix.$post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
 
         $topicModel->setId($topicId);
@@ -95,16 +98,10 @@ class Showposts extends \Ilch\Controller\Frontend
         $userId = null;
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();
-            $postModel = new ForumPostModel();
 
-            $lastPost = $topicMapper->getLastPostByTopicId($topicId);
-
-            $lastRead = $lastPost->getRead();
-            if (!\in_array($this->getUser()->getId(), explode(',', $lastRead))) {
-                $postModel->setId($lastPost->getId());
-                $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
-                $postMapper->saveRead($postModel);
-            }
+            // Mark topic as read.
+            $trackReadMapper = new TrackReadMapper();
+            $trackReadMapper->markTopicAsRead($this->getUser()->getId(), $topicId, $forum->getId());
 
             if ($this->getConfig()->get('forum_topicSubscription') == 1) {
                 $topicSubscriptionMapper = new TopicSubscriptionMapper();
@@ -169,7 +166,7 @@ class Showposts extends \Ilch\Controller\Frontend
 
         if ($this->getUser() && $this->getUser()->isAdmin() && $this->getRequest()->isSecure()) {
             $postMapper->deleteById($postId);
-            if ($countPosts === '1') {
+            if ($countPosts === 1) {
                 $topicMapper->deleteById($topicId);
                 $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId]);
             }
@@ -392,7 +389,7 @@ class Showposts extends \Ilch\Controller\Frontend
 
                             $sitetitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
                             $username = $this->getLayout()->escape($user->getName());
-                            $date = new \Ilch\Date();
+                            $date = new Date();
                             $mailContent = $emailsMapper->getEmail('forum', 'post_reportedPost_mail', $this->getTranslator()->getLocale());
                             $layout = $_SESSION['layout'] ?? '';
                             if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/reportedPost.php')) {
@@ -409,7 +406,7 @@ class Showposts extends \Ilch\Controller\Frontend
                                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                             ];
                             $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
-                            $mail = new \Ilch\Mail();
+                            $mail = new Mail();
                             $mail->setFromName($sitetitle)
                                 ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
                                 ->setToName($username)

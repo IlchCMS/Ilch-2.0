@@ -40,7 +40,11 @@ $reasonTransKeys = [
                             <td><?=$this->escape($report->getDate()) ?></td>
                             <td><?=$this->getTrans($reasonTransKeys[$report->getReason()]) ?></td>
                             <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'reports', 'action' => 'show', 'id' => $report->getId()], 'admin') ?>"><?=$this->getTrans('showDetails') ?></a></td>
+                            <?php if ($report->getTopicId()) : ?>
                             <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $report->getTopicId().'#'.$report->getPostId()], '') ?>" target="_blank"><?=$this->getTrans('showPost') ?></a></td>
+                            <?php else : ?>
+                            <td><?=$this->getTrans('reportPostNotExisting') ?></td>
+                            <?php endif; ?>
                             <td><?=$this->escape($report->getUsername()) ?></td>
                         </tr>
                     <?php endforeach; ?>

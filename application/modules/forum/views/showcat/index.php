@@ -1,4 +1,8 @@
 <?php
+
+use Modules\Forum\Mappers\Forum;
+
+/** @var Forum $forumMapper */
 $forumMapper = $this->get('forumMapper');
 $forumItems = $this->get('forumItems');
 $cat = $this->get('cat');
@@ -8,11 +12,10 @@ function rec($item, $forumMapper, $obj, $readAccess)
 {
     $DESCPostorder = $obj->get('DESCPostorder');
     $postsPerPage = $obj->get('postsPerPage');
-
-    $subItems = $forumMapper->getForumItemsByParent($item->getId());
-    $topics = $forumMapper->getCountTopicsById($item->getId());
-    $lastPost = $forumMapper->getLastPostByTopicId($item->getId());
-    $posts = $forumMapper->getCountPostsById($item->getId());
+    $subItems = $item->getSubItems();
+    $topics = $item->getTopics();
+    $lastPost = $item->getLastPost();
+    $posts = $item->getPosts();
     $adminAccess = null;
     if ($obj->getUser()) {
         $adminAccess = $obj->getUser()->isAdmin();
@@ -43,7 +46,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
                         <?php if ($lastPost && $obj->getUser()): ?>
-                            <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
+                            <?php if ($lastPost->getRead()): ?>
                                 topic-read
                             <?php else: ?>
                                 topic-unread
