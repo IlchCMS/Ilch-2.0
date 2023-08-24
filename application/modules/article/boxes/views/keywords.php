@@ -14,7 +14,7 @@
         } elseif ($count == 2) {
             echo '<span style="font-size:'.$this->get('keywordsH2').'px"><a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a></span> ';
         } else {
-            echo '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a> ';
+            echo '<a href="'.$this->getUrl(['module' => 'article', 'controller' => 'keywords', 'action' => 'show', 'keyword' => $keyword]).'">'.$keyword.'</a> ';
         }
     }
     ?>
