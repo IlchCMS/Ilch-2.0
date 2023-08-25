@@ -549,8 +549,7 @@ class Frontend extends Base
                 <script src="' . $this->getStaticUrl('js/ilch.js') . '"></script>
                 <script src="' . $this->getStaticUrl('js/jquery.mjs.nestedSortable.js') . '"></script>
                 <script src="' . $this->getStaticUrl('../application/modules/admin/static/js/functions.js') . '"></script>
-                <script src="' . $this->getVendorUrl('ckeditor/ckeditor/plugins/codesnippet/lib/highlight.pack.js') . '"></script>
-                ';
+                <script src="' . $this->getVendorUrl('ckeditor/ckeditor/plugins/codesnippet/lib/highlight.pack.js') . '"></script>';
 
         if (is_array($this->get('scriptTags'))) {
             foreach ($this->get('scriptTags') as $key => $scriptTag) {
