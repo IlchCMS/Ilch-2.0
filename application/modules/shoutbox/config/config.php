@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.5.0',
+        'version' => '1.5.1',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -96,6 +96,8 @@ class Config extends \Ilch\Config\Install
                 // no break
             case "1.4.2":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
+                // no break
+            case "1.5.0":
                 // no break
         }
 
