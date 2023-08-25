@@ -6,14 +6,14 @@
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
+use Modules\Forum\Mappers\TrackRead;
 use Modules\User\Mappers\User as UserMapper;
 
-use Modules\Forum\Models\ForumPost as ForumPostModel;
-
-class Shownewposts extends \Ilch\Controller\Frontend
+class Shownewposts extends Frontend
 {
     public function indexAction()
     {
@@ -21,7 +21,6 @@ class Shownewposts extends \Ilch\Controller\Frontend
             $forumMapper = new ForumMapper();
             $topicMapper = new TopicMapper();
             $postMapper = new PostMapper();
-            $pagination = new \Ilch\Pagination();
             $userMapper = new UserMapper();
 
             $user = $userMapper->getUserById($this->getUser()->getId());
@@ -54,16 +53,13 @@ class Shownewposts extends \Ilch\Controller\Frontend
 
     public function markallasreadAction()
     {
-        if ($this->getUser()) {
-            $adminAccess = $this->getUser()->isAdmin();
-            
+        if ($this->getUser() && $this->getRequest()->isSecure()) {
             $forumMapper = new ForumMapper();
-            $topicMapper = new TopicMapper();
-            $postMapper = new PostMapper();
+            $trackRead = new TrackRead();
             $userMapper = new UserMapper();
-            
-            $postModel = new ForumPostModel;
 
+            $adminAccess = $this->getUser()->isAdmin();
+            $forumIds = [];
             $user = $userMapper->getUserById($this->getUser()->getId());
 
             $groupIds = [];
@@ -71,24 +67,21 @@ class Shownewposts extends \Ilch\Controller\Frontend
                 $groupIds[] = $groups->getId();
             }
 
-            foreach ($topicMapper->getTopics() as $topic) {
-                $forum = $forumMapper->getForumById($topic->getTopicId());
-                $lastPost = $topicMapper->getLastPostByTopicId($topic->getId());
-                if ($adminAccess || is_in_array($groupIds, explode(',', $forum->getReadAccess()))) {
-                    if (!\in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))) {
-                        $lastRead = $lastPost->getRead();
-                        if (!\in_array($this->getUser()->getId(), explode(',', $lastRead))) {
-                            $postModel->setId($lastPost->getId());
-                            $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
-                            $postMapper->saveRead($postModel);
-                        }
-                    }
+            foreach ($forumMapper->getForumItems() as $forumItem) {
+                // If it is a forum and the user is either admin or has read access then the forum can be marked as read.
+                if ($forumItem->getType() === 1 && $adminAccess || is_in_array($groupIds, explode(',', $forumItem->getReadAccess()))) {
+                    $forumIds[] = $forumItem->getId();
                 }
             }
-            $this->addMessage('allasreadForum', 'info');
+
+            if (!empty($forumIds)) {
+                $trackRead->markForumsAsRead($this->getUser()->getId(), $forumIds);
+            }
+            $this->addMessage('markedAllForumsAsRead', 'info');
         } else {
             $this->addMessage('noAccessForum', 'warning');
         }
+
         $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
     }
 }

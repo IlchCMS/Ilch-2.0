@@ -1,11 +1,12 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\User\Mappers;
 
+use Ilch\Database\Mysql\Result;
 use Modules\User\Models\AuthProviderUser;
 use Modules\User\Models\Provider;
 use Modules\User\Models\AuthProviderModule;
@@ -183,7 +184,7 @@ class AuthProvider extends \Ilch\Mapper
      * the links to the auth providers of that deleted user are of no use anymore.
      *
      * @param $user_id
-     * @return \Ilch\Database\Mysql\Result|int
+     * @return Result|int
      */
     public function deleteUser($user_id)
     {
@@ -210,7 +211,7 @@ class AuthProvider extends \Ilch\Mapper
     public function deleteProvider($key)
     {
         $provider = $this->db()->delete('auth_providers', ['key' => $key])->execute();
-        $provider_users = $this->db()->delete('users_auth_providers', ['provider' => $key])->execute();
+        $this->db()->delete('users_auth_providers', ['provider' => $key])->execute();
 
         return $provider === 1;
     }

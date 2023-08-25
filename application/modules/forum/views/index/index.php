@@ -55,7 +55,7 @@ function rec($item, $obj, $readAccess, $i)
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
                         <?php if ($lastPost && $obj->getUser()): ?>
-                            <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
+                            <?php if ($lastPost->getRead()): ?>
                                 topic-read
                             <?php else: ?>
                                 topic-unread
@@ -105,7 +105,7 @@ function rec($item, $obj, $readAccess, $i)
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                         <?=$obj->escape($lastPost->getAutor()->getName()) ?>
                                     </a>
-                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => ($DESCPostorder?1:ceil($countPosts/$postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
+                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => ($DESCPostorder ? 1 : ceil($countPosts / $postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
                                         <img src="<?=$obj->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$obj->getTrans('viewLastPost') ?>" title="<?=$obj->getTrans('viewLastPost') ?>" height="10" width="12">
                                     </a>
                                     <br>
@@ -151,7 +151,7 @@ function rec($item, $obj, $readAccess, $i)
         </ul>
         <?php if ($this->getUser()): ?>          
             <div class="pull-right">
-                <a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'markallasread']) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
+                <a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'markallasread'], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
             </div>
         <?php endif; ?>
     </div>

@@ -1,9 +1,14 @@
 <?php
+use Modules\Forum\Mappers\Forum;
+use Modules\Forum\Mappers\Topic;
+
 $forum = $this->get('forum');
 $cat = $this->get('cat');
 $forumEdit = $this->get('forumEdit');
 $topics = $this->get('topics');
+/** @var Topic $topicMapper */
 $topicMapper = $this->get('topicMapper');
+/** @var Forum $forumMapper */
 $forumMapper = $this->get('forumMapper');
 $groupIdsArray = $this->get('groupIdsArray');
 $adminAccess = null;
@@ -60,15 +65,15 @@ $postsPerPage = $this->get('postsPerPage');
             <ul class="topiclist topics">
                 <?php if (!empty($topics)): ?>
                     <?php foreach ($topics as $topic): ?>
-                        <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getTopicId()) ?>
-                        <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getTopicId()) ?>
-                        <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getTopicId()) ?>
+                        <?php $lastPost = ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic->getId(), $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic->getId()) ?>
+                        <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
+                        <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
                         <li class="row ilch-border ilch-bg--hover <?=($topic->getType() == '1') ? 'tack' : '' ?>">
                             <dl class="icon
                                 <?php if ($this->getUser()): ?>
-                                    <?php if ($topic->getStatus() == 0 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
+                                    <?php if ($topic->getStatus() == 0 && $lastPost->getRead()): ?>
                                         topic-read
-                                    <?php elseif ($topic->getStatus() == 1 && in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
+                                    <?php elseif ($topic->getStatus() == 1 && $lastPost->getRead()): ?>
                                         topic-read-locked
                                     <?php elseif ($topic->getStatus() == 1): ?>
                                         topic-unread-locked
@@ -199,6 +204,11 @@ $postsPerPage = $this->get('postsPerPage');
                         }
                     </script>
                 <?php endif; ?>
+            <?php endif; ?>
+            <?php if ($this->getUser()): ?>
+                <div class="pull-right foren-actions">
+                    <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'marktopicsasread', 'forumid' => $this->getRequest()->getParam('forumid')], null, true) ?>" class="ilch-link"><?=$this->getTrans('markTopicsAsRead') ?></a>
+                </div>
             <?php endif; ?>
         </div>
         <?php if ($forumEdit): ?>

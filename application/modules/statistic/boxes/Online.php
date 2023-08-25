@@ -15,7 +15,9 @@ class Online extends \Ilch\Box
     {
         $statisticMapper = new StatisticMapper();
 
-        $this->getView()->set('usersOnline', $statisticMapper->getVisitsOnlineUser());
-        $this->getView()->set('guestOnline', $statisticMapper->getVisitsCountOnline() - count($statisticMapper->getVisitsOnlineUser()));
+        $usersOnline = $statisticMapper->getVisitsOnlineUser();
+
+        $this->getView()->set('usersOnline', $usersOnline);
+        $this->getView()->set('guestOnline', $statisticMapper->getVisitsCountOnline() - count($usersOnline));
     }
 }

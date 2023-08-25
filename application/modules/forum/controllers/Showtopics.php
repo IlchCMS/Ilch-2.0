@@ -6,21 +6,22 @@
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
+use Ilch\Pagination;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
+use Modules\Forum\Mappers\TrackRead;
 use Modules\User\Mappers\User as UserMapper;
-use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
-use Ilch\Accesses;
 
-class Showtopics extends \Ilch\Controller\Frontend
+class Showtopics extends Frontend
 {
     public function indexAction()
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
         $postMapper = new PostMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
         $userMapper = new UserMapper();
 
         $forumId = $this->getRequest()->getParam('forumid');
@@ -37,7 +38,6 @@ class Showtopics extends \Ilch\Controller\Frontend
 
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
-        $userId = null;
         $groupIds = [3];
 
         if ($this->getRequest()->isPost() && $this->getRequest()->getPost('forumEdit') === 'forumEdit') {
@@ -82,14 +82,12 @@ class Showtopics extends \Ilch\Controller\Frontend
     public function deleteAction()
     {
         $topicMapper = new TopicMapper();
-        $topicSubscriptionMapper = new TopicSubscriptionMapper();
 
         if ($this->getUser()) {
             if ($this->getUser()->hasAccess('module_forum') || $this->getUser()->isAdmin()) {
                 if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicDelete') === 'topicDelete') {
                     foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
                         $topicMapper->deleteById($topicId);
-                        $topicSubscriptionMapper->deleteAllSubscriptionsForTopic($topicId);
                     }
 
                     $this->addMessage('deleteSuccess');
@@ -97,5 +95,45 @@ class Showtopics extends \Ilch\Controller\Frontend
                 }
             }
         }
+    }
+
+    public function marktopicsasreadAction()
+    {
+        if ($this->getUser() && $this->getRequest()->isSecure()) {
+            $forumMapper = new ForumMapper();
+            $topicMapper = new TopicMapper();
+            $trackRead = new TrackRead();
+            $userMapper = new UserMapper();
+
+            $adminAccess = $this->getUser()->isAdmin();
+            $topicIds = [];
+            $user = $userMapper->getUserById($this->getUser()->getId());
+
+            $groupIds = [];
+            foreach ($user->getGroups() as $groups) {
+                $groupIds[] = $groups->getId();
+            }
+
+            $forum = $forumMapper->getForumById($this->getRequest()->getParam('forumid'));
+
+            if (!empty($forum) && $forum->getType() === 1) {
+                foreach ($topicMapper->getTopicsByForumId($this->getRequest()->getParam('forumid')) as $topic) {
+                    // If the topic belongs to a forum and the user is either admin or has read access then the topic can be marked as read.
+                    if ($adminAccess || is_in_array($groupIds, explode(',', $forum->getReadAccess()))) {
+                        $topicIds[] = $topic->getId();
+                    }
+                }
+
+                if (!empty($topicIds)) {
+                    $trackRead->markTopicsAsRead($this->getUser()->getId(), $topicIds, $forum->getId());
+                }
+            }
+
+            $this->addMessage('markedAllTopicsAsRead', 'info');
+        } else {
+            $this->addMessage('noAccessForum', 'warning');
+        }
+
+        $this->redirect(['module' => 'forum', 'controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]);
     }
 }

@@ -6,33 +6,64 @@
 
 namespace Modules\Forum\Mappers;
 
+use Ilch\Database\Exception;
+use Ilch\Mapper;
 use Modules\Forum\Models\ForumItem;
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 
-class Forum extends \Ilch\Mapper
+class Forum extends Mapper
 {
     /**
      * Get all forumItems by its parent (specified by its id)
      *
-     * @param integer $itemId
+     * @param int $itemId
+     * @param int|null $userId
      * @return ForumItem[]|[]
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
-    public function getForumItemsByParent($itemId)
+    public function getForumItemsByParent(int $itemId, int $userId = null): array
     {
-        $items = [];
-        $itemRows = $this->db()->select('*')
-                ->from('forum_items')
-                ->where(['parent_id' => $itemId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+        return $this->getForumItemsByParentIds([$itemId], $userId);
+    }
+
+    /**
+     * Get all forumItems by their parent ids (specified by their ids)
+     *
+     * @param int[] $itemIds An array of parent ids.
+     * @param int|null $userId
+     * @return array
+     * @throws Exception
+     */
+    public function getForumItemsByParentIds(array $itemIds, int $userId = null): array
+    {
+        $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description', 'i.prefix'])
+            ->from(['i' => 'forum_items'])
+            ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
+            ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
+            ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+            ->join(['t' => 'forum_topics'], 'i.id = t.forum_id', 'LEFT', ['topicCount' => 'COUNT(DISTINCT t.id)'])
+            ->join(['p' => 'forum_posts'], 'i.id = p.forum_id', 'LEFT', ['postCount' => 'COUNT(DISTINCT p.id)'])
+            ->where(['i.parent_id' => $itemIds], 'or')
+            ->group(['i.id'])
+            ->order(['i.sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return [];
         }
+
+        $subItemsIds = array_column($itemRows, 'id');
+        $subItems = $this->getForumItemsByParentIds($subItemsIds, $userId);
+
+        $subItemsRelation = [];
+        foreach ($subItems as $subItem) {
+            $subItemsRelation[$subItem->getParentId()][] = $subItem;
+        }
+
+        $items = [];
 
         foreach ($itemRows as $itemRow) {
             $itemModel = new ForumItem();
@@ -40,15 +71,17 @@ class Forum extends \Ilch\Mapper
             $itemModel->setType($itemRow['type']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
-            $itemModel->setParentId($itemId);
+            $itemModel->setParentId($itemRow['parent_id']);
             $itemModel->setPrefix($itemRow['prefix']);
-            $itemModel->setReadAccess($itemRow['read_access']);
-            $itemModel->setReplayAccess($itemRow['replay_access']);
-            $itemModel->setCreateAccess($itemRow['create_access']);
-            $itemModel->setSubItems($this->getForumItemsByParent($itemRow['id']));
-            $itemModel->setTopics($this->getCountTopicsById($itemRow['id']));
-            $itemModel->setLastPost($this->getLastPostByTopicId($itemRow['id']));
-            $itemModel->setPosts($this->getCountPostsById($itemRow['id']));
+            $itemModel->setReadAccess($itemRow['read_access'] ?? '');
+            $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
+            $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
+            $itemModel->setSubItems($subItemsRelation[$itemRow['id']] ?? []);
+            $itemModel->setTopics($itemRow['topicCount']);
+            if ($itemRow['type'] == 1) {
+                $itemModel->setLastPost($this->getLastPostByForumId($itemRow['id'], $userId));
+            }
+            $itemModel->setPosts($itemRow['postCount']);
             $items[] = $itemModel;
         }
 
@@ -61,12 +94,15 @@ class Forum extends \Ilch\Mapper
      * @param int $id
      * @return ForumItem|null
      */
-    public function getForumById($id)
+    public function getForumById(int $id): ?ForumItem
     {
-        $itemRows = $this->db()->select('*')
-                ->from('forum_items')
-                ->where(['id' => $id])
-                ->order(['sort' => 'DESC'])
+        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
+                ->from(['i' => 'forum_items'])
+                ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
+                ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
+                ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+                ->where(['i.id' => $id])
+                ->order(['i.sort' => 'DESC'])
                 ->execute()
                 ->fetchAssoc();
 
@@ -81,9 +117,9 @@ class Forum extends \Ilch\Mapper
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
         $itemModel->setPrefix($itemRows['prefix']);
-        $itemModel->setReadAccess($itemRows['read_access']);
-        $itemModel->setReplayAccess($itemRows['replay_access']);
-        $itemModel->setCreateAccess($itemRows['create_access']);
+        $itemModel->setReadAccess($itemRows['read_access'] ?? '');
+        $itemModel->setReplyAccess($itemRows['reply_access'] ?? '');
+        $itemModel->setCreateAccess($itemRows['create_access'] ?? '');
 
         return $itemModel;
     }
@@ -94,12 +130,15 @@ class Forum extends \Ilch\Mapper
      * @param int $topicId
      * @return ForumItem|null
      */
-    public function getForumByTopicId($topicId)
+    public function getForumByTopicId(int $topicId): ?ForumItem
     {
         $itemRow = $this->db()->select()
-            ->fields(['t.id', 't.topic_id'])
+            ->fields(['t.id'])
             ->from(['t' => 'forum_topics'])
-            ->join(['i' => 'forum_items'], 'i.id = t.topic_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.prefix', 'i.parent_id', 'i.read_access', 'i.replay_access', 'i.create_access'])
+            ->join(['i' => 'forum_items'], 'i.id = t.forum_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.prefix', 'i.parent_id'])
+            ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
+            ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
+            ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
             ->where(['t.id' => $topicId])
             ->execute()
             ->fetchAssoc();
@@ -115,46 +154,59 @@ class Forum extends \Ilch\Mapper
         $itemModel->setDesc($itemRow['description']);
         $itemModel->setParentId($itemRow['parent_id']);
         $itemModel->setPrefix($itemRow['prefix']);
-        $itemModel->setReadAccess($itemRow['read_access']);
-        $itemModel->setReplayAccess($itemRow['replay_access']);
-        $itemModel->setCreateAccess($itemRow['create_access']);
+        $itemModel->setReadAccess($itemRow['read_access'] ?? '');
+        $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
+        $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
 
         return $itemModel;
     }
 
     /**
-     * @param int $topicId
+     * @param int $forumId
+     * @param int|null $userId
      * @return PostModel|null
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
-    public function getLastPostByTopicId($topicId)
+    public function getLastPostByForumId(int $forumId, int $userId = null): ?PostModel
     {
-        $sql = 'SELECT `t`.`id`, `t`.`topic_id`, `t`.`topic_title`, `p`.`read`, `p`.`id`, `p`.`topic_id`, `p`.`date_created`, `p`.`user_id`
-                FROM `[prefix]_forum_topics` AS `t`
-                LEFT JOIN `[prefix]_forum_posts` AS `p` ON `t`.`id` = `p`.`topic_id`
-                WHERE `t`.`topic_id` = '.(int)$topicId.'
-                ORDER BY `p`.`id` DESC';
+        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.user_id', 'p.date_created', 'p.forum_id'])
+            ->from(['p' => 'forum_posts'])
+            ->join(['t' => 'forum_topics'], 't.id = p.topic_id', 'LEFT', ['t.topic_title']);
 
-        $fileRow = $this->db()->queryRow($sql);
-        if (empty($fileRow)) {
+        if ($userId) {
+            $select->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id', 'tr.datetime >= p.date_created'], 'LEFT', ['topic_read' => 'tr.datetime'])
+                ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id', 'fr.datetime >= p.date_created'], 'LEFT', ['forum_read' => 'fr.datetime']);
+        }
+
+        $lastPostRow = $select->where(['p.forum_id' => $forumId])
+            ->order(['p.date_created' => 'DESC', 'p.id' => 'DESC'])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($lastPostRow)) {
             return null;
         }
 
-        $entryModel = new PostModel();
+        $postModel = new PostModel();
         $userMapper = new UserMapper();
-        $entryModel->setId($fileRow['id']);
-        $user = $userMapper->getUserById($fileRow['user_id']);
-        if ($user) {
-            $entryModel->setAutor($user);
-        } else {
-            $entryModel->setAutor($userMapper->getDummyUser());
-        }
-        $entryModel->setDateCreated($fileRow['date_created']);
-        $entryModel->setTopicId($fileRow['topic_id']);
-        $entryModel->setTopicTitle($fileRow['topic_title']);
-        $entryModel->setRead($fileRow['read']);
+        $postModel->setId($lastPostRow['id']);
+        $user = $userMapper->getUserById($lastPostRow['user_id']);
 
-        return $entryModel;
+        if ($user) {
+            $postModel->setAutor($user);
+        } else {
+            $postModel->setAutor($userMapper->getDummyUser());
+        }
+
+        $postModel->setDateCreated($lastPostRow['date_created']);
+        $postModel->setTopicId($lastPostRow['topic_id']);
+        $postModel->setTopicTitle($lastPostRow['topic_title']);
+
+        if ($userId) {
+            $postModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
+        }
+
+        return $postModel;
     }
 
     /**
@@ -163,10 +215,10 @@ class Forum extends \Ilch\Mapper
      * @param int $id
      * @return ForumItem|null
      */
-    public function getCatByParentId($id)
+    public function getCatByParentId(int $id): ?ForumItem
     {
-        $itemRows = $this->db()->select('*')
-                ->from('forum_items')
+        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
+                ->from(['i' => 'forum_items'])
                 ->where(['id' => $id])
                 ->order(['sort' => 'ASC'])
                 ->execute()
@@ -183,18 +235,132 @@ class Forum extends \Ilch\Mapper
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
         $itemModel->setPrefix($itemRows['prefix']);
-        $itemModel->setReadAccess($itemRows['read_access']);
-        $itemModel->setReplayAccess($itemRows['replay_access']);
-        $itemModel->setCreateAccess($itemRows['create_access']);
 
         return $itemModel;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getForumItems(): ?array
+    {
+        $items = [];
+        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
+            ->from(['i' => 'forum_items'])
+            ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
+            ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
+            ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+            ->group(['i.id'])
+            ->order(['i.sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
+
+        if (empty($itemRows)) {
+            return null;
+        }
+
+        foreach ($itemRows as $itemRow) {
+            $itemModel = new ForumItem();
+            $itemModel->setId($itemRow['id']);
+            $itemModel->setType($itemRow['type']);
+            $itemModel->setTitle($itemRow['title']);
+            $itemModel->setDesc($itemRow['description']);
+            $itemModel->setParentId($itemRow['parent_id']);
+            $itemModel->setPrefix($itemRow['prefix']);
+            $itemModel->setReadAccess($itemRow['read_access'] ?? '');
+            $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
+            $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
+            $items[] = $itemModel;
+        }
+
+        return $items;
+    }
+
+    /**
+     * @param int $id
+     * @return int
+     */
+    public function getCountPostsById(int $id): int
+    {
+        return $this->db()->select(['p.id', 'p.topic_id', 't.id'])
+            ->from(['t' => 'forum_topics'])
+            ->join(['p' => 'forum_posts'], 'p.topic_id = t.id', 'LEFT', ['p.id', 'p.topic_id'])
+            ->where(['t.forum_id' => $id])
+            ->group(['t.id', 'p.id', 'p.topic_id'])
+            ->execute()
+            ->getFoundRows();
+    }
+
+    /**
+     * Get the count of posts in a topic by the topic id.
+     *
+     * @param int $topicId
+     * @return int
+     */
+    public function getCountPostsByTopicId(int $topicId): int
+    {
+        $countOfPosts = $this->db()->select('COUNT(id)')
+            ->from('forum_posts')
+            ->where(['topic_id' => $topicId])
+            ->execute()
+            ->fetchCell();
+
+        if (empty($countOfPosts)) {
+            return 0;
+        }
+
+        return $countOfPosts;
+    }
+
+    /**
+     * Get count of topics by id.
+     *
+     * @param int $id
+     * @return int
+     */
+    public function getCountTopicsById(int $id): int
+    {
+        $countOfTopics = $this->db()->select('COUNT(id)')
+            ->from('forum_topics')
+            ->where(['forum_id' => $id])
+            ->execute()
+            ->fetchCell();
+
+        if (empty($countOfTopics)) {
+            return 0;
+        }
+
+        return $countOfTopics;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getForumPermas(): ?array
+    {
+        $permas = $this->db()->select('*')
+            ->from('forum_items')
+            ->execute()
+            ->fetchRows();
+
+        $permaArray = [];
+
+        if (empty($permas)) {
+            return null;
+        }
+
+        foreach ($permas as $perma) {
+            $permaArray[$perma['title']] = $perma;
+        }
+
+        return $permaArray;
     }
 
     /**
      * @param ForumItem $forumItem
      * @return int
      */
-    public function saveItem(ForumItem $forumItem)
+    public function saveItem(ForumItem $forumItem): int
     {
         $fields = [
             'title' => $forumItem->getTitle(),
@@ -203,9 +369,6 @@ class Forum extends \Ilch\Mapper
             'type' => $forumItem->getType(),
             'description' => $forumItem->getDesc(),
             'prefix' => $forumItem->getPrefix(),
-            'read_access' => $forumItem->getReadAccess(),
-            'replay_access' => $forumItem->getReplayAccess(),
-            'create_access' => $forumItem->getCreateAccess()
         ];
 
         foreach ($fields as $key => $value) {
@@ -231,16 +394,50 @@ class Forum extends \Ilch\Mapper
                 ->execute();
         }
 
+        // Store access rights if the item is a forum and not a category.
+        if ($forumItem->getType() == 1) {
+            $this->db()->delete('forum_accesses')
+                ->where(['item_id' => $itemId])
+                ->execute();
+
+            $access_rights = [
+                explode(',', $forumItem->getReadAccess() ?? ''),
+                explode(',', $forumItem->getReplyAccess() ?? ''),
+                explode(',', $forumItem->getCreateAccess() ?? '')
+            ];
+
+            // 'read_access' => 0, 'reply_access' => 1, 'create_access' => 2
+            $preparedRows = [];
+            foreach ($access_rights as $type => $rights) {
+                foreach($rights as $groupId) {
+                    if ($groupId) {
+                        $preparedRows[] = [$itemId, $groupId, $type];
+                    }
+                }
+            }
+
+            if (count($preparedRows)) {
+                // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+                // per insert, which would have been possible with a higher number of forums and user groups.
+                $chunks = array_chunk($preparedRows, 25);
+                foreach ($chunks as $chunk) {
+                    $this->db()->insert('forum_accesses')
+                        ->columns(['item_id', 'group_id', 'access_type'])
+                        ->values($chunk)
+                        ->execute();
+                }
+            }
+        }
+
         return $itemId;
     }
 
     /**
-     * @param $forumItem
+     * @param int $id
      */
-    public function deleteItem($forumItem)
+    public function deleteItem(int $id)
     {
         $topicMapper = new TopicMapper();
-        $id = $forumItem->getId();
         $topics = $topicMapper->getTopicsListByForumId($id);
         foreach ($topics as $topicId) {
             $topicMapper->deleteById($topicId);
@@ -248,122 +445,5 @@ class Forum extends \Ilch\Mapper
         $this->db()->delete('forum_items')
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getForumItems()
-    {
-        $items = [];
-        $itemRows = $this->db()->select('*')
-                ->from('forum_items')
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
-
-        if (empty($itemRows)) {
-            return null;
-        }
-
-        foreach ($itemRows as $itemRow) {
-            $itemModel = new ForumItem();
-            $itemModel->setId($itemRow['id']);
-            $itemModel->setType($itemRow['type']);
-            $itemModel->setTitle($itemRow['title']);
-            $itemModel->setDesc($itemRow['description']);
-            $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefix']);
-            $itemModel->setReadAccess($itemRow['read_access']);
-            $itemModel->setReplayAccess($itemRow['replay_access']);
-            $itemModel->setCreateAccess($itemRow['create_access']);
-            $items[] = $itemModel;
-        }
-
-        return $items;
-    }
-
-    /**
-     * @param int $id
-     * @return int
-     */
-    public function getCountPostsById($id)
-    {
-        return $this->db()->select('*')
-            ->fields(['p.id', 'p.topic_id', 't.id', 't.topic_id'])
-            ->from(['t' => 'forum_topics'])
-            ->join(['p' => 'forum_posts'], 'p.topic_id = t.id', 'LEFT', ['p.id', 'p.topic_id'])
-            ->where(['t.topic_id' => $id])
-            ->group(['t.id', 't.topic_id', 'p.id', 'p.topic_id'])
-            ->execute()
-            ->getFoundRows();
-    }
-
-    /**
-     * Get the count of posts in a topic by the topic id.
-     *
-     * @param int $topicId
-     * @return int|string
-     * @throws \Ilch\Database\Exception
-     */
-    public function getCountPostsByTopicId($topicId)
-    {
-        $countOfPosts = $this->db()->select('COUNT(id)')
-            ->from('forum_posts')
-            ->where(['topic_id' => (int)$topicId])
-            ->execute()
-            ->fetchCell();
-
-        if (empty($countOfPosts)) {
-            return '0';
-        }
-
-        return $countOfPosts;
-    }
-
-    /**
-     * Get count of topics by id.
-     *
-     * @param int $id
-     * @return int|string
-     * @throws \Ilch\Database\Exception
-     */
-    public function getCountTopicsById($id)
-    {
-        $countOfTopics = $this->db()->select('COUNT(topic_id)')
-            ->from('forum_topics')
-            ->where(['topic_id' => (int)$id])
-            ->execute()
-            ->fetchCell();
-
-        if (empty($countOfTopics)) {
-            return '0';
-        }
-
-        return $countOfTopics;
-    }
-
-    /**
-     * @return array|null
-     * @throws \Ilch\Database\Exception
-     */
-    public function getForumPermas()
-    {
-        $permas = $this->db()->select('*')
-            ->from('forum_items')
-            ->execute()
-            ->fetchRows();
-
-        $permaArray = [];
-
-        if (empty($permas)) {
-            return null;
-        }
-
-        foreach ($permas as $perma) {
-            $permaArray[$perma['title']] = $perma;
-        }
-
-        return $permaArray;
     }
 }

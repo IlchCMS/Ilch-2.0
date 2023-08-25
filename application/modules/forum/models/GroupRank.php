@@ -1,45 +1,47 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Models;
+
+use Ilch\Model;
 
 /**
  * The group rank model class.
  *
  * @package ilch
  */
-class GroupRank extends \Ilch\Model
+class GroupRank extends Model
 {
     /**
      * The id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * The group id.
      *
-     * @var integer
+     * @var int
      */
     protected $group_id;
     
     /**
      * The rank of the group.
      *
-     * @var integer
+     * @var int
      */
     protected $rank;
 
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
@@ -47,26 +49,26 @@ class GroupRank extends \Ilch\Model
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getGroupId()
+    public function getGroupId(): int
     {
         return $this->group_id;
     }
 
     /**
-     * @param integer $group_id
+     * @param int $group_id
      * @return GroupRank
      */
-    public function setGroupId($group_id)
+    public function setGroupId(int $group_id): GroupRank
     {
         $this->group_id = $group_id;
         return $this;
@@ -75,7 +77,7 @@ class GroupRank extends \Ilch\Model
     /**
      * @return int
      */
-    public function getRank()
+    public function getRank(): int
     {
         return $this->rank;
     }
@@ -84,7 +86,7 @@ class GroupRank extends \Ilch\Model
      * @param int $rank
      * @return GroupRank
      */
-    public function setRank($rank)
+    public function setRank(int $rank): GroupRank
     {
         $this->rank = $rank;
         return $this;

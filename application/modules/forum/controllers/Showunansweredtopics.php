@@ -1,24 +1,24 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Showunansweredtopics extends \Ilch\Controller\Frontend
+class Showunansweredtopics extends Frontend
 {
     public function indexAction()
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
         $postMapper = new PostMapper();
-        $pagination = new \Ilch\Pagination();
         $userMapper = new UserMapper();
 
         $userId = null;

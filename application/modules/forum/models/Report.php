@@ -1,22 +1,24 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Models;
+
+use Ilch\Model;
 
 /**
  * The report model class.
  *
  * @package ilch
  */
-class Report extends \Ilch\Model
+class Report extends Model
 {
     /**
      * The id of the report.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -30,21 +32,21 @@ class Report extends \Ilch\Model
     /**
      * The forum id of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $forum_id;
 
     /**
      * The topic id of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $topic_id;
 
     /**
      * The id of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $post_id;
 
@@ -65,7 +67,7 @@ class Report extends \Ilch\Model
     /**
      * The user id of the reporter.
      *
-     * @var integer
+     * @var int
      */
     protected $user_id;
 
@@ -79,9 +81,9 @@ class Report extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
@@ -89,9 +91,9 @@ class Report extends \Ilch\Model
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -100,7 +102,7 @@ class Report extends \Ilch\Model
      * @param string $date
      * @return Report
      */
-    public function setDate($date)
+    public function setDate(string $date): Report
     {
         $this->date = $date;
         return $this;
@@ -109,16 +111,16 @@ class Report extends \Ilch\Model
     /**
      * @return string
      */
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
     }
 
     /**
-     * @param int $forum_id
+     * @param int|null $forum_id
      * @return Report
      */
-    public function setForumId($forum_id)
+    public function setForumId(?int $forum_id): Report
     {
         $this->forum_id = $forum_id;
         return $this;
@@ -127,25 +129,25 @@ class Report extends \Ilch\Model
     /**
      * @return int
      */
-    public function getForumId()
+    public function getForumId(): int
     {
         return $this->forum_id;
     }
 
     /**
-     * @param int $topic_id
+     * @param int|null $topic_id
      * @return Report
      */
-    public function setTopicId($topic_id)
+    public function setTopicId(?int $topic_id): Report
     {
         $this->topic_id = $topic_id;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getTopicId()
+    public function getTopicId(): ?int
     {
         return $this->topic_id;
     }
@@ -154,7 +156,7 @@ class Report extends \Ilch\Model
      * @param int $post_id
      * @return Report
      */
-    public function setPostId($post_id)
+    public function setPostId(int $post_id): Report
     {
         $this->post_id = $post_id;
         return $this;
@@ -163,7 +165,7 @@ class Report extends \Ilch\Model
     /**
      * @return int
      */
-    public function getPostId()
+    public function getPostId(): int
     {
         return $this->post_id;
     }
@@ -172,7 +174,7 @@ class Report extends \Ilch\Model
      * @param string $reason
      * @return Report
      */
-    public function setReason($reason)
+    public function setReason(string $reason): Report
     {
         $this->reason = $reason;
         return $this;
@@ -181,7 +183,7 @@ class Report extends \Ilch\Model
     /**
      * @return string
      */
-    public function getReason()
+    public function getReason(): string
     {
         return $this->reason;
     }
@@ -190,7 +192,7 @@ class Report extends \Ilch\Model
      * @param string $details
      * @return Report
      */
-    public function setDetails($details)
+    public function setDetails(string $details): Report
     {
         $this->details = $details;
         return $this;
@@ -199,7 +201,7 @@ class Report extends \Ilch\Model
     /**
      * @return string
      */
-    public function getDetails()
+    public function getDetails(): string
     {
         return $this->details;
     }
@@ -208,7 +210,7 @@ class Report extends \Ilch\Model
      * @param int $user_id
      * @return Report
      */
-    public function setUserId($user_id)
+    public function setUserId(int $user_id): Report
     {
         $this->user_id = $user_id;
         return $this;
@@ -217,7 +219,7 @@ class Report extends \Ilch\Model
     /**
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->user_id;
     }
@@ -226,7 +228,7 @@ class Report extends \Ilch\Model
      * @param string $username
      * @return Report
      */
-    public function setUsername($username)
+    public function setUsername(string $username): Report
     {
         $this->username = $username;
         return $this;
@@ -235,7 +237,7 @@ class Report extends \Ilch\Model
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }

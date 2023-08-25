@@ -6,15 +6,18 @@
 
 namespace Modules\Forum\Mappers;
 
+use Ilch\Database\Mysql\Result;
+use Ilch\Date;
+use Ilch\Mapper;
 use Modules\Forum\Models\Remember as RememberModel;
 
-class Remember extends \Ilch\Mapper
+class Remember extends Mapper
 {
     /**
      * @param array $where
      * @return array|RememberModel[]
      */
-    private function getBy($where = [])
+    private function getBy(array $where = []): array
     {
         $remembersArray = $this->db()->select('*')
             ->fields(['r.id', 'r.date', 'r.post_id', 'r.note', 'r.user_id'])
@@ -49,7 +52,7 @@ class Remember extends \Ilch\Mapper
      * @param int $userId
      * @return array|RememberModel[]
      */
-    public function getRememberedPostsByUserId($userId)
+    public function getRememberedPostsByUserId(int $userId): array
     {
         return $this->getBy(['r.user_id' => $userId]);
     }
@@ -60,7 +63,7 @@ class Remember extends \Ilch\Mapper
      * @param int $id
      * @return null|RememberModel
      */
-    public function getRememberById($id)
+    public function getRememberById(int $id): ?RememberModel
     {
         $remember = $this->getBy(['r.id' => $id]);
 
@@ -75,22 +78,12 @@ class Remember extends \Ilch\Mapper
      * Get all remembered posts of a topic of a user.
      *
      * @param int $topicId
+     * @param int $userId
      * @return array|RememberModel[]
      */
-    public function getRememberedPostsByTopicId($topicId, $userId)
+    public function getRememberedPostsByTopicId(int $topicId, int $userId): array
     {
         return $this->getBy(['p.topic_id' => $topicId, 'r.user_id' => $userId]);
-    }
-
-    /**
-     * Get entries by post id.
-     *
-     * @param int $postId
-     * @return array|RememberModel[]
-     */
-    public function getRememberedPostsByPostId($postId)
-    {
-        return $this->getBy(['r.post_id' => $postId]);
     }
 
     /**
@@ -99,7 +92,7 @@ class Remember extends \Ilch\Mapper
      * @param array $where
      * @return bool
      */
-    private function hasEntryWith($where = [])
+    private function hasEntryWith(array $where = []): bool
     {
         return (bool) $this->db()->select('id')
             ->from('forum_remember')
@@ -114,7 +107,7 @@ class Remember extends \Ilch\Mapper
      * @param int $postId
      * @return bool
      */
-    public function hasRememberedPostWithPostId($postId)
+    public function hasRememberedPostWithPostId(int $postId): bool
     {
         return $this->hasEntryWith(['post_id' => $postId]);
     }
@@ -124,7 +117,7 @@ class Remember extends \Ilch\Mapper
      *
      * @param RememberModel $remember
      */
-    public function save($remember)
+    public function save(RememberModel $remember)
     {
         if ($this->hasEntryWith(['id' => $remember->getId()])) {
             $this->db()->update('forum_remember')
@@ -136,7 +129,7 @@ class Remember extends \Ilch\Mapper
         } else {
             $this->db()->insert('forum_remember')
                 ->values([
-                    'date' => new \Ilch\Date(),
+                    'date' => new Date(),
                     'post_id' => $remember->getPostId(),
                     'note' => $remember->getNote(),
                     'user_id' => $remember->getUserId()
@@ -149,25 +142,13 @@ class Remember extends \Ilch\Mapper
      * Delete entry by id for a specific user.
      *
      * @param int $id
-     * @return \Ilch\Database\Mysql\Result|int
+     * @param int $userId
+     * @return Result|int
      */
-    public function delete($id, $userId)
+    public function delete(int $id, int $userId)
     {
         return $this->db()->delete('forum_remember')
             ->where(['id' => $id, 'user_id' => $userId])
-            ->execute();
-    }
-
-    /**
-     * Delete entries for deleted post.
-     *
-     * @param int $postId
-     * @return \Ilch\Database\Mysql\Result|int
-     */
-    public function deleteByPostId($postId)
-    {
-        return $this->db()->delete('forum_remember')
-            ->where(['post_id' => $postId])
             ->execute();
     }
 }

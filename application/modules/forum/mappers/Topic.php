@@ -6,20 +6,30 @@
 
 namespace Modules\Forum\Mappers;
 
+use Ilch\Database\Exception;
+use Ilch\Database\Mysql\Result;
+use Ilch\Mapper;
+use Ilch\Pagination;
+use Modules\Forum\Models\ForumTopic;
 use Modules\Forum\Models\ForumTopic as TopicModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Models\ForumPost as PostModel;
-use Modules\Forum\Mappers\Post as PostMapper;
 
-class Topic extends \Ilch\Mapper
+class Topic extends Mapper
 {
-    public function getTopicsByForumId($id, $pagination = null)
+    /**
+     * @param $id
+     * @param $pagination
+     * @return array|ForumTopic[]
+     * @throws Exception
+     */
+    public function getTopicsByForumId($id, $pagination = null): array
     {
         $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)'])
             ->from(['topics' => 'forum_topics'])
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
             ->where(['topics.forum_id' => (int)$id])
-            ->group(['topics.type', 'topics.id', 'topics.topic_id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
+            ->group(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
             ->order(['topics.type' => 'DESC', 'latest_post' => 'DESC']);
 
         if ($pagination !== null) {
@@ -34,7 +44,6 @@ class Topic extends \Ilch\Mapper
         $topicArray = $result->fetchRows();
 
         $entry = [];
-        $user = null;
         $dummyUser = null;
         $userCache = [];
 
@@ -42,7 +51,6 @@ class Topic extends \Ilch\Mapper
             $entryModel = new TopicModel();
             $userMapper = new UserMapper();
             $entryModel->setId($entries['id']);
-            $entryModel->setTopicId($entries['topic_id']);
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
@@ -74,10 +82,10 @@ class Topic extends \Ilch\Mapper
     /**
      * Get a list of topic ids of topics in a forum.
      *
-     * @param integer $id
+     * @param int $id
      * @return array array of topic ids
      */
-    public function getTopicsListByForumId($id)
+    public function getTopicsListByForumId(int $id): array
     {
         $result = $this->db()->select('id')
             ->from('forum_topics')
@@ -95,16 +103,16 @@ class Topic extends \Ilch\Mapper
     /**
      * Get the topics.
      *
-     * @param null|\Ilch\Pagination $pagination
-     * @param null|array $limit
-     * @return array
-     * @throws \Ilch\Database\Exception
+     * @param Pagination|null $pagination
+     * @param array|null $limit
+     * @return array|ForumTopic[]
+     * @throws Exception
      */
-    public function getTopics($pagination = null, $limit = null)
+    public function getTopics(Pagination $pagination = null, array $limit = null): array
     {
         $sql = $this->db()->select('*')
             ->from(['forum_topics'])
-            ->group(['type', 'id', 'topic_id', 'topic_prefix', 'topic_title', 'visits', 'creator_id', 'date_created', 'forum_id', 'status'])
+            ->group(['type', 'id', 'topic_prefix', 'topic_title', 'visits', 'creator_id', 'date_created', 'forum_id', 'status'])
             ->order(['type' => 'DESC', 'id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -123,7 +131,6 @@ class Topic extends \Ilch\Mapper
 
 
         $entry = [];
-        $user = null;
         $dummyUser = null;
         $userCache = [];
 
@@ -132,7 +139,6 @@ class Topic extends \Ilch\Mapper
             $userMapper = new UserMapper();
             $entryModel->setId($entries['id']);
             $entryModel->setForumId($entries['forum_id']);
-            $entryModel->setTopicId($entries['topic_id']);
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
             $entryModel->setStatus($entries['status']);
@@ -164,14 +170,14 @@ class Topic extends \Ilch\Mapper
     /**
      * Get topic by id.
      *
-     * @param integer $id
-     * @return TopicModel
+     * @param int $id
+     * @return TopicModel|null
      */
-    public function getTopicById($id)
+    public function getTopicById(int $id): ?TopicModel
     {
         $topic = $this->db()->select('*')
             ->from('forum_topics')
-            ->where(['id' => (int)$id])
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -199,19 +205,25 @@ class Topic extends \Ilch\Mapper
     }
 
     /**
-     * Get last post by topic id.
+     * Get last post by topic id and user id.
      *
      * @param int $id topic id
+     * @param int|null $userId user id
      * @return PostModel|null
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
-    public function getLastPostByTopicId($id)
+    public function getLastPostByTopicId(int $id, int $userId = null): ?PostModel
     {
-        $lastPostRow = $this->db()->select()
-            ->fields(['id', 'topic_id', 'date_created', 'user_id', 'read'])
-            ->from('forum_posts')
-            ->where(['topic_id' => $id])
-            ->order(['date_created' => 'DESC'])
+        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.date_created', 'p.user_id', 'p.forum_id'])
+            ->from(['p' => 'forum_posts']);
+
+        if ($userId) {
+            $select->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id', 'tr.datetime >= p.date_created'], 'LEFT', ['topic_read' => 'tr.datetime'])
+                ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id', 'fr.datetime >= p.date_created'], 'LEFT', ['forum_read' => 'fr.datetime']);
+        }
+
+        $lastPostRow = $select->where(['p.topic_id' => $id])
+            ->order(['p.date_created' => 'DESC'])
             ->limit(1)
             ->execute()
             ->fetchAssoc();
@@ -224,52 +236,56 @@ class Topic extends \Ilch\Mapper
         $userMapper = new UserMapper();
         $entryModel->setId($lastPostRow['id']);
         $user = $userMapper->getUserById($lastPostRow['user_id']);
+
         if ($user) {
             $entryModel->setAutor($user);
         } else {
             $entryModel->setAutor($userMapper->getDummyUser());
         }
+
         $entryModel->setDateCreated($lastPostRow['date_created']);
         $entryModel->setTopicId($lastPostRow['topic_id']);
-        $entryModel->setRead($lastPostRow['read']);
+
+        if ($userId) {
+            $entryModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
+        }
 
         return $entryModel;
     }
 
     /**
-     * Inserts or updates File entry.
+     * Inserts or updates a topic.
      *
      * @param TopicModel $model
+     * @return Result|int
      */
     public function save(TopicModel $model)
     {
         if ($model->getId()) {
-            $this->db()->update('forum_topics')
-                ->values(['topic_id' => $model->getTopicId(), 'forum_id' => $model->getForumId()])
+            return $this->db()->update('forum_topics')
+                ->values(['forum_id' => $model->getForumId()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('forum_topics')
+            return $this->db()->insert('forum_topics')
                 ->values([
                     'topic_prefix' => $model->getTopicPrefix(),
                     'topic_title' => $model->getTopicTitle(),
-                    'topic_id' => $model->getTopicId(),
                     'forum_id' => $model->getForumId(),
                     'creator_id' => $model->getCreatorId(),
                     'type' => $model->getType(),
                     'date_created' => $model->getDateCreated()
                 ])
                 ->execute();
-            $this->last_insert_id = $this->db()->getLastInsertId();
         }
     }
 
     /**
      * Updates topic status with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function updateStatus($id)
+    public function updateStatus(int $id)
     {
         $status = (int) $this->db()->select('status')
                         ->from('forum_topics')
@@ -286,9 +302,9 @@ class Topic extends \Ilch\Mapper
     /**
      * Updates topic type with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function updateType($id)
+    public function updateType(int $id)
     {
         $type = (int) $this->db()->select('type')
             ->from('forum_topics')
@@ -318,20 +334,12 @@ class Topic extends \Ilch\Mapper
     }
 
     /**
-     * @return mixed
-     */
-    public function getLastInsertId()
-    {
-        return $this->last_insert_id;
-    }
-
-    /**
      * Get x topics with latest activity where x is specified by the limit.
      *
-     * @param null|integer $limit
+     * @param int|null $limit
      * @return array[]
      */
-    public function getLastActiveTopics($limit = null)
+    public function getLastActiveTopics(int $limit = null): array
     {
         $sql = 'SELECT * 
                 FROM 
@@ -344,7 +352,7 @@ class Topic extends \Ilch\Mapper
                 ORDER BY `innerfrom`.`date_created` DESC';
 
         if ($limit !== null) {
-            $sql .= ' LIMIT '.(int)$limit;
+            $sql .= ' LIMIT '. $limit;
         }
 
         return $this->db()->queryArray($sql);
@@ -354,15 +362,10 @@ class Topic extends \Ilch\Mapper
      * Delete topic by id.
      *
      * @param int $id
-     * @throws \Ilch\Database\Exception
      */
-    public function deleteById($id)
+    public function deleteById(int $id)
     {
-        $postMapper = new PostMapper();
-        $posts = $postMapper->getPostsByTopicId($id);
-        foreach ($posts as $post) {
-            $postMapper->deleteById($post->getId());
-        }
+        // Posts get deleted by FKC.
         $this->db()->delete('forum_topics')
         ->where(['id' => $id])
         ->execute();

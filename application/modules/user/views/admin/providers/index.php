@@ -29,7 +29,7 @@
                                 </span>
                             <?php else: ?>
                                 <span class="text-success">
-                                    <i class="fa-solid fa-check fa-fw"></i> <b><?=$this->escape($provider->module_name) ?></b> (<?= $provider->getModule() ?>)
+                                    <i class="fa-solid fa-check fa-fw"></i> <b><?=$this->escape($provider->getModuleName()) ?></b> (<?= $provider->getModule() ?>)
                                 </span>
                             <?php endif; ?>
                         </td>

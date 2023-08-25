@@ -212,6 +212,8 @@ if (!empty($_SESSION['shopping_cart'])) {
     </a>
     <?php } ?>
 </div>
+
+<?php if (isset($_SESSION['shopping_cart'])) : ?>
 <script>
 let willCollect = $('#willCollect');
 
@@ -281,3 +283,4 @@ $('.plus-btn').on('click', function(e) {
     $('#reload').css('display','inline-block');
 });
 </script>
+<?php endif; ?>

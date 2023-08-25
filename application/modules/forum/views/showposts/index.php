@@ -1,4 +1,7 @@
 <?php
+
+use Ilch\Date;
+
 $forumMapper = $this->get('forumMapper');
 $rankMapper = $this->get('rankMapper');
 $posts = $this->get('posts');
@@ -23,7 +26,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
     foreach ($prefix as $key => $value) {
         if ($topicpost->getTopicPrefix() == $key) {
             $value = trim($value);
-            $prefix = '['.$value.'] ';
+            $prefix = '[' . $value . '] ';
         }
     }
 }
@@ -43,7 +46,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             <div class="col-lg-12">
                 <?php if ($topicpost->getStatus() == 0): ?>
                     <?php if ($this->getUser()): ?>
-                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
+                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
                             <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                 <span class="btn-label">
                                     <i class="fa-solid fa-plus"></i>
@@ -90,7 +93,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
         </div>
         <?php foreach ($posts as $post): ?>
             <?php
-            $date = new \Ilch\Date($post->getDateCreated());
+            $date = new Date($post->getDateCreated());
             $reported = in_array($post->getId(), $reportedPostsIds);
             $remembered = in_array($post->getId(), $rememberedPostIds);
             ?>
@@ -163,7 +166,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         <?php foreach ($post->getAutor()->getGroups() as $group): ?>
                             <i class="forum appearance<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></i><br>
                         <?php endforeach; ?>
-                        <i><?=$this->escape($rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle()) ?></i>
+                        <i><?=($post->getAutorAllPost()) ? $this->escape($rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle()) : '' ?></i>
                     </dd>
                     <dd>&nbsp;</dd>
                     <dd><b><?=$this->getTrans('posts') ?>:</b> <?=$post->getAutorAllPost() ?></dd>
@@ -172,23 +175,23 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             </div>
             <div class="post-footer ilch-bg">
                 <?php if ($this->get('postVoting')) : ?>
-                    <?php
-                    $votes = explode(',', $post->getVotes());
-                    $countOfVotes = count($votes) - 1;
-                    ?>
-                    <?php if ($this->getUser() && !in_array($this->getUser()->getId(), $votes)) : ?>
+                    <?php if ($this->getUser() && !$post->isUserHasVoted()) : ?>
                         <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
-                            <i class="fa-solid fa-thumbs-up"></i> <?=$countOfVotes ?>
+                            <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
                         </a>
-                    <?php else: ?>
+                    <?php elseif ($this->getUser() && $post->isUserHasVoted()) : ?>
                         <button class="btn btn-sm btn-default btn-success">
-                            <i class="fa-solid fa-thumbs-up"></i> <?=$countOfVotes ?>
+                            <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
+                        </button>
+                    <?php else : ?>
+                        <button class="btn btn-sm btn-default">
+                            <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
                         </button>
                     <?php endif; ?>
                 <?php endif; ?>
                 <?php if ($this->getUser()): ?>
                     <div class="quote">
-                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
+                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
                             <p class="quote-post">
                                 <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
                         <span class="btn-label">
@@ -226,7 +229,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
         <div class="topic-actions">
             <?php if ($topicpost->getStatus() == 0): ?>
                 <?php if ($this->getUser()): ?>
-                    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplayAccess()))): ?>
+                    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                             <span class="btn-label">
                                 <i class="fa-solid fa-plus"></i>

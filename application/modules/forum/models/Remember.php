@@ -6,17 +6,19 @@
 
 namespace Modules\Forum\Models;
 
+use Ilch\Model;
+
 /**
  * The remember model class.
  *
  * @package ilch
  */
-class Remember extends \Ilch\Model
+class Remember extends Model
 {
     /**
      * The id of the remember.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -30,21 +32,21 @@ class Remember extends \Ilch\Model
     /**
      * The forum id of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $forum_id;
 
     /**
      * The topic id of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $topic_id;
 
     /**
      * The id of the post.
      *
-     * @var integer
+     * @var int
      */
     protected $post_id;
 
@@ -65,16 +67,16 @@ class Remember extends \Ilch\Model
     /**
      * The user id.
      *
-     * @var integer
+     * @var int
      */
     protected $user_id;
 
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
@@ -82,9 +84,9 @@ class Remember extends \Ilch\Model
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -93,7 +95,7 @@ class Remember extends \Ilch\Model
      * @param string $date
      * @return Remember
      */
-    public function setDate($date)
+    public function setDate(string $date): Remember
     {
         $this->date = $date;
         return $this;
@@ -102,7 +104,7 @@ class Remember extends \Ilch\Model
     /**
      * @return string
      */
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
     }
@@ -111,7 +113,7 @@ class Remember extends \Ilch\Model
      * @param int $forum_id
      * @return Remember
      */
-    public function setForumId($forum_id)
+    public function setForumId(int $forum_id): Remember
     {
         $this->forum_id = $forum_id;
         return $this;
@@ -120,7 +122,7 @@ class Remember extends \Ilch\Model
     /**
      * @return int
      */
-    public function getForumId()
+    public function getForumId(): int
     {
         return $this->forum_id;
     }
@@ -129,7 +131,7 @@ class Remember extends \Ilch\Model
      * @param int $topic_id
      * @return Remember
      */
-    public function setTopicId($topic_id)
+    public function setTopicId(int $topic_id): Remember
     {
         $this->topic_id = $topic_id;
         return $this;
@@ -138,7 +140,7 @@ class Remember extends \Ilch\Model
     /**
      * @return int
      */
-    public function getTopicId()
+    public function getTopicId(): int
     {
         return $this->topic_id;
     }
@@ -147,7 +149,7 @@ class Remember extends \Ilch\Model
      * @param int $post_id
      * @return Remember
      */
-    public function setPostId($post_id)
+    public function setPostId(int $post_id): Remember
     {
         $this->post_id = $post_id;
         return $this;
@@ -156,7 +158,7 @@ class Remember extends \Ilch\Model
     /**
      * @return int
      */
-    public function getPostId()
+    public function getPostId(): int
     {
         return $this->post_id;
     }
@@ -165,7 +167,7 @@ class Remember extends \Ilch\Model
      * @param string $note
      * @return Remember
      */
-    public function setNote($note)
+    public function setNote(string $note): Remember
     {
         $this->note = $note;
         return $this;
@@ -174,7 +176,7 @@ class Remember extends \Ilch\Model
     /**
      * @return string
      */
-    public function getNote()
+    public function getNote(): string
     {
         return $this->note;
     }
@@ -183,7 +185,7 @@ class Remember extends \Ilch\Model
      * @param int $user_id
      * @return Remember
      */
-    public function setUserId($user_id)
+    public function setUserId(int $user_id): Remember
     {
         $this->user_id = $user_id;
         return $this;
@@ -192,7 +194,7 @@ class Remember extends \Ilch\Model
     /**
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->user_id;
     }
@@ -200,7 +202,7 @@ class Remember extends \Ilch\Model
     /**
      * @return string
      */
-    public function getTopicTitle()
+    public function getTopicTitle(): string
     {
         return $this->topicTitle;
     }
@@ -208,7 +210,7 @@ class Remember extends \Ilch\Model
     /**
      * @param string $topicTitle
      */
-    public function setTopicTitle($topicTitle)
+    public function setTopicTitle(string $topicTitle)
     {
         $this->topicTitle = $topicTitle;
     }

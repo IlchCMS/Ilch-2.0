@@ -6,10 +6,11 @@
 
 namespace Modules\Forum\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\User\Mappers\Group as GroupMapper;
 use Modules\Forum\Mappers\GroupRanking as GroupRankingMapper;
 
-class Settings extends \Ilch\Controller\Admin
+class Settings extends Admin
 {
     public function init()
     {
@@ -131,7 +132,7 @@ class Settings extends \Ilch\Controller\Admin
      * @param array $appearances Appearance settings
      * @return string Filename of the css file on success
      */
-    private function writeCSSFile($appearances)
+    private function writeCSSFile(array $appearances)
     {
         $content = '';
         foreach ($appearances as $key => $value) {

@@ -6,6 +6,7 @@
 
 namespace Modules\Forum\Controllers;
 
+use Ilch\Controller\Frontend;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
@@ -14,7 +15,7 @@ use Modules\User\Mappers\Group as GroupMapper;
 use Modules\Forum\Mappers\GroupRanking as GroupRankingMapper;
 use Ilch\Layout\Helper\LinkTag\Model as LinkTagModel;
 
-class Index extends \Ilch\Controller\Frontend
+class Index extends Frontend
 {
     public function indexAction()
     {
@@ -31,12 +32,11 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('forum'), ['action' => 'index']);
 
-        $forumItems = $forumMapper->getForumItemsByParent(0);
+        $forumItems = $forumMapper->getForumItemsByParent(0, ($this->getUser()) ? $this->getUser()->getId() : null);
         $whoWasOnlineUsers = $visitMapper->getWhoWasOnline();
         $allOnlineUsers = $visitMapper->getVisitsCountOnline();
         $usersOnline = $visitMapper->getVisitsOnlineUser();
 
-        $userId = null;
         $groupIds = [3];
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();

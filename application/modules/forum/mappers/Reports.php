@@ -1,20 +1,23 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Forum\Mappers;
 
+use Ilch\Database\Mysql\Result;
+use Ilch\Date;
+use Ilch\Mapper;
 use Modules\Forum\Models\Report as ReportModel;
 
-class Reports extends \Ilch\Mapper
+class Reports extends Mapper
 {
     /**
      * @param array $where
      * @return array|ReportModel[]
      */
-    private function getBy($where = [])
+    private function getBy(array $where = []): array
     {
         $reportsArray = $this->db()->select('*')
             ->fields(['r.id', 'r.date', 'r.post_id', 'r.reason', 'r.details', 'r.user_id'])
@@ -49,7 +52,7 @@ class Reports extends \Ilch\Mapper
      *
      * @return array|ReportModel[]
      */
-    public function getReports()
+    public function getReports(): array
     {
         return $this->getBy();
     }
@@ -57,10 +60,10 @@ class Reports extends \Ilch\Mapper
     /**
      * Get report by id.
      *
-     * @param $id
+     * @param int $id
      * @return null|ReportModel
      */
-    public function getReportById($id)
+    public function getReportById(int $id): ?ReportModel
     {
         $report = $this->getBy(['r.id' => $id]);
 
@@ -74,11 +77,11 @@ class Reports extends \Ilch\Mapper
     /**
      * Add report.
      *
-     * @param $report
+     * @param ReportModel $report
      */
-    public function addReport($report)
+    public function addReport(ReportModel $report)
     {
-        $date = new \Ilch\Date();
+        $date = new Date();
 
         $this->db()->insert('forum_reports')
             ->values([
@@ -94,10 +97,10 @@ class Reports extends \Ilch\Mapper
     /**
      * Delete report by id.
      *
-     * @param $id
-     * @return \Ilch\Database\Mysql\Result|int
+     * @param int $id
+     * @return Result|int
      */
-    public function deleteReport($id)
+    public function deleteReport(int $id)
     {
         return $this->db()->delete('forum_reports')
             ->where(['id' => $id])

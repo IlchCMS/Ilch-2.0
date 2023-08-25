@@ -1,4 +1,4 @@
-<h1><?=($this->get('rank')->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<h1><?=($this->get('rank')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
@@ -10,7 +10,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->escape($this->get('rank')->getTitle()) ?>"
+                   value="<?=($this->get('rank')) ? $this->escape($this->get('rank')->getTitle()) : '' ?>"
                    required />
         </div>
     </div>
@@ -24,7 +24,7 @@
                    id="posts"
                    name="posts"
                    min="0"
-                   value="<?=$this->escape($this->get('rank')->getPosts()) ?>"
+                   value="<?=($this->get('rank')) ? $this->escape($this->get('rank')->getPosts()) : '' ?>"
                    required />
         </div>
     </div>
