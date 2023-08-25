@@ -1,14 +1,15 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\User\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\User\Mappers\AuthProvider;
 
-class Providers extends \Ilch\Controller\Admin
+class Providers extends Admin
 {
     public function init()
     {
