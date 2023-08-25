@@ -90,7 +90,7 @@ class Shoutbox extends \Ilch\Mapper
         $pagination = null;
         if ($limit) {
             $pagination = new \Ilch\Pagination();
-            $pagination->setRows($limit);
+            $pagination->setRowsPerPage($limit);
         }
         return $this->getEntriesBy([], ['id' => 'DESC'], $pagination);
     }
