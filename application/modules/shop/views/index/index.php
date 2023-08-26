@@ -1,5 +1,6 @@
 <?php
 $categories = $this->get('categories');
+$countAllItems = $this->get('countAllItems');
 $countCats = $this->get('countCats');
 $shopItems = $this->get('shopItems');
 $itemsMapper = $this->get('itemsMapper');
@@ -67,21 +68,25 @@ if(!empty($_SESSION['shopping_cart'])) {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$this->getTrans('menuCats') ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <li <?=($this->getRequest()->getParam('catId') == 'all') ? 'class="active"' : ''; ?>>
+                                <a href="<?=$this->getUrl('shop/index/index/catId/all')?>#shopAnker">
+                                    <?=$this->getTrans('allProducts') ?>
+                                    <span class="countItems">[<?=$countAllItems ?>]</span>
+                                </a>
+                            </li>
                             <?php foreach ($categories as $category) :
                                 $countCat = (isset($countCats[$category->getId()])) ? $countCats[$category->getId()] : 0;
-                                if ($category->getId() == $this->get('firstCatId') || $category->getId() == $this->getRequest()->getParam('catId')) {
+                                if (($category->getId() == $this->get('firstCatId') && $this->getRequest()->getParam('catId') != 'all') || $category->getId() == $this->getRequest()->getParam('catId')) {
                                     $active = 'class="active"';
                                 } else {
                                     $active = '';
                                 }
-
                                 if ($countCat > 0) : ?>
                                     <li <?=$active ?>>
                                         <a href="<?=$this->getUrl('shop/index/index/catId/' . $category->getId()) ?>#shopAnker">
                                             <?=$this->escape($category->getTitle()) ?>
                                             <span class="countItems">[<?=$countCat ?>]</span>
                                         </a>
-                                        
                                     </li>
                                 <?php endif; ?>
                             <?php endforeach; ?>

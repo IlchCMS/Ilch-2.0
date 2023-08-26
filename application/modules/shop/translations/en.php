@@ -15,6 +15,7 @@ return [
     'administration' => 'Administration',
     'AGB' => 'Terms of Service',
     'alreadyInCart' => 'is already in the shopping cart!',
+    'allProducts' => 'All products',
     'approx' => 'approx.',
     'available' => 'available',
     'back' => 'Back',

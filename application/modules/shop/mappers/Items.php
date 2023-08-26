@@ -75,6 +75,21 @@ class Items extends Mapper
     }
 
     /**
+     * Get count of all active items.
+     *
+     * @param int $status
+     * @return int
+     */
+    public function getCountOfItems(int $status = 1): int
+    {
+        return (int)$this->db()->select('COUNT(*)')
+            ->from('shop_items')
+            ->where(['status' => $status])
+            ->execute()
+            ->fetchCell();
+    }
+
+    /**
      * Return count of items per category.
      *
      * @param array $catIds
