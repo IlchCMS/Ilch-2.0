@@ -14,11 +14,11 @@ $coreVersion = $this->get('coreVersion');
 $modulesNotInstalled = $this->get('modulesNotInstalled');
 ?>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">'.$this->getTrans('lastUpdateOn').' '.$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true).'</span>' : $this->getTrans('lastUpdateOn').': '.$this->getTrans('lastUpdateUnknown') ?></p>
-
+<div class="row">
 <?php foreach ($this->get('layouts') as $layout): ?>
     <div id="layouts" class="col-lg-3 col-sm-6">
-        <div class="panel panel-ilch">
-            <div class="panel-heading">
+        <div class="card panel-ilch">
+            <div class="card-heading">
                 <div class="clearfix">
                     <div class="pull-left">
                         <b><?=$this->escape($layout->getName()) ?></b>
@@ -34,7 +34,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <span data-toggle="modal"
                       data-target="#infoModal<?=$layout->getKey() ?>"
                       title="<?=$this->getTrans('info') ?>">
@@ -42,7 +42,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                 </span>
                 <?=($layout->getOfficial()) ? '<span class="ilch-official">ilch</span>' : '' ?>
             </div>
-            <div class="panel-footer">
+            <div class="card-footer">
                 <div class="clearfix">
                     <div class="pull-left">
                         <?php
@@ -157,7 +157,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
         $screen = '<img src="'.$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png').'" alt="'.$this->escape($layout->getName()).'" title="'.$this->escape($layout->getName()).'" />';
         $author = $this->escape($layout->getAuthor());
     }
-    
+
     $layoutInfo = '<center>'.$screen.'</center><br />
                    <b>'.$this->getTrans('name').':</b> '.$this->escape($layout->getName()).'<br />
                    <b>'.$this->getTrans('version').':</b> '.$this->escape($layout->getVersion()).'<br />
@@ -168,7 +168,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
     ?>
     <?=$this->getDialog('infoModal'.$layout->getKey(), $this->getTrans('menuLayout').' '.$this->getTrans('info'), $layoutInfo) ?>
 <?php endforeach; ?>
-
+</div>
 <?=$this->getDialog('deleteModal', $this->getTrans('delete'), $this->getTrans('needAcknowledgement'), 1) ?>
 <script>
 $('.deleteLayout').on('click', function(event) {
