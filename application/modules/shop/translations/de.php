@@ -15,6 +15,7 @@ return [
     'administration' => 'Administration',
     'AGB' => 'Allgemeine Geschäftsbedingungen',
     'alreadyInCart' => 'befindet sich schon im Warenkorb!',
+    'allProducts' => 'Alle Produkte',
     'approx' => 'ca.',
     'available' => 'vorhanden',
     'back' => 'Zurück',

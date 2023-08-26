@@ -53,6 +53,7 @@ class Index extends Frontend
             $catIds[] = $category->getId();
         }
         $countCats = $itemsMapper->getCountOfItemsPerCategory($catIds);
+        $countAllItems = $itemsMapper->getCountOfItems();
 
         if ($this->getRequest()->getParam('catId') && is_numeric($this->getRequest()->getParam('catId'))) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
@@ -74,13 +75,26 @@ class Index extends Frontend
             }
 
             $shopItems = $itemsMapper->getShopItems(['cat_id' => $this->getRequest()->getParam('catId'), 'status' => 1]);
-        } elseif (!empty($categories)) {
+        } elseif ($this->getRequest()->getParam('catId') && $this->getRequest()->getParam('catId') == 'all') {
             $this->getLayout()->header()->css('static/css/style_front.css');
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                ->add($categories[0]->getTitle(), ['action' => 'index', 'catId' => $categories[0]->getId()]);
+                ->add($this->getTranslator()->trans('allProducts'), ['action' => 'index', 'catId' => 'all']);
+            $shopItems = $itemsMapper->getShopItems(['status' => 1]);
+        } elseif (!empty($categories)) {
+            $this->getLayout()->header()->css('static/css/style_front.css');
             $shopItems = $itemsMapper->getShopItems(['cat_id' => $categories[0]->getId(), 'status' => 1]);
-            $this->getView()->set('firstCatId', $categories[0]->getId());
+            if (empty($shopItems)) {
+                $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('allProducts'), ['action' => 'index', 'catId' => 'all']);
+                $shopItems = $itemsMapper->getShopItems(['status' => 1]);
+            } else {
+                $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+                    ->add($categories[0]->getTitle(), ['action' => 'index', 'catId' => $categories[0]->getId()]);
+                $this->getView()->set('firstCatId', $categories[0]->getId());
+            }
         } else {
             $this->getLayout()->header()->css('static/css/style_front.css');
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
@@ -88,6 +102,7 @@ class Index extends Frontend
         }
 
         $this->getView()->set('categories', $categories);
+        $this->getView()->set('countAllItems', $countAllItems);
         $this->getView()->set('countCats', $countCats);
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('itemsMapper', $itemsMapper);
