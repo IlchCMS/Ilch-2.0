@@ -66,7 +66,6 @@ $postsPerPage = $this->get('postsPerPage');
                 <?php if (!empty($topics)): ?>
                     <?php foreach ($topics as $topic): ?>
                         <?php $lastPost = ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic->getId(), $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic->getId()) ?>
-                        <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
                         <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
                         <li class="row ilch-border ilch-bg--hover <?=($topic->getType() == '1') ? 'tack' : '' ?>">
                             <dl class="icon
@@ -122,7 +121,7 @@ $postsPerPage = $this->get('postsPerPage');
                                         <?=$this->getTrans('views') ?>:
                                     </div>
                                     <div class="pull-left text-justify">
-                                        <?=$countPosts - 1 ?>
+                                        <?=$topic->getCountPosts() - 1 ?>
                                         <br />
                                         <?=$topic->getVisits() ?>
                                     </div>
@@ -138,7 +137,7 @@ $postsPerPage = $this->get('postsPerPage');
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                             <?=$this->escape($lastPost->getAutor()->getName()) ?>
                                         </a>
-                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId(), 'page' => ($DESCPostorder ? 1 : ceil($countPosts / $postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
+                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId(), 'page' => ($DESCPostorder ? 1 : ceil($topic->getCountPosts() / $postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
                                             <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
                                         </a>
                                         <br>
@@ -226,7 +225,7 @@ $postsPerPage = $this->get('postsPerPage');
 $('.row.tack').last().addClass('last');
 
 $('input[type=checkbox]').change(function () {
-    var checked = false,
+    let checked = false,
         checkedBoxes = 0,
         checkboxes = document.getElementsByName('check_topics[]'),
         allCheckbox = document.getElementById('allTopics');
@@ -242,7 +241,7 @@ $('input[type=checkbox]').change(function () {
         }
     }
 
-    if (checkedBoxes == 0) {
+    if (checkedBoxes === 0) {
         checked = false;
     }
 

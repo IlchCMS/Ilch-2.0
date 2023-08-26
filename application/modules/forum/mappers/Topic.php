@@ -10,7 +10,6 @@ use Ilch\Database\Exception;
 use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Ilch\Pagination;
-use Modules\Forum\Models\ForumTopic;
 use Modules\Forum\Models\ForumTopic as TopicModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Models\ForumPost as PostModel;
@@ -20,12 +19,12 @@ class Topic extends Mapper
     /**
      * @param $id
      * @param $pagination
-     * @return array|ForumTopic[]
+     * @return array|TopicModel[]
      * @throws Exception
      */
     public function getTopicsByForumId($id, $pagination = null): array
     {
-        $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)'])
+        $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)', 'countPosts' => 'COUNT(posts.id)'])
             ->from(['topics' => 'forum_topics'])
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
             ->where(['topics.forum_id' => (int)$id])
@@ -73,6 +72,7 @@ class Topic extends Mapper
             $entryModel->setTopicPrefix($entries['topic_prefix']);
             $entryModel->setTopicTitle($entries['topic_title']);
             $entryModel->setDateCreated($entries['date_created']);
+            $entryModel->setCountPosts($entries['countPosts']);
             $entry[] = $entryModel;
         }
 
@@ -105,15 +105,16 @@ class Topic extends Mapper
      *
      * @param Pagination|null $pagination
      * @param array|null $limit
-     * @return array|ForumTopic[]
+     * @return array|TopicModel[]
      * @throws Exception
      */
     public function getTopics(Pagination $pagination = null, array $limit = null): array
     {
-        $sql = $this->db()->select('*')
-            ->from(['forum_topics'])
-            ->group(['type', 'id', 'topic_prefix', 'topic_title', 'visits', 'creator_id', 'date_created', 'forum_id', 'status'])
-            ->order(['type' => 'DESC', 'id' => 'DESC']);
+        $sql = $this->db()->select(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
+            ->from(['topics' => 'forum_topics'])
+            ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT', ['countPosts' => 'COUNT(posts.id)'])
+            ->group(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
+            ->order(['topics.type' => 'DESC', 'topics.id' => 'DESC']);
 
         if ($pagination !== null) {
             $sql->limit($pagination->getLimit())
@@ -161,6 +162,7 @@ class Topic extends Mapper
             $entryModel->setTopicPrefix($entries['topic_prefix']);
             $entryModel->setTopicTitle($entries['topic_title']);
             $entryModel->setDateCreated($entries['date_created']);
+            $entryModel->setCountPosts($entries['countPosts']);
             $entry[] = $entryModel;
         }
 
