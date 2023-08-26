@@ -104,9 +104,9 @@ class Dialog extends \Ilch\Model
     /**
      * Get the ID of the message
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -127,9 +127,9 @@ class Dialog extends \Ilch\Model
     /**
      * Get the CONVERSATION_ID of the dialog
      *
-     * @return int
+     * @return int|null
      */
-    public function getCId(): int
+    public function getCId(): ?int
     {
         return $this->c_id;
     }
@@ -265,9 +265,9 @@ class Dialog extends \Ilch\Model
     /**
      * Get the text of the dialog
      *
-     * @return string
+     * @return string|null
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
