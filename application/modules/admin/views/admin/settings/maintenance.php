@@ -3,7 +3,7 @@
 <h1><?=$this->getTrans('menuMaintenance') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('maintenanceMode') ?>:
         </div>
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="maintenanceDateTime" class="col-md-2 control-label">
             <?=$this->getTrans('maintenanceEndDateTime') ?>:
         </label>
@@ -32,18 +32,18 @@
             </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="maintenanceStatus" class="col-md-2 control-label">
             <?=$this->getTrans('maintenanceStatus') ?>:
         </label>
         <div class="col-lg-4">
             <div class="range">
-                <input type="range" name="maintenanceStatus" min="0" max="100" value="<?=$this->escape($this->get('maintenanceStatus')) ?>" onchange="range.value=value">
+                <input type="range" class="form-range" name="maintenanceStatus" min="0" max="100" value="<?=$this->escape($this->get('maintenanceStatus')) ?>" onchange="range.value=value">
                 <output id="range"><?=$this->escape($this->get('maintenanceStatus')) ?></output>
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="maintenanceText" class="col-lg-2 control-label">
             <?=$this->getTrans('maintenanceText') ?>:
         </label>

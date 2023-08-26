@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('menuHtaccess') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('modRewrite') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('modRewrite') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('modRewrite') ?>:
         </div>
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-6">
             <textarea class="form-control"
                       id="htaccess"
