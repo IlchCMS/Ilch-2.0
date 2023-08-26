@@ -26,7 +26,7 @@
                 <div class="installVersion" title="<?=$this->getTrans('ilchInstall', VERSION) ?>">
                     <?=$this->getTrans('ilchInstallVersion', VERSION) ?>
                 </div>
-                <form autocomplete="off" class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => urlencode($this->getRequest()->getActionName())]) ?>">
+                <form autocomplete="off" class="row gy-2 gx-4" method="POST" action="<?=$this->getUrl(['action' => urlencode($this->getRequest()->getActionName())]) ?>">
                     <?=$this->getTokenField() ?>
                     <div class="col-lg-4 col-md-3 col-sm-3 hidden-xs verticalLine install_step">
                         <?php
