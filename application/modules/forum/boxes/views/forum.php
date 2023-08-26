@@ -34,7 +34,7 @@ $postsPerPage = $this->get('postsPerPage');
                     <?php else: ?>
                         <img src="<?=$this->getStaticUrl('../application/modules/forum/static/img/topic_read.png') ?>" style="float: left; margin-top: 8px;" alt="<?=$this->getTrans('read') ?>">
                     <?php endif; ?>
-                    <a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $topic['topic_id'], 'page' => ($DESCPostorder?1:ceil($countPosts/$postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
+                    <a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $topic['topic_id'], 'page' => ($DESCPostorder ? 1 : ceil($countPosts / $postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
                         <?=$this->escape($topic['topic_title']) ?>
                     </a>
                     <br />

@@ -43,7 +43,8 @@ class Showposts extends Frontend
         $reportsMapper = new ReportsMapper();
         $rememberMapper = new RememberMapper();
 
-        $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
+        $rowsPerPage = !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage');
+        $pagination->setRowsPerPage($rowsPerPage);
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $topicId = $this->getRequest()->getParam('topicid');
@@ -99,9 +100,13 @@ class Showposts extends Frontend
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();
 
-            // Mark topic as read.
-            $trackReadMapper = new TrackReadMapper();
-            $trackReadMapper->markTopicAsRead($this->getUser()->getId(), $topicId, $forum->getId());
+            if (($this->getConfig()->get('forum_DESCPostorder') && $this->getRequest()->getParam('page') == (1 || !$this->getRequest()->getParam('page')))
+                || (!$this->getConfig()->get('forum_DESCPostorder') && ($this->getRequest()->getParam('page') == (ceil($pagination->getRows() / $rowsPerPage))))
+            ) {
+                // Mark topic as read if on the last page or on the first page with descending post order.
+                $trackReadMapper = new TrackReadMapper();
+                $trackReadMapper->markTopicAsRead($this->getUser()->getId(), $topicId, $forum->getId());
+            }
 
             if ($this->getConfig()->get('forum_topicSubscription') == 1) {
                 $topicSubscriptionMapper = new TopicSubscriptionMapper();
