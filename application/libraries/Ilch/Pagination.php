@@ -9,25 +9,27 @@ namespace Ilch;
 class Pagination
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $page = 1;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $rowsPerPage = 20;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $rows;
 
     /**
-     * @param integer $page
+     * @param mixed $page
      */
     public function setPage($page)
     {
+        // Don't change the type to int to avoid errors as $page typically comes from an URL parameter and can be non-numeric.
+        // Changing this would require every usage of this function to be guarded against passing non-numeric values.
         if ($page == null || !is_numeric($page)) {
             $page = 1;
         }
@@ -36,29 +38,38 @@ class Pagination
     }
 
     /**
-     * @param integer $rows
+     * @param int $rows
      */
-    public function setRows($rows)
+    public function setRows(int $rows)
     {
-        $this->rows = intval($rows);
+        $this->rows = $rows;
     }
 
     /**
-     * @param $rowsPerPage
-     * @intern param int $rowsPerPage
+     * Get the number of rows.
+     *
+     * @return int
      */
-    public function setRowsPerPage($rowsPerPage)
+    public function getRows(): int
+    {
+        return $this->rows;
+    }
+
+    /**
+     * @param int|null $rowsPerPage
+     */
+    public function setRowsPerPage(?int $rowsPerPage)
     {
         if ($rowsPerPage == null) {
             $rowsPerPage = 20;
         }
-        $this->rowsPerPage = intval($rowsPerPage);
+        $this->rowsPerPage = $rowsPerPage;
     }
 
     /**
      * @return int[]
      */
-    public function getLimit()
+    public function getLimit(): array
     {
         return [($this->page - 1) * $this->rowsPerPage, $this->rowsPerPage];
     }
@@ -70,14 +81,14 @@ class Pagination
      * @param $urlArray
      * @return string
      */
-    public function getHtml($view, $urlArray)
+    public function getHtml($view, $urlArray): string
     {
         if (empty($this->rows)) {
             return '';
         }
 
         $links = 7;
-        $last = ceil($this->rows/$this->rowsPerPage);
+        $last = ceil($this->rows / $this->rowsPerPage);
 
         if ($last == 1) {
             return '';
@@ -90,30 +101,30 @@ class Pagination
 
         if ($this->page > 1) {
             $urlArray['page'] = $this->page - 1;
-            $html .= '<li><a href="'.$view->getUrl($urlArray).'">&laquo;</a></li>';
+            $html .= '<li><a href="' . $view->getUrl($urlArray) . '">&laquo;</a></li>';
         }
 
         if ($start > 1) {
             $urlArray['page'] = 1;
-            $html .= '<li><a href="'.$view->getUrl($urlArray).'">1</a></li>';
+            $html .= '<li><a href="' . $view->getUrl($urlArray) . '">1</a></li>';
             $html .= '<li class="disabled"><span>...</span></li>';
         }
 
         for ($i = $start; $i <= $end; $i++) {
-            $class  = ($this->page == $i) ? 'active' : '';
+            $class = ($this->page == $i) ? 'active' : '';
             $urlArray['page'] = $i;
-            $html .= '<li class="'.$class.'"><a href="'.$view->getUrl($urlArray).'">'.$i.'</a></li>';
+            $html .= '<li class="' . $class . '"><a href="' . $view->getUrl($urlArray) . '">' . $i . '</a></li>';
         }
 
         if ($end < $last) {
             $urlArray['page'] = $last;
             $html .= '<li class="disabled"><span>...</span></li>';
-            $html .= '<li><a href="'.$view->getUrl($urlArray).'">'.$last.'</a></li>';
+            $html .= '<li><a href="' . $view->getUrl($urlArray) . '">' . $last . '</a></li>';
         }
 
         if ($last > $this->page) {
             $urlArray['page'] = $this->page + 1;
-            $html .= '<li><a href="'.$view->getUrl($urlArray).'">&raquo;</a></li>';
+            $html .= '<li><a href="' . $view->getUrl($urlArray) . '">&raquo;</a></li>';
         }
 
         $html .= '</ul>';
