@@ -162,4 +162,11 @@ function rec($item, $forumMapper, $obj, $readAccess)
         <?php header('location: ' .$this->getUrl(['controller' => 'index', 'action' => 'index']));
         exit; ?>
     <?php endif; ?>
+    <div class="topic-actions">
+    <?php if ($this->getUser()): ?>
+        <div class="pull-right">
+            <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'markallasread', 'id' => $this->getRequest()->getParam('id')], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
+        </div>
+    <?php endif; ?>
+    </div>
 </div>

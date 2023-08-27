@@ -10,7 +10,6 @@ use Ilch\Controller\Frontend;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
-use Modules\Forum\Mappers\TrackRead;
 use Modules\User\Mappers\User as UserMapper;
 
 class Shownewposts extends Frontend
@@ -49,39 +48,5 @@ class Shownewposts extends Frontend
             $this->addMessage('noAccessForum', 'warning');
             $this->redirect(['module' => 'forum', 'controller' => 'index']);
         }
-    }
-
-    public function markallasreadAction()
-    {
-        if ($this->getUser() && $this->getRequest()->isSecure()) {
-            $forumMapper = new ForumMapper();
-            $trackRead = new TrackRead();
-            $userMapper = new UserMapper();
-
-            $adminAccess = $this->getUser()->isAdmin();
-            $forumIds = [];
-            $user = $userMapper->getUserById($this->getUser()->getId());
-
-            $groupIds = [];
-            foreach ($user->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
-            }
-
-            foreach ($forumMapper->getForumItems() as $forumItem) {
-                // If it is a forum and the user is either admin or has read access then the forum can be marked as read.
-                if ($forumItem->getType() === 1 && $adminAccess || is_in_array($groupIds, explode(',', $forumItem->getReadAccess()))) {
-                    $forumIds[] = $forumItem->getId();
-                }
-            }
-
-            if (!empty($forumIds)) {
-                $trackRead->markForumsAsRead($this->getUser()->getId(), $forumIds);
-            }
-            $this->addMessage('markedAllForumsAsRead', 'info');
-        } else {
-            $this->addMessage('noAccessForum', 'warning');
-        }
-
-        $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
     }
 }

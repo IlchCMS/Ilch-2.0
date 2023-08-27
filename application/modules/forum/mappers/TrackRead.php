@@ -52,6 +52,35 @@ class TrackRead extends Mapper
     }
 
     /**
+     * Mark forum as read.
+     *
+     * @param int $userId
+     * @param int $forumId
+     * @return Result|int
+     */
+    public function markForumAsRead(int $userId, int $forumId)
+    {
+        $dateTime = new Date();
+
+        $this->db()->delete('forum_topics_read')
+            ->where(['user_id' => $userId, 'forum_id' => $forumId])
+            ->execute();
+
+        $affectedRows = $this->db()->update('forum_read')
+            ->values(['user_id' => $userId, 'forum_id' => $forumId, 'datetime' => $dateTime])
+            ->where(['user_id' => $userId, 'forum_id' => $forumId])
+            ->execute();
+
+        if (!$affectedRows) {
+            return $this->db()->insert('forum_read')
+                ->values(['user_id' => $userId, 'forum_id' => $forumId, 'datetime' => $dateTime])
+                ->execute();
+        }
+
+        return $affectedRows;
+    }
+
+    /**
      * Mark topics of a forum as read.
      *
      * @param int $userId
@@ -96,21 +125,17 @@ class TrackRead extends Mapper
     {
         $dateTime = new Date();
 
-        $exists = (bool)$this->db()->select('user_id')
-            ->from('forum_topics_read')
+        $affectedRows = $this->db()->update('forum_topics_read')
+            ->values(['user_id' => $userId, 'forum_id' => $forumId, 'topic_id' => $topicId, 'datetime' => $dateTime])
             ->where(['user_id' => $userId, 'topic_id' => $topicId])
-            ->execute()
-            ->fetchCell();
+            ->execute();
 
-        if ($exists) {
-            return $this->db()->update('forum_topics_read')
-                ->values(['user_id' => $userId, 'forum_id' => $forumId, 'topic_id' => $topicId, 'datetime' => $dateTime])
-                ->where(['user_id' => $userId, 'topic_id' => $topicId])
-                ->execute();
-        } else {
+        if (!$affectedRows) {
             return $this->db()->insert('forum_topics_read')
                 ->values(['user_id' => $userId, 'forum_id' => $forumId, 'topic_id' => $topicId, 'datetime' => $dateTime])
                 ->execute();
         }
+
+        return $affectedRows;
     }
 }

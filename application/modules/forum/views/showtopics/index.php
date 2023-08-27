@@ -22,7 +22,6 @@ $postsPerPage = $this->get('postsPerPage');
 
 <?php if ($adminAccess || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
     <div id="forum">
-    
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
             <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
