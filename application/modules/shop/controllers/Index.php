@@ -434,6 +434,10 @@ class Index extends Frontend
         $itemsMapper = new ItemsMapper();
         $userMapper = new UserMapper();
 
+        if (empty($this->getRequest()->getParam('id')) || !is_numeric($this->getRequest()->getParam('id'))) {
+            $this->redirect(['action' => 'index']);
+        }
+
         $shopItem = $itemsMapper->getShopItemById($this->getRequest()->getParam('id'));
 
         if (empty($shopItem) || $shopItem->getStatus() != 1) {
