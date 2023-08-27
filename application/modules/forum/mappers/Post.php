@@ -105,8 +105,9 @@ class Post extends Mapper
             $result = $select->execute();
         }
 
+        $userMapper = new UserMapper();
         $postsArray = $result->fetchRows();
-        $postEntry = [];
+        $posts = [];
         $dummyUser = null;
         $cache = [];
 
@@ -118,7 +119,6 @@ class Post extends Mapper
             if (\array_key_exists($post['user_id'], $cache)) {
                 $postModel->setAutor($cache[$post['user_id']]['user']);
             } else {
-                $userMapper = new UserMapper();
                 $user = $userMapper->getUserById($post['user_id']);
                 if ($user) {
                     $cache[$post['user_id']]['user'] = $user;
@@ -135,10 +135,10 @@ class Post extends Mapper
             $postModel->setCountOfVotes($post['countOfVotes']);
             $postModel->setUserHasVoted((bool)$post['userHasVoted']);
 
-            $postEntry[] = $postModel;
+            $posts[] = $postModel;
         }
 
-        return $postEntry;
+        return $posts;
     }
 
     /**

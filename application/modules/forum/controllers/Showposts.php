@@ -101,7 +101,7 @@ class Showposts extends Frontend
             $userId = $this->getUser()->getId();
 
             if (($this->getConfig()->get('forum_DESCPostorder') && $this->getRequest()->getParam('page') == (1 || !$this->getRequest()->getParam('page')))
-                || (!$this->getConfig()->get('forum_DESCPostorder') && ($this->getRequest()->getParam('page') == (ceil($pagination->getRows() / $rowsPerPage))))
+                || (!$this->getConfig()->get('forum_DESCPostorder') && ((($this->getRequest()->getParam('page')) ?? 1) == (ceil($pagination->getRows() / $rowsPerPage))))
             ) {
                 // Mark topic as read if on the last page or on the first page with descending post order.
                 $trackReadMapper = new TrackReadMapper();

@@ -1,4 +1,7 @@
 <?php
+
+use Modules\Forum\Mappers\Forum as ForumMapper;
+
 $forumItems = $this->get('forumItems');
 $readAccess = $this->get('groupIdsArray');
 $usersOnlineList = $this->get('usersOnlineList');
@@ -54,8 +57,8 @@ function rec($item, $obj, $readAccess, $i)
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
-                        <?php if ($lastPost && $obj->getUser()): ?>
-                            <?php if ($lastPost->getRead()): ?>
+                        <?php if ($obj->getUser()): ?>
+                            <?php if (!in_array($item->getId(), $obj->get('containsUnreadTopics'))): ?>
                                 topic-read
                             <?php else: ?>
                                 topic-unread
@@ -88,6 +91,7 @@ function rec($item, $obj, $readAccess, $i)
                         <dd class="lastpost small">
                             <?php if ($lastPost): ?>
                                 <?php
+                                /** @var ForumMapper $forumMapper */
                                 $forumMapper = $obj->get('forumMapper');
                                 $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId());
                                 ?>
@@ -151,7 +155,7 @@ function rec($item, $obj, $readAccess, $i)
         </ul>
         <?php if ($this->getUser()): ?>          
             <div class="pull-right">
-                <a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'markallasread'], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'markallasread'], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
             </div>
         <?php endif; ?>
     </div>

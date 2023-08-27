@@ -357,6 +357,32 @@ class Forum extends Mapper
     }
 
     /**
+     * Returns a list of forum ids with unread topics in it.
+     * This function was added as a probably temporary fix
+     * for issue #491.
+     *
+     * @param int $userId
+     * @param array $forumIds
+     * @return string[]
+     * @see https://github.com/IlchCMS/Ilch-2.0/issues/491
+     */
+    public function getListOfForumIdsWithUnreadTopics(int $userId, array $forumIds): array
+    {
+        return $this->db()->select(['i.id'])
+            ->from(['t' => 'forum_topics'])
+            ->join(['i' => 'forum_items'], 'i.id = t.forum_id', 'LEFT')
+            ->join(['p' => 'forum_posts'], ['t.id = p.topic_id'], 'LEFT')
+            ->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id'], 'LEFT')
+            ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id'], 'LEFT')
+            ->where(['i.parent_id' => $forumIds, 'i.id' => $forumIds], 'or')
+            ->andWhere(['tr.datetime IS' => null, 'fr.datetime IS' => null])
+            ->orWhere(['tr.datetime < p.date_created', 'fr.datetime < p.date_created'])
+            ->group(['i.id'])
+            ->execute()
+            ->fetchList();
+    }
+
+    /**
      * @param ForumItem $forumItem
      * @return int
      */
