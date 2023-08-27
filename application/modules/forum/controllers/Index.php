@@ -70,6 +70,11 @@ class Index extends Frontend
             }
         }
 
+        $forumIds = [];
+        foreach($forumItems as $forumItem) {
+            $forumIds[] = $forumItem->getId();
+        }
+
         $this->getView()->set('groupIdsArray', $groupIds)
             ->set('onlineUsersHighestRankedGroup', $onlineUsersHighestRankedGroup)
             ->set('forumItems', $forumItems)
@@ -81,6 +86,7 @@ class Index extends Frontend
             ->set('registNewUser', $userMapper->getUserById($visitMapper->getRegistNewUser()))
             ->set('listGroups', $groupMapper->getGroupList())
             ->set('forumMapper', $forumMapper)
+            ->set('containsUnreadTopics', ($this->getUser()) ? $forumMapper->getListOfForumIdsWithUnreadTopics($this->getUser()->getId(), $forumIds) : [])
             ->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'))
             ->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }

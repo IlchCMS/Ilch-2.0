@@ -40,10 +40,6 @@ class Showcat extends Frontend
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index','action' => 'index'])
                 ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()]);
 
-        $this->getView()->set('forumItems', $forumItems);
-        $this->getView()->set('forumMapper', $forumMapper);
-        $this->getView()->set('cat', $cat);
-
         $user = null;
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
@@ -56,6 +52,15 @@ class Showcat extends Frontend
             }
         }
 
+        $forumIds = [];
+        foreach($forumItems as $forumItem) {
+            $forumIds[] = $forumItem->getId();
+        }
+
+        $this->getView()->set('forumItems', $forumItems);
+        $this->getView()->set('forumMapper', $forumMapper);
+        $this->getView()->set('cat', $cat);
+        $this->getView()->set('containsUnreadTopics', ($this->getUser()) ? $forumMapper->getListOfForumIdsWithUnreadTopics($this->getUser()->getId(), $forumIds) : []);
         $this->getView()->set('readAccess', $readAccess);
         $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
         $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));

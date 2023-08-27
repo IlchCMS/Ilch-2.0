@@ -57,8 +57,8 @@ function rec($item, $obj, $readAccess, $i)
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
-                        <?php if ($lastPost && $obj->getUser()): ?>
-                            <?php if ($lastPost->getRead()): ?>
+                        <?php if ($obj->getUser()): ?>
+                            <?php if (!in_array($item->getId(), $obj->get('containsUnreadTopics'))): ?>
                                 topic-read
                             <?php else: ?>
                                 topic-unread
