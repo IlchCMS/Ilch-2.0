@@ -50,7 +50,7 @@ class ForumPost extends Model
     /**
      * The read of the post.
      *
-     * @var string
+     * @var bool
      */
     protected $read;
 
@@ -145,9 +145,9 @@ class ForumPost extends Model
     /**
      * Gets the read of the post.
      *
-     * @return string
+     * @return bool
      */
-    public function getRead(): string
+    public function getRead(): bool
     {
         return $this->read;
     }
@@ -155,10 +155,10 @@ class ForumPost extends Model
     /**
      * Sets the read of the post.
      *
-     * @param string $read
+     * @param bool $read
      * @return $this
      */
-    public function setRead(string $read): ForumPost
+    public function setRead(bool $read): ForumPost
     {
         $this->read = $read;
 

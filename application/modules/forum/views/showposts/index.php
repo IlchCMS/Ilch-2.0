@@ -173,36 +173,37 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     <dd><b><?=$this->getTrans('joined') ?>:</b> <?=$post->getAutor()->getDateCreated() ?></dd>
                 </dl>
             </div>
-            <div class="post-footer ilch-bg">
-                <?php if ($this->get('postVoting')) : ?>
-                    <?php if ($this->getUser() && !$post->isUserHasVoted()) : ?>
-                        <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
-                            <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
-                        </a>
-                    <?php elseif ($this->getUser() && $post->isUserHasVoted()) : ?>
-                        <button class="btn btn-sm btn-default btn-success">
-                            <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
-                        </button>
-                    <?php else : ?>
-                        <button class="btn btn-sm btn-default">
-                            <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
-                        </button>
+            <?php if ($this->getUser() || $this->get('postVoting')): ?>
+                <div class="post-footer ilch-bg">
+                    <?php if ($this->get('postVoting')) : ?>
+                        <?php if ($this->getUser() && !$post->isUserHasVoted()) : ?>
+                            <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
+                                <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
+                            </a>
+                        <?php elseif ($this->getUser() && $post->isUserHasVoted()) : ?>
+                            <button class="btn btn-sm btn-default btn-success">
+                                <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
+                            </button>
+                        <?php else : ?>
+                            <button class="btn btn-sm btn-default">
+                                <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
+                            </button>
+                        <?php endif; ?>
                     <?php endif; ?>
-                <?php endif; ?>
-                <?php if ($this->getUser()): ?>
-                    <div class="quote">
-                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
-                            <p class="quote-post">
-                                <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
+                    <?php if ($this->getUser()): ?>
+                        <div class="quote">
+                            <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
+                                <p class="quote-post">
+                                    <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
                         <span class="btn-label">
                             <i class="fas fa-quote-left"></i>
                         </span><?=$this->getTrans('quote') ?>
-                                </a>
-                            </p>
-                        <?php endif; ?>
-                    </div>
-                    <?php if (!$reported && $this->get('reportingPosts')) : ?>
-                        <div class="report">
+                                    </a>
+                                </p>
+                            <?php endif; ?>
+                        </div>
+                        <?php if (!$reported && $this->get('reportingPosts')) : ?>
+                            <div class="report">
                                 <p class="report-post">
                                     <a href="<?=$this->getUrl(['action' => 'report','topicid' => $this->getRequest()->getParam('topicid'), 'postid' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
                         <span class="btn-label">
@@ -210,21 +211,22 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         </span><?=$this->getTrans('report') ?>
                                     </a>
                                 </p>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (!$remembered) : ?>
-                        <div class="remember">
-                            <p class="remember-post">
-                                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!$remembered) : ?>
+                            <div class="remember">
+                                <p class="remember-post">
+                                    <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
                             <span class="btn-label">
                                 <i class="fa-solid fa-bookmark"></i>
                             </span><?=$this->getTrans('remember') ?>
-                                </button>
-                            </p>
-                        </div>
+                                    </button>
+                                </p>
+                            </div>
+                        <?php endif; ?>
                     <?php endif; ?>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endif; ?>
         <?php endforeach; ?>
         <div class="topic-actions">
             <?php if ($topicpost->getStatus() == 0): ?>
