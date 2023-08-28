@@ -27,8 +27,22 @@ class Newpost extends Frontend
         $topicMapper = new TopicMapper();
         $postMapper = new PostMapper();
 
-        $topicId = (int)$this->getRequest()->getParam('topicid');
+        $topicId = $this->getRequest()->getParam('topicid');
+
+        if (empty($topicId) || !is_numeric($topicId)) {
+            $this->redirect()
+                ->withMessage('topicNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
+
         $forum = $forumMapper->getForumByTopicId($topicId);
+
+        if (!$forum) {
+            $this->redirect()
+                ->withMessage('topicNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
+
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
         $topic = $topicMapper->getTopicById($topicId);
 
@@ -50,6 +64,12 @@ class Newpost extends Frontend
 
         if ($quotePostId && is_numeric($quotePostId) && $quotePostId > 0) {
             $post = $postMapper->getPostById($quotePostId);
+
+            if (!$post) {
+                $this->redirect()
+                    ->withMessage('postNotFound', 'danger')
+                    ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+            }
 
             // Check if the forum id of the post fits the id of the forum.
             // If that is not the case then don't even bother checking the rights
@@ -86,10 +106,15 @@ class Newpost extends Frontend
         }
 
         if ($this->getRequest()->getPost('saveNewPost')) {
-            $dateCreated = $postMapper->getDateOfLastPostByUserId($this->getUser()->getId());
-            $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser()->getGroups()), explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
+            $dateCreated = '';
+            $isExcludedFromFloodProtection = false;
 
-            if (!$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$this->getConfig()->get('forum_floodInterval')))) {
+            if ($this->getUser()) {
+                $dateCreated = $postMapper->getDateOfLastPostByUserId($this->getUser()->getId());
+                $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser()->getGroups()), explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
+            }
+
+            if ($this->getUser() && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$this->getConfig()->get('forum_floodInterval')))) {
                 $this->addMessage('floodError', 'danger');
                 $this->redirect()
                     ->withInput()

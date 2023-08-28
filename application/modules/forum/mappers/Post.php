@@ -30,6 +30,7 @@ class Post extends Mapper
             ->where(['id' => $id])
             ->join(['v' => 'forum_votes'], 'p.id = v.post_id', 'LEFT', ['countOfVotes' => 'COUNT(v.user_id)'])
             ->join(['vu' => 'forum_votes'], ['p.id = vu.post_id', 'vu.user_id' => $userId], 'LEFT', ['userHasVoted' => 'vu.user_id'])
+            ->group(['p.id'])
             ->execute()
             ->fetchAssoc();
 
