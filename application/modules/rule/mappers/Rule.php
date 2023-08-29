@@ -210,9 +210,6 @@ class Rule extends \Ilch\Mapper
             ->where(['rule_id' => $ruleId])
             ->execute();
 
-        $sql = 'INSERT INTO [prefix]_' . $this->tablenameAccess . ' (rule_id, group_id) VALUES';
-        $sqlWithValues = $sql;
-        $rowCount = 0;
         $groupIds = [];
         if (!empty($access)) {
             if (!in_array('all', $access)) {
@@ -223,24 +220,21 @@ class Rule extends \Ilch\Mapper
             $groupIds[] = '1';
         }
 
+        $preparedRows = [];
         foreach ($groupIds as $groupId) {
-            // There is a limit of 1000 rows per insert, but according to some benchmarks found online
-            // the sweet spot seams to be around 25 rows per insert. So aim for that.
-            if ($rowCount >= 25) {
-                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-                $this->db()->queryMulti($sqlWithValues);
-                $rowCount = 0;
-                $sqlWithValues = $sql;
-            }
-
-            $rowCount++;
-            $sqlWithValues .= '(' . $ruleId . ',' . (int)$groupId . '),';
+            $preparedRows[] = [$ruleId, (int)$groupId];
         }
 
-        if ($sqlWithValues != $sql) {
-            // Insert remaining rows.
-            $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-            $this->db()->queryMulti($sqlWithValues);
+        if (count($preparedRows)) {
+            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+            // per insert, which would have been possible with a higher number of forums and user groups.
+            $chunks = array_chunk($preparedRows, 25);
+            foreach ($chunks as $chunk) {
+                $this->db()->insert($this->tablenameAccess)
+                    ->columns(['rule_id', 'group_id'])
+                    ->values($chunk)
+                    ->execute();
+            }
         }
     }
 

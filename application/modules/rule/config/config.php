@@ -122,9 +122,7 @@ class Config extends \Ilch\Config\Install
                     ->execute()
                     ->fetchList();
 
-                $sql = 'INSERT INTO [prefix]_rules_access (rule_id, group_id) VALUES';
-                $sqlWithValues = $sql;
-                $rowCount = 0;
+                $preparedRows = [];
 
                 $accesall = [];
                 foreach ($readAccessRows as $readAccessRow) {
@@ -134,30 +132,24 @@ class Config extends \Ilch\Config\Install
                         $accesall[] = $readAccessRow['id'];
                     } else {
                         foreach ($readAccessArray as $ruleId => $groupIds) {
-                            // There is a limit of 1000 rows per insert, but according to some benchmarks found online
-                            // the sweet spot seams to be around 25 rows per insert. So aim for that.
-                            if ($rowCount >= 25) {
-                                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-                                $this->db()->queryMulti($sqlWithValues);
-                                $rowCount = 0;
-                                $sqlWithValues = $sql;
-                            }
-
-                            // Don't try to add a groupId that doesn't exist in the groups table as this would
-                            // lead to an error (foreign key constraint).
                             $groupIds = array_intersect($existingGroups, $groupIds);
-                            $rowCount += \count($groupIds);
-
                             foreach ($groupIds as $groupId) {
-                                $sqlWithValues .= '(' . $ruleId . ',' . $groupId . '),';
+                                $preparedRows[] = [$ruleId, (int)$groupId];
                             }
                         }
                     }
                 }
-                if ($sqlWithValues != $sql) {
-                    // Insert remaining rows.
-                    $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-                    $this->db()->queryMulti($sqlWithValues);
+
+                if (count($preparedRows)) {
+                    // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+                    // per insert, which would have been possible with a higher number of forums and user groups.
+                    $chunks = array_chunk($preparedRows, 25);
+                    foreach ($chunks as $chunk) {
+                        $this->db()->insert('rules_access')
+                            ->columns(['rule_id', 'group_id'])
+                            ->values($chunk)
+                            ->execute();
+                    }
                 }
 
                 // Delete old read_access column of table faqs_cats.
