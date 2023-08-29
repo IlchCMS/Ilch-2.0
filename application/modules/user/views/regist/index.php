@@ -11,7 +11,7 @@
             </div>
             <div class="panel-footer clearfix">
                 <div class="pull-left checkbox inline <?=$this->validation()->hasError('acceptRule') ? 'has-error' : '' ?>">
-                    <input type="checkbox" style="margin-left: 0px;" id="acceptRule" name="acceptRule" value="1"> <label for="acceptRule"><?=$this->getTrans('acceptRule') ?></label>
+                    <input type="checkbox" style="margin-left: 0;" id="acceptRule" name="acceptRule" value="1"> <label for="acceptRule"><?=$this->getTrans('acceptRule') ?></label>
                 </div>
                 <div class="pull-right">
                     <?=$this->getSaveBar('nextButton', 'Regist') ?>

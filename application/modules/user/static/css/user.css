@@ -76,7 +76,7 @@
 }
 
 #panel hr {
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 10px;
 }
 
@@ -217,7 +217,7 @@ ol.sortable {
 }
 
 .sortable li div  {
-    border: 1px solid #d4d4d4;
+    border: 1px solid;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -305,7 +305,7 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 #mediaModal .modal-body {
     height: 100%;
     border-radius: 0;
-    padding: 0px 0px 57px !important;
+    padding: 0 0 57px !important;
 }
 #mediaModal .modal-footer {
     display: none;

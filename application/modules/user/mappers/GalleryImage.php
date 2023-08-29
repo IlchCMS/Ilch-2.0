@@ -15,7 +15,6 @@ class GalleryImage extends \Ilch\Mapper
      *
      * @param int $id
      * @return GalleryImageModel|null
-     * @throws \Ilch\Database\Exception
      */
     public function getImageById($id)
     {
@@ -46,7 +45,6 @@ class GalleryImage extends \Ilch\Mapper
      *
      * @param int $id
      * @return GalleryImageModel|null
-     * @throws \Ilch\Database\Exception
      */
     public function getLastImageByGalleryId($id)
     {

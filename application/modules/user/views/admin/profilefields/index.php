@@ -62,6 +62,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                     </td>
                     <?php
                     $found = false;
+                    $profileFieldName = '';
 
                     foreach ($profileFieldsTranslation as $profileFieldTrans) {
                         if ($profileField->getId() == $profileFieldTrans->getFieldId()) {

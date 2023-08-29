@@ -122,7 +122,7 @@ class Panel extends BaseController
 
             $birthday = '';
             if ($this->getRequest()->getPost('birthday') != '') {
-                $birthday = new \Ilch\Date($this->getRequest()->getPost('birthday'));
+                $birthday = new IlchDate($this->getRequest()->getPost('birthday'));
             }
 
             if ($validation->isValid()) {
@@ -404,7 +404,7 @@ class Panel extends BaseController
 
                 $this->redirect([]);
             } else {
-                $userMapper->selectsdelete($userId, new \Ilch\Date());
+                $userMapper->selectsdelete($userId, new IlchDate());
                 $this->redirect(['module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1]);
             }
         }

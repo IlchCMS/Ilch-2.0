@@ -11,7 +11,7 @@ class Usermenu extends \Ilch\Model
     /**
      * Id of the menu.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -32,14 +32,14 @@ class Usermenu extends \Ilch\Model
     /**
      * Position of the menu.
      *
-     * @var integer
+     * @var int
      */
     protected $position;
 
     /**
      * Sets the menu id.
      *
-     * @param integer $id
+     * @param int $id
      * @return $this
      */
     public function setId($id)
@@ -52,7 +52,7 @@ class Usermenu extends \Ilch\Model
     /**
      * Gets the menu id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

@@ -80,7 +80,7 @@ class AuthToken extends \Ilch\Model
     /**
      * Saves the id of the user.
      *
-     * @param int $id
+     * @param int $userid
      * @return AuthToken
      */
     public function setUserid($userid)

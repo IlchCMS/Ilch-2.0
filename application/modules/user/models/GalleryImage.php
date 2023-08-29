@@ -11,14 +11,14 @@ class GalleryImage extends \Ilch\Model
     /**
      * The id of the image.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * The userId of the image.
      *
-     * @var integer
+     * @var int
      */
     protected $userId;
 
@@ -74,7 +74,7 @@ class GalleryImage extends \Ilch\Model
     /**
      * Gets the id of the image.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -84,7 +84,7 @@ class GalleryImage extends \Ilch\Model
     /**
      * Gets the userId of the image.
      *
-     * @return integer
+     * @return int
      */
     public function getUserId()
     {
@@ -164,7 +164,7 @@ class GalleryImage extends \Ilch\Model
     /**
      * Sets the id of the image.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {

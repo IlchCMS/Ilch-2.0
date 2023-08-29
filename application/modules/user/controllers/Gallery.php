@@ -68,7 +68,7 @@ class Gallery extends \Ilch\Controller\Frontend
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new GalleryImageMapper();
-        $commentMapper = new CommentMapper;
+        $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
 
         $id = $this->getRequest()->getParam('id');
@@ -95,23 +95,25 @@ class Gallery extends \Ilch\Controller\Frontend
         $model->setVisits($image->getVisits() + 1);
         $imageMapper->saveVisits($model);
 
-        if ($this->getRequest()->getPost('saveComment')) {
-            $comments = new Comments();
-            $key = 'user/gallery/showimage/user/'.$userId;
+        if ($this->getUser()) {
+            if ($this->getRequest()->getPost('saveComment')) {
+                $comments = new Comments();
+                $key = 'user/gallery/showimage/user/'.$userId;
 
-            if ($this->getRequest()->getPost('fkId')) {
-                $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                if ($this->getRequest()->getPost('fkId')) {
+                    $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                }
+
+                $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
+                $this->redirect(['action' => 'showImage', 'user' => $userId, 'id' => $id]);
             }
+            if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
+                $commentId = $this->getRequest()->getParam('commentId');
+                $comments = new Comments();
 
-            $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
-            $this->redirect(['action' => 'showImage', 'user' => $userId, 'id' => $id]);
-        }
-        if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
-            $commentId = $this->getRequest()->getParam('commentId');
-            $comments = new Comments();
-
-            $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-            $this->redirect(['action' => 'showimage', 'user' => $userId, 'id' => $id.'#comment_'.$commentId]);
+                $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
+                $this->redirect(['action' => 'showimage', 'user' => $userId, 'id' => $id.'#comment_'.$commentId]);
+            }
         }
 
         $this->getView()->set('image', $imageMapper->getImageById($id));

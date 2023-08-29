@@ -538,7 +538,7 @@ class User extends \Ilch\Mapper
      */
     public function deleteselectsdelete($timetodelete = 5): bool
     {
-        $date = new \Ilch\Date();
+        $date = new IlchDate();
         $authTokenMapper = new AuthTokenMapper();
         $statisticMapper = new StatisticMapper();
         $friendsMapper = new FriendsMapper();
@@ -549,7 +549,7 @@ class User extends \Ilch\Mapper
 
         foreach ($entries as $user) {
             if ($user->getSelectsDelete() != '') {
-                $dateuser = new \Ilch\Date($user->getSelectsDelete());
+                $dateuser = new IlchDate($user->getSelectsDelete());
                 if ($dateuser->getTimestamp() <= $date->getTimestamp()) {
                     $this->delete($user->getId());
                     $authTokenMapper->deleteAllAuthTokenOfUser($user->getId());

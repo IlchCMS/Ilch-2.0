@@ -11,35 +11,35 @@ class GalleryItem extends \Ilch\Model
     /**
      * Id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * Sort of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $sort;
 
     /**
      * Type of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $type;
 
     /**
      * UserId of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $userId;
 
     /**
      * ParentId of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $parentId;
 
@@ -60,7 +60,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -70,7 +70,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      * @return GalleryItem
      */
     public function setId($id)
@@ -83,7 +83,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Gets the sort.
      *
-     * @return integer
+     * @return int
      */
     public function getSort()
     {
@@ -93,7 +93,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the sort.
      *
-     * @param integer $sort
+     * @param int $sort
      * @return GalleryItem
      */
     public function setSort($sort)
@@ -106,7 +106,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Gets the type.
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -116,7 +116,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the type.
      *
-     * @param integer $type
+     * @param int $type
      * @return GalleryItem
      */
     public function setType($type)
@@ -129,7 +129,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Gets the gallery userId.
      *
-     * @return integer
+     * @return int
      */
     public function getUserId()
     {
@@ -139,7 +139,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the gallery userId.
      *
-     * @param integer $userId
+     * @param int $userId
      * @return GalleryItem
      */
     public function setUserId($userId)
@@ -152,7 +152,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Gets the parent id.
      *
-     * @return integer
+     * @return int
      */
     public function getParentId()
     {
@@ -162,7 +162,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the parent id.
      *
-     * @param integer $id
+     * @param int $id
      * @return GalleryItem
      */
     public function setParentId($id)

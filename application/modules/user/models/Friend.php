@@ -11,21 +11,21 @@ class Friend extends \Ilch\Model
     /**
      * Id of the friend.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * User Id.
      *
-     * @var integer
+     * @var int
      */
     protected $userId;
 
     /**
      * User Id of the friend.
      *
-     * @var integer
+     * @var int
      */
     protected $friendUserId;
 
@@ -53,7 +53,7 @@ class Friend extends \Ilch\Model
     /**
      * Sets the friend id.
      *
-     * @param integer $id
+     * @param int $id
      * @return $this
      */
     public function setId($id)
@@ -66,7 +66,7 @@ class Friend extends \Ilch\Model
     /**
      * Gets the friend id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -76,7 +76,7 @@ class Friend extends \Ilch\Model
     /**
      * Sets the user id.
      *
-     * @param integer $userId
+     * @param int $userId
      * @return $this
      */
     public function setUserId($userId)
@@ -89,7 +89,7 @@ class Friend extends \Ilch\Model
     /**
      * Gets the user id.
      *
-     * @return integer
+     * @return int
      */
     public function getUserId()
     {
@@ -99,7 +99,7 @@ class Friend extends \Ilch\Model
     /**
      * Sets the user id of the friend.
      *
-     * @param integer $friendUserId
+     * @param int $friendUserId
      * @return $this
      */
     public function setFriendUserId($friendUserId)
@@ -112,7 +112,7 @@ class Friend extends \Ilch\Model
     /**
      * Gets the user id of the friend.
      *
-     * @return integer
+     * @return int
      */
     public function getFriendUserId()
     {

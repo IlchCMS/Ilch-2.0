@@ -13,7 +13,7 @@ use Modules\User\Models\User;
 class Group extends \Ilch\Mapper
 {
     /**
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 2.1.51
      */
