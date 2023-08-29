@@ -2,13 +2,13 @@
 
 /** @var \Ilch\View $this */
 
-/** @var Modules\Privacy\Models\Privacy $privacys */
-$privacys = $this->get('privacys');
+/** @var Modules\Privacy\Models\Privacy $privacies */
+$privacies = $this->get('privacies');
 
-if ($privacys) : ?>
+if ($privacies) : ?>
     <?php
     $sources = [];
-    foreach ($privacys as $privacy) :
+    foreach ($privacies as $privacy) :
         $link = '<a href="' . $this->escape($privacy->getUrl()) . '" target="_blank" rel="noopener">' . $this->escape($privacy->getUrlTitle()) . '</a>';
         if ($privacy->getUrlTitle() != '' && $privacy->getShow() == '1' && !in_array($link, $sources)) {
             $sources[] = $link;

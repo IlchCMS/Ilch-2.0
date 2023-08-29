@@ -2,11 +2,11 @@
 
 /** @var \Ilch\View $this */
 
-/** @var Modules\Privacy\Models\Privacy[]|null $privacys */
-$privacys = $this->get('privacys');
+/** @var Modules\Privacy\Models\Privacy[]|null $privacies */
+$privacies = $this->get('privacies');
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($privacys) : ?>
+<?php if ($privacies) : ?>
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -30,7 +30,7 @@ $privacys = $this->get('privacys');
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($privacys as $privacy) : ?>
+                    <?php foreach ($privacies as $privacy) : ?>
                         <tr>
                             <input type="hidden" name="items[]" value="<?=$privacy->getId() ?>" />
                             <td><?=$this->getDeleteCheckbox('check_privacys', $privacy->getId()) ?></td>

@@ -66,7 +66,7 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('privacys', $privacyMapper->getPrivacy());
+        $this->getView()->set('privacies', $privacyMapper->getPrivacy());
     }
 
     public function treatAction()
