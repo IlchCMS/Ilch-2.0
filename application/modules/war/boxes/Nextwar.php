@@ -6,17 +6,20 @@
 
 namespace Modules\War\Boxes;
 
+use Ilch\Box;
+use Ilch\Date;
+use Ilch\Registry;
 use Modules\War\Mappers\War as WarMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Nextwar extends \Ilch\Box
+class Nextwar extends Box
 {
     public function render()
     {
         $warMapper = new WarMapper();
         $userMapper = new UserMapper();
-        $date = new \Ilch\Date();
-        $config = \Ilch\Registry::get('config');
+        $date = new Date();
+        $config = Registry::get('config');
 
         $user = null;
         if ($this->getUser()) {

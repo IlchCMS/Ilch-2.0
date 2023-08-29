@@ -81,7 +81,7 @@
     function duplicate() {
         let clone = original.cloneNode(true); // "deep" clone
         clone.id = "duplicator" + i++; // there can only be one element with an ID
-        let dup = original.parentNode.appendChild(clone);
+        original.parentNode.appendChild(clone);
 
         // delete a possible hidden input "warGameIds" for the clone as otherwise the original would
         // get overwritten in the database.

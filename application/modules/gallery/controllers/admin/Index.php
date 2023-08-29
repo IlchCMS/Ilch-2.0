@@ -6,12 +6,13 @@
 
 namespace Modules\Gallery\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Modules\Gallery\Mappers\Image as ImageMapper;
 use Ilch\Validation;
 use Modules\Gallery\Models\GalleryItem;
 
-class Index extends \Ilch\Controller\Admin
+class Index extends Admin
 {
     public function init()
     {

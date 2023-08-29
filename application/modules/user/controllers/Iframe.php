@@ -41,7 +41,7 @@ class Iframe extends \Ilch\Controller\Frontend
     {
         $this->getLayout()->setFile('modules/admin/layouts/iframe');
 
-        $ilchdate = new IlchDate;
+        $ilchdate = new IlchDate();
         $mediaMapper = new MediaMapper();
 
         $allowedExtensions = $this->getConfig()->get('media_ext_img');
@@ -53,7 +53,7 @@ class Iframe extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->isPost()) {
             if (!is_dir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId())) {
-                mkdir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId(), 0777);
+                mkdir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId());
             }
 
             $upload = new \Ilch\Upload();

@@ -39,7 +39,7 @@ class ProfileFields extends \Ilch\Mapper
      * Returns a ProfileField model found by the id.
      *
      * @param  int $id
-     * @return null|\Modules\User\Models\ProfileField
+     * @return null|ProfileFieldModel
      */
     public function getProfileFieldById($id)
     {
@@ -60,7 +60,7 @@ class ProfileFields extends \Ilch\Mapper
      * Returns a ProfileField model found by the key.
      *
      * @param  int $key
-     * @return null|\Modules\User\Models\ProfileField
+     * @return null|ProfileFieldModel
      */
     public function getProfileFieldIdByKey($key)
     {
@@ -143,7 +143,7 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Updates profile-field with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function update($id)
     {
@@ -171,7 +171,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @param  int $id
      *
-     * @return boolean True if success, otherwise false.
+     * @return bool True if success, otherwise false.
      */
     public function deleteProfileField($id)
     {
@@ -185,7 +185,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @param  int $id
      *
-     * @return boolean True if a profile-field with this id exists, false otherwise.
+     * @return bool True if a profile-field with this id exists, false otherwise.
      */
     public function profileFieldWithIdExists($id)
     {

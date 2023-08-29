@@ -11,8 +11,8 @@ class CookieStolen extends \Ilch\Mapper
     /**
      * Check if database contains a cookieStolen-message for an user.
      *
-     * @param int userid
-     * @return boolean
+     * @param int $userid
+     * @return bool
      */
     public function containsCookieStolen($userid)
     {
@@ -26,7 +26,7 @@ class CookieStolen extends \Ilch\Mapper
     /**
      * Add cookieStolen-message for an user.
      *
-     * @param int userid
+     * @param int $userid
      * @return int
      */
     public function addCookieStolen($userid)
@@ -43,7 +43,7 @@ class CookieStolen extends \Ilch\Mapper
     /**
      * Delete the cookieStolen-message of an user.
      *
-     * @param int userid
+     * @param int $userid
      * @return \Ilch\Database\Mysql\Result|int
      */
     public function deleteCookieStolen($userid)

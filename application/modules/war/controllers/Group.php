@@ -6,20 +6,22 @@
 
 namespace Modules\War\Controllers;
 
+use Ilch\Controller\Frontend;
+use Ilch\Pagination;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Mappers\War as WarMapper;
 use Modules\War\Mappers\Games as GamesMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Group extends \Ilch\Controller\Frontend
+class Group extends Frontend
 {
     public function indexAction()
     {
         $groupMapper = new GroupMapper();
         $warMapper = new WarMapper();
         $gamesMapper = new GamesMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuWarList'), ['controller' => 'index', 'action' => 'index'])
@@ -41,7 +43,7 @@ class Group extends \Ilch\Controller\Frontend
         $enemyMapper = new EnemyMapper();
         $warMapper = new WarMapper();
         $gamesMapper = new GamesMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
 
         $group = $groupMapper->getGroupById($this->getRequest()->getParam('id'));
         if ($group) {

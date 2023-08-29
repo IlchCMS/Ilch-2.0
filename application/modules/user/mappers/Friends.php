@@ -109,7 +109,7 @@ class Friends extends \Ilch\Mapper
      *
      * @param int $userId
      * @param int $friendUserId
-     * @return boolean
+     * @return bool
      * @since 2.1.20
      */
     public function hasFriend($userId, $friendUserId)

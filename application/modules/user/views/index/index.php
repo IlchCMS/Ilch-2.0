@@ -95,9 +95,7 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                             }
                                     ?>
                                 </td>
-                                <?php
-                                if ($userGroupList_allowed == true):
-                                ?>
+                                <?php if ($userGroupList_allowed):?>
                                 <td>
                                     <?=$this->escape($groups) ?>
                                 </td>

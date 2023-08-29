@@ -7,6 +7,7 @@
 
 namespace Modules\User\Mappers;
 
+use InvalidArgumentException;
 use Modules\User\Mappers\NotificationPermission as NotificationPermissionMapper;
 use Modules\User\Models\Notification as NotificationModel;
 use Modules\User\Models\NotificationPermission as NotificationPermissionModel;

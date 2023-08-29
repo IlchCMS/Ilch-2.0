@@ -6,11 +6,13 @@
 
 namespace Modules\War\Controllers\Admin;
 
+use Ilch\Controller\Admin;
+use Ilch\Pagination;
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Models\Enemy as EnemyModel;
 use Ilch\Validation;
 
-class Enemy extends \Ilch\Controller\Admin
+class Enemy extends Admin
 {
     public function init()
     {
@@ -74,7 +76,7 @@ class Enemy extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $enemyMapper = new EnemyMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index']);
@@ -111,15 +113,6 @@ class Enemy extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manageNewEnemy'), ['action' => 'treat']);
         }
-
-        $post = [
-            'enemyName' => '',
-            'enemyTag' => '',
-            'enemyImage' => '',
-            'enemyHomepage' => '',
-            'enemyContactName' => '',
-            'enemyContactEmail' => ''
-        ];
 
         if ($this->getRequest()->isPost()) {
             $enemyImage = $this->getRequest()->getPost('enemyImage');
@@ -171,7 +164,6 @@ class Enemy extends \Ilch\Controller\Admin
                 ->withErrors($validation->getErrorBag())
                 ->to(array_merge(['action' => 'treat'], ($enemyModel->getId()?['id' => $enemyModel->getId()]:[])));
         }
-
 
         $this->getView()->set('enemy', $enemyModel);
     }

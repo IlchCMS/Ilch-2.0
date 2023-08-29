@@ -6,12 +6,14 @@
 
 namespace Modules\War\Controllers\Admin;
 
+use Ilch\Controller\Admin;
+use Ilch\Pagination;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Models\Group as GroupModel;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
 
-class Group extends \Ilch\Controller\Admin
+class Group extends Admin
 {
     public function init()
     {
@@ -75,7 +77,7 @@ class Group extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $groupMapper = new GroupMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index']);

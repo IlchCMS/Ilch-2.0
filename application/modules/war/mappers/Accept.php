@@ -6,16 +6,18 @@
 
 namespace Modules\War\Mappers;
 
+use Ilch\Mapper;
+use Ilch\Pagination;
 use Modules\War\Models\Accept as EntriesModel;
 
-class Accept extends \Ilch\Mapper
+class Accept extends Mapper
 {
     public $tablename = 'war_accept';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      */
     public function checkDB(): bool
     {
@@ -27,10 +29,10 @@ class Accept extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])
@@ -71,7 +73,7 @@ class Accept extends \Ilch\Mapper
      */
     public function getAcceptByWhere(array $where = []): ?array
     {
-        return $this->getEntriesBy($where, ['id' => 'DESC']);
+        return $this->getEntriesBy($where);
     }
 
     /**
@@ -112,7 +114,7 @@ class Accept extends \Ilch\Mapper
      * Inserts or updates entry.
      *
      * @param EntriesModel $model
-     * @return integer
+     * @return int
      */
     public function save(EntriesModel $model): int
     {
@@ -137,7 +139,7 @@ class Accept extends \Ilch\Mapper
      * Deletes the entry.
      *
      * @param int|EntriesModel $id
-     * @return boolean
+     * @return bool
      */
     public function delete($id): bool
     {

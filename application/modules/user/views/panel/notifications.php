@@ -26,11 +26,13 @@ $index = 0;
                                 <col class="col-lg-10">
                             </colgroup>
                             <thead>
-                            <th><?=$this->getCheckAllCheckbox('check_notificationPermissions') ?></th>
-                            <th></th>
-                            <th></th>
-                            <th><?=$this->getTrans('notificationType') ?></th>
-                            <th><?=$this->getTrans('notificationModule') ?></th>
+                                <tr>
+                                    <th><?=$this->getCheckAllCheckbox('check_notificationPermissions') ?></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th><?=$this->getTrans('notificationType') ?></th>
+                                    <th><?=$this->getTrans('notificationModule') ?></th>
+                                </tr>
                             </thead>
                             <tbody>
                             <?php foreach ($notificationPermissions as $notificationPermission): ?>

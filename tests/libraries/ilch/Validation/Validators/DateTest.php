@@ -79,17 +79,29 @@ class DateTest extends TestCase
                 'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
                 'expectedErrorParameters' => ['Y-m-d']
             ],
+            'Null byte' => [
+                'data'                    => $this->createData("\0"),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
+                'expectedErrorParameters' => ['Y-m-d']
+            ],
+            'Null' => [
+                'data'                    => $this->createData(null),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
+                'expectedErrorParameters' => ['Y-m-d']
+            ],
         ];
     }
 
     /**
      * Helper function for creating data object
      *
-     * @param string $value
+     * @param string|null $value
      * @param string $parameter
      * @return stdClass
      */
-    private function createData(string $value, string $parameter = 'Y-m-d'): stdClass
+    private function createData(?string $value, string $parameter = 'Y-m-d'): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

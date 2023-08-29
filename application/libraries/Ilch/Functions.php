@@ -462,14 +462,19 @@ function group($file)
 /**
  * Check if date string is valid.
  *
- * @since 2.1.30
- *
- * @param $date
+ * @param string|null $date
  * @param string $format
  * @return bool
+ * @since 2.1.30
  */
-function validateDate($date, string $format = 'Y-m-d H:i:s'): bool
+function validateDate(?string $date, string $format = 'Y-m-d H:i:s'): bool
 {
+    if ((0 === substr_compare($date, "\0", - 1))) {
+        // Return false when $date contains null bytes.
+        // This avoids "createFromFormat(): Argument must not contain any null bytes".
+        return false;
+    }
+
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
 }

@@ -141,6 +141,7 @@ class Forum extends Mapper
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
             ->where(['t.id' => $topicId])
+            ->group(['i.id'])
             ->execute()
             ->fetchAssoc();
 

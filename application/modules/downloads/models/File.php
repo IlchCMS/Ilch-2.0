@@ -1,17 +1,19 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Downloads\Models;
 
-class File extends \Ilch\Model
+use Ilch\Model;
+
+class File extends Model
 {
     /**
      * The id of the image.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -63,11 +65,15 @@ class File extends \Ilch\Model
      * @var string
      */
     protected $file_url;
+    /**
+     * @var string
+     */
+    private $filethumb;
 
-   /**
+    /**
      * Gets the id of the file.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -157,7 +163,7 @@ class File extends \Ilch\Model
     /**
      * Sets the id of the file.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {

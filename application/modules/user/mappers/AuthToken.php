@@ -13,7 +13,7 @@ class AuthToken extends \Ilch\Mapper
     /**
      * Returns the row of the user.
      *
-     * @param string selector
+     * @param string $selector
      * @return AuthTokenModel|null
      */
     public function getAuthToken($selector)
@@ -38,7 +38,7 @@ class AuthToken extends \Ilch\Mapper
     /**
      * Adds a new authToken to the database.
      *
-     * @param string Modules\User\Models\AuthToken
+     * @param AuthTokenModel $authToken
      * @return int
      */
     public function addAuthToken($authToken)
@@ -67,7 +67,7 @@ class AuthToken extends \Ilch\Mapper
     /**
      * Delete the authToken in the database.
      *
-     * @param string selector
+     * @param string $selector
      * @return \Ilch\Database\Mysql\Result|int number of deleted rows
      */
     public function deleteAuthToken($selector)
@@ -81,7 +81,7 @@ class AuthToken extends \Ilch\Mapper
     /**
      * Delete all authToken of a user in the database.
      *
-     * @param int userid
+     * @param int $userid
      * @return \Ilch\Database\Mysql\Result|int number of deleted rows
      */
     public function deleteAllAuthTokenOfUser($userid)

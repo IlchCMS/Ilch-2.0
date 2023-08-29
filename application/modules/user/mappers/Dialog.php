@@ -525,7 +525,6 @@ class Dialog extends \Ilch\Mapper
      * @param int $user_one
      * @param int $user_two
      * @return DialogModel|null
-     * @throws \Ilch\Database\Exception
      */
     public function getDialogCheck(int $user_one, int $user_two): ?DialogModel
     {

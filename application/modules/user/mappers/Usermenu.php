@@ -14,7 +14,7 @@ class Usermenu extends \Ilch\Mapper
     /**
      * Gets the usermenu.
      *
-     * @return null|\Modules\User\Models\Usermenu[]
+     * @return null|UserMenuModel[]
      */
     public function getUserMenu()
     {
@@ -44,7 +44,7 @@ class Usermenu extends \Ilch\Mapper
     /**
      * Gets the usermenusettings.
      * @param $locale
-     * @return null|\Modules\User\Models\Usermenusettings[]
+     * @return null|UserMenuSettingsModel[]
      */
     public function getUserMenuSettingsLinks($locale)
     {

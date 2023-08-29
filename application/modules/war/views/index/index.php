@@ -1,4 +1,7 @@
 <?php
+
+use Ilch\Date;
+
 $gamesMapper = $this->get('gamesMapper');
 ?>
 
@@ -33,7 +36,7 @@ $gamesMapper = $this->get('gamesMapper');
             <tbody>
                 <?php foreach ($this->get('war') as $war): ?>
                     <?php
-                    $date = new \Ilch\Date($war->getWarTime())
+                    $date = new Date($war->getWarTime())
                     ?>
                     <tr>
                         <td><?php

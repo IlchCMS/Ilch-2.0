@@ -37,7 +37,7 @@ class Result
     /**
      * Result constructor.
      * @param bool $success
-     * @param UserModel $user
+     * @param UserModel|null $user
      * @param string|null $error
      */
     public function __construct($success, UserModel $user = null, $error = null)

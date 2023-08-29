@@ -6,19 +6,22 @@
 
 namespace Modules\War\Mappers;
 
-use Ilch\Database\Exception;
+use Ilch\Date;
+use Ilch\Mapper;
 use Ilch\Pagination;
 use Modules\War\Models\War as EntriesModel;
 use Modules\Comment\Mappers\Comment as Comments;
 
-class War extends \Ilch\Mapper
+use function is_string;
+
+class War extends Mapper
 {
     public $tablename = 'war';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      */
     public function checkDB(): bool
     {
@@ -30,10 +33,10 @@ class War extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $read_access = '';
         if (isset($where['ra.group_id'])) {
@@ -79,10 +82,10 @@ class War extends \Ilch\Mapper
      * Gets the Wars.
      *
      * @param array $where
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return null|array
      */
-    public function getWars(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
+    public function getWars(array $where = [], ?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['w.time' => 'ASC'], $pagination);
     }
@@ -91,10 +94,10 @@ class War extends \Ilch\Mapper
      * Gets the Next Wars.
      *
      * @param array $where
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return null|array
      */
-    public function getNextWars(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
+    public function getNextWars(array $where = [], ?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['w.id' => 'DESC'], $pagination);
     }
@@ -123,23 +126,23 @@ class War extends \Ilch\Mapper
     /**
      * Get wars for json (for example the calendar)
      *
-     * @param \Ilch\Date|string $start
-     * @param \Ilch\Date|string $end
+     * @param Date|string $start
+     * @param Date|string $end
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return array|null
      */
     public function getWarsForJson($start, $end, $groupIds = '3'): ?array
     {
-        if (\is_string($groupIds)) {
+        if (is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
         }
 
         if ($start && $end) {
-            if (!is_a($start, \Ilch\Date::class)) {
-                $start = new \Ilch\Date($start);
+            if (!is_a($start, Date::class)) {
+                $start = new Date($start);
             }
-            if (!is_a($end, \Ilch\Date::class)) {
-                $end = new \Ilch\Date($end);
+            if (!is_a($end, Date::class)) {
+                $end = new Date($end);
             }
 
             $entryArray = $this->getEntriesBy(['show' => 1, 'time >=' => $start->format('Y-m-d').' 00:00:00', 'time <=' => $end->format('Y-m-d').' 23:59:59', 'ra.group_id' => $groupIds], []);
@@ -158,10 +161,10 @@ class War extends \Ilch\Mapper
      * Gets wars by where
      *
      * @param array $where
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getWarsByWhere(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
+    public function getWarsByWhere(array $where = [], ?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['w.time' => 'DESC'], $pagination);
     }
@@ -170,7 +173,7 @@ class War extends \Ilch\Mapper
      * Inserts or updates entry.
      *
      * @param EntriesModel $model
-     * @return integer
+     * @return int
      */
     public function save(EntriesModel $model): int
     {
@@ -198,12 +201,12 @@ class War extends \Ilch\Mapper
      *
      * @param int $warId
      * @param string|array $readAccess example: "1,2,3"
-     * @param boolean $addAdmin
+     * @param bool $addAdmin
      * @since 1.15.0
      */
     public function saveReadAccess(int $warId, $readAccess, bool $addAdmin = true)
     {
-        if (\is_string($readAccess)) {
+        if (is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
         }
         
@@ -248,7 +251,7 @@ class War extends \Ilch\Mapper
      * Deletes the entry.
      *
      * @param int|EntriesModel $id
-     * @return boolean
+     * @return bool
      */
     public function delete($id): bool
     {
@@ -271,7 +274,7 @@ class War extends \Ilch\Mapper
      * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getWarListByStatus(?int $status = null, ?\Ilch\Pagination $pagination = null): ?array
+    public function getWarListByStatus(?int $status = null, ?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy(($status ? ['status' => $status] : []), ['w.time' => 'DESC'], $pagination);
     }
@@ -286,7 +289,7 @@ class War extends \Ilch\Mapper
      */
     public function getWarList($pagination = null, $readAccess = '3', int $groupId = null): ?array
     {
-        if (\is_string($readAccess)) {
+        if (is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
         }
 
@@ -304,13 +307,13 @@ class War extends \Ilch\Mapper
      */
     public function getWarListByStatusAndLimt(?int $status = null, ?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
     {
-        if (\is_string($groupIds)) {
+        if (is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
         }
 
         $pagination = null;
         if ($limit) {
-            $pagination = new \Ilch\Pagination();
+            $pagination = new Pagination();
             $pagination->setRowsPerPage($limit);
         }
 
@@ -386,18 +389,18 @@ class War extends \Ilch\Mapper
     /**
      * Returns the Countdown
      *
-     * @param \Ilch\Date|string $datum
+     * @param Date|string $datum
      * @return string
      */
     public function countdown($datum): string
     {
-        $datenow = new \Ilch\Date();
+        $datenow = new Date();
         $datenow = $datenow->format(null, true);
         
-        if (is_a($datum, \Ilch\Date::class)) {
+        if (is_a($datum, Date::class)) {
             $date = $datum;
         } else {
-            $date = new \Ilch\Date($datum);
+            $date = new Date($datum);
         }
 
         // make a unix timestamp for the given date
@@ -435,7 +438,7 @@ class War extends \Ilch\Mapper
      * Check if table exists.
      *
      * @param string $table
-     * @return boolean
+     * @return bool
      */
     public function existsTable(string $table): bool
     {
@@ -447,7 +450,7 @@ class War extends \Ilch\Mapper
      *
      * @param int|EntriesModel $id
      * @param int $status
-     * @return boolean
+     * @return bool
      */
     public function updateStatus($id, int $status = -1): bool
     {
@@ -485,7 +488,7 @@ class War extends \Ilch\Mapper
      *
      * @param int|EntriesModel $id
      * @param int $show
-     * @return boolean
+     * @return bool
      */
     public function updateShow($id, int $show = -1): bool
     {

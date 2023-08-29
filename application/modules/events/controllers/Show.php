@@ -224,7 +224,7 @@ class Show extends \Ilch\Controller\Frontend
     {
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
-        $userMapper = new UserMapper;
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'))
@@ -246,14 +246,14 @@ class Show extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()))
+            ->set('eventListParticipation', ($this->getUser()) ? $eventMapper->getEventListParticipation($this->getUser()->getId()) : null)
             ->set('readAccess', $readAccess);
     }
 
     public function delAction()
     {
         if ($this->getRequest()->isSecure()) {
-            $commentMapper = new CommentMapper;
+            $commentMapper = new CommentMapper();
 
             $commentMapper->delete($this->getRequest()->getParam('id'));
 

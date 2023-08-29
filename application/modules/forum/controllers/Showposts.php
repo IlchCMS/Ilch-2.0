@@ -192,35 +192,35 @@ class Showposts extends Frontend
         $postId = $this->getRequest()->getParam('id');
         $topicId = $this->getRequest()->getParam('topicid');
 
+        if (empty($topicId) || !is_numeric($topicId)) {
+            $this->redirect()
+                ->withMessage('topicNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
+
         $forum = $forumMapper->getForumByTopicId($topicId);
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
         if (empty($postId) || !is_numeric($postId)) {
-            $this->addMessage('postNotFound', 'danger');
-            $this->redirect(['controller' => 'index', 'action' => 'index']);
-            return;
+            $this->redirect()
+                ->withMessage('postNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
         }
 
         $post = $postMapper->getPostById($postId);
 
         if (empty($post)) {
-            $this->addMessage('postNotFound', 'danger');
-            $this->redirect(['controller' => 'index', 'action' => 'index']);
-            return;
-        }
-
-        if (empty($topicId) || !is_numeric($topicId)) {
-            $this->addMessage('topicNotFound', 'danger');
-            $this->redirect(['controller' => 'index', 'action' => 'index']);
-            return;
+            $this->redirect()
+                ->withMessage('postNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
         }
 
         $topic = $topicMapper->getTopicById($topicId);
 
         if (empty($topic)) {
-            $this->addMessage('topicNotFound', 'danger');
-            $this->redirect(['controller' => 'index', 'action' => 'index']);
-            return;
+            $this->redirect()
+                ->withMessage('topicNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
         }
 
         if ($this->getUser()) {

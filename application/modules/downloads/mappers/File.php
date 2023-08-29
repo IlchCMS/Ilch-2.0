@@ -6,16 +6,18 @@
 
 namespace Modules\Downloads\Mappers;
 
+use Ilch\Database\Exception;
+use Ilch\Database\Mysql\Result;
+use Ilch\Mapper;
 use Modules\Downloads\Models\File as FileModel;
 
-class File extends \Ilch\Mapper
+class File extends Mapper
 {
     /**
      * Get the file by id.
      *
      * @param int $id
      * @return FileModel|null
-     * @throws \Ilch\Database\Exception
      */
     public function getFileById($id)
     {
@@ -47,7 +49,6 @@ class File extends \Ilch\Mapper
      *
      * @param int $id
      * @return FileModel|null
-     * @throws \Ilch\Database\Exception
      */
     public function getLastFileByDownloadsId($id)
     {
@@ -156,7 +157,7 @@ class File extends \Ilch\Mapper
      * Delete a file by it's id.
      *
      * @param int $id the id of the file
-     * @return \Ilch\Database\Mysql\Result|int
+     * @return Result|int
      */
     public function deleteById($id)
     {
@@ -183,7 +184,7 @@ class File extends \Ilch\Mapper
     /**
      * Updates File meta.
      *
-     * @param ImageModel $model
+     * @param FileModel $model
      */
     public function saveFileTreat(FileModel $model)
     {
