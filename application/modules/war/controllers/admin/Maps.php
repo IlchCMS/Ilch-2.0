@@ -7,11 +7,13 @@
 
 namespace Modules\War\Controllers\Admin;
 
+use Ilch\Controller\Admin;
+use Ilch\Pagination;
 use Modules\War\Mappers\Maps as MapsMapper;
 use Modules\War\Models\Maps as MapsModel;
 use Ilch\Validation;
 
-class Maps extends \Ilch\Controller\Admin
+class Maps extends Admin
 {
     public function init()
     {
@@ -75,7 +77,7 @@ class Maps extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $mapsMapper = new MapsMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('manageMaps'), ['action' => 'index']);

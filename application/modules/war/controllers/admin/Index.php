@@ -6,6 +6,9 @@
 
 namespace Modules\War\Controllers\Admin;
 
+use Ilch\Controller\Admin;
+use Ilch\Date;
+use Ilch\Pagination;
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\War as WarMapper;
@@ -16,7 +19,9 @@ use Modules\User\Mappers\Group as UserGroupMapper;
 use Modules\War\Mappers\Maps as MapsMapper;
 use Ilch\Validation;
 
-class Index extends \Ilch\Controller\Admin
+use function count;
+
+class Index extends Admin
 {
     public function init()
     {
@@ -80,7 +85,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $warMapper = new WarMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
         $groupMapper = new GroupMapper();
         $enemyMapper = new EnemyMapper();
 
@@ -184,7 +189,7 @@ class Index extends \Ilch\Controller\Admin
                     $groupPoints = $this->getRequest()->getPost('warErgebnisGroup');
                     $enemyPoints = $this->getRequest()->getPost('warErgebnisEnemy');
 
-                    for ($i = 0; $i < \count($maps); $i++) {
+                    for ($i = 0; $i < count($maps); $i++) {
                         if (!empty($ids[$i])) {
                             $gameModel->setId($ids[$i]);
                         }
@@ -198,7 +203,7 @@ class Index extends \Ilch\Controller\Admin
 
                 $warModel->setWarEnemy($this->getRequest()->getPost('warEnemy'))
                     ->setWarGroup($this->getRequest()->getPost('warGroup'))
-                    ->setWarTime(new \Ilch\Date($this->getRequest()->getPost('warTime')))
+                    ->setWarTime(new Date($this->getRequest()->getPost('warTime')))
                     ->setWarMaps($warMap)
                     ->setWarServer($this->getRequest()->getPost('warServer'))
                     ->setWarPassword($this->getRequest()->getPost('warPassword'))

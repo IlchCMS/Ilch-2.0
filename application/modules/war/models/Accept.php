@@ -6,7 +6,9 @@
 
 namespace Modules\War\Models;
 
-class Accept extends \Ilch\Model
+use Ilch\Model;
+
+class Accept extends Model
 {
     /**
      * The id.

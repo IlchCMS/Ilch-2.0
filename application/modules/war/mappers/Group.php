@@ -6,16 +6,18 @@
 
 namespace Modules\War\Mappers;
 
+use Ilch\Mapper;
+use Ilch\Pagination;
 use Modules\War\Models\Group as EntriesModel;
 
-class Group extends \Ilch\Mapper
+class Group extends Mapper
 {
     public $tablename = 'war_groups';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      */
     public function checkDB(): bool
     {
@@ -27,10 +29,10 @@ class Group extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['g.id', 'g.name', 'g.tag', 'g.image', 'g.member', 'g.desc'])
@@ -68,10 +70,10 @@ class Group extends \Ilch\Mapper
      * Gets the Groups.
      *
      * @param array $where
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return null|array
      */
-    public function getGroups(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
+    public function getGroups(array $where = [], ?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['g.id' => 'DESC'], $pagination);
     }
@@ -79,10 +81,10 @@ class Group extends \Ilch\Mapper
     /**
      * Gets the Group List
      *
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return null|array
      */
-    public function getGroupList(?\Ilch\Pagination $pagination = null): ?array
+    public function getGroupList(?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy([], ['g.id' => 'DESC'], $pagination);
     }
@@ -112,7 +114,7 @@ class Group extends \Ilch\Mapper
      * Inserts or updates entry.
      *
      * @param EntriesModel $model
-     * @return integer
+     * @return int
      */
     public function save(EntriesModel $model): int
     {
@@ -137,7 +139,7 @@ class Group extends \Ilch\Mapper
      * Deletes the entry.
      *
      * @param int|EntriesModel $id
-     * @return boolean
+     * @return bool
      */
     public function delete($id): bool
     {

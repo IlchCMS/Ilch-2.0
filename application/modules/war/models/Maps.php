@@ -7,7 +7,9 @@
 
 namespace Modules\War\Models;
 
-class Maps extends \Ilch\Model
+use Ilch\Model;
+
+class Maps extends Model
 {
     /**
      * The id.

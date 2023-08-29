@@ -1,3 +1,8 @@
+<?php
+
+use Ilch\Date;
+
+?>
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <?php $entrie = $this->get('war'); ?>
 <h1><?=(!$entrie->getId()) ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
@@ -42,7 +47,7 @@
                        id="warTimeInput"
                        name="warTime"
                        size="16"
-                       value="<?=$this->escape($this->originalInput('warTime', ($entrie->getId()?(new \Ilch\Date($entrie->getWarTime()))->format("d.m.Y H:i"):''))) ?>"
+                       value="<?=$this->escape($this->originalInput('warTime', ($entrie->getId()?(new Date($entrie->getWarTime()))->format("d.m.Y H:i"):''))) ?>"
                        readonly />
                 <span class="input-group-addon">
                     <span class="fa-solid fa-calendar"></span>

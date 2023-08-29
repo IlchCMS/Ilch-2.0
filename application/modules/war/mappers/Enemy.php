@@ -6,16 +6,18 @@
 
 namespace Modules\War\Mappers;
 
+use Ilch\Mapper;
+use Ilch\Pagination;
 use Modules\War\Models\Enemy as EntriesModel;
 
-class Enemy extends \Ilch\Mapper
+class Enemy extends Mapper
 {
     public $tablename = 'war_enemy';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      */
     public function checkDB(): bool
     {
@@ -27,10 +29,10 @@ class Enemy extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['e.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['e.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['e.id', 'e.name', 'e.tag', 'e.image', 'e.homepage', 'e.contact_name', 'e.contact_email'])
@@ -68,10 +70,10 @@ class Enemy extends \Ilch\Mapper
      * Gets the Enemy
      *
      * @param array $where
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return null|array
      */
-    public function getEnemy(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEnemy(array $where = [], ?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['e.id' => 'DESC'], $pagination);
     }
@@ -79,10 +81,10 @@ class Enemy extends \Ilch\Mapper
     /**
      * Gets the Enemy List
      *
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return null|array
      */
-    public function getEnemyList(?\Ilch\Pagination $pagination = null): ?array
+    public function getEnemyList(?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy([], ['e.id' => 'DESC'], $pagination);
     }
@@ -112,7 +114,7 @@ class Enemy extends \Ilch\Mapper
      * Inserts or updates entry.
      *
      * @param EntriesModel $model
-     * @return integer
+     * @return int
      */
     public function save(EntriesModel $model): int
     {
@@ -137,7 +139,7 @@ class Enemy extends \Ilch\Mapper
      * Deletes the entry.
      *
      * @param int|EntriesModel $id
-     * @return boolean
+     * @return bool
      */
     public function delete($id): bool
     {

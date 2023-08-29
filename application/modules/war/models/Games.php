@@ -6,19 +6,21 @@
 
 namespace Modules\War\Models;
 
-class Games extends \Ilch\Model
+use Ilch\Model;
+
+class Games extends Model
 {
     /**
      * The id.
      *
-     * @var integer
+     * @var int
      */
     protected $id = 0;
 
     /**
      * The warId.
      *
-     * @var integer
+     * @var int
      */
     protected $warId = 0;
 

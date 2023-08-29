@@ -6,11 +6,14 @@
 
 namespace Modules\War\Config;
 
-class Config extends \Ilch\Config\Install
+use Ilch\Config\Database;
+use Ilch\Config\Install;
+
+class Config extends Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.15.3',
+        'version' => '1.15.4',
         'icon_small' => 'fa-solid fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -54,14 +57,14 @@ class Config extends \Ilch\Config\Install
             $this->db()->insert('calendar_events')->values(['url' => 'war/wars/index/'])->execute();
         }
 
-        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig = new Database($this->db());
         $databaseConfig->set('war_boxNextWarLimit', '5')
             ->set('war_boxLastWarLimit', '5');
     }
 
     public function uninstall()
     {
-        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig = new Database($this->db());
         $databaseConfig->delete('war_boxNextWarLimit');
         $databaseConfig->delete('war_boxLastWarLimit');
         $databaseConfig->delete('war_warsPerPage');
@@ -394,6 +397,7 @@ class Config extends \Ilch\Config\Install
                 Code verbesseung
                 */
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `lastaccepttime`;');
+                // no break
             case "1.15.1":
                 // no break
             case "1.15.2":

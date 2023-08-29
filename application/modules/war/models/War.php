@@ -6,7 +6,9 @@
 
 namespace Modules\War\Models;
 
-class War extends \Ilch\Model
+use Ilch\Model;
+
+class War extends Model
 {
     /**
      * The id.

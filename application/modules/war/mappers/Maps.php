@@ -7,16 +7,18 @@
 
 namespace Modules\War\Mappers;
 
+use Ilch\Mapper;
+use Ilch\Pagination;
 use Modules\War\Models\Maps as EntriesModel;
 
-class Maps extends \Ilch\Mapper
+class Maps extends Mapper
 {
     public $tablename = 'war_maps';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      */
     public function checkDB(): bool
     {
@@ -28,10 +30,10 @@ class Maps extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['a.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['a.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])
@@ -68,10 +70,10 @@ class Maps extends \Ilch\Mapper
      * Gets the Entries.
      *
      * @param array $where
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntries(array $where = [], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntries(array $where = [], ?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy($where, ['id' => 'ASC'], $pagination);
     }
@@ -79,10 +81,10 @@ class Maps extends \Ilch\Mapper
     /**
      * Gets the List by status.
      *
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return null|array
      */
-    public function getList(?\Ilch\Pagination $pagination = null): ?array
+    public function getList(?Pagination $pagination = null): ?array
     {
         return $this->getEntriesBy([], ['id' => 'ASC'], $pagination);
     }
@@ -112,7 +114,7 @@ class Maps extends \Ilch\Mapper
      * Inserts or updates entry.
      *
      * @param EntriesModel $model
-     * @return integer
+     * @return int
      */
     public function save(EntriesModel $model): int
     {
@@ -137,7 +139,7 @@ class Maps extends \Ilch\Mapper
      * Deletes the entry.
      *
      * @param int|EntriesModel $id
-     * @return boolean
+     * @return bool
      */
     public function delete($id): bool
     {

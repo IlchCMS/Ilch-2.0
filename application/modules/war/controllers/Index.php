@@ -6,6 +6,9 @@
 
 namespace Modules\War\Controllers;
 
+use Ilch\Controller\Frontend;
+use Ilch\Date;
+use Ilch\Pagination;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Mappers\Games as GamesMapper;
@@ -18,11 +21,11 @@ use Modules\War\Mappers\Maps as MapsMapper;
 use Ilch\Comments;
 use Ilch\Validation;
 
-class Index extends \Ilch\Controller\Frontend
+class Index extends Frontend
 {
     public function indexAction()
     {
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
         $warMapper = new WarMapper();
         $userMapper = new UserMapper();
         $gamesMapper = new GamesMapper();
@@ -65,8 +68,8 @@ class Index extends \Ilch\Controller\Frontend
         $acceptMapper = new AcceptMapper();
         $mapsMapper = new MapsMapper();
         
-        $date = new \Ilch\Date();
-        $datenow = new \Ilch\Date($date->format("Y-m-d H:i:s", true));
+        $date = new Date();
+        $datenow = new Date($date->format("Y-m-d H:i:s", true));
 
         $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
 
@@ -110,53 +113,56 @@ class Index extends \Ilch\Controller\Frontend
                     }
                 }
             }
-            if ($this->getUser() && $this->getRequest()->isPost()) {
-                if ($this->getRequest()->getPost('warAccept')) {
-                    $validation = Validation::create($this->getRequest()->getPost(), [
-                        'warAccept'           => 'required|min:1|max:3'
-                    ]);
 
-                    if ($validation->isValid()) {
-                        $model = new AcceptModel();
-                        if ($accept) {
-                            $model->setId($accept->getId());
+            if ($this->getUser()) {
+                if ($this->getRequest()->isPost()) {
+                    if ($this->getRequest()->getPost('warAccept')) {
+                        $validation = Validation::create($this->getRequest()->getPost(), [
+                            'warAccept'           => 'required|min:1|max:3'
+                        ]);
+
+                        if ($validation->isValid()) {
+                            $model = new AcceptModel();
+                            if ($accept) {
+                                $model->setId($accept->getId());
+                            }
+
+                            $model->setWarId($war->getId())
+                                ->setUserId($this->getUser()->getId())
+                                ->setAccept((int)$this->getRequest()->getPost('warAccept'))
+                                ->setComment(trim($this->getRequest()->getPost('warComment')))
+                                ->setDateCreated($datenow);
+                            $acceptMapper->save($model);
+
+                            $this->redirect()
+                                ->withMessage('saveSuccess')
+                                ->to(['action' => 'show', 'id' => $war->getId()]);
+                            $this->redirect(['action' => 'show', 'id' => $war->getId()]);
+                        }
+                        $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                        $this->redirect()
+                            ->withInput()
+                            ->withErrors($validation->getErrorBag())
+                            ->to(['action' => 'show', 'id' => $war->getId()]);
+                    } elseif ($this->getRequest()->getPost('saveComment')) {
+                        $comments = new Comments();
+
+                        if ($this->getRequest()->getPost('fkId')) {
+                            $commentsKey .= '/id_c/'.$this->getRequest()->getPost('fkId');
                         }
 
-                        $model->setWarId($war->getId())
-                            ->setUserId($this->getUser()->getId())
-                            ->setAccept((int)$this->getRequest()->getPost('warAccept'))
-                            ->setComment(trim($this->getRequest()->getPost('warComment')))
-                            ->setDateCreated($datenow);
-                        $acceptMapper->save($model);
-
-                        $this->redirect()
-                            ->withMessage('saveSuccess')
-                            ->to(['action' => 'show', 'id' => $war->getId()]);
+                        $comments->saveComment($commentsKey, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
                         $this->redirect(['action' => 'show', 'id' => $war->getId()]);
                     }
-                    $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                    $this->redirect()
-                        ->withInput()
-                        ->withErrors($validation->getErrorBag())
-                        ->to(['action' => 'show', 'id' => $war->getId()]);
-                } elseif ($this->getRequest()->getPost('saveComment')) {
+                }
+
+                if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
+                    $commentId = $this->getRequest()->getParam('commentId');
                     $comments = new Comments();
 
-                    if ($this->getRequest()->getPost('fkId')) {
-                        $commentsKey .= '/id_c/'.$this->getRequest()->getPost('fkId');
-                    }
-
-                    $comments->saveComment($commentsKey, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
-                    $this->redirect(['action' => 'show', 'id' => $war->getId()]);
+                    $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
+                    $this->redirect(['action' => 'show', 'id' => $war->getId().'#comment_'.$commentId]);
                 }
-            }
-
-            if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
-                $commentId = $this->getRequest()->getParam('commentId');
-                $comments = new Comments();
-
-                $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-                $this->redirect(['action' => 'show', 'id' => $war->getId().'#comment_'.$commentId]);
             }
 
             $this->getLayout()->getHmenu()

@@ -6,9 +6,10 @@
 
 namespace Modules\War\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Ilch\Validation;
 
-class Settings extends \Ilch\Controller\Admin
+class Settings extends Admin
 {
     public function init()
     {

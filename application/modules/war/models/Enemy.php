@@ -6,12 +6,14 @@
 
 namespace Modules\War\Models;
 
-class Enemy extends \Ilch\Model
+use Ilch\Model;
+
+class Enemy extends Model
 {
     /**
      * The id.
      *
-     * @var integer
+     * @var int
      */
     protected $id = 0;
 
