@@ -1,18 +1,15 @@
 <?php
-$adate = new \Ilch\Date();
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\History\Models\History $history */
 $history = $this->get('history');
-
-if ($history != '') {
-    $getDate = new \Ilch\Date($history->getDate());
-    $date = $getDate->format('d.m.Y', true);
-}
 ?>
-
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <h1>
-    <?=($history != '') ? $this->getTrans('edit') : $this->getTrans('add') ?>
+    <?=($history->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -21,11 +18,14 @@ if ($history != '') {
             <?=$this->getTrans('date') ?>:
         </label>
         <div class="col-lg-2 input-group ilch-date date form_datetime">
+            <?php
+            $getDate = new \Ilch\Date($history->getDate() ?? 'now');
+            ?>
             <input type="text"
                    class="form-control"
                    id="date"
                    name="date"
-                   value="<?=($history != '') ? $date : $this->get('post')['date'] ?>"
+                   value="<?=$this->originalInput('date', $getDate->format('d.m.Y', true)) ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa-solid fa-calendar"></span>
@@ -41,7 +41,7 @@ if ($history != '') {
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($history != '') ? $this->escape($history->getTitle()) : $this->get('post')['title'] ?>" />
+                   value="<?=$this->originalInput('title', $history->getTitle()) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -53,22 +53,22 @@ if ($history != '') {
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?=($history != '') ? $this->escape($history->getText()) : $this->get('post')['text'] ?></textarea>
+                      rows="5"><?=$this->originalInput('text', $history->getText()) ?></textarea>
         </div>
     </div>
     <div class="form-group">
-        <label for="type" class="col-lg-2 control-label">
+        <label for="symbol" class="col-lg-2 control-label">
             <?=$this->getTrans('symbol') ?>:
         </label>
         <div class="col-lg-2 input-group ilch-date">
             <span class="input-group-addon">
-                <span id="chosensymbol" class="<?=($history != '') ? $this->escape($history->getType()) : $this->get('post')['symbol'] ?>"></span>
+                <span id="chosensymbol" class="<?=$this->originalInput('symbol', $history->getType())  ?>"></span>
             </span>
             <input type="text"
                    class="form-control"
                    id="symbol"
                    name="symbol"
-                   value="<?=($history != '') ? $this->escape($history->getType()) : $this->get('post')['symbol'] ?>"
+                   value="<?=$this->originalInput('symbol', $history->getType()) ?>"
                    readonly />
             <span class="input-group-addon">
                 <span class="fa-solid fa-mouse-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
@@ -83,13 +83,13 @@ if ($history != '') {
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"
-                   value="<?=($history != '') ? $history->getColor() : '#75ce66' ?>">
+                   value="<?=$this->originalInput('color', $history->getColor()) ? : '#75ce66' ?>">
             <span class="input-group-addon">
                 <span class="fa-solid fa-undo" onclick="document.getElementById('color').color.fromString('75ce66')"></span>
             </span>
         </div>
     </div>
-    <?=($history != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=($history->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
 <div class="modal fade" id="symbolDialog" tabindex="-1" role="dialog" aria-labelledby="symbolDialogTitle" aria-hidden="true">
@@ -111,62 +111,63 @@ if ($history != '') {
     </div>
 </div>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
-$(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy",
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minView: 2,
-        todayHighlight: true
-    });
-
-    $("#symbolDialog").on('shown.bs.modal', function (e) {
-        let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH.'/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
-        let icons = [];
-
-        $.each(content, function(index, icon) {
-            if (~icon.styles.indexOf('brands')) {
-                icons.push('fa-brands fa-' + index);
-            } else {
-                if (~icon.styles.indexOf('solid')) {
-                    icons.push('fa-solid fa-' + index);
-                }
-
-                if (~icon.styles.indexOf('regular')) {
-                    icons.push('fa-regular fa-' + index);
-                }
-            }
-        })
-
-        let div;
-        for (let x = 0; x < icons.length;) {
-            let y;
-            div = '<div class="row">';
-            for (y = x; y < x + 6; y++) {
-                div += '<div class="icon col-lg-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
-            }
-            div += '</div>';
-            x = y;
-
-            $("#symbolDialog .modal-content .modal-body").append(div);
-        }
-
-        $(".faicon").click(function (e) {
-            $("#symbol").val($(this).closest("i").attr('id'));
-            $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
-            $("#symbolDialog").modal('hide')
+    $(document).ready(function() {
+        $(".form_datetime").datetimepicker({
+            format: "dd.mm.yyyy",
+            autoclose: true,
+            language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+            minView: 2,
+            todayHighlight: true
         });
 
-        $("#noIcon").click(function (e) {
-            $("#symbol").val("");
+        $("#symbolDialog").on('shown.bs.modal', function () {
+            let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH . '/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
+            let icons = [];
+
+            $.each(content, function(index, icon) {
+                if (~icon.styles.indexOf('brands')) {
+                    icons.push('fa-brands fa-' + index);
+                } else {
+                    if (~icon.styles.indexOf('solid')) {
+                        icons.push('fa-solid fa-' + index);
+                    }
+
+                    if (~icon.styles.indexOf('regular')) {
+                        icons.push('fa-regular fa-' + index);
+                    }
+                }
+            })
+
+            let div;
+            let x;
+            for (x = 0; x < icons.length;) {
+                let y;
+                div = '<div class="row">';
+                for (y = x; y < x + 6; y++) {
+                    div += '<div class="icon col-lg-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
+                }
+                div += '</div>';
+                x = y;
+
+                $("#symbolDialog .modal-content .modal-body").append(div);
+            }
+
+            $(".faicon").click(function () {
+                $("#symbol").val($(this).closest("i").attr('id'));
+                $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
+                $("#symbolDialog").modal('hide')
+            });
+
+            $("#noIcon").click(function () {
+                $("#symbol").val("");
+            });
         });
     });
-});
 </script>
