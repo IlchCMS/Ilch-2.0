@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -18,12 +19,12 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
             ]
@@ -35,8 +36,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuPrivacy',
             $items
         );
@@ -56,38 +56,58 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        if ($this->getRequest()->getPost('saveRules')) {
+            foreach ($this->getRequest()->getPost('items') as $i => $id) {
+                $privacyMapper->sort($id, $i);
+            }
+
+            $this->redirect()
+                ->withMessage('saveSuccess')
+                ->to(['action' => 'index']);
+        }
+
         $this->getView()->set('privacys', $privacyMapper->getPrivacy());
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $privacyMapper = new PrivacyMapper();
 
+        $model = new PrivacyModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuPrivacy'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('privacy', $privacyMapper->getPrivacyById($this->getRequest()->getParam('id')));
+            $model = $privacyMapper->getPrivacyById($this->getRequest()->getParam('id'));
+            if (!$model) {
+                $this->redirect(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuPrivacy'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('privacy', $model);
 
         if ($this->getRequest()->isPost()) {
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            Validation::setCustomFieldAliases(['urltitle' => 'urlTitle']);
+
+            $validationRules = [
                 'show' => 'required|numeric|integer|min:0|max:1',
                 'title' => 'required',
                 'text' => 'required',
                 'url' => 'url'
-            ]);
+            ];
+
+            if ($this->getRequest()->getPost('urltitle') || $this->getRequest()->getPost('url')) {
+                $validationRules['urltitle'] = 'required';
+                $validationRules['url'] = 'required|url';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
-                $model = new PrivacyModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
                 $model->setShow($this->getRequest()->getPost('show'));
                 $model->setTitle($this->getRequest()->getPost('title'))
                     ->setText($this->getRequest()->getPost('text'))
@@ -103,7 +123,7 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect()
                     ->withInput()
                     ->withErrors($validation->getErrorBag())
-                    ->to(['action' => 'treat']);
+                    ->to(array_merge(['action' => 'treat'], ($model->getId() ? ['id' => $model->getId()] : [])));
             }
         }
     }

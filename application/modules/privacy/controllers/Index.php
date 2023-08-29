@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -19,6 +20,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuPrivacy'), ['action' => 'index']);
 
-        $this->getView()->set('privacy', $privacyMapper->getPrivacy(['show' => 1]));
+        $this->getView()->set('privacys', $privacyMapper->getPrivacy(['show' => 1]));
     }
 }
