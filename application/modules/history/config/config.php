@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,8 +11,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'history',
-        'version' => '1.8.0',
-        'icon_small' => 'fa-history',
+        'version' => '1.9.0',
+        'icon_small' => 'fa-solid fa-clock-rotate-left',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -38,12 +39,13 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'history_desc_order'");
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('history_desc_order');
 
-        $this->db()->queryMulti('DROP TABLE `[prefix]_history`');
+        $this->db()->drop('history', true);
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_history` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -56,7 +58,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -64,14 +66,18 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_history` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 // no break
             case "1.1":
+                // no break
             case "1.1.0":
+                // no break
             case "1.2.0":
+                // no break
             case "1.3.0":
                 // Add sort order setting
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('history_desc_order', '0');
                 // no break
             case "1.4.0":
+                // no break
             case "1.5.0":
                 // convert type to new icons
                 $this->db()->query("UPDATE `[prefix]_history` SET `type` = 'fas fa-globe' WHERE `type` = 'globe';");
@@ -82,7 +88,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_history` SET `type` = 'fas fa-map-marker' WHERE `type` = 'location';");
 
                 // remove no longer needed images
-                removeDir(APPLICATION_PATH.'/modules/history/static/img');
+                removeDir(APPLICATION_PATH . '/modules/history/static/img');
                 // no break
             case "1.6.0":
                 // Update description
@@ -91,6 +97,24 @@ class Config extends \Ilch\Config\Install
                 }
                 // no break
             case "1.7.0":
+                // no break
+            case "1.8.0":
+                $this->db()->update('modules', ['icon_small' => $this->config['icon_small']], ['key' => $this->config['key']])->execute();
+
+                foreach (['fas' => 'fa-solid', 'far' => 'fa-regular', 'fab' => 'fa-brands'] as $key => $replace) {
+                    $replaceTypes = $this->db()->select(['id', 'type'])
+                        ->from('history')
+                        ->where(['type LIKE' => $key . ' fa-%'])
+                        ->execute()
+                        ->fetchRows();
+                    foreach ($replaceTypes ?? [] as $entries) {
+                        var_dump($entries);
+                        $this->db()->update('history', ['type' => preg_replace('/' . $key . ' fa-(.*)/', $replace . ' fa-$1', $entries['type'])], ['id' => $entries['id']])->execute();
+                    }
+                }
+                // no break
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

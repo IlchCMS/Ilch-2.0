@@ -205,7 +205,7 @@ Main components
     .cd-timeline-content h3 {
         padding: 10px;
         font-size: 21px;
-        margin-top: 0px;
+        margin-top: 0;
         background-color: #d4d4d4;
     }
     .cd-timeline-content p {
@@ -232,7 +232,7 @@ Main components
         padding: .8em 0;
         width: 100%;
         left: 122%;
-        top: 0px;
+        top: 0;
         font-size: 16px;
     }
     .cd-timeline-block:nth-child(even) .cd-timeline-content {

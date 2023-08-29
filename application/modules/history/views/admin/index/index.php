@@ -1,5 +1,12 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\History\Models\History[]|null $entries */
+$entries = $this->get('entries');
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('entries') != ''): ?>
+<?php if ($entries) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -23,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('entries') as $entry): ?>
+                    <?php foreach ($entries as $entry) : ?>
                         <?php $getDate = new \Ilch\Date($entry->getDate()); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_entries', $entry->getId()) ?></td>
@@ -31,7 +38,7 @@
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $entry->getId()]) ?></td>
                             <td><?=$getDate->format('d.m.Y', true) ?></td>
                             <td><?=$this->escape($entry->getTitle()) ?></td>
-                            <td><?=$this->escape($entry->getText()) ?></td>
+                            <td><?=$this->purify($entry->getText()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -39,6 +46,6 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noHistorys') ?>
 <?php endif; ?>
