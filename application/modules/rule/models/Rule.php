@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,63 +14,101 @@ class Rule extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The paragraph of the rule.
      *
      * @var string
      */
-    protected $paragraph;
+    protected $paragraph = '';
 
     /**
      * The title of the rule.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The text of the rule.
      *
      * @var string
      */
-    protected $text;
+    protected $text = '';
 
     /**
      * The position of the rule.
      *
      * @var int
      */
-    protected $position;
+    protected $position = 0;
 
     /**
      * The parent_id of the rule.
      *
      * @var int
      */
-    protected $parent_id;
+    protected $parent_id = 0;
 
     /**
      * The title of the parent rule.
      *
      * @var string
      */
-    protected $parent_title;
+    protected $parent_title = '';
 
     /**
      * Read access of the item.
      *
      * @var string
      */
-    protected $access;
+    protected $access = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Rule
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['paragraph'])) {
+            $this->setParagraph($entries['paragraph']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        if (isset($entries['position'])) {
+            $this->setPosition($entries['position']);
+        }
+        if (isset($entries['parent_id'])) {
+            $this->setParentId($entries['parent_id']);
+        }
+        if (isset($entries['parent_title'])) {
+            $this->setParentTitle($entries['parent_title']);
+        }
+        if (isset($entries['access'])) {
+            $this->setAccess($entries['access']);
+        }
+        if (isset($entries['access_all'])) {
+            if ($entries['access_all']) {
+                $this->setAccess('all');
+            }
+        }
+        return $this;
+    }
 
     /**
      * Gets the id of the rule.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -80,9 +119,9 @@ class Rule extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Rule
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -92,7 +131,7 @@ class Rule extends \Ilch\Model
      *
      * @return string
      */
-    public function getParagraph()
+    public function getParagraph(): string
     {
         return $this->paragraph;
     }
@@ -103,9 +142,9 @@ class Rule extends \Ilch\Model
      * @param string $paragraph
      * @return $this
      */
-    public function setParagraph($paragraph)
+    public function setParagraph(string $paragraph): Rule
     {
-        $this->paragraph = (string)$paragraph;
+        $this->paragraph = $paragraph;
 
         return $this;
     }
@@ -115,7 +154,7 @@ class Rule extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -126,9 +165,9 @@ class Rule extends \Ilch\Model
      * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Rule
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -138,7 +177,7 @@ class Rule extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -149,9 +188,9 @@ class Rule extends \Ilch\Model
      * @param string $text
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Rule
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -161,7 +200,7 @@ class Rule extends \Ilch\Model
      *
      * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -172,9 +211,9 @@ class Rule extends \Ilch\Model
      * @param int $position
      * @return $this
      */
-    public function setPosition($position)
+    public function setPosition(int $position): Rule
     {
-        $this->position = (int)$position;
+        $this->position = $position;
 
         return $this;
     }
@@ -184,7 +223,7 @@ class Rule extends \Ilch\Model
      *
      * @return int
      */
-    public function getParent_Id()
+    public function getParentId(): int
     {
         return $this->parent_id;
     }
@@ -195,9 +234,9 @@ class Rule extends \Ilch\Model
      * @param int $parent_id
      * @return $this
      */
-    public function setParent_Id($parent_id)
+    public function setParentId(int $parent_id): Rule
     {
-        $this->parent_id = (int)$parent_id;
+        $this->parent_id = $parent_id;
 
         return $this;
     }
@@ -207,7 +246,7 @@ class Rule extends \Ilch\Model
      *
      * @return string
      */
-    public function getParentTitle()
+    public function getParentTitle(): string
     {
         return $this->parent_title;
     }
@@ -218,7 +257,7 @@ class Rule extends \Ilch\Model
      * @param string $parent_title
      * @return Rule
      */
-    public function setParentTitle($parent_title)
+    public function setParentTitle(string $parent_title): Rule
     {
         $this->parent_title = $parent_title;
         return $this;
@@ -229,7 +268,7 @@ class Rule extends \Ilch\Model
      *
      * @return string
      */
-    public function getAccess()
+    public function getAccess(): string
     {
         return $this->access;
     }
@@ -240,10 +279,31 @@ class Rule extends \Ilch\Model
      * @param string $access
      * @return $this
      */
-    public function setAccess($access)
+    public function setAccess(string $access): Rule
     {
-        $this->access = (string) $access;
+        $this->access = $access;
 
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'paragraph' => $this->getParagraph(),
+                'title'     => $this->getTitle(),
+                'text'      => $this->getText(),
+                'parent_id' => $this->getParentId(),
+                'position'  => $this->getPosition(),
+                'access_all'    => ($this->getAccess() === 'all' ? 1 : 0)
+            ]
+        );
     }
 }

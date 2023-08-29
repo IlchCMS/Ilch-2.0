@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -19,25 +20,25 @@ class Cats extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCats',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-cogs',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
@@ -63,27 +64,29 @@ class Cats extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('saveCats')) {
-            foreach ($this->getRequest()->getPost('items') as $i => $catId) {
-                $ruleMapper->sort($catId, $i);
-            }
+        if ($this->getRequest()->getPost('check_cats')) {
+            if ($this->getRequest()->getPost('action') == 'delete') {
+                $categoryInUse = false;
+                foreach ($this->getRequest()->getPost('check_cats') as $catId) {
+                    if ($ruleMapper->getRulesItemsByParent($catId, null) == null) {
+                        $ruleMapper->delete($catId);
+                    } else {
+                        $categoryInUse = true;
+                    }
+                }
 
-            $this->redirect()
-                ->withMessage('saveSuccess')
-                ->to(['action' => 'index']);
+                if ($categoryInUse) {
+                    $this->redirect()
+                        ->withMessage('OneOrMoreCategoriesInUse', 'danger')
+                        ->to(['action' => 'index']);
+                }
+                $this->redirect()
+                    ->withMessage('deleteSuccess')
+                    ->to(['action' => 'index']);
+            }
         }
 
-        if ($this->getRequest()->getPost('action') === 'delete') {
-            foreach ($this->getRequest()->getPost('check_cats') as $catId) {
-                $ruleMapper->delete($catId);
-            }
-
-            $this->redirect()
-                ->withMessage('deleteSuccess')
-                ->to(['action' => 'index']);
-        }
-
-        $this->getView()->set('cats', $ruleMapper->getRules(['r.parent_id' => 0]));
+        $this->getView()->set('cats', $ruleMapper->getRules(['r.parent_id' => 0], null));
     }
 
     public function treatAction()
@@ -91,19 +94,25 @@ class Cats extends \Ilch\Controller\Admin
         $ruleMapper = new RuleMapper();
         $userGroupMapper = new UserGroupMapper();
 
+        $model = new RuleModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('cat', $ruleMapper->getRuleById($this->getRequest()->getParam('id')));
+            $model = $ruleMapper->getRuleById($this->getRequest()->getParam('id'));
+
+            if (!$model) {
+                $this->redirect(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('cat', $model);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -112,14 +121,12 @@ class Cats extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model = new RuleModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-
                 $groups = '';
                 if (!empty($this->getRequest()->getPost('groups'))) {
                     $groups = implode(',', $this->getRequest()->getPost('groups'));
+                }
+                if (!$groups) {
+                    $groups = 'all';
                 }
 
                 $model->setParagraph($this->getRequest()->getPost('paragraph'));
@@ -136,11 +143,11 @@ class Cats extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
+                ->to(array_merge(['action' => 'treat'], ($model->getId() ? ['id' => $model->getId()] : [])));
         }
 
-        if (!empty($rule)) {
-            $groups = explode(',', $rule->getAccess());
+        if (!empty($model)) {
+            $groups = explode(',', $model->getAccess());
         } else {
             $groups = [1,2,3];
         }
@@ -154,7 +161,7 @@ class Cats extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             $ruleMapper = new RuleMapper();
 
-            if ($ruleMapper->getRulesItemsByParent($this->getRequest()->getParam('id')) == '') {
+            if ($ruleMapper->getRulesItemsByParent($this->getRequest()->getParam('id'), null) == null) {
                 $ruleMapper->delete($this->getRequest()->getParam('id'));
 
                 $this->redirect()
