@@ -108,7 +108,6 @@ class Config extends \Ilch\Config\Install
                         ->execute()
                         ->fetchRows();
                     foreach ($replaceTypes ?? [] as $entries) {
-                        var_dump($entries);
                         $this->db()->update('history', ['type' => preg_replace('/' . $key . ' fa-(.*)/', $replace . ' fa-$1', $entries['type'])], ['id' => $entries['id']])->execute();
                     }
                 }
