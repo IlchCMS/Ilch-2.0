@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -17,6 +18,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuImprint'), ['action' => 'index']);
 
-        $this->getView()->set('imprint', $imprintMapper->getImprint()[0]);
+        $this->getView()->set('imprint', $imprintMapper->getImprintById(1));
     }
 }

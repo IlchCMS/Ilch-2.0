@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,21 +14,36 @@ class Imprint extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The imprint.
      *
      * @var string
      */
-    protected $imprint;
+    protected $imprint = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Imprint
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['imprint'])) {
+            $this->setImprint($entries['imprint']);
+        }
+        return $this;
+    }
 
     /**
      * Gets the id of the imprint.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -38,9 +54,9 @@ class Imprint extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Imprint
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -50,7 +66,7 @@ class Imprint extends \Ilch\Model
      *
      * @return string
      */
-    public function getImprint()
+    public function getImprint(): string
     {
         return $this->imprint;
     }
@@ -61,10 +77,26 @@ class Imprint extends \Ilch\Model
      * @param string $imprint
      * @return $this
      */
-    public function setImprint($imprint)
+    public function setImprint(string $imprint): Imprint
     {
-        $this->imprint = (string)$imprint;
+        $this->imprint = $imprint;
 
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'imprint'        => $this->getImprint(),
+            ]
+        );
     }
 }
