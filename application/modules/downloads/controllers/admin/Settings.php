@@ -6,7 +6,9 @@
 
 namespace Modules\Downloads\Controllers\Admin;
 
-class Settings extends \Ilch\Controller\Admin
+use Ilch\Controller\Admin;
+
+class Settings extends Admin
 {
     public function init()
     {

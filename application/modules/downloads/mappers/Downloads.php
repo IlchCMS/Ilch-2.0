@@ -6,9 +6,10 @@
 
 namespace Modules\Downloads\Mappers;
 
+use Ilch\Mapper;
 use Modules\Downloads\Models\DownloadsItem;
 
-class Downloads extends \Ilch\Mapper
+class Downloads extends Mapper
 {
     /**
      * Gets all Downloads items by parent item id.
@@ -107,7 +108,7 @@ class Downloads extends \Ilch\Mapper
      * Save one Downloads item.
      *
      * @param  DownloadsItem $downloadsItem
-     * @return integer
+     * @return int
      */
     public function saveItem(DownloadsItem $downloadsItem)
     {

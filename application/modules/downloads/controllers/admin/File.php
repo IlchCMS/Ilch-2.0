@@ -6,11 +6,12 @@
 
 namespace Modules\Downloads\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Downloads\Models\File as FileModel;
 use Ilch\Validation;
 
-class File extends \Ilch\Controller\Admin
+class File extends Admin
 {
     public function init()
     {

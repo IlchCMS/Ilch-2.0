@@ -6,10 +6,12 @@
 
 namespace Modules\Downloads\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Downloads\Mappers\File as FileMapper;
+use Modules\Downloads\Models\DownloadsItem;
 
-class Index extends \Ilch\Controller\Admin
+class Index extends Admin
 {
     public function init()
     {
@@ -73,7 +75,7 @@ class Index extends \Ilch\Controller\Admin
                     }
 
                     foreach ($items as $item) {
-                        $downloadsItem = new \Modules\Downloads\Models\DownloadsItem;
+                        $downloadsItem = new DownloadsItem();
 
                         if (strpos($item['id'], 'tmp_') !== false) {
                             $tmpId = str_replace('tmp_', '', $item['id']);
@@ -104,7 +106,7 @@ class Index extends \Ilch\Controller\Admin
                     $sort = 0;
 
                     foreach ($sortArray as $id => $parent) {
-                        $downloadsItem = new \Modules\Downloads\Models\DownloadsItem();
+                        $downloadsItem = new DownloadsItem();
                         $downloadsItem->setId($id);
                         $downloadsItem->setSort($sort);
                         $downloadsItem->setParentId($parent);

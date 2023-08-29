@@ -6,45 +6,47 @@
 
 namespace Modules\Downloads\Models;
 
+use Ilch\Model;
+
 /**
  * The Downloads item model class.
  *
  * @package ilch
  */
-class DownloadsItem extends \Ilch\Model
+class DownloadsItem extends Model
 {
     /**
      * Id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * Sort of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $sort;
 
     /**
      * Type of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $type;
 
     /**
      * DownloadsId of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $downloadsId;
 
     /**
      * ParentId of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $parentId;
 
@@ -65,7 +67,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -75,7 +77,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -85,7 +87,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Gets the sort.
      *
-     * @return integer
+     * @return int
      */
     public function getSort()
     {
@@ -95,7 +97,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Sets the sort.
      *
-     * @param integer $sort
+     * @param int $sort
      */
     public function setSort($sort)
     {
@@ -105,7 +107,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Gets the type.
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -115,7 +117,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Sets the type.
      *
-     * @param integer $type
+     * @param int $type
      */
     public function setType($type)
     {
@@ -125,7 +127,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Gets the Downloads id.
      *
-     * @return integer
+     * @return int
      */
     public function getDownloadsId()
     {
@@ -135,7 +137,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Sets the Downloads id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setDownloadsId($id)
     {
@@ -145,7 +147,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Gets the parent id.
      *
-     * @return integer
+     * @return int
      */
     public function getParentId()
     {
@@ -155,7 +157,7 @@ class DownloadsItem extends \Ilch\Model
     /**
      * Sets the parent id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setParentId($id)
     {
