@@ -1,6 +1,13 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Rule\Models\Rule[]|null $cats */
+$cats = $this->get('cats');
+?>
 <h1><?=$this->getTrans('menuCats') ?></h1>
-<?php if (!empty($this->get('cats'))): ?>
-    <form class="form-horizontal" method="POST">
+<?php if ($cats) : ?>
+    <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -21,9 +28,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('cats') as $cat): ?>
+                    <?php foreach ($cats as $cat) : ?>
                         <tr>
-                            <input type="hidden" name="items[]" value="<?=$cat->getId() ?>" />
                             <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
@@ -35,6 +41,7 @@
             </table>
         </div>
         <div class="content_savebox">
+            <input type="hidden" class="content_savebox_hidden" name="action" value="" />
             <div class="btn-group dropup">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <?=$this->getTrans('selected') ?> <span class="caret"></span>
@@ -45,6 +52,6 @@
             </div>
         </div>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noCats') ?>
 <?php endif; ?>

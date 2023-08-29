@@ -1,5 +1,15 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Rule\Mappers\Rule $ruleMapper */
+$ruleMapper = $this->get('ruleMapper');
+
+/** @var Modules\Rule\Models\Rule[]|null $rules */
+$rules = $this->get('rules');
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('rules') != ''): ?>
+<?php if ($rules) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -27,17 +37,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('rules') as $rule): ?>
-                    <?php
-                    $rulesparent = $this->get('ruleMapper')->getRuleById($rule->getParent_Id())
-                    ?>
+                    <?php foreach ($rules as $rule) : ?>
+                        <?php
+                        $rulesparent = $rule->getParentId() ? $ruleMapper->getRuleById($rule->getParentId()) : null;
+                        ?>
                         <tr>
                             <input type="hidden" name="items[]" value="<?=$rule->getId() ?>" />
                             <td><?=$this->getDeleteCheckbox('check_entries', $rule->getId()) ?></td>
-                            <td><?=$this->getEditIcon(array_merge(($rule->getParent_Id()==0?['controller' => 'cats']:[]), ['action' => 'treat', 'id' => $rule->getId()])) ?></td>
+                            <td><?=$this->getEditIcon(array_merge(($rule->getParentId() == 0 ? ['controller' => 'cats'] : []), ['action' => 'treat', 'id' => $rule->getId()])) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $rule->getId()]) ?></td>
-                            <td><i class="fa fa-sort"></i></td>
-                            <td><?=($rulesparent?$this->escape($rulesparent->getParagraph()).' / ':'') ?><?=$this->escape($rule->getParagraph()) ?></td>
+                            <td><i class="fa-solid fa-sort"></i></td>
+                            <td><?=($rulesparent ? $this->escape($rulesparent->getParagraph()) . ' / ' : '') ?><?=$this->escape($rule->getParagraph()) ?></td>
                             <td><?=$this->escape($rule->getTitle()) ?></td>
                             <td><?=$this->escape($rule->getParentTitle()) ?></td>
                             <td><?=$this->purify($rule->getText()) ?></td>
@@ -74,6 +84,6 @@
         }
     }).disableSelection();
     </script>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noRules') ?>
 <?php endif; ?>

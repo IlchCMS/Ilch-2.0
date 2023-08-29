@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -18,20 +19,19 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index']);
 
-        $this->getView()->set('rules', $ruleMapper->getRulesItemsByParent(0));
-        $this->getView()->set('rulesMapper', $ruleMapper);
-
-        $userId = null;
         $groupIds = [3];
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
-            $user = $userMapper->getUserById($userId);
+            $user = $userMapper->getUserById($this->getUser()->getId());
 
             $groupIds = [];
             foreach ($user->getGroups() as $groups) {
                 $groupIds[] = $groups->getId();
             }
         }
+
+        $this->getView()->set('rules', $ruleMapper->getRulesItemsByParent(0, $groupIds));
+        $this->getView()->set('rulesMapper', $ruleMapper);
+
         $this->getView()->set('groupIdsArray', $groupIds);
         $this->getView()->set('showallonstart', $this->getConfig()->get('rule_showallonstart'));
     }

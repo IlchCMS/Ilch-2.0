@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -24,4 +25,5 @@ return [
     'OneOrMoreCategoriesInUse' => 'One or more categories could not be deleted because rules are still assigned.',
     'showallonstart' => 'Categories open / closed',
     'selectAssignedGroups' => 'Selected groups or empty for all',
+    'all' => 'All',
 ];

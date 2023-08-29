@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -24,4 +25,5 @@ return [
     'OneOrMoreCategoriesInUse' => 'Eine oder mehrere Kategorien konnten nicht gelöscht werden, da noch Regeln zugewiesen sind.',
     'showallonstart' => 'Kategorien ausgeklappt / eingeklappt',
     'selectAssignedGroups' => 'Ausgewählte Gruppen oder leer für alle',
+    'all' => 'Alle',
 ];
