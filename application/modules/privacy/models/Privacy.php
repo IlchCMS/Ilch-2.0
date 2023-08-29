@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,49 +14,86 @@ class Privacy extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The title of the privacy.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The urltitle of the privacy.
      *
      * @var string
      */
-    protected $urltitle;
+    protected $urltitle = '';
 
     /**
      * The url of the privacy.
      *
      * @var string
      */
-    protected $url;
+    protected $url = '';
 
     /**
      * The text of the privacy.
      *
      * @var string
      */
-    protected $text;
+    protected $text = '';
 
     /**
      * The show of the privacy.
      *
-     * @var int
+     * @var bool
      */
-    protected $show;
+    protected $show = false;
+
+    /**
+     * The show of the privacy.
+     *
+     * @var bool
+     */
+    protected $position = 0;
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Privacy
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['urltitle'])) {
+            $this->setUrlTitle($entries['urltitle']);
+        }
+        if (isset($entries['url'])) {
+            $this->setUrl($entries['url']);
+        }
+        if (isset($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        if (isset($entries['show'])) {
+            $this->setShow($entries['show']);
+        }
+        if (isset($entries['position'])) {
+            $this->setPosition($entries['position']);
+        }
+        return $this;
+    }
 
     /**
      * Gets the id of the privacy.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -64,11 +102,11 @@ class Privacy extends \Ilch\Model
      * Sets the id of the privacy.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Privacy
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -78,7 +116,7 @@ class Privacy extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -87,11 +125,11 @@ class Privacy extends \Ilch\Model
      * Sets the title of the privacy.
      *
      * @param string $title
-     * @return this
+     * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Privacy
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -101,7 +139,7 @@ class Privacy extends \Ilch\Model
      *
      * @return string
      */
-    public function getUrlTitle()
+    public function getUrlTitle(): string
     {
         return $this->urltitle;
     }
@@ -110,11 +148,11 @@ class Privacy extends \Ilch\Model
      * Sets the urltitle of the privacy.
      *
      * @param string $urltitle
-     * @return this
+     * @return $this
      */
-    public function setUrlTitle($urltitle)
+    public function setUrlTitle(string $urltitle): Privacy
     {
-        $this->urltitle = (string)$urltitle;
+        $this->urltitle = $urltitle;
 
         return $this;
     }
@@ -124,7 +162,7 @@ class Privacy extends \Ilch\Model
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -133,11 +171,11 @@ class Privacy extends \Ilch\Model
      * Sets the url of the privacy.
      *
      * @param string $url
-     * @return this
+     * @return $this
      */
-    public function setURL($url)
+    public function setURL(string $url): Privacy
     {
-        $this->url = (string)$url;
+        $this->url = $url;
 
         return $this;
     }
@@ -147,7 +185,7 @@ class Privacy extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -156,11 +194,11 @@ class Privacy extends \Ilch\Model
      * Sets the text of the privacy.
      *
      * @param string $text
-     * @return this
+     * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Privacy
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -168,9 +206,9 @@ class Privacy extends \Ilch\Model
     /**
      * Gets the show of the privacy.
      *
-     * @return int
+     * @return bool
      */
-    public function getShow()
+    public function getShow(): bool
     {
         return $this->show;
     }
@@ -178,13 +216,57 @@ class Privacy extends \Ilch\Model
     /**
      * Sets the show of the privacy.
      *
-     * @param int $show
-     * @return this
+     * @param bool $show
+     * @return $this
      */
-    public function setShow($show)
+    public function setShow(bool $show): Privacy
     {
-        $this->show = (int)$show;
+        $this->show = $show;
 
         return $this;
+    }
+
+    /**
+     * Gets the position of the privacy.
+     *
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * Sets the position of the privacy.
+     *
+     * @param int $position
+     * @return $this
+     */
+    public function setPosition(int $position): Privacy
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'title'        => $this->getTitle(),
+                'urltitle'     => $this->getUrlTitle(),
+                'url'          => $this->getUrl(),
+                'text'         => $this->getText(),
+                'show'         => $this->getShow(),
+                'position'     => $this->getPosition(),
+            ]
+        );
     }
 }
