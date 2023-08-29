@@ -142,7 +142,6 @@ class Config extends \Ilch\Config\Install
 
                 if (count($preparedRows)) {
                     // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
-                    // per insert, which would have been possible with a higher number of forums and user groups.
                     $chunks = array_chunk($preparedRows, 25);
                     foreach ($chunks as $chunk) {
                         $this->db()->insert('rules_access')
