@@ -6,10 +6,12 @@
 
 namespace Modules\Gallery\Controllers\Admin;
 
+use Ilch\Controller\Admin;
+use Ilch\Pagination;
 use Modules\Gallery\Mappers\Image as ImageMapper;
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 
-class Gallery extends \Ilch\Controller\Admin
+class Gallery extends Admin
 {
     public function init()
     {
@@ -49,7 +51,7 @@ class Gallery extends \Ilch\Controller\Admin
     public function treatGalleryAction() 
     {
         $imageMapper = new ImageMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
         $galleryMapper = new GalleryMapper();
 
         $id = $this->getRequest()->getParam('id');

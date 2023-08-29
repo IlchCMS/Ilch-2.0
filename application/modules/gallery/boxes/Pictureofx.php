@@ -6,9 +6,14 @@
 
 namespace Modules\Gallery\Boxes;
 
+use DateInterval;
+use DateTime;
+use Ilch\Box;
 use Modules\Gallery\Mappers\Image as ImageMapper;
 
-class Pictureofx extends \Ilch\Box
+use function count;
+
+class Pictureofx extends Box
 {
     public function render()
     {
@@ -36,22 +41,22 @@ class Pictureofx extends \Ilch\Box
                     $add = '';
             }
 
-            $currentTime = new \DateTime();
+            $currentTime = new DateTime();
             $currentIndex = (!empty($currentPicOfX[0])) ? $currentPicOfX[0] : 0;
             $setAt = (!empty($currentPicOfX[1])) ? $currentPicOfX[1] : null;
-            $date = new \DateTime($setAt);
+            $date = new DateTime($setAt);
 
             if (!empty($add)) {
-                $date->add(new \DateInterval($add));
+                $date->add(new DateInterval($add));
             }
 
             if (($date <= $currentTime) || empty($this->getConfig()->get('gallery_currentPicOfX'))) {
                 if ($this->getConfig()->get('gallery_pictureOfXRandom')) {
-                    $index = mt_rand(0, \count($imageIds) - 1);
+                    $index = mt_rand(0, count($imageIds) - 1);
                 } else {
                     $index = $currentIndex + 1;
 
-                    if ((\count($imageIds) - 1) < $index) {
+                    if ((count($imageIds) - 1) < $index) {
                         $index = 0;
                     }
                 }
@@ -60,7 +65,7 @@ class Pictureofx extends \Ilch\Box
             } else {
                 $index = $currentIndex;
 
-                if ((\count($imageIds) - 1) < $index) {
+                if ((count($imageIds) - 1) < $index) {
                     $index = 0;
                 }
             }

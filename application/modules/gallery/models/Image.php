@@ -6,10 +6,12 @@
 
 namespace Modules\Gallery\Models;
 
+use Ilch\Model;
+
 /**
  * Image model
  */
-class Image extends \Ilch\Model
+class Image extends Model
 {
     /**
      * The id of the image.

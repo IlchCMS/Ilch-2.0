@@ -6,10 +6,11 @@
 
 namespace Modules\Gallery\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Ilch\Validation;
 
-class Settings extends \Ilch\Controller\Admin
+class Settings extends Admin
 {
     public function init()
     {

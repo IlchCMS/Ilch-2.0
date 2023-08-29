@@ -6,12 +6,13 @@
 
 namespace Modules\Gallery\Mappers;
 
+use Ilch\Mapper;
 use Modules\Gallery\Models\GalleryItem;
 
 /**
  * Gallery mapper.
  */
-class Gallery extends \Ilch\Mapper
+class Gallery extends Mapper
 {
     /**
      * Gets all gallery items by parent item id.
