@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'imprint',
-        'icon_small' => 'fa-paragraph',
+        'icon_small' => 'fa-solid fa-paragraph',
         'system_module' => true,
         'languages' => [
             'de_DE' => [
@@ -27,9 +28,9 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-        
-        $databaseImpressum = new \Modules\Imprint\Mappers\Imprint($this->db());
-        $databaseImpressum->set('imprint', '<h2>Angaben gemäß § 5 TMG:</h2>
+
+        $databaseImpressum = new \Modules\Imprint\Mappers\Imprint();
+        $databaseImpressum->set('<h2>Angaben gemäß § 5 TMG:</h2>
 <p>Max Mustermann<br />
 Musterstraße 111<br />
 Gebäude 44<br />
@@ -49,7 +50,7 @@ E-Mail: mustermann@musterfirma.de</p>
 ', 1);
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_imprint` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -60,8 +61,14 @@ E-Mail: mustermann@musterfirma.de</p>
         INSERT INTO `[prefix]_imprint` (`imprint`) VALUES ("");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
+        switch ($installedVersion) {
+            case "2.1.52":
+                $this->db()->update('modules', ['icon_small' => $this->config['icon_small']], ['key' => $this->config['key']])->execute();
+                break;
+        }
 
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
