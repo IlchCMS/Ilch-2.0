@@ -1,4 +1,9 @@
 <?php
+
+/** @var Items $itemsMapper */
+
+use Modules\Shop\Mappers\Items;
+
 $itemsMapper = $this->get('itemsMapper');
 
 /* shopcart session */
@@ -9,7 +14,7 @@ if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
         foreach ($_SESSION['shopping_cart'] as $key => $value) {
             if (isset($_POST['code']) && $_POST['code'] == $key) {
                 unset($_SESSION['shopping_cart'][$key]);
-                $status = '<div id="infobox" class="alert alert-danger" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $_POST['name'] . '</b> ' . $this->getTrans('removedFromCart') . '</div>';
+                $status = '<div id="infobox" class="alert alert-danger" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $this->escape($_POST['name']) . '</b> ' . $this->getTrans('removedFromCart') . '</div>';
             }
             if (empty($_SESSION['shopping_cart'])) {
                 unset($_SESSION['shopping_cart']);
@@ -68,7 +73,11 @@ if (!empty($_SESSION['shopping_cart'])) {
         <?php
         $itemIds = [];
         foreach ($_SESSION['shopping_cart'] as $product) {
-            $itemIds[] = $product['id'];
+            // Don't add entries where the product id and quantity is not an integer and bigger than 0.
+            // Probably a corrupted shopping cart.
+            if (ctype_digit(strval($product['id']) && $product['id'] > 0) && ctype_digit(strval($product['quantity'])) && $product['quantity'] > 0) {
+                $itemIds[] = $product['id'];
+            }
         }
 
         $itemsAssoc = [];

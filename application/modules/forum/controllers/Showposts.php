@@ -197,19 +197,24 @@ class Showposts extends Frontend
                 ->withMessage('topicNotFound', 'danger')
                 ->to(['controller' => 'index', 'action' => 'index']);
         }
-
-        $forum = $forumMapper->getForumByTopicId($topicId);
-        $cat = $forumMapper->getCatByParentId($forum->getParentId());
-
         if (empty($postId) || !is_numeric($postId)) {
             $this->redirect()
                 ->withMessage('postNotFound', 'danger')
                 ->to(['controller' => 'index', 'action' => 'index']);
         }
 
+        $forum = $forumMapper->getForumByTopicId($topicId);
+
+        if (!$forum) {
+            $this->redirect()
+                ->withMessage('forumNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
+
+        $cat = $forumMapper->getCatByParentId($forum->getParentId());
         $post = $postMapper->getPostById($postId);
 
-        if (empty($post)) {
+        if (!$post) {
             $this->redirect()
                 ->withMessage('postNotFound', 'danger')
                 ->to(['controller' => 'index', 'action' => 'index']);
@@ -217,7 +222,7 @@ class Showposts extends Frontend
 
         $topic = $topicMapper->getTopicById($topicId);
 
-        if (empty($topic)) {
+        if (!$topic) {
             $this->redirect()
                 ->withMessage('topicNotFound', 'danger')
                 ->to(['controller' => 'index', 'action' => 'index']);
