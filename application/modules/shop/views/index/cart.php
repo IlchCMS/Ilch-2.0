@@ -75,7 +75,7 @@ if (!empty($_SESSION['shopping_cart'])) {
         foreach ($_SESSION['shopping_cart'] as $product) {
             // Don't add entries where the product id and quantity is not an integer and bigger than 0.
             // Probably a corrupted shopping cart.
-            if (ctype_digit(strval($product['id']) && $product['id'] > 0) && ctype_digit(strval($product['quantity'])) && $product['quantity'] > 0) {
+            if ((ctype_digit(strval($product['id'])) && $product['id'] > 0) && (ctype_digit(strval($product['quantity'])) && $product['quantity'] > 0)) {
                 $itemIds[] = $product['id'];
             }
         }
