@@ -1,41 +1,143 @@
 $(document).ready(function(){
     $('.ckeditor').each(function() {
-        var id = $(this).attr('id');
-        var toolbar = $(this).attr('toolbar');
-
-        if (CKEDITOR.instances[id]) {
-            CKEDITOR.instances[id].destroy();
-        }
+        let toolbar = $(this).attr('toolbar');
+        let config = {};
 
         if (toolbar === 'ilch_html') {
-            CKEDITOR.env.isCompatible = true;
-            CKEDITOR.replace( id , {
-                removePlugins: 'bbcode',
-                disableObjectResizing: false,
-                contentsCss: [CKEDITOR.basePath + '../../../vendor/twbs/bootstrap/dist/css/bootstrap.min.css'],
+            // ilch_html configuration
+            config = {
                 allowedContent: true,
-                customConfig: '../../../static/js/ckeditor/config_ilch_html.js',
-                toolbar : toolbar
-            });
+                toolbar: {
+                    items: [
+                        'sourceEditing',
+                        '|',
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'underline',
+                        'strikethrough',
+                        'subscript',
+                        'superscript',
+                        '|',
+                        'alignment',
+                        '|',
+                        'outdent',
+                        'indent',
+                        '|',
+                        'bulletedList',
+                        'numberedList',
+                        'removeFormat',
+                        '|',
+                        'link',
+                        'specialCharacters',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'codeBlock',
+                        'insertTable',
+                        'mediaEmbed',
+                        'undo',
+                        'redo',
+                        '-',
+                        'fontSize',
+                        'fontFamily',
+                        'fontBackgroundColor',
+                        'fontColor'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                language: 'de',
+                image: {
+                    toolbar: [
+                        'imageTextAlternative',
+                        'toggleImageCaption',
+                        'imageStyle:inline',
+                        'imageStyle:block',
+                        'imageStyle:side'
+                    ]
+                },
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells',
+                        'tableCellProperties',
+                        'tableProperties'
+                    ]
+                }
+            };
         } else if(toolbar === 'ilch_html_frontend') {
-            CKEDITOR.env.isCompatible = true;
-            CKEDITOR.replace( id , {
-                removePlugins: 'bbcode',
-                disableObjectResizing: false,
-                contentsCss: [CKEDITOR.basePath + '../../../vendor/twbs/bootstrap/dist/css/bootstrap.min.css'],
+            // ilch_html_frontend configuration
+            config = {
                 allowedContent: true,
-                customConfig: '../../../static/js/ckeditor/config_ilch_html_frontend.js',
-                toolbar : toolbar
-            });
-        } else {
-            CKEDITOR.env.isCompatible = true;
-            CKEDITOR.replace( id , {
-                disableObjectResizing: false,
-                allowedContent: true,
-                customConfig: '../../../static/js/ckeditor/config_ilch_bbcode.js',
-                toolbar : toolbar
-            });
+                toolbar: {
+                    items: [
+                        'sourceEditing',
+                        '|',
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'underline',
+                        'strikethrough',
+                        'subscript',
+                        'superscript',
+                        '|',
+                        'alignment',
+                        '|',
+                        'outdent',
+                        'indent',
+                        '|',
+                        'bulletedList',
+                        'numberedList',
+                        'removeFormat',
+                        '|',
+                        'link',
+                        'specialCharacters',
+                        '|',
+                        'imageUpload',
+                        'blockQuote',
+                        'codeBlock',
+                        'insertTable',
+                        'mediaEmbed',
+                        'undo',
+                        'redo',
+                        '-',
+                        'fontSize',
+                        'fontFamily',
+                        'fontBackgroundColor',
+                        'fontColor'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+                language: 'de',
+                image: {
+                    toolbar: [
+                        'imageTextAlternative',
+                        'toggleImageCaption',
+                        'imageStyle:inline',
+                        'imageStyle:block',
+                        'imageStyle:side'
+                    ]
+                },
+                table: {
+                    contentToolbar: [
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells',
+                        'tableCellProperties',
+                        'tableProperties'
+                    ]
+                }
+            };
         };
+
+        ClassicEditor
+            .create( document.querySelector( '.ckeditor' ), config )
+            .then( ckeditor => {
+                window.editor = ckeditor;
+            } );
     });
 
     // Remove input value on click

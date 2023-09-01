@@ -21,6 +21,8 @@
         <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
         <link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/admin.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getStaticUrl('js/ckeditor5/styles.css') ?>" rel="stylesheet" type="text/css">
+        <link href="<?=$this->getStaticUrl('js/highlight/default.min.css') ?>" rel="stylesheet" type="text/css">
 
         <!-- SCRIPTS -->
         <script src="<?=$this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') ?>"></script>
@@ -31,10 +33,12 @@
         <script src="<?=$this->getStaticUrl('js/validate/jquery.validate.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/additional-methods.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
-        <script src="<?=$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js') ?>"></script>
-        <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
+        <script src="<?=$this->getStaticUrl('js/ckeditor5/build/ckeditor.js') ?>"></script>
+        <script src="<?=$this->getStaticUrl('js/highlight/highlight.min.js') ?>"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
         <?=$this->getContent() ?>
+        <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
     </body>
 </html>

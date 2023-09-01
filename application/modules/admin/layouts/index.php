@@ -31,6 +31,8 @@ $accesses = $this->get('accesses');
     <link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
     <link href="<?=$this->getStaticUrl('js/tokenfield/css/bootstrap-tokenfield.min.css') ?>" rel="stylesheet">
     <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/admin.css') ?>" rel="stylesheet">
+    <link href="<?=$this->getStaticUrl('js/ckeditor5/styles.css') ?>" rel="stylesheet" type="text/css">
+    <link href="<?=$this->getStaticUrl('js/highlight/default.min.css') ?>" rel="stylesheet" type="text/css">
 
     <script>
         // Set a bunch of variables to later display translated messages. Used in ../application/modules/admin/static/js/functions.js
@@ -50,9 +52,10 @@ $accesses = $this->get('accesses');
     <script src="<?=$this->getStaticUrl('js/validate/jquery.validate.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/validate/additional-methods.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
-    <script src="<?=$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js') ?>"></script>
-    <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
+    <script src="<?=$this->getStaticUrl('js/ckeditor5/build/ckeditor.js') ?>"></script>
+    <script src="<?=$this->getStaticUrl('js/highlight/highlight.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/jquery.key.js') ?>"></script>
+    <script>hljs.highlightAll();</script>
     <script>
         $.key('alt+a', function() { window.location.href ='<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'index']) ?>'; });
         $.key('alt+u', function() { window.location.href ='<?=$this->getUrl(['module' => 'user', 'controller' => 'index', 'action' => 'index']) ?>'; });
@@ -347,6 +350,7 @@ $accesses = $this->get('accesses');
     var iframeUrlFileCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/fileckeditor/') ?>";
     var iframeMediaUploadCkeditor = "<?=$this->getUrl('admin/media/iframe/uploadckeditor/') ?>";
 </script>
+<script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
 <?=(\Ilch\DebugBar::isInitialized()) ? \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->render() : ''?>
 </body>
 </html>

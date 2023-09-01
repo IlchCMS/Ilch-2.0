@@ -18,7 +18,6 @@
         "fortawesome/font-awesome": "^6.2.1",
         "npm-asset/jquery": "^3.5",
         "npm-asset/jquery-ui": "^1.13",
-        "ckeditor/ckeditor": "^4.14",
         "phpmailer/phpmailer": "~6.1",
         "harvesthq/chosen": "^1.8",
         "ezyang/htmlpurifier": "^4.12",
