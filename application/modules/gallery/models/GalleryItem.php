@@ -6,12 +6,14 @@
 
 namespace Modules\Gallery\Models;
 
+use Ilch\Model;
+
 /**
  * The gallery item model class.
  *
  * @package ilch
  */
-class GalleryItem extends \Ilch\Model
+class GalleryItem extends Model
 {
     /**
      * Id of the item.

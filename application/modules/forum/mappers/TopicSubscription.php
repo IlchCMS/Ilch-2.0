@@ -12,7 +12,6 @@ use Modules\Forum\Models\TopicSubscription as TopicSubscriptionModel;
 
 class TopicSubscription extends Mapper
 {
-
     /**
      * Get all subscriptions for a topic.
      * Call this when you need to know who should get a notification.

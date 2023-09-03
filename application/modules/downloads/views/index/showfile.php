@@ -1,7 +1,11 @@
 <?php
+
+use Ilch\Comments;
+use Ilch\Date;
+
 $file = $this->get('file');
-$nowDate = new \Ilch\Date();
-$commentsClass = new \Ilch\Comments();
+$nowDate = new Date();
+$commentsClass = new Comments();
 $image = '';
 if (!empty($file)) {
     if ($file->getFileImage() != '') {

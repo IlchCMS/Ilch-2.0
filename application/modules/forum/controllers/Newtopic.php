@@ -21,8 +21,22 @@ class Newtopic extends Frontend
     public function indexAction()
     {
         $forumMapper = new ForumMapper();
-        $id = (int)$this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getParam('id');
+
+        if (empty($id) || !is_numeric($id)) {
+            $this->redirect()
+                ->withMessage('forumNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
+
         $forum = $forumMapper->getForumById($id);
+
+        if (!$forum) {
+            $this->redirect()
+                ->withMessage('forumNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
+
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
         $this->getLayout()->getTitle()

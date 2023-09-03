@@ -99,7 +99,7 @@ class Gallery extends \Ilch\Mapper
     /**
      * Gets all gallery items by user id.
      *
-     * @param integer $userId
+     * @param int $userId
      * @return null|GalleryItem[];
      */
     public function getGalleryItems($userId)
@@ -143,7 +143,7 @@ class Gallery extends \Ilch\Mapper
      * Save one gallery item.
      *
      * @param  GalleryItem $galleryItem
-     * @return integer
+     * @return int
      */
     public function saveItem(GalleryItem $galleryItem)
     {

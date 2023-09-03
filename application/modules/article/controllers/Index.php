@@ -77,8 +77,6 @@ class Index extends \Ilch\Controller\Frontend
         $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
         $config = \Ilch\Registry::get('config');
-        $hasReadAccess = true;
-        $article = null;
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuArticle'));
@@ -146,7 +144,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $hasReadAccess = (is_in_array($readAccess, explode(',', $article->getReadAccess())) || $adminAccess === true);
 
-        if ($hasReadAccess && !$article->getCommentsDisabled()) {
+        if ($this->getUser() && $hasReadAccess && !$article->getCommentsDisabled()) {
             if ($this->getRequest()->getPost('saveComment')) {
                 $comments = new Comments();
                 $key = sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'));

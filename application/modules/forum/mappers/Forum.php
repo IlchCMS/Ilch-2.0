@@ -96,30 +96,31 @@ class Forum extends Mapper
      */
     public function getForumById(int $id): ?ForumItem
     {
-        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
+        $itemRow = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
                 ->from(['i' => 'forum_items'])
                 ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
                 ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
                 ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
                 ->where(['i.id' => $id])
+                ->group(['i.id'])
                 ->order(['i.sort' => 'DESC'])
                 ->execute()
                 ->fetchAssoc();
 
-        if (empty($itemRows)) {
+        if (empty($itemRow)) {
             return null;
         }
 
         $itemModel = new ForumItem();
-        $itemModel->setId($itemRows['id']);
-        $itemModel->setType($itemRows['type']);
-        $itemModel->setTitle($itemRows['title']);
-        $itemModel->setDesc($itemRows['description']);
-        $itemModel->setParentId($itemRows['parent_id']);
-        $itemModel->setPrefix($itemRows['prefix']);
-        $itemModel->setReadAccess($itemRows['read_access'] ?? '');
-        $itemModel->setReplyAccess($itemRows['reply_access'] ?? '');
-        $itemModel->setCreateAccess($itemRows['create_access'] ?? '');
+        $itemModel->setId($itemRow['id']);
+        $itemModel->setType($itemRow['type']);
+        $itemModel->setTitle($itemRow['title']);
+        $itemModel->setDesc($itemRow['description']);
+        $itemModel->setParentId($itemRow['parent_id']);
+        $itemModel->setPrefix($itemRow['prefix']);
+        $itemModel->setReadAccess($itemRow['read_access'] ?? '');
+        $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
+        $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
 
         return $itemModel;
     }
@@ -140,6 +141,7 @@ class Forum extends Mapper
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
             ->where(['t.id' => $topicId])
+            ->group(['i.id'])
             ->execute()
             ->fetchAssoc();
 
@@ -354,6 +356,32 @@ class Forum extends Mapper
         }
 
         return $permaArray;
+    }
+
+    /**
+     * Returns a list of forum ids with unread topics in it.
+     * This function was added as a probably temporary fix
+     * for issue #491.
+     *
+     * @param int $userId
+     * @param array $forumIds
+     * @return string[]
+     * @see https://github.com/IlchCMS/Ilch-2.0/issues/491
+     */
+    public function getListOfForumIdsWithUnreadTopics(int $userId, array $forumIds): array
+    {
+        return $this->db()->select(['i.id'])
+            ->from(['t' => 'forum_topics'])
+            ->join(['i' => 'forum_items'], 'i.id = t.forum_id', 'LEFT')
+            ->join(['p' => 'forum_posts'], ['t.id = p.topic_id'], 'LEFT')
+            ->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id'], 'LEFT')
+            ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id'], 'LEFT')
+            ->where(['i.parent_id' => $forumIds, 'i.id' => $forumIds], 'or')
+            ->andWhere(['tr.datetime IS' => null, 'fr.datetime IS' => null])
+            ->orWhere(['tr.datetime < p.date_created', 'fr.datetime < p.date_created'])
+            ->group(['i.id'])
+            ->execute()
+            ->fetchList();
     }
 
     /**

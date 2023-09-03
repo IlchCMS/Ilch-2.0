@@ -6,12 +6,14 @@
 
 namespace Modules\War\Models;
 
-class Group extends \Ilch\Model
+use Ilch\Model;
+
+class Group extends Model
 {
     /**
      * The id.
      *
-     * @var integer
+     * @var int
      */
     protected $id = 0;
 
@@ -90,7 +92,7 @@ class Group extends \Ilch\Model
     /**
      * Gets the id of the group.
      *
-     * @return integer
+     * @return int
      */
     public function getId(): int
     {
@@ -100,7 +102,7 @@ class Group extends \Ilch\Model
     /**
      * Sets the id of the group.
      *
-     * @param integer $id
+     * @param int $id
      * @return $this
      */
     public function setId(int $id): Group

@@ -1,17 +1,19 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Downloads\Controllers\Admin;
 
+use Ilch\Controller\Admin;
+use Ilch\Pagination;
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Media\Mappers\Media as MediaMapper;
 use Modules\Downloads\Models\File as FileModel;
 
-class Downloads extends \Ilch\Controller\Admin
+class Downloads extends Admin
 {
     public function init()
     {
@@ -51,7 +53,7 @@ class Downloads extends \Ilch\Controller\Admin
     public function treatDownloadsAction() 
     {
         $fileMapper = new FileMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
         $downloadsMapper = new DownloadsMapper();
         $id = $this->getRequest()->getParam('id');
         $downloadsTitle = $downloadsMapper->getDownloadsById($id);

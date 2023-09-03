@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('menuSettings') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -8,9 +12,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="desc_order-on" name="desc_order" value="1" <?=($this->get('desc_order') == '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="desc_order-on" name="desc_order" value="1" <?=($this->originalInput('desc_order', $this->get('desc_order'))) ? 'checked="checked"' : '' ?> />
                 <label for="desc_order-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="desc_order-off" name="desc_order" value="0" <?=($this->get('desc_order') != '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="desc_order-off" name="desc_order" value="0" <?=(!$this->originalInput('desc_order', $this->get('desc_order'))) ? 'checked="checked"' : '' ?> />
                 <label for="desc_order-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>

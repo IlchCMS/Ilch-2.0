@@ -90,7 +90,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      *
      * @param  int $fieldId
      *
-     * @return boolean True if success, otherwise false.
+     * @return bool True if success, otherwise false.
      */
     public function deleteProfileFieldTranslationsByFieldId($fieldId)
     {
@@ -105,7 +105,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      * @param  string $locale
      * @param  int $fieldId
      *
-     * @return boolean True if success, otherwise false.
+     * @return bool True if success, otherwise false.
      */
     public function deleteProfileFieldTranslation($locale, $fieldId)
     {

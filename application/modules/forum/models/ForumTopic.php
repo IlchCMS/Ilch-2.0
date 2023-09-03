@@ -83,6 +83,13 @@ class ForumTopic extends Model
     protected $status;
 
     /**
+     * Count of posts.
+     *
+     * @var int
+     */
+    protected $countPosts;
+
+    /**
       * Gets the id of the topic.
       *
       * @return int|null
@@ -309,6 +316,28 @@ class ForumTopic extends Model
     {
         $this->status = $status;
 
+        return $this;
+    }
+
+    /**
+     * Get the count of posts.
+     *
+     * @return int
+     */
+    public function getCountPosts(): int
+    {
+        return $this->countPosts;
+    }
+
+    /**
+     * Set the count of posts.
+     *
+     * @param int $countPosts
+     * @return ForumTopic
+     */
+    public function setCountPosts(int $countPosts): ForumTopic
+    {
+        $this->countPosts = $countPosts;
         return $this;
     }
 }

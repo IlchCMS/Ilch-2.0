@@ -7,9 +7,10 @@
 
 namespace Modules\War\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Ilch\Validation;
 
-class Icons extends \Ilch\Controller\Admin
+class Icons extends Admin
 {
     protected $icons = [];
 

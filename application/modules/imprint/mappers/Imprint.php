@@ -1,93 +1,136 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Imprint\Mappers;
 
+use Ilch\Pagination;
 use Modules\Imprint\Models\Imprint as ImprintModel;
 
 class Imprint extends \Ilch\Mapper
 {
+    /**
+     * @var string
+     */
+    public $tablename = 'imprint';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return bool
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by param.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param Pagination|null $pagination
+     * @return ImprintModel[]|null
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entriesArray = $result->fetchRows();
+        if (empty($entriesArray)) {
+            return null;
+        }
+        $entries = [];
+
+        foreach ($entriesArray as $entry) {
+            $entryModel = new ImprintModel();
+            $entryModel->setByArray($entry);
+
+            $entries[] = $entryModel;
+        }
+        return $entries;
+    }
+
     /**
      * Gets the Imprint.
      *
      * @param array $where
      * @return ImprintModel[]|array
      */
-    public function getImprint($where = [])
+    public function getImprint(array $where = []): ?array
     {
-        $entryArray = $this->db()->select('*')
-            ->from('imprint')
-            ->where($where)
-            ->order(['id' => 'DESC'])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($entryArray)) {
-            return [];
-        }
-
-        $imprint = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new ImprintModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setImprint($entries['imprint']);
-            $imprint[] = $entryModel;
-        }
-
-        return $imprint;
+        return $this->getEntriesBy($where);
     }
 
     /**
      * Gets imprint.
      *
-     * @param integer $id
+     * @param int $id
      * @return ImprintModel|null
      */
-    public function getImprintById($id)
+    public function getImprintById(int $id): ?ImprintModel
     {
-        $imprint = $this->getImprint(['id' => $id]);
+        $entries = $this->getEntriesBy(['id' => $id], []);
 
-        return reset($imprint);
+        if (!empty($entries)) {
+            return reset($entries);
+        }
+
+        return null;
     }
 
     /**
      * Updates imprint model.
      *
      * @param ImprintModel $imprint
+     * @return int
      */
-    public function save(ImprintModel $imprint)
+    public function save(ImprintModel $imprint): int
     {
-        $this->db()->update('imprint')
-            ->values
-            (
-                [
-                    'imprint' => $imprint->getImprint(),
-                ]
-            )
-            ->where(['id' => $imprint->getId()])
-            ->execute();
+        $fields = $imprint->getArray();
+
+        if (!$this->getImprintById($imprint->getId())) {
+            return $this->db()->insert($this->tablename)
+                ->values($fields)
+                ->execute();
+        } else {
+            $this->db()->update($this->tablename)
+                ->values($fields)
+                ->where(['id' => $imprint->getId()])
+                ->execute();
+        }
+        return $imprint->getId();
     }
 
     /**
      * Sets the config for given key/vale.
      *
-     * @param string         $key
-     * @param string|integer $value
-     * @param integer        $id
+     * @param string $value
+     * @param int|null $id
+     * @return int
      */
-    public function set($key, $value, $id)
+    public function set(string $value, ?int $id = null): int
     {
-        $this->db()->update('imprint')
-            ->values
-            (
-                [
-                    $key => $value,
-                ]
-            )
-            ->where(['id' => $id])
-            ->execute();
+        $entryModel = new ImprintModel();
+        if ($id) {
+            $entryModel->setId($id);
+        }
+        $entryModel->setImprint($value);
+        return $this->save($entryModel);
     }
 }

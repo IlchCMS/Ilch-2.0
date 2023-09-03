@@ -10,7 +10,6 @@ use Ilch\Database\Exception;
 use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Ilch\Pagination;
-use Modules\Forum\Models\ForumTopic;
 use Modules\Forum\Models\ForumTopic as TopicModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Models\ForumPost as PostModel;
@@ -18,14 +17,14 @@ use Modules\Forum\Models\ForumPost as PostModel;
 class Topic extends Mapper
 {
     /**
-     * @param $id
-     * @param $pagination
-     * @return array|ForumTopic[]
+     * @param int $id
+     * @param Pagination|null $pagination
+     * @return array|TopicModel[]
      * @throws Exception
      */
-    public function getTopicsByForumId($id, $pagination = null): array
+    public function getTopicsByForumId(int $id, Pagination $pagination = null): array
     {
-        $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)'])
+        $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)', 'countPosts' => 'COUNT(posts.id)'])
             ->from(['topics' => 'forum_topics'])
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
             ->where(['topics.forum_id' => (int)$id])
@@ -41,42 +40,43 @@ class Topic extends Mapper
             $result = $sql->execute();
         }
 
-        $topicArray = $result->fetchRows();
+        $topicRows = $result->fetchRows();
 
-        $entry = [];
+        $userMapper = new UserMapper();
+        $topics = [];
         $dummyUser = null;
         $userCache = [];
 
-        foreach ($topicArray as $entries) {
-            $entryModel = new TopicModel();
-            $userMapper = new UserMapper();
-            $entryModel->setId($entries['id']);
-            $entryModel->setVisits($entries['visits']);
-            $entryModel->setType($entries['type']);
-            $entryModel->setStatus($entries['status']);
+        foreach ($topicRows as $topicRow) {
+            $topicModel = new TopicModel();
+            $topicModel->setId($topicRow['id']);
+            $topicModel->setVisits($topicRow['visits']);
+            $topicModel->setType($topicRow['type']);
+            $topicModel->setStatus($topicRow['status']);
 
-            if (\array_key_exists($entries['creator_id'], $userCache)) {
-                $entryModel->setAuthor($userCache[$entries['creator_id']]);
+            if (\array_key_exists($topicRow['creator_id'], $userCache)) {
+                $topicModel->setAuthor($userCache[$topicRow['creator_id']]);
             } else {
-                $user = $userMapper->getUserById($entries['creator_id']);
+                $user = $userMapper->getUserById($topicRow['creator_id']);
                 if ($user) {
-                    $userCache[$entries['creator_id']] = $user;
-                    $entryModel->setAuthor($user);
+                    $userCache[$topicRow['creator_id']] = $user;
+                    $topicModel->setAuthor($user);
                 } else {
                     if (!$dummyUser) {
                         $dummyUser = $userMapper->getDummyUser();
                     }
-                    $entryModel->setAuthor($dummyUser);
+                    $topicModel->setAuthor($dummyUser);
                 }
             }
 
-            $entryModel->setTopicPrefix($entries['topic_prefix']);
-            $entryModel->setTopicTitle($entries['topic_title']);
-            $entryModel->setDateCreated($entries['date_created']);
-            $entry[] = $entryModel;
+            $topicModel->setTopicPrefix($topicRow['topic_prefix']);
+            $topicModel->setTopicTitle($topicRow['topic_title']);
+            $topicModel->setDateCreated($topicRow['date_created']);
+            $topicModel->setCountPosts($topicRow['countPosts']);
+            $topics[] = $topicModel;
         }
 
-        return $entry;
+        return $topics;
     }
 
     /**
@@ -105,15 +105,16 @@ class Topic extends Mapper
      *
      * @param Pagination|null $pagination
      * @param array|null $limit
-     * @return array|ForumTopic[]
+     * @return array|TopicModel[]
      * @throws Exception
      */
     public function getTopics(Pagination $pagination = null, array $limit = null): array
     {
-        $sql = $this->db()->select('*')
-            ->from(['forum_topics'])
-            ->group(['type', 'id', 'topic_prefix', 'topic_title', 'visits', 'creator_id', 'date_created', 'forum_id', 'status'])
-            ->order(['type' => 'DESC', 'id' => 'DESC']);
+        $sql = $this->db()->select(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
+            ->from(['topics' => 'forum_topics'])
+            ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT', ['countPosts' => 'COUNT(posts.id)'])
+            ->group(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
+            ->order(['topics.type' => 'DESC', 'topics.id' => 'DESC']);
 
         if ($pagination !== null) {
             $sql->limit($pagination->getLimit())
@@ -127,44 +128,44 @@ class Topic extends Mapper
             $result = $sql->execute();
         }
 
-        $topicsArray = $result->fetchRows();
+        $topicRows = $result->fetchRows();
 
-
-        $entry = [];
+        $userMapper = new UserMapper();
+        $topics = [];
         $dummyUser = null;
         $userCache = [];
 
-        foreach ($topicsArray as $entries) {
-            $entryModel = new TopicModel();
-            $userMapper = new UserMapper();
-            $entryModel->setId($entries['id']);
-            $entryModel->setForumId($entries['forum_id']);
-            $entryModel->setVisits($entries['visits']);
-            $entryModel->setType($entries['type']);
-            $entryModel->setStatus($entries['status']);
+        foreach ($topicRows as $topicRow) {
+            $topicModel = new TopicModel();
+            $topicModel->setId($topicRow['id']);
+            $topicModel->setForumId($topicRow['forum_id']);
+            $topicModel->setVisits($topicRow['visits']);
+            $topicModel->setType($topicRow['type']);
+            $topicModel->setStatus($topicRow['status']);
 
-            if (\array_key_exists($entries['creator_id'], $userCache)) {
-                $entryModel->setAuthor($userCache[$entries['creator_id']]);
+            if (\array_key_exists($topicRow['creator_id'], $userCache)) {
+                $topicModel->setAuthor($userCache[$topicRow['creator_id']]);
             } else {
-                $user = $userMapper->getUserById($entries['creator_id']);
+                $user = $userMapper->getUserById($topicRow['creator_id']);
                 if ($user) {
-                    $userCache[$entries['creator_id']] = $user;
-                    $entryModel->setAuthor($user);
+                    $userCache[$topicRow['creator_id']] = $user;
+                    $topicModel->setAuthor($user);
                 } else {
                     if (!$dummyUser) {
                         $dummyUser = $userMapper->getDummyUser();
                     }
-                    $entryModel->setAuthor($dummyUser);
+                    $topicModel->setAuthor($dummyUser);
                 }
             }
 
-            $entryModel->setTopicPrefix($entries['topic_prefix']);
-            $entryModel->setTopicTitle($entries['topic_title']);
-            $entryModel->setDateCreated($entries['date_created']);
-            $entry[] = $entryModel;
+            $topicModel->setTopicPrefix($topicRow['topic_prefix']);
+            $topicModel->setTopicTitle($topicRow['topic_title']);
+            $topicModel->setDateCreated($topicRow['date_created']);
+            $topicModel->setCountPosts($topicRow['countPosts']);
+            $topics[] = $topicModel;
         }
 
-        return $entry;
+        return $topics;
     }
 
     /**
@@ -185,23 +186,23 @@ class Topic extends Mapper
             return null;
         }
 
-        $entryModel = new TopicModel();
+        $topicModel = new TopicModel();
         $userMapper = new UserMapper();
-        $entryModel->setId($topic['id']);
-        $entryModel->setTopicPrefix($topic['topic_prefix']);
-        $entryModel->setTopicTitle($topic['topic_title']);
-        $entryModel->setCreatorId($topic['creator_id']);
-        $entryModel->setVisits($topic['visits']);
+        $topicModel->setId($topic['id']);
+        $topicModel->setTopicPrefix($topic['topic_prefix']);
+        $topicModel->setTopicTitle($topic['topic_title']);
+        $topicModel->setCreatorId($topic['creator_id']);
+        $topicModel->setVisits($topic['visits']);
         $user = $userMapper->getUserById($topic['creator_id']);
         if ($user) {
-            $entryModel->setAuthor($user);
+            $topicModel->setAuthor($user);
         } else {
-            $entryModel->setAuthor($userMapper->getDummyUser());
+            $topicModel->setAuthor($userMapper->getDummyUser());
         }
-        $entryModel->setDateCreated($topic['date_created']);
-        $entryModel->setStatus($topic['status']);
+        $topicModel->setDateCreated($topic['date_created']);
+        $topicModel->setStatus($topic['status']);
 
-        return $entryModel;
+        return $topicModel;
     }
 
     /**
@@ -232,25 +233,25 @@ class Topic extends Mapper
             return null;
         }
 
-        $entryModel = new PostModel();
+        $postModel = new PostModel();
         $userMapper = new UserMapper();
-        $entryModel->setId($lastPostRow['id']);
+        $postModel->setId($lastPostRow['id']);
         $user = $userMapper->getUserById($lastPostRow['user_id']);
 
         if ($user) {
-            $entryModel->setAutor($user);
+            $postModel->setAutor($user);
         } else {
-            $entryModel->setAutor($userMapper->getDummyUser());
+            $postModel->setAutor($userMapper->getDummyUser());
         }
 
-        $entryModel->setDateCreated($lastPostRow['date_created']);
-        $entryModel->setTopicId($lastPostRow['topic_id']);
+        $postModel->setDateCreated($lastPostRow['date_created']);
+        $postModel->setTopicId($lastPostRow['topic_id']);
 
         if ($userId) {
-            $entryModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
+            $postModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
         }
 
-        return $entryModel;
+        return $postModel;
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -11,39 +12,68 @@ use Modules\History\Models\History as HistoryModel;
 class History extends \Ilch\Mapper
 {
     /**
+     * @var string
+     */
+    public $tablename = 'history';
+
+    /**
+     * @return boolean
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return HistoryModel[]|null
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['date' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select()
+            ->fields(['*'])
+            ->from([$this->tablename])
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entriesArray = $result->fetchRows();
+        if (empty($entriesArray)) {
+            return null;
+        }
+        $entries = [];
+
+        foreach ($entriesArray as $entryArray) {
+            $entryModel = new HistoryModel();
+
+            $entryModel->setByArray($entryArray);
+
+            $entries[] = $entryModel;
+        }
+        return $entries;
+    }
+
+    /**
      * Gets the History entries.
      *
      * @param array $where
      * @return HistoryModel[]|array
      */
-    public function getEntries($where = [])
+    public function getEntries(array $where = []): ?array
     {
-        $entryArray = $this->db()->select('*')
-            ->from('history')
-            ->where($where)
-            ->order(['date' => 'ASC'])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($entryArray)) {
-            return null;
-        }
-
-        $entry = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new HistoryModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setDate($entries['date']);
-            $entryModel->setTitle($entries['title']);
-            $entryModel->setType($entries['type']);
-            $entryModel->setColor($entries['color']);
-            $entryModel->setText($entries['text']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
+        return $this->getEntriesBy($where);
     }
-    
+
     /**
      * Gets historys.
      *
@@ -51,85 +81,46 @@ class History extends \Ilch\Mapper
      * @param array $orderBy
      * @return HistoryModel[]|null
      */
-    public function getHistorysBy($where = [], $orderBy = ['id' => 'ASC'])
+    public function getHistorysBy(array $where = [], array $orderBy = ['id' => 'ASC']): ?array
     {
-        $historyArray = $this->db()->select('*')
-            ->from('history')
-            ->where($where)
-            ->order($orderBy)
-            ->execute()
-            ->fetchRows();
-
-        if (empty($historyArray)) {
-            return null;
-        }
-
-        $historys = [];
-        foreach ($historyArray as $historyRow) {
-            $historyModel = new HistoryModel();
-            $historyModel->setId($historyRow['id']);
-            $historyModel->setDate($historyRow['date']);
-            $historyModel->setTitle($historyRow['title']);
-            $historyModel->setType($historyRow['type']);
-            $historyModel->setColor($historyRow['color']);
-            $historyModel->setText($historyRow['text']);
-            $historys[] = $historyModel;
-        }
-
-        return $historys;
+        return $this->getEntriesBy($where, $orderBy);
     }
 
     /**
      * Gets history.
      *
-     * @param integer $id
+     * @param int $id
      * @return HistoryModel|null
      */
-    public function getHistoryById($id)
+    public function getHistoryById(int $id): ?HistoryModel
     {
-        $historyRow = $this->db()->select('*')
-            ->from('history')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
+        $entries = $this->getEntriesBy(['id' => $id], []);
 
-        if (empty($historyRow)) {
-            return null;
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
-        $historyModel = new HistoryModel();
-        $historyModel->setId($historyRow['id']);
-        $historyModel->setDate($historyRow['date']);
-        $historyModel->setTitle($historyRow['title']);
-        $historyModel->setType($historyRow['type']);
-        $historyModel->setColor($historyRow['color']);
-        $historyModel->setText($historyRow['text']);
-
-        return $historyModel;
+        return null;
     }
 
     /**
      * Inserts or updates history model.
      *
      * @param HistoryModel $history
+     * @return int
      */
-    public function save(HistoryModel $history)
+    public function save(HistoryModel $history): int
     {
-        $fields = [
-            'date' => $history->getDate(),
-            'title' => $history->getTitle(),
-            'type' => $history->getType(),
-            'color' => $history->getColor(),
-            'text' => $history->getText()
-        ];
+        $fields = $history->getArray(false);
 
         if ($history->getId()) {
-            $this->db()->update('history')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $history->getId()])
                 ->execute();
+            return $history->getId();
         } else {
-            $this->db()->insert('history')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -138,11 +129,12 @@ class History extends \Ilch\Mapper
     /**
      * Deletes history with given id.
      *
-     * @param integer $id
+     * @param int $id
+     * @return bool
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('history')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }

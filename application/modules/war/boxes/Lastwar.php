@@ -6,18 +6,20 @@
 
 namespace Modules\War\Boxes;
 
+use Ilch\Box;
+use Ilch\Registry;
 use Modules\War\Mappers\War as WarMapper;
 use Modules\War\Mappers\Games as GamesMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Lastwar extends \Ilch\Box
+class Lastwar extends Box
 {
     public function render()
     {
         $warMapper = new WarMapper();
         $gamesMapper = new GamesMapper();
         $userMapper = new UserMapper();
-        $config = \Ilch\Registry::get('config');
+        $config = Registry::get('config');
 
         $user = null;
         if ($this->getUser()) {

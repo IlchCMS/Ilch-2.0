@@ -146,4 +146,5 @@ return [
     'confirmDeletePost' => 'Do you really want to delete this post?',
     'postNotFound' => 'Post not found.',
     'topicNotFound' => 'Topic not found.',
+    'forumNotFound' => 'Forum not found.',
 ];

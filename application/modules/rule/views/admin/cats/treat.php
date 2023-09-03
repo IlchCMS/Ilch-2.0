@@ -1,4 +1,17 @@
-<h1><?=($this->get('cat') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Rule\Models\Rule $cat */
+$cat = $this->get('cat');
+
+/** @var Modules\Rule\Models\Rule[]|null $rulesparents */
+$rulesparents = $this->get('rulesparents');
+
+/** @var Modules\User\Models\Group[]|null $userGroupList */
+$userGroupList = $this->get('userGroupList');
+?>
+<h1><?=($cat) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField(); ?>
     <div class="form-group <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
@@ -10,7 +23,7 @@
                    class="form-control"
                    id="paragraph"
                    name="paragraph"
-                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getParagraph()) : $this->escape($this->originalInput('paragraph')) ?>"
+                   value="<?=$this->escape($this->originalInput('paragraph', $cat->getParagraph())) ?>"
                    required />
         </div>
     </div>
@@ -23,24 +36,27 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getTitle()) : $this->escape($this->originalInput('name')) ?>"
+                   value="<?=$this->escape($this->originalInput('name', $cat->getTitle())) ?>"
                    required />
         </div>
     </div>
     <div class="form-group">
         <label for="assignedGroupsRead" class="col-lg-2 control-label">
             <?=$this->getTrans('see') ?>
-            <a href="#" data-toggle="tooltip" title="<?=$this->getTrans('seetext') ?>"><i class="fa fa-info-circle"></i></a>
+            <a href="#" data-toggle="tooltip" title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
         </label>
         <div class="col-lg-4">
             <select class="chosen-select form-control" id="assignedGroupsRead" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
-                <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$this->escape($groupList->getName()) ?></option>
-                <?php endforeach; ?>
+                <option value="all"<?=(in_array('all', $this->originalInput('groups', $this->get('groups')))) ? ' selected' : '' ?>><?=$this->getTrans('all') ?></option>
+            <?php foreach ($userGroupList as $groupList) : ?>
+                <?php if ($groupList->getId() != 1) : ?>
+                    <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->originalInput('groups', $this->get('groups')))) ? ' selected' : '' ?>><?=$this->escape($groupList->getName()) ?></option>
+                <?php endif; ?>
+            <?php endforeach; ?>
             </select>
         </div>
     </div>
-    <?=($this->get('cat') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=($cat->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
 <script>

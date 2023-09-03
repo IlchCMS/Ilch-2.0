@@ -117,7 +117,8 @@ class Showtopics extends Frontend
             $forum = $forumMapper->getForumById($this->getRequest()->getParam('forumid'));
 
             if (!empty($forum) && $forum->getType() === 1) {
-                foreach ($topicMapper->getTopicsByForumId($this->getRequest()->getParam('forumid')) as $topic) {
+                $topics = $topicMapper->getTopicsByForumId($this->getRequest()->getParam('forumid'));
+                foreach ($topics as $topic) {
                     // If the topic belongs to a forum and the user is either admin or has read access then the topic can be marked as read.
                     if ($adminAccess || is_in_array($groupIds, explode(',', $forum->getReadAccess()))) {
                         $topicIds[] = $topic->getId();
@@ -125,7 +126,13 @@ class Showtopics extends Frontend
                 }
 
                 if (!empty($topicIds)) {
-                    $trackRead->markTopicsAsRead($this->getUser()->getId(), $topicIds, $forum->getId());
+                    if (count($topics) === count($topicIds)) {
+                        // As we want to mark all topics in a forum as read, we can mark the forum as read instead of each topic.
+                        $trackRead->markForumAsRead($this->getUser()->getId(), $forum->getId());
+                    } else {
+                        // Mark each topic as read as not all topics can be marked as read.
+                        $trackRead->markTopicsAsRead($this->getUser()->getId(), $topicIds, $forum->getId());
+                    }
                 }
             }
 

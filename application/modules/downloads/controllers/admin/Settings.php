@@ -1,12 +1,14 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Downloads\Controllers\Admin;
 
-class Settings extends \Ilch\Controller\Admin
+use Ilch\Controller\Admin;
+
+class Settings extends Admin
 {
     public function init()
     {

@@ -63,7 +63,7 @@ class ProfileFieldsContent extends \Ilch\Mapper
      * Deletes the profile-content for a user with the given id.
      *
      * @param  int $userId
-     * @return boolean True if success, otherwise false.
+     * @return bool True if success, otherwise false.
      */
     public function deleteProfileFieldContentByUserId($userId)
     {
@@ -76,7 +76,7 @@ class ProfileFieldsContent extends \Ilch\Mapper
      * Deletes the profile-content with a given field-id.
      *
      * @param  int $fieldId
-     * @return boolean True if success, otherwise false.
+     * @return bool True if success, otherwise false.
      */
     public function deleteProfileFieldContentByFieldId($fieldId)
     {

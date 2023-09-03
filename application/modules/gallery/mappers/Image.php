@@ -6,18 +6,21 @@
 
 namespace Modules\Gallery\Mappers;
 
+use Ilch\Database\Exception;
+use Ilch\Database\Mysql\Result;
+use Ilch\Mapper;
 use Ilch\Pagination;
 use Modules\Gallery\Models\Image as ImageModel;
 
 /**
  * Image mapper
  */
-class Image extends \Ilch\Mapper
+class Image extends Mapper
 {
     /**
      * @param int $id
      * @return ImageModel|null
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
     public function getImageById(int $id): ?ImageModel
     {
@@ -50,7 +53,7 @@ class Image extends \Ilch\Mapper
      *
      * @param int $id
      * @return ImageModel|null
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
     public function getLastImageByGalleryId(int $id): ?ImageModel
     {
@@ -82,7 +85,7 @@ class Image extends \Ilch\Mapper
      *
      * @param int $id
      * @return int
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
     public function getCountImageById(int $id): int
     {
@@ -117,7 +120,7 @@ class Image extends \Ilch\Mapper
      * @param int $id
      * @param Pagination|null $pagination
      * @return array
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
     public function getImageByGalleryId(int $id, Pagination $pagination = NULL): array
     {
@@ -173,7 +176,7 @@ class Image extends \Ilch\Mapper
      * Delete entries for images by id.
      *
      * @param int $id
-     * @return \Ilch\Database\Mysql\Result|int
+     * @return Result|int
      */
     public function deleteById(int $id)
     {

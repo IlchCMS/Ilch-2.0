@@ -907,7 +907,7 @@ class Config extends \Ilch\Config\Install
 
                 $notificationModel->setModule('bbcodeconvert');
                 $notificationModel->setMessage($message[$this->getTranslator()->shortenLocale($this->getTranslator()->getLocale())]);
-                $notificationModel->setURL(BASE_URL . '/index.php/' . 'admin/admin/modules/notinstalled');
+                $notificationModel->setURL(BASE_URL . '/' . 'admin/admin/modules/notinstalled');
                 $notificationModel->setType('bbcodeconvertAvailableForInstallation');
 
                 $notificationsMapper->addNotification($notificationModel);
@@ -923,6 +923,10 @@ class Config extends \Ilch\Config\Install
                 unlink(ROOT_PATH . '/static/css/chosen/chosen.css');
                 unlink(ROOT_PATH . '/static/css/chosen/chosen-sprite.png');
 
+                // Update vendor folder
+                replaceVendorDirectory();
+                break;
+            case "2.1.52":
                 // Update vendor folder
                 replaceVendorDirectory();
                 break;

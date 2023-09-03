@@ -961,7 +961,7 @@ class Statistic extends \Ilch\Mapper
      */
     private function columnWithValueExists(string $column, ?string $value): bool
     {
-        return $this->db()->select('id')
+        return (bool)$this->db()->select('id')
             ->from('visits_stats')
             ->where([$column => $value])
             ->execute()

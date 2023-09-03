@@ -1,84 +1,133 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Privacy\Mappers;
 
+use Ilch\Database\Mysql\Result;
+use Ilch\Pagination;
 use Modules\Privacy\Models\Privacy as PrivacyModel;
 
 class Privacy extends \Ilch\Mapper
 {
     /**
+     * @var string
+     */
+    public $tablename = 'privacy';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return bool
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by param.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param Pagination|null $pagination
+     * @return PrivacyModel[]|null
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['position' => 'ASC'], ?Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entriesArray = $result->fetchRows();
+        if (empty($entriesArray)) {
+            return null;
+        }
+        $entries = [];
+
+        foreach ($entriesArray as $entry) {
+            $entryModel = new PrivacyModel();
+            $entryModel->setByArray($entry);
+
+            $entries[] = $entryModel;
+        }
+        return $entries;
+    }
+
+    /**
      * Gets the Privacy.
      *
      * @param array $where
-     * @return PrivacyModel[]|array
+     * @return PrivacyModel[]|null
      */
-    public function getPrivacy($where = [])
+    public function getPrivacy(array $where = []): ?array
     {
-        $entryArray = $this->db()->select('*')
-            ->from('privacy')
-            ->where($where)
-            ->order(['id' => 'ASC'])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($entryArray)) {
-            return null;
-        }
-
-        $privacy = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new PrivacyModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setTitle($entries['title']);
-            $entryModel->setUrlTitle($entries['urltitle']);
-            $entryModel->setUrl($entries['url']);
-            $entryModel->setText($entries['text']);
-            $entryModel->setShow($entries['show']);
-            $privacy[] = $entryModel;
-        }
-
-        return $privacy;
+        return $this->getEntriesBy($where);
     }
 
     /**
      * Gets privacy.
      *
-     * @param integer $id
+     * @param int $id
      * @return PrivacyModel|null
      */
-    public function getPrivacyById($id)
+    public function getPrivacyById(int $id): ?PrivacyModel
     {
-        $privacy = $this->getPrivacy(['id' => $id]);
+        $entries = $this->getEntriesBy(['id' => $id], []);
 
-        return reset($privacy);
+        if (!empty($entries)) {
+            return reset($entries);
+        }
+
+        return null;
+    }
+
+    /**
+     * Sort privacy.
+     *
+     * @param int $id
+     * @param int $position
+     * @return bool
+     */
+    public function sort(int $id, int $position): bool
+    {
+        return $this->db()->update($this->tablename)
+            ->values(['position' => $position])
+            ->where(['id' => $id])
+            ->execute();
     }
 
     /**
      * Inserts or updates privacy model.
      *
      * @param PrivacyModel $privacy
+     * @return int
      */
-    public function save(PrivacyModel $privacy)
+    public function save(PrivacyModel $privacy): int
     {
-        $fields = [
-            'title' => $privacy->getTitle(),
-            'urltitle' => $privacy->getUrlTitle(),
-            'url' => $privacy->getUrl(),
-            'text' => $privacy->getText(),
-            'show' => $privacy->getShow()
-        ];
+        $fields = $privacy->getArray();
 
         if ($privacy->getId()) {
-            $this->db()->update('privacy')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $privacy->getId()])
                 ->execute();
+            return $privacy->getId();
         } else {
-            $this->db()->insert('privacy')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -87,37 +136,42 @@ class Privacy extends \Ilch\Mapper
     /**
      * Updates privacy with given id.
      *
-     * @param integer $id
+     * @param int $id
+     * @param int $showMan
+     * @return Result|int
      */
-    public function update($id)
+    public function update(int $id, int $showMan = -1)
     {
-        $show = (int) $this->db()->select('show')
-                        ->from('privacy')
-                        ->where(['id' => $id])
-                        ->execute()
-                        ->fetchCell();
-
-        if ($show == 1) {
-            $this->db()->update('privacy')
-                ->values(['show' => 0])
-                ->where(['id' => $id])
-                ->execute();
+        if ($showMan != -1) {
+            $showNow = $showMan;
         } else {
-            $this->db()->update('privacy')
-                ->values(['show' => 1])
+            $setFree = (int) $this->db()->select('show')
+                ->from($this->tablename)
                 ->where(['id' => $id])
-                ->execute();
+                ->execute()
+                ->fetchCell();
+
+            if ($setFree == 1) {
+                $showNow = 0;
+            } else {
+                $showNow = 1;
+            }
         }
+        return $this->db()->update($this->tablename)
+            ->values(['show' => $showNow])
+            ->where(['id' => $id])
+            ->execute();
     }
 
     /**
      * Deletes privacy with given id.
      *
      * @param integer $id
+     * @return bool
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('privacy')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }

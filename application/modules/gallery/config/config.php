@@ -6,11 +6,14 @@
 
 namespace Modules\Gallery\Config;
 
-class Config extends \Ilch\Config\Install
+use Ilch\Config\Install;
+use Modules\Admin\Models\Box;
+
+class Config extends Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.21.0',
+        'version' => '1.21.1',
         'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -85,6 +88,7 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                // no break
             case "1.4.0":
             case "1.5.0":
                 // Add "picture of x" box to list of boxes.
@@ -104,13 +108,14 @@ class Config extends \Ilch\Config\Install
                 }
 
                 if (isset($this->config['boxes'])) {
-                    $boxModel = new \Modules\Admin\Models\Box();
+                    $boxModel = new Box();
                     $boxModel->setModule($this->config['key']);
                     foreach ($this->config['boxes'] as $key => $value) {
                         $boxModel->addContent($key, $value);
                     }
                     $boxMapper->install($boxModel);
                 }
+                // no break
             case "1.6.0":
             case "1.7.0":
             case "1.8.0":
@@ -123,6 +128,7 @@ class Config extends \Ilch\Config\Install
                 foreach($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'gallery' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
             case "1.14.0":
             case "1.15.0":
             case "1.16.0":

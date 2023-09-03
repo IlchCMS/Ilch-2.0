@@ -30,6 +30,7 @@ class Post extends Mapper
             ->where(['id' => $id])
             ->join(['v' => 'forum_votes'], 'p.id = v.post_id', 'LEFT', ['countOfVotes' => 'COUNT(v.user_id)'])
             ->join(['vu' => 'forum_votes'], ['p.id = vu.post_id', 'vu.user_id' => $userId], 'LEFT', ['userHasVoted' => 'vu.user_id'])
+            ->group(['p.id'])
             ->execute()
             ->fetchAssoc();
 
@@ -105,8 +106,9 @@ class Post extends Mapper
             $result = $select->execute();
         }
 
+        $userMapper = new UserMapper();
         $postsArray = $result->fetchRows();
-        $postEntry = [];
+        $posts = [];
         $dummyUser = null;
         $cache = [];
 
@@ -118,7 +120,6 @@ class Post extends Mapper
             if (\array_key_exists($post['user_id'], $cache)) {
                 $postModel->setAutor($cache[$post['user_id']]['user']);
             } else {
-                $userMapper = new UserMapper();
                 $user = $userMapper->getUserById($post['user_id']);
                 if ($user) {
                     $cache[$post['user_id']]['user'] = $user;
@@ -135,10 +136,10 @@ class Post extends Mapper
             $postModel->setCountOfVotes($post['countOfVotes']);
             $postModel->setUserHasVoted((bool)$post['userHasVoted']);
 
-            $postEntry[] = $postModel;
+            $posts[] = $postModel;
         }
 
-        return $postEntry;
+        return $posts;
     }
 
     /**

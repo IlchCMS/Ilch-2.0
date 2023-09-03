@@ -1,10 +1,12 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Privacy\Models\Privacy $privacy */
+$privacy = $this->get('privacy');
+?>
 <h1>
-    <?php if ($this->get('privacy') != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
+    <?=($privacy->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
@@ -14,17 +16,9 @@
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="show-on" name="show" value="1" 
-                    <?php if ($this->get('privacy') != '' && $this->get('privacy')->getShow() == 1): ?>
-                        checked="checked"
-                    <?php else: ?>
-                        checked="checked"
-                    <?php endif; ?> />
+                <input type="radio" class="flipswitch-input" id="show-on" name="show" value="1" <?=($this->originalInput('show', $privacy->getShow())) ? 'checked="checked"' : '' ?> />
                 <label for="show-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="show-off" name="show" value="0" 
-                    <?php if ($this->get('privacy') != '' && $this->get('privacy')->getShow() == 0): ?>
-                        checked="checked"
-                    <?php endif; ?> />
+                <input type="radio" class="flipswitch-input" id="show-off" name="show" value="0" <?=(!$this->originalInput('show', $privacy->getShow())) ? 'checked="checked"' : '' ?> />
                 <label for="show-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -39,7 +33,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getTitle()) : $this->escape($this->originalInput('title')) ?>" />
+                   value="<?=$this->escape($this->originalInput('title', $privacy->getTitle())) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -51,7 +45,7 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getText()) : $this->originalInput('text') ?></textarea>
+                      rows="5"><?=$this->originalInput('text', $privacy->getText()) ?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -63,7 +57,7 @@
                    class="form-control"
                    id="urltitle"
                    name="urltitle"
-                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getUrlTitle()) : $this->escape($this->originalInput('urltitle')) ?>" />
+                   value="<?=$this->escape($this->originalInput('urltitle', $privacy->getUrlTitle())) ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('url') ? 'has-error' : '' ?>">
@@ -75,9 +69,9 @@
                    class="form-control"
                    id="url"
                    name="url"
-                   placeholder="http://" 
-                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getUrl()) : $this->escape($this->originalInput('url')) ?>" />
+                   placeholder="https://"
+                   value="<?=$this->escape($this->originalInput('url', $privacy->getUrl())) ?>" />
         </div>
     </div>
-    <?=($this->get('privacy') != '') ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
+    <?=($privacy) ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>

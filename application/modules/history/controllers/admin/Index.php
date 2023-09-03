@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -68,63 +69,48 @@ class Index extends \Ilch\Controller\Admin
     {
         $historyMapper = new HistoryMapper();
 
+        $model = new HistoryModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+            $model = $historyMapper->getHistoryById($this->getRequest()->getParam('id'));
 
-            $this->getView()->set('history', $historyMapper->getHistoryById($this->getRequest()->getParam('id')));
+            if (!$model) {
+                $this->redirect(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
-
-        $post = [
-            'date' => '',
-            'title' => '',
-            'symbol' => '',
-            'color' => '',
-            'text' => ''
-        ];
+        $this->getView()->set('history', $model);
 
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'date' => new \Ilch\Date(trim($this->getRequest()->getPost('date'))),
-                'title' => trim($this->getRequest()->getPost('title')),
-                'symbol' => trim($this->getRequest()->getPost('symbol')),
-                'color' => trim($this->getRequest()->getPost('color')),
-                'text' => trim($this->getRequest()->getPost('text'))
-            ];
-
-            $validation = Validation::create($post, [
-                'date' => 'required',
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'date' => 'required|date:d.m.Y',
                 'title' => 'required',
-                'text' => 'required'
+                'text' => 'required',
+                'color' => 'required'
             ]);
 
             if ($validation->isValid()) {
-                $model = new HistoryModel();
-
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-
-                $model->setDate($post['date']);
-                $model->setTitle($post['title']);
-                $model->setType($post['symbol']);
-                $model->setColor($post['color']);
-                $model->setText($post['text']);
+                $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'))));
+                $model->setTitle($this->getRequest()->getPost('title'));
+                $model->setType($this->getRequest()->getPost('symbol'));
+                $model->setColor($this->getRequest()->getPost('color'));
+                $model->setText($this->getRequest()->getPost('text'));
                 $historyMapper->save($model);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], ($model->getId() ? ['id' => $model->getId()] : [])));
         }
-
-        $this->getView()->set('post', $post);
     }
 
     public function delAction()

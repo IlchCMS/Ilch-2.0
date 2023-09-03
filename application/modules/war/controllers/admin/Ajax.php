@@ -6,11 +6,12 @@
 
 namespace Modules\War\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\War\Mappers\Games as GamesMapper;
 use Modules\War\Models\Games as GamesModel;
 use Modules\War\Mappers\Maps as MapsMapper;
 
-class Ajax extends \Ilch\Controller\Admin
+class Ajax extends Admin
 {
     public function gameAction()
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,49 +14,76 @@ class History extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The date of the history.
      *
      * @var string
      */
-    protected $date;
+    protected $date = '';
 
     /**
      * The title of the history.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The type of the history.
      *
      * @var string
      */
-    protected $type;
+    protected $type  = '';
 
     /**
      * The color of the history.
      *
      * @var string
      */
-    protected $color;
+    protected $color = '';
 
     /**
      * The text of the history.
      *
      * @var string
      */
-    protected $text;
+    protected $text = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): History
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['date'])) {
+            $this->setDate($entries['date']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['type'])) {
+            $this->setType($entries['type']);
+        }
+        if (isset($entries['color'])) {
+            $this->setColor($entries['color']);
+        }
+        if (isset($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        return $this;
+    }
 
     /**
      * Gets the id of the history.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -64,11 +92,11 @@ class History extends \Ilch\Model
      * Sets the id of the history.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): History
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -78,7 +106,7 @@ class History extends \Ilch\Model
      *
      * @return string
      */
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
     }
@@ -87,11 +115,11 @@ class History extends \Ilch\Model
      * Sets the date of the history.
      *
      * @param string $date
-     * @return this
+     * @return $this
      */
-    public function setDate($date)
+    public function setDate(string $date): History
     {
-        $this->date = (string)$date;
+        $this->date = $date;
 
         return $this;
     }
@@ -101,7 +129,7 @@ class History extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -110,11 +138,11 @@ class History extends \Ilch\Model
      * Sets the title of the history.
      *
      * @param string $title
-     * @return this
+     * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): History
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -124,7 +152,7 @@ class History extends \Ilch\Model
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -133,11 +161,11 @@ class History extends \Ilch\Model
      * Sets the type of the history.
      *
      * @param string $type
-     * @return this
+     * @return $this
      */
-    public function setType($type)
+    public function setType(string $type): History
     {
-        $this->type = (string)$type;
+        $this->type = $type;
 
         return $this;
     }
@@ -147,7 +175,7 @@ class History extends \Ilch\Model
      *
      * @return string
      */
-    public function getColor()
+    public function getColor(): string
     {
         return $this->color;
     }
@@ -156,11 +184,11 @@ class History extends \Ilch\Model
      * Sets the color of the history.
      *
      * @param string $color
-     * @return this
+     * @return $this
      */
-    public function setColor($color)
+    public function setColor(string $color): History
     {
-        $this->color = (string)$color;
+        $this->color = $color;
 
         return $this;
     }
@@ -170,7 +198,7 @@ class History extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -179,12 +207,32 @@ class History extends \Ilch\Model
      * Sets the text of the history.
      *
      * @param string $text
-     * @return this
+     * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): History
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'date'  => $this->getDate(),
+                'title' => $this->getTitle(),
+                'type'  => $this->getType(),
+                'color' => $this->getColor(),
+                'text'  => $this->getText()
+            ]
+        );
     }
 }

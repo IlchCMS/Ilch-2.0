@@ -1,4 +1,7 @@
 <?php
+
+use Ilch\Date;
+
 $war = $this->get('war');
 $group = $this->get('group');
 $enemy = $this->get('enemy');
@@ -158,13 +161,13 @@ $commentsClass = new Ilch\Comments();
                         ?>
                         <li class="list-group-item<?=$class ?>">
                             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: 
-                            <?=$text ?><?=$comment ?> <i class="fa-solid fa-circle-info" data-toggle="popover" data-trigger="hover" data-content="<?=(new \Ilch\Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></i>
+                            <?=$text ?><?=$comment ?> <i class="fa-solid fa-circle-info" data-toggle="popover" data-trigger="hover" data-content="<?=(new Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></i>
                         </li>
                     <?php endforeach; ?>
                     </ul>
                     <?php
                     $datenow = $this->get('datenow')->getTimestamp();
-                    $wartime = (new \Ilch\Date($war->getWarTime()))->getTimestamp();
+                    $wartime = (new Date($war->getWarTime()))->getTimestamp();
                     ?>
                     <?php if (($war->getLastAcceptTime() == 0 || ((($wartime - $datenow) / 60) >= $war->getLastAcceptTime())) && $war->getWarStatus() == 1):?>
                         <?php foreach ($userGroupIds as $userGroupId): ?>

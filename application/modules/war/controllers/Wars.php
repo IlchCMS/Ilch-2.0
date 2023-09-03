@@ -6,10 +6,11 @@
 
 namespace Modules\War\Controllers;
 
+use Ilch\Controller\Frontend;
 use Modules\War\Mappers\War as WarMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Wars extends \Ilch\Controller\Frontend
+class Wars extends Frontend
 {
     public function indexAction()
     {

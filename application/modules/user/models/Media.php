@@ -60,7 +60,7 @@ class Media extends \Ilch\Model
     /**
      * Gets the id of the media.
      *
-     * @return integer
+     * @return int
      */
 
     public function getId()
@@ -71,7 +71,7 @@ class Media extends \Ilch\Model
     /**
      * Gets the userid of the media.
      *
-     * @return integer
+     * @return int
      */
 
     public function getUserId()
@@ -132,7 +132,7 @@ class Media extends \Ilch\Model
     /**
      * Sets the id of the media.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -142,7 +142,7 @@ class Media extends \Ilch\Model
     /**
      * Sets the userid of the media.
      *
-     * @param integer $userid
+     * @param int $userid
      */
     public function setUserId($userid)
     {

@@ -7,13 +7,15 @@
 namespace Modules\Downloads\Controllers;
 
 use Ilch\Comments;
+use Ilch\Controller\Frontend;
+use Ilch\Pagination;
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Downloads\Models\File as FileModel;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Index extends \Ilch\Controller\Frontend
+class Index extends Frontend
 {
     public function indexAction() 
     {
@@ -36,7 +38,7 @@ class Index extends \Ilch\Controller\Frontend
     public function showAction() 
     {
         $fileMapper = new FileMapper();
-        $pagination = new \Ilch\Pagination();
+        $pagination = new Pagination();
         $downloadsMapper = new DownloadsMapper();
 
         $id = $this->getRequest()->getParam('id');
@@ -67,7 +69,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
-        $commentMapper = new CommentMapper;
+        $commentMapper = new CommentMapper();
 
         $id = $this->getRequest()->getParam('id');
         $file = $fileMapper->getFileById($id);
@@ -95,23 +97,25 @@ class Index extends \Ilch\Controller\Frontend
             $fileMapper->saveVisits($model);
         }
 
-        if ($this->getRequest()->getPost('saveComment')) {
-            $comments = new Comments();
-            $key = 'downloads/index/showfile/id/'.$id;
+        if ($this->getUser()) {
+            if ($this->getRequest()->getPost('saveComment')) {
+                $comments = new Comments();
+                $key = 'downloads/index/showfile/id/'.$id;
 
-            if ($this->getRequest()->getPost('fkId')) {
-                $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                if ($this->getRequest()->getPost('fkId')) {
+                    $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                }
+
+                $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
+                $this->redirect(['action' => 'showFile', 'id' => $id]);
             }
+            if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
+                $commentId = $this->getRequest()->getParam('commentId');
+                $comments = new Comments();
 
-            $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
-            $this->redirect(['action' => 'showFile', 'id' => $id]);
-        }
-        if ($this->getRequest()->getParam('commentId') && ($this->getRequest()->getParam('key') === 'up' || $this->getRequest()->getParam('key') === 'down')) {
-            $commentId = $this->getRequest()->getParam('commentId');
-            $comments = new Comments();
-
-            $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-            $this->redirect(['action' => 'showFile', 'id' => $id.'#comment_'.$commentId]);
+                $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
+                $this->redirect(['action' => 'showFile', 'id' => $id.'#comment_'.$commentId]);
+            }
         }
 
         $this->getView()->set('file', $file);
