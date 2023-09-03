@@ -24,7 +24,7 @@ h1, h2 {
 body.modal-open {
     overflow: hidden !important;
 }
-.nounderline, .nounderline:hover{ 
+.nounderline, .nounderline:hover{
     text-decoration: none
 }
 header .rightbar .opens {
@@ -108,6 +108,9 @@ a {
 }
 #content .ilch-margin-b {
     margin-bottom:10px;
+}
+#content .table > thead > tr > th {
+  border-bottom: 2px solid #ddd;
 }
 .leftbar {
     margin-right: 80px;
