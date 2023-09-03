@@ -15,7 +15,7 @@ if ($group->getId()) {
     <input type="hidden"
            name="group[id]"
            value="<?=$group->getId() ?>" />
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="groupName" class="col-lg-3 control-label">
             <?=$this->getTrans('groupName') ?>
         </label>
@@ -28,7 +28,7 @@ if ($group->getId()) {
                    value="<?=$this->escape($group->getName()) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <table class="table table-borderless">
             <colgroup><col class="col-lg-6">
                 <col class="col-lg-6">
@@ -36,8 +36,8 @@ if ($group->getId()) {
             </colgroup>
             <thead>
                 <tr>
-                    <th class="th-lg"><?=$this->getTrans('users') ?></th>
-                    <th class="th-lg"><?=$this->getTrans('assignedUsers') ?></th>
+                    <th class="th-lg table-light"><?=$this->getTrans('users') ?></th>
+                    <th class="th-lg table-light"><?=$this->getTrans('assignedUsers') ?></th>
                 </tr>
             </thead>
             <tbody>
