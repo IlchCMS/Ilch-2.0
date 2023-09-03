@@ -29,8 +29,6 @@ class Index extends Frontend
         $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent(0));
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
-
-
     }
 
     public function showAction() 
@@ -76,7 +74,6 @@ class Index extends Frontend
             'titleattr' => $this->getConfig()->get('venoboxTitleattr'),
         ];
         $this->getView()->set('venoboxOptions', $venoboxOptions);
-
         $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
     }
@@ -139,7 +136,6 @@ class Index extends Frontend
                 $this->redirect(['action' => 'showimage', 'id' => $id.'#comment_'.$commentId]);
             }
         }
-
         $this->getView()->set('image', $imageMapper->getImageById($id));
         $this->getView()->set('commentsKey', 'gallery/index/showimage/id/'.$id);
     }
