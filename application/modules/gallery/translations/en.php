@@ -60,4 +60,10 @@ return [
     'noMediaAlt' => 'No thumbnail available.',
     'titleCannotChangeTypeOnEdit' => 'Changing the type afterwards is not possible.',
     'titleCannotChangeCategoryOnEdit' => 'On the left side you can assign the gallery to another category by drag and drop.',
+    'venoboxOverlayColor' => 'Background Color?',
+    'venoboxInfinigall' => 'Infinite Gallery?',
+    'venoboxNumeration' => 'Numbering of Image?',
+    'venoboxBgcolor' => 'Backgroundcolor of Image?',
+    'venoboxBorder' => 'Frame Thickness?',
+    'venoboxTitleattr' => 'Display Image Title?'
 ];

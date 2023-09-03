@@ -55,7 +55,7 @@ class Settings extends Admin
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('gallery_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
-                $pictureOfXSource = is_array($this->getRequest()->getPost('pictureOfXSource')) ? implode(",", $this->getRequest()->getPost('pictureOfXSource')) : '';
+                $pictureOfXSource = is_array($data = $this->getRequest()->getPost('pictureOfXSource')) ? implode(",", $data) : '';
                 $this->getConfig()->set('gallery_pictureOfXSource', (empty($pictureOfXSource)) ? '' : $pictureOfXSource);
                 $this->getConfig()->set('gallery_pictureOfXInterval', $this->getRequest()->getPost('pictureOfXInterval'));
                 $this->getConfig()->set('gallery_pictureOfXRandom', $this->getRequest()->getPost('pictureOfXRandom'));
@@ -78,7 +78,7 @@ class Settings extends Admin
         }
 
         $this->getView()->set('picturesPerPage', $this->getConfig()->get('gallery_picturesPerPage'));
-        $this->getView()->set('pictureOfXSource', explode(',', $this->getConfig()->get('gallery_pictureOfXSource') ?? ''));
+        $this->getView()->set('pictureOfXSource', explode(',', $this->getConfig()->get('gallery_pictureOfXSource')));
         $this->getView()->set('pictureOfXInterval', $this->getConfig()->get('gallery_pictureOfXInterval'));
         $this->getView()->set('pictureOfXRandom', $this->getConfig()->get('gallery_pictureOfXRandom'));
         $this->getView()->set('galleries', $galleryMapper->getGalleryCatItem(1));
