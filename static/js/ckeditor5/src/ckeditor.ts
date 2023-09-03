@@ -56,6 +56,10 @@ import {
 } from '@ckeditor/ckeditor5-table';
 import { TextTransformation } from '@ckeditor/ckeditor5-typing';
 import { WordCount } from '@ckeditor/ckeditor5-word-count';
+import {
+	Emoji, EmojiActivity, EmojiFlags, EmojiFood, EmojiNature, EmojiObjects, EmojiPeople,
+	EmojiPlaces, EmojiSymbols
+} from '@phudak/ckeditor5-emoji/src';
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
@@ -67,6 +71,15 @@ class Editor extends ClassicEditor {
 		BlockQuote,
 		Bold,
 		CodeBlock,
+		Emoji,
+		EmojiPeople,
+		EmojiNature,
+		EmojiPlaces,
+		EmojiFood,
+		EmojiActivity,
+		EmojiObjects,
+		EmojiSymbols,
+		EmojiFlags,
 		Essentials,
 		FontBackgroundColor,
 		FontColor,
@@ -136,6 +149,7 @@ class Editor extends ClassicEditor {
 				'|',
 				'link',
 				'specialCharacters',
+				'emoji',
 				'|',
 				'imageUpload',
 				'blockQuote',
