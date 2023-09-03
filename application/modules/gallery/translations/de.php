@@ -65,5 +65,7 @@ return [
     'venoboxNumeration' => 'Nummerierung der Bilder?',
     'venoboxBgcolor' => 'Farbe vom Bilderrahmen?',
     'venoboxBorder' => 'Stärke vom Bilderrahmen?',
-    'venoboxTitleattr' => 'Bildtitel anzeigen?'
+    'venoboxTitleattr' => 'Bildtitel anzeigen?',
+    'venoboxSetting' => 'Venobox Einstellungen',
+    'for example: 15px' => 'zum Beispiel: 15px',
 ];

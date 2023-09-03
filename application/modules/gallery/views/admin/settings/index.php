@@ -73,7 +73,7 @@
         </div>
     </div>
 
-    <h1>Venobox Einstellungen</h1>
+    <h1><?=$this->getTrans('venoboxSetting') ?></h1>
     <div class="form-group <?=$this->validation()->hasError('venoboxNumeration') ? 'has-error' : '' ?>">
         <label for="venoboxNumeration" class="col-lg-2 control-label">
             <?=$this->getTrans('venoboxNumeration') ?>:
@@ -149,7 +149,7 @@
                    name="venoboxBorder"
                    pattern="[0-9]+px"
                    value="<?=($this->get('venoboxBorder')) ? $this->escape($this->get('venoboxBorder')) : $this->originalInput('venoboxBorder') ?>" />
-            <div class="form-text">Zum Beispiel: 15px</div>
+            <div class="form-text"><?=$this->getTrans('for example: 15px') ?></div>
         </div>
 
     </div>
