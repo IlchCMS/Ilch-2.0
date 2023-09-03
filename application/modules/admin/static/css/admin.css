@@ -24,7 +24,7 @@ h1, h2 {
 body.modal-open {
     overflow: hidden !important;
 }
-.nounderline, .nounderline:hover{
+.nounderline, .nounderline:hover{ sgh
     text-decoration: none
 }
 header .rightbar .opens {
