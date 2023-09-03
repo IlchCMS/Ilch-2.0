@@ -64,9 +64,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="pictureOfXRandom-on" name="pictureOfXRandom" value="1" <?php if ($this->get('pictureOfXRandom') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="pictureOfXRandom-on" name="pictureOfXRandom" value="1" <?= $this->get('pictureOfXRandom') == '1' ? 'checked="checked"' : '' ?> />
                 <label for="pictureOfXRandom-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="pictureOfXRandom-off" name="pictureOfXRandom" value="0" <?php if ($this->get('pictureOfXRandom') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="pictureOfXRandom-off" name="pictureOfXRandom" value="0" <?= $this->get('pictureOfXRandom') != '1' ? 'checked="checked"' : '' ?> />
                 <label for="pictureOfXRandom-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -80,10 +80,10 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="venoboxNumeration-on" name="venoboxNumeration" value="1" <?php if ($this->get('venoboxNumeration') == '1') { echo 'checked="checked"'; } ?>  />
+                <input type="radio" class="flipswitch-input" id="venoboxNumeration-on" name="venoboxNumeration" value="1" <?= $this->get('venoboxNumeration') == '1' ? 'checked="checked"' : '' ?>  />
                 <label for="venoboxNumeration-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
 
-                <input type="radio" class="flipswitch-input" id="venoboxNumeration-off" name="venoboxNumeration" value="0" <?php if ($this->get('venoboxNumeration') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="venoboxNumeration-off" name="venoboxNumeration" value="0" <?= $this->get('venoboxNumeration') != '1' ? 'checked="checked"' : '' ?> />
                 <label for="venoboxNumeration-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -98,7 +98,7 @@
             <input class="form-control color {hash:true}"
                    id="venoboxOverlayColor"
                    name="venoboxOverlayColor"
-                   value="<?php if ($this->get('venoboxOverlayColor') != '') { echo $this->get('venoboxOverlayColor'); } else { echo '#ffffff'; } ?>">
+                   value="<?= $this->get('venoboxOverlayColor') != '' ? $this->get('venoboxOverlayColor') : '#ffffff' ?>">
             <span class="input-group-addon">
                 <span class="fa fa-undo" onclick="document.getElementById('venoboxOverlayColor').color.fromString('ffffff')"></span>
             </span>
@@ -112,10 +112,10 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="venoboxInfinigall-on" name="venoboxInfinigall" value="1" <?php if ($this->get('venoboxInfinigall') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="venoboxInfinigall-on" name="venoboxInfinigall" value="1" <?= $this->get('venoboxInfinigall') == '1' ? 'checked="checked"' : '' ?> />
                 <label for="venoboxInfinigall-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
 
-                <input type="radio" class="flipswitch-input" id="venoboxInfinigall-off" name="venoboxInfinigall" value="0" <?php if ($this->get('venoboxInfinigall') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="venoboxInfinigall-off" name="venoboxInfinigall" value="0" <?= $this->get('venoboxInfinigall') != '1' ? 'checked="checked"' : '' ?> />
                 <label for="venoboxInfinigall-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -130,7 +130,7 @@
             <input class="form-control color {hash:true}"
                    id="venoboxBgcolor"
                    name="venoboxBgcolor"
-                   value="<?php if ($this->get('venoboxBgcolor') != '') { echo $this->get('venoboxBgcolor'); } else { echo '#ffffff'; } ?>">
+                   value="<?= $this->get('venoboxBgcolor') != '' ? $this->get('venoboxBgcolor') : '#ffffff' ?>">
             <span class="input-group-addon">
                 <span class="fa fa-undo" onclick="document.getElementById('venoboxBgcolor').color.fromString('ffffff')"></span>
             </span>
@@ -160,10 +160,10 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="venoboxTitleattr-on" name="venoboxTitleattr" value="title" <?php if ($this->get('venoboxTitleattr') == 'title') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="venoboxTitleattr-on" name="venoboxTitleattr" value="title" <?= $this->get('venoboxTitleattr') == 'title' ? 'checked="checked"' : '' ?> />
                 <label for="venoboxTitleattr-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
 
-                <input type="radio" class="flipswitch-input" id="venoboxTitleattr-off" name="venoboxTitleattr" value="" <?php if ($this->get('venoboxTitleattr') != 'title') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="venoboxTitleattr-off" name="venoboxTitleattr" value="" <?= $this->get('venoboxTitleattr') != 'title' ? 'checked="checked"' : '' ?> />
                 <label for="venoboxTitleattr-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
