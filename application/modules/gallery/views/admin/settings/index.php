@@ -80,7 +80,7 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="venoboxNumeration-on" name="venoboxNumeration" value="1" <?=($this->get('venoboxNumeration') == '1') ? 'checked="checked"' ?>  />
+                <input type="radio" class="flipswitch-input" id="venoboxNumeration-on" name="venoboxNumeration" value="1" <?php if ($this->get('venoboxNumeration') == '1') { echo 'checked="checked"'; } ?>  />
                 <label for="venoboxNumeration-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
 
                 <input type="radio" class="flipswitch-input" id="venoboxNumeration-off" name="venoboxNumeration" value="0" <?php if ($this->get('venoboxNumeration') != '1') { echo 'checked="checked"'; } ?> />
