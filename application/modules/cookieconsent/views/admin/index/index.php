@@ -1,21 +1,21 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('cookieConsent') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cookieConsent') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentShow') ?>:
         </div>
         <div class="col-lg-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="cookie-consent-yes" name="cookieConsent" value="1" <?php if ($this->get('cookieConsent') == '1') { echo 'checked="checked"'; } ?> />  
-                <label for="cookie-consent-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>  
-                <input type="radio" class="flipswitch-input" id="cookie-consent-no" name="cookieConsent" value="0" <?php if ($this->get('cookieConsent') == '0') { echo 'checked="checked"'; } ?> />  
-                <label for="cookie-consent-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>  
+                <input type="radio" class="flipswitch-input" id="cookie-consent-yes" name="cookieConsent" value="1" <?php if ($this->get('cookieConsent') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="cookie-consent-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="cookie-consent-no" name="cookieConsent" value="0" <?php if ($this->get('cookieConsent') == '0') { echo 'checked="checked"'; } ?> />
+                <label for="cookie-consent-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('cookieConsentLayout') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cookieConsentLayout') ? 'has-error' : '' ?>">
         <label for="cookieConsentLayout" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentLayout') ?>:
         </label>
@@ -27,7 +27,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('cookieConsentPos') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cookieConsentPos') ? 'has-error' : '' ?>">
         <label for="cookieConsentPos" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentPos') ?>:
         </label>
@@ -40,7 +40,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('cookieConsentType') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cookieConsentType') ? 'has-error' : '' ?>">
         <label for="cookieConsentType" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentType') ?>:
         </label>
@@ -54,7 +54,7 @@
     </div>
 
     <h1><?=$this->getTrans('cookieConsentPopUp') ?></h1>
-    <div class="form-group <?=$this->validation()->hasError('cookieConsentPopUpBGColor') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cookieConsentPopUpBGColor') ? 'has-error' : '' ?>">
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentPopUpBGColor') ?>:
         </label>
@@ -63,12 +63,12 @@
                    id="cookieConsentPopUpBGColor"
                    name="cookieConsentPopUpBGColor"
                    value="<?php if ($this->get('cookieConsentPopUpBGColor') != '') { echo $this->get('cookieConsentPopUpBGColor'); } else { echo '#000000'; } ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('cookieConsentPopUpBGColor').color.fromString('000000')"></span>
             </span>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('cookieConsentPopUpTextColor') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cookieConsentPopUpTextColor') ? 'has-error' : '' ?>">
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentPopUpTextColor') ?>:
         </label>
@@ -77,14 +77,14 @@
                    id="cookieConsentPopUpTextColor"
                    name="cookieConsentPopUpTextColor"
                    value="<?php if ($this->get('cookieConsentPopUpTextColor') != '') { echo $this->get('cookieConsentPopUpTextColor'); } else { echo '#ffffff'; } ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('cookieConsentPopUpTextColor').color.fromString('ffffff')"></span>
             </span>
         </div>
     </div>
 
     <h1><?=$this->getTrans('cookieConsentBtn') ?></h1>
-    <div class="form-group <?=$this->validation()->hasError('cookieConsentBtnBGColor') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cookieConsentBtnBGColor') ? 'has-error' : '' ?>">
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentBtnBGColor') ?>:
         </label>
@@ -93,12 +93,12 @@
                    id="cookieConsentBtnBGColor"
                    name="cookieConsentBtnBGColor"
                    value="<?php if ($this->get('cookieConsentBtnBGColor') != '') { echo $this->get('cookieConsentBtnBGColor'); } else { echo '#f1d600'; } ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('cookieConsentBtnBGColor').color.fromString('f1d600')"></span>
             </span>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('cookieConsentBtnTextColor') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cookieConsentBtnTextColor') ? 'has-error' : '' ?>">
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentBtnTextColor') ?>:
         </label>
@@ -107,7 +107,7 @@
                    id="cookieConsentBtnTextColor"
                    name="cookieConsentBtnTextColor"
                    value="<?php if ($this->get('cookieConsentBtnTextColor') != '') { echo $this->get('cookieConsentBtnTextColor'); } else { echo '#000000'; } ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('cookieConsentBtnTextColor').color.fromString('000000')"></span>
             </span>
         </div>

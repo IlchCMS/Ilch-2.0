@@ -1,11 +1,11 @@
 <h1><?=$this->getTrans('settings') ?>
-    <a class="badge" data-toggle="modal" data-target="#infoModal">
+    <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info" ></i>
     </a>
 </h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('acceptReply') ?>:
         </div>
@@ -19,7 +19,7 @@
             </div>
          </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('nesting') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('nesting') ? 'has-error' : '' ?>">
         <label for="nesting" class="col-lg-2 control-label">
             <?=$this->getTrans('nesting') ?>:
         </label>
@@ -32,7 +32,7 @@
                    value="<?=$this->get('comment_nesting') ?>">
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="floodIntervalInput" class="col-lg-2 control-label">
             <?=$this->getTrans('floodInterval') ?>:
         </label>
@@ -45,7 +45,7 @@
                    value="<?=$this->escape($this->get('floodInterval')) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="excludeFloodProtection" class="col-lg-2 control-label">
             <?=$this->getTrans('excludeFloodProtection') ?>:
         </label>
@@ -75,7 +75,7 @@
         </div>
     </div>
     <h2><?=$this->getTrans('boxSettings') ?></h2>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="boxCommentsLimit" class="col-lg-2 control-label">
             <?=$this->getTrans('boxCommentsLimit') ?>
         </label>
