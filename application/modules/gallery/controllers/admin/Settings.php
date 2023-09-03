@@ -55,7 +55,7 @@ class Settings extends Admin
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('gallery_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
-                $pictureOfXSource = is_array($data = $this->getRequest()->getPost('pictureOfXSource')) ? implode(",", $data) : '';
+                $pictureOfXSource = is_array($this->getRequest()->getPost('pictureOfXSource')) ? implode(",", $this->getRequest()->getPost('pictureOfXSource')) : '';
                 $this->getConfig()->set('gallery_pictureOfXSource', (empty($pictureOfXSource)) ? '' : $pictureOfXSource);
                 $this->getConfig()->set('gallery_pictureOfXInterval', $this->getRequest()->getPost('pictureOfXInterval'));
                 $this->getConfig()->set('gallery_pictureOfXRandom', $this->getRequest()->getPost('pictureOfXRandom'));
