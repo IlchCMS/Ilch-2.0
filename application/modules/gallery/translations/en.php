@@ -65,5 +65,6 @@ return [
     'venoboxNumeration' => 'Numbering of Image?',
     'venoboxBgcolor' => 'Backgroundcolor of Image?',
     'venoboxBorder' => 'Frame Thickness?',
-    'venoboxTitleattr' => 'Display Image Title?'
+    'venoboxTitleattr' => 'Display Image Title?',
+    'venoboxSetting' => 'Venobox Settings'
 ];
