@@ -72,9 +72,107 @@
             </div>
         </div>
     </div>
+
+    <h1>Venobox Einstellungen</h1>
+    <div class="form-group <?=$this->validation()->hasError('venoboxNumeration') ? 'has-error' : '' ?>">
+        <label for="venoboxNumeration" class="col-lg-2 control-label">
+            <?=$this->getTrans('venoboxNumeration') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="venoboxNumeration-on" name="venoboxNumeration" value="1" <?=($this->get('venoboxNumeration') == '1') ? 'checked="checked"' ?>  />
+                <label for="venoboxNumeration-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+
+                <input type="radio" class="flipswitch-input" id="venoboxNumeration-off" name="venoboxNumeration" value="0" <?php if ($this->get('venoboxNumeration') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="venoboxNumeration-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group <?=$this->validation()->hasError('venoboxOverlayColor') ? 'has-error' : '' ?>">
+        <label for="color" class="col-lg-2 control-label">
+            <?=$this->getTrans('venoboxOverlayColor') ?>:
+        </label>
+        <div class="col-lg-2 input-group">
+            <input class="form-control color {hash:true}"
+                   id="venoboxOverlayColor"
+                   name="venoboxOverlayColor"
+                   value="<?php if ($this->get('venoboxOverlayColor') != '') { echo $this->get('venoboxOverlayColor'); } else { echo '#ffffff'; } ?>">
+            <span class="input-group-addon">
+                <span class="fa fa-undo" onclick="document.getElementById('venoboxOverlayColor').color.fromString('ffffff')"></span>
+            </span>
+        </div>
+
+    </div>
+
+    <div class="form-group <?=$this->validation()->hasError('venoboxInfinigall') ? 'has-error' : '' ?>">
+        <label for="venoboxInfinigall" class="col-lg-2 control-label">
+            <?=$this->getTrans('venoboxInfinigall') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="venoboxInfinigall-on" name="venoboxInfinigall" value="1" <?php if ($this->get('venoboxInfinigall') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="venoboxInfinigall-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+
+                <input type="radio" class="flipswitch-input" id="venoboxInfinigall-off" name="venoboxInfinigall" value="0" <?php if ($this->get('venoboxInfinigall') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="venoboxInfinigall-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group <?=$this->validation()->hasError('venoboxBgcolor') ? 'has-error' : '' ?>">
+        <label for="color" class="col-lg-2 control-label">
+            <?=$this->getTrans('venoboxBgcolor') ?>:
+        </label>
+        <div class="col-lg-2 input-group">
+            <input class="form-control color {hash:true}"
+                   id="venoboxBgcolor"
+                   name="venoboxBgcolor"
+                   value="<?php if ($this->get('venoboxBgcolor') != '') { echo $this->get('venoboxBgcolor'); } else { echo '#ffffff'; } ?>">
+            <span class="input-group-addon">
+                <span class="fa fa-undo" onclick="document.getElementById('venoboxBgcolor').color.fromString('ffffff')"></span>
+            </span>
+        </div>
+
+    </div>
+
+    <div class="form-group <?=$this->validation()->hasError('venoboxBorder') ? 'has-error' : '' ?>">
+        <label for="venoboxBorder" class="col-lg-2 control-label">
+            <?=$this->getTrans('venoboxBorder') ?>:
+        </label>
+        <div class="col-lg-2 input-group">
+            <input type="text"
+                   class="form-control"
+                   id="venoboxBorder"
+                   name="venoboxBorder"
+                   pattern="[0-9]+px"
+                   value="<?=($this->get('venoboxBorder')) ? $this->escape($this->get('venoboxBorder')) : $this->originalInput('venoboxBorder') ?>" />
+            <div class="form-text">Zum Beispiel: 15px</div>
+        </div>
+
+    </div>
+
+    <div class="form-group <?=$this->validation()->hasError('venoboxTitleattr') ? 'has-error' : '' ?>">
+        <label for="venoboxTitleattr" class="col-lg-2 control-label">
+            <?=$this->getTrans('venoboxTitleattr') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="venoboxTitleattr-on" name="venoboxTitleattr" value="title" <?php if ($this->get('venoboxTitleattr') == 'title') { echo 'checked="checked"'; } ?> />
+                <label for="venoboxTitleattr-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+
+                <input type="radio" class="flipswitch-input" id="venoboxTitleattr-off" name="venoboxTitleattr" value="" <?php if ($this->get('venoboxTitleattr') != 'title') { echo 'checked="checked"'; } ?> />
+                <label for="venoboxTitleattr-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+
     <?=$this->getSaveBar() ?>
 </form>
-
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
 <script>
     $('#pictureOfXSource').chosen();
 </script>

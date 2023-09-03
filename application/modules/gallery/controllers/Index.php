@@ -29,6 +29,17 @@ class Index extends Frontend
         $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent(0));
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
+
+        // Venobox instance options
+        $venoboxOptions = [
+            'numeration' => $this->getConfig()->get('venoboxNumeration'),
+            'infinigall' => $this->getConfig()->get('venoboxInfinigall'),
+            'bgcolor' => $this->getConfig()->get('venoboxBgcolor'),
+            'overlayColor' => $this->getConfig()->get('venoboxOverlayColor'),
+            'border' => $this->getConfig()->get('venoboxBorder'),
+            'titleattr' => $this->getConfig()->get('venoboxTitleattr'),
+        ];
+        $this->getView()->set('venoboxOptions', $venoboxOptions);
     }
 
     public function showAction() 

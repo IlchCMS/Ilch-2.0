@@ -60,4 +60,10 @@ return [
     'noMediaAlt' => 'Kein Vorschaubild verfügbar.',
     'titleCannotChangeTypeOnEdit' => 'Nachträgliches Ändern des Typs ist nicht möglich.',
     'titleCannotChangeCategoryOnEdit' => 'Sie können links per Ziehen und Ablegen die Zuordnung zu einer Kategorie ändern.',
+    'venoboxOverlayColor' => 'Hintergrundfarbe?',
+    'venoboxInfinigall' => 'Unendliche Gallery?',
+    'venoboxNumeration' => 'Nummerierung der Bilder?',
+    'venoboxBgcolor' => 'Farbe vom Bilderrahmen?',
+    'venoboxBorder' => 'Stärke vom Bilderrahmen?',
+    'venoboxTitleattr' => 'Bildtitel anzeigen?'
 ];
