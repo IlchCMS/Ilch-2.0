@@ -1,11 +1,11 @@
 <h1><?=$this->getTrans('settings') ?>
-    <a class="badge" data-toggle="modal" data-target="#infoModal">
+    <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa fa-info" ></i>
     </a>
 </h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="allowedImagesInput" class="col-lg-2 control-label">
             <?=$this->getTrans('allowedImages') ?>:
         </label>
@@ -15,7 +15,7 @@
                       name="allowedImages"><?=$this->escape($this->get('media_ext_img')) ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="allowedVideosInput" class="col-lg-2 control-label">
             <?=$this->getTrans('allowedVideos') ?>:
         </label>
@@ -25,7 +25,7 @@
                       name="allowedVideos"><?=$this->escape($this->get('media_ext_video')) ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="allowedFilesInput" class="col-lg-2 control-label">
             <?=$this->getTrans('allowedFiles') ?>:
         </label>
@@ -35,7 +35,7 @@
                       name="allowedFiles"><?=$this->escape($this->get('media_ext_file')) ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="mediaPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('mediaPerPage') ?>:
         </label>
@@ -48,7 +48,7 @@
                    value="<?=$this->escape($this->get('mediaPerPage')) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('directoriesAsCategories') ?>
         </div>
