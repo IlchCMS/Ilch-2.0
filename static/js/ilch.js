@@ -31,6 +31,7 @@ $(document).ready(function(){
                         '|',
                         'link',
                         'specialCharacters',
+                        'emoji',
                         '|',
                         'imageUpload',
                         'blockQuote',
@@ -95,6 +96,7 @@ $(document).ready(function(){
                         '|',
                         'link',
                         'specialCharacters',
+                        'emoji',
                         '|',
                         'imageUpload',
                         'blockQuote',
@@ -137,6 +139,9 @@ $(document).ready(function(){
             .create( document.querySelector( '.ckeditor' ), config )
             .then( ckeditor => {
                 window.editor = ckeditor;
+            } )
+            .catch( err => {
+                console.error( err.stack );
             } );
     });
 
