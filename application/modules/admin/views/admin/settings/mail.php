@@ -5,7 +5,7 @@
         <p><?=$this->getTrans('standardMail') . ': ' . $this->get('standardMail') ?></p>
         <p id="smtpModeDescription"><?=($this->get('smtp_mode') === '1') ? $this->getTrans('smtpModeEnabledDescription') : $this->getTrans('smtpModeDisabledDescription') ?></p>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="navbarFixed" class="col-lg-2 control-label">
             <?=$this->getTrans('smtpMode') ?>:
         </label>
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div id="smtpSettings" class="smtpSettings <?=($this->get('smtp_mode') !== '1') ? 'hidden' : '' ?>">
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="smtp_server" class="col-lg-2 control-label">
                 <?=$this->getTrans('smtp_server') ?>:
             </label>
@@ -32,7 +32,7 @@
                        value="<?=$this->escape($this->get('smtp_server')) ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="smtp_port" class="col-lg-2 control-label">
                 <?=$this->getTrans('smtp_port') ?>:
             </label>
@@ -44,7 +44,7 @@
                        value="<?=$this->escape($this->get('smtp_port')) ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="smtp_secure" class="col-lg-2 control-label">
                 <?=$this->getTrans('smtp_secure') ?>:
             </label>
@@ -66,7 +66,7 @@
                 </select>
             </div>
         </div>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="smtp_user" class="col-lg-2 control-label">
                 <?=$this->getTrans('smtp_user') ?>:
             </label>
@@ -78,7 +78,7 @@
                        value="<?=$this->escape($this->get('smtp_user')) ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="smtp_pass" class="col-lg-2 control-label">
                 <?=$this->getTrans('smtp_pass') ?>:
             </label>
@@ -92,7 +92,7 @@
         </div>
     </div>
     <legend><?=$this->getTrans('emailBlacklist') ?></legend>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="emailBlacklist" class="col-lg-2 control-label">
             <?=$this->getTrans('emailBlacklist') ?>:
         </label>

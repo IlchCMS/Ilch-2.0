@@ -1,26 +1,28 @@
 .panel-ilch {
     border-color: #C9C9C9;
+    margin-bottom: 20px;
 }
 
-.panel-ilch > .panel-heading {
+.panel-ilch > .card-heading {
     color: #000;
     border-color: #C9C9C9;
     background-color: #C9C9C9;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
 }
 
-#layouts .panel-heading a:hover {
+#layouts .card-heading a:hover {
     color: #fff;
     text-decoration: none;
 }
 
-#layouts .panel-body img {
+#layouts .card-body img {
     height: 150px;
     margin-left: auto;
     margin-right: auto;
     display: block;
 }
 
-#layouts .panel-body span {
+#layouts .card-body span {
     cursor: pointer;
 }
 
@@ -65,13 +67,13 @@
 
 /* Mark official modules/layouts  */
 #modules table tbody tr td:last-child,
-#layouts .panel .panel-body {
+#layouts .card .card-body {
     position: relative;
     overflow: hidden;
 }
 
 #modules table tbody tr td:last-child span.ilch-official,
-#layouts .panel .panel-body span.ilch-official {
+#layouts .card .card-body span.ilch-official {
     position: absolute;
     top: 7px;
     right: -47px;

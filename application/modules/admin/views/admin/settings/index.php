@@ -7,7 +7,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="startPage" class="col-lg-2 control-label">
             <?=$this->getTrans('startPage') ?>:
         </label>
@@ -61,7 +61,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('multilingualAcp') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('multilingualAcp') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('multilingualAcp') ?>:
         </div>
@@ -75,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div id="contentLanguage" class="form-group <?php if ($this->get('multilingualAcp') != '1') { echo 'hidden'; } ?>">
+    <div id="contentLanguage" class="row form-group ilch-margin-b <?php if ($this->get('multilingualAcp') != '1') { echo 'hidden'; } ?>">
         <label for="languageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('contentLanguage') ?>:
         </label>
@@ -92,7 +92,7 @@
             </select>
         </div>
     </div>
-    <div id="contentLanguage" class="form-group">
+    <div id="contentLanguage" class="row form-group ilch-margin-b">
         <label for="localeInput" class="col-lg-2 control-label">
             <?=$this->getTrans('locale') ?>:
         </label>
@@ -109,7 +109,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="timezone" class="col-lg-2 control-label">
             <?=$this->getTrans('timezone') ?>:
         </label>
@@ -127,7 +127,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('standardMail') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('standardMail') ? 'has-error' : '' ?>">
         <label for="standardMailInput" class="col-lg-2 control-label">
             <?=$this->getTrans('standardMail') ?>:
         </label>
@@ -140,7 +140,7 @@
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('defaultPaginationObjects') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('defaultPaginationObjects') ? 'has-error' : '' ?>">
         <label for="defaultPaginationObjectsInput" class="col-lg-2 control-label">
             <?=$this->getTrans('defaultPaginationObjects') ?>:
         </label>
@@ -155,7 +155,7 @@
     </div>
 
     <h1><?=$this->getTrans('captcha') ?></h1>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div for="captcha" class="col-lg-2 control-label">
             <?=$this->getTrans('captcha') ?>:
         </div>
@@ -173,7 +173,7 @@
         </div>
     </div>
     <div id="captcha_apikey" class="">
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="captcha_apikey" class="col-lg-2 control-label">
                     <?=$this->getTrans('captcha_apikey') ?>:
             </label>
@@ -187,7 +187,7 @@
         </div>
     </div>
     <div id="captcha_seckey" class="">
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="captcha_seckey" class="col-lg-2 control-label">
                     <?=$this->getTrans('captcha_seckey') ?>:
             </label>
@@ -200,7 +200,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="hideCaptchaFor" class="col-lg-2 control-label">
             <?=$this->getTrans('hideCaptchaFor') ?>:
         </label>
@@ -233,7 +233,7 @@
 
     <h1><?=$this->getTrans('htmlPurifier') ?></h1>
     <p><?=$this->getTrans('htmlPurifierDescription') ?></p>
-    <div id="htmlPurifier" class="form-group">
+    <div id="htmlPurifier" class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('htmlPurifier') ?>:
         </div>
@@ -249,7 +249,7 @@
     </div>
 
     <h1><?=$this->getTrans('backendFunctions') ?></h1>
-    <div id="hmenuFixed" class="form-group">
+    <div id="hmenuFixed" class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('hmenuFixed') ?>:
         </div>

@@ -8,26 +8,28 @@ $errors = $this->get('errors');
 /** @var array $usages */
 $usages = $this->get('usages');
 ?>
-<div class="form-group <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
-    <label for="usage" class="control-label col-lg-3">
+<div class="mb-3 <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
+    <label for="usage" class="form-label">
         <?=$this->getTrans('usage') ?>:
     </label>
-    <div class="col-lg-9 input-group">
-        <select class="form-control" id="usage" name="usage">
+    <div class="input-group mb-9">
+        <select class="form-select" id="usage" name="usage">
             <?php foreach ($usages as $value) : ?>
                 <option <?=$this->originalInput('usage', $this->get('usage')) == $value ? 'selected="selected"' : '' ?> value="<?=$value ?>"><?=$this->getTrans($value) ?></option>
             <?php endforeach; ?>
         </select>
-        <div class="input-group-addon custom" data-toggle="collapse" data-target="#modules" title="<?=$this->getTrans('custom') ?>"><i class="fa-solid fa-circle-info"></i> <?=$this->getTrans('custom') ?></div>
+        <div class="input-group-text" data-bs-toggle="collapse" data-bs-target="#modules" title="<?=$this->getTrans('custom') ?>">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-circle-info"></i> &nbsp; <?=$this->getTrans('custom') ?></button>
+        </div>
     </div>
 </div>
 
-<div class="form-group collapse" id="modules">
-    <div id="modulesContent" class="col-lg-offset-1 col-lg-11"></div>
+<div class="mb-3 collapse" id="modules">
+    <div id="modulesContent" class="col-lg-offset-1 col-lg-12"></div>
 </div>
 
-<div class="form-group <?=$this->validation()->hasError('adminName') ? 'has-error' : '' ?>">
-    <label for="adminName" class="control-label col-lg-3">
+<div class="mb-3 <?=$this->validation()->hasError('adminName') ? 'has-error' : '' ?>">
+    <label for="adminName" class="form-label">
         <?=$this->getTrans('adminName') ?>:
     </label>
     <div class="col-lg-9">
@@ -39,8 +41,8 @@ $usages = $this->get('usages');
                autocomplete="username" />
     </div>
 </div>
-<div class="form-group <?=$this->validation()->hasError('adminPassword') ? 'has-error' : '' ?>">
-    <label for="adminPassword" class="control-label col-lg-3">
+<div class="mb-3 <?=$this->validation()->hasError('adminPassword') ? 'has-error' : '' ?>">
+    <label for="adminPassword" class="form-label">
         <?=$this->getTrans('adminPassword') ?>:
     </label>
     <div class="col-lg-9">
@@ -52,8 +54,8 @@ $usages = $this->get('usages');
                autocomplete="new-password" />
     </div>
 </div>
-<div class="form-group <?=$this->validation()->hasError('adminPassword2') ? 'has-error' : '' ?>">
-    <label for="adminPassword2" class="control-label col-lg-3">
+<div class="mb-3 <?=$this->validation()->hasError('adminPassword2') ? 'has-error' : '' ?>">
+    <label for="adminPassword2" class="form-label">
         <?=$this->getTrans('adminPassword2') ?>:
     </label>
     <div class="col-lg-9">
@@ -65,8 +67,8 @@ $usages = $this->get('usages');
                autocomplete="new-password" />
     </div>
 </div>
-<div class="form-group <?=$this->validation()->hasError('adminEmail') ? 'has-error' : '' ?>">
-    <label for="adminEmail" class="control-label col-lg-3">
+<div class="mb-3 <?=$this->validation()->hasError('adminEmail') ? 'has-error' : '' ?>">
+    <label for="adminEmail" class="form-label">
         <?=$this->getTrans('adminEmail') ?>:
     </label>
     <div class="col-lg-9">

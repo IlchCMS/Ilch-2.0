@@ -10,7 +10,7 @@ $privacy = $this->get('privacy');
 </h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('show') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('show') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('show') ?>
         </div>
@@ -24,7 +24,7 @@ $privacy = $this->get('privacy');
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>
         </label>
@@ -36,7 +36,7 @@ $privacy = $this->get('privacy');
                    value="<?=$this->escape($this->originalInput('title', $privacy->getTitle())) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>
         </label>
@@ -48,7 +48,7 @@ $privacy = $this->get('privacy');
                       rows="5"><?=$this->originalInput('text', $privacy->getText()) ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="urltitle" class="col-lg-2 control-label">
             <?=$this->getTrans('urlTitle') ?>
         </label>
@@ -60,7 +60,7 @@ $privacy = $this->get('privacy');
                    value="<?=$this->escape($this->originalInput('urltitle', $privacy->getUrlTitle())) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('url') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('url') ? 'has-error' : '' ?>">
         <label for="url" class="col-lg-2 control-label">
             <?=$this->getTrans('url') ?>
         </label>
