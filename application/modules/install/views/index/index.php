@@ -8,8 +8,8 @@ $languages = $this->get('languages');
 /** @var array $timezones */
 $timezones = $this->get('timezones') ?? [];
 ?>
-<div class="form-group">
-    <label for="languageInput" class="col-lg-3 control-label">
+<div class="mb-3">
+    <label for="languageInput" class="col-lg-3 form-label">
         <?=$this->getTrans('chooseLanguage') ?>:
     </label>
     <div class="col-lg-4">
@@ -20,8 +20,8 @@ $timezones = $this->get('timezones') ?? [];
         </select>
     </div>
 </div>
-<div class="form-group <?=$this->validation()->hasError('timezone') ? 'has-error' : '' ?>">
-    <label for="timezone" class="col-lg-3 control-label">
+<div class="mb-3 <?=$this->validation()->hasError('timezone') ? 'has-error' : '' ?>">
+    <label for="timezone" class="col-lg-3 form-label">
         <?=$this->getTrans('timezone') ?>:
     </label>
     <div class="col-lg-4">

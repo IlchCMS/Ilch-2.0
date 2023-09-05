@@ -8,7 +8,7 @@ if ($this->get('article')) {
 <h1><?=($this->get('article')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('template') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('template') ? 'has-error' : '' ?>">
         <label for="template" class="col-lg-2 control-label">
             <?=$this->getTrans('template') ?>:
         </label>
@@ -27,7 +27,7 @@ if ($this->get('article')) {
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
         <label for="teaser" class="col-lg-2 control-label">
             <?=$this->getTrans('teaser') ?>:
         </label>
@@ -39,7 +39,7 @@ if ($this->get('article')) {
                    value="<?=($this->get('article')) ? $this->escape($this->get('article')->getTeaser()) : $this->originalInput('teaser') ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -51,7 +51,7 @@ if ($this->get('article')) {
                    value="<?=($this->get('article')) ? $this->escape($this->get('article')->getTitle()) : $this->originalInput('title') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="date_created" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
@@ -67,7 +67,7 @@ if ($this->get('article')) {
             </span>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">
         <label for="cats" class="col-lg-2 control-label">
             <?=$this->getTrans('cats') ?>:
         </label>
@@ -95,8 +95,8 @@ if ($this->get('article')) {
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('content') ? 'has-error' : '' ?>">
-        <div class="col-lg-offset-2 col-lg-8">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('content') ? 'has-error' : '' ?>">
+        <div class="offset-lg-2 col-lg-8">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="content"
@@ -104,7 +104,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="language" class="col-lg-2 control-label">
                 <?=$this->getTrans('language') ?>:
             </label>
@@ -129,7 +129,7 @@ if ($this->get('article')) {
         </div>
     <?php endif; ?>
     <h1><?=$this->getTrans('options') ?></h1>
-    <div class="form-group <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
         <label for="access" class="col-lg-2 control-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
@@ -141,7 +141,7 @@ if ($this->get('article')) {
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="topArticle" class="col-lg-2 control-label">
             <?=$this->getTrans('topArticle') ?>:
         </label>
@@ -153,7 +153,7 @@ if ($this->get('article')) {
                    <?=($this->get('article') && $this->get('article')->getTopArticle()) ? 'checked="checked"' : '' ?> />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="commentsDisabled" class="col-lg-2 control-label">
             <?=$this->getTrans('commentsDisabled') ?>:
         </label>
@@ -165,7 +165,7 @@ if ($this->get('article')) {
                 <?=(($this->get('article') && $this->get('article')->getCommentsDisabled()) || (!$this->get('article') && $this->get('disableComments'))) ? 'checked="checked"' : '' ?> />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="saveAsTemplate" class="col-lg-2 control-label">
             <?=$this->getTrans('saveAsTemplate') ?>:
         </label>
@@ -177,7 +177,7 @@ if ($this->get('article')) {
             />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
             <?=$this->getTrans('image') ?>:
         </label>
@@ -188,11 +188,11 @@ if ($this->get('article')) {
                        id="selectedImage"
                        name="image"
                        value="<?=$this->get('article') ? $this->escape($this->get('article')->getImage()) : $this->originalInput('image') ?>" />
-                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a></span>
+                <span class="input-group-text"><a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="imageSource" class="col-lg-2 control-label">
             <?=$this->getTrans('imageSource') ?>:
         </label>
@@ -204,7 +204,7 @@ if ($this->get('article')) {
                    value="<?=($this->get('article')) ? $this->escape($this->get('article')->getImageSource()) : $this->originalInput('imageSource') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="preview" class="col-lg-2 control-label">
             <?=$this->getTrans('preview') ?>:
         </label>
@@ -213,27 +213,27 @@ if ($this->get('article')) {
         </div>
     </div>
     <h1><?=$this->getTrans('seo') ?></h1>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="description" class="col-lg-2 control-label">
             <?=$this->getTrans('seoDescription') ?>:
         </label>
         <div class="col-lg-4">
-            <textarea class="form-control" 
+            <textarea class="form-control"
                       id="description"
                       name="description"><?=($this->get('article')) ? $this->escape($this->get('article')->getDescription()) : $this->originalInput('description') ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="keywords" class="col-lg-2 control-label">
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
         <div class="col-lg-4">
-            <textarea class="form-control" 
-                      id="keywords" 
+            <textarea class="form-control"
+                      id="keywords"
                       name="keywords"><?=($this->get('article')) ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords')?></textarea>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
         <label for="permaLink" class="col-lg-2 control-label">
             <?=$this->getTrans('permaLink') ?>:
         </label>

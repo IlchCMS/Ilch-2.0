@@ -111,8 +111,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                     </span></a>
                             <?php else: ?>
                                 <span class="btn btn-default"
-                                      data-toggle="modal"
-                                      data-target="#infoModal<?=$module->getKey() ?>"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#infoModal<?=$module->getKey() ?>"
                                       title="<?=$this->getTrans('info') ?>">
                                     <i class="fa-solid fa-info text-info"></i>
                                 </span>
@@ -178,8 +178,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <?php } ?>
                             <?php if (!empty(checkOthersDependencies([$module->getKey() => $module->getVersion()], $dependencies))): ?>
                                 <button class="btn disabled"
-                                        data-toggle="modal"
-                                        data-target="#dependencyInfoModal<?=$module->getKey() ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#dependencyInfoModal<?=$module->getKey() ?>"
                                         title="<?=$this->getTrans('dependencyError') ?>">
                                     <i class="fa-regular fa-trash-can text-warning"></i>
                                 </button>

@@ -18,11 +18,11 @@ if (empty($layoutsOnUpdateServer)) {
 }
 ?>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">'.$this->getTrans('lastUpdateOn').' '.$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true).'</span>' : $this->getTrans('lastUpdateOn').': '.$this->getTrans('lastUpdateUnknown') ?></p>
-
+<div class="row">
 <?php foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer): ?>
-    <div id="layouts" class="col-lg-3 col-sm-6">
-        <div class="panel panel-ilch">
-            <div class="panel-heading">
+    <div id="layouts" class="col-xl-3 col-md-6">
+        <div class="card panel-ilch ilch-margin-b">
+            <div class="card-heading">
                 <div class="clearfix">
                     <div class="pull-left">
                         <b><?=$this->escape($layoutOnUpdateServer->name) ?></b>
@@ -36,13 +36,13 @@ if (empty($layoutsOnUpdateServer)) {
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                     <img src="<?=$this->get('updateserver').'layouts/images/'.$layoutOnUpdateServer->thumbs[0]->img ?>" alt="<?=$this->escape($layoutOnUpdateServer->name) ?>" />
                 </a>
                 <?=(!empty($layoutOnUpdateServer->official) && $layoutOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
             </div>
-            <div class="panel-footer">
+            <div class="card-footer">
                 <div class="clearfix">
                     <div class="pull-left">
                         <?php
@@ -97,3 +97,4 @@ if (empty($layoutsOnUpdateServer)) {
         </div>
     </div>
 <?php endforeach; ?>
+</div>

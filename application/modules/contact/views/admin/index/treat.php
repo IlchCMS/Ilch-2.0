@@ -9,7 +9,7 @@
 </h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -21,7 +21,7 @@
                    value="<?=($this->get('receiver') != '') ? $this->escape($this->get('receiver')->getName()) : $this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
         <label for="email" class="col-lg-2 control-label">
                 <?=$this->getTrans('email') ?>:
         </label>

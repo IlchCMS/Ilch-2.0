@@ -99,9 +99,9 @@ foreach ($modules as $module): ?>
                 </div>
             <?php endif; ?>
 
-            <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                <li class="active"><a href="#info" data-toggle="tab"><?=$this->getTrans('info') ?></a></li>
-                <li><a href="#changelog" data-toggle="tab"><?=$this->getTrans('changelog') ?></a></li>
+            <ul id="tabs" class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation"><a class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true"><?=$this->getTrans('info') ?></a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" id="changelog-tab" data-bs-toggle="tab" data-bs-target="#changelog" type="button" role="tab" aria-controls="changelog" aria-selected="false"><?=$this->getTrans('changelog') ?></a></li>
             </ul>
             <br />
 
@@ -252,4 +252,3 @@ $(document).ready(function(){
     $('#module-search-carousel').carousel();
 });
 </script>
-
