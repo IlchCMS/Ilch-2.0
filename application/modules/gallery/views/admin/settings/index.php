@@ -106,9 +106,9 @@
 
     </div>
 
-    <div class="form-group <?=$this->validation()->hasError('venoboxInfinigall') ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('venoboxInfiniteGallery') ? 'has-error' : '' ?>">
         <label for="venoboxInfinigall" class="col-lg-2 control-label">
-            <?=$this->getTrans('venoboxInfinigall') ?>:
+            <?=$this->getTrans('venoboxInfiniteGallery') ?>:
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
@@ -149,7 +149,7 @@
                    name="venoboxBorder"
                    pattern="[0-9]+px"
                    value="<?=($this->get('venoboxBorder')) ? $this->escape($this->get('venoboxBorder')) : $this->originalInput('venoboxBorder') ?>" />
-            <div class="form-text"><?=$this->getTrans('for example: 15px') ?></div>
+            <div class="form-text"><?=$this->getTrans('venoboxExampleText') ?></div>
         </div>
 
     </div>

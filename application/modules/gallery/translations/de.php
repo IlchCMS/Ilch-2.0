@@ -61,11 +61,11 @@ return [
     'titleCannotChangeTypeOnEdit' => 'Nachträgliches Ändern des Typs ist nicht möglich.',
     'titleCannotChangeCategoryOnEdit' => 'Sie können links per Ziehen und Ablegen die Zuordnung zu einer Kategorie ändern.',
     'venoboxOverlayColor' => 'Hintergrundfarbe?',
-    'venoboxInfinigall' => 'Unendliche Gallery?',
+    'venoboxInfiniteGallery' => 'Unendliche Gallery?',
     'venoboxNumeration' => 'Nummerierung der Bilder?',
     'venoboxBgcolor' => 'Farbe vom Bilderrahmen?',
     'venoboxBorder' => 'Stärke vom Bilderrahmen?',
     'venoboxTitleattr' => 'Bildtitel anzeigen?',
     'venoboxSetting' => 'Venobox Einstellungen',
-    'for example: 15px' => 'zum Beispiel: 15px',
+    'venoboxExampleText' => 'zum Beispiel: 15px',
 ];
