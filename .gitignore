@@ -13,3 +13,4 @@ robots.txt
 /cache/
 /vendor/
 tests/.phpunit.result.cache
+

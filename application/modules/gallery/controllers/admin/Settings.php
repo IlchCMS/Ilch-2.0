@@ -48,7 +48,9 @@ class Settings extends Admin
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'picturesPerPage' => 'numeric|min:1',
                 'pictureOfXInterval' => 'numeric|min:0|max:4',
-                'pictureOfXRandom' => 'numeric|min:0|max:1'
+                'pictureOfXRandom' => 'numeric|min:0|max:1',
+                'venoboxNumeration' => 'numeric|min:0|max:1',
+                'venoboxInfiniteGallery' => 'numeric|min:0|max:1'
             ]);
 
             if ($validation->isValid()) {
@@ -57,6 +59,14 @@ class Settings extends Admin
                 $this->getConfig()->set('gallery_pictureOfXSource', (empty($pictureOfXSource)) ? '' : $pictureOfXSource);
                 $this->getConfig()->set('gallery_pictureOfXInterval', $this->getRequest()->getPost('pictureOfXInterval'));
                 $this->getConfig()->set('gallery_pictureOfXRandom', $this->getRequest()->getPost('pictureOfXRandom'));
+                // Settings Venobox
+                $this->getConfig()->set('gallery_venoboxOverlayColor', $this->getRequest()->getPost('venoboxOverlayColor'));
+                $this->getConfig()->set('gallery_venoboxNumeration', $this->getRequest()->getPost('venoboxNumeration'));
+                $this->getConfig()->set('gallery_venoboxInfiniteGallery', $this->getRequest()->getPost('venoboxInfiniteGallery'));
+                $this->getConfig()->set('gallery_venoboxBgcolor', $this->getRequest()->getPost('venoboxBgcolor'));
+                $this->getConfig()->set('gallery_venoboxBorder', $this->getRequest()->getPost('venoboxBorder'));
+                $this->getConfig()->set('gallery_venoboxTitleattr', $this->getRequest()->getPost('venoboxTitleattr'));
+
                 $this->addMessage('saveSuccess');
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
@@ -72,5 +82,11 @@ class Settings extends Admin
         $this->getView()->set('pictureOfXInterval', $this->getConfig()->get('gallery_pictureOfXInterval'));
         $this->getView()->set('pictureOfXRandom', $this->getConfig()->get('gallery_pictureOfXRandom'));
         $this->getView()->set('galleries', $galleryMapper->getGalleryCatItem(1));
+        $this->getView()->set('venoboxOverlayColor', $this->getConfig()->get('gallery_venoboxOverlayColor') );
+        $this->getView()->set('venoboxNumeration', $this->getConfig()->get('gallery_venoboxNumeration') );
+        $this->getView()->set('venoboxInfiniteGallery', $this->getConfig()->get('gallery_venoboxInfiniteGallery') );
+        $this->getView()->set('venoboxBgcolor', $this->getConfig()->get('gallery_venoboxBgcolor') );
+        $this->getView()->set('venoboxBorder', $this->getConfig()->get('gallery_venoboxBorder') );
+        $this->getView()->set('venoboxTitleattr', $this->getConfig()->get('gallery_venoboxTitleattr') );
     }
 }

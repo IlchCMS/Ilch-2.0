@@ -64,6 +64,16 @@ class Index extends Frontend
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
                 ->add($gallery->getTitle(), ['action' => 'show', 'id' => $id]);
 
+        // Venobox instance options
+        $venoboxOptions = [
+            'numeration' => $this->getConfig()->get('venoboxNumeration'),
+            'infinigall' => $this->getConfig()->get('venoboxInfiniteGallery'),
+            'bgcolor' => $this->getConfig()->get('venoboxBgcolor'),
+            'overlayColor' => $this->getConfig()->get('venoboxOverlayColor'),
+            'border' => $this->getConfig()->get('venoboxBorder'),
+            'titleattr' => $this->getConfig()->get('venoboxTitleattr'),
+        ];
+        $this->getView()->set('venoboxOptions', $venoboxOptions);
         $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
     }
@@ -126,7 +136,6 @@ class Index extends Frontend
                 $this->redirect(['action' => 'showimage', 'id' => $id.'#comment_'.$commentId]);
             }
         }
-
         $this->getView()->set('image', $imageMapper->getImageById($id));
         $this->getView()->set('commentsKey', 'gallery/index/showimage/id/'.$id);
     }

@@ -54,7 +54,7 @@
                     </div>
                 </a>
             <?php else: ?>
-                <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" title="<?= $image->getImageTitle() ?> ">
+                <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" data-title="<?= $image->getImageTitle() ?> ">
                     <div class="panel-image thumbnail">
                         <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" class="panel-image-preview" alt="<?=$this->getTrans('noMediaAlt') ?>" />
                     </div>
@@ -75,11 +75,19 @@
 
 <script src="<?=$this->getModuleUrl('static/venobox/venobox.min.js') ?>"></script>
 <script>
-    new VenoBox({
-        selector: '.venobox',
-        numeration: true,
-        share: true,
-        navTouch: true,
-        spinner: 'pulse',
-    })
+    const venoboxOptions = <?php echo json_encode($this->get('venoboxOptions')); ?>;
+
+    const options = {
+        selector: ".venobox",
+        titleStyle: 'bar',
+    <?php foreach ($this->get('venoboxOptions') as $param => $value): ?>
+    <?php if ($value === "0" || $value === "1"): ?>
+    <?php echo $param; ?>: <?php echo $value === "1" ? 'true' : 'false'; ?>,
+    <?php else: ?>
+    <?php echo $param; ?>: "<?php echo $value; ?>",
+    <?php endif; ?>
+    <?php endforeach; ?>
+    };
+
+    new VenoBox(options);
 </script>
