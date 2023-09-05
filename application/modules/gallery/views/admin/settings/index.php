@@ -107,16 +107,16 @@
     </div>
 
     <div class="form-group <?=$this->validation()->hasError('venoboxInfiniteGallery') ? 'has-error' : '' ?>">
-        <label for="venoboxInfinigall" class="col-lg-2 control-label">
+        <label for="venoboxInfiniteGallery" class="col-lg-2 control-label">
             <?=$this->getTrans('venoboxInfiniteGallery') ?>:
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="venoboxInfinigall-on" name="venoboxInfinigall" value="1" <?= $this->get('venoboxInfinigall') == '1' ? 'checked="checked"' : '' ?> />
-                <label for="venoboxInfinigall-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="venoboxInfiniteGallery-on" name="venoboxInfiniteGallery" value="1" <?= $this->get('venoboxInfiniteGallery') == '1' ? 'checked="checked"' : '' ?> />
+                <label for="venoboxInfiniteGallery-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
 
-                <input type="radio" class="flipswitch-input" id="venoboxInfinigall-off" name="venoboxInfinigall" value="0" <?= $this->get('venoboxInfinigall') != '1' ? 'checked="checked"' : '' ?> />
-                <label for="venoboxInfinigall-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <input type="radio" class="flipswitch-input" id="venoboxInfiniteGallery-off" name="venoboxInfiniteGallery" value="0" <?= $this->get('venoboxInfiniteGallery') != '1' ? 'checked="checked"' : '' ?> />
+                <label for="venoboxInfiniteGallery-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>

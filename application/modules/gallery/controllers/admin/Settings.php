@@ -50,7 +50,7 @@ class Settings extends Admin
                 'pictureOfXInterval' => 'numeric|min:0|max:4',
                 'pictureOfXRandom' => 'numeric|min:0|max:1',
                 'venoboxNumeration' => 'numeric|min:0|max:1',
-                'venoboxInfinigall' => 'numeric|min:0|max:1'
+                'venoboxInfiniteGallery' => 'numeric|min:0|max:1'
             ]);
 
             if ($validation->isValid()) {
@@ -62,7 +62,7 @@ class Settings extends Admin
                 // Settings Venobox
                 $this->getConfig()->set('venoboxOverlayColor', $this->getRequest()->getPost('venoboxOverlayColor'));
                 $this->getConfig()->set('venoboxNumeration', $this->getRequest()->getPost('venoboxNumeration'));
-                $this->getConfig()->set('venoboxInfinigall', $this->getRequest()->getPost('venoboxInfinigall'));
+                $this->getConfig()->set('venoboxInfiniteGallery', $this->getRequest()->getPost('venoboxInfiniteGallery'));
                 $this->getConfig()->set('venoboxBgcolor', $this->getRequest()->getPost('venoboxBgcolor'));
                 $this->getConfig()->set('venoboxBorder', $this->getRequest()->getPost('venoboxBorder'));
                 $this->getConfig()->set('venoboxTitleattr', $this->getRequest()->getPost('venoboxTitleattr'));
@@ -78,13 +78,13 @@ class Settings extends Admin
         }
 
         $this->getView()->set('picturesPerPage', $this->getConfig()->get('gallery_picturesPerPage'));
-        $this->getView()->set('pictureOfXSource', explode(',', $this->getConfig()->get('gallery_pictureOfXSource')));
+        $this->getView()->set('pictureOfXSource', explode(',', $this->getConfig()->get('gallery_pictureOfXSource') ?? ''));
         $this->getView()->set('pictureOfXInterval', $this->getConfig()->get('gallery_pictureOfXInterval'));
         $this->getView()->set('pictureOfXRandom', $this->getConfig()->get('gallery_pictureOfXRandom'));
         $this->getView()->set('galleries', $galleryMapper->getGalleryCatItem(1));
         $this->getView()->set('venoboxOverlayColor', $this->getConfig()->get('venoboxOverlayColor') );
         $this->getView()->set('venoboxNumeration', $this->getConfig()->get('venoboxNumeration') );
-        $this->getView()->set('venoboxInfinigall', $this->getConfig()->get('venoboxInfinigall') );
+        $this->getView()->set('venoboxInfiniteGallery', $this->getConfig()->get('venoboxInfiniteGallery') );
         $this->getView()->set('venoboxBgcolor', $this->getConfig()->get('venoboxBgcolor') );
         $this->getView()->set('venoboxBorder', $this->getConfig()->get('venoboxBorder') );
         $this->getView()->set('venoboxTitleattr', $this->getConfig()->get('venoboxTitleattr') );

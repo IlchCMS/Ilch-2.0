@@ -67,7 +67,7 @@ class Index extends Frontend
         // Venobox instance options
         $venoboxOptions = [
             'numeration' => $this->getConfig()->get('venoboxNumeration'),
-            'infinigall' => $this->getConfig()->get('venoboxInfinigall'),
+            'infinigall' => $this->getConfig()->get('venoboxInfiniteGallery'),
             'bgcolor' => $this->getConfig()->get('venoboxBgcolor'),
             'overlayColor' => $this->getConfig()->get('venoboxOverlayColor'),
             'border' => $this->getConfig()->get('venoboxBorder'),
