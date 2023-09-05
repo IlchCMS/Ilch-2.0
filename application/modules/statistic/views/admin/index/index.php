@@ -9,7 +9,7 @@ $statistic_config = $this->get('statistic_config');
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <?php foreach ($statistic_config->configNames as $names) : ?>
-    <div class="form-group <?=$this->validation()->hasError($names) ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError($names) ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans($names) ?>:
         </div>

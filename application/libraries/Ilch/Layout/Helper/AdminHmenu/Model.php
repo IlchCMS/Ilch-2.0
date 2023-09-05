@@ -51,17 +51,17 @@ class Model
     public function __toString()
     {
         if (empty($this->data)) {
-            return '<ol class="breadcrumb">&raquo; <li><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li></ol>';
+            return '<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; <li class="breadcrumb-item active"><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li></ol></div>';
         }
-        $html = '<ol class="breadcrumb">&raquo; <li><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li>';
+        $html = '<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; <li class="breadcrumb-item active"><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li>';
         foreach ($this->data as $key => $value) {
             if (empty($value)) {
                 $html .= $this->layout->escape($key);
             } else {
-                $html .= '<li><a href="' . $this->layout->getUrl($value) . '">' . $this->layout->escape($key) . '</a></li>';
+                $html .= '<li class="breadcrumb-item"><a href="' . $this->layout->getUrl($value) . '">' . $this->layout->escape($key) . '</a></li>';
             }
         }
-        $html .= '</ol>';
+        $html .= '</ol></div>';
 
         return $html;
     }

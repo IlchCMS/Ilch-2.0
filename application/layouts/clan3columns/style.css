@@ -45,16 +45,11 @@ hr {
 }
 
 .navbar-gaming .navbar-brand {
-    color: #FFF;
+    color: #575B5E;
 }
 
-.navbar-gaming .container-fluid .navbar-collapse {
-    margin-right: -30px;
-    margin-left: -30px;
-}
-
-.navbar-gaming .container-fluid .navbar-collapse .panel {
-    border: 0;
+.navbar-gaming .container-fluid .navbar-collapse .card {
+    /*! border: 0; */
 }
 
 .navbar-gaming .navbar-nav > li > a:hover, .navbar-gaming .navbar-nav > li > a:focus {
@@ -73,18 +68,8 @@ hr {
     background-color: #40434E;
 }
 
-.navbar-toggle .icon-bar {
-    background-color: #EEE;
-}
-
 header .container {
-    margin-top: 51px;
-}
-
-@media (min-width: 768px) {
-    header .container {
-        margin-top: 0;
-    }
+    margin-top: 0px;
 }
 
 header .container .gaming {
@@ -132,6 +117,30 @@ header .container .gaming .gaming-name {
     line-height: 25px;
 }
 
+/*-- begin carusel -- */
+
+header .carousel-control.left {
+    background-image: -webkit-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+    background-image: -o-linear-gradient(left,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+    background-image: -webkit-gradient(linear,left top,right top,from(rgba(0,0,0,.5)),to(rgba(0,0,0,.0001)));
+    background-image: linear-gradient(to right,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+    background-repeat: repeat-x;
+}
+
+header .carousel-control.right {
+    right: 0;
+    left: auto;
+    background-image: -webkit-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+    background-image: -o-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+    background-image: -webkit-gradient(linear,left top,right top,from(rgba(0,0,0,.0001)),to(rgba(0,0,0,.5)));
+    background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+    background-repeat: repeat-x;
+}
+
+/*-- ende carusel -- */
+
 @media (min-width: 768px) {
     header .container .gaming .gaming-name {
         top: 20px;
@@ -151,18 +160,19 @@ header .container .gaming .gaming-name {
     margin-top: 15px;
     padding-left: 0;
     padding-right: 0;
-    width: 100%;
+    max-width: 100%;
 }
 
 @media (min-width: 768px) {
     .container {
         margin-top: 0;
+        max-width: 100%;
     }
 }
 
 @media (min-width: 1200px) {
     .container {
-        width: 80%;
+        max-width: 80%;
     }
 }
 
@@ -199,7 +209,7 @@ header .container .gaming .gaming-name {
 @media (min-width: 768px) {
     .panel-gaming,
     .panel-default {
-        border-radius: 4px;
+        /*! border-radius: 4px; */
     }
 }
 
@@ -217,12 +227,22 @@ header .container .gaming .gaming-name {
     border-top-right-radius: 0 !important;
     border-top-left-radius: 0 !important;
 }
+/*-- breadcrumb -- */
+.breadcrumb {
+    background:#f5f5f5;
+    padding: 8px 15px;
+}
+/*-- card-begin --*/
 
-.panel-gaming > .panel-body li {
+.card {
+    margin-bottom:20px;
+}
+
+.panel-gaming > .card-body li {
     line-height: 35px;
     border-bottom: 1px solid #DDD;
 }
-
+/*-- card Ende --*/
 .panel-gaming > .panel-body a {
     color: #4295C9;
     text-decoration: none;

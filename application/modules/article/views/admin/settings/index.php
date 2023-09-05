@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('articlesPerPage') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('articlesPerPage') ? 'has-error' : '' ?>">
         <label for="articlesPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('articlesPerPage') ?>
         </label>
@@ -14,7 +14,7 @@
                    value="<?=($this->get('articlesPerPage') != '') ? $this->escape($this->get('articlesPerPage')) : $this->originalInput('articlesPerPage') ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('articleRating') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('articleRating') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('articleRating') ?>
         </div>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('disableComments') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('disableComments') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('disableComments') ?>
         </div>
@@ -45,7 +45,7 @@
 
     <h2><?=$this->getTrans('boxSettings') ?></h2>
     <b><?=$this->getTrans('boxArticle') ?></b>
-    <div class="form-group <?=$this->validation()->hasError('boxArticleLimit') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxArticleLimit') ? 'has-error' : '' ?>">
         <label for="boxArticleLimit" class="col-lg-2 control-label">
             <?=$this->getTrans('boxArticleLimit') ?>
         </label>
@@ -59,7 +59,7 @@
         </div>
     </div>
     <b><?=$this->getTrans('boxArchive') ?></b>
-    <div class="form-group <?=$this->validation()->hasError('boxArchiveLimit') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxArchiveLimit') ? 'has-error' : '' ?>">
         <label for="boxArchiveLimit" class="col-lg-2 control-label">
             <?=$this->getTrans('boxArchiveLimit') ?>
         </label>
@@ -73,7 +73,7 @@
         </div>
     </div>
     <b><?=$this->getTrans('boxKeywords') ?></b>
-    <div class="form-group <?=$this->validation()->hasError('boxKeywordsH2') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxKeywordsH2') ? 'has-error' : '' ?>">
         <label for="boxKeywordsH2" class="col-lg-2 control-label">
             <?=$this->getTrans('boxKeywordsH2') ?>
         </label>
@@ -87,7 +87,7 @@
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('boxKeywordsH3') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxKeywordsH3') ? 'has-error' : '' ?>">
         <label for="boxKeywordsH3" class="col-lg-2 control-label">
             <?=$this->getTrans('boxKeywordsH3') ?>
         </label>
@@ -101,7 +101,7 @@
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('boxKeywordsH4') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxKeywordsH4') ? 'has-error' : '' ?>">
         <label for="boxKeywordsH4" class="col-lg-2 control-label">
             <?=$this->getTrans('boxKeywordsH4') ?>
         </label>
@@ -115,7 +115,7 @@
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('boxKeywordsH5') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxKeywordsH5') ? 'has-error' : '' ?>">
         <label for="boxKeywordsH5" class="col-lg-2 control-label">
             <?=$this->getTrans('boxKeywordsH5') ?>
         </label>

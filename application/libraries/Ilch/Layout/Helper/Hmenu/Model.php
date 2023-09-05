@@ -57,25 +57,25 @@ class Model
         }
 
         // TODO: This generated output should be easily customizable
-        $begin = '<ol class="breadcrumb">';
+        $begin = '<div aria-label="breadcrumb"><ol class="breadcrumb">';
 
-        $html = '<li>';
+        $html = '<li class="breadcrumb-item active">';
         $html .= '<a href="' . $this->layout->getUrl() . '">Start</a>';
         $html .= '';
 
         foreach ($this->data as $key => $value) {
             if (empty($value)) {
-                $html .= '<li class="active">';
+                $html .= '<li class="breadcrumb-item">';
                 $html .= $this->layout->escape($key);
             } else {
-                $html .= '<li>';
+                $html .= '<li class="breadcrumb-item">';
                 $html .= '<a href="' . $this->layout->escape($this->layout->getUrl($value)) . '">' . $this->layout->escape($key) . '</a>';
             }
             $html .= '</li>';
         }
 
-        $end = '</ol>';
+        $end = '</ol></div>';
 
         return $begin . $html . $end;
     }
-}
+  }

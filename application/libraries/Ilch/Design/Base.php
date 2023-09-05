@@ -766,9 +766,9 @@ abstract class Base
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-hidden="true">&times;
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close">
                         </button>
                         <h4 class="modal-title" id="modalLabel">' . $name . '</h4>
                     </div>
@@ -783,12 +783,12 @@ abstract class Base
                             </button>
                             <button type="button"
                                     class="btn btn-default"
-                                    data-dismiss="modal">' . $this->getTrans('cancel') . '
+                                    data-bs-dismiss="modal">' . $this->getTrans('cancel') . '
                             </button>';
         } else {
             $html .= '<button type="button"
                                 class="btn btn-primary"
-                                data-dismiss="modal">
+                                data-bs-dismiss="modal">
                             ' . $this->getTrans('close') . '
                             </button>';
         }

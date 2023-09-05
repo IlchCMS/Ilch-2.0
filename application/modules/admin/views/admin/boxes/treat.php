@@ -7,7 +7,7 @@ $entrie = $this->get('box');
 
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('boxTitle') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxTitle') ? 'has-error' : '' ?>">
         <label for="boxTitle" class="col-lg-2 control-label">
             <?=$this->getTrans('boxTitle') ?>:
         </label>
@@ -19,7 +19,7 @@ $entrie = $this->get('box');
                    value="<?=$this->escape($this->originalInput('boxTitle', ($entrie->getId()?$entrie->getTitle():''))) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('boxContent') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxContent') ? 'has-error' : '' ?>">
         <label for="boxContent" class="col-lg-2 control-label">
             <?=$this->getTrans('boxContent') ?>:
         </label>
@@ -31,7 +31,7 @@ $entrie = $this->get('box');
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale')): ?>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="boxLanguage" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxLanguage') ?>:
             </label>
