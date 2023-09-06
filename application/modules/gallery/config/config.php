@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -45,12 +46,36 @@ class Config extends Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('gallery_picturesPerPage', 1)
+            ->set('gallery_pictureOfXSource', '')
+            ->set('gallery_pictureOfXInterval', '')
+            ->set('gallery_pictureOfXRandom', 0)
+            ->set('gallery_venoboxOverlayColor', '')
+            ->set('gallery_venoboxNumeration', 0)
+            ->set('gallery_venoboxInfiniteGallery', 0)
+            ->set('gallery_venoboxBgcolor', '')
+            ->set('gallery_venoboxBorder', 0)
+            ->set('gallery_venoboxTitleattr', '');
     }
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_gallery_imgs`');
-        $this->db()->queryMulti('DROP TABLE `[prefix]_gallery_items`');
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('gallery_picturesPerPage')
+            ->delete('gallery_pictureOfXSource')
+            ->delete('gallery_pictureOfXInterval')
+            ->delete('gallery_pictureOfXRandom')
+            ->delete('gallery_venoboxOverlayColor')
+            ->delete('gallery_venoboxNumeration')
+            ->delete('gallery_venoboxInfiniteGallery')
+            ->delete('gallery_venoboxBgcolor')
+            ->delete('gallery_venoboxBorder')
+            ->delete('gallery_venoboxTitleattr');
+
+        $this->db()->drop('gallery_imgs', true);
+        $this->db()->drop('gallery_items', true);
     }
 
     public function getInstallSql(): string
@@ -125,7 +150,7 @@ class Config extends Install
             case "1.12.0":
             case "1.13.0":
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'gallery' AND `locale` = '%s';", $value['description'], $key));
                 }
                 // no break
@@ -168,9 +193,11 @@ class Config extends Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` ADD INDEX `FK_[prefix]_gallery_imgs_[prefix]_gallery_items` (`gallery_id`) USING BTREE;');
                 $this->db()->query('ALTER TABLE `[prefix]_gallery_imgs` ADD CONSTRAINT `FK_[prefix]_gallery_imgs_[prefix]_gallery_items` FOREIGN KEY (`gallery_id`) REFERENCES `[prefix]_gallery_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                // no break
             case "1.20.0":
             case "1.20.1":
+            case "1.21.0":
+            case "1.21.1":
         }
     }
 }
-

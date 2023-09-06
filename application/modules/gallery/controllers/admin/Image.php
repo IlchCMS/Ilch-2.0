@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -40,19 +41,17 @@ class Image extends Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuGallery',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
-        
     }
 
-    public function treatImageAction() 
+    public function treatImageAction()
     {
         $imageMapper = new ImageMapper();
         $id = (int)$this->getRequest()->getParam('id');
