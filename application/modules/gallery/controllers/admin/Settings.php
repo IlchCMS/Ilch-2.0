@@ -51,7 +51,6 @@ class Settings extends Admin
                 'pictureOfXRandom' => 'numeric|min:0|max:1',
                 'venoboxNumeration' => 'numeric|min:0|max:1',
                 'venoboxInfiniteGallery' => 'numeric|min:0|max:1',
-                'venoboxBorder' => 'numeric',
             ]);
 
             if ($validation->isValid()) {

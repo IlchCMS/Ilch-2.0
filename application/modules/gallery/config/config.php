@@ -56,7 +56,7 @@ class Config extends Install
             ->set('gallery_venoboxNumeration', 0)
             ->set('gallery_venoboxInfiniteGallery', 0)
             ->set('gallery_venoboxBgcolor', '')
-            ->set('gallery_venoboxBorder', 0)
+            ->set('gallery_venoboxBorder', '0px')
             ->set('gallery_venoboxTitleattr', '');
     }
 
