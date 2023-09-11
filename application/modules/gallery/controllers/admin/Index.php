@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -31,14 +32,13 @@ class Index extends Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuGallery',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
@@ -65,7 +65,7 @@ class Index extends Admin
                 $oldItems = $galleryMapper->getGalleryItems();
 
                 // Delete no longer existing items.
-                foreach($oldItems as $oldItem) {
+                foreach ($oldItems as $oldItem) {
                     if (!key_exists($oldItem->getId(), $items)) {
                         $galleryMapper->deleteItem($oldItem);
                     }
@@ -92,8 +92,9 @@ class Index extends Admin
                         $galleryItem->setType($item['type']);
                         $galleryItem->setTitle($item['title']);
                         $galleryItem->setDesc($item['desc']);
-                        $newId = $galleryMapper->saveItem($galleryItem);
 
+
+                        $newId = $galleryMapper->saveItem($galleryItem);
                         if (isset($tmpId)) {
                             foreach ($sortArray as $id => $parentId) {
                                 if ($id == $tmpId) {
@@ -109,13 +110,8 @@ class Index extends Admin
                     }
 
                     $sort = 0;
-
                     foreach ($sortArray as $id => $parent) {
-                        $galleryItem = new GalleryItem();
-                        $galleryItem->setId($id);
-                        $galleryItem->setSort($sort);
-                        $galleryItem->setParentId($parent);
-                        $galleryMapper->saveItem($galleryItem);
+                        $galleryMapper->sort($id, $sort);
                         $sort += 10;
                     }
                 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,7 +7,6 @@
 
 namespace Modules\Gallery\Mappers;
 
-use Ilch\Database\Exception;
 use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Ilch\Pagination;
@@ -20,7 +20,6 @@ class Image extends Mapper
     /**
      * @param int $id
      * @return ImageModel|null
-     * @throws Exception
      */
     public function getImageById(int $id): ?ImageModel
     {
@@ -53,7 +52,6 @@ class Image extends Mapper
      *
      * @param int $id
      * @return ImageModel|null
-     * @throws Exception
      */
     public function getLastImageByGalleryId(int $id): ?ImageModel
     {
@@ -85,7 +83,6 @@ class Image extends Mapper
      *
      * @param int $id
      * @return int
-     * @throws Exception
      */
     public function getCountImageById(int $id): int
     {
@@ -120,9 +117,8 @@ class Image extends Mapper
      * @param int $id
      * @param Pagination|null $pagination
      * @return array
-     * @throws Exception
      */
-    public function getImageByGalleryId(int $id, Pagination $pagination = NULL): array
+    public function getImageByGalleryId(int $id, ?Pagination $pagination = null): array
     {
         $select = $this->db()->select(['g.image_id', 'g.gallery_id', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'gallery_imgs'])

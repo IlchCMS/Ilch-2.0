@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -109,7 +110,7 @@ class Gallery extends Mapper
 
         return $itemModel;
     }
-    
+
 
     /**
      * Save one gallery item.
@@ -152,7 +153,27 @@ class Gallery extends Mapper
 
         return $itemId;
     }
- 
+
+
+    /**
+     * Sort Gallery.
+     *
+     * @param int|GalleryItem $id
+     * @param int $pos
+     * @return bool
+     */
+    public function sort($id, int $pos): bool
+    {
+        if (is_a($id, GalleryItem::class)) {
+            $id = $id->getId();
+        }
+
+        return $this->db()->update('gallery_items')
+            ->values(['sort' => $pos])
+            ->where(['id' => $id])
+            ->execute();
+    }
+
     /**
      * Delete the given gallery item.
      *
