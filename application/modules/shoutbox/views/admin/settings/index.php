@@ -18,19 +18,6 @@
                    value="<?=$this->originalInput('limit', $this->get('limit')) ?>">
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('maxwordlength') ? 'has-error' : '' ?>">
-        <label for="maxwordlength" class="col-lg-2 control-label">
-            <?=$this->getTrans('maximumWordLength') ?>
-        </label>
-        <div class="col-lg-1">
-            <input type="number"
-                   class="form-control"
-                   id="maxwordlength"
-                   name="maxwordlength"
-                   min="1"
-                   value="<?=$this->originalInput('maxwordlength', $this->get('maxwordlength')) ?>">
-        </div>
-    </div>
     <div class="form-group <?=$this->validation()->hasError('maxtextlength') ? 'has-error' : '' ?>">
         <label for="maxtextlength" class="col-lg-2 control-label">
             <?=$this->getTrans('maximumTextLength') ?>
