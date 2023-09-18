@@ -14,7 +14,6 @@ return [
     'message' => 'Nachricht',
     'noEntrys' => 'Keine Einträge vorhanden',
     'numberOfMessagesDisplayed' => 'Anzahl angezeigter Nachrichten',
-    'maximumWordLength' => 'Maximale Wortlänge',
     'maximumTextLength' => 'Maximale Textlänge',
     'settings' => 'Einstellungen',
     'answer' => 'Antworten',

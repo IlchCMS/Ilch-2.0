@@ -7,6 +7,11 @@ $userMapper = new \Modules\User\Mappers\User();
 
 $config = \Ilch\Registry::get('config');
 ?>
+<style>
+.shoutbox-text {
+    line-break: anywhere;
+}
+</style>
 <script>
     $(function() {
         let $shoutboxContainer = $('#shoutbox-container<?=$this->get('uniqid') ?>'),
@@ -188,12 +193,7 @@ $config = \Ilch\Registry::get('config');
                         <?php endif; ?>
                     </tr>
                     <tr>
-                        <?php
-                        /*
-                         * @todo should fix this regex.
-                         */
-                        ?>
-                        <td><?=preg_replace('/([^\s]{' . $this->get('maxwordlength') . '})(?=[^\s])/', "$1\n", $this->escape($shoutbox->getTextarea())) ?></td>
+                        <td class="shoutbox-text"><?=$this->escape($shoutbox->getTextarea()) ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
