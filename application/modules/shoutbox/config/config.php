@@ -96,10 +96,9 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
                 // no break
             case "1.5.0":
-                // no break
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->delete('shoutbox_limit')
-                    ->delete('shoutbox_maxwordlength');
+                $databaseConfig->delete('shoutbox_maxwordlength');
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
