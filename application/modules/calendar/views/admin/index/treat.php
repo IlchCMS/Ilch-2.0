@@ -36,7 +36,7 @@ $entry = $this->get('calendar');
     <h1>
         <?=($entry->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
     </h1>
-    <div class="form-group<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
         <label for="start" class="col-lg-2 control-label">
             <?=$this->getTrans('start') ?>:
         </label>
@@ -47,12 +47,12 @@ $entry = $this->get('calendar');
                    name="start"
                    value="<?=$this->escape($this->originalInput('start', ($entry->getId()?(new \Ilch\Date($entry->getStart()))->format('d.m.Y H:i'):''))) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
         <label for="end" class="col-lg-2 control-label">
             <?=$this->getTrans('end') ?>:
         </label>
@@ -62,12 +62,12 @@ $entry = $this->get('calendar');
                    id="end"
                    name="end"
                    value="<?=$this->escape($this->originalInput('end', ($entry->getId()?($entry->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getEnd()))->format('d.m.Y H:i') : ''):''))) ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -79,7 +79,7 @@ $entry = $this->get('calendar');
                    value="<?=$this->escape($this->originalInput('title', ($entry->getId()?$entry->getTitle():''))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
         <label for="place" class="col-lg-2 control-label">
             <?=$this->getTrans('place') ?>:
         </label>
@@ -91,7 +91,7 @@ $entry = $this->get('calendar');
                    value="<?=$this->escape($this->originalInput('place', ($entry->getId()?$entry->getPlace():''))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
         <label for="periodType" class="col-lg-2 control-label">
             <?=$this->getTrans('periodEntry') ?>:
         </label>
@@ -104,7 +104,7 @@ $entry = $this->get('calendar');
             </select>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
         <label for="periodDays" class="col-lg-2 control-label"></label>
         <div class="col-lg-4">
             <select class="form-control" name="periodDays" id="periodDays">
@@ -115,7 +115,7 @@ $entry = $this->get('calendar');
             </select>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
         <label for="periodDay" class="col-lg-2 control-label"></label>
         <div class="col-lg-4 input-group">
             <span class="input-group-addon"><?=$this->getTrans('periodEvery') ?></span>
@@ -128,7 +128,7 @@ $entry = $this->get('calendar');
         </div>
     </div>
 
-    <div class="form-group<?=$this->validation()->hasError('repeatUntil') ? ' has-error' : '' ?>" id="repeatUntil_div">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('repeatUntil') ? ' has-error' : '' ?>" id="repeatUntil_div">
         <label for="repeatUntil" class="col-lg-2 control-label">
             <?=$this->getTrans('repeatUntil') ?>:
         </label>
@@ -139,13 +139,13 @@ $entry = $this->get('calendar');
                    name="repeatUntil"
                    value="<?=$this->escape($this->originalInput('repeatUntil', ($entry->getId()?($entry->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getRepeatUntil()))->format('d.m.Y H:i') : ''):''))) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
 
-    <div class="form-group<?=$this->validation()->hasError('color') ? ' has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('color') ? ' has-error' : '' ?>">
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('color') ?>:
         </label>
@@ -154,12 +154,12 @@ $entry = $this->get('calendar');
                    id="color"
                    name="color"
                    value="<?=$this->escape($this->originalInput('color', ($entry->getId()?$entry->getColor():'#32333B'))) ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('color').color.fromString('32333B')"></span>
             </span>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
         <label for="access" class="col-lg-2 control-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
@@ -174,7 +174,7 @@ $entry = $this->get('calendar');
             </select>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>

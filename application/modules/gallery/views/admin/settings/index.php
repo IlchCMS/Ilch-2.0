@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('picturesPerPage') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('picturesPerPage') ? 'has-error' : '' ?>">
         <label for="picturesPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('picturesPerPage') ?>:
         </label>
@@ -15,7 +15,7 @@
         </div>
     </div>
     <h1><?=$this->getTrans('box') ?>: <?=$this->getTrans('pictureOfX') ?></h1>
-    <div class="form-group <?=$this->validation()->hasError('pictureOfXSource') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('pictureOfXSource') ? 'has-error' : '' ?>">
         <label for="pictureOfXSource" class="col-lg-2 control-label">
             <?=$this->getTrans('pictureOfXSource') ?>:
         </label>
@@ -40,7 +40,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('pictureOfXInterval') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('pictureOfXInterval') ? 'has-error' : '' ?>">
         <?php $selected = ($this->get('pictureOfXInterval')) ? 'selected="selected"' : ''?>
         <label for="pictureOfXInterval" class="col-lg-2 control-label">
             <?=$this->getTrans('pictureOfXInterval') ?>:
@@ -58,7 +58,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('pictureOfXRandom') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('pictureOfXRandom') ? 'has-error' : '' ?>">
         <label for="pictureOfXRandom" class="col-lg-2 control-label">
             <?=$this->getTrans('pictureOfXRandom') ?>:
         </label>

@@ -14,7 +14,7 @@ if ($awards != '') {
 <h1><?=($awards != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
@@ -25,12 +25,12 @@ if ($awards != '') {
                    id="date"
                    value="<?=($this->get('awards') != '') ? $this->escape($date) : $this->escape($this->originalInput('date')) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('rank') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('rank') ? 'has-error' : '' ?>">
         <label for="rank" class="col-lg-2 control-label">
             <?=$this->getTrans('rank') ?>:
         </label>
@@ -44,7 +44,7 @@ if ($awards != '') {
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->escape($this->originalInput('rank')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
             <?=$this->getTrans('image') ?>:
         </label>
@@ -56,16 +56,16 @@ if ($awards != '') {
                        name="image"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                        value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span id="clearImage" class="fa-solid fa-xmark"></span>
                 </span>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a>
                 </span>
             </div>
         </div>
     </div>
-    <div class="form-group <?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
         <label for="user" class="col-lg-2 control-label">
             <?=$this->getTrans('userTeam') ?>:
         </label>
@@ -112,7 +112,7 @@ if ($awards != '') {
             </select>
         </div>
     </div>
-    <div class="form-group <?=($this->validation()->hasError('event')) ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=($this->validation()->hasError('event')) ? 'has-error' : '' ?>">
         <label for="event" class="col-lg-2 control-label">
             <?=$this->getTrans('event') ?>:
         </label>
@@ -124,7 +124,7 @@ if ($awards != '') {
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getEvent()) : $this->escape($this->originalInput('event')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
         <label for="page" class="col-lg-2 control-label">
             <?=$this->getTrans('page') ?>:
         </label>
