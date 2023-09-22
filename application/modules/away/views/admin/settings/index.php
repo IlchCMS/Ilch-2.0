@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('adminNotification') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('adminNotification') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('adminNotification') ?>
         </div>
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('userNotification') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('userNotification') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('userNotification') ?>
         </div>
@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div id="notifyGroupsDiv" class="form-group <?=$this->validation()->hasError('notifyGroups') ? 'has-error' : '' ?> <?=($this->get('userNotification') !== '1') ? 'hidden' : '' ?>">
+    <div id="notifyGroupsDiv" class="row form-group ilch-margin-b <?=$this->validation()->hasError('notifyGroups') ? 'has-error' : '' ?> <?=($this->get('userNotification') !== '1') ? 'hidden' : '' ?>">
         <label for="notifyGroups" class="col-lg-2 control-label">
             <?=$this->getTrans('notifyGroups') ?>
         </label>

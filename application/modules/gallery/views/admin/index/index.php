@@ -67,7 +67,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
 }
 ?>
 
-<form class="form-horizontal" id="galleryForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form class="form-horizontal row" id="galleryForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <h1><?=$this->getTrans('gallery') ?></h1>
     <div class="col-lg-6">
@@ -83,7 +83,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
     </div>
     <div class="col-lg-6 changeBox">
         <input type="hidden" id="id" value="" />
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="title" class="col-lg-3 control-label">
                 <?=$this->getTrans('title') ?>
             </label>
@@ -91,7 +91,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
                 <input type="text" class="form-control" id="title" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="desc" class="col-lg-3 control-label">
                 <?=$this->getTrans('description') ?>
             </label>
@@ -103,7 +103,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
                           cols="45"></textarea>
             </div>
         </div>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="type" class="col-lg-3 control-label">
                 <?=$this->getTrans('type') ?>
             </label>
