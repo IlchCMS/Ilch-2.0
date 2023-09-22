@@ -1,9 +1,22 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Gallery\Mappers\Gallery $galleryMapper */
 $galleryMapper = $this->get('galleryMapper');
+/** @var \Modules\Gallery\Models\GalleryItem[]|null $galleryItems */
 $galleryItems = $this->get('galleryItems');
+/** @var \Modules\Gallery\Mappers\Image $imageMapper */
 $imageMapper = $this->get('imageMapper');
 
-function rec($item, $galleryMapper, $obj, $imageMapper)
+/**
+ * @param \Modules\Gallery\Models\GalleryItem $item
+ * @param \Modules\Gallery\Mappers\Gallery $galleryMapper
+ * @param \Ilch\View $obj
+ * @param \Modules\Gallery\Mappers\Image $imageMapper
+ * @return void
+ */
+function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers\Gallery $galleryMapper, \Ilch\View $obj, \Modules\Gallery\Mappers\Image $imageMapper)
 {
     $subItems = $galleryMapper->getGalleryItemsByParent($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
@@ -12,32 +25,32 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
         $class = 'mjs-nestedSortable-leaf';
     }
 
-    echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
+    echo '<li id="list_' . $item->getId() . '" class="' . $class . '">';
     echo '<div><span class="disclose"><i class="fa-solid fa-circle-minus"></i>
-                    <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$obj->escape($item->getTitle()).'" />
-                    <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$obj->escape($item->getDesc()).'" />
-                    <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
-                    <input type="hidden" class="hidden_parentid" name="items['.$item->getId().'][parentid]" value="'.$item->getParentId().'" />
+                    <input type="hidden" class="hidden_id" name="items[' . $item->getId() . '][id]" value="' . $item->getId() . '" />
+                    <input type="hidden" class="hidden_title" name="items[' . $item->getId() . '][title]" value="' . $obj->escape($item->getTitle()) . '" />
+                    <input type="hidden" class="hidden_desc" name="items[' . $item->getId() . '][desc]" value="' . $obj->escape($item->getDesc()) . '" />
+                    <input type="hidden" class="hidden_type" name="items[' . $item->getId() . '][type]" value="' . $item->getType() . '" />
+                    <input type="hidden" class="hidden_parentid" name="items[' . $item->getId() . '][parentid]" value="' . $item->getParentId() . '" />
                     <span></span>
                 </span>
-                <span class="title">'.$obj->escape($item->getTitle()).'</span>
+                <span class="title">' . $obj->escape($item->getTitle()) . '</span>
                 <span class="item_delete">
                     <i class="fa-solid fa-circle-xmark"></i>
                 </span><span class="item_edit">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </span>
                 <span class="upload" style="float:right; margin-right: 6px;">
-                    <a href="javascript:media('.$item->getId().')">
+                    <a href="javascript:media(' . $item->getId() . ')">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
                     </a>
                 </span>
                 <span class="view" style="float:right; margin-right: 6px;">
-                    <a href="'.$obj->getUrl(['controller' => 'gallery', 'action' => 'treatgallery','id' => $item->getId()]).'">
+                    <a href="' . $obj->getUrl(['controller' => 'gallery', 'action' => 'treatgallery','id' => $item->getId()]) . '">
                         <i class="fa-solid fa-eye"></i>
                     </a>
                 </span>
-                <span class="count" style="float:right; margin-right: 6px;">'. $imageMapper->getCountImageById($item->getId()) .'</span>
+                <span class="count" style="float:right; margin-right: 6px;">' . $imageMapper->getCountImageById($item->getId()) . '</span>
             </div>';
 
     if (!empty($subItems)) {
@@ -60,11 +73,11 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     <div class="col-lg-6">
         <ol id="sortable" class="sortable">
             <?php
-                if (!empty($galleryItems)) {
-                    foreach ($galleryItems as $item) {
-                        rec($item, $galleryMapper, $this, $imageMapper);
-                    }
+            if (!empty($galleryItems)) {
+                foreach ($galleryItems as $item) {
+                    rec($item, $galleryMapper, $this, $imageMapper);
                 }
+            }
             ?>
         </ol>
     </div>
@@ -110,7 +123,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     <?=$this->getSaveBar('saveButton') ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script>
 function resetBox() {
     $(':input', '.changeBox')
@@ -178,12 +191,12 @@ $(document).ready (
             let options = '';
 
             $('#sortable').find('li').each(function() {
-                if ($(this).find('input.hidden_type:first').val() == 0) {
+                if ($(this).find('input.hidden_type:first').val() === "0") {
                     options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+escapeHtml($(this).find('input.hidden_title:first').val())+'</option>';
                 }
             });
 
-            if (options == '' && ($(this).val() == '1')) {
+            if (options === '' && ($(this).val() === '1')) {
                 alert(<?=json_encode($this->getTrans('missingCat')) ?>);
                 $(this).val(0);
                 return;
@@ -192,22 +205,22 @@ $(document).ready (
             let menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
                         <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
-            if ($(this).val() == '0') {
+            if ($(this).val() === '0') {
                 $('.dyn').html('');
-            } else if ($(this).val() == '1') {
+            } else if ($(this).val() === '1') {
                 $('.dyn').html(menuHtml);
             }
         });
 
         $('#galleryForm').on('click', '#menuItemAdd', function () {
-                    if ($('#title').val() == '') {
-                        alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
-                        return;
-                    }
+            if ($('#title').val() === '') {
+                alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
+                return;
+            }
 
             let append = '#sortable';
 
-            if ($('#type').val() != 0 && $('#menukey').val() != 0 ) {
+            if ($('#type').val() !== "0" && $('#menukey').val() > 0 ) {
                 let id = $('#menukey').val();
 
                 if ($('#sortable #'+id+' ol').length > 0) {
@@ -219,11 +232,11 @@ $(document).ready (
                 if (!isNaN(id)) {
                     append = '#sortable #list_'+id+' ol';
 
-                    if ($(append).length == 0) {
+                    if ($(append).length === 0) {
                         $('<ol></ol>').appendTo('#sortable #list_'+id);
                     }
                 } else {
-                    if ($(append).length == 0) {
+                    if ($(append).length === 0) {
                         $('<ol></ol>').appendTo('#sortable #'+id);
                     }
                     append = '#sortable #'+id+' ol';
@@ -241,8 +254,7 @@ $(document).ready (
                     +'</span></span><span class="title">'+escapedTitle+'</span><span class="item_delete"><i class="fa-solid fa-circle-xmark"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
-            }
-        );
+        });
 
         $('.sortable').on('click', '.item_edit', function () {
             let parentId = $(this).parent().find('.hidden_parentid').val();
@@ -260,7 +272,7 @@ $(document).ready (
         });
 
         $('#galleryForm').on('click', '#menuItemEdit', function () {
-                if ($('#title').val() == '') {
+                if ($('#title').val() === '') {
                     alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                     return;
                 }
@@ -282,7 +294,7 @@ $(document).ready (
 </script>
 <script>
 <?=$this->getMedia()
-        ->addActionButton($this->getUrl('admin/gallery/gallery/treatgallery/id/'.$this->getRequest()->getParam('id')))
+        ->addActionButton($this->getUrl('admin/gallery/gallery/treatgallery/id/' . $this->getRequest()->getParam('id')))
         ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/multi/id/'))
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>

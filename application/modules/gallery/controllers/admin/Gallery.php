@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -36,19 +37,17 @@ class Gallery extends Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuGallery',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
-        
     }
 
-    public function treatGalleryAction() 
+    public function treatGalleryAction()
     {
         $imageMapper = new ImageMapper();
         $pagination = new Pagination();
@@ -62,15 +61,15 @@ class Gallery extends Admin
                 ->add($this->getTranslator()->trans($galleryTitle->getTitle()), ['action' => 'treatgallery', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') === 'delete') {
-                foreach ($this->getRequest()->getPost('check_gallery') as $imageId) {
-                    $imageMapper->deleteById($imageId);
-                }
-                $this->addMessage('deleteSuccess');
-                $this->redirect(['action' => 'treatgallery','id' => $id]);
+            foreach ($this->getRequest()->getPost('check_gallery') as $imageId) {
+                $imageMapper->deleteById($imageId);
+            }
+            $this->addMessage('deleteSuccess');
+            $this->redirect(['action' => 'treatgallery','id' => $id]);
         }
 
         if ($this->getRequest()->getPost()) {
-            foreach ($this->getRequest()->getPost('check_image') as $imageId ) {
+            foreach ($this->getRequest()->getPost('check_image') as $imageId) {
                 $model = new \Modules\Gallery\Models\Image();
                 $model->setImageId($imageId);
                 $model->setGalleryId($this->getRequest()->getParam('id'));
@@ -85,7 +84,7 @@ class Gallery extends Admin
         $this->getView()->set('galleryTitle', $galleryTitle->getTitle());
     }
 
-    public function treatImageAction() 
+    public function treatImageAction()
     {
         $imageMapper = new ImageMapper();
 

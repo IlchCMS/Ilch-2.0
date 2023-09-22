@@ -1,4 +1,9 @@
 <?php
+
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Gallery\Models\Image $image */
 $image = $this->get('image');
 $commentsClass = new Ilch\Comments();
 ?>
@@ -9,11 +14,11 @@ $commentsClass = new Ilch\Comments();
 <div id="gallery">
     <div class="row">
         <div class="col-md-6">
-        <?php if ($image->getImageUrl()): ?>
+        <?php if ($image->getImageUrl()) : ?>
             <a class="venobox" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>">
                 <img src="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" alt="<?= $this->escape($image->getImageTitle()) ?>" />
             </a>
-        <?php else: ?>
+        <?php else : ?>
             <a class="venobox" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>">
                 <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$this->getTrans('noMediaAlt') ?>" />
             </a>
@@ -30,12 +35,3 @@ $commentsClass = new Ilch\Comments();
 <?= $commentsClass->getComments($this->get('commentsKey'), $image, $this) ?>
 
 <script src="<?=$this->getModuleUrl('static/venobox/venobox.min.js') ?>"></script>
-<script>
-    new VenoBox({
-        selector: '.venobox',
-        numeration: true,
-        share: true,
-        navTouch: true,
-        spinner: 'pulse',
-    })
-</script>

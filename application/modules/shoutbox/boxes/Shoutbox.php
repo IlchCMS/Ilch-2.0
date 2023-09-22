@@ -73,7 +73,6 @@ class Shoutbox extends \Ilch\Box
         $this->getView()->setArray([
             'uniqid'        => $uniqid,
             'shoutbox'      => $shoutboxMapper->getShoutboxLimit($this->getConfig()->get('shoutbox_limit')),
-            'maxwordlength' => $this->getConfig()->get('shoutbox_maxwordlength'),
             'writeAccess'   => $ids,
             'captchaNeeded' => $captchaNeeded,
             'validation'    => $validation

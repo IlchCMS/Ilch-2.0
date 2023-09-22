@@ -1,6 +1,10 @@
 <?php
-    $commentMapper = new \Modules\Comment\Mappers\Comment();
-    $image = $this->get('image');
+
+/** @var \Ilch\View $this */
+
+$commentMapper = new \Modules\Comment\Mappers\Comment();
+/** @var \Modules\Gallery\Models\Image $image */
+$image = $this->get('image');
 ?>
 
 <style>
@@ -36,14 +40,14 @@
     }
 </style>
 
-<?php if (!empty($image)): ?>
-    <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/'.$image->getId()); ?>
+<?php if (!empty($image)) : ?>
+    <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/' . $image->getId()); ?>
     <div class="panel panel-default">
         <div class="panel-image thumbnail">
         <?php if (file_exists($image->getImageThumb())) : ?>
             <a href="<?=$this->getUrl(['module' => 'gallery', 'controller' => 'index', 'action' => 'showimage', 'id' => $image->getId()]) ?>">
                 <?php $altText = (empty($image->getImageTitle())) ? basename($image->getImageUrl()) : $image->getImageTitle(); ?>
-                <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$this->escape($altText) ?>" />
+                <img src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$this->escape($altText) ?>" />
             </a>
         <?php else : ?>
             <?=$this->getTrans('pictureMissing') ?>
@@ -54,6 +58,6 @@
             <i class="fa-solid fa-eye"> <?=$image->getVisits() ?></i>
         </div>
     </div>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noPictures') ?>
 <?php endif; ?>

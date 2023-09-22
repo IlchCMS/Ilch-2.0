@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -15,7 +16,7 @@ use Modules\Gallery\Mappers\Image as ImageMapper;
 
 class Index extends Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
@@ -31,7 +32,7 @@ class Index extends Frontend
         $this->getView()->set('imageMapper', $imageMapper);
     }
 
-    public function showAction() 
+    public function showAction()
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
@@ -59,16 +60,26 @@ class Index extends Frontend
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('gallery'))
                 ->add($gallery->getTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery') . ' - ' . $gallery->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
                 ->add($gallery->getTitle(), ['action' => 'show', 'id' => $id]);
 
+        // Venobox instance options
+        $venoboxOptions = [
+            'numeration' => $this->getConfig()->get('gallery_venoboxNumeration'),
+            'infinigall' => $this->getConfig()->get('gallery_venoboxInfiniteGallery'),
+            'bgcolor' => $this->getConfig()->get('gallery_venoboxBgcolor'),
+            'overlayColor' => $this->getConfig()->get('gallery_venoboxOverlayColor'),
+            'border' => $this->getConfig()->get('gallery_venoboxBorder'),
+            'titleattr' => $this->getConfig()->get('gallery_venoboxTitleattr'),
+        ];
+        $this->getView()->set('venoboxOptions', $venoboxOptions);
         $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
     }
 
-    public function showImageAction() 
+    public function showImageAction()
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
@@ -95,7 +106,7 @@ class Index extends Frontend
                 ->add($this->getTranslator()->trans('gallery'))
                 ->add($gallery->getTitle())
                 ->add($image->getImageTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$image->getImageDesc());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery') . ' - ' . $image->getImageDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
                 ->add($gallery->getTitle(), ['action' => 'show', 'id' => $gallery->getId()])
@@ -109,10 +120,10 @@ class Index extends Frontend
         if ($this->getUser()) {
             if ($this->getRequest()->getPost('saveComment')) {
                 $comments = new Comments();
-                $key = 'gallery/index/showimage/id/'.$id;
+                $key = 'gallery/index/showimage/id/' . $id;
 
                 if ($this->getRequest()->getPost('fkId')) {
-                    $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                    $key .= '/id_c/' . $this->getRequest()->getPost('fkId');
                 }
 
                 $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
@@ -123,11 +134,10 @@ class Index extends Frontend
                 $comments = new Comments();
 
                 $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-                $this->redirect(['action' => 'showimage', 'id' => $id.'#comment_'.$commentId]);
+                $this->redirect(['action' => 'showimage', 'id' => $id . '#comment_' . $commentId]);
             }
         }
-
         $this->getView()->set('image', $imageMapper->getImageById($id));
-        $this->getView()->set('commentsKey', 'gallery/index/showimage/id/'.$id);
+        $this->getView()->set('commentsKey', 'gallery/index/showimage/id/' . $id);
     }
 }
