@@ -14,13 +14,13 @@ $userGroupList = $this->get('userGroupList');
 
 <h1>
     <?=($team->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
-    <a class="badge" data-toggle="modal" data-target="#infoModal">
+    <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('teamName') ?>
         </label>
@@ -32,7 +32,7 @@ $userGroupList = $this->get('userGroupList');
                    value="<?=$this->escape($this->originalInput('name', $team->getName())) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('upl') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('upl') ? 'has-error' : '' ?>">
         <label for="upl" class="col-lg-2 control-label">
             <?=$this->getTrans('img') ?>:
         </label>
@@ -62,7 +62,7 @@ $userGroupList = $this->get('userGroupList');
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('leader') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('leader') ? 'has-error' : '' ?>">
         <label for="leader" class="col-lg-2 control-label">
             <?=$this->getTrans('leader') ?>
         </label>
@@ -84,7 +84,7 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('coLeader') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('coLeader') ? 'has-error' : '' ?>">
         <label for="coLeader" class="col-lg-2 control-label">
             <?=$this->getTrans('coLeader') ?>
         </label>
@@ -106,7 +106,7 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('members') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('members') ? 'has-error' : '' ?>">
         <label for="groupId" class="col-lg-2 control-label">
             <?=$this->getTrans('group') ?>
         </label>
@@ -125,7 +125,7 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('optShow') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('optShow') ? 'has-error' : '' ?>">
         <label for="optShow" class="col-lg-2 control-label">
             <?=$this->getTrans('optShow') ?>:
         </label>
@@ -139,7 +139,7 @@ $userGroupList = $this->get('userGroupList');
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('optIn') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('optIn') ? 'has-error' : '' ?>">
         <label for="optIn" class="col-lg-2 control-label">
             <?=$this->getTrans('optIn') ?>:
         </label>
@@ -153,7 +153,7 @@ $userGroupList = $this->get('userGroupList');
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('notifyLeader') ? 'has-error' : '' ?>" id="notifyLeader">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('notifyLeader') ? 'has-error' : '' ?>" id="notifyLeader">
         <label for="notifyLeader" class="col-lg-2 control-label">
             <?=$this->getTrans('notifyLeader') ?>:
         </label>

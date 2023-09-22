@@ -18,7 +18,7 @@ $userDeleted = $this->get('userDeleted');
 ?>
 <h1><?=$this->getTrans('application') ?></h1>
 <div class="form-horizontal">
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label class="col-lg-2">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -26,7 +26,7 @@ $userDeleted = $this->get('userDeleted');
             <?=$this->escape($join->getName()) ?>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label class="col-lg-2">
             <?=$this->getTrans('team') ?>:
         </label>
@@ -34,7 +34,7 @@ $userDeleted = $this->get('userDeleted');
             <?=$this->escape($team->getName()) ?>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label class="col-lg-2">
             <?=$this->getTrans('email') ?>:
         </label>
@@ -42,7 +42,7 @@ $userDeleted = $this->get('userDeleted');
             <?=$this->escape($join->getEMail()) ?>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label class="col-lg-2">
             <?=$this->getTrans('dateTime') ?>:
         </label>
@@ -50,7 +50,7 @@ $userDeleted = $this->get('userDeleted');
             <?=$date->format('d.m.Y H:i', true) ?>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label class="col-lg-2">
             <?=$this->getTrans('gender') ?>:
         </label>
@@ -67,7 +67,7 @@ $userDeleted = $this->get('userDeleted');
         </div>
     </div>
     <?php if ($join->getBirthday()) : ?>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label class="col-lg-2">
                 <?=$this->getTrans('birthday') ?>:
             </label>
@@ -77,7 +77,7 @@ $userDeleted = $this->get('userDeleted');
         </div>
     <?php endif; ?>
     <?php if ($join->getPlace()) : ?>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label class="col-lg-2">
                 <?=$this->getTrans('place') ?>:
             </label>
@@ -86,7 +86,7 @@ $userDeleted = $this->get('userDeleted');
             </div>
         </div>
     <?php endif; ?>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label class="col-lg-2">
             <?=$this->getTrans('skill') ?>:
         </label>
@@ -104,7 +104,7 @@ $userDeleted = $this->get('userDeleted');
             ?>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label class="col-lg-2">
             <?=$this->getTrans('text') ?>:
         </label>
