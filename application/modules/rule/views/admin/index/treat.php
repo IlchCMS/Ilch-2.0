@@ -17,7 +17,7 @@ $userGroupList = $this->get('userGroupList');
 <h1><?=($rule->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
         <label for="paragraph" class="col-lg-2 control-label">
             <?=$this->getTrans('paragraph') ?>
         </label>
@@ -30,7 +30,7 @@ $userGroupList = $this->get('userGroupList');
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>
         </label>
@@ -43,7 +43,7 @@ $userGroupList = $this->get('userGroupList');
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('cat') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('cat') ? 'has-error' : '' ?>">
         <label for="cat" class="col-lg-2 control-label">
             <?=$this->getTrans('cat') ?>
         </label>
@@ -55,7 +55,7 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
         <label for="assignedGroupsRead" class="col-lg-2 control-label">
             <?=$this->getTrans('see') ?>
             <a href="#" data-toggle="tooltip" title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
@@ -71,7 +71,7 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>
         </label>
