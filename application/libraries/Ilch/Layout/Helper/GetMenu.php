@@ -22,6 +22,7 @@ class GetMenu
             'li-class-child' => '',
             'li-class-active' => '',
             'a-class'          => '',
+            'span-class'       => '',
             'allow-nesting' => true,
         ],
         'boxes' => [

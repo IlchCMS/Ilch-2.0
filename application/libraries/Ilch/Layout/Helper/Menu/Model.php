@@ -235,6 +235,13 @@ class Model
                     $aClasses[] = array_dot($options, 'menus.a-class');
                 }
 
+                // Span Klassen
+                if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.span-class')) {
+                    $aClasses[] = array_dot($options, 'menus.span-class');
+                } else {
+                    $aClasses[] = array_dot($options, 'menus.span-class');
+                }
+
 
                 $target = '';
                 $noopener = '';
@@ -274,7 +281,26 @@ class Model
                 }
 
                 if (!is_in_array($groupIds, explode(',', $menuData['items'][$itemId]->getAccess())) || $adminAccess) {
-                    $contentHtml = '<a' . $this->createClassAttribute(array_dot($options, 'menus.a-class')) . ' href="' . $href . '"' . $target . $noopener . '>' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
+                    $title = $this->layout->escape($menuData['items'][$itemId]->getTitle());
+                    $a_class_classAttribute = $this->createClassAttribute(array_dot($options, 'menus.a-class'));
+                    $span_class_classAttribute = $this->createClassAttribute(array_dot($options, 'menus.span-class'));
+
+                    $contentHtml = '<a' . $a_class_classAttribute;
+                    $contentHtml .= ' href="' . $href . '"';
+                    $contentHtml .= $target;
+                    $contentHtml .= $noopener;
+                    $contentHtml .= '>';
+
+                    if (!empty($span_class_classAttribute)) {
+                        $contentHtml .= '<span' . $span_class_classAttribute;
+                        $contentHtml .= '>';
+                        $contentHtml .= $title;
+                        $contentHtml .= '</span>';
+                    } else {
+                        $contentHtml .= $title;
+                    }
+
+                    $contentHtml .= '</a>';
 
                     // find childitems recursively
                     $subItemsHtml = $this->buildMenu($itemId, $menuData, $locale, $options, $menuData['items'][$itemId]->getType());
