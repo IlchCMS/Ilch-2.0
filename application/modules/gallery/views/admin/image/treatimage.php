@@ -17,7 +17,7 @@ $image = $this->get('image');
                 </a>
             </div>
             <div class="col-md-8">
-                <div class="form-group">
+                <div class="row form-group ilch-margin-b">
                     <label for="imageTitleInput" class="col-lg-2 control-label">
                         <?=$this->getTrans('imageTitle') ?>:
                     </label>
@@ -29,7 +29,7 @@ $image = $this->get('image');
                                value="<?=$this->escape($image->getImageTitle()) ?>" />
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="row form-group ilch-margin-b">
                     <label for="imageDescInput" class="col-lg-2 control-label">
                         <?=$this->getTrans('imageDesc') ?>:
                     </label>

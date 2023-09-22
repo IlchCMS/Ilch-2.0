@@ -4,7 +4,7 @@
 
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('numberOfBirthdaysShow') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('numberOfBirthdaysShow') ? 'has-error' : '' ?>">
         <label for="numberOfBirthdaysShow" class="col-lg-2 control-label">
             <?=$this->getTrans('numberOfBirthdaysShow') ?>:
         </label>
@@ -17,7 +17,7 @@
                    value="<?=$this->get('numberOfBirthdaysShow') ?>">
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('visibleForGuest') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('visibleForGuest') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('visibleForGuest') ?>:
         </div>

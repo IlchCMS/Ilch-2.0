@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="threadsPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('threadsPerPage') ?>:
         </label>
@@ -14,7 +14,7 @@
                    value="<?=$this->escape($this->get('threadsPerPage')) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="postsPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('postsPerPage') ?>:
         </label>
@@ -27,7 +27,7 @@
                    value="<?=$this->escape($this->get('postsPerPage')) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="floodIntervalInput" class="col-lg-2 control-label">
             <?=$this->getTrans('floodInterval') ?>:
         </label>
@@ -40,7 +40,7 @@
                    value="<?=$this->escape($this->get('floodInterval')) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="excludeFloodProtection" class="col-lg-2 control-label">
             <?=$this->getTrans('excludeFloodProtection') ?>:
         </label>
@@ -69,7 +69,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('postVoting') ?>:
         </div>
@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('topicSubscription') ?>:
         </div>
@@ -97,7 +97,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('DESCPostorder') ?>:
         </div>
@@ -112,7 +112,7 @@
         </div>
     </div>
     <h2><?=$this->getTrans('boxSettings') ?></h2>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="boxForumLimit" class="col-lg-2 control-label">
             <?=$this->getTrans('boxForumLimit') ?>
         </label>
@@ -126,7 +126,7 @@
         </div>
     </div>
     <h2><?=$this->getTrans('reportSettings') ?></h2>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('reportingPosts') ?>:
         </div>
@@ -140,7 +140,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('reportNotificationEMail') ?>:
         </div>
