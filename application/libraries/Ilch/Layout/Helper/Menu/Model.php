@@ -221,21 +221,21 @@ class Model
                 $liClasses = [];
                 $aClasses = [];
 
-                // Listen Klassen
+                // list classes
                 if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.allow-nesting') === false) {
                     $liClasses[] = array_dot($options, 'menus.li-class-root');
                 } else {
                     $liClasses[] = array_dot($options, 'menus.li-class-child');
                 }
 
-                // Link Klassen
+                // link classes
                 if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.a-class')) {
                     $aClasses[] = array_dot($options, 'menus.a-class');
                 } else {
                     $aClasses[] = array_dot($options, 'menus.a-class');
                 }
 
-                // Span Klassen
+                // span classes
                 if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.span-class')) {
                     $aClasses[] = array_dot($options, 'menus.span-class');
                 } else {
