@@ -33,16 +33,10 @@ $cats = $this->get('cats');
                 </thead>
                 <tbody>
                     <?php foreach ($cats as $cat) : ?>
-<<<<<<< HEAD
 
                         <?php $faqs = $faqMapper->getFaqsByCatId($cat->getId()); ?>
-                        <?php $countFaqs = is_array($faqs) ? count($faqs) : 0; ?>
-
                         <?php $countFaqs = count($faqMapper->getFaqsByCatId($cat->getId()) ?? []); ?>
 
-=======
-                        <?php $countFaqs = count($faqMapper->getFaqsByCatId($cat->getId()) ?? []); ?>
->>>>>>> 829480307680b009deafae676720dc12f3ebd967
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
