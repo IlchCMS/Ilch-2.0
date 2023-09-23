@@ -11,7 +11,7 @@ $checkouts = $this->get('checkout');
 <h1><?=$this->getTrans('bookings') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>
         </label>
@@ -24,7 +24,7 @@ $checkouts = $this->get('checkout');
                    value="<?=$this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('checkoutdate') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('checkoutdate') ? 'has-error' : '' ?>">
         <label for="datetime" class="col-lg-2 control-label">
             <?=$this->getTrans('datetime') ?>
         </label>
@@ -37,7 +37,7 @@ $checkouts = $this->get('checkout');
                    value="<?=($this->get('checkoutdate') != '') ? $this->get('checkoutdate') : '' ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
         <label for="usage" class="col-lg-2 control-label">
             <?=$this->getTrans('usage') ?>
         </label>
@@ -50,7 +50,7 @@ $checkouts = $this->get('checkout');
                    value="<?=$this->escape($this->originalInput('usage')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('amount') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('amount') ? 'has-error' : '' ?>">
         <label for="amount" class="col-lg-2 control-label">
             <?=$this->getTrans('amount') ?>
         </label>
@@ -60,10 +60,10 @@ $checkouts = $this->get('checkout');
                    id="amount"
                    name="amount"
                    placeholder="<?=$this->getTrans('amount') ?>"
-                   data-content="<?=$this->getTrans('amountinfo') ?>" 
-                   rel="popover" 
-                   data-placement="bottom" 
-                   data-original-title="<?=$this->getTrans('amount') ?>" 
+                   data-content="<?=$this->getTrans('amountinfo') ?>"
+                   rel="popover"
+                   data-placement="bottom"
+                   data-original-title="<?=$this->getTrans('amount') ?>"
                    data-trigger="hover"
                    value="<?=$this->escape($this->originalInput('amount')) ?>" />
         </div>
@@ -72,8 +72,8 @@ $checkouts = $this->get('checkout');
     <br>
     <div class="col-lg-4">
         <h1><?=$this->getTrans('bankbalance') ?></h1>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card card-default">
+            <div class="card-body">
                 <strong>
                     <?php
                     if ($this->get('amount') != '') {
@@ -119,7 +119,7 @@ $checkouts = $this->get('checkout');
                     <th></th>
                     <th><?=$this->getTrans('datetime') ?></th>
                     <th><?=$this->getTrans('name') ?></th>
-                    <th><?=$this->getTrans('amount') ?></th> 
+                    <th><?=$this->getTrans('amount') ?></th>
                     <th><?=$this->getTrans('usage') ?></th>
                 </tr>
             </thead>

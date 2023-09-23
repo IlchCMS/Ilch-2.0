@@ -1,6 +1,6 @@
 <h1>
     <?=$this->getTrans('manage') ?>
-    <a class="badge" data-toggle="modal" data-target="#infoModal">
+    <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>

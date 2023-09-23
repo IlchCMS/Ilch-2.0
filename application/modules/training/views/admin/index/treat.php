@@ -12,7 +12,7 @@
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -24,7 +24,7 @@
                    value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTitle()); } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="date" class="col-md-2 control-label">
             <?=$this->getTrans('dateTime') ?>:
         </label>
@@ -35,12 +35,12 @@
                    name="date"
                    value="<?php if ($this->get('training') != '') { echo date('d.m.Y H:i', strtotime($this->get('training')->getDate())); } ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="time" class="col-lg-2 control-label">
             <?=$this->getTrans('time') ?>:
         </label>
@@ -53,7 +53,7 @@
                    value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTime()); } else { echo '30'; } ?>">
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="place" class="col-lg-2 control-label">
             <?=$this->getTrans('place') ?>:
         </label>
@@ -65,7 +65,7 @@
                    value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getPlace()); } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="contact" class="col-lg-2 control-label">
             <?=$this->getTrans('contactPerson') ?>:
         </label>
@@ -83,7 +83,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="voiceServer" class="col-lg-2 control-label">
             <?=$this->getTrans('voiceServer') ?>:
         </label>
@@ -108,7 +108,7 @@
     }
     ?>
     <div id="voiceServerInfo" <?=$voiceDisplay ?>>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="voiceServerIP" class="col-lg-2 control-label">
                 <?=$this->getTrans('voiceServerIP') ?>:
             </label>
@@ -121,7 +121,7 @@
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getVoiceServerIP()); } ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="voiceServerPW" class="col-lg-2 control-label">
                 <?=$this->getTrans('voiceServerPW') ?>:
             </label>
@@ -135,7 +135,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="gameServer" class="col-lg-2 control-label">
             <?=$this->getTrans('gameServer') ?>:
         </label>
@@ -160,7 +160,7 @@
     }
     ?>
     <div id="gameServerInfo" <?=$gameDisplay ?>>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="gameServerIP" class="col-lg-2 control-label">
                 <?=$this->getTrans('gameServerIP') ?>:
             </label>
@@ -173,7 +173,7 @@
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getGameServerIP()); } ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="gameServerPW" class="col-lg-2 control-label">
                 <?=$this->getTrans('gameServerPW') ?>:
             </label>
@@ -187,7 +187,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('otherInfo') ?>:
         </label>
@@ -199,7 +199,7 @@
                       rows="5"><?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getText()); } ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="access" class="col-lg-2 control-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
@@ -214,7 +214,7 @@
         </div>
     </div>
     <?php if ($this->get('calendarShow') == 1): ?>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <div class="col-lg-offset-2 col-lg-10">
                 <input type="checkbox"
                        id="calendarShow"
@@ -255,8 +255,8 @@ $(document).ready(function() {
     });
 });
 
-function showMe (it, box) { 
-    var vis = (box.checked) ? "block" : "none"; 
+function showMe (it, box) {
+    var vis = (box.checked) ? "block" : "none";
     document.getElementById(it).style.display = vis;
-} 
+}
 </script>
