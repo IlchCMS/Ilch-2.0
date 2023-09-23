@@ -285,22 +285,7 @@ class Model
                     $a_class_classAttribute = $this->createClassAttribute(array_dot($options, 'menus.a-class'));
                     $span_class_classAttribute = $this->createClassAttribute(array_dot($options, 'menus.span-class'));
 
-                    $contentHtml = '<a' . $a_class_classAttribute;
-                    $contentHtml .= ' href="' . $href . '"';
-                    $contentHtml .= $target;
-                    $contentHtml .= $noopener;
-                    $contentHtml .= '>';
-
-                    if (!empty($span_class_classAttribute)) {
-                        $contentHtml .= '<span' . $span_class_classAttribute;
-                        $contentHtml .= '>';
-                        $contentHtml .= $title;
-                        $contentHtml .= '</span>';
-                    } else {
-                        $contentHtml .= $title;
-                    }
-
-                    $contentHtml .= '</a>';
+                    $contentHtml = '<a' . $a_class_classAttribute . ' href="' . $href . '"' . $target . $noopener . '>' . (!empty($span_class_classAttribute) ? '<span' . $span_class_classAttribute . '>' . $title . '</span>' : $title) . '</a>';
 
                     // find childitems recursively
                     $subItemsHtml = $this->buildMenu($itemId, $menuData, $locale, $options, $menuData['items'][$itemId]->getType());
