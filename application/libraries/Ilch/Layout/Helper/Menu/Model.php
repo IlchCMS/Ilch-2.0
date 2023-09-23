@@ -242,7 +242,6 @@ class Model
                     $aClasses[] = array_dot($options, 'menus.span-class');
                 }
 
-
                 $target = '';
                 $noopener = '';
 
@@ -296,8 +295,6 @@ class Model
                             . '>' . $subItemsHtml . '</ul>';
                         $subItemsHtml = '';
                     }
-
-
 
                     $html .= '<li' . $this->createClassAttribute($liClasses) . '>' . $contentHtml . '</li>' . $subItemsHtml;
                 }
