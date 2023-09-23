@@ -1,12 +1,12 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
 <ul class="nav nav-pills navbar-fixed-top">
-    <li><a href="<?=$this->getUrl('admin/media/iframe/upload/') ?>"><?=$this->getTrans('upload') ?></a></li>
-    <li><a href="<?=$_SESSION['media-url-media-button'] ?>"><?=$this->getTrans('media') ?></a></li>
+    <li class="nav-item"><a href="<?=$this->getUrl('admin/media/iframe/upload/') ?>" class="nav-link"><?=$this->getTrans('upload') ?></a></li>
+    <li class="nav-item"><a href="<?=$_SESSION['media-url-media-button'] ?>" class="nav-link"><?=$this->getTrans('media') ?></a></li>
 </ul>
 
 <?php if ($this->get('medias') != ''): ?>
-    <div id="ilchmedia" class="container-fluid">
+    <div id="ilchmedia" class="container-flui rowd">
         <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'single'): ?>
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
@@ -28,7 +28,7 @@
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
                     <div class="col-lg-2 col-sm-3 col-xs-4">
-                        <img class="image thumbnail img-responsive"
+                        <img class="image img-thumbnail img-fluid"
                              data-url="<?=$media->getUrl() ?>"
                              src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                              alt="<?=$media->getName() ?>">
@@ -68,7 +68,7 @@
     });
     </script>
 <?php endif; ?>
-    
+
 <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
     <script>
     $(".image").click(function() {
@@ -79,7 +79,7 @@
     });
     </script>
 <?php endif; ?>
-    
+
 <?php if ($this->getRequest()->getParam('type') === 'media'): ?>
     <script>
     $(".image").click(function() {
@@ -89,7 +89,7 @@
     });
     </script>
 <?php endif; ?>
-    
+
 <?php if ($this->getRequest()->getParam('type') === 'single'): ?>
     <script>
     $(".image").click(function() {
@@ -102,7 +102,7 @@
 <script>
 $(document).ready(function()
 {
-    function media_loader() 
+    function media_loader()
     {
         var ID=$(".media_loader:last").attr("id");
         $.post("<?=$this->getUrl('admin/media/ajax/index/type/single/lastid/') ?>"+ID,
@@ -113,13 +113,13 @@ $(document).ready(function()
                 }
             }
         );
-    };  
+    };
 
     $(window).scroll(function()
     {
         if ($(window).scrollTop() === $(document).height() - $(window).height()) {
             media_loader();
         }
-    }); 
+    });
 });
 </script>

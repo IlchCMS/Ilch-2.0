@@ -763,7 +763,7 @@ abstract class Base
     {
         $html = '<div class="modal fade" id="' . $id . '">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content modal-xl">
                     <div class="modal-header">
                         <button type="button"
                                 class="btn-close"

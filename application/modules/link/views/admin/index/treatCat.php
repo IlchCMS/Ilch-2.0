@@ -9,7 +9,7 @@
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -22,7 +22,7 @@
                    value="<?=($this->get('category') != '') ? $this->escape($this->get('category')->getName()) : $this->escape($this->get('post')['name']) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="desc" class="col-lg-2 control-label">
             <?=$this->getTrans('description') ?>:
         </label>

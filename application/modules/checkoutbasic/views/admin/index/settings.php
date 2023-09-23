@@ -11,7 +11,7 @@
                   toolbar="ilch_html"
                   name="checkoutContact"><?=$this->get('checkoutContact') ?></textarea>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('checkoutCurrency') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('checkoutCurrency') ? 'has-error' : '' ?>">
         <label for="checkoutCurrency" class="control-label">
             <?=$this->getTrans('checkoutCurrency') ?>:
         </label>

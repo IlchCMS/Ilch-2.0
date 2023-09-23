@@ -11,7 +11,7 @@ if (!$this->validation()->hasErrors()) {
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('showHtml') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('showHtml') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('showHtml') ?>:
         </div>
@@ -25,7 +25,7 @@ if (!$this->validation()->hasErrors()) {
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('showBBCode') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('showBBCode') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('showBBCode') ?>:
         </div>
@@ -47,6 +47,6 @@ $('form').submit(function( event ) {
     if (!$('#html-yes').is(':checked') && !$('#bbcode-yes').is(':checked')) {
         event.preventDefault();
         alert('<?=$this->getTrans('noneEnabled') ?>');
-    }  
+    }
 });
 </script>
