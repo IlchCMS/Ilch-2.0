@@ -91,3 +91,8 @@ img {
 .input-group > :not(.input-group-addon):not(.input-group-btn) + .input-group-addon {
     border-left-width: 0;
 }
+
+/* Margin-bottom Class */
+.mb-15 {
+    margin-bottom: 15px;
+}
