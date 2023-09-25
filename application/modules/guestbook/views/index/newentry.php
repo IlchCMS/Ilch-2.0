@@ -14,7 +14,7 @@
                    placeholder="Bot" />
         </div>
     </div>
-    <div class="row form-group mb-15<?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row form-group mb-15 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-xl-2 control-label">
             <?=$this->getTrans('name') ?>*
         </label>
@@ -27,7 +27,7 @@
                    value="<?=$this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
-    <div class="row form-group mb-15<?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row form-group mb-15 <?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
         <label for="email" class="col-xl-2 control-label">
             <?=$this->getTrans('email') ?>*
         </label>
@@ -40,7 +40,7 @@
                    value="<?=$this->escape($this->originalInput('email')) ?>" />
         </div>
     </div>
-    <div class="row form-group mb-15<?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
+    <div class="row form-group mb-15 <?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
         <label for="homepage" class="col-xl-2 control-label">
             <?=$this->getTrans('page') ?>
         </label>
@@ -53,7 +53,7 @@
                   value="<?=$this->escape($this->originalInput('homepage')) ?>" />
         </div>
     </div>
-    <div class="row form-group mb-15<?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
+    <div class="row form-group mb-15 <?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
         <label for="text" class="col-xl-2 control-label">
             <?=$this->getTrans('message') ?>*
         </label>
