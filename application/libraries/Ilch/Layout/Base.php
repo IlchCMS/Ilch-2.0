@@ -104,12 +104,12 @@ abstract class Base extends \Ilch\Design\Base
                     $text .= '<li>' . $messageText . '</li>';
                 }
                 $text .= '</ul>';
-                $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissable" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true" aria-label="close"></button>
                 ' . $text . '</div>';
             } else {
-                $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissable" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true" aria-label="close"></button>
                 ' . $this->escape($message['text']) . '</div>';
             }
             unset($_SESSION['messages'][$key]);
