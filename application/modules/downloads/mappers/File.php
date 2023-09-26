@@ -33,6 +33,7 @@ class File extends Mapper
         }
 
         $entryModel = new FileModel();
+        $entryModel->setId($id);
         $entryModel->setFileId($fileRow['file_id']);
         $entryModel->setFileUrl($fileRow['url']);
         $entryModel->setFileImage($fileRow['file_image']);
