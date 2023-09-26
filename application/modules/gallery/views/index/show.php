@@ -48,30 +48,30 @@ $pagination = $this->get('pagination');
 
 <link href="<?=$this->getModuleUrl('static/venobox/venobox.min.css') ?>" media="screen" rel="stylesheet">
 
-<div id="gallery">
+<div id="gallery" class="row">
     <?php
     /** @var \Modules\Gallery\Models\Image $image */
     foreach ($this->get('image') as $image) : ?>
         <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/' . $image->getId()); ?>
- 
-        <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
-            <div class="panel panel-default">
+
+        <div class="col-sm-6 col-lg-4 col-xl-3 col-md-4">
+            <div class="card card-default">
             <?php if (file_exists($image->getImageThumb())) : ?>
                 <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" title="<?= $image->getImageTitle() ?> ">
-                    <div class="panel-image thumbnail">
+                    <div class="card-image img-thumbnail">
                         <img src="<?= $this->getUrl() . '/' . $image->getImageThumb() ?>" class="panel-image-preview" alt="<?= $this->escape($image->getImageTitle()) ?>" />
                     </div>
                 </a>
             <?php else : ?>
                 <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" data-title="<?= $image->getImageTitle() ?> ">
-                    <div class="panel-image thumbnail">
+                    <div class="card-image img-thumbnail">
                         <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" class="panel-image-preview" alt="<?=$this->getTrans('noMediaAlt') ?>" />
                     </div>
                 </a>
             <?php endif; ?>
 
                 <a href="<?=$this->getUrl(['action' => 'showimage', 'id' => $image->getId()]) ?>" title="<?=$this->getTrans('description')?>">
-                    <div class="panel-footer text-center">
+                    <div class="card-footer text-center">
                         <i class="fa-regular fa-comment"></i> <?=$commentsCount ?>
                         <i class="fa-solid fa-eye"></i> <?=$image->getVisits() ?>
                     </div>

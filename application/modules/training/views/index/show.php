@@ -6,32 +6,32 @@ $userMapper = new \Modules\User\Mappers\User();
 <?php if ($this->get('hasReadAccess')) : ?>
     <h1><?=$this->getTrans('trainDetails') ?></h1>
     <div class="form-horizontal">
-        <div class="form-group">
-            <div class="col-lg-3">
+        <div class="row form-group mb-15">
+            <div class="col-xl-3">
                 <?=$this->getTrans('title') ?>:
             </div>
             <div class="col-lg-9"><?=$this->escape($training->getTitle()) ?></div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-3">
+        <div class="row form-group mb-15">
+            <div class="col-xl-3">
                 <?=$this->getTrans('dateTime') ?>:
             </div>
             <div class="col-lg-9"><?=date('d.m.Y', strtotime($training->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($training->getDate())) ?> <?=$this->getTrans('clock') ?></div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-3">
+        <div class="row form-group mb-15">
+            <div class="col-xl-3">
                 <?=$this->getTrans('time') ?>:
             </div>
-            <div class="col-lg-9">~ <?=$this->escape($training->getTime()) ?></div>
+            <div class="col-xl-9">~ <?=$this->escape($training->getTime()) ?></div>
         </div>
-        <div class="form-group">
+        <div class="row form-group mb-15">
             <div class="col-lg-3">
                 <?=$this->getTrans('place') ?>:
             </div>
-            <div class="col-lg-9"><?=$this->escape($training->getPlace()) ?></div>
+            <div class="col-xl-9"><?=$this->escape($training->getPlace()) ?></div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-3">
+        <div class="row form-group mb-15">
+            <div class="col-xl-3">
                 <?=$this->getTrans('contactPerson') ?>:
             </div>
             <?php $contactUser = $userMapper->getUserById($training->getContact()); ?>
@@ -39,19 +39,19 @@ $userMapper = new \Modules\User\Mappers\User();
         </div>
         <?php if ($training->getVoiceServer() != ''): ?>
             <?php if ($training->getVoiceServerIP() != ''): ?>
-                <div class="form-group">
-                    <div class="col-lg-3">
+                <div class="row form-group mb-15">
+                    <div class="col-xl-3">
                         <?=$this->getTrans('voiceServerIP') ?>:
                     </div>
-                    <div class="col-lg-9"><?=$this->escape($training->getVoiceServerIP()) ?></div>
+                    <div class="col-xl-9"><?=$this->escape($training->getVoiceServerIP()) ?></div>
                 </div>
             <?php endif; ?>
             <?php if ($training->getVoiceServerPW() != ''): ?>
-                <div class="form-group">
-                    <div class="col-lg-3">
+                <div class="row form-group mb-15">
+                    <div class="col-xl-3">
                         <?=$this->getTrans('voiceServerPW') ?>:
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-xl-9">
                         <?php if ($this->getUser() && $this->get('trainEntrantUser') != ''): ?>
                             <?=$this->escape($training->getVoiceServerPW()) ?>
                         <?php else: ?>
@@ -63,19 +63,19 @@ $userMapper = new \Modules\User\Mappers\User();
         <?php endif; ?>
         <?php if ($training->getGameServer() != ''): ?>
             <?php if ($training->getGameServerIP() != ''): ?>
-                <div class="form-group">
-                    <div class="col-lg-3">
+                <div class="row form-group mb-15">
+                    <div class="col-xl-3">
                         <?=$this->getTrans('gameServerIP') ?>:
                     </div>
-                    <div class="col-lg-9"><?=$this->escape($training->getGameServerIP()) ?></div>
+                    <div class="col-xl-9"><?=$this->escape($training->getGameServerIP()) ?></div>
                 </div>
             <?php endif; ?>
             <?php if ($training->getGameServerPW() != ''): ?>
-                <div class="form-group">
-                    <div class="col-lg-3">
+                <div class="row form-group mb-15">
+                    <div class="col-xl-3">
                         <?=$this->getTrans('gameServerPW') ?>:
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-xl-9">
                         <?php if ($this->getUser() && $this->get('trainEntrantUser') != ''): ?>
                             <?=$this->escape($training->getGameServerPW()) ?>
                         <?php else: ?>
@@ -85,11 +85,11 @@ $userMapper = new \Modules\User\Mappers\User();
                 </div>
             <?php endif; ?>
         <?php endif; ?>
-        <div class="form-group">
-            <div class="col-lg-3">
+        <div class="row form-group mb-15">
+            <div class="col-xl-3">
                 <?=$this->getTrans('entrant') ?>:
             </div>
-            <div class="col-lg-9">
+            <div class="col-xl-9">
                 <?=$this->getTrans('entrys') ?> <?=$this->get('trainEntrantsUserCount') ?>
                 <?php if ($this->get('trainEntrantsUserCount') != 0): ?>
                     <br />
@@ -104,11 +104,11 @@ $userMapper = new \Modules\User\Mappers\User();
                 <?php endif; ?>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-12">
+        <div class="row form-group mb-15">
+            <div class="col-xl-12">
                 <?=$this->getTrans('otherInfo') ?>:
             </div>
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <?php if ($training->getText()!= ''): ?>
                     <?=$this->purify($training->getText()) ?>
                 <?php else: ?>
@@ -126,11 +126,11 @@ $userMapper = new \Modules\User\Mappers\User();
                         <?=$this->getTrans('decline') ?>
                     </button>
                 <?php else: ?>
-                    <div class="form-group">
+                    <div class="row form-group mb-15">
                         <label for="otherInfo" class="col-lg-2" style="top: 7px;">
                             <?=$this->getTrans('note') ?>:
                         </label>
-                        <div class="col-lg-4">
+                        <div class="col-xl-4">
                         <textarea class="form-control"
                                   style="resize: none;"
                                   id="otherInfo"
@@ -138,7 +138,7 @@ $userMapper = new \Modules\User\Mappers\User();
                                   cols="10"
                                   rows="1"></textarea>
                         </div>
-                        <div class="col-lg-2" style="top: 2px;">
+                        <div class="col-xl-2" style="top: 2px;">
                             <button type="submit" class="btn btn-sm btn-success" name="save" value="save">
                                 <?=$this->getTrans('join') ?>
                             </button>

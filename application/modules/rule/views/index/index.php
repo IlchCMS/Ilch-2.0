@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <?php
 
 /** @var \Ilch\View $this */
@@ -23,11 +24,11 @@ function rec(\Modules\Rule\Models\Rule $item, \Ilch\View $obj)
     if ($item->getParentId() === 0 && !$subItemsFalse) {
         echo '<div class="card">
     <div class="card-header" id="paragraph' . $paragraph . '">
-        <h3 class="mb-0" data-toggle="collapse" data-target="#paragraph0_' . $paragraph . '" aria-expanded="false" aria-controls="paragraph0_' . $paragraph . '">
-            <a href="#paragraph' . $paragraph . '"><i class="fa-solid fa-bookmark"></i></a> ' . $obj->getTrans('art') . ' ' . $paragraph . ' : ' . $obj->escape($item->getTitle()) . '<span class="pull-right glyphicon glyphicon-' . ($obj->get('showallonstart') ? 'minus' : 'plus') . '"></span>
+        <h3 class="mb-0" data-bs-toggle="collapse" data-bs-target="#paragraph0_'.$paragraph.'" aria-expanded="false" aria-controls="paragraph0_'.$paragraph.'">
+            <a href="#paragraph'.$paragraph.'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$paragraph.' : '.$obj->escape($item->getTitle()).'<span class="pull-right bi bi-'.($obj->get('showallonstart')?'dash':'plus').'"></span>
         </h3>
     </div>
-    <div id="paragraph0_' . $paragraph . '" class="panel-collapse collapse" aria-labelledby="paragraph' . $paragraph . '" data-parent="#accordion">
+    <div id="paragraph0_'.$paragraph.'" class="panel-collapse collapse" aria-labelledby="paragraph'.$paragraph.'" data-bs-parent="#accordion">
         <div class="card-body">
             <table class="table table-striped table-responsive">';
 
@@ -75,10 +76,10 @@ function rec(\Modules\Rule\Models\Rule $item, \Ilch\View $obj)
 
         $('#accordion .collapse')
         .on('shown.bs.collapse', function() {
-            $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+            $(this).parent().find(".bi-plus").removeClass("bi-plus").addClass("bi-dash");
         })
         .on('hidden.bs.collapse', function() {
-            $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+            $(this).parent().find(".bi-dash").removeClass("bi-dash").addClass("bi-plus");
         });
 
         function openAnchorAccordion() {
