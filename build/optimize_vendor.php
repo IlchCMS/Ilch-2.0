@@ -82,6 +82,7 @@ $directories = [
         'keep' => [
             'bootstrap/dist/css/bootstrap.min.css',
             'bootstrap/dist/js/bootstrap.min.js',
+            'bootstrap/dist/js/bootstrap.bundle.min.js'
             'bootstrap/dist/fonts/',
             'bootstrap/LICENSE',
         ]
