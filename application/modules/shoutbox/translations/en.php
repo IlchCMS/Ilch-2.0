@@ -14,7 +14,6 @@ return [
     'message' => 'Message',
     'noEntrys' => 'No entries exist',
     'numberOfMessagesDisplayed' => 'Number of messages displayed',
-    'maximumWordLength' => 'Maximum word length',
     'maximumTextLength' => 'Maximum text length',
     'settings' => 'Settings',
     'answer' => 'Answer',

@@ -45,7 +45,6 @@ class Config extends \Ilch\Config\Install
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('shoutbox_limit', '5')
-            ->set('shoutbox_maxwordlength', '10')
             ->set('shoutbox_maxtextlength', '50')
             ->set('shoutbox_writeaccess', '1,2');
     }
@@ -57,7 +56,6 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->delete('shoutbox_limit')
             ->delete('shoutbox_maxtextlength')
-            ->delete('shoutbox_maxwordlength')
             ->delete('shoutbox_writeaccess');
     }
 
@@ -98,6 +96,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
                 // no break
             case "1.5.0":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->delete('shoutbox_maxwordlength');
                 // no break
         }
 

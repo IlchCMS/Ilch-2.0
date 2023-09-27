@@ -59,23 +59,23 @@ class DefaultCaptcha
      */
     public function getCaptcha(View $view): string
     {
-        return '<div class="form-group ' . ($view->validation()->hasError('captcha') ? 'has-error' : '') . '">
-            <label class="col-lg-2 control-label">
+        return '<div class="form-group row mb-15 ' . ($view->validation()->hasError('captcha') ? 'has-error' : '') . '">
+            <label class="col-xl-2 control-label">
                 ' . $view->getTrans('captcha') . '
             </label>
-            <div class="col-lg-8">
+            <div class="col-xl-8">
                 ' . $view->getCaptchaField() . '
             </div>
         </div>
-        <div class="form-group ' . ($view->validation()->hasError('captcha') ? 'has-error' : '') . '">
-            <div class="col-lg-offset-2 col-lg-8 input-group captcha">
+        <div class="form-group row mb-15 ' . ($view->validation()->hasError('captcha') ? 'has-error' : '') . '">
+            <div class="offset-xl-2 col-xl-8 input-group captcha">
                 <input type="text"
                        class="form-control"
                        id="captcha-form"
                        name="captcha"
                        autocomplete="off"
                        placeholder="' . $view->getTrans('captcha') . '" />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <a href="javascript:void(0)" onclick="
                         document.getElementById(\'captcha\').src=\'' . $view->getUrl() . '/application/libraries/Captcha/Captcha.php?\'+Math.random();
                         document.getElementById(\'captcha-form\').focus();"

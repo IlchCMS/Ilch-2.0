@@ -1,6 +1,13 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <h1><?=$this->getTrans('gallery') ?>: <?=$this->get('galleryTitle') ?></h1>
-<?=$this->get('pagination')->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>
-<?php if ($this->get('image')): ?>
+<?=$pagination->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>
+<?php if ($this->get('image')) : ?>
     <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -24,14 +31,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('image') as $image): ?>
+                    <?php
+                    /** @var \Modules\Gallery\Models\Image $image */
+                    foreach ($this->get('image') as $image) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_gallery', $image->getId()) ?></td>
                             <td><?=$this->getEditIcon(['controller' => 'image', 'action' => 'treatimage', 'gallery' => $image->getGalleryId(), 'id' => $image->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $image->getId(), 'gallery' => $this->getRequest()->getParam('id')]) ?></td>
-                            <?php if (file_exists($image->getImageThumb())): ?>
-                                <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/></td>
-                            <?php else: ?>
+                            <?php if (file_exists($image->getImageThumb())) : ?>
+                                <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/></td>
+                            <?php else : ?>
                                 <td><img class="image thumbnail img-responsive" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$this->getTrans('noMediaAlt') ?>"/></td>
                             <?php endif; ?>
                             <td><?=$this->escape($image->getImageTitle()) ?></td>
@@ -43,16 +52,17 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noImage') ?>
 <?php endif; ?>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script>
-<?=$this->getMedia()
-        ->addActionButton($this->getUrl('admin/gallery/gallery/treatgallery/id/'.$this->getRequest()->getParam('id').'/'))
-        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/multi/id/'.$this->getRequest()->getParam('id').'/'))
-        ->addUploadController($this->getUrl('admin/media/index/upload'))
+<?php
+$this->getMedia()
+    ->addActionButton($this->getUrl('admin/gallery/gallery/treatgallery/id/' . $this->getRequest()->getParam('id') . '/'))
+    ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/multi/id/' . $this->getRequest()->getParam('id') . '/'))
+    ->addUploadController($this->getUrl('admin/media/index/upload'));
 ?>
 
 function reload() {

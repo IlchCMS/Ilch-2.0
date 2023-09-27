@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -24,7 +25,7 @@ class Pictureofx extends Box
         if (!empty($imageIds)) {
             $currentPicOfX = explode(',', $this->getConfig()->get('gallery_currentPicOfX'));
 
-            switch($this->getConfig()->get('gallery_pictureOfXInterval')) {
+            switch ($this->getConfig()->get('gallery_pictureOfXInterval')) {
                 case '1':
                     $add = 'PT1H';
                     break;
@@ -61,7 +62,7 @@ class Pictureofx extends Box
                     }
                 }
 
-                $this->getConfig()->set('gallery_currentPicOfX', $index .','.$currentTime->format('Y-m-d H:i:s'));
+                $this->getConfig()->set('gallery_currentPicOfX', $index . ',' . $currentTime->format('Y-m-d H:i:s'));
             } else {
                 $index = $currentIndex;
 

@@ -52,7 +52,6 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'limit'         => 'required|min:1',
-                'maxwordlength' => 'required|min:10',
                 'maxtextlength' => 'required|min:20'
             ]);
 
@@ -64,7 +63,6 @@ class Settings extends \Ilch\Controller\Admin
                 }
 
                 $this->getConfig()->set('shoutbox_limit', $this->getRequest()->getPost('limit'))
-                    ->set('shoutbox_maxwordlength', $this->getRequest()->getPost('maxwordlength'))
                     ->set('shoutbox_maxtextlength', $this->getRequest()->getPost('maxtextlength'))
                     ->set('shoutbox_writeaccess', $writeAccess);
 
@@ -80,7 +78,6 @@ class Settings extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('limit', $this->getConfig()->get('shoutbox_limit'))
-            ->set('maxwordlength', $this->getConfig()->get('shoutbox_maxwordlength'))
             ->set('maxtextlength', $this->getConfig()->get('shoutbox_maxtextlength'))
             ->set('userGroupList', $userGroupMapper->getGroupList())
             ->set('writeAccess', $this->getConfig()->get('shoutbox_writeaccess'));

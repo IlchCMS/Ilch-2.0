@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -60,4 +61,12 @@ return [
     'noMediaAlt' => 'No thumbnail available.',
     'titleCannotChangeTypeOnEdit' => 'Changing the type afterwards is not possible.',
     'titleCannotChangeCategoryOnEdit' => 'On the left side you can assign the gallery to another category by drag and drop.',
+    'venoboxOverlayColor' => 'Backgroundcolor?',
+    'venoboxInfiniteGallery' => 'Infinite gallery?',
+    'venoboxNumeration' => 'Numbering of image?',
+    'venoboxBgcolor' => 'Backgroundcolor of image?',
+    'venoboxBorder' => 'Frame thickness?',
+    'venoboxTitleattr' => 'Display image title?',
+    'venoboxSetting' => 'Venobox settings',
+    'venoboxExampleText' => 'for example: 15px',
 ];

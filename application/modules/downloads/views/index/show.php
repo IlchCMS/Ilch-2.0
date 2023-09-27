@@ -57,7 +57,7 @@
                 <div class="panel-footer text-center">
                     <i class="fa-solid fa-pencil"></i> <?=$this->escape($file->getFileTitle()) ?><br>
                     <i class="fa-regular fa-comment"></i> <?=$commentsCount ?>
-                    <i class="fa-solid fa-eye"> <?=$file->getVisits() ?></i>
+                    <i class="fa-solid fa-eye"></i> <?=$file->getVisits() ?>
                 </div>
             </div>
         </div>

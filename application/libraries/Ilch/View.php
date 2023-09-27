@@ -55,7 +55,7 @@ class View extends Design\Base
     public function getSaveBar($saveKey = 'saveButton', $nameKey = null, $deleteKey = '')
     {
         $html = '<div class="content_savebox">
-                    <button type="submit" class="save_button btn btn-default" name="save'.$nameKey.'" value="save">
+                    <button type="submit" class="save_button btn btn-outline-secondary" name="save'.$nameKey.'" value="save">
                         '.$this->getTrans($saveKey).'
                     </button>';
 

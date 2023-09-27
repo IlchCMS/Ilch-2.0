@@ -5,7 +5,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('showallonstart') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('showallonstart') ? 'has-error' : '' ?>">
         <label for="threadsPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('showallonstart') ?>:
         </label>

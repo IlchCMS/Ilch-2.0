@@ -374,18 +374,18 @@ $(document).ready
             if ($(this).val() == '0') {
                 $('.dyn').html('');
             } else if ($(this).val() == '1') {
-                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-4 control-label"><?=$this->getTrans('address') ?></label>\n\
+                $('.dyn').html('<div class="form-group row ilch-margin-b"><label for="href" class="col-lg-4 control-label"><?=$this->getTrans('address') ?></label>\n\
                                 <div class="col-lg-8"><input type="text" class="form-control" id="href" value="http://" /></div></div>\n\
-                                <div class="form-group"><label for="target" class="col-lg-4 control-label"><?=$this->getTrans('target') ?></label>\n\
+                                <div class="form-group row ilch-margin-b"><label for="target" class="col-lg-4 control-label"><?=$this->getTrans('target') ?></label>\n\
                                 <div class="col-lg-8"><select class="form-control" id="target"><?php foreach ($targets as $target => $translation) { echo '<option value="'.$target.'">'.$this->getTrans($translation).'</option>';} ?></select></div></div>'+menuHtml);
             } else if ($(this).val() == '2') {
-                 $('.dyn').html('<div class="form-group"><label for="siteid" class="col-lg-4 control-label"><?=$this->getTrans('page') ?></label>\n\
+                 $('.dyn').html('<div class="form-group row ilch-margin-b"><label for="siteid" class="col-lg-4 control-label"><?=$this->getTrans('page') ?></label>\n\
                                 <div class="col-lg-8"><?php if (!empty($pages)) { echo '<select class="form-control" id="siteid">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$this->escape($page->getTitle()).'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
-                $('.dyn').html('<div class="form-group"><label for="modulekey" class="col-lg-4 control-label"><?=$this->getTrans('module') ?></label>\n\
+                $('.dyn').html('<div class="form-group row ilch-margin-b"><label for="modulekey" class="col-lg-4 control-label"><?=$this->getTrans('module') ?></label>\n\
                                 <div class="col-lg-8"><?php if (!empty($modules)) { echo '<select class="form-control" id="modulekey">'; foreach ($modules as $module) { if ($module->getHideMenu() != true) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';}} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '4') {
-                $('.dyn').html('<div class="form-group"><label for="boxkey" class="col-lg-4 control-label"><?=$this->getTrans('box') ?></label>\n\
+                $('.dyn').html('<div class="form-group row ilch-margin-b"><label for="boxkey" class="col-lg-4 control-label"><?=$this->getTrans('box') ?></label>\n\
                                 <div class="col-lg-8"><?='<select class="form-control" id="boxkey">';
                     foreach ($boxes as $box) { echo '<option value="'.$box->getModule().'_'.$box->getKey().'">'.$box->getName().'</option>'; } foreach ($selfBoxes as $box) { echo '<option value="'.$box->getId().'">self_'.$this->escape($box->getTitle()).'</option>';} echo '</select>'; ?></div></div>');
             }

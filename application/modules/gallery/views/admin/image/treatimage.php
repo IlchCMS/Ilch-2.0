@@ -1,4 +1,10 @@
-<?php $image = $this->get('image'); ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Gallery\Models\Image $image */
+$image = $this->get('image');
+?>
 
 <h1><?=$this->getTrans('treatImage') ?></h1>
 <form class="form-horizontal" method="POST">
@@ -6,12 +12,12 @@
     <div id="gallery">
         <div class="row">
             <div class="col-md-4">
-                <a href="<?=$this->getUrl().'/'.$image->getImageUrl() ?>">
-                    <img class="thumbnail" src="<?=$this->getUrl().'/'.$image->getImageUrl() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/>
+                <a href="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>">
+                    <img class="thumbnail" src="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/>
                 </a>
             </div>
             <div class="col-md-8">
-                <div class="form-group">
+                <div class="row form-group ilch-margin-b">
                     <label for="imageTitleInput" class="col-lg-2 control-label">
                         <?=$this->getTrans('imageTitle') ?>:
                     </label>
@@ -23,7 +29,7 @@
                                value="<?=$this->escape($image->getImageTitle()) ?>" />
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="row form-group ilch-margin-b">
                     <label for="imageDescInput" class="col-lg-2 control-label">
                         <?=$this->getTrans('imageDesc') ?>:
                     </label>
@@ -37,5 +43,5 @@
             </div>
         </div>
     </div>
-    <?=$this->getSaveBar('saveButton') ?>
+    <?=$this->getSaveBar() ?>
 </form>

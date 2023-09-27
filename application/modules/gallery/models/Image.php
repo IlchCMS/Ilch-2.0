@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -18,63 +19,63 @@ class Image extends Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The imageId of the image.
      *
-     * @var string
+     * @var int
      */
-    protected $image_id;
+    protected $image_id = 0;
 
     /**
      * The imageThumb of the image.
      *
      * @var string
      */
-    protected $image_thumb;
+    protected $image_thumb = '';
 
     /**
      * Title of the image.
      *
      * @var string
      */
-    protected $image_title;
+    protected $image_title = '';
 
     /**
      * Description of the image.
      *
      * @var string
      */
-    protected $image_desc;
+    protected $image_desc = '';
 
     /**
      * The gallery id of the image.
      *
-     * @var string
+     * @var int
      */
-    protected $gallery_id;
+    protected $gallery_id = 0;
 
     /**
      * The visits of the image.
      *
-     * @var string
+     * @var int
      */
-    protected $visits;
+    protected $visits = 0;
 
     /**
      * The imageUrl of the image.
      *
      * @var string
      */
-    protected $image_url;
+    protected $image_url = '';
 
-   /**
+    /**
      * Gets the id of the image.
      *
-     * @return int|null
+     * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -132,9 +133,9 @@ class Image extends Model
     /**
      * Gets the visits of the image.
      *
-     * @return string
+     * @return int
      */
-    public function getVisits(): string
+    public function getVisits(): int
     {
         return $this->visits;
     }
@@ -212,9 +213,9 @@ class Image extends Model
     /**
      * Sets the visits of the image.
      *
-     * @param string $visits
+     * @param int $visits
      */
-    public function setVisits(string $visits)
+    public function setVisits(int $visits)
     {
         $this->visits = $visits;
     }

@@ -1,4 +1,11 @@
-<?php $commentMapper = new \Modules\Comment\Mappers\Comment(); ?>
+<?php
+
+/** @var \Ilch\View $this */
+$commentMapper = new \Modules\Comment\Mappers\Comment();
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 
 <style>
 @media (max-width: 990px) {
@@ -41,28 +48,30 @@
 
 <link href="<?=$this->getModuleUrl('static/venobox/venobox.min.css') ?>" media="screen" rel="stylesheet">
 
-<div id="gallery">
-    <?php foreach ($this->get('image') as $image): ?>
-        <?php $commentsCount = $commentMapper->getCountComments ('gallery/index/showimage/id/'.$image->getId()); ?>
- 
-        <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
-            <div class="panel panel-default">
-            <?php if (file_exists($image->getImageThumb())): ?>
+<div id="gallery" class="row">
+    <?php
+    /** @var \Modules\Gallery\Models\Image $image */
+    foreach ($this->get('image') as $image) : ?>
+        <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/' . $image->getId()); ?>
+
+        <div class="col-sm-6 col-lg-4 col-xl-3 col-md-4">
+            <div class="card card-default">
+            <?php if (file_exists($image->getImageThumb())) : ?>
                 <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" title="<?= $image->getImageTitle() ?> ">
-                    <div class="panel-image thumbnail">
+                    <div class="card-image img-thumbnail">
                         <img src="<?= $this->getUrl() . '/' . $image->getImageThumb() ?>" class="panel-image-preview" alt="<?= $this->escape($image->getImageTitle()) ?>" />
                     </div>
                 </a>
-            <?php else: ?>
-                <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" title="<?= $image->getImageTitle() ?> ">
-                    <div class="panel-image thumbnail">
+            <?php else : ?>
+                <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" data-title="<?= $image->getImageTitle() ?> ">
+                    <div class="card-image img-thumbnail">
                         <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" class="panel-image-preview" alt="<?=$this->getTrans('noMediaAlt') ?>" />
                     </div>
                 </a>
             <?php endif; ?>
 
                 <a href="<?=$this->getUrl(['action' => 'showimage', 'id' => $image->getId()]) ?>" title="<?=$this->getTrans('description')?>">
-                    <div class="panel-footer text-center">
+                    <div class="card-footer text-center">
                         <i class="fa-regular fa-comment"></i> <?=$commentsCount ?>
                         <i class="fa-solid fa-eye"></i> <?=$image->getVisits() ?>
                     </div>
@@ -71,15 +80,21 @@
         </div>
     <?php endforeach; ?>
 </div>
-<?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
+<?=$pagination->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
 
 <script src="<?=$this->getModuleUrl('static/venobox/venobox.min.js') ?>"></script>
 <script>
-    new VenoBox({
-        selector: '.venobox',
-        numeration: true,
-        share: true,
-        navTouch: true,
-        spinner: 'pulse',
-    })
+    const options = {
+        selector: ".venobox",
+        titleStyle: 'bar',
+    <?php foreach ($this->get('venoboxOptions') as $param => $value) : ?>
+        <?php if ($value === "0" || $value === "1") : ?>
+            <?=$param ?>: <?=$value === "1" ? 'true' : 'false' ?>,
+        <?php else : ?>
+            <?=$param ?>: "<?=$value ?>",
+        <?php endif; ?>
+    <?php endforeach; ?>
+    };
+
+    new VenoBox(options);
 </script>
