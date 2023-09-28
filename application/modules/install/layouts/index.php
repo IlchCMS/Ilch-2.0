@@ -20,15 +20,15 @@
         <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
     </head>
     <body>
-        <div class="container">
-            <div class="col-xl-offset-2 col-xl-12 col-lg-12 col-md-12 col-sm-12 install_container">
+        <div class="container d-flex align-items-center justify-content-center">
+            <div class="col-xl-offset-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 install_container">
                 <div class="logo" title="<?=$this->getTrans('ilchInstall', VERSION) ?>"></div>
                 <div class="installVersion" title="<?=$this->getTrans('ilchInstall', VERSION) ?>">
                     <?=$this->getTrans('ilchInstallVersion', VERSION) ?>
                 </div>
                 <form autocomplete="off" class="row needs-validation" method="POST" action="<?=$this->getUrl(['action' => urlencode($this->getRequest()->getActionName())]) ?>">
                     <?=$this->getTokenField() ?>
-                    <div class="d-none d-md-block col-xl-4 col-lg-4 col-md-4 verticalLine install_step">
+                    <div class="d-none d-md-block col-xl-3 col-lg-3 col-md-3 verticalLine install_step">
                         <?php
                         $done = 1;
                         /** @var array $menu */
@@ -48,7 +48,7 @@
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
                         <?php foreach ($menu as $key => $values) : ?>
                             <?php if ($this->getRequest()->getActionName() == $key) : ?>
                                 <h2><?=$this->getTrans($values['langKey']) ?></h2>

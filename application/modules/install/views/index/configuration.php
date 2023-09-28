@@ -19,9 +19,7 @@ $usages = $this->get('usages');
                     <option <?=$this->originalInput('usage', $this->get('usage')) == $value ? 'selected="selected"' : '' ?> value="<?=$value ?>"><?=$this->getTrans($value) ?></option>
                 <?php endforeach; ?>
             </select>
-            <div class="input-group-text" data-bs-toggle="collapse" data-bs-target="#modules" title="<?=$this->getTrans('custom') ?>">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-circle-info"></i> &nbsp; <?=$this->getTrans('custom') ?></button>
-            </div>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-bs-toggle="collapse" data-bs-target="#modules" title="<?=$this->getTrans('custom') ?>"><i class="fa-solid fa-circle-info"></i> &nbsp; <?=$this->getTrans('custom') ?></button>
         </div>
     </div>
 </div>
