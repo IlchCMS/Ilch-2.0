@@ -20,8 +20,8 @@
         <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
     </head>
     <body>
-        <div class="container d-flex align-items-center justify-content-center">
-            <div class="col-xl-offset-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 install_container">
+        <div class="container">
+            <div class="col-xl-offset-2 col-xl-12 col-lg-12 col-md-12 col-sm-12 install_container">
                 <div class="logo" title="<?=$this->getTrans('ilchInstall', VERSION) ?>"></div>
                 <div class="installVersion" title="<?=$this->getTrans('ilchInstall', VERSION) ?>">
                     <?=$this->getTrans('ilchInstallVersion', VERSION) ?>
