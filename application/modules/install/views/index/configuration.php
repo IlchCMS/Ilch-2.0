@@ -8,72 +8,74 @@ $errors = $this->get('errors');
 /** @var array $usages */
 $usages = $this->get('usages');
 ?>
-<div class="mb-3 <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
-    <label for="usage" class="form-label">
+<div class="row mb-3">
+    <label for="usage" class="col-xl-3 form-label <?=$this->validation()->hasError('usage') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('usage') ?>:
     </label>
-    <div class="input-group mb-9">
-        <select class="form-select" id="usage" name="usage">
-            <?php foreach ($usages as $value) : ?>
-                <option <?=$this->originalInput('usage', $this->get('usage')) == $value ? 'selected="selected"' : '' ?> value="<?=$value ?>"><?=$this->getTrans($value) ?></option>
-            <?php endforeach; ?>
-        </select>
-        <div class="input-group-text" data-bs-toggle="collapse" data-bs-target="#modules" title="<?=$this->getTrans('custom') ?>">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-circle-info"></i> &nbsp; <?=$this->getTrans('custom') ?></button>
+    <div class="col-xl-9">
+        <div class="input-group">
+            <select class="form-select <?=$this->validation()->hasError('usage') ? 'is-invalid' : '' ?>" id="usage" name="usage">
+                <?php foreach ($usages as $value) : ?>
+                    <option <?=$this->originalInput('usage', $this->get('usage')) == $value ? 'selected="selected"' : '' ?> value="<?=$value ?>"><?=$this->getTrans($value) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <div class="input-group-text" data-bs-toggle="collapse" data-bs-target="#modules" title="<?=$this->getTrans('custom') ?>">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-circle-info"></i> &nbsp; <?=$this->getTrans('custom') ?></button>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="mb-3 collapse" id="modules">
-    <div id="modulesContent" class="col-lg-offset-1 col-lg-12"></div>
+<div class="row mb-3 collapse" id="modules">
+    <div id="modulesContent" class="col-xl-offset-1 col-xl-12"></div>
 </div>
 
-<div class="mb-3 <?=$this->validation()->hasError('adminName') ? 'has-error' : '' ?>">
-    <label for="adminName" class="form-label">
+<div class="row mb-3">
+    <label for="adminName" class="form-label <?=$this->validation()->hasError('adminName') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('adminName') ?>:
     </label>
     <div class="col-lg-9">
         <input type="text"
-               class="form-control"
+               class="form-control <?=$this->validation()->hasError('adminName') ? 'is-invalid' : '' ?>"
                id="adminName"
                name="adminName"
                value="<?=$this->escape($this->originalInput('adminName', $this->get('adminName'))) ?>"
                autocomplete="username" />
     </div>
 </div>
-<div class="mb-3 <?=$this->validation()->hasError('adminPassword') ? 'has-error' : '' ?>">
-    <label for="adminPassword" class="form-label">
+<div class="row mb-3">
+    <label for="adminPassword" class="form-label <?=$this->validation()->hasError('adminPassword') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('adminPassword') ?>:
     </label>
     <div class="col-lg-9">
         <input type="password"
-               class="form-control"
+               class="form-control <?=$this->validation()->hasError('adminPassword') ? 'is-invalid' : '' ?>"
                id="adminPassword"
                name="adminPassword"
                value="<?=$this->escape($this->originalInput('adminPassword', $this->get('adminPassword'))) ?>"
                autocomplete="new-password" />
     </div>
 </div>
-<div class="mb-3 <?=$this->validation()->hasError('adminPassword2') ? 'has-error' : '' ?>">
-    <label for="adminPassword2" class="form-label">
+<div class="row mb-3">
+    <label for="adminPassword2" class="form-label <?=$this->validation()->hasError('adminPassword2') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('adminPassword2') ?>:
     </label>
     <div class="col-lg-9">
         <input type="password"
-               class="form-control"
+               class="form-control <?=$this->validation()->hasError('adminPassword2') ? 'is-invalid' : '' ?>"
                id="adminPassword2"
                name="adminPassword2"
                value="<?=$this->escape($this->originalInput('adminPassword2', $this->get('adminPassword2'))) ?>"
                autocomplete="new-password" />
     </div>
 </div>
-<div class="mb-3 <?=$this->validation()->hasError('adminEmail') ? 'has-error' : '' ?>">
-    <label for="adminEmail" class="form-label">
+<div class="row mb-3">
+    <label for="adminEmail" class="form-label <?=$this->validation()->hasError('adminEmail') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('adminEmail') ?>:
     </label>
     <div class="col-lg-9">
         <input type="text"
-               class="form-control"
+               class="form-control <?=$this->validation()->hasError('adminEmail') ? 'is-invalid' : '' ?>"
                id="adminEmail"
                name="adminEmail"
                value="<?=$this->escape($this->originalInput('adminEmail', $this->get('adminEmail'))) ?>" />

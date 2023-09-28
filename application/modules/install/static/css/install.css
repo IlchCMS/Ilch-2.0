@@ -3,13 +3,13 @@ body {
     padding-top: 65px;
 }
 
-.container {
+.container-fluid {
     width: 100%;
     padding-left: 50px;
     padding-right: 2px;
 }
 @media (min-width: 1200px) {
-    .container {
+    .container-fluid {
         margin-left: 0;
     }
 
@@ -18,7 +18,7 @@ body {
     }
 }
 @media (min-width: 1400px) {
-    .container {
+    .container-fluid {
         width: 75%;
         margin-left: auto;
         margin-right: auto;
@@ -138,6 +138,8 @@ div.license {
     height: 350px;
     overflow-y: scroll;
     overflow-x : hidden;
+    background-color:#f1f1f1;
+	cursor:not-allowed
 }
 
 
