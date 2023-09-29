@@ -81,10 +81,10 @@
                         <?php if ($this->getRequest()->getActionName() === 'finish') : ?>
                             <div class="float-end">
                                 <a target="_blank" href="<?=$this->getUrl() ?>" class="btn btn-success">
-                                    Frontend
+                                    <?=$this->getTrans('frontend') ?>
                                 </a>
                                 <a target="_blank" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'admin', 'action' => 'index']) ?>" class="btn btn-primary">
-                                    Administration
+                                    <?=$this->getTrans('administration') ?>
                                 </a>
                             </div>
                         <?php endif; ?>
