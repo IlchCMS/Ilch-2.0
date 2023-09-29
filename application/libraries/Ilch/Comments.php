@@ -111,7 +111,7 @@ class Comments
 
             if ($obj->getUser() && $config->get('comment_reply') == 1 && $req < $config->get('comment_nesting')-1) {
                 $commentsHtml .= '
-                                <a href="javascript:slideReply(\'reply_'.$fk_comment->getId().'\');" class="btn btn-sm btn-hover-success btn-hover-primary">
+                                <a href="javascript:slideReply(\'reply_'.$fk_comment->getId().'\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
                                     <i class="fa-solid fa-reply"></i> '.$obj->getTrans('reply').'
                                 </a>';
             }
@@ -312,7 +312,7 @@ class Comments
 
             if ($layout->getUser() && $config->get('comment_reply') == 1 && $config->get('comment_nesting') > 0) {
                 $commentsHtml .= '
-                                    <a href="javascript:slideReply(\'reply_'.$comment->getId().'\');" class="btn btn-sm btn-hover-success btn-hover-primary">
+                                    <a href="javascript:slideReply(\'reply_'.$comment->getId().'\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
                                         <i class="fa-solid fa-reply"></i> '.$layout->getTrans('reply').'
                                     </a>';
             }
