@@ -23,7 +23,7 @@ function recCategory(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery
 
     if ($item->getType() === 0) {
         echo '<li>
-                <a href="#filter" data-filter=".X' . $obj->escape($item->getId()) . 'X"><i class="fa-solid fa-image"></i> ' . $obj->escape($item->getTitle()) . '</a>
+                <a class="dropdown-item" href="#filter" data-filter=".X' . $obj->escape($item->getId()) . 'X"><i class="fa-solid fa-image"></i> ' . $obj->escape($item->getTitle()) . '</a>
               </li>';
     }
     if (!empty($subItems)) {
@@ -92,38 +92,29 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
 <link href="<?=$this->getModuleUrl('static/css/gallery.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('menuGallery') ?> <span class="catinfo"></span></h1>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-        <span class="sr-only"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+    <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
-    </div>
     <div id="navbar-collapse" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li class="dropdown active">
-          <a class="dropdown-toggle" href="#" id="dropdownConfig" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-arrow-down"></i> <?=$this->getTrans('allCat') ?></a>
-          <ul id="filters" class="dropdown-menu" aria-labelledby="dropdownConfig">
-            <li class="active"><a href="#filter" data-filter="*"><i class="fa-solid fa-image"></i> <?=$this->getTrans('allCat') ?></a></li>
-            <?php if (!empty($galleryItems)) :
-                ?>
-                <?php foreach ($galleryItems as $item) :
-                    ?>
-                    <?php recCategory($item, $galleryMapper, $this); ?>
-                    <?php
-                endforeach; ?>
-                <?php
-            endif; ?>
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown active">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownConfig" data-bs-toggle="dropdown" role="button"><i class="fa-solid fa-arrow-down"></i> <?=$this->getTrans('allCat') ?></a>
+          <ul id="filters" class="dropdown-menu">
+            <li><a class="dropdown-item" href="#filter" data-filter="*"><i class="fa-solid fa-image"></i> <?=$this->getTrans('allCat') ?></a></li>
+            <?php if (!empty($galleryItems)): ?>
+              <?php foreach ($galleryItems as $item): ?>
+                <?php recCategory($item, $galleryMapper, $this, $imageMapper); ?>
+              <?php endforeach; ?>
+            <?php endif; ?>
           </ul>
         </li>
-        <li id="sorts"><a href="#filter" data-sort-direction="asc" data-sort-by="name"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
+        <li id="sorts" class="nav-item"><a href="#filter" data-sort-direction="asc" data-sort-by="name" class="nav-link"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
       </ul>
-      <form class="nav navbar-form navbar-right">
-        <input type="text" id="quicksearch" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
+      <form class="d-flex">
+        <input type="text" id="quicksearch" class="form-control" aria-label="search" type="search" placeholder="<?=$this->getTrans('search') ?>">
       </form>
     </div>
   </div>

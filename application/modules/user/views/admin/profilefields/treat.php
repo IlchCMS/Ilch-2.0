@@ -45,7 +45,7 @@ $iconArray = [
            value="<?=($profileField->getId()) ? $profileField->getPosition() : $countOfProfileFields ?>" />
 
     <!-- select profilefield -->
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="profileFieldType" class="col-lg-2 control-label">
             <?=$this->getTrans('profileFieldType') ?>
         </label>
@@ -61,7 +61,7 @@ $iconArray = [
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <span class="input-group-addon typeinfo">
+                <span class="input-group-text typeinfo">
                     <span class="<?=($profileField->getType()!==null) ? $iconArray[$profileField->getType()] : $iconArray[0] ?>"></span>
                 </span>
             </div>
@@ -69,7 +69,7 @@ $iconArray = [
     </div>
 
     <!-- field description -->
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="profileFieldDescription" class="col-lg-2 control-label">
             <?=$this->getTrans('profileFieldDescription') ?>
         </label>
@@ -77,9 +77,9 @@ $iconArray = [
             <textarea class="form-control typedesc" id="profileFieldDescription" rows="2" readonly><?=($profileField->getType()!==null) ? $this->getTrans('profileFieldTypeDesc'.$profileField->getType()) : $this->getTrans('profileFieldTypeDesc0') ?></textarea>
         </div>
     </div>
-    
+
     <!-- icon selection -->
-    <div class="form-group <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldIcons">
+    <div class="row form-group ilch-margin-b <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldIcons">
         <?php $icon = '';
         if ($profileField->getType() == 2) {
             $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'];
@@ -89,7 +89,7 @@ $iconArray = [
             <?=$this->getTrans('profileFieldIcon') ?>:
         </label>
         <div class="col-lg-4 input-group ilch-date">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span id="chosensymbol" class="<?=$icon ?>"></span>
             </span>
             <input type="text"
@@ -98,14 +98,14 @@ $iconArray = [
                    name="profileField[icon]"
                    value="<?=$icon ?>"
                    readonly />
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-arrow-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
             </span>
         </div>
     </div>
 
     <!-- db key -->
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="profileFieldKey" class="col-lg-2 control-label">
             <?=$this->getTrans('profileFieldKey') ?>
         </label>
@@ -116,15 +116,15 @@ $iconArray = [
                        id="profileFieldKey"
                        name="profileField[key]"
                        value="<?=$this->escape($profileField->getKey()) ?>" />
-                <span class="input-group-addon" data-toggle="event-popover" title="" data-content="<?=$this->getTrans('profileFieldKeyDesc') ?>" data-original-title="Info">
+                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="right" title="<?=$this->getTrans('profileFieldKeyDesc') ?>" data-content="<?=$this->getTrans('profileFieldKeyDesc') ?>" data-original-title="Info">
                     <span class="fa-solid fa-info"></span>
                 </span>
             </div>
         </div>
     </div>
-    
+
     <!-- icon addition -->
-    <div class="form-group <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldAddition">
+    <div class="row form-group ilch-margin-b <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldAddition">
         <label for="profileFieldLinkAddition" class="col-lg-2 control-label">
             <?=$this->getTrans('profileFieldLinkAddition') ?>
         </label>
@@ -141,7 +141,7 @@ $iconArray = [
     <div id="translations">
         <?php $i = 0; ?>
         <?php foreach ($profileFieldsTranslation as $profileFieldTranslation): ?>
-        <div class="form-group" id="profileFieldTrans<?=$i ?>">
+        <div class="row form-group ilch-margin-b" id="profileFieldTrans<?=$i ?>">
             <input type="hidden" name="profileFieldTrans<?=$i ?>[field_id]" value="<?=$profileField->getId() ?>" />
             <input type="hidden" name="profileFieldTrans<?=$i ?>[locale]" value="<?=$profileFieldTranslation->getLocale() ?>" />
             <label for="profileFieldName<?=$i ?>" class="col-lg-2 control-label">
@@ -152,7 +152,7 @@ $iconArray = [
                     <select class="form-control input-group-addon" name="profileFieldTrans<?=$i ?>[locale]" id="profileFieldName<?=$i ?>" onchange="isDuplicate()">
                         <option selected="selected" disabled><?=$this->getTrans('pleaseSelect') ?></option>
                         <?php foreach ($localeList as $key => $locale) :?>
-                            <option value="<?=$key ?>" 
+                            <option value="<?=$key ?>"
                             <?=(($locale == $localeList[$profileFieldTranslation->getLocale()]) ? ' selected' : ''); ?>
                             ><?=$locale ?></option>
                         <?php next($localeList);
@@ -174,7 +174,7 @@ $iconArray = [
         </div>
         <?php endforeach; ?>
         <div id="addTranslations"></div>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="profileFieldTranslation" class="col-lg-2 control-label">
                 <?=$this->getTrans('addProfileFieldTranslation') ?>
             </label>
@@ -208,10 +208,10 @@ $iconArray = [
                             <button type="button" class="btn btn-success btn-add">+</button>
                         </span>
                     </div>
-                </div>    
+                </div>
             </div>
         <?php else : ?>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="profileFieldOptions" class="col-lg-2 control-label">
                 <?=$this->getTrans('profileFieldOptions') ?>
             </label>
@@ -443,7 +443,7 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
         $(document).on('click', '.btn-add', addFormGroup);
         $(document).on('click', '.btn-remove', removeFormGroup);
     });
-    
+
     $(function () {
         $('[data-toggle="event-popover"]').popover({
             container: 'body',

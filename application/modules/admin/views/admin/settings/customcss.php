@@ -7,7 +7,7 @@
 <h1><?=$this->getTrans('menuCustomCSS') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-6">
             <textarea class="form-control"
                       id="customCSS"

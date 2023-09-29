@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('menuSettings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('sortCategoriesAlphabetically') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('sortCategoriesAlphabetically') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('sortCategoriesAlphabetically') ?>
         </div>
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('sortQuestionsAlphabetically') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('sortQuestionsAlphabetically') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('sortQuestionsAlphabetically') ?>
         </div>

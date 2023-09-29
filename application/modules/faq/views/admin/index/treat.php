@@ -15,7 +15,7 @@ $cats = $this->get('cats');
 <?php if ($cats) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
+        <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
             <label for="catId" class="col-lg-2 control-label">
                 <?=$this->getTrans('cat') ?>:
             </label>
@@ -27,7 +27,7 @@ $cats = $this->get('cats');
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
+        <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
             <label for="question" class="col-lg-2 control-label">
                 <?=$this->getTrans('question') ?>:
             </label>
@@ -39,7 +39,7 @@ $cats = $this->get('cats');
                        value="<?=$this->escape($this->originalInput('question', $faq->getQuestion())) ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('answer') ? 'has-error' : '' ?>">
+        <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('answer') ? 'has-error' : '' ?>">
             <label for="ck_1" class="col-lg-2 control-label">
                 <?=$this->getTrans('answer') ?>:
             </label>

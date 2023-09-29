@@ -11,7 +11,7 @@ $licenseMissing = $this->get('licenseMissing');
 /** @var string $licenseText */
 $licenseText = $this->get('licenseText');
 ?>
-<div class="form-group <?=$this->validation()->hasError('licenseAccepted') ? 'has-error' : '' ?>">
+<div class="mb-3 <?=$this->validation()->hasError('licenseAccepted') ? 'has-error' : '' ?>">
     <div class="col-lg-12">
         <?php if ($this->get('licenseMissing')) : ?>
             <div class="alert alert-danger" role="alert">

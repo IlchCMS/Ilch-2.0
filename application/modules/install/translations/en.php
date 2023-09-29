@@ -65,6 +65,4 @@ return [
     'private' => 'private site',
     'clan' => 'clan site',
     'dependencyMessage' => 'Other modules were selected to fullfill dependencies.',
-    'frontend' => 'Frontend',
-    'administration' => 'Administration',
 ];

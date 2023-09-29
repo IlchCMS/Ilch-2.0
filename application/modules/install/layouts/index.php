@@ -17,7 +17,7 @@
         <link href="<?=$this->getVendorUrl('npm-asset/jquery-ui/dist/themes/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
         <script src="<?=$this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') ?>"></script>
         <script src="<?=$this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js') ?>"></script>
-        <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
+        <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
     </head>
     <body>
         <div class="container">
@@ -26,7 +26,7 @@
                 <div class="installVersion" title="<?=$this->getTrans('ilchInstall', VERSION) ?>">
                     <?=$this->getTrans('ilchInstallVersion', VERSION) ?>
                 </div>
-                <form autocomplete="off" class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => urlencode($this->getRequest()->getActionName())]) ?>">
+                <form autocomplete="off" class="row gy-2 gx-4" method="POST" action="<?=$this->getUrl(['action' => urlencode($this->getRequest()->getActionName())]) ?>">
                     <?=$this->getTokenField() ?>
                     <div class="col-lg-4 col-md-3 col-sm-3 hidden-xs verticalLine install_step">
                         <?php
@@ -81,10 +81,10 @@
                         <?php if ($this->getRequest()->getActionName() === 'finish') : ?>
                             <div class="pull-right">
                                 <a target="_blank" href="<?=$this->getUrl() ?>" class="btn btn-success">
-                                    <?=$this->getTrans('frontend') ?>
+                                    Frontend
                                 </a>
                                 <a target="_blank" href="<?=$this->getUrl() . '/admin' ?>" class="btn btn-primary">
-                                    <?=$this->getTrans('administration') ?>
+                                    Administration
                                 </a>
                             </div>
                         <?php endif; ?>

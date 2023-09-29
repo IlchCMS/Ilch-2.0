@@ -96,16 +96,16 @@ function buildMenu($parentId, $menuData, View $view) {
             <?php if ($menu->getId() == $this->get('menu')->getId()): ?>
                 <?php $active = 'active'; ?>
             <?php endif; ?>
-            <li class="<?=$active ?>">
-                <a href="<?=$this->getUrl(['menu' => $menu->getId()]) ?>"><?=$this->getTrans('menu') ?> <?=$iMenu ?></a>
+            <li class="<?=$active ?> nav-item">
+                <a class="nav-link <?=$active ?>" href="<?=$this->getUrl(['menu' => $menu->getId()]) ?>"><?=$this->getTrans('menu') ?> <?=$iMenu ?></a>
             </li>
             <?php $iMenu++; ?>
         <?php endforeach; ?>
-        <li><a href="<?=$this->getUrl(['action' => 'add']) ?>">+</a></li>
+        <li class="nav-item"><a class="nav-link" href="<?=$this->getUrl(['action' => 'add']) ?>">+</a></li>
     </ul>
     <br />
     <h1><?=$this->getTrans('menuChange') ?></h1>
-    <div class="form-group">
+    <div class="row mb-3">
         <div class="col-sm-7 col-lg-7">
             <ol id="sortable" class="sortable">
                 <?php if (!empty($menuItems)): ?>
@@ -115,7 +115,7 @@ function buildMenu($parentId, $menuData, View $view) {
         </div>
         <div class="col-sm-5 col-lg-5 changeBox">
             <input type="hidden" id="id" value="" />
-            <div class="form-group">
+            <div class="row mb-3">
                 <label for="title" class="col-lg-4 control-label">
                     <?=$this->getTrans('itemTitle') ?>
                 </label>
@@ -123,7 +123,7 @@ function buildMenu($parentId, $menuData, View $view) {
                     <input type="text" class="form-control" id="title" />
                 </div>
             </div>
-            <div class="form-group">
+            <div class="row mb-3">
                 <label for="type" class="col-lg-4 control-label">
                     <?=$this->getTrans('itemType') ?>
                 </label>
@@ -140,7 +140,7 @@ function buildMenu($parentId, $menuData, View $view) {
                 </div>
             </div>
             <div class="dyn"></div>
-            <div class="form-group">
+            <div class="row mb-3">
                 <label for="access" class="col-lg-4 control-label">
                     <?=$this->getTrans('notVisible') ?>
                 </label>
@@ -154,7 +154,7 @@ function buildMenu($parentId, $menuData, View $view) {
             </div>
 
             <div class="actions col-lg-12 text-right">
-                <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">
+                <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">
             </div>
         </div>
     </div>
@@ -368,24 +368,24 @@ $(document).ready
                 return;
             }
 
-            let menuHtml = '<div class="form-group"><label for="menukey" class="col-lg-4 control-label"><?=$this->getTrans('labelMenu') ?></label>\n\
+            let menuHtml = '<div class="row mb-3"><label for="menukey" class="col-lg-4 control-label"><?=$this->getTrans('labelMenu') ?></label>\n\
                             <div class="col-lg-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
             } else if ($(this).val() == '1') {
-                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-4 control-label"><?=$this->getTrans('address') ?></label>\n\
+                $('.dyn').html('<div class="form-group row ilch-margin-b"><label for="href" class="col-lg-4 control-label"><?=$this->getTrans('address') ?></label>\n\
                                 <div class="col-lg-8"><input type="text" class="form-control" id="href" value="http://" /></div></div>\n\
-                                <div class="form-group"><label for="target" class="col-lg-4 control-label"><?=$this->getTrans('target') ?></label>\n\
+                                <div class="form-group row ilch-margin-b"><label for="target" class="col-lg-4 control-label"><?=$this->getTrans('target') ?></label>\n\
                                 <div class="col-lg-8"><select class="form-control" id="target"><?php foreach ($targets as $target => $translation) { echo '<option value="'.$target.'">'.$this->getTrans($translation).'</option>';} ?></select></div></div>'+menuHtml);
             } else if ($(this).val() == '2') {
-                 $('.dyn').html('<div class="form-group"><label for="siteid" class="col-lg-4 control-label"><?=$this->getTrans('page') ?></label>\n\
+                 $('.dyn').html('<div class="form-group row ilch-margin-b"><label for="siteid" class="col-lg-4 control-label"><?=$this->getTrans('page') ?></label>\n\
                                 <div class="col-lg-8"><?php if (!empty($pages)) { echo '<select class="form-control" id="siteid">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$this->escape($page->getTitle()).'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
-                $('.dyn').html('<div class="form-group"><label for="modulekey" class="col-lg-4 control-label"><?=$this->getTrans('module') ?></label>\n\
+                $('.dyn').html('<div class="form-group row ilch-margin-b"><label for="modulekey" class="col-lg-4 control-label"><?=$this->getTrans('module') ?></label>\n\
                                 <div class="col-lg-8"><?php if (!empty($modules)) { echo '<select class="form-control" id="modulekey">'; foreach ($modules as $module) { if ($module->getHideMenu() != true) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';}} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '4') {
-                $('.dyn').html('<div class="form-group"><label for="boxkey" class="col-lg-4 control-label"><?=$this->getTrans('box') ?></label>\n\
+                $('.dyn').html('<div class="form-group row ilch-margin-b"><label for="boxkey" class="col-lg-4 control-label"><?=$this->getTrans('box') ?></label>\n\
                                 <div class="col-lg-8"><?='<select class="form-control" id="boxkey">';
                     foreach ($boxes as $box) { echo '<option value="'.$box->getModule().'_'.$box->getKey().'">'.$box->getName().'</option>'; } foreach ($selfBoxes as $box) { echo '<option value="'.$box->getId().'">self_'.$this->escape($box->getTitle()).'</option>';} echo '</select>'; ?></div></div>');
             }

@@ -11,7 +11,7 @@ body {
     height: 100%;
     width: 100%;
     direction: ltr;
-    overflow-x: hidden;
+    /*! overflow-x: hidden; */
 }
 h1, h2 {
     font-size: 21px;
@@ -53,20 +53,20 @@ header .rightbar li > #search-header .search-text {
     width: 100%;
 }
 header .rightbar .opens {
-    right: 0; 
-    top: 40px; 
-    padding: 4px; 
+    right: 0;
+    top: 40px;
+    padding: 4px;
     position: absolute;
-    background: #e7e7e7; 
+    background: #e7e7e7;
     border: solid 1px #ccc;
-    box-shadow: 0 1px 3px #ddd; 
+    box-shadow: 0 1px 3px #ddd;
     display: inherit !important
 }
 header .rightbar .search-close {
     display: none;
 }
 header .rightbar .search-opens form {
-    margin: 0;	
+    margin: 0;
 }
 header .rightbar > li > #search-header:hover {
     color: #fff !important;
@@ -90,7 +90,7 @@ header {
     padding: 0 !important;
 }
 a {
-    color: black;
+    color: black !important;
 }
 .chosen-container {
     width: 100% !important;
@@ -105,6 +105,12 @@ a {
 #content .form-horizontal .form-group {
     margin-left: 0;
     margin-right: 0;
+}
+#content .ilch-margin-b {
+    margin-bottom:15px;
+}
+#content .table > thead > tr > th {
+  border-bottom: 2px solid #ddd;
 }
 .leftbar {
     margin-right: 80px;
@@ -197,6 +203,8 @@ aside nav ul .active > a {
     background-image: linear-gradient(to bottom, #F3F3F3, #E2E2E2);
     background-repeat: repeat-x;
     border: none !important;
+    padding:0;
+    z-index: 1000;
 }
 .navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
     padding-right: 0;
@@ -230,7 +238,7 @@ aside nav ul .active > a {
     opacity: 0.2;
     position: fixed;
     bottom: -9px;
-    width: 220px; 
+    width: 220px;
     height: 116px;
     z-index: -1;
     background-image: url("../../../../../static/img/ilch_logo.png");
@@ -240,6 +248,10 @@ aside nav ul .active > a {
 .navbar-nav > li > a {
     padding-top: 10px !important;
     padding-bottom: 10px !important;
+}
+.navbar-nav .nav-link {
+    padding:10px 10px 10px 15px;
+    color: #555;
 }
 .leftbar > div > button {
     padding:  5px 7px 5px 7px;
@@ -462,6 +474,15 @@ aside {
     top: 40px;
     bottom: 0;
 }
+#main .modal-header {
+
+}
+#main .modal-header .btn-close {
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+    margin-top: 0px;
+}
 .savebox_bottom {
     bottom: 45px !important;
 }
@@ -492,7 +513,7 @@ aside {
     z-index: 900;
 }
 #ribbon .breadcrumb {
-    display: inline-block;
+
     margin: 0;
     margin-top: 3px;
     padding: 7px 0 !important;
@@ -535,7 +556,7 @@ nav ul li a {
     line-height: normal;
     font-size: 14px;
     padding: 10px 10px 10px 15px;
-    color: #fff;
+    color:#555;
     display: block;
     font-weight: 400;
     text-decoration: none !important;
@@ -545,7 +566,7 @@ nav ul li a:focus {
     color: #c9c9c9;
 }
 nav ul li a:hover {
-    color: #fff;
+    color: #000 !important;
     text-decoration: none;
 }
 nav ul span.menu-item-parent {
@@ -597,8 +618,8 @@ nav > ul > li > ul::before {
 nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     border-color: #ACACAC !important;
 }
-.nav-tabs > li.active > a {
-    background-color: #e3e3e3;
+.nav-tabs > li>.active {
+    background-color: #e3e3e3 !important;
     cursor: pointer;
     border-top: 1px solid #C0C0C0;
     border-left: 1px solid #C0C0C0;
@@ -646,6 +667,7 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     padding-left: 0;
     padding-right: 0;
     width: 220px;
+    display: block;
 }
 
 .hidden-menu #left-panel {
@@ -697,7 +719,13 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
 #ilch_dropdown .list-group {
     margin-bottom: 0 !important;
 }
-
+.dropdown #menu {
+    min-width: 210px
+}
+.ilch--flex-wrap .list-group-horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 .flipswitch {
     position: relative;
     height: 34px;
@@ -888,6 +916,7 @@ table tbody i.fa.fa-sort {
     }
     .leftbar {
         margin-right: 0;
+        width:100%;
     }
 }
 @media (min-width:768px) and (max-width:991px) {

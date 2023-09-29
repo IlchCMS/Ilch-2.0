@@ -43,7 +43,7 @@ $accesses = $this->get('accesses');
     <script src="<?=$this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') ?>"></script>
     <script src="<?=$this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/jquery.mjs.nestedSortable.js') ?>"></script>
-    <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
+    <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('../application/modules/admin/static/js/functions.js') ?>"></script>
     <script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/tokenfield/bootstrap-tokenfield.min.js') ?>"></script>
@@ -81,7 +81,7 @@ $accesses = $this->get('accesses');
 <!-- HEADER -->
 <header id="header">
     <!-- TOP NAVBAR -->
-    <nav class="navbar navbar-default topnavbar navbar-fixed-top">
+    <nav class="navbar navbar-expand-lg topnavbar navbar-light bg-light" style="padding:0px;">
         <!-- TOP NAVBAR LEFT -->
         <div class="navbar-header leftbar">
             <?php if ($this->hasSidebar()) : ?>
@@ -92,11 +92,11 @@ $accesses = $this->get('accesses');
                 </div>
             <?php endif; ?>
             <img title="Version <?=$config->get('version') ?>" class="pull-left logo hidden-sm" src="<?=$this->getStaticUrl('img/ilch_logo_2.png') ?>"  alt="Version <?=$config->get('version') ?>"/>
-            <div class="hidden-md hidden-lg hidden-sm">
-                <a class="<?=($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') ? 'active' : ''?> home" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
+            <div class=" d-sm-block d-md-block d-lg-none">
+                <a class="float-start <?=($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') ? 'active' : ''?> home" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                     <i class="fa-solid fa-house"></i>
                 </a>
-                <button type="button" class="pull-right navbar-toggle" data-toggle="collapse" data-target="#rightbar">
+                <button class="float-end" type="button" class="pull-right navbar-toggle" data-bs-toggle="collapse" data-bs-target="#rightbar">
                     <i class="fa-solid fa-table-cells"></i>
                 </button>
             </div>
@@ -104,8 +104,8 @@ $accesses = $this->get('accesses');
         <!-- TOP NAVBAR LEFT END -->
         <!-- TOP NAVBAR RIGHT -->
         <nav id="rightbar" class="rightbar navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="<?=($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') ? 'active' : '' ?> visible-md visible-lg">
+            <ul class="nav navbar-nav me-auto">
+                <li class="<?=($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') ? 'active' : '' ?> d-none d-lg-block">
                     <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                         <i class="fa-solid fa-house"></i>
                     </a>
@@ -150,27 +150,29 @@ $accesses = $this->get('accesses');
                 ?>
                 <?php if (!empty($modulesHtml) || !empty($systemModuleHtml) || !empty($layoutModuleHtml)) : ?>
                     <li id="ilch_dropdown" class="dropdown <?=($this->getRequest()->getModuleName() !== 'admin') ? 'active' : '' ?>">
-                        <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
+                         <a class="list-group-item nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#navbar" href="#">
                             <i class="fa-solid fa-puzzle-piece hidden-sm hidden-md"></i> <?=$this->getTrans('modules') ?>
-                            <b class="caret"></b>
                         </a>
-                        <ul role="menu" class="dropdown-menu full pre-scrollable">
+                        <ul  class="dropdown-menu full" id="navbar">
                             <?php if ($this->getUser()->isAdmin()) : ?>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'index']) ?>">
                                     <i class="fa-solid fa-list-ol"></i> <?=$this->getTrans('overview') ?>
                                 </a>
-                                <div class="divider"></div>
+                                <li><hr class="dropdown-divider"></li>
                             <?php endif; ?>
-                            <li>
+                            <li class="list-group-item ilch--flex-wrap">
                                 <div class="list-group list-group-horizontal">
                                     <?=$systemModuleHtml ?>
                                 </div>
-                                <div class="divider"></div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="list-group-item ilch--flex-wrap">
                                 <div class="list-group list-group-horizontal">
                                     <?=$modulesHtml ?>
                                 </div>
+                            </li>
                                 <?php if (!empty($layoutModuleHtml)) : ?>
-                                    <div class="divider"></div>
+                                    <li><hr class="dropdown-divider"></li>
                                     <div class="list-group list-group-horizontal">
                                         <?=$layoutModuleHtml ?>
                                     </div>
@@ -201,31 +203,31 @@ $accesses = $this->get('accesses');
                     </li>
                 <?php endif; ?>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right d-flex">
                 <?php if ($this->getUser()->isAdmin()) : ?>
                     <li class="<?=($this->getRequest()->getModuleName() === 'admin' && ($this->getRequest()->getControllerName() === 'settings' || $this->getRequest()->getControllerName() === 'backup' || $this->getRequest()->getControllerName() === 'emails')) ? 'active' : '' ?>">
                         <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>">
-                            <i class="fa-solid fa-gears"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuSettings') ?></span>
+                            <i class="fa-solid fa-gears"></i> <span class="d-lg-none"><?=$this->getTrans('menuSettings') ?></span>
                         </a>
                     </li>
                 <?php endif; ?>
                 <li>
                     <a title="<?=$this->getTrans('openFrontend') ?>" target="_blank" href="<?=$this->getUrl() ?>">
-                        <i class="fa-solid fa-share"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuFrontend') ?></span>
+                        <i class="fa-solid fa-share"></i> <span class="d-lg-none"><?=$this->getTrans('menuFrontend') ?></span>
                     </a>
                 </li>
                 <li class="dropdown <?=($this->getRequest()->getModuleName() === 'admin' &&  $this->getRequest()->getControllerName() === 'infos') ? 'active' : '' ?>">
-                    <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
-                        <i class="fa-solid fa-circle-question"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuInfos') ?></span> <b class="caret"></b>
+                    <a data-toggle="dropdown" class="dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#menu" href="#" target="_blank" href="<?=$this->getUrl() ?>">
+                        <i class="fa-solid fa-circle-question"></i> <span class="d-lg-none"><?=$this->getTrans('menuInfos') ?></span> <b class="caret"></b>
                     </a>
-                    <ul role="menu" class="dropdown-menu">
+                    <ul id="menu" class="dropdown-menu" style="right:0;">
                         <li>
                             <a href="https://www.ilch.de" target="_blank" rel="noopener">
                                 <i class="fa-solid fa-house"></i>
                                 <?=$this->getTrans('officialSite') ?>
                             </a>
                         </li>
-                        <li class="divider"></li>
+                        <li><hr class="dropdown-divider"></li>
                         <li>
                             <a href="https://www.ilch.de/forum.html" target="_blank" rel="noopener">
                                 <i class="fa-regular fa-comments"></i>
@@ -239,7 +241,7 @@ $accesses = $this->get('accesses');
                             </a>
                         </li>
                         <?php if ($this->getUser()->isAdmin()) : ?>
-                            <li class="divider"></li>
+                            <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'index']) ?>">
                                     <i class="fa-solid fa-circle-info"></i>
@@ -255,11 +257,11 @@ $accesses = $this->get('accesses');
                     <?php $name = $this->getUser()->getName(); ?>
                 <?php endif; ?>
                 <li class="dropdown dropdown-user">
-                    <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
+                    <a data-toggle="dropdown" class="dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#dropdown-user"  href="#" target="_blank" href="<?=$this->getUrl() ?>">
                         <i class="fa-solid fa-user hidden-sm hidden-md"></i> <?=$this->escape($name) ?>
                         <b class="caret"></b>
                     </a>
-                    <ul role="menu" class="dropdown-menu">
+                    <ul id="dropdown-user" class="dropdown-menu" style="right:0;">
                         <li class="logout">
                             <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'logout']) ?>">
                                 <i class="fa-solid fa-power-off"></i> <?=$this->getTrans('logout') ?>
@@ -269,7 +271,7 @@ $accesses = $this->get('accesses');
                 </li>
                 <!-- Search Block -->
                 <li>
-                    <i id="search-header" class="fa-solid fa-magnifying-glass search-btn"><span class="search-text visible-xs-inline"><?=$this->getTrans('search') ?></span></i>
+                    <i id="search-header" class="fa-solid fa-magnifying-glass search-btn"><span class="search-text d-lg-none"><?=$this->getTrans('search') ?></span></i>
                     <div id="search-div" class="search-close">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="<?=$this->getTrans('search') ?>">

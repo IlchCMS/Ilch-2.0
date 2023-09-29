@@ -7,7 +7,7 @@ $entrie = $this->get('page');
 
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('pageTitle') ? 'has-error' : '' ?>">
+    <div class="row ilch-margin-b form-group <?=$this->validation()->hasError('pageTitle') ? 'has-error' : '' ?>">
         <label for="pageTitle" class="col-lg-2 control-label">
             <?=$this->getTrans('pageTitle') ?>:
         </label>
@@ -19,7 +19,7 @@ $entrie = $this->get('page');
                    value="<?=$this->escape($this->originalInput('pageTitle', ($entrie->getId()?$entrie->getTitle():''))) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('pageContent') ? 'has-error' : '' ?>">
+    <div class="row ilch-margin-b form-group <?=$this->validation()->hasError('pageContent') ? 'has-error' : '' ?>">
         <label for="pageContent" class="col-lg-2 control-label">
             <?=$this->getTrans('pageContent') ?>:
         </label>
@@ -30,7 +30,7 @@ $entrie = $this->get('page');
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale')): ?>
-        <div class="form-group">
+        <div class="row ilch-margin-b form-group">
             <label for="pageLanguage" class="col-lg-2 control-label">
                 <?=$this->getTrans('pageLanguage') ?>:
             </label>
@@ -47,7 +47,7 @@ $entrie = $this->get('page');
         </div>
     <?php endif; ?>
     <h1><?=$this->getTrans('seo') ?></h1>
-    <div class="form-group">
+    <div class="row ilch-margin-b form-group">
         <label for="description" class="col-lg-2 control-label">
             <?=$this->getTrans('seoDescription') ?>:
         </label>
@@ -57,7 +57,7 @@ $entrie = $this->get('page');
                       name="description"><?=$this->escape($this->originalInput('description', ($entrie->getId()?$entrie->getDescription():''))) ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row ilch-margin-b form-group">
         <label for="keywords" class="col-lg-2 control-label">
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
@@ -67,13 +67,13 @@ $entrie = $this->get('page');
                       name="keywords"><?=$this->escape($this->originalInput('keywords', ($entrie->getId()?$entrie->getKeywords():''))) ?></textarea>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
-        <label for="permaLink" class="col-lg-2 control-label">
+    <div class="row ilch-margin-b form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
+        <label for="permaLink" class="col-lg-2">
             <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon3"><?=substr($this->getUrl('a', 'default'), 0, -1) ?></span>
+                <span class="input-group-text" id="basic-addon3"><?=substr($this->getUrl('a', 'default'), 0, -1) ?></span>
                 <input class="form-control"
                        type="text"
                        id="permaLink"

@@ -5,19 +5,19 @@
     </div>
 </h1>
 <?php if (!empty($this->get('welcomeMessage'))) : ?>
-<div class="panel panel-default">
-    <div class="panel-body welcomeMessage"><?=$this->purify($this->get('welcomeMessage')) ?></div>
+<div class="card panel-default">
+    <div class="card-body welcomeMessage"><?=$this->purify($this->get('welcomeMessage')) ?></div>
 </div>
 <?php endif; ?>
 <?php foreach ($this->get('entries') as $entry): ?>
     <?php $date = new \Ilch\Date($entry->getDatetime()); ?>
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="card panel-default">
+        <div class="card-header">
             <div class="row">
-                <div class="col-sm-6 col-lg-5">
+                <div class="col-md-6 col-xl-5">
                     <?=$this->getTrans('from') ?>: <?=$this->escape($entry->getName()) ?>
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-md-6 col-xl-3">
                     <?php if ($this->getUser() && $this->getUser()->isAdmin()) : ?>
                         <a target="_blank" href="mailto:<?=$this->escape($entry->getEmail()) ?>">
                             <i class="fa-solid fa-envelope"></i>
@@ -29,12 +29,12 @@
                         </a>
                     <?php endif; ?>
                 </div>
-                <div class="col-sm-12 col-lg-4">
+                <div class="col-md-12 col-xl-4">
                     <?=$this->getTrans('date') ?>: <?=$date->format('H:i d.m.Y', true) ?>
                 </div>
             </div>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <?=$this->alwaysPurify($entry->getText()) ?>
         </div>
     </div>

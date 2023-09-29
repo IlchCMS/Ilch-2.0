@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('acceptUserRegis') ?>:
         </div>
@@ -18,7 +18,7 @@
     <div id="registRules" <?php if ($this->get('regist_accept') != '1') {
     echo 'class="hidden"';
 } ?>>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <div class="col-lg-2 control-label">
                 <?=$this->getTrans('confirmRegistrationEmail') ?>:
             </div>
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div id="registSetfree" <?=($this->get('regist_accept') == '1' && $this->get('regist_confirm') == '1') ? 'class="hidden"' : '' ?>>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <div class="col-lg-2 control-label">
                 <?=$this->getTrans('setfreeRegistration') ?>:
             </div>
@@ -50,7 +50,7 @@
         </div>
     </div>
     <div id="rulesForRegist" <?=($this->get('regist_accept') != '1') ? 'class="hidden"' : '' ?>>
-        <div class="form-group">
+        <div class="row form-group ilch-margin-b">
             <label for="ck_1" class="col-lg-2 control-label">
                     <?=$this->getTrans('rulesForRegist') ?>:
             </label>
@@ -64,7 +64,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="delete_time" class="col-lg-2 control-label">
             <?=$this->getTrans('deletetime') ?>
         </label>
@@ -78,7 +78,7 @@
     </div>
 
     <h1><?=$this->getTrans('menuSettingsAvatar') ?></h1>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="avatar_height" class="col-lg-2 control-label">
             <?=$this->getTrans('avatarHeight') ?>
         </label>
@@ -90,7 +90,7 @@
                    value="<?=$this->get('avatar_height') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="avatar_width" class="col-lg-2 control-label">
             <?=$this->getTrans('avatarWidth') ?>
         </label>
@@ -102,7 +102,7 @@
                    value="<?=$this->get('avatar_width') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="avatar_size" class="col-lg-2 control-label">
             <?=$this->getTrans('avatarSizeBytes') ?>
         </label>
@@ -114,7 +114,7 @@
                    value="<?=$this->get('avatar_size') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="avatar_filetypes" class="col-lg-2 control-label">
             <?=$this->getTrans('allowedFileExtensions') ?>
         </label>
@@ -128,7 +128,7 @@
     </div>
 
     <h1><?=$this->getTrans('menuSettingsGallery') ?></h1>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('usergalleryAllowed') ?>:
         </div>
@@ -142,7 +142,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="usergallery_filetypes" class="col-lg-2 control-label">
             <?=$this->getTrans('allowedFileExtensions') ?>
         </label>
@@ -154,7 +154,7 @@
                    value="<?=$this->get('usergallery_filetypes') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <label for="picturesPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('picturesPerPage') ?>:
         </label>
@@ -169,7 +169,7 @@
     </div>
 
     <h1><?=$this->getTrans('UserGroupsList') ?></h1>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('userGroupsAllowed') ?>:
         </div>
@@ -185,7 +185,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('userAvatarsAllowed') ?>:
         </div>

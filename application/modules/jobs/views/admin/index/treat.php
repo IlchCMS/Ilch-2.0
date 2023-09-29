@@ -11,7 +11,7 @@
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row form-group ilch-margin-b">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('show') ?>:
         </div>
@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -47,7 +47,7 @@
                    value="<?=($this->get('jobs') != '') ? $this->escape($this->get('jobs')->getTitle()) : $this->escape($this->get('post')['title']) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
@@ -59,7 +59,7 @@
                       rows="5"><?=($this->get('jobs') != '') ? $this->escape($this->get('jobs')->getText()) : $this->escape($this->get('post')['text']) ?></textarea>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
         <label for="email" class="col-lg-2 control-label">
             <?=$this->getTrans('email') ?>:
         </label>

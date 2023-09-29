@@ -65,6 +65,4 @@ return [
     'private' => 'Private Seite',
     'clan' => 'Clan Seite',
     'dependencyMessage' => 'Es wurden weitere Module ausgewählt, um Abhängigkeiten zu erfüllen.',
-    'frontend' => 'Frontend',
-    'administration' => 'Administration',
 ];

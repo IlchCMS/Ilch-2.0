@@ -11,6 +11,8 @@
 .lib-panel .col-md-6 {
     padding: 0;
     background-color: #FFFFFF;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .lib-panel .lib-row {

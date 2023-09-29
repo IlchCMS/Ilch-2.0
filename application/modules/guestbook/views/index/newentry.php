@@ -2,11 +2,11 @@
 
 <form id="guestbookForm" name="guestbookForm" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group hidden">
-        <label for="bot" class="col-lg-2 control-label">
+    <div class="row form-group mb-15 hidden">
+        <label for="bot" class="col-xl-2 control-label">
             <?=$this->getTrans('bot') ?>*
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <input type="text"
                    class="form-control"
                    name="bot"
@@ -14,11 +14,11 @@
                    placeholder="Bot" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-lg-2 control-label">
+    <div class="row form-group mb-15 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+        <label for="name" class="col-xl-2 control-label">
             <?=$this->getTrans('name') ?>*
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <input type="text"
                    class="form-control"
                    name="name"
@@ -27,11 +27,11 @@
                    value="<?=$this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
-    <div class="form-group <?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
-        <label for="email" class="col-lg-2 control-label">
+    <div class="row form-group mb-15 <?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
+        <label for="email" class="col-xl-2 control-label">
             <?=$this->getTrans('email') ?>*
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <input type="email"
                    class="form-control"
                    name="email"
@@ -40,11 +40,11 @@
                    value="<?=$this->escape($this->originalInput('email')) ?>" />
         </div>
     </div>
-    <div class="form-group <?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
-        <label for="homepage" class="col-lg-2 control-label">
+    <div class="row form-group mb-15 <?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
+        <label for="homepage" class="col-xl-2 control-label">
             <?=$this->getTrans('page') ?>
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
            <input type="text"
                   class="form-control"
                   name="homepage"
@@ -53,11 +53,11 @@
                   value="<?=$this->escape($this->originalInput('homepage')) ?>" />
         </div>
     </div>
-    <div class="form-group <?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label for="text" class="col-lg-2 control-label">
+    <div class="row form-group mb-15 <?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
+        <label for="text" class="col-xl-2 control-label">
             <?=$this->getTrans('message') ?>*
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="text"
@@ -69,8 +69,8 @@
     <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
         <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
     <?php endif; ?>
-    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-8">
+    <div class="row form-group mb-15">
+        <div class="offset-xl-2 col-xl-8">
             <?php
                 if ($this->get('captchaNeeded')) {
                     if ($this->get('googlecaptcha')) {

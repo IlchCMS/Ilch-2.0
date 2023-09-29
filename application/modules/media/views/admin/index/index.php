@@ -30,7 +30,7 @@
                             <option value="400">400</option>
                             <option value="500">500</option>
                             <option value="1000">1000</option>
-                        </select>     
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -53,13 +53,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">    
+                <div class="form-group">
                     <button type="submit" class="btn btn-default filter-col" name="search" value="search">
                         <span class="fa fa-search"></span> <?=$this->getTrans('search') ?>
-                    </button>  
+                    </button>
                 </div>
             </form>
-        </div>    
+        </div>
         <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
             <span class="fa fa-cogs"></span> <?=$this->getTrans('advancedSearch') ?>
         </button>
@@ -117,17 +117,18 @@
                             <td><a href="<?=$this->getBaseUrl($media->getUrl()) ?>" download="<?=$this->escape($media->getName().".".$media->getEnding()) ?>"><?=$this->escape($media->getName()) ?></a></td>
                             <td><?=$media->getDatetime() ?></td>
                             <td>
-                                <div class="btn-group dropdown">
+                                <div class="btn-group">
                                     <button type="button"
                                             class="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown"><?=$this->escape($media->getCatName()) ?>
+                                            aria-expanded="false"
+                                            data-bs-toggle="dropdown"><?=$this->escape($media->getCatName()) ?>
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu listChooser" role="menu">
                                         <?php if ($this->get('catnames') != ''): ?>
                                             <?php foreach ($this->get('catnames') as $name): ?>
                                                 <li>
-                                                    <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$this->escape($name->getCatName()) ?></a>
+                                                    <a class="dropdown-item" href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$this->escape($name->getCatName()) ?></a>
                                                 </li>
                                             <?php endforeach; ?>
                                         <?php endif; ?>

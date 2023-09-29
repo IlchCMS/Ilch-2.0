@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'away',
-        'version' => '1.6.1',
+        'version' => '1.6.0',
         'icon_small' => 'fa-solid fa-calendar-xmark',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -71,7 +71,7 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            $installSql .= 'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("away/aways/index/");';
+            $installSql.'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("away/aways/index/");';
         }
 
         return $installSql;
@@ -104,12 +104,6 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('away_adminNotification', 1);
             case "1.5.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-calendar-xmark' WHERE `key` = 'away';");
-            case "1.6.0":
-                if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-                    if (!$this->db()->select('url', 'calendar_events', ['url' => 'away/aways/index/'])->execute()->getNumRows()) {
-                        $this->db()->query("INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ('away/aways/index/');");
-                    }
-                }
         }
     }
 }
