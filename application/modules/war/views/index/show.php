@@ -19,28 +19,28 @@ $commentsClass = new Ilch\Comments();
 <h1><?=$this->getTrans('warPlay') ?></h1>
 <div class="row">
     <div class="center-text row no_margin">
-        <div class="col-md-5">
-            <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($group && $group->getGroupImage() != '' ? $group->getGroupImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$group && $group->getGroupName() != '' ? $group->getGroupName() : '' ?>">
+        <div class="col-lg-5">
+            <img class="img-thumbnail img-fluid" src="<?=$this->getBaseUrl($group && $group->getGroupImage() != '' ? $group->getGroupImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$group && $group->getGroupName() != '' ? $group->getGroupName() : '' ?>">
             <h4><span><?=$this->escape($group ? $group->getGroupName() : '') ?></span></h4>
         </div>
-        <div class="col-md-2 plays-vs">
+        <div class="col-lg-2 plays-vs">
             <h4>
                 <span class="fa-solid fa-circle-arrow-left"></span>
                 <span>VS</span>
                 <span class="fa-solid fa-circle-arrow-right"></span>
             </h4>
         </div>
-        <div class="col-md-5">
-            <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($enemy && $enemy->getEnemyImage() != '' ? $enemy->getEnemyImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$enemy && $enemy->getEnemyName() != '' ? $enemy->getEnemyName() : '' ?>">
+        <div class="col-lg-5">
+            <img class="img-thumbnail img-fluid" src="<?=$this->getBaseUrl($enemy && $enemy->getEnemyImage() != '' ? $enemy->getEnemyImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$enemy && $enemy->getEnemyName() != '' ? $enemy->getEnemyName() : '' ?>">
             <h4><span><?=$this->escape($enemy ? $enemy->getEnemyName() : '') ?></span></h4>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?=$this->getTrans('warStatusFrom') ?> <?=$war->getWarTime() ?></h3>
+    <div class="col-xl-6">
+        <div class="card panel-default">
+            <div class="card-header">
+                <h6 class="card-title"><?=$this->getTrans('warStatusFrom') ?> <?=$war->getWarTime() ?></h6>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <?php
                 if ($war->getWarStatus() == '1') {
                     echo $this->getTrans('warStatusOpen');
@@ -51,12 +51,12 @@ $commentsClass = new Ilch\Comments();
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?=$this->getTrans('warResult') ?></h3>
+    <div class="col-xl-6">
+        <div class="card panel-default">
+            <div class="card-header">
+                <h6 class="card-title"><?=$this->getTrans('warResult') ?></h6>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <?php
                 $enemyPoints = 0;
                 $groupPoints = 0;
@@ -83,12 +83,12 @@ $commentsClass = new Ilch\Comments();
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?=$this->getTrans('warMap') ?></h3>
+    <div class="col-xl-6">
+        <div class="card panel-default">
+            <div class="card-header">
+                <h6 class="card-title"><?=$this->getTrans('warMap') ?></h6>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
             <?php foreach ($games ?? [] as $game): ?>
                 <?php
                 $mapModel = $this->get('mapsMapper')->getEntryById($game->getMap());
@@ -104,12 +104,12 @@ $commentsClass = new Ilch\Comments();
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?=$this->getTrans('warMember') ?></h3>
+    <div class="col-xl-6">
+        <div class="card panel-default">
+            <div class="card-header">
+                <h6 class="card-title"><?=$this->getTrans('warMember') ?></h6>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <ul class="list-group">
                 <?php foreach ($userGroupIds ?? [] as $userGroupId): ?>
                     <?php
@@ -124,12 +124,12 @@ $commentsClass = new Ilch\Comments();
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?=$this->getTrans('warAccept') ?></h3>
+    <div class="col-xl-6">
+        <div class="card panel-default">
+            <div class="card-header">
+                <h6 class="card-title"><?=$this->getTrans('warAccept') ?></h6>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
             <?php if ($userGroupIds): ?>
                 <form id="accept_form" class="form-horizontal" method="POST" action="">
                     <?=$this->getTokenField() ?>
@@ -160,7 +160,7 @@ $commentsClass = new Ilch\Comments();
                         }
                         ?>
                         <li class="list-group-item<?=$class ?>">
-                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: 
+                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>:
                             <?=$text ?><?=$comment ?> <i class="fa-solid fa-circle-info" data-toggle="popover" data-trigger="hover" data-content="<?=(new Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></i>
                         </li>
                     <?php endforeach; ?>
@@ -179,18 +179,18 @@ $commentsClass = new Ilch\Comments();
                             ?>
                             <?php if ($this->getUser()): ?>
                                 <?php if ($user->getId() == $this->getUser()->getId()): ?>
-                                    <select class="form-control col-lg-3 <?=$this->validation()->hasError('warAccept') ? ' has-error' : '' ?>" id="warAccept" name="warAccept">
+                                    <select class="form-control col-lg-3 mb-3 <?=$this->validation()->hasError('warAccept') ? ' has-error' : '' ?>" id="warAccept" name="warAccept">
                                         <optgroup label="<?=$this->getTrans('choose') ?>">
                                             <option value="1" <?=($acceptArray ? $acceptArray->getAccept() : '') == 1 ? 'selected=""' : '' ?>><?=$this->getTrans('accept') ?></option>
                                             <option value="2" <?=($acceptArray ? $acceptArray->getAccept() : '') == 2 ? 'selected=""' : '' ?>><?=$this->getTrans('decline') ?></option>
                                             <option value="3" <?=($acceptArray ? $acceptArray->getAccept() : '') == 3 ? 'selected=""' : '' ?>><?=$this->getTrans('undecided') ?></option>
                                         </optgroup>
                                     </select>
-                                    <textarea class="form-control col-lg-3 <?=$this->validation()->hasError('warComment') ? ' has-error' : '' ?>"
+                                    <textarea class="form-control col-lg-3 mb-3 <?=$this->validation()->hasError('warComment') ? ' has-error' : '' ?>"
                                               style="resize: vertical"
                                               name="warComment"
                                               id="warComment" ></textarea>
-                                    <button type="submit" class="btn" name="save" value="save">
+                                    <button type="submit" class="btn btn-outline-secondary" name="save" value="save">
                                         <?=$this->getTrans('save') ?>
                                     </button>
                                 <?php endif; ?>
@@ -202,12 +202,12 @@ $commentsClass = new Ilch\Comments();
             </div>
         </div>
     </div>
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?=$this->getTrans('warReport') ?></h3>
+    <div class="col-xl-12">
+        <div class="card panel-default">
+            <div class="card-header">
+                <h6 class="card-title"><?=$this->getTrans('warReport') ?></h6>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <?=$this->purify($war->getWarReport()) ?>
             </div>
         </div>
@@ -216,5 +216,5 @@ $commentsClass = new Ilch\Comments();
 
 <?= $commentsClass->getComments($this->get('commentsKey'), $war, $this) ?>
 <script>
-    $('[data-toggle="popover"]').popover();  
+    $('[data-toggle="popover"]').popover();
 </script>

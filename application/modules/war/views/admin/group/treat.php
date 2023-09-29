@@ -2,7 +2,7 @@
 <h1><?=(!$entrie->getId()) ? $this->getTrans('manageNewGroup') : $this->getTrans('treatGroup') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=$this->validation()->hasError('groupName') ? ' has-error' : '' ?>">
+    <div class="form-group row mb-3 <?=$this->validation()->hasError('groupName') ? ' has-error' : '' ?>">
         <label for="groupNameInput" class="col-lg-2 control-label">
             <?=$this->getTrans('groupName') ?>:
         </label>
@@ -14,7 +14,7 @@
                    value="<?=$this->escape($this->originalInput('groupName', ($entrie->getId()?$entrie->getGroupName():''))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('groupTag') ? ' has-error' : '' ?>">
+    <div class="form-group row mb-3 <?=$this->validation()->hasError('groupTag') ? ' has-error' : '' ?>">
         <label for="groupTagInput" class="col-lg-2 control-label">
             <?=$this->getTrans('groupTag') ?>:
         </label>
@@ -26,7 +26,7 @@
                    value="<?=$this->escape($this->originalInput('groupTag', ($entrie->getId()?$entrie->getGroupTag():''))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('groupImage') ? ' has-error' : '' ?>">
+    <div class="form-group row mb-3 <?=$this->validation()->hasError('groupImage') ? ' has-error' : '' ?>">
         <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('groupImage') ?>:
         </label>
@@ -38,13 +38,13 @@
                        name="groupImage"
                        placeholder="<?=$this->getTrans('groupImage') ?>"
                        value="<?=$this->escape($this->originalInput('groupImage', ($entrie->getId()?$entrie->getGroupImage():''))) ?>" />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a>
                 </span>
             </div>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('groupDesc') ? ' has-error' : '' ?>">
+    <div class="form-group row mb-3 <?=$this->validation()->hasError('groupDesc') ? ' has-error' : '' ?>">
         <label for="groupDesc" class="col-lg-2 control-label">
             <?=$this->getTrans('groupDesc') ?>:
         </label>
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('userGroup') ? ' has-error' : '' ?>">
+    <div class="form-group row mb-3 <?=$this->validation()->hasError('userGroup') ? ' has-error' : '' ?>">
         <label for="warGroup" class="col-lg-2 control-label">
             <?=$this->getTrans('assignedMember') ?>
         </label>

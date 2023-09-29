@@ -45,12 +45,12 @@
             ?>
             <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-xs-12 col-md-3 text-center">
+                    <div class="col-xs-12 col-lg-3 text-center">
                         <a href="<?=$this->getUrl(['controller' => 'group', 'action' => 'show', 'id' => $group->getId()]) ?>">
-                            <img src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>" class="thumbnail img-responsive" />
+                            <img src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>" class="img-thumbnail img-fluid rounded" />
                         </a>
                     </div>
-                    <div class="col-xs-12 col-md-9 section-box">
+                    <div class="col-xs-12 col-lg-9 section-box">
                         <h4>
                             <a href="<?=$this->getUrl(['controller' => 'group', 'action' => 'show', 'id' => $group->getId()]) ?>"><?=$this->escape($group->getGroupName()) ?></a>
                         </h4>
