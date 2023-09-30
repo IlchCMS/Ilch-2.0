@@ -2,7 +2,7 @@
 <h1><?=(!$icon) ? $this->getTrans('createNewGameIcon') : $this->getTrans('treatGameIcon') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
+    <div class="form-group row mb-3<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
         <label for="gameNameInput" class="col-lg-2 control-label">
             <?=$this->getTrans('gameName') ?>:
         </label>
@@ -14,7 +14,7 @@
                    value="<?=$this->escape($this->originalInput('gameName', ($icon ?? ''))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('gameIcon') ? ' has-error' : '' ?>">
+    <div class="form-group row mb-3 <?=$this->validation()->hasError('gameIcon') ? ' has-error' : '' ?>">
         <label for="gameIcon" class="col-lg-2 control-label">
             <?=$this->getTrans('gameIcon') ?><br>
             <?=$this->getTrans('iconSize') ?>: 16 Pixel <?=$this->getTrans('iconWidth') ?>, 16 Pixel <?=$this->getTrans('iconHeight') ?>.<br>
@@ -26,7 +26,7 @@
                     <input type="file" name="icon" accept="image/png">
                 </span>
             </span>
-            <input type="text" 
+            <input type="text"
                    class="form-control"
                    id="gameIcon"
                    name="gameIcon"

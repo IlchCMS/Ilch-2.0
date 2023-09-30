@@ -7,7 +7,7 @@
         <?php if ($game->getId()): ?>
         <input type="hidden" name="warGameIds[]" value="<?=$game->getId() ?>">
         <?php endif; ?>
-        <div class="form-group">
+        <div class="form-group row mb-3 ">
             <label class="col-lg-2 control-label" for="warMapPlayed[]">
                 <?=$this->getTrans('warMapName') ?>
                 <?php if ($game->getId()): ?>
@@ -30,7 +30,7 @@
                 </select>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row mb-3 ">
             <label class="col-lg-2 control-label" for="warErgebnis[]">
                 <?=$this->getTrans('warResult') ?>
             </label>
@@ -51,7 +51,7 @@
                        value="<?=$game->getEnemyPoints() ?>">
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row mb-3 ">
             <label class="col-lg-2"></label>
             <div class="col-lg-4">
                 <h1></h1>
@@ -60,13 +60,13 @@
     </div>
 <?php endforeach; ?>
 </div>
-<div class="form-group">
+<div class="form-group row mb-3 ">
     <label class="col-lg-2 control-label" for="textinput"></label>
     <div class="col-lg-2">
-        <a id="button-duplicater" class="btn btn-default"><?=$this->getTrans('warMoreMaps') ?></a>
+        <a id="button-duplicater" class="btn btn-outline-secondary"><?=$this->getTrans('warMoreMaps') ?></a>
     </div>
     <div class="col-lg-2">
-        <a id="button-remover" class="btn btn-default"><?=$this->getTrans('warRemoveMaps') ?></a>
+        <a id="button-remover" class="btn btn-outline-secondary"><?=$this->getTrans('warRemoveMaps') ?></a>
     </div>
 </div>
 

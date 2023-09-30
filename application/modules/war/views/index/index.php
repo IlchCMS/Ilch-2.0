@@ -8,7 +8,7 @@ $gamesMapper = $this->get('gamesMapper');
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuGroups') ?></h1>
-<h4><a class="btn btn-default" href="<?=$this->getUrl(['controller' => 'group', 'action' => 'index']) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
+<h4><a class="btn btn-outline-secondary" href="<?=$this->getUrl(['controller' => 'group', 'action' => 'index']) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
 
 <h1><?=$this->getTrans('warsOverview') ?></h1>
 <?php if ($this->get('war')): ?>

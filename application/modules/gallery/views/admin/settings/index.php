@@ -71,7 +71,7 @@
     </div>
 
     <h1><?=$this->getTrans('venoboxSetting') ?></h1>
-    <div class="form-group <?=$this->validation()->hasError('venoboxNumeration') ? 'has-error' : '' ?>">
+    <div class="form-group row form-group ilch-margin-b <?=$this->validation()->hasError('venoboxNumeration') ? 'has-error' : '' ?>">
         <label for="venoboxNumeration" class="col-lg-2 control-label">
             <?=$this->getTrans('venoboxNumeration') ?>:
         </label>
@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <div class="form-group <?=$this->validation()->hasError('venoboxOverlayColor') ? 'has-error' : '' ?>">
+    <div class="form-group row form-group ilch-margin-b <?=$this->validation()->hasError('venoboxOverlayColor') ? 'has-error' : '' ?>">
         <label for="venoboxOverlayColor" class="col-lg-2 control-label">
             <?=$this->getTrans('venoboxOverlayColor') ?>:
         </label>
@@ -95,13 +95,13 @@
                    id="venoboxOverlayColor"
                    name="venoboxOverlayColor"
                    value="<?=$this->originalInput('venoboxOverlayColor', $this->get('venoboxOverlayColor')) ? : '#ffffff' ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('venoboxOverlayColor').color.fromString('ffffff')"></span>
             </span>
         </div>
     </div>
 
-    <div class="form-group <?=$this->validation()->hasError('venoboxInfiniteGallery') ? 'has-error' : '' ?>">
+    <div class="form-group row form-group ilch-margin-b <?=$this->validation()->hasError('venoboxInfiniteGallery') ? 'has-error' : '' ?>">
         <label for="venoboxInfiniteGallery" class="col-lg-2 control-label">
             <?=$this->getTrans('venoboxInfiniteGallery') ?>:
         </label>
@@ -116,7 +116,7 @@
         </div>
     </div>
 
-    <div class="form-group <?=$this->validation()->hasError('venoboxBgcolor') ? 'has-error' : '' ?>">
+    <div class="form-group row form-group ilch-margin-b <?=$this->validation()->hasError('venoboxBgcolor') ? 'has-error' : '' ?>">
         <label for="venoboxBgcolor" class="col-lg-2 control-label">
             <?=$this->getTrans('venoboxBgcolor') ?>:
         </label>
@@ -125,13 +125,13 @@
                    id="venoboxBgcolor"
                    name="venoboxBgcolor"
                    value="<?=$this->originalInput('venoboxBgcolor', $this->get('venoboxBgcolor')) ? : '#ffffff' ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('venoboxBgcolor').color.fromString('ffffff')"></span>
             </span>
         </div>
     </div>
 
-    <div class="form-group <?=$this->validation()->hasError('venoboxBorder') ? 'has-error' : '' ?>">
+    <div class="form-group row form-group ilch-margin-b <?=$this->validation()->hasError('venoboxBorder') ? 'has-error' : '' ?>">
         <label for="venoboxBorder" class="col-lg-2 control-label">
             <?=$this->getTrans('venoboxBorder') ?>:
         </label>
@@ -146,7 +146,7 @@
         </div>
     </div>
 
-    <div class="form-group <?=$this->validation()->hasError('venoboxTitleattr') ? 'has-error' : '' ?>">
+    <div class="form-group row form-group ilch-margin-b <?=$this->validation()->hasError('venoboxTitleattr') ? 'has-error' : '' ?>">
         <label for="venoboxTitleattr" class="col-lg-2 control-label">
             <?=$this->getTrans('venoboxTitleattr') ?>:
         </label>

@@ -9,7 +9,7 @@ use Ilch\Date;
 <?php if ($this->get('group') != '' && $this->get('enemy') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group<?=$this->validation()->hasError('warEnemy') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warEnemy') ? ' has-error' : '' ?>">
             <label for="warEnemy" class="col-lg-2 control-label">
                 <?=$this->getTrans('warEnemy') ?>:
             </label>
@@ -23,7 +23,7 @@ use Ilch\Date;
                 </select>
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('warGroup') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warGroup') ? ' has-error' : '' ?>">
             <label for="warGroup" class="col-lg-2 control-label">
                 <?=$this->getTrans('warGroup') ?>:
             </label>
@@ -37,7 +37,7 @@ use Ilch\Date;
                 </select>
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('warTime') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warTime') ? ' has-error' : '' ?>">
             <label for="warTimeInput" class="col-md-2 control-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
@@ -49,12 +49,12 @@ use Ilch\Date;
                        size="16"
                        value="<?=$this->escape($this->originalInput('warTime', ($entrie->getId()?(new Date($entrie->getWarTime()))->format("d.m.Y H:i"):''))) ?>"
                        readonly />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('warMap') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warMap') ? ' has-error' : '' ?>">
             <label for="warMapInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('warMap') ?>
             </label>
@@ -66,7 +66,7 @@ use Ilch\Date;
                 </select>
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('warServer') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warServer') ? ' has-error' : '' ?>">
             <label for="warServerInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('warServer') ?>:
             </label>
@@ -78,7 +78,7 @@ use Ilch\Date;
                        value="<?=$this->escape($this->originalInput('warServer', ($entrie->getId()?$entrie->getWarServer():''))) ?>" />
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('warPassword') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warPassword') ? ' has-error' : '' ?>">
             <label for="warPasswordInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('warPassword') ?>:
             </label>
@@ -90,7 +90,7 @@ use Ilch\Date;
                        value="<?=$this->escape($this->originalInput('warPassword', ($entrie->getId()?$entrie->getWarPassword():''))) ?>" />
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('warXonx') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warXonx') ? ' has-error' : '' ?>">
             <label for="warXonx" class="col-lg-2 control-label">
                 <?=$this->getTrans('warXonx') ?>:
             </label>
@@ -115,7 +115,7 @@ use Ilch\Date;
                        value="<?=$this->escape($this->originalInput('warXonxNew')) ?>" />
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('warGame') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warGame') ? ' has-error' : '' ?>">
             <label for="warGame" class="col-lg-2 control-label">
                 <?=$this->getTrans('warGame') ?>:
             </label>
@@ -140,7 +140,7 @@ use Ilch\Date;
                        value="<?=$this->escape($this->originalInput('warGameNew')) ?>" />
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('warMatchtype') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warMatchtype') ? ' has-error' : '' ?>">
             <label for="warMatchtype" class="col-lg-2 control-label">
                 <?=$this->getTrans('warMatchtype') ?>:
             </label>
@@ -165,7 +165,7 @@ use Ilch\Date;
                        value="<?=$this->escape($this->originalInput('warMatchtypeNew')) ?>" />
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('lastAcceptTime') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('lastAcceptTime') ? ' has-error' : '' ?>">
             <label for="lastAcceptTimeInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('lastAcceptTime') ?>:
             </label>
@@ -182,7 +182,7 @@ use Ilch\Date;
             <div id="games"></div>
         <?php else: ?>
             <h1><?=$this->getTrans('warResultInfo') ?></h1>
-            <div class="form-group">
+            <div class="form-group row mb-3">
                 <div class="col-lg-2">
                     <?=$this->getTrans('warResultInfo') ?>:
                 </div>
@@ -192,7 +192,7 @@ use Ilch\Date;
             </div>
         <?php endif; ?>
         <h1><?=$this->getTrans('warReport') ?></h1>
-        <div class="form-group<?=$this->validation()->hasError('warReport') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warReport') ? ' has-error' : '' ?>">
             <div class="col-lg-offset-2 col-lg-8">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
@@ -200,7 +200,7 @@ use Ilch\Date;
                           toolbar="ilch_html"><?=$this->escape($this->originalInput('warReport', ($entrie->getId()?$entrie->getWarReport():''))) ?></textarea>
             </div>
         </div>
-        <div class="form-group<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
             <label for="access" class="col-lg-2 control-label">
                 <?=$this->getTrans('visibleFor') ?>
             </label>
@@ -216,7 +216,7 @@ use Ilch\Date;
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
-        <div class="form-group<?=$this->validation()->hasError('calendarShow') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('calendarShow') ? ' has-error' : '' ?>">
             <label for="calendarShow" class="col-lg-2 control-label">
                 <?=$this->getTrans('calendarShow') ?>:
             </label>
@@ -232,7 +232,7 @@ use Ilch\Date;
         </div>
         <?php endif; ?>
         <h1><?=$this->getTrans('warStatus') ?></h1>
-        <div class="form-group<?=$this->validation()->hasError('warStatus') ? ' has-error' : '' ?>">
+        <div class="form-group row mb-3 <?=$this->validation()->hasError('warStatus') ? ' has-error' : '' ?>">
             <label for="warStatus" class="col-lg-2 control-label">
                 <?=$this->getTrans('warStatus') ?>:
             </label>
