@@ -220,12 +220,10 @@ $(document).ready (
 
             let append = '#sortable';
 
-            if ($('#type').val() !== "0" && $('#menukey').val() > 0 ) {
+            if ($('#type').val() !== "0" && $('#menukey').val() > "0" ) {
                 let id = $('#menukey').val();
 
-                if ($('#sortable #'+id+' ol').length > 0) {
-
-                } else {
+                if ($('#sortable #'+id+' ol').length <= 0) {
                     $('<ol></ol>').appendTo('#sortable #'+id);
                 }
 
