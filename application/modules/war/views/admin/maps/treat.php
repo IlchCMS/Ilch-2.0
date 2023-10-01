@@ -2,7 +2,7 @@
 <h1><?=(!$entrie->getId()) ? $this->getTrans('manageNewMaps') : $this->getTrans('treatMaps') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=$this->validation()->hasError('mapsName') ? ' has-error' : '' ?>">
+    <div class="form-group row mb-3 <?=$this->validation()->hasError('mapsName') ? ' has-error' : '' ?>">
         <label for="mapsNameInput" class="col-lg-2 control-label">
             <?=$this->getTrans('mapsName') ?>:
         </label>

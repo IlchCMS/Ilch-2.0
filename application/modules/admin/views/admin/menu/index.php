@@ -96,16 +96,16 @@ function buildMenu($parentId, $menuData, View $view) {
             <?php if ($menu->getId() == $this->get('menu')->getId()): ?>
                 <?php $active = 'active'; ?>
             <?php endif; ?>
-            <li class="<?=$active ?>">
-                <a href="<?=$this->getUrl(['menu' => $menu->getId()]) ?>"><?=$this->getTrans('menu') ?> <?=$iMenu ?></a>
+            <li class="<?=$active ?> nav-item">
+                <a class="nav-link <?=$active ?>" href="<?=$this->getUrl(['menu' => $menu->getId()]) ?>"><?=$this->getTrans('menu') ?> <?=$iMenu ?></a>
             </li>
             <?php $iMenu++; ?>
         <?php endforeach; ?>
-        <li><a href="<?=$this->getUrl(['action' => 'add']) ?>">+</a></li>
+        <li class="nav-item"><a class="nav-link" href="<?=$this->getUrl(['action' => 'add']) ?>">+</a></li>
     </ul>
     <br />
     <h1><?=$this->getTrans('menuChange') ?></h1>
-    <div class="form-group">
+    <div class="row mb-3">
         <div class="col-sm-7 col-lg-7">
             <ol id="sortable" class="sortable">
                 <?php if (!empty($menuItems)): ?>
@@ -115,7 +115,7 @@ function buildMenu($parentId, $menuData, View $view) {
         </div>
         <div class="col-sm-5 col-lg-5 changeBox">
             <input type="hidden" id="id" value="" />
-            <div class="form-group">
+            <div class="row mb-3">
                 <label for="title" class="col-lg-4 control-label">
                     <?=$this->getTrans('itemTitle') ?>
                 </label>
@@ -123,7 +123,7 @@ function buildMenu($parentId, $menuData, View $view) {
                     <input type="text" class="form-control" id="title" />
                 </div>
             </div>
-            <div class="form-group">
+            <div class="row mb-3">
                 <label for="type" class="col-lg-4 control-label">
                     <?=$this->getTrans('itemType') ?>
                 </label>
@@ -140,7 +140,7 @@ function buildMenu($parentId, $menuData, View $view) {
                 </div>
             </div>
             <div class="dyn"></div>
-            <div class="form-group">
+            <div class="row mb-3">
                 <label for="access" class="col-lg-4 control-label">
                     <?=$this->getTrans('notVisible') ?>
                 </label>
@@ -154,7 +154,7 @@ function buildMenu($parentId, $menuData, View $view) {
             </div>
 
             <div class="actions col-lg-12 text-right">
-                <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">
+                <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">
             </div>
         </div>
     </div>
@@ -368,7 +368,7 @@ $(document).ready
                 return;
             }
 
-            let menuHtml = '<div class="form-group"><label for="menukey" class="col-lg-4 control-label"><?=$this->getTrans('labelMenu') ?></label>\n\
+            let menuHtml = '<div class="row mb-3"><label for="menukey" class="col-lg-4 control-label"><?=$this->getTrans('labelMenu') ?></label>\n\
                             <div class="col-lg-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {

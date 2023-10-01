@@ -39,9 +39,9 @@ $pagination = $this->get('pagination');
                             <td><?=$this->getEditIcon(['controller' => 'image', 'action' => 'treatimage', 'gallery' => $image->getGalleryId(), 'id' => $image->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $image->getId(), 'gallery' => $this->getRequest()->getParam('id')]) ?></td>
                             <?php if (file_exists($image->getImageThumb())) : ?>
-                                <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/></td>
+                                <td><img class="image img-thumbnail img-responsive" src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/></td>
                             <?php else : ?>
-                                <td><img class="image thumbnail img-responsive" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$this->getTrans('noMediaAlt') ?>"/></td>
+                                <td><img class="image img-thumbnail img-responsive" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$this->getTrans('noMediaAlt') ?>"/></td>
                             <?php endif; ?>
                             <td><?=$this->escape($image->getImageTitle()) ?></td>
                             <td><div class="table_text"><?=$this->escape($image->getImageDesc()) ?></div></td>

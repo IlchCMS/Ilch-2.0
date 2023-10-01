@@ -23,7 +23,7 @@ function recCategory(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery
 
     if ($item->getType() === 0) {
         echo '<li>
-                <a href="#filter" data-filter=".X' . $obj->escape($item->getId()) . 'X"><i class="fa-solid fa-image"></i> ' . $obj->escape($item->getTitle()) . '</a>
+                <a class="dropdown-item" href="#filter" data-filter=".X' . $obj->escape($item->getId()) . 'X"><i class="fa-solid fa-image"></i> ' . $obj->escape($item->getTitle()) . '</a>
               </li>';
     }
     if (!empty($subItems)) {

@@ -90,20 +90,20 @@ class Comments
             if ($obj->getUser() && !in_array($obj->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
                                 <div class="btn-group">
-                                    <a class="btn btn-sm btn-default btn-hover-success" href="'.$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'up']).'" title="'.$obj->getTrans('iLike').'">
+                                    <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="'.$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'up']).'" title="'.$obj->getTrans('iLike').'">
                                         <i class="fa-solid fa-thumbs-up"></i> '.$obj->escape($fk_comment->getUp()).'
                                     </a>
-                                    <a class="btn btn-sm btn-default btn-hover-danger" href="'.$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'down']).'" title="'.$obj->getTrans('notLike').'">
+                                    <a class="btn btn-sm btn-outline-secondary btn-hover-danger" href="'.$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'down']).'" title="'.$obj->getTrans('notLike').'">
                                         <i class="fa-solid fa-thumbs-down"></i> '.$obj->escape($fk_comment->getDown()).'
                                     </a>
                                 </div>';
             } else {
                 $commentsHtml .= '
                                 <div class="btn-group">
-                                    <button class="btn btn-sm btn-default btn-success">
+                                    <button class="btn btn-sm btn-outline-secondary btn-success">
                                         <i class="fa-solid fa-thumbs-up"></i> '.$obj->escape($fk_comment->getUp()).'
                                     </button>
-                                    <button class="btn btn-sm btn-default btn-danger">
+                                    <button class="btn btn-sm btn-outline-secondary btn-danger">
                                         <i class="fa-solid fa-thumbs-down"></i> '.$obj->escape($fk_comment->getDown()).'
                                     </button>
                                 </div>';
@@ -111,7 +111,7 @@ class Comments
 
             if ($obj->getUser() && $config->get('comment_reply') == 1 && $req < $config->get('comment_nesting')-1) {
                 $commentsHtml .= '
-                                <a href="javascript:slideReply(\'reply_'.$fk_comment->getId().'\');" class="btn btn-sm btn-default btn-hover-primary">
+                                <a href="javascript:slideReply(\'reply_'.$fk_comment->getId().'\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
                                     <i class="fa-solid fa-reply"></i> '.$obj->getTrans('reply').'
                                 </a>';
             }
@@ -156,7 +156,7 @@ class Comments
                                             </p>
                                             <div>
                                                 <div class="content_savebox">
-                                                    <button type="submit" class="btn btn-default btn-sm" name="saveComment" value="save">'.
+                                                    <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">'.
                                                         $obj->getTrans('submit').'
                                                     </button>
                                                 </div>
@@ -226,8 +226,8 @@ class Comments
             <form class="form-horizontal" method="POST">'.
                 $layout->getTokenField().'
                 <section class="comment-list">
-                    <div class="panel">
-                        <div class="panel-body">
+                    <div class="card">
+                        <div class="card-body">
                             <div class="media-block">
                                 <a class="media-left hidden-xs" href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">
                                     <img class="img-circle comment-img" alt="'.$layout->escape($layout->getUser()->getName()).'" src="'.$layout->getUrl().'/'.$layout->getUser()->getAvatar().'">
@@ -249,7 +249,7 @@ class Comments
                                     </p>
                                     <div>
                                         <div class="content_savebox">
-                                            <button type="submit" class="btn btn-default btn-sm" name="saveComment" value="save">'.
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">'.
                 $layout->getTrans('submit').'
                                             </button>
                                         </div>
@@ -272,8 +272,8 @@ class Comments
             $commentsHtml .= '
         <section class="comment-list">
             <article id="comment_'.$comment->getId().'">
-                <div class="panel">
-                    <div class="panel-body">
+                <div class="card">
+                    <div class="card-body">
                         <div class="media-block">
                             <a class="media-left hidden-xs" href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]).'" title="'.$layout->escape($user->getName()).'">
                                 <img class="img-circle comment-img" alt="'.$layout->escape($user->getName()).'" src="'.$layout->getUrl().'/'.$user->getAvatar().'">
@@ -291,20 +291,20 @@ class Comments
             if ($layout->getUser() && !in_array($layout->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
                                     <div class="btn-group">
-                                        <a class="btn btn-sm btn-default btn-hover-success" href="'.$layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'up']).'" title="'.$layout->getTrans('iLike').'">
+                                        <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="'.$layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'up']).'" title="'.$layout->getTrans('iLike').'">
                                             <i class="fa-solid fa-thumbs-up"></i> '.$comment->getUp().'
                                         </a>
-                                        <a class="btn btn-sm btn-default btn-hover-danger" href="'.$layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'down']).'" title="'.$layout->getTrans('notLike').'">
+                                        <a class="btn btn-sm btn-outline-secondary btn-hover-danger" href="'.$layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'down']).'" title="'.$layout->getTrans('notLike').'">
                                             <i class="fa-solid fa-thumbs-down"></i> '.$comment->getDown().'
                                         </a>
                                     </div>';
             } else {
                 $commentsHtml .= '
                                     <div class="btn-group">
-                                        <button class="btn btn-sm btn-default btn-success">
+                                        <button class="btn btn-sm btn-outline-secondary btn-success">
                                             <i class="fa-solid fa-thumbs-up"></i> '.$comment->getUp().'
                                         </button>
-                                        <button class="btn btn-sm btn-default btn-danger">
+                                        <button class="btn btn-sm btn-outline-secondary btn-danger">
                                             <i class="fa-solid fa-thumbs-down"></i> '.$comment->getDown().'
                                         </button>
                                     </div>';
@@ -312,7 +312,7 @@ class Comments
 
             if ($layout->getUser() && $config->get('comment_reply') == 1 && $config->get('comment_nesting') > 0) {
                 $commentsHtml .= '
-                                    <a href="javascript:slideReply(\'reply_'.$comment->getId().'\');" class="btn btn-sm btn-default btn-hover-primary">
+                                    <a href="javascript:slideReply(\'reply_'.$comment->getId().'\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
                                         <i class="fa-solid fa-reply"></i> '.$layout->getTrans('reply').'
                                     </a>';
             }
@@ -353,7 +353,7 @@ class Comments
                                                     </p>
                                                     <div>
                                                         <div class="content_savebox">
-                                                            <button type="submit" class="btn btn-default btn-sm" name="saveComment" value="save">'.
+                                                            <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">'.
                                                                 $layout->getTrans('submit').'
                                                             </button>
                                                         </div>

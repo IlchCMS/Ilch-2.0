@@ -44,10 +44,10 @@ foreach ($wars ?? [] as $war) {
 <div id="war_index">
     <div class="col-lg-12 no_padding">
         <div class="row">
-            <div class="col-xs-12 col-md-6 text-center">
+            <div class="col-xs-12 col-lg-6 text-center">
                 <img src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>" class="thumbnail img-responsive" />
             </div>
-            <div class="col-xs-12 col-md-6 section-box">
+            <div class="col-xs-12 col-lg-6 section-box">
                 <h3>
                     <?=$this->escape($group->getGroupName()) ?>
                 </h3>
@@ -55,7 +55,7 @@ foreach ($wars ?? [] as $war) {
                 <p><?=$this->escape($group->getGroupDesc()) ?></p>
                 <hr />
                 <div class="row rating-desc">
-                    <div class="col-md-12">
+                    <div class="col-lg-12">
                         <strong><?=$this->getTrans('games') ?></strong><br />
                         <span><?=$this->getTrans('warWin') ?></span>(<?=$winCount ?>)<span class="separator">|</span>
                         <span><?=$this->getTrans('warLost') ?></span>(<?=$lostCont ?>)<span class="separator">|</span>
