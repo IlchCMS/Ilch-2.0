@@ -21,7 +21,7 @@
 ) ?>
                         </li>
                         <li class="list-group-item">
-                            <form method="POST" 
+                            <form method="POST"
                                 action="<?= $this->getUrl([
                                     'module' => $provider->getModule(),
                                     'controller' => $provider->getUnlinkController(),
@@ -39,7 +39,7 @@
                             <?=$this->getTrans('providers.notLinked') ?>
                         </li>
                         <li class="list-group-item">
-                            <a class="btn btn-xs btn-default" href="<?=$this->getUrl([
+                            <a class="btn btn-xs btn-outline-secondary" href="<?=$this->getUrl([
                                 'module' => $provider->getModule(),
                                 'controller' => $provider->getAuthController(),
                                 'action' => $provider->getAuthAction()

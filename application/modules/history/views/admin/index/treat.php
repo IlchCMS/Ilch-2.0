@@ -61,7 +61,7 @@ $history = $this->get('history');
             <?=$this->getTrans('symbol') ?>:
         </label>
         <div class="col-lg-2 input-group ilch-date">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span id="chosensymbol" class="<?=$this->originalInput('symbol', $history->getType())  ?>"></span>
             </span>
             <input type="text"
@@ -71,7 +71,7 @@ $history = $this->get('history');
                    value="<?=$this->originalInput('symbol', $history->getType()) ?>"
                    readonly />
             <span class="input-group-text">
-                <span class="fa-solid fa-mouse-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
+                <span class="fa-solid fa-mouse-pointer" data-bs-toggle="modal" data-bs-target="#symbolDialog"></span>
             </span>
         </div>
     </div>

@@ -444,6 +444,7 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .profile-sidebar .profile-usermenu ul li a {
     font-size: 14px;
     font-weight: 400;
+    padding: 10px 15px;
 }
 
 .profile-sidebar .profile-usermenu ul li i {
@@ -457,10 +458,10 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 
 .profile-sidebar .profile-usermenu ul li.active a {
     color: #5b9bd1;
-    border-left: 2px solid #5b9bd1;
+    border-left: 2px solid #5b9bd1 !important;
     margin-left: -2px;
-    border-right: 2px solid #5b9bd1;
-    margin-right: -2px;
+    border-right: 2px solid #5b9bd1 !important;
+    /*! margin-right: -2px; */
 }
 
 /* Profile Content */

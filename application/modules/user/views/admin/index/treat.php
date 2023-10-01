@@ -14,7 +14,7 @@ if ($user->getId()) {
     <input type="hidden"
            name="id"
            value="<?=$user->getId() ?>" />
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-3 control-label">
             <?=$this->getTrans('userName') ?>
         </label>
@@ -27,7 +27,7 @@ if ($user->getId()) {
                    value="<?=($this->originalInput('name') != '') ? $this->escape($this->originalInput('name')) : $this->escape($user->getName()) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
         <label for="email" class="col-lg-3 control-label">
             <?=$this->getTrans('userEmail') ?>
         </label>
@@ -40,7 +40,7 @@ if ($user->getId()) {
                    value="<?=($this->originalInput('email') != '') ? $this->escape($this->originalInput('email')) : $this->escape($user->getEmail()) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('userPassword') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('userPassword') ? 'has-error' : '' ?>">
         <label for="password" class="col-lg-3 control-label">
             <?=$this->getTrans('userPassword') ?>
         </label>
@@ -67,7 +67,7 @@ if ($user->getId()) {
             $dateLastActivity = $this->getTrans('neverLoggedIn');
         }
     ?>
-        <div class="row form-group ilch-margin-b">
+        <div class="row mb-3">
             <label class="col-lg-3 control-label">
                 <?=$this->getTrans('userDateCreated') ?>
             </label>
@@ -75,7 +75,7 @@ if ($user->getId()) {
                 <p class="form-control-static"><?=$this->escape($user->getDateCreated()) ?></p>
             </div>
         </div>
-        <div class="row form-group ilch-margin-b">
+        <div class="row mb-3">
             <label class="col-lg-3 control-label">
                 <?=$this->getTrans('userDateConfirmed') ?>
             </label>
@@ -83,7 +83,7 @@ if ($user->getId()) {
                 <p class="form-control-static"><?=$this->escape($dateConfirmed) ?></p>
             </div>
         </div>
-        <div class="row form-group ilch-margin-b">
+        <div class="row mb-3">
             <label class="col-lg-3 control-label">
                 <?=$this->getTrans('userDateLastActivity') ?>
             </label>
@@ -92,7 +92,7 @@ if ($user->getId()) {
             </div>
         </div>
     <?php endif; ?>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <div class="col-lg-3 control-label">
             <?=$this->getTrans('usergalleryAllowed') ?>
         </div>
@@ -111,7 +111,7 @@ if ($user->getId()) {
         </div>
     </div>
     <?php if ($user->getId()) : ?>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <div class="col-lg-3 control-label">
             <?=$this->getTrans('lockUser') ?>
         </div>
@@ -130,7 +130,7 @@ if ($user->getId()) {
         </div>
     </div>
     <?php endif; ?>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="assignedGroups" class="col-lg-3 control-label">
                 <?=$this->getTrans('assignedGroups') ?>
         </label>
@@ -162,12 +162,12 @@ if ($user->getId()) {
         </div>
     </div>
     <?php if ($user->getId()) : ?>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="assignedGroups" class="col-lg-3 control-label">
             <?=$this->getTrans('userProfile') ?>
         </label>
         <div class="col-lg-4">
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treatProfile', 'user' => $user->getId()]) ?>" class="btn"><?=$this->getTrans('editUserProfile') ?></a>
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treatProfile', 'user' => $user->getId()]) ?>" class="btn btn-outline-secondary"><?=$this->getTrans('editUserProfile') ?></a>
         </div>
     </div>
     <?php endif; ?>

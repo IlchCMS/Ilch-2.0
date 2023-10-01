@@ -762,15 +762,15 @@ abstract class Base
     public function getDialog(string $id, string $name, string $content, $submit = null): string
     {
         $html = '<div class="modal fade" id="' . $id . '">
-            <div class="modal-dialog">
-                <div class="modal-content modal-xl">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title" id="modalLabel">' . $name . '</h4>
                         <button type="button"
                                 class="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close">
                         </button>
-                        <h4 class="modal-title" id="modalLabel">' . $name . '</h4>
                     </div>
                     <div class="modal-body">
                         ' . $content . '
@@ -782,7 +782,7 @@ abstract class Base
                                  id="modalButton">' . $this->getTrans('ack') . '
                             </button>
                             <button type="button"
-                                    class="btn btn-default"
+                                    class="btn btn btn-secondary"
                                     data-bs-dismiss="modal">' . $this->getTrans('cancel') . '
                             </button>';
         } else {

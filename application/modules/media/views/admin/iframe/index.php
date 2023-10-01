@@ -6,12 +6,12 @@
 </ul>
 
 <?php if ($this->get('medias') != ''): ?>
-    <div id="ilchmedia" class="container-flui rowd">
+    <div id="ilchmedia" class="container-flui row">
         <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'single'): ?>
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
                     <div id="<?=$media->getId() ?>" class="col-lg-2 col-sm-3 col-xs-4 media_loader">
-                        <img class="image thumbnail img-responsive"
+                        <img class="image img-thumbnail img-responsive"
                              data-url="<?=$media->getUrl() ?>"
                              <?php if (file_exists($media->getUrlThumb())): ?>
                                 src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"

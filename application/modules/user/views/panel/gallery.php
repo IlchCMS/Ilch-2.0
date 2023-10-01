@@ -78,7 +78,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                         </div>
                         <div class="col-lg-7 changeBox">
                             <input type="hidden" id="id" value="" />
-                            <div class="form-group">
+                            <div class="row mb-3">
                                 <label for="title" class="col-lg-4 control-label">
                                     <?=$this->getTrans('title') ?>:
                                 </label>
@@ -89,7 +89,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                            name="title" />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="row mb-3">
                                 <label for="desc" class="col-lg-4 control-label">
                                     <?=$this->getTrans('description') ?>:
                                 </label>
@@ -100,7 +100,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                               rows="8"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="row mb-3">
                                 <label for="type" class="col-lg-4 control-label">
                                     <?=$this->getTrans('type') ?>:
                                 </label>
@@ -113,7 +113,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                             </div>
                             <div class="dyn"></div>
                             <div class="col-lg-offset-4 actions">
-                                <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
+                                <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
                             </div>
                         </div>
                         <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
@@ -189,7 +189,7 @@ $(document).ready (
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-4 control-label">Kategorie:</label>\n\
+            menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 control-label">Kategorie:</label>\n\
                         <div class="col-lg-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
@@ -264,7 +264,7 @@ $(document).ready (
         });
 
         $('#galleryForm').on('click', '#menuItemEditCancel', function() {
-            $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="Menuitem hinzufügen">');
+            $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="Menuitem hinzufügen">');
             resetBox();
         });
     }
