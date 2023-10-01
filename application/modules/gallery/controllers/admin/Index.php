@@ -93,7 +93,6 @@ class Index extends Admin
                         $galleryItem->setTitle($item['title']);
                         $galleryItem->setDesc($item['desc']);
 
-
                         $newId = $galleryMapper->saveItem($galleryItem);
                         if (isset($tmpId)) {
                             foreach ($sortArray as $id => $parentId) {
@@ -111,7 +110,7 @@ class Index extends Admin
 
                     $sort = 0;
                     foreach ($sortArray as $id => $parent) {
-                        $galleryMapper->sort($id, $sort);
+                        $galleryMapper->sort($id, $sort, $parent);
                         $sort += 10;
                     }
                 }
