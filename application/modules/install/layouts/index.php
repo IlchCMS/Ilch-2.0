@@ -20,15 +20,15 @@
         <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
     </head>
     <body>
-        <div class="container">
-            <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12 install_container">
+        <div class="container d-flex align-items-center justify-content-center">
+            <div class="col-xl-offset-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 install_container">
                 <div class="logo" title="<?=$this->getTrans('ilchInstall', VERSION) ?>"></div>
                 <div class="installVersion" title="<?=$this->getTrans('ilchInstall', VERSION) ?>">
                     <?=$this->getTrans('ilchInstallVersion', VERSION) ?>
                 </div>
-                <form autocomplete="off" class="row gy-2 gx-4" method="POST" action="<?=$this->getUrl(['action' => urlencode($this->getRequest()->getActionName())]) ?>">
+                <form autocomplete="off" class="row needs-validation" method="POST" action="<?=$this->getUrl(['action' => urlencode($this->getRequest()->getActionName())]) ?>">
                     <?=$this->getTokenField() ?>
-                    <div class="col-lg-4 col-md-3 col-sm-3 hidden-xs verticalLine install_step">
+                    <div class="d-none d-md-block col-xl-3 col-lg-3 col-md-3 verticalLine install_step">
                         <?php
                         $done = 1;
                         /** @var array $menu */
@@ -48,7 +48,7 @@
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <div class="col-lg-8 col-md-9 col-sm-9">
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
                         <?php foreach ($menu as $key => $values) : ?>
                             <?php if ($this->getRequest()->getActionName() == $key) : ?>
                                 <h2><?=$this->getTrans($values['langKey']) ?></h2>
@@ -61,13 +61,13 @@
 
                     <div class="save_box">
                         <?php if (!in_array($this->getRequest()->getActionName(), ['index', 'finish'])) : ?>
-                            <a href="<?=$this->getUrl(['action' => $lastAction]) ?>" class="btn btn-default pull-left">
+                            <a href="<?=$this->getUrl(['action' => $lastAction]) ?>" class="btn btn-outline-secondary">
                                 <?=$this->getTrans('backButton') ?>
                             </a>
                         <?php endif; ?>
 
                         <?php if ($this->getRequest()->getActionName() !== 'finish' && !$this->get('mysqliExtensionMissing')) : ?>
-                            <button type="submit" class="btn btn-primary pull-right" name="save">
+                            <button type="submit" class="btn btn-primary float-end" name="save">
                                 <?php $buttonTrans = 'nextButton'; ?>
 
                                 <?php if ($this->getRequest()->getActionName() === 'configuration') : ?>
@@ -79,11 +79,11 @@
                         <?php endif; ?>
 
                         <?php if ($this->getRequest()->getActionName() === 'finish') : ?>
-                            <div class="pull-right">
+                            <div class="float-end">
                                 <a target="_blank" href="<?=$this->getUrl() ?>" class="btn btn-success">
                                     <?=$this->getTrans('frontend') ?>
                                 </a>
-                                <a target="_blank" href="<?=$this->getUrl() . '/admin' ?>" class="btn btn-primary">
+                                <a target="_blank" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'admin', 'action' => 'index']) ?>" class="btn btn-primary">
                                     <?=$this->getTrans('administration') ?>
                                 </a>
                             </div>

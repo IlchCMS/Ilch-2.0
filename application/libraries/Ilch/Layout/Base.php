@@ -97,6 +97,7 @@ abstract class Base extends \Ilch\Design\Base
         }
 
         foreach ($messages as $key => $message) {
+            $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissible fade show" role="alert">';
             if (!empty($message['validationError']) && $message['validationError'] == true) {
                 $text = '<b>' . $this->getTrans('errorsOccured') . '</b>';
                 $text .= '<ul>';
@@ -104,14 +105,12 @@ abstract class Base extends \Ilch\Design\Base
                     $text .= '<li>' . $messageText . '</li>';
                 }
                 $text .= '</ul>';
-                $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissable" role="alert">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true" aria-label="close"></button>
-                ' . $text . '</div>';
+                $html .= $text;
             } else {
-                $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissable" role="alert">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true" aria-label="close"></button>
-                ' . $this->escape($message['text']) . '</div>';
+                $html .= $this->escape($message['text']);
             }
+            $html .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
             unset($_SESSION['messages'][$key]);
         }
 
