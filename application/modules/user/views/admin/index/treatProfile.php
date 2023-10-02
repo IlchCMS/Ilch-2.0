@@ -1,7 +1,7 @@
 <h1>
     <?php $user = $this->get('user') ?>
     <?=$this->getTrans('editUserProfileOf', $user->getName()) ?>
-    <a class="badge" data-toggle="modal" data-target="#infoModal">
+    <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
@@ -88,4 +88,3 @@ foreach ($profileFields as $profileField) {
 }
 ?>
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('editUserProfileInfoText')) ?>
-

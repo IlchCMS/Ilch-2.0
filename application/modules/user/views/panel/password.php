@@ -8,7 +8,7 @@
             <h1><?=$this->getTrans('settingsPassword') ?></h1>
             <form class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="form-group <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
+                <div class="row mb-3 <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileNewPassword') ?>*
                     </label>
@@ -23,7 +23,7 @@
                         <?=$this->getTrans('profilePasswordInfo') ?>
                     </div>
                 </div>
-                <div class="form-group <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
+                <div class="row mb-3 <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileNewPasswordRetype') ?>*
                     </label>
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
                         <input type="submit"
-                               class="btn"
+                               class="btn btn-outline-secondary"
                                name="saveEntry"
                                value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>

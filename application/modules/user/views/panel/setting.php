@@ -8,7 +8,7 @@
             <h1><?=$this->getTrans('settingsSetting') ?></h1>
             <form class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="form-group <?=$this->validation()->hasError('locale') ? 'has-error' : '' ?>">
+                <div class="row mb-3 <?=$this->validation()->hasError('locale') ? 'has-error' : '' ?>">
                     <div class="col-lg-3 control-label">
                         <?=$this->getTrans('locale') ?>
                     </div>
@@ -25,7 +25,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group <?=$this->validation()->hasError('optMail') ? 'has-error' : '' ?>">
+                <div class="row mb-3 <?=$this->validation()->hasError('optMail') ? 'has-error' : '' ?>">
                     <div class="col-lg-3 control-label">
                         <?=$this->getTrans('optMail') ?>
                     </div>
@@ -46,9 +46,9 @@
 
                 <div class="form-group">
                     <div class="col-lg-offset-3 col-lg-12">
-                        <input type="submit" 
-                               class="btn"
-                               name="saveEntry" 
+                        <input type="submit"
+                               class="btn btn-outline-secondary"
+                               name="saveEntry"
                                value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>
                 </div>

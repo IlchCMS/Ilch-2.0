@@ -27,13 +27,13 @@ foreach ($profil->getGroups() as $group) {
     <div class="profil-header">
         <div class="row">
             <div class="col-lg-3">
-                <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
+                <img class="img-thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
                 <?php if ($profil->getId() != $this->getUser()->getId()) : ?>
                 <div style="margin-top: 5px">
                     <?php if ($this->get('isFriend')) : ?>
-                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'removeFriend', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('removeFriend') ?>"><?=$this->getTrans('removeFriend') ?></a>
+                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'removeFriend', 'id' => $profil->getId()], null, true) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('removeFriend') ?>"><?=$this->getTrans('removeFriend') ?></a>
                     <?php else : ?>
-                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'sendFriendRequest', 'id' => $profil->getId()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('sendFriendRequest') ?>"><?=$this->getTrans('sendFriendRequest') ?></a>
+                        <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'sendFriendRequest', 'id' => $profil->getId()], null, true) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('sendFriendRequest') ?>"><?=$this->getTrans('sendFriendRequest') ?></a>
                     <?php endif; ?>
                 </div>
                 <?php endif; ?>
@@ -79,7 +79,7 @@ foreach ($profil->getGroups() as $group) {
 }
                 ?>
             </div>
-        </div>        
+        </div>
     </div>
     <br />
     <div class="profil-content">

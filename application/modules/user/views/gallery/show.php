@@ -43,8 +43,8 @@
         <?php foreach ($this->get('image') as $image): ?>
             <?php $commentsCount = $commentMapper->getCountComments('user/gallery/showimage/user/'.$this->getRequest()->getParam('user').'/id/'.$image->getId()); ?>
             <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
-                <div class="panel panel-default">
-                    <div class="panel-image thumbnail">
+                <div class="card panel-default">
+                    <div class="card-image img-thumbnail">
                         <a href="<?=$this->getUrl(['action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'id' => $image->getId()]) ?>">
                         <?php if (file_exists($image->getImageThumb())): ?>
                             <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
@@ -53,7 +53,7 @@
                         <?php endif; ?>
                         </a>
                     </div>
-                    <div class="panel-footer text-center">
+                    <div class="card-footer text-center">
                         <i class="fa-regular fa-comment"></i> <?=$commentsCount ?>
                         <i class="fa-solid fa-eye"> <?=$image->getVisits() ?></i>
                     </div>

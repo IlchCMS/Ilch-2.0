@@ -5,7 +5,7 @@
       role="form"
       id="groupAccessForm">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="groupId" class="control-label col-sm-2"><?=$this->getTrans('group') ?></label>
         <div class="col-sm-10">
             <select class="form-control" id="groupId" name="groupId">
@@ -22,7 +22,7 @@
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="accessId" class="control-label col-sm-2">
         <?php
         $accessTypes = $this->get('accessTypes');

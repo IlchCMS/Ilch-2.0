@@ -17,9 +17,9 @@
 <form class="form-horizontal" method="POST" action="<?=$_SESSION['media-url-action-button'] ?><?=$this->getRequest()->getParam('id') ?>">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-pills navbar-fixed-top">
-        <li><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id')]) ?>"><?=$this->getTrans('upload') ?></a></li>
-        <li><a href="<?=$_SESSION['media-url-media-button'] ?><?=$this->getRequest()->getParam('id') ?>"><?=$this->getTrans('media') ?></a></li>
-        <li class="pull-right"><button type="submit" class="btn btn-primary" name="save" value="save"><?=$this->getTrans('add') ?></button></li>
+        <li class="nav-item"><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id')]) ?>" class="nav-link"><?=$this->getTrans('upload') ?></a></li>
+        <li class="nav-item"><a href="<?=$_SESSION['media-url-media-button'] ?><?=$this->getRequest()->getParam('id') ?>" class="nav-link"><?=$this->getTrans('media') ?></a></li>
+        <li class="pull-right nav-item"><button type="submit" class="btn btn-primary" name="save" value="save"><?=$this->getTrans('add') ?></button></li>
     </ul>
 
     <?php if ($this->get('medias') != ''): ?>
@@ -28,7 +28,7 @@
                 <?php foreach ($this->get('medias') as $media): ?>
                     <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
                         <div id="<?=$media->getId() ?>" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
-                            <img class="image thumbnail img-responsive"
+                            <img class="image img-thumbnail img-responsive"
                                  data-url="<?=$media->getUrl() ?>"
                                  <?php if (file_exists($media->getUrlThumb())): ?>
                                     src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
@@ -73,7 +73,7 @@ $(document).on("click", "img.image", function() {
 });
 
 $(document).ready(function() {
-    function media_loader() { 
+    function media_loader() {
         var ID=$(".media_loader:last").attr("id");
         $.post("<?=$this->getUrl('admin/media/ajax/multi/type/') ?><?=$this->getRequest()->getParam('type') ?>/lastid/"+ID,
             function(data)

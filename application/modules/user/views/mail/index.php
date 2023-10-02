@@ -4,7 +4,7 @@
         <h1><?=$this->getTrans('mailTo') ?> <?=$user->getName() ?></h1>
         <form method="POST" class="form-horizontal">
             <?=$this->getTokenField() ?>
-            <div class="form-group <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
+            <div class="row mb-3 <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
                 <label for="subject" class="col-lg-2 control-label">
                     <?=$this->getTrans('subject') ?>:
                 </label>
@@ -16,7 +16,7 @@
                            value="<?=$this->originalInput('subject') ?>" />
                 </div>
             </div>
-            <div class="form-group <?=$this->validation()->hasError('message') ? 'has-error' : '' ?>">
+            <div class="row mb-3 <?=$this->validation()->hasError('message') ? 'has-error' : '' ?>">
                 <label for="message" class="col-lg-2 control-label">
                     <?=$this->getTrans('message') ?>:
                 </label>
