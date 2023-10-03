@@ -92,7 +92,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
 <link href="<?=$this->getModuleUrl('static/css/gallery.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('menuGallery') ?> <span class="catinfo"></span></h1>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
         <li class="nav-item dropdown active">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownConfig" data-bs-toggle="dropdown" data-bs-target="#navbar-collapse" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-arrow-down"></i> <?=$this->getTrans('allCat') ?></a>
           <ul id="filters" class="dropdown-menu" aria-labelledby="dropdownConfig">
-            <li class="active"><a href="#filter" data-filter="*"><i class="fa-solid fa-image" class="dropdown-item"></i> <?=$this->getTrans('allCat') ?></a></li>
+            <li><a href="#filter" data-filter="*" class="active dropdown-item"><i class="fa-solid fa-image"></i> <?=$this->getTrans('allCat') ?></a></li>
             <?php if (!empty($galleryItems)) :
                 ?>
                 <?php foreach ($galleryItems as $item) :
@@ -115,7 +115,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
             endif; ?>
           </ul>
         </li>
-        <li id="sorts" class="nav-item"><a href="#filter" data-sort-direction="asc" data-sort-by="name"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
+        <li id="sorts" class="nav-item"><a href="#filter" data-sort-direction="asc" data-sort-by="name" class="nav-link"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
       </ul>
       <form class="d-flex">
         <input type="text" id="quicksearch" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
