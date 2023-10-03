@@ -11,7 +11,7 @@
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
                     <div id="<?=$media->getId() ?>" class="col-lg-2 col-sm-3 col-xs-4 media_loader">
-                        <img class="image thumbnail img-responsive"
+                        <img class="image img-thumbnail img-responsive"
                              data-url="<?=$media->getUrl() ?>"
                              <?php if (file_exists($media->getUrlThumb())): ?>
                                 src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
@@ -43,7 +43,7 @@
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
                     <div class="col-lg-2 col-sm-3 col-xs-4">
-                        <img class="image thumbnail img-responsive"
+                        <img class="image img-thumbnail img-responsive"
                              data-alt="<?=$media->getName() ?>"
                              data-url="<?=$this->getUrl().'/'.$media->getUrl() ?>"
                              src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"

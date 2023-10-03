@@ -11,7 +11,7 @@ $commentsClass = new Ilch\Comments();
     <div class="row">
         <div class="col-md-6">
             <a href="<?=$this->getUrl().'/'.$image->getImageUrl() ?>">
-                <img class="thumbnail" src="<?=$this->getUrl().'/'.$image->getImageUrl() ?>" alt="<?=$image->getImageTitle() ?>"/>
+                <img class="img-thumbnail" src="<?=$this->getUrl().'/'.$image->getImageUrl() ?>" alt="<?=$image->getImageTitle() ?>"/>
             </a>
         </div>
         <div class="col-md-6">

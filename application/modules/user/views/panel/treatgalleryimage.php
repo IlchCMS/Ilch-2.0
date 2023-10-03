@@ -13,11 +13,11 @@
                 <div id="gallery">
                     <div class="col-md-5">
                         <a href="<?=$this->getUrl().'/'.$image->getImageUrl() ?>">
-                            <img class="thumbnail" src="<?=$this->getUrl().'/'.$image->getImageUrl() ?>"/>
+                            <img class="img-thumbnail" src="<?=$this->getUrl().'/'.$image->getImageUrl() ?>"/>
                         </a>
                     </div>
                     <div class="col-md-7">
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <label for="imageTitleInput" class="col-lg-4 control-label">
                                 <?=$this->getTrans('title') ?>:
                             </label>
@@ -29,7 +29,7 @@
                                        value="<?=$image->getImageTitle() ?>" />
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="row mb-3">
                             <label for="imageDescInput" class="col-lg-4 control-label">
                                 <?=$this->getTrans('description') ?>:
                             </label>

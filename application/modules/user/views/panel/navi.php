@@ -31,7 +31,7 @@ function getTransKey($usermenuId)
         </div>
     </div>
     <div class="profile-usermenu">
-        <ul class="nav">
+        <ul class="nav flex-column">
             <?php foreach ($this->get('usermenu') as $usermenu) {
     $class = '';
     if ($usermenu->getKey() == 'user/panel/'.$this->getRequest()->getActionName()) {
@@ -40,7 +40,7 @@ function getTransKey($usermenuId)
 
     if ($usermenu->getKey() === 'user/panel/gallery' && ($this->get('galleryAllowed') == 0 || $profil->getOptGallery() == 0)) {
     } else {
-        echo '<li class="' . $class . '"><a href="' . $this->getUrl($usermenu->getKey()) . '">' . $this->getTrans(getTransKey($usermenu->getId())) . ' <i class="' . $usermenu->getIcon() . ' pull-right"></i></a></li>';
+        echo '<li class="nav-item ' . $class . '"><a href="' . $this->getUrl($usermenu->getKey()) . '" class="nav-link">' . $this->getTrans(getTransKey($usermenu->getId())) . ' <i class="' . $usermenu->getIcon() . ' pull-right"></i></a></li>';
     }
 } ?>
         </ul>

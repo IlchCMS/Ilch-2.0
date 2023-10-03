@@ -6,7 +6,7 @@
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
                 <div  id="<?=$media->getId() ?>" class="col-lg-2 col-sm-3 col-xs-4 media_loader">
-                    <img class="image thumbnail img-responsive"
+                    <img class="image img-thumbnail img-fluid"
                          data-url="<?=$media->getUrl() ?>"
                          src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
                          alt="<?=$media->getName() ?>">
@@ -19,7 +19,7 @@
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
                 <div id="<?=$media->getId() ?>" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
-                    <img class="image thumbnail img-responsive"
+                    <img class="image img-thumbnail img-fluid"
                          data-url="<?=$media->getUrl() ?>"
                          src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                          alt="<?=$media->getName() ?>">
@@ -35,7 +35,7 @@
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
                 <div id="<?=$media->getId() ?>" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
-                    <img class="image thumbnail img-responsive"
+                    <img class="image img-thumbnail img-fluid"
                          data-alt="<?=$media->getName() ?>"
                          data-url="<?=$media->getUrl() ?>"
                          src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
@@ -92,8 +92,8 @@
 <script>
 $(document).ready(function()
 {
-    function media_loader() 
-    { 
+    function media_loader()
+    {
         var ID=$(".media_loader:last").attr("id");
         $.post("<?=$this->getUrl('admin/media/ajax/index/type/') ?><?=$this->getRequest()->getParam('type') ?>/lastid/"+ID,
             function(data)
@@ -103,13 +103,13 @@ $(document).ready(function()
                 }
             }
         );
-    };  
+    };
 
     $(window).scroll(function()
     {
         if ($(window).scrollTop() === $(document).height() - $(window).height()) {
             media_loader();
         }
-    }); 
+    });
 });
 </script>

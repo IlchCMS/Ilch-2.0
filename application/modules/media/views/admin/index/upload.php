@@ -9,7 +9,7 @@
         <p><?=$this->getTrans('drag') ?></p>
         <i class="fa fa-cloud-upload"></i>
         <p><?=$this->getTrans('or') ?></p>
-        <a class="btn btn-small btn-primary"><?=$this->getTrans('browse') ?></a>
+        <a class="btn btn-sm btn-primary"><?=$this->getTrans('browse') ?></a>
         <input type="file" name="upl" multiple />
     </div>
     <ul><!-- Uploads --></ul>

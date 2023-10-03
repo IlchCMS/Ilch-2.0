@@ -1,4 +1,4 @@
-<form 
+<form
     action="<?=$this->getUrl([
         'module' => 'user',
         'controller' => 'providers',
@@ -10,7 +10,7 @@
 >
     <h1><?= $this->getTrans('authProvider') ?> <?= $this->get('provider')->getName() ?></h1>
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row mb-3">
         <label for="moduleInput" class="col-lg-3 control-label">
             <?=$this->getTrans('module') ?>
         </label>
@@ -18,7 +18,7 @@
             <select id="moduleInput" name="module" class="form-control">
                 <option value=""><?= $this->getTrans('deactivateAuthProvider') ?></option>
                 <?php foreach ($this->get('modules') as $module): ?>
-                    <option 
+                    <option
                         value="<?= $module->getModule() ?>"
                         <?= $module->getModule() === $this->get('provider')->getModule() ? 'selected="selected"' : '' ?>
                     >

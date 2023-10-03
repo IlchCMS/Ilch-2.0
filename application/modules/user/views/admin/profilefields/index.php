@@ -5,7 +5,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
 <link href="<?=$this->getModuleUrl('static/css/profile-fields.css') ?>" rel="stylesheet">
 <h1>
     <?=$this->getTrans('menuProfileFields') ?>
-    <a class="badge" data-toggle="modal" data-target="#infoModal">
+    <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
@@ -93,16 +93,16 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
     </div>
 
     <div class="content_savebox">
-        <button type="submit" class="btn btn-default sortbtn" name="save" value="save">
+        <button type="submit" class="btn btn-outline-secondary sortbtn" name="save" value="save">
             <?=$this->getTrans('saveButton') ?>
         </button>
         <input type="hidden" class="content_savebox_hidden" name="action" value="" />
         <div class="btn-group dropup">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
                 <?=$this->getTrans('selected') ?> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu listChooser" role="menu">
-                <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+                <li><a href="#" data-hiddenkey="delete" class="dropdown-item"><?=$this->getTrans('delete') ?></a></li>
             </ul>
         </div>
     </div>

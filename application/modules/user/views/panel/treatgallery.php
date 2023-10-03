@@ -42,9 +42,9 @@
                                         <td><?=$this->getEditIcon(['action' => 'treatgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getId()]) ?></td>
                                         <td><?=$this->getDeleteIcon(['action' => 'delgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getImageId()]) ?></td>
                                         <?php if (file_exists($image->getImageThumb())): ?>
-                                            <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>"/></td>
+                                            <td><img class="image img-thumbnail img-fluid" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>"/></td>
                                         <?php else: ?>
-                                            <td><img class="image thumbnail img-responsive" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"/></td>
+                                            <td><img class="image img-thumbnail img-fluid" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"/></td>
                                         <?php endif; ?>
                                         <td><?=$this->escape($image->getImageTitle()) ?></td>
                                         <td><?=$this->escape($image->getImageDesc()) ?></td>
@@ -53,7 +53,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <?=$this->getListBar(['delete' => 'delete']) ?> 
+                    <?=$this->getListBar(['delete' => 'delete']) ?>
                 </form>
             <?php else: ?>
                 <?=$this->getTrans('noImages') ?>

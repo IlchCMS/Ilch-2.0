@@ -23,7 +23,7 @@
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb">
-                                <img class="image thumbnail img-responsive"
+                                <img class="image img-thumbnail img-fluid"
                                      data-url="<?=$media->getUrl() ?>"
                                      src="<?=$this->getUrl($media->getUrlThumb()) ?>"
                                      alt="<?=$media->getName() ?>">
@@ -46,7 +46,7 @@
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
                             <div class="col-lg-2 col-sm-3 col-xs-4">
-                                <img class="image thumbnail img-responsive"
+                                <img class="image img-thumbnail img-fluid"
                                      data-url="<?=$media->getUrl() ?>"
                                      src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                                      alt="<?=$media->getName() ?>">
@@ -61,7 +61,7 @@
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb">
-                                <img class="image thumbnail img-responsive"
+                                <img class="image img-thumbnail img-fluid"
                                      data-url="<?=$media->getUrl() ?>"
                                      src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                                      alt="">

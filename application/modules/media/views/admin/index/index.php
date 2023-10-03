@@ -119,7 +119,7 @@
                             <td>
                                 <div class="btn-group">
                                     <button type="button"
-                                            class="btn btn-default dropdown-toggle"
+                                            class="btn btn-outline-secondary dropdown-toggle"
                                             aria-expanded="false"
                                             data-bs-toggle="dropdown"><?=$this->escape($media->getCatName()) ?>
                                         <span class="caret"></span>
