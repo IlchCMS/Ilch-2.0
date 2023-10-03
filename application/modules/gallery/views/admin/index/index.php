@@ -202,7 +202,7 @@ $(document).ready (
                 return;
             }
 
-            let menuHtml = '<div class="form-group row mb-3"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
+            let menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
                         <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() === '0') {
@@ -220,12 +220,10 @@ $(document).ready (
 
             let append = '#sortable';
 
-            if ($('#type').val() !== "0" && $('#menukey').val() > 0 ) {
+            if ($('#type').val() !== "0" && $('#menukey').val() > "0" ) {
                 let id = $('#menukey').val();
 
-                if ($('#sortable #'+id+' ol').length > 0) {
-
-                } else {
+                if ($('#sortable #'+id+' ol').length <= 0) {
                     $('<ol></ol>').appendTo('#sortable #'+id);
                 }
 

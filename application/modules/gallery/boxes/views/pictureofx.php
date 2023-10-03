@@ -42,8 +42,8 @@ $image = $this->get('image');
 
 <?php if (!empty($image)) : ?>
     <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/' . $image->getId()); ?>
-    <div class="card panel-default">
-        <div class="card-image img-thumbnail">
+    <div class="panel panel-default">
+        <div class="panel-image thumbnail">
         <?php if (file_exists($image->getImageThumb())) : ?>
             <a href="<?=$this->getUrl(['module' => 'gallery', 'controller' => 'index', 'action' => 'showimage', 'id' => $image->getId()]) ?>">
                 <?php $altText = (empty($image->getImageTitle())) ? basename($image->getImageUrl()) : $image->getImageTitle(); ?>
@@ -53,7 +53,7 @@ $image = $this->get('image');
             <?=$this->getTrans('pictureMissing') ?>
         <?php endif; ?>
         </div>
-        <div class="card-footer text-center">
+        <div class="panel-footer text-center">
             <i class="fa-regular fa-comment"></i> <?=$commentsCount ?>
             <i class="fa-solid fa-eye"> <?=$image->getVisits() ?></i>
         </div>

@@ -110,7 +110,7 @@ if ($this->getUser()) {
         <?=$this->getTokenField() ?>
         <h1><?=$this->getTrans('menuEntry') ?></h1>
 
-        <div class="form-group <?=in_array('reason', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=in_array('reason', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="reason" class="col-lg-2 control-label">
                 <?=$this->getTrans('reason') ?>:
             </label>
@@ -122,7 +122,7 @@ if ($this->getUser()) {
                        value="<?=($this->get('post') != '') ? $this->get('post')['reason'] : '' ?>" />
             </div>
         </div>
-        <div class="form-group <?=in_array('when', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=in_array('when', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="start" class="col-md-2 control-label">
                 <?=$this->getTrans('when') ?>:
             </label>
@@ -149,7 +149,7 @@ if ($this->getUser()) {
                 </span>
             </div>
         </div>
-        <div class="form-group <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="text" class="col-lg-2 control-label">
                 <?=$this->getTrans('description') ?>:
             </label>
@@ -161,7 +161,7 @@ if ($this->getUser()) {
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
-            <div class="form-group">
+            <div class="row mb-3">
                 <div class="col-lg-offset-2 col-lg-10">
                     <input type="checkbox"
                            id="calendarShow"

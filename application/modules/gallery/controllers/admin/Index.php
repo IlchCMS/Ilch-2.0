@@ -65,7 +65,7 @@ class Index extends Admin
                 $oldItems = $galleryMapper->getGalleryItems();
 
                 // Delete no longer existing items.
-                foreach ($oldItems as $oldItem) {
+                foreach ($oldItems ?? [] as $oldItem) {
                     if (!key_exists($oldItem->getId(), $items)) {
                         $galleryMapper->deleteItem($oldItem);
                     }
@@ -93,7 +93,6 @@ class Index extends Admin
                         $galleryItem->setTitle($item['title']);
                         $galleryItem->setDesc($item['desc']);
 
-
                         $newId = $galleryMapper->saveItem($galleryItem);
                         if (isset($tmpId)) {
                             foreach ($sortArray as $id => $parentId) {
@@ -111,7 +110,7 @@ class Index extends Admin
 
                     $sort = 0;
                     foreach ($sortArray as $id => $parent) {
-                        $galleryMapper->sort($id, $sort);
+                        $galleryMapper->sort($id, $sort, $parent);
                         $sort += 10;
                     }
                 }
