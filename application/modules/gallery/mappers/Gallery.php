@@ -162,14 +162,14 @@ class Gallery extends Mapper
      * @param int $pos
      * @return bool
      */
-    public function sort($id, int $pos): bool
+    public function sort($id, int $pos, int $parent): bool
     {
         if (is_a($id, GalleryItem::class)) {
             $id = $id->getId();
         }
 
         return $this->db()->update('gallery_items')
-            ->values(['sort' => $pos])
+            ->values(['sort' => $pos, 'parent_id' => $parent])
             ->where(['id' => $id])
             ->execute();
     }

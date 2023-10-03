@@ -92,29 +92,33 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
 <link href="<?=$this->getModuleUrl('static/css/gallery.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('menuGallery') ?> <span class="catinfo"></span></h1>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
     <div id="navbar-collapse" class="collapse navbar-collapse">
-      <ul class="navbar-nav">
+      <ul class="nav navbar-nav">
         <li class="nav-item dropdown active">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdownConfig" data-bs-toggle="dropdown" role="button"><i class="fa-solid fa-arrow-down"></i> <?=$this->getTrans('allCat') ?></a>
-          <ul id="filters" class="dropdown-menu">
-            <li><a class="dropdown-item" href="#filter" data-filter="*"><i class="fa-solid fa-image"></i> <?=$this->getTrans('allCat') ?></a></li>
-            <?php if (!empty($galleryItems)): ?>
-              <?php foreach ($galleryItems as $item): ?>
-                <?php recCategory($item, $galleryMapper, $this, $imageMapper); ?>
-              <?php endforeach; ?>
-            <?php endif; ?>
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownConfig" data-bs-toggle="dropdown" data-bs-target="#navbar-collapse" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-arrow-down"></i> <?=$this->getTrans('allCat') ?></a>
+          <ul id="filters" class="dropdown-menu" aria-labelledby="dropdownConfig">
+            <li class="active"><a href="#filter" data-filter="*"><i class="fa-solid fa-image" class="dropdown-item"></i> <?=$this->getTrans('allCat') ?></a></li>
+            <?php if (!empty($galleryItems)) :
+                ?>
+                <?php foreach ($galleryItems as $item) :
+                    ?>
+                    <?php recCategory($item, $galleryMapper, $this); ?>
+                    <?php
+                endforeach; ?>
+                <?php
+            endif; ?>
           </ul>
         </li>
-        <li id="sorts" class="nav-item"><a href="#filter" data-sort-direction="asc" data-sort-by="name" class="nav-link"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
+        <li id="sorts" class="nav-item"><a href="#filter" data-sort-direction="asc" data-sort-by="name"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
       </ul>
       <form class="d-flex">
-        <input type="text" id="quicksearch" class="form-control" aria-label="search" type="search" placeholder="<?=$this->getTrans('search') ?>">
+        <input type="text" id="quicksearch" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
       </form>
     </div>
   </div>

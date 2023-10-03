@@ -38,39 +38,36 @@ $readAccess = $this->get('readAccess');
 <?php if ($faqs) : ?>
     <form class="form-horizontal" role="search" method="POST">
         <?=$this->getTokenField() ?>
-        <div class="form-group">
+        <div class="row mb-3">
             <div class="col-lg-6">
                 <input type="text" class="form-control" placeholder="<?=$this->getTrans('placeHolderSearch') ?>" name="search" id="search">
             </div>
-            <button type="submit" class="btn btn-default"><?=$this->getTrans('search') ?></button>
+            <div class="col-lg-6">
+                <button type="submit" class="btn btn-default"><?=$this->getTrans('search') ?></button>
+            </div>
         </div>
     </form>
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand">Navigation</a>
-            </div>
+            <a class="navbar-brand">Navigation</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <?php foreach ($categories as $category) :
                         $countFaqs = count($faqMapper->getFaqs(['f.cat_id' => $category->getId()], ['f.id' => 'ASC'], $readAccess));
                         if ($category->getId() == $this->getRequest()->getParam('catId')) {
-                            $active = 'class="active"';
+                            $active = 'active';
                         } else {
                             $active = '';
                         }
 
                         if ($countFaqs > 0) : ?>
-                            <li <?=$active ?>>
-                                <a href="<?=$this->getUrl(['action' => 'index', 'catId' => $category->getId()]) ?>">
+                            <li class="nav-item">
+                                <a href="<?=$this->getUrl(['action' => 'index', 'catId' => $category->getId()]) ?>" <a class="nav-link <?=$active ?>">
                                     <b><?=$this->escape($category->getTitle()) ?></b>
                                     <span class="badge"><?=$countFaqs ?></span>
                                 </a>

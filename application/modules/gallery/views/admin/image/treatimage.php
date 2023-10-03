@@ -13,11 +13,11 @@ $image = $this->get('image');
         <div class="row">
             <div class="col-md-4">
                 <a href="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>">
-                    <img class="thumbnail" src="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/>
+                    <img class="img-thumbnail" src="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/>
                 </a>
             </div>
             <div class="col-md-8">
-                <div class="row form-group ilch-margin-b">
+                <div class="row mb-3">
                     <label for="imageTitleInput" class="col-lg-2 control-label">
                         <?=$this->getTrans('imageTitle') ?>:
                     </label>
@@ -29,7 +29,7 @@ $image = $this->get('image');
                                value="<?=$this->escape($image->getImageTitle()) ?>" />
                     </div>
                 </div>
-                <div class="row form-group ilch-margin-b">
+                <div class="row mb-3">
                     <label for="imageDescInput" class="col-lg-2 control-label">
                         <?=$this->getTrans('imageDesc') ?>:
                     </label>
