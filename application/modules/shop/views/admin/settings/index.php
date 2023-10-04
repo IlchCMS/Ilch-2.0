@@ -5,34 +5,34 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
-        <li class="active">
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>" <a class="nav-link active">
                 <i class="fa-solid fa-store"></i> <b><?=$this->getTrans('menuSettingShop') ?></b>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>" <a class="nav-link">
                 <i class="fa-solid fa-university"></i> <?=$this->getTrans('menuSettingBank') ?>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>" <a class="nav-link">
                 <i class="fa-solid fa-tools"></i> <?=$this->getTrans('menuSettingDefault') ?>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>" <a class="nav-link">
                 <i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>" <a class="nav-link">
                 <i class="fa-solid fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
             </a>
         </li>
     </ul>
     <br />
-    <div class="form-group <?=$this->validation()->hasError('shopName') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopName') ? 'has-error' : '' ?>">
         <label for="shopName" class="col-lg-2 control-label">
             <?=$this->getTrans('shopName') ?>:
         </label>
@@ -45,7 +45,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopName()) != '') ? $this->escape($this->get('settings')->getShopName()) : $this->escape($this->originalInput('shopName')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('shopStreet') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopStreet') ? 'has-error' : '' ?>">
         <label for="shopStreet" class="col-lg-2 control-label">
             <?=$this->getTrans('shopStreet') ?>:
         </label>
@@ -58,7 +58,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopStreet()) != '') ? $this->escape($this->get('settings')->getShopStreet()) : $this->escape($this->originalInput('shopStreet')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('shopPlz') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopPlz') ? 'has-error' : '' ?>">
         <label for="shopPlz" class="col-lg-2 control-label">
             <?=$this->getTrans('shopPlz') ?>:
         </label>
@@ -71,7 +71,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopPlz()) != '') ? $this->escape($this->get('settings')->getShopPlz()) : $this->escape($this->originalInput('shopPlz')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('shopCity') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopCity') ? 'has-error' : '' ?>">
         <label for="shopCity" class="col-lg-2 control-label">
             <?=$this->getTrans('shopCity') ?>:
         </label>
@@ -85,13 +85,13 @@
         </div>
     </div>
     <hr />
-    <div class="form-group <?=$this->validation()->hasError('shopLogo') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopLogo') ? 'has-error' : '' ?>">
         <label for="selectedImage_shopLogo" class="col-lg-2 control-label">
             <?=$this->getTrans('shopLogo') ?>:
         </label>
         <div class="col-lg-3">
             <div class="input-group">
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <?php $shopImgPath = '/application/modules/shop/static/img/';
                     if ($this->escape($this->get('settings')->getShopLogo() && file_exists(ROOT_PATH.'/'.$this->get('settings')->getShopLogo()))) {
                         $img = BASE_URL.'/'.$this->get('settings')->getShopLogo();
@@ -106,10 +106,10 @@
                        name="shopLogo"
                        placeholder="<?=$this->getTrans('choosePic') ?>"
                        value="<?=($this->escape($this->get('settings')->getShopLogo()) != '') ? $this->escape($this->get('settings')->getShopLogo()) : $this->escape($this->originalInput('shopLogo')) ?>" />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-xmark"></span>
                 </span>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <a id="media_shopLogo" href="javascript:media_shopLogo()"><i class="fa-regular fa-image"></i></a>
                     <script>
                         <?=$this->getMedia()
@@ -122,7 +122,7 @@
         </div>
     </div>
     <hr />
-    <div class="form-group <?=$this->validation()->hasError('shopTel') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopTel') ? 'has-error' : '' ?>">
         <label for="shopTel" class="col-lg-2 control-label">
             <?=$this->getTrans('shopTel') ?>:
         </label>
@@ -135,7 +135,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopTel()) != '') ? $this->escape($this->get('settings')->getShopTel()) : $this->escape($this->originalInput('shopTel')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('shopFax') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopFax') ? 'has-error' : '' ?>">
         <label for="shopFax" class="col-lg-2 control-label">
             <?=$this->getTrans('shopFax') ?>:
         </label>
@@ -148,7 +148,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopFax()) != '') ? $this->escape($this->get('settings')->getShopFax()) : $this->escape($this->originalInput('shopFax')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('shopMail') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopMail') ? 'has-error' : '' ?>">
         <label for="shopMail" class="col-lg-2 control-label">
             <?=$this->getTrans('shopMail') ?>:
         </label>
@@ -161,7 +161,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopMail()) != '') ? $this->escape($this->get('settings')->getShopMail()) : $this->escape($this->originalInput('shopMail')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('shopWeb') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopWeb') ? 'has-error' : '' ?>">
         <label for="shopWeb" class="col-lg-2 control-label">
             <?=$this->getTrans('shopWeb') ?>:
         </label>
@@ -175,7 +175,7 @@
         </div>
     </div>
     <hr />
-        <div class="form-group <?=$this->validation()->hasError('shopStNr') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('shopStNr') ? 'has-error' : '' ?>">
         <label for="shopStNr" class="col-lg-2 control-label">
             <?=$this->getTrans('shopStNr') ?>:
         </label>

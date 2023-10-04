@@ -178,3 +178,6 @@ input.btn.keep:hover {
     color: #3c763d;
     background-color: #dff0d8;
 }
+.media-body .alert {
+    padding:0px 5px
+}

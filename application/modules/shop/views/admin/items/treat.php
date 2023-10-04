@@ -12,7 +12,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
 
-        <div class="form-group <?=$this->validation()->hasError('status') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('status') ? 'has-error' : '' ?>">
             <label for="status" class="col-lg-2 control-label">
                 <?=$this->getTrans('visibility') ?>
             </label>
@@ -27,7 +27,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
             <label for="catId" class="col-lg-2 control-label">
                 <?=$this->getTrans('cat') ?>:
             </label>
@@ -49,8 +49,8 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 </select>
             </div>
         </div>
-        
-        <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+
+        <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
             <label for="name" class="col-lg-2 control-label">
                 <?=$this->getTrans('productName') ?>:
             </label>
@@ -63,7 +63,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('itemnumber') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('itemnumber') ? 'has-error' : '' ?>">
             <label for="itemnumber" class="col-lg-2 control-label">
                 <?=$this->getTrans('itemNumber') ?>:
             </label>
@@ -76,12 +76,12 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('stock') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('stock') ? 'has-error' : '' ?>">
             <label for="stock" class="col-lg-2 control-label">
                 <?=$this->getTrans('stock') ?> / <?=$this->getTrans('salesUnit') ?>:
             </label>
-            <div class="col-lg-5 form-inline">
-                <div class="form-group">
+            <div class="col-lg-5 input-group">
+                <div class="mb-3">
                     <input type="number"
                            class="form-control"
                            id="stock"
@@ -89,7 +89,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            min="0"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getStock()) : $this->escape($this->originalInput('stock')) ?>" />
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
                     <input type="text"
                            class="form-control"
                            id="unitName"
@@ -100,7 +100,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('cordon') || $this->validation()->hasError('cordonColor') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('cordon') || $this->validation()->hasError('cordonColor') ? 'has-error' : '' ?>">
             <label for="cordon" class="col-lg-2 control-label">
                 <?=$this->getTrans('cordon') ?>:
             </label>
@@ -131,30 +131,30 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
             <label for="price" class="col-lg-2 control-label">
                 <?=$this->getTrans('price') ?>:
             </label>
             <div class="col-lg-5">
                 <div class="input-group">
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control text-right"
                            id="price"
                            name="price"
-                           pattern="^\d*(\.\d{2}$)?" 
+                           pattern="^\d*(\.\d{2}$)?"
                            placeholder="99.00"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getPrice()) : $this->escape($this->originalInput('price')) ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <b><?=$this->escape($this->get('currency')) ?></b>
                     </span>
                 </div>
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('tax') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('tax') ? 'has-error' : '' ?>">
             <label for="tax" class="col-lg-2 control-label">
                 <?=$this->getTrans('tax') ?>:
             </label>
@@ -173,27 +173,27 @@ $shopImgPath = '/application/modules/shop/static/img/';
                                   } else {
                                       echo $this->escape($this->get('settings')->getFixTax());
                                   } ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <b><?=$this->getTrans('percent') ?> (%)</b>
                     </span>
                 </div>
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('shippingCosts') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('shippingCosts') ? 'has-error' : '' ?>">
             <label for="shippingCosts" class="col-lg-2 control-label">
                 <?=$this->getTrans('shippingCosts') ?>:
             </label>
             <div class="col-lg-5">
                 <div class="input-group">
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control text-right"
                            id="shippingCosts"
                            name="shippingCosts"
-                           pattern="^\d*(\.\d{2}$)?" 
+                           pattern="^\d*(\.\d{2}$)?"
                            placeholder="<?=($this->escape($this->get('settings')->getFixShippingCosts()) != '') ? $this->escape($this->get('settings')->getFixShippingCosts()) : '' ?>"
                            value="<?php if ($this->get('shopItem') != '') {
                                       echo $this->escape($this->get('shopItem')->getShippingCosts());
@@ -202,14 +202,14 @@ $shopImgPath = '/application/modules/shop/static/img/';
                                   } else {
                                       echo $this->escape($this->get('settings')->getFixShippingCosts());
                                   } ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <b><?=$this->escape($this->get('currency')) ?></b>
                     </span>
                 </div>
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('shippingTime') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('shippingTime') ? 'has-error' : '' ?>">
             <label for="shippingTime" class="col-lg-2 control-label">
                 <?=$this->getTrans('shippingTime') ?>:
             </label>
@@ -228,20 +228,20 @@ $shopImgPath = '/application/modules/shop/static/img/';
                                   } else {
                                       echo $this->escape($this->get('settings')->getFixShippingTime());
                                   } ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <b><?=$this->getTrans('days') ?></b>
                     </span>
                 </div>
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
             <label for="selectedImage_image" class="col-lg-2 control-label">
                 <?=$this->getTrans('productThumbnail') ?>:
             </label>
             <div class="col-lg-5">
                 <div class="input-group">
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <?php
                         if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage() && file_exists(ROOT_PATH . '/' . $this->get('shopItem')->getImage())) {
                             $img = BASE_URL . '/' . $this->get('shopItem')->getImage();
@@ -256,10 +256,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            name="image"
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-xmark clearImage"></span>
                     </span>
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <a id="media_image" href="javascript:media_image()"><i class="fa-regular fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
@@ -272,13 +272,13 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('image1') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('image1') ? 'has-error' : '' ?>">
             <label for="selectedImage_image1" class="col-lg-2 control-label">
                 <?=$this->getTrans('productImage') ?> 1:
             </label>
             <div class="col-lg-5">
                 <div class="input-group">
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <?php
                         if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage1() && file_exists(ROOT_PATH . '/' . $this->get('shopItem')->getImage1())) {
                             $img1 = BASE_URL . '/' . $this->get('shopItem')->getImage1();
@@ -293,10 +293,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            name="image1"
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage1()) : $this->escape($this->originalInput('image1')) ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-xmark clearImage"></span>
                     </span>
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <a id="media_image1" href="javascript:media_image1()"><i class="fa-regular fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
@@ -309,13 +309,13 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('image2') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('image2') ? 'has-error' : '' ?>">
             <label for="selectedImage_image2" class="col-lg-2 control-label">
                 <?=$this->getTrans('productImage') ?> 2:
             </label>
             <div class="col-lg-5">
                 <div class="input-group">
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <?php
                         if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage2() && file_exists(ROOT_PATH . '/' . $this->get('shopItem')->getImage2())) {
                             $img2 = BASE_URL . '/' . $this->get('shopItem')->getImage2();
@@ -330,10 +330,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            name="image2"
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage2()) : $this->escape($this->originalInput('image2')) ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-xmark clearImage"></span>
                     </span>
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <a id="media_image2" href="javascript:media_image2()"><i class="fa-regular fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
@@ -346,13 +346,13 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('image3') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('image3') ? 'has-error' : '' ?>">
             <label for="selectedImage_image3" class="col-lg-2 control-label">
                 <?=$this->getTrans('productImage') ?> 3:
             </label>
             <div class="col-lg-5">
                 <div class="input-group">
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <?php
                         if ($this->get('shopItem') != '' && $this->get('shopItem')->getImage3() && file_exists(ROOT_PATH . '/' . $this->get('shopItem')->getImage3())) {
                             $img3 = BASE_URL . '/' . $this->get('shopItem')->getImage3();
@@ -367,10 +367,10 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            name="image3"
                            placeholder="<?=$this->getTrans('choosePic') ?>"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getImage3()) : $this->escape($this->originalInput('image3')) ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-xmark clearImage"></span>
                     </span>
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <a id="media_image3" href="javascript:media_image3()"><i class="fa-regular fa-image"></i></a>
                         <script>
                             <?=$this->getMedia()
@@ -383,7 +383,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('info') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('info') ? 'has-error' : '' ?>">
             <label for="info" class="col-lg-2 control-label">
                 <?=$this->getTrans('shortInfo') ?>:
             </label>
@@ -399,7 +399,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('desc') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('desc') ? 'has-error' : '' ?>">
             <label for="desc" class="col-lg-2 control-label">
                 <?=$this->getTrans('description') ?>:
             </label>

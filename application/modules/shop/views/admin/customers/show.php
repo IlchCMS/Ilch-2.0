@@ -102,7 +102,7 @@
                         </a>
                     <?php } elseif ($order->getStatus() == 1) { ?>
                         <a href="<?=$this->getUrl(['controller' => 'orders', 'action' => 'treat', 'id' => $order->getId()]) ?>"
-                           class="btn btn-sm alert-warning">
+                           class="btn btn-sm btn-warning">
                             <i class="fa-solid fa-pencil-square"
                                aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b>
                         </a>
@@ -114,7 +114,7 @@
                         </a>
                     <?php } else { ?>
                         <a href="<?=$this->getUrl(['controller' => 'orders', 'action' => 'treat', 'id' => $order->getId()]) ?>"
-                           class="btn btn-sm alert-success">
+                           class="btn btn-sm btn-success">
                             <i class="fa-solid fa-check-square"
                                aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b>
                         </a>

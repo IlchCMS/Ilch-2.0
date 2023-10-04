@@ -4,7 +4,7 @@
 
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="row mb-3">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('catTitle') ?>:
         </label>
@@ -16,7 +16,7 @@
                    value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getTitle()) : '' ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row mb-3">
         <label for="access" class="col-lg-2 control-label">
             <?=$this->getTrans('visibleFor') ?>:
         </label>

@@ -74,13 +74,13 @@ $itemsMapper = $this->get('itemsMapper');
                 <th><?=$this->getTrans('status') ?></th>
                 <td>
                     <?php if ($order->getStatus() == 0) : ?>
-                        <div class="btn btn-sm alert-danger"><i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b></div>
+                        <div class="btn btn-sm btn-danger"><i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b></div>
                     <?php elseif ($order->getStatus() == 1) : ?>
-                        <div class="btn btn-sm alert-warning"><i class="fa-solid fa-pencil-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b></div>
+                        <div class="btn btn-sm btn-warning"><i class="fa-solid fa-pencil-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b></div>
                     <?php elseif ($order->getStatus() == 2) : ?>
-                        <div class="btn btn-sm alert-info"><i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('canceledBIG') ?></b></div>
+                        <div class="btn btn-sm btn-info"><i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('canceledBIG') ?></b></div>
                     <?php else : ?>
-                        <div class="btn btn-sm alert-success"><i class="fa-solid fa-check-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b></div>
+                        <div class="btn btn-sm btn-success"><i class="fa-solid fa-check-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b></div>
                     <?php endif; ?>
                 </td>
             </tr>
@@ -164,43 +164,43 @@ $itemsMapper = $this->get('itemsMapper');
                 <?php $subtotal_price += round($itemPrice * $orderItem->getQuantity(), 2); ?>
             <?php endforeach; ?>
             <tr>
-                <td colspan="7" class="text-right finished">
+                <td colspan="7" class="text-end finished">
                     <b><?=$this->getTrans('deliveryCosts') ?>:</b>
                 </td>
-                <td colspan="1" class="text-right finished">
+                <td colspan="1" class="text-end finished">
                     <?php $shipping_costs = ($order->getWillCollect()) ? 0 : max($arrayShippingCosts); ?>
                     <b><?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                 </td>
             </tr>
             <tr>
-                <td colspan="7" class="text-right finish">
+                <td colspan="7" class="text-end finish">
                     <?=$this->getTrans('subtotal') ?> <?=$this->getTrans('withTax') ?>:
                 </td>
-                <td colspan="1" class="text-right finish">
+                <td colspan="1" class="text-end finish">
                     <?php $total_price = array_sum($arrayPrices) + $shipping_costs; ?>
                     <?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                 </td>
             </tr>
             <tr>
-                <td colspan="7" class="text-right finish">
+                <td colspan="7" class="text-end finish">
                     <?=$this->getTrans('subtotal') ?> <?=$this->getTrans('withoutTax') ?>:
                 </td>
-                <td colspan="1" class="text-right finish">
+                <td colspan="1" class="text-end finish">
                     <?php $sumPricewithoutTax = array_sum($arrayPricesWithoutTax) + round(($shipping_costs / (100 + max($arrayTaxes))) * 100, 2); ?>
                     <?=number_format($sumPricewithoutTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                 </td>
             </tr>
             <tr>
-                <td colspan="7" class="text-right finish">
+                <td colspan="7" class="text-end finish">
                     <?=$this->getTrans('tax') ?>:
                 </td>
-                <td colspan="1" class="text-right finish">
+                <td colspan="1" class="text-end finish">
                     <?php $differenzTax = round($total_price - $sumPricewithoutTax, 2); ?>
                     <?=number_format($differenzTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                 </td>
             </tr>
             <tr>
-                <td colspan="7" class="text-right finished">
+                <td colspan="7" class="text-end finished">
                     <b><?=$this->getTrans('totalPrice') ?>:</b>
                 </td>
                 <td colspan="1" class="text-right finished">

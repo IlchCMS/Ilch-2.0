@@ -58,7 +58,7 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
 } else {
     $img = BASE_URL . $shopImgPath . 'noimg.jpg';
 } ?>
-<div class="col show">
+<div class="col show row">
     <div class="col-lg-6">
         <table class="table noborder">
             <tr>
@@ -69,58 +69,46 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                                 <div class="modal-header">
                                     <h4 class="modal-title"><?=$this->escape($shopItem->getName()) ?></h4>
                                 </div>
-                                <div id="carousel-shop" class="carousel slide" data-ride="carousel">
+                                <div id="carousel-shop" class="carousel carousel-dark slide" data-bs-touch="false" data-bs-interval="false">
                                     <!-- Indicators -->
-                                    <ol class="carousel-indicators">
-                                        <?php echo '<li data-target="#carousel-shop" data-slide-to="0" class="active"></li>';
-                                        if ($shopItem->getImage1() && file_exists(ROOT_PATH . '/' . $shopItem->getImage1())) {
-                                            echo '<li data-target="#carousel-shop" data-slide-to="1"></li>';
-                                        }
-                                        if ($shopItem->getImage2() && file_exists(ROOT_PATH . '/' . $shopItem->getImage2())) {
-                                            echo '<li data-target="#carousel-shop" data-slide-to="2"></li>';
-                                        }
-                                        if ($shopItem->getImage3() && file_exists(ROOT_PATH . '/' . $shopItem->getImage3())) {
-                                            echo '<li data-target="#carousel-shop" data-slide-to="3"></li>';
-                                        } ?>
-                                    </ol>
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
-                                        <div class="item active"><img src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>"></div>
+                                        <div class="carousel-item active"><img src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>"></div>
                                         <?php
                                         if ($shopItem->getImage1() && file_exists(ROOT_PATH . '/' . $shopItem->getImage1())) {
-                                            echo '<div class="item"><img src="' . BASE_URL . '/' . $shopItem->getImage1() . '"></div>';
+                                            echo '<div class="carousel-item"><img src="' . BASE_URL . '/' . $shopItem->getImage1() . '"></div>';
                                         }
                                         if ($shopItem->getImage2() && file_exists(ROOT_PATH . '/' . $shopItem->getImage2())) {
-                                            echo '<div class="item"><img src="' . BASE_URL . '/' . $shopItem->getImage2() . '"></div>';
+                                            echo '<div class="carousel-item"><img src="' . BASE_URL . '/' . $shopItem->getImage2() . '"></div>';
                                         }
                                         if ($shopItem->getImage3() && file_exists(ROOT_PATH . '/' . $shopItem->getImage3())) {
-                                            echo '<div class="item"><img src="' . BASE_URL . '/' . $shopItem->getImage3() . '"></div>';
+                                            echo '<div class="carousel-item"><img src="' . BASE_URL . '/' . $shopItem->getImage3() . '"></div>';
                                         } ?>
                                     </div>
                                     <!-- Controls -->
-                                    <a class="left carousel-control" href="#carousel-shop" role="button" data-slide="prev">
-                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
+                                    <a class="carousel-control-prev" role="button" data-bs-target="#carousel-shop" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
                                     </a>
-                                    <a class="right carousel-control" href="#carousel-shop" role="button" data-slide="next">
-                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
+                                    <a class="carousel-control-next" role="button" data-bs-target="#carousel-shop" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
                                     </a>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <?php if ($shopItem->getCordon() && $shopItem->getCordon() == 1) { ?>
                         <div class="cordon-wrapper">
                             <div class="cordon <?=$this->escape($shopItem->getCordonColor()) ?>"><?=$this->escape($shopItem->getCordonText()) ?></div>
                         </div>
                     <?php } ?>
-                    
-                    <img id="productimage" class="productimage" src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>" data-toggle="modal" data-target="#myModal">
+
+                    <img id="productimage" class="productimage" src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>" data-bs-toggle="modal" data-bs-target="#myModal">
                 </td>
             </tr>
             <tr>
@@ -178,7 +166,7 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                             <input type="hidden" name="code" value="<?=$shopItem->getCode() ?>" />
                                 <div class="input-group input-group-sm quantity">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
+                                        <button class="btn btn-outline-secondary plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
                                     </span>
                                     <input class="form-control item-quantity"
                                         type="text"
@@ -187,13 +175,13 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                                         value="1"
                                         readonly>
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
+                                        <button class="btn btn-outline-secondary minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
                                     </span>
                                 </div>
                                 <button type="submit" class="btn btn-sm btn-warning"><i class="fa-solid fa-shopping-cart"></i> <?=$this->getTrans('inToCart') ?></button>
                             </form>
                         <?php } else { ?>
-                            <button class="btn btn-default">
+                            <button class="btn btn-outline-secondary">
                                 <i class="fa-solid fa-store-slash"></i> <b><?=$this->getTrans('currentlySoldOut') ?></b>
                             </button>
                         <?php } ?>
@@ -202,9 +190,9 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                 <tr>
                     <td colspan="2" class="text-center">
                         <div class="btn-group btn-group-sm">
-                            <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
-                            <a class="btn btn-default" href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker"><i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuAGB') ?></a>
-                            <a class="btn btn-default" href="<?=$this->getUrl('shop/index/cart') ?>#shopAnker"><i class="fa-solid fa-shopping-basket"></i> <?=$this->getTrans('menuCart') ?></a>
+                            <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
+                            <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker"><i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuAGB') ?></a>
+                            <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index/cart') ?>#shopAnker"><i class="fa-solid fa-shopping-basket"></i> <?=$this->getTrans('menuCart') ?></a>
                         </div>
                     </td>
                 </tr>
