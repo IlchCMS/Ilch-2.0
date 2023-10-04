@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -16,35 +17,35 @@ class Jobs extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The title of the jobs.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The text of the jobs.
      *
      * @var string
      */
-    protected $text;
+    protected $text = '';
 
     /**
      * The email of the jobs.
      *
      * @var string
      */
-    protected $email;
+    protected $email = '';
 
     /**
      * The show of the jobs.
      *
-     * @var int
+     * @var bool
      */
-    protected $show;
+    protected $show = true;
 
     /**
      * Gets the id of the jobs.
@@ -141,9 +142,9 @@ class Jobs extends \Ilch\Model
     /**
      * Gets the show of the jobs.
      *
-     * @return int
+     * @return bool
      */
-    public function getShow(): int
+    public function getShow(): bool
     {
         return $this->show;
     }
@@ -151,10 +152,10 @@ class Jobs extends \Ilch\Model
     /**
      * Sets the show of the jobs.
      *
-     * @param int $show
+     * @param bool $show
      * @return Jobs
      */
-    public function setShow(int $show): Jobs
+    public function setShow(bool $show): Jobs
     {
         $this->show = $show;
 
