@@ -170,10 +170,8 @@ $(document).ready (
                 return;
             }
 
-            const menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans(
-                'cat'
-            ) ?></label>\n\
-                        <div class="col-lg-6"><select class="form-control" id="menukey">' + options + '</select></div></div>';
+            const menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
+                              <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
