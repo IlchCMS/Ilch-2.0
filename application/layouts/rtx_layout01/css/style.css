@@ -1,0 +1,36 @@
+/*----------------------------------------------------------------------------------------------------------------------
+# Generelle Einstellungen
+----------------------------------------------------------------------------------------------------------------------*/
+
+/* UniversalSelektor: Innen und Außenabstand auf 0 setzen */
+*{
+    margin: 0;
+    padding: 0}
+
+/* Standardschrift und Farbe festlegen */
+body {
+    font-family: "Open Sans", sans-serif;
+    color: #444444;
+}
+
+/* Alle Überschriften Standardmäßig gleiche Schriftart */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Jost", sans-serif;
+}
+
+/* Alle Links in bestimmter Farbe und ohne Unterstrich */
+a {
+    color: #47b2e4;
+    text-decoration: none;
+}
+
+/* Beim überfahren von Links ändert sich die Farbe leicht. */
+a:hover {
+    color: #73c5eb;
+    text-decoration: none;
+}
