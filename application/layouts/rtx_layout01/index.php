@@ -11,7 +11,7 @@
 </head>
 <body>
 <!-- ======= Header ======= -->
-    <header class="fixed-top">
+    <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
             <h1 class="me-auto"><a href="<?=$this->getUrl() ?>" class="logo me-auto"><img src="<?= $this->getStaticUrl('img/ilch_logo.png') ?>" alt="" class="img-fluid"></a></h1>
 
