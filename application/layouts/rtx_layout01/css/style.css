@@ -54,3 +54,11 @@ a:hover {
     text-transform: uppercase;
 }
 
+#header .logo a {
+    color: #bf0f21;
+}
+
+#header .logo img {
+    max-height: 100px;
+}
+
