@@ -67,9 +67,9 @@ class DownloadsItem extends Model
     /**
      * Gets the id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -79,17 +79,17 @@ class DownloadsItem extends Model
      *
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
-        $this->id = (int) $id;
+        $this->id = $id;
     }
 
     /**
      * Gets the sort.
      *
-     * @return int
+     * @return int|null
      */
-    public function getSort()
+    public function getSort(): ?int
     {
         return $this->sort;
     }
@@ -99,17 +99,17 @@ class DownloadsItem extends Model
      *
      * @param int $sort
      */
-    public function setSort($sort)
+    public function setSort(int $sort)
     {
-        $this->sort = (int)$sort;
+        $this->sort = $sort;
     }
 
     /**
      * Gets the type.
      *
-     * @return int
+     * @return int|null
      */
-    public function getType()
+    public function getType(): ?int
     {
         return $this->type;
     }
@@ -119,17 +119,17 @@ class DownloadsItem extends Model
      *
      * @param int $type
      */
-    public function setType($type)
+    public function setType(int $type)
     {
-        $this->type = (int)$type;
+        $this->type = $type;
     }
 
     /**
      * Gets the Downloads id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getDownloadsId()
+    public function getDownloadsId(): ?int
     {
         return $this->downloadsId;
     }
@@ -139,17 +139,17 @@ class DownloadsItem extends Model
      *
      * @param int $id
      */
-    public function setDownloadsId($id)
+    public function setDownloadsId(int $id)
     {
-        $this->downloadsId = (int) $id;
+        $this->downloadsId = $id;
     }
 
     /**
      * Gets the parent id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getParentId()
+    public function getParentId(): ?int
     {
         return $this->parentId;
     }
@@ -159,17 +159,17 @@ class DownloadsItem extends Model
      *
      * @param int $id
      */
-    public function setParentId($id)
+    public function setParentId(int $id)
     {
-        $this->parentId = (int) $id;
+        $this->parentId = $id;
     }
 
     /**
      * Gets the title.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -179,17 +179,17 @@ class DownloadsItem extends Model
      *
      * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
-        $this->title = (string) $title;
+        $this->title = $title;
     }
 
     /**
      * Gets the desc.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDesc()
+    public function getDesc(): ?string
     {
         return $this->desc;
     }
@@ -199,8 +199,8 @@ class DownloadsItem extends Model
      *
      * @param string $desc
      */
-    public function setDesc($desc)
+    public function setDesc(string $desc)
     {
-        $this->desc = (string)$desc;
+        $this->desc = $desc;
     }
 }

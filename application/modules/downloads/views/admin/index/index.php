@@ -124,7 +124,7 @@ function resetBox() {
 
 $(document).ready (
     function () {
-        var itemId = 999;
+        let itemId = 999;
         $('.sortable').nestedSortable ({
             forcePlaceholderSize: true,
             handle: 'div',
@@ -156,7 +156,7 @@ $(document).ready (
         });
 
         $('#downloadsForm').on('change', '#type', function() {
-            var options = '';
+            let options = '';
 
             $('#sortable').find('li').each(function() {
                 if ($(this).find('input.hidden_type:first').val() == 0) {
@@ -170,8 +170,10 @@ $(document).ready (
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
-                        <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+            const menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans(
+                'cat'
+            ) ?></label>\n\
+                        <div class="col-lg-6"><select class="form-control" id="menukey">' + options + '</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
@@ -186,28 +188,29 @@ $(document).ready (
                         return;
                     }
 
-            append = '#sortable';
+            let append = '#sortable';
+            let id;
 
-            if ($('#type').val() != 0 && $('#menukey').val() != 0 ) {
+            if ($('#type').val() != 0 && $('#menukey').val() != 0) {
                 id = $('#menukey').val();
 
-                if ($('#sortable #'+id+' ol').length > 0) {
+                if ($('#sortable #' + id + ' ol').length > 0) {
 
                 } else {
-                    $('<ol></ol>').appendTo('#sortable #'+id);
+                    $('<ol></ol>').appendTo('#sortable #' + id);
                 }
 
                 if (!isNaN(id)) {
-                    append = '#sortable #list_'+id+' ol';
+                    append = '#sortable #list_' + id + ' ol';
 
                     if ($(append).length == 0) {
-                        $('<ol></ol>').appendTo('#sortable #list_'+id);
+                        $('<ol></ol>').appendTo('#sortable #list_' + id);
                     }
                 } else {
                     if ($(append).length == 0) {
-                        $('<ol></ol>').appendTo('#sortable #'+id);
+                        $('<ol></ol>').appendTo('#sortable #' + id);
                     }
-                    append = '#sortable #'+id+' ol';
+                    append = '#sortable #' + id + ' ol';
                 }
 
             }
@@ -263,7 +266,7 @@ $(document).ready (
 
 function reload() {
     setTimeout(function(){window.location.reload(1);}, 1000);
-};
+}
 </script>
 
 <style>
