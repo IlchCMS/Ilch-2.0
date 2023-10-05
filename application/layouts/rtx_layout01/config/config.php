@@ -14,7 +14,7 @@ class Config extends \Ilch\Config\Install
         'author' => 'RTX2070',
         'link' => 'http://ilch.de',
         'desc' => 'Bootstrap 5 Standard Layout (flexbox)',
-        
+
         //'modulekey' => 'Name of Module'
     ];
 
