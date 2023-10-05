@@ -13,7 +13,9 @@
 <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
-            <h1 class="me-auto"><a href="<?=$this->getUrl() ?>" class="logo me-auto"><img src="<?= $this->getStaticUrl('img/ilch_logo.png') ?>" alt="" class="img-fluid"></a></h1>
+
+            <!-- ToDo:: Später hat man die Wahl zwischen LogoGrafik oder einfachem Text -->
+            <h1 class="me-auto"><a href="<?=$this->getUrl() ?>" class="logo me-auto"><img src="<?= $this->getStaticUrl('img/ilch_logo.png') ?>" alt="Ilch2-Logo" class="img-fluid">Ilch CMS</a></h1>
 
         </div>
 

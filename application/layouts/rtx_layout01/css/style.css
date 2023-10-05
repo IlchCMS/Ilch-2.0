@@ -25,13 +25,13 @@ h6 {
 
 /* Alle Links in bestimmter Farbe und ohne Unterstrich */
 a {
-    color: #47b2e4;
+    color: #c10f20;
     text-decoration: none;
 }
 
 /* Beim überfahren von Links ändert sich die Farbe leicht. */
 a:hover {
-    color: #73c5eb;
+    color: rgba(191, 15, 33, 0.72);
     text-decoration: none;
 }
 
@@ -42,5 +42,15 @@ a:hover {
     z-index: 1000;
     padding: 15px 0;
     background: rgb(60 63 65);
+}
+
+#header .logo {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
