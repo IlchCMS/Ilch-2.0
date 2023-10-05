@@ -555,7 +555,7 @@ legend .forum.fa {
 
 #forum .topic-actions {
     margin-bottom: 10px;
-    height: 35px;
+    /*! height: 35px; */
     min-height: 35px;
     overflow: hidden;
 }
@@ -586,8 +586,8 @@ legend .forum.fa {
     padding-right: 5px;
 }
 #forum .btn-xs .btn-label {
-    padding: 3px 5px 3px 7px;
-    left: -5px;
+    /*! padding: 3px 5px 3px 7px; */
+    /*! left: -5px; */
 }
 
 #forum .pagination > li > a, .pagination > li > span {
@@ -595,10 +595,10 @@ legend .forum.fa {
 }
 
 #forum .btn-label {
-    position: relative;
-    left: -12px;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.15);
+    /*! position: relative; */
+    /*! left: -12px; */
+    /*! padding: 8px; */
+    /*! background: rgba(0, 0, 0, 0.15); */
 }
 
 #forum .new-post-head,

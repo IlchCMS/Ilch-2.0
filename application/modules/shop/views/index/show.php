@@ -71,6 +71,19 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                                 </div>
                                 <div id="carousel-shop" class="carousel carousel-dark slide" data-bs-touch="false" data-bs-interval="false">
                                     <!-- Indicators -->
+                                    <div class="carousel-indicators">
+                                        <?php echo '<button data-bs-target="#carousel-shop" data-bs-slide-to="0" class="active"></button>';
+                                        if ($shopItem->getImage1() && file_exists(ROOT_PATH . '/' . $shopItem->getImage1())) {
+                                            echo '<button data-bs-target="#carousel-shop" data-bs-slide-to="1"></button>';
+                                        }
+                                        if ($shopItem->getImage2() && file_exists(ROOT_PATH . '/' . $shopItem->getImage2())) {
+                                            echo '<button data-bs-target="#carousel-shop" data-bs-slide-to="2"></button>';
+                                        }
+                                        if ($shopItem->getImage3() && file_exists(ROOT_PATH . '/' . $shopItem->getImage3())) {
+                                            echo '<button data-bs-target="#carousel-shop" data-bs-slide-to="3"></button>';
+                                        } ?>
+                                    </div>
+
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
                                         <div class="carousel-item active"><img src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>"></div>

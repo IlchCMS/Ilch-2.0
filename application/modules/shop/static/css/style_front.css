@@ -134,7 +134,7 @@ h1 a span.badge {
 
 /* show */
 .show table {
-    border-collapse: collapse;  
+    border-collapse: collapse;
 }
 .show td.big {
     border: 1px solid #ddd !important;
@@ -158,7 +158,7 @@ h1 a span.badge {
     cursor: pointer;
     background: #fff;
 }
-.show .thumb a.thumbimg img {    
+.show .thumb a.thumbimg img {
     height: 50px !important;
     width: auto !important;
     border: 1px solid #ddd;

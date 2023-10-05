@@ -71,7 +71,7 @@
         <div class="container">
             <div class="gaming">
                 <div class="row">
-                    <div class="d-none d-md-block col-md-3">
+                    <div class="d-none d-md-block col-md-3 col-lg-2">
                       <?php
                       echo $this->getMenu(
                           1,
@@ -84,7 +84,7 @@
                       );
                       ?>
                     </div>
-                    <div class="col-xs-12 col-md-9">
+                    <div class="col-xs-12 col-md-3 col-lg-10">
                       <?=$this->getHmenu() ?>
                       <div class="card panel-default">
                           <div class="card-body">

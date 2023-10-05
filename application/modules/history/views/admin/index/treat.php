@@ -13,7 +13,7 @@ $history = $this->get('history');
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
@@ -32,7 +32,7 @@ $history = $this->get('history');
             </span>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b<?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -44,7 +44,7 @@ $history = $this->get('history');
                    value="<?=$this->originalInput('title', $history->getTitle()) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
@@ -56,12 +56,12 @@ $history = $this->get('history');
                       rows="5"><?=$this->originalInput('text', $history->getText()) ?></textarea>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="symbol" class="col-lg-2 control-label">
             <?=$this->getTrans('symbol') ?>:
         </label>
         <div class="col-lg-2 input-group ilch-date">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span id="chosensymbol" class="<?=$this->originalInput('symbol', $history->getType())  ?>"></span>
             </span>
             <input type="text"
@@ -71,11 +71,11 @@ $history = $this->get('history');
                    value="<?=$this->originalInput('symbol', $history->getType()) ?>"
                    readonly />
             <span class="input-group-text">
-                <span class="fa-solid fa-mouse-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
+                <span class="fa-solid fa-mouse-pointer" data-bs-toggle="modal" data-bs-target="#symbolDialog"></span>
             </span>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('color') ?>:
         </label>

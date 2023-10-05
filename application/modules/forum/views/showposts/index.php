@@ -47,21 +47,21 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                 <?php if ($topicpost->getStatus() == 0): ?>
                     <?php if ($this->getUser()): ?>
                         <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
-                            <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
-                                <span class="btn-label">
+                            <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-sm btn-primary">
+                                <span class="badge">
                                     <i class="fa-solid fa-plus"></i>
                                 </span><?=$this->getTrans('createNewPost') ?>
                             </a>
                             <?php if ($this->get('topicSubscription')) : ?>
                                 <?php if ($this->get('isSubscribed')) : ?>
-                                    <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
-                                    <span class="btn-label">
+                                    <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-sm btn-primary">
+                                    <span class="badge">
                                         <i class="fa-solid fa-bell-slash"></i>
                                     </span><?=$this->getTrans('unsubscribe') ?>
                                     </a>
                                 <?php else : ?>
-                                    <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
-                                    <span class="btn-label">
+                                    <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-sm btn-primary">
+                                    <span class="badge">
                                         <i class="fa-solid fa-bell"></i>
                                     </span><?=$this->getTrans('subscribe') ?>
                                     </a>
@@ -70,15 +70,15 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         <?php endif; ?>
                     <?php else: ?>
                         <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
-                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
-                            <span class="btn-label">
+                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-sm btn-primary">
+                            <span class="badge">
                                 <i class="fa-solid fa-user"></i>
                             </span><?=$this->getTrans('loginPost') ?>
                         </a>
                     <?php endif; ?>
                 <?php else: ?>
-                    <div class="btn btn-primary">
-                        <span class="btn-label">
+                    <div class="btn btn-sm btn-primary">
+                        <span class="badge">
                             <i class="fa-solid fa-lock"></i>
                         </span><?=$this->getTrans('lockPost') ?>
                     </div>
@@ -117,8 +117,8 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                     <?php if ($this->getUser()): ?>
                                         <?php if ($this->getUser()->isAdmin()): ?>
                                             <p class="delete-post">
-                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()], null, true) ?>" id="delete" class="btn btn-primary btn-xs">
-                                                    <span class="btn-label">
+                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()], null, true) ?>" id="delete" class="btn btn-primary btn-sm">
+                                                    <span class="badge">
                                                         <i class="fa-regular fa-trash-can"></i>
                                                     </span><?=$this->getTrans('delete') ?>
                                                 </a>
@@ -130,8 +130,8 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                     <?php if ($this->getUser()): ?>
                                         <?php if ($this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum') || $this->getUser()->getId() == $post->getAutor()->getId()): ?>
                                             <p class="edit-post">
-                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-xs">
-                                                    <span class="btn-label">
+                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-sm">
+                                                    <span class="badge">
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </span><?=$this->getTrans('edit') ?>
                                                 </a>
@@ -177,15 +177,15 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                 <div class="post-footer ilch-bg">
                     <?php if ($this->get('postVoting')) : ?>
                         <?php if ($this->getUser() && !$post->isUserHasVoted()) : ?>
-                            <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
+                            <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
                                 <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
                             </a>
                         <?php elseif ($this->getUser() && $post->isUserHasVoted()) : ?>
-                            <button class="btn btn-sm btn-default btn-success">
+                            <button class="btn btn-sm btn-outline-secondary btn-success">
                                 <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
                             </button>
                         <?php else : ?>
-                            <button class="btn btn-sm btn-default">
+                            <button class="btn btn-sm btn-outline-secondary">
                                 <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
                             </button>
                         <?php endif; ?>
@@ -194,8 +194,8 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         <div class="quote">
                             <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
                                 <p class="quote-post">
-                                    <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
-                        <span class="btn-label">
+                                    <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-sm">
+                        <span class="badge">
                             <i class="fas fa-quote-left"></i>
                         </span><?=$this->getTrans('quote') ?>
                                     </a>
@@ -205,8 +205,8 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         <?php if (!$reported && $this->get('reportingPosts')) : ?>
                             <div class="report">
                                 <p class="report-post">
-                                    <a href="<?=$this->getUrl(['action' => 'report','topicid' => $this->getRequest()->getParam('topicid'), 'postid' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
-                        <span class="btn-label">
+                                    <a href="<?=$this->getUrl(['action' => 'report','topicid' => $this->getRequest()->getParam('topicid'), 'postid' => $post->getId()]) ?>" class="btn btn-primary btn-sm">
+                        <span class="badge">
                             <i class="fa-solid fa-flag"></i>
                         </span><?=$this->getTrans('report') ?>
                                     </a>
@@ -216,8 +216,8 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         <?php if (!$remembered) : ?>
                             <div class="remember">
                                 <p class="remember-post">
-                                    <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
-                            <span class="btn-label">
+                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
+                            <span class="badge">
                                 <i class="fa-solid fa-bookmark"></i>
                             </span><?=$this->getTrans('remember') ?>
                                     </button>
@@ -232,21 +232,21 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             <?php if ($topicpost->getStatus() == 0): ?>
                 <?php if ($this->getUser()): ?>
                     <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
-                        <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
-                            <span class="btn-label">
+                        <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-sm btn-primary">
+                            <span class="badge">
                                 <i class="fa-solid fa-plus"></i>
                             </span><?=$this->getTrans('createNewPost') ?>
                         </a>
                         <?php if ($this->get('topicSubscription')) : ?>
                             <?php if ($this->get('isSubscribed')) : ?>
-                                <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
-                                    <span class="btn-label">
+                                <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-sm btn-primary">
+                                    <span class="badge">
                                         <i class="fa-solid fa-bell-slash"></i>
                                     </span><?=$this->getTrans('unsubscribe') ?>
                                 </a>
                             <?php else : ?>
-                                <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
-                                    <span class="btn-label">
+                                <a href="<?=$this->getUrl(['action' => 'subscribe','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-sm btn-primary">
+                                    <span class="badge">
                                         <i class="fa-solid fa-bell"></i>
                                     </span><?=$this->getTrans('subscribe') ?>
                                 </a>
@@ -256,14 +256,14 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                 <?php else: ?>
                     <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
-                        <span class="btn-label">
+                        <span class="badge">
                             <i class="fa-solid fa-user"></i>
                         </span><?=$this->getTrans('loginPost') ?>
                     </a>
                 <?php endif; ?>
             <?php else: ?>
-                <div class="btn btn-primary">
-                    <span class="btn-label">
+                <div class="btn btn-sm btn-primary">
+                    <span class="badge">
                         <i class="fa-solid fa-lock"></i>
                     </span><?=$this->getTrans('lockPost') ?>
                 </div>
@@ -296,8 +296,8 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     </div>
                     <div class="modal-footer">
                         <div id="rememberPostStatus"></div>
-                        <button type="submit" class="btn btn-primary" id="submitRememberDialog" tabindex="0"><?=$this->getTrans('rememberPost') ?></button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><?=$this->getTrans('close') ?></button>
+                        <button type="submit" class="btn btn-sm btn-primary" id="submitRememberDialog" tabindex="0"><?=$this->getTrans('rememberPost') ?></button>
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><?=$this->getTrans('close') ?></button>
                     </div>
                 </div>
             </div>

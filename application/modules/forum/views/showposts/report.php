@@ -11,7 +11,7 @@
             <div class="new-topic ilch-bg ilch-border">
                 <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
-                    <div class="form-group <?=$this->validation()->hasError('reason') ? 'has-error' : '' ?>">
+                    <div class="row mb-3 <?=$this->validation()->hasError('reason') ? 'has-error' : '' ?>">
                         <label for="reason" class="col-lg-2 control-label">
                             <?=$this->getTrans('reason') ?>
                         </label>
@@ -24,7 +24,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="row mb-3">
                         <label for="details" class="col-lg-2 control-label">
                             <?=$this->getTrans('details') ?>
                         </label>
@@ -35,8 +35,8 @@
                                       rows="10"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-8">
+                    <div class="row mb-3">
+                        <div class="offset-lg-2 col-lg-8">
                             <input type="submit"
                                    class="btn btn-primary"
                                    name="reportPost"

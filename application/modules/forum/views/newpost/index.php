@@ -40,7 +40,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             <div class="new-topic ilch-bg ilch-border">
                 <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
-                    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+                    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
                         <div class="col-lg-12">
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
@@ -48,10 +48,10 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                       toolbar="ilch_html_frontend"><?=(!empty($postTextAsQuote)) ? $this->escape($postTextAsQuote) : $this->originalInput('text') ?></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="row mb-3">
                         <div class="col-lg-12">
                             <input type="submit"
-                                   class="btn btn-primary"
+                                   class="btn btn-sm btn-primary"
                                    name="saveNewPost"
                                    value="<?=$this->getTrans('add') ?>" />
                         </div>

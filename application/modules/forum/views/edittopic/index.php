@@ -53,7 +53,7 @@ function rec($item, $obj, $readAccess, $i)
             <div class="new-topic ilch-bg ilch-border">
                 <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
-                    <div class="form-group">
+                    <div class="row mb-3">
                         <label for="selectForum" class="col-lg-2 control-label">
                             <?=$this->getTrans('selectForum') ?>
                         </label>
@@ -68,9 +68,9 @@ function rec($item, $obj, $readAccess, $i)
                             <?php endforeach; ?>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-10">
-                            <button type="submit" class="btn btn-primary" name="edittopic" value="edittopic">
+                    <div class="row mb-3">
+                        <div class="offset-lg-2 col-lg-10">
+                            <button type="submit" class="btn btn-sm btn-primary" name="edittopic" value="edittopic">
                                 <?=$this->getTrans('move') ?>
                             </button>
                         </div>

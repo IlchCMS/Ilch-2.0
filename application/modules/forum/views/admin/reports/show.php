@@ -10,7 +10,7 @@ $report = $this->get('report');
 ?>
 <h1><?=$this->getTrans('report') ?></h1>
 <?php if (!empty($report)): ?>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
@@ -18,7 +18,7 @@ $report = $this->get('report');
             <p><?=$report->getDate() ?></p>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="reason" class="col-lg-2 control-label">
             <?=$this->getTrans('reason') ?>:
         </label>
@@ -26,7 +26,7 @@ $report = $this->get('report');
             <p><?=$this->getTrans($reasonTransKeys[$report->getReason()]) ?></p>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="details" class="col-lg-2 control-label">
             <?=$this->getTrans('details') ?>:
         </label>
@@ -34,7 +34,7 @@ $report = $this->get('report');
             <p><?=$this->escape($report->getDetails()) ?>&nbsp;</p>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="reporter" class="col-lg-2 control-label">
             <?=$this->getTrans('reporter') ?>:
         </label>
