@@ -10,6 +10,10 @@
     <script src="<?= $this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
 </head>
 <body>
-<h1>Testausgabe</h1>
+<!-- ======= Header ======= -->
+    <header class="fixed-top">
+
+    </header>
+<!-- ======= Ende Header ======= -->
 </body>
 </html>
