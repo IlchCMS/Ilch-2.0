@@ -13,8 +13,12 @@ class Downloads extends Mapper
 {
     /**
      * Gets all Downloads items by parent item id.
+     *
+     * @param int $downloadsId
+     * @param int $itemId
+     * @return array|null
      */
-    public function getDownloadsItemsByParent($downloadsId, $itemId)
+    public function getDownloadsItemsByParent(int $downloadsId, int $itemId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
@@ -44,8 +48,11 @@ class Downloads extends Mapper
 
     /**
      * Gets all Downloads items by type.
+     *
+     * @param int $type
+     * @return array|null
      */
-    public function getDownloadsCatItem($type)
+    public function getDownloadsCatItem(int $type): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
@@ -79,7 +86,7 @@ class Downloads extends Mapper
      * @param int $id id of download
      * @return DownloadsItem|null
      */
-    public function getDownloadsById($id)
+    public function getDownloadsById(int $id): ?DownloadsItem
     {
         $itemRows = $this->db()->select('*')
                 ->from('downloads_items')
@@ -102,15 +109,14 @@ class Downloads extends Mapper
 
         return $itemModel;
     }
-    
 
     /**
      * Save one Downloads item.
      *
-     * @param  DownloadsItem $downloadsItem
+     * @param DownloadsItem $downloadsItem
      * @return int
      */
-    public function saveItem(DownloadsItem $downloadsItem)
+    public function saveItem(DownloadsItem $downloadsItem): int
     {
         $fields = [
             'title' => $downloadsItem->getTitle(),
@@ -150,9 +156,9 @@ class Downloads extends Mapper
     /**
      * Delete the given Downloads item.
      *
-     * @param  DownloadsItem $downloadsItem
+     * @param DownloadsItem $downloadsItem
      */
-    public function deleteItem($downloadsItem)
+    public function deleteItem(DownloadsItem $downloadsItem)
     {
         $this->db()->delete('downloads_items')
             ->where(['id' => $downloadsItem->getId()])
@@ -161,8 +167,11 @@ class Downloads extends Mapper
 
     /**
      * Gets all Downloads items by Downloads id.
+     *
+     * @param int $downloadsId
+     * @return array|null
      */
-    public function getDownloadsItems($downloadsId)
+    public function getDownloadsItems(int $downloadsId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')

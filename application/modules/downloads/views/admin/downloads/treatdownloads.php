@@ -46,7 +46,7 @@ tbody tr td {
                             <td><?=$this->getDeleteCheckbox('check_downloads', $file->getId()) ?></td>
                             <td><?=$this->getEditIcon(['controller' => 'file', 'action' => 'treatfile', 'downloads' => $file->getCat(), 'id' => $file->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $file->getId(), 'downloads' => $this->getRequest()->getParam('id')]) ?></td>
-                            <td><img class="file thumbnail img-responsive" src="<?=$image ?>"/>
+                            <td><img class="file thumbnail img-responsive" src="<?=$image ?>" alt="<?=$this->escape($file->getFileTitle()) ?>" />
                             </td>
                             <td><?=$this->escape($file->getFileTitle()) ?></td>
                             <td><?=$this->escape($file->getFileDesc()) ?></td>
@@ -69,7 +69,7 @@ tbody tr td {
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
 
-function reload( ){
+function reload() {
     setTimeout(function(){window.location.reload(1);}, 1000);
-};
+}
 </script>

@@ -41,4 +41,5 @@ return [
     'missingCat' => 'Es muss zuerst eine Kategorie hinzugefügt werden.',
     'downloadsPerPage' => 'Downloads pro Seite',
     'downloadNotFound' => 'Download nicht gefunden.',
+    'moreSettings' => 'Weitere Einstellungen, die dieses Modul betreffen, öffnen.',
 ];
