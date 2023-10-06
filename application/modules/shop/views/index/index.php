@@ -130,7 +130,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                 <div class="cordon <?=$this->escape($shopItem->getCordonColor()) ?>"><?=$this->escape($shopItem->getCordonText()) ?></div>
             </div>
         <?php } ?>
-        <a  href="<?=$this->getUrl('shop/index/show/id/' . $shopItem->getId()) ?>#shopAnker" class="text-center">
+        <a href="<?=$this->getUrl('shop/index/show/id/' . $shopItem->getId()) ?>#shopAnker" class="text-center">
             <?php $shopImgPath = '/application/modules/shop/static/img/';
             if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage())) {
                 $img = BASE_URL . '/' . $shopItem->getImage();
