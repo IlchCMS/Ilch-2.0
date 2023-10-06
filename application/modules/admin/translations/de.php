@@ -152,6 +152,7 @@ return [
     'dropTable' => 'DROP TABLE-Befehle hinzufügen',
     'noBackups' => 'Keine Backups vorhanden',
     'backupNotFound' => 'Das Backup wurde nicht gefunden oder konnte nicht geöffnet werden.',
+    'backupFilesize' => 'Dateigröße',
     'menuCustomCSS' => 'Benutzerdefinierte CSS',
     'menuHtaccess' => 'htaccess',
     'modrewriteLinesAdded' => 'Einträge für Mod-Rewrite hinzugefügt.',
