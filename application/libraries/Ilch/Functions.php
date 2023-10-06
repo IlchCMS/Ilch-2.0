@@ -309,7 +309,7 @@ function var_export_short_syntax($var, string $indent = ''): string
 /**
  * Checks if the current visitor is logged in.
  *
- * @return boolean
+ * @return bool
  */
 function loggedIn(): bool
 {
@@ -577,4 +577,33 @@ function invalidateOpcache(string $filepath, bool $force = false): bool
 	}
 
     return opcache_invalidate($filepath, $force);
+}
+
+/**
+ * Get the bytes in a human readable format like 350 KB instead of 358400 bytes.
+ * Integers in PHP are limited to 32 bits, unless they are on 64 bit architecture, then they have 64 bit size.
+ * For a larger size use string. It will be converted to a double, which should always have 64 bit length.
+ * Technically the correct unit names for powers of 1024 are KiB, MiB etc.
+ *
+ * @since 2.1.54
+ *
+ * @param int|string $bytes
+ * @param int $decimals
+ * @return string|bool Number as string or false on failure.
+ */
+function formatBytes($bytes, int $decimals = 0)
+{
+    if ($bytes === '' || $bytes < 0 || !is_numeric($bytes)) {
+        return false;
+    }
+
+    $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+
+    $bytes = max($bytes, 0);
+    $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+    $pow = min($pow, count($units) - 1);
+
+    $bytes /= pow(1024, $pow);
+
+    return round($bytes, $decimals) . ' ' . $units[$pow];
 }

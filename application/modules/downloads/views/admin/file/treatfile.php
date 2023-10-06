@@ -15,8 +15,7 @@ if ($file->getFileImage() != '') {
             <div class="row">
                 <div class="col-md-4">
                     <a href="<?=$this->getBaseUrl($file->getFileUrl()) ?>">
-                        <img class="thumbnail"
-                             src="<?=$image ?>"/>
+                        <img class="thumbnail" src="<?=$image ?>" alt="<?=$this->escape($file->getFileTitle()) ?>" />
                     </a>
                 </div>
                 <div class="col-md-8">

@@ -92,7 +92,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
 <link href="<?=$this->getModuleUrl('static/css/gallery.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('menuGallery') ?> <span class="catinfo"></span></h1>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,7 +111,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
                 <?php endif; ?>
           </ul>
         </li>
-        <li id="sorts" class="nav-item"><a href="#filter" data-sort-direction="asc" data-sort-by="name" class="nav-link"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
+        <li id="sorts" class="nav-item"><a href="#filter" data-sort-direction="asc" data-sort-by="name"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
       </ul>
       <form class="d-flex">
         <input type="text" id="quicksearch" class="form-control" placeholder="<?=$this->getTrans('search') ?>">

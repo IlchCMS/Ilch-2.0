@@ -8,6 +8,7 @@
                 <col class="icon_width">
                 <col class="icon_width">
                 <col class="col-lg-2">
+                <col class="col-lg-2">
                 <col>
             </colgroup>
             <thead>
@@ -16,6 +17,7 @@
                     <th></th>
                     <th></th>
                     <th><?=$this->getTrans('date') ?></th>
+                    <th><?=$this->getTrans('backupFilesize') ?></th>
                     <th><?=$this->getTrans('name') ?></th>
                 </tr>
             </thead>
@@ -27,7 +29,8 @@
                             <td><a href="<?=$this->getUrl(['action' => 'download', 'id' => $backup->getId()], null, true) ?>" title="<?=$this->getTrans('download') ?>"><span class="fa-solid fa-download"></span></a></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
                             <td><?=$this->escape($backup->getDate()) ?></td>
-                            <td><?=$this->escape($backup->getName()) ?></td>
+                            <td><?=formatBytes(filesize(ROOT_PATH . '/backups/' . $backup->getName())) ?></td>
+                            <td><?=$this->escape(preg_replace('/_[^_.]*\./', '.', $backup->getName())) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
