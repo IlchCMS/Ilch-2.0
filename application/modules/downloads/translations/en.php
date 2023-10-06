@@ -41,4 +41,5 @@ return [
     'missingCat' => 'It is required to first add a category.',
     'downloadsPerPage' => 'Downloads per page',
     'downloadNotFound' => 'Download not found.',
+    'moreSettings' => 'Open further settings affecting this module.',
 ];

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -203,11 +203,10 @@ class Backup extends \Ilch\Controller\Admin
 
                     if (strtolower($path_parts['extension']) === 'gz') {
                         header('Content-type: application/x-gzip');
-                        header('Content-Disposition: filename="' .$publicFileName. '"');
                     } else {
                         header('Content-type: application/x-sql');
-                        header('Content-Disposition: filename="' .$publicFileName. '"');
                     }
+                    header('Content-Disposition: filename="' .$publicFileName. '"');
                     header('Content-length: ' .filesize($fullPath));
                     // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
                     header('Cache-control: private');

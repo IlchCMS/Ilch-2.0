@@ -1,7 +1,10 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Jobs\Models\Jobs $job */
 $job = $this->get('job');
 ?>
-
 <style>
 .briefcase {
     padding: 8px 8px 0 8px;
@@ -11,19 +14,17 @@ $job = $this->get('job');
 
 <h1><?=$this->getTrans('menuJob') ?></h1>
 
-<?php if ($job != ''): ?>
-    <div class="row">
-        <div class="col-lg-2">
-            <i class="fa-solid fa-briefcase fa-4x briefcase"></i>
-        </div>
-        <div class="col-lg-10" style="margin-bottom: 35px;">
-            <h1><?=$this->escape($job->getTitle()) ?></h1>
-            <?=$this->purify($job->getText()) ?>
-        </div>
+<div class="row">
+    <div class="col-lg-2">
+        <i class="fa-solid fa-briefcase fa-4x briefcase"></i>
     </div>
-<?php endif; ?>
+    <div class="col-lg-10" style="margin-bottom: 35px;">
+        <h1><?=$this->escape($job->getTitle()) ?></h1>
+        <?=$this->purify($job->getText()) ?>
+    </div>
+</div>
 
-<?php if ($this->getUser()): ?>
+<?php if ($this->getUser()) : ?>
     <h1><?=$this->getTrans('apply') ?></h1>
     <form action="" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
@@ -35,7 +36,7 @@ $job = $this->get('job');
             </label>
             <div class="col-lg-3">
                 <select class="form-control" id="title" name="title">
-                    <?php foreach ($this->get('jobs') as $job): ?>
+                    <?php foreach ($this->get('jobs') as $job) : ?>
                         <option value="<?=$job->getTitle() ?>" <?=($this->getRequest()->getParam('id') == $job->getId()) ? 'selected="selected"' : '' ?>>
                             <?=$this->escape($job->getTitle()) ?>
                         </option>
@@ -43,13 +44,13 @@ $job = $this->get('job');
                 </select>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
             <div class="col-lg-12">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
                           toolbar="ilch_html_frontend"
-                          rows="5"></textarea>
+                          rows="5"><?=$this->originalInput('text') ?></textarea>
             </div>
         </div>
         <div class="col-lg-12 text-right">
