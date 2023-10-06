@@ -5,34 +5,34 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>" class="nav-link">
                 <i class="fa-solid fa-store"></i> <?=$this->getTrans('menuSettingShop') ?>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>" class="nav-link">
                 <i class="fa-solid fa-university"></i> <?=$this->getTrans('menuSettingBank') ?>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>" class="nav-link">
                 <i class="fa-solid fa-tools"></i> <?=$this->getTrans('menuSettingDefault') ?>
             </a>
         </li>
-        <li class="active">
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>" class="nav-link active">
                 <i class="fa-solid fa-gavel"></i> <b><?=$this->getTrans('menuSettingAGB') ?></b>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>" class="nav-link">
                 <i class="fa-solid fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
             </a>
         </li>
     </ul>
     <br />
-    <div class="form-group <?=$this->validation()->hasError('settingsAGB') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('settingsAGB') ? 'has-error' : '' ?>">
         <label for="settingsAGB" class="col-lg-2 control-label">
             <?=$this->getTrans('AGB') ?>:
         </label>

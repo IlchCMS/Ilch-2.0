@@ -149,46 +149,46 @@ $settingsMapper = $this->get('settingsMapper');
                     <?php $subtotal_price += round($itemPrice * $orderItem->getQuantity(), 2); ?>
                 <?php endforeach; ?>
                 <tr>
-                    <td colspan="7" class="text-right finished">
+                    <td colspan="7" class="text-end finished">
                         <b><?=$this->getTrans('deliveryCosts') ?>:</b>
                     </td>
-                    <td colspan="1" class="text-right finished">
+                    <td colspan="1" class="text-end finished">
                         <?php $shipping_costs = ($order->getWillCollect()) ? 0 : max($arrayShippingCosts); ?>
                         <b><?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right finish">
+                    <td colspan="7" class="text-end finish">
                         <?=$this->getTrans('subtotal') ?> <?=$this->getTrans('withTax') ?>:
                     </td>
-                    <td colspan="1" class="text-right finish">
+                    <td colspan="1" class="text-end finish">
                         <?php $total_price = array_sum($arrayPrices) + $shipping_costs; ?>
                         <?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right finish">
+                    <td colspan="7" class="text-end finish">
                         <?=$this->getTrans('subtotal') ?> <?=$this->getTrans('withoutTax') ?>:
                     </td>
-                    <td colspan="1" class="text-right finish">
+                    <td colspan="1" class="text-end finish">
                         <?php $sumPricewithoutTax = array_sum($arrayPricesWithoutTax) + round(($shipping_costs / (100 + max($arrayTaxes))) * 100, 2); ?>
                         <?=number_format($sumPricewithoutTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right finish">
+                    <td colspan="7" class="text-end finish">
                         <?=$this->getTrans('tax') ?>:
                     </td>
-                    <td colspan="1" class="text-right finish">
+                    <td colspan="1" class="text-end finish">
                         <?php $differenzTax = round($total_price - $sumPricewithoutTax, 2); ?>
                         <?=number_format($differenzTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right finished">
+                    <td colspan="7" class="text-end finished">
                         <b><?=$this->getTrans('totalPrice') ?>:</b>
                     </td>
-                    <td colspan="1" class="text-right finished">
+                    <td colspan="1" class="text-end finished">
                         <b><?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
@@ -208,16 +208,16 @@ $settingsMapper = $this->get('settingsMapper');
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm">
-                        <button type="submit" name="status" value="0" class="btn btn-sm alert-danger">
+                        <button type="submit" name="status" value="0" class="btn btn-sm btn-danger">
                             <i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('openBIG') ?>
                         </button>
-                        <button type="submit" name="status" value="1" class="btn btn-sm alert-warning">
+                        <button type="submit" name="status" value="1" class="btn btn-sm btn-warning">
                             <i class="fa-solid fa-pencil-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('processingBIG') ?>
                         </button>
-                        <button type="submit" name="status" value="2" class="btn btn-sm alert-info">
+                        <button type="submit" name="status" value="2" class="btn btn-sm btn-info">
                             <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('canceledBIG') ?>
                         </button>
-                        <button type="submit" name="status" value="3" class="btn btn-sm alert-success">
+                        <button type="submit" name="status" value="3" class="btn btn-sm btn-success">
                             <i class="fa-solid fa-check-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('completedBIG') ?>
                         </button>
                     </div>
@@ -248,33 +248,33 @@ $settingsMapper = $this->get('settingsMapper');
                         $file_location = ROOT_PATH . $shopInvoicePath . $invoiceFilename . '.pdf';
                         $file_show = BASE_URL . $shopInvoicePath . $invoiceFilename . '.pdf';
                         if (file_exists($file_location)) { ?>
-                            <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm alert-success">
+                            <a href="<?=$this->getUrl(['action' => 'download', 'id' => $order->getId()], null, true) ?>" target="_blank" class="btn btn-sm btn-success">
                                 <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
                             </a>
-                            <a href="<?=$this->getUrl(['action' => 'sendInvoice', 'id' => $order->getId()], null, true) ?>" class="btn btn-sm alert-success">
+                            <a href="<?=$this->getUrl(['action' => 'sendInvoice', 'id' => $order->getId()], null, true) ?>" class="btn btn-sm btn-success">
                                 <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('sendInvoice') ?>
                             </a>
-                            <button type="submit" name="PDF" value="delete" class="btn btn-sm alert-danger">
+                            <button type="submit" name="PDF" value="delete" class="btn btn-sm btn-danger">
                                 <i class="fa-solid fa-minus-square" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('deletePDF') ?>
                             </button>
                         <?php } else { ?>
-                            <button type="submit" name="PDF" value="createInvoice" class="btn btn-sm alert-default">
+                            <button type="submit" name="PDF" value="createInvoice" class="btn btn-sm btn-secondary">
                                 <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('createPDF') ?>
                             </button>
                         <?php } ?>
                     </form>
                 </td>
             </tr>
-            <tr>            
+            <tr>
                 <th><?=$this->getTrans('deliveryNote') ?></th>
             </tr>
-            <tr>            
+            <tr>
                 <td>
                     <div class="btn-group btn-group-sm">
-                        <button type="submit" formtarget="_blank" name="PDF" value="showDeliveryNote" class="btn btn-sm alert-default">
+                        <button type="submit" formtarget="_blank" name="PDF" value="showDeliveryNote" class="btn btn-sm btn-secondary">
                             <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('showPDF') ?>
                         </button>
-                        <span class="btn btn-sm alert-default" style="pointer-events: none">
+                        <span class="btn btn-sm btn-light" style="pointer-events: none">
                             <i class="fa-solid fa-info"></i> <?=$this->getTrans('infoDeliveryNote') ?>
                         </span>
                     </div>
@@ -286,10 +286,10 @@ $settingsMapper = $this->get('settingsMapper');
             <tr>
                 <td>
                     <div class="btn-group btn-group-sm">
-                        <button type="submit" name="delete" value="1" class="btn btn-sm alert-default delete_button">
+                        <button type="submit" name="delete" value="1" class="btn btn-sm btn-secondary delete_button">
                             <i class="fa-regular fa-trash-can" aria-hidden="true"></i>&nbsp;<?=$this->getTrans('deleteBIG') ?>
                         </button>
-                        <span class="btn btn-sm alert-default" style="pointer-events: none">
+                        <span class="btn btn-sm btn-light" style="pointer-events: none">
                             <i class="fa-solid fa-info"></i> <?=$this->getTrans('infoDeleteOrder') ?>
                         </span>
                     </div>

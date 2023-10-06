@@ -107,8 +107,8 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
             <?php if (!empty($galleryItems)) : ?>
                 <?php foreach ($galleryItems as $item) : ?>
                     <?php recCategory($item, $galleryMapper, $this); ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
           </ul>
         </li>
         <li id="sorts" class="nav-item"><a href="#filter" data-sort-direction="asc" data-sort-by="name"><i class="sorticon fa-solid fa-arrow-down-9-1"></i> <?=$this->getTrans('sort') ?></a></li>
