@@ -70,7 +70,7 @@ class Index extends \Ilch\Controller\Frontend
                 $messageReplace = [
                     '{applyAs}' => $this->getTranslator()->trans('applyAs') . ' ' . $jobTitle,
                     '{from}' => $this->getTranslator()->trans('mailFrom'),
-                    '{content}' => $this->getLayout()->purify($post['text']),
+                    '{content}' => $this->getLayout()->alwaysPurify($post['text']),
                     '{senderMail}' => $this->getLayout()->escape($user->getEmail()),
                     '{senderName}' => $this->getLayout()->escape($user->getName()),
                     '{sitetitle}' => $siteTitle,

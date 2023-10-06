@@ -60,12 +60,6 @@ class File extends Admin
         $id = (int)$this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost()) {
-            $post = [
-                'fileTitle' => '',
-                'fileImage' => '',
-                'fileDesc' => ''
-            ];
-
             $fileImage = '';
             if (!empty($this->getRequest()->getPost('fileImage'))) {
                 $fileImage = BASE_URL.'/'.$this->getRequest()->getPost('fileImage');

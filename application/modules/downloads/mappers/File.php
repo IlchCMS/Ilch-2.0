@@ -6,9 +6,9 @@
 
 namespace Modules\Downloads\Mappers;
 
-use Ilch\Database\Exception;
 use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
+use Ilch\Pagination;
 use Modules\Downloads\Models\File as FileModel;
 
 class File extends Mapper
@@ -19,12 +19,12 @@ class File extends Mapper
      * @param int $id
      * @return FileModel|null
      */
-    public function getFileById($id)
+    public function getFileById(int $id): ?FileModel
     {
         $fileRow = $this->db()->select(['g.file_id', 'g.cat', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])
             ->join(['m' => 'media'], 'g.file_id = m.id', 'LEFT')
-            ->where(['g.id' => (int)$id])
+            ->where(['g.id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -51,12 +51,12 @@ class File extends Mapper
      * @param int $id
      * @return FileModel|null
      */
-    public function getLastFileByDownloadsId($id)
+    public function getLastFileByDownloadsId(int $id): ?FileModel
     {
         $fileRow = $this->db()->select(['g.file_id', 'g.cat', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])
             ->join(['m' => 'media'], 'g.file_id = m.id', 'LEFT')
-            ->where(['g.cat' => (int)$id])
+            ->where(['g.cat' => $id])
             ->order(['g.id' => 'DESC'])
             ->limit(1)
             ->execute()
@@ -115,15 +115,15 @@ class File extends Mapper
      * Get files by category id.
      *
      * @param int $id category id
-     * @param null $pagination
+     * @param Pagination|null $pagination
      * @return array
      */
-    public function getFileByDownloadsId($id, $pagination = NULL)
+    public function getFileByDownloadsId(int $id, Pagination $pagination = NULL): array
     {
         $sql = $this->db()->select(['g.cat', 'fileid' => 'g.id', 'g.file_title', 'g.file_image', 'g.file_description', 'g.visits', 'm.url', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])
             ->join(['m' => 'media'], 'g.file_image = m.url', 'LEFT')
-            ->where(['g.cat' => (int)$id])
+            ->where(['g.cat' => $id])
             ->order(['g.id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -140,11 +140,11 @@ class File extends Mapper
 
         foreach ($filesArray as $entry) {
             $fileModel = new FileModel();
-            $fileModel->setFileUrl($entry['url']);
-            $fileModel->setFileThumb($entry['url_thumb']);
+            $fileModel->setFileUrl($entry['url'] ?? '');
+            $fileModel->setFileThumb($entry['url_thumb'] ?? '');
             $fileModel->setId($entry['fileid']);
             $fileModel->setFileTitle($entry['file_title']);
-            $fileModel->setFileImage($entry['url_thumb']);
+            $fileModel->setFileImage($entry['url_thumb'] ?? '');
             $fileModel->setFileDesc($entry['file_description']);
             $fileModel->setVisits($entry['visits']);
             $fileModel->setCat($entry['cat']);
@@ -160,7 +160,7 @@ class File extends Mapper
      * @param int $id the id of the file
      * @return Result|int
      */
-    public function deleteById($id)
+    public function deleteById(int $id)
     {
         return $this->db()->delete('downloads_files')
             ->where(['id' => $id])
