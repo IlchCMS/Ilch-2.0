@@ -12,8 +12,6 @@ use Ilch\Pagination;
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Downloads\Models\File as FileModel;
-use Modules\Comment\Mappers\Comment as CommentMapper;
-use Modules\User\Mappers\User as UserMapper;
 
 class Index extends Frontend
 {
@@ -69,7 +67,6 @@ class Index extends Frontend
     {
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
-        $commentMapper = new CommentMapper();
 
         $id = $this->getRequest()->getParam('id');
         $file = $fileMapper->getFileById($id);
