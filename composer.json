@@ -14,7 +14,7 @@
         "jbbcode/jbbcode": "^1.4",
         "ifsnop/mysqldump-php": "2.*",
         "kartik-v/bootstrap-star-rating": "^4.0",
-        "twbs/bootstrap": "^5.3.1",
+        "twbs/bootstrap": "^5.3.2",
         "fortawesome/font-awesome": "^6.2.1",
         "npm-asset/jquery": "^3.5",
         "npm-asset/jquery-ui": "^1.13",
