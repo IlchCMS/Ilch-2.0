@@ -578,3 +578,25 @@ function invalidateOpcache(string $filepath, bool $force = false): bool
 
     return opcache_invalidate($filepath, $force);
 }
+
+/**
+ * Get the bytes in a human readable format like 350 KB.
+ *
+ * @since 2.1.54
+ *
+ * @param int $bytes
+ * @param int $precision
+ * @return string
+ */
+function formatBytes(int $bytes, int $precision = 0): string
+{
+    $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+
+    $bytes = max($bytes, 0);
+    $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+    $pow = min($pow, count($units) - 1);
+
+    $bytes /= pow(1024, $pow);
+
+    return round($bytes, $precision) . ' ' . $units[$pow];
+}
