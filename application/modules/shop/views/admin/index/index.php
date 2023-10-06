@@ -36,10 +36,10 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status' => '3']));
                             <b><?=$countAllOrders ?>&ensp;<?=($countAllOrders == 1) ? $this->getTrans('order') : $this->getTrans('orders') ?></b>
                         </a> &nbsp;<?=$this->getTrans('available') ?>
                     </p>
-                        <?=($countNewOrders > 0) ? '&nbsp;<div class="alert alert-danger btn-sm d-inblock"><b>' . $countNewOrders . '&ensp;' . $this->getTrans('new') . '</b></div>' : ''; ?>
-                        <?=($countWorkOrders > 0) ? '&nbsp;<div class="btn-sm alert  alert-warning d-inblock"><b>' . $countWorkOrders . '&ensp;' . $this->getTrans('processing') . '</b></div>' : ''; ?>
-                        <?=($countCancelOrders > 0) ? '&nbsp;<div class="btn-sm alert  alert-info d-inblock"><b>' . $countCancelOrders . '&ensp;' . $this->getTrans('canceled') . '</b></div>' : ''; ?>
-                        <?=($countDoneOrders > 0) ? '&nbsp;<div class="btn-sm alert  alert-success d-inblock"><b>' . $countDoneOrders . '&ensp;' . $this->getTrans('completed') . '</b></div>' : ''; ?>
+                    <?=($countNewOrders > 0) ? '&nbsp;<div class="alert alert-danger btn-sm d-inblock"><b>' . $countNewOrders . '&ensp;' . $this->getTrans('new') . '</b></div>' : ''; ?>
+                    <?=($countWorkOrders > 0) ? '&nbsp;<div class="btn-sm alert  alert-warning d-inblock"><b>' . $countWorkOrders . '&ensp;' . $this->getTrans('processing') . '</b></div>' : ''; ?>
+                    <?=($countCancelOrders > 0) ? '&nbsp;<div class="btn-sm alert  alert-info d-inblock"><b>' . $countCancelOrders . '&ensp;' . $this->getTrans('canceled') . '</b></div>' : ''; ?>
+                    <?=($countDoneOrders > 0) ? '&nbsp;<div class="btn-sm alert  alert-success d-inblock"><b>' . $countDoneOrders . '&ensp;' . $this->getTrans('completed') . '</b></div>' : ''; ?>
                 <?php } else { ?>
                     <p>
                         <?=$this->getTrans('infoNoOrder') ?>

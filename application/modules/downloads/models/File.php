@@ -65,6 +65,7 @@ class File extends Model
      * @var string
      */
     protected $file_url;
+
     /**
      * @var string
      */
@@ -73,9 +74,9 @@ class File extends Model
     /**
      * Gets the id of the file.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -85,7 +86,7 @@ class File extends Model
      *
      * @return string
      */
-    public function getFileId()
+    public function getFileId(): string
     {
         return $this->file_id;
     }
@@ -95,7 +96,7 @@ class File extends Model
      *
      * @return string
      */
-    public function getFileThumb()
+    public function getFileThumb(): string
     {
         return $this->filethumb;
     }
@@ -105,7 +106,7 @@ class File extends Model
      *
      * @return string
      */
-    public function getFileTitle()
+    public function getFileTitle(): string
     {
         return $this->file_title;
     }
@@ -115,7 +116,7 @@ class File extends Model
      *
      * @return string
      */
-    public function getFileDesc()
+    public function getFileDesc(): string
     {
         return $this->file_desc;
     }
@@ -125,7 +126,7 @@ class File extends Model
      *
      * @return string
      */
-    public function getFileImage()
+    public function getFileImage(): string
     {
         return $this->file_image;
     }
@@ -135,7 +136,7 @@ class File extends Model
      *
      * @return string
      */
-    public function getCat()
+    public function getCat(): string
     {
         return $this->cat;
     }
@@ -143,9 +144,9 @@ class File extends Model
     /**
      * Gets the visits of the file.
      *
-     * @return string
+     * @return int
      */
-    public function getVisits()
+    public function getVisits(): int
     {
         return $this->visits;
     }
@@ -155,7 +156,7 @@ class File extends Model
      *
      * @return string
      */
-    public function getFileUrl()
+    public function getFileUrl(): string
     {
         return $this->file_url;
     }
@@ -165,9 +166,9 @@ class File extends Model
      *
      * @param int $id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
-        $this->id = (int)$id;
+        $this->id = $id;
     }
 
     /**
@@ -175,9 +176,9 @@ class File extends Model
      *
      * @param string $file_id
      */
-    public function setFileId($file_id)
+    public function setFileId(string $file_id)
     {
-        $this->file_id = (string)$file_id;
+        $this->file_id = $file_id;
     }
 
     /**
@@ -185,9 +186,9 @@ class File extends Model
      *
      * @param string $fileThumb
      */
-    public function setFileThumb($fileThumb)
+    public function setFileThumb(string $fileThumb)
     {
-        $this->filethumb = (string)$fileThumb;
+        $this->filethumb = $fileThumb;
     }
 
     /**
@@ -195,9 +196,9 @@ class File extends Model
      *
      * @param string $fileTitle
      */
-    public function setFileTitle($fileTitle)
+    public function setFileTitle(string $fileTitle)
     {
-        $this->file_title = (string) $fileTitle;
+        $this->file_title = $fileTitle;
     }
 
     /**
@@ -205,9 +206,9 @@ class File extends Model
      *
      * @param string $fileImage
      */
-    public function setFileImage($fileImage)
+    public function setFileImage(string $fileImage)
     {
-        $this->file_image = (string) $fileImage;
+        $this->file_image = $fileImage;
     }
 
     /**
@@ -215,9 +216,9 @@ class File extends Model
      *
      * @param string $fileDesc
      */
-    public function setFileDesc($fileDesc)
+    public function setFileDesc(string $fileDesc)
     {
-        $this->file_desc = (string) $fileDesc;
+        $this->file_desc = $fileDesc;
     }
 
     /**
@@ -225,19 +226,19 @@ class File extends Model
      *
      * @param string $cat
      */
-    public function setCat($cat)
+    public function setCat(string $cat)
     {
-        $this->cat = (string)$cat;
+        $this->cat = $cat;
     }
 
     /**
      * Sets the visits of the file.
      *
-     * @param string $visits
+     * @param int $visits
      */
-    public function setVisits($visits)
+    public function setVisits(int $visits)
     {
-        $this->visits = (string)$visits;
+        $this->visits = $visits;
     }
 
     /**
@@ -245,8 +246,8 @@ class File extends Model
      *
      * @param string $fileUrl
      */
-    public function setFileUrl($fileUrl)
+    public function setFileUrl(string $fileUrl)
     {
-        $this->file_url = (string)$fileUrl;
+        $this->file_url = $fileUrl;
     }
 }

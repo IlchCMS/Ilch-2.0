@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -17,7 +18,7 @@ class Jobs extends \Ilch\Mapper
      * Gets the Jobs entries.
      *
      * @param array $where
-     * @return JobsModel[]|array
+     * @return JobsModel[]|null
      */
     public function getJobs(array $where = []): ?array
     {
@@ -34,11 +35,11 @@ class Jobs extends \Ilch\Mapper
         $jobs = [];
         foreach ($jobsArray as $entries) {
             $jobsModel = new JobsModel();
-            $jobsModel->setId($entries['id']);
-            $jobsModel->setTitle($entries['title']);
-            $jobsModel->setText($entries['text']);
-            $jobsModel->setEmail($entries['email']);
-            $jobsModel->setShow($entries['show']);
+            $jobsModel->setId($entries['id'])
+                ->setTitle($entries['title'])
+                ->setText($entries['text'])
+                ->setEmail($entries['email'])
+                ->setShow($entries['show']);
             $jobs[] = $jobsModel;
         }
 
@@ -64,11 +65,11 @@ class Jobs extends \Ilch\Mapper
         }
 
         $jobsModel = new JobsModel();
-        $jobsModel->setId($jobsRow['id']);
-        $jobsModel->setTitle($jobsRow['title']);
-        $jobsModel->setText($jobsRow['text']);
-        $jobsModel->setEmail($jobsRow['email']);
-        $jobsModel->setShow($jobsRow['show']);
+        $jobsModel->setId($jobsRow['id'])
+            ->setTitle($jobsRow['title'])
+            ->setText($jobsRow['text'])
+            ->setEmail($jobsRow['email'])
+            ->setShow($jobsRow['show']);
 
         return $jobsModel;
     }
@@ -77,8 +78,9 @@ class Jobs extends \Ilch\Mapper
      * Inserts or updates jobs model.
      *
      * @param JobsModel $jobs
+     * @return int
      */
-    public function save(JobsModel $jobs)
+    public function save(JobsModel $jobs): int
     {
         $fields = [
             'title' => $jobs->getTitle(),
@@ -92,8 +94,9 @@ class Jobs extends \Ilch\Mapper
                 ->values($fields)
                 ->where(['id' => $jobs->getId()])
                 ->execute();
+            return $jobs->getId();
         } else {
-            $this->db()->insert('jobs')
+            return $this->db()->insert('jobs')
                 ->values($fields)
                 ->execute();
         }
@@ -129,10 +132,11 @@ class Jobs extends \Ilch\Mapper
      * Deletes jobs with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('jobs')
+        return $this->db()->delete('jobs')
             ->where(['id' => $id])
             ->execute();
     }

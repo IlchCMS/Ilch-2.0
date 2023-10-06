@@ -14,5 +14,6 @@
                    value="<?=$this->escape($this->get('downloadsPerPage')) ?>" />
         </div>
     </div>
+    <a href="<?=$this->getUrl(['module' => 'media', 'controller' => 'settings', 'action' => 'index'], 'admin') ?>"><?=$this->getTrans('moreSettings') ?></a>
     <?=$this->getSaveBar() ?>
 </form>

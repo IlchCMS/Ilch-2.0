@@ -83,7 +83,6 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                                             echo '<button data-bs-target="#carousel-shop" data-bs-slide-to="3"></button>';
                                         } ?>
                                     </div>
-
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
                                         <div class="carousel-item active"><img src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>"></div>
