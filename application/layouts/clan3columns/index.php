@@ -20,8 +20,8 @@
                 <?php
                 echo $this->getMenu(
                     1,
-                    '<div class="card panel-gaming">
-                         <div class="panel-heading">%s</div>
+                    '<div class="card card-gaming">
+                         <div class="card-header">%s</div>
                             <div class="card-body">
                                 %c
                             </div>
@@ -75,8 +75,8 @@
                         <?php
                         echo $this->getMenu(
                             1,
-                            '<div class="card panel-gaming">
-                                 <div class="panel-heading">%s</div>
+                            '<div class="card card-gaming">
+                                 <div class="card-header">%s</div>
                                     <div class="card-body">
                                         %c
                                     </div>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="col-xs-12 col-md-7 col-lg-8">
                         <?=$this->getHmenu() ?>
-                        <div class="card panel-default">
+                        <div class="card card-default">
                             <div class="card-body">
                                 <?=$this->getContent() ?>
                             </div>
@@ -96,8 +96,8 @@
                         <?php
                         echo $this->getMenu(
                             2,
-                            '<div class="card panel-gaming">
-                                 <div class="panel-heading">%s</div>
+                            '<div class="card card-gaming">
+                                 <div class="card-header">%s</div>
                                     <div class="card-body">
                                         %c
                                     </div>

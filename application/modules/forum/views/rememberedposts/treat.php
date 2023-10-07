@@ -5,7 +5,7 @@
 <div id="editRememberedPost">
     <form id="editRememberedPost_form" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
-        <div class="form-group <?=$this->validation()->hasError('note') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('note') ? 'has-error' : '' ?>">
             <label for="note" class="col-lg-2 control-label">
                 <?=$this->getTrans('rememberedPostNote') ?>:
             </label>
@@ -18,6 +18,6 @@
                        value="<?=($this->originalInput('note') == '') ? $this->escape($this->get('rememberedPost')->getNote()) : $this->originalInput('note') ?>" />
             </div>
         </div>
-        <button type="submit" class="btn btn-primary"><?=$this->getTrans('saveNoteRememberedPost') ?></button>
+        <button type="submit" class="btn btn-sm btn-primary"><?=$this->getTrans('saveNoteRememberedPost') ?></button>
     </form>
 </div>
