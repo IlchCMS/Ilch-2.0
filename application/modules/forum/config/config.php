@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.34.0',
+        'version' => '1.34.1',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -132,7 +132,9 @@ class Config extends \Ilch\Config\Install
                 `forum_id` INT(11) NOT NULL,
                 `type` TINYINT(1) NOT NULL DEFAULT 0,
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_topics_[prefix]_forum_items` (`forum_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_topics_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_topicsubscription` (
@@ -156,6 +158,8 @@ class Config extends \Ilch\Config\Install
                 `forum_id` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`) USING BTREE,
                 INDEX `FK_[prefix]_forum_posts_[prefix]_forum_topics` (`topic_id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_posts_[prefix]_forum_items` (`forum_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
                 CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_topics` FOREIGN KEY (`topic_id`) REFERENCES `[prefix]_forum_topics` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -748,6 +752,12 @@ class Config extends \Ilch\Config\Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_forum_remember` ADD CONSTRAINT `FK_[prefix]_forum_remember_[prefix]_forum_posts` FOREIGN KEY (`post_id`) REFERENCES `[prefix]_forum_posts` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_remember` ADD CONSTRAINT `FK_[prefix]_forum_remember_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // no break
+            case "1.34.0":
+                // Add additional FKCs and therefore indices to the posts and topics table to fix a slow query. For example reduced from ~530 ms to ~54 ms with the tables on the dev system.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` ADD CONSTRAINT `FK_[prefix]_forum_topics_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
                 // no break
         }
