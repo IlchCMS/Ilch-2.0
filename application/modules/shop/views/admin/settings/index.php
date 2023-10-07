@@ -6,27 +6,27 @@
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>" <a class="nav-link active">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>" class="nav-link active">
                 <i class="fa-solid fa-store"></i> <b><?=$this->getTrans('menuSettingShop') ?></b>
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>" <a class="nav-link">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>" class="nav-link">
                 <i class="fa-solid fa-university"></i> <?=$this->getTrans('menuSettingBank') ?>
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>" <a class="nav-link">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>" class="nav-link">
                 <i class="fa-solid fa-tools"></i> <?=$this->getTrans('menuSettingDefault') ?>
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>" <a class="nav-link">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>" class="nav-link">
                 <i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>" <a class="nav-link">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>" class="nav-link">
                 <i class="fa-solid fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
             </a>
         </li>

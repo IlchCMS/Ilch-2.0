@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'jobs',
-        'version' => '1.6.0',
+        'version' => '1.6.1',
         'icon_small' => 'fa-solid fa-briefcase',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -45,10 +46,10 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_jobs`');
+        $this->db()->drop('jobs', true);
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_jobs` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -60,7 +61,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -79,6 +80,10 @@ class Config extends \Ilch\Config\Install
             case "1.5.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-briefcase' WHERE `key` = 'jobs';");
                 // no break
+            case "1.6.0":
+                // no break
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

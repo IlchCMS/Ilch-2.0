@@ -141,7 +141,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                             <input type="hidden" name="action" value="change" />
                             <div class="input-group">
                                 <input type="hidden" name="maxStock" value="<?=$itemMaxStock; ?>" />
-                                    <button class="btn btn-sm btn-outline-secondary plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
                                 <input class="form-control item-quantity input-sm"
                                     type="text"
                                     id="quantity"
@@ -149,7 +149,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                                     onchange="this.form.submit()"
                                     value="<?=$product['quantity'] ?>"
                                     readonly>
-                                    <button class="btn btn-sm btn-outline-secondary minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
+                                <button class="btn btn-sm btn-outline-secondary minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
                             </div>
                         </form>
                     </td>

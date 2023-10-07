@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -54,6 +55,9 @@ class Index extends \Ilch\Controller\Admin
                 foreach ($this->getRequest()->getPost('check_entries') as $jobsId) {
                     $jobsMapper->delete($jobsId);
                 }
+                $this->redirect()
+                    ->withMessage('deleteSuccess')
+                    ->to(['action' => 'index']);
             }
         }
 
@@ -64,34 +68,22 @@ class Index extends \Ilch\Controller\Admin
     {
         $jobsMapper = new JobsMapper();
 
+        $jobsModel = new JobsModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('jobs', $jobsMapper->getJobsById($this->getRequest()->getParam('id')));
+            $jobsModel = $jobsMapper->getJobsById($this->getRequest()->getParam('id'));
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
-
-        $post = [
-            'title' => '',
-            'text' => '',
-            'email' => '',
-            'show' => ''
-        ];
+        $this->getView()->set('job', $jobsModel);
 
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'title' => trim($this->getRequest()->getPost('title')),
-                'text' => trim($this->getRequest()->getPost('text')),
-                'email' => trim($this->getRequest()->getPost('email')),
-                'show' => $this->getRequest()->getPost('show')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'title' => 'required',
                 'text' => 'required',
                 'email' => 'required|email',
@@ -99,31 +91,29 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model = new JobsModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-                $model->setTitle($post['title']);
-                $model->setText($post['text']);
-                $model->setEmail($post['email']);
-                $model->setShow($post['show']);
-                $jobsMapper->save($model);
+                $jobsModel->setTitle($this->getRequest()->getPost('title'))
+                    ->setText($this->getRequest()->getPost('text'))
+                    ->setEmail($this->getRequest()->getPost('email'))
+                    ->setShow($this->getRequest()->getPost('show'));
+                $jobsMapper->save($jobsModel);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(array_merge(['action' => 'treat'], ($jobsModel->getId() ? ['id' => $jobsModel->getId()] : [])));
             }
         }
-
-        $this->getView()->set('post', $post);
     }
 
     public function updateAction()
     {
         if ($this->getRequest()->isSecure()) {
             $jobsMapper = new JobsMapper();
-            $jobsMapper->update($this->getRequest()->getParam('id'));
+            $jobsMapper->update($this->getRequest()->getParam('id') ?? 0);
 
             $this->addMessage('saveSuccess');
         }
@@ -135,7 +125,7 @@ class Index extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             $jobsMapper = new JobsMapper();
-            $jobsMapper->delete($this->getRequest()->getParam('id'));
+            $jobsMapper->delete($this->getRequest()->getParam('id') ?? 0);
 
             $this->addMessage('deleteSuccess');
         }
