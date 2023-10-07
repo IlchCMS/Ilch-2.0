@@ -6,6 +6,8 @@
 
 namespace Ilch;
 
+use Thumb\Thumbnail;
+
 /**
  * Ilch/Upload class.
  */
@@ -77,7 +79,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * Resets
      */
-    public function reset()
+    public function reset(): Upload
     {
         $this->file = null;
         $this->ending = null;
@@ -94,9 +96,9 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @param string $file
      *
-     * @return string File
+     * @return Upload File
      */
-    public function setFile($file)
+    public function setFile(string $file): Upload
     {
         $this->file = $file;
 
@@ -106,7 +108,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }
@@ -114,9 +116,9 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @param string $ending
      *
-     * @return string Ending
+     * @return Upload Ending
      */
-    public function setEnding($ending)
+    public function setEnding(string $ending): Upload
     {
         $this->ending = $ending;
 
@@ -126,7 +128,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getEnding()
+    public function getEnding(): string
     {
         $this->ending = strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
 
@@ -136,9 +138,9 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @param string $name
      *
-     * @return string Name
+     * @return Upload Name
      */
-    public function setName($name)
+    public function setName(string $name): Upload
     {
         $this->name = $name;
 
@@ -148,7 +150,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         $this->name = pathinfo($this->file, PATHINFO_FILENAME);
 
@@ -158,9 +160,9 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @param string $fileName
      *
-     * @return string fileName
+     * @return Upload fileName
      */
-    public function setFileName($fileName)
+    public function setFileName(string $fileName): Upload
     {
         $this->fileName = $fileName;
 
@@ -170,7 +172,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         return $this->fileName;
     }
@@ -178,9 +180,9 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @param string $url
      *
-     * @return string url
+     * @return Upload url
      */
-    public function setUrl($url)
+    public function setUrl(string $url): Upload
     {
         $this->url = $url;
 
@@ -190,7 +192,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -198,9 +200,9 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @param string $types
      *
-     * @return string types
+     * @return Upload types
      */
-    public function setTypes($types)
+    public function setTypes(string $types): Upload
     {
         $this->types = $types;
 
@@ -210,7 +212,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getTypes()
+    public function getTypes(): string
     {
         return $this->types;
     }
@@ -218,9 +220,9 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @param string $allowedExtensions
      *
-     * @return string allowedExtensions
+     * @return Upload allowedExtensions
      */
-    public function setAllowedExtensions($allowedExtensions)
+    public function setAllowedExtensions(string $allowedExtensions): Upload
     {
         $this->allowedExtensions = $allowedExtensions;
 
@@ -230,7 +232,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getAllowedExtensions()
+    public function getAllowedExtensions(): string
     {
         return $this->allowedExtensions;
     }
@@ -238,9 +240,9 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @param string $path
      *
-     * @return string path
+     * @return Upload path
      */
-    public function setPath($path)
+    public function setPath(string $path): Upload
     {
         $this->path = $path;
 
@@ -250,7 +252,7 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -258,9 +260,9 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @param string $urlThumb
      *
-     * @return string urlThumb
+     * @return Upload urlThumb
      */
-    public function setUrlThumb($urlThumb)
+    public function setUrlThumb(string $urlThumb): Upload
     {
         $this->urlThumb = $urlThumb;
 
@@ -270,25 +272,23 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @return string
      */
-    public function getUrlThumb()
+    public function getUrlThumb(): string
     {
         return $this->urlThumb;
     }
 
     /**
+     * Get size of the file in a human readable form.
+     *
      * @return string
+     * @since 2.0.0
      */
-    public function getSize()
+    public function getSize(): string
     {
         $bytes = sprintf('%u', filesize($this->file));
 
         if ($bytes > 0) {
-            $unit = (int)log($bytes, 1024);
-            $units = ['B', 'KB', 'MB', 'GB'];
-
-            if (array_key_exists($unit, $units) === true) {
-                return sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]);
-            }
+            return formatBytes($bytes);
         }
 
         return $bytes;
@@ -296,12 +296,20 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * Take an educated guess on how big the image is going to be in memory.
+     *
      * @param string $imageFilePath
-     * @return int required memory in bytes
+     * @return int|false required memory in bytes or false in case of an error.
+     * @since 2.0.0
+     * @since 2.1.54 returns false in case of an error.
      */
-    public function guessRequiredMemory($imageFilePath)
+    public function guessRequiredMemory(string $imageFilePath)
     {
         $imageInfo = getimagesize($imageFilePath);
+
+        if ($imageInfo === false) {
+            return false;
+        }
+
         if (empty($imageInfo['channels'])) {
             $imageInfo['channels'] = 4;
         }
@@ -309,22 +317,30 @@ class Upload extends \Ilch\Controller\Base
         // channels will be 3 for RGB pictures and 4 for CMYK pictures
         // bits is the number of bits for each color.
         // The tweak-factor might be overly careful and could therefore be lowered if necessary.
+        // After testing with >10k pictures the tweak factor got lowered to 1.9 (90 %) from 2.5 (150 %)
+        // With a tweak factor of 1.9 there were still no out of memory errors.
         return ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 1.9);
     }
 
     /**
      * Returns if there would likely be enough free memory for the image.
      * Returns true in case of memory_limit = -1 e.g. no memory limit.
+     * Returns false if not an image or an error occured.
      *
      * @param string $imageFilePath
      * @return bool
      * @since 2.1.20
+     * @since 2.1.54 Returns false if not an image or an error occured.
      */
-    public function enoughFreeMemory($imageFilePath)
+    public function enoughFreeMemory(string $imageFilePath): bool
     {
         $memoryLimit = ini_get('memory_limit');
         if ($memoryLimit == '-1') {
             return true;
+        }
+
+        if (getimagesize($imageFilePath) === false) {
+            return false;
         }
 
         if (($this->returnBytes($memoryLimit) - memory_get_usage(true)) < $this->guessRequiredMemory($imageFilePath)) {
@@ -356,7 +372,7 @@ class Upload extends \Ilch\Controller\Base
      *
      * @return bool
      */
-    public function isAllowedExtension()
+    public function isAllowedExtension(): bool
     {
         return in_array($this->getEnding(), explode(' ', $this->getAllowedExtensions()));
     }
@@ -364,10 +380,11 @@ class Upload extends \Ilch\Controller\Base
     /**
      * Convert for example the memory_limit of php (example: 128M) to bytes.
      *
-     * @param $size_str
+     * @param string $size_str
      * @return float|int
+     * @since 2.0.0
      */
-    public function returnBytes($size_str)
+    public function returnBytes(string $size_str)
     {
         switch (substr($size_str, -1)) {
             case 'M':
@@ -406,14 +423,15 @@ class Upload extends \Ilch\Controller\Base
      * Create thumbnail
      *
      * @return bool
+     * @since 2.1.20
      */
-    public function createThumbnail()
+    public function createThumbnail(): bool
     {
         if (!$this->enoughFreeMemory($this->getUrl())) {
             return false;
         }
 
-        $thumb = new \Thumb\Thumbnail();
+        $thumb = new Thumbnail();
         $thumb->Thumbprefix = 'thumb_';
         $thumb->Thumblocation = $this->path;
         $thumb->Thumbsize = 300;
