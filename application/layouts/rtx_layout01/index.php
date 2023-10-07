@@ -9,11 +9,6 @@
     <link href="<?= $this->getLayoutUrl('css/style.css') ?>" rel="stylesheet">
     <?= $this->getCustomCSS() ?>
     <script src="<?= $this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
-<style>
-
-
-</style>
-
 </head>
 <body>
 <!-- ======= Header ======= -->
@@ -43,7 +38,6 @@
 
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
-
     <div class="container">
         <div class="row">
             <div class="col-lg-8 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
@@ -68,7 +62,6 @@
         <div class="container ">
             <div class="row ">
                 <div class="col-lg-2">
-
                     <?=$this->getMenu(2, '<div class="card my-2">
                         <div class="card-header card-header-bg ">
                             %s
@@ -83,11 +76,9 @@
                         ],
                     ])
                     ?>
-
                 </div>
                 <div class="col-lg-7 ilch-content ">
                     <?=$this->getContent()?>
-
                 </div>
                 <div class="col-lg-2">
 
@@ -105,9 +96,7 @@
                         ],
                     ])
                     ?>
-
                 </div>
-
             </div>
         </div>
     </section><!-- Ende Content Section -->
@@ -134,8 +123,6 @@
                 ])
                 ?>
 
-
-
                 <?=$this->getMenu(5, '<div class="col-lg-3 col-md-6 footer-links"><h4>%s</h4>%c</div>', [
                     'menus' => [
                         'ul-class-root'  => '',
@@ -151,8 +138,6 @@
                 ])
                 ?>
 
-
-
                 <?=$this->getMenu(6, '<div class="col-lg-3 col-md-6 footer-links"><h4>%s</h4>%c</div>', [
                     'menus' => [
                         'ul-class-root'  => '',
@@ -167,9 +152,7 @@
                     ],
                 ])
                 ?>
-
-
-
+            
             <div class="col-lg-3 col-md-6 footer-links">
                 <h4>Soziale Netzwerke</h4>
                 <p>Besuche uns auf diesen Plattformen</p>
