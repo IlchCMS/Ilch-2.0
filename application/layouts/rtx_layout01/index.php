@@ -59,8 +59,8 @@
 <main id="main">
     <!-- ======= Content Section ======= -->
     <section id="ilch-content" class="">
-        <div class="container ">
-            <div class="row ">
+        <div class="container-fluid ">
+            <div class="row justify-content-center">
                 <div class="col-lg-2">
                     <?=$this->getMenu(2, '<div class="card my-2">
                         <div class="card-header card-header-bg ">
@@ -152,7 +152,7 @@
                     ],
                 ])
                 ?>
-            
+
             <div class="col-lg-3 col-md-6 footer-links">
                 <h4>Soziale Netzwerke</h4>
                 <p>Besuche uns auf diesen Plattformen</p>
