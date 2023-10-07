@@ -201,19 +201,40 @@ header .carousel-control.right{
     }
 }
 
-.panel-gaming,
-.panel-default {
+/*-- breadcrumb -- */
+.breadcrumb {
+    background:#f5f5f5;
+    padding: 8px 15px;
+}
+/*-- card-begin --*/
+
+.card {
+    margin-bottom:20px;
+}
+
+.card-gaming > .card-body li {
+    line-height: 35px;
+    border-bottom: 1px solid #DDD;
+}
+
+.card-gaming > .card-body a {
+    color: #4295C9;
+    text-decoration: none;
+}
+
+.card-gaming,
+.card-default {
     border-radius: 0;
 }
 
 @media (min-width: 768px) {
-    .panel-gaming,
-    .panel-default {
-        /*! border-radius: 4px; */
+    .card-gaming,
+    .card-default {
+        border-radius: 4px;
     }
 }
 
-.panel-gaming > .panel-heading {
+.card-gaming > .card-header {
     color: #4295C9;
     background-color: #32333B;
     margin-top: 0;
@@ -227,27 +248,8 @@ header .carousel-control.right{
     border-top-right-radius: 0 !important;
     border-top-left-radius: 0 !important;
 }
-/*-- breadcrumb -- */
-.breadcrumb {
-    background:#f5f5f5;
-    padding: 8px 15px;
-}
-/*-- card-begin --*/
 
-.card {
-    margin-bottom:20px;
-}
-
-.panel-gaming > .card-body li {
-    line-height: 35px;
-    border-bottom: 1px solid #DDD;
-}
 /*-- card Ende --*/
-.panel-gaming > .panel-body a {
-    color: #4295C9;
-    text-decoration: none;
-}
-
 .ilch--new-message a.text-danger {
     color: #a94442;
 }
