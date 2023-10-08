@@ -62,17 +62,17 @@
         <div class="container-fluid ">
             <div class="row justify-content-center">
                 <div class="col-lg-2">
-                    <?=$this->getMenu(2, '<div class="card my-2">
+                    <?=$this->getMenu(2, '<div class="card card-menu-bg my-2">
                         <div class="card-header card-header-bg ">
                             %s
                         </div>%c</div>', [
                         'menus' => [
                             'ul-class-root'  => 'list-group',
-                            'li-class-root'  => 'list-group-item',
-                            'a-class' => 'rtx rtx-one',
+                            'li-class-root'  => 'btn m-1',
+                            'a-class' => 'text-white',
                         ],
                         'boxes' => [
-                            'render' => true
+                            'render' => false
                         ],
                     ])
                     ?>
@@ -82,17 +82,17 @@
                 </div>
                 <div class="col-lg-2">
 
-                    <?=$this->getMenu(3, '<div class="card my-2">
-                        <div class="card-header card-header-bg">
+                    <?=$this->getMenu(3, '<div class="card card-menu-bg my-2">
+                        <div class="card-header card-header-bg ">
                             %s
                         </div>%c</div>', [
                         'menus' => [
-                            'ul-class-root'  => 'list-group list-group-flush ',
-                            'li-class-root'  => 'list-group-item',
-                            'a-class' => 'rtx rtx-one',
+                            'ul-class-root'  => 'list-group',
+                            'li-class-root'  => 'btn m-1',
+                            'a-class' => 'text-white',
                         ],
                         'boxes' => [
-                            'render' => true
+                            'render' => false
                         ],
                     ])
                     ?>
