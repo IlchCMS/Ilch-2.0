@@ -91,10 +91,10 @@ class Dialog extends \Ilch\Model
     /**
      * Set the ID of the message
      *
-     * @param int $id
+     * @param int|null $id
      * @return $this
      */
-    public function setId(int $id): Dialog
+    public function setId(?int $id): Dialog
     {
         $this->id = $id;
 

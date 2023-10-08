@@ -452,8 +452,6 @@ class Panel extends BaseController
                 } else {
                     $dialogMapper->markAllAsRead($c_id, $this->getUser()->getId());
                 }
-
-                $this->getView()->set('inbox', $dialogMapper->getDialogMessage($c_id));
             } else {
                 $this->redirect(['action' => 'dialog']);
             }
