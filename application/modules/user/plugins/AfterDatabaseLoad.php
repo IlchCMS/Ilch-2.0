@@ -6,6 +6,9 @@
 
 namespace Modules\User\Plugins;
 
+use Ilch\Database\Exception;
+use Ilch\Redirect;
+use Ilch\Registry;
 use Modules\Statistic\Mappers\Statistic;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Service\Remember as RememberMe;
@@ -18,7 +21,7 @@ class AfterDatabaseLoad
      * If no user id is given a default user will be created.
      *
      * @param array $pluginData
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
     public function __construct(array $pluginData)
     {
@@ -40,16 +43,16 @@ class AfterDatabaseLoad
         $mapper = new UserMapper();
         $user = $mapper->getUserById($userId);
 
-        \Ilch\Registry::set('user', $user);
+        Registry::set('user', $user);
 
-        // Check if user is locked out. If that is the case log him out.
-        if (\is_object($user) && $user->getLocked()) {
+        // Check if user is locked out or deleted. If that is the case log him out.
+        if ($userId && !$user || \is_object($user) && $user->getLocked()) {
             if (!empty($_COOKIE['remember'])) {
                 setcookieIlch('remember', '', strtotime('-1 hours'));
             }
 
             $_SESSION = [];
-            \Ilch\Registry::remove('user');
+            Registry::remove('user');
 
             if (ini_get('session.use_cookies')) {
                 setcookieIlch(session_name(), '', strtotime('-12 hours'));
@@ -89,20 +92,23 @@ class AfterDatabaseLoad
         if ($request->getParam('language')) {
             $_SESSION['language'] = $request->getParam('language');
             $pluginData['translator']->setLocale($_SESSION['language']);
-            $Redirect = new \Ilch\Redirect($request, $pluginData['translator']);
+            $Redirect = new Redirect($request, $pluginData['translator']);
             $Redirect->to($request->unsetParam('language')->getArray());
         }
 
         if ($request->getParam('ilch_layout')) {
             $_SESSION['layout'] = $pluginData['request']->getParam('ilch_layout');
-            $Redirect = new \Ilch\Redirect($request, $pluginData['translator']);
+            $Redirect = new Redirect($request, $pluginData['translator']);
             $Redirect->to($request->unsetParam('ilch_layout')->getArray());
         }
 
-        if (!$request->isAdmin() && !strpos($site, 'user/ajax/checknewmessage') && !strpos($site,
-                'user/ajax/checknewfriendrequests')) {
+        $sessionId = session_id();
+
+        // Ignore activity within the admincenter and the ajax requests for new messages or friend requests. Don't save
+        // the visit either if the session id is an empty string. This is the case for a just deleted or locked user.
+        if (!$request->isAdmin() && !strpos($site, 'user/ajax/checknewmessage') && !strpos($site, 'user/ajax/checknewfriendrequests') && $sessionId) {
             $statisticMapper = new Statistic();
-            $statisticMapper->saveVisit(['user_id' => $userId, 'session_id' => session_id(), 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
+            $statisticMapper->saveVisit(['user_id' => $userId, 'session_id' => $sessionId, 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
         }
 
         $pluginData['translator']->setLocale($pluginData['config']->get('locale') ?? '');
