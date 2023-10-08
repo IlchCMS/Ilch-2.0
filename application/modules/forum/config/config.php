@@ -124,12 +124,12 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_topics` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `forum_id` INT(11) NOT NULL,
                 `topic_prefix` INT(11) NOT NULL DEFAULT 0,
                 `topic_title` VARCHAR(255) NOT NULL,
                 `visits` INT(11) NOT NULL DEFAULT 0,
                 `creator_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
-                `forum_id` INT(11) NOT NULL,
                 `type` TINYINT(1) NOT NULL DEFAULT 0,
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`) USING BTREE,
@@ -152,10 +152,10 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_posts` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `topic_id` INT(11) NOT NULL,
+                `forum_id` INT(11) NOT NULL DEFAULT 0,
                 `text` TEXT NOT NULL,
                 `user_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
-                `forum_id` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`) USING BTREE,
                 INDEX `FK_[prefix]_forum_posts_[prefix]_forum_topics` (`topic_id`) USING BTREE,
                 INDEX `FK_[prefix]_forum_posts_[prefix]_forum_items` (`forum_id`) USING BTREE,
@@ -715,7 +715,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_forum_topicsubscription` ADD CONSTRAINT `FK_[prefix]_forum_topicsubscription_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
 
-                // Add FKC for the 'topic_id' and 'user_id' columns in the 'forum_topicsubscription' table after deleting possibly orphaned remembered posts.
+                // Add FKC for the 'topic_id' and 'user_id' columns in the 'forum_remember' table after deleting possibly orphaned remembered posts.
                 $existingPosts = $this->db()->select('id')
                     ->from('forum_posts')
                     ->execute()
@@ -755,7 +755,43 @@ class Config extends \Ilch\Config\Install
 
                 // no break
             case "1.34.0":
-                // Add additional FKCs and therefore indices to the posts and topics table to fix a slow query. For example reduced from ~530 ms to ~54 ms with the tables on the dev system.
+                // Add FKCs for the 'forum_id' columns in the tables 'forum_posts' and 'forum_topics' after deleting possibly orphaned posts and topics.
+                // Added additional FKCs and therefore indices to the posts and topics table to improve the performance of a query.
+                $existingForums = $this->db()->select('id')
+                    ->from('forum_items')
+                    ->execute()
+                    ->fetchList();
+
+                $referencedForumsInPosts = $this->db()->select('forum_id')
+                    ->from('forum_posts')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($referencedForumsInPosts ?? [], $existingForums ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('forum_posts')
+                        ->where(['forum_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $referencedForumsInTopics = $this->db()->select('forum_id')
+                    ->from('forum_topics')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($referencedForumsInTopics ?? [], $existingForums ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('forum_topics')
+                        ->where(['forum_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Change the order of column 'forum_id' of the tables 'forum_posts' and 'forum_topics'. Move them closer to the front.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` CHANGE COLUMN `forum_id` INT(11) NOT NULL DEFAULT 0 AFTER `topic_id`;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` CHANGE COLUMN `forum_id` INT(11) NOT NULL AFTER `id`;');
+
                 $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_topics` ADD CONSTRAINT `FK_[prefix]_forum_topics_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
