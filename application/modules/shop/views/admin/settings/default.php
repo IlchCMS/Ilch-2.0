@@ -5,34 +5,34 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>" class="nav-link">
                 <i class="fa-solid fa-store"></i> <?=$this->getTrans('menuSettingShop') ?>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>" class="nav-link">
                 <i class="fa-solid fa-university"></i> <?=$this->getTrans('menuSettingBank') ?>
             </a>
         </li>
-        <li class="active">
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>" class="nav-link active">
                 <i class="fa-solid fa-tools"></i> <b><?=$this->getTrans('menuSettingDefault') ?></b>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>" class="nav-link">
                 <i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
             </a>
         </li>
-        <li>
-            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>" class="nav-link">
                 <i class="fa-solid fa-money-bill"></i> <?=$this->getTrans('menuSettingPayment') ?>
             </a>
         </li>
     </ul>
     <br />
-    <div class="form-group <?=$this->validation()->hasError('shopCurrency') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('shopCurrency') ? 'has-error' : '' ?>">
         <label for="shopCurrency" class="col-lg-2 control-label">
             <?=$this->getTrans('shopCurrency') ?>:
         </label>
@@ -52,7 +52,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('fixTax') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('fixTax') ? 'has-error' : '' ?>">
         <label for="fixTax" class="col-lg-2 control-label">
             <?=$this->getTrans('fixTax') ?>:
         </label>
@@ -65,35 +65,35 @@
                        min="1"
                        placeholder="19"
                        value="<?=($this->escape($this->get('settings')->getFixTax()) != '') ? $this->escape($this->get('settings')->getFixTax()) : $this->escape($this->originalInput('fixTax')) ?>" />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <b><?=$this->getTrans('percent') ?> (%)</b>
                 </span>
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('fixShippingCosts') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('fixShippingCosts') ? 'has-error' : '' ?>">
         <label for="fixShippingCosts" class="col-lg-2 control-label">
             <?=$this->getTrans('fixShippingCosts') ?>:
         </label>
         <div class="col-lg-3">
             <div class="input-group">
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control text-right"
                        id="fixShippingCosts"
                        name="fixShippingCosts"
-                       pattern="^\d*(\.\d{2}$)?" 
+                       pattern="^\d*(\.\d{2}$)?"
                        placeholder="99.00"
                        value="<?=($this->escape($this->get('settings')->getFixShippingCosts()) != '') ? $this->escape($this->get('settings')->getFixShippingCosts()) : $this->escape($this->originalInput('fixShippingCosts')) ?>" />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <b><?=$this->escape($this->get('currency')) ?></b>
                 </span>
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('fixShippingTime') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('fixShippingTime') ? 'has-error' : '' ?>">
         <label for="fixShippingTime" class="col-lg-2 control-label">
             <?=$this->getTrans('fixShippingTime') ?>:
         </label>
@@ -106,13 +106,13 @@
                        min="1"
                        placeholder="7"
                        value="<?=($this->escape($this->get('settings')->getFixShippingTime()) != '') ? $this->escape($this->get('settings')->getFixShippingTime()) : $this->escape($this->originalInput('fixShippingTime')) ?>" />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <b><?=$this->getTrans('days') ?></b>
                 </span>
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('allowWillCollect') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('allowWillCollect') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('allowWillCollect') ?>
         </div>
@@ -127,13 +127,13 @@
         </div>
     </div>
     <hr />
-    <div class="form-group <?=$this->validation()->hasError('invoiceTextTop') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('invoiceTextTop') ? 'has-error' : '' ?>">
         <label for="invoiceTextTop" class="col-lg-2 control-label">
             <?=$this->getTrans('invoiceTextTop') ?>:
         </label>
         <div class="col-lg-10">
             <div class="input-group">
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextTop') ?>"></span>
                 </span>
                 <input type="text"
@@ -144,13 +144,13 @@
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('invoiceTextBottom') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('invoiceTextBottom') ? 'has-error' : '' ?>">
         <label for="invoiceTextBottom" class="col-lg-2 control-label">
             <?=$this->getTrans('invoiceTextBottom') ?>:
         </label>
         <div class="col-lg-10">
             <div class="input-group">
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextBottom') ?>"></span>
                 </span>
                 <input type="text"
@@ -161,13 +161,13 @@
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('deliveryTextTop') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('deliveryTextTop') ? 'has-error' : '' ?>">
         <label for="deliveryTextTop" class="col-lg-2 control-label">
             <?=$this->getTrans('deliveryTextTop') ?>:
         </label>
         <div class="col-lg-10">
             <div class="input-group">
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoDeliveryTextTop') ?>"></span>
                 </span>
                 <input type="text"

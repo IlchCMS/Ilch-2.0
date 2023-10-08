@@ -108,25 +108,25 @@ h1 a span.badge {
 }
 
 /* items show */
-a.thumbnail:hover {
+.shop-card-index:hover {
     text-decoration: none;
     border: 1px solid #eea236 !important;
     -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
     -moz-box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
 }
-.thumbnail img {
+.card>a> img {
     max-height: 150px !important;
     width: auto !important;
 }
-.thumbnail .caption,
-.thumbnail .caption h4,
-.thumbnail .caption p,
-.thumbnail .caption form {
+.card .caption,
+.card .caption h4,
+.card .caption p,
+.card .caption form {
     text-align: center;
 }
-.thumbnail .caption h4,
-.thumbnail .caption p {
+.card .caption h4,
+.card .caption p {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -134,7 +134,7 @@ a.thumbnail:hover {
 
 /* show */
 .show table {
-    border-collapse: collapse;  
+    border-collapse: collapse;
 }
 .show td.big {
     border: 1px solid #ddd !important;
@@ -158,7 +158,7 @@ a.thumbnail:hover {
     cursor: pointer;
     background: #fff;
 }
-.show .thumb a.thumbimg img {    
+.show .thumb a.thumbimg img {
     height: 50px !important;
     width: auto !important;
     border: 1px solid #ddd;
@@ -310,6 +310,9 @@ a.thumbnail:hover {
     text-align: justify;
     white-space: normal;
 }
+.order #acceptOrder {
+    position:relative;
+}
 .order h4 {
     padding-top: 20px;
     border-top: 1px solid #eee;
@@ -328,7 +331,6 @@ a.thumbnail:hover {
     overflow: hidden;
     position: absolute;
     top: -1px;
-    left: 14px;
 }
 .cordon-wrapper .cordon {
     font-size: 15px;
@@ -368,4 +370,9 @@ a.thumbnail:hover {
 .cordon-wrapper .cordon.grey {
     color: #383d41;
     background-color: #e2e3e5;
+}
+
+.plus-btn {
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
 }

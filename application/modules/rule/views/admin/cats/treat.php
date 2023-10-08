@@ -14,7 +14,7 @@ $userGroupList = $this->get('userGroupList');
 <h1><?=($cat) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField(); ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
         <label for="paragraph" class="col-lg-2 control-label">
             <?=$this->getTrans('art') ?>
         </label>
@@ -27,7 +27,7 @@ $userGroupList = $this->get('userGroupList');
                    required />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -40,7 +40,7 @@ $userGroupList = $this->get('userGroupList');
                    required />
         </div>
     </div>
-    <div class="frow form-group ilch-margin-b">
+    <div class="row mb-3">
         <label for="assignedGroupsRead" class="col-lg-2 control-label">
             <?=$this->getTrans('see') ?>
             <a href="#" data-toggle="tooltip" title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>

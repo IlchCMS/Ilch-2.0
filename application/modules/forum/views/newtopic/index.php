@@ -31,7 +31,7 @@ if ($this->getUser()) {
                         <?=$this->getTokenField() ?>
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="form-group <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
+                                <div class="row mb-3 <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
                                     <label for="topicTitle" class="col-lg-2 control-label">
                                         <?=$this->getTrans('topicTitle') ?>
                                     </label>
@@ -59,7 +59,7 @@ if ($this->getUser()) {
                                                value="<?=$this->originalInput('topicTitle') ?>" />
                                     </div>
                                 </div>
-                                <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+                                <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
                                     <label class="col-lg-2 control-label">
                                         <?=$this->getTrans('text') ?>
                                     </label>
@@ -71,7 +71,7 @@ if ($this->getUser()) {
                                     </div>
                                 </div>
                                 <?php if ($this->getUser()->isAdmin()): ?>
-                                    <div class="form-group">
+                                    <div class="row mb-3">
                                         <div class="col-lg-2 control-label">
                                             <?=$this->getTrans('forumOptions') ?>
                                         </div>
@@ -87,10 +87,10 @@ if ($this->getUser()) {
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <div class="form-group">
-                                    <div class="col-lg-offset-2 col-lg-8">
+                                <div class="row mb-3">
+                                    <div class="offset-lg-2 col-lg-8">
                                         <input type="submit"
-                                               class="btn btn-primary"
+                                               class="btn btn-sm btn-primary"
                                                name="saveNewTopic"
                                                value="<?=$this->getTrans('add') ?>" />
                                     </div>

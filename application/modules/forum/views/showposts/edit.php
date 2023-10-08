@@ -18,7 +18,7 @@ $post = $this->get('post');
                 <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
                     <?php if ($this->get('isFirstPost')) : ?>
-                    <div class="form-group <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
+                    <div class="row mb-3 <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
                         <label for="topicTitle" class="col-lg-2 control-label">
                             <?=$this->getTrans('topicTitle') ?>
                         </label>
@@ -46,7 +46,7 @@ $post = $this->get('post');
                         </div>
                     </div>
                     <?php endif; ?>
-                    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+                    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
                         <label class="col-lg-2 control-label">
                             <?=$this->getTrans('text') ?>
                         </label>
@@ -57,10 +57,10 @@ $post = $this->get('post');
                                       toolbar="ilch_html_frontend"><?=$this->escape($post->getText()) ?></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-8">
+                    <div class="row mb-3">
+                        <div class="offset-lg-2 col-lg-8">
                             <input type="submit"
-                                   class="btn btn-primary"
+                                   class="btn btn-sm btn-primary"
                                    name="editPost"
                                    value="<?=$this->getTrans('edit') ?>" />
                         </div>

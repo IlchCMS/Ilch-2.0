@@ -62,7 +62,7 @@ function rec(ForumItem $item, $forumMapper, $obj)
     </div>
     <div class="col-lg-6 changeBox">
         <input type="hidden" id="id" value="" />
-        <div class="row form-group ilch-margin-b">
+        <div class="row mb-3">
             <label for="title" class="col-lg-3 control-label">
                 <?=$this->getTrans('title') ?>
             </label>
@@ -70,7 +70,7 @@ function rec(ForumItem $item, $forumMapper, $obj)
                 <input type="text" class="form-control" id="title" />
             </div>
         </div>
-        <div class="row form-group ilch-margin-b">
+        <div class="row mb-3">
             <label for="desc" class="col-lg-3 control-label">
                 <?=$this->getTrans('description') ?>
             </label>
@@ -82,7 +82,7 @@ function rec(ForumItem $item, $forumMapper, $obj)
                           cols="45"></textarea>
             </div>
         </div>
-        <div class="row form-group ilch-margin-b">
+        <div class="row mb-3">
             <label for="type" class="col-lg-3 control-label">
                 <?=$this->getTrans('type') ?>
             </label>
@@ -94,7 +94,7 @@ function rec(ForumItem $item, $forumMapper, $obj)
             </div>
         </div>
         <div class="dyn"></div>
-        <div class="col-lg-offset-3 actions">
+        <div class="offset-lg-3 actions">
             <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd') ?>">
         </div>
     </div>
@@ -162,25 +162,25 @@ $(document).ready (
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="menukey" class="col-lg-3 control-label"><?=$this->getTrans('menuSelection') ?></label>\n\
+            menuHtml = '<div class="row mb-3"><label for="menukey" class="col-lg-3 control-label"><?=$this->getTrans('menuSelection') ?></label>\n\
                         <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>\n\
-                        <div class="form-group"><label for="prefix" class="col-lg-3 control-label"><?=$this->getTrans('prefix') ?></label>\n\
+                        <div class="row mb-3"><label for="prefix" class="col-lg-3 control-label"><?=$this->getTrans('prefix') ?></label>\n\
                         <div class="col-lg-6"><input type="text" class="form-control" id="prefix"></div></div>\n\
-                        <div class="form-group"><label for="assignedGroupsRead" class="col-lg-3 control-label"><?=$this->getTrans('see') ?></label>\n\
+                        <div class="row mb-3"><label for="assignedGroupsRead" class="col-lg-3 control-label"><?=$this->getTrans('see') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
-                        <div class="form-group"><label for="assignedGroupsReply" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
+                        <div class="row mb-3"><label for="assignedGroupsReply" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsReply" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
-                        <div class="form-group"><label for="assignedGroupsCreate" class="col-lg-3 control-label"><?=$this->getTrans('create') ?></label>\n\
+                        <div class="row mb-3"><label for="assignedGroupsCreate" class="col-lg-3 control-label"><?=$this->getTrans('create') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsCreate" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\

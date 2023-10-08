@@ -1,7 +1,7 @@
 <h1><?=($this->get('rank')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -14,7 +14,7 @@
                    required />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('posts') ? 'has-error' : '' ?>">
+    <div class="row mb-3 <?=$this->validation()->hasError('posts') ? 'has-error' : '' ?>">
         <label for="posts" class="col-lg-2 control-label">
             <?=$this->getTrans('posts') ?>:
         </label>

@@ -2,11 +2,11 @@
 
 <h1><?=$this->getTrans('menuOrders') ?>
     <div class="input-group input-group-sm filter">
-        <span class="input-group-addon">
+        <span class="input-group-text">
             <i class="fa-solid fa-filter"></i>
         </span>
         <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filter') ?>">
-        <span class="input-group-addon">
+        <span class="input-group-text">
             <span id="filterClear" class="fa-solid fa-xmark"></span>
         </span>
     </div>
@@ -51,26 +51,20 @@
                             <td></td>
                             <td>
                                 <?php if ($order->getStatus() == 0) { ?>
-                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm alert-danger">
+                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm btn-danger">
                                         <i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b>
                                     </a>
                                 <?php } elseif ($order->getStatus() == 1) { ?>
-                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>"
-                                       class="btn btn-sm alert-warning">
-                                        <i class="fa-solid fa-pencil-square"
-                                           aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b>
+                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm btn-warning">
+                                        <i class="fa-solid fa-pencil-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b>
                                     </a>
                                 <?php } elseif ($order->getStatus() == 2) { ?>
-                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>"
-                                       class="btn btn-sm alert-info">
-                                        <i class="fa-solid fa-exclamation-triangle"
-                                           aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('canceledBIG') ?></b>
+                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm btn-info">
+                                        <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('canceledBIG') ?></b>
                                     </a>
                                 <?php } else { ?>
-                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>"
-                                       class="btn btn-sm alert-success">
-                                        <i class="fa-solid fa-check-square"
-                                           aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b>
+                                    <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $order->getId()]) ?>" class="btn btn-sm btn-success">
+                                        <i class="fa-solid fa-check-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b>
                                     </a>
                                 <?php } ?>
                             </td>

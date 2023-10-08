@@ -24,24 +24,22 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status' => '3']));
 <?php endif; ?>
 
 <div class="row">
-    <div class="col-sm-12 col-md-6">
-        <div class="thumbnail media">
+    <div class="col-sm-12 col-md-6 mb-3">
+        <div class="img-thumbnail media">
             <div class="media-body">
                 <h4 class="media-heading">
                     <i class="fa-solid fa-cart-arrow-down"></i>&nbsp;&nbsp;<?=$this->getTrans('menuOrders') ?></h4>
                 <hr>
                 <?php if ($countAllOrders > 0) { ?>
                     <p>
-                        &nbsp;<a href="<?=$this->getUrl(['controller' => 'orders', 'action' => 'index']) ?>" class="btn btn-default">
+                        &nbsp;<a href="<?=$this->getUrl(['controller' => 'orders', 'action' => 'index']) ?>" class="btn btn-outline-secondary">
                             <b><?=$countAllOrders ?>&ensp;<?=($countAllOrders == 1) ? $this->getTrans('order') : $this->getTrans('orders') ?></b>
                         </a> &nbsp;<?=$this->getTrans('available') ?>
                     </p>
-                    <p>
-                        <?=($countNewOrders > 0) ? '&nbsp;<div class="btn-sm alert-danger d-inblock"><b>' . $countNewOrders . '&ensp;' . $this->getTrans('new') . '</b></div>' : ''; ?>
-                        <?=($countWorkOrders > 0) ? '&nbsp;<div class="btn-sm alert-warning d-inblock"><b>' . $countWorkOrders . '&ensp;' . $this->getTrans('processing') . '</b></div>' : ''; ?>
-                        <?=($countCancelOrders > 0) ? '&nbsp;<div class="btn-sm alert-info d-inblock"><b>' . $countCancelOrders . '&ensp;' . $this->getTrans('canceled') . '</b></div>' : ''; ?>
-                        <?=($countDoneOrders > 0) ? '&nbsp;<div class="btn-sm alert-success d-inblock"><b>' . $countDoneOrders . '&ensp;' . $this->getTrans('completed') . '</b></div>' : ''; ?>
-                    </p>
+                    <?=($countNewOrders > 0) ? '&nbsp;<div class="alert alert-danger btn-sm d-inblock"><b>' . $countNewOrders . '&ensp;' . $this->getTrans('new') . '</b></div>' : ''; ?>
+                    <?=($countWorkOrders > 0) ? '&nbsp;<div class="btn-sm alert  alert-warning d-inblock"><b>' . $countWorkOrders . '&ensp;' . $this->getTrans('processing') . '</b></div>' : ''; ?>
+                    <?=($countCancelOrders > 0) ? '&nbsp;<div class="btn-sm alert  alert-info d-inblock"><b>' . $countCancelOrders . '&ensp;' . $this->getTrans('canceled') . '</b></div>' : ''; ?>
+                    <?=($countDoneOrders > 0) ? '&nbsp;<div class="btn-sm alert  alert-success d-inblock"><b>' . $countDoneOrders . '&ensp;' . $this->getTrans('completed') . '</b></div>' : ''; ?>
                 <?php } else { ?>
                     <p>
                         <?=$this->getTrans('infoNoOrder') ?>
@@ -50,18 +48,18 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status' => '3']));
             </div>
         </div>
     </div>
-    <div class="col-sm-12 col-md-6">
-        <div class="thumbnail media">
+    <div class="col-sm-12 col-md-6 mb-3">
+        <div class="img-thumbnail media">
             <div class="media-body">
                 <h4 class="media-heading"><i class="fa-solid fa-tshirt"></i>&nbsp;&nbsp;<?=$this->getTrans('menuItems') ?></h4>
                 <hr>
                 <?php $countCats = count($this->get('cats')); ?>
                 <?php $countItems = count($this->get('itemsMapper')); ?>
                 <p>
-                    &nbsp;<a href="<?=$this->getUrl(['controller' => 'items', 'action' => 'index']) ?>" class="btn btn-default">
+                    &nbsp;<a href="<?=$this->getUrl(['controller' => 'items', 'action' => 'index']) ?>" class="btn btn-outline-secondary">
                         <b><?=$countItems ?>&ensp;<?=$this->getTrans('products') ?></b>
-                    </a> &nbsp; in &nbsp; 
-                    <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'index']) ?>" class="btn btn-default">
+                    </a> &nbsp; in &nbsp;
+                    <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'index']) ?>" class="btn btn-outline-secondary">
                         <b><?=$countCats ?>&ensp;<?=$this->getTrans('cats') ?></b>
                     </a> &nbsp;<?=$this->getTrans('available') ?>
                 </p>
@@ -72,12 +70,12 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status' => '3']));
     <div class="col-md-12" style="text-align:right">
         <form class="form-horizontal" id="delSamplaDataForm" method="POST" action="">
             <?=$this->getTokenField() ?>
-            <a class="badge" data-toggle="modal" data-target="#infoModal">
+            <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal">
                 <i class="fa-solid fa-info"></i>
             </a>
-            <input type="button" id="delete_button" class="btn btn-default del" value="<?=$this->getTrans('delSampleData') ?>" />
+            <input type="button" id="delete_button" class="btn btn-outline-secondary del" value="<?=$this->getTrans('delSampleData') ?>" />
             <input type="hidden" name="delSampleData" value="delete" />
-            <input type="submit" name="keepSampleData" id="keep_button" class="btn btn-default keep" value="<?=$this->getTrans('keepSampleData') ?>" />
+            <input type="submit" name="keepSampleData" id="keep_button" class="btn btn-outline-secondary keep" value="<?=$this->getTrans('keepSampleData') ?>" />
         </form>
     </div>
     <?php endif; ?>

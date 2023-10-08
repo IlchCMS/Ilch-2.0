@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -27,14 +28,18 @@ class Index extends \Ilch\Controller\Frontend
         $jobsMapper = new JobsMapper();
         $userMapper = new UserMapper();
 
-        $id = $this->getRequest()->getParam('id');
 
-        $job = $jobsMapper->getJobsById($id);
+        $job = $jobsMapper->getJobsById($this->getRequest()->getParam('id') ?? 0);
+        if (!$job) {
+            $this->redirect()
+                ->to(['action' => 'index']);
+        }
+
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index'])
-                ->add($job->getTitle(), ['action' => 'show', 'id' => $id]);
+                ->add($job->getTitle(), ['action' => 'show', 'id' => $job->getId()]);
 
-        if ($this->getRequest()->getPost('saveApply')) {
+        if ($this->getRequest()->getPost('saveApply') && $this->getUser()) {
             $post = [
                 'title' => trim($this->getRequest()->getPost('title')),
                 'text' => trim($this->getRequest()->getPost('text'))
@@ -49,7 +54,6 @@ class Index extends \Ilch\Controller\Frontend
                 $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
                 $jobTitle = $this->getLayout()->escape($post['title']);
                 $date = new \Ilch\Date();
-                $job = $jobsMapper->getJobsById($id);
                 $user = $userMapper->getUserById($this->getUser()->getId());
 
                 $layout = '';
@@ -57,16 +61,16 @@ class Index extends \Ilch\Controller\Frontend
                     $layout = $_SESSION['layout'];
                 }
 
-                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/jobs/layouts/mail/apply.php')) {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/jobs/layouts/mail/apply.php');
+                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/jobs/layouts/mail/apply.php')) {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/jobs/layouts/mail/apply.php');
                 } else {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/jobs/layouts/mail/apply.php');
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/jobs/layouts/mail/apply.php');
                 }
 
                 $messageReplace = [
-                    '{applyAs}' => $this->getTranslator()->trans('applyAs').' '.$jobTitle,
+                    '{applyAs}' => $this->getTranslator()->trans('applyAs') . ' ' . $jobTitle,
                     '{from}' => $this->getTranslator()->trans('mailFrom'),
-                    '{content}' => $this->getLayout()->escape($post['text']),
+                    '{content}' => $this->getLayout()->alwaysPurify($post['text']),
                     '{senderMail}' => $this->getLayout()->escape($user->getEmail()),
                     '{senderName}' => $this->getLayout()->escape($user->getName()),
                     '{sitetitle}' => $siteTitle,
@@ -82,7 +86,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->setFromEmail($this->getLayout()->escape($this->getConfig()->get('standardMail')))
                     ->setToName('')
                     ->setToEmail($this->getLayout()->escape($job->getEmail()))
-                    ->setSubject($this->getTranslator()->trans('applyAs').' '.$jobTitle)
+                    ->setSubject($this->getTranslator()->trans('applyAs') . ' ' . $jobTitle)
                     ->setMessage($message)
                     ->send();
 
@@ -93,7 +97,7 @@ class Index extends \Ilch\Controller\Frontend
                 $this->redirect()
                     ->withInput()
                     ->withErrors($validation->getErrorBag())
-                    ->to(['action' => 'show', 'id' => $id]);
+                    ->to(['action' => 'show', 'id' => $job->getId()]);
             }
         }
 
