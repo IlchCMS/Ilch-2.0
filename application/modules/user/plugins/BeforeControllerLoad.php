@@ -7,6 +7,7 @@
 
 namespace Modules\User\Plugins;
 
+use Ilch\Database\Exception;
 use Modules\User\Mappers\User as UserMapper;
 
 class BeforeControllerLoad
@@ -15,7 +16,7 @@ class BeforeControllerLoad
      * Checks if the user has enough rights to access the requested page.
      *
      * @param array $pluginData
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
     public function __construct(array $pluginData)
     {
