@@ -105,8 +105,8 @@ class Dialog extends \Ilch\Mapper
 
         $dialogModel = new DialogModel();
         $dialogModel->setId($dialogRow['id']);
-        if (!empty($dialog['name'])) {
-            $dialogModel->setName($dialog['name']);
+        if (!empty($dialogRow['name'])) {
+            $dialogModel->setName($dialogRow['name']);
         } else {
             $dialogModel->setName('No longer exists');
         }
