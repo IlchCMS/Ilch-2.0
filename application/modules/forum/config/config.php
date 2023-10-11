@@ -789,8 +789,8 @@ class Config extends \Ilch\Config\Install
                 }
 
                 // Change the order of column 'forum_id' of the tables 'forum_posts' and 'forum_topics'. Move them closer to the front.
-                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` CHANGE COLUMN `forum_id` INT(11) NOT NULL DEFAULT 0 AFTER `topic_id`;');
-                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` CHANGE COLUMN `forum_id` INT(11) NOT NULL AFTER `id`;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` CHANGE COLUMN `forum_id` `forum_id` INT(11) NOT NULL DEFAULT 0 AFTER `topic_id`;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` CHANGE COLUMN `forum_id` `forum_id` INT(11) NOT NULL AFTER `id`;');
 
                 $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 $this->db()->query('ALTER TABLE `[prefix]_forum_topics` ADD CONSTRAINT `FK_[prefix]_forum_topics_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
