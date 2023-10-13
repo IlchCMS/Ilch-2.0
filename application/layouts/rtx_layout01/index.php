@@ -41,10 +41,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-                <h1>Ilch CMS</h1>
-                <h2>Du hast einen Clan, eine Community oder willst eine eigene private Homepage erstellen?</h2>
+                <h1><?=$this->getTrans('heroH1')?></h1>
+                <h2><?=$this->getTrans('heroH2')?></h2>
                 <div class="d-flex justify-content-center justify-content-lg-start">
-                    <a href="https://github.com/IlchCMS/Ilch-2.0" class="btn-download">Kostenloser Download</a>
+                    <a href="https://github.com/IlchCMS/Ilch-2.0" class="btn-download"><?=$this->getTrans('heroButton')?></a>
 
                 </div>
             </div>
@@ -154,8 +154,8 @@
                 ?>
 
             <div class="col-lg-3 col-md-6 footer-links">
-                <h4>Soziale Netzwerke</h4>
-                <p>Besuche uns auf diesen Plattformen</p>
+                <h4><?=$this->getTrans('footerLinksH4')?></h4>
+                <p><?=$this->getTrans('footerLinksText')?>/p>
                 <div class="social-links mt-3">
                     <a href="#" class="twitter"><i class="fa-brands fa-x-twitter"></i></a>
                     <a href="#" class="facebook"><i class="fa-brands fa-facebook"></i></a>
