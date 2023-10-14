@@ -7,7 +7,6 @@ $rankMapper = $this->get('rankMapper');
 $posts = $this->get('posts');
 $cat = $this->get('cat');
 $topicpost = $this->get('post');
-$readAccess = $this->get('readAccess');
 $forum = $this->get('forum');
 $reportedPostsIds = $this->get('reportedPostsIds');
 $rememberedPostIds = $this->get('rememberedPostIds');
@@ -34,7 +33,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReadAccess()))): ?>
+<?php if ($adminAccess || $forum->getReadAccess()): ?>
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
@@ -46,7 +45,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             <div class="col-lg-12">
                 <?php if ($topicpost->getStatus() == 0): ?>
                     <?php if ($this->getUser()): ?>
-                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
+                        <?php if ($adminAccess || $forum->getReplyAccess()): ?>
                             <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                 <span class="btn-label">
                                     <i class="fa-solid fa-plus"></i>
@@ -192,7 +191,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     <?php endif; ?>
                     <?php if ($this->getUser()): ?>
                         <div class="quote">
-                            <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
+                            <?php if ($adminAccess || $forum->getReplyAccess()): ?>
                                 <p class="quote-post">
                                     <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
                         <span class="btn-label">
@@ -231,7 +230,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
         <div class="topic-actions">
             <?php if ($topicpost->getStatus() == 0): ?>
                 <?php if ($this->getUser()): ?>
-                    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
+                    <?php if ($adminAccess || $forum->getReplyAccess()): ?>
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                             <span class="btn-label">
                                 <i class="fa-solid fa-plus"></i>

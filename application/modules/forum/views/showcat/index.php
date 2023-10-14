@@ -6,9 +6,8 @@ use Modules\Forum\Mappers\Forum;
 $forumMapper = $this->get('forumMapper');
 $forumItems = $this->get('forumItems');
 $cat = $this->get('cat');
-$readAccess = $this->get('readAccess');
 
-function rec($item, $forumMapper, $obj, $readAccess)
+function rec($item, $forumMapper, $obj)
 {
     $DESCPostorder = $obj->get('DESCPostorder');
     $postsPerPage = $obj->get('postsPerPage');
@@ -40,7 +39,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
         </ul>
     <?php endif; ?>
 
-    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
+    <?php if ($adminAccess || $item->getReadAccess()): ?>
         <?php if ($item->getType() != 0): ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
@@ -109,7 +108,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
     <?php
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
-            rec($subItem, $forumMapper, $obj, $readAccess);
+            rec($subItem, $forumMapper, $obj);
         }
     }
 }
@@ -129,7 +128,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
     }
     $subItemsFalse = false;
         foreach ($forumItems as $subItem) {
-            if ($adminAccess || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
+            if ($adminAccess || $subItem->getReadAccess()) {
                 $subItemsFalse = true;
             }
         }
@@ -154,7 +153,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
             </ul>
             <?php
             foreach ($forumItems as $item) {
-                rec($item, $forumMapper, $this, $readAccess);
+                rec($item, $forumMapper, $this);
             }
             ?>
         </div>

@@ -9,8 +9,6 @@ namespace Modules\Forum\Controllers;
 use Ilch\Controller\Frontend;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
-use Modules\Forum\Mappers\Post as PostMapper;
-use Modules\User\Mappers\User as UserMapper;
 
 class Showunansweredtopics extends Frontend
 {
@@ -18,37 +16,32 @@ class Showunansweredtopics extends Frontend
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
-        $postMapper = new PostMapper();
-        $userMapper = new UserMapper();
 
-        $userId = null;
-        $groupIds = [3];
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('forum'))
+            ->add($this->getTranslator()->trans('showUnansweredTopics'));
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('showUnansweredTopics'));
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('showUnansweredTopics'), ['action' => 'index']);
 
-        if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
-        }
-        $user = $userMapper->getUserById($userId);
+        $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
 
-        if ($this->getUser()) {
-            $groupIds = [];
-            foreach ($user->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
+        $forums = $forumMapper->getForumItemsUser($this->getUser());
+        $topics = $topicMapper->getTopicsByForumIds(array_keys($forums));
+
+        $topicsToShow = [];
+        foreach ($topics as $topic) {
+            if (($topic->getCountPosts() === 1) && ($isAdmin || $forums[$topic->getForumId()]->getReadAccess())) {
+                $topicsToShow[] = [
+                    'topic' => $topic,
+                    'forumPrefix' => $forums[$topic->getForumId()]->getPrefix(),
+                    'lastPost' => ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic->getId(), $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic->getId()),
+                ];
             }
         }
 
-        $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('forum'))
-                ->add($this->getTranslator()->trans('showUnansweredTopics'));
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('showUnansweredTopics'));
-        $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('showUnansweredTopics'), ['action' => 'index']);
-
-        $this->getView()->set('forumMapper', $forumMapper);
-        $this->getView()->set('topicMapper', $topicMapper);
-        $this->getView()->set('postMapper', $postMapper);
-        $this->getView()->set('topics', $topicMapper->getTopics());
-        $this->getView()->set('groupIdsArray', $groupIds);
+        $this->getView()->set('topics', $topicsToShow);
         $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
         $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }

@@ -1,10 +1,9 @@
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 <?php
 $forumItems = $this->get('forumItems');
-$readAccess = $this->get('groupIdsArray');
 $editTopicItems = $this->get('editTopicItems');
 
-function rec($item, $obj, $readAccess, $i)
+function rec($item, $obj, $i)
 {
     $subItems = $item->getSubItems();
     $adminAccess = null;
@@ -14,7 +13,7 @@ function rec($item, $obj, $readAccess, $i)
     $subItemsFalse = false;
     if (!empty($subItems) && ($item->getType() === 0)) {
         foreach ($subItems as $subItem) {
-            if ($adminAccess || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
+            if ($adminAccess || $subItem->getReadAccess()) {
                 $subItemsFalse = true;
             }
         }
@@ -23,7 +22,7 @@ function rec($item, $obj, $readAccess, $i)
         <optgroup label="<?=$item->getTitle() ?>"></optgroup>
     <?php endif; ?>
 
-    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
+    <?php if ($adminAccess || $item->getReadAccess()): ?>
         <?php if ($item->getType() != 0): ?>
             <?php $selected = ''; ?>
             <?php if ($item->getId() == $obj->getRequest()->getParam('forumid')): ?>
@@ -36,7 +35,7 @@ function rec($item, $obj, $readAccess, $i)
     if (!empty($subItems) && $i == 0) {
         $i++;
         foreach ($subItems as $subItem) {
-            rec($subItem, $obj, $readAccess, $i);
+            rec($subItem, $obj, $i);
         }
     }
 }
@@ -60,7 +59,7 @@ function rec($item, $obj, $readAccess, $i)
                         <div class="col-lg-6">
                             <select class="form-control" id="selectForum" name="edit">
                                 <?php foreach ($forumItems as $item): ?>
-                                    <?php rec($item, $this, $readAccess, $i = null) ?>
+                                    <?php rec($item, $this, $i = null) ?>
                                 <?php endforeach; ?>
                             </select>
                             <?php foreach ($editTopicItems as $editId): ?>

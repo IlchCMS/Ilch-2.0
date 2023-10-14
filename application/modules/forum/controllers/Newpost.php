@@ -13,7 +13,6 @@ use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\TrackRead as TrackReadMapper;
-use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
@@ -75,17 +74,9 @@ class Newpost extends Frontend
             // If that is not the case then don't even bother checking the rights
             // as the URL is invalid anyway.
             if ($post->getForumId() == $forum->getId()) {
-                $userMapper = new UserMapper();
-
-                $userId = null;
-                if ($this->getUser()) {
-                    $userId = $this->getUser()->getId();
-                }
-                $user = $userMapper->getUserById($userId);
-
                 $readAccess = [3];
-                if ($user) {
-                    foreach ($user->getGroups() as $us) {
+                if ($this->getUser()) {
+                    foreach ($this->getUser()->getGroups() as $us) {
                         $readAccess[] = $us->getId();
                     }
                 }

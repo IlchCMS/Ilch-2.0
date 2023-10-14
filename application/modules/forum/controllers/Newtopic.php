@@ -13,7 +13,6 @@ use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
-use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
 
 class Newtopic extends Frontend
@@ -29,7 +28,7 @@ class Newtopic extends Frontend
                 ->to(['controller' => 'index', 'action' => 'index']);
         }
 
-        $forum = $forumMapper->getForumById($id);
+        $forum = $forumMapper->getForumByIdUser($id, $this->getUser());
 
         if (!$forum) {
             $this->redirect()
@@ -40,16 +39,16 @@ class Newtopic extends Frontend
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('forum'))
-                ->add($cat->getTitle())
-                ->add($forum->getTitle())
-                ->add($this->getTranslator()->trans('newTopicTitle'));
+            ->add($this->getTranslator()->trans('forum'))
+            ->add($cat->getTitle())
+            ->add($forum->getTitle())
+            ->add($this->getTranslator()->trans('newTopicTitle'));
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
-                ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
-                ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $id])
-                ->add($this->getTranslator()->trans('newTopicTitle'), ['controller' => 'newtopic','action' => 'index', 'id' => $id]);
+            ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+            ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
+            ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $id])
+            ->add($this->getTranslator()->trans('newTopicTitle'), ['controller' => 'newtopic','action' => 'index', 'id' => $id]);
 
         if ($this->getRequest()->getPost('saveNewTopic')) {
             $postMapper = new PostMapper();
@@ -100,20 +99,6 @@ class Newtopic extends Frontend
             }
         }
 
-        $userMapper = new UserMapper();
-        $user = null;
-        if ($this->getUser()) {
-            $user = $userMapper->getUserById($this->getUser()->getId());
-        }
-
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
-            }
-        }
-
-        $this->getView()->set('readAccess', $readAccess);
         $this->getView()->set('cat', $cat);
         $this->getView()->set('forum', $forum);
     }

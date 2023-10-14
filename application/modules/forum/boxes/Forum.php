@@ -9,7 +9,6 @@ namespace Modules\Forum\Boxes;
 use Ilch\Box;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
-use Modules\User\Mappers\User as UserMapper;
 
 class Forum extends Box
 {
@@ -17,26 +16,29 @@ class Forum extends Box
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
-        $userMapper = new UserMapper();
 
-        // Add group 'guest' by default
-        $groupIds = [3];
+        $boxEntryLimit = (!empty($this->getConfig()->get('forum_boxForumLimit'))) ? $this->getConfig()->get('forum_boxForumLimit') : 5;
+        $lastActiveTopics = $topicMapper->getLastActiveTopics($boxEntryLimit);
+        $forumIds = array_column($lastActiveTopics, 'forum_id');
+        $forums = $forumMapper->getForumsByIdsUser($forumIds, $this->getUser());
+        $topicIds = array_column($lastActiveTopics, 'topic_id');
+        $counts = $forumMapper->getCountPostsByTopicIds($topicIds);
+        $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
 
-        if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
-            $user = $userMapper->getUserById($userId);
-
-            $groupIds = [];
-            foreach ($user->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
+        $lastActiveTopicsToShow = [];
+        foreach ($lastActiveTopics as $topic) {
+            if ($isAdmin || $forums[$topic['forum_id']]->getReadAccess()) {
+                $lastActiveTopicsToShow[] = [
+                    'forumId' => $topic['forum_id'],
+                    'topicId' => $topic['topic_id'],
+                    'topicTitle' => $topic['topic_title'],
+                    'countPosts' => $counts[$topic['topic_id']],
+                    'lastPost' => ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic['topic_id'], $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic['topic_id']),
+                ];
             }
         }
 
-        $BoxEntryLimit = (!empty($this->getConfig()->get('forum_boxForumLimit'))) ? $this->getConfig()->get('forum_boxForumLimit') : 5;
-        $this->getView()->set('forumMapper', $forumMapper);
-        $this->getView()->set('topicMapper', $topicMapper);
-        $this->getView()->set('topics', $topicMapper->getLastActiveTopics($BoxEntryLimit));
-        $this->getView()->set('groupIdsArray', $groupIds);
+        $this->getView()->set('lastActiveTopicsToShow', $lastActiveTopicsToShow);
         $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
         $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }

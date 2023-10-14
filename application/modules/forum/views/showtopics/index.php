@@ -1,5 +1,4 @@
 <?php
-use Modules\Forum\Mappers\Forum;
 use Modules\Forum\Mappers\Topic;
 
 $forum = $this->get('forum');
@@ -8,9 +7,6 @@ $forumEdit = $this->get('forumEdit');
 $topics = $this->get('topics');
 /** @var Topic $topicMapper */
 $topicMapper = $this->get('topicMapper');
-/** @var Forum $forumMapper */
-$forumMapper = $this->get('forumMapper');
-$groupIdsArray = $this->get('groupIdsArray');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
@@ -20,7 +16,7 @@ $postsPerPage = $this->get('postsPerPage');
 ?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<?php if ($adminAccess || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
+<?php if ($adminAccess || $forum->getReadAccess()): ?>
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
@@ -65,7 +61,6 @@ $postsPerPage = $this->get('postsPerPage');
                 <?php if (!empty($topics)): ?>
                     <?php foreach ($topics as $topic): ?>
                         <?php $lastPost = ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic->getId(), $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic->getId()) ?>
-                        <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
                         <li class="row ilch-border ilch-bg--hover <?=($topic->getType() == '1') ? 'tack' : '' ?>">
                             <dl class="icon
                                 <?php if ($this->getUser()): ?>
@@ -86,8 +81,8 @@ $postsPerPage = $this->get('postsPerPage');
                             ">
                                 <dt>
                                     <?php
-                                    if ($forumPrefix->getPrefix() != '' && $topic->getTopicPrefix() > 0) {
-                                        $prefix = explode(',', $forumPrefix->getPrefix());
+                                    if ($forum->getPrefix() != '' && $topic->getTopicPrefix() > 0) {
+                                        $prefix = explode(',', $forum->getPrefix());
                                         array_unshift($prefix, '');
 
                                         foreach ($prefix as $key => $value) {

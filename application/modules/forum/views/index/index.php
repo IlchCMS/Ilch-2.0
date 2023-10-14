@@ -3,7 +3,6 @@
 use Modules\Forum\Mappers\Forum as ForumMapper;
 
 $forumItems = $this->get('forumItems');
-$readAccess = $this->get('groupIdsArray');
 $usersOnlineList = $this->get('usersOnlineList');
 $usersWhoWasOnline = $this->get('usersWhoWasOnline');
 $usersOnline = $this->get('usersOnline');
@@ -11,7 +10,7 @@ $guestOnline = $this->get('guestOnline');
 $forumStatistics = $this->get('forumStatics');
 $onlineUsersHighestRankedGroup = $this->get('onlineUsersHighestRankedGroup');
 
-function rec($item, $obj, $readAccess, $i)
+function rec($item, $obj, $i)
 {
     $DESCPostorder = $obj->get('DESCPostorder');
     $postsPerPage = $obj->get('postsPerPage');
@@ -27,7 +26,7 @@ function rec($item, $obj, $readAccess, $i)
     $subItemsFalse = false;
     if (!empty($subItems) && ($item->getType() === 0)) {
         foreach ($subItems as $subItem) {
-            if ($adminAccess || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
+            if ($adminAccess || $subItem->getReadAccess()) {
                 $subItemsFalse = true;
             }
         }
@@ -52,7 +51,7 @@ function rec($item, $obj, $readAccess, $i)
         </ul>
     <?php endif; ?>
 
-    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
+    <?php if ($adminAccess || $item->getReadAccess()): ?>
         <?php if ($item->getType() != 0): ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
@@ -127,7 +126,7 @@ function rec($item, $obj, $readAccess, $i)
     if (!empty($subItems) && $i == 0) {
         $i++;
         foreach ($subItems as $subItem) {
-            rec($subItem, $obj, $readAccess, $i);
+            rec($subItem, $obj, $i);
         }
     }
 }
@@ -139,7 +138,7 @@ function rec($item, $obj, $readAccess, $i)
     <h1><?=$this->getTrans('forum') ?></h1>
     <?php foreach ($forumItems as $item): ?>
         <div class="forabg">
-            <?php rec($item, $this, $readAccess, $i = null) ?>
+            <?php rec($item, $this, $i = null) ?>
         </div>
     <?php endforeach; ?>
     <div class="foren-actions clearfix">

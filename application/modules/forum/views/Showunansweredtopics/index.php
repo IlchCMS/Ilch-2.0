@@ -1,20 +1,5 @@
 <?php
-use Modules\Forum\Mappers\Forum;
-use Modules\Forum\Mappers\Topic;
-use Modules\Forum\Mappers\Post;
-
 $topics = $this->get('topics');
-/** @var Forum $forumMapper */
-$forumMapper = $this->get('forumMapper');
-/** @var Topic $topicMapper */
-$topicMapper = $this->get('topicMapper');
-/** @var Post $postMapper */
-$postMapper = $this->get('postMapper');
-$groupIdsArray = $this->get('groupIdsArray');
-$adminAccess = null;
-if ($this->getUser()) {
-    $adminAccess = $this->getUser()->isAdmin();
-}
 $DESCPostorder = $this->get('DESCPostorder');
 $postsPerPage = $this->get('postsPerPage');
 ?>
@@ -38,92 +23,85 @@ $postsPerPage = $this->get('postsPerPage');
         </ul>
         <ul class="topiclist topics">
             <?php foreach ($topics as $topic): ?>
-                <?php if (($topic->getCountPosts() - 1) == 0): ?>
-                    <?php $forum = $forumMapper->getForumById($topic->getForumId()); ?>
-                    <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
-                    <?php $lastPost = ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic->getId(), $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic->getId()) ?>
-                    <?php if ($adminAccess || is_in_array($groupIdsArray, explode(',', $forum->getReadAccess()))): ?>
-                        <li class="row ilch-border ilch-bg--hover">
-                            <dl class="icon
-                            <?php if ($this->getUser()): ?>
-                                <?php if ($topic->getStatus() == 0 && $lastPost->getRead()): ?>
-                                    topic-read
-                                <?php elseif ($topic->getStatus() == 1 && $lastPost->getRead()): ?>
-                                    topic-read-locked
-                                <?php elseif ($topic->getStatus() == 1): ?>
-                                    topic-unread-locked
-                                <?php else: ?>
-                                    topic-unread
-                                <?php endif; ?>
-                            <?php elseif ($topic->getStatus() == 1): ?>
-                                topic-read-locked
-                            <?php else: ?>
-                                topic-read
-                            <?php endif; ?>
-                        ">
-                                <dt>
-                                    <?php
-                                    if ($forumPrefix->getPrefix() != '' && $topic->getTopicPrefix() > 0) {
-                                        $prefix = explode(',', $forumPrefix->getPrefix());
-                                        array_unshift($prefix, '');
-
-                                        foreach ($prefix as $key => $value) {
-                                            if ($topic->getTopicPrefix() == $key) {
-                                                echo '<span class="label label-default">'.$value.'</span>';
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                    <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="topictitle">
-                                        <?=$topic->getTopicTitle() ?>
-                                    </a>
-                                    <?php if ($topic->getType() == '1'): ?>
-                                        <i class="fa-solid fa-thumbtack"></i>
-                                    <?php endif; ?>
-                                    <br>
-                                    <div class="small">
-                                        <?=$this->getTrans('by') ?>
-                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $topic->getAuthor()->getId()]) ?>" class="ilch-link-red">
-                                            <?=$this->escape($topic->getAuthor()->getName()) ?>
-                                        </a>
-                                        »
-                                        <?=$topic->getDateCreated() ?>
-                                    </div>
-                                </dt>
-                                <dd class="posts small">
-                                    <div class="pull-left text-nowrap stats">
-                                        <?=$this->getTrans('replies') ?>:
-                                        <br />
-                                        <?=$this->getTrans('views') ?>:
-                                    </div>
-                                    <div class="pull-left text-justify">
-                                        <?=$topic->getCountPosts() - 1 ?>
-                                        <br />
-                                        <?=$topic->getVisits() ?>
-                                    </div>
-                                </dd>
-                                <dd class="lastpost small">
-                                    <div class="pull-left">
-                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
-                                            <img style="width:40px; padding-right: 5px;" src="<?=$this->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
-                                        </a>
-                                    </div>
-                                    <div class="pull-left">
-                                        <?=$this->getTrans('by') ?>
-                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
-                                            <?=$this->escape($lastPost->getAutor()->getName()) ?>
-                                        </a>
-                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => ($DESCPostorder ? 1 : ceil($topic->getCountPosts() / $postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
-                                            <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
-                                        </a>
-                                        <br>
-                                        <?=$lastPost->getDateCreated() ?>
-                                    </div>
-                                </dd>
-                            </dl>
-                        </li>
+                <li class="row ilch-border ilch-bg--hover">
+                    <dl class="icon
+                    <?php if ($this->getUser()): ?>
+                        <?php if ($topic['topic']->getStatus() == 0 && $topic['lastPost']->getRead()): ?>
+                            topic-read
+                        <?php elseif ($topic['topic']->getStatus() == 1 && $topic['lastPost']->getRead()): ?>
+                            topic-read-locked
+                        <?php elseif ($topic['topic']->getStatus() == 1): ?>
+                            topic-unread-locked
+                        <?php else: ?>
+                            topic-unread
+                        <?php endif; ?>
+                    <?php elseif ($topic['topic']->getStatus() == 1): ?>
+                        topic-read-locked
+                    <?php else: ?>
+                        topic-read
                     <?php endif; ?>
-                <?php endif; ?>
+                ">
+                        <dt>
+                            <?php
+                            if ($topic['forumPrefix'] != '' && $topic['topic']->getTopicPrefix() > 0) {
+                                $prefix = explode(',', $topic['forumPrefix']);
+                                array_unshift($prefix, '');
+
+                                foreach ($prefix as $key => $value) {
+                                    if ($topic['topic']->getTopicPrefix() == $key) {
+                                        echo '<span class="label label-default">'.$value.'</span>';
+                                    }
+                                }
+                            }
+                            ?>
+                            <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic['topic']->getId()]) ?>" class="topictitle">
+                                <?=$topic['topic']->getTopicTitle() ?>
+                            </a>
+                            <?php if ($topic['topic']->getType() == '1'): ?>
+                                <i class="fa-solid fa-thumbtack"></i>
+                            <?php endif; ?>
+                            <br>
+                            <div class="small">
+                                <?=$this->getTrans('by') ?>
+                                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $topic['topic']->getAuthor()->getId()]) ?>" class="ilch-link-red">
+                                    <?=$this->escape($topic['topic']->getAuthor()->getName()) ?>
+                                </a>
+                                »
+                                <?=$topic['topic']->getDateCreated() ?>
+                            </div>
+                        </dt>
+                        <dd class="posts small">
+                            <div class="pull-left text-nowrap stats">
+                                <?=$this->getTrans('replies') ?>:
+                                <br />
+                                <?=$this->getTrans('views') ?>:
+                            </div>
+                            <div class="pull-left text-justify">
+                                <?=$topic['topic']->getCountPosts() - 1 ?>
+                                <br />
+                                <?=$topic['topic']->getVisits() ?>
+                            </div>
+                        </dd>
+                        <dd class="lastpost small">
+                            <div class="pull-left">
+                                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $topic['lastPost']->getAutor()->getId()]) ?>" title="<?=$this->escape($topic['lastPost']->getAutor()->getName()) ?>">
+                                    <img style="width:40px; padding-right: 5px;" src="<?=$this->getBaseUrl($topic['lastPost']->getAutor()->getAvatar()) ?>" alt="<?=$this->escape($topic['lastPost']->getAutor()->getName()) ?>">
+                                </a>
+                            </div>
+                            <div class="pull-left">
+                                <?=$this->getTrans('by') ?>
+                                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $topic['lastPost']->getAutor()->getId()]) ?>" title="<?=$this->escape($topic['lastPost']->getAutor()->getName()) ?>">
+                                    <?=$this->escape($topic['lastPost']->getAutor()->getName()) ?>
+                                </a>
+                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic['lastPost']->getTopicId(), 'page' => ($DESCPostorder ? 1 : ceil($topic['topic']->getCountPosts() / $postsPerPage))]) ?>#<?=$topic['lastPost']->getId() ?>">
+                                    <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
+                                </a>
+                                <br>
+                                <?=$topic['lastPost']->getDateCreated() ?>
+                            </div>
+                        </dd>
+                    </dl>
+                </li>
             <?php endforeach; ?>
         </ul>
     </div>

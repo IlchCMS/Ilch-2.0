@@ -53,7 +53,7 @@ class Showposts extends Frontend
             return;
         }
 
-        $forum = $forumMapper->getForumByTopicId($topicId);
+        $forum = $forumMapper->getForumByTopicIdUser($topicId, $this->getUser());
         if ($forum === null) {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Topic', 'errorText' => 'notFound']);
             return;
@@ -92,14 +92,9 @@ class Showposts extends Frontend
         $topicModel->setVisits($post->getVisits() + 1);
         $topicMapper->saveVisits($topicModel);
 
-        $userMapper = new UserMapper();
-
         $rememberedPostIds = [];
         $isSubscribed = false;
-        $userId = null;
         if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
-
             if (($this->getConfig()->get('forum_DESCPostorder') && $this->getRequest()->getParam('page') == (1 || !$this->getRequest()->getParam('page')))
                 || (!$this->getConfig()->get('forum_DESCPostorder') && ((($this->getRequest()->getParam('page')) ?? 1) == (ceil($pagination->getRows() / $rowsPerPage))))
             ) {
@@ -114,17 +109,9 @@ class Showposts extends Frontend
                 $isSubscribed = $topicSubscriptionMapper->isSubscribedToTopic($topicId, $this->getUser()->getId());
             }
 
-            $rememberedPosts = $rememberMapper->getRememberedPostsByTopicId($topicId, $userId);
+            $rememberedPosts = $rememberMapper->getRememberedPostsByTopicId($topicId, $this->getUser()->getId());
             foreach ($rememberedPosts as $rememberedPost) {
                 $rememberedPostIds[] = $rememberedPost->getPostId();
-            }
-        }
-        $user = $userMapper->getUserById($userId);
-
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
             }
         }
 
@@ -146,7 +133,6 @@ class Showposts extends Frontend
         $this->getView()->set('cat', $cat);
         $this->getView()->set('posts', $posts);
         $this->getView()->set('forum', $forum);
-        $this->getView()->set('readAccess', $readAccess);
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('userAccess', new Accesses($this->getRequest()));
         $this->getView()->set('rankMapper', $rankMapper);

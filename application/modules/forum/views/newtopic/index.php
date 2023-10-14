@@ -1,7 +1,6 @@
 <?php
 $forum = $this->get('forum');
 $cat = $this->get('cat');
-$readAccess = $this->get('readAccess');
 
 $adminAccess = null;
 if ($this->getUser()) {
@@ -11,7 +10,7 @@ if ($this->getUser()) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getCreateAccess()))): ?>
+<?php if ($adminAccess || $forum->getCreateAccess()): ?>
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>

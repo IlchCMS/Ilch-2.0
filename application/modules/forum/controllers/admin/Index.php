@@ -78,15 +78,11 @@ class Index extends Admin
                     }
                 }
 
-                $oldItems = $forumMapper->getForumItems();
+                $oldItems = $forumMapper->getForumItemsIds();
 
                 // Deletes old entries from database.
                 if (!empty($oldItems)) {
-                    foreach ($oldItems as $oldItem) {
-                        if (!isset($items[$oldItem->getId()])) {
-                            $forumMapper->deleteItem($oldItem->getId());
-                        }
-                    }
+                    $forumMapper->deleteItems(array_diff($oldItems, array_keys($items)));
                 }
 
                 if ($items) {

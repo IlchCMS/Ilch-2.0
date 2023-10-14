@@ -24,10 +24,21 @@ class Topic extends Mapper
      */
     public function getTopicsByForumId(int $id, Pagination $pagination = null): array
     {
+        return $this->getTopicsByForumIds([$id], $pagination);
+    }
+
+    /**
+     * @param array $ids
+     * @param Pagination|null $pagination
+     * @return array
+     * @throws Exception
+     */
+    public function getTopicsByForumIds(array $ids, Pagination $pagination = null): array
+    {
         $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)', 'countPosts' => 'COUNT(posts.id)'])
             ->from(['topics' => 'forum_topics'])
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
-            ->where(['topics.forum_id' => (int)$id])
+            ->where(['topics.forum_id' => $ids])
             ->group(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
             ->order(['topics.type' => 'DESC', 'latest_post' => 'DESC']);
 
@@ -51,6 +62,7 @@ class Topic extends Mapper
             $topicModel = new TopicModel();
             $topicModel->setId($topicRow['id']);
             $topicModel->setVisits($topicRow['visits']);
+            $topicModel->setForumId($topicRow['forum_id']);
             $topicModel->setType($topicRow['type']);
             $topicModel->setStatus($topicRow['status']);
 
