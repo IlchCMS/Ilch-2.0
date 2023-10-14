@@ -2,32 +2,18 @@
 
 use Ilch\Date;
 
-$forumMapper = $this->get('forumMapper');
 $rankMapper = $this->get('rankMapper');
 $posts = $this->get('posts');
 $cat = $this->get('cat');
 $topicpost = $this->get('post');
 $forum = $this->get('forum');
+$prefix = $this->get('prefix');
 $reportedPostsIds = $this->get('reportedPostsIds');
 $rememberedPostIds = $this->get('rememberedPostIds');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
     $userAccess = $this->get('userAccess');
-}
-
-$forumPrefix = $forumMapper->getForumByTopicId($topicpost->getId());
-$prefix = '';
-if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
-    $prefix = explode(',', $forumPrefix->getPrefix());
-    array_unshift($prefix, '');
-
-    foreach ($prefix as $key => $value) {
-        if ($topicpost->getTopicPrefix() == $key) {
-            $value = trim($value);
-            $prefix = '[' . $value . '] ';
-        }
-    }
 }
 ?>
 

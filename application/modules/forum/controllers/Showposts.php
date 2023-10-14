@@ -128,11 +128,11 @@ class Showposts extends Frontend
             $reportedPostsIds[] = $reportedPost->getPostId();
         }
 
-        $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('post', $post);
         $this->getView()->set('cat', $cat);
         $this->getView()->set('posts', $posts);
         $this->getView()->set('forum', $forum);
+        $this->getView()->set('prefix', $prefix);
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('userAccess', new Accesses($this->getRequest()));
         $this->getView()->set('rankMapper', $rankMapper);
