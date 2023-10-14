@@ -65,10 +65,10 @@ class Showposts extends Frontend
 
         $prefix = '';
         if ($forum->getPrefix() != '' && $post->getTopicPrefix() > 0) {
-            $prefix = explode(',', $forum->getPrefix());
-            array_unshift($prefix, '');
+            $prefixes = explode(',', $forum->getPrefix());
+            array_unshift($prefixes, '');
 
-            foreach ($prefix as $key => $value) {
+            foreach ($prefixes as $key => $value) {
                 if ($post->getTopicPrefix() == $key) {
                     $value = trim($value);
                     $prefix = '[' . $value . '] ';
