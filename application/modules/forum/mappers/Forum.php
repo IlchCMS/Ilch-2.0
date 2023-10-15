@@ -57,12 +57,21 @@ class Forum extends Mapper
             return [];
         }
 
-        $subItemsIds = array_column($itemRows, 'id');
-        $subItems = $this->getForumItemsByParentIds($subItemsIds, $userId);
-
+        $subItemsIds = [];
         $subItemsRelation = [];
-        foreach ($subItems as $subItem) {
-            $subItemsRelation[$subItem->getParentId()][] = $subItem;
+        foreach($itemRows as $itemRow) {
+            // Don't bother trying to get subitems if the item is already a forum and not a category.
+            if ($itemRow['type'] != 1) {
+                $subItemsIds[] = $itemRow['id'];
+            }
+        }
+
+        if (!empty($subItemsIds)) {
+            $subItems = $this->getForumItemsByParentIds($subItemsIds, $userId);
+
+            foreach ($subItems as $subItem) {
+                $subItemsRelation[$subItem->getParentId()][] = $subItem;
+            }
         }
 
         $items = [];
@@ -124,12 +133,21 @@ class Forum extends Mapper
             return [];
         }
 
-        $subItemsIds = array_column($itemRows, 'id');
-        $subItems = $this->getForumItemsByParentIdsUser($subItemsIds, $user);
-
+        $subItemsIds = [];
         $subItemsRelation = [];
-        foreach ($subItems as $subItem) {
-            $subItemsRelation[$subItem->getParentId()][] = $subItem;
+        foreach($itemRows as $itemRow) {
+            // Don't bother trying to get subitems if the item is already a forum and not a category.
+            if ($itemRow['type'] != 1) {
+                $subItemsIds[] = $itemRow['id'];
+            }
+        }
+
+        if (!empty($subItemsIds)) {
+            $subItems = $this->getForumItemsByParentIdsUser($subItemsIds, $user);
+
+            foreach ($subItems as $subItem) {
+                $subItemsRelation[$subItem->getParentId()][] = $subItem;
+            }
         }
 
         $items = [];

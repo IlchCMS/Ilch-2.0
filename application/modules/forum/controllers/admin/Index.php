@@ -148,7 +148,6 @@ class Index extends Admin
         }
 
         $this->getView()->set('forumItems', $forumMapper->getForumItemsByParent(0));
-        $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
     }
 }

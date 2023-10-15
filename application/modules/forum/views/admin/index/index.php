@@ -2,15 +2,13 @@
 
 use Modules\Forum\Models\ForumItem;
 
-$forumMapper = $this->get('forumMapper');
 $forumItems = $this->get('forumItems');
 
-function rec(ForumItem $item, $forumMapper, $obj)
+function rec(ForumItem $item, $obj)
 {
-    $subItems = $forumMapper->getforumItemsByParent($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
-    if (empty($subItems)) {
+    if (empty($item->getSubItems())) {
         $class = 'mjs-nestedSortable-leaf';
     }
 
@@ -34,11 +32,11 @@ function rec(ForumItem $item, $forumMapper, $obj)
         </span>
     </div>';
 
-    if (!empty($subItems)) {
+    if (!empty($item->getSubItems())) {
         echo '<ol>';
 
-        foreach ($subItems as $subItem) {
-            rec($subItem, $forumMapper, $obj);
+        foreach ($item->getSubItems() as $subItem) {
+            rec($subItem, $obj);
         }
 
         echo '</ol>';
@@ -55,7 +53,7 @@ function rec(ForumItem $item, $forumMapper, $obj)
         <ol id="sortable" class="sortable">
             <?php
                 foreach ($forumItems as $item) {
-                    rec($item, $forumMapper, $this);
+                    rec($item, $this);
                 }
             ?>
         </ol>
