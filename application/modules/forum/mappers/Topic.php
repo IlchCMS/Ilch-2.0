@@ -85,7 +85,7 @@ class Topic extends Mapper
             $topicModel->setTopicTitle($topicRow['topic_title']);
             $topicModel->setDateCreated($topicRow['date_created']);
             $topicModel->setCountPosts($topicRow['countPosts']);
-            $topics[] = $topicModel;
+            $topics[$topicRow['id']] = $topicModel;
         }
 
         return $topics;
@@ -264,6 +264,59 @@ class Topic extends Mapper
         }
 
         return $postModel;
+    }
+
+    /**
+     *  Get last posts by topic ids and user id.
+     *
+     * @param array $ids
+     * @param int|null $userId
+     * @return PostModel[]|null
+     * @throws Exception
+     */
+    public function getLastPostsByTopicIds(array $ids, int $userId = null): ?array
+    {
+        $select = $this->db()->select(['p.id', 'p.topic_id', 'date_created' => 'MAX(p.date_created)', 'p.user_id', 'p.forum_id'])
+            ->from(['p' => 'forum_posts']);
+
+        if ($userId) {
+            $select->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id', 'tr.datetime >= p.date_created'], 'LEFT', ['topic_read' => 'tr.datetime'])
+                ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id', 'fr.datetime >= p.date_created'], 'LEFT', ['forum_read' => 'fr.datetime']);
+        }
+
+        $lastPostsRows = $select->where(['p.topic_id' => $ids])
+            ->order(['p.date_created' => 'DESC'])
+            ->group(['p.topic_id'])
+            ->execute()
+            ->fetchRows();
+
+        if (empty($lastPostsRows)) {
+            return null;
+        }
+
+        $lastPosts = [];
+        foreach ($lastPostsRows as $lastPostRow) {
+            $postModel = new PostModel();
+            $userMapper = new UserMapper();
+            $postModel->setId($lastPostRow['id']);
+            $user = $userMapper->getUserById($lastPostRow['user_id']);
+
+            if ($user) {
+                $postModel->setAutor($user);
+            } else {
+                $postModel->setAutor($userMapper->getDummyUser());
+            }
+
+            $postModel->setDateCreated($lastPostRow['date_created']);
+            $postModel->setTopicId($lastPostRow['topic_id']);
+
+            if ($userId) {
+                $postModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
+            }
+            $lastPosts[] = $postModel;
+        }
+
+        return $lastPosts;
     }
 
     /**
