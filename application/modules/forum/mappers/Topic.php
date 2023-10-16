@@ -267,7 +267,7 @@ class Topic extends Mapper
     }
 
     /**
-     *  Get last posts by topic ids and user id.
+     * Get last posts by topic ids and user id.
      *
      * @param array $ids
      * @param int|null $userId
