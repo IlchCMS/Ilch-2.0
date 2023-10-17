@@ -38,9 +38,9 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                 <div class="col-lg-12">
                     <form action="<?=$this->getUrl(['module' => 'vote']) ?>" class="form-horizontal" method="POST">
                         <?=$this->getTokenField() ?>
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h4 class="panel-title"><?=$this->escape($groupVote->getQuestion()) ?></h4>
+                        <div class="card border-primary">
+                            <div class="card-header bg-primary">
+                                <h6 class="card-title"><?=$this->escape($groupVote->getQuestion()) ?></h6>
                             </div>
                             <?php
                             $voteRes = $resultMapper->getVoteRes($groupVote->getId());
@@ -99,7 +99,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                                                 <?php endif; ?>
                                             </div>
                                         <?php endforeach; ?>
-                                        <div class="panel-footer">
+                                        <div class="card-footer">
                                             <?=$this->getSaveBar('voteButton', 'Vote') ?>
                                         </div>
                                     </div>

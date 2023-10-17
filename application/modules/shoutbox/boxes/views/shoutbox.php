@@ -87,16 +87,16 @@ $config = \Ilch\Registry::get('config');
 </script>
 <div id="shoutbox-container<?=$this->get('uniqid') ?>">
     <div id="shoutbox-button-container<?=$this->get('uniqid') ?>" class="form-horizontal">
-        <div class="form-group">
+        <div class="row mb-3">
             <div class="col-lg-12">
                 <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))) : ?>
                     <div class="pull-left">
-                        <button class="btn" id="shoutbox-slide-down<?=$this->get('uniqid') ?>"><?=$this->getTrans('answer') ?></button>
+                        <button class="btn btn-outline-secondary" id="shoutbox-slide-down<?=$this->get('uniqid') ?>"><?=$this->getTrans('answer') ?></button>
                     </div>
                 <?php endif; ?>
                 <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')) : ?>
                     <div class="pull-right">
-                        <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
+                        <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-outline-secondary"><?=$this->getTrans('archive') ?></a>
                     </div>
                 <?php endif; ?>
             </div>
@@ -108,7 +108,7 @@ $config = \Ilch\Registry::get('config');
             <form id="shoutboxForm_<?=$this->get('uniqid') ?>" name="shoutboxForm_<?=$this->get('uniqid') ?>" class="form-horizontal" method="post">
                 <input type="hidden" name="uniqid" value="<?=$this->get('uniqid') ?>">
                <?=$this->getTokenField() ?>
-                <div class="form-group hidden">
+                <div class="row mb-3 d-none">
                     <label class="col-lg-2 control-label" for="bot">
                         <?=$this->getTrans('bot') ?>
                     </label>
@@ -120,7 +120,7 @@ $config = \Ilch\Registry::get('config');
                                placeholder="Bot" />
                     </div>
                 </div>
-                <div class="form-group <?=$this->validation()->hasError('shoutbox_name') ? 'has-error' : '' ?>">
+                <div class="row mb-3 <?=$this->validation()->hasError('shoutbox_name') ? 'has-error' : '' ?>">
                     <div class="col-lg-12">
                         <input type="text"
                                class="form-control"
@@ -130,7 +130,7 @@ $config = \Ilch\Registry::get('config');
                                <?=($this->getUser() !== null) ? 'readonly' : 'required' ?> />
                     </div>
                 </div>
-                <div class="form-group <?=$this->validation()->hasError('shoutbox_textarea') ? 'has-error' : '' ?>">
+                <div class="row mb-3 <?=$this->validation()->hasError('shoutbox_textarea') ? 'has-error' : '' ?>">
                     <div class="col-lg-12">
                         <textarea class="form-control"
                                   style="resize: vertical"
@@ -142,7 +142,7 @@ $config = \Ilch\Registry::get('config');
                                   required></textarea>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="row mb-3">
                     <div class="col-lg-12">
                         <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
                             <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>

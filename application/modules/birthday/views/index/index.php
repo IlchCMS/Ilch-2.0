@@ -6,15 +6,15 @@ $date = new \Ilch\Date();
 
 <h1><?=$this->getTrans('menuBirthdayList') ?></h1>
 <?php if ($this->get('birthdayListNOW') != ''): ?>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
+    <div class="card card-primary">
+        <div class="card-header">
             <strong><?=$this->getTrans('birthdayToday') ?></strong>
             <span class="pull-right">
                 <strong><?=date('d.m.Y', strtotime($date->format('Y-m-d'))) ?></strong>
             </span>
         </div>
         <?php foreach ($this->get('birthdayListNOW') as $birthdaylist): ?>
-            <div class="panel-body">
+            <div class="card-body">
                 <div class="col-lg-12">
                     <div class="col-lg-2 confetti">
                         <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
@@ -44,15 +44,15 @@ $date = new \Ilch\Date();
             <?php endif; ?>
         <?php endforeach; ?>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="card card-default">
+            <div class="card-header">
                 <?php $month = date('F', mktime(0, 0, 0, +$x, 1, 1)); ?>
                 <strong><?=$this->getTrans($month) ?></strong>
                 <span class="pull-right">
                 <strong><?=$monthsUserCount ?> <?=$this->getTrans('people') ?></strong>
             </span>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <?php if ($monthsUserCount != ''): ?>
                     <?php foreach ($this->get('birthdayList') as $birthdaylist): ?>
                         <?php if ($birthdaylist->getBirthday() != '' && $this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
