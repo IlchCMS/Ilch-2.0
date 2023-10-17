@@ -25,17 +25,32 @@ class Forum extends Box
         $counts = $forumMapper->getCountPostsByTopicIds($topicIds);
         $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
 
+        $topicIds = [];
         $lastActiveTopicsToShow = [];
-        foreach ($lastActiveTopics as $topic) {
+        foreach ($lastActiveTopics as $index => $topic) {
             if ($isAdmin || $forums[$topic['forum_id']]->getReadAccess()) {
-                $lastActiveTopicsToShow[] = [
-                    'forumId' => $topic['forum_id'],
-                    'topicId' => $topic['topic_id'],
-                    'topicTitle' => $topic['topic_title'],
-                    'countPosts' => $counts[$topic['topic_id']],
-                    'lastPost' => ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic['topic_id'], $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic['topic_id']),
-                ];
+                $topicIds[] = $topic['topic_id'];
             }
+        }
+
+        $posts = $topicMapper->getLastPostsByTopicIds($topicIds, ($this->getUser()) ? $this->getUser()->getId() : null);
+
+        foreach ($posts as $post) {
+            $foundTopic = null;
+            foreach ($lastActiveTopics as $topic) {
+                if ($topic['topic_id'] == $post->getTopicId()) {
+                    $foundTopic = $topic;
+                    break;
+                }
+            }
+
+            $lastActiveTopicsToShow[] = [
+                'forumId' => $foundTopic['forum_id'],
+                'topicId' => $foundTopic['topic_id'],
+                'topicTitle' => $foundTopic['topic_title'],
+                'countPosts' => $counts[$foundTopic['topic_id']],
+                'lastPost' => $post,
+            ];
         }
 
         $this->getView()->set('lastActiveTopicsToShow', $lastActiveTopicsToShow);

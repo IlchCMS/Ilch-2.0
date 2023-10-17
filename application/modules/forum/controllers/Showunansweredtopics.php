@@ -30,15 +30,22 @@ class Showunansweredtopics extends Frontend
         $forums = $forumMapper->getForumItemsUser($this->getUser());
         $topics = $topicMapper->getTopicsByForumIds(array_keys($forums));
 
+        $topicIds = [];
         $topicsToShow = [];
         foreach ($topics as $topic) {
             if (($topic->getCountPosts() === 1) && ($isAdmin || $forums[$topic->getForumId()]->getReadAccess())) {
-                $topicsToShow[] = [
-                    'topic' => $topic,
-                    'forumPrefix' => $forums[$topic->getForumId()]->getPrefix(),
-                    'lastPost' => ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic->getId(), $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic->getId()),
-                ];
+                $topicIds[] = $topic->getId();
             }
+        }
+
+        $posts = $topicMapper->getLastPostsByTopicIds($topicIds, ($this->getUser()) ? $this->getUser()->getId() : null);
+
+        foreach ($posts as $post) {
+            $topicsToShow[] = [
+                'topic' => $topics[$post->getTopicId()],
+                'forumPrefix' => $forums[$topics[$post->getTopicId()]->getForumId()]->getPrefix(),
+                'lastPost' => $post,
+            ];
         }
 
         $this->getView()->set('topics', $topicsToShow);

@@ -227,43 +227,13 @@ class Topic extends Mapper
      */
     public function getLastPostByTopicId(int $id, int $userId = null): ?PostModel
     {
-        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.date_created', 'p.user_id', 'p.forum_id'])
-            ->from(['p' => 'forum_posts']);
+        $lastPost = $this->getLastPostsByTopicIds([$id], $userId);
 
-        if ($userId) {
-            $select->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id', 'tr.datetime >= p.date_created'], 'LEFT', ['topic_read' => 'tr.datetime'])
-                ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id', 'fr.datetime >= p.date_created'], 'LEFT', ['forum_read' => 'fr.datetime']);
+        if (!empty($lastPost)) {
+            return reset($lastPost);
         }
 
-        $lastPostRow = $select->where(['p.topic_id' => $id])
-            ->order(['p.date_created' => 'DESC'])
-            ->limit(1)
-            ->execute()
-            ->fetchAssoc();
-
-        if (empty($lastPostRow)) {
-            return null;
-        }
-
-        $postModel = new PostModel();
-        $userMapper = new UserMapper();
-        $postModel->setId($lastPostRow['id']);
-        $user = $userMapper->getUserById($lastPostRow['user_id']);
-
-        if ($user) {
-            $postModel->setAutor($user);
-        } else {
-            $postModel->setAutor($userMapper->getDummyUser());
-        }
-
-        $postModel->setDateCreated($lastPostRow['date_created']);
-        $postModel->setTopicId($lastPostRow['topic_id']);
-
-        if ($userId) {
-            $postModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
-        }
-
-        return $postModel;
+        return null;
     }
 
     /**

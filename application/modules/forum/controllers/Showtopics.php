@@ -50,11 +50,19 @@ class Showtopics extends Frontend
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('forum_threadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_threadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
+        $topics = $topicMapper->getTopicsByForumId($forumId, $pagination);
+
+        $posts = $topicMapper->getLastPostsByTopicIds(array_keys($topics), ($this->getUser()) ? $this->getUser()->getId() : null);
+        $postTopicRelation = [];
+        foreach($posts ?? [] as $index => $post) {
+            $postTopicRelation[$post->getTopicId()] = $index;
+        }
 
         $this->getView()->set('forum', $forum);
         $this->getView()->set('cat', $cat);
-        $this->getView()->set('topicMapper', $topicMapper);
-        $this->getView()->set('topics', $topicMapper->getTopicsByForumId($forumId, $pagination));
+        $this->getView()->set('topics', $topics);
+        $this->getView()->set('posts', $posts);
+        $this->getView()->set('postTopicRelation', $postTopicRelation);
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
         $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));

@@ -1,12 +1,11 @@
 <?php
-use Modules\Forum\Mappers\Topic;
 
 $forum = $this->get('forum');
 $cat = $this->get('cat');
 $forumEdit = $this->get('forumEdit');
 $topics = $this->get('topics');
-/** @var Topic $topicMapper */
-$topicMapper = $this->get('topicMapper');
+$posts = $this->get('posts');
+$postTopicRelation = $this->get('postTopicRelation');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
@@ -60,7 +59,7 @@ $postsPerPage = $this->get('postsPerPage');
             <ul class="topiclist topics">
                 <?php if (!empty($topics)): ?>
                     <?php foreach ($topics as $topic): ?>
-                        <?php $lastPost = ($this->getUser()) ? $topicMapper->getLastPostByTopicId($topic->getId(), $this->getUser()->getId()) : $topicMapper->getLastPostByTopicId($topic->getId()) ?>
+                        <?php $lastPost = $posts[$postTopicRelation[$topic->getId()]] ?>
                         <li class="row ilch-border ilch-bg--hover <?=($topic->getType() == '1') ? 'tack' : '' ?>">
                             <dl class="icon
                                 <?php if ($this->getUser()): ?>
