@@ -141,7 +141,7 @@ class Forum extends Mapper
         }
 
         if (!empty($subItemsIds)) {
-            $subItems = $this->getForumItemsByParentIds($subItemsIds);
+            $subItems = $this->getForumItemsAdmincenterByParentIds($subItemsIds);
 
             foreach ($subItems as $subItem) {
                 $subItemsRelation[$subItem->getParentId()][] = $subItem;
@@ -241,7 +241,7 @@ class Forum extends Mapper
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
             $itemModel->setSubItems($subItemsRelation[$itemRow['id']] ?? []);
             $itemModel->setTopics($itemRow['topicCount']);
-             if ($itemRow['type'] == 1 && isset($lastPosts[$itemRow['id']])) {
+            if ($itemRow['type'] == 1 && isset($lastPosts[$itemRow['id']])) {
                 $itemModel->setLastPost($lastPosts[$itemRow['id']]);
             }
             $itemModel->setPosts($itemRow['postCount']);
