@@ -103,7 +103,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
         <li class="nav-item dropdown active">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownConfig" data-bs-toggle="dropdown" data-bs-target="#navbar-collapse" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-arrow-down"></i> <?=$this->getTrans('allCat') ?></a>
           <ul id="filters" class="dropdown-menu" aria-labelledby="dropdownConfig">
-            <li><a href="#filter" data-filter="*" class="active dropdown-item"><i class="fa-solid fa-image"></i> <?=$this->getTrans('allCat') ?></a></li>
+            <li class="active"><a href="#filter" data-filter="*"><i class="fa-solid fa-image" class="dropdown-item"></i> <?=$this->getTrans('allCat') ?></a></li>
             <?php if (!empty($galleryItems)) : ?>
                 <?php foreach ($galleryItems as $item) : ?>
                     <?php recCategory($item, $galleryMapper, $this); ?>

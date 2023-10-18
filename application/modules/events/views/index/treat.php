@@ -17,7 +17,7 @@ $types = $this->get('types');
 <?php if ($this->getUser() && (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->hasAccess('module_events'))): ?>
     <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group">
+        <div class="row mb-3">
             <div class="col-lg-2 control-label"><?=$this->getTrans('image') ?></div>
             <div class="col-lg-10">
                 <?php if ($this->get('event') != '' && $this->escape($this->get('event')->getImage()) != ''): ?>
@@ -54,7 +54,7 @@ $types = $this->get('types');
                 </div>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('creator') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('creator') ? 'has-error' : '' ?>">
             <label for="creator" class="col-lg-2 control-label">
                 <?=$this->getTrans('by') ?>
             </label>
@@ -67,7 +67,7 @@ $types = $this->get('types');
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('start') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('start') ? 'has-error' : '' ?>">
             <label for="start" class="col-md-2 control-label">
                 <?=$this->getTrans('startTime') ?>
             </label>
@@ -79,12 +79,12 @@ $types = $this->get('types');
                        size="16"
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } elseif ($this->originalInput('start') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('start'))); } ?>"
                        readonly>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('end') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('end') ? 'has-error' : '' ?>">
             <label for="end" class="col-md-2 control-label">
                 <?=$this->getTrans('endTime') ?>
             </label>
@@ -96,15 +96,15 @@ $types = $this->get('types');
                        size="16"
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getEnd())); } elseif ($this->originalInput('end') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('end'))); } ?>"
                        readonly>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-xmark"></span>
                 </span>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
             <label for="title" class="col-lg-2 control-label">
                 <?=$this->getTrans('title') ?>
             </label>
@@ -116,7 +116,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getTitle()) : $this->escape($this->originalInput('title')) ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
             <label for="place" class="col-lg-2 control-label">
                 <?=$this->getTrans('place') ?>
             </label>
@@ -128,12 +128,12 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPlace()) : $this->escape($this->originalInput('place')) ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('type') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('type') ? 'has-error' : '' ?>">
             <label for="place" class="col-lg-2 control-label">
                 <?=$this->getTrans('type') ?>
             </label>
             <div class="col-lg-6">
-                <select class="form-control typeselection" name="typeselection" id="typeselection">
+                <select class="form-control typeselection mb-3" name="typeselection" id="typeselection">
                     <option value=""><?=$this->getTrans('otherOrNone') ?></option>
                     <?php foreach ($types as $type) : ?>
                         <?php if (empty($type)) {
@@ -150,7 +150,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getType()) : $this->escape($this->originalInput('type')) ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
             <label for="website" class="col-lg-2 control-label">
                 <?=$this->getTrans('website') ?>
             </label>
@@ -163,7 +163,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getWebsite()) : $this->escape($this->originalInput('website')) ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
             <label for="ck_1" class="col-lg-2 control-label">
                 <?=$this->getTrans('text') ?>
             </label>
@@ -175,7 +175,7 @@ $types = $this->get('types');
                           rows="5"><?=($this->get('event') != '') ? $this->escape($this->get('event')->getText()) : $this->escape($this->originalInput('text')) ?></textarea>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
             <label for="price" class="col-lg-2 control-label">
                 <?=$this->getTrans('price') ?>
             </label>
@@ -209,7 +209,7 @@ $types = $this->get('types');
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
+        <div class="row mb-3 <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
             <label for="userLimit" class="col-lg-2 control-label">
                 <?=$this->getTrans('userLimit') ?> <div class="badge" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
             </label>
@@ -223,7 +223,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->get('event')->getUserLimit() : $this->originalInput('userLimit') ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="row mb-3">
             <label for="access" class="col-lg-2 control-label">
                 <?=$this->getTrans('visibleFor') ?>
             </label>
@@ -238,7 +238,7 @@ $types = $this->get('types');
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
-            <div class="form-group">
+            <div class="row mb-3">
                 <div class="col-lg-offset-2 col-lg-10">
                     <input type="checkbox"
                            id="calendarShow"
