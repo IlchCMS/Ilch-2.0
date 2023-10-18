@@ -47,7 +47,7 @@ class Forum extends Mapper
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
             ->join(['t' => 'forum_topics'], 'i.id = t.forum_id', 'LEFT', ['topicCount' => 'COUNT(DISTINCT t.id)'])
             ->join(['p' => 'forum_posts'], 'i.id = p.forum_id', 'LEFT', ['postCount' => 'COUNT(DISTINCT p.id)'])
-            ->where(['i.parent_id' => $itemIds], 'or')
+            ->where(['i.parent_id' => $itemIds])
             ->group(['i.id'])
             ->order(['i.sort' => 'ASC'])
             ->execute()
@@ -76,6 +76,13 @@ class Forum extends Mapper
 
         $items = [];
 
+        // Get the last posts only for forum items that are actually forums.
+        $forumItemsForums = array_diff(array_column($itemRows, 'id'), $subItemsIds);
+        $lastPosts = null;
+        if (!empty($forumItemsForums)) {
+            $lastPosts = $this->getLastPostsByForumIds($forumItemsForums, $userId);
+        }
+
         foreach ($itemRows as $itemRow) {
             $itemModel = new ForumItem();
             $itemModel->setId($itemRow['id']);
@@ -89,10 +96,72 @@ class Forum extends Mapper
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
             $itemModel->setSubItems($subItemsRelation[$itemRow['id']] ?? []);
             $itemModel->setTopics($itemRow['topicCount']);
-            if ($itemRow['type'] == 1) {
-                $itemModel->setLastPost($this->getLastPostByForumId($itemRow['id'], $userId));
+            if ($itemRow['type'] == 1 && isset($lastPosts[$itemRow['id']])) {
+                $itemModel->setLastPost($lastPosts[$itemRow['id']]);
             }
             $itemModel->setPosts($itemRow['postCount']);
+            $items[] = $itemModel;
+        }
+
+        return $items;
+    }
+
+
+    /**
+     * Get forum items with the needed values for the admincenter.
+     *
+     * @param array $itemIds
+     * @return array
+     * @throws Exception
+     */
+    public function getForumItemsAdmincenterByParentIds(array $itemIds): array
+    {
+        $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description', 'i.prefix'])
+            ->from(['i' => 'forum_items'])
+            ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
+            ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
+            ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+            ->where(['i.parent_id' => $itemIds])
+            ->group(['i.id'])
+            ->order(['i.sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
+
+        if (empty($itemRows)) {
+            return [];
+        }
+
+        $subItemsIds = [];
+        $subItemsRelation = [];
+        foreach($itemRows as $itemRow) {
+            // Don't bother trying to get subitems if the item is already a forum and not a category.
+            if ($itemRow['type'] != 1) {
+                $subItemsIds[] = $itemRow['id'];
+            }
+        }
+
+        if (!empty($subItemsIds)) {
+            $subItems = $this->getForumItemsByParentIds($subItemsIds);
+
+            foreach ($subItems as $subItem) {
+                $subItemsRelation[$subItem->getParentId()][] = $subItem;
+            }
+        }
+
+        $items = [];
+
+        foreach ($itemRows as $itemRow) {
+            $itemModel = new ForumItem();
+            $itemModel->setId($itemRow['id']);
+            $itemModel->setType($itemRow['type']);
+            $itemModel->setTitle($itemRow['title']);
+            $itemModel->setDesc($itemRow['description']);
+            $itemModel->setParentId($itemRow['parent_id']);
+            $itemModel->setPrefix($itemRow['prefix']);
+            $itemModel->setReadAccess($itemRow['read_access'] ?? '');
+            $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
+            $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
+            $itemModel->setSubItems($subItemsRelation[$itemRow['id']] ?? []);
             $items[] = $itemModel;
         }
 
@@ -152,6 +221,13 @@ class Forum extends Mapper
 
         $items = [];
 
+        // Get the last posts only for forum items that are actually forums.
+        $forumItemsForums = array_diff(array_column($itemRows, 'id'), $subItemsIds);
+        $lastPosts = null;
+        if (!empty($forumItemsForums)) {
+            $lastPosts = $this->getLastPostsByForumIds($forumItemsForums, $user ? $user->getId() : null);
+        }
+
         foreach ($itemRows as $itemRow) {
             $itemModel = new ForumItem();
             $itemModel->setId($itemRow['id']);
@@ -165,8 +241,8 @@ class Forum extends Mapper
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
             $itemModel->setSubItems($subItemsRelation[$itemRow['id']] ?? []);
             $itemModel->setTopics($itemRow['topicCount']);
-            if ($itemRow['type'] == 1) {
-                $itemModel->setLastPost($this->getLastPostByForumId($itemRow['id'], $user ? $user->getId() : null));
+             if ($itemRow['type'] == 1 && isset($lastPosts[$itemRow['id']])) {
+                $itemModel->setLastPost($lastPosts[$itemRow['id']]);
             }
             $itemModel->setPosts($itemRow['postCount']);
             $items[] = $itemModel;
@@ -364,6 +440,8 @@ class Forum extends Mapper
     }
 
     /**
+     * Get last post by forum id.
+     *
      * @param int $forumId
      * @param int|null $userId
      * @return PostModel|null
@@ -382,6 +460,7 @@ class Forum extends Mapper
 
         $lastPostRow = $select->where(['p.forum_id' => $forumId])
             ->order(['p.date_created' => 'DESC', 'p.id' => 'DESC'])
+            ->limit(1)
             ->execute()
             ->fetchAssoc();
 
@@ -411,6 +490,60 @@ class Forum extends Mapper
         return $postModel;
     }
 
+    /**
+     * Get last posts by forum ids.
+     *
+     * @param array $forumId
+     * @param int|null $userId
+     * @return array|null
+     * @throws Exception
+     */
+    public function getLastPostsByForumIds(array $forumId, int $userId = null): ?array
+    {
+        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.user_id', 'p.date_created', 'p.forum_id'])
+            ->from(['p' => 'forum_posts'])
+            ->join(['t' => 'forum_topics'], 't.id = p.topic_id', 'LEFT', ['t.topic_title']);
+
+        if ($userId) {
+            $select->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id', 'tr.datetime >= p.date_created'], 'LEFT', ['topic_read' => 'tr.datetime'])
+                ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id', 'fr.datetime >= p.date_created'], 'LEFT', ['forum_read' => 'fr.datetime']);
+        }
+
+        $lastPostRows = $select->where(['p.forum_id' => $forumId])
+            ->order(['p.date_created' => 'DESC', 'p.id' => 'DESC'])
+            ->group(['p.forum_id'])
+            ->execute()
+            ->fetchRows();
+
+        if (empty($lastPostRows)) {
+            return null;
+        }
+
+        $lastPosts = [];
+        foreach ($lastPostRows as $lastPostRow) {
+            $postModel = new PostModel();
+            $userMapper = new UserMapper();
+            $postModel->setId($lastPostRow['id']);
+            $user = $userMapper->getUserById($lastPostRow['user_id']);
+
+            if ($user) {
+                $postModel->setAutor($user);
+            } else {
+                $postModel->setAutor($userMapper->getDummyUser());
+            }
+
+            $postModel->setDateCreated($lastPostRow['date_created']);
+            $postModel->setTopicId($lastPostRow['topic_id']);
+            $postModel->setTopicTitle($lastPostRow['topic_title']);
+
+            if ($userId) {
+                $postModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
+            }
+            $lastPosts[$lastPostRow['forum_id']] = $postModel;
+        }
+
+        return $lastPosts;
+    }
     /**
      * Get category by parent id.
      *
