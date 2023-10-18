@@ -7,10 +7,10 @@ $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <div class="container-fluid">
-            <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-             </button>
+        <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+        </button>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="navbar-nav">
