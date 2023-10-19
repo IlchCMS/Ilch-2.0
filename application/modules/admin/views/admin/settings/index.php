@@ -7,11 +7,11 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b">
-        <label for="startPage" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="startPage" class="col-xl-2 control-label">
             <?=$this->getTrans('startPage') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="form-control" id="startPage" name="startPage">
                 <optgroup label="<?=$this->getTrans('pages') ?>">
                     <?php foreach ($pages as $page): ?>
@@ -61,11 +61,11 @@
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('multilingualAcp') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('multilingualAcp') ? 'has-error' : '' ?>">
+        <div class="col-xl-2 control-label">
             <?=$this->getTrans('multilingualAcp') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="multilingualAcp-on" name="multilingualAcp" value="1" <?php if ($this->get('multilingualAcp') == '1') { echo 'checked="checked"'; } ?> />
                 <label for="multilingualAcp-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -75,11 +75,11 @@
             </div>
         </div>
     </div>
-    <div id="contentLanguage" class="row form-group ilch-margin-b <?php if ($this->get('multilingualAcp') != '1') { echo 'hidden'; } ?>">
-        <label for="languageInput" class="col-lg-2 control-label">
+    <div id="contentLanguage" class="row mb-3 <?php if ($this->get('multilingualAcp') != '1') { echo 'hidden'; } ?>">
+        <label for="languageInput" class="col-xl-2 control-label">
             <?=$this->getTrans('contentLanguage') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="form-control" id="languageInput" name="contentLanguage">
                 <?php foreach ($this->get('languages') as $key => $value): ?>
                     <?php $selected = ''; ?>
@@ -92,11 +92,11 @@
             </select>
         </div>
     </div>
-    <div id="contentLanguage" class="row form-group ilch-margin-b">
-        <label for="localeInput" class="col-lg-2 control-label">
+    <div id="contentLanguage" class="row mb-3">
+        <label for="localeInput" class="col-xl-2 control-label">
             <?=$this->getTrans('locale') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="form-control" id="languageInput" name="locale">
                 <?php foreach ($this->get('languages') as $key => $value): ?>
                     <?php $selected = ''; ?>
@@ -109,11 +109,11 @@
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
-        <label for="timezone" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="timezone" class="col-xl-2 control-label">
             <?=$this->getTrans('timezone') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="form-control" id="timezone" name="timezone">
                 <?php $timezones = $this->get('timezones'); ?>
                 <?php for ($i = 0, $iMax = count($timezones); $i < $iMax; $i++): ?>
@@ -127,11 +127,11 @@
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('standardMail') ? 'has-error' : '' ?>">
-        <label for="standardMailInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('standardMail') ? 'has-error' : '' ?>">
+        <label for="standardMailInput" class="col-xl-2 control-label">
             <?=$this->getTrans('standardMail') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="email"
                    class="form-control"
                    id="standardMailInput"
@@ -140,11 +140,11 @@
                    required />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('defaultPaginationObjects') ? 'has-error' : '' ?>">
-        <label for="defaultPaginationObjectsInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('defaultPaginationObjects') ? 'has-error' : '' ?>">
+        <label for="defaultPaginationObjectsInput" class="col-xl-2 control-label">
             <?=$this->getTrans('defaultPaginationObjects') ?>:
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="defaultPaginationObjectsInput"
@@ -155,11 +155,11 @@
     </div>
 
     <h1><?=$this->getTrans('captcha') ?></h1>
-    <div class="row form-group ilch-margin-b">
-        <div for="captcha" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <div for="captcha" class="col-xl-2 control-label">
             <?=$this->getTrans('captcha') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="form-control" id="captcha" name="captcha">
                 <option <?=($this->get('captcha') == 0 || !$this->get('captcha') ? 'selected="selected"' : '') ?> value="0"><?=$this->getTrans('default') ?></option>
                 <option <?=($this->get('captcha') == 2 ? 'selected="selected"' : '') ?> value="2"><?=$this->getTrans('grecaptcha') ?> V2</option>
@@ -167,17 +167,17 @@
             </select>
         </div>
     </div>
-    <div id="captcha_apikey_info" class="form-group">
-        <div class="col-lg-6 alert alert-info">
+    <div id="captcha_apikey_info" class="row mb-3">
+        <div class="col-xl-6 alert alert-info">
             <?=$this->getTrans('captcha_apikey_info', '<a href="https://www.google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>') ?>
         </div>
     </div>
     <div id="captcha_apikey" class="">
-        <div class="row form-group ilch-margin-b">
-            <label for="captcha_apikey" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="captcha_apikey" class="col-xl-2 control-label">
                     <?=$this->getTrans('captcha_apikey') ?>:
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <input class="form-control"
                        type="text"
                        id="captcha_apikey"
@@ -187,11 +187,11 @@
         </div>
     </div>
     <div id="captcha_seckey" class="">
-        <div class="row form-group ilch-margin-b">
-            <label for="captcha_seckey" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="captcha_seckey" class="col-xl-2 control-label">
                     <?=$this->getTrans('captcha_seckey') ?>:
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <input class="form-control"
                        type="text"
                        id="captcha_seckey"
@@ -200,11 +200,11 @@
             </div>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
-        <label for="hideCaptchaFor" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="hideCaptchaFor" class="col-xl-2 control-label">
             <?=$this->getTrans('hideCaptchaFor') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="hideCaptchaFor"
                     name="groups[]"
@@ -233,11 +233,11 @@
 
     <h1><?=$this->getTrans('htmlPurifier') ?></h1>
     <p><?=$this->getTrans('htmlPurifierDescription') ?></p>
-    <div id="htmlPurifier" class="row form-group ilch-margin-b">
-        <div class="col-lg-2 control-label">
+    <div id="htmlPurifier" class="row mb-3">
+        <div class="col-xl-2 control-label">
             <?=$this->getTrans('htmlPurifier') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="htmlPurifier-on" name="htmlPurifier" value="1" <?= ($this->get('htmlPurifier')) ? 'checked="checked"' : '' ?> />
                 <label for="htmlPurifier-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -249,11 +249,11 @@
     </div>
 
     <h1><?=$this->getTrans('backendFunctions') ?></h1>
-    <div id="hmenuFixed" class="row form-group ilch-margin-b">
-        <div class="col-lg-2 control-label">
+    <div id="hmenuFixed" class="row mb-3">
+        <div class="col-xl-2 control-label">
             <?=$this->getTrans('hmenuFixed') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="hmenuFixed-on" name="hmenuFixed" value="1" <?php if ($this->get('hmenuFixed') === 'hmenu-fixed') { echo 'checked="checked"'; } ?> />
                 <label for="hmenuFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>

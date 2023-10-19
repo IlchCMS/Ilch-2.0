@@ -21,7 +21,7 @@ $userMapper = $this->get('userMapper');
             }
         ?>
             <li class="list-group-item">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a> - 
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a> -
                 <?php if ($article->getAuthorId() != ''): ?>
                     <?php $user = $userMapper->getUserById($article->getAuthorId()); ?>
                     <?php if ($user != ''): ?>
@@ -39,11 +39,11 @@ $userMapper = $this->get('userMapper');
                     $countOfVotes = count($votes) - 1;
                     ?>
                     <?php if ($this->getUser() && in_array($this->getUser()->getId(), $votes) == false) : ?>
-                        <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'index']) ?>" title="<?=$this->getTrans('iLike') ?>">
+                        <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'index']) ?>" title="<?=$this->getTrans('iLike') ?>">
                             <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
                         </a>
                     <?php else: ?>
-                        <button class="btn btn-sm btn-default btn-success">
+                        <button class="btn btn-sm btn-outline-secondary btn-success">
                             <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
                         </button>
                     <?php endif; ?>

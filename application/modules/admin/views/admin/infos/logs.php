@@ -5,7 +5,7 @@ $userCache = [];
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('logs') ?></h1>
 <p>
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         <i class="fa-solid fa-filter"></i> <?=$this->getTrans('filter') ?>
     </a>
 </p>
@@ -13,11 +13,11 @@ $userCache = [];
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="panel-body">
-            <div class="form-group">
-                <label for="startDate" class="col-lg-2 control-label">
+            <div class="row mb-3">
+                <label for="startDate" class="col-xl-2 control-label">
                     <?=$this->getTrans('startDate') ?>:
                 </label>
-                <div class="col-lg-4 input-group ilch-date date form_datetime">
+                <div class="col-xl-4 input-group ilch-date date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="startDate"
@@ -29,11 +29,11 @@ $userCache = [];
                     </span>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="endDate" class="col-lg-2 control-label">
+            <div class="row mb-3">
+                <label for="endDate" class="col-xl-2 control-label">
                     <?=$this->getTrans('endDate') ?>:
                 </label>
-                <div class="col-lg-4 input-group ilch-date date form_datetime">
+                <div class="col-xl-4 input-group ilch-date date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="endDate"

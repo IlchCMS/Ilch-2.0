@@ -15,7 +15,7 @@ $cats = $this->get('cats');
             }
             ?>
             <li class="list-group-item">
-                <span class="badge"><?=$count ?></span>
+                <span class="badge bg-secondary"><?=$count ?></span>
                 <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $cat->getId()]) ?>"><?=$this->escape($cat->getName()) ?></a>
             </li>
         <?php endforeach; ?>

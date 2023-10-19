@@ -21,7 +21,7 @@ if (empty($layoutsOnUpdateServer)) {
 <div class="row">
 <?php foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer): ?>
     <div id="layouts" class="col-xl-3 col-md-6">
-        <div class="card panel-ilch ilch-margin-b">
+        <div class="card panel-ilch mb-3">
             <div class="card-heading">
                 <div class="clearfix">
                     <div class="pull-left">
@@ -63,7 +63,7 @@ if (empty($layoutsOnUpdateServer)) {
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServer->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServer->key], 'newVersion' => $layoutOnUpdateServer->version, 'from' => 'search']) ?>">
                                     <?=$this->getTokenField() ?>
                                     <button type="submit"
-                                            class="btn btn-default"
+                                            class="btn btn-outline-secondary"
                                             title="<?=$this->getTrans('layoutUpdate') ?>">
                                         <i class="fa-solid fa-arrows-rotate"></i>
                                     </button>
@@ -78,7 +78,7 @@ if (empty($layoutsOnUpdateServer)) {
                             <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $layoutOnUpdateServer->key, 'version' => $layoutOnUpdateServer->version]) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
-                                        class="btn btn-default"
+                                        class="btn btn-outline-secondary"
                                         title="<?=$this->getTrans('layoutDownload') ?>">
                                     <i class="fa-solid fa-download"></i>
                                 </button>
@@ -87,7 +87,7 @@ if (empty($layoutsOnUpdateServer)) {
                     </div>
                     <div class="pull-right">
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
-                            <span class="btn btn-default">
+                            <span class="btn btn-outline-secondary">
                                 <i class="fa-solid fa-info text-info"></i>
                             </span>
                         </a>

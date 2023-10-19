@@ -17,13 +17,13 @@ foreach ($layouts as $layout): ?>
     <?php if ($layout->id == $this->getRequest()->getParam('id')): ?>
         <div id="layout" class="tab-content">
             <?php if (!empty($layout->thumbs)): ?>
-                <div id="layout-search-carousel" class="carousel slide" data-ride="carousel">
+                <div id="layout-search-carousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner" role="listbox">
                         <?php $itemI = 0; ?>
                         <?php foreach ($layout->thumbs as $thumb): ?>
-                            <div class="item <?=$itemI == 0 ? 'active' : '' ?>">
-                                <img src="<?=$this->get('updateserver').'layouts/images/'.$thumb->img ?>" alt="<?=$this->escape($layout->name) ?>">
-                                <div class="carousel-caption">
+                            <div class="carousel-item text-center <?=$itemI == 0 ? 'active' : '' ?>">
+                                <img class="d-block" src="<?=$this->get('updateserver').'layouts/images/'.$thumb->img ?>" alt="<?=$this->escape($layout->name) ?>">
+                                <div class="carousel-caption d-none d-md-block">
                                     <?php if ($thumb->desc != ''): ?>
                                         <?=$this->escape($thumb->desc) ?>
                                     <?php else: ?>

@@ -7,11 +7,11 @@ $entrie = $this->get('box');
 
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxTitle') ? 'has-error' : '' ?>">
-        <label for="boxTitle" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('boxTitle') ? 'has-error' : '' ?>">
+        <label for="boxTitle" class="col-xl-2 control-label">
             <?=$this->getTrans('boxTitle') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="boxTitle"
@@ -19,11 +19,11 @@ $entrie = $this->get('box');
                    value="<?=$this->escape($this->originalInput('boxTitle', ($entrie->getId()?$entrie->getTitle():''))) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('boxContent') ? 'has-error' : '' ?>">
-        <label for="boxContent" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('boxContent') ? 'has-error' : '' ?>">
+        <label for="boxContent" class="col-xl-2 control-label">
             <?=$this->getTrans('boxContent') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <textarea class="form-control ckeditor"
                       id="boxContent"
                       name="boxContent"
@@ -31,11 +31,11 @@ $entrie = $this->get('box');
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale')): ?>
-        <div class="row form-group ilch-margin-b">
-            <label for="boxLanguage" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="boxLanguage" class="col-xl-2 control-label">
                 <?=$this->getTrans('boxLanguage') ?>:
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <select class="form-control" id="boxLanguage" name="boxLanguage">
                     <?php foreach ($this->get('languages') as $key => $value): ?>
                         <?php if ($key == $this->get('contentLanguage')): ?>
