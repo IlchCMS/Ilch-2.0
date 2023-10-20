@@ -12,10 +12,10 @@ $errors = $this->get('errors');
         </div>
         <div class="card-body">
             <div class="row mb-3 d-none">
-                <label class="col-lg-2 control-label">
+                <label class="col-xl-2 control-label">
                     <?=$this->getTrans('bot') ?>*
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="text"
                            class="form-control"
                            name="bot"
@@ -23,10 +23,10 @@ $errors = $this->get('errors');
                 </div>
             </div>
             <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-                <label for="name" class="control-label col-lg-2">
+                <label for="name" class="control-label col-xl-2">
                     <?=$this->getTrans('name') ?>:
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="text"
                            class="form-control"
                            id="name"
@@ -36,10 +36,10 @@ $errors = $this->get('errors');
                 </div>
             </div>
             <div class="row mb-3 <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
-                <label for="password" class="control-label col-lg-2">
+                <label for="password" class="control-label col-xl-2">
                     <?=$this->getTrans('password') ?>:
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="password"
                            class="form-control"
                            id="password"
@@ -49,10 +49,10 @@ $errors = $this->get('errors');
                 </div>
             </div>
             <div class="row mb-3 <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
-                <label for="password2" class="control-label col-lg-2">
+                <label for="password2" class="control-label col-xl-2">
                     <?=$this->getTrans('password2') ?>:
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="password"
                            class="form-control"
                            id="password2"
@@ -62,10 +62,10 @@ $errors = $this->get('errors');
                 </div>
             </div>
             <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-                <label for="email" class="control-label col-lg-2">
+                <label for="email" class="control-label col-xl-2">
                     <?=$this->getTrans('emailAdress') ?>:
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="text"
                            class="form-control"
                            id="email"

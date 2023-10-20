@@ -1,7 +1,7 @@
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
-    <div class="col-lg-12 profile">
+    <div class="col-xl-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
@@ -9,10 +9,10 @@
             <form class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('locale') ? 'has-error' : '' ?>">
-                    <div class="col-lg-3 control-label">
+                    <div class="col-xl-3 control-label">
                         <?=$this->getTrans('locale') ?>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-xl-2">
                         <select class="form-control" id="locale" name="locale">
                             <?php foreach ($this->get('languages') as $key => $value): ?>
                                 <?php $selected = ''; ?>
@@ -26,10 +26,10 @@
                     </div>
                 </div>
                 <div class="row mb-3 <?=$this->validation()->hasError('optMail') ? 'has-error' : '' ?>">
-                    <div class="col-lg-3 control-label">
+                    <div class="col-xl-3 control-label">
                         <?=$this->getTrans('optMail') ?>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-xl-4">
                         <div class="flipswitch">
                             <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="optMail" value="1" <?php if ($this->getUser()->getOptMail() == '1') {
     echo 'checked="checked"';
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-lg-offset-3 col-lg-12">
+                    <div class="offset-xl-3 col-xl-12">
                         <input type="submit"
                                class="btn btn-outline-secondary"
                                name="saveEntry"

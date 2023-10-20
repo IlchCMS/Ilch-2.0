@@ -42,7 +42,7 @@
     <div id="gallery">
         <?php foreach ($this->get('image') as $image): ?>
             <?php $commentsCount = $commentMapper->getCountComments('user/gallery/showimage/user/'.$this->getRequest()->getParam('user').'/id/'.$image->getId()); ?>
-            <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
+            <div class="col-xs-6 col-lg-4 col-xl-3 col-md-4">
                 <div class="card panel-default">
                     <div class="card-image img-thumbnail">
                         <a href="<?=$this->getUrl(['action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'id' => $image->getId()]) ?>">

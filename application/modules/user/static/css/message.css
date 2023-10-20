@@ -389,9 +389,9 @@
     width: 100%;
     margin-bottom: 0;
 }
-.chat .chat-wrapper .compose-box .col-xs-12,
-.chat .chat-wrapper .col-lg-4,
-.chat .chat-wrapper .col-lg-8 {
+.chat .chat-wrapper .compose-box .col-12,
+.chat .chat-wrapper .col-xl-4,
+.chat .chat-wrapper .col-xl-8 {
     padding: 0;
 }
 @media (max-width: 768px) {

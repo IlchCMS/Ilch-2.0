@@ -2,10 +2,10 @@
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
-        <label class="col-lg-2 control-label">
+        <label class="col-xl-2 control-label">
             <?=$this->getTrans('profileNewPassword') ?>*
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <input type="password"
                    class="form-control"
                    id="password"
@@ -17,10 +17,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
-        <label class="col-lg-2 control-label">
+        <label class="col-xl-2 control-label">
             <?=$this->getTrans('profileNewPasswordRetype') ?>*
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <input type="password"
                    class="form-control"
                    name="password2"
@@ -29,8 +29,8 @@
                    required />
         </div>
     </div>
-    <div class="row mb-3">    
-        <div class="col-lg-offset-2 col-lg-8">
+    <div class="row mb-3">
+        <div class="offset-xl-2 col-xl-8">
             <?=$this->getSaveBar('profileSubmit', 'NewPassword') ?>
         </div>
     </div>

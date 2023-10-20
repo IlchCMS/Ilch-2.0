@@ -14,7 +14,7 @@ if (!empty($profil->getBirthday())) {
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <div class="row">
-    <div class="col-lg-12 profile">
+    <div class="col-xl-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
@@ -22,10 +22,10 @@ if (!empty($profil->getBirthday())) {
             <form class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-                    <label class="col-lg-2 control-label">
+                    <label class="col-xl-2 control-label">
                         <?=$this->getTrans('profileEmail') ?>*
                     </label>
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
                         <input type="text"
                                class="form-control"
                                name="email"
@@ -35,10 +35,10 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-lg-2 control-label">
+                    <label class="col-xl-2 control-label">
                         <?=$this->getTrans('profileFirstName') ?>
                     </label>
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
                         <input type="text"
                                class="form-control"
                                name="first-name"
@@ -47,10 +47,10 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-lg-2 control-label">
+                    <label class="col-xl-2 control-label">
                         <?=$this->getTrans('profileLastName') ?>
                     </label>
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
                         <input type="text"
                                class="form-control"
                                name="last-name"
@@ -59,10 +59,10 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-lg-2 control-label">
+                    <label class="col-xl-2 control-label">
                         <?=$this->getTrans('profileGender') ?>
                     </label>
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
                         <select class="form-control" id="gender" name="gender">
                             <option value="0" <?=(($this->originalInput('gender') != '' && $this->originalInput('gender') == 0) || $profil->getGender() == 0) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderUnknown') ?></option>
                             <option value="1" <?=(($this->originalInput('gender') != '' && $this->originalInput('gender') == 1) || $profil->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderMale') ?></option>
@@ -72,10 +72,10 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-lg-2 control-label">
+                    <label class="col-xl-2 control-label">
                         <?=$this->getTrans('profileCity') ?>
                     </label>
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
                        <input type="text"
                               class="form-control"
                               name="city"
@@ -84,10 +84,10 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-lg-2 control-label">
+                    <label class="col-xl-2 control-label">
                         <?=$this->getTrans('profileBirthday') ?>
                     </label>
-                    <div class="col-lg-8 input-group ilch-date date form_datetime">
+                    <div class="col-xl-8 input-group ilch-date date form_datetime">
                         <input type="text"
                                class="form-control"
                                name="birthday"
@@ -123,10 +123,10 @@ if (!empty($profil->getBirthday())) {
                             }
                         } ?>
                         <div class="row mb-3">
-                            <label class="col-lg-2 control-label">
+                            <label class="col-xl-2 control-label">
                                 <?=$this->escape($profileFieldName) ?>
                             </label>
-                            <div class="col-lg-8">
+                            <div class="col-xl-8">
                             <!-- radio -->
                             <?php if ($profileField->getType() == 3) :
                                 $options = json_decode($profileField->getOptions(), true);
@@ -135,7 +135,7 @@ if (!empty($profil->getBirthday())) {
                                         <input type="radio" name="<?=$index ?>" id="<?=$optValue ?>" value="<?=$optValue ?>" class="form-check-input" <?=($optValue == $value) ? 'checked' : '' ?>/>
                                         <label class="form-check-label" for="<?=$optValue ?>"><?=$this->escape($optValue) ?></label>
                                         <?php if ($profileField->getShow() == 0) : ?>
-                                            <span class="input-group-addon check" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                            <span class="input-group-text check" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
                                                 <span class="fa-solid fa-eye-slash"></span>
                                             </span>
                                         <?php endif; ?>
@@ -149,7 +149,7 @@ if (!empty($profil->getBirthday())) {
                                         <input type="checkbox" name="<?=$index ?>[<?=$optKey ?>]" id="<?=$optValue ?>" value="<?=$optValue ?>" class="form-check-input" <?=in_array($optValue, $value) ? 'checked' : '' ?>/>
                                         <label class="form-check-label" for="<?=$optValue ?>"><?=$this->escape($optValue) ?></label>
                                         <?php if ($profileField->getShow() == 0) : ?>
-                                            <span class="input-group-addon check" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                            <span class="input-group-text check" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
                                                 <span class="fa-solid fa-eye-slash"></span>
                                             </span>
                                         <?php endif; ?>
@@ -165,7 +165,7 @@ if (!empty($profil->getBirthday())) {
                                         <?php endforeach; ?>
                                     </select>
                                 <?php if ($profileField->getShow() == 0) : ?>
-                                    <span class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                    <span class="input-group-text" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
                                         <span class="fa-solid fa-eye-slash"></span>
                                     </span>
                                 <?php endif; ?>
@@ -179,7 +179,7 @@ if (!empty($profil->getBirthday())) {
                                            placeholder="<?=$value ?>"
                                            value="<?=$value ?>">
                                 <?php if ($profileField->getShow() == 0) : ?>
-                                    <span class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                    <span class="input-group-text" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
                                         <span class="fa-solid fa-eye-slash"></span>
                                     </span>
                                 </div>
@@ -206,7 +206,7 @@ if (!empty($profil->getBirthday())) {
                     <?php endif;
                 endforeach; ?>
                 <div class="row mb-3">
-                    <div class="col-lg-offset-2 col-lg-8">
+                    <div class="offset-xl-2 col-xl-8">
                         <input type="submit"
                                class="btn btn-outline-secondary"
                                name="saveEntry"

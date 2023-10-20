@@ -34,7 +34,7 @@
         $errors = $this->get('errors');
         ?>
         <div class="row mb-3">
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
                     <input type="text"
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
                     <input type="password"
@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <button type="submit" class="btn btn-outline-secondary" name="login">
                     <?=$this->getTrans('login') ?>
                 </button>

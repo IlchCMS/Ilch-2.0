@@ -6,8 +6,8 @@
       id="groupAccessForm">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <label for="groupId" class="control-label col-sm-2"><?=$this->getTrans('group') ?></label>
-        <div class="col-sm-10">
+        <label for="groupId" class="control-label col-md-2"><?=$this->getTrans('group') ?></label>
+        <div class="col-md-10">
             <select class="form-control" id="groupId" name="groupId">
                 <option value="0"
                         <?=(empty((int)$this->get('activeGroupId'))) ? 'selected="selected"' : '' ?>>
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="accessId" class="control-label col-sm-2">
+        <label for="accessId" class="control-label col-md-2">
         <?php
         $accessTypes = $this->get('accessTypes');
         foreach ($accessTypes as $accessType => $typeData) {
@@ -35,7 +35,7 @@
         }
         $activeaccess = '';
         ?></label>
-        <div class="col-sm-10">
+        <div class="col-md-10">
             <select class="form-control" id="accessId" name="accessId">
                 <option value="0"
                         <?=(empty((int)$this->get('activeaccessId'))) ? 'selected="selected"' : '' ?>>
@@ -96,9 +96,9 @@
                 <table class="table table-hover table-striped">
                     <colgroup>
                         <col>
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
                     </colgroup>
                     <thead>
                         <tr>
@@ -180,9 +180,9 @@
                 <table class="table table-hover table-striped">
                     <colgroup>
                         <col>
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
                     </colgroup>
                     <thead>
                         <tr>

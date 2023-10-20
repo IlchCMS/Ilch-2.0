@@ -56,7 +56,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
-    <div class="col-lg-12 profile">
+    <div class="col-xl-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
@@ -65,7 +65,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                 <form class="form-horizontal" id="galleryForm" method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="row">
-                        <div class="col-lg-5">
+                        <div class="col-xl-5">
                             <ol id="sortable" class="sortable">
                                 <?php
                                 if (!empty($galleryItems)) {
@@ -76,13 +76,13 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 ?>
                             </ol>
                         </div>
-                        <div class="col-lg-7 changeBox">
+                        <div class="col-xl-7 changeBox">
                             <input type="hidden" id="id" value="" />
                             <div class="row mb-3">
-                                <label for="title" class="col-lg-4 control-label">
+                                <label for="title" class="col-xl-4 control-label">
                                     <?=$this->getTrans('title') ?>:
                                 </label>
-                                <div class="col-lg-8">
+                                <div class="col-xl-8">
                                     <input type="text"
                                            class="form-control"
                                            id="title"
@@ -90,10 +90,10 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="desc" class="col-lg-4 control-label">
+                                <label for="desc" class="col-xl-4 control-label">
                                     <?=$this->getTrans('description') ?>:
                                 </label>
-                                <div class="col-lg-8">
+                                <div class="col-xl-8">
                                     <textarea class="form-control"
                                               id="desc"
                                               name="desc"
@@ -101,10 +101,10 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="type" class="col-lg-4 control-label">
+                                <label for="type" class="col-xl-4 control-label">
                                     <?=$this->getTrans('type') ?>:
                                 </label>
-                                <div class="col-lg-8">
+                                <div class="col-xl-8">
                                     <select class="form-control" id="type">
                                         <option value="0"><?=$this->getTrans('cat') ?></option>
                                         <option value="1"><?=$this->getTrans('gallery') ?></option>
@@ -112,12 +112,12 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 </div>
                             </div>
                             <div class="dyn"></div>
-                            <div class="col-lg-offset-4 actions">
+                            <div class="offset-xl-4 actions">
                                 <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
                             </div>
                         </div>
                         <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-                        <div class="col-lg-5">
+                        <div class="col-xl-5">
                             <?=$this->getSaveBar('saveButton', 'Gallery') ?>
                         </div>
                     </div>
@@ -190,7 +190,7 @@ $(document).ready (
             }
 
             menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 control-label">Kategorie:</label>\n\
-                        <div class="col-lg-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+                        <div class="col-xl-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');

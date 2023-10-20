@@ -46,10 +46,10 @@ $iconArray = [
 
     <!-- select profilefield -->
     <div class="row mb-3">
-        <label for="profileFieldType" class="col-lg-2 control-label">
+        <label for="profileFieldType" class="col-xl-2 control-label">
             <?=$this->getTrans('profileFieldType') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <select class="form-control" id="profileFieldType" name="profileField[type]">
                     <?php foreach ($type as $key => $value): ?>
@@ -73,7 +73,7 @@ $iconArray = [
         <label for="profileFieldDescription" class="col-lg-2 control-label">
             <?=$this->getTrans('profileFieldDescription') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <textarea class="form-control typedesc" id="profileFieldDescription" rows="2" readonly><?=($profileField->getType()!==null) ? $this->getTrans('profileFieldTypeDesc'.$profileField->getType()) : $this->getTrans('profileFieldTypeDesc0') ?></textarea>
         </div>
     </div>
@@ -85,10 +85,10 @@ $iconArray = [
             $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'];
         }
         ?>
-        <label for="profileFieldIcon" class="col-lg-2 control-label">
+        <label for="profileFieldIcon" class="col-xl-2 control-label">
             <?=$this->getTrans('profileFieldIcon') ?>:
         </label>
-        <div class="col-lg-4 input-group ilch-date">
+        <div class="col-xl-4 input-group ilch-date">
             <span class="input-group-text">
                 <span id="chosensymbol" class="<?=$icon ?>"></span>
             </span>
@@ -106,10 +106,10 @@ $iconArray = [
 
     <!-- db key -->
     <div class="row mb-3">
-        <label for="profileFieldKey" class="col-lg-2 control-label">
+        <label for="profileFieldKey" class="col-xl-2 control-label">
             <?=$this->getTrans('profileFieldKey') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control required"
@@ -125,10 +125,10 @@ $iconArray = [
 
     <!-- icon addition -->
     <div class="row mb-3 <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldAddition">
-        <label for="profileFieldLinkAddition" class="col-lg-2 control-label">
+        <label for="profileFieldLinkAddition" class="col-xl-2 control-label">
             <?=$this->getTrans('profileFieldLinkAddition') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="profileFieldLinkAddition"
@@ -147,7 +147,7 @@ $iconArray = [
             <label for="profileFieldName<?=$i ?>" class="col-lg-2 control-label">
                 <?=$this->getTrans('profileFieldName') ?>
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <div class="input-group">
                     <select class="form-control input-group-addon" name="profileFieldTrans<?=$i ?>[locale]" id="profileFieldName<?=$i ?>" onchange="isDuplicate()">
                         <option selected="selected" disabled><?=$this->getTrans('pleaseSelect') ?></option>
@@ -175,10 +175,10 @@ $iconArray = [
         <?php endforeach; ?>
         <div id="addTranslations"></div>
         <div class="row mb-3">
-            <label for="profileFieldTranslation" class="col-lg-2 control-label">
+            <label for="profileFieldTranslation" class="col-xl-2 control-label">
                 <?=$this->getTrans('addProfileFieldTranslation') ?>
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <button type="button" class="btn btn-outline-secondary" onclick="addTranslations()">+</button>
             </div>
         </div>
@@ -193,7 +193,7 @@ $iconArray = [
                 <label for="profileFieldOptions" class="col-lg-2 control-label">
                     <?=$this->getTrans('profileFieldOptions')  ?>
                 </label>
-                <div class="col-lg-4">
+                <div class="col-xl-4">
                     <?php foreach ($options as $key => $value): ?>
                         <div class="mb-3 input-group">
                             <input type="text" name="profileFieldOptions[<?=$key ?>]" class="form-control required" value="<?=$this->escape($value) ?>" />
@@ -215,7 +215,7 @@ $iconArray = [
             <label for="profileFieldOptions" class="col-lg-2 control-label">
                 <?=$this->getTrans('profileFieldOptions') ?>
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <div class="mb-3 input-group">
                     <input type="text" name="profileFieldOptions[]" id="profileFieldOptions" class="form-control">
                     <span class="input-group-btn">
@@ -236,15 +236,15 @@ $iconArray = [
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="symbolDialogTitle"><?=$this->getTrans('chooseIcon') ?></h5>
-                <button type="button" class="btn" id="noIcon" data-dismiss="modal"><?=$this->getTrans('noIcon') ?></button>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn" id="noIcon" data-bs-dismiss="modal"><?=$this->getTrans('noIcon') ?></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal"><?=$this->getTrans('close') ?></button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><?=$this->getTrans('close') ?></button>
             </div>
         </div>
     </div>

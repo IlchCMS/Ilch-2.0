@@ -16,10 +16,10 @@ if ($group->getId()) {
            name="group[id]"
            value="<?=$group->getId() ?>" />
     <div class="row mb-3">
-        <label for="groupName" class="col-lg-3 control-label">
+        <label for="groupName" class="col-xl-3 control-label">
             <?=$this->getTrans('groupName') ?>
         </label>
-        <div class="col-lg-9">
+        <div class="col-xl-9">
             <input type="text"
                    class="form-control required"
                    id="groupName"
@@ -30,8 +30,8 @@ if ($group->getId()) {
     </div>
     <div class="row mb-3">
         <table class="table table-borderless">
-            <colgroup><col class="col-lg-6">
-                <col class="col-lg-6">
+            <colgroup><col class="col-xl-6">
+                <col class="col-xl-6">
                 <col>
             </colgroup>
             <thead>

@@ -27,7 +27,7 @@
             <div class="container-fluid">
                 <?php foreach ($this->get('medias') as $media): ?>
                     <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
-                        <div id="<?=$media->getId() ?>" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
+                        <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                             <img class="image img-thumbnail img-responsive"
                                  data-url="<?=$media->getUrl() ?>"
                                  <?php if (file_exists($media->getUrlThumb())): ?>

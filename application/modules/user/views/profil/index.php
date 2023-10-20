@@ -26,7 +26,7 @@ foreach ($profil->getGroups() as $group) {
 <div class="profil">
     <div class="profil-header">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-xl-3">
                 <img class="img-thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
                 <?php if ($profil->getId() != $this->getUser()->getId()) : ?>
                 <div style="margin-top: 5px">
@@ -38,7 +38,7 @@ foreach ($profil->getGroups() as $group) {
                 </div>
                 <?php endif; ?>
             </div>
-            <div class="col-lg-5 col-xs-12">
+            <div class="col-xl-5 col-12">
                 <h3><?=$this->escape($profil->getName()) ?></h3>
                 <div class="detail">
                     <i class="fa-solid fa-right-to-bracket" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
@@ -48,7 +48,7 @@ foreach ($profil->getGroups() as $group) {
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="col-lg-4 hidden-xs concatLinks-lg">
+            <div class="col-xl-4 d-none d-sm-block concatLinks-lg">
                 <?php if ($this->getUser() && $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
                     <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId()]) ?>" class="fa-solid fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
                 <?php endif; ?>
@@ -85,26 +85,26 @@ foreach ($profil->getGroups() as $group) {
     <div class="profil-content">
         <h1><?=$this->getTrans('profileDetails') ?></h1>
         <div class="row">
-            <div class="col-lg-3 detail bold">
+            <div class="col-xl-3 detail bold">
                 <?=$this->getTrans('profileFirstName') ?>
             </div>
-            <div class="col-lg-9 detail">
+            <div class="col-xl-9 detail">
                 <?=$this->escape($profil->getFirstName()) ?>
             </div>
         </div>
          <div class="row">
-            <div class="col-lg-3 detail bold">
+            <div class="col-xl-3 detail bold">
                 <?=$this->getTrans('profileLastName') ?>
             </div>
-            <div class="col-lg-9 detail">
+            <div class="col-xl-9 detail">
                 <?=$this->escape($profil->getLastName()) ?>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 detail bold">
+            <div class="col-xl-3 detail bold">
                 <?=$this->getTrans('profileGender') ?>
             </div>
-            <div class="col-lg-9 detail">
+            <div class="col-xl-9 detail">
                 <?php if ($profil->getGender() == 1) {
                     echo $this->getTrans('profileGenderMale');
                 } elseif ($profil->getGender() == 2) {
@@ -117,18 +117,18 @@ foreach ($profil->getGroups() as $group) {
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 detail bold">
+            <div class="col-xl-3 detail bold">
                 <?=$this->getTrans('profileCity') ?>
             </div>
-            <div class="col-lg-9 detail">
+            <div class="col-xl-9 detail">
                 <?=$this->escape($profil->getCity()) ?>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 detail bold">
+            <div class="col-xl-3 detail bold">
                 <?=$this->getTrans('profileBirthday') ?>
             </div>
-            <div class="col-lg-9 detail">
+            <div class="col-xl-9 detail">
                 <?php if ($profil->getBirthday() != '') {
                     echo $birthday->format('d-m-Y', true).' ('.floor(($date->format('Ymd') - str_replace("-", "", $this->escape($profil->getBirthday()))) / 10000).')';
                 } ?>
@@ -165,10 +165,10 @@ foreach ($profil->getGroups() as $group) {
                 <h1><?=$this->escape($profileFieldName) ?></h1>
             <?php elseif ($profileField->getType() != 1 && !empty($value)) : ?>
                 <div class="row">
-                    <div class="col-lg-3 detail bold">
+                    <div class="col-xl-3 detail bold">
                         <?=$this->escape($profileFieldName) ?>
                     </div>
-                    <div class="col-lg-9 detail">
+                    <div class="col-xl-9 detail">
                         <?=$this->escape($value) ?>
                     </div>
                 </div>
@@ -180,7 +180,7 @@ foreach ($profil->getGroups() as $group) {
             <br />
             <h1><?=$this->getTrans('profileSignature') ?></h1>
             <div class="row">
-                <div class="col-lg-9 detail">
+                <div class="col-xl-9 detail">
                     <?=$this->alwaysPurify($profil->getSignature()) ?>
                 </div>
             </div>
@@ -189,10 +189,10 @@ foreach ($profil->getGroups() as $group) {
         <br />
         <h1><?=$this->getTrans('others') ?></h1>
         <div class="row">
-            <div class="col-lg-3 detail bold">
+            <div class="col-xl-3 detail bold">
                 <?=$this->getTrans('groups') ?>
             </div>
-            <div class="col-lg-9 detail">
+            <div class="col-xl-9 detail">
                 <?=$this->escape($groups) ?>
             </div>
         </div>
