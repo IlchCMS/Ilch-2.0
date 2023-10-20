@@ -106,24 +106,24 @@ foreach ($modules as $module): ?>
             <br />
 
             <div class="tab-pane active" id="info">
-                <div class="col-xs-12 col-lg-6">
+                <div class="col-sm-12 col-xl-6">
                     <div class="row">
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('name') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$this->escape($module->name) ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('version') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$module->version ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('author') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-xs-6">
                             <?php if ($module->link != ''): ?>
                                 <a href="<?=$module->link ?>" alt="<?=$this->escape($module->author) ?>" title="<?=$this->escape($module->author) ?>" target="_blank" rel="noopener">
                                     <i><?=$this->escape($module->author) ?></i>
@@ -132,22 +132,22 @@ foreach ($modules as $module): ?>
                                 <i><?=$this->escape($module->author) ?></i>
                             <?php endif; ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('hits') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$module->hits ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('downloads') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$module->downs ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('rating') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <span title="<?=$module->rating ?> <?php if ($module->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
                                 <input type="number"
                                        class="rating"
@@ -161,49 +161,49 @@ foreach ($modules as $module): ?>
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-sm-12">
                             <b><?=$this->getTrans('requirements') ?>:</b>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('ilchCoreVersion') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$ilchCore ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('phpVersion') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$phpVersion ?>
                         </div>
                         <?php if (!empty($module->phpExtensions)): ?>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-md-3 col-sm-6">
                                 <b><?=$this->getTrans('phpExtensions') ?>:</b>
                             </div>
-                            <div class="col-sm-9 col-xs-6">
+                            <div class="col-md-9 col-sm-6">
                                 <?=$phpExtension ?>
                             </div>
                         <?php endif; ?>
                         <?php if (!empty($module->depends)): ?>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-md-3 col-sm-6">
                                 <b><?=$this->getTrans('dependencies') ?>:</b>
                             </div>
-                            <div class="col-sm-9 col-xs-6">
+                            <div class="col-md-9 col-sm-6">
                                 <?=$dependency ?>
                             </div>
                         <?php endif; ?>
                     </div>
                     <br />
-                    <div class="col-xs-12">
+                    <div class="col-sm-12">
                         <b><?=$this->getTrans('desc') ?>:</b>
                     </div>
-                    <div class="col-xs-12">
+                    <div class="col-sm-12">
                         <?=$this->escape($module->desc) ?>
                     </div>
                 </div>
             </div>
             <div class="tab-pane" id="changelog">
-                <div class="col-xs-12">
+                <div class="col-sm-12">
                     <?php if (!empty($module->changelog)) {
                         echo $module->changelog;
                     } else {
@@ -215,29 +215,29 @@ foreach ($modules as $module): ?>
 
         <div class="content_savebox">
             <?php if (!empty($module->phpextensions) && in_array(false, $extensionCheck)): ?>
-                <button class="btn btn-default disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
+                <button class="btn btn-outline-secondary disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
                     <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (!version_compare(PHP_VERSION, $module->phpVersion, '>=')): ?>
-                <button class="btn btn-default disabled" title="<?=$this->getTrans('phpVersionError') ?>">
+                <button class="btn btn-outline-secondary disabled" title="<?=$this->getTrans('phpVersionError') ?>">
                     <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (!version_compare($coreVersion, $module->ilchCore, '>=')): ?>
-                <button class="btn btn-default disabled" title="<?=$this->getTrans('ilchCoreError') ?>">
+                <button class="btn btn-outline-secondary disabled" title="<?=$this->getTrans('ilchCoreError') ?>">
                     <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (!empty($dependencyCheck)): ?>
-                <button class="btn btn-default disabled" title="<?=$this->getTrans('dependencyError') ?>">
+                <button class="btn btn-outline-secondary disabled" title="<?=$this->getTrans('dependencyError') ?>">
                     <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (in_array($module->key, $this->get('modules'))): ?>
-                <button class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
+                <button class="btn btn-outline-secondary disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                     <i class="fa-solid fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
                 <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'search', 'key' => $module->key]) ?>">
                     <?=$this->getTokenField() ?>
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit" class="btn btn-outline-secondary">
                         <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>

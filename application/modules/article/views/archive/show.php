@@ -68,11 +68,11 @@ if ($this->get('date')) {
                 $countOfVotes = count($votes) - 1;
                 ?>
                 <?php if ($this->getUser() && in_array($this->getUser()->getId(), $votes) == false) : ?>
-                    <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]) ?>" title="<?=$this->getTrans('iLike') ?>">
+                    <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]) ?>" title="<?=$this->getTrans('iLike') ?>">
                         <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
                     </a>
                 <?php else: ?>
-                    <button class="btn btn-sm btn-default btn-success">
+                    <button class="btn btn-sm btn-outline-secondary btn-success">
                         <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
                     </button>
                 <?php endif; ?>

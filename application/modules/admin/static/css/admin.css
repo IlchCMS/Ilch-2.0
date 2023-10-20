@@ -1343,13 +1343,13 @@ table tbody i.fa.fa-sort {
 #layout #layout-search-carousel {
     margin: -10px -15px 15px -15px;
 }
-#module #module-search-carousel .carousel-inner .item img,
-#layout #layout-search-carousel .carousel-inner .item img {
+#module #module-search-carousel .carousel-inner .carousel-item img,
+#layout #layout-search-carousel .carousel-inner .carousel-item img {
     max-height: 320px;
     margin: auto;
 }
-#module #module-search-carousel .carousel-inner .item .carousel-caption,
-#layout #layout-search-carousel .carousel-inner .item .carousel-caption {
+#module #module-search-carousel .carousel-inner .carousel-item .carousel-caption,
+#layout #layout-search-carousel .carousel-inner .carousel-item .carousel-caption {
     position: absolute;
     right: 0;
     bottom: 0;

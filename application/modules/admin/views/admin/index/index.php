@@ -19,7 +19,7 @@ $version = $this->get('version');
 <?=$this->getTokenField() ?>
 <?php endif; ?>
 <div class="row">
-    <div class="col-lg-6 col-md-6">
+    <div class="col-xl-6 col-lg-6">
         <h1>
             <?=$this->getTrans('system') ?>
             <?php if ($this->get('foundNewVersions')): ?>
@@ -33,7 +33,7 @@ $version = $this->get('version');
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
                     <col />
                 </colgroup>
                 <thead>
@@ -73,7 +73,7 @@ $version = $this->get('version');
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <colgroup>
-                        <col class="col-lg-2">
+                        <col class="col-xl-2">
                         <col>
                     </colgroup>
                     <thead>
@@ -100,8 +100,8 @@ $version = $this->get('version');
                         <col class="icon_width">
                         <col class="icon_width">
                         <col class="icon_width">
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
                         <col>
                     </colgroup>
                     <thead>

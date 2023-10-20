@@ -118,7 +118,7 @@
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey(), 'from' => 'notinstalled']) ?>">
                                     <?=$this->getTokenField() ?>
                                     <button type="submit"
-                                            class="btn btn-default showOverlay"
+                                            class="btn btn-outline-secondary showOverlay"
                                             title="<?=$this->getTrans('installModule') ?>">
                                         <i class="fa-regular fa-floppy-disk"></i>
                                     </button>
@@ -126,19 +126,19 @@
                             <?php endif; ?>
                             <?php if ($moduleOnUpdateServer && $module->getKey() == $moduleOnUpdateServer->key): ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
-                                    <span class="btn btn-default">
+                                    <span class="btn btn-outline-secondary">
                                         <i class="fa-solid fa-info text-info"></i>
                                     </span>
                                 </a>
                             <?php else: ?>
-                                <span class="btn btn-default"
-                                      data-toggle="modal"
-                                      data-target="#infoModal<?=$module->getKey() ?>"
+                                <span class="btn btn-outline-secondary"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#infoModal<?=$module->getKey() ?>"
                                       title="<?=$this->getTrans('info') ?>">
                                     <i class="fa-solid fa-info text-info"></i>
                                 </span>
                             <?php endif; ?>
-                            <a href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('delete') ?>">
+                            <a href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('delete') ?>">
                                 <i class="fa-regular fa-trash-can text-warning"></i>
                             </a>
                         </td>

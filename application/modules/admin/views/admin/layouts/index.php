@@ -16,7 +16,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">'.$this->getTrans('lastUpdateOn').' '.$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true).'</span>' : $this->getTrans('lastUpdateOn').': '.$this->getTrans('lastUpdateUnknown') ?></p>
 <div class="row">
 <?php foreach ($this->get('layouts') as $layout): ?>
-    <div id="layouts" class="col-lg-3 col-sm-6">
+    <div id="layouts" class="col-xl-3 col-md-6">
         <div class="card panel-ilch">
             <div class="card-heading">
                 <div class="clearfix">
@@ -35,8 +35,8 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                 </div>
             </div>
             <div class="card-body">
-                <span data-toggle="modal"
-                      data-target="#infoModal<?=$layout->getKey() ?>"
+                <span data-bs-toggle="modal"
+                      data-bs-target="#infoModal<?=$layout->getKey() ?>"
                       title="<?=$this->getTrans('info') ?>">
                     <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" alt="<?=$this->escape($layout->getName()) ?>" title="<?=$this->escape($layout->getName()) ?>" />
                 </span>
@@ -72,7 +72,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServerFound->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServerFound->key], 'newVersion' => $layoutOnUpdateServerFound->version, 'from' => 'index']) ?>">
                                     <?=$this->getTokenField() ?>
                                     <button type="submit"
-                                            class="btn btn-default"
+                                            class="btn btn-outline-secondary"
                                             title="<?=$this->getTrans('layoutUpdate') ?>">
                                         <i class="fa-solid fa-arrows-rotate"></i>
                                     </button>
@@ -85,12 +85,12 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                                 </span>
                             <?php else: ?>
                                 <?php if ($ilchCoreTooOld) : ?>
-                                    <button class="btn btn-default unchecked disabled"
+                                    <button class="btn btn-outline-secondary unchecked disabled"
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
                                         <i class="fa"></i>
                                     </button>
                                 <?php elseif ($moduleNotInstalled) : ?>
-                                    <button class="btn btn-default unchecked disabled"
+                                    <button class="btn btn-outline-secondary unchecked disabled"
                                             title="<?=$this->getTrans('layoutModuleNotInstalled') ?>">
                                         <i class="fa"></i>
                                     </button>
@@ -103,12 +103,12 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                         <?php endif; ?>
 
                         <?php if ($ilchCoreTooOld) : ?>
-                            <button class="btn btn-default disabled"
+                            <button class="btn btn-outline-secondary disabled"
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
                                 <i class="fa-solid fa-gears"></i>
                             </button>
                         <?php elseif ($moduleNotInstalled) : ?>
-                            <button class="btn btn-default disabled"
+                            <button class="btn btn-outline-secondary disabled"
                                     title="<?=$this->getTrans('layoutModuleNotInstalled') ?>">
                                 <i class="fa-solid fa-gears"></i>
                             </button>
@@ -125,17 +125,17 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                         <?php endif; ?>
                     </div>
                     <div class="pull-right">
-                        <span class="btn btn-default"
-                              data-toggle="modal"
-                              data-target="#infoModal<?=$layout->getKey() ?>"
+                        <span class="btn btn-outline-secondary"
+                              data-bs-toggle="modal"
+                              data-bs-target="#infoModal<?=$layout->getKey() ?>"
                               title="<?=$this->getTrans('info') ?>">
                             <i class="fa-solid fa-info text-info"></i>
                         </span>
                         <?php if ($this->get('defaultLayout') !== $layout->getKey()): ?>
-                            <span class="btn btn-default deleteLayout"
+                            <span class="btn btn-outline-secondary deleteLayout"
                                   data-clickurl="<?=$this->getUrl(['action' => 'delete', 'key' => $layout->getKey()], null, true) ?>"
-                                  data-toggle="modal"
-                                  data-target="#deleteModal"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deleteModal"
                                   data-modaltext="<?=$this->escape($this->getTrans('askIfDeleteLayout', $layout->getKey())) ?>"
                                   title="<?=$this->getTrans('delete') ?>">
                                 <i class="fa-regular fa-trash-can text-danger"></i>

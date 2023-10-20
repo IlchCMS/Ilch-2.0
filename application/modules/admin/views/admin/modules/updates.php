@@ -93,7 +93,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                     if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))): ?>
                     <tr id="Module_<?=$module->getKey() ?>"></tr>
                     <?php continue; ?>
-                    <?php else: 
+                    <?php else:
                     $found = true;
                     ?>
                     <tr id="Module_<?=$module->getKey() ?>">
@@ -111,18 +111,18 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                                 <?php endif; ?>
                             </small>
                             <br /><br />
-                            <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('administrate') ?>">
+                            <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('administrate') ?>">
                                 <i class="fa-solid fa-pencil text-success"></i>
                             </a>
                             <?php if ($moduleOnUpdateServer && $module->getKey() === $moduleOnUpdateServer->key): ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
-                                    <span class="btn btn-default">
+                                    <span class="btn btn-outline-secondary">
                                         <i class="fa-solid fa-info text-info"></i>
                                     </span></a>
                             <?php else: ?>
-                                <span class="btn btn-default"
-                                      data-toggle="modal"
-                                      data-target="#infoModal<?=$module->getKey() ?>"
+                                <span class="btn btn-outline-secondary"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#infoModal<?=$module->getKey() ?>"
                                       title="<?=$this->getTrans('info') ?>">
                                     <i class="fa-solid fa-info text-info"></i>
                                 </span>
@@ -170,7 +170,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                                         <?=$this->getTokenField() ?>
                                         <input type="hidden" name="gotokey" value="<?=$this->get('gotokey') ? '1' : '0' ?>" />
                                         <button type="submit"
-                                                class="btn btn-default showOverlay"
+                                                class="btn btn-outline-secondary showOverlay"
                                                 title="<?=$this->getTrans('localModuleUpdate') ?>">
                                             <i class="<?=$icon ?>"></i>
                                         </button>
@@ -180,7 +180,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                                         <?=$this->getTokenField() ?>
                                         <input type="hidden" name="gotokey" value="<?=$this->get('gotokey') ? '1' : '0' ?>" />
                                         <button type="submit"
-                                                class="btn btn-default showOverlay"
+                                                class="btn btn-outline-secondary showOverlay"
                                                 title="<?=$this->getTrans('moduleUpdate') ?>">
                                             <i class="<?=$icon ?>"></i>
                                         </button>
@@ -189,13 +189,13 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                             <?php } ?>
                             <?php if (!empty(checkOthersDependencies([$module->getKey() => $module->getVersion()], $dependencies))): ?>
                                 <button class="btn disabled"
-                                        data-toggle="modal"
-                                        data-target="#dependencyInfoModal<?=$module->getKey() ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#dependencyInfoModal<?=$module->getKey() ?>"
                                         title="<?=$this->getTrans('dependencyError') ?>">
                                     <i class="fa-regular fa-trash-can text-warning"></i>
                                 </button>
                             <?php else: ?>
-                                <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('uninstall') ?>">
+                                <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('uninstall') ?>">
                                     <i class="fa-regular fa-trash-can text-warning"></i>
                                 </a>
                             <?php endif; ?>
