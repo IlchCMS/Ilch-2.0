@@ -54,6 +54,7 @@ return [
     'naviEventsPast' => 'Vergangene',
     'naviEventsAdd' => 'Erstellen',
     'naviEventsParticipation' => 'Teilnahme',
+    'naviToggleNavigation' => 'Navigation umschalten',
     'imageHeight' => 'Bild Höhe',
     'imageWidth' => 'Bild Breite',
     'imageSizeBytes' => 'Bild max Größe in Bytes',
