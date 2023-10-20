@@ -105,7 +105,11 @@ class Dialog extends \Ilch\Mapper
 
         $dialogModel = new DialogModel();
         $dialogModel->setId($dialogRow['id']);
-        $dialogModel->setName($dialogRow['name']);
+        if (!empty($dialog['name'])) {
+            $dialogModel->setName($dialog['name']);
+        } else {
+            $dialogModel->setName('No longer exists');
+        }
         if (file_exists($dialogRow['avatar'])) {
             $dialogModel->setAvatar($dialogRow['avatar']);
         } else {
