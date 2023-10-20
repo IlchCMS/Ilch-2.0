@@ -1,16 +1,25 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 use Modules\Forum\Mappers\Forum as ForumMapper;
 
+/** @var \Modules\Forum\Models\ForumItem[]|null $forumItems */
 $forumItems = $this->get('forumItems');
+/** @var Modules\User\Models\User[] $usersOnlineList */
 $usersOnlineList = $this->get('usersOnlineList');
+/** @var Modules\User\Models\User[] $usersWhoWasOnline */
 $usersWhoWasOnline = $this->get('usersWhoWasOnline');
+/** @var int $usersOnline */
 $usersOnline = $this->get('usersOnline');
+/** @var int $guestOnline */
 $guestOnline = $this->get('guestOnline');
+/** @var \Modules\Forum\Models\ForumStatistics $forumStatistics */
 $forumStatistics = $this->get('forumStatics');
+/** @var array $onlineUsersHighestRankedGroup */
 $onlineUsersHighestRankedGroup = $this->get('onlineUsersHighestRankedGroup');
 
-function rec($item, $obj, $i)
+function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
 {
     $DESCPostorder = $obj->get('DESCPostorder');
     $postsPerPage = $obj->get('postsPerPage');
@@ -30,9 +39,8 @@ function rec($item, $obj, $i)
                 $subItemsFalse = true;
             }
         }
-    }
-?>
-    <?php if ($subItemsFalse && $item->getType() === 0): ?>
+    } ?>
+    <?php if ($subItemsFalse && $item->getType() === 0) : ?>
         <ul class="forenlist">
             <li class="header">
                 <dl class="title ilch-head">
@@ -42,7 +50,7 @@ function rec($item, $obj, $i)
                         </a>
                     </dt>
                 </dl>
-                <?php if ($item->getDesc() != ''): ?>
+                <?php if ($item->getDesc() != '') : ?>
                     <dl class="desc small ilch-bg ilch-border">
                         <?=$obj->escape($item->getDesc()) ?>
                     </dl>
@@ -51,18 +59,18 @@ function rec($item, $obj, $i)
         </ul>
     <?php endif; ?>
 
-    <?php if ($adminAccess || $item->getReadAccess()): ?>
-        <?php if ($item->getType() != 0): ?>
+    <?php if ($adminAccess || $item->getReadAccess()) : ?>
+        <?php if ($item->getType() != 0) : ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
-                        <?php if ($obj->getUser()): ?>
-                            <?php if (!in_array($item->getId(), $obj->get('containsUnreadTopics'))): ?>
+                        <?php if ($obj->getUser()) : ?>
+                            <?php if (!in_array($item->getId(), $obj->get('containsUnreadTopics'))) : ?>
                                 topic-read
-                            <?php else: ?>
+                            <?php else : ?>
                                 topic-unread
                             <?php endif; ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             topic-read
                         <?php endif; ?>
                     ">
@@ -88,12 +96,11 @@ function rec($item, $obj, $i)
                             </div>
                         </dd>
                         <dd class="lastpost small">
-                            <?php if ($lastPost): ?>
+                            <?php if ($lastPost) : ?>
                                 <?php
                                 /** @var ForumMapper $forumMapper */
                                 $forumMapper = $obj->get('forumMapper');
-                                $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId());
-                                ?>
+                                $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId()); ?>
                                 <div class="pull-left">
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                         <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
@@ -136,7 +143,7 @@ function rec($item, $obj, $i)
 
 <div id="forum">
     <h1><?=$this->getTrans('forum') ?></h1>
-    <?php foreach ($forumItems as $item): ?>
+    <?php foreach ($forumItems as $item) : ?>
         <div class="forabg">
             <?php rec($item, $this, $i = null) ?>
         </div>
@@ -144,15 +151,15 @@ function rec($item, $obj, $i)
     <div class="foren-actions clearfix">
         <ul class="pull-left">
             <li><a href="<?=$this->getUrl(['controller' => 'showunansweredtopics', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showUnansweredTopics') ?></a></li>
-            <?php if ($this->getUser()): ?>
+            <?php if ($this->getUser()) : ?>
                 <li><a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showNewPosts') ?></a></li>
             <?php endif; ?>
             <li><a href="<?=$this->getUrl(['controller' => 'showactivetopics', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showActiveTopics') ?></a></li>
-            <?php if ($this->getUser()): ?>
+            <?php if ($this->getUser()) : ?>
                 <li><a href="<?=$this->getUrl(['controller' => 'rememberedposts', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showRememberedPosts') ?></a></li>
             <?php endif; ?>
         </ul>
-        <?php if ($this->getUser()): ?>          
+        <?php if ($this->getUser()) : ?>          
             <div class="pull-right">
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'markallasread'], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
             </div>
@@ -164,12 +171,12 @@ function rec($item, $obj, $i)
         <div class="content ilch-border">
             <h5><i class="fa-solid fa-user"></i> <?=$this->getTrans('activeUser') ?></h5>
             <div class="statistics">
-                <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>" class="ilch-link"><?=$usersOnline+$guestOnline ?> <?=$this->getTrans('usersOnline') ?></a>. <?=$this->getTrans('registeredUsers') ?>: <?=$usersOnline ?>, <?=$this->getTrans('guests') ?>: <?=$guestOnline ?><br />
+                <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>" class="ilch-link"><?=$usersOnline + $guestOnline ?> <?=$this->getTrans('usersOnline') ?></a>. <?=$this->getTrans('registeredUsers') ?>: <?=$usersOnline ?>, <?=$this->getTrans('guests') ?>: <?=$guestOnline ?><br />
                 <ul class="user-list">
-                    <?php foreach ($usersOnlineList as $user): ?>
+                    <?php foreach ($usersOnlineList as $user) : ?>
                         <?php if (!empty($onlineUsersHighestRankedGroup[$user->getId()])) : ?>
                             <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><span class="forum appearance<?=$onlineUsersHighestRankedGroup[$user->getId()] ?>"><?=$this->escape($user->getName()) ?></span></a></li>
-                        <?php else: ?>
+                        <?php else : ?>
                             <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><?=$this->escape($user->getName()) ?></a></li>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -178,8 +185,8 @@ function rec($item, $obj, $i)
                 <div class="small">
                     <ul class="group-legend">
                         <li><i class="fa-solid fa-bars"></i> <?=$this->getTrans('legend') ?>:</li>
-                        <?php foreach ($this->get('listGroups') as $group): ?>
-                            <?php if ($group->getName() !== 'Guest'): ?>
+                        <?php foreach ($this->get('listGroups') as $group) : ?>
+                            <?php if ($group->getName() !== 'Guest') : ?>
                                 <li class="group"><span class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></span></li>
                             <?php endif; ?>
                         <?php endforeach; ?>
@@ -190,7 +197,7 @@ function rec($item, $obj, $i)
             <h5><i class="fa-solid fa-users"></i> <?=$this->getTrans('whoWasHere') ?></h5>
             <div class="statistics">
                 <ul class="user-list">
-                    <?php foreach ($usersWhoWasOnline as $user): ?>
+                    <?php foreach ($usersWhoWasOnline as $user) : ?>
                         <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><?=$this->escape($user->getName()) ?></a></li>
                     <?php endforeach; ?>
                 </ul>

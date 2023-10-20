@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -39,7 +40,7 @@ class Showcat extends Frontend
         $forumItems = $forumMapper->getForumItemsByParentIdsUser([$catId], $this->getUser());
 
         $forumIds = [];
-        foreach($forumItems as $forumItem) {
+        foreach ($forumItems as $forumItem) {
             $forumIds[] = $forumItem->getId();
         }
 

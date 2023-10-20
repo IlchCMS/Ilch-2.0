@@ -1,4 +1,8 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var array $topics */
 $topics = $this->get('topics');
 $DESCPostorder = $this->get('DESCPostorder');
 $postsPerPage = $this->get('postsPerPage');
@@ -22,18 +26,18 @@ $postsPerPage = $this->get('postsPerPage');
             </li>
         </ul>
         <ul class="topiclist topics">
-            <?php foreach ($topics as $topic): ?>
+            <?php foreach ($topics as $topic) : ?>
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon
-                    <?php if ($this->getUser()): ?>
-                        <?php if ($topic['topic']->getStatus() == 1): ?>
+                    <?php if ($this->getUser()) : ?>
+                        <?php if ($topic['topic']->getStatus() == 1) : ?>
                             topic-unread-locked
-                        <?php else: ?>
+                        <?php else : ?>
                             topic-unread
                         <?php endif; ?>
-                    <?php elseif ($topic['topic']->getStatus() == 1): ?>
+                    <?php elseif ($topic['topic']->getStatus() == 1) : ?>
                         topic-read-locked
-                    <?php else: ?>
+                    <?php else : ?>
                         topic-read
                     <?php endif; ?>
                 ">
@@ -45,7 +49,7 @@ $postsPerPage = $this->get('postsPerPage');
 
                                 foreach ($prefix as $key => $value) {
                                     if ($topic['topic']->getTopicPrefix() == $key) {
-                                        echo '<span class="label label-default">'.$value.'</span>';
+                                        echo '<span class="label label-default">' . $value . '</span>';
                                     }
                                 }
                             }
@@ -53,7 +57,7 @@ $postsPerPage = $this->get('postsPerPage');
                             <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic['topic']->getId()]) ?>" class="topictitle">
                                 <?=$topic['topic']->getTopicTitle() ?>
                             </a>
-                            <?php if ($topic['topic']->getType() == '1'): ?>
+                            <?php if ($topic['topic']->getType() == '1') : ?>
                                 <i class="fa-solid fa-thumbtack"></i>
                             <?php endif; ?>
                             <br>

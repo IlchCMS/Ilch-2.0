@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -80,13 +81,13 @@ class Showposts extends Frontend
                 ->add($this->getTranslator()->trans('forum'))
                 ->add($cat->getTitle())
                 ->add($forum->getTitle())
-                ->add($prefix.$post->getTopicTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
+                ->add($prefix . $post->getTopicTitle());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum') . ' - ' . $forum->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                 ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
                 ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()])
-                ->add($prefix.$post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+                ->add($prefix . $post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
 
         $topicModel->setId($topicId);
         $topicModel->setVisits($post->getVisits() + 1);
@@ -95,7 +96,8 @@ class Showposts extends Frontend
         $rememberedPostIds = [];
         $isSubscribed = false;
         if ($this->getUser()) {
-            if (($this->getConfig()->get('forum_DESCPostorder') && $this->getRequest()->getParam('page') == (1 || !$this->getRequest()->getParam('page')))
+            if (
+                ($this->getConfig()->get('forum_DESCPostorder') && $this->getRequest()->getParam('page') == (1 || !$this->getRequest()->getParam('page')))
                 || (!$this->getConfig()->get('forum_DESCPostorder') && ((($this->getRequest()->getParam('page')) ?? 1) == (ceil($pagination->getRows() / $rowsPerPage))))
             ) {
                 // Mark topic as read if on the last page or on the first page with descending post order.
@@ -118,7 +120,7 @@ class Showposts extends Frontend
         if (!empty($this->getConfig()->get('forum_filenameGroupappearanceCSS'))) {
             $linkTagModel = new LinkTagModel();
             $linkTagModel->setRel('stylesheet')
-                ->setHref($this->getLayout()->getModuleUrl('static/css/groupappearance/'.$this->getConfig()->get('forum_filenameGroupappearanceCSS')));
+                ->setHref($this->getLayout()->getModuleUrl('static/css/groupappearance/' . $this->getConfig()->get('forum_filenameGroupappearanceCSS')));
             $this->getLayout()->add('linkTags', 'groupappearance', $linkTagModel);
         }
 
@@ -134,7 +136,6 @@ class Showposts extends Frontend
         $this->getView()->set('forum', $forum);
         $this->getView()->set('prefix', $prefix);
         $this->getView()->set('pagination', $pagination);
-        $this->getView()->set('userAccess', new Accesses($this->getRequest()));
         $this->getView()->set('rankMapper', $rankMapper);
         $this->getView()->set('postVoting', $this->getConfig()->get('forum_postVoting'));
         $this->getView()->set('topicSubscription', $this->getConfig()->get('forum_topicSubscription'));
@@ -388,10 +389,10 @@ class Showposts extends Frontend
                             $date = new Date();
                             $mailContent = $emailsMapper->getEmail('forum', 'post_reportedPost_mail', $this->getTranslator()->getLocale());
                             $layout = $_SESSION['layout'] ?? '';
-                            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/reportedPost.php')) {
-                                $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/reportedPost.php');
+                            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/forum/layouts/mail/reportedPost.php')) {
+                                $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/forum/layouts/mail/reportedPost.php');
                             } else {
-                                $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/forum/layouts/mail/reportedPost.php');
+                                $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/forum/layouts/mail/reportedPost.php');
                             }
                             $messageReplace = [
                                 '{content}' => $this->getLayout()->purify($mailContent->getText()),

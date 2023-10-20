@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -42,7 +43,7 @@ class Showtopics extends Frontend
             ->add($this->getTranslator()->trans('forum'))
             ->add($cat->getTitle())
             ->add($forum->getTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum') . ' - ' . $forum->getDesc());
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
             ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
@@ -54,7 +55,7 @@ class Showtopics extends Frontend
 
         $posts = $topicMapper->getLastPostsByTopicIds(array_keys($topics), ($this->getUser()) ? $this->getUser()->getId() : null);
         $postTopicRelation = [];
-        foreach($posts ?? [] as $index => $post) {
+        foreach ($posts ?? [] as $index => $post) {
             $postTopicRelation[$post->getTopicId()] = $index;
         }
 

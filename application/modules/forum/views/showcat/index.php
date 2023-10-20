@@ -1,14 +1,19 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 use Modules\Forum\Mappers\Forum;
 
-/** @var Forum $forumMapper */
-$forumMapper = $this->get('forumMapper');
+/** @var \Modules\Forum\Models\ForumItem[]|null $forumItems */
 $forumItems = $this->get('forumItems');
+/** @var \Modules\Forum\Models\ForumItem $cat */
 $cat = $this->get('cat');
 
-function rec($item, $forumMapper, $obj)
+function rec($item, \Ilch\View $obj)
 {
+    /** @var Forum $forumMapper */
+    $forumMapper = $obj->get('forumMapper');
+
     $DESCPostorder = $obj->get('DESCPostorder');
     $postsPerPage = $obj->get('postsPerPage');
     $subItems = $item->getSubItems();
@@ -18,9 +23,8 @@ function rec($item, $forumMapper, $obj)
     $adminAccess = null;
     if ($obj->getUser()) {
         $adminAccess = $obj->getUser()->isAdmin();
-    }
-?>
-    <?php if ($item->getType() === 0): ?>
+    } ?>
+    <?php if ($item->getType() === 0) : ?>
         <ul class="forenlist">
             <li class="header">
                 <dl class="title ilch-head">
@@ -30,7 +34,7 @@ function rec($item, $forumMapper, $obj)
                         </a>
                     </dt>
                 </dl>
-                <?php if ($item->getDesc() != ''): ?>
+                <?php if ($item->getDesc() != '') : ?>
                     <dl class="desc small">
                         <?=$obj->escape($item->getDesc()) ?>
                     </dl>
@@ -39,18 +43,18 @@ function rec($item, $forumMapper, $obj)
         </ul>
     <?php endif; ?>
 
-    <?php if ($adminAccess || $item->getReadAccess()): ?>
-        <?php if ($item->getType() != 0): ?>
+    <?php if ($adminAccess || $item->getReadAccess()) : ?>
+        <?php if ($item->getType() != 0) : ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
-                        <?php if ($obj->getUser()): ?>
-                            <?php if (!in_array($item->getId(), $obj->get('containsUnreadTopics'))): ?>
+                        <?php if ($obj->getUser()) : ?>
+                            <?php if (!in_array($item->getId(), $obj->get('containsUnreadTopics'))) : ?>
                                 topic-read
-                            <?php else: ?>
+                            <?php else : ?>
                                 topic-unread
                             <?php endif; ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             topic-read
                         <?php endif; ?>
                     ">
@@ -76,7 +80,7 @@ function rec($item, $forumMapper, $obj)
                             </div>
                         </dd>
                         <dd class="lastpost small">
-                            <?php if ($lastPost): ?>
+                            <?php if ($lastPost) : ?>
                                 <?php $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId()) ?>
                                 <div class="pull-left">
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
@@ -108,7 +112,7 @@ function rec($item, $forumMapper, $obj)
     <?php
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
-            rec($subItem, $forumMapper, $obj);
+            rec($subItem, $obj);
         }
     }
 }
@@ -127,13 +131,13 @@ function rec($item, $forumMapper, $obj)
         $adminAccess = $this->getUser()->isAdmin();
     }
     $subItemsFalse = false;
-        foreach ($forumItems as $subItem) {
-            if ($adminAccess || $subItem->getReadAccess()) {
-                $subItemsFalse = true;
-            }
+    foreach ($forumItems as $subItem) {
+        if ($adminAccess || $subItem->getReadAccess()) {
+            $subItemsFalse = true;
         }
+    }
     ?>
-    <?php if (!empty($forumItems) && $subItemsFalse): ?>
+    <?php if (!empty($forumItems) && $subItemsFalse) : ?>
         <div class="forabg">
             <ul class="forenlist">
                 <li class="header">
@@ -144,7 +148,7 @@ function rec($item, $forumMapper, $obj)
                             </a>
                         </dt>
                     </dl>
-                    <?php if ($cat->getDesc() != ''): ?>
+                    <?php if ($cat->getDesc() != '') : ?>
                         <dl class="desc small ilch-bg ilch-border">
                             <?=$cat->getDesc() ?>
                         </dl>
@@ -153,16 +157,16 @@ function rec($item, $forumMapper, $obj)
             </ul>
             <?php
             foreach ($forumItems as $item) {
-                rec($item, $forumMapper, $this);
+                rec($item, $this);
             }
             ?>
         </div>
-    <?php else: ?>
-        <?php header('location: ' .$this->getUrl(['controller' => 'index', 'action' => 'index']));
+    <?php else : ?>
+        <?php header('location: ' . $this->getUrl(['controller' => 'index', 'action' => 'index']));
         exit; ?>
     <?php endif; ?>
     <div class="topic-actions">
-    <?php if ($this->getUser()): ?>
+    <?php if ($this->getUser()) : ?>
         <div class="pull-right">
             <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'markallasread', 'id' => $this->getRequest()->getParam('id')], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
         </div>

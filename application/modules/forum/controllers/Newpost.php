@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -105,7 +106,7 @@ class Newpost extends Frontend
                 $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser()->getGroups()), explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
             }
 
-            if ($this->getUser() && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$this->getConfig()->get('forum_floodInterval')))) {
+            if ($this->getUser() && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time() - $this->getConfig()->get('forum_floodInterval')))) {
                 $this->addMessage('floodError', 'danger');
                 $this->redirect()
                     ->withInput()
@@ -162,10 +163,10 @@ class Newpost extends Frontend
                         $date = new Date();
                         $mailContent = $emailsMapper->getEmail('forum', 'topic_subscription_mail', $this->getTranslator()->getLocale());
                         $layout = $_SESSION['layout'] ?? '';
-                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/topicsubscription.php')) {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/topicsubscription.php');
+                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/forum/layouts/mail/topicsubscription.php')) {
+                            $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/forum/layouts/mail/topicsubscription.php');
                         } else {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/forum/layouts/mail/topicsubscription.php');
+                            $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/forum/layouts/mail/topicsubscription.php');
                         }
                         $messageReplace = [
                             '{content}' => $this->getLayout()->purify($mailContent->getText()),

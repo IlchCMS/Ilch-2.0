@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -27,7 +28,7 @@ class Forum extends Box
 
         $topicIds = [];
         $lastActiveTopicsToShow = [];
-        foreach ($lastActiveTopics as $index => $topic) {
+        foreach ($lastActiveTopics as $topic) {
             if ($isAdmin || $forums[$topic['forum_id']]->getReadAccess()) {
                 $topicIds[] = $topic['topic_id'];
             }

@@ -1,10 +1,13 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 use Modules\Forum\Models\ForumItem;
 
+/** @var ForumItem|null $forumItems */
 $forumItems = $this->get('forumItems');
 
-function rec(ForumItem $item, $obj)
+function rec(ForumItem $item, \Ilch\View $obj)
 {
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
@@ -12,19 +15,19 @@ function rec(ForumItem $item, $obj)
         $class = 'mjs-nestedSortable-leaf';
     }
 
-    echo '<li id="list_'.$item->getId().'" class="'.$class.'">
+    echo '<li id="list_' . $item->getId() . '" class="' . $class . '">
         <div><span class="disclose"><i class="fa-solid fa-circle-minus"></i>
-            <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-            <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
-            <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
-            <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
-            <input type="hidden" class="hidden_prefix" name="items['.$item->getId().'][prefix]" value="'.$item->getPrefix().'" />
-            <input type="hidden" class="hidden_read_access" name="items['.$item->getId().'][readAccess]" value="'.$item->getReadAccess().'" />
-            <input type="hidden" class="hidden_reply_access" name="items['.$item->getId().'][replyAccess]" value="'.$item->getReplyAccess().'" />
-            <input type="hidden" class="hidden_create_access" name="items['.$item->getId().'][createAccess]" value="'.$item->getCreateAccess().'" />
+            <input type="hidden" class="hidden_id" name="items[' . $item->getId() . '][id]" value="' . $item->getId() . '" />
+            <input type="hidden" class="hidden_title" name="items[' . $item->getId() . '][title]" value="' . $item->getTitle() . '" />
+            <input type="hidden" class="hidden_desc" name="items[' . $item->getId() . '][desc]" value="' . $item->getDesc() . '" />
+            <input type="hidden" class="hidden_type" name="items[' . $item->getId() . '][type]" value="' . $item->getType() . '" />
+            <input type="hidden" class="hidden_prefix" name="items[' . $item->getId() . '][prefix]" value="' . $item->getPrefix() . '" />
+            <input type="hidden" class="hidden_read_access" name="items[' . $item->getId() . '][readAccess]" value="' . $item->getReadAccess() . '" />
+            <input type="hidden" class="hidden_reply_access" name="items[' . $item->getId() . '][replyAccess]" value="' . $item->getReplyAccess() . '" />
+            <input type="hidden" class="hidden_create_access" name="items[' . $item->getId() . '][createAccess]" value="' . $item->getCreateAccess() . '" />
             <span></span>
         </span>
-        <span class="title">'.$item->getTitle().'</span>
+        <span class="title">' . $item->getTitle() . '</span>
         <span class="item_delete">
             <i class="fa-solid fa-circle-xmark"></i>
         </span><span class="item_edit">
@@ -52,9 +55,9 @@ function rec(ForumItem $item, $obj)
     <div class="col-lg-6">
         <ol id="sortable" class="sortable">
             <?php
-                foreach ($forumItems as $item) {
-                    rec($item, $this);
-                }
+            foreach ($forumItems as $item) {
+                rec($item, $this);
+            }
             ?>
         </ol>
     </div>
@@ -167,21 +170,24 @@ $(document).ready (
                         <div class="form-group"><label for="assignedGroupsRead" class="col-lg-3 control-label"><?=$this->getTrans('see') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
-                        <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
+                        <?php foreach ($this->get('userGroupList') as $groupList) :
+                            ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="form-group"><label for="assignedGroupsReply" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsReply" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
-                        <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
+                        <?php foreach ($this->get('userGroupList') as $groupList) :
+                            ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="form-group"><label for="assignedGroupsCreate" class="col-lg-3 control-label"><?=$this->getTrans('create') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsCreate" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
-                        <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
+                        <?php foreach ($this->get('userGroupList') as $groupList) :
+                            ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>';
@@ -305,8 +311,8 @@ $(document).ready (
 </script>
 <script>
 <?=$this->getMedia()
-        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id')))
-        ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id')))
+        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/' . $this->getRequest()->getParam('id')))
+        ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/' . $this->getRequest()->getParam('id')))
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
 

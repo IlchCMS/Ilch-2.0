@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -35,7 +36,7 @@ class Forum extends Mapper
      *
      * @param int[] $itemIds An array of parent ids.
      * @param int|null $userId
-     * @return array
+     * @return array|ForumItem[]
      * @throws Exception
      */
     public function getForumItemsByParentIds(array $itemIds, int $userId = null): array
@@ -59,7 +60,7 @@ class Forum extends Mapper
 
         $subItemsIds = [];
         $subItemsRelation = [];
-        foreach($itemRows as $itemRow) {
+        foreach ($itemRows as $itemRow) {
             // Don't bother trying to get subitems if the item is already a forum and not a category.
             if ($itemRow['type'] != 1) {
                 $subItemsIds[] = $itemRow['id'];
@@ -111,7 +112,7 @@ class Forum extends Mapper
      * Get forum items with the needed values for the admincenter.
      *
      * @param array $itemIds
-     * @return array
+     * @return array|ForumItem[]
      * @throws Exception
      */
     public function getForumItemsAdmincenterByParentIds(array $itemIds): array
@@ -133,7 +134,7 @@ class Forum extends Mapper
 
         $subItemsIds = [];
         $subItemsRelation = [];
-        foreach($itemRows as $itemRow) {
+        foreach ($itemRows as $itemRow) {
             // Don't bother trying to get subitems if the item is already a forum and not a category.
             if ($itemRow['type'] != 1) {
                 $subItemsIds[] = $itemRow['id'];
@@ -175,7 +176,7 @@ class Forum extends Mapper
      *
      * @param array $itemIds
      * @param User|null $user
-     * @return array
+     * @return array|ForumItem[]
      * @throws Exception
      */
     public function getForumItemsByParentIdsUser(array $itemIds, User $user = null): array
@@ -204,7 +205,7 @@ class Forum extends Mapper
 
         $subItemsIds = [];
         $subItemsRelation = [];
-        foreach($itemRows as $itemRow) {
+        foreach ($itemRows as $itemRow) {
             // Don't bother trying to get subitems if the item is already a forum and not a category.
             if ($itemRow['type'] != 1) {
                 $subItemsIds[] = $itemRow['id'];
@@ -495,7 +496,7 @@ class Forum extends Mapper
      *
      * @param array $forumId
      * @param int|null $userId
-     * @return array|null
+     * @return array|PostModel[]|null
      * @throws Exception
      */
     public function getLastPostsByForumIds(array $forumId, int $userId = null): ?array
@@ -579,7 +580,7 @@ class Forum extends Mapper
      * Use getForumItemsUser if you don't need to know all user groups that have
      * read, reply or create access for performance reasons.
      *
-     * @return array|null
+     * @return array|ForumItem[]|null
      */
     public function getForumItems(): ?array
     {
@@ -620,7 +621,7 @@ class Forum extends Mapper
      * Only returns if user has read, reply or create access. No full lists of user groups.
      *
      * @param User|null $user
-     * @return array|null
+     * @return array|ForumItem[]|null
      */
     public function getForumItemsUser(User $user = null): ?array
     {
@@ -861,7 +862,7 @@ class Forum extends Mapper
             // 'read_access' => 0, 'reply_access' => 1, 'create_access' => 2
             $preparedRows = [];
             foreach ($access_rights as $type => $rights) {
-                foreach($rights as $groupId) {
+                foreach ($rights as $groupId) {
                     if ($groupId) {
                         $preparedRows[] = [$itemId, $groupId, $type];
                     }

@@ -1,9 +1,14 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 <?php
+/** @var \Modules\Forum\Models\ForumItem[]|null $forumItems */
 $forumItems = $this->get('forumItems');
 $editTopicItems = $this->get('editTopicItems');
 
-function rec($item, $obj, $i)
+function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
 {
     $subItems = $item->getSubItems();
     $adminAccess = null;
@@ -18,14 +23,14 @@ function rec($item, $obj, $i)
             }
         }
     } ?>
-    <?php if ($subItemsFalse && $item->getType() === 0): ?>
+    <?php if ($subItemsFalse && $item->getType() === 0) : ?>
         <optgroup label="<?=$item->getTitle() ?>"></optgroup>
     <?php endif; ?>
 
-    <?php if ($adminAccess || $item->getReadAccess()): ?>
-        <?php if ($item->getType() != 0): ?>
+    <?php if ($adminAccess || $item->getReadAccess()) : ?>
+        <?php if ($item->getType() != 0) : ?>
             <?php $selected = ''; ?>
-            <?php if ($item->getId() == $obj->getRequest()->getParam('forumid')): ?>
+            <?php if ($item->getId() == $obj->getRequest()->getParam('forumid')) : ?>
                 <?php $selected = 'selected="selected"'; ?>
             <?php endif; ?>
                 <option value="<?=$item->getId() ?>" <?=$selected?>><?=$item->getTitle() ?></option>
@@ -58,11 +63,11 @@ function rec($item, $obj, $i)
                         </label>
                         <div class="col-lg-6">
                             <select class="form-control" id="selectForum" name="edit">
-                                <?php foreach ($forumItems as $item): ?>
+                                <?php foreach ($forumItems as $item) : ?>
                                     <?php rec($item, $this, $i = null) ?>
                                 <?php endforeach; ?>
                             </select>
-                            <?php foreach ($editTopicItems as $editId): ?>
+                            <?php foreach ($editTopicItems as $editId) : ?>
                                 <input type="hidden" name="topicids[]" value="<?=$editId ?>" />
                             <?php endforeach; ?>
                         </div>

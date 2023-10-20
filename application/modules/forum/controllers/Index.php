@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -41,7 +42,7 @@ class Index extends Frontend
         if (!empty($this->getConfig()->get('forum_filenameGroupappearanceCSS'))) {
             $linkTagModel = new LinkTagModel();
             $linkTagModel->setRel('stylesheet')
-                ->setHref($this->getLayout()->getModuleUrl('static/css/groupappearance/'.$this->getConfig()->get('forum_filenameGroupappearanceCSS')));
+                ->setHref($this->getLayout()->getModuleUrl('static/css/groupappearance/' . $this->getConfig()->get('forum_filenameGroupappearanceCSS')));
             $this->getLayout()->add('linkTags', 'groupappearance', $linkTagModel);
         }
 
@@ -60,7 +61,7 @@ class Index extends Frontend
         }
 
         $forumIds = [];
-        foreach($forumItems as $forumItem) {
+        foreach ($forumItems as $forumItem) {
             $forumIds[] = $forumItem->getId();
         }
 

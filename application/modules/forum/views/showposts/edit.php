@@ -1,6 +1,12 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Forum\Models\ForumItem $forum */
 $forum = $this->get('forum');
+/** @var \Modules\Forum\Models\ForumTopic $topic */
 $topic = $this->get('topic');
+/** @var \Modules\Forum\Models\ForumPost $post */
 $post = $this->get('post');
 ?>
 
@@ -22,14 +28,14 @@ $post = $this->get('post');
                         <label for="topicTitle" class="col-lg-2 control-label">
                             <?=$this->getTrans('topicTitle') ?>
                         </label>
-                        <?php if ($forum->getPrefix() != ''): ?>
+                        <?php if ($forum->getPrefix() != '') : ?>
                             <?php $prefix = explode(',', $forum->getPrefix()); ?>
                             <?php array_unshift($prefix, ''); ?>
                             <div class="col-lg-2 prefix">
                                 <select class="form-control" id="topicPrefix" name="topicPrefix">
-                                    <?php foreach ($prefix as $key => $value): ?>
+                                    <?php foreach ($prefix as $key => $value) : ?>
                                         <?php $selected = ''; ?>
-                                        <?php if ($key == $topic->getTopicPrefix()): ?>
+                                        <?php if ($key == $topic->getTopicPrefix()) : ?>
                                             <?php $selected = 'selected="selected"'; ?>
                                         <?php endif; ?>
                                         <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -43,7 +44,7 @@ class Newtopic extends Frontend
             ->add($cat->getTitle())
             ->add($forum->getTitle())
             ->add($this->getTranslator()->trans('newTopicTitle'));
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum') . ' - ' . $forum->getDesc());
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
             ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
@@ -55,7 +56,7 @@ class Newtopic extends Frontend
             $dateCreated = $postMapper->getDateOfLastPostByUserId($this->getUser()->getId());
             $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser()->getGroups()), explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
 
-            if (!$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$this->getConfig()->get('forum_floodInterval')))) {
+            if (!$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time() - $this->getConfig()->get('forum_floodInterval')))) {
                 $this->addMessage('floodError', 'danger');
                 $this->redirect()
                     ->withInput()
