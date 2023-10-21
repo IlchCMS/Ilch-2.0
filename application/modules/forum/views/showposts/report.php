@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <div id="forum">

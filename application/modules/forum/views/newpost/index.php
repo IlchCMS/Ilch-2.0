@@ -1,20 +1,26 @@
 <?php
-$forumMapper = $this->get('forumMapper');
-$cat = $this->get('cat');
-$topicpost = $this->get('topicPost');
-$postTextAsQuote = $this->get('postTextAsQuote');
-$forum = $this->get('forum');
 
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Forum\Mappers\Forum $forumMapper */
+$forumMapper = $this->get('forumMapper');
+/** @var \Modules\Forum\Models\ForumItem $cat */
+$cat = $this->get('cat');
+/** @var \Modules\Forum\Models\ForumTopic $topicpost */
+$topicpost = $this->get('topicPost');
+/** @var string $postTextAsQuote */
+$postTextAsQuote = $this->get('postTextAsQuote');
+/** @var \Modules\Forum\Models\ForumItem $forum */
+$forum = $this->get('forum');
 $forumPrefix = $forumMapper->getForumByTopicId($topicpost->getId());
 $prefix = '';
 if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
     $prefix = explode(',', $forumPrefix->getPrefix());
     array_unshift($prefix, '');
-
     foreach ($prefix as $key => $value) {
         if ($topicpost->getTopicPrefix() == $key) {
             $value = trim($value);
-            $prefix = '['.$value.'] ';
+            $prefix = '[' . $value . '] ';
         }
     }
 }
@@ -27,7 +33,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
         <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
         <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
         <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$forum->getTitle() ?></a>
-        <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>"><?=$prefix.$topicpost->getTopicTitle() ?></a>
+        <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>"><?=$prefix . $topicpost->getTopicTitle() ?></a>
         <i class="fa-solid fa-chevron-right"></i> <?=$this->getTrans('newPost') ?>
     </h1>
     <div class="row">

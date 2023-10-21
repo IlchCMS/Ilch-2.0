@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -78,15 +79,11 @@ class Index extends Admin
                     }
                 }
 
-                $oldItems = $forumMapper->getForumItems();
+                $oldItems = $forumMapper->getForumItemsIds();
 
                 // Deletes old entries from database.
                 if (!empty($oldItems)) {
-                    foreach ($oldItems as $oldItem) {
-                        if (!isset($items[$oldItem->getId()])) {
-                            $forumMapper->deleteItem($oldItem->getId());
-                        }
-                    }
+                    $forumMapper->deleteItems(array_diff($oldItems, array_keys($items)));
                 }
 
                 if ($items) {
@@ -151,8 +148,7 @@ class Index extends Admin
             $this->redirect(['action' => 'index']);
         }
 
-        $this->getView()->set('forumItems', $forumMapper->getForumItemsByParent(0));
-        $this->getView()->set('forumMapper', $forumMapper);
+        $this->getView()->set('forumItems', $forumMapper->getForumItemsAdmincenterByParentIds([0]));
         $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
     }
 }
