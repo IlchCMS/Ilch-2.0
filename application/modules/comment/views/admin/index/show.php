@@ -13,9 +13,9 @@ $modules = $modulesMapper->getModulesByKey($this->getRequest()->getParam('key'),
             <colgroup>
                 <col class="icon_width" />
                 <col class="icon_width" />
-                <col class="col-lg-1" />
-                <col class="col-lg-1" />
-                <col class="col-lg-1" />
+                <col class="col-xl-1" />
+                <col class="col-xl-1" />
+                <col class="col-xl-1" />
                 <col />
             </colgroup>
             <thead>
@@ -31,7 +31,7 @@ $modules = $modulesMapper->getModulesByKey($this->getRequest()->getParam('key'),
             <tbody>
                 <?php if ($this->get('comments')): ?>
                     <?php foreach ($this->get('comments') as $comment): ?>
-                        <?php 
+                        <?php
                         $user = $userMapper->getUserById($comment->getUserId());
                         if (!$user) {
                             $user = $userMapper->getDummyUser();

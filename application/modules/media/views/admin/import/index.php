@@ -1,7 +1,7 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('mediaFromImport') ?>
-    <a class="badge" data-toggle="modal" data-target="#infoModal">
+    <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa fa-info" ></i>
     </a>
 </h1>
@@ -12,9 +12,9 @@
             <table class="table table-hover table-striped">
                 <colgroup>
                         <col class="icon_width">
-                        <col class="col-xs-1">
-                        <col class="col-lg-1">
-                        <col class="col-lg-1">
+                        <col class="col-1">
+                        <col class="col-xl-1">
+                        <col class="col-xl-1">
                         <col>
                 </colgroup>
                 <thead>

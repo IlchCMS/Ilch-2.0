@@ -2,8 +2,8 @@
 <?php if ($this->get('cat')): ?>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
-        <div class="input-group input-group-option col-lg-6 col-md-6 col-xs-12">
+    <div class="row mb-3">
+        <div class="input-group-option col-xl-6 col-lg-6 col-12">
             <input type="text" class="form-control" name="title_treat" placeholder="<?=$this->escape($this->get('cat')->getCatName()) ?>">
         </div>
     </div>

@@ -128,8 +128,7 @@
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                                     <span class="btn btn-outline-secondary">
                                         <i class="fa-solid fa-info text-info"></i>
-                                    </span>
-                                </a>
+                                    </span></a>
                             <?php else: ?>
                                 <span class="btn btn-outline-secondary"
                                       data-bs-toggle="modal"

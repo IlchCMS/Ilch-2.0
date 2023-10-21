@@ -5,6 +5,7 @@ html {
     position: relative;
     overflow-x: hidden;
 }
+
 body {
     margin: 0;
     padding: 0;
@@ -91,6 +92,7 @@ header {
 }
 a {
     color: black !important;
+    text-decoration: none;
 }
 .chosen-container {
     width: 100% !important;
@@ -231,7 +233,7 @@ aside nav ul .active > a {
 }
 
 .withEmptyCells {
-    border-collapse: separate;
+    border-collapse: collapse;
 }
 
 .watermark {
@@ -518,8 +520,9 @@ aside {
     margin-top: 3px;
     padding: 7px 0 !important;
     background: 0 0;
+    color: #fff;
 }
-#ribbon .breadcrumb, #ribbon .breadcrumb a {
+#ribbon .breadcrumb-item +.breadcrumb-item:before, #ribbon .breadcrumb, #ribbon .breadcrumb a {
     color: #ccc !important;
     text-decoration: none !Important;
 }
@@ -655,6 +658,13 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     position: relative;
     top: 1px;
     left: 1px;
+}
+.btn-primary {
+    background-color:#337ab7;
+    color:#ffffff !important;
+}
+.btn-primary:hover {
+    background-color:#286090;
 }
 
 @media (min-width:991px) {
@@ -1357,4 +1367,8 @@ table tbody i.fa.fa-sort {
     padding: 10px 15px 5px;
     background: #333333;
     background: rgba(0, 0, 0, 0.75);
+}
+
+.table > :not(caption) > * > * {
+    background-color:transparent !important;
 }
