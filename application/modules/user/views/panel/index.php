@@ -7,7 +7,7 @@ $openFriendRequests = $this->get('openFriendRequests');
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
-    <div class="col-lg-12 profile">
+    <div class="col-xl-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
@@ -20,7 +20,7 @@ $openFriendRequests = $this->get('openFriendRequests');
                         <colgroup>
                             <col class="icon_width">
                             <col class="icon_width">
-                            <col class="col-lg-12">
+                            <col class="col-xl-12">
                         </colgroup>
                         <thead>
                         <tr>
@@ -53,9 +53,9 @@ $openFriendRequests = $this->get('openFriendRequests');
                                 <col class="icon_width">
                                 <col class="icon_width">
                                 <col class="icon_width">
-                                <col class="col-lg-2">
-                                <col class="col-lg-2">
-                                <col class="col-lg-8">
+                                <col class="col-xl-2">
+                                <col class="col-xl-2">
+                                <col class="col-xl-8">
                             </colgroup>
                             <thead>
                             <tr>

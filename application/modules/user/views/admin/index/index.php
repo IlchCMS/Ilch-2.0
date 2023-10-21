@@ -44,11 +44,11 @@
                 <col class="icon_width">
                 <col class="icon_width">
                 <col class="icon_width">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><col class="col-lg-2"><?php endif; ?>
-                <col class="col-lg-2">
+                <col class="col-xl-2">
+                <col class="col-xl-2">
+                <col class="col-xl-2">
+                <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><col class="col-xl-2"><?php endif; ?>
+                <col class="col-xl-2">
                 <col>
             </colgroup>
             <thead>
@@ -60,7 +60,7 @@
                     <th><?=$this->getTrans('userEmail') ?></th>
                     <th><?=$this->getTrans('userDateCreated') ?></th>
                     <th><?=$this->getTrans('userDateLastActivity') ?></th>
-                    <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-toggle="modal" data-target="#infoModal"><i class="fa-solid fa-info"></i></a></th><?php endif; ?>
+                    <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="fa-solid fa-info"></i></a></th><?php endif; ?>
                     <th><?=$this->getTrans('userGroups') ?></th>
                 </tr>
             </thead>

@@ -15,10 +15,10 @@ if ($user->getId()) {
            name="id"
            value="<?=$user->getId() ?>" />
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-lg-3 control-label">
+        <label for="name" class="col-xl-3 control-label">
             <?=$this->getTrans('userName') ?>
         </label>
-        <div class="col-lg-9">
+        <div class="col-xl-9">
             <input type="text"
                    class="form-control required"
                    id="name"
@@ -28,10 +28,10 @@ if ($user->getId()) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-        <label for="email" class="col-lg-3 control-label">
+        <label for="email" class="col-xl-3 control-label">
             <?=$this->getTrans('userEmail') ?>
         </label>
-        <div class="col-lg-9">
+        <div class="col-xl-9">
             <input type="text"
                    class="form-control required email"
                    id="email"
@@ -41,10 +41,10 @@ if ($user->getId()) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('userPassword') ? 'has-error' : '' ?>">
-        <label for="password" class="col-lg-3 control-label">
+        <label for="password" class="col-xl-3 control-label">
             <?=$this->getTrans('userPassword') ?>
         </label>
-        <div class="col-lg-9">
+        <div class="col-xl-9">
             <input type="password"
                    class="form-control"
                    id="password"
@@ -68,35 +68,35 @@ if ($user->getId()) {
         }
     ?>
         <div class="row mb-3">
-            <label class="col-lg-3 control-label">
+            <label class="col-xl-3 control-label">
                 <?=$this->getTrans('userDateCreated') ?>
             </label>
-            <div class="col-lg-9">
+            <div class="col-xl-9">
                 <p class="form-control-static"><?=$this->escape($user->getDateCreated()) ?></p>
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-lg-3 control-label">
+            <label class="col-xl-3 control-label">
                 <?=$this->getTrans('userDateConfirmed') ?>
             </label>
-            <div class="col-lg-9">
+            <div class="col-xl-9">
                 <p class="form-control-static"><?=$this->escape($dateConfirmed) ?></p>
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-lg-3 control-label">
+            <label class="col-xl-3 control-label">
                 <?=$this->getTrans('userDateLastActivity') ?>
             </label>
-            <div class="col-lg-9">
+            <div class="col-xl-9">
                 <p class="form-control-static"><?=$this->escape($dateLastActivity) ?></p>
             </div>
         </div>
     <?php endif; ?>
     <div class="row mb-3">
-        <div class="col-lg-3 control-label">
+        <div class="col-xl-3 control-label">
             <?=$this->getTrans('usergalleryAllowed') ?>
         </div>
-        <div class="col-lg-9">
+        <div class="col-xl-9">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="opt-gallery-yes" name="opt_gallery" value="1" <?php if ($user->getOptGallery() == '1') {
         echo 'checked="checked"';
@@ -112,10 +112,10 @@ if ($user->getId()) {
     </div>
     <?php if ($user->getId()) : ?>
     <div class="row mb-3">
-        <div class="col-lg-3 control-label">
+        <div class="col-xl-3 control-label">
             <?=$this->getTrans('lockUser') ?>
         </div>
-        <div class="col-lg-9">
+        <div class="col-xl-9">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="locked-yes" name="locked" value="1" <?php if ($user->getLocked() == '1') {
         echo 'checked="checked"';
@@ -131,10 +131,10 @@ if ($user->getId()) {
     </div>
     <?php endif; ?>
     <div class="row mb-3">
-        <label for="assignedGroups" class="col-lg-3 control-label">
+        <label for="assignedGroups" class="col-xl-3 control-label">
                 <?=$this->getTrans('assignedGroups') ?>
         </label>
-        <div class="col-lg-9">
+        <div class="col-xl-9">
             <select class="chosen-select form-control"
                     id="assignedGroups"
                     name="groups[]"
@@ -163,10 +163,10 @@ if ($user->getId()) {
     </div>
     <?php if ($user->getId()) : ?>
     <div class="row mb-3">
-        <label for="assignedGroups" class="col-lg-3 control-label">
+        <label for="assignedGroups" class="col-xl-3 control-label">
             <?=$this->getTrans('userProfile') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treatProfile', 'user' => $user->getId()]) ?>" class="btn"><?=$this->getTrans('editUserProfile') ?></a>
         </div>
     </div>

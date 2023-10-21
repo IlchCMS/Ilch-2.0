@@ -5,10 +5,10 @@
         <?=$this->getTrans('finish') ?>
     </div>
     <div class="card-body">
-        <div class="col-lg-2 fa-4x check">
+        <div class="col-xl-2 fa-4x check">
             <i class="fa-solid fa-circle-check text-success" title="<?=$this->getTrans('finish') ?>"></i>
         </div>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <?=$this->getTranslator()->trans('registerThanks', $this->escape($_SESSION['name'] ?? '')) ?>
             <br /><br />
         <?php if ($this->get('regist_confirm') == '1'): ?>

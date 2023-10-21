@@ -15,10 +15,10 @@
         <?=$this->getTokenField() ?>
         <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl')) ?>" />
         <div class="row mb-3 <?=$this->validation()->hasError('login_emailname') ? 'has-error' : '' ?>">
-            <label for="login_emailname" class="col-lg-2 control-label">
+            <label for="login_emailname" class="col-xl-2 control-label">
                 <?=$this->getTrans('nameEmail') ?>:
             </label>
-            <div class="col-lg-10">
+            <div class="col-xl-10">
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
                     <input type="text"
@@ -30,10 +30,10 @@
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('login_password') ? 'has-error' : '' ?>">
-            <label for="login_password" class="col-lg-2 control-label">
+            <label for="login_password" class="col-xl-2 control-label">
                 <?=$this->getTrans('password') ?>:
             </label>
-            <div class="col-lg-10">
+            <div class="col-xl-10">
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
                     <input type="password"
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-lg-offset-2 col-lg-10">
+            <div class="offset-xl-2 col-xl-10">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
@@ -54,8 +54,8 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-lg-offset-2 col-lg-10">
-                <button type="submit" name="login" class="btn btn-default">
+            <div class="offset-xl-2 col-xl-10">
+                <button type="submit" name="login" class="btn btn-outline-secondary">
                     <i class="fa-solid fa-fw fa-right-to-bracket"></i> <?=$this->getTrans('login') ?>
                 </button>
                 <span class="social-logins">
@@ -78,7 +78,7 @@
             </div>
         </div>
     </form>
-    <div class="col-lg-offset-2 col-lg-10">
+    <div class="offset-xl-2 col-xl-10">
             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a><br />
     </div>
     <?php if ($this->get('regist_accept') == '1'): ?>

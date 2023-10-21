@@ -2,7 +2,7 @@
 <link href="<?=$this->getModuleUrl('static/css/message.css') ?>" rel="stylesheet">
 
 <div class="row">
-    <div class="col-lg-12 profile">
+    <div class="col-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
         <div class="profile-content active">
             <?php if ($this->getRequest()->getParam('showhidden') != 1) : ?>
@@ -14,7 +14,7 @@
             <div id="uMessenger">
                 <div class="chat">
                     <div class="row chat-wrapper">
-                        <div class="col-xs-12 col-md-5 col-lg-4 <?=$this->get('dialog') ? 'hidden-list-message' : '' ?>">
+                        <div class="col-12  col-md-5 col-xl-4 <?=$this->get('dialog') ? 'hidden-list-message' : '' ?>">
                             <div class="chat-list-info">
                                 <span class="avatar">
                                     <img src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" class="img-circle" alt="<?=$this->escape($this->getUser()->getName()) ?>" title="<?=$this->escape($this->getUser()->getName()) ?>">
@@ -85,7 +85,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-md-7 col-lg-8 <?=$this->get('dialog') ? '' : 'hidden-list-message' ?>">
+                        <div class="col-12 col-md-7 col-xl-8 <?=$this->get('dialog') ? '' : 'hidden-list-message' ?>">
                             <?php if ($this->get('dialog')): ?>
                                 <div class="message-info">
                                     <span class="back-chat-list">
@@ -118,7 +118,7 @@
                             <?php if ($this->get('dialog')): ?>
                                 <div class="compose-box">
                                     <div class="row">
-                                        <div class="col-xs-12 chat-textarea<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>">
+                                        <div class="col-12 chat-textarea<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>">
                                             <?=$this->getTokenField() ?>
                                             <textarea class="form-control input-sm ckeditor"
                                                       id="ck_1"

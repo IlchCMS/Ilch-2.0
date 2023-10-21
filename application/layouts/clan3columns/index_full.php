@@ -84,7 +84,7 @@
                       );
                       ?>
                     </div>
-                    <div class="col-xs-12 col-md-3 col-lg-10">
+                    <div class="col-xs-12 col-md-9 col-lg-10">
                       <?=$this->getHmenu() ?>
                       <div class="card card-default">
                           <div class="card-body">

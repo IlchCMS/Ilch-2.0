@@ -16,7 +16,7 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
     <div class="userlist">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <thead>
