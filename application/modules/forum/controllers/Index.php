@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -33,26 +34,15 @@ class Index extends Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('forum'), ['action' => 'index']);
 
-        $forumItems = $forumMapper->getForumItemsByParent(0, ($this->getUser()) ? $this->getUser()->getId() : null);
         $whoWasOnlineUsers = $visitMapper->getWhoWasOnline();
         $allOnlineUsers = $visitMapper->getVisitsCountOnline();
         $usersOnline = $visitMapper->getVisitsOnlineUser();
-
-        $groupIds = [3];
-        if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
-            $user = $userMapper->getUserById($userId);
-
-            $groupIds = [];
-            foreach ($user->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
-            }
-        }
+        $forumItems = $forumMapper->getForumItemsByParentIdsUser([0], $this->getUser());
 
         if (!empty($this->getConfig()->get('forum_filenameGroupappearanceCSS'))) {
             $linkTagModel = new LinkTagModel();
             $linkTagModel->setRel('stylesheet')
-                ->setHref($this->getLayout()->getModuleUrl('static/css/groupappearance/'.$this->getConfig()->get('forum_filenameGroupappearanceCSS')));
+                ->setHref($this->getLayout()->getModuleUrl('static/css/groupappearance/' . $this->getConfig()->get('forum_filenameGroupappearanceCSS')));
             $this->getLayout()->add('linkTags', 'groupappearance', $linkTagModel);
         }
 
@@ -71,12 +61,11 @@ class Index extends Frontend
         }
 
         $forumIds = [];
-        foreach($forumItems as $forumItem) {
+        foreach ($forumItems as $forumItem) {
             $forumIds[] = $forumItem->getId();
         }
 
-        $this->getView()->set('groupIdsArray', $groupIds)
-            ->set('onlineUsersHighestRankedGroup', $onlineUsersHighestRankedGroup)
+        $this->getView()->set('onlineUsersHighestRankedGroup', $onlineUsersHighestRankedGroup)
             ->set('forumItems', $forumItems)
             ->set('usersOnlineList', $usersOnline)
             ->set('usersWhoWasOnline', $whoWasOnlineUsers)
@@ -96,20 +85,13 @@ class Index extends Frontend
         if ($this->getUser() && $this->getRequest()->isSecure()) {
             $forumMapper = new ForumMapper();
             $trackRead = new TrackRead();
-            $userMapper = new UserMapper();
 
             $adminAccess = $this->getUser()->isAdmin();
             $forumIds = [];
-            $user = $userMapper->getUserById($this->getUser()->getId());
 
-            $groupIds = [];
-            foreach ($user->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
-            }
-
-            foreach ($forumMapper->getForumItems() as $forumItem) {
+            foreach ($forumMapper->getForumItemsUser($this->getUser()) as $forumItem) {
                 // If it is a forum and the user is either admin or has read access then the forum can be marked as read.
-                if ($forumItem->getType() === 1 && $adminAccess || is_in_array($groupIds, explode(',', $forumItem->getReadAccess()))) {
+                if ($forumItem->getType() === 1 && $adminAccess || $forumItem->getReadAccess()) {
                     $forumIds[] = $forumItem->getId();
                 }
             }
