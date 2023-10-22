@@ -16,6 +16,14 @@ a {
     text-decoration: none;
 }
 
+.btn-primary,
+.bg-primary{
+    background-color:#337ab7 !important;
+    color:#ffffff !important;
+}
+.border-primary {
+    border-color:#337ab7 !important;
+}
 label {
     font-weight: normal;
 }

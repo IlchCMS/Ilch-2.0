@@ -6,9 +6,9 @@
         <div id="filter-panel" class="collapse filter-panel">
             <form class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage') ?>:</label>
-                    <div class="col-lg-2">
+                <div class="row mb-3">
+                    <label class="col-xl-2 control-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage') ?>:</label>
+                    <div class="col-xl-2">
                         <select class="form-control" id="pref-perpage" name="rows">
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -33,18 +33,18 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-orderby"><?=$this->getTrans('orderBy') ?>:</label>
-                    <div class="col-lg-2">
+                <div class="row mb-3">
+                    <label class="col-xl-2 control-label" for="pref-orderby"><?=$this->getTrans('orderBy') ?>:</label>
+                    <div class="col-xl-2">
                         <select class="form-control" id="pref-orderby" name="order">
                             <option value="ASC"><?=$this->getTrans('ascending') ?></option>
                             <option value="DESC"><?=$this->getTrans('descending') ?></option>
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-orderbytype"><?=$this->getTrans('mediaType') ?>:</label>
-                    <div class="col-lg-2">
+                <div class="row mb-3">
+                    <label class="col-xl-2 control-label" for="pref-orderbytype"><?=$this->getTrans('mediaType') ?>:</label>
+                    <div class="col-xl-2">
                         <select class="form-control" id="pref-orderbytype" name="orderbytype">
                             <option value="all"><?=$this->getTrans('all') ?></option>
                             <option value="image"><?=$this->getTrans('image') ?></option>
@@ -53,14 +53,16 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default filter-col" name="search" value="search">
+                <div class="row mb-3">
+                  <div class="col-xl-2">
+                    <button type="submit" class="btn btn-outline-secondary filter-col" name="search" value="search">
                         <span class="fa fa-search"></span> <?=$this->getTrans('search') ?>
                     </button>
+                  </div>
                 </div>
             </form>
         </div>
-        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+        <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filter-panel">
             <span class="fa fa-cogs"></span> <?=$this->getTrans('advancedSearch') ?>
         </button>
     </div>
@@ -73,11 +75,11 @@
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-xs-1">
-                    <col class="col-lg-1">
+                    <col class="col-1">
+                    <col class="col-xl-1">
                     <col>
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
                 </colgroup>
                 <thead>
                     <tr>
@@ -157,7 +159,7 @@
                     <div class="modal-footer">
                         <button type="button"
                                 class="btn btn-primary"
-                                data-dismiss="modal"><?=$this->getTrans('close') ?>
+                                data-bs-dismiss="modal"><?=$this->getTrans('close') ?>
                         </button>
                     </div>
                 </div>

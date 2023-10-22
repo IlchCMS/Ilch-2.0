@@ -28,7 +28,7 @@
                 <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'multi'): ?>
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
-                            <div id="<?=$media->getId() ?>"  class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
+                            <div id="<?=$media->getId() ?>"  class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                                 <img class="image thumbnail img-fluid"
                                      data-url="<?=$media->getUrl() ?>"
                                      <?php if (file_exists($media->getUrlThumb())): ?>
@@ -55,7 +55,7 @@
                 <?php if ($this->getRequest()->getParam('type') === 'media'): ?>
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
-                            <div class="col-lg-2 col-sm-3 col-xs-4">
+                            <div class="col-xl-2 col-md-3 col-4">
                                 <img class="image img-thumbnail img-fluid"
                                      data-url="<?=$media->getUrl() ?>"
                                      src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
@@ -70,7 +70,7 @@
                 <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
-                            <div id="<?=$media->getId() ?>" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
+                            <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                                 <img class="image img-thumbnail img-fluid"
                                      data-url="<?=$media->getUrl() ?>"
                                      src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"

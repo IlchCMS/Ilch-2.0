@@ -9,11 +9,11 @@ $userMapper = new \Modules\User\Mappers\User();
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-2">
-            <col class="col-lg-2">
+            <col class="col-xl-2">
+            <col class="col-xl-2">
         <?php if ($this->getUser() && $this->getUser()->isAdmin()) : ?>
-            <col class="col-lg-2">
-            <col class="col-lg-3">
+            <col class="col-xl-2">
+            <col class="col-xl-3">
         <?php endif; ?>
             <col>
         </colgroup>

@@ -14,7 +14,7 @@
             <div id="uMessenger">
                 <div class="chat">
                     <div class="row chat-wrapper">
-                        <div class="col-12  col-md-5 col-xl-4 <?=$this->get('dialog') ? 'hidden-list-message' : '' ?>">
+                        <div class="col-12 col-md-5 col-xl-4 <?=$this->get('dialog') ? 'hidden-list-message' : '' ?>">
                             <div class="chat-list-info">
                                 <span class="avatar">
                                     <img src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" class="img-circle" alt="<?=$this->escape($this->getUser()->getName()) ?>" title="<?=$this->escape($this->getUser()->getName()) ?>">

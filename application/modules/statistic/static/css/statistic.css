@@ -1,3 +1,6 @@
+h4 {
+    margin-bottom:0px !important;
+}
 .ilch-logo {
     background-image: url('../img/ilch_statistic_panel_head.png');
     background-repeat: no-repeat;
@@ -9,7 +12,7 @@
     border-color: #ddd;
 }
 
-.panel-ilch {
+.card-ilch {
     background-color: #B71E00 !important;
 }
 .ilch-title {
@@ -19,12 +22,12 @@
     color: #000 !important;
 }
 
-.panel .stats {
+.card .stats {
     text-align: center;
     cursor: help;
 }
 
-.stats .panel-title {
+.stats .card-title {
     font-size: 25px;
     font-weight: bold;
     color: #000;
@@ -37,10 +40,10 @@
     text-decoration: none;
 }
 
-.panel-body .list-group {
+.card-body .list-group {
     margin-bottom: 0;
 }
-.panel-body .progress {
+.card-body .progress {
     margin-bottom: 0;
 }
 
@@ -57,7 +60,7 @@
     margin-top: -20px !important;
 }
 
-.panel-heading span {
+.card-header span {
     margin-top: -16px;
     font-size: 15px;
 }
@@ -84,11 +87,13 @@
     background: rgba(0, 0, 0, 0.04);
     border: 1px solid #e0e0e0;
     padding: 0 0 5px 0;
+    height: 55px;
 }
 .box > .icon > .info > h3.title {
     text-align: left;
     margin-left: 25px;
     font-size: 14px;
+    margin-top: 15px;
 }
 .box .space {
     height: 15px;

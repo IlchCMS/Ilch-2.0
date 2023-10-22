@@ -16,16 +16,16 @@ $browser = $this->getRequest()->getParam('browser');
 <?php if ($this->get('statisticOSVersionList') != '' && $os != '') : ?>
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?></i></h1>
     <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
+        <div class="col-xl-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('osStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
                 </div>
-                <div class="panel-footer">
+                <div class="card-footer">
                     <?=$this->getTrans('os') ?>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -56,15 +56,15 @@ $browser = $this->getRequest()->getParam('browser');
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('browserStatistic') ?> - <?=$this->escape($browser) ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('browserStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
                 </div>
-                <div class="panel-footer">
+                <div class="card-footer">
                     <?=$this->getTrans('browser') ?>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -96,16 +96,16 @@ $browser = $this->getRequest()->getParam('browser');
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans($date->format('F', true)) . $date->format(' Y', true) ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><?=$this->getTrans('visitsStatistic') ?></h4>
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('visitsStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
                 </div>
 
-                <div class="panel-footer">
-                    <h4 class="panel-title"><?=$this->getTrans('hour') ?></h4>
+                <div class="card-footer">
+                    <h4 class="card-title"><?=$this->getTrans('hour') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -124,10 +124,10 @@ $browser = $this->getRequest()->getParam('browser');
                     </div>
                 </div>
 
-                <div class="panel-footer">
+                <div class="card-footer">
                     <h4 class="panel-title"><?=$this->getTrans('day') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -147,10 +147,10 @@ $browser = $this->getRequest()->getParam('browser');
                     </div>
                 </div>
 
-                <div class="panel-footer">
+                <div class="card-footer">
                     <h4 class="panel-title"><?=$this->getTrans('yearMonthDay') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -170,10 +170,10 @@ $browser = $this->getRequest()->getParam('browser');
                     </div>
                 </div>
 
-                <div class="panel-footer">
+                <div class="card-footer">
                     <h4 class="panel-title"><?=$this->getTrans('year') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -198,15 +198,15 @@ $browser = $this->getRequest()->getParam('browser');
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('browserStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
                 </div>
-                <div class="panel-footer">
+                <div class="card-footer">
                     <?=$this->getTrans('browser') ?>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -231,10 +231,10 @@ $browser = $this->getRequest()->getParam('browser');
                     </div>
                 </div>
 
-                <div class="panel-footer">
-                    <h4 class="panel-title"><?=$this->getTrans('language') ?></h4>
+                <div class="card-footer">
+                    <h4 class="card-title"><?=$this->getTrans('language') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -264,15 +264,15 @@ $browser = $this->getRequest()->getParam('browser');
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
                     <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
                 </div>
-                <div class="panel-footer">
+                <div class="card-footer">
                     <?=$this->getTrans('os') ?>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -308,16 +308,16 @@ $browser = $this->getRequest()->getParam('browser');
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$date->format('Y', true) ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><?=$this->getTrans('visitsStatistic') ?></h4>
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('visitsStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
                 </div>
 
-                <div class="panel-footer">
-                    <h4 class="panel-title"><?=$this->getTrans('hour') ?></h4>
+                <div class="card-footer">
+                    <h4 class="card-title"><?=$this->getTrans('hour') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -336,10 +336,10 @@ $browser = $this->getRequest()->getParam('browser');
                     </div>
                 </div>
 
-                <div class="panel-footer">
-                    <h4 class="panel-title"><?=$this->getTrans('day') ?></h4>
+                <div class="card-footer">
+                    <h4 class="card-title"><?=$this->getTrans('day') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -382,10 +382,10 @@ $browser = $this->getRequest()->getParam('browser');
                     </div>
                 </div>
 
-                <div class="panel-footer">
-                    <h4 class="panel-title"><?=$this->getTrans('year') ?></h4>
+                <div class="card-footer">
+                    <h4 class="card-title"><?=$this->getTrans('year') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -410,15 +410,15 @@ $browser = $this->getRequest()->getParam('browser');
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('browserStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
                 </div>
-                <div class="panel-footer">
+                <div class="card-footer">
                     <?=$this->getTrans('browser') ?>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -443,10 +443,10 @@ $browser = $this->getRequest()->getParam('browser');
                     </div>
                 </div>
 
-                <div class="panel-footer">
-                    <h4 class="panel-title"><?=$this->getTrans('language') ?></h4>
+                <div class="card-footer">
+                    <h4 class="card-title"><?=$this->getTrans('language') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -476,15 +476,15 @@ $browser = $this->getRequest()->getParam('browser');
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('osStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
                 </div>
-                <div class="panel-footer">
+                <div class="card-footer">
                     <?=$this->getTrans('os') ?>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
@@ -519,13 +519,13 @@ $(document).ready(function() {
     $('.progress .progress-bar').progressbar();
 });
 
-$(document).on('click', '.panel-heading span.clickable', function() {
+$(document).on('click', '.card-header span.clickable', function() {
     if (!$(this).hasClass('panel-collapsed')) {
-        $(this).closest('.panel').find('.panel-body').slideUp();
+        $(this).closest('.card').find('.card-body').slideUp();
         $(this).addClass('panel-collapsed');
         $(this).find('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
     } else {
-        $(this).closest('.panel').find('.panel-body').slideDown();
+        $(this).closest('.card').find('.card-body').slideDown();
         $(this).removeClass('panel-collapsed');
         $(this).find('i').removeClass('fa-chevron-down').addClass('fa-chevron-up');
     }
