@@ -51,9 +51,9 @@ class Model
     public function __toString()
     {
         if (empty($this->data)) {
-            return '<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; <li class="breadcrumb-item active"><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li></ol></div>';
+            return '<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; &nbsp;<li class="breadcrumb-item active"><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li></ol></div>';
         }
-        $html = '<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; <li class="breadcrumb-item active"><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li>';
+        $html = '<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; &nbsp;<li class="breadcrumb-item active"><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li>';
         foreach ($this->data as $key => $value) {
             if (empty($value)) {
                 $html .= $this->layout->escape($key);

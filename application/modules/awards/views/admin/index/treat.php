@@ -14,27 +14,27 @@ if ($awards != '') {
 <h1><?=($awards != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
-        <label for="date" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
+        <label for="date" class="col-xl-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div class="col-lg-2 input-group ilch-date date form_datetime">
+        <div class="col-xl-2 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    name="date"
                    id="date"
                    value="<?=($this->get('awards') != '') ? $this->escape($date) : $this->escape($this->originalInput('date')) ?>"
                    readonly>
-            <span class="input-group-text">
+            <span class="input-group-addon">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('rank') ? 'has-error' : '' ?>">
-        <label for="rank" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('rank') ? 'has-error' : '' ?>">
+        <label for="rank" class="col-xl-2 control-label">
             <?=$this->getTrans('rank') ?>:
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="rank"
@@ -44,11 +44,11 @@ if ($awards != '') {
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->escape($this->originalInput('rank')) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
-        <label for="selectedImage" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+        <label for="selectedImage" class="col-xl-2 control-label">
             <?=$this->getTrans('image') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control"
@@ -65,11 +65,11 @@ if ($awards != '') {
             </div>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
-        <label for="user" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
+        <label for="user" class="col-xl-2 control-label">
             <?=$this->getTrans('userTeam') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <select class="form-control" id="user" name="utId[]" multiple>
                 <optgroup label="<?=$this->getTrans('user') ?>">
                     <?php foreach ($this->get('users') as $user) {
@@ -112,11 +112,11 @@ if ($awards != '') {
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=($this->validation()->hasError('event')) ? 'has-error' : '' ?>">
-        <label for="event" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=($this->validation()->hasError('event')) ? 'has-error' : '' ?>">
+        <label for="event" class="col-xl-2 control-label">
             <?=$this->getTrans('event') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="event"
@@ -124,11 +124,11 @@ if ($awards != '') {
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getEvent()) : $this->escape($this->originalInput('event')) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
-        <label for="page" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
+        <label for="page" class="col-xl-2 control-label">
             <?=$this->getTrans('page') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    name="page"

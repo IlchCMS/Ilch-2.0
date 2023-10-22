@@ -347,6 +347,7 @@
     display: inline-block;
     text-align: left;
     background-color: #3498db;
+    padding: 9px;
 }
 .chat .chat-wrapper .message-list-wrapper .message-list li.right .body .message:after {
     content: '';

@@ -94,6 +94,10 @@ a {
     color: black !important;
     text-decoration: none;
 }
+a:hover {
+    text-decoration: underline;
+    color:#337ab7 !important;
+}
 .chosen-container {
     width: 100% !important;
 }
@@ -430,7 +434,6 @@ aside {
     background-image: linear-gradient(to bottom, #f3f3f3, #e2e2e2);
     background-repeat: repeat-x;
     position: relative;
-
 }
 #header > div {
     display: inline-block;
@@ -665,6 +668,7 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
 }
 .btn-primary:hover {
     background-color:#286090;
+    color:#ffffff !important;
 }
 
 @media (min-width:991px) {
@@ -1353,13 +1357,13 @@ table tbody i.fa.fa-sort {
 #layout #layout-search-carousel {
     margin: -10px -15px 15px -15px;
 }
-#module #module-search-carousel .carousel-inner .carousel-item img,
-#layout #layout-search-carousel .carousel-inner .carousel-item img {
+#module #module-search-carousel .carousel-inner .item img,
+#layout #layout-search-carousel .carousel-inner .item img {
     max-height: 320px;
     margin: auto;
 }
-#module #module-search-carousel .carousel-inner .carousel-item .carousel-caption,
-#layout #layout-search-carousel .carousel-inner .carousel-item .carousel-caption {
+#module #module-search-carousel .carousel-inner .item .carousel-caption,
+#layout #layout-search-carousel .carousel-inner .item .carousel-caption {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -1371,4 +1375,14 @@ table tbody i.fa.fa-sort {
 
 .table > :not(caption) > * > * {
     background-color:transparent !important;
+}
+.checkbox {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.checkbox>label>input {
+    margin-right: .5rem;
+}
+.user-search {
+    margin-top:4px;
 }

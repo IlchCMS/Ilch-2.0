@@ -11,11 +11,11 @@ $cat = $this->get('cat');
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <label for="title" class="col-xl-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="title"
@@ -23,11 +23,11 @@ $cat = $this->get('cat');
                    value="<?=$this->escape($this->originalInput('title', $cat->getTitle())) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
-        <label for="access" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
+        <label for="access" class="col-xl-2 control-label">
             <?=$this->getTrans('visibleFor') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('groups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
                 <?php foreach ($this->get('userGroupList') as $groupList) : ?>

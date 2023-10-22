@@ -13,18 +13,18 @@ if ($file->getFileImage() != '') {
     <form class="form-horizontal" method="POST" action="">
         <div id="gallery">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <a href="<?=$this->getBaseUrl($file->getFileUrl()) ?>">
                         <img class="thumbnail" src="<?=$image ?>" alt="<?=$this->escape($file->getFileTitle()) ?>" />
                     </a>
                 </div>
-                <div class="col-md-8">
+                <div class="col-lg-8">
                     <?=$this->getTokenField() ?>
-                    <div class="form-group">
+                    <div class="row mb-3">
                         <label for="fileTitleInput" class="col-lg-2 control-label">
                             <?=$this->getTrans('fileTitle') ?>:
                         </label>
-                        <div class="col-lg-8">
+                        <div class="col-xl-8">
                             <input type="text"
                                    class="form-control"
                                    id="fileTitleInput"
@@ -32,11 +32,11 @@ if ($file->getFileImage() != '') {
                                    value="<?=$this->escape($file->getFileTitle()) ?>" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="selectedImage" class="col-lg-2 control-label">
+                    <div class="row mb-3">
+                        <label for="selectedImage" class="col-xl-2 control-label">
                             <?=$this->getTrans('fileImage') ?>:
                         </label>
-                        <div class="col-lg-8">
+                        <div class="col-xl-8">
                             <div class="input-group">
                                 <input type="text"
                                        class="form-control"
@@ -44,15 +44,15 @@ if ($file->getFileImage() != '') {
                                        name="fileImage"
                                        placeholder="<?=$this->getTrans('fileImageInfo') ?>"
                                        value="<?=$this->escape($file->getFileImage()) ?>" />
-                                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a></span>
+                                <span class="input-group-text"><a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a></span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="fileDescInput" class="col-lg-2 control-label">
+                    <div class="row mb-3">
+                        <label for="fileDescInput" class="col-xl-2 control-label">
                             <?=$this->getTrans('fileDesc') ?>:
                         </label>
-                        <div class="col-lg-8">
+                        <div class="col-xl-8">
                             <textarea class="form-control"
                                       id="fileDescInput"
                                       name="fileDesc"

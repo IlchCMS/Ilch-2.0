@@ -70,7 +70,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
 
 <div id="modules" class="table-responsive">
   <div class="row">
-    <div class="col-lg-12 input-group">
+    <div class="col-xl-12 input-group user-search">
         <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
         <input class="form-control hasclear" id="user-search" placeholder="<?=$this->getTrans('search') ?>" required>
     </div>
@@ -78,8 +78,8 @@ usort($modulesOnUpdateServer, 'custom_sort');
     <br />
     <table class="table table-hover table-striped table-list-search">
         <colgroup>
-            <col class="col-lg-2" />
-            <col class="col-lg-1" />
+            <col class="col-xl-2" />
+            <col class="col-xl-1" />
             <col />
         </colgroup>
         <thead>

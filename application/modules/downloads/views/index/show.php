@@ -47,14 +47,14 @@
         $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png');
     }
     ?>
-        <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-image thumbnail">
+        <div class="col-6 col-lg-4 col-xl-3 col-md-4">
+            <div class="card card-default">
+                <div class="card-image me-auto ms-auto thumbnail">
                     <a href="<?=$this->getUrl(['action' => 'showfile', 'id' => $file->getId()]) ?>">
                         <img src="<?=$image ?>" class="panel-image-preview" alt="<?=$this->escape($file->getFileTitle()) ?>" />
                     </a>
                 </div>
-                <div class="panel-footer text-center">
+                <div class="card-footer text-center">
                     <i class="fa-solid fa-pencil"></i> <?=$this->escape($file->getFileTitle()) ?><br>
                     <i class="fa-regular fa-comment"></i> <?=$commentsCount ?>
                     <i class="fa-solid fa-eye"></i> <?=$file->getVisits() ?>
