@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -9,14 +10,12 @@ namespace Modules\Forum\Controllers;
 use Ilch\Controller\Frontend;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\TrackRead;
-use Modules\User\Mappers\User as UserMapper;
 
 class Showcat extends Frontend
 {
     public function indexAction()
     {
         $forumMapper = new ForumMapper();
-        $userMapper = new UserMapper();
 
         $catId = $this->getRequest()->getParam('id');
         if (empty($catId) || !is_numeric($catId)) {
@@ -30,8 +29,6 @@ class Showcat extends Frontend
             return;
         }
 
-        $forumItems = $forumMapper->getForumItemsByParent($catId, ($this->getUser()) ? $this->getUser()->getId() : null);
-
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))
                 ->add($cat->getTitle());
@@ -40,20 +37,10 @@ class Showcat extends Frontend
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index','action' => 'index'])
                 ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()]);
 
-        $user = null;
-        if ($this->getUser()) {
-            $user = $userMapper->getUserById($this->getUser()->getId());
-        }
-
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
-            }
-        }
+        $forumItems = $forumMapper->getForumItemsByParentIdsUser([$catId], $this->getUser());
 
         $forumIds = [];
-        foreach($forumItems as $forumItem) {
+        foreach ($forumItems as $forumItem) {
             $forumIds[] = $forumItem->getId();
         }
 
@@ -61,7 +48,6 @@ class Showcat extends Frontend
         $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('cat', $cat);
         $this->getView()->set('containsUnreadTopics', ($this->getUser()) ? $forumMapper->getListOfForumIdsWithUnreadTopics($this->getUser()->getId(), $forumIds) : []);
-        $this->getView()->set('readAccess', $readAccess);
         $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
         $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }
@@ -71,20 +57,13 @@ class Showcat extends Frontend
         if ($this->getUser() && $this->getRequest()->isSecure()) {
             $forumMapper = new ForumMapper();
             $trackRead = new TrackRead();
-            $userMapper = new UserMapper();
 
             $adminAccess = $this->getUser()->isAdmin();
             $forumIds = [];
-            $user = $userMapper->getUserById($this->getUser()->getId());
 
-            $groupIds = [];
-            foreach ($user->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
-            }
-
-            foreach ($forumMapper->getForumItemsByParent($this->getRequest()->getParam('id') ?? 0) as $forumItem) {
+            foreach ($forumMapper->getForumItemsByParentIdsUser([$this->getRequest()->getParam('id')] ?? [0], $this->getUser()) as $forumItem) {
                 // If it is a forum and the user is either admin or has read access then the forum can be marked as read.
-                if ($forumItem->getType() === 1 && $adminAccess || is_in_array($groupIds, explode(',', $forumItem->getReadAccess()))) {
+                if ($forumItem->getType() === 1 && $adminAccess || $forumItem->getReadAccess()) {
                     $forumIds[] = $forumItem->getId();
                 }
             }

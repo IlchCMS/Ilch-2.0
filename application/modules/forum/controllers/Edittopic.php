@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -8,7 +9,6 @@ namespace Modules\Forum\Controllers;
 
 use Ilch\Controller\Frontend;
 use Modules\Forum\Mappers\Forum as ForumMapper;
-use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Models\ForumTopic as TopicModel;
 use Modules\Forum\Mappers\Post as PostMapper;
@@ -18,25 +18,12 @@ class Edittopic extends Frontend
 {
     public function indexAction()
     {
-        $userMapper = new UserMapper();
         $forumMapper = new ForumMapper();
-        $forumItems = $forumMapper->getForumItemsByParent(0);
 
+        $user = null;
         $forumId = $this->getRequest()->getParam('forumid');
-        $forum = $forumMapper->getForumById($forumId);
+        $forum = $forumMapper->getForumByIdUser($forumId, $this->getUser());
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
-
-        $groupIds = [3];
-
-        if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
-            $user = $userMapper->getUserById($userId);
-
-            $groupIds = [];
-            foreach ($user->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
-            }
-        }
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('forum'))
@@ -79,8 +66,7 @@ class Edittopic extends Frontend
             }
         }
 
-        $this->getView()->set('groupIdsArray', $groupIds)
-            ->set('forumItems', $forumItems)
+        $this->getView()->set('forumItems', $forumMapper->getForumItemsByParentIdsUser([0], $user))
             ->set('editTopicItems', $this->getRequest()->getPost('check_topics'));
     }
 

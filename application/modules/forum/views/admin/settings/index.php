@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
@@ -51,6 +55,7 @@
                     data-placeholder="<?=$this->getTrans('excludeFloodProtection') ?>"
                     multiple>
                 <?php
+                /** @var \Modules\User\Models\Group $group */
                 foreach ($this->get('groupList') as $group) {
                     ?>
                     <option value="<?=$group->getId() ?>"

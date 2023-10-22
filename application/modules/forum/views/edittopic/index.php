@@ -1,10 +1,14 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 <?php
+/** @var \Modules\Forum\Models\ForumItem[]|null $forumItems */
 $forumItems = $this->get('forumItems');
-$readAccess = $this->get('groupIdsArray');
 $editTopicItems = $this->get('editTopicItems');
 
-function rec($item, $obj, $readAccess, $i)
+function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
 {
     $subItems = $item->getSubItems();
     $adminAccess = null;
@@ -14,19 +18,19 @@ function rec($item, $obj, $readAccess, $i)
     $subItemsFalse = false;
     if (!empty($subItems) && ($item->getType() === 0)) {
         foreach ($subItems as $subItem) {
-            if ($adminAccess || is_in_array($readAccess, explode(',', $subItem->getReadAccess()))) {
+            if ($adminAccess || $subItem->getReadAccess()) {
                 $subItemsFalse = true;
             }
         }
     } ?>
-    <?php if ($subItemsFalse && $item->getType() === 0): ?>
+    <?php if ($subItemsFalse && $item->getType() === 0) : ?>
         <optgroup label="<?=$item->getTitle() ?>"></optgroup>
     <?php endif; ?>
 
-    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $item->getReadAccess()))): ?>
-        <?php if ($item->getType() != 0): ?>
+    <?php if ($adminAccess || $item->getReadAccess()) : ?>
+        <?php if ($item->getType() != 0) : ?>
             <?php $selected = ''; ?>
-            <?php if ($item->getId() == $obj->getRequest()->getParam('forumid')): ?>
+            <?php if ($item->getId() == $obj->getRequest()->getParam('forumid')) : ?>
                 <?php $selected = 'selected="selected"'; ?>
             <?php endif; ?>
                 <option value="<?=$item->getId() ?>" <?=$selected?>><?=$item->getTitle() ?></option>
@@ -36,7 +40,7 @@ function rec($item, $obj, $readAccess, $i)
     if (!empty($subItems) && $i == 0) {
         $i++;
         foreach ($subItems as $subItem) {
-            rec($subItem, $obj, $readAccess, $i);
+            rec($subItem, $obj, $i);
         }
     }
 }
@@ -59,11 +63,11 @@ function rec($item, $obj, $readAccess, $i)
                         </label>
                         <div class="col-lg-6">
                             <select class="form-control" id="selectForum" name="edit">
-                                <?php foreach ($forumItems as $item): ?>
-                                    <?php rec($item, $this, $readAccess, $i = null) ?>
+                                <?php foreach ($forumItems as $item) : ?>
+                                    <?php rec($item, $this, $i = null) ?>
                                 <?php endforeach; ?>
                             </select>
-                            <?php foreach ($editTopicItems as $editId): ?>
+                            <?php foreach ($editTopicItems as $editId) : ?>
                                 <input type="hidden" name="topicids[]" value="<?=$editId ?>" />
                             <?php endforeach; ?>
                         </div>

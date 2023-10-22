@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.34.1',
+        'version' => '1.34.2',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -59,8 +60,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('forum_groupAppearance', json_encode($appearance));
 
         $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
-        $filename = uniqid().'.css';
-        file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
+        $filename = uniqid() . '.css';
+        file_put_contents(APPLICATION_PATH . '/modules/forum/static/css/groupappearance/' . $filename, $defaultCss);
         $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
 
         $this->db()->query('INSERT INTO `[prefix]_forum_groupranking` (`group_id`,`rank`) VALUES(1,0);');
@@ -284,7 +285,7 @@ class Config extends \Ilch\Config\Install
                       <p>Administrator</p>", "en_EN");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         //Workaround to fix 1.1 and 1.10 being considered equal.
         if ($installedVersion == "1.10") {
@@ -344,7 +345,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_forum_ranks` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
                 // Delete no longer needed file.
-                unlink(ROOT_PATH.'/application/modules/forum/controllers/admin/Base.php');
+                unlink(ROOT_PATH . '/application/modules/forum/controllers/admin/Base.php');
                 // no break
             case "1.11.0":
             case "1.12.0":
@@ -361,8 +362,8 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('forum_groupAppearance', serialize($appearance));
 
                 $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
-                $filename = uniqid().'.css';
-                file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
+                $filename = uniqid() . '.css';
+                file_put_contents(APPLICATION_PATH . '/modules/forum/static/css/groupappearance/' . $filename, $defaultCss);
                 $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
 
                 // Add table for group ranking, which is needed when deciding which appearance needs to be applied.
@@ -442,8 +443,8 @@ class Config extends \Ilch\Config\Install
                               <p>Administrator</p>", "en_EN");');
 
                 // Create possibly missing "groupappearance"-directory and default CSS.
-                if (!file_exists(APPLICATION_PATH.'/modules/forum/static/css/groupappearance')) {
-                    mkdir(APPLICATION_PATH.'/modules/forum/static/css/groupappearance');
+                if (!file_exists(APPLICATION_PATH . '/modules/forum/static/css/groupappearance')) {
+                    mkdir(APPLICATION_PATH . '/modules/forum/static/css/groupappearance');
 
                     // Add default appearance for admin group
                     $databaseConfig = new \Ilch\Config\Database($this->db());
@@ -453,8 +454,8 @@ class Config extends \Ilch\Config\Install
                     $databaseConfig->set('forum_groupAppearance', serialize($appearance));
 
                     $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
-                    $filename = uniqid().'.css';
-                    file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
+                    $filename = uniqid() . '.css';
+                    file_put_contents(APPLICATION_PATH . '/modules/forum/static/css/groupappearance/' . $filename, $defaultCss);
                     $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
                 }
                 // no break
@@ -566,9 +567,9 @@ class Config extends \Ilch\Config\Install
                         ->execute()
                         ->fetchList();
 
-                    foreach($currentAccesses as $item_id => $accesses) {
+                    foreach ($currentAccesses as $item_id => $accesses) {
                         // Prepare rows for inserting them in chunks later. Remove potential duplicates and group ids of groups that no longer exist.
-                        foreach($columns as $column) {
+                        foreach ($columns as $column) {
                             $groupIds = array_intersect(array_unique(explode(',', $accesses[$column])), $existingGroupIds);
 
                             foreach ($groupIds as $groupId) {
@@ -796,6 +797,10 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_forum_topics` ADD CONSTRAINT `FK_[prefix]_forum_topics_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
                 // no break
+            case "1.34.1":
+                // no break
         }
+
+        return '"' . $this->config['key'] . '" Update function executed.';
     }
 }
