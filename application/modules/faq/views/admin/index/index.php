@@ -18,7 +18,7 @@ $faqs = $this->get('faqs');
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
                     <col>
                 </colgroup>
                 <thead>

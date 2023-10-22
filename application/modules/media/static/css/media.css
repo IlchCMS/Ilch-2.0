@@ -153,6 +153,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#353535', end
 
 #ilchmedia .thumb {
     margin-bottom: 30px;
+    position: relative;
 }
 
 .media-getname{
@@ -170,7 +171,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#353535', end
     width: 24px;
     position: absolute;
     top: 5px;
-    right: 9px;
+    right: 30px;
     outline: 0px none;
     border: 1px solid #575757;
     border-radius: 3px;
@@ -190,7 +191,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#353535', end
     position: absolute;
     top: 0px;
     left: 5px;
-    color: #0099FF;
+    color:#0099FF;
 }
 
 .nav-pills{

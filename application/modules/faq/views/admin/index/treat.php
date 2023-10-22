@@ -15,11 +15,11 @@ $cats = $this->get('cats');
 <?php if ($cats) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
-            <label for="catId" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
+            <label for="catId" class="col-xl-2 control-label">
                 <?=$this->getTrans('cat') ?>:
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <select class="form-control" id="catId" name="catId">
                     <?php foreach ($cats as $model) : ?>
                         <option value="<?=$model->getId() ?>" <?=($this->originalInput('catId', ($faq->getId() ? $faq->getCatId() : 0))) == $model->getId() ? 'selected=""' : '' ?>><?=$this->escape($model->getTitle()) ?></option>
@@ -27,11 +27,11 @@ $cats = $this->get('cats');
                 </select>
             </div>
         </div>
-        <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
-            <label for="question" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
+            <label for="question" class="col-xl-2 control-label">
                 <?=$this->getTrans('question') ?>:
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <input type="text"
                        class="form-control"
                        id="question"
@@ -39,11 +39,11 @@ $cats = $this->get('cats');
                        value="<?=$this->escape($this->originalInput('question', $faq->getQuestion())) ?>" />
             </div>
         </div>
-        <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('answer') ? 'has-error' : '' ?>">
-            <label for="ck_1" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('answer') ? 'has-error' : '' ?>">
+            <label for="ck_1" class="col-xl-2 control-label">
                 <?=$this->getTrans('answer') ?>:
             </label>
-            <div class="col-lg-10">
+            <div class="col-xl-10">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="answer"

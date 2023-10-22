@@ -14,8 +14,8 @@ if ($this->getUser()) {
     <table class="table table-hover table-striped">
         <colgroup>
             <col>
-            <col class="col-lg-5">
-            <col class="col-lg-1">
+            <col class="col-xl-5">
+            <col class="col-xl-1">
         </colgroup>
         <thead>
             <tr>
@@ -111,10 +111,10 @@ if ($this->getUser()) {
         <h1><?=$this->getTrans('menuEntry') ?></h1>
 
         <div class="row mb-3 <?=in_array('reason', $this->get('errorFields')) ? 'has-error' : '' ?>">
-            <label for="reason" class="col-lg-2 control-label">
+            <label for="reason" class="col-xl-2 control-label">
                 <?=$this->getTrans('reason') ?>:
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="reason"
@@ -123,10 +123,10 @@ if ($this->getUser()) {
             </div>
         </div>
         <div class="row mb-3 <?=in_array('when', $this->get('errorFields')) ? 'has-error' : '' ?>">
-            <label for="start" class="col-md-2 control-label">
+            <label for="start" class="col-xl-2 control-label">
                 <?=$this->getTrans('when') ?>:
             </label>
-            <div class="col-lg-3 input-group ilch-date date form_datetime pull-left">
+            <div class="col-xl-3 input-group ilch-date date form_datetime pull-left">
                 <input type="text"
                        class="form-control"
                        id="start"
@@ -137,7 +137,7 @@ if ($this->getUser()) {
                     <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
-            <div class="col-lg-3 input-group ilch-date date form_datetime">
+            <div class="col-xl-3 input-group ilch-date date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="end"
@@ -150,10 +150,10 @@ if ($this->getUser()) {
             </div>
         </div>
         <div class="row mb-3 <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
-            <label for="text" class="col-lg-2 control-label">
+            <label for="text" class="col-xl-2 control-label">
                 <?=$this->getTrans('description') ?>:
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <textarea class="form-control"
                           name="text"
                           id="text"
@@ -162,7 +162,7 @@ if ($this->getUser()) {
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
             <div class="row mb-3">
-                <div class="col-lg-offset-2 col-lg-10">
+                <div class="offset-xl-2 col-xl-10">
                     <input type="checkbox"
                            id="calendarShow"
                            name="calendarShow"
@@ -174,7 +174,7 @@ if ($this->getUser()) {
                 </div>
             </div>
         <?php endif; ?>
-        <div class="col-lg-8" align="right">
+        <div class="col-xl-8" align="right">
             <?=$this->getSaveBar('addButton', 'Away') ?>
         </div>
     </form>

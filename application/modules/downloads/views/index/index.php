@@ -61,7 +61,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
 {
     $subItems = $downloadsMapper->getDownloadsItemsByParent('1', $item->getId());
     $fileCount = $fileMapper->getCountOfFilesByCategory($item->getId());
-    
+
     if ($item->getType() === 0) {
         echo '<div class="page-header">
               <h4>'.$obj->getTrans('cat').': '.$obj->escape($item->getTitle()).'  <small>'.$obj->escape($item->getDesc()).'</small>
@@ -73,22 +73,22 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
         if ($lastFile && $lastFile->getFileImage() != '') {
             $image = $obj->getBaseUrl($lastFile->getFileImage()) ;
         }
-        echo '<div class="col-md-12 no-padding lib-item" data-category="view">
+        echo '<div class="col-lg-12 no-padding lib-item" data-category="view">
                 <div class="lib-panel">
                     <div class="row box-shadow">
-                        <div class="col-md-4">
+                        <div class="col-lg-4">
                             <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
                                 <img class="lib-img-show" src="'.$image.'">
                             </a>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-lg-8">
                             <div class="lib-row lib-header">
                                 <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
                                     '.$obj->escape($item->getTitle()).'
                                 </a>
                                 <p class="text-left">'.$obj->getTrans('files').': '.$fileCount.'</p>
                                 <div class="lib-header-seperator"></div>
-                                
+
                             </div>
                             <div class="lib-row lib-desc">
                                 '.$obj->escape($item->getDesc()).'
@@ -97,7 +97,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                     </div>
                 </div>
             </div>';
-        
+
     }
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
@@ -106,7 +106,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
     }
 }
 ?>
-<div class="col-lg-12">
+<div class="col-xl-12">
     <ul class="media-list">
         <?php
         if (!empty($downloadsItems)) {

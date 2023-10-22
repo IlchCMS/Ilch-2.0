@@ -39,16 +39,16 @@ $readAccess = $this->get('readAccess');
     <form class="form-horizontal" role="search" method="POST">
         <?=$this->getTokenField() ?>
         <div class="row mb-3">
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text" class="form-control" placeholder="<?=$this->getTrans('placeHolderSearch') ?>" name="search" id="search">
             </div>
-            <div class="col-lg-6">
-                <button type="submit" class="btn btn-default"><?=$this->getTrans('search') ?></button>
+            <div class="col-xl-6">
+                <button type="submit" class="btn btn-outline-secondary"><?=$this->getTrans('search') ?></button>
             </div>
         </div>
     </form>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg border rounded bg-light mb-3">
         <div class="container-fluid">
             <a class="navbar-brand">Navigation</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@ $readAccess = $this->get('readAccess');
                             <li class="nav-item">
                                 <a href="<?=$this->getUrl(['action' => 'index', 'catId' => $category->getId()]) ?>" <a class="nav-link <?=$active ?>">
                                     <b><?=$this->escape($category->getTitle()) ?></b>
-                                    <span class="badge"><?=$countFaqs ?></span>
+                                    <span class="badge rounded-pill bg-secondary"><?=$countFaqs ?></span>
                                 </a>
                             </li>
                         <?php endif; ?>
