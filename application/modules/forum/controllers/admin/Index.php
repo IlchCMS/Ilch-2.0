@@ -70,6 +70,7 @@ class Index extends Admin
                         'title' => 'required',
                         'readAccess' => 'min:0',
                         'replyAccess' => 'min:0',
+                        'createAccess' => 'min:0',
                     ]);
                     if (!$validation->isValid()) {
                         $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
@@ -83,7 +84,10 @@ class Index extends Admin
 
                 // Deletes old entries from database.
                 if (!empty($oldItems)) {
-                    $forumMapper->deleteItems(array_diff($oldItems, array_keys($items)));
+                    $itemsToDelete = array_diff($oldItems, array_keys($items));
+                    if (!empty($itemsToDelete)) {
+                        $forumMapper->deleteItems($itemsToDelete);
+                    }
                 }
 
                 if ($items) {
