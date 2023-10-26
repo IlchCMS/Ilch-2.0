@@ -48,20 +48,20 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
 
 <div id="forum">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-post-head ilch-head">
                 <?=$this->getTrans('topicMoveTo') ?>
             </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
                 <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="row mb-3">
-                        <label for="selectForum" class="col-lg-2 control-label">
+                        <label for="selectForum" class="col-xl-2 control-label">
                             <?=$this->getTrans('selectForum') ?>
                         </label>
-                        <div class="col-lg-6">
+                        <div class="col-xl-6">
                             <select class="form-control" id="selectForum" name="edit">
                                 <?php foreach ($forumItems as $item) : ?>
                                     <?php rec($item, $this, $i = null) ?>
@@ -73,7 +73,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="offset-lg-2 col-lg-10">
+                        <div class="offset-xl-2 col-xl-10">
                             <button type="submit" class="btn btn-sm btn-primary" name="edittopic" value="edittopic">
                                 <?=$this->getTrans('move') ?>
                             </button>

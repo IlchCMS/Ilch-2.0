@@ -555,7 +555,6 @@ legend .forum.fa {
 
 #forum .topic-actions {
     margin-bottom: 10px;
-    height: 35px;
     min-height: 35px;
     overflow: hidden;
 }
@@ -629,4 +628,9 @@ legend .forum.fa {
 }
 #editRememberedPost .form-horizontal .form-group .control-label {
     text-align: left;
+}
+
+#forum .statistics,
+#forum h5 {
+    font-size: .95rem !important;
 }

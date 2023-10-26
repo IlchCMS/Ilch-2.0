@@ -6,10 +6,10 @@
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-lg-2 control-label">
+        <label for="title" class="col-xl-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <input type="text"
                    class="form-control"
                    id="title"
@@ -19,10 +19,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('posts') ? 'has-error' : '' ?>">
-        <label for="posts" class="col-lg-2 control-label">
+        <label for="posts" class="col-xl-2 control-label">
             <?=$this->getTrans('posts') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <input type="number"
                    class="form-control"
                    id="posts"

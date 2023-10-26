@@ -10,10 +10,10 @@
     <form id="editRememberedPost_form" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 <?=$this->validation()->hasError('note') ? 'has-error' : '' ?>">
-            <label for="note" class="col-lg-2 control-label">
+            <label for="note" class="col-xl-2 control-label">
                 <?=$this->getTrans('rememberedPostNote') ?>:
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="note"

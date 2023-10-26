@@ -37,12 +37,12 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
         <i class="fa-solid fa-chevron-right"></i> <?=$this->getTrans('newPost') ?>
     </h1>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-post-head ilch-head">
                 <?=$this->getTrans('newPost') ?>
             </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
                 <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
@@ -55,7 +55,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-lg-12">
+                        <div class="col-xl-12">
                             <input type="submit"
                                    class="btn btn-sm btn-primary"
                                    name="saveNewPost"

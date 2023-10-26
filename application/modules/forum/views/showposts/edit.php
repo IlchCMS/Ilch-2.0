@@ -14,24 +14,24 @@ $post = $this->get('post');
 
 <div id="forum">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-post-head ilch-head">
                 <?=$this->getTrans('editPost') ?>
             </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
                 <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
                     <?php if ($this->get('isFirstPost')) : ?>
                     <div class="row mb-3 <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
-                        <label for="topicTitle" class="col-lg-2 control-label">
+                        <label for="topicTitle" class="col-xl-2 control-label">
                             <?=$this->getTrans('topicTitle') ?>
                         </label>
                         <?php if ($forum->getPrefix() != '') : ?>
                             <?php $prefix = explode(',', $forum->getPrefix()); ?>
                             <?php array_unshift($prefix, ''); ?>
-                            <div class="col-lg-2 prefix">
+                            <div class="col-xl-2 prefix">
                                 <select class="form-control" id="topicPrefix" name="topicPrefix">
                                     <?php foreach ($prefix as $key => $value) : ?>
                                         <?php $selected = ''; ?>
@@ -43,7 +43,7 @@ $post = $this->get('post');
                                 </select>
                             </div>
                         <?php endif; ?>
-                        <div class="col-lg-5">
+                        <div class="col-xl-5">
                             <input type="text"
                                    class="form-control"
                                    id="topicTitle"
@@ -53,10 +53,10 @@ $post = $this->get('post');
                     </div>
                     <?php endif; ?>
                     <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-                        <label class="col-lg-2 control-label">
+                        <label class="col-xl-2 control-label">
                             <?=$this->getTrans('text') ?>
                         </label>
-                        <div class="col-lg-10">
+                        <div class="col-xl-10">
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
                                       name="text"
@@ -64,7 +64,7 @@ $post = $this->get('post');
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="offset-lg-2 col-lg-8">
+                        <div class="offset-xl-2 col-xl-8">
                             <input type="submit"
                                    class="btn btn-sm btn-primary"
                                    name="editPost"

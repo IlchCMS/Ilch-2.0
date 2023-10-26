@@ -16,8 +16,8 @@ $pagination = $this->get('pagination');
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col class="col-lg-4">
+                    <col class="col-xl-2">
+                    <col class="col-xl-4">
                     <col>
                 </colgroup>
                 <thead>

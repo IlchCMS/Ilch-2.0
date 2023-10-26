@@ -6,10 +6,10 @@
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('picturesPerPage') ? 'has-error' : '' ?>">
-        <label for="picturesPerPageInput" class="col-lg-2 control-label">
+        <label for="picturesPerPageInput" class="col-xl-2 control-label">
             <?=$this->getTrans('picturesPerPage') ?>:
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="picturesPerPageInput"
@@ -20,10 +20,10 @@
     </div>
     <h1><?=$this->getTrans('box') ?>: <?=$this->getTrans('pictureOfX') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('pictureOfXSource') ? 'has-error' : '' ?>">
-        <label for="pictureOfXSource" class="col-lg-2 control-label">
+        <label for="pictureOfXSource" class="col-xl-2 control-label">
             <?=$this->getTrans('pictureOfXSource') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="pictureOfXSource"
                     name="pictureOfXSource[]"
@@ -39,10 +39,10 @@
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('pictureOfXInterval') ? 'has-error' : '' ?>">
         <?php $selected = ($this->get('pictureOfXInterval')) ? 'selected="selected"' : ''?>
-        <label for="pictureOfXInterval" class="col-lg-2 control-label">
+        <label for="pictureOfXInterval" class="col-xl-2 control-label">
             <?=$this->getTrans('pictureOfXInterval') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="pictureOfXInterval"
                     name="pictureOfXInterval"
@@ -56,10 +56,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('pictureOfXRandom') ? 'has-error' : '' ?>">
-        <label for="pictureOfXRandom" class="col-lg-2 control-label">
+        <label for="pictureOfXRandom" class="col-xl-2 control-label">
             <?=$this->getTrans('pictureOfXRandom') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="pictureOfXRandom-on" name="pictureOfXRandom" value="1" <?=$this->originalInput('pictureOfXRandom', $this->get('pictureOfXRandom')) ? 'checked="checked"' : '' ?> />
                 <label for="pictureOfXRandom-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -72,10 +72,10 @@
 
     <h1><?=$this->getTrans('venoboxSetting') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxNumeration') ? 'has-error' : '' ?>">
-        <label for="venoboxNumeration" class="col-lg-2 control-label">
+        <label for="venoboxNumeration" class="col-xl-2 control-label">
             <?=$this->getTrans('venoboxNumeration') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="venoboxNumeration-on" name="venoboxNumeration" value="1" <?=$this->originalInput('venoboxNumeration', $this->get('venoboxNumeration')) ? 'checked="checked"' : '' ?>  />
                 <label for="venoboxNumeration-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -87,10 +87,10 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxOverlayColor') ? 'has-error' : '' ?>">
-        <label for="venoboxOverlayColor" class="col-lg-2 control-label">
+        <label for="venoboxOverlayColor" class="col-xl-2 control-label">
             <?=$this->getTrans('venoboxOverlayColor') ?>:
         </label>
-        <div class="col-lg-2 input-group">
+        <div class="col-xl-2 input-group">
             <input class="form-control color {hash:true}"
                    id="venoboxOverlayColor"
                    name="venoboxOverlayColor"
@@ -102,10 +102,10 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxInfiniteGallery') ? 'has-error' : '' ?>">
-        <label for="venoboxInfiniteGallery" class="col-lg-2 control-label">
+        <label for="venoboxInfiniteGallery" class="col-xl-2 control-label">
             <?=$this->getTrans('venoboxInfiniteGallery') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="venoboxInfiniteGallery-on" name="venoboxInfiniteGallery" value="1" <?=$this->originalInput('venoboxInfiniteGallery', $this->get('venoboxInfiniteGallery')) ? 'checked="checked"' : '' ?> />
                 <label for="venoboxInfiniteGallery-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -117,10 +117,10 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxBgcolor') ? 'has-error' : '' ?>">
-        <label for="venoboxBgcolor" class="col-lg-2 control-label">
+        <label for="venoboxBgcolor" class="col-xl-2 control-label">
             <?=$this->getTrans('venoboxBgcolor') ?>:
         </label>
-        <div class="col-lg-2 input-group">
+        <div class="col-xl-2 input-group">
             <input class="form-control color {hash:true}"
                    id="venoboxBgcolor"
                    name="venoboxBgcolor"
@@ -132,10 +132,10 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxBorder') ? 'has-error' : '' ?>">
-        <label for="venoboxBorder" class="col-lg-2 control-label">
+        <label for="venoboxBorder" class="col-xl-2 control-label">
             <?=$this->getTrans('venoboxBorder') ?>:
         </label>
-        <div class="col-lg-2 input-group">
+        <div class="col-xl-2 input-group">
             <input type="text"
                    class="form-control"
                    id="venoboxBorder"
@@ -147,10 +147,10 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxTitleattr') ? 'has-error' : '' ?>">
-        <label for="venoboxTitleattr" class="col-lg-2 control-label">
+        <label for="venoboxTitleattr" class="col-xl-2 control-label">
             <?=$this->getTrans('venoboxTitleattr') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="venoboxTitleattr-on" name="venoboxTitleattr" value="title" <?=$this->originalInput('venoboxTitleattr', $this->get('venoboxTitleattr')) == 'title' ? 'checked="checked"' : '' ?> />
                 <label for="venoboxTitleattr-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
