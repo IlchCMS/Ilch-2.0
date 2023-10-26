@@ -9,11 +9,11 @@
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+        <label for="name" class="col-xl-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="name"
@@ -22,11 +22,11 @@
                    value="<?=($this->get('link') != '') ? $this->escape($this->get('link')->getName()) : $this->escape($this->get('post')['name']) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
-        <label for="link" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
+        <label for="link" class="col-xl-2 control-label">
             <?=$this->getTrans('link') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="link"
@@ -35,11 +35,11 @@
                    value="<?=($this->get('link') != '') ? $this->escape($this->get('link')->getLink()) : $this->escape($this->get('post')['link']) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
-        <label for="selectedImage_1" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
+        <label for="selectedImage_1" class="col-xl-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control"
@@ -51,11 +51,11 @@
             </div>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
-        <label for="desc" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="desc" class="col-xl-2 control-label">
             <?=$this->getTrans('description') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <textarea class="form-control"
                       id="desc"
                       name="desc"
@@ -63,11 +63,11 @@
                       rows="3"><?=($this->get('link') != '') ? $this->escape($this->get('link')->getDesc()) : $this->escape($this->get('post')['desc']) ?></textarea>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
-        <label for="catId" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
+        <label for="catId" class="col-xl-2 control-label">
             <?=$this->getTrans('category') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="form-control" id="catId" name="catId">
                 <option value="0">-- <?=$this->getTrans('optionNoCategory') ?> --</option>
                 <?php

@@ -3,7 +3,7 @@
 <link href="<?=$this->getModuleUrl('../user/static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
-    <div class="col-lg-12 profile">
+    <div class="col-xl-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
@@ -11,10 +11,10 @@
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('acceptNewsletter') ? 'has-error' : '' ?>">
-                    <div class="col-lg-3 control-label">
+                    <div class="col-xl-3 control-label">
                         <?=$this->getTrans('acceptNewsletter') ?>:
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-xl-4">
                         <div class="flipswitch">
                             <input type="radio" class="flipswitch-input" id="newsletter_yes" name="acceptNewsletter" value="1" <?=($countMail == '1') ? 'checked="checked"' : '' ?> />
                             <label for="newsletter_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-lg-offset-3 col-lg-12">
+                    <div class="offset-xl-3 col-xl-12">
                         <input type="submit"
                                name="saveEntry"
                                class="btn btn-outline-secondary"
