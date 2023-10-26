@@ -13,8 +13,8 @@ $appearances = $this->get('appearances');
             <colgroup>
                 <col class="icon_width">
                 <col class="icon_width" />
-                <col class="col-lg-2">
-                <col class="col-lg-10">
+                <col class="col-xl-2">
+                <col class="col-xl-10">
             </colgroup>
             <thead>
             <tr>

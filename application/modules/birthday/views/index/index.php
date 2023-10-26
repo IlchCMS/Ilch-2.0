@@ -15,13 +15,13 @@ $date = new \Ilch\Date();
         </div>
         <?php foreach ($this->get('birthdayListNOW') as $birthdaylist): ?>
             <div class="card-body">
-                <div class="col-lg-12">
-                    <div class="col-lg-2 confetti">
+                <div class="col-xl-12">
+                    <div class="col-xl-2 confetti">
                         <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
                             <img class="thumbnail center-block" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69">
                         </a>
                     </div>
-                    <div class="col-lg-10">
+                    <div class="col-xl-10">
                         <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><strong><?=$this->escape($birthdaylist->getName()) ?></strong></a><br />
                         <?=$this->getTrans('will') ?> <?=floor(($date->format('Ymd') - str_replace("-", "", $this->escape($birthdaylist->getBirthday()))) / 10000) ?> <?=$this->getTrans('yearsOld') ?><br />
                         <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($birthdaylist->getID())): ?>

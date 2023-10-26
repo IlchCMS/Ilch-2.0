@@ -37,7 +37,7 @@ if ($this->getUser()) {
             <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($prefix . $topicpost->getTopicTitle()) ?>
         </h1>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <?php if ($topicpost->getStatus() == 0) : ?>
                     <?php if ($this->getUser()): ?>
                         <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
@@ -79,7 +79,7 @@ if ($this->getUser()) {
                 <?php endif; ?>
                 <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>
             </div>
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <div class="posts-head ilch-head">
                     <?=$this->escape($prefix . $topicpost->getTopicTitle()) ?>
                 </div>
@@ -93,9 +93,9 @@ if ($this->getUser()) {
             ?>
             <div id="<?=$post->getId() ?>" class="post ilch-bg <?=($reported) ? 'reported' : '' ?>">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lxlg-12">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-xl-6">
                                 <p class="author">
                                     <a href="#<?=$post->getId() ?>"><img src="<?=$this->getModuleUrl('static/img/icon_post_target.png') ?>" alt="Post" title="Post" height="9" width="11"></a>
                                     <?=$this->getTrans('by') ?>
@@ -106,12 +106,12 @@ if ($this->getUser()) {
                                     <?=$date->format('d.m.Y H:i:s', true) ?>
                                 </p>
                             </div>
-                            <div class="col-lg-6 pull-right">
+                            <div class="col-xl-6 pull-right">
                                 <div class="delete">
                                     <?php if ($this->getUser()) : ?>
                                         <?php if ($this->getUser()->isAdmin()) : ?>
                                             <p class="delete-post">
-                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()], null, true) ?>" id="delete" class="btn btn-primary btn-sm">
+                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()], null, true) ?>" id="delete" class="btn btn-primary btn-sm p-0 pe-1">
                                                     <span class="badge">
                                                         <i class="fa-regular fa-trash-can"></i>
                                                     </span><?=$this->getTrans('delete') ?>
@@ -124,7 +124,7 @@ if ($this->getUser()) {
                                     <?php if ($this->getUser()) : ?>
                                         <?php if ($this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum') || $this->getUser()->getId() == $post->getAutor()->getId()) : ?>
                                             <p class="edit-post">
-                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-sm">
+                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-sm p-0 pe-1">
                                                     <span class="badge">
                                                         <i class="fa-solid fa-pencil"></i>
                                                     </span><?=$this->getTrans('edit') ?>
@@ -171,15 +171,15 @@ if ($this->getUser()) {
                 <div class="post-footer ilch-bg">
                     <?php if ($this->get('postVoting')) : ?>
                         <?php if ($this->getUser() && !$post->isUserHasVoted()) : ?>
-                            <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
+                            <a class="btn btn-sm btn-outline-secondary btn-hover-success text-white" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
                                 <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
                             </a>
                         <?php elseif ($this->getUser() && $post->isUserHasVoted()) : ?>
-                            <button class="btn btn-sm btn-outline-secondary btn-success">
+                            <button class="btn btn-sm btn-outline-secondary btn-success text-white">
                                 <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
                             </button>
                         <?php else : ?>
-                            <button class="btn btn-sm btn-outline-secondary">
+                            <button class="btn btn-sm btn-outline-secondary text-white">
                                 <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
                             </button>
                         <?php endif; ?>
@@ -188,7 +188,7 @@ if ($this->getUser()) {
                         <div class="quote">
                             <?php if ($adminAccess || $forum->getReplyAccess()) : ?>
                                 <p class="quote-post">
-                                    <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-sm">
+                                    <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-sm p-0 pe-1">
                         <span class="badge">
                             <i class="fas fa-quote-left"></i>
                         </span><?=$this->getTrans('quote') ?>
@@ -199,7 +199,7 @@ if ($this->getUser()) {
                         <?php if (!$reported && $this->get('reportingPosts')) : ?>
                             <div class="report">
                                 <p class="report-post">
-                                    <a href="<?=$this->getUrl(['action' => 'report','topicid' => $this->getRequest()->getParam('topicid'), 'postid' => $post->getId()]) ?>" class="btn btn-primary btn-sm">
+                                    <a href="<?=$this->getUrl(['action' => 'report','topicid' => $this->getRequest()->getParam('topicid'), 'postid' => $post->getId()]) ?>" class="btn btn-primary btn-sm p-0 pe-1">
                         <span class="badge">
                             <i class="fa-solid fa-flag"></i>
                         </span><?=$this->getTrans('report') ?>
@@ -210,7 +210,7 @@ if ($this->getUser()) {
                         <?php if (!$remembered) : ?>
                             <div class="remember">
                                 <p class="remember-post">
-                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
+                                    <button class="btn btn-primary btn-sm p-0 pe-1" data-bs-toggle="modal" data-bs-target="#rememberDialog" data-post-id="<?=$post->getId() ?>">
                             <span class="badge">
                                 <i class="fa-solid fa-bookmark"></i>
                             </span><?=$this->getTrans('remember') ?>

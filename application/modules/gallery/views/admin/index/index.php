@@ -70,7 +70,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
 <form class="form-horizontal row" id="galleryForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <h1><?=$this->getTrans('gallery') ?></h1>
-    <div class="col-lg-6">
+    <div class="col-xl-6">
         <ol id="sortable" class="sortable">
             <?php
             if (!empty($galleryItems)) {
@@ -81,21 +81,21 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
             ?>
         </ol>
     </div>
-    <div class="col-lg-6 changeBox">
+    <div class="col-xl-6 changeBox">
         <input type="hidden" id="id" value="" />
         <div class="row mb-3">
-            <label for="title" class="col-lg-3 control-label">
+            <label for="title" class="col-xl-3 control-label">
                 <?=$this->getTrans('title') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text" class="form-control" id="title" />
             </div>
         </div>
         <div class="row mb-3">
-            <label for="desc" class="col-lg-3 control-label">
+            <label for="desc" class="col-xl-3 control-label">
                 <?=$this->getTrans('description') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <textarea class="form-control"
                           id="desc"
                           name="desc"
@@ -104,10 +104,10 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
             </div>
         </div>
         <div class="row mb-3">
-            <label for="type" class="col-lg-3 control-label">
+            <label for="type" class="col-xl-3 control-label">
                 <?=$this->getTrans('type') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <select class="form-control" id="type">
                     <option value="0"><?=$this->getTrans('cat') ?></option>
                     <option value="1"><?=$this->getTrans('gallery') ?></option>
@@ -115,7 +115,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
             </div>
         </div>
         <div class="dyn"></div>
-        <div class="col-lg-offset-3 actions">
+        <div class="offset-xl-3 actions">
             <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
         </div>
     </div>
@@ -202,8 +202,8 @@ $(document).ready (
                 return;
             }
 
-            let menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
-                        <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+            let menuHtml = '<div class="row mb-3"><label for="href" class="col-xl-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
+                        <div class="col-xl-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() === '0') {
                 $('.dyn').html('');

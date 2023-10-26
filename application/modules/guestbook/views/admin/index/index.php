@@ -10,7 +10,7 @@
         </li>
         <?php if ($this->get('badge') > 0): ?>
             <li <?=($this->getRequest()->getParam('showsetfree')) ? 'class="active"' : '' ?>>
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
+                <a class="nav-link" href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                     <?=$this->getTrans('setfree') ?><span class="badge rounded-pill bg-secondary"><?=$this->get('badge') ?></span>
                 </a>
             </li>
@@ -28,9 +28,9 @@
                     }
                     ?>
                     <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
                     <col>
                 </colgroup>
                 <thead>

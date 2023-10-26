@@ -11,17 +11,17 @@ $image = $this->get('image');
     <?=$this->getTokenField() ?>
     <div id="gallery">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-lg-4">
                 <a href="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>">
                     <img class="img-thumbnail" src="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/>
                 </a>
             </div>
-            <div class="col-md-8">
+            <div class="col-lg-8">
                 <div class="row mb-3">
-                    <label for="imageTitleInput" class="col-lg-2 control-label">
+                    <label for="imageTitleInput" class="col-xl-2 control-label">
                         <?=$this->getTrans('imageTitle') ?>:
                     </label>
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
                         <input type="text"
                                class="form-control"
                                id="imageTitleInput"
@@ -30,10 +30,10 @@ $image = $this->get('image');
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="imageDescInput" class="col-lg-2 control-label">
+                    <label for="imageDescInput" class="col-xl-2 control-label">
                         <?=$this->getTrans('imageDesc') ?>:
                     </label>
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
                         <textarea class="form-control"
                                   id="imageDescInput"
                                   rows="8"

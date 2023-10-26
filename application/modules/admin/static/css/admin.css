@@ -5,7 +5,6 @@ html {
     position: relative;
     overflow-x: hidden;
 }
-
 body {
     margin: 0;
     padding: 0;
@@ -92,7 +91,6 @@ header {
 }
 a {
     color: black !important;
-    text-decoration: none;
 }
 a:hover {
     text-decoration: underline;
@@ -111,9 +109,6 @@ a:hover {
 #content .form-horizontal .form-group {
     margin-left: 0;
     margin-right: 0;
-}
-#content .ilch-margin-b {
-    margin-bottom:15px;
 }
 #content .table > thead > tr > th {
   border-bottom: 2px solid #ddd;
@@ -237,7 +232,7 @@ aside nav ul .active > a {
 }
 
 .withEmptyCells {
-    border-collapse: collapse;
+    border-collapse: separate;
 }
 
 .watermark {
@@ -434,6 +429,7 @@ aside {
     background-image: linear-gradient(to bottom, #f3f3f3, #e2e2e2);
     background-repeat: repeat-x;
     position: relative;
+
 }
 #header > div {
     display: inline-block;
@@ -523,9 +519,8 @@ aside {
     margin-top: 3px;
     padding: 7px 0 !important;
     background: 0 0;
-    color: #fff;
 }
-#ribbon .breadcrumb-item +.breadcrumb-item:before, #ribbon .breadcrumb, #ribbon .breadcrumb a {
+#ribbon .breadcrumb, #ribbon .breadcrumb a {
     color: #ccc !important;
     text-decoration: none !Important;
 }
