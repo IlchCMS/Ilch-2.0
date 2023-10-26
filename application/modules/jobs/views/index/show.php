@@ -15,10 +15,10 @@ $job = $this->get('job');
 <h1><?=$this->getTrans('menuJob') ?></h1>
 
 <div class="row">
-    <div class="col-lg-2">
+    <div class="col-xl-2">
         <i class="fa-solid fa-briefcase fa-4x briefcase"></i>
     </div>
-    <div class="col-lg-10" style="margin-bottom: 35px;">
+    <div class="col-xl-10" style="margin-bottom: 35px;">
         <h1><?=$this->escape($job->getTitle()) ?></h1>
         <?=$this->purify($job->getText()) ?>
     </div>
@@ -28,13 +28,13 @@ $job = $this->get('job');
     <h1><?=$this->getTrans('apply') ?></h1>
     <form action="" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
-        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-            <label for="title" class="col-lg-3 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+            <label for="title" class="col-xl-3 control-label">
                 <div class="text-left">
                     <?=$this->getTrans('applyAs') ?>:
                 </div>
             </label>
-            <div class="col-lg-3">
+            <div class="col-xl-3">
                 <select class="form-control" id="title" name="title">
                     <?php foreach ($this->get('jobs') as $job) : ?>
                         <option value="<?=$job->getTitle() ?>" <?=($this->getRequest()->getParam('id') == $job->getId()) ? 'selected="selected"' : '' ?>>
@@ -44,8 +44,8 @@ $job = $this->get('job');
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-            <div class="col-lg-12">
+        <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+            <div class="col-xl-12">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
@@ -53,7 +53,7 @@ $job = $this->get('job');
                           rows="5"><?=$this->originalInput('text') ?></textarea>
             </div>
         </div>
-        <div class="col-lg-12 text-right">
+        <div class="col-xl-12 text-right">
             <?=$this->getSaveBar('apply', 'Apply') ?>
         </div>
     </form>
