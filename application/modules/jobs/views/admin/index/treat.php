@@ -11,10 +11,10 @@ $job = $this->get('job');
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('show') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+        <div class="col-xl-2 control-label">
             <?=$this->getTrans('show') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="jobs-yes" name="show" value="1" <?=$this->originalInput('show', $job->getShow()) ? 'checked="checked"' : '' ?> />
                 <label for="jobs-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
@@ -24,11 +24,11 @@ $job = $this->get('job');
             </div>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <label for="title" class="col-xl-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="title"
@@ -36,11 +36,11 @@ $job = $this->get('job');
                    value="<?=$this->escape($this->originalInput('title', $job->getTitle())) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label for="ck_1" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+        <label for="ck_1" class="col-xl-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="text"
@@ -48,11 +48,11 @@ $job = $this->get('job');
                       rows="5"><?=$this->escape($this->originalInput('text', $job->getText())) ?></textarea>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-        <label for="email" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+        <label for="email" class="col-xl-2 control-label">
             <?=$this->getTrans('email') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="email"
                    class="form-control"
                    id="email"

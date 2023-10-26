@@ -33,10 +33,10 @@ $history = $this->get('history');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-lg-2 control-label">
+        <label for="title" class="col-xl-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="title"
@@ -45,10 +45,10 @@ $history = $this->get('history');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label for="ck_1" class="col-lg-2 control-label">
+        <label for="ck_1" class="col-xl-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="text"
@@ -57,10 +57,10 @@ $history = $this->get('history');
         </div>
     </div>
     <div class="row mb-3">
-        <label for="symbol" class="col-lg-2 control-label">
+        <label for="symbol" class="col-xl-2 control-label">
             <?=$this->getTrans('symbol') ?>:
         </label>
-        <div class="col-lg-2 input-group ilch-date">
+        <div class="col-xl-2 input-group ilch-date">
             <span class="input-group-text">
                 <span id="chosensymbol" class="<?=$this->originalInput('symbol', $history->getType())  ?>"></span>
             </span>
@@ -69,17 +69,17 @@ $history = $this->get('history');
                    id="symbol"
                    name="symbol"
                    value="<?=$this->originalInput('symbol', $history->getType()) ?>"
-                   readonly />
+                   disabled />
             <span class="input-group-text">
                 <span class="fa-solid fa-mouse-pointer" data-bs-toggle="modal" data-bs-target="#symbolDialog"></span>
             </span>
         </div>
     </div>
     <div class="row mb-3">
-        <label for="color" class="col-lg-2 control-label">
+        <label for="color" class="col-xl-2 control-label">
             <?=$this->getTrans('color') ?>:
         </label>
-        <div class="col-lg-2 input-group ilch-date">
+        <div class="col-xl-2 input-group ilch-date">
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"
@@ -95,12 +95,10 @@ $history = $this->get('history');
 <div class="modal fade" id="symbolDialog" tabindex="-1" role="dialog" aria-labelledby="symbolDialogTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header row">
                 <h5 class="modal-title" id="symbolDialogTitle"><?=$this->getTrans('chooseIcon') ?></h5>
-                <button type="button" class="btn" id="noIcon" data-dismiss="modal"><?=$this->getTrans('noIcon') ?></button>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="col-6"><button type="button" class="btn btn-outline-secondary" id="noIcon" data-bs-dismiss="modal"><?=$this->getTrans('noIcon') ?></button></div>
             </div>
             <div class="modal-body">
             </div>
@@ -151,7 +149,7 @@ $history = $this->get('history');
                 let y;
                 div = '<div class="row">';
                 for (y = x; y < x + 6; y++) {
-                    div += '<div class="icon col-lg-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
+                    div += '<div class="icon col-xl-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
                 }
                 div += '</div>';
                 x = y;
