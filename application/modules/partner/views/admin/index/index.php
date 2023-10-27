@@ -8,14 +8,14 @@
     <form class="form-horizontal" id="partnerIndexForm" method="POST">
         <?=$this->getTokenField() ?>
         <ul class="nav nav-tabs">
-            <li <?=(!$this->getRequest()->getParam('showsetfree')) ? 'class="active"' : '' ?>>
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
+            <li class="nav-item <?=(!$this->getRequest()->getParam('showsetfree')) ? 'active' : '' ?>">
+                <a class="nav-link" href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
                     <?=$this->getTrans('entrys') ?>
                 </a>
             </li>
             <?php if ($this->get('badge') > 0): ?>
-                <li <?=($this->getRequest()->getParam('showsetfree')) ? 'class="active"' : '' ?>>
-                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
+                <li class="nav-item <?=($this->getRequest()->getParam('showsetfree')) ? 'active' : '' ?>">
+                    <a class="nav-link"href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                         <?=$this->getTrans('setfree') ?> <span class="badge"><?=$this->get('badge') ?></span>
                     </a>
                 </li>
@@ -31,7 +31,7 @@
                     <?php endif; ?>
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
                     <col />
                 </colgroup>
                 <thead>
@@ -94,16 +94,16 @@
         ?>
         <?php if (!$this->getRequest()->getParam('showsetfree')) : ?>
             <div class="content_savebox">
-                <button type="submit" class="btn btn-default" name="save" value="save">
+                <button type="submit" class="btn btn-outline-secondary" name="save" value="save">
                     <?=$this->getTrans('saveButton') ?>
                 </button>
                 <input type="hidden" class="content_savebox_hidden" name="action" value="" />
                 <div class="btn-group dropup">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
                         <?=$this->getTrans('selected') ?> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu listChooser" role="menu">
-                        <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+                        <li><a class="dropdown-item" href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
                     </ul>
                 </div>
             </div>

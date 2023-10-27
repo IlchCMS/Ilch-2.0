@@ -9,11 +9,11 @@
 </h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <label for="title" class="col-xl-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="title"
@@ -21,11 +21,11 @@
                    value="<?=($linkus != '') ? $this->escape($linkus->getTitle()) : $this->escape($this->get('post')['title']) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
-        <label for="selectedImage_1" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
+        <label for="selectedImage_1" class="col-xl-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control"

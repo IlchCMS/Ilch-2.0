@@ -11,11 +11,11 @@ if (!$this->validation()->hasErrors()) {
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('showHtml') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('showHtml') ? 'has-error' : '' ?>">
+        <div class="col-xl-2 control-label">
             <?=$this->getTrans('showHtml') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="html-yes" name="showHtml" value="1" <?=($showHtml) ? 'checked="checked"' : '' ?> />
                 <label for="html-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
@@ -25,11 +25,11 @@ if (!$this->validation()->hasErrors()) {
             </div>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('showBBCode') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('showBBCode') ? 'has-error' : '' ?>">
+        <div class="col-xl-2 control-label">
             <?=$this->getTrans('showBBCode') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="bbcode-yes" name="showBBCode" value="1" <?=($showBBCode) ? 'checked="checked"' : '' ?> />
                 <label for="bbcode-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>

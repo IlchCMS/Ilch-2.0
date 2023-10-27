@@ -2,11 +2,11 @@
 <?php if ($this->get('emails') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
-            <label for="subject" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
+            <label for="subject" class="col-xl-2 control-label">
                 <?=$this->getTrans('subject') ?>:
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <input type="text"
                        class="form-control"
                        id="subject"
@@ -15,11 +15,11 @@
                        required />
             </div>
         </div>
-        <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-            <label for="ck_1" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+            <label for="ck_1" class="col-xl-2 control-label">
                 <?=$this->getTrans('text') ?>:
             </label>
-            <div class="col-lg-10">
+            <div class="col-xl-10">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
