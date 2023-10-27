@@ -33,10 +33,10 @@
     </ul>
     <br />
     <div class="row mb-3 <?=$this->validation()->hasError('shopCurrency') ? 'has-error' : '' ?>">
-        <label for="shopCurrency" class="col-lg-2 control-label">
+        <label for="shopCurrency" class="col-xl-2 control-label">
             <?=$this->getTrans('shopCurrency') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <select class="form-control"
                     name="shopCurrency"
                     id="shopCurrency">
@@ -53,10 +53,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('fixTax') ? 'has-error' : '' ?>">
-        <label for="fixTax" class="col-lg-2 control-label">
+        <label for="fixTax" class="col-xl-2 control-label">
             <?=$this->getTrans('fixTax') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <div class="input-group">
                 <input type="number"
                        class="form-control"
@@ -72,10 +72,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('fixShippingCosts') ? 'has-error' : '' ?>">
-        <label for="fixShippingCosts" class="col-lg-2 control-label">
+        <label for="fixShippingCosts" class="col-xl-2 control-label">
             <?=$this->getTrans('fixShippingCosts') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <div class="input-group">
                 <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
@@ -94,10 +94,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('fixShippingTime') ? 'has-error' : '' ?>">
-        <label for="fixShippingTime" class="col-lg-2 control-label">
+        <label for="fixShippingTime" class="col-xl-2 control-label">
             <?=$this->getTrans('fixShippingTime') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <div class="input-group">
                 <input type="number"
                        class="form-control"
@@ -113,10 +113,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('allowWillCollect') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+        <div class="col-xl-2 control-label">
             <?=$this->getTrans('allowWillCollect') ?>
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="allowWillCollect-on" name="allowWillCollect" value="1" <?=($this->get('settings')->getAllowWillCollect() == '1') ? 'checked="checked"' : '' ?> />
                 <label for="allowWillCollect-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -128,10 +128,10 @@
     </div>
     <hr />
     <div class="row mb-3 <?=$this->validation()->hasError('invoiceTextTop') ? 'has-error' : '' ?>">
-        <label for="invoiceTextTop" class="col-lg-2 control-label">
+        <label for="invoiceTextTop" class="col-xl-2 control-label">
             <?=$this->getTrans('invoiceTextTop') ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <div class="input-group">
                 <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextTop') ?>"></span>
@@ -145,10 +145,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('invoiceTextBottom') ? 'has-error' : '' ?>">
-        <label for="invoiceTextBottom" class="col-lg-2 control-label">
+        <label for="invoiceTextBottom" class="col-xl-2 control-label">
             <?=$this->getTrans('invoiceTextBottom') ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <div class="input-group">
                 <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextBottom') ?>"></span>
@@ -162,10 +162,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('deliveryTextTop') ? 'has-error' : '' ?>">
-        <label for="deliveryTextTop" class="col-lg-2 control-label">
+        <label for="deliveryTextTop" class="col-xl-2 control-label">
             <?=$this->getTrans('deliveryTextTop') ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <div class="input-group">
                 <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoDeliveryTextTop') ?>"></span>

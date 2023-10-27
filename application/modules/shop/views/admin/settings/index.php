@@ -33,10 +33,10 @@
     </ul>
     <br />
     <div class="row mb-3 <?=$this->validation()->hasError('shopName') ? 'has-error' : '' ?>">
-        <label for="shopName" class="col-lg-2 control-label">
+        <label for="shopName" class="col-xl-2 control-label">
             <?=$this->getTrans('shopName') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="shopName"
@@ -46,10 +46,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('shopStreet') ? 'has-error' : '' ?>">
-        <label for="shopStreet" class="col-lg-2 control-label">
+        <label for="shopStreet" class="col-xl-2 control-label">
             <?=$this->getTrans('shopStreet') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="shopStreet"
@@ -59,10 +59,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('shopPlz') ? 'has-error' : '' ?>">
-        <label for="shopPlz" class="col-lg-2 control-label">
+        <label for="shopPlz" class="col-xl-2 control-label">
             <?=$this->getTrans('shopPlz') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="shopPlz"
@@ -72,10 +72,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('shopCity') ? 'has-error' : '' ?>">
-        <label for="shopCity" class="col-lg-2 control-label">
+        <label for="shopCity" class="col-xl-2 control-label">
             <?=$this->getTrans('shopCity') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="shopCity"
@@ -86,10 +86,10 @@
     </div>
     <hr />
     <div class="row mb-3 <?=$this->validation()->hasError('shopLogo') ? 'has-error' : '' ?>">
-        <label for="selectedImage_shopLogo" class="col-lg-2 control-label">
+        <label for="selectedImage_shopLogo" class="col-xl-2 control-label">
             <?=$this->getTrans('shopLogo') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <div class="input-group">
                 <span class="input-group-text">
                     <?php $shopImgPath = '/application/modules/shop/static/img/';
@@ -123,10 +123,10 @@
     </div>
     <hr />
     <div class="row mb-3 <?=$this->validation()->hasError('shopTel') ? 'has-error' : '' ?>">
-        <label for="shopTel" class="col-lg-2 control-label">
+        <label for="shopTel" class="col-xl-2 control-label">
             <?=$this->getTrans('shopTel') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="shopTel"
@@ -136,10 +136,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('shopFax') ? 'has-error' : '' ?>">
-        <label for="shopFax" class="col-lg-2 control-label">
+        <label for="shopFax" class="col-xl-2 control-label">
             <?=$this->getTrans('shopFax') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="shopFax"
@@ -149,10 +149,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('shopMail') ? 'has-error' : '' ?>">
-        <label for="shopMail" class="col-lg-2 control-label">
+        <label for="shopMail" class="col-xl-2 control-label">
             <?=$this->getTrans('shopMail') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="shopMail"
@@ -162,10 +162,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('shopWeb') ? 'has-error' : '' ?>">
-        <label for="shopWeb" class="col-lg-2 control-label">
+        <label for="shopWeb" class="col-xl-2 control-label">
             <?=$this->getTrans('shopWeb') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="shopWeb"
@@ -176,10 +176,10 @@
     </div>
     <hr />
         <div class="row mb-3 <?=$this->validation()->hasError('shopStNr') ? 'has-error' : '' ?>">
-        <label for="shopStNr" class="col-lg-2 control-label">
+        <label for="shopStNr" class="col-xl-2 control-label">
             <?=$this->getTrans('shopStNr') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="shopStNr"

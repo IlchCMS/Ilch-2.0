@@ -39,7 +39,7 @@ $itemsMapper = $this->get('itemsMapper');
     <div class="table-responsive">
         <table class="table">
             <colgroup>
-                <col class="col-lg-1">
+                <col class="col-xl-1">
                 <col>
             </colgroup>
             <tbody>

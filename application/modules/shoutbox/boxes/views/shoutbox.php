@@ -88,7 +88,7 @@ $config = \Ilch\Registry::get('config');
 <div id="shoutbox-container<?=$this->get('uniqid') ?>">
     <div id="shoutbox-button-container<?=$this->get('uniqid') ?>" class="form-horizontal">
         <div class="row mb-3">
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))) : ?>
                     <div class="pull-left">
                         <button class="btn btn-outline-secondary" id="shoutbox-slide-down<?=$this->get('uniqid') ?>"><?=$this->getTrans('answer') ?></button>
@@ -109,10 +109,10 @@ $config = \Ilch\Registry::get('config');
                 <input type="hidden" name="uniqid" value="<?=$this->get('uniqid') ?>">
                <?=$this->getTokenField() ?>
                 <div class="row mb-3 d-none">
-                    <label class="col-lg-2 control-label" for="bot">
+                    <label class="col-xl-2 control-label" for="bot">
                         <?=$this->getTrans('bot') ?>
                     </label>
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
                         <input type="text"
                                class="form-control"
                                name="bot"
@@ -121,7 +121,7 @@ $config = \Ilch\Registry::get('config');
                     </div>
                 </div>
                 <div class="row mb-3 <?=$this->validation()->hasError('shoutbox_name') ? 'has-error' : '' ?>">
-                    <div class="col-lg-12">
+                    <div class="col-xl-12">
                         <input type="text"
                                class="form-control"
                                name="shoutbox_name"
@@ -131,7 +131,7 @@ $config = \Ilch\Registry::get('config');
                     </div>
                 </div>
                 <div class="row mb-3 <?=$this->validation()->hasError('shoutbox_textarea') ? 'has-error' : '' ?>">
-                    <div class="col-lg-12">
+                    <div class="col-xl-12">
                         <textarea class="form-control"
                                   style="resize: vertical"
                                   name="shoutbox_textarea"
@@ -143,7 +143,7 @@ $config = \Ilch\Registry::get('config');
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-lg-12">
+                    <div class="col-xl-12">
                         <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
                             <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
                         <?php endif; ?>

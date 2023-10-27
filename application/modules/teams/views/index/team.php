@@ -20,14 +20,14 @@ $team = $this->get('team');
 <div class="teams">
     <div class="row">
         <?php if ($team->getOptShow() == 1) : ?>
-            <div class="col-lg-12 team-name">
+            <div class="col-xl-12 team-name">
                 <?php if ($team->getImg() != '') : ?>
                     <img src="<?=$this->getBaseUrl() . $team->getImg() ?>" alt="<?=$this->escape($team->getName()) ?>" title="<?=$this->escape($team->getName()) ?>" />
                 <?php else : ?>
                     <h3><?=$this->escape($team->getName()) ?></h3>
                 <?php endif; ?>
             </div>
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <?php
                 $groupList = $groupMapper->getUsersForGroup($team->getGroupId());
                 $leaderIds = explode(',', $team->getLeader());
@@ -37,8 +37,8 @@ $team = $this->get('team');
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <colgroup>
-                            <col class="col-lg-5" />
-                            <col class="col-lg-3" />
+                            <col class="col-xl-5" />
+                            <col class="col-xl-3" />
                             <col />
                         </colgroup>
                         <tbody>

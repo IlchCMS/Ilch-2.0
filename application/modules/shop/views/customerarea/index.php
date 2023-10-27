@@ -7,7 +7,7 @@
         <table id="sortTable" class="table table-hover table-striped">
             <colgroup>
                 <col class="icon_width">
-                <col>
+                <col class="col-xl-3">
                 <col>
                 <col>
                 <col>
@@ -30,13 +30,13 @@
                     <td><a href="<?=$this->getUrl(['action' => 'show', 'id' => $order->getId()]) ?>" title="<?=$this->getTrans('showOrderDetails') ?>"><i class="fa-regular fa-folder-open"></i></a></td>
                     <td>
                         <?php if ($order->getStatus() == 0) : ?>
-                            <div class="btn btn-sm alert-danger"><i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b></div>
+                            <div class="btn btn-sm btn-danger"><i class="fa-solid fa-plus-square" aria-hidden="true"></i>&nbsp;<b><?=$this->getTrans('newBIG') ?></b></div>
                         <?php elseif ($order->getStatus() == 1) : ?>
-                            <div class="btn btn-sm alert-warning"><i class="fa-solid fa-pencil-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b></div>
+                            <div class="btn btn-sm btn-warning"><i class="fa-solid fa-pencil-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('processingBIG') ?></b></div>
                         <?php elseif ($order->getStatus() == 2) : ?>
-                            <div class="btn btn-sm alert-info"><i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('canceledBIG') ?></b></div>
+                            <div class="btn btn-sm btn-info"><i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('canceledBIG') ?></b></div>
                         <?php else : ?>
-                            <div class="btn btn-sm alert-success"><i class="fa-solid fa-check-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b></div>
+                            <div class="btn btn-sm btn-success"><i class="fa-solid fa-check-square" aria-hidden="true"></i>&nbsp;<b><?= $this->getTrans('completedBIG') ?></b></div>
                         <?php endif; ?>
                     </td>
                     <?php

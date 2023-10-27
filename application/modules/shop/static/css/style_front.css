@@ -310,9 +310,6 @@ h1 a span.badge {
     text-align: justify;
     white-space: normal;
 }
-.order #acceptOrder {
-    position:relative;
-}
 .order h4 {
     padding-top: 20px;
     border-top: 1px solid #eee;

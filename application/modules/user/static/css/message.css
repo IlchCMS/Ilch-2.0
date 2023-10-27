@@ -263,6 +263,7 @@
     display: inline-block;
     width: auto;
     color: #000;
+    padding: 9px;
 }
 .chat .chat-wrapper .message-list-wrapper .message-list li.left .body .message:before {
     content: '';

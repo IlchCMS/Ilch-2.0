@@ -15,43 +15,43 @@ $birthday = new Ilch\Date($join->getBirthday());
 ?>
 <h1><?=$this->getTrans('application') ?></h1>
 <div class="form-horizontal">
-    <div class="row form-group ilch-margin-b">
-        <label class="col-lg-2">
+    <div class="row mb-3">
+        <label class="col-xl-2">
             <?=$this->getTrans('name') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?=$this->escape($join->getName()) ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
-        <label class="col-lg-2">
+    <div class="row mb-3">
+        <label class="col-xl-2">
             <?=$this->getTrans('team') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?=(!empty($team)) ? $this->escape($team->getName()) : $this->getTrans('noTeam') ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
-        <label class="col-lg-2">
+    <div class="row mb-3">
+        <label class="col-xl-2">
             <?=$this->getTrans('email') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?=$this->escape($join->getEMail()) ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
-        <label class="col-lg-2">
+    <div class="row mb-3">
+        <label class="col-xl-2">
             <?=$this->getTrans('dateTime') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?=$date->format('d.m.Y H:i', true) ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
-        <label class="col-lg-2">
+    <div class="row mb-3">
+        <label class="col-xl-2">
             <?=$this->getTrans('gender') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?php
             if ($join->getGender() == 1) {
                 echo $this->getTrans('genderMale');
@@ -64,30 +64,30 @@ $birthday = new Ilch\Date($join->getBirthday());
         </div>
     </div>
     <?php if ($join->getBirthday()) : ?>
-        <div class="row form-group ilch-margin-b">
-            <label class="col-lg-2">
+        <div class="row mb-3">
+            <label class="col-xl-2">
                 <?=$this->getTrans('birthday') ?>:
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <?=$birthday->format('d.m.Y') ?> (<?=$joinsMapper->getAge($birthday) ?>)
             </div>
         </div>
     <?php endif; ?>
     <?php if ($join->getPlace()) : ?>
-        <div class="row form-group ilch-margin-b">
-            <label class="col-lg-2">
+        <div class="row mb-3">
+            <label class="col-xl-2">
                 <?=$this->getTrans('place') ?>:
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <?=$this->escape($join->getPlace()) ?>
             </div>
         </div>
     <?php endif; ?>
-    <div class="row form-group ilch-margin-b">
-        <label class="col-lg-2">
+    <div class="row mb-3">
+        <label class="col-xl-2">
             <?=$this->getTrans('skill') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?php
             if ($join->getSkill() == 0) {
                 echo $this->getTrans('beginner');
@@ -101,11 +101,11 @@ $birthday = new Ilch\Date($join->getBirthday());
             ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
-        <label class="col-lg-2">
+    <div class="row mb-3">
+        <label class="col-xl-2">
             <?=$this->getTrans('text') ?>:
         </label>
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <?=$this->alwaysPurify($join->getText()) ?>
         </div>
     </div>

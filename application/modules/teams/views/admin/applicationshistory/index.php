@@ -17,11 +17,11 @@ $pagination = $this->get('pagination');
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="col-lg-3" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
+                <col class="col-xl-3" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
             </colgroup>
             <thead>
                 <tr>
@@ -64,7 +64,7 @@ $pagination = $this->get('pagination');
     <div class="content_savebox">
         <form class="form-horizontal" method="POST">
             <?=$this->getTokenField() ?>
-            <button type="submit" name="clearHistory" class="btn btn-default"><?=$this->getTrans('clearHistory') ?></button>
+            <button type="submit" name="clearHistory" class="btn btn-outline-secondary"><?=$this->getTrans('clearHistory') ?></button>
         </form>
     </div>
 <?php else : ?>

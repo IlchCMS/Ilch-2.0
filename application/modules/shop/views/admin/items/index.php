@@ -61,9 +61,9 @@
                             <td class="text-center">
                             <?php
                             if ($shopItem->getStatus() == 1) {
-                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-xs btn-success" title="' . $this->getTrans('active') . '"><i class="fa-solid fa-eye"></i></a>';
+                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-sm btn-success" title="' . $this->getTrans('active') . '"><i class="fa-solid fa-eye"></i></a>';
                             } else {
-                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-xs btn-danger" title="' . $this->getTrans('inactive') . '"><i class="fa-solid fa-eye-slash inactiv"></i></a>';
+                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-sm btn-danger" title="' . $this->getTrans('inactive') . '"><i class="fa-solid fa-eye-slash inactiv"></i></a>';
                             }
                             ?>
                             </td>

@@ -22,11 +22,11 @@ $teams = $this->get('teams');
 <?php if ($teams) : ?>
     <form id="joinForm" name="joinForm" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
-        <div class="form-group hidden">
-            <label class="col-lg-2 control-label" for="bot">
+        <div class="row mb-3 d-none">
+            <label class="col-xl-2 control-label" for="bot">
                 <?=$this->getTrans('bot') ?>*
             </label>
-            <div class="col-lg-8">
+            <div class="col-xl-8">
                 <input type="text"
                        class="form-control"
                        name="bot"
@@ -34,11 +34,11 @@ $teams = $this->get('teams');
                        placeholder="Bot" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('teamId') ? 'has-error' : '' ?>">
-            <label for="teamId" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('teamId') ? 'has-error' : '' ?>">
+            <label for="teamId" class="col-xl-2 control-label">
                 <?=$this->getTrans('team') ?>
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <select class="form-control" id="teamId" name="teamId">
                     <optgroup label="<?=$this->getTrans('teams') ?>">
                         <?php
@@ -61,11 +61,11 @@ $teams = $this->get('teams');
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-            <label for="name" class="col-md-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+            <label for="name" class="col-lg-2 control-label">
                 <?=$this->getTrans('name') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
             <?php if ($this->getUser()) : ?>
                 <input type="text"
                        class="form-control"
@@ -82,11 +82,11 @@ $teams = $this->get('teams');
             <?php endif; ?>
         </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-            <label for="email" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+            <label for="email" class="col-xl-2 control-label">
                 <?=$this->getTrans('email') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <?php if ($this->getUser()) : ?>
                     <input type="text"
                            class="form-control"
@@ -103,11 +103,11 @@ $teams = $this->get('teams');
                 <?php endif; ?>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label" for="gender">
+        <div class="row mb-3">
+            <label class="col-xl-2 control-label" for="gender">
                 <?=$this->getTrans('gender') ?>
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <?php if ($this->getUser()) : ?>
                     <select class="form-control" id="gender" name="gender" <?=($this->getUser()->getGender() == 0) ? '' : 'disabled="disabled"' ?>>
                         <option value="1" <?=($this->getUser()->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
@@ -123,12 +123,12 @@ $teams = $this->get('teams');
                 <?php endif; ?>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('birthday') ? 'has-error' : '' ?>">
-            <label for="age" class="col-lg-2 control-label" for="birthday">
+        <div class="row mb-3 <?=$this->validation()->hasError('birthday') ? 'has-error' : '' ?>">
+            <label for="age" class="col-xl-2 control-label" for="birthday">
                 <?=$this->getTrans('birthday') ?>
             </label>
             <?php if ($this->getUser() && $this->getUser()->getBirthday() && $this->getUser()->getBirthday() != '0000-00-00') : ?>
-                <div class="col-lg-2 input-group ilch-date">
+                <div class="col-xl-2 input-group ilch-date">
                     <?php $birthday = new \Ilch\Date($this->getUser()->getBirthday()); ?>
                     <input type="text"
                            class="form-control"
@@ -141,7 +141,7 @@ $teams = $this->get('teams');
                     </span>
                 </div>
             <?php else : ?>
-                <div class="col-lg-2 input-group ilch-date date form_datetime">
+                <div class="col-xl-2 input-group ilch-date date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="birthday"
@@ -153,11 +153,11 @@ $teams = $this->get('teams');
                 </div>
             <?php endif; ?>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
-            <label for="place" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
+            <label for="place" class="col-xl-2 control-label">
                 <?=$this->getTrans('place') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="place"
@@ -165,11 +165,11 @@ $teams = $this->get('teams');
                        value="<?=$this->originalInput('place') ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('skill') ? 'has-error' : '' ?>">
-            <label for="skill" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('skill') ? 'has-error' : '' ?>">
+            <label for="skill" class="col-xl-2 control-label">
                 <?=$this->getTrans('skill') ?>
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <select class="form-control" id="skill" name="skill">
                     <option value="0" <?=($this->originalInput('skill') == 0) ? 'selected="selected"' : '' ?>><?=$this->getTrans('beginner') ?></option>
                     <option value="1" <?=($this->originalInput('skill') == 1) ? 'selected="selected"' : '' ?>><?=$this->getTrans('experience') ?></option>
@@ -178,11 +178,11 @@ $teams = $this->get('teams');
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-            <label for="ck_1" class="col-lg-2 control-label">
+        <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+            <label for="ck_1" class="col-xl-2 control-label">
                 <?=$this->getTrans('text') ?>
             </label>
-            <div class="col-lg-10">
+            <div class="col-xl-10">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
@@ -193,8 +193,8 @@ $teams = $this->get('teams');
         <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
             <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
         <?php endif; ?>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-8">
+        <div class="row mb-3">
+            <div class="offset-xl2 col-xl-8">
                 <?php
                 if ($this->get('captchaNeeded')) {
                     if ($this->get('googlecaptcha')) {

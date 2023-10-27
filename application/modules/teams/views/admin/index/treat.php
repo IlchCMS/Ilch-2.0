@@ -20,11 +20,11 @@ $userGroupList = $this->get('userGroupList');
 </h1>
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+        <label for="name" class="col-xl-2 control-label">
             <?=$this->getTrans('teamName') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="name"
@@ -32,14 +32,14 @@ $userGroupList = $this->get('userGroupList');
                    value="<?=$this->escape($this->originalInput('name', $team->getName())) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('upl') ? 'has-error' : '' ?>">
-        <label for="upl" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('upl') ? 'has-error' : '' ?>">
+        <label for="upl" class="col-xl-2 control-label">
             <?=$this->getTrans('img') ?>:
         </label>
         <div class="col-lg-4">
             <div class="row">
                 <?php if ($team->getImg() != '') : ?>
-                    <div class="col-lg-12">
+                    <div class="col-xl-12">
                         <img src="<?=$this->getBaseUrl($team->getImg()) ?>" alt="<?=$this->getTrans('img') . ' ' . $this->escape($team->getName()) ?>">
 
                         <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
@@ -62,11 +62,11 @@ $userGroupList = $this->get('userGroupList');
             </div>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('leader') ? 'has-error' : '' ?>">
-        <label for="leader" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('leader') ? 'has-error' : '' ?>">
+        <label for="leader" class="col-xl-2 control-label">
             <?=$this->getTrans('leader') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="leader"
                     name="leader[]"
@@ -84,11 +84,11 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('coLeader') ? 'has-error' : '' ?>">
-        <label for="coLeader" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('coLeader') ? 'has-error' : '' ?>">
+        <label for="coLeader" class="col-xl-2 control-label">
             <?=$this->getTrans('coLeader') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="coLeader"
                     name="coLeader[]"
@@ -106,11 +106,11 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('members') ? 'has-error' : '' ?>">
-        <label for="groupId" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('members') ? 'has-error' : '' ?>">
+        <label for="groupId" class="col-xl-2 control-label">
             <?=$this->getTrans('group') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="form-control" id="groupId" name="groupId">
                 <optgroup label="<?=$this->getTrans('groups') ?>">
                     <?php
@@ -125,11 +125,11 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('optShow') ? 'has-error' : '' ?>">
-        <label for="optShow" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('optShow') ? 'has-error' : '' ?>">
+        <label for="optShow" class="col-xl-2 control-label">
             <?=$this->getTrans('optShow') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="optShow-on" name="optShow" value="1" <?=($this->originalInput('optShow', $team->getOptShow()) ? 'checked="checked"' : '') ?> />
                 <label for="optShow-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
@@ -139,11 +139,11 @@ $userGroupList = $this->get('userGroupList');
             </div>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('optIn') ? 'has-error' : '' ?>">
-        <label for="optIn" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('optIn') ? 'has-error' : '' ?>">
+        <label for="optIn" class="col-xl-2 control-label">
             <?=$this->getTrans('optIn') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="optIn-on" name="optIn" value="1" <?=($this->originalInput('optIn', $team->getOptIn()) ? 'checked="checked"' : '') ?> />
                 <label for="optIn-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
@@ -153,11 +153,11 @@ $userGroupList = $this->get('userGroupList');
             </div>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('notifyLeader') ? 'has-error' : '' ?>" id="notifyLeader">
-        <label for="notifyLeader" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('notifyLeader') ? 'has-error' : '' ?>" id="notifyLeader">
+        <label for="notifyLeader" class="col-xl-2 control-label">
             <?=$this->getTrans('notifyLeader') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="notifyLeader-on" name="notifyLeader" value="1" <?=($this->originalInput('notifyLeader', $team->getNotifyLeader()) ? 'checked="checked"' : '') ?> />
                 <label for="notifyLeader-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>

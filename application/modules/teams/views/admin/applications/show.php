@@ -18,7 +18,7 @@ $userDeleted = $this->get('userDeleted');
 ?>
 <h1><?=$this->getTrans('application') ?></h1>
 <div class="form-horizontal">
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label class="col-lg-2">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -26,7 +26,7 @@ $userDeleted = $this->get('userDeleted');
             <?=$this->escape($join->getName()) ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label class="col-lg-2">
             <?=$this->getTrans('team') ?>:
         </label>
@@ -34,7 +34,7 @@ $userDeleted = $this->get('userDeleted');
             <?=$this->escape($team->getName()) ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label class="col-lg-2">
             <?=$this->getTrans('email') ?>:
         </label>
@@ -42,7 +42,7 @@ $userDeleted = $this->get('userDeleted');
             <?=$this->escape($join->getEMail()) ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label class="col-lg-2">
             <?=$this->getTrans('dateTime') ?>:
         </label>
@@ -50,7 +50,7 @@ $userDeleted = $this->get('userDeleted');
             <?=$date->format('d.m.Y H:i', true) ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label class="col-lg-2">
             <?=$this->getTrans('gender') ?>:
         </label>
@@ -67,7 +67,7 @@ $userDeleted = $this->get('userDeleted');
         </div>
     </div>
     <?php if ($join->getBirthday()) : ?>
-        <div class="row form-group ilch-margin-b">
+        <div class="row mb-3">
             <label class="col-lg-2">
                 <?=$this->getTrans('birthday') ?>:
             </label>
@@ -77,7 +77,7 @@ $userDeleted = $this->get('userDeleted');
         </div>
     <?php endif; ?>
     <?php if ($join->getPlace()) : ?>
-        <div class="row form-group ilch-margin-b">
+        <div class="row mb-3">
             <label class="col-lg-2">
                 <?=$this->getTrans('place') ?>:
             </label>
@@ -86,7 +86,7 @@ $userDeleted = $this->get('userDeleted');
             </div>
         </div>
     <?php endif; ?>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label class="col-lg-2">
             <?=$this->getTrans('skill') ?>:
         </label>
@@ -104,7 +104,7 @@ $userDeleted = $this->get('userDeleted');
             ?>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b">
+    <div class="row mb-3">
         <label class="col-lg-2">
             <?=$this->getTrans('text') ?>:
         </label>
@@ -115,14 +115,14 @@ $userDeleted = $this->get('userDeleted');
 
     <div class="content_savebox">
         <?php if (!$userDeleted) : ?>
-        <a href="<?=$this->getUrl(['action' => 'accept', 'id' => $join->getId()], null, true) ?>" class="save_button btn btn-default">
+        <a href="<?=$this->getUrl(['action' => 'accept', 'id' => $join->getId()], null, true) ?>" class="save_button btn btn-outline-secondary">
             <?=$this->getTrans('accept') ?>
         </a>
-        <a href="<?=$this->getUrl(['action' => 'reject', 'id' => $join->getId()], null, true) ?>" class="delete_button btn btn-default">
+        <a href="<?=$this->getUrl(['action' => 'reject', 'id' => $join->getId()], null, true) ?>" class="delete_button btn btn-outline-secondary">
             <?=$this->getTrans('reject') ?>
         </a>
         <?php else : ?>
-        <a href="<?=$this->getUrl(['action' => 'delete', 'id' => $join->getId()], null, true) ?>" class="delete_button btn btn-default">
+        <a href="<?=$this->getUrl(['action' => 'delete', 'id' => $join->getId()], null, true) ?>" class="delete_button btn btn-outline-secondary">
             <?=$this->getTrans('delete') ?>
         </a>
         <?php endif; ?>

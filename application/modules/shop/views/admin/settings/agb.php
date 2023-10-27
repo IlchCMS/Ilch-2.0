@@ -33,10 +33,10 @@
     </ul>
     <br />
     <div class="row mb-3 <?=$this->validation()->hasError('settingsAGB') ? 'has-error' : '' ?>">
-        <label for="settingsAGB" class="col-lg-2 control-label">
+        <label for="settingsAGB" class="col-xl-2 control-label">
             <?=$this->getTrans('AGB') ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <textarea class="form-control ckeditor"
                 id="settingsAGB"
                 name="settingsAGB"
