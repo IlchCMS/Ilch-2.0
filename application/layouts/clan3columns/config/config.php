@@ -21,6 +21,41 @@ class Config extends \Ilch\Config\Install
                 ['module' => 'guestbook'],
             ]//only for example
         ],
+        'layouts' => [
+            'index_full' => [
+                ['module' => 'user', 'controller' => 'panel'],
+                ['module' => 'forum'],
+                ['module' => 'guestbook'],
+            ],
+            'start' => [
+                ['module' => 'contact'],
+            ],
+            'shop_index' => [
+                ['module' => 'shop'],
+            ]//only for example
+        ],
+        'settings' => [
+            'header' => [
+              'type' => 'text',
+              'default' => 'Clanname',
+              'description' => '',
+            ],
+            'slider1' => [
+              'type' => 'mediaselection',
+              'default' => 'application/layouts/clan3columns/img/slider/slider_1.jpg',
+              'description' => 'img',
+            ],
+            'slider2' => [
+              'type' => 'mediaselection',
+              'default' => 'application/layouts/clan3columns/img/slider/slider_2.jpg',
+              'description' => 'img',
+            ],
+            'slider3' => [
+              'type' => 'mediaselection',
+              'default' => 'application/layouts/clan3columns/img/slider/slider_3.jpg',
+              'description' => 'img',
+            ],
+        ],
         //'modulekey' => 'Name of Module'
     ];
 

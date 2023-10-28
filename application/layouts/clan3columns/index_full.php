@@ -42,13 +42,13 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="<?=$this->getLayoutUrl('img/slider/slider_1.jpg') ?>" alt="Slider 1">
+                            <img src="<?=$this->getBaseUrl($this->getLayoutSetting('slider1')) ?>" alt="Slider 1">
                         </div>
                         <div class="carousel-item">
-                            <img src="<?=$this->getLayoutUrl('img/slider/slider_2.jpg') ?>" alt="Slider 2">
+                            <img src="<?=$this->getBaseUrl($this->getLayoutSetting('slider2')) ?>" alt="Slider 2">
                         </div>
                         <div class="carousel-item">
-                            <img src="<?=$this->getLayoutUrl('img/slider/slider_3.jpg') ?>" alt="Slider 3">
+                            <img src="<?=$this->getBaseUrl($this->getLayoutSetting('slider3')) ?>" alt="Slider 3">
                         </div>
                     </div>
                     <button class="carousel-control-prev carousel-control left" type="button" data-bs-target="#carousel-generic" data-bs-slide="prev">
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="gaming-name">
-                    Clanname
+                    <?=$this->getLayoutSetting('header')?>
                 </div>
             </div>
         </div>
