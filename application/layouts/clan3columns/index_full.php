@@ -10,7 +10,7 @@
     </head>
     <body>
       <header>
-        <nav class="navbar navbar-expand-lg navbar-light navbar-gaming bg-light d-none d-sm-block d-md-none">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-gaming bg-dark fixed-top d-sm-block d-md-none">
           <div class="container-fluid">
             <a class="navbar-brand" href="<?=$this->getUrl() ?>"><?=$this->getTrans('navigation') ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,7 +104,7 @@
                             &copy; Ilch 2.0 Free Layout | CMS by <a href="http://www.ilch.de/">Ilch</a>
                         </div>
                         <div class="col-xs-12 col-md-6 nav">
-                            <ul>
+                            <ul class="text-end">
                                 <li><a href="<?=$this->getUrl() ?>">Home</a></li>
                                 <li><a href="<?=$this->getUrl(['module'=>'contact', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('contact') ?></a></li>
                                 <li><a href="<?=$this->getUrl(['module'=>'imprint', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('imprint') ?></a></li>

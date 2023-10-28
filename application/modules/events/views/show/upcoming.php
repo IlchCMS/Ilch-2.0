@@ -6,7 +6,7 @@ $entrantsMapper = $this->get('entrantsMapper');
 
 <h1><?=$this->getTrans('menuEventUpcoming') ?></h1>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-xl-12">
         <ul class="event-list">
             <?php if ($this->get('eventListUpcoming') != ''): ?>
                 <?php foreach ($this->get('eventListUpcoming') as $eventlist): ?>

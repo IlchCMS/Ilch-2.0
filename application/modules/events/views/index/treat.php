@@ -18,16 +18,16 @@ $types = $this->get('types');
     <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3">
-            <div class="col-lg-2 control-label"><?=$this->getTrans('image') ?></div>
-            <div class="col-lg-10">
+            <div class="col-xl-2 control-label"><?=$this->getTrans('image') ?></div>
+            <div class="col-xl-10">
                 <?php if ($this->get('event') != '' && $this->escape($this->get('event')->getImage()) != ''): ?>
-                    <div class="col-lg-7 col-sm-7 col-7">
+                    <div class="col-xl-7 col-md-7 col-7">
                         <div class="row">
                             <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>" alt="<?=$this->escape($this->get('event')->getTitle()) ?>">
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="col-lg-7">
+                <div class="col-xl-7">
                     <div class="row">
                         <?php if ($this->get('event') != '' && $this->get('event')->getImage() != ''): ?>
                             <label style="margin-left: 10px; margin-top: 10px;">
@@ -42,7 +42,7 @@ $types = $this->get('types');
                         </p>
                     </div>
                 </div>
-                <div class="input-group col-lg-7">
+                <div class="input-group col-xl-7">
                     <span class="input-group-btn">
                         <span class="btn btn-primary btn-file">
                             <?=$this->getTrans('browse') ?>&hellip; <input type="file" name="image" accept="image/*">
@@ -55,10 +55,10 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('creator') ? 'has-error' : '' ?>">
-            <label for="creator" class="col-lg-2 control-label">
+            <label for="creator" class="col-xl-2 control-label">
                 <?=$this->getTrans('by') ?>
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <select class="form-control" name="creator" id="creator">
                     <option selected="selected"><?=$this->getTrans('noSelection') ?></option>
                     <?php foreach ($users as $user): ?>
@@ -68,10 +68,10 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('start') ? 'has-error' : '' ?>">
-            <label for="start" class="col-md-2 control-label">
+            <label for="start" class="col-lg-2 control-label">
                 <?=$this->getTrans('startTime') ?>
             </label>
-            <div class="col-lg-4 input-group ilch-date date form_datetime">
+            <div class="col-xl-4 input-group ilch-date date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="start"
@@ -79,16 +79,16 @@ $types = $this->get('types');
                        size="16"
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } elseif ($this->originalInput('start') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('start'))); } ?>"
                        readonly>
-                <span class="input-group-text">
+                <span class="input-group-addon">
                     <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('end') ? 'has-error' : '' ?>">
-            <label for="end" class="col-md-2 control-label">
+            <label for="end" class="col-lg-2 control-label">
                 <?=$this->getTrans('endTime') ?>
             </label>
-            <div class="col-lg-4 input-group ilch-date date form_datetime">
+            <div class="col-xl-4 input-group ilch-date date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="end"
@@ -99,16 +99,16 @@ $types = $this->get('types');
                 <span class="input-group-text">
                     <span class="fa-solid fa-xmark"></span>
                 </span>
-                <span class="input-group-text">
+                <span class="input-group-addon">
                     <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-            <label for="title" class="col-lg-2 control-label">
+            <label for="title" class="col-xl-2 control-label">
                 <?=$this->getTrans('title') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="title"
@@ -117,10 +117,10 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
-            <label for="place" class="col-lg-2 control-label">
+            <label for="place" class="col-xl-2 control-label">
                 <?=$this->getTrans('place') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="place"
@@ -129,10 +129,10 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('type') ? 'has-error' : '' ?>">
-            <label for="place" class="col-lg-2 control-label">
+            <label for="place" class="col-xl-2 control-label">
                 <?=$this->getTrans('type') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <select class="form-control typeselection mb-3" name="typeselection" id="typeselection">
                     <option value=""><?=$this->getTrans('otherOrNone') ?></option>
                     <?php foreach ($types as $type) : ?>
@@ -151,10 +151,10 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
-            <label for="website" class="col-lg-2 control-label">
+            <label for="website" class="col-xl-2 control-label">
                 <?=$this->getTrans('website') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="website"
@@ -164,10 +164,10 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-            <label for="ck_1" class="col-lg-2 control-label">
+            <label for="ck_1" class="col-xl-2 control-label">
                 <?=$this->getTrans('text') ?>
             </label>
-            <div class="col-lg-10">
+            <div class="col-xl-10">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
@@ -176,17 +176,17 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
-            <label for="price" class="col-lg-2 control-label">
+            <label for="price" class="col-xl-2 control-label">
                 <?=$this->getTrans('price') ?>
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <select class="form-control" id="priceArt" name="priceArt">
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 1) { echo 'selected="selected"'; } ?> value="1"><?=$this->getTrans('ticket') ?></option>
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 2) { echo 'selected="selected"'; } ?> value="2"><?=$this->getTrans('entry') ?></option>
                 </select>
             </div>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <input type="number"
                        class="form-control"
                        id="price"
@@ -195,7 +195,7 @@ $types = $this->get('types');
                        min="0"
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPrice()) : $this->originalInput('price') ?>" />
             </div>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <select class="form-control" id="currency" name="currency">
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
                     <?php foreach ($this->get('currencies') as $currency) {
@@ -210,10 +210,10 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
-            <label for="userLimit" class="col-lg-2 control-label">
+            <label for="userLimit" class="col-xl-2 control-label">
                 <?=$this->getTrans('userLimit') ?> <div class="badge" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <input type="number"
                        class="form-control"
                        id="userLimit"
@@ -224,10 +224,10 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3">
-            <label for="access" class="col-lg-2 control-label">
+            <label for="access" class="col-xl-2 control-label">
                 <?=$this->getTrans('visibleFor') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                     <?php foreach ($this->get('userGroupList') as $groupList): ?>
                         <?php if ($groupList->getId() != 1): ?>
@@ -239,7 +239,7 @@ $types = $this->get('types');
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
             <div class="row mb-3">
-                <div class="col-lg-offset-2 col-lg-10">
+                <div class="offset-xl-2 col-xl-10">
                     <input type="checkbox"
                            id="calendarShow"
                            name="calendarShow"

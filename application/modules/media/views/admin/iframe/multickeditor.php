@@ -22,6 +22,7 @@
                 <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'multi'): ?>
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
+                          <div class="row">
                             <div class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb">
                                 <img class="image img-thumbnail img-fluid"
                                      data-url="<?=$media->getUrl() ?>"
@@ -34,6 +35,7 @@
                                        value="<?=$media->getId() ?>" />
                                 <label for="<?=$media->getId() ?> test"></label>
                             </div>
+                          </div>
                             <input type="text"
                                    class="hidden"
                                    name="check_url[]"
@@ -45,6 +47,7 @@
                 <?php if ($this->getRequest()->getParam('type') === 'media'): ?>
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
+                          <div class="row">
                             <div class="col-xl-2 col-md-3 col-4">
                                 <img class="image img-thumbnail img-fluid"
                                      data-url="<?=$media->getUrl() ?>"
@@ -53,6 +56,7 @@
                                 <div class="media-getending">Type: <?=$media->getEnding() ?></div>
                                 <div class="media-getname"><?=$media->getName() ?></div>
                             </div>
+                          </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -60,6 +64,7 @@
                 <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
+                          <div class="row">
                             <div class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb">
                                 <img class="image img-thumbnail img-fluid"
                                      data-url="<?=$media->getUrl() ?>"
@@ -72,6 +77,7 @@
                                        value="<?=$media->getId() ?>" />
                                 <label for="<?=$media->getId() ?> test"></label>
                             </div>
+                          </div>
                             <input type="text"
                                    class="hidden"
                                    name="check_url[]"

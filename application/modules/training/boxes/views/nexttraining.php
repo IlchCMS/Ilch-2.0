@@ -7,7 +7,7 @@
         $adminAccess = $this->getUser()->isAdmin();
     }
     $trainingMapper = $this->get('trainingMapper');
-    $entrantsMapper = $this->get('entrantsMapper'); 
+    $entrantsMapper = $this->get('entrantsMapper');
 
     foreach ($this->get('training') as $training):
         if (!is_in_array($this->get('readAccess'), explode(',', $training->getReadAccess())) && $adminAccess == false) {
@@ -22,18 +22,18 @@
         <div class="nexttraining-box">
             <div class="row">
                 <a href="<?=$this->getUrl('training/index/show/id/' . $training->getId()) ?>">
-                    <div class="col-xs-4 ellipsis" title="<?=$this->escape($training->getPlace()) ?>">
+                    <div class="col-4 ellipsis" title="<?=$this->escape($training->getPlace()) ?>">
                         <div class="ellipsis-item">
                             <?=$this->escape($training->getTitle()) ?>
                         </div>
                     </div>
-                    <div class="col-xs-3 ellipsis">
+                    <div class="col-3 ellipsis">
                         <div class="ellipsis-item">
                             <?=count($entrantsMapper->getEntrantsById($training->getId())) ?>
                         </div>
                     </div>
                 </a>
-                <div class="col-xs-3 small nexttraining-date">
+                <div class="col-3 small nexttraining-date">
                     <div class="ellipsis-item text-right" title="<?=$countdown ?>">
                         <i><?=$countdown ?></i>
                     </div>

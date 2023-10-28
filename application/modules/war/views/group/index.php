@@ -43,14 +43,15 @@
                 $drawnCount = $drawn;
             }
             ?>
-            <div class="col-lg-12">
+            <div class="row">
+            <div class="col-xl-12">
                 <div class="row">
-                    <div class="col-xs-12 col-lg-3 text-center">
+                    <div class="col-12 col-xl-3 text-center">
                         <a href="<?=$this->getUrl(['controller' => 'group', 'action' => 'show', 'id' => $group->getId()]) ?>">
                             <img src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>" class="img-thumbnail img-fluid rounded" />
                         </a>
                     </div>
-                    <div class="col-xs-12 col-lg-9 section-box">
+                    <div class="col-12 col-xl-9 section-box">
                         <h4>
                             <a href="<?=$this->getUrl(['controller' => 'group', 'action' => 'show', 'id' => $group->getId()]) ?>"><?=$this->escape($group->getGroupName()) ?></a>
                         </h4>
@@ -58,7 +59,7 @@
                         <p><?=$this->escape($group->getGroupDesc()) ?></p>
                         <hr />
                         <div class="row rating-desc">
-                            <div class="col-md-12">
+                            <div class="col-lg-12">
                                 <strong><?=$this->getTrans('games') ?></strong><br />
                                 <span><?=$this->getTrans('warWin') ?></span>(<?=$winCount ?>)<span class="separator">|</span>
                                 <span><?=$this->getTrans('warLost') ?></span>(<?=$lostCont ?>)<span class="separator">|</span>
@@ -68,6 +69,7 @@
                     </div>
                 </div>
             </div>
+          </div>
         <?php endforeach; ?>
     </div>
     <?=$this->get('pagination')->getHtml($this, []) ?>

@@ -42,20 +42,20 @@
         <div class="lastwar-box">
             <div class="row">
                 <a href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>" title="<?=$this->escape($war->getWarGroupTag()).' '.$this->getTrans('vs').' '.$this->escape($war->getWarEnemyTag()) ?>">
-                    <div class="col-xs-4 ellipsis">
+                    <div class="col-4 ellipsis">
                         <?=$gameImg ?>
                         <div class="ellipsis-item">
                             <?=$this->escape($war->getWarGroupTag()) ?>
                         </div>
                     </div>
-                    <div class="col-xs-2 small pull-left nextwar-vs"><?=$this->getTrans('vs') ?></div>
-                    <div class="col-xs-3 ellipsis">
+                    <div class="col-2 small pull-left nextwar-vs"><?=$this->getTrans('vs') ?></div>
+                    <div class="col-3 ellipsis">
                         <div class="ellipsis-item">
                             <?=$this->escape($war->getWarEnemyTag()) ?>
                         </div>
                     </div>
                 </a>
-                <div class="col-xs-3 small nextwar-date">
+                <div class="col-3 small nextwar-date">
                     <div class="ellipsis-item text-right <?=$matchStatus ?>" title="<?=$groupPoints ?>:<?=$enemyPoints ?>">
                         <?=$groupPoints ?>:<?=$enemyPoints ?>
                     </div>
