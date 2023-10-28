@@ -33,10 +33,10 @@
     </ul>
     <br />
     <div class="row mb-3 <?=$this->validation()->hasError('bankName') ? 'has-error' : '' ?>">
-        <label for="bankName" class="col-lg-2 control-label">
+        <label for="bankName" class="col-xl-2 control-label">
             <?=$this->getTrans('bankName') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="bankName"
@@ -46,10 +46,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('bankOwner') ? 'has-error' : '' ?>">
-        <label for="bankOwner" class="col-lg-2 control-label">
+        <label for="bankOwner" class="col-xl-2 control-label">
             <?=$this->getTrans('bankOwner') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="bankOwner"
@@ -59,10 +59,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('bankIBAN') ? 'has-error' : '' ?>">
-        <label for="bankIBAN" class="col-lg-2 control-label">
+        <label for="bankIBAN" class="col-xl-2 control-label">
             <?=$this->getTrans('bankIBAN') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="bankIBAN"
@@ -72,10 +72,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('bankBIC') ? 'has-error' : '' ?>">
-        <label for="bankBIC" class="col-lg-2 control-label">
+        <label for="bankBIC" class="col-xl-2 control-label">
             <?=$this->getTrans('bankBIC') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="bankBIC"

@@ -37,10 +37,10 @@
     <?=$this->getTokenField() ?>
 
     <div class="row mb-3">
-        <label for="clientID" class="col-lg-2 control-label">
+        <label for="clientID" class="col-xl-2 control-label">
             <?=$this->getTrans('clientID') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('clientIDInfo') ?>"></span>
@@ -57,10 +57,10 @@
     <hr>
     <p><?=$this->getTrans('paypalMeDesc') ?></p>
     <div class="row mb-3">
-        <label for="paypalMe" class="col-lg-2 control-label">
+        <label for="paypalMe" class="col-xl-2 control-label">
             <?=$this->getTrans('paypalMe') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <span class="input-group-text">
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('paypalMeInfo') ?>"></span>
@@ -75,10 +75,10 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('paypalMePresetAmount') ? 'has-error' : '' ?>">
-        <label for="paypalMePresetAmount" class="col-lg-2 control-label">
+        <label for="paypalMePresetAmount" class="col-xl-2 control-label">
             <?=$this->getTrans('paypalMePresetAmount') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="paypalMePresetAmount-on" name="paypalMePresetAmount" value="1" <?=($this->get('settings') && $this->get('settings')->isPayPalMePresetAmount() == '1') ? 'checked="checked"' : '' ?> />
                 <label for="paypalMePresetAmount-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>

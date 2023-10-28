@@ -59,7 +59,7 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
     $img = BASE_URL . $shopImgPath . 'noimg.jpg';
 } ?>
 <div class="col show row">
-    <div class="col-lg-6">
+    <div class="col-xl-6">
         <table class="table noborder">
             <tr>
                 <td class="big">
@@ -140,7 +140,7 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
             </tr>
         </table>
     </div>
-    <div class="col-lg-6">
+    <div class="col-xl-6">
         <table class="table table-striped border">
             <colgroup>
                 <col>
@@ -211,7 +211,7 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
             </tbody>
         </table>
     </div>
-    <div class="col-lg-12 desc">
+    <div class="col-xl-12 desc">
         <table class="table table-striped border">
             <tr>
                 <td>

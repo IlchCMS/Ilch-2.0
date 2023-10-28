@@ -50,7 +50,7 @@ $settingsMapper = $this->get('settingsMapper');
     <div class="table-responsive">
         <table class="table">
             <colgroup>
-                <col class="col-lg-1">
+                <col class="col-xl-1">
                 <col>
             </colgroup>
             <tbody>
@@ -296,7 +296,7 @@ $settingsMapper = $this->get('settingsMapper');
                 </td>
             </tr>
         </table>
-        <a class="btn btn-default" href="<?=$this->getUrl(['action' => 'index']) ?>">
+        <a class="btn btn-outline-secondary" href="<?=$this->getUrl(['action' => 'index']) ?>">
             <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
         </a>
     </form>
@@ -890,7 +890,7 @@ $settingsMapper = $this->get('settingsMapper');
 <?php else : ?>
     <h1><?=$this->getTrans('menuOrder'); ?></h1>
     <div class="alert alert-warning"><?=$this->getTrans('noOrderSelected') ?></div>
-    <a class="btn btn-default" href="<?=$this->getUrl(['action' => 'index']) ?>">
+    <a class="btn btn-outline-secondary" href="<?=$this->getUrl(['action' => 'index']) ?>">
         <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
     </a>
 <?php endif; ?>

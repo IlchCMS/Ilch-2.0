@@ -5,11 +5,11 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('limit') ? 'has-error' : '' ?>">
-        <label for="limit" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('limit') ? 'has-error' : '' ?>">
+        <label for="limit" class="col-xl-2 control-label">
             <?=$this->getTrans('numberOfMessagesDisplayed') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="limit"
@@ -18,11 +18,11 @@
                    value="<?=$this->originalInput('limit', $this->get('limit')) ?>">
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('maxtextlength') ? 'has-error' : '' ?>">
-        <label for="maxtextlength" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('maxtextlength') ? 'has-error' : '' ?>">
+        <label for="maxtextlength" class="col-xl-2 control-label">
             <?=$this->getTrans('maximumTextLength') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="maxtextlength"
@@ -31,11 +31,11 @@
                    value="<?=$this->originalInput('maxtextlength', $this->get('maxtextlength')) ?>">
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('writeAccess') ? 'has-error' : '' ?>">
-        <label for="writeAccess" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('writeAccess') ? 'has-error' : '' ?>">
+        <label for="writeAccess" class="col-xl-2 control-label">
             <?=$this->getTrans('writeAccess') ?>
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <select class="chosen-select form-control"
                     id="writeAccess"
                     name="writeAccess[]"

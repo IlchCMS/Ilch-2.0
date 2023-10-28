@@ -24,7 +24,7 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status' => '3']));
 <?php endif; ?>
 
 <div class="row">
-    <div class="col-sm-12 col-md-6 mb-3">
+    <div class="col-md-12 col-lg-6 mb-3">
         <div class="img-thumbnail media">
             <div class="media-body">
                 <h4 class="media-heading">
@@ -48,7 +48,7 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status' => '3']));
             </div>
         </div>
     </div>
-    <div class="col-sm-12 col-md-6 mb-3">
+    <div class="col-md-12 col-lg-6 mb-3">
         <div class="img-thumbnail media">
             <div class="media-body">
                 <h4 class="media-heading"><i class="fa-solid fa-tshirt"></i>&nbsp;&nbsp;<?=$this->getTrans('menuItems') ?></h4>
@@ -67,10 +67,10 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status' => '3']));
         </div>
     </div>
     <?php if ($this->get('settings')->getIfSampleData() == 1) : ?>
-    <div class="col-md-12" style="text-align:right">
+    <div class="col-lg-12" style="text-align:right">
         <form class="form-horizontal" id="delSamplaDataForm" method="POST" action="">
             <?=$this->getTokenField() ?>
-            <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal">
+            <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
                 <i class="fa-solid fa-info"></i>
             </a>
             <input type="button" id="delete_button" class="btn btn-outline-secondary del" value="<?=$this->getTrans('delSampleData') ?>" />

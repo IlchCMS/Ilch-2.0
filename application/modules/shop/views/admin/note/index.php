@@ -3,7 +3,7 @@
 <h1><?=$this->getTrans('menuNote') ?></h1>
 
 <div class="row mb-3">
-    <div class="col-sm-12 col-md-8 text-justify">
+    <div class="col-md-12 col-lg-8 text-justify">
         <?=$this->getTrans('noteText') ?>
     </div>
 </div>

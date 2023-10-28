@@ -11,9 +11,9 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
     <?=$this->getTrans('menuPayment') ?>
 </h1>
 
-<div class="panel panel-default">
-    <div class="panel-heading" id="orderHeading" data-toggle="collapse" data-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(), 0, strrpos($order->getInvoiceFilename(), '_')), $invoiceSentDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock'), $orderDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock')) ?><span class="pull-right clickable"><i class="fa-solid fa-chevron-down"></i></span></div>
-    <div class="panel-body collapse" id="orderDetails">
+<div class="card panel-default">
+    <div class="card-header" id="orderHeading" data-bs-toggle="collapse" data-bs-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(), 0, strrpos($order->getInvoiceFilename(), '_')), $invoiceSentDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock'), $orderDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock')) ?><span class="pull-right clickable"><i class="fa-solid fa-chevron-down"></i></span></div>
+    <div class="card-body collapse" id="orderDetails">
         <div class="table-responsive order">
             <table class="table table-striped">
                 <thead>
@@ -82,7 +82,7 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
                         <td class="text-center">
                             <b><?=$orderItem->getQuantity() ?></b>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             <b><?=number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?></b>
                         </td>
                     </tr>
@@ -96,25 +96,25 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
                     ?>
                 <?php endforeach; ?>
                 <tr>
-                    <td colspan="7" class="text-right finished">
+                    <td colspan="7" class="text-end finished">
                         <b><?=$this->getTrans('deliveryCosts') ?>:</b>
                     </td>
-                    <td colspan="1" class="text-right finished">
+                    <td colspan="1" class="text-end finished">
                         <?php $shipping_costs = max($arrayShippingCosts); ?>
                         <b><?=number_format($shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?></b>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right finish">
+                    <td colspan="7" class="text-end finish">
                         <?=$this->getTrans('subtotal') ?> <?=$this->getTrans('withTax') ?>:
                     </td>
-                    <td colspan="1" class="text-right finish">
+                    <td colspan="1" class="text-end finish">
                         <?php $total_price = array_sum($arrayPrices) + $shipping_costs; ?>
                         <?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right finish">
+                    <td colspan="7" class="text-end finish">
                         <?=$this->getTrans('subtotal') ?> <?=$this->getTrans('withoutTax') ?>:
                     </td>
                     <td colspan="1" class="text-right finish">
@@ -123,19 +123,19 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right finish">
+                    <td colspan="7" class="text-end finish">
                         <?=$this->getTrans('tax') ?>:
                     </td>
-                    <td colspan="1" class="text-right finish">
+                    <td colspan="1" class="text-end finish">
                         <?php $differenzTax = round($total_price - $sumPricewithoutTax, 2); ?>
                         <?=number_format($differenzTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right finished">
+                    <td colspan="7" class="text-end finished">
                         <b><?=$this->getTrans('totalPrice') ?>:</b>
                     </td>
-                    <td colspan="1" class="text-right finished">
+                    <td colspan="1" class="text-end finished">
                         <b><?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?></b>
                     </td>
                 </tr>

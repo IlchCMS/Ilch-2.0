@@ -212,7 +212,7 @@ if (!empty($_SESSION['shopping_cart'])) {
     } else { ?>
         <?=$this->getTrans('cartEmpty') ?>
     <div class="row space20"></div>
-    <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-default">
+    <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-outline-secondary">
         <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
     </a>
     <?php } ?>

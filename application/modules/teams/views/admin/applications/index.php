@@ -13,7 +13,7 @@ $joins = $this->get('joins');
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="col-lg-3" />
+                <col class="col-xl-3" />
                 <col />
             </colgroup>
             <thead>
@@ -42,4 +42,3 @@ $joins = $this->get('joins');
 <?php else : ?>
     <?=$this->getTrans('noApplications') ?>
 <?php endif; ?>
-

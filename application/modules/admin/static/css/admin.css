@@ -94,7 +94,7 @@ a {
 }
 a:hover {
     text-decoration: underline;
-    color:#337ab7 !important;
+    color:#337ab7;
 }
 .chosen-container {
     width: 100% !important;

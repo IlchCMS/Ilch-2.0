@@ -54,11 +54,11 @@ $teams = $this->get('teams');
         <div class="content_savebox">
             <input type="hidden" class="content_savebox_hidden" name="action" value="" />
             <div class="btn-group dropup">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bc-toggle="dropdown">
                     <?=$this->getTrans('selected') ?> <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu listChooser" role="menu">
-                    <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+                    <li><a class="dropdoen-item" href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
                 </ul>
             </div>
             <button type="submit" class="save_button btn btn-default" name="saveTeams" value="save">

@@ -3,7 +3,7 @@
 
 <h1>
     <?=$this->getTrans('menuCats') ?>
-    <a class="badge" data-toggle="modal" data-target="#infoModal">
+    <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
@@ -47,16 +47,16 @@
             <input type="hidden" id="positions" name="positions" value="" />
         </div>
         <div class="content_savebox">
-            <button type="submit" class="btn btn-default sortbtn" name="save" value="save">
+            <button type="submit" class="btn btn-outline-secondary sortbtn" name="save" value="save">
                 <?=$this->getTrans('saveSort') ?>
             </button>
             <input type="hidden" class="content_savebox_hidden" name="action" value="" />
             <div class="btn-group dropup">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
                     <?=$this->getTrans('selected') ?> <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu listChooser" role="menu">
-                    <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+                    <li><a class="dropdown-item" href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
                 </ul>
             </div>
         </div>
