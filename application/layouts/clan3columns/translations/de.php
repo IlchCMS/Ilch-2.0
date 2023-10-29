@@ -9,10 +9,15 @@ return [
     'slider1' => 'Slider 1',
     'slider2' => 'Slider 2',
     'slider3' => 'Slider 3',
-    'img' => 'standard grafik bei 1600px X 430px',
+    'img' => 'Maße der Standardgrafik: 1600 x 430',
 
     'togglenavigation' => 'Navigation umschalten',
     'navigation' => 'Navigation',
+    'slide1' => 'Slide 1',
+    'slide2' => 'Slide 2',
+    'slide3' => 'Slide 3',
+    'previous' => 'vorheriges',
+    'next' => 'nächstes',
 
     'home' => 'Home',
     'contact' => 'Kontakt',
