@@ -5,12 +5,14 @@
     <?php if ($this->getRequest()->getParam('type') === 'imageckeditor' || $this->getRequest()->getParam('type') === 'single'): ?>
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
+              <div class="row">
                 <div  id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
                     <img class="image img-thumbnail img-fluid"
                          data-url="<?=$media->getUrl() ?>"
                          src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
                          alt="<?=$media->getName() ?>">
                 </div>
+              </div>
             <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>
@@ -18,6 +20,7 @@
     <?php if ($this->getRequest()->getParam('type') === 'media' || $this->getRequest()->getParam('type') === 'videockeditor'): ?>
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
+              <div class="row">
                 <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                     <img class="image img-thumbnail img-fluid"
                          data-url="<?=$media->getUrl() ?>"
@@ -27,6 +30,7 @@
                         <small class="text-info"><?=substr($media->getName(), 0, 20) ?></small>
                     </div>
                 </div>
+              </div>
             <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>
@@ -34,6 +38,7 @@
     <?php if ($this->getRequest()->getParam('type') === 'file' || $this->getRequest()->getParam('type') === 'fileckeditor'): ?>
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
+              <div class="row">
                 <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                     <img class="image img-thumbnail img-fluid"
                          data-alt="<?=$media->getName() ?>"
@@ -44,6 +49,7 @@
                         <small class="text-info"><?=substr($media->getName(), 0, 20) ?></small>
                     </div>
                 </div>
+              </div>
             <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>

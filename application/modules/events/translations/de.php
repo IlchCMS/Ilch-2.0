@@ -74,6 +74,7 @@ return [
     'visibleFor' => 'Sichtbar für',
     'selectAssignedGroups' => 'Ausgewählte Gruppen',
     'showMore' => 'Mehr anzeigen',
+    'close' => 'Schließen',
     'login' => 'Login',
     'headpic' => 'Bild zur Veranstaltung.',
     'avatar' => 'Avatar',

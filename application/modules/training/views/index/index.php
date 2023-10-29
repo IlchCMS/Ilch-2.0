@@ -10,10 +10,10 @@ $displayedTrainings = 0;
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-3">
+            <col class="col-xl-3">
             <col>
-            <col class="col-lg-3">
-            <col class="col-lg-1">
+            <col class="col-xl-3">
+            <col class="col-xl-1">
         </colgroup>
         <thead>
             <tr>
@@ -33,7 +33,7 @@ $displayedTrainings = 0;
                     $displayedTrainings++;
                     ?>
                     <tr>
-                        <td><?=date('d.m.Y', strtotime($training->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($training->getDate())) ?> <?=$this->getTrans('clock') ?></td>    
+                        <td><?=date('d.m.Y', strtotime($training->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($training->getDate())) ?> <?=$this->getTrans('clock') ?></td>
                         <td><a href="<?=$this->getUrl('training/index/show/id/' . $training->getId()) ?>"><?=$this->escape($training->getTitle()) ?></a></td>
                         <td><?=$this->escape($training->getPlace()) ?></td>
                         <td align="center"><?=count($entrantsMapper->getEntrantsById($training->getId())) ?></td>

@@ -35,7 +35,7 @@ if (!empty($event)) {
     </h1>
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-xl-6">
             <div class="event-head">
                 <?php if ($this->escape($event->getImage()) != ''): ?>
                     <img src="<?=$this->getBaseUrl().$this->escape($event->getImage()) ?>" class="headPic" alt="<?=$this->getTrans('headpic') ?>">
@@ -207,7 +207,7 @@ if (!empty($event)) {
                     </div>
 
                     <div class="more-entrants">
-                        <a href="" data-toggle="modal" data-target="#entrantsModal"><?=$this->getTrans('showMore') ?></a>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#entrantsModal"><?=$this->getTrans('showMore') ?></a>
                     </div>
                 </div>
             <?php endif; ?>
@@ -220,7 +220,7 @@ if (!empty($event)) {
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-xl-6">
             <div class="form-horizontal">
                 <?php if ($this->getUser() && (($eventEntrants != '' && $eventEntrants->getUserId() == $this->getUser()->getId()) || $event->getUserId() == $this->getUser()->getId())): ?>
                     <div class="form-group eventCommentSubmit">
@@ -278,8 +278,8 @@ if (!empty($event)) {
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"><?=$this->getTrans('entrant') ?></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?=$this->getTrans('close') ?>"></button>
                     </div>
                     <div class="modal-body">
                         <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
@@ -384,4 +384,3 @@ if (!empty($event)) {
     <?php endif; ?>
     </script>
 <?php endif; ?>
-

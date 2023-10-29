@@ -16,11 +16,11 @@ $gamesMapper = $this->get('gamesMapper');
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <colgroup>
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
                 <col />
             </colgroup>
             <thead>

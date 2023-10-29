@@ -10,6 +10,7 @@
         <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'single'): ?>
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
+                  <div class="row">
                     <div id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
                         <img class="image img-thumbnail img-responsive"
                              data-url="<?=$media->getUrl() ?>"
@@ -20,6 +21,7 @@
                              <?php endif; ?>
                              alt="<?=$media->getName() ?>">
                     </div>
+                  </div>
                 <?php endif; ?>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -27,6 +29,7 @@
         <?php if ($this->getRequest()->getParam('type') === 'media'): ?>
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
+                  <div class="row">
                     <div class="col-xl-2 col-md-3 col-4">
                         <img class="image img-thumbnail img-fluid"
                              data-url="<?=$media->getUrl() ?>"
@@ -35,6 +38,7 @@
                         <div class="media-getending">Type: <?=$media->getEnding() ?></div>
                         <div class="media-getname"><?=$media->getName() ?></div>
                     </div>
+                  </div>
                 <?php endif; ?>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -42,6 +46,7 @@
         <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
+                  <div class="row">
                     <div class="col-xl-2 col-md-3 col-4">
                         <img class="image img-thumbnail img-responsive"
                              data-alt="<?=$media->getName() ?>"
@@ -51,6 +56,7 @@
                         <div class="media-getending">Type: <?=$media->getEnding() ?></div>
                         <div class="media-getname"><?=$media->getName() ?></div>
                     </div>
+                  </div>
                 <?php endif; ?>
             <?php endforeach; ?>
         <?php endif; ?>

@@ -2,11 +2,11 @@
 <h1><?=(!$icon) ? $this->getTrans('createNewGameIcon') : $this->getTrans('treatGameIcon') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
-    <div class="form-group row mb-3<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
-        <label for="gameNameInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
+        <label for="gameNameInput" class="col-xl-2 control-label">
             <?=$this->getTrans('gameName') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="gameNameInput"
@@ -14,13 +14,13 @@
                    value="<?=$this->escape($this->originalInput('gameName', ($icon ?? ''))) ?>" />
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('gameIcon') ? ' has-error' : '' ?>">
-        <label for="gameIcon" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('gameIcon') ? ' has-error' : '' ?>">
+        <label for="gameIcon" class="col-xl-2 control-label">
             <?=$this->getTrans('gameIcon') ?><br>
             <?=$this->getTrans('iconSize') ?>: 16 Pixel <?=$this->getTrans('iconWidth') ?>, 16 Pixel <?=$this->getTrans('iconHeight') ?>.<br>
             <?=$this->getTrans('allowedFileExtensions') ?>: png
         </label>
-        <div class="input-group col-lg-4">
+        <div class="input-group col-xl-4">
             <span class="input-group-btn">
                 <span class="btn btn-primary btn-file">
                     <input type="file" name="icon" accept="image/png">
@@ -35,7 +35,7 @@
     </div>
     <?php if ($icon && file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$icon.'.png')): ?>
     <div>
-        <div class="col-lg-6">
+        <div class="col-xl-6">
             <img class="" src="<?=$this->getBaseUrl().'application/modules/war/static/img/'.$icon.'.png' ?>" title="<?=$this->escape($icon) ?>" alt="<?=$this->escape($icon) ?>">
         </div>
     </div>

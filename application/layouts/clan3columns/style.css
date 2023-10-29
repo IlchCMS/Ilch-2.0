@@ -79,8 +79,14 @@ hr {
     background-color: #40434E;
 }
 
+.navbar-gaming >.container-fluid>#navbarNav {
+    margin-top:8px;
+    max-height:550px;
+    overflow: scroll;
+}
+
 header .container {
-    margin-top: 0px;
+    margin-top: 56px;
 }
 
 header .container .gaming {
@@ -93,6 +99,9 @@ header .container .gaming {
 @media (min-width: 768px) {
     header .container .gaming {
         margin: 0 10px;
+    }
+    header .container {
+        margin-top: 0px;
     }
 }
 
@@ -318,5 +327,6 @@ header .carousel-control.right{
 @media (min-width: 768px) {
     .footer .container .gaming .nav {
         text-align: right;
+        display:block;
     }
 }

@@ -2,11 +2,11 @@
 <h1><?=$this->getTrans('manageNewEnemy') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('enemyName') ? ' has-error' : '' ?>">
-        <label for="enemyNameInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('enemyName') ? ' has-error' : '' ?>">
+        <label for="enemyNameInput" class="col-xl-2 control-label">
             <?=$this->getTrans('enemyName') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="enemyNameInput"
@@ -14,11 +14,11 @@
                    value="<?=$this->escape($this->originalInput('enemyName', ($entrie->getId()?$entrie->getEnemyName():''))) ?>" />
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('enemyTag') ? ' has-error' : '' ?>">
-        <label for="enemyTagInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('enemyTag') ? ' has-error' : '' ?>">
+        <label for="enemyTagInput" class="col-xl-2 control-label">
             <?=$this->getTrans('enemyTag') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="enemyTagInput"
@@ -26,11 +26,11 @@
                    value="<?=$this->escape($this->originalInput('enemyTag', ($entrie->getId()?$entrie->getEnemyTag():''))) ?>" />
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('enemyHomepage') ? ' has-error' : '' ?>">
-        <label for="enemyHomepageInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('enemyHomepage') ? ' has-error' : '' ?>">
+        <label for="enemyHomepageInput" class="col-xl-2 control-label">
             <?=$this->getTrans('enemyHomepage') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="enemyHomepageInput"
@@ -38,11 +38,11 @@
                    value="<?=$this->escape($this->originalInput('enemyHomepage', ($entrie->getId()?$entrie->getEnemyHomepage():''))) ?>" />
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('enemyImage') ? ' has-error' : '' ?>">
-        <label for="selectedImage" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('enemyImage') ? ' has-error' : '' ?>">
+        <label for="selectedImage" class="col-xl-2 control-label">
             <?=$this->getTrans('enemyImage') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control"
@@ -56,11 +56,11 @@
             </div>
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('enemyContactName') ? ' has-error' : '' ?>">
-        <label for="enemyContactNameInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('enemyContactName') ? ' has-error' : '' ?>">
+        <label for="enemyContactNameInput" class="col-xl-2 control-label">
             <?=$this->getTrans('enemyContactName') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="enemyContactNameInput"
@@ -68,11 +68,11 @@
                    value="<?=$this->escape($this->originalInput('enemyContactName', ($entrie->getId()?$entrie->getEnemyContactName():''))) ?>" />
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('enemyContactEmail') ? ' has-error' : '' ?>">
-        <label for="enemyContactEmailInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('enemyContactEmail') ? ' has-error' : '' ?>">
+        <label for="enemyContactEmailInput" class="col-xl-2 control-label">
             <?=$this->getTrans('enemyContactEmail') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="email"
                    class="form-control"
                    id="enemyContactEmailInput"

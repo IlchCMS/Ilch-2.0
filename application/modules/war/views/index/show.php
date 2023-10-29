@@ -19,24 +19,24 @@ $commentsClass = new Ilch\Comments();
 <h1><?=$this->getTrans('warPlay') ?></h1>
 <div class="row">
     <div class="center-text row no_margin">
-        <div class="col-lg-5">
+        <div class="col-xl-5">
             <img class="img-thumbnail img-fluid" src="<?=$this->getBaseUrl($group && $group->getGroupImage() != '' ? $group->getGroupImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$group && $group->getGroupName() != '' ? $group->getGroupName() : '' ?>">
             <h4><span><?=$this->escape($group ? $group->getGroupName() : '') ?></span></h4>
         </div>
-        <div class="col-lg-2 plays-vs">
+        <div class="col-xl-2 plays-vs">
             <h4>
                 <span class="fa-solid fa-circle-arrow-left"></span>
                 <span>VS</span>
                 <span class="fa-solid fa-circle-arrow-right"></span>
             </h4>
         </div>
-        <div class="col-lg-5">
+        <div class="col-xl-5">
             <img class="img-thumbnail img-fluid" src="<?=$this->getBaseUrl($enemy && $enemy->getEnemyImage() != '' ? $enemy->getEnemyImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$enemy && $enemy->getEnemyName() != '' ? $enemy->getEnemyName() : '' ?>">
             <h4><span><?=$this->escape($enemy ? $enemy->getEnemyName() : '') ?></span></h4>
         </div>
     </div>
     <div class="col-xl-6">
-        <div class="card panel-default">
+        <div class="card cartd-default">
             <div class="card-header">
                 <h6 class="card-title"><?=$this->getTrans('warStatusFrom') ?> <?=$war->getWarTime() ?></h6>
             </div>
@@ -52,7 +52,7 @@ $commentsClass = new Ilch\Comments();
         </div>
     </div>
     <div class="col-xl-6">
-        <div class="card panel-default">
+        <div class="card card-default">
             <div class="card-header">
                 <h6 class="card-title"><?=$this->getTrans('warResult') ?></h6>
             </div>
@@ -84,7 +84,7 @@ $commentsClass = new Ilch\Comments();
         </div>
     </div>
     <div class="col-xl-6">
-        <div class="card panel-default">
+        <div class="card card-default">
             <div class="card-header">
                 <h6 class="card-title"><?=$this->getTrans('warMap') ?></h6>
             </div>
@@ -105,7 +105,7 @@ $commentsClass = new Ilch\Comments();
     </div>
     <div class="clearfix"></div>
     <div class="col-xl-6">
-        <div class="card panel-default">
+        <div class="card card-default">
             <div class="card-header">
                 <h6 class="card-title"><?=$this->getTrans('warMember') ?></h6>
             </div>
@@ -125,7 +125,7 @@ $commentsClass = new Ilch\Comments();
         </div>
     </div>
     <div class="col-xl-6">
-        <div class="card panel-default">
+        <div class="card card-default">
             <div class="card-header">
                 <h6 class="card-title"><?=$this->getTrans('warAccept') ?></h6>
             </div>
@@ -203,7 +203,7 @@ $commentsClass = new Ilch\Comments();
         </div>
     </div>
     <div class="col-xl-12">
-        <div class="card panel-default">
+        <div class="card card-default">
             <div class="card-header">
                 <h6 class="card-title"><?=$this->getTrans('warReport') ?></h6>
             </div>

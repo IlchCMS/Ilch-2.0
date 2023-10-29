@@ -2,11 +2,11 @@
 <h1><?=(!$entrie->getId()) ? $this->getTrans('manageNewGroup') : $this->getTrans('treatGroup') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('groupName') ? ' has-error' : '' ?>">
-        <label for="groupNameInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('groupName') ? ' has-error' : '' ?>">
+        <label for="groupNameInput" class="col-xl-2 control-label">
             <?=$this->getTrans('groupName') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="groupNameInput"
@@ -14,11 +14,11 @@
                    value="<?=$this->escape($this->originalInput('groupName', ($entrie->getId()?$entrie->getGroupName():''))) ?>" />
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('groupTag') ? ' has-error' : '' ?>">
-        <label for="groupTagInput" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('groupTag') ? ' has-error' : '' ?>">
+        <label for="groupTagInput" class="col-xl-2 control-label">
             <?=$this->getTrans('groupTag') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="groupTagInput"
@@ -26,11 +26,11 @@
                    value="<?=$this->escape($this->originalInput('groupTag', ($entrie->getId()?$entrie->getGroupTag():''))) ?>" />
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('groupImage') ? ' has-error' : '' ?>">
-        <label for="selectedImage_1" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('groupImage') ? ' has-error' : '' ?>">
+        <label for="selectedImage_1" class="col-xl-2 control-label">
             <?=$this->getTrans('groupImage') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control"
@@ -44,11 +44,11 @@
             </div>
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('groupDesc') ? ' has-error' : '' ?>">
-        <label for="groupDesc" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('groupDesc') ? ' has-error' : '' ?>">
+        <label for="groupDesc" class="col-xl-2 control-label">
             <?=$this->getTrans('groupDesc') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <textarea class="form-control"
                           name="groupDesc"
@@ -59,11 +59,11 @@
             </div>
         </div>
     </div>
-    <div class="form-group row mb-3 <?=$this->validation()->hasError('userGroup') ? ' has-error' : '' ?>">
-        <label for="warGroup" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('userGroup') ? ' has-error' : '' ?>">
+        <label for="warGroup" class="col-xl-2 control-label">
             <?=$this->getTrans('assignedMember') ?>
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <select class="form-control" id="warGroup" name="userGroup">
                 <optgroup label="<?=$this->getTrans('groupsName') ?>">
                     <?php foreach ($this->get('userGroupList') as $groupList): ?>

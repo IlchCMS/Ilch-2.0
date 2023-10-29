@@ -9,11 +9,11 @@ $vote = $this->get('vote');
 <h1><?=($vote->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form role="form" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
-        <label for="group" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
+        <label for="group" class="col-xl-2 control-label">
             <?=$this->getTrans('participationGroup') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="group" name="groups[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
@@ -29,11 +29,11 @@ $vote = $this->get('vote');
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('access') ? 'has-error' : '' ?>">
-        <label for="access" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('access') ? 'has-error' : '' ?>">
+        <label for="access" class="col-xl-2 control-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="access" name="access[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
@@ -49,11 +49,11 @@ $vote = $this->get('vote');
             </select>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
-        <label for="question" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
+        <label for="question" class="col-xl-2 control-label">
             <?=$this->getTrans('question') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input class="form-control"
                    type="text"
                    id="question"
@@ -61,11 +61,11 @@ $vote = $this->get('vote');
                    value="<?=$this->escape($this->originalInput('question', $vote->getQuestion())) ?>" />
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('multiplereply') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('multiplereply') ? 'has-error' : '' ?>">
+        <div class="col-xl-2 control-label">
             <?=$this->getTrans('multiplereply') ?>
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="multiplereply-on" name="multiplereply" value="1" <?=($this->originalInput('multiplereply', $vote->getMultipleReply())) ? 'checked="checked"' : '' ?> />
                 <label for="multiplereply-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -75,8 +75,8 @@ $vote = $this->get('vote');
             </div>
         </div>
     </div>
-    <div class="row form-group ilch-margin-b <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
-        <label for="reply" class="col-lg-2 control-label">
+    <div class="row mb-3 <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
+        <label for="reply" class="col-xl-2 control-label">
             <?=$this->getTrans('reply') ?>
         </label>
         <?php if ($vote->getId()) : ?>
@@ -84,12 +84,12 @@ $vote = $this->get('vote');
             <?php $voteRes = $resultMapper->getVoteRes($vote->getId()); ?>
             <?php $countRes = count($voteRes); ?>
             <?php $i = 0; ?>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <?php foreach ($voteRes as $voteResModel) : ?>
                     <?php $i++; ?>
-                    <div class="row form-group ilch-margin-b input-group">
-                        <input type="text" name="reply[]" class="form-control" value="<?=$this->escape($voteResModel->getReply()) ?>">
-                        <span class="input-group-btn">
+                    <div class="row mb-3 input-group">
+                        <input type="text" name="reply[]" class="form-control col-xl-11 p-0" value="<?=$this->escape($voteResModel->getReply()) ?>">
+                        <span class="input-group-btn col-xl-1 p-0">
                             <?php if ($i == $countRes) : ?>
                                 <button type="button" class="btn btn-success btn-add">+</button>
                             <?php else : ?>
@@ -100,10 +100,10 @@ $vote = $this->get('vote');
                 <?php endforeach; ?>
             </div>
         <?php else : ?>
-            <div class="col-lg-4">
-                <div class="row form-group ilch-margin-b input-group">
-                    <input type="text" name="reply[]" class="form-control">
-                    <span class="input-group-btn">
+            <div class="col-xl-4">
+                <div class="row mb-3 input-group">
+                    <input type="text" name="reply[]" class="form-control col-xl-11 p-0">
+                    <span class="input-group-btn col-xl-1 p-0">
                         <button type="button" class="btn btn-success btn-add">+</button>
                     </span>
                 </div>
