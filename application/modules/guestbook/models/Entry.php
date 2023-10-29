@@ -70,9 +70,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the email of the entry.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -80,9 +80,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the text of the entry.
      *
-     * @return string
+     * @return string|null
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
@@ -90,9 +90,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the name of the entry.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -100,9 +100,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the homepage of the entry.
      *
-     * @return string
+     * @return string|null
      */
-    public function getHomepage(): string
+    public function getHomepage(): ?string
     {
         return $this->homepage;
     }
@@ -110,9 +110,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the datetime of the entry.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDatetime(): string
+    public function getDatetime(): ?string
     {
         return $this->datetime;
     }
