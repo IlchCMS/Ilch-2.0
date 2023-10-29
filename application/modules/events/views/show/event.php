@@ -279,7 +279,7 @@ if (!empty($event)) {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title"><?=$this->getTrans('entrant') ?></h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?=$this->getTrans('close') ?>"></button>
                     </div>
                     <div class="modal-body">
                         <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
