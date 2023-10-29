@@ -10,17 +10,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'name' => 'Ilch-Clan',
-        'version' => '1.0.1',
+        'version' => '1.1.0',
         'author' => 'Ilch.de',
-        'link' => 'http://ilch.de',
+        'link' => 'https://ilch.de',
         'desc' => '3 Spalten Clan Layout',
-        'layouts' => [
-            'index_full' => [
-                ['module' => 'user', 'controller' => 'panel'],
-                ['module' => 'forum'],
-                ['module' => 'guestbook'],
-            ]//only for example
-        ],
         'layouts' => [
             'index_full' => [
                 ['module' => 'user', 'controller' => 'panel'],
@@ -32,7 +25,7 @@ class Config extends \Ilch\Config\Install
             ],
             'shop_index' => [
                 ['module' => 'shop'],
-            ]//only for example
+            ]
         ],
         'settings' => [
             'header' => [
@@ -56,7 +49,6 @@ class Config extends \Ilch\Config\Install
               'description' => 'img',
             ],
         ],
-        //'modulekey' => 'Name of Module'
     ];
 
     public function getUpdate($installedVersion)
