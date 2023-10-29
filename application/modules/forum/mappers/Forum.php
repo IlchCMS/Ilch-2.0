@@ -899,6 +899,10 @@ class Forum extends Mapper
      */
     public function deleteItems(array $ids)
     {
+        if (empty($ids)) {
+            return;
+        }
+
         $this->db()->delete('forum_items')
             ->where(['id' => $ids])
             ->execute();
