@@ -8,57 +8,63 @@
 <?php if ($this->get('medias') != ''): ?>
     <div id="ilchmedia" class="container-flui rowd">
         <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'single'): ?>
+            <div class="row">
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
-                  <div class="row">
-                    <div id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
-                        <img class="image img-thumbnail img-responsive"
-                             data-url="<?=$media->getUrl() ?>"
-                             <?php if (file_exists($media->getUrlThumb())): ?>
-                                src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
-                             <?php else: ?>
-                                src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                             <?php endif; ?>
-                             alt="<?=$media->getName() ?>">
+                    <div class="row">
+                        <div id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
+                            <img class="image img-thumbnail img-responsive"
+                                 data-url="<?=$media->getUrl() ?>"
+                                 <?php if (file_exists($media->getUrlThumb())): ?>
+                                    src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
+                                 <?php else: ?>
+                                    src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                 <?php endif; ?>
+                                 alt="<?=$media->getName() ?>">
+                        </div>
                     </div>
-                  </div>
                 <?php endif; ?>
             <?php endforeach; ?>
+            </div>
         <?php endif; ?>
 
         <?php if ($this->getRequest()->getParam('type') === 'media'): ?>
+            <div class="row">
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
-                  <div class="row">
-                    <div class="col-xl-2 col-md-3 col-4">
-                        <img class="image img-thumbnail img-fluid"
-                             data-url="<?=$media->getUrl() ?>"
-                             src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                             alt="<?=$media->getName() ?>">
-                        <div class="media-getending">Type: <?=$media->getEnding() ?></div>
-                        <div class="media-getname"><?=$media->getName() ?></div>
+                    <div class="row">
+                        <div class="col-xl-2 col-md-3 col-4">
+                            <img class="image img-thumbnail img-fluid"
+                                 data-url="<?=$media->getUrl() ?>"
+                                 src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                 alt="<?=$media->getName() ?>">
+                            <div class="media-getending">Type: <?=$media->getEnding() ?></div>
+                            <div class="media-getname"><?=$media->getName() ?></div>
+                        </div>
                     </div>
-                  </div>
                 <?php endif; ?>
             <?php endforeach; ?>
+            </div>
         <?php endif; ?>
 
         <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
+            <div class="row">
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
-                  <div class="row">
-                    <div class="col-xl-2 col-md-3 col-4">
-                        <img class="image img-thumbnail img-responsive"
-                             data-alt="<?=$media->getName() ?>"
-                             data-url="<?=$this->getUrl().'/'.$media->getUrl() ?>"
-                             src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                             alt="<?=$media->getName() ?>">
-                        <div class="media-getending">Type: <?=$media->getEnding() ?></div>
-                        <div class="media-getname"><?=$media->getName() ?></div>
+                    <div class="row">
+                        <div class="col-xl-2 col-md-3 col-4">
+                            <img class="image img-thumbnail img-responsive"
+                                 data-alt="<?=$media->getName() ?>"
+                                 data-url="<?=$this->getUrl().'/'.$media->getUrl() ?>"
+                                 src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                 alt="<?=$media->getName() ?>">
+                            <div class="media-getending">Type: <?=$media->getEnding() ?></div>
+                            <div class="media-getname"><?=$media->getName() ?></div>
+                        </div>
                     </div>
-                  </div>
                 <?php endif; ?>
             <?php endforeach; ?>
+            </div>
         <?php endif; ?>
     </div>
 <?php else: ?>

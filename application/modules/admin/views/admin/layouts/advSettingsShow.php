@@ -87,7 +87,7 @@ function getInput($name, $value, $settingsValues, $obj)
                 <div class="col-xl-10">
                     <?=getInput($key, $value, $this->get('settingsValues'), $this) ?>
                     <?php if (!empty($value['description'])) : ?>
-                        <div class="text-right"><small><?=$this->getOtherLayoutTrans($this->get('layoutKey'), $value['description']) ?></small><p></p></div>
+                        <div class="text-end"><small><?=$this->getOtherLayoutTrans($this->get('layoutKey'), $value['description']) ?></small><p></p></div>
                     <?php endif; ?>
                 </div>
             </div>

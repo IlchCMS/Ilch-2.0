@@ -13,7 +13,7 @@
         <nav class="navbar navbar-expand-lg navbar-light navbar-gaming bg-light fixed-top d-sm-block d-md-none">
           <div class="container-fluid">
             <a class="navbar-brand" href="<?=$this->getUrl() ?>"><?=$this->getTrans('navigation') ?></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="<?=$this->getTrans('togglenavigation') ?>">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -36,33 +36,33 @@
             <div class="gaming">
                 <div id="carousel-generic" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carousel-generic" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carousel-generic" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carousel-generic" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carousel-generic" data-bs-slide-to="0" class="active" aria-current="true" aria-label="<?=$this->getTrans('slide1') ?>"></button>
+                        <button type="button" data-bs-target="#carousel-generic" data-bs-slide-to="1" aria-label="<?=$this->getTrans('slide2') ?>"></button>
+                        <button type="button" data-bs-target="#carousel-generic" data-bs-slide-to="2" aria-label="<?=$this->getTrans('slide3') ?>"></button>
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="<?=$this->getLayoutUrl('img/slider/slider_1.jpg') ?>" alt="Slider 1">
+                            <img src="<?=$this->getBaseUrl($this->getLayoutSetting('slider1')) ?>" alt="<?=$this->getTrans('slider1') ?>">
                         </div>
                         <div class="carousel-item">
-                            <img src="<?=$this->getLayoutUrl('img/slider/slider_2.jpg') ?>" alt="Slider 2">
+                            <img src="<?=$this->getBaseUrl($this->getLayoutSetting('slider2')) ?>" alt="<?=$this->getTrans('slider2') ?>">
                         </div>
                         <div class="carousel-item">
-                            <img src="<?=$this->getLayoutUrl('img/slider/slider_3.jpg') ?>" alt="Slider 3">
+                            <img src="<?=$this->getBaseUrl($this->getLayoutSetting('slider3')) ?>" alt="<?=$this->getTrans('slider3') ?>">
                         </div>
                     </div>
                     <button class="carousel-control-prev carousel-control left" type="button" data-bs-target="#carousel-generic" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <span class="visually-hidden"><?=$this->getTrans('previous') ?></span>
                     </button>
                     <button class="carousel-control-next carousel-control right" type="button" data-bs-target="#carousel-generic" data-bs-slide="next">
                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                       <span class="visually-hidden">Next</span>
+                       <span class="visually-hidden"><?=$this->getTrans('next') ?></span>
                    </button>
                 </div>
 
                 <div class="gaming-name">
-                    Clanname
+                    <?=$this->getLayoutSetting('header')?>
                 </div>
             </div>
         </div>
@@ -101,11 +101,11 @@
                 <div class="gaming">
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            &copy; Ilch 2.0 Free Layout | CMS by <a href="http://www.ilch.de/">Ilch</a>
+                            &copy; Ilch 2.0 Free Layout | CMS by <a href="https://www.ilch.de/">Ilch</a>
                         </div>
                         <div class="col-xs-12 col-md-6 nav">
                             <ul class="text-end">
-                                <li><a href="<?=$this->getUrl() ?>">Home</a></li>
+                                <li><a href="<?=$this->getUrl() ?>"><?=$this->getTrans('home') ?></a></li>
                                 <li><a href="<?=$this->getUrl(['module'=>'contact', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('contact') ?></a></li>
                                 <li><a href="<?=$this->getUrl(['module'=>'imprint', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('imprint') ?></a></li>
                                 <li><a href="<?=$this->getUrl(['module'=>'privacy', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('privacy') ?></a></li>
