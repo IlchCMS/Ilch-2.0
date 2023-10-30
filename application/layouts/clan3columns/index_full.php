@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="gaming-name">
-                    <?=$this->getLayoutSetting('header')?>
+                    <?=$this->getLayoutSetting('headertext')?>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
         <div class="container">
             <div class="gaming">
                 <div class="row">
-                    <div class="d-none d-md-block col-md-3 col-lg-2">
+                    <div class="d-none d-md-block col-lg-3 col-xl-2">
                       <?php
                       echo $this->getMenu(
                           1,
@@ -84,7 +84,7 @@
                       );
                       ?>
                     </div>
-                    <div class="col-xs-12 col-md-9 col-lg-10">
+                    <div class="col-12 col-lg-9 col-xl-10">
                       <?=$this->getHmenu() ?>
                       <div class="card card-default">
                           <div class="card-body">
@@ -100,10 +100,10 @@
             <div class="container">
                 <div class="gaming">
                     <div class="row">
-                        <div class="col-xs-12 col-md-6">
+                        <div class="col-12 col-lg-6">
                             &copy; Ilch 2.0 Free Layout | CMS by <a href="https://www.ilch.de/">Ilch</a>
                         </div>
-                        <div class="col-xs-12 col-md-6 nav">
+                        <div class="col-12 col-lg-6 nav">
                             <ul class="text-end">
                                 <li><a href="<?=$this->getUrl() ?>"><?=$this->getTrans('home') ?></a></li>
                                 <li><a href="<?=$this->getUrl(['module'=>'contact', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('contact') ?></a></li>

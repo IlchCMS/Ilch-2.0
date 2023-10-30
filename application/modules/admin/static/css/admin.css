@@ -519,7 +519,7 @@ aside {
     padding: 7px 0 !important;
     background: 0 0;
 }
-#ribbon .breadcrumb, #ribbon .breadcrumb a {
+#ribbon .breadcrumb, #ribbon .breadcrumb a, #ribbon .breadcrumb-item + .breadcrumb-item::before {
     color: #ccc !important;
     text-decoration: none !Important;
 }

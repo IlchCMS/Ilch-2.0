@@ -28,7 +28,7 @@ class Config extends \Ilch\Config\Install
             ]
         ],
         'settings' => [
-            'header' => [
+            'headertext' => [
               'type' => 'text',
               'default' => 'Clanname',
               'description' => '',
