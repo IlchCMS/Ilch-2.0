@@ -268,10 +268,10 @@ $types = $this->get('types');
 <script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script>
 <script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
 <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
-<?php if ($this->get('event_google_maps_api_key') != ''): ?>
+<?php if ($this->get('event_google_maps_api_key') != '') : ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
 <?php endif; ?>
 <script>
@@ -295,7 +295,6 @@ $(document).ready(function() {
             startOfTheWeek: 1,
             format: "dd.MM.yyyy HH:mm"
         },
-        promptTimeOnDateChange: true,
         stepping: 15
     });
 
@@ -316,7 +315,6 @@ $(document).ready(function() {
             startOfTheWeek: 1,
             format: "dd.MM.yyyy HH:mm"
         },
-        promptTimeOnDateChange: true,
         stepping: 15
     });
 
