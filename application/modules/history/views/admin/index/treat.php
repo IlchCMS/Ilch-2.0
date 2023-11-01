@@ -6,7 +6,7 @@
 $history = $this->get('history');
 ?>
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <h1>
     <?=($history->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
@@ -17,7 +17,7 @@ $history = $this->get('history');
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div class="col-lg-2 input-group ilch-date date form_datetime">
+        <div id="date" class="col-lg-2 input-group ilch-date date form_datetime">
             <?php
             $getDate = new \Ilch\Date($history->getDate() ?? 'now');
             ?>
@@ -111,61 +111,80 @@ $history = $this->get('history');
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
-    $(document).ready(function() {
-        $(".form_datetime").datetimepicker({
-            format: "dd.mm.yyyy",
-            autoclose: true,
-            language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-            minView: 2,
-            todayHighlight: true
+$(document).ready(function() {
+    new tempusDominus.TempusDominus(document.getElementById('date'), {
+        display: {
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            },
+            components: {
+                clock: false
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy"
+        }
+    });
+
+        // $(".form_datetime").datetimepicker({
+            // format: "dd.mm.yyyy",
+            // autoclose: true,
+            // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+            // minView: 2,
+            // todayHighlight: true
+        // });
+
+    $("#symbolDialog").on('shown.bs.modal', function () {
+        let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH . '/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
+        let icons = [];
+
+        $.each(content, function(index, icon) {
+            if (~icon.styles.indexOf('brands')) {
+                icons.push('fa-brands fa-' + index);
+            } else {
+                if (~icon.styles.indexOf('solid')) {
+                    icons.push('fa-solid fa-' + index);
+                }
+
+                if (~icon.styles.indexOf('regular')) {
+                    icons.push('fa-regular fa-' + index);
+                }
+            }
+        })
+
+        let div;
+        let x;
+        for (x = 0; x < icons.length;) {
+            let y;
+            div = '<div class="row">';
+            for (y = x; y < x + 6; y++) {
+                div += '<div class="icon col-xl-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
+            }
+            div += '</div>';
+            x = y;
+
+            $("#symbolDialog .modal-content .modal-body").append(div);
+        }
+
+        $(".faicon").click(function () {
+            $("#symbol").val($(this).closest("i").attr('id'));
+            $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
+            $("#symbolDialog").modal('hide')
         });
 
-        $("#symbolDialog").on('shown.bs.modal', function () {
-            let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH . '/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
-            let icons = [];
-
-            $.each(content, function(index, icon) {
-                if (~icon.styles.indexOf('brands')) {
-                    icons.push('fa-brands fa-' + index);
-                } else {
-                    if (~icon.styles.indexOf('solid')) {
-                        icons.push('fa-solid fa-' + index);
-                    }
-
-                    if (~icon.styles.indexOf('regular')) {
-                        icons.push('fa-regular fa-' + index);
-                    }
-                }
-            })
-
-            let div;
-            let x;
-            for (x = 0; x < icons.length;) {
-                let y;
-                div = '<div class="row">';
-                for (y = x; y < x + 6; y++) {
-                    div += '<div class="icon col-xl-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
-                }
-                div += '</div>';
-                x = y;
-
-                $("#symbolDialog .modal-content .modal-body").append(div);
-            }
-
-            $(".faicon").click(function () {
-                $("#symbol").val($(this).closest("i").attr('id'));
-                $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
-                $("#symbolDialog").modal('hide')
-            });
-
-            $("#noIcon").click(function () {
-                $("#symbol").val("");
-            });
+        $("#noIcon").click(function () {
+            $("#symbol").val("");
         });
     });
+});
 </script>

@@ -1,4 +1,4 @@
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuMaintenance') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
@@ -21,13 +21,14 @@
         <label for="maintenanceDateTime" class="col-lg-2 control-label">
             <?=$this->getTrans('maintenanceEndDateTime') ?>:
         </label>
-        <div class="col-xl-2 input-group ilch-date date form_datetime">
+        <div id="maintenanceEndDateTime" class="col-xl-2 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
+                   id="maintenanceEndDateTime"
                    name="maintenanceDateTime"
                    value="<?=date('d.m.Y H:i', strtotime($this->get('maintenanceDate'))) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
@@ -59,19 +60,41 @@
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
 <?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
 $(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: 'dd.mm.yyyy hh:ii',
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true
+    new tempusDominus.TempusDominus(document.getElementById('maintenanceEndDateTime'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        promptTimeOnDateChange: true,
+        stepping: 15
     });
+    
+    // $(".form_datetime").datetimepicker({
+        // format: 'dd.mm.yyyy hh:ii',
+        // startDate: new Date(),
+        // autoclose: true,
+        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        // minuteStep: 15,
+        // todayHighlight: true
+    // });
 });
 </script>

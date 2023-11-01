@@ -4,7 +4,7 @@ if ($this->get('article')) {
     $articleID = $this->get('article')->getId();
 }
 ?>
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <h1><?=($this->get('article')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
@@ -55,7 +55,7 @@ if ($this->get('article')) {
         <label for="date_created" class="col-xl-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div class="col-xl-4 input-group ilch-date date form_datetime">
+        <div id="date_created" class="col-xl-4 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    id="date_created"
@@ -252,21 +252,43 @@ if ($this->get('article')) {
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
 <?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
 $('#access').chosen();
 $(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true
+    new tempusDominus.TempusDominus(document.getElementById('date_created'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        promptTimeOnDateChange: true,
+        stepping: 15
     });
+    
+    // $(".form_datetime").datetimepicker({
+        // format: "dd.mm.yyyy hh:ii",
+        // startDate: new Date(),
+        // autoclose: true,
+        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        // minuteStep: 15,
+        // todayHighlight: true
+    // });
 });
 $('#cats').chosen();
 

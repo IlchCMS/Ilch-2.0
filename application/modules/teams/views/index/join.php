@@ -16,7 +16,7 @@ if ($this->getUser()) {
 $teams = $this->get('teams');
 ?>
 
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuJoin') ?></h1>
 <?php if ($teams) : ?>
@@ -136,18 +136,18 @@ $teams = $this->get('teams');
                            name="birthday"
                            value="<?=$birthday->format('d.m.Y') ?>"
                            readonly />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-calendar" disabled></span>
                     </span>
                 </div>
             <?php else : ?>
-                <div class="col-xl-2 input-group ilch-date date form_datetime">
+                <div id="birthday" class="col-xl-2 input-group ilch-date date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="birthday"
                            name="birthday"
                            value="<?=($this->originalInput('birthday') != '') ? $this->originalInput('birthday') : '' ?>" />
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-calendar"></span>
                     </span>
                 </div>
@@ -213,20 +213,41 @@ $teams = $this->get('teams');
     <?=$this->getTrans('noTeams') ?>
 <?php endif; ?>
 
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
-    $(document).ready(function() {
-        $(".form_datetime").datetimepicker({
-            defaultDate: new Date(),
-            endDate: new Date(),
-            format: "dd.mm.yyyy",
-            autoclose: true,
-            language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-            minView: 2,
-            todayHighlight: true
-        });
+$(document).ready(function() {
+    new tempusDominus.TempusDominus(document.getElementById('birthday'), {
+        restrictions: {
+          maxDate: new Date()
+        },
+        display: {
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            },
+            components: {
+                clock: false
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy"
+        }
     });
+        // $(".form_datetime").datetimepicker({
+            // defaultDate: new Date(),
+            // endDate: new Date(),
+            // format: "dd.mm.yyyy",
+            // autoclose: true,
+            // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+            // minView: 2,
+            // todayHighlight: true
+        // });
+});
 </script>

@@ -2,7 +2,7 @@
 $userMapper = $this->get('userMapper');
 $userCache = [];
 ?>
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('logs') ?></h1>
 <p>
     <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -17,14 +17,14 @@ $userCache = [];
                 <label for="startDate" class="col-xl-2 control-label">
                     <?=$this->getTrans('startDate') ?>:
                 </label>
-                <div class="col-xl-4 input-group ilch-date date form_datetime">
+                <div id="startDate" class="col-xl-4 input-group ilch-date date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="startDate"
                            name="startDate"
                            value="<?=date('d.m.Y 00:00', strtotime( '-7 days' )) ?>"
                            readonly>
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-calendar"></span>
                     </span>
                 </div>
@@ -33,14 +33,14 @@ $userCache = [];
                 <label for="endDate" class="col-xl-2 control-label">
                     <?=$this->getTrans('endDate') ?>:
                 </label>
-                <div class="col-xl-4 input-group ilch-date date form_datetime">
+                <div id="endDate" class="col-xl-4 input-group ilch-date date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="endDate"
                            name="endDate"
                            value="<?=date('d.m.Y 23:59') ?>"
                            readonly>
-                    <span class="input-group-addon">
+                    <span class="input-group-text">
                         <span class="fa-solid fa-calendar"></span>
                     </span>
                 </div>
@@ -103,19 +103,72 @@ $userCache = [];
     </form>
 </div>
 
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
 <?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
 $(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        todayBtn: true,
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true
+    const start = new tempusDominus.TempusDominus(document.getElementById('startDate'), {
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        promptTimeOnDateChange: true,
+        stepping: 15
     });
+    
+    const end = new tempusDominus.TempusDominus(document.getElementById('endDate'), {
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        promptTimeOnDateChange: true,
+        stepping: 15
+    });
+
+    start.subscribe('change.td', (e) => {
+        end.updateOptions({
+            restrictions: {
+                minDate: e.date,
+            },
+        });
+    });
+    
+    end.subscribe('change.td', (e) => {
+        start.updateOptions({
+            restrictions: {
+                maxDate: e.date,
+            },
+        });
+    });
+    
+    // $(".form_datetime").datetimepicker({
+        // format: "dd.mm.yyyy hh:ii",
+        // todayBtn: true,
+        // autoclose: true,
+        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        // minuteStep: 15,
+        // todayHighlight: true
+    // });
 });
 </script>
