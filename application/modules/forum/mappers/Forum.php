@@ -795,6 +795,10 @@ class Forum extends Mapper
      */
     public function getListOfForumIdsWithUnreadTopics(int $userId, array $forumIds): array
     {
+        if (empty($forumIds)) {
+            return [];
+        }
+
         return $this->db()->select(['i.id'])
             ->from(['t' => 'forum_topics'])
             ->join(['i' => 'forum_items'], 'i.id = t.forum_id', 'LEFT')
