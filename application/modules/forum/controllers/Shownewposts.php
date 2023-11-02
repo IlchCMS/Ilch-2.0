@@ -30,7 +30,7 @@ class Shownewposts extends Frontend
             $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
 
             $forums = $forumMapper->getForumItemsUser($this->getUser());
-            $topics = $topicMapper->getTopicsByForumIds(array_keys($forums));
+            $topics = $topicMapper->getTopicsByForumIds(array_keys($forums ?? []));
 
             $topicIds = [];
             $topicsToShow = [];
@@ -42,7 +42,7 @@ class Shownewposts extends Frontend
 
             $posts = $topicMapper->getLastPostsByTopicIds($topicIds, ($this->getUser()) ? $this->getUser()->getId() : null);
 
-            foreach ($posts as $post) {
+            foreach ($posts ?? [] as $post) {
                 if (!$post->getRead()) {
                     $topicsToShow[] = [
                         'topic' => $topics[$post->getTopicId()],

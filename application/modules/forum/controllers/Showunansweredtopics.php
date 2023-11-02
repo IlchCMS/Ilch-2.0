@@ -29,7 +29,7 @@ class Showunansweredtopics extends Frontend
         $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
 
         $forums = $forumMapper->getForumItemsUser($this->getUser());
-        $topics = $topicMapper->getTopicsByForumIds(array_keys($forums));
+        $topics = $topicMapper->getTopicsByForumIds(array_keys($forums ?? []));
 
         $topicIds = [];
         $topicsToShow = [];
@@ -41,7 +41,7 @@ class Showunansweredtopics extends Frontend
 
         $posts = $topicMapper->getLastPostsByTopicIds($topicIds, ($this->getUser()) ? $this->getUser()->getId() : null);
 
-        foreach ($posts as $post) {
+        foreach ($posts ?? [] as $post) {
             $topicsToShow[] = [
                 'topic' => $topics[$post->getTopicId()],
                 'forumPrefix' => $forums[$topics[$post->getTopicId()]->getForumId()]->getPrefix(),
