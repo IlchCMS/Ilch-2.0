@@ -160,14 +160,5 @@ $(document).ready(function() {
             },
         });
     });
-    
-    // $(".form_datetime").datetimepicker({
-        // format: "dd.mm.yyyy hh:ii",
-        // todayBtn: true,
-        // autoclose: true,
-        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        // minuteStep: 15,
-        // todayHighlight: true
-    // });
 });
 </script>

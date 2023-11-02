@@ -278,13 +278,6 @@ $(document).ready(function () {
         },
         stepping: 15
     });
-        // $(".form_datetime").datetimepicker({
-            // format: "dd.mm.yyyy hh:ii",
-            // autoclose: true,
-            // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-            // minuteStep: 15,
-            // todayHighlight: true
-        // });
 
     diasableXonx();
     diasableGame();

@@ -244,16 +244,5 @@ $(document).ready(function() {
             },
         });
     });
-    
-    // $(".form_datetime").datetimepicker({
-        // format: "dd.mm.yyyy",
-        // startDate: new Date(),
-        // autoclose: true,
-        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        // minView: 2,
-        // todayHighlight: true,
-        // linkField: "end",
-        // linkFormat: "dd.mm.yyyy"
-    // });
 });
 </script>
