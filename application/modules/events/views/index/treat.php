@@ -7,7 +7,7 @@ $users = $userMapper->getUserList();
 $types = $this->get('types');
 ?>
 
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
 <link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
 
@@ -71,7 +71,7 @@ $types = $this->get('types');
             <label for="start" class="col-lg-2 control-label">
                 <?=$this->getTrans('startTime') ?>
             </label>
-            <div class="col-xl-4 input-group ilch-date date form_datetime">
+            <div id="start" class="col-xl-4 input-group ilch-date date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="start"
@@ -88,7 +88,7 @@ $types = $this->get('types');
             <label for="end" class="col-lg-2 control-label">
                 <?=$this->getTrans('endTime') ?>
             </label>
-            <div class="col-xl-4 input-group ilch-date date form_datetime">
+            <div id="end" class="col-xl-4 input-group ilch-date date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="end"
@@ -266,26 +266,72 @@ $types = $this->get('types');
 <?php endif; ?>
 
 <script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
-<?php if ($this->get('event_google_maps_api_key') != ''): ?>
+<?php if ($this->get('event_google_maps_api_key') != '') : ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
 <?php endif; ?>
 <script>
 $('#access').chosen();
 
 $(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true,
-        linkField: "end",
-        linkFormat: "dd.mm.yyyy hh:ii"
+    const start = new tempusDominus.TempusDominus(document.getElementById('start'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        stepping: 15
+    });
+
+    const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        stepping: 15
+    });
+
+    start.subscribe('change.td', (e) => {
+        end.updateOptions({
+            restrictions: {
+                minDate: e.date,
+            },
+        });
+    });
+    
+    end.subscribe('change.td', (e) => {
+        start.updateOptions({
+            restrictions: {
+                maxDate: e.date,
+            },
+        });
     });
 });
 

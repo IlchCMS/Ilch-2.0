@@ -29,7 +29,7 @@ $periodAppendix = [
 $entry = $this->get('calendar');
  ?>
 
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -40,14 +40,14 @@ $entry = $this->get('calendar');
         <label for="start" class="col-xl-2 control-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div class="col-xl-4 input-group ilch-date date form_datetime_1">
+        <div id="start" class="col-xl-4 input-group ilch-date date form_datetime_1">
             <input type="text"
                    class="form-control"
                    id="start"
                    name="start"
                    value="<?=$this->escape($this->originalInput('start', ($entry->getId()?(new \Ilch\Date($entry->getStart()))->format('d.m.Y H:i'):''))) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
@@ -56,13 +56,13 @@ $entry = $this->get('calendar');
         <label for="end" class="col-xl-2 control-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div class="col-xl-4 input-group ilch-date date form_datetime_2">
+        <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
             <input type="text"
                    class="form-control"
                    id="end"
                    name="end"
                    value="<?=$this->escape($this->originalInput('end', ($entry->getId()?($entry->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getEnd()))->format('d.m.Y H:i') : ''):''))) ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
@@ -118,13 +118,13 @@ $entry = $this->get('calendar');
     <div class="row mb-3 <?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
         <label for="periodDay" class="col-xl-2 control-label"></label>
         <div class="col-xl-4 input-group">
-            <span class="input-group-addon"><?=$this->getTrans('periodEvery') ?></span>
+            <span class="input-group-text"><?=$this->getTrans('periodEvery') ?></span>
             <input type="text"
                    class="form-control"
                    id="periodDay"
                    name="periodDay"
                    value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():'')) == 'days'?'0':($entry->getId()?$entry->getPeriodDay():'1')))) ?>" />
-            <span class="input-group-addon" id="periodDayAppendix"><?=(!empty($entry->getPeriodType())) ? $this->getTrans($periodAppendix[$entry->getPeriodType()]) : '' ?></span>
+            <span class="input-group-text" id="periodDayAppendix"><?=(!empty($entry->getPeriodType())) ? $this->getTrans($periodAppendix[$entry->getPeriodType()]) : '' ?></span>
         </div>
     </div>
 
@@ -132,14 +132,14 @@ $entry = $this->get('calendar');
         <label for="repeatUntil" class="col-xl-2 control-label">
             <?=$this->getTrans('repeatUntil') ?>:
         </label>
-        <div class="col-xl-4 input-group ilch-date date form_datetime_3">
+        <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
             <input type="text"
                    class="form-control"
                    id="repeatUntil"
                    name="repeatUntil"
                    value="<?=$this->escape($this->originalInput('repeatUntil', ($entry->getId()?($entry->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getRepeatUntil()))->format('d.m.Y H:i') : ''):''))) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
@@ -191,9 +191,10 @@ $entry = $this->get('calendar');
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
 <?=$this->getMedia()
@@ -205,40 +206,77 @@ $('#access').chosen();
 $(document).ready(function() {
     let jsPeriodAppendix = <?=json_encode($periodAppendix) ?>;
 
-    $(".form_datetime_1").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true,
-    }).on('change.datetimepicker', function (e) {
-        let mindate = $(".form_datetime_1").data("datetimepicker").getDate();
-        $('.form_datetime_2').datetimepicker('minDate', mindate);
+    const start = new tempusDominus.TempusDominus(document.getElementById('start'), {
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        stepping: 15
     });
 
-    $(".form_datetime_2").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: false,
-        useCurrent: false,
-        minDate: $(".form_datetime_1").data("datetimepicker").getDate()
-    }).on('change.datetimepicker', function (e) {
-        let mindate = $(".form_datetime_2").data("datetimepicker").getDate();
-        $('.form_datetime_3').datetimepicker('minDate', mindate);
+    const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        stepping: 15
     });
 
-    $(".form_datetime_3").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: false,
-        useCurrent: false,
-        minDate: $(".form_datetime_2").data("datetimepicker").getDate()
+    const repeatUntil = new tempusDominus.TempusDominus(document.getElementById('repeatUntil'), {
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        promptTimeOnDateChange: true,
+        stepping: 15
+    });
+
+    start.subscribe('change.td', (e) => {
+        end.updateOptions({
+            restrictions: {
+                minDate: e.date,
+            },
+        });
+    });
+    
+    end.subscribe('change.td', (e) => {
+        repeatUntil.updateOptions({
+            restrictions: {
+                minDate: e.date,
+            },
+        });
+        start.updateOptions({
+            restrictions: {
+                maxDate: e.date,
+            },
+        });
     });
 
     diasableDays();

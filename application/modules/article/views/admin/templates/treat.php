@@ -4,7 +4,6 @@ if ($this->get('article') != '') {
     $articleID = $this->get('article')->getId();
 }
 ?>
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('editTemplate') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
@@ -133,22 +132,8 @@ if ($this->get('article') != '') {
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <script>
 $('#access').chosen();
-$(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true
-    });
-});
 $('#cats').chosen();
 
 $('#title').change(

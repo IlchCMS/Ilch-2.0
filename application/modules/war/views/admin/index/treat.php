@@ -3,7 +3,7 @@
 use Ilch\Date;
 
 ?>
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <?php $entrie = $this->get('war'); ?>
 <h1><?=(!$entrie->getId()) ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
 <?php if ($this->get('group') != '' && $this->get('enemy') != ''): ?>
@@ -41,7 +41,7 @@ use Ilch\Date;
             <label for="warTimeInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
-            <div class="input-group ilch-date date form_datetime col-xl-4">
+            <div id="warTime" class="input-group ilch-date date form_datetime col-xl-4">
                 <input type="text"
                        class="form-control"
                        id="warTimeInput"
@@ -49,7 +49,7 @@ use Ilch\Date;
                        size="16"
                        value="<?=$this->escape($this->originalInput('warTime', ($entrie->getId()?(new Date($entrie->getWarTime()))->format("d.m.Y H:i"):''))) ?>"
                        readonly />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
@@ -253,63 +253,73 @@ use Ilch\Date;
 <?php endif; ?>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
-    $('#warMapInput').chosen();
-    $('#access').chosen();
-    $(document).ready(function () {
-        $(".form_datetime").datetimepicker({
-            format: "dd.mm.yyyy hh:ii",
-            autoclose: true,
-            language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-            minuteStep: 15,
-            todayHighlight: true
-        });
-
-        diasableXonx();
-        diasableGame();
-        diasableMatchtype();
-        loadGames();
-
-        document.getElementById('warXonx').onchange = diasableXonx;
-        document.getElementById('warGame').onchange = diasableGame;
-        document.getElementById('warMatchtype').onchange = diasableMatchtype;
-
-        function diasableXonx() {
-            if (document.getElementById('warXonx').value === 'neu') {
-                document.getElementById("warXonxNew").style.display = "block";
-                document.getElementById("warXonx").style.margin = "0 0 5px";
-            } else {
-                document.getElementById("warXonxNew").style.display = "none";
-                document.getElementById("warXonxNew").value = '';
+$('#warMapInput').chosen();
+$('#access').chosen();
+$(document).ready(function () {
+    new tempusDominus.TempusDominus(document.getElementById('warTime'), {
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
             }
-        }
-
-        function diasableGame() {
-            if (document.getElementById('warGame').value === 'neu') {
-                document.getElementById("warGameNew").style.display = "block";
-                document.getElementById("warGame").style.margin = "0 0 5px";
-            } else {
-                document.getElementById("warGameNew").style.display = "none";
-                document.getElementById("warGameNew").value = '';
-            }
-        }
-
-        function diasableMatchtype() {
-            if (document.getElementById('warMatchtype').value === 'neu') {
-                document.getElementById("warMatchtypeNew").style.display = "block";
-                document.getElementById("warMatchtype").style.margin = "0 0 5px";
-            } else {
-                document.getElementById("warMatchtypeNew").style.display = "none";
-                document.getElementById("warMatchtypeNew").value = '';
-            }
-        }
-
-        function loadGames() {
-            $('#games').load('<?=$this->getUrl(array_merge(['controller' => 'ajax', 'action' => 'game'], ($entrie->getId()?['id' => $entrie->getId()]:[]))) ?>');
-        }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        stepping: 15
     });
+
+    diasableXonx();
+    diasableGame();
+    diasableMatchtype();
+    loadGames();
+
+    document.getElementById('warXonx').onchange = diasableXonx;
+    document.getElementById('warGame').onchange = diasableGame;
+    document.getElementById('warMatchtype').onchange = diasableMatchtype;
+
+    function diasableXonx() {
+        if (document.getElementById('warXonx').value === 'neu') {
+            document.getElementById("warXonxNew").style.display = "block";
+            document.getElementById("warXonx").style.margin = "0 0 5px";
+        } else {
+            document.getElementById("warXonxNew").style.display = "none";
+            document.getElementById("warXonxNew").value = '';
+        }
+    }
+
+    function diasableGame() {
+        if (document.getElementById('warGame').value === 'neu') {
+            document.getElementById("warGameNew").style.display = "block";
+            document.getElementById("warGame").style.margin = "0 0 5px";
+        } else {
+            document.getElementById("warGameNew").style.display = "none";
+            document.getElementById("warGameNew").value = '';
+        }
+    }
+
+    function diasableMatchtype() {
+        if (document.getElementById('warMatchtype').value === 'neu') {
+            document.getElementById("warMatchtypeNew").style.display = "block";
+            document.getElementById("warMatchtype").style.margin = "0 0 5px";
+        } else {
+            document.getElementById("warMatchtypeNew").style.display = "none";
+            document.getElementById("warMatchtypeNew").value = '';
+        }
+    }
+
+    function loadGames() {
+        $('#games').load('<?=$this->getUrl(array_merge(['controller' => 'ajax', 'action' => 'game'], ($entrie->getId()?['id' => $entrie->getId()]:[]))) ?>');
+    }
+});
 </script>

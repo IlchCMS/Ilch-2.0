@@ -7,7 +7,7 @@ if ($this->getUser()) {
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/away.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuAway') ?></h1>
 <div class="table-responsive">
@@ -126,25 +126,25 @@ if ($this->getUser()) {
             <label for="start" class="col-xl-2 control-label">
                 <?=$this->getTrans('when') ?>:
             </label>
-            <div class="col-xl-3 input-group ilch-date date form_datetime pull-left">
+            <div id="start" class="col-xl-3 input-group ilch-date date form_datetime pull-left">
                 <input type="text"
                        class="form-control"
                        id="start"
                        name="start"
                        size="16"
                        readonly>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
-            <div class="col-xl-3 input-group ilch-date date form_datetime">
+            <div id="end" class="col-xl-3 input-group ilch-date date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="end"
                        name="end"
                        size="16"
                        readonly>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
@@ -180,21 +180,69 @@ if ($this->getUser()) {
     </form>
 <?php endif; ?>
 
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
 $(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minView: 2,
-        todayHighlight: true,
-        linkField: "end",
-        linkFormat: "dd.mm.yyyy"
+    const start = new tempusDominus.TempusDominus(document.getElementById('start'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            },
+            components: {
+                clock: false
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy"
+        }
+    });
+    
+    const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            },
+            components: {
+                clock: false
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy"
+        }
+    });
+
+    start.subscribe('change.td', (e) => {
+        end.updateOptions({
+            restrictions: {
+                minDate: e.date,
+            },
+        });
+    });
+    
+    end.subscribe('change.td', (e) => {
+        start.updateOptions({
+            restrictions: {
+                maxDate: e.date,
+            },
+        });
     });
 });
 </script>
