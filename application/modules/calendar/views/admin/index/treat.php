@@ -285,42 +285,6 @@ $(document).ready(function() {
         });
     });
 
-    // $(".form_datetime_1").datetimepicker({
-        // format: "dd.mm.yyyy hh:ii",
-        // autoclose: true,
-        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        // minuteStep: 15,
-        // todayHighlight: true,
-    // }).on('change.datetimepicker', function (e) {
-        // let mindate = $(".form_datetime_1").data("datetimepicker").getDate();
-        // $('.form_datetime_2').datetimepicker('minDate', mindate);
-    // });
-
-    // $(".form_datetime_2").datetimepicker({
-        // format: "dd.mm.yyyy hh:ii",
-        // startDate: new Date(),
-        // autoclose: true,
-        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        // minuteStep: 15,
-        // todayHighlight: false,
-        // useCurrent: false,
-        // minDate: $(".form_datetime_1").data("datetimepicker").getDate()
-    // }).on('change.datetimepicker', function (e) {
-        // let mindate = $(".form_datetime_2").data("datetimepicker").getDate();
-        // $('.form_datetime_3').datetimepicker('minDate', mindate);
-    // });
-
-    // $(".form_datetime_3").datetimepicker({
-        // format: "dd.mm.yyyy hh:ii",
-        // startDate: new Date(),
-        // autoclose: true,
-        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        // minuteStep: 15,
-        // todayHighlight: false,
-        // useCurrent: false,
-        // minDate: $(".form_datetime_2").data("datetimepicker").getDate()
-    // });
-
     diasableDays();
 
     document.getElementById("periodType").onchange = function() {

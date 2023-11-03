@@ -136,14 +136,6 @@ $(document).ready(function() {
         }
     });
 
-        // $(".form_datetime").datetimepicker({
-            // format: "dd.mm.yyyy",
-            // autoclose: true,
-            // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-            // minView: 2,
-            // todayHighlight: true
-        // });
-
     $("#symbolDialog").on('shown.bs.modal', function () {
         let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH . '/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
         let icons = [];

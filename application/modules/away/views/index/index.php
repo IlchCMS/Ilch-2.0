@@ -207,7 +207,7 @@ $(document).ready(function() {
             format: "dd.MM.yyyy"
         }
     });
-    
+
     const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
         restrictions: {
           minDate: new Date()
@@ -236,7 +236,7 @@ $(document).ready(function() {
             },
         });
     });
-    
+
     end.subscribe('change.td', (e) => {
         start.updateOptions({
             restrictions: {
@@ -244,16 +244,5 @@ $(document).ready(function() {
             },
         });
     });
-    
-    // $(".form_datetime").datetimepicker({
-        // format: "dd.mm.yyyy",
-        // startDate: new Date(),
-        // autoclose: true,
-        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        // minView: 2,
-        // todayHighlight: true,
-        // linkField: "end",
-        // linkFormat: "dd.mm.yyyy"
-    // });
 });
 </script>

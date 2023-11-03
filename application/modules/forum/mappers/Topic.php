@@ -35,6 +35,10 @@ class Topic extends Mapper
      */
     public function getTopicsByForumIds(array $ids, Pagination $pagination = null): array
     {
+        if (empty($ids)) {
+            return [];
+        }
+
         $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)', 'countPosts' => 'COUNT(posts.id)'])
             ->from(['topics' => 'forum_topics'])
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
@@ -234,6 +238,10 @@ class Topic extends Mapper
      */
     public function getLastPostsByTopicIds(array $ids, int $userId = null): ?array
     {
+        if (empty($ids)) {
+            return null;
+        }
+
         $select = $this->db()->select(['p.id', 'p.topic_id', 'date_created' => 'MAX(p.date_created)', 'p.user_id', 'p.forum_id'])
             ->from(['p' => 'forum_posts']);
         if ($userId) {

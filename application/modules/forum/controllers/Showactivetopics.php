@@ -31,7 +31,7 @@ class Showactivetopics extends Frontend
 
         $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
         $forums = $forumMapper->getForumItemsUser($this->getUser());
-        $topics = $topicMapper->getTopicsByForumIds(array_keys($forums));
+        $topics = $topicMapper->getTopicsByForumIds(array_keys($forums ?? []));
 
         $topicIds = [];
         $topicsToShow = [];
@@ -43,7 +43,7 @@ class Showactivetopics extends Frontend
 
         $posts = $topicMapper->getLastPostsByTopicIds($topicIds, ($this->getUser()) ? $this->getUser()->getId() : null);
 
-        foreach ($posts as $post) {
+        foreach ($posts ?? [] as $post) {
             if ($post->getDateCreated() < $date->format('Y-m-d H:i:s', true) && $post->getDateCreated() > $dateLessHours->format('Y-m-d H:i:s', true)) {
                 $topicsToShow[] = [
                     'topic' => $topics[$post->getTopicId()],

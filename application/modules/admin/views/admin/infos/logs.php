@@ -127,7 +127,7 @@ $(document).ready(function() {
         promptTimeOnDateChange: true,
         stepping: 15
     });
-    
+
     const end = new tempusDominus.TempusDominus(document.getElementById('endDate'), {
         display: {
             sideBySide: true,
@@ -152,7 +152,7 @@ $(document).ready(function() {
             },
         });
     });
-    
+
     end.subscribe('change.td', (e) => {
         start.updateOptions({
             restrictions: {
@@ -160,14 +160,5 @@ $(document).ready(function() {
             },
         });
     });
-    
-    // $(".form_datetime").datetimepicker({
-        // format: "dd.mm.yyyy hh:ii",
-        // todayBtn: true,
-        // autoclose: true,
-        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        // minuteStep: 15,
-        // todayHighlight: true
-    // });
 });
 </script>

@@ -240,14 +240,5 @@ $(document).ready(function() {
             format: "dd.MM.yyyy"
         }
     });
-        // $(".form_datetime").datetimepicker({
-            // defaultDate: new Date(),
-            // endDate: new Date(),
-            // format: "dd.mm.yyyy",
-            // autoclose: true,
-            // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-            // minView: 2,
-            // todayHighlight: true
-        // });
 });
 </script>
