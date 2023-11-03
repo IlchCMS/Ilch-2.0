@@ -353,12 +353,11 @@ class Frontend extends Base
     public function getBox(string $moduleKey, string $boxKey = '', ?string $customView = null): string
     {
         $accessMapper = new Accesses($this->getRequest());
+        if (empty($boxKey)) {
+            $boxKey = $moduleKey;
+        }
 
-        if ($accessMapper->hasAccess('Module', $moduleKey, $accessMapper::TYPE_MODULE)) {
-            if (empty($boxKey)) {
-                $boxKey = $moduleKey;
-            }
-
+        if ($accessMapper->hasAccess('Module', $moduleKey) || ($moduleKey == 'user' && $boxKey == 'login') || ($moduleKey == 'admin' && in_array($boxKey, ['layoutswitch', 'langswitch']))) {
             $class = '\\Modules\\' . ucfirst($moduleKey) . '\\Boxes\\' . ucfirst($boxKey);
             $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
             $this->getTranslator()->load(APPLICATION_PATH . '/modules/' . $moduleKey . '/translations');
@@ -469,7 +468,7 @@ class Frontend extends Base
 
         $accessMapper = new Accesses($this->getRequest());
 
-        if ($accessMapper->hasAccess('Module', $moduleName, $accessMapper::TYPE_MODULE) && $this->getRequest()->getModuleName() != $moduleName) {
+        if ($accessMapper->hasAccess('Module', $moduleName) && $this->getRequest()->getModuleName() != $moduleName) {
             $controller = '\\Modules\\' . ucfirst($moduleName) . '\\Controllers\\' . $dir . ucfirst($controllerName);
 
             $request = new Request(false);
