@@ -79,7 +79,7 @@ $types = $this->get('types');
                        size="16"
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } elseif ($this->originalInput('start') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('start'))); } ?>"
                        readonly>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
@@ -99,7 +99,7 @@ $types = $this->get('types');
                 <span class="input-group-text">
                     <span class="fa-solid fa-xmark"></span>
                 </span>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
