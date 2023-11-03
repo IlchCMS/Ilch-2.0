@@ -207,7 +207,7 @@ $(document).ready(function() {
             format: "dd.MM.yyyy"
         }
     });
-    
+
     const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
         restrictions: {
           minDate: new Date()
@@ -236,7 +236,7 @@ $(document).ready(function() {
             },
         });
     });
-    
+
     end.subscribe('change.td', (e) => {
         start.updateOptions({
             restrictions: {

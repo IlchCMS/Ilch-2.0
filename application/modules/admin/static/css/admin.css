@@ -232,7 +232,7 @@ aside nav ul .active > a {
 }
 
 .withEmptyCells {
-    border-collapse: separate;
+    border-collapse: collapse;
 }
 
 .watermark {

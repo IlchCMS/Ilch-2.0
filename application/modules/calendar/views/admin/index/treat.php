@@ -104,7 +104,8 @@ $entry = $this->get('calendar');
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
+    <div class="<?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
+      <div class="row mb-3">
         <label for="periodDays" class="col-xl-2 control-label"></label>
         <div class="col-xl-4">
             <select class="form-control" name="periodDays" id="periodDays">
@@ -114,8 +115,10 @@ $entry = $this->get('calendar');
                 <?php endforeach; ?>
             </select>
         </div>
+      </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
+    <div class="<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
+      <div class="row mb-3">
         <label for="periodDay" class="col-xl-2 control-label"></label>
         <div class="col-xl-4 input-group">
             <span class="input-group-text"><?=$this->getTrans('periodEvery') ?></span>
@@ -126,9 +129,11 @@ $entry = $this->get('calendar');
                    value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():'')) == 'days'?'0':($entry->getId()?$entry->getPeriodDay():'1')))) ?>" />
             <span class="input-group-text" id="periodDayAppendix"><?=(!empty($entry->getPeriodType())) ? $this->getTrans($periodAppendix[$entry->getPeriodType()]) : '' ?></span>
         </div>
+      </div>
     </div>
 
-    <div class="row mb-3 <?=$this->validation()->hasError('repeatUntil') ? ' has-error' : '' ?>" id="repeatUntil_div">
+    <div class="<?=$this->validation()->hasError('repeatUntil') ? ' has-error' : '' ?>" id="repeatUntil_div">
+      <div class="row mb-3">
         <label for="repeatUntil" class="col-xl-2 control-label">
             <?=$this->getTrans('repeatUntil') ?>:
         </label>
@@ -143,6 +148,7 @@ $entry = $this->get('calendar');
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
+      </div>
     </div>
 
     <div class="row mb-3<?=$this->validation()->hasError('color') ? ' has-error' : '' ?>">
@@ -265,7 +271,7 @@ $(document).ready(function() {
             },
         });
     });
-    
+
     end.subscribe('change.td', (e) => {
         repeatUntil.updateOptions({
             restrictions: {

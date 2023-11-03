@@ -325,7 +325,7 @@ $(document).ready(function() {
             },
         });
     });
-    
+
     end.subscribe('change.td', (e) => {
         start.updateOptions({
             restrictions: {
