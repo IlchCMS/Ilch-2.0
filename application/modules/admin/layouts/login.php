@@ -39,9 +39,9 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                         <form class="form-signin" method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'index']) ?>">
                             <?=$this->getTokenField() ?>
                             <h4><?=$this->getTrans('loginWelcome') ?></h4>
-                            <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; } ?>">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                            <div class="form-group mb-1 <?php if (!empty($errors)) { echo 'has-error'; } ?>">
+                                <div class="input-group flex-wrap">
+                                    <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
                                     <input type="text"
                                            class="form-control"
                                            name="emailname"
@@ -50,9 +50,9 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                            autocomplete="username">
                                 </div>
                             </div>
-                            <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; } ?>">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
+                            <div class="form-group mb-3 <?php if (!empty($errors)) { echo 'has-error'; } ?>">
+                                <div class="input-group flex-wrap">
+                                    <span class="input-group"><i class="fa-solid fa-lock"></i></span>
                                     <input type="password"
                                            class="form-control"
                                            name="password"
@@ -60,16 +60,17 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                            autocomplete="current-password">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="language" class="control-label"><?=$this->getTrans('language') ?></label>
-                                <select class="form-control" name="language" id="language">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="language">Sprache</label>
+                                <select class="form-select" id="language" name="language">
                                     <option value="">Standard</option>
                                     <?php foreach ($languages as $key => $value): ?>
                                         <option value="<?=$key ?>"><?=$this->escape($value) ?></option>
                                     <?php endforeach; ?>
+
                                 </select>
                             </div>
-                            <button type="submit" class="btn"><?=$this->getTrans('signIn') ?></button>
+                            <button type="submit" class="btn btn-outline-secondary"><?=$this->getTrans('signIn') ?></button>
                             <br />
                             <?php if (!empty($errors)): ?>
                                 <?php foreach ($errors as $transKey): ?>
