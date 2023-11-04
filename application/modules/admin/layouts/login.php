@@ -60,8 +60,8 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                            autocomplete="current-password">
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="language" class="control-label"><?=$this->getTrans('language') ?></label>
+                            <div class="row mb-3" style="padding: 0px 13px;">
+                                <label for="language" class="control-label p-0"><?=$this->getTrans('language') ?></label>
                                 <select class="form-control" name="language" id="language">
                                     <option value="">Standard</option>
                                     <?php foreach ($languages as $key => $value): ?>
@@ -69,7 +69,7 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <button type="submit" class="btn"><?=$this->getTrans('signIn') ?></button>
+                            <button type="submit" class="btn btn-outline-secondary"><?=$this->getTrans('signIn') ?></button>
                             <br />
                             <?php if (!empty($errors)): ?>
                                 <?php foreach ($errors as $transKey): ?>
