@@ -80,19 +80,19 @@ $postsPerPage = $this->get('postsPerPage');
                                 <br />
                                 <?=$this->getTrans('views') ?>:
                             </div>
-                            <div class="pull-left text-justify">
+                            <div class="float-start text-justify">
                                 <?=$topic['topic']->getCountPosts() - 1 ?>
                                 <br />
                                 <?=$topic['topic']->getVisits() ?>
                             </div>
                         </dd>
                         <dd class="lastpost small">
-                            <div class="pull-left">
+                            <div class="float-start">
                                 <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $topic['lastPost']->getAutor()->getId()]) ?>" title="<?=$this->escape($topic['lastPost']->getAutor()->getName()) ?>">
                                     <img style="width:40px; padding-right: 5px;" src="<?=$this->getBaseUrl($topic['lastPost']->getAutor()->getAvatar()) ?>" alt="<?=$this->escape($topic['lastPost']->getAutor()->getName()) ?>">
                                 </a>
                             </div>
-                            <div class="pull-left">
+                            <div class="float-start">
                                 <?=$this->getTrans('by') ?>
                                 <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $topic['lastPost']->getAutor()->getId()]) ?>" title="<?=$this->escape($topic['lastPost']->getAutor()->getName()) ?>">
                                     <?=$this->escape($topic['lastPost']->getAutor()->getName()) ?>

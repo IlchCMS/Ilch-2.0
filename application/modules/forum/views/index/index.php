@@ -63,7 +63,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
         <?php if ($item->getType() != 0) : ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
-                    <dl class="icon 
+                    <dl class="icon
                         <?php if ($obj->getUser()) : ?>
                             <?php if (!in_array($item->getId(), $obj->get('containsUnreadTopics'))) : ?>
                                 topic-read
@@ -149,7 +149,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
         </div>
     <?php endforeach; ?>
     <div class="foren-actions clearfix">
-        <ul class="pull-left">
+        <ul class="float-start">
             <li><a href="<?=$this->getUrl(['controller' => 'showunansweredtopics', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showUnansweredTopics') ?></a></li>
             <?php if ($this->getUser()) : ?>
                 <li><a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showNewPosts') ?></a></li>
@@ -159,8 +159,8 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                 <li><a href="<?=$this->getUrl(['controller' => 'rememberedposts', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showRememberedPosts') ?></a></li>
             <?php endif; ?>
         </ul>
-        <?php if ($this->getUser()) : ?>          
-            <div class="pull-right">
+        <?php if ($this->getUser()) : ?>
+            <div class="float-end">
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'markallasread'], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
             </div>
         <?php endif; ?>

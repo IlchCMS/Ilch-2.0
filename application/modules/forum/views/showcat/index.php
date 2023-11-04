@@ -47,7 +47,7 @@ function rec($item, \Ilch\View $obj)
         <?php if ($item->getType() != 0) : ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
-                    <dl class="icon 
+                    <dl class="icon
                         <?php if ($obj->getUser()) : ?>
                             <?php if (!in_array($item->getId(), $obj->get('containsUnreadTopics'))) : ?>
                                 topic-read
@@ -68,12 +68,12 @@ function rec($item, \Ilch\View $obj)
                             </div>
                         </dt>
                         <dd class="posts small">
-                            <div class="pull-left text-nowrap stats">
+                            <div class="float-start text-nowrap stats">
                                 <?=$obj->getTrans('topics') ?>:
                                 <br />
                                 <?=$obj->getTrans('posts') ?>:
                             </div>
-                            <div class="pull-left text-justify">
+                            <div class="float-start text-justify">
                                 <?=$topics ?>
                                 <br />
                                 <?=$posts ?>
@@ -87,7 +87,7 @@ function rec($item, \Ilch\View $obj)
                                         <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                     </a>
                                 </div>
-                                <div class="pull-left">
+                                <div class="float-start">
                                     <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId()]) ?>">
                                         <?=$obj->escape($lastPost->getTopicTitle()) ?>
                                     </a>
@@ -167,7 +167,7 @@ function rec($item, \Ilch\View $obj)
     <?php endif; ?>
     <div class="topic-actions">
     <?php if ($this->getUser()) : ?>
-        <div class="pull-right">
+        <div class="float-end">
             <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'markallasread', 'id' => $this->getRequest()->getParam('id')], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
         </div>
     <?php endif; ?>

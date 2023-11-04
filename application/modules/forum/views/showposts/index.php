@@ -106,7 +106,7 @@ if ($this->getUser()) {
                                     <?=$date->format('d.m.Y H:i:s', true) ?>
                                 </p>
                             </div>
-                            <div class="col-xl-6 pull-right">
+                            <div class="col-xl-6 float-end">
                                 <div class="delete">
                                     <?php if ($this->getUser()) : ?>
                                         <?php if ($this->getUser()->isAdmin()) : ?>
