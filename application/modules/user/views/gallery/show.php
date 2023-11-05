@@ -40,7 +40,7 @@
 <h1><?=$this->getTrans('menuGallery') ?></h1>
 <?php if ($this->get('image') != ''): ?>
     <div id="gallery">
-      <div class="row">
+        <div class="row">
         <?php foreach ($this->get('image') as $image): ?>
             <?php $commentsCount = $commentMapper->getCountComments('user/gallery/showimage/user/'.$this->getRequest()->getParam('user').'/id/'.$image->getId()); ?>
             <div class="col-xs-6 col-lg-4 col-xl-3 col-md-4">
@@ -61,7 +61,7 @@
                 </div>
             </div>
         <?php endforeach; ?>
-      </div>
+        </div>
     </div>
 <?php else: ?>
     <?=$this->getTrans('noImages') ?>
