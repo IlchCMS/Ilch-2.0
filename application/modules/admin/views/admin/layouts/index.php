@@ -95,7 +95,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                                         <i class="fa"></i>
                                     </button>
                                 <?php else: ?>
-                                    <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()], null, true) ?>" class="btn btn-default unchecked" title="<?=$this->getTrans('setDefault') ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()], null, true) ?>" class="btn btn-outline-secondary unchecked" title="<?=$this->getTrans('setDefault') ?>">
                                         <i class="fa"></i>
                                     </a>
                                 <?php endif; ?>
@@ -114,11 +114,11 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                             </button>
                         <?php else: ?>
                             <?php if ($layout->getModulekey() != ''): ?>
-                                <a href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
+                                <a href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('settings') ?>">
                                     <i class="fa-solid fa-gears"></i>
                                 </a>
                             <?php elseif (!empty($layout->getSettings())): ?>
-                                <a href="<?=$this->getUrl(['action' => 'advSettingsShow', 'layoutKey' => $layout->getKey()]) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
+                                <a href="<?=$this->getUrl(['action' => 'advSettingsShow', 'layoutKey' => $layout->getKey()]) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('settings') ?>">
                                     <i class="fa-solid fa-gears"></i>
                                 </a>
                             <?php endif; ?>

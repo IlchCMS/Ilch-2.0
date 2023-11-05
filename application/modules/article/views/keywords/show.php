@@ -83,7 +83,7 @@ $keyword = $this->getRequest()->getParam('keyword');
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
-    <div class="pull-right">
+    <div class="float-end">
         <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'keyword' => urlencode($keyword)]) ?>
     </div>
 <?php else: ?>

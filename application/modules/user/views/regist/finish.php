@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="card-footer clearfix">
-        <div class="pull-right">
+        <div class="float-end">
             <a href="<?=$this->getUrl() ?>" class="btn btn-success" role="button"><?=$this->getTrans('back') ?></a>
         </div>
     </div>

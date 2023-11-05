@@ -25,6 +25,7 @@
     <?php if ($this->get('medias') != ''): ?>
         <div id="ilchmedia">
             <div class="container-fluid">
+              <div class="row">
                 <?php foreach ($this->get('medias') as $media): ?>
                     <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
                         <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
@@ -49,6 +50,7 @@
                                value="<?=$media->getUrl() ?>" />
                     <?php endif; ?>
                 <?php endforeach; ?>
+              </div>
             </div>
         </div>
     <?php else: ?>

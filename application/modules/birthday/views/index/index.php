@@ -9,7 +9,7 @@ $date = new \Ilch\Date();
     <div class="card card-primary">
         <div class="card-header">
             <strong><?=$this->getTrans('birthdayToday') ?></strong>
-            <span class="pull-right">
+            <span class="float-end">
                 <strong><?=date('d.m.Y', strtotime($date->format('Y-m-d'))) ?></strong>
             </span>
         </div>

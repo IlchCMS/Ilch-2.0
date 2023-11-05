@@ -102,7 +102,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                 <?=$this->getTrans('selected') ?> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu listChooser" role="menu">
-                <li><a href="#" data-hiddenkey="delete" class="dropdown-item"><?=$this->getTrans('delete') ?></a></li>
+                <li class="dropdown-item"><a href="#" data-hiddenkey="delete" class="dropdown-item"><?=$this->getTrans('delete') ?></a></li>
             </ul>
         </div>
     </div>

@@ -9,7 +9,7 @@ $errors = $this->get('errors');
 $usages = $this->get('usages');
 ?>
 <div class="row mb-3">
-    <label for="usage" class="col-xl-3 form-label <?=$this->validation()->hasError('usage') ? 'text-danger' : '' ?>">
+    <label for="usage" class="col-xl-3 form-label fw-bold text-end <?=$this->validation()->hasError('usage') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('usage') ?>:
     </label>
     <div class="col-xl-9">
@@ -19,20 +19,20 @@ $usages = $this->get('usages');
                     <option <?=$this->originalInput('usage', $this->get('usage')) == $value ? 'selected="selected"' : '' ?> value="<?=$value ?>"><?=$this->getTrans($value) ?></option>
                 <?php endforeach; ?>
             </select>
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-bs-toggle="collapse" data-bs-target="#modules" title="<?=$this->getTrans('custom') ?>"><i class="fa-solid fa-circle-info"></i> &nbsp; <?=$this->getTrans('custom') ?></button>
+            <button class="btn btn-secondary" type="button" id="button-addon2" data-bs-toggle="collapse" data-bs-target="#modules" title="<?=$this->getTrans('custom') ?>"><i class="fa-solid fa-circle-info"></i> &nbsp; <?=$this->getTrans('custom') ?></button>
         </div>
     </div>
 </div>
 
 <div class="row mb-3 collapse" id="modules">
-    <div id="modulesContent" class="col-xl-offset-1 col-xl-12"></div>
+    <div id="modulesContent" class="offset-xl-1 col-xl-12"></div>
 </div>
 
 <div class="row mb-3">
-    <label for="adminName" class="form-label <?=$this->validation()->hasError('adminName') ? 'text-danger' : '' ?>">
+    <label for="adminName" class="col-xl-3 form-label fw-bold text-end <?=$this->validation()->hasError('adminName') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('adminName') ?>:
     </label>
-    <div class="col-lg-9">
+    <div class="col-xl-9">
         <input type="text"
                class="form-control <?=$this->validation()->hasError('adminName') ? 'is-invalid' : '' ?>"
                id="adminName"
@@ -42,10 +42,10 @@ $usages = $this->get('usages');
     </div>
 </div>
 <div class="row mb-3">
-    <label for="adminPassword" class="form-label <?=$this->validation()->hasError('adminPassword') ? 'text-danger' : '' ?>">
+    <label for="adminPassword" class="col-xl-3 form-label fw-bold text-end <?=$this->validation()->hasError('adminPassword') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('adminPassword') ?>:
     </label>
-    <div class="col-lg-9">
+    <div class="col-xl-9">
         <input type="password"
                class="form-control <?=$this->validation()->hasError('adminPassword') ? 'is-invalid' : '' ?>"
                id="adminPassword"
@@ -55,10 +55,10 @@ $usages = $this->get('usages');
     </div>
 </div>
 <div class="row mb-3">
-    <label for="adminPassword2" class="form-label <?=$this->validation()->hasError('adminPassword2') ? 'text-danger' : '' ?>">
+    <label for="adminPassword2" class="col-xl-3 form-label fw-bold text-end <?=$this->validation()->hasError('adminPassword2') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('adminPassword2') ?>:
     </label>
-    <div class="col-lg-9">
+    <div class="col-xl-9">
         <input type="password"
                class="form-control <?=$this->validation()->hasError('adminPassword2') ? 'is-invalid' : '' ?>"
                id="adminPassword2"
@@ -68,10 +68,10 @@ $usages = $this->get('usages');
     </div>
 </div>
 <div class="row mb-3">
-    <label for="adminEmail" class="form-label <?=$this->validation()->hasError('adminEmail') ? 'text-danger' : '' ?>">
+    <label for="adminEmail" class="col-xl-3 form-label fw-bold text-end <?=$this->validation()->hasError('adminEmail') ? 'text-danger' : '' ?>">
         <?=$this->getTrans('adminEmail') ?>:
     </label>
-    <div class="col-lg-9">
+    <div class="col-xl-9">
         <input type="text"
                class="form-control <?=$this->validation()->hasError('adminEmail') ? 'is-invalid' : '' ?>"
                id="adminEmail"

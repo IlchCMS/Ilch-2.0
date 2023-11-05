@@ -90,12 +90,12 @@ $config = \Ilch\Registry::get('config');
         <div class="row mb-3">
             <div class="col-xl-12">
                 <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))) : ?>
-                    <div class="pull-left">
+                    <div class="float-start">
                         <button class="btn btn-outline-secondary" id="shoutbox-slide-down<?=$this->get('uniqid') ?>"><?=$this->getTrans('answer') ?></button>
                     </div>
                 <?php endif; ?>
                 <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')) : ?>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-outline-secondary"><?=$this->getTrans('archive') ?></a>
                     </div>
                 <?php endif; ?>
@@ -147,7 +147,7 @@ $config = \Ilch\Registry::get('config');
                         <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
                             <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
                         <?php endif; ?>
-                        <div class="pull-left">
+                        <div class="float-start">
                             <?php
                             if ($this->get('captchaNeeded')) {
                                 if ($this->get('googlecaptcha')) {
@@ -161,7 +161,7 @@ $config = \Ilch\Registry::get('config');
                             ?>
                         </div>
                         <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')) : ?>
-                            <div class="pull-right">
+                            <div class="float-end">
                                 <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
                             </div>
                         <?php endif; ?>

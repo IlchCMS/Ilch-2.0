@@ -90,7 +90,7 @@ if ($this->get('date')) {
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
-        <div class="pull-right">
+        <div class="float-end">
             <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]) ?>
         </div>
 <?php else: ?>

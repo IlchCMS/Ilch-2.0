@@ -61,8 +61,8 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
 <div id="modules" class="table-responsive">
     <table class="table withEmptyCells table-hover table-striped">
         <colgroup>
-            <col class="col-lg-2" />
-            <col class="col-lg-1" />
+            <col class="col-xl-2" />
+            <col class="col-xl-1" />
             <col />
         </colgroup>
         <thead>

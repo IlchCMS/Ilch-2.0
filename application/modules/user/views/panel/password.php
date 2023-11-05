@@ -36,7 +36,7 @@
                                required />
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="row mb-3">
                     <div class="offset-xl-2 col-xl-8">
                         <input type="submit"
                                class="btn btn-outline-secondary"

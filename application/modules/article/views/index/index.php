@@ -85,7 +85,7 @@ $commentMapper = $this->get('commentMapper');
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
-        <div class="pull-right">
+        <div class="float-end">
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
         </div>
 <?php else: ?>

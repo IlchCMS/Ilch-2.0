@@ -27,7 +27,7 @@ if (!empty($event)) {
     <h1>
         <?=$this->getTrans('event') ?>
         <?php if ($this->getUser() && ($event->getUserId() == $this->getUser()->getId() || $this->getUser()->hasAccess('module_events'))): ?>
-            <div class="pull-right">
+            <div class="float-end">
                 <?=$this->getEditIcon(['controller' => 'index', 'action' => 'treat', 'id' => $event->getId()]) ?>
                 <?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $event->getId()]) ?>
             </div>
@@ -255,10 +255,10 @@ if (!empty($event)) {
                         <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
                             <?php if ($this->getUser()): ?>
                                 <?php if ($event->getUserId() == $this->getUser()->getId() || $commentUser->getId() == $this->getUser()->getId()): ?>
-                                    <div class="pull-right" style="height: 40px; top: 0;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
+                                    <div class="float-end" style="height: 40px; top: 0;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
                                 <?php endif; ?>
                             <?php endif; ?>
-                            <div class="pull-left"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
+                            <div class="float-start"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
                             <div class="userEventInfo">
                                 <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
                                 <span class="small"><?=$commentDate->format('Y.m.d H:i', true) ?></span>

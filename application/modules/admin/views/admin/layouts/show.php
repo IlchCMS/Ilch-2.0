@@ -49,30 +49,30 @@ foreach ($layouts as $layout): ?>
             <?php endif; ?>
 
             <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                <li class="active"><a href="#info" data-toggle="tab"><?=$this->getTrans('info') ?></a></li>
-                <li><a href="#changelog" data-toggle="tab"><?=$this->getTrans('changelog') ?></a></li>
+                <li class="nav-item"><a class="nav-link active" href="#info" data-toggle="tab"><?=$this->getTrans('info') ?></a></li>
+                <li class="nav-item"><a class="nav-link"href="#changelog" data-toggle="tab"><?=$this->getTrans('changelog') ?></a></li>
             </ul>
             <br />
 
             <div class="tab-pane active" id="info">
-                <div class="col-xs-12 col-lg-6">
+                <div class="col-12 col-lg-6">
                     <div class="row">
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('name') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$this->escape($layout->name) ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('version') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$layout->version ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('author') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-6">
                             <?php if ($layout->link != ''): ?>
                                 <a href="<?=$layout->link ?>" alt="<?=$this->escape($layout->author) ?>" title="<?=$this->escape($layout->author) ?>" target="_blank" rel="noopener">
                                     <i><?=$this->escape($layout->author) ?></i>
@@ -81,22 +81,22 @@ foreach ($layouts as $layout): ?>
                                 <i><?=$this->escape($layout->author) ?></i>
                             <?php endif; ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('hits') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$layout->hits ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('downloads') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <?=$layout->downs ?>
                         </div>
-                        <div class="col-sm-3 col-xs-6">
+                        <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('rating') ?>:</b>
                         </div>
-                        <div class="col-sm-9 col-xs-6">
+                        <div class="col-md-9 col-sm-6">
                             <span title="<?=$layout->rating ?> <?php if ($layout->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
                                 <input type="number"
                                        class="rating"
@@ -111,30 +111,30 @@ foreach ($layouts as $layout): ?>
                     <br />
                     <?php if (!empty($layout->ilchCore)): ?>
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-12">
                                 <b><?=$this->getTrans('requirements') ?>:</b>
                             </div>
-                            <div class="col-sm-3 col-xs-6">
+                            <div class="col-md-3 col-sm-6">
                                 <b><?=$this->getTrans('ilchCoreVersion') ?>:</b>
                             </div>
-                            <div class="col-sm-9 col-xs-6">
+                            <div class="col-md-9 col-sm-6">
                                 <?=$this->escape($layout->ilchCore) ?>
                             </div>
                         </div>
                         <br />
                     <?php endif; ?>
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-12">
                             <b><?=$this->getTrans('desc') ?>:</b>
                         </div>
-                        <div class="col-xs-12">
+                        <div class="col-12">
                             <?=$this->escape($layout->desc) ?>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="tab-pane" id="changelog">
-                <div class="col-xs-12">
+                <div class="col-12">
                     <?php if (!empty($layout->changelog)) {
                         echo $layout->changelog;
                     } else {
@@ -146,13 +146,13 @@ foreach ($layouts as $layout): ?>
 
         <div class="content_savebox">
             <?php if (in_array($layout->key, $this->get('layouts'))): ?>
-                <button class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
+                <button class="btn btn-outline-secondary disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                     <i class="fa-solid fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
                 <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search', 'key' => $layout->key, 'version' => $layout->version]) ?>">
                     <?=$this->getTokenField() ?>
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit" class="btn btn-outline-secondary">
                         <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>

@@ -124,7 +124,7 @@
                                                       id="ck_1"
                                                       name="dialog_message"
                                                       toolbar="ilch_html_frontend"<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>></textarea>
-                                            <button class="btn btn-primary btn-sm pull-right" id="chatSendBtn">
+                                            <button class="btn btn-primary btn-sm float-end" id="chatSendBtn">
                                                 <i class="fa-solid fa-location-arrow"></i>
                                             </button>
                                         </div>
