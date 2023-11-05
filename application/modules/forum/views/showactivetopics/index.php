@@ -75,7 +75,7 @@ $postsPerPage = $this->get('postsPerPage');
                             </div>
                         </dt>
                         <dd class="posts small">
-                            <div class="pull-left text-nowrap stats">
+                            <div class="float-start text-nowrap stats">
                                 <?=$this->getTrans('replies') ?>:
                                 <br />
                                 <?=$this->getTrans('views') ?>:

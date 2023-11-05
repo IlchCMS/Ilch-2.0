@@ -84,12 +84,12 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                             </div>
                         </dt>
                         <dd class="posts small">
-                            <div class="pull-left text-nowrap stats">
+                            <div class="float-start text-nowrap stats">
                                 <?=$obj->getTrans('topics') ?>:
                                 <br />
                                 <?=$obj->getTrans('posts') ?>:
                             </div>
-                            <div class="pull-left text-justify">
+                            <div class="float-start text-justify">
                                 <?=$topics ?>
                                 <br />
                                 <?=$posts ?>
@@ -101,12 +101,12 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                                 /** @var ForumMapper $forumMapper */
                                 $forumMapper = $obj->get('forumMapper');
                                 $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId()); ?>
-                                <div class="pull-left">
+                                <div class="float-start">
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                         <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                     </a>
                                 </div>
-                                <div class="pull-left">
+                                <div class="float-start">
                                     <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId()]) ?>">
                                         <?=$obj->escape($lastPost->getTopicTitle()) ?>
                                     </a>

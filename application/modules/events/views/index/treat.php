@@ -251,7 +251,7 @@ $types = $this->get('types');
                 </div>
             </div>
         <?php endif; ?>
-        <div style="float: right;">
+        <div class="float-end">
             <?php
             if ($this->get('event') != '') {
                 echo $this->getSaveBar('edit');

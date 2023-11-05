@@ -117,7 +117,7 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
                     <td colspan="7" class="text-end finish">
                         <?=$this->getTrans('subtotal') ?> <?=$this->getTrans('withoutTax') ?>:
                     </td>
-                    <td colspan="1" class="text-right finish">
+                    <td colspan="1" class="text-end finish">
                         <?php $sumPricewithoutTax = array_sum($arrayPricesWithoutTax) + round(($shipping_costs / (100 + max($arrayTaxes))) * 100, 2); ?>
                         <?=number_format($sumPricewithoutTax, 2, '.', '') ?> <?=$this->escape($this->get('currency')->getName()) ?>
                     </td>

@@ -82,7 +82,7 @@ function rec($item, \Ilch\View $obj)
                         <dd class="lastpost small">
                             <?php if ($lastPost) : ?>
                                 <?php $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId()) ?>
-                                <div class="pull-left">
+                                <div class="float-start">
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                         <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                     </a>

@@ -223,20 +223,20 @@ if (!empty($event)) {
         <div class="col-xl-6">
             <div class="form-horizontal">
                 <?php if ($this->getUser() && (($eventEntrants != '' && $eventEntrants->getUserId() == $this->getUser()->getId()) || $event->getUserId() == $this->getUser()->getId())): ?>
-                    <div class="form-group eventCommentSubmit">
+                    <div class="row mb-3 eventCommentSubmit">
                         <form action="" class="form-horizontal" method="POST">
                             <?=$this->getTokenField() ?>
                             <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
                             <div style="margin-bottom: 10px; margin-top: 10px;">
-                                <div class="col-lg-12">
+                                <div class="col-xl-12">
                                     <textarea class="eventTextarea"
                                               name="commentEvent"
                                               placeholder="<?=$this->getTrans('writeToEvent') ?>"
                                               required></textarea>
                                 </div>
                             </div>
-                            <div class="col-lg-12 eventSubmit">
-                                <button type="submit" class="pull-right btn btn-sm" name="saveEntry">
+                            <div class="col-xl-12 eventSubmit">
+                                <button type="submit" class="float-end btn btn-secondary btn-sm" name="saveEntry">
                                     <?=$this->getTrans('write') ?>
                                 </button>
                             </div>

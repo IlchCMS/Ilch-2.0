@@ -26,7 +26,7 @@ $statistic_config = $this->get('statistic_config');
         <div class="card border-primary">
             <div class="card-header bg-primary">
                 <h4 class="card-title"><?=$this->getTrans('siteStatistic') ?></h4>
-                <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
+                <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -227,7 +227,7 @@ $statistic_config = $this->get('statistic_config');
                     <div class="col-12 col-lg-6 col-xl-3">
                         <div class="card stats card-default" title="<?=$this->getTrans('statTotal') ?>: <?=$this->get('visitsAllTotal') ?>">
                             <div class="card-header text-center">
-                                <span class="panel-title"><?=$this->get('visitsAllTotal') ?></span>
+                                <span class="card-title"><?=$this->get('visitsAllTotal') ?></span>
                             </div>
                             <div class="card-body text-center">
                                 <strong><?=$this->getTrans('statTotal') ?></strong>

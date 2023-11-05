@@ -53,7 +53,7 @@ $job = $this->get('job');
                           rows="5"><?=$this->originalInput('text') ?></textarea>
             </div>
         </div>
-        <div class="col-xl-12 text-right">
+        <div class="col-xl-12 text-end">
             <?=$this->getSaveBar('apply', 'Apply') ?>
         </div>
     </form>

@@ -48,7 +48,7 @@ $date = new \Ilch\Date();
             <div class="card-header">
                 <?php $month = date('F', mktime(0, 0, 0, +$x, 1, 1)); ?>
                 <strong><?=$this->getTrans($month) ?></strong>
-                <span class="pull-right">
+                <span class="float-end">
                 <strong><?=$monthsUserCount ?> <?=$this->getTrans('people') ?></strong>
             </span>
             </div>
