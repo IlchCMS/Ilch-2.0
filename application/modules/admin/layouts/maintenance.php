@@ -1,4 +1,4 @@
-<?php 
+<?php
 $config = \Ilch\Registry::get('config');
 $translator = new \Ilch\Translator();
 $translator->load(APPLICATION_PATH.'/modules/admin/translations/');
@@ -34,7 +34,7 @@ $date = new \Ilch\Date();
     </head>
     <body>
         <div class="container">
-            <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12 maintenance_container">
+            <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 maintenance_container">
                 <div class="logo" title="<?=$translator->trans('ilchCMSVersion', $config->get('version')) ?>"></div>
                 <div class="maintenance_head"><?=$translator->trans('maintenanceMode') ?></div>
                 <div class="hidden-xs">

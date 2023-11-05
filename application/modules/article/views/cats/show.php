@@ -85,7 +85,7 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
-    <div class="pull-right">
+    <div class="float-end">
         <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
     </div>
 

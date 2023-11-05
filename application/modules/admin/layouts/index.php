@@ -85,7 +85,7 @@ $accesses = $this->get('accesses');
         <!-- TOP NAVBAR LEFT -->
         <div class="navbar-header leftbar">
             <?php if ($this->hasSidebar()) : ?>
-                <div id="hide-menu" class="btn-header pull-left">
+                <div id="hide-menu" class="btn-header float-start">
                     <a id="toggleLeftMenu" title="Collapse Menu" data-toggle="collapse" data-target="#left-panel">
                         <i class="fa-solid fa-outdent"></i>
                     </a>

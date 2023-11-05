@@ -5,7 +5,7 @@ $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
 
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+<nav class="navbar navbar-expand-lg border rounded bg-light mb-3">
     <div class="container-fluid">
         <a class="navbar-brand"><?=$this->getTrans('navigation') ?></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="<?=$this->getTrans('naviToggleNavigation') ?>">

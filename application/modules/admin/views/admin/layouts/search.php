@@ -24,10 +24,10 @@ if (empty($layoutsOnUpdateServer)) {
         <div class="card panel-ilch mb-3">
             <div class="card-heading">
                 <div class="clearfix">
-                    <div class="pull-left">
+                    <div class="float-start">
                         <b><?=$this->escape($layoutOnUpdateServer->name) ?></b>
                     </div>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <?php if ($layoutOnUpdateServer->link != ''): ?>
                             <a href="<?=$layoutOnUpdateServer->link ?>" alt="<?=$this->escape($layoutOnUpdateServer->author) ?>" title="<?=$this->escape($layoutOnUpdateServer->author) ?>" target="_blank" rel="noopener"><i><?=$this->escape($layoutOnUpdateServer->author) ?></i></a>
                         <?php else: ?>
@@ -44,7 +44,7 @@ if (empty($layoutsOnUpdateServer)) {
             </div>
             <div class="card-footer">
                 <div class="clearfix">
-                    <div class="pull-left">
+                    <div class="float-start">
                         <?php
                         $layoutExists = in_array($layoutOnUpdateServer->key, $this->get('layouts'));
                         $ilchCoreRequirement = empty($layoutOnUpdateServer->ilchCore) ? $coreVersion : $layoutOnUpdateServer->ilchCore;
@@ -85,7 +85,7 @@ if (empty($layoutsOnUpdateServer)) {
                             </form>
                         <?php endif; ?>
                     </div>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                             <span class="btn btn-outline-secondary">
                                 <i class="fa-solid fa-info text-info"></i>

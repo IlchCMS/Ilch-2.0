@@ -63,7 +63,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
         <?php if ($item->getType() != 0) : ?>
             <ul class="forenlist forums">
                 <li class="row ilch-border ilch-bg--hover">
-                    <dl class="icon 
+                    <dl class="icon
                         <?php if ($obj->getUser()) : ?>
                             <?php if (!in_array($item->getId(), $obj->get('containsUnreadTopics'))) : ?>
                                 topic-read
@@ -84,12 +84,12 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                             </div>
                         </dt>
                         <dd class="posts small">
-                            <div class="pull-left text-nowrap stats">
+                            <div class="float-start text-nowrap stats">
                                 <?=$obj->getTrans('topics') ?>:
                                 <br />
                                 <?=$obj->getTrans('posts') ?>:
                             </div>
-                            <div class="pull-left text-justify">
+                            <div class="float-start text-justify">
                                 <?=$topics ?>
                                 <br />
                                 <?=$posts ?>
@@ -101,12 +101,12 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                                 /** @var ForumMapper $forumMapper */
                                 $forumMapper = $obj->get('forumMapper');
                                 $countPosts = $forumMapper->getCountPostsByTopicId($lastPost->getTopicId()); ?>
-                                <div class="pull-left">
+                                <div class="float-start">
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                         <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                     </a>
                                 </div>
-                                <div class="pull-left">
+                                <div class="float-start">
                                     <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId()]) ?>">
                                         <?=$obj->escape($lastPost->getTopicTitle()) ?>
                                     </a>
@@ -149,7 +149,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
         </div>
     <?php endforeach; ?>
     <div class="foren-actions clearfix">
-        <ul class="pull-left">
+        <ul class="float-start">
             <li><a href="<?=$this->getUrl(['controller' => 'showunansweredtopics', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showUnansweredTopics') ?></a></li>
             <?php if ($this->getUser()) : ?>
                 <li><a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showNewPosts') ?></a></li>
@@ -159,8 +159,8 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                 <li><a href="<?=$this->getUrl(['controller' => 'rememberedposts', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showRememberedPosts') ?></a></li>
             <?php endif; ?>
         </ul>
-        <?php if ($this->getUser()) : ?>          
-            <div class="pull-right">
+        <?php if ($this->getUser()) : ?>
+            <div class="float-end">
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'markallasread'], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
             </div>
         <?php endif; ?>

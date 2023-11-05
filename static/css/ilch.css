@@ -47,9 +47,11 @@ img {
 .ilch-border {
     border: 1px solid #E4E4E4;
 }
-.ilch-head {
+.ilch-head, #rememberedPosts >.table > thead > .ilch-head{
+    --bs-table-bg: #337ab7 !important;
     background-color: #337ab7;
-    color: #FFF;
+    --bs-table-color: #FFF;
+    color:#fff;
 }
 .ilch-head a,
 .ilch-head a:hover {
@@ -92,8 +94,14 @@ img {
     border-left-width: 0;
 }
 
-/* input-group BS5 have width 100% */
-
+/* input-group in BS5 has a width of 100% */
 .input-group {
   width:auto !important;
+}
+
+/* .page-header does not exist for BS5 */
+.page-header {
+  padding-bottom:9px;
+  margin:40px 0 20px;
+  border-bottom:1px solid #eee
 }

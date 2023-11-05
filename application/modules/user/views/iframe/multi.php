@@ -25,30 +25,32 @@
     <?php if ($this->get('medias') != ''): ?>
         <div id="ilchmedia">
             <div class="container-fluid">
-                <?php foreach ($this->get('medias') as $media): ?>
-                    <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
-                        <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
-                            <img class="image img-thumbnail img-responsive"
-                                 data-url="<?=$media->getUrl() ?>"
-                                 <?php if (file_exists($media->getUrlThumb())): ?>
-                                    src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
-                                 <?php else: ?>
-                                    src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                                 <?php endif; ?>
-                                 alt="<?=$media->getName() ?>">
-                            <input type="checkbox"
-                                   class="regular-checkbox big-checkbox"
-                                   id="<?=$media->getId() ?>_img"
-                                   name="check_image[]"
-                                   value="<?=$media->getId() ?>" />
-                            <label for="<?=$media->getId() ?>_img"></label>
-                        </div>
-                        <input type="text"
-                               class="hidden"
-                               name="check_url[]"
-                               value="<?=$media->getUrl() ?>" />
-                    <?php endif; ?>
-                <?php endforeach; ?>
+                <div class="row">
+                    <?php foreach ($this->get('medias') as $media): ?>
+                        <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
+                            <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
+                                <img class="image img-thumbnail img-responsive"
+                                     data-url="<?=$media->getUrl() ?>"
+                                     <?php if (file_exists($media->getUrlThumb())): ?>
+                                        src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
+                                     <?php else: ?>
+                                        src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                     <?php endif; ?>
+                                     alt="<?=$media->getName() ?>">
+                                <input type="checkbox"
+                                       class="regular-checkbox big-checkbox"
+                                       id="<?=$media->getId() ?>_img"
+                                       name="check_image[]"
+                                       value="<?=$media->getId() ?>" />
+                                <label for="<?=$media->getId() ?>_img"></label>
+                            </div>
+                            <input type="text"
+                                   class="hidden"
+                                   name="check_url[]"
+                                   value="<?=$media->getUrl() ?>" />
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
     <?php else: ?>

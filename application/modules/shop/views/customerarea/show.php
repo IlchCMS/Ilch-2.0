@@ -203,7 +203,7 @@ $itemsMapper = $this->get('itemsMapper');
                 <td colspan="7" class="text-end finished">
                     <b><?=$this->getTrans('totalPrice') ?>:</b>
                 </td>
-                <td colspan="1" class="text-right finished">
+                <td colspan="1" class="text-end finished">
                     <b><?=number_format($total_price, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                 </td>
             </tr>

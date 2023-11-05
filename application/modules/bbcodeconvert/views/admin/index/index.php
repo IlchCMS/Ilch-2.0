@@ -102,11 +102,11 @@
     <div class="content_savebox">
         <input type="hidden" class="content_savebox_hidden" name="action" value="convert" />
         <div class="btn-group dropup">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"<?=($this->get('getHtmlFromBBCodeExists')) ? '' : ' disabled' ?>>
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"<?=($this->get('getHtmlFromBBCodeExists')) ? '' : ' disabled' ?>>
                 <?=$this->getTrans('selected') ?> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu listConvert" role="menu">
-                <li><a href="#" data-hiddenkey="convert" id="convert"><?=$this->getTrans('convert') ?></a></li>
+                <li clas="dropdown-item"><a href="#" data-hiddenkey="convert" id="convert"><?=$this->getTrans('convert') ?></a></li>
             </ul>
         </div>
     </div>

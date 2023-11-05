@@ -23,19 +23,17 @@
                     <div class="row">
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
-                            <div class="row">
-                                <div class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb">
-                                    <img class="image img-thumbnail img-fluid"
-                                         data-url="<?=$media->getUrl() ?>"
-                                         src="<?=$this->getUrl($media->getUrlThumb()) ?>"
-                                         alt="<?=$media->getName() ?>">
-                                    <input type="checkbox"
-                                           class="regular-checkbox big-checkbox"
-                                           id="<?=$media->getId() ?> test"
-                                           name="check_image[]"
-                                           value="<?=$media->getId() ?>" />
-                                    <label for="<?=$media->getId() ?> test"></label>
-                                </div>
+                            <div class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb">
+                                <img class="image img-thumbnail img-fluid"
+                                     data-url="<?=$media->getUrl() ?>"
+                                     src="<?=$this->getUrl($media->getUrlThumb()) ?>"
+                                     alt="<?=$media->getName() ?>">
+                                <input type="checkbox"
+                                       class="regular-checkbox big-checkbox"
+                                       id="<?=$media->getId() ?> test"
+                                       name="check_image[]"
+                                       value="<?=$media->getId() ?>" />
+                                <label for="<?=$media->getId() ?> test"></label>
                             </div>
                             <input type="text"
                                    class="hidden"
@@ -50,15 +48,13 @@
                     <div class="row">
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
-                            <div class="row">
-                                <div class="col-xl-2 col-md-3 col-4">
-                                    <img class="image img-thumbnail img-fluid"
-                                         data-url="<?=$media->getUrl() ?>"
-                                         src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                                         alt="<?=$media->getName() ?>">
-                                    <div class="media-getending">Type: <?=$media->getEnding() ?></div>
-                                    <div class="media-getname"><?=$media->getName() ?></div>
-                                </div>
+                            <div class="col-xl-2 col-md-3 col-4">
+                                <img class="image img-thumbnail img-fluid"
+                                     data-url="<?=$media->getUrl() ?>"
+                                     src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                     alt="<?=$media->getName() ?>">
+                                <div class="media-getending">Type: <?=$media->getEnding() ?></div>
+                                <div class="media-getname"><?=$media->getName() ?></div>
                             </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -69,19 +65,17 @@
                     <div class="row">
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
-                            <div class="row">
-                                <div class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb">
-                                    <img class="image img-thumbnail img-fluid"
-                                         data-url="<?=$media->getUrl() ?>"
-                                         src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                                         alt="">
-                                    <input type="checkbox"
-                                           class="regular-checkbox big-checkbox"
-                                           id="<?=$media->getId() ?> test"
-                                           name="check_image[]"
-                                           value="<?=$media->getId() ?>" />
-                                    <label for="<?=$media->getId() ?> test"></label>
-                                </div>
+                            <div class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb">
+                                <img class="image img-thumbnail img-fluid"
+                                     data-url="<?=$media->getUrl() ?>"
+                                     src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                     alt="">
+                                <input type="checkbox"
+                                       class="regular-checkbox big-checkbox"
+                                       id="<?=$media->getId() ?> test"
+                                       name="check_image[]"
+                                       value="<?=$media->getId() ?>" />
+                                <label for="<?=$media->getId() ?> test"></label>
                             </div>
                             <input type="text"
                                    class="hidden"

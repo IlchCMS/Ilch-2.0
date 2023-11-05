@@ -21,7 +21,7 @@ $userMapper = $this->get('userMapper');
             }
         ?>
             <li class="list-group-item">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a> - 
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a> -
                 <?php if ($article->getAuthorId() != ''): ?>
                     <?php $user = $userMapper->getUserById($article->getAuthorId()); ?>
                     <?php if ($user != ''): ?>
@@ -61,7 +61,7 @@ $userMapper = $this->get('userMapper');
             </li>
         <?php endforeach; ?>
     </ul>
-    <div class="pull-right">
+    <div class="float-end">
         <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'id' => $this->getRequest()->getParam('id')]) ?>
     </div>
 <?php else: ?>

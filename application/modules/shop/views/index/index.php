@@ -151,7 +151,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                         </button>
                     </form>
                 <?php } else { ?>
-                    <button class="btn btn-sm btn-default">
+                    <button class="btn btn-sm btn-outline-secondary">
                         <small><?=$this->getTrans('currentlySoldOut') ?> <i class="fa-solid fa-store-slash"></i></small>
                     </button>
                 <?php } ?>

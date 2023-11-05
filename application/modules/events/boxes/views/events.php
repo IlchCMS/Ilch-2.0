@@ -8,7 +8,7 @@
                     <a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>">
                         <?=((strlen($this->escape($eventlist->getTitle()))<15) ? $this->escape($eventlist->getTitle()) : substr($this->escape($eventlist->getTitle()),0,15).'...') ?>
                     </a>
-                    <span class="small pull-right"><?=$date->format('d.m.y', true) ?></span>
+                    <span class="small float-end"><?=$date->format('d.m.y', true) ?></span>
                 </li>
             <?php endif; ?>
         <?php endforeach; ?>

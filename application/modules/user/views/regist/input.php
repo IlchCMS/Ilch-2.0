@@ -78,7 +78,7 @@ $errors = $this->get('errors');
             <?php endif; ?>
         </div>
         <div class="panel-footer clearfix">
-            <div class="pull-right">
+            <div class="float-end">
                 <?php
                     if ($this->get('captchaNeeded')) {
                         if ($this->get('googlecaptcha')) {

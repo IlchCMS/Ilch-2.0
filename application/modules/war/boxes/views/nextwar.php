@@ -27,7 +27,7 @@
                             <?=$this->escape($war->getWarGroupTag()) ?>
                         </div>
                     </div>
-                    <div class="col-2 small pull-left nextwar-vs"><?=$this->getTrans('vs') ?></div>
+                    <div class="col-2 small float-start nextwar-vs"><?=$this->getTrans('vs') ?></div>
                     <div class="col-3 ellipsis">
                         <div class="ellipsis-item">
                             <?=$this->escape($war->getWarEnemyTag()) ?>

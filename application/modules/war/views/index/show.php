@@ -96,7 +96,7 @@ $commentsClass = new Ilch\Comments();
                 <ul class="list-group">
                     <li class="list-group-item">
                         <span class=""><?=$this->escape($mapModel ? $mapModel->getName() : '') ?></span>
-                        <span class="pull-right"><?=$game->getGroupPoints() ?> : <?=$game->getEnemyPoints() ?></span>
+                        <span class="float-end"><?=$game->getGroupPoints() ?> : <?=$game->getEnemyPoints() ?></span>
                     </li>
                 </ul>
             <?php endforeach; ?>

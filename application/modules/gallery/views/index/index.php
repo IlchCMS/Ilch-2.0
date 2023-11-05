@@ -70,7 +70,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
                                 <a href="' . $obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]) . '" >
                                     ' . $obj->escape($item->getTitle()) . '
                                 </a>
-                                <p class="text-left">' . $obj->getTrans('cat') . ': ' . $catTitle . '
+                                <p class="text-start">' . $obj->getTrans('cat') . ': ' . $catTitle . '
                                 <br />' . $obj->getTrans('images') . ': ' . $imageMapper->getCountImageById($item->getId()) . '</p>
                                 <div class="lib-header-seperator"></div>
                             </div>

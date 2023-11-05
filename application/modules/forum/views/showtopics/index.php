@@ -116,24 +116,24 @@ $postsPerPage = $this->get('postsPerPage');
                                     </div>
                                 </dt>
                                 <dd class="posts small">
-                                    <div class="pull-left text-nowrap stats">
+                                    <div class="float-start text-nowrap stats">
                                         <?=$this->getTrans('replies') ?>:
                                         <br />
                                         <?=$this->getTrans('views') ?>:
                                     </div>
-                                    <div class="pull-left text-justify">
+                                    <div class="float-start text-justify">
                                         <?=$topic->getCountPosts() - 1 ?>
                                         <br />
                                         <?=$topic->getVisits() ?>
                                     </div>
                                 </dd>
                                 <dd class="lastpost small">
-                                    <div class="pull-left">
+                                    <div class="float-start">
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                             <img style="width:40px; padding-right: 5px;" src="<?=$this->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                         </a>
                                     </div>
-                                    <div class="pull-left">
+                                    <div class="float-start">
                                         <?=$this->getTrans('by') ?>
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                             <?=$this->escape($lastPost->getAutor()->getName()) ?>
@@ -206,7 +206,7 @@ $postsPerPage = $this->get('postsPerPage');
                 <?php endif; ?>
             <?php endif; ?>
             <?php if ($this->getUser()) : ?>
-                <div class="pull-right foren-actions">
+                <div class="float-end foren-actions">
                     <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'marktopicsasread', 'forumid' => $this->getRequest()->getParam('forumid')], null, true) ?>" class="ilch-link"><?=$this->getTrans('markTopicsAsRead') ?></a>
                 </div>
             <?php endif; ?>
