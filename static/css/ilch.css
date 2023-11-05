@@ -94,14 +94,12 @@ img {
     border-left-width: 0;
 }
 
-/* input-group BS5 have width 100% */
-
+/* input-group in BS5 has a width of 100% */
 .input-group {
   width:auto !important;
 }
 
-/* .page-header not exist for BS5 */
-
+/* .page-header does not exist for BS5 */
 .page-header {
   padding-bottom:9px;
   margin:40px 0 20px;
