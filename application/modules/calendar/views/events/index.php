@@ -6,7 +6,7 @@ $events = [];
 // calendar entries
 foreach ($this->get('calendarList') ?? [] as $calendarList) {
     $e = [];
-    $e['title'] = $this->escape($calendarList->getTitle());
+    $e['title'] = $calendarList->getTitle();
     $e['start'] = $calendarList->getStart();
     $e['end'] = $calendarList->getEnd();
     $e['color'] = $calendarList->getColor();
