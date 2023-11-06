@@ -320,6 +320,10 @@ class Forum extends Mapper
      */
     public function getForumsByIdsUser(array $ids, User $user = null): ?array
     {
+        if (empty($ids)) {
+            return null;
+        }
+
         $groupIds = [3];
         foreach ($user ? $user->getGroups() : [] as $group) {
             $groupIds[] = $group->getId();
@@ -725,6 +729,10 @@ class Forum extends Mapper
      */
     public function getCountPostsByTopicIds(array $topicIds): ?array
     {
+        if (empty($topicIds)) {
+            return null;
+        }
+
         $countOfPostsRows = $this->db()->select(['count' => 'COUNT(id)', 'topic_id'])
             ->from('forum_posts')
             ->where(['topic_id' => $topicIds], 'or')

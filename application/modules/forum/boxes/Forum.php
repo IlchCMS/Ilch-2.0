@@ -36,7 +36,7 @@ class Forum extends Box
 
         $posts = $topicMapper->getLastPostsByTopicIds($topicIds, ($this->getUser()) ? $this->getUser()->getId() : null);
 
-        foreach ($posts as $post) {
+        foreach ($posts ?? [] as $post) {
             $foundTopic = null;
             foreach ($lastActiveTopics as $topic) {
                 if ($topic['topic_id'] == $post->getTopicId()) {
