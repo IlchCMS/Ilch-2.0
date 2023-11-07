@@ -273,7 +273,7 @@ class Topic extends Mapper
             $postModel->setDateCreated($lastPostRow['date_created']);
             $postModel->setTopicId($lastPostRow['topic_id']);
             if ($userId) {
-                $postModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
+                $postModel->setRead($lastPostRow['topic_read'] >= $lastPostRow['date_created'] || $lastPostRow['forum_read'] >= $lastPostRow['date_created']);
             }
             $lastPosts[] = $postModel;
         }
