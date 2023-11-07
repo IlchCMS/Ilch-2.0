@@ -505,7 +505,7 @@ class Forum extends Mapper
      */
     public function getLastPostsByForumIds(array $forumId, int $userId = null): ?array
     {
-        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.user_id', 'p.date_created', 'p.forum_id'])
+        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.user_id', 'date_created' => 'MAX(p.date_created)', 'p.forum_id'])
             ->from(['p' => 'forum_posts'])
             ->join(['t' => 'forum_topics'], 't.id = p.topic_id', 'LEFT', ['t.topic_title']);
 
@@ -515,8 +515,8 @@ class Forum extends Mapper
         }
 
         $lastPostRows = $select->where(['p.forum_id' => $forumId])
-            ->order(['p.date_created' => 'DESC', 'p.id' => 'DESC'])
-            ->group(['p.forum_id'])
+            ->order(['date_created' => 'ASC'])
+            ->group(['p.forum_id', 'p.topic_id'])
             ->execute()
             ->fetchRows();
 
