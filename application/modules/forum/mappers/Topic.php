@@ -250,7 +250,7 @@ class Topic extends Mapper
         }
 
         $lastPostsRows = $select->where(['p.topic_id' => $ids])
-            ->order(['p.date_created' => 'DESC'])
+            ->order(['date_created' => 'DESC'])
             ->group(['p.topic_id'])
             ->execute()
             ->fetchRows();
