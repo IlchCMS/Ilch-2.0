@@ -273,6 +273,7 @@ class Topic extends Mapper
             $postModel->setDateCreated($lastPostRow['date_created']);
             $postModel->setTopicId($lastPostRow['topic_id']);
             if ($userId) {
+                // Needs an additional check if datetime is newer than the newest post of the topic as topic_read was always set.
                 $postModel->setRead($lastPostRow['topic_read'] >= $lastPostRow['date_created'] || $lastPostRow['forum_read'] >= $lastPostRow['date_created']);
             }
             $lastPosts[] = $postModel;
