@@ -250,7 +250,7 @@ class Topic extends Mapper
         }
 
         $lastPostsRows = $select->where(['p.topic_id' => $ids])
-            ->order(['p.date_created' => 'DESC'])
+            ->order(['date_created' => 'DESC'])
             ->group(['p.topic_id'])
             ->execute()
             ->fetchRows();
@@ -273,7 +273,8 @@ class Topic extends Mapper
             $postModel->setDateCreated($lastPostRow['date_created']);
             $postModel->setTopicId($lastPostRow['topic_id']);
             if ($userId) {
-                $postModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
+                // Needs an additional check if datetime is newer than the newest post of the topic as topic_read was always set.
+                $postModel->setRead($lastPostRow['topic_read'] >= $lastPostRow['date_created'] || $lastPostRow['forum_read'] >= $lastPostRow['date_created']);
             }
             $lastPosts[] = $postModel;
         }
