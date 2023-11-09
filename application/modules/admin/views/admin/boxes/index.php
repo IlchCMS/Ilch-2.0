@@ -25,7 +25,7 @@
                         <a href="<?=$this->getUrl($this->get('sorter')->getUrlArray('title')) ?>" title="<?=$this->getTrans('boxTitle') ?>"><?=$this->get('sorter')->getArrowHtml('title') ?> <?=$this->getTrans('boxTitle') ?></a>&nbsp;
                     </th>
                     <?php if ($this->get('multilingual')): ?>
-                        <th class="text-right">
+                        <th class="text-end">
                             <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
                                 <?php if ($key == $this->get('contentLanguage')): ?>
                                     <?php continue; ?>
@@ -52,7 +52,7 @@
                                 <?php endif; ?>
                             </td>
                             <?php if ($this->get('multilingual')): ?>
-                                <td class="text-right">
+                                <td class="text-end">
                                     <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
                                         <?php if ($key == $this->get('contentLanguage')): ?>
                                             <?php continue; ?>

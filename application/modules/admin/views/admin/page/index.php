@@ -24,7 +24,7 @@
                     </th>
                     <?php
                     if ($this->get('multilingual')) {
-                        echo '<th class="text-right">';
+                        echo '<th class="text-end">';
 
                         foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
                             if ($key == $this->get('contentLanguage')) {
@@ -49,7 +49,7 @@
                             </td>
                             <?php
                             if ($this->get('multilingual')) {
-                                echo '<td class="text-right">';
+                                echo '<td class="text-end">';
                                 foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
                                     if ($key == $this->get('contentLanguage')) {
                                         continue;

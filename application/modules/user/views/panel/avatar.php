@@ -40,10 +40,10 @@ $settingMapper = $this->get('settingMapper');
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="row mb-3">
                     <div class="offset-xl-2 col-xl-12">
                         <input type="submit"
-                               class="btn"
+                               class="btn btn-outline-secondary"
                                name="saveEntry"
                                value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>

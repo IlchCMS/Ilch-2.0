@@ -18,7 +18,7 @@
                                   toolbar="ilch_html_frontend"><?=$this->escape($profil->getSignature()) ?></textarea>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="row mb-3">
                     <div class="col-xl-8">
                         <input type="submit"
                                class="btn btn-outline-secondary"

@@ -1,17 +1,17 @@
 <h1>
     <?=$this->getTrans('menuGuestbook') ?>
-    <div class="pull-right">
+    <div class="float-end">
         <a href="<?=$this->getUrl(['action' => 'newentry']) ?>"><?=$this->getTrans('entry') ?></a>
     </div>
 </h1>
 <?php if (!empty($this->get('welcomeMessage'))) : ?>
-<div class="card panel-default">
+<div class="card card-default">
     <div class="card-body welcomeMessage"><?=$this->purify($this->get('welcomeMessage')) ?></div>
 </div>
 <?php endif; ?>
 <?php foreach ($this->get('entries') as $entry): ?>
     <?php $date = new \Ilch\Date($entry->getDatetime()); ?>
-    <div class="card panel-default">
+    <div class="card card-default">
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6 col-xl-5">

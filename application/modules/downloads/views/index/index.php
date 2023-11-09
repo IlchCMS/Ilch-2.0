@@ -106,16 +106,18 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
     }
 }
 ?>
-<div class="col-xl-12">
-    <ul class="media-list">
-        <?php
-        if (!empty($downloadsItems)) {
-            foreach ($downloadsItems as $item) {
-                rec($item, $downloadsMapper, $this, $fileMapper);
+<div class="row">
+    <div class="col-xl-12">
+        <ul class="media-list">
+            <?php
+            if (!empty($downloadsItems)) {
+                foreach ($downloadsItems as $item) {
+                    rec($item, $downloadsMapper, $this, $fileMapper);
+                }
+            } else {
+                echo $this->getTrans('noDownloads');
             }
-        } else {
-            echo $this->getTrans('noDownloads');
-        }
-        ?>
-    </ul>
+            ?>
+        </ul>
+    </div>
 </div>

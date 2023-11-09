@@ -55,7 +55,7 @@ $pagination = $this->get('pagination');
         <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/' . $image->getId()); ?>
 
         <div class="col-6 col-lg-4 col-xl-3 col-md-4">
-            <div class="card panel-default">
+            <div class="card card-default">
             <?php if (file_exists($image->getImageThumb())) : ?>
                 <a class="venobox" data-gall="gallery01" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" title="<?= $image->getImageTitle() ?> ">
                     <div class="panel-image img-thumbnail">

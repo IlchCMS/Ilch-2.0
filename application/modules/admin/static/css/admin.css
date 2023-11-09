@@ -1357,7 +1357,7 @@ table tbody i.fa.fa-sort {
     margin: auto;
 }
 #module #module-search-carousel .carousel-inner .item .carousel-caption,
-#layout #layout-search-carousel .carousel-inner .item .carousel-caption {
+#layout #layout-search-carousel > .carousel-inner >.carousel-item> .carousel-caption {
     position: absolute;
     right: 0;
     bottom: 0;

@@ -105,3 +105,19 @@ img {
   margin:40px 0 20px;
   border-bottom:1px solid #eee
 }
+
+/* .pagination */
+
+.pagination >.page-item>.page-link,
+.pagination >li >.page-link {
+    color:#337ab7;
+}
+
+.pagination >.active{
+    --bs-pagination-active-bg: #337ab7;
+    --bs-pagination-active-border-color: #337ab7;
+}
+
+.pagination > .active >.page-link {
+    color: #ffffff;
+}
