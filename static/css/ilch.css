@@ -106,8 +106,7 @@ img {
   border-bottom:1px solid #eee
 }
 
-/* .pagination */
-
+/*.pagination */
 .pagination >.page-item>.page-link,
 .pagination >li >.page-link {
     color:#337ab7;

@@ -10,7 +10,7 @@
     </head>
     <body>
         <header>
-          <nav class="navbar navbar-expand-lg navbar-dark navbar-gaming fixed-top d-sm-block d-md-none">
+          <nav class="navbar navbar-expand-lg navbar-light navbar-gaming bg-light fixed-top d-sm-block d-md-none">
             <div class="container-fluid">
               <a class="navbar-brand" href="<?=$this->getUrl() ?>"><?=$this->getTrans('navigation') ?></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="<?=$this->getTrans('togglenavigation') ?>">

@@ -16,7 +16,7 @@ $date = new \Ilch\Date();
         <?php foreach ($this->get('birthdayListNOW') as $birthdaylist): ?>
             <div class="card-body row">
                 <div class="col-xl-12">
-                  <div class="row"
+                  <div class="row">
                     <div class="col-xl-2 confetti">
                         <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
                             <img class="img-thumbnail center-block" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69">
