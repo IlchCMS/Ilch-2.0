@@ -40,7 +40,7 @@ function getTransKey($usermenuId)
 
     if ($usermenu->getKey() === 'user/panel/gallery' && ($this->get('galleryAllowed') == 0 || $profil->getOptGallery() == 0)) {
     } else {
-        echo '<li class="nav-item ' . $class . '"><a href="' . $this->getUrl($usermenu->getKey()) . '" class="nav-link">' . $this->getTrans(getTransKey($usermenu->getId())) . ' <i class="' . $usermenu->getIcon() . ' pull-right"></i></a></li>';
+        echo '<li class="nav-item ' . $class . '"><a href="' . $this->getUrl($usermenu->getKey()) . '" class="nav-link">' . $this->getTrans(getTransKey($usermenu->getId())) . ' <i class="' . $usermenu->getIcon() . ' float-end"></i></a></li>';
     }
 } ?>
         </ul>
