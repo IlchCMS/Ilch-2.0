@@ -153,7 +153,7 @@ function buildMenu($parentId, $menuData, View $view) {
                 </div>
             </div>
 
-            <div class="actions col-xl-12 text-right">
+            <div class="actions col-xl-12 text-end">
                 <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">
             </div>
         </div>

@@ -19,7 +19,7 @@ $rememberedPosts = $this->get('rememberedPosts');
                     <col class="icon_width" />
                     <col>
                     <col>
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
                 </colgroup>
                 <thead>
                 <tr class="ilch-head">

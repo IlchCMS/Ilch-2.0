@@ -71,9 +71,9 @@ class Comments
                         <a class="media-left col-md-offset-<?=$req ?> col-sm-offset-'.$req.' hidden-xs" href="'.$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]).'" title="'.$obj->escape($user->getName()).'">
                             <img class="img-circle comment-img" alt="'.$obj->escape($user->getName()).'" src="'.$obj->getUrl().'/'.$user->getAvatar().'">
                         </a>
-                        <div class="media-body">
+                        <div class="media-body pe-2 ps-2">
                             <div class="clearfix">
-                                <div class="pull-left">
+                                <div class="fload-start">
                                     <a href="'.$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]).'" title="'.$obj->escape($user->getName()).'">'.
                                         $obj->escape($user->getName()).'
                                     </a>
@@ -81,7 +81,7 @@ class Comments
                                         <i class="fa-regular fa-clock" title="'.$obj->getTrans('commentDateTime').'"></i> '.$commentDate->format('d.m.Y - H:i', true).'
                                     </p>
                                 </div>
-                                <div class="pull-right text-muted small">
+                                <div class="fload-end text-muted small">
                                     <i class="fa-solid fa-reply fa-flip-vertical"></i> '.$user_rep->getName().'
                                 </div>
                             </div>
@@ -100,10 +100,10 @@ class Comments
             } else {
                 $commentsHtml .= '
                                 <div class="btn-group">
-                                    <button class="btn btn-sm btn-outline-secondary btn-success">
+                                    <button class="btn btn-sm btn-outline-secondary btn-success text-white">
                                         <i class="fa-solid fa-thumbs-up"></i> '.$obj->escape($fk_comment->getUp()).'
                                     </button>
-                                    <button class="btn btn-sm btn-outline-secondary btn-danger">
+                                    <button class="btn btn-sm btn-outline-secondary btn-danger text-white">
                                         <i class="fa-solid fa-thumbs-down"></i> '.$obj->escape($fk_comment->getDown()).'
                                     </button>
                                 </div>';
@@ -133,9 +133,9 @@ class Comments
                                         <a class="media-left col-md-offset-'.$req.' col-sm-offset-'.$req.' hidden-xs" href="'.$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]).'" title="'.$obj->escape($obj->getUser()->getName()).'">
                                             <img class="img-circle comment-img" alt="'.$obj->escape($obj->getUser()->getName()).'" src="'.$obj->getUrl().'/'.$obj->getUser()->getAvatar().'">
                                         </a>
-                                        <div class="media-body">
+                                        <div class="media-body ps-2 pe-2">
                                             <div class="clearfix">
-                                                <div class="pull-left">
+                                                <div class="fload-start">
                                                     <a href="'.$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]).'" title="'.$obj->escape($obj->getUser()->getName()).'">'.
                                                         $obj->escape($obj->getUser()->getName()).'
                                                     </a>
@@ -143,7 +143,7 @@ class Comments
                                                         <i class="fa-regular fa-clock" title="'.$obj->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
                                                     </p>
                                                 </div>
-                                                <div class="pull-right text-muted small">
+                                                <div class="float-end text-muted small">
                                                     <i class="fa-solid fa-reply fa-flip-vertical"></i> '.$user->getName().'
                                                 </div>
                                             </div>
@@ -232,7 +232,7 @@ class Comments
                                 <a class="media-left hidden-xs" href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">
                                     <img class="img-circle comment-img" alt="'.$layout->escape($layout->getUser()->getName()).'" src="'.$layout->getUrl().'/'.$layout->getUser()->getAvatar().'">
                                 </a>
-                                <div class="media-body">
+                                <div class="media-body ps-2 pe-2">
                                     <div>
                                         <a href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">'.
                 $layout->escape($layout->getUser()->getName()).'
@@ -274,7 +274,7 @@ class Comments
             <article id="comment_'.$comment->getId().'">
                 <div class="card">
                     <div class="card-body">
-                        <div class="media-block">
+                        <div class="media-block ps-2 pe-2">
                             <a class="media-left hidden-xs" href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]).'" title="'.$layout->escape($user->getName()).'">
                                 <img class="img-circle comment-img" alt="'.$layout->escape($user->getName()).'" src="'.$layout->getUrl().'/'.$user->getAvatar().'">
                             </a>
@@ -301,10 +301,10 @@ class Comments
             } else {
                 $commentsHtml .= '
                                     <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-secondary btn-success">
+                                        <button class="btn btn-sm btn-outline-secondary btn-success text-white">
                                             <i class="fa-solid fa-thumbs-up"></i> '.$comment->getUp().'
                                         </button>
-                                        <button class="btn btn-sm btn-outline-secondary btn-danger">
+                                        <button class="btn btn-sm btn-outline-secondary btn-danger text-white">
                                             <i class="fa-solid fa-thumbs-down"></i> '.$comment->getDown().'
                                         </button>
                                     </div>';
@@ -330,9 +330,9 @@ class Comments
                                                 <a class="media-left hidden-xs" href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">
                                                     <img class="img-circle comment-img" alt="'.$layout->escape($layout->getUser()->getName()).'" src="'.$layout->getUrl().'/'.$layout->getUser()->getAvatar().'">
                                                 </a>
-                                                <div class="media-body">
+                                                <div class="media-body ps-2 pe-2">
                                                     <div class="clearfix">
-                                                        <div class="pull-left">
+                                                        <div class="float-start">
                                                             <a href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">'.
                                                                 $layout->escape($layout->getUser()->getName()).'
                                                             </a>
@@ -340,7 +340,7 @@ class Comments
                                                                 <i class="fa-regular fa-clock" title="'.$layout->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
                                                             </p>
                                                         </div>
-                                                        <div class="pull-right text-muted small">
+                                                        <div class="float-end text-muted small">
                                                             <i class="fa-solid fa-reply fa-flip-vertical"></i> '.$layout->escape($user->getName()).'
                                                         </div>
                                                     </div>

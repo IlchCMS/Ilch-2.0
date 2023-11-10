@@ -171,7 +171,7 @@ if ($this->getUser()) {
                 <div class="post-footer ilch-bg">
                     <?php if ($this->get('postVoting')) : ?>
                         <?php if ($this->getUser() && !$post->isUserHasVoted()) : ?>
-                            <a class="btn btn-sm btn-outline-secondary btn-hover-success text-white" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
+                            <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="<?=$this->getUrl(['id' => $post->getId(), 'action' => 'vote', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" title="<?=$this->getTrans('iLike') ?>">
                                 <i class="fa-solid fa-thumbs-up"></i> <?=$post->getCountOfVotes() ?>
                             </a>
                         <?php elseif ($this->getUser() && $post->isUserHasVoted()) : ?>

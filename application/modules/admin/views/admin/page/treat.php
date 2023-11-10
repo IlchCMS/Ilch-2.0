@@ -68,7 +68,7 @@ $entrie = $this->get('page');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
-        <label for="permaLink" class="col-lg-2">
+        <label for="permaLink" class="col-xl-2">
             <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-xl-4">

@@ -48,10 +48,6 @@ hr {
     color: #575B5E;
 }
 
-.navbar-gaming .container-fluid .navbar-collapse .card {
-    /*! border: 0; */
-}
-
 .navbar-gaming .navbar-nav > li > a:hover, .navbar-gaming .navbar-nav > li > a:focus {
     background-color: #32333B;
     color: #32333B;

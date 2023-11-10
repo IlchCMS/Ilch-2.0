@@ -22,7 +22,7 @@ foreach ($layouts as $layout): ?>
                         <?php $itemI = 0; ?>
                         <?php foreach ($layout->thumbs as $thumb): ?>
                             <div class="carousel-item text-center <?=$itemI == 0 ? 'active' : '' ?>">
-                                <img class="d-block" src="<?=$this->get('updateserver').'layouts/images/'.$thumb->img ?>" alt="<?=$this->escape($layout->name) ?>">
+                                <img class="d-block ms-auto me-auto" src="<?=$this->get('updateserver').'layouts/images/'.$thumb->img ?>" alt="<?=$this->escape($layout->name) ?>">
                                 <div class="carousel-caption d-none d-md-block">
                                     <?php if ($thumb->desc != ''): ?>
                                         <?=$this->escape($thumb->desc) ?>

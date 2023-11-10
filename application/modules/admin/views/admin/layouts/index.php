@@ -20,10 +20,10 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
         <div class="card panel-ilch">
             <div class="card-heading">
                 <div class="clearfix">
-                    <div class="pull-left">
+                    <div class="float-start">
                         <b><?=$this->escape($layout->getName()) ?></b>
                     </div>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <?php if ($layout->getLink() != ''): ?>
                             <a href="<?=$layout->getLink() ?>" alt="<?=$this->escape($layout->getAuthor()) ?>" title="<?=$this->escape($layout->getAuthor()) ?>" target="_blank" rel="noopener">
                                 <i><?=$this->escape($layout->getAuthor()) ?></i>
@@ -44,7 +44,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
             </div>
             <div class="card-footer">
                 <div class="clearfix">
-                    <div class="pull-left">
+                    <div class="float-start">
                         <?php
                         if (empty($layout->getIlchCore())) {
                             $ilchCoreTooOld = false;
@@ -124,7 +124,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <span class="btn btn-outline-secondary"
                               data-bs-toggle="modal"
                               data-bs-target="#infoModal<?=$layout->getKey() ?>"
