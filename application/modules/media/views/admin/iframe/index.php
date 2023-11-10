@@ -32,14 +32,14 @@
             <div class="row">
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
-                        <div class="col-xl-2 col-md-3 col-4">
-                            <img class="image img-thumbnail img-fluid"
-                                 data-url="<?=$media->getUrl() ?>"
-                                 src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                                 alt="<?=$media->getName() ?>">
-                            <div class="media-getending">Type: <?=$media->getEnding() ?></div>
-                            <div class="media-getname"><?=$media->getName() ?></div>
-                        </div>
+                    <div class="col-xl-2 col-md-3 col-4">
+                        <img class="image img-thumbnail img-fluid"
+                             data-url="<?=$media->getUrl() ?>"
+                             src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                             alt="<?=$media->getName() ?>">
+                        <div class="media-getending">Type: <?=$media->getEnding() ?></div>
+                        <div class="media-getname"><?=$media->getName() ?></div>
+                    </div>
                 <?php endif; ?>
             <?php endforeach; ?>
             </div>
@@ -49,15 +49,15 @@
             <div class="row">
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
-                        <div class="col-xl-2 col-md-3 col-4">
-                            <img class="image img-thumbnail img-responsive"
-                                 data-alt="<?=$media->getName() ?>"
-                                 data-url="<?=$this->getUrl().'/'.$media->getUrl() ?>"
-                                 src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                                 alt="<?=$media->getName() ?>">
-                            <div class="media-getending">Type: <?=$media->getEnding() ?></div>
-                            <div class="media-getname"><?=$media->getName() ?></div>
-                        </div>
+                    <div class="col-xl-2 col-md-3 col-4">
+                        <img class="image img-thumbnail img-responsive"
+                             data-alt="<?=$media->getName() ?>"
+                             data-url="<?=$this->getUrl().'/'.$media->getUrl() ?>"
+                             src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                             alt="<?=$media->getName() ?>">
+                        <div class="media-getending">Type: <?=$media->getEnding() ?></div>
+                        <div class="media-getname"><?=$media->getName() ?></div>
+                    </div>
                 <?php endif; ?>
             <?php endforeach; ?>
             </div>

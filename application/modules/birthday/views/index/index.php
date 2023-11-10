@@ -16,20 +16,20 @@ $date = new \Ilch\Date();
         <?php foreach ($this->get('birthdayListNOW') as $birthdaylist): ?>
             <div class="card-body row">
                 <div class="col-xl-12">
-                  <div class="row">
-                    <div class="col-xl-2 confetti">
-                        <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
-                            <img class="img-thumbnail center-block" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69">
-                        </a>
+                    <div class="row">
+                        <div class="col-xl-2 confetti">
+                            <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
+                                <img class="img-thumbnail center-block" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69">
+                            </a>
+                        </div>
+                        <div class="col-xl-10">
+                            <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><strong><?=$this->escape($birthdaylist->getName()) ?></strong></a><br />
+                            <?=$this->getTrans('will') ?> <?=floor(($date->format('Ymd') - str_replace("-", "", $this->escape($birthdaylist->getBirthday()))) / 10000) ?> <?=$this->getTrans('yearsOld') ?><br />
+                            <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($birthdaylist->getID())): ?>
+                                <a href="<?=$this->getUrl('user/panel/dialognew/id/' . $birthdaylist->getId()) ?>"><?=$this->getTrans('writeCongratulations') ?></a>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    <div class="col-xl-10">
-                        <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><strong><?=$this->escape($birthdaylist->getName()) ?></strong></a><br />
-                        <?=$this->getTrans('will') ?> <?=floor(($date->format('Ymd') - str_replace("-", "", $this->escape($birthdaylist->getBirthday()))) / 10000) ?> <?=$this->getTrans('yearsOld') ?><br />
-                        <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($birthdaylist->getID())): ?>
-                            <a href="<?=$this->getUrl('user/panel/dialognew/id/' . $birthdaylist->getId()) ?>"><?=$this->getTrans('writeCongratulations') ?></a>
-                        <?php endif; ?>
-                    </div>
-                  </div>
                 </div>
             </div>
         <?php endforeach; ?>
