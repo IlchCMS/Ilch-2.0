@@ -12,7 +12,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'bbcodeconvert',
-        'version' => '1.0.2',
+        'version' => '1.0.3',
         'icon_small' => 'fa-solid fa-arrow-right-arrow-left',
         'author' => 'ilch.de',
         'link' => 'https://www.ilch.de',

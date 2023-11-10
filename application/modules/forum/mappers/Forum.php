@@ -320,6 +320,10 @@ class Forum extends Mapper
      */
     public function getForumsByIdsUser(array $ids, User $user = null): ?array
     {
+        if (empty($ids)) {
+            return null;
+        }
+
         $groupIds = [3];
         foreach ($user ? $user->getGroups() : [] as $group) {
             $groupIds[] = $group->getId();
@@ -501,7 +505,7 @@ class Forum extends Mapper
      */
     public function getLastPostsByForumIds(array $forumId, int $userId = null): ?array
     {
-        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.user_id', 'p.date_created', 'p.forum_id'])
+        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.user_id', 'date_created' => 'MAX(p.date_created)', 'p.forum_id'])
             ->from(['p' => 'forum_posts'])
             ->join(['t' => 'forum_topics'], 't.id = p.topic_id', 'LEFT', ['t.topic_title']);
 
@@ -511,8 +515,8 @@ class Forum extends Mapper
         }
 
         $lastPostRows = $select->where(['p.forum_id' => $forumId])
-            ->order(['p.date_created' => 'DESC', 'p.id' => 'DESC'])
-            ->group(['p.forum_id'])
+            ->order(['date_created' => 'ASC'])
+            ->group(['p.forum_id', 'p.topic_id'])
             ->execute()
             ->fetchRows();
 
@@ -725,6 +729,10 @@ class Forum extends Mapper
      */
     public function getCountPostsByTopicIds(array $topicIds): ?array
     {
+        if (empty($topicIds)) {
+            return null;
+        }
+
         $countOfPostsRows = $this->db()->select(['count' => 'COUNT(id)', 'topic_id'])
             ->from('forum_posts')
             ->where(['topic_id' => $topicIds], 'or')
