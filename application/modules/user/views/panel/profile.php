@@ -226,7 +226,7 @@ if (!empty($profil->getBirthday())) {
 <?php endif; ?>
 <script>
 $(document).ready(function() {
-    new tempusDominus.TempusDominus(document.getElementById('startDate'), {
+    new tempusDominus.TempusDominus(document.getElementById('birthday'), {
         restrictions: {
           maxDate: new Date()
         },
@@ -246,15 +246,6 @@ $(document).ready(function() {
             format: "dd.MM.yyyy"
         }
     });
-    // $(".form_datetime").datetimepicker({
-        // defaultDate: new Date(),
-        // endDate: new Date(),
-        // format: "dd.mm.yyyy",
-        // autoclose: true,
-        // language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        // minView: 2,
-        // todayHighlight: true
-    // });
 
     $("[rel='tooltip']").tooltip();
 });
