@@ -69,7 +69,7 @@ $history = $this->get('history');
                    id="symbol"
                    name="symbol"
                    value="<?=$this->originalInput('symbol', $history->getType()) ?>"
-                   disabled />
+                   readonly />
             <span class="input-group-text">
                 <span class="fa-solid fa-mouse-pointer" data-bs-toggle="modal" data-bs-target="#symbolDialog"></span>
             </span>
