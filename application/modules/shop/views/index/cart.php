@@ -124,7 +124,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                             <input type="hidden" name="code" value="<?=$this->escape($itemCode); ?>" />
                             <input type="hidden" name="name" value="<?=$this->escape($itemName); ?>" />
                             <input type="hidden" name="action" value="remove" />
-                            <button type="submit" class="btn btn-sm btn-default fa-regular fa-trash-can remove"></button>
+                            <button type="submit" class="btn btn-sm btn-default remove"><i class="fa-regular fa-trash-can"></i></button>
                         </form>
                     </td>
                     <td data-label="<?=$this->getTrans('productName') ?>">
