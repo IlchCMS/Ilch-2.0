@@ -8,7 +8,7 @@
     <div class="row mb-3">
         <label for="groupId" class="control-label col-md-2"><?=$this->getTrans('group') ?></label>
         <div class="col-md-10">
-            <select class="form-control" id="groupId" name="groupId">
+            <select class="form-control form-select" id="groupId" name="groupId">
                 <option value="0"
                         <?=(empty((int)$this->get('activeGroupId'))) ? 'selected="selected"' : '' ?>>
                         <?=$this->getTrans('chooseAGroup') ?>
@@ -36,7 +36,7 @@
         $activeaccess = '';
         ?></label>
         <div class="col-md-10">
-            <select class="form-control" id="accessId" name="accessId">
+            <select class="form-control form-select" id="accessId" name="accessId">
                 <option value="0"
                         <?=(empty((int)$this->get('activeaccessId'))) ? 'selected="selected"' : '' ?>>
                         <?=$this->getTrans('choose') ?>

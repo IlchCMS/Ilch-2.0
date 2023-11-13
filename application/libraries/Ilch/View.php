@@ -60,7 +60,7 @@ class View extends Design\Base
                     </button>';
 
         if (!empty($deleteKey)) {
-            $html .= '<button type="submit" class="delete_button pull-right btn" name="delete" value="delete">
+            $html .= '<button type="submit" class="delete_button float-end btn" name="delete" value="delete">
                         '.$this->getTrans($deleteKey).'
                       </button>';
         }

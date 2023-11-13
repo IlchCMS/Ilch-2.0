@@ -22,7 +22,7 @@ $cats = $this->get('cats');
                             <?=$this->escape($cat->getName()) ?>
                         </a>
                     </span>
-                    <span class="badge">
+                    <span class="badge rounded-pill bg-secondary">
                         <?=$count ?>
                     </span>
                 </li>

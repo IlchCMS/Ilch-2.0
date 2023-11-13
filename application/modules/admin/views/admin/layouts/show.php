@@ -49,8 +49,8 @@ foreach ($layouts as $layout): ?>
             <?php endif; ?>
 
             <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                <li class="nav-item"><a class="nav-link active" href="#info" data-toggle="tab"><?=$this->getTrans('info') ?></a></li>
-                <li class="nav-item"><a class="nav-link"href="#changelog" data-toggle="tab"><?=$this->getTrans('changelog') ?></a></li>
+                <li class="nav-item"><a class="nav-link active" href="#info" data-bs-toggle="tab"><?=$this->getTrans('info') ?></a></li>
+                <li class="nav-item"><a class="nav-link"href="#changelog" data-bs-toggle="tab"><?=$this->getTrans('changelog') ?></a></li>
             </ul>
             <br />
 

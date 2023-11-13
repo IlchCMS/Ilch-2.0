@@ -120,3 +120,11 @@ img {
 .pagination > .active >.page-link {
     color: #ffffff;
 }
+
+/* .has-error*/
+.has-error label {
+    color:#ae2d3a !important;
+}
+.has-error input {
+    border-color:#ae2d3e !important;
+}

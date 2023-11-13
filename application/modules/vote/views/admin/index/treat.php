@@ -88,7 +88,7 @@ $vote = $this->get('vote');
                 <?php foreach ($voteRes as $voteResModel) : ?>
                     <?php $i++; ?>
                     <div class="row mb-3 input-group">
-                        <input type="text" name="reply[]" class="form-control col-xl-11 p-0" value="<?=$this->escape($voteResModel->getReply()) ?>">
+                        <input type="text" name="reply[]" class="form-control col-xl-11" value="<?=$this->escape($voteResModel->getReply()) ?>">
                         <span class="input-group-btn col-xl-1 p-0">
                             <?php if ($i == $countRes) : ?>
                                 <button type="button" class="btn btn-success btn-add">+</button>
@@ -102,7 +102,7 @@ $vote = $this->get('vote');
         <?php else : ?>
             <div class="col-xl-4">
                 <div class="row mb-3 input-group">
-                    <input type="text" name="reply[]" class="form-control col-xl-11 p-0">
+                    <input type="text" name="reply[]" class="form-control col-xl-11">
                     <span class="input-group-btn col-xl-1 p-0">
                         <button type="button" class="btn btn-success btn-add">+</button>
                     </span>
