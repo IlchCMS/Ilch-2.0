@@ -5,7 +5,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
 <link href="<?=$this->getModuleUrl('static/css/profile-fields.css') ?>" rel="stylesheet">
 <h1>
     <?=$this->getTrans('menuProfileFields') ?>
-    <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
+    <a class="badge rounded-pill bg-secondary text-white" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>

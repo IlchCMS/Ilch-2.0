@@ -1,5 +1,5 @@
 <form action="get">
-    <select class="form-control languageInput" name="language">
+    <select class="form-control languageInput form-select" name="language">
         <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
             <?php $sel = ''; ?>
             <?php if ($this->get('language') == $key): ?>

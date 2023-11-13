@@ -88,7 +88,7 @@
             <?=$this->getTrans('registDescription') ?>
         </p>
         <p>
-            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']) ?>" class="btn btn-default pull-left">
+            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']) ?>" class="btn btn-outline-secondary float-start">
                 <?=$this->getTrans('register') ?>
             </a>
         </p>

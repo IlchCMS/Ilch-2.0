@@ -25,7 +25,7 @@ function rec(\Modules\Rule\Models\Rule $item, \Ilch\View $obj)
         echo '<div class="card">
     <div class="card-header" id="paragraph' . $paragraph . '">
         <h3 class="mb-0" data-bs-toggle="collapse" data-bs-target="#paragraph0_'.$paragraph.'" aria-expanded="false" aria-controls="paragraph0_'.$paragraph.'">
-            <a href="#paragraph'.$paragraph.'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$paragraph.' : '.$obj->escape($item->getTitle()).'<span class="pull-right bi bi-'.($obj->get('showallonstart')?'dash':'plus').'"></span>
+            <a href="#paragraph'.$paragraph.'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$paragraph.' : '.$obj->escape($item->getTitle()).'<span class="float-end bi bi-'.($obj->get('showallonstart')?'dash':'plus').'"></span>
         </h3>
     </div>
     <div id="paragraph0_'.$paragraph.'" class="panel-collapse collapse" aria-labelledby="paragraph'.$paragraph.'" data-bs-parent="#accordion">

@@ -32,7 +32,7 @@
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showselectsdelete' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showselectsdelete')) {
         echo 'active';
     } ?>">
-                    <?=$this->getTrans('selectsdelete') ?> <span class="badge"><?=$this->get('badgeSelectsDelete') ?></span>
+                    <?=$this->getTrans('selectsdelete') ?> <span class="badge rounded-pill bg-secondary text-white"><?=$this->get('badgeSelectsDelete') ?></span>
                 </a>
             </li>
         <?php endif; ?>

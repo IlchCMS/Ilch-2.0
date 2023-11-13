@@ -196,7 +196,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPrice()) : $this->originalInput('price') ?>" />
             </div>
             <div class="col-xl-2">
-                <select class="form-control" id="currency" name="currency">
+                <select class="form-control form-select" id="currency" name="currency">
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
                     <?php foreach ($this->get('currencies') as $currency) {
                         if ($this->get('event') != '' && $this->get('event')->getCurrency() == $currency->getId()) {
@@ -211,7 +211,7 @@ $types = $this->get('types');
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
             <label for="userLimit" class="col-xl-2 control-label">
-                <?=$this->getTrans('userLimit') ?> <div class="badge" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
+                <?=$this->getTrans('userLimit') ?> <div class="badge rounded-pill bg-secondary" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
             </label>
             <div class="col-xl-2">
                 <input type="number"

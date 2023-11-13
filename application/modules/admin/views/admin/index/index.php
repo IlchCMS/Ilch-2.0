@@ -23,11 +23,11 @@ $version = $this->get('version');
         <h1>
             <?=$this->getTrans('system') ?>
             <?php if ($this->get('foundNewVersions')): ?>
-                <span class="label label-danger"><?=$this->getTrans('notUpToDate') ?></span>
+                <span class="badge bg-danger"><?=$this->getTrans('notUpToDate') ?></span>
             <?php elseif ($this->get('curlErrorOccured')): ?>
-                <span class="label label-warning"><?=$this->getTrans('versionQueryFailed') ?></span>
+                <span class="badge bg-warning text-dark"><?=$this->getTrans('versionQueryFailed') ?></span>
             <?php else: ?>
-                <span class="label label-success"><?=$this->getTrans('upToDate') ?></span>
+                <span class="badge bg-success"><?=$this->getTrans('upToDate') ?></span>
             <?php endif; ?>
         </h1>
         <div class="table-responsive">
