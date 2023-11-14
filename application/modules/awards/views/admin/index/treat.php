@@ -74,7 +74,7 @@ if ($awards != '') {
                 <optgroup label="<?=$this->getTrans('user') ?>">
                     <?php foreach ($this->get('users') as $user) {
                             $selected = '';
-                            if ($this->validation()->hasErrors() && in_array('1_'.$user->getId(), $this->originalInput('utId'))) {
+                            if ($this->validation()->hasErrors() && $this->originalInput('utId') && in_array('1_'.$user->getId(), $this->originalInput('utId'))) {
                                 $selected = 'selected="selected"';
                             } elseif (!$this->validation()->hasErrors() && $awards) {
                                 foreach($awards->getRecipients() as $recipient) {
