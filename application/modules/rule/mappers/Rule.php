@@ -173,13 +173,13 @@ class Rule extends \Ilch\Mapper
                 // New rule. Add at the end of it's category.
                 $lastPosition = $this->db()->select('position as lastPosition')
                     ->from($this->tablename)
-                    ->where(['parent_id' => $fields['parent_id']])
+                    ->where(['id' => $fields['parent_id']])
                     ->order(['position' => 'DESC'])
                     ->limit(1)
                     ->execute()
                     ->fetchAssoc();
 
-                $fields['position'] = $lastPosition['lastPosition'];
+                $fields['position'] = $lastPosition['lastPosition'] ?? 0;
             }
 
             $itemId = $this->db()->insert($this->tablename)
