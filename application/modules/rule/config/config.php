@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'rule',
-        'version' => '1.8.0',
+        'version' => '1.8.1',
         'icon_small' => 'fa-solid fa-gavel',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -159,6 +159,7 @@ class Config extends \Ilch\Config\Install
                     $this->db()->query("UPDATE `[prefix]_rules` SET `access_all` = '1' WHERE `id` = '" . $id . "';");
                 }
                 // no break
+            case "1.8.0":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
