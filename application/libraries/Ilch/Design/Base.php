@@ -169,7 +169,7 @@ abstract class Base
         $this->purifierConfig = \HTMLPurifier_Config::createDefault();
         $this->purifierConfig->set('Filter.YouTube', true);
         $this->purifierConfig->set('HTML.SafeIframe', true);
-        $this->purifierConfig->set('URI.AllowedSchemes', array('data' => true));
+        $this->purifierConfig->set('URI.AllowedSchemes', ['data' => true, 'src' => true, 'http' => true, 'https' => true]);
         $this->purifierConfig->set('URI.SafeIframeRegexp', '%^https://(www.youtube.com/embed/|www.youtube-nocookie.com/embed/|player.vimeo.com/video/|)%');
         $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
         $this->purifierConfig->set('Attr.EnableID', true);
