@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,63 +14,96 @@ class Link extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The position of the link.
      *
      * @var int
      */
-    protected $position;
+    protected $position = 0;
 
     /**
      * The name of the link.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * The link of the link.
      *
      * @var string
      */
-    protected $link;
+    protected $link = '';
 
     /**
      * The banner of the link.
      *
      * @var string
      */
-    protected $banner;
+    protected $banner = '';
+
+    /**
+     * The category of the link.
+     *
+     * @var int
+     */
+    protected $cat_id = 0;
 
     /**
      * The category of the link.
      *
      * @var string
      */
-    protected $cat_id;
+    protected $desc = '';
 
     /**
      * The category of the link.
      *
-     * @var string
+     * @var int
      */
-    protected $desc;
+    protected $hits = 0;
 
     /**
-     * The category of the link.
-     *
-     * @var string
+     * @param array $entries
+     * @return $this
      */
-    protected $hits;
+    public function setByArray(array $entries): Link
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['cat_id'])) {
+            $this->setCatId($entries['cat_id']);
+        }
+        if (isset($entries['pos'])) {
+            $this->setPosition($entries['pos']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (isset($entries['desc'])) {
+            $this->setDesc($entries['desc']);
+        }
+        if (isset($entries['banner'])) {
+            $this->setBanner($entries['banner']);
+        }
+        if (isset($entries['link'])) {
+            $this->setLink($entries['link']);
+        }
+        if (isset($entries['hits'])) {
+            $this->setHits($entries['hits']);
+        }
+        return $this;
+    }
 
     /**
      * Gets the id of the link.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -78,11 +112,11 @@ class Link extends \Ilch\Model
      * Sets the id of the link.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Link
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -92,7 +126,7 @@ class Link extends \Ilch\Model
      *
      * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -101,11 +135,11 @@ class Link extends \Ilch\Model
      * Sets the position.
      *
      * @param int $position
-     * @return this
+     * @return $this
      */
-    public function setPosition($position)
+    public function setPosition(int $position): Link
     {
-        $this->position = (int)$position;
+        $this->position = $position;
         return $this;
     }
 
@@ -114,7 +148,7 @@ class Link extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -123,11 +157,11 @@ class Link extends \Ilch\Model
      * Sets the name of the link.
      *
      * @param string $name
-     * @return this
+     * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Link
     {
-        $this->name = (string)$name;
+        $this->name = $name;
 
         return $this;
     }
@@ -137,7 +171,7 @@ class Link extends \Ilch\Model
      *
      * @return string
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -146,11 +180,11 @@ class Link extends \Ilch\Model
      * Sets the link of the link.
      *
      * @param string $link
-     * @return this
+     * @return $this
      */
-    public function setLink($link)
+    public function setLink(string $link): Link
     {
-        $this->link = (string)$link;
+        $this->link = $link;
 
         return $this;
     }
@@ -160,7 +194,7 @@ class Link extends \Ilch\Model
      *
      * @return string
      */
-    public function getBanner()
+    public function getBanner(): string
     {
         return $this->banner;
     }
@@ -169,11 +203,11 @@ class Link extends \Ilch\Model
      * Sets the banner of the link.
      *
      * @param string $banner
-     * @return this
+     * @return $this
      */
-    public function setBanner($banner)
+    public function setBanner(string $banner): Link
     {
-        $this->banner = (string)$banner;
+        $this->banner = $banner;
 
         return $this;
     }
@@ -181,9 +215,9 @@ class Link extends \Ilch\Model
     /**
      * Gets the category of the link.
      *
-     * @return string
+     * @return int
      */
-    public function getCatId()
+    public function getCatId(): int
     {
         return $this->cat_id;
     }
@@ -191,12 +225,12 @@ class Link extends \Ilch\Model
     /**
      * Sets the category of the link.
      *
-     * @param int $id
-     * @return this
+     * @param $cat
+     * @return $this
      */
-    public function setCatId($cat)
+    public function setCatId($cat): Link
     {
-        $this->cat_id = (int)$cat;
+        $this->cat_id = $cat;
 
         return $this;
     }
@@ -206,7 +240,7 @@ class Link extends \Ilch\Model
      *
      * @return string
      */
-    public function getDesc()
+    public function getDesc(): string
     {
         return $this->desc;
     }
@@ -215,11 +249,11 @@ class Link extends \Ilch\Model
      * Sets the description of the link.
      *
      * @param string $desc
-     * @return this
+     * @return $this
      */
-    public function setDesc($desc)
+    public function setDesc(string $desc): Link
     {
-        $this->desc = (string)$desc;
+        $this->desc = $desc;
 
         return $this;
     }
@@ -227,9 +261,9 @@ class Link extends \Ilch\Model
     /**
      * Gets the hits of the link.
      *
-     * @return string
+     * @return int
      */
-    public function getHits()
+    public function getHits(): int
     {
         return $this->hits;
     }
@@ -238,12 +272,47 @@ class Link extends \Ilch\Model
      * Sets the hits of the link.
      *
      * @param string $hits
-     * @return this
+     * @return $this
      */
-    public function setHits($hits)
+    public function setHits(string $hits): Link
     {
-        $this->hits = (string)$hits;
+        $this->hits = $hits;
 
         return $this;
+    }
+
+    /**
+     * Sets the hits of the link.
+     *
+     * @param int $hit
+     * @return $this
+     */
+    public function addHits(int $hit = 1): Link
+    {
+        $this->hits = $this->hits + $hit;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'name'      => $this->getName(),
+                'link'      => $this->getLink(),
+                'banner'    => $this->getBanner(),
+                'desc'      => $this->getDesc(),
+                'cat_id'    => $this->getCatId(),
+                'pos'       => $this->getPosition(),
+                'hits'      => $this->getHits()
+            ]
+        );
     }
 }
