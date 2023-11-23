@@ -3,6 +3,9 @@
 /** @var \Ilch\View $this */
 
 /** @var array $topics */
+
+use Ilch\Date;
+
 $topics = $this->get('topics');
 $DESCPostorder = $this->get('DESCPostorder');
 $postsPerPage = $this->get('postsPerPage');
@@ -71,7 +74,8 @@ $postsPerPage = $this->get('postsPerPage');
                                     <?=$this->escape($topic['topic']->getAuthor()->getName()) ?>
                                 </a>
                                 »
-                                <?=$topic['topic']->getDateCreated() ?>
+                                <?php $date = new Date($topic['topic']->getDateCreated()); ?>
+                                <?=$date->format('d.m.y - H:i', true) ?>
                             </div>
                         </dt>
                         <dd class="posts small">
@@ -101,7 +105,8 @@ $postsPerPage = $this->get('postsPerPage');
                                     <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
                                 </a>
                                 <br>
-                                <?=$topic['lastPost']->getDateCreated() ?>
+                                <?php $date = new Date($topic['lastPost']->getDateCreated()); ?>
+                                <?=$date->format('d.m.y - H:i', true) ?>
                             </div>
                         </dd>
                     </dl>

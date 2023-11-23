@@ -2,6 +2,7 @@
 
 /** @var \Ilch\View $this */
 
+use Ilch\Date;
 use Modules\Forum\Mappers\Forum;
 
 /** @var \Modules\Forum\Models\ForumItem[]|null $forumItems */
@@ -29,7 +30,7 @@ function rec($item, \Ilch\View $obj)
             <li class="header">
                 <dl class="title ilch-head">
                     <dt>
-                        <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>">
+                        <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $item->getId()]) ?>">
                             <?=$obj->escape($item->getTitle()) ?>
                         </a>
                     </dt>
@@ -59,7 +60,7 @@ function rec($item, \Ilch\View $obj)
                         <?php endif; ?>
                     ">
                         <dt>
-                            <a href="<?=$obj->getUrl(['controller' => 'showtopics', 'action' => 'index','forumid' => $item->getId()]) ?>">
+                            <a href="<?=$obj->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $item->getId()]) ?>">
                                 <?=$item->getTitle() ?>
                             </a>
                             <br>
@@ -88,7 +89,7 @@ function rec($item, \Ilch\View $obj)
                                     </a>
                                 </div>
                                 <div class="pull-left">
-                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId()]) ?>">
+                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId()]) ?>">
                                         <?=$obj->escape($lastPost->getTopicTitle()) ?>
                                     </a>
                                     <br>
@@ -96,11 +97,12 @@ function rec($item, \Ilch\View $obj)
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
                                         <?=$obj->escape($lastPost->getAutor()->getName()) ?>
                                     </a>
-                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => ($DESCPostorder ? 1 : ceil($countPosts / $postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
+                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId(), 'page' => ($DESCPostorder ? 1 : ceil($countPosts / $postsPerPage))]) ?>#<?=$lastPost->getId() ?>">
                                         <img src="<?=$obj->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$obj->getTrans('viewLastPost') ?>" title="<?=$obj->getTrans('viewLastPost') ?>" height="10" width="12">
                                     </a>
                                     <br>
-                                    <?=$lastPost->getDateCreated() ?>
+                                    <?php $date = new Date($lastPost->getDateCreated()); ?>
+                                    <?=$date->format('d.m.y - H:i', true) ?>
                                 </div>
                             <?php endif; ?>
                         </dd>
@@ -167,7 +169,7 @@ function rec($item, \Ilch\View $obj)
     <?php endif; ?>
     <div class="topic-actions">
     <?php if ($this->getUser()) : ?>
-        <div class="pull-right">
+        <div class="pull-right foren-actions">
             <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'markallasread', 'id' => $this->getRequest()->getParam('id')], null, true) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
         </div>
     <?php endif; ?>

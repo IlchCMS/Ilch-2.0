@@ -2,6 +2,8 @@
 
 /** @var \Ilch\View $this */
 
+use Ilch\Date;
+
 $reasonTransKeys = [
     '1' => 'illegalContent',
     '2' => 'spam',
@@ -18,7 +20,8 @@ $report = $this->get('report');
             <?=$this->getTrans('date') ?>:
         </label>
         <div class="col-lg-10">
-            <p><?=$report->getDate() ?></p>
+            <?php $date = new Date($report->getDate()); ?>
+            <p><?=$date->format('d.m.y - H:i', true) ?></p>
         </div>
     </div>
     <div class="form-group">

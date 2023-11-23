@@ -2,6 +2,7 @@
 
 /** @var \Ilch\View $this */
 
+use Ilch\Date;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 
 /** @var \Modules\Forum\Models\ForumItem[]|null $forumItems */
@@ -45,7 +46,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
             <li class="header">
                 <dl class="title ilch-head">
                     <dt>
-                        <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>">
+                        <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $item->getId()]) ?>">
                             <?=$obj->escape($item->getTitle()) ?>
                         </a>
                     </dt>
@@ -75,7 +76,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                         <?php endif; ?>
                     ">
                         <dt>
-                            <a href="<?=$obj->getUrl(['controller' => 'showtopics', 'action' => 'index','forumid' => $item->getId()]) ?>">
+                            <a href="<?=$obj->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $item->getId()]) ?>">
                                 <?=$item->getTitle() ?>
                             </a>
                             <br>
@@ -107,7 +108,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                                     </a>
                                 </div>
                                 <div class="pull-left">
-                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId()]) ?>">
+                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId()]) ?>">
                                         <?=$obj->escape($lastPost->getTopicTitle()) ?>
                                     </a>
                                     <br>
@@ -119,7 +120,8 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
                                         <img src="<?=$obj->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$obj->getTrans('viewLastPost') ?>" title="<?=$obj->getTrans('viewLastPost') ?>" height="10" width="12">
                                     </a>
                                     <br>
-                                    <?=$lastPost->getDateCreated() ?>
+                                    <?php $date = new Date($lastPost->getDateCreated()); ?>
+                                    <?=$date->format('d.m.y - H:i', true) ?>
                                 </div>
                             <?php endif; ?>
                         </dd>
