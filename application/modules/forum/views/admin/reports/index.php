@@ -2,6 +2,8 @@
 
 /** @var \Ilch\View $this */
 
+use Ilch\Date;
+
 $reasonTransKeys = [
     '1' => 'illegalContent',
     '2' => 'spam',
@@ -39,10 +41,11 @@ $reasonTransKeys = [
                     <?php
                     /** @var \Modules\Forum\Models\Report $report */
                     foreach ($this->get('reports') as $report) : ?>
+                        <?php $date = new Date($report->getDate()); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_forumReports', $report->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $report->getId()]) ?></td>
-                            <td><?=$this->escape($report->getDate()) ?></td>
+                            <td><?=$date->format('d.m.y - H:i', true) ?></td>
                             <td><?=$this->getTrans($reasonTransKeys[$report->getReason()]) ?></td>
                             <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'reports', 'action' => 'show', 'id' => $report->getId()], 'admin') ?>"><?=$this->getTrans('showDetails') ?></a></td>
                             <?php if ($report->getTopicId()) : ?>

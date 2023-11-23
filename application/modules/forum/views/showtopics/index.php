@@ -3,6 +3,9 @@
 /** @var \Ilch\View $this */
 
 /** @var \Modules\Forum\Models\ForumItem $forum */
+
+use Ilch\Date;
+
 $forum = $this->get('forum');
 /** @var \Modules\Forum\Models\ForumItem $cat */
 $cat = $this->get('cat');
@@ -32,7 +35,7 @@ $postsPerPage = $this->get('postsPerPage');
         </h1>
         <div class="topic-actions">
             <?php if ($this->getUser()) : ?>
-                <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary">
+                <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index', 'id' => $forum->getId()]) ?>" class="btn btn-primary">
                     <span class="btn-label">
                         <i class="fa-solid fa-plus"></i>
                     </span><?=$this->getTrans('createNewTopic') ?>
@@ -99,7 +102,7 @@ $postsPerPage = $this->get('postsPerPage');
                                         }
                                     }
                                     ?>
-                                    <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="topictitle">
+                                    <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topic->getId()]) ?>" class="topictitle">
                                         <?=$this->escape($topic->getTopicTitle()) ?>
                                     </a>
                                     <?php if ($topic->getType() == '1') : ?>
@@ -112,7 +115,8 @@ $postsPerPage = $this->get('postsPerPage');
                                             <?=$this->escape($topic->getAuthor()->getName()) ?>
                                         </a>
                                         »
-                                        <?=$topic->getDateCreated() ?>
+                                        <?php $date = new Date($topic->getDateCreated()); ?>
+                                        <?=$date->format('d.m.y - H:i', true) ?>
                                     </div>
                                 </dt>
                                 <dd class="posts small">
@@ -142,7 +146,8 @@ $postsPerPage = $this->get('postsPerPage');
                                             <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
                                         </a>
                                         <br>
-                                        <?=$lastPost->getDateCreated() ?>
+                                        <?php $date = new Date($lastPost->getDateCreated()); ?>
+                                        <?=$date->format('d.m.y - H:i', true) ?>
                                     </div>
                                 </dd>
                                 <?php if ($forumEdit) : ?>
