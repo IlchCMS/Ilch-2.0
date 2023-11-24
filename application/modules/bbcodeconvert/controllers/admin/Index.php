@@ -17,15 +17,15 @@ use Modules\Admin\Mappers\LayoutAdvSettings;
 class Index extends Admin
 {
     private const supportedModules = [
-        'contact' => ['2.1.52', '2.1.53', '2.1.54'],
+        'contact' => ['2.1.52', '2.1.53', '2.1.54', '2.1.55'],
         'events' => ['1.22.0', '1.22.1'],
         'forum' => ['1.33.0', '1.34.0', '1.34.1', '1.34.2', '1.34.3', '1.34.4'],
         'guestbook' => ['1.13.0', '1.13.1'],
         'jobs' => ['1.6.0'],
         'kvticket' => ['1.5.0'],
         'radiohoerercharts' => ['1.8.0', '1.8.1', '1.8.2'],
-        'teams' => ['1.23.0'],
-        'user' => ['2.1.52', '2.1.53', '2.1.54']
+        'teams' => ['1.23.0', '1.23.1'],
+        'user' => ['2.1.52', '2.1.53', '2.1.54', '2.1.55']
     ];
 
     private const supportedLayouts = [
