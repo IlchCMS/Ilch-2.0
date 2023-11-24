@@ -1,3 +1,13 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Link\Models\Category[]|null $categorys */
+$categorys = $this->get('categorys');
+
+/** @var \Modules\Link\Models\Link[]|null $links */
+$links = $this->get('links');
+?>
 <h1>
     <?=$this->getTrans('manage') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
@@ -6,7 +16,7 @@
 </h1>
 <form class="form-horizontal" id="downloadsForm" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <?php if ($this->get('categorys') != ''): ?>
+    <?php if ($categorys) : ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -27,14 +37,12 @@
                 </thead>
                 <tbody id="sortableCat">
                     <?php
-                    foreach ($this->get('categorys') as $category):
+                    foreach ($categorys as $category) :
                         $getDesc = $this->escape($category->getDesc());
                         if ($getDesc != '') {
-                            $getDesc = '&raquo; '.$this->escape($category->getDesc());
-                        } else {
-                            $getDesc = '';
+                            $getDesc = '&raquo; ' . $getDesc;
                         }
-                    ?>
+                        ?>
                         <tr id="<?=$category->getId() ?>">
                             <td><?=$this->getDeleteCheckbox('check_cats', $category->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treatCat', 'id' => $category->getId()]) ?></td>
@@ -50,7 +58,7 @@
         <br />
     <?php endif; ?>
 
-    <?php if (!empty($this->get('links'))): ?>
+    <?php if ($links) : ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -69,23 +77,23 @@
                 </thead>
                 <tbody id="sortable">
                     <?php
-                    foreach ($this->get('links') as $link):
+                    foreach ($links as $link) :
                         $banner = $this->escape($link->getBanner());
                         $desc = $this->escape($link->getDesc());
                         if (!empty($desc)) {
-                            $desc = '&raquo; '.$this->escape($link->getDesc());
+                            $desc = '&raquo; ' . $this->escape($link->getDesc());
                         } else {
                             $desc = '';
                         }
 
                         if (strncmp($banner, 'application', 11) === 0) {
-                            $banner = '<img src="'.$this->getBaseUrl($banner).'">';
+                            $banner = '<img src="' . $this->getBaseUrl($banner) . '">';
                         } elseif (!empty($banner)) {
-                            $banner = '<img src="'.$this->escape($banner).'">';
+                            $banner = '<img src="' . $this->escape($banner) . '">';
                         } else {
                             $banner = $link->getName();
                         }
-                    ?>
+                        ?>
                         <tr id="<?=$link->getId() ?>">
                             <td><?=$this->getDeleteCheckbox('check_links', $link->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treatLink', 'id' => $link->getId()]) ?></td>
@@ -97,7 +105,7 @@
             </table>
             <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <?=$this->getTrans('noLinks') ?>
     <?php endif; ?>
 
