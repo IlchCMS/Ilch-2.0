@@ -58,7 +58,7 @@ class Dialog extends \Ilch\Mapper
             }
             $readLastOneDialog = $this->getReadLastOneDialog($dialog['c_id']);
             $dialogModel->setRead($readLastOneDialog && $readLastOneDialog->getRead());
-            if (file_exists($dialog['avatar'])) {
+            if (!empty($dialog['avatar']) && file_exists($dialog['avatar'])) {
                 $dialogModel->setAvatar($dialog['avatar']);
             } else {
                 $dialogModel->setAvatar('static/img/noavatar.jpg');
@@ -105,7 +105,11 @@ class Dialog extends \Ilch\Mapper
 
         $dialogModel = new DialogModel();
         $dialogModel->setId($dialogRow['id']);
-        $dialogModel->setName($dialogRow['name']);
+        if (!empty($dialogRow['name'])) {
+            $dialogModel->setName($dialogRow['name']);
+        } else {
+            $dialogModel->setName('No longer exists');
+        }
         if (file_exists($dialogRow['avatar'])) {
             $dialogModel->setAvatar($dialogRow['avatar']);
         } else {

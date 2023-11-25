@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -26,13 +27,19 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'menuActionNewLink',
                     'active' => false,
                     'icon' => 'fa-solid fa-circle-plus',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treatLink', 'catId' => $this->getRequest()->getParam('cat_id')])
+                    'url' => $this->getLayout()->getUrl(array_merge(
+                        ['controller' => 'index', 'action' => 'treatLink'],
+                        $this->getRequest()->getParam('cat_id') ? [ 'catId' => $this->getRequest()->getParam('cat_id')] : []
+                    ))
                 ],
                 [
                     'name' => 'menuActionNewCategory',
                     'active' => false,
                     'icon' => 'fa-solid fa-circle-plus',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('cat_id')])
+                    'url' => $this->getLayout()->getUrl(array_merge(
+                        ['controller' => 'index', 'action' => 'treatCat'],
+                        $this->getRequest()->getParam('cat_id') ? ['parentId' => $this->getRequest()->getParam('cat_id')] : [],
+                    ))
                 ]
             ]
         ];
@@ -57,74 +64,96 @@ class Index extends \Ilch\Controller\Admin
         $categoryMapper = new CategoryMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
-
-        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_cats')) {
-            foreach ($this->getRequest()->getPost('check_cats') as $catId) {
-                $categoryMapper->delete($catId);
-            }
-        }
-
-        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_links')) {
-            foreach ($this->getRequest()->getPost('check_links') as $linkId) {
-                $linkMapper->delete($linkId);
-            }
-        }
+                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
 
         if ($this->getRequest()->getParam('cat_id')) {
-            $links = $linkMapper->getLinks(['cat_id' => $this->getRequest()->getParam('cat_id')]);
-            $categorys = $categoryMapper->getCategories(['parent_id' => $this->getRequest()->getParam('cat_id')]);
+            $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('cat_id'));
+
+            if (!$category) {
+                $this->redirect()
+                    ->withMessage('categoryNotFound', 'warning')
+                    ->to(['action' => 'index']);
+            }
+
+            $parentCategories = $categoryMapper->getCategoriesForParent($category->getParentId());
+
+            foreach ($parentCategories ?? [] as $parent) {
+                $this->getLayout()->getAdminHmenu()
+                    ->add($parent->getName(), ['action' => 'index', 'cat_id' => $parent->getId()]);
+            }
+
+            $this->getLayout()->getAdminHmenu()
+                ->add($category->getName(), ['action' => 'index', 'cat_id' => $category->getId()]);
+
+            $links = $linkMapper->getLinksByCatId($this->getRequest()->getParam('cat_id'));
+            $categorys = $categoryMapper->getCategorysByParentId($this->getRequest()->getParam('cat_id'));
         } else {
-            $links = $linkMapper->getLinks(['cat_id' => 0]);
-            $categorys = $categoryMapper->getCategories(['parent_id' => 0]);
+            $links = $linkMapper->getLinksByCatId(0);
+            $categorys = $categoryMapper->getCategorysByParentId(0);
         }
 
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
+
         if ($this->getRequest()->isPost()) {
-            $postData = $this->getRequest()->getPost();
-
-            if (isset($postData['hiddenMenu'])) {
-                $positions = explode(',', $postData['hiddenMenu']);
-
-                foreach ($positions as $x => $xValue) {
-                    $linkMapper->updatePositionById($xValue, $x);
+            if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_cats')) {
+                foreach ($this->getRequest()->getPost('check_cats') as $catId) {
+                    $categoryMapper->delete($catId);
                 }
-            }
-            if (isset($postData['hiddenMenuCat'])) {
-                $positionsCat = explode(',', $postData['hiddenMenuCat']);
-
-                foreach ($positionsCat as $x => $xValue) {
-                    $categoryMapper->updatePositionById($xValue, $x);
+                $this->addMessage('deleteSuccess');
+            } elseif ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_links')) {
+                foreach ($this->getRequest()->getPost('check_links') as $linkId) {
+                    $linkMapper->delete($linkId);
                 }
+                $this->addMessage('deleteSuccess');
+            } else {
+                if ($this->getRequest()->getPost('hiddenMenu')) {
+                    $positions = explode(',', $this->getRequest()->getPost('hiddenMenu'));
+
+                    foreach ($positions as $x => $xValue) {
+                        $linkMapper->updatePositionById($xValue, $x);
+                    }
+                }
+                if ($this->getRequest()->getPost('hiddenMenuCat')) {
+                    $positionsCat = explode(',', $this->getRequest()->getPost('hiddenMenuCat'));
+
+                    foreach ($positionsCat as $x => $xValue) {
+                        $categoryMapper->updatePositionById($xValue, $x);
+                    }
+                }
+                $this->addMessage('saveSuccess');
             }
-            
-            $this->addMessage('saveSuccess');
             $this->redirect(['action' => 'index']);
         }
 
         $this->getView()->set('links', $links);
         $this->getView()->set('categorys', $categorys);
     }
-    
+
     public function redirectAction()
     {
         $linkMapper = new LinkMapper();
-        $linkModel = $linkMapper->getLinkById($this->getRequest()->getParam('link_id'));
-        $linkModel->setHits($linkModel->getHits() + 1);
-        $linkMapper->save($linkModel);
-        header('location: ' .$linkModel->getLink());
-        exit;
+
+        $linkModel = $linkMapper->getLinkById($this->getRequest()->getParam('link_id', 0));
+        if ($linkModel) {
+            $linkModel->addHits();
+            $linkMapper->save($linkModel);
+
+            header('location: ' . $linkModel->getLink());
+            exit;
+        }
+        $this->redirect(['action' => 'index']);
     }
 
     public function deleteCatAction()
     {
         $linkMapper = new LinkMapper();
-        $countLinks = count($linkMapper->getLinks(['cat_id' => $this->getRequest()->getParam('id')]));
+        $countLinks = count($linkMapper->getLinksByCatId($this->getRequest()->getParam('id', -1)) ?? []);
 
         if ($countLinks == 0) {
             if ($this->getRequest()->isSecure()) {
                 $categorykMapper = new CategoryMapper();
-                $categorykMapper->delete($this->getRequest()->getParam('id'));
+                $categorykMapper->delete($this->getRequest()->getParam('id', 0));
                 $this->addMessage('deleteSuccess');
             }
         } else {
@@ -138,7 +167,7 @@ class Index extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             $linkMapper = new LinkMapper();
-            $linkMapper->delete($this->getRequest()->getParam('id'));
+            $linkMapper->delete($this->getRequest()->getParam('id', 0));
             $this->addMessage('deleteSuccess');
         }
 
@@ -150,40 +179,36 @@ class Index extends \Ilch\Controller\Admin
         $categoryMapper = new CategoryMapper();
         $linkMapper = new LinkMapper();
 
+        $model = new LinkModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-    
-            $this->getView()->set('link', $linkMapper->getLinkById($this->getRequest()->getParam('id')));
+
+            $model = $linkMapper->getLinkById($this->getRequest()->getParam('id'));
+
+            if (!$model) {
+                $this->redirect(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
-
-        $post = [
-            'name' => '',
-            'link' => '',
-            'banner' => '',
-            'desc' => '',
-            'catId' => '',
-        ];
+        $this->getView()->set('link', $model);
 
         if ($this->getRequest()->isPost()) {
-            $model = new LinkModel();
-
             // Add BASE_URL if banner starts with application to get a complete URL for validation
-            $banner = trim($this->getRequest()->getPost('banner'));
+            $banner = $this->getRequest()->getPost('banner');
             if (!empty($banner) && strncmp($banner, 'application', 11) === 0) {
-                $banner = BASE_URL.'/'.urlencode($banner);
+                $banner = $this->getView()->getBaseUrl($banner);
             }
 
             $post = [
-                'name' => trim($this->getRequest()->getPost('name')),
-                'link' => trim($this->getRequest()->getPost('link')),
+                'name' => $this->getRequest()->getPost('name'),
+                'link' => $this->getRequest()->getPost('link'),
                 'banner' => $banner,
-                'desc' => trim($this->getRequest()->getPost('desc')),
+                'desc' => $this->getRequest()->getPost('desc'),
                 'catId' => $this->getRequest()->getPost('catId'),
             ];
 
@@ -191,34 +216,33 @@ class Index extends \Ilch\Controller\Admin
                 'catId' => 'category',
             ]);
 
-            $validation = Validation::create($post, [
+            $validation = Validation::create($post, array_merge([
                 'name' => 'required',
                 'link' => 'required|url',
                 'banner' => 'url',
-                'catId' => 'numeric|integer|min:0',
-            ]);
+            ], $this->getRequest()->getPost('catId') ? ['catId' => 'numeric|integer|min:0|exists:' . $categoryMapper->tablename . ',id'] : ['catId' => 'numeric|integer|min:0']));
 
-            $post['banner'] = trim($this->getRequest()->getPost('banner'));
+            $post['banner'] = $this->getRequest()->getPost('banner');
 
             if ($validation->isValid()) {
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-                $model->setName($post['name']);
-                $model->setLink($post['link']);
-                $model->setBanner($post['banner']);
-                $model->setDesc($post['desc']);
-                $model->setCatId($post['catId']);
+                $model->setName($post['name'])
+                    ->setLink($post['link'])
+                    ->setBanner($post['banner'])
+                    ->setDesc($post['desc'])
+                    ->setCatId($post['catId']);
                 $linkMapper->save($model);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(array_merge(['action' => 'treatLink'], ($model->getId() ? ['id' => $model->getId()] : [])));
             }
         }
 
-        $this->getView()->set('post', $post);
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 
@@ -226,56 +250,46 @@ class Index extends \Ilch\Controller\Admin
     {
         $categorykMapper = new CategoryMapper();
 
+        $model = new CategoryModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-    
-            $this->getView()->set('category', $categorykMapper->getCategoryById($this->getRequest()->getParam('id')));
+
+            $model = $categorykMapper->getCategoryById($this->getRequest()->getParam('id'));
+
+            if (!$model) {
+                $this->redirect(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
-
-        $post = [
-            'name' => '',
-            'desc' => ''
-        ];
+        $this->getView()->set('category', $model);
 
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'name' => trim($this->getRequest()->getPost('name')),
-                'desc' => trim($this->getRequest()->getPost('desc'))
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required'
             ]);
 
             if ($validation->isValid()) {
-                $model = new CategoryModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-                if (!empty($this->getRequest()->getParam('parentId'))) {
+                if ($this->getRequest()->getParam('parentId')) {
                     $model->setParentID($this->getRequest()->getParam('parentId'));
                 }
-                $model->setName($post['name']);
-                $model->setDesc($post['desc']);
+                $model->setName($this->getRequest()->getPost('name'))
+                    ->setDesc($this->getRequest()->getPost('desc'));
                 $categorykMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-                if ($this->getRequest()->getParam('parentId')) {
-                    $this->redirect(['action' => 'index', 'cat_id' => $this->getRequest()->getParam('parentId')]);
-                } else {
-                    $this->redirect(['action' => 'index']);
-                }
+                $this->redirect(array_merge(['action' => 'index'], ($model->getParentId() ? ['cat_id' => $model->getParentId()] : [])));
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(array_merge(['action' => 'treatCat'], ($model->getId() ? ['id' => $model->getId()] : [])));
             }
         }
-
-        $this->getView()->set('post', $post);
     }
 }

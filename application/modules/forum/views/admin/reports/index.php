@@ -1,4 +1,9 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+use Ilch\Date;
+
 $reasonTransKeys = [
     '1' => 'illegalContent',
     '2' => 'spam',
@@ -7,7 +12,7 @@ $reasonTransKeys = [
 ]
 ?>
 <h1><?=$this->getTrans('reports') ?></h1>
-<?php if (!empty($this->get('reports'))): ?>
+<?php if (!empty($this->get('reports'))) : ?>
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -33,15 +38,18 @@ $reasonTransKeys = [
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('reports') as $report): ?>
+                    <?php
+                    /** @var \Modules\Forum\Models\Report $report */
+                    foreach ($this->get('reports') as $report) : ?>
+                        <?php $date = new Date($report->getDate()); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_forumReports', $report->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $report->getId()]) ?></td>
-                            <td><?=$this->escape($report->getDate()) ?></td>
+                            <td><?=$date->format('d.m.y - H:i', true) ?></td>
                             <td><?=$this->getTrans($reasonTransKeys[$report->getReason()]) ?></td>
                             <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'reports', 'action' => 'show', 'id' => $report->getId()], 'admin') ?>"><?=$this->getTrans('showDetails') ?></a></td>
                             <?php if ($report->getTopicId()) : ?>
-                            <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $report->getTopicId().'#'.$report->getPostId()], '') ?>" target="_blank"><?=$this->getTrans('showPost') ?></a></td>
+                            <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $report->getTopicId() . '#' . $report->getPostId()], '') ?>" target="_blank"><?=$this->getTrans('showPost') ?></a></td>
                             <?php else : ?>
                             <td><?=$this->getTrans('reportPostNotExisting') ?></td>
                             <?php endif; ?>
@@ -53,7 +61,7 @@ $reasonTransKeys = [
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <tr>
         <td colspan="5"><?=$this->getTrans('noReports') ?></td>
     </tr>

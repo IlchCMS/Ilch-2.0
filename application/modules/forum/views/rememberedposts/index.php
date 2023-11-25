@@ -1,10 +1,17 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Forum\Models\ForumPost[]|null $rememberedPosts */
+
+use Ilch\Date;
+
 $rememberedPosts = $this->get('rememberedPosts');
 ?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('rememberedPosts') ?></h1>
-<?php if (!empty($rememberedPosts)): ?>
+<?php if (!empty($rememberedPosts)) : ?>
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div id="rememberedPosts" class="table-responsive">
@@ -28,14 +35,15 @@ $rememberedPosts = $this->get('rememberedPosts');
                 </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($rememberedPosts as $post): ?>
+                    <?php foreach ($rememberedPosts as $post) : ?>
+                        <?php $date = new Date($post->getDate()); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_rememberedPosts', $post->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $post->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $post->getId()]) ?></td>
-                            <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $post->getTopicId().'#'.$post->getPostId()], '') ?>" target="_blank"><?=$this->escape($post->getTopicTitle()) ?></a></td>
+                            <td><a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $post->getTopicId() . '#' . $post->getPostId()], '') ?>" target="_blank"><?=$this->escape($post->getTopicTitle()) ?></a></td>
                             <td><?=$this->escape($post->getNote()) ?></td>
-                            <td><?=$post->getDate() ?></td>
+                            <td><?=$date->format('d.m.y - H:i', true) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -43,7 +51,7 @@ $rememberedPosts = $this->get('rememberedPosts');
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <p><?=$this->getTrans('noRememberedPosts') ?></p>
 <?php endif; ?>
 

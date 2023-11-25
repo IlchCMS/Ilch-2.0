@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('ranks') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
@@ -20,8 +24,10 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($this->get('ranks'))): ?>
-                    <?php foreach ($this->get('ranks') as $rank): ?>
+                <?php if (!empty($this->get('ranks'))) : ?>
+                    <?php
+                    /** @var \Modules\Forum\Models\Rank $rank */
+                    foreach ($this->get('ranks') as $rank) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_forumRanks', $rank->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $rank->getId()]) ?></td>
@@ -30,7 +36,7 @@
                             <td><?=$rank->getPosts() ?></td>
                         </tr>
                     <?php endforeach; ?>
-                <?php else: ?>
+                <?php else : ?>
                     <tr>
                         <td colspan="5"><?=$this->getTrans('noRanks') ?></td>
                     </tr>

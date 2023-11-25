@@ -20,7 +20,7 @@ return [
     'ilchInstallVersion' => 'CMS %s',
     'welcomeToInstall' => 'Willkommen zur Ilch CMS %s Installation',
     'chooseLanguage' => 'Sprache',
-    'licenseMissing' => 'Es wurde keine Lizenz gefunden<br /><small>Bitte lade die license.html mit hoch</small>',
+    'licenseMissing' => 'Es wurde keine Lizenz gefunden.<br /><small>Bitte laden Sie die Datei LICENSE mit hoch.</small>',
     'acceptLicense' => 'Nutzungslizenz gelesen und akzeptiert',
     'required' => 'Erforderlich',
     'available' => 'Vorhanden',

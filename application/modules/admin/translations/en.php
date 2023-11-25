@@ -152,6 +152,7 @@ return [
     'dropTable' => 'Add DROP TABLE statements',
     'noBackups' => 'No backups available',
     'backupNotFound' => 'The backup was not found or could not be opened.',
+    'backupFilesize' => 'Filesize',
     'menuCustomCSS' => 'Custom CSS',
     'menuHtaccess' => 'htaccess',
     'modrewriteLinesAdded' => 'Added lines for mod rewrite.',

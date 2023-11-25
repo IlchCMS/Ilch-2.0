@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.23.0',
+        'version' => '1.23.1',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -243,6 +243,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-users' WHERE `key` = 'teams';");
                 // no break
             case "1.22.0":
+                // no break
+            case "1.23.0":
                 // no break
         }
         return 'Update function executed.';

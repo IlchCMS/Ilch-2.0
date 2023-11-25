@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -12,8 +13,6 @@ use Ilch\Mail;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
-use Modules\Forum\Mappers\TrackRead as TrackReadMapper;
-use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
@@ -75,17 +74,9 @@ class Newpost extends Frontend
             // If that is not the case then don't even bother checking the rights
             // as the URL is invalid anyway.
             if ($post->getForumId() == $forum->getId()) {
-                $userMapper = new UserMapper();
-
-                $userId = null;
-                if ($this->getUser()) {
-                    $userId = $this->getUser()->getId();
-                }
-                $user = $userMapper->getUserById($userId);
-
                 $readAccess = [3];
-                if ($user) {
-                    foreach ($user->getGroups() as $us) {
+                if ($this->getUser()) {
+                    foreach ($this->getUser()->getGroups() as $us) {
                         $readAccess[] = $us->getId();
                     }
                 }
@@ -114,7 +105,7 @@ class Newpost extends Frontend
                 $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser()->getGroups()), explode(',', $this->getConfig()->get('forum_excludeFloodProtection')));
             }
 
-            if ($this->getUser() && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$this->getConfig()->get('forum_floodInterval')))) {
+            if ($this->getUser() && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time() - $this->getConfig()->get('forum_floodInterval')))) {
                 $this->addMessage('floodError', 'danger');
                 $this->redirect()
                     ->withInput()
@@ -135,10 +126,7 @@ class Newpost extends Frontend
                         ->setDateCreated($dateTime);
                     $postMapper->save($postModel);
 
-                    // Mark topic as read.
-                    $trackReadMapper = new TrackReadMapper();
-                    $trackReadMapper->markTopicAsRead($this->getUser()->getId(), $topicId, $forum->getId());
-
+                    // Topic is marked as read when showing it (controller: showposts, action: index).
                     $postsPerPage = (empty($this->getConfig()->get('forum_postsPerPage'))) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage');
                     $countPosts = $forumMapper->getCountPostsByTopicId($topicId);
                     $page = ($this->getConfig()->get('forum_DESCPostorder') ? 1 : ceil($countPosts / $postsPerPage));
@@ -171,10 +159,10 @@ class Newpost extends Frontend
                         $date = new Date();
                         $mailContent = $emailsMapper->getEmail('forum', 'topic_subscription_mail', $this->getTranslator()->getLocale());
                         $layout = $_SESSION['layout'] ?? '';
-                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/topicsubscription.php')) {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/forum/layouts/mail/topicsubscription.php');
+                        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/forum/layouts/mail/topicsubscription.php')) {
+                            $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/forum/layouts/mail/topicsubscription.php');
                         } else {
-                            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/forum/layouts/mail/topicsubscription.php');
+                            $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/forum/layouts/mail/topicsubscription.php');
                         }
                         $messageReplace = [
                             '{content}' => $this->getLayout()->purify($mailContent->getText()),

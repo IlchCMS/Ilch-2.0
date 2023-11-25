@@ -1,21 +1,27 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+use Ilch\Date;
+
 $reasonTransKeys = [
     '1' => 'illegalContent',
     '2' => 'spam',
     '3' => 'wrongTopic',
     '4' => 'other',
 ];
-
+/** @var \Modules\Forum\Models\Report|null $report */
 $report = $this->get('report');
 ?>
 <h1><?=$this->getTrans('report') ?></h1>
-<?php if (!empty($report)): ?>
+<?php if (!empty($report)) : ?>
     <div class="form-group">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
         <div class="col-lg-10">
-            <p><?=$report->getDate() ?></p>
+            <?php $date = new Date($report->getDate()); ?>
+            <p><?=$date->format('d.m.y - H:i', true) ?></p>
         </div>
     </div>
     <div class="form-group">
@@ -42,6 +48,6 @@ $report = $this->get('report');
             <p><?=$this->escape($report->getUsername()) ?></p>
         </div>
     </div>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noReports') ?>
 <?php endif; ?>

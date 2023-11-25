@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,49 +14,72 @@ class Category extends \Ilch\Mapper
      *
      * @var int
      */
-    private $id;
-
+    private $id = 0;
     /**
      * The position of the category.
      *
      * @var int
      */
-    protected $position;
-
+    protected $position = 0;
     /**
      * The name of the category.
      *
      * @var string
      */
-    private $name;
-
+    private $name = '';
     /**
      * The catid of the category.
      *
      * @var int
      */
-    private $cat;
-
+    private $cat = 0;
     /**
      * The description of the category.
      *
      * @var string
      */
-    private $desc;
-    
+    private $desc = '';
     /**
      * The links count of the category.
      *
      * @var integer
      */
-    private $linksCount;
+    private $linksCount = 0;
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Category
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['parent_id'])) {
+            $this->setParentId($entries['parent_id']);
+        }
+        if (isset($entries['pos'])) {
+            $this->setPosition($entries['pos']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (isset($entries['desc'])) {
+            $this->setDesc($entries['desc']);
+        }
+        if (isset($entries['count'])) {
+            $this->setLinksCount($entries['count']);
+        }
+
+        return $this;
+    }
 
     /**
      * Returns the user category id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -64,10 +88,13 @@ class Category extends \Ilch\Mapper
      * Sets the category id.
      *
      * @param int $id
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Category
     {
-        $this->id = (int) $id;
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -75,7 +102,7 @@ class Category extends \Ilch\Mapper
      *
      * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -84,11 +111,12 @@ class Category extends \Ilch\Mapper
      * Sets the position.
      *
      * @param int $position
-     * @return this
+     * @return $this
      */
-    public function setPosition($position)
+    public function setPosition(int $position): Category
     {
-        $this->position = (int)$position;
+        $this->position = $position;
+
         return $this;
     }
 
@@ -97,7 +125,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -106,10 +134,13 @@ class Category extends \Ilch\Mapper
      * Sets the category name.
      *
      * @param string $name
+     * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Category
     {
-        $this->name = (string) $name;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -117,7 +148,7 @@ class Category extends \Ilch\Mapper
      *
      * @return int
      */
-    public function getParentId()
+    public function getParentId(): int
     {
         return $this->cat;
     }
@@ -126,10 +157,13 @@ class Category extends \Ilch\Mapper
      * Sets the category id.
      *
      * @param int $cat
+     * @return $this
      */
-    public function setParentId($cat)
+    public function setParentId(int $cat): Category
     {
         $this->cat = $cat;
+
+        return $this;
     }
 
     /**
@@ -137,7 +171,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getDesc()
+    public function getDesc(): string
     {
         return $this->desc;
     }
@@ -146,21 +180,21 @@ class Category extends \Ilch\Mapper
      * Sets the description of the category.
      *
      * @param string $desc
-     * @return this
+     * @return $this
      */
-    public function setDesc($desc)
+    public function setDesc(string $desc): Category
     {
-        $this->desc = (string)$desc;
+        $this->desc = $desc;
 
         return $this;
     }
-    
+
     /**
      * Gets the links count of the category.
      *
-     * @return integer
+     * @return int
      */
-    public function getLinksCount()
+    public function getLinksCount(): int
     {
         return $this->linksCount;
     }
@@ -168,13 +202,32 @@ class Category extends \Ilch\Mapper
     /**
      * Sets the links count of the category.
      *
-     * @param integer $count
-     * @return this
+     * @param int $count
+     * @return $this
      */
-    public function setLinksCount($count)
+    public function setLinksCount(int $count): Category
     {
         $this->linksCount = $count;
 
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'name'      => $this->getName(),
+                'desc'      => $this->getDesc(),
+                'parent_id' => $this->getParentId(),
+                'pos'       => $this->getPosition()
+            ]
+        );
     }
 }

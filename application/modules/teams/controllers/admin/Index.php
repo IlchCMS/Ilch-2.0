@@ -132,13 +132,13 @@ class Index extends \Ilch\Controller\Admin
                     $teamsMapper->delImageById($model, true);
                 }
 
-                if ($_FILES['upl']['name']) {
+                if ($_FILES['img']['name']) {
                     $allowedFiletypes = $this->getConfig()->get('teams_filetypes');
                     $imageMaxHeight = $this->getConfig()->get('teams_height');
                     $imageMaxWidth = $this->getConfig()->get('teams_width');
                     $path = $this->getConfig()->get('teams_uploadpath');
-                    $file = $_FILES['upl']['name'];
-                    $file_tmpe = $_FILES['upl']['tmp_name'];
+                    $file = $_FILES['img']['name'];
+                    $file_tmpe = $_FILES['img']['tmp_name'];
                     $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                     $imageInfo = getimagesize($file_tmpe);
 

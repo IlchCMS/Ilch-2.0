@@ -15,6 +15,7 @@ $periodTypes = [
     'weekly' => $this->getTranslator()->trans('weekly'),
     'monthly' => $this->getTranslator()->trans('monthly'),
     'quarterly' => $this->getTranslator()->trans('quarterly'),
+    'yearly' => $this->getTranslator()->trans('yearly'),
     'days' => $this->getTranslator()->trans('days'),
 ];
 

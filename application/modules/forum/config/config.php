@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.34.0',
+        'version' => '1.34.4',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -59,8 +60,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('forum_groupAppearance', json_encode($appearance));
 
         $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
-        $filename = uniqid().'.css';
-        file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
+        $filename = uniqid() . '.css';
+        file_put_contents(APPLICATION_PATH . '/modules/forum/static/css/groupappearance/' . $filename, $defaultCss);
         $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
 
         $this->db()->query('INSERT INTO `[prefix]_forum_groupranking` (`group_id`,`rank`) VALUES(1,0);');
@@ -124,15 +125,17 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_topics` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `forum_id` INT(11) NOT NULL,
                 `topic_prefix` INT(11) NOT NULL DEFAULT 0,
                 `topic_title` VARCHAR(255) NOT NULL,
                 `visits` INT(11) NOT NULL DEFAULT 0,
                 `creator_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
-                `forum_id` INT(11) NOT NULL,
                 `type` TINYINT(1) NOT NULL DEFAULT 0,
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_topics_[prefix]_forum_items` (`forum_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_topics_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_topicsubscription` (
@@ -150,12 +153,14 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_posts` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `topic_id` INT(11) NOT NULL,
+                `forum_id` INT(11) NOT NULL DEFAULT 0,
                 `text` TEXT NOT NULL,
                 `user_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
-                `forum_id` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`) USING BTREE,
                 INDEX `FK_[prefix]_forum_posts_[prefix]_forum_topics` (`topic_id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_posts_[prefix]_forum_items` (`forum_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
                 CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_topics` FOREIGN KEY (`topic_id`) REFERENCES `[prefix]_forum_topics` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -280,7 +285,7 @@ class Config extends \Ilch\Config\Install
                       <p>Administrator</p>", "en_EN");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         //Workaround to fix 1.1 and 1.10 being considered equal.
         if ($installedVersion == "1.10") {
@@ -340,7 +345,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_forum_ranks` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
                 // Delete no longer needed file.
-                unlink(ROOT_PATH.'/application/modules/forum/controllers/admin/Base.php');
+                unlink(ROOT_PATH . '/application/modules/forum/controllers/admin/Base.php');
                 // no break
             case "1.11.0":
             case "1.12.0":
@@ -357,8 +362,8 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('forum_groupAppearance', serialize($appearance));
 
                 $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
-                $filename = uniqid().'.css';
-                file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
+                $filename = uniqid() . '.css';
+                file_put_contents(APPLICATION_PATH . '/modules/forum/static/css/groupappearance/' . $filename, $defaultCss);
                 $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
 
                 // Add table for group ranking, which is needed when deciding which appearance needs to be applied.
@@ -438,8 +443,8 @@ class Config extends \Ilch\Config\Install
                               <p>Administrator</p>", "en_EN");');
 
                 // Create possibly missing "groupappearance"-directory and default CSS.
-                if (!file_exists(APPLICATION_PATH.'/modules/forum/static/css/groupappearance')) {
-                    mkdir(APPLICATION_PATH.'/modules/forum/static/css/groupappearance');
+                if (!file_exists(APPLICATION_PATH . '/modules/forum/static/css/groupappearance')) {
+                    mkdir(APPLICATION_PATH . '/modules/forum/static/css/groupappearance');
 
                     // Add default appearance for admin group
                     $databaseConfig = new \Ilch\Config\Database($this->db());
@@ -449,8 +454,8 @@ class Config extends \Ilch\Config\Install
                     $databaseConfig->set('forum_groupAppearance', serialize($appearance));
 
                     $defaultCss = '#forum .appearance1 {color: #000000;font-weight: bold;}';
-                    $filename = uniqid().'.css';
-                    file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $defaultCss);
+                    $filename = uniqid() . '.css';
+                    file_put_contents(APPLICATION_PATH . '/modules/forum/static/css/groupappearance/' . $filename, $defaultCss);
                     $databaseConfig->set('forum_filenameGroupappearanceCSS', $filename);
                 }
                 // no break
@@ -562,9 +567,9 @@ class Config extends \Ilch\Config\Install
                         ->execute()
                         ->fetchList();
 
-                    foreach($currentAccesses as $item_id => $accesses) {
+                    foreach ($currentAccesses as $item_id => $accesses) {
                         // Prepare rows for inserting them in chunks later. Remove potential duplicates and group ids of groups that no longer exist.
-                        foreach($columns as $column) {
+                        foreach ($columns as $column) {
                             $groupIds = array_intersect(array_unique(explode(',', $accesses[$column])), $existingGroupIds);
 
                             foreach ($groupIds as $groupId) {
@@ -711,7 +716,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_forum_topicsubscription` ADD CONSTRAINT `FK_[prefix]_forum_topicsubscription_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
 
-                // Add FKC for the 'topic_id' and 'user_id' columns in the 'forum_topicsubscription' table after deleting possibly orphaned remembered posts.
+                // Add FKC for the 'topic_id' and 'user_id' columns in the 'forum_remember' table after deleting possibly orphaned remembered posts.
                 $existingPosts = $this->db()->select('id')
                     ->from('forum_posts')
                     ->execute()
@@ -750,6 +755,52 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_forum_remember` ADD CONSTRAINT `FK_[prefix]_forum_remember_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
                 // no break
+            case "1.34.0":
+                // Add FKCs for the 'forum_id' columns in the tables 'forum_posts' and 'forum_topics' after deleting possibly orphaned posts and topics.
+                // Added additional FKCs and therefore indices to the posts and topics table to improve the performance of a query.
+                $existingForums = $this->db()->select('id')
+                    ->from('forum_items')
+                    ->execute()
+                    ->fetchList();
+
+                $referencedForumsInPosts = $this->db()->select('forum_id')
+                    ->from('forum_posts')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($referencedForumsInPosts ?? [], $existingForums ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('forum_posts')
+                        ->where(['forum_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $referencedForumsInTopics = $this->db()->select('forum_id')
+                    ->from('forum_topics')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($referencedForumsInTopics ?? [], $existingForums ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('forum_topics')
+                        ->where(['forum_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Change the order of column 'forum_id' of the tables 'forum_posts' and 'forum_topics'. Move them closer to the front.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` CHANGE COLUMN `forum_id` `forum_id` INT(11) NOT NULL DEFAULT 0 AFTER `topic_id`;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` CHANGE COLUMN `forum_id` `forum_id` INT(11) NOT NULL AFTER `id`;');
+
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` ADD CONSTRAINT `FK_[prefix]_forum_topics_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // no break
+            case "1.34.1":
+                // no break
         }
+
+        return '"' . $this->config['key'] . '" Update function executed.';
     }
 }

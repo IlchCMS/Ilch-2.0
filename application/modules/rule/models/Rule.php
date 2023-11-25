@@ -297,11 +297,11 @@ class Rule extends \Ilch\Model
         return array_merge(
             ($withId ? ['id' => $this->getId()] : []),
             [
-                'paragraph' => $this->getParagraph(),
-                'title'     => $this->getTitle(),
-                'text'      => $this->getText(),
-                'parent_id' => $this->getParentId(),
-                'position'  => $this->getPosition(),
+                'paragraph'     => $this->getParagraph(),
+                'title'         => $this->getTitle(),
+                'text'          => $this->getText(),
+                'parent_id'     => $this->getParentId(),
+                'position'      => $this->getPosition(),
                 'access_all'    => ($this->getAccess() === 'all' ? 1 : 0)
             ]
         );

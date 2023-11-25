@@ -1,52 +1,46 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 use Ilch\Date;
 
-$forumMapper = $this->get('forumMapper');
+/** @var \Modules\Forum\Mappers\Rank $rankMapper */
 $rankMapper = $this->get('rankMapper');
+/** @var \Modules\Forum\Models\ForumPost[] $posts */
 $posts = $this->get('posts');
+/** @var \Modules\Forum\Models\ForumItem $cat */
 $cat = $this->get('cat');
+/** @var \Modules\Forum\Models\ForumTopic|null $topicpost */
 $topicpost = $this->get('post');
-$readAccess = $this->get('readAccess');
+/** @var \Modules\Forum\Models\ForumItem $forum */
 $forum = $this->get('forum');
+/** @var string $prefix */
+$prefix = $this->get('prefix');
+/** @var array $reportedPostsIds */
 $reportedPostsIds = $this->get('reportedPostsIds');
+/** @var array $rememberedPostIds */
 $rememberedPostIds = $this->get('rememberedPostIds');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
-    $userAccess = $this->get('userAccess');
-}
-
-$forumPrefix = $forumMapper->getForumByTopicId($topicpost->getId());
-$prefix = '';
-if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
-    $prefix = explode(',', $forumPrefix->getPrefix());
-    array_unshift($prefix, '');
-
-    foreach ($prefix as $key => $value) {
-        if ($topicpost->getTopicPrefix() == $key) {
-            $value = trim($value);
-            $prefix = '[' . $value . '] ';
-        }
-    }
 }
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReadAccess()))): ?>
+<?php if ($adminAccess || $forum->getReadAccess()) : ?>
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
             <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$this->escape($cat->getTitle()) ?></a>
             <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$this->escape($forum->getTitle()) ?></a>
-            <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($prefix.$topicpost->getTopicTitle()) ?>
+            <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($prefix . $topicpost->getTopicTitle()) ?>
         </h1>
         <div class="row">
             <div class="col-lg-12">
-                <?php if ($topicpost->getStatus() == 0): ?>
-                    <?php if ($this->getUser()): ?>
-                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
+                <?php if ($topicpost->getStatus() == 0) : ?>
+                    <?php if ($this->getUser()) : ?>
+                        <?php if ($adminAccess || $forum->getReplyAccess()) : ?>
                             <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                 <span class="btn-label">
                                     <i class="fa-solid fa-plus"></i>
@@ -68,7 +62,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                 <?php endif; ?>
                             <?php endif; ?>
                         <?php endif; ?>
-                    <?php else: ?>
+                    <?php else : ?>
                         <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
                             <span class="btn-label">
@@ -76,7 +70,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                             </span><?=$this->getTrans('loginPost') ?>
                         </a>
                     <?php endif; ?>
-                <?php else: ?>
+                <?php else : ?>
                     <div class="btn btn-primary">
                         <span class="btn-label">
                             <i class="fa-solid fa-lock"></i>
@@ -87,11 +81,11 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             </div>
             <div class="col-lg-12">
                 <div class="posts-head ilch-head">
-                    <?=$this->escape($prefix.$topicpost->getTopicTitle()) ?>
+                    <?=$this->escape($prefix . $topicpost->getTopicTitle()) ?>
                 </div>
             </div>
         </div>
-        <?php foreach ($posts as $post): ?>
+        <?php foreach ($posts as $post) : ?>
             <?php
             $date = new Date($post->getDateCreated());
             $reported = in_array($post->getId(), $reportedPostsIds);
@@ -114,8 +108,8 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                             </div>
                             <div class="col-lg-6 pull-right">
                                 <div class="delete">
-                                    <?php if ($this->getUser()): ?>
-                                        <?php if ($this->getUser()->isAdmin()): ?>
+                                    <?php if ($this->getUser()) : ?>
+                                        <?php if ($this->getUser()->isAdmin()) : ?>
                                             <p class="delete-post">
                                                 <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()], null, true) ?>" id="delete" class="btn btn-primary btn-xs">
                                                     <span class="btn-label">
@@ -127,8 +121,8 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                                     <?php endif; ?>
                                 </div>
                                 <div class="edit">
-                                    <?php if ($this->getUser()): ?>
-                                        <?php if ($this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum') || $this->getUser()->getId() == $post->getAutor()->getId()): ?>
+                                    <?php if ($this->getUser()) : ?>
+                                        <?php if ($this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum') || $this->getUser()->getId() == $post->getAutor()->getId()) : ?>
                                             <p class="edit-post">
                                                 <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-xs">
                                                     <span class="btn-label">
@@ -149,7 +143,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         <?=$this->alwaysPurify($post->getText()) ?>
                     </div>
 
-                    <?php if ($post->getAutor()->getSignature()): ?>
+                    <?php if ($post->getAutor()->getSignature()) : ?>
                         <hr />
                         <?=$this->alwaysPurify($post->getAutor()->getSignature()) ?>
                     <?php endif; ?>
@@ -163,7 +157,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         </a>
                     </dt>
                     <dd>
-                        <?php foreach ($post->getAutor()->getGroups() as $group): ?>
+                        <?php foreach ($post->getAutor()->getGroups() as $group) : ?>
                             <i class="forum appearance<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></i><br>
                         <?php endforeach; ?>
                         <i><?=($post->getAutorAllPost()) ? $this->escape($rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle()) : '' ?></i>
@@ -173,7 +167,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                     <dd><b><?=$this->getTrans('joined') ?>:</b> <?=$post->getAutor()->getDateCreated() ?></dd>
                 </dl>
             </div>
-            <?php if ($this->getUser() || $this->get('postVoting')): ?>
+            <?php if ($this->getUser() || $this->get('postVoting')) : ?>
                 <div class="post-footer ilch-bg">
                     <?php if ($this->get('postVoting')) : ?>
                         <?php if ($this->getUser() && !$post->isUserHasVoted()) : ?>
@@ -190,9 +184,9 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                             </button>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <?php if ($this->getUser()): ?>
+                    <?php if ($this->getUser()) : ?>
                         <div class="quote">
-                            <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
+                            <?php if ($adminAccess || $forum->getReplyAccess()) : ?>
                                 <p class="quote-post">
                                     <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'), 'quote' => $post->getId()]) ?>" class="btn btn-primary btn-xs">
                         <span class="btn-label">
@@ -229,9 +223,9 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
             <?php endif; ?>
         <?php endforeach; ?>
         <div class="topic-actions">
-            <?php if ($topicpost->getStatus() == 0): ?>
-                <?php if ($this->getUser()): ?>
-                    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
+            <?php if ($topicpost->getStatus() == 0) : ?>
+                <?php if ($this->getUser()) : ?>
+                    <?php if ($adminAccess || $forum->getReplyAccess()) : ?>
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                             <span class="btn-label">
                                 <i class="fa-solid fa-plus"></i>
@@ -253,7 +247,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                             <?php endif; ?>
                         <?php endif; ?>
                     <?php endif; ?>
-                <?php else: ?>
+                <?php else : ?>
                     <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
                         <span class="btn-label">
@@ -261,7 +255,7 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
                         </span><?=$this->getTrans('loginPost') ?>
                     </a>
                 <?php endif; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <div class="btn btn-primary">
                     <span class="btn-label">
                         <i class="fa-solid fa-lock"></i>
@@ -304,9 +298,9 @@ if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
         </div>
     </form>
 
-<?php else: ?>
+<?php else : ?>
     <?php
-    header('location: ' .$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
+    header('location: ' . $this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
     exit;
     ?>
 <?php endif; ?>

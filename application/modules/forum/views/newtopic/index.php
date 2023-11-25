@@ -1,7 +1,11 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Forum\Models\ForumItem $forum */
 $forum = $this->get('forum');
+/** @var \Modules\Forum\Models\ForumItem $cat */
 $cat = $this->get('cat');
-$readAccess = $this->get('readAccess');
 
 $adminAccess = null;
 if ($this->getUser()) {
@@ -11,7 +15,7 @@ if ($this->getUser()) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getCreateAccess()))): ?>
+<?php if ($adminAccess || $forum->getCreateAccess()) : ?>
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
@@ -35,14 +39,14 @@ if ($this->getUser()) {
                                     <label for="topicTitle" class="col-lg-2 control-label">
                                         <?=$this->getTrans('topicTitle') ?>
                                     </label>
-                                    <?php if ($forum->getPrefix() != ''): ?>
+                                    <?php if ($forum->getPrefix() != '') : ?>
                                         <?php $prefix = explode(',', $forum->getPrefix()); ?>
                                         <?php array_unshift($prefix, ''); ?>
                                         <div class="col-lg-2 prefix">
                                             <select class="form-control" id="topicPrefix" name="topicPrefix">
-                                                <?php foreach ($prefix as $key => $value): ?>
+                                                <?php foreach ($prefix as $key => $value) : ?>
                                                     <?php $selected = ''; ?>
-                                                    <?php if ($key == $this->originalInput('topicPrefix')): ?>
+                                                    <?php if ($key == $this->originalInput('topicPrefix')) : ?>
                                                         <?php $selected = 'selected="selected"'; ?>
                                                     <?php endif; ?>
 
@@ -70,7 +74,7 @@ if ($this->getUser()) {
                                               toolbar="ilch_html_frontend"><?=$this->originalInput('text') ?></textarea>
                                     </div>
                                 </div>
-                                <?php if ($this->getUser()->isAdmin()): ?>
+                                <?php if ($this->getUser()->isAdmin()) : ?>
                                     <div class="form-group">
                                         <div class="col-lg-2 control-label">
                                             <?=$this->getTrans('forumOptions') ?>
@@ -102,9 +106,9 @@ if ($this->getUser()) {
             </div>
         </div>
     </div>
-<?php else: ?>
+<?php else : ?>
     <?php
-    header('location: ' .$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
+    header('location: ' . $this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
     exit;
     ?>
 <?php endif; ?>

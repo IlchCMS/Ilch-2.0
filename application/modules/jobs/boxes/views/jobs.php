@@ -1,6 +1,13 @@
-<?php if ($this->get('jobs') != ''): ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Jobs\Models\Jobs[]|null $jobs */
+$jobs = $this->get('jobs');
+?>
+<?php if ($jobs) : ?>
     <ul class="list-unstyled">
-        <?php foreach ($this->get('jobs') as $job): ?>
+        <?php foreach ($jobs as $job) : ?>
             <li>
                 <a href="<?=$this->getUrl('jobs/index/show/id/' . $job->getId()) ?>">
                     <?=$this->escape($job->getTitle()) ?>
@@ -8,6 +15,6 @@
             </li>
         <?php endforeach; ?>
     </ul>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noJobs') ?>
 <?php endif; ?>

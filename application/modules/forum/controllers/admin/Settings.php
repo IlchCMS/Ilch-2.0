@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -140,21 +141,21 @@ class Settings extends Admin
                 continue;
             }
 
-            $content .= '#forum .appearance'.$key.' {'.PHP_EOL;
-            $content .= 'color: '.$value['textcolor'].';'.PHP_EOL;
+            $content .= '#forum .appearance' . $key . ' {' . PHP_EOL;
+            $content .= 'color: ' . $value['textcolor'] . ';' . PHP_EOL;
 
             if (isset($value['bold'])) {
-                $content .= 'font-weight: bold;'.PHP_EOL;
+                $content .= 'font-weight: bold;' . PHP_EOL;
             }
 
             if (isset($value['italic'])) {
-                $content .= 'font-style: italic;'.PHP_EOL;
+                $content .= 'font-style: italic;' . PHP_EOL;
             }
-            $content .= '}'.PHP_EOL;
+            $content .= '}' . PHP_EOL;
         }
 
         // Delete old stylesheets
-        $files = glob(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/*');
+        $files = glob(APPLICATION_PATH . '/modules/forum/static/css/groupappearance/*');
         foreach ($files as $file) {
             if (is_file($file)) {
                 unlink($file);
@@ -165,8 +166,8 @@ class Settings extends Admin
             return '';
         }
 
-        $filename = uniqid().'.css';
-        $returnValue = file_put_contents(APPLICATION_PATH.'/modules/forum/static/css/groupappearance/'.$filename, $content);
+        $filename = uniqid() . '.css';
+        $returnValue = file_put_contents(APPLICATION_PATH . '/modules/forum/static/css/groupappearance/' . $filename, $content);
         if ($returnValue !== false && $returnValue != 0) {
             return $filename;
         }

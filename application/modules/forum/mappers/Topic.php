@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -7,7 +8,6 @@
 namespace Modules\Forum\Mappers;
 
 use Ilch\Database\Exception;
-use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Ilch\Pagination;
 use Modules\Forum\Models\ForumTopic as TopicModel;
@@ -24,13 +24,27 @@ class Topic extends Mapper
      */
     public function getTopicsByForumId(int $id, Pagination $pagination = null): array
     {
+        return $this->getTopicsByForumIds([$id], $pagination);
+    }
+
+    /**
+     * @param array $ids
+     * @param Pagination|null $pagination
+     * @return array|TopicModel[]
+     * @throws Exception
+     */
+    public function getTopicsByForumIds(array $ids, Pagination $pagination = null): array
+    {
+        if (empty($ids)) {
+            return [];
+        }
+
         $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)', 'countPosts' => 'COUNT(posts.id)'])
             ->from(['topics' => 'forum_topics'])
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
-            ->where(['topics.forum_id' => (int)$id])
+            ->where(['topics.forum_id' => $ids])
             ->group(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
             ->order(['topics.type' => 'DESC', 'latest_post' => 'DESC']);
-
         if ($pagination !== null) {
             $sql->limit($pagination->getLimit())
                 ->useFoundRows();
@@ -41,19 +55,17 @@ class Topic extends Mapper
         }
 
         $topicRows = $result->fetchRows();
-
         $userMapper = new UserMapper();
         $topics = [];
         $dummyUser = null;
         $userCache = [];
-
         foreach ($topicRows as $topicRow) {
             $topicModel = new TopicModel();
             $topicModel->setId($topicRow['id']);
             $topicModel->setVisits($topicRow['visits']);
+            $topicModel->setForumId($topicRow['forum_id']);
             $topicModel->setType($topicRow['type']);
             $topicModel->setStatus($topicRow['status']);
-
             if (\array_key_exists($topicRow['creator_id'], $userCache)) {
                 $topicModel->setAuthor($userCache[$topicRow['creator_id']]);
             } else {
@@ -73,7 +85,7 @@ class Topic extends Mapper
             $topicModel->setTopicTitle($topicRow['topic_title']);
             $topicModel->setDateCreated($topicRow['date_created']);
             $topicModel->setCountPosts($topicRow['countPosts']);
-            $topics[] = $topicModel;
+            $topics[$topicRow['id']] = $topicModel;
         }
 
         return $topics;
@@ -92,7 +104,6 @@ class Topic extends Mapper
             ->where(['forum_id' => $id])
             ->execute()
             ->fetchArray();
-
         if (empty($result)) {
             return [];
         }
@@ -115,7 +126,6 @@ class Topic extends Mapper
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT', ['countPosts' => 'COUNT(posts.id)'])
             ->group(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
             ->order(['topics.type' => 'DESC', 'topics.id' => 'DESC']);
-
         if ($pagination !== null) {
             $sql->limit($pagination->getLimit())
                 ->useFoundRows();
@@ -129,12 +139,10 @@ class Topic extends Mapper
         }
 
         $topicRows = $result->fetchRows();
-
         $userMapper = new UserMapper();
         $topics = [];
         $dummyUser = null;
         $userCache = [];
-
         foreach ($topicRows as $topicRow) {
             $topicModel = new TopicModel();
             $topicModel->setId($topicRow['id']);
@@ -142,7 +150,6 @@ class Topic extends Mapper
             $topicModel->setVisits($topicRow['visits']);
             $topicModel->setType($topicRow['type']);
             $topicModel->setStatus($topicRow['status']);
-
             if (\array_key_exists($topicRow['creator_id'], $userCache)) {
                 $topicModel->setAuthor($userCache[$topicRow['creator_id']]);
             } else {
@@ -181,7 +188,6 @@ class Topic extends Mapper
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
-
         if (empty($topic)) {
             return null;
         }
@@ -201,7 +207,6 @@ class Topic extends Mapper
         }
         $topicModel->setDateCreated($topic['date_created']);
         $topicModel->setStatus($topic['status']);
-
         return $topicModel;
     }
 
@@ -215,58 +220,82 @@ class Topic extends Mapper
      */
     public function getLastPostByTopicId(int $id, int $userId = null): ?PostModel
     {
-        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.date_created', 'p.user_id', 'p.forum_id'])
-            ->from(['p' => 'forum_posts']);
+        $lastPost = $this->getLastPostsByTopicIds([$id], $userId);
+        if (!empty($lastPost)) {
+            return reset($lastPost);
+        }
 
+        return null;
+    }
+
+    /**
+     * Get last posts by topic ids and user id.
+     *
+     * @param array $ids
+     * @param int|null $userId
+     * @return PostModel[]|null
+     * @throws Exception
+     */
+    public function getLastPostsByTopicIds(array $ids, int $userId = null): ?array
+    {
+        if (empty($ids)) {
+            return null;
+        }
+
+        $select = $this->db()->select(['p.id', 'p.topic_id', 'date_created' => 'MAX(p.date_created)', 'p.user_id', 'p.forum_id'])
+            ->from(['p' => 'forum_posts']);
         if ($userId) {
             $select->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id', 'tr.datetime >= p.date_created'], 'LEFT', ['topic_read' => 'tr.datetime'])
                 ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id', 'fr.datetime >= p.date_created'], 'LEFT', ['forum_read' => 'fr.datetime']);
         }
 
-        $lastPostRow = $select->where(['p.topic_id' => $id])
-            ->order(['p.date_created' => 'DESC'])
-            ->limit(1)
+        $lastPostsRows = $select->where(['p.topic_id' => $ids])
+            ->order(['date_created' => 'DESC'])
+            ->group(['p.topic_id'])
             ->execute()
-            ->fetchAssoc();
-
-        if (empty($lastPostRow)) {
+            ->fetchRows();
+        if (empty($lastPostsRows)) {
             return null;
         }
 
-        $postModel = new PostModel();
-        $userMapper = new UserMapper();
-        $postModel->setId($lastPostRow['id']);
-        $user = $userMapper->getUserById($lastPostRow['user_id']);
+        $lastPosts = [];
+        foreach ($lastPostsRows as $lastPostRow) {
+            $postModel = new PostModel();
+            $userMapper = new UserMapper();
+            $postModel->setId($lastPostRow['id']);
+            $user = $userMapper->getUserById($lastPostRow['user_id']);
+            if ($user) {
+                $postModel->setAutor($user);
+            } else {
+                $postModel->setAutor($userMapper->getDummyUser());
+            }
 
-        if ($user) {
-            $postModel->setAutor($user);
-        } else {
-            $postModel->setAutor($userMapper->getDummyUser());
+            $postModel->setDateCreated($lastPostRow['date_created']);
+            $postModel->setTopicId($lastPostRow['topic_id']);
+            if ($userId) {
+                // Needs an additional check if datetime is newer than the newest post of the topic as topic_read was always set.
+                $postModel->setRead($lastPostRow['topic_read'] >= $lastPostRow['date_created'] || $lastPostRow['forum_read'] >= $lastPostRow['date_created']);
+            }
+            $lastPosts[] = $postModel;
         }
 
-        $postModel->setDateCreated($lastPostRow['date_created']);
-        $postModel->setTopicId($lastPostRow['topic_id']);
-
-        if ($userId) {
-            $postModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
-        }
-
-        return $postModel;
+        return $lastPosts;
     }
 
     /**
      * Inserts or updates a topic.
      *
      * @param TopicModel $model
-     * @return Result|int
+     * @return int
      */
-    public function save(TopicModel $model)
+    public function save(TopicModel $model): int
     {
         if ($model->getId()) {
-            return $this->db()->update('forum_topics')
+            $this->db()->update('forum_topics')
                 ->values(['forum_id' => $model->getForumId()])
                 ->where(['id' => $model->getId()])
                 ->execute();
+            return $model->getId();
         } else {
             return $this->db()->insert('forum_topics')
                 ->values([
@@ -293,7 +322,6 @@ class Topic extends Mapper
                         ->where(['id' => $id])
                         ->execute()
                         ->fetchCell();
-
         $this->db()->update('forum_topics')
             ->values(['status' => !$status])
             ->where(['id' => $id])
@@ -312,7 +340,6 @@ class Topic extends Mapper
             ->where(['id' => $id])
             ->execute()
             ->fetchCell();
-
         $this->db()->update('forum_topics')
             ->values(['type' => !$type])
             ->where(['id' => $id])
@@ -351,9 +378,8 @@ class Topic extends Mapper
                     ) AS `innerfrom` 
                 GROUP BY `innerfrom`.`topic_id` 
                 ORDER BY `innerfrom`.`date_created` DESC';
-
         if ($limit !== null) {
-            $sql .= ' LIMIT '. $limit;
+            $sql .= ' LIMIT ' . $limit;
         }
 
         return $this->db()->queryArray($sql);

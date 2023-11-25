@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -7,10 +8,9 @@
 namespace Modules\Forum\Controllers;
 
 use Ilch\Controller\Frontend;
+use Ilch\Date;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
-use Modules\Forum\Mappers\Post as PostMapper;
-use Modules\User\Mappers\User as UserMapper;
 
 class Showactivetopics extends Frontend
 {
@@ -18,37 +18,42 @@ class Showactivetopics extends Frontend
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
-        $postMapper = new PostMapper();
-        $userMapper = new UserMapper();
+        $date = new Date();
+        $dateLessHours = new Date('-1 day');
 
-        $userId = null;
-        $groupIds = [3];
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('forum'))
+            ->add($this->getTranslator()->trans('showActiveTopics'));
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('showActiveTopics'));
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('showActiveTopics'), ['action' => 'index']);
 
-        if ($this->getUser()) {
-            $userId = $this->getUser()->getId();
-        }
-        $user = $userMapper->getUserById($userId);
+        $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
+        $forums = $forumMapper->getForumItemsUser($this->getUser());
+        $topics = $topicMapper->getTopicsByForumIds(array_keys($forums ?? []));
 
-        if ($this->getUser()) {
-            $groupIds = [];
-            foreach ($user->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
+        $topicIds = [];
+        $topicsToShow = [];
+        foreach ($topics as $topic) {
+            if ($isAdmin || $forums[$topic->getForumId()]->getReadAccess()) {
+                $topicIds[] = $topic->getId();
             }
         }
 
-        $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('forum'))
-                ->add($this->getTranslator()->trans('showActiveTopics'));
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('showActiveTopics'));
-        $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('showActiveTopics'), ['action' => 'index']);
+        $posts = $topicMapper->getLastPostsByTopicIds($topicIds, ($this->getUser()) ? $this->getUser()->getId() : null);
 
-        $this->getView()->set('forumMapper', $forumMapper);
-        $this->getView()->set('topicMapper', $topicMapper);
-        $this->getView()->set('postMapper', $postMapper);
-        $this->getView()->set('topics', $topicMapper->getTopics());
-        $this->getView()->set('groupIdsArray', $groupIds);
+        foreach ($posts ?? [] as $post) {
+            if ($post->getDateCreated() < $date->format('Y-m-d H:i:s', true) && $post->getDateCreated() > $dateLessHours->format('Y-m-d H:i:s', true)) {
+                $topicsToShow[] = [
+                    'topic' => $topics[$post->getTopicId()],
+                    'forumPrefix' => $forums[$topics[$post->getTopicId()]->getForumId()]->getPrefix(),
+                    'lastPost' => $post,
+                ];
+            }
+        }
+
+        $this->getView()->set('topics', $topicsToShow);
         $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
         $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
     }
