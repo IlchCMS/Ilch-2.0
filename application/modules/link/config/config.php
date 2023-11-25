@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'link',
-        'version' => '1.10.0',
+        'version' => '1.10.1',
         'icon_small' => 'fa-solid fa-arrow-up-right-from-square',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -35,11 +36,11 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_links`;
-                                 DROP TABLE `[prefix]_link_cats`;');
+        $this->db()->drop('links', true);
+        $this->db()->drop('link_cats', true);
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_links` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -66,7 +67,7 @@ class Config extends \Ilch\Config\Install
                 (1, "ilch", "Du suchst ein einfach strukturiertes Content Management System? Dann bist du bei ilch genau richtig! ", "https://www.ilch.de/include/images/linkus/468x60.png", "https://ilch.de");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -89,8 +90,13 @@ class Config extends \Ilch\Config\Install
 
                 // Update possibly existing default Ilch entry
                 $this->db()->query("UPDATE `[prefix]_links` SET `banner` = 'https://www.ilch.de/include/images/linkus/468x60.png', `link` = 'https://ilch.de' WHERE `id` = 1 AND `banner` = 'http://www.ilch.de/include/images/linkus/468x60.png' AND `link` = 'http://ilch.de';");
+                // no break
             case "1.9.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-arrow-up-right-from-square' WHERE `key` = 'link';");
+                // no break
+            case "1.10.0":
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

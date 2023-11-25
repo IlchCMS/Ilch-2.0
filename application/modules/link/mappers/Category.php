@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,47 +7,97 @@
 
 namespace Modules\Link\Mappers;
 
+use Ilch\Pagination;
 use Modules\Link\Models\Category as CategoryModel;
+use Modules\Link\Mappers\Link as LinkMapper;
 
 class Category extends \Ilch\Mapper
 {
+    /**
+     * @var string
+     */
+    public $tablename = 'link_cats';
+    /**
+     * @var string
+     */
+    public $tablename_entries = null;
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->tablename_entries = (new LinkMapper())->tablename;
+
+        return $this;
+    }
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return bool
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by param.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param Pagination|null $pagination
+     * @param bool $countEntries
+     * @return CategoryModel[]|null
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['lc.pos' => 'ASC'], ?Pagination $pagination = null, bool $countEntries = false): ?array
+    {
+        $select = $this->db()->select();
+        $select->fields(['lc.id', 'lc.parent_id', 'lc.pos', 'lc.name', 'lc.desc'])
+            ->from(['lc' => $this->tablename])
+            ->where($where)
+            ->order($orderBy);
+
+        if ($countEntries) {
+            $select->join(['l' => $this->tablename_entries], ['l.cat_id = lc.id'], 'LEFT', ['count' => 'COUNT(l.id)'])
+                ->group(['lc.id', 'lc.parent_id', 'lc.pos', 'lc.name', 'lc.desc']);
+        }
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entriesArray = $result->fetchRows();
+        if (empty($entriesArray)) {
+            return null;
+        }
+        $entries = [];
+
+        foreach ($entriesArray as $entry) {
+            $entryModel = new CategoryModel();
+            $entryModel->setByArray($entry);
+
+            $entries[] = $entryModel;
+        }
+        return $entries;
+    }
+
     /**
      * Gets categorys.
      *
      * @param array $where
      * @return CategoryModel[]|null
      */
-    public function getCategories($where = [])
+    public function getCategories(array $where = []): ?array
     {
-        $sql = 'SELECT lc.*, COUNT(l.id) as count
-                FROM `[prefix]_link_cats` as lc
-                LEFT JOIN `[prefix]_links` as l ON l.cat_id = lc.id
-                WHERE 1 ';
-
-        foreach ($where as $key => $value) {
-            $sql .= ' AND lc.`'.$key.'` = "'.$this->db()->escape($value).'"';
-        }
-
-        $sql .= 'GROUP BY `lc`.`id`, `lc`.`parent_id`, `lc`.`pos`, `lc`.`name`, `lc`.`desc` ORDER BY `lc`.`pos` ASC';
-        $categoryArray = $this->db()->queryArray($sql);
-
-        if (empty($categoryArray)) {
-            return null;
-        }
-
-        $categorys = [];
-        foreach ($categoryArray as $categoryRow) {
-            $categoryModel = new CategoryModel();
-            $categoryModel->setId($categoryRow['id']);
-            $categoryModel->setParentId($categoryRow['parent_id']);
-            $categoryModel->setPosition($categoryRow['pos']);
-            $categoryModel->setName($categoryRow['name']);
-            $categoryModel->setDesc($categoryRow['desc']);
-            $categoryModel->setLinksCount($categoryRow['count']);
-            $categorys[] = $categoryModel;
-        }
-
-        return $categorys;
+        return $this->getEntriesBy($where, ['lc.pos' => 'ASC'], null, true);
     }
 
     /**
@@ -55,56 +106,57 @@ class Category extends \Ilch\Mapper
      * @param int $id
      * @return CategoryModel|null
      */
-    public function getCategoryById($id)
+    public function getCategoryById(int $id): ?CategoryModel
     {
-        $cats = $this->getCategories(['id' => $id]);
+        $cats = $this->getEntriesBy(['lc.id' => $id]);
 
-        if ($cats === null) {
-            return null;
+        if ($cats) {
+            return reset($cats);
         }
 
-        return reset($cats);
+        return null;
     }
 
     /**
-     * @param $models
-     * @param int $id
-     * @return array|null
+     * Returns user model found by the id or false if none found.
+     *
+     * @param int $parentId
+     * @return CategoryModel[]|null
      */
-    public function getCategoriesForParentRec($models, $id)
+    public function getCategorysByParentId(int $parentId): ?array
     {
-        $categoryRow = $this->db()->select('*')
-            ->from('link_cats')
-            ->order(['pos' => 'ASC'])
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
+        return $this->getEntriesBy(['lc.parent_id' => $parentId], ['lc.pos' => 'ASC'], null, true);
+    }
 
-        if (empty($categoryRow)) {
+    /**
+     * @param array $models
+     * @param int $id
+     * @return CategoryModel[]|null
+     */
+    public function getCategoriesForParentRec(array $models, int $id): ?array
+    {
+        $categoryModel = $this->getCategoryById($id);
+
+        if (!$categoryModel) {
             return null;
         }
 
-        if (!empty($categoryRow['parent_id'])) {
-            $models = $this->getCategoriesForParentRec($models, $categoryRow['parent_id']);
+        if ($categoryModel->getParentId()) {
+            $models = $this->getCategoriesForParentRec($models, $categoryModel->getParentId());
         }
 
-        $categoryModel = new CategoryModel();
-        $categoryModel->setId($categoryRow['id']);
-        $categoryModel->setParentId($categoryRow['parent_id']);
-        $categoryModel->setPosition($categoryRow['pos']);
-        $categoryModel->setName($categoryRow['name']);
-        $categoryModel->setDesc($categoryRow['desc']);
         $models[] = $categoryModel;
 
         return $models;
     }
+
     /**
      * Returns user model found by the name or false if none found.
      *
-     * @param  string $name
-     * @return false|CategoryModel
+     * @param int $id
+     * @return CategoryModel[]|null
      */
-    public function getCategoriesForParent($id)
+    public function getCategoriesForParent(int $id): ?array
     {
         return $this->getCategoriesForParentRec([], $id);
     }
@@ -114,11 +166,11 @@ class Category extends \Ilch\Mapper
      *
      * @param int $id
      * @param int $position
-     *
+     * @return bool
      */
-    public function updatePositionById($id, $position)
+    public function updatePositionById(int $id, int $position): bool
     {
-        $this->db()->update('link_cats')
+        return $this->db()->update($this->tablename)
             ->values(['pos' => $position])
             ->where(['id' => $id])
             ->execute();
@@ -128,23 +180,20 @@ class Category extends \Ilch\Mapper
      * Inserts or updates category model.
      *
      * @param CategoryModel $category
+     * @return int
      */
-    public function save(CategoryModel $category)
+    public function save(CategoryModel $category): int
     {
-        $fields = [
-            'name' => $category->getName(),
-            'desc' => $category->getDesc(),
-            'parent_id' => $category->getParentId(),
-            'pos' => $category->getPosition()
-        ];
+        $fields = $category->getArray();
 
         if ($category->getId()) {
-            $this->db()->update('link_cats')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $category->getId()])
                 ->execute();
+            return $category->getId();
         } else {
-            $this->db()->insert('link_cats')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -153,11 +202,12 @@ class Category extends \Ilch\Mapper
     /**
      * Deletes category with given id.
      *
-     * @param integer $id
+     * @param int $id
+     * @return bool
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('link_cats')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }

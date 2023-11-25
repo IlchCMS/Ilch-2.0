@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -16,40 +17,36 @@ class Index extends \Ilch\Controller\Frontend
         $linkMapper = new LinkMapper();
         $categoryMapper = new CategoryMapper();
 
+        $category = null;
         if ($this->getRequest()->getParam('cat_id')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('cat_id'));
 
-            if (empty($category)) {
+            if (!$category) {
                 $this->redirect()
                     ->withMessage('categoryNotFound', 'warning')
                     ->to(['action' => 'index']);
             }
         }
 
-        if (!empty($category)) {
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
+
+        if ($category) {
             $parentCategories = $categoryMapper->getCategoriesForParent($category->getParentId());
 
-            $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
-
-            if (!empty($parentCategories)) {
-                foreach ($parentCategories as $parent) {
-                    $this->getLayout()->getHmenu()
-                        ->add($parent->getName(), ['action' => 'index', 'cat_id' => $parent->getId()]);
-                }
+            foreach ($parentCategories ?? [] as $parent) {
+                $this->getLayout()->getHmenu()
+                    ->add($parent->getName(), ['action' => 'index', 'cat_id' => $parent->getId()]);
             }
 
             $this->getLayout()->getHmenu()
-                ->add($category->getName(), ['action' => 'index', 'cat_id' => $this->getRequest()->getParam('cat_id')]);
+                ->add($category->getName(), ['action' => 'index', 'cat_id' => $category->getId()]);
 
-            $links = $linkMapper->getLinks(['cat_id' => $this->getRequest()->getParam('cat_id')]);
-            $categorys = $categoryMapper->getCategories(['parent_id' => $this->getRequest()->getParam('cat_id')]);
+            $links = $linkMapper->getLinksByCatId($category->getId());
+            $categorys = $categoryMapper->getCategorysByParentId($category->getId());
         } else {
-            $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
-
-            $links = $linkMapper->getLinks(['cat_id' => 0]);
-            $categorys = $categoryMapper->getCategories(['parent_id' => 0]);
+            $links = $linkMapper->getLinksByCatId(0);
+            $categorys = $categoryMapper->getCategorysByParentId(0);
         }
 
         $this->getView()->set('links', $links);
@@ -60,17 +57,14 @@ class Index extends \Ilch\Controller\Frontend
     {
         $linkMapper = new LinkMapper();
 
-        if (empty($this->getRequest()->getParam('link_id')) || !is_numeric($this->getRequest()->getParam('link_id'))) {
-            return;
-        }
-
-        $linkModel = $linkMapper->getLinkById($this->getRequest()->getParam('link_id'));
-        if (!empty($linkModel)) {
-            $linkModel->setHits($linkModel->getHits() + 1);
+        $linkModel = $linkMapper->getLinkById($this->getRequest()->getParam('link_id') ?? 0);
+        if ($linkModel) {
+            $linkModel->addHits();
             $linkMapper->save($linkModel);
 
-            header('location: ' .$linkModel->getLink());
+            header('location: ' . $linkModel->getLink());
             exit;
         }
+        $this->redirect(['action' => 'index']);
     }
 }

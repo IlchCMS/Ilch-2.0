@@ -13,7 +13,6 @@ use Ilch\Mail;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
-use Modules\Forum\Mappers\TrackRead as TrackReadMapper;
 use Modules\Forum\Mappers\TopicSubscription as TopicSubscriptionMapper;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
@@ -127,10 +126,7 @@ class Newpost extends Frontend
                         ->setDateCreated($dateTime);
                     $postMapper->save($postModel);
 
-                    // Mark topic as read.
-                    $trackReadMapper = new TrackReadMapper();
-                    $trackReadMapper->markTopicAsRead($this->getUser()->getId(), $topicId, $forum->getId());
-
+                    // Topic is marked as read when showing it (controller: showposts, action: index).
                     $postsPerPage = (empty($this->getConfig()->get('forum_postsPerPage'))) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage');
                     $countPosts = $forumMapper->getCountPostsByTopicId($topicId);
                     $page = ($this->getConfig()->get('forum_DESCPostorder') ? 1 : ceil($countPosts / $postsPerPage));

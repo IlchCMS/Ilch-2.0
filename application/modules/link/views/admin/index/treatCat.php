@@ -1,12 +1,11 @@
-<h1>
-    <?php
-    if ($this->get('category') != '') {
-        echo $this->getTrans('menuActionEditCategory');
-    } else {
-        echo $this->getTrans('menuActionNewCategory');
-    }
-    ?>
-</h1>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var Modules\Link\Models\Category $cat */
+$cat = $this->get('category');
+?>
+<h1><?=($cat->getId()) ? $this->getTrans('menuActionEditCategory') : $this->getTrans('menuActionNewCategory') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
@@ -19,7 +18,7 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=($this->get('category') != '') ? $this->escape($this->get('category')->getName()) : $this->escape($this->get('post')['name']) ?>" />
+                   value="<?=$this->escape($this->originalInput('name', $cat->getName())) ?>" />
         </div>
     </div>
     <div class="row mb-3">
@@ -31,8 +30,8 @@
                       id="desc"
                       name="desc"
                       cols="45"
-                      rows="3"><?=($this->get('category') != '') ? $this->escape($this->get('category')->getDesc()) : $this->escape($this->get('post')['desc']) ?></textarea>
+                      rows="3"><?=$this->escape($this->originalInput('desc', $cat->getDesc())) ?></textarea>
         </div>
     </div>
-    <?=($this->get('category') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($cat->getId() ? 'updateButton' : 'addButton') ?>
 </form>
