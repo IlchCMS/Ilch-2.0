@@ -22,16 +22,24 @@ if (!empty($file)) {
 <div id="downloads">
     <div class="row">
         <div class="col-lg-6">
-            <a href="<?=$this->getUrl().'/'.$file->getFileUrl() ?>">
+            <?php if ($file->getFileUrl()) : ?>
+                <a href="<?=$this->getUrl() . '/' . $file->getFileUrl() ?>">
+                    <img class="img-thumbnail" src="<?=$image ?>" alt="<?=$this->escape($file->getFileTitle()) ?>"/>
+                </a>
+            <?php else : ?>
                 <img class="img-thumbnail" src="<?=$image ?>" alt="<?=$this->escape($file->getFileTitle()) ?>"/>
-            </a>
+            <?php endif; ?>
         </div>
         <div class="col-lg-6">
             <h3><?=$this->escape($file->getFileTitle()) ?></h3>
             <p><?=$this->escape($file->getFileDesc()) ?></p>
             <?php $extension = pathinfo($file->getFileUrl(), PATHINFO_EXTENSION);
-            $extension = (empty($extension)) ? '': '.'.$extension; ?>
-            <a href="<?=$this->getUrl().'/'.$file->getFileUrl() ?>" class="btn btn-primary pull-right" download="<?=$this->escape($file->getFileTitle()).$extension ?>"><?=$this->getTrans('download') ?></a>
+            $extension = (empty($extension)) ? '' : '.' . $extension; ?>
+            <?php if ($file->getFileUrl()) : ?>
+                <a href="<?=$this->getUrl() . '/' . $file->getFileUrl() ?>" class="btn btn-primary pull-right" download="<?=$this->escape($file->getFileTitle()) . $extension ?>"><?=$this->getTrans('download') ?></a>
+            <?php else : ?>
+                <?=$this->getTrans('downloadNotFound') ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

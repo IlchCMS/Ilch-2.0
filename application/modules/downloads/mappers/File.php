@@ -35,7 +35,7 @@ class File extends Mapper
         $entryModel = new FileModel();
         $entryModel->setId($id);
         $entryModel->setFileId($fileRow['file_id']);
-        $entryModel->setFileUrl($fileRow['url']);
+        $entryModel->setFileUrl($fileRow['url'] ?? '');
         $entryModel->setFileImage($fileRow['file_image']);
         $entryModel->setFileTitle($fileRow['file_title']);
         $entryModel->setFileDesc($fileRow['file_description']);
@@ -68,7 +68,7 @@ class File extends Mapper
 
         $entryModel = new FileModel();
         $entryModel->setFileId($fileRow['file_id']);
-        $entryModel->setFileUrl($fileRow['url']);
+        $entryModel->setFileUrl($fileRow['url'] ?? '');
         $entryModel->setFileTitle($fileRow['file_title']);
         $entryModel->setFileImage($fileRow['file_image']);
         $entryModel->setFileDesc($fileRow['file_description']);

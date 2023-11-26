@@ -183,7 +183,7 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                    ->add($this->getTranslator()->trans('menuActionEditLink'), ['action' => 'treat']);
 
             $model = $linkMapper->getLinkById($this->getRequest()->getParam('id'));
 
@@ -193,7 +193,7 @@ class Index extends \Ilch\Controller\Admin
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                    ->add($this->getTranslator()->trans('menuActionNewLink'), ['action' => 'treat']);
         }
         $this->getView()->set('link', $model);
 
@@ -243,7 +243,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('cats', $categoryMapper->getCategories());
+        $this->getView()->set('cats', $categoryMapper->getCategories() ?? []);
     }
 
     public function treatCatAction()
@@ -254,7 +254,7 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                    ->add($this->getTranslator()->trans('menuActionEditCategory'), ['action' => 'treat']);
 
             $model = $categorykMapper->getCategoryById($this->getRequest()->getParam('id'));
 
@@ -264,7 +264,7 @@ class Index extends \Ilch\Controller\Admin
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                    ->add($this->getTranslator()->trans('menuActionNewCategory'), ['action' => 'treat']);
         }
         $this->getView()->set('category', $model);
 
