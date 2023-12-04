@@ -936,6 +936,10 @@ class Config extends \Ilch\Config\Install
                 // Update vendor folder
                 replaceVendorDirectory();
                 break;
+            case "2.1.55":
+                // Update vendor folder. Downgrade CKEditor to 4.22.1. Version 4.23 is an LTS version, which requires a license.
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
