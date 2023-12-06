@@ -793,8 +793,8 @@ class Forum extends Mapper
 
     /**
      * Returns a list of forum ids with unread topics in it.
-     * This function was added as a probably temporary fix
-     * for issue #491.
+     * This function was added as a temporary fix
+     * for issue #491, which might be a permanent solution by now.
      *
      * @param int $userId
      * @param array $forumIds
@@ -815,7 +815,11 @@ class Forum extends Mapper
             ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id'], 'LEFT')
             ->where(['i.parent_id' => $forumIds, 'i.id' => $forumIds], 'or')
             ->andWhere(['tr.datetime IS' => null, 'fr.datetime IS' => null])
-            ->orWhere(['tr.datetime < p.date_created', 'fr.datetime < p.date_created'])
+            // Only take fr.datetime into consideration if there is not a newer tr.datetime.
+            // Previously we just checked if tr.datetime or fr.datetime was smaller than p.date_created. This caused
+            // topics being shown as unread when there was an entry in forum_read that fullfilled the condition. This
+            // was even the case with a newer entry in topics_read, which indicated that the topic was read.
+            ->orWhere(['tr.datetime < p.date_created', $select->andX(['tr.datetime <= fr.datetime', 'fr.datetime < p.date_created'])])
             ->group(['i.id'])
             ->execute()
             ->fetchList();
