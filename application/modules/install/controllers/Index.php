@@ -11,6 +11,15 @@ use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
 {
+    /**
+     * @var string
+     */
+    private const MARIADBVERSION = '5.5';
+    /**
+     * @var string
+     */
+    private const MYSQLVERSION = '5.5.3';
+
     public function init()
     {
         if (!extension_loaded('openssl')) {
@@ -181,9 +190,8 @@ class Index extends \Ilch\Controller\Frontend
     public function systemcheckAction()
     {
         $errors = [];
-        $phpVersion = '7.3';
-        $this->getView()->set('phpVersion', $phpVersion);
-        if (!version_compare(PHP_VERSION, $phpVersion, '>=')) {
+        $this->getView()->set('phpVersion', PHPVERSION);
+        if (!version_compare(PHP_VERSION, PHPVERSION, '>=')) {
             $errors['phpVersion'] = true;
         }
 
@@ -192,10 +200,10 @@ class Index extends \Ilch\Controller\Frontend
         $dbLinkIdentifier = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
         $dbVersion = mysqli_get_server_info($dbLinkIdentifier);
         if (strpos($dbVersion, 'MariaDB') !== false) {
-            $requiredVersion = '5.5';
-            $this->getView()->set('dbServerInfo', 'MariaDB');
+            $requiredVersion = $this::MARIADBVERSION;
+            $this->getView()->set('dbServerInfo', ' MariaDB');
         } else {
-            $requiredVersion = '5.5.3';
+            $requiredVersion = $this::MYSQLVERSION;
             $this->getView()->set('dbServerInfo', 'MySQL');
         }
         if (!version_compare($dbVersion, $requiredVersion, '>=')) {
@@ -573,7 +581,7 @@ class Index extends \Ilch\Controller\Frontend
             if ($reload) {
                 unset($_SESSION['install']['modulesToInstall'][$type]);
             } else {
-                    $modulesToInstall = $_SESSION['install']['modulesToInstall'][$type];
+                $modulesToInstall = $_SESSION['install']['modulesToInstall'][$type];
             }
         }
 
