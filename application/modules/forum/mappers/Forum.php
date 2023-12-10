@@ -793,8 +793,7 @@ class Forum extends Mapper
 
     /**
      * Returns a list of forum ids with unread topics in it.
-     * This function was added as a temporary fix
-     * for issue #491, which might be a permanent solution by now.
+     * This function was added as a fix for issue #491.
      *
      * @param int $userId
      * @param array $forumIds
@@ -807,8 +806,8 @@ class Forum extends Mapper
             return [];
         }
 
-        return $this->db()->select(['i.id'])
-            ->from(['t' => 'forum_topics'])
+        $select = $this->db()->select(['i.id']);
+        return $select->from(['t' => 'forum_topics'])
             ->join(['i' => 'forum_items'], 'i.id = t.forum_id', 'LEFT')
             ->join(['p' => 'forum_posts'], ['t.id = p.topic_id'], 'LEFT')
             ->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id'], 'LEFT')
