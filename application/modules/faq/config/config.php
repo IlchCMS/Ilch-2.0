@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'faq',
-        'version' => '1.9.1',
+        'version' => '1.9.2',
         'icon_small' => 'fa-regular fa-circle-question',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -40,9 +40,9 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->drop('faqs', true);
         $this->db()->drop('faqs_cats_access', true);
         $this->db()->drop('faqs_cats', true);
-        $this->db()->drop('faqs', true);
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->delete('faq_sortCategoriesAlphabetically')
