@@ -78,6 +78,8 @@ class Config extends \Ilch\Config\Install
             DROP TABLE `[prefix]_forum_topics`;
             DROP TABLE `[prefix]_forum_groupranking`;
             DROP TABLE `[prefix]_forum_accesses`;
+            DROP TABLE `[prefix]_forum_prefixes_items`;
+            DROP TABLE `[prefix]_forum_prefixes`;
             DROP TABLE `[prefix]_forum_items`;
             DROP TABLE `[prefix]_forum_ranks`;
             DROP TABLE `[prefix]_forum_reports`;
@@ -109,9 +111,23 @@ class Config extends \Ilch\Config\Install
                 `type` TINYINT(1) NOT NULL,
                 `title` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
-                `prefix` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_prefixes` (
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `prefix` VARCHAR(255) NOT NULL,
+                PRIMARY KEY (`id`) USING BTREE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_forum_prefixes_items` (
+                `item_id` INT(11) NOT NULL,
+                `prefix_id` INT(11) NOT NULL,
+                INDEX `FK_[prefix]_forum_prefixes_items_[prefix]_forum_items` (`item_id`) USING BTREE,
+                INDEX `FK_[prefix]_forum_prefixes_items_[prefix]_forum_prefixes` (`prefix_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_forum_prefixes_items_[prefix]_forum_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_forum_prefixes_items_[prefix]_forum_prefixes` FOREIGN KEY (`prefix_id`) REFERENCES `[prefix]_forum_prefixes` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_accesses` (
                 `item_id` INT(11) NOT NULL,
@@ -798,6 +814,116 @@ class Config extends \Ilch\Config\Install
 
                 // no break
             case "1.34.1":
+                // no break
+            case "1.34.2":
+                // no break
+            case "1.34.3":
+                // no break
+            case "1.34.4":
+                // Create new tables 'forum_prefixes' and 'forum_prefixes_items'.
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_prefixes` (
+                            `id` INT(11) NOT NULL AUTO_INCREMENT,
+                            `prefix` VARCHAR(255) NOT NULL,
+                            PRIMARY KEY (`id`) USING BTREE
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_prefixes_items` (
+                            `item_id` INT(11) NOT NULL,
+                            `prefix_id` INT(11) NOT NULL,
+                            INDEX `FK_[prefix]_forum_prefixes_items_[prefix]_forum_items` (`item_id`) USING BTREE,
+                            INDEX `FK_[prefix]_forum_prefixes_items_[prefix]_forum_prefixes` (`prefix_id`) USING BTREE,
+                            CONSTRAINT `FK_[prefix]_forum_prefixes_items_[prefix]_forum_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                            CONSTRAINT `FK_[prefix]_forum_prefixes_items_[prefix]_forum_prefixes` FOREIGN KEY (`prefix_id`) REFERENCES `[prefix]_forum_prefixes` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // Convert old data for the prefix feature to the new system.
+                // Get all non-empty values of prefix for every forum.
+                $prefixRows = $this->db()->select(['id', 'prefix'])
+                    ->from('forum_items')
+                    ->where(['type' => 1, 'prefix <>' => ''])
+                    ->execute()
+                    ->fetchList('prefix', 'id');
+
+                // Get all topics with a prefix. Ignore 0, which stands for no prefix.
+                $topicsWithPrefix = $this->db()->select(['id', 'forum_id', 'topic_prefix'])
+                    ->from('forum_topics')
+                    ->where(['topic_prefix <>' => 0])
+                    ->execute()
+                    ->fetchRows();
+
+                // Create a list of unique prefixes that need to be added to the new 'forum_prefixes' table.
+                $mapTopicIdToPrefix = [];
+                $mapItemIdToPrefixes = [];
+                $existingPrefixes = [];
+                foreach ($prefixRows as $item_id => $prefixes) {
+                    $prefixes = explode(', ', $prefixes);
+
+                    // Map the topic id to the used prefix.
+                    foreach($topicsWithPrefix as $topic) {
+                        $mapTopicIdToPrefix[$topic['id']] = $prefixes[$topic['topic_prefix']] ?? '';
+                    }
+
+                    $existingPrefixes = array_merge($existingPrefixes, $prefixes);
+                    $mapItemIdToPrefixes[$item_id] = $prefixes;
+                }
+                $uniquePrefixes = array_unique($existingPrefixes);
+
+                // Add the unique prefixes in chunks of 25 to the 'forum_prefixes' table.
+                $chunks = array_chunk($uniquePrefixes, 25);
+                foreach ($chunks as $chunk) {
+                    $this->db()->insert('forum_prefixes')
+                        ->columns(['prefix'])
+                        ->values($chunk)
+                        ->execute();
+                }
+
+                // Update the 'topic_prefix' column of the 'forum_topics' table to contain the id of the prefix.
+                $existingPrefixes = $this->db()->select(['id', 'prefix'])
+                    ->from('forum_prefixes')
+                    ->execute()
+                    ->fetchRows();
+
+                foreach ($topicsWithPrefix as $topic) {
+                    foreach ($existingPrefixes as $existingPrefix) {
+                        if (!$mapTopicIdToPrefix[$topic['id']]) {
+                            $this->db()->update('forum_topics')
+                                ->values(['topic_prefix' => 0])
+                                ->where(['id' => $topic['id']])
+                                ->execute();
+                            break;
+                        }
+                        if ($mapTopicIdToPrefix[$topic['id']] = $existingPrefix['prefix']) {
+                            $this->db()->update('forum_topics')
+                                ->values(['topic_prefix' => $existingPrefix['id']])
+                                ->where(['id' => $topic['id']])
+                                ->execute();
+                            break;
+                        }
+                    }
+                }
+
+                // Add currently allowed prefixes for the forum items.
+                $forumPrefixesItemsRows = [];
+                foreach ($mapItemIdToPrefixes as $item_id => $prefixes) {
+                    foreach ($prefixes as $prefix) {
+                        foreach ($existingPrefixes as $existingPrefix) {
+                            if ($prefix === $existingPrefix['prefix']) {
+                                $forumPrefixesItemsRows[] = ['item_id' => $item_id, 'prefix_id' => $existingPrefix['id']];
+                                break;
+                            }
+                        }
+                    }
+                }
+                $chunks = array_chunk($forumPrefixesItemsRows, 25);
+                foreach ($chunks as $chunk) {
+                    $this->db()->insert('forum_prefixes_items')
+                        ->columns(['item_id', 'prefix_id'])
+                        ->values($chunk)
+                        ->execute();
+                }
+
+                // Delete the no longer used column 'prefix' of the 'forum_items' table.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_items` DROP COLUMN `prefix`;');
                 // no break
         }
 

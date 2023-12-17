@@ -28,6 +28,12 @@ class Reports extends Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index'])
             ],
             [
+                'name' => 'menuPrefixes',
+                'active' => false,
+                'icon' => 'fa-solid fa-table-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'prefixes', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuReports',
                 'active' => true,
                 'icon' => 'fa-solid fa-flag',

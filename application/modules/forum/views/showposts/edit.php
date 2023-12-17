@@ -8,6 +8,8 @@ $forum = $this->get('forum');
 $topic = $this->get('topic');
 /** @var \Modules\Forum\Models\ForumPost $post */
 $post = $this->get('post');
+/** @var \Modules\Forum\Models\Prefix[] $prefixes */
+$prefixes = $this->get('prefixes');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
@@ -29,16 +31,20 @@ $post = $this->get('post');
                             <?=$this->getTrans('topicTitle') ?>
                         </label>
                         <?php if ($forum->getPrefix() != '') : ?>
-                            <?php $prefix = explode(',', $forum->getPrefix()); ?>
-                            <?php array_unshift($prefix, ''); ?>
+                            <?php $prefixIds = explode(',', $forum->getPrefix()); ?>
+                            <?php array_unshift($prefixIds, ''); ?>
                             <div class="col-lg-2 prefix">
                                 <select class="form-control" id="topicPrefix" name="topicPrefix">
-                                    <?php foreach ($prefix as $key => $value) : ?>
+                                    <?php foreach ($prefixIds as $prefixId) : ?>
                                         <?php $selected = ''; ?>
-                                        <?php if ($key == $topic->getTopicPrefix()) : ?>
+                                        <?php if ($prefixId == $topic->getTopicPrefix()->getId()) : ?>
                                             <?php $selected = 'selected="selected"'; ?>
                                         <?php endif; ?>
-                                        <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
+                                        <?php if ($prefixId) : ?>
+                                            <option <?=$selected ?> value="<?=$prefixId ?>"><?=$this->escape($prefixes[$prefixId]->getPrefix()) ?></option>
+                                        <?php else : ?>
+                                            <option <?=$selected ?> value="0"></option>
+                                        <?php endif; ?>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

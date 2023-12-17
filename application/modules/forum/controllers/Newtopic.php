@@ -10,17 +10,20 @@ namespace Modules\Forum\Controllers;
 use Ilch\Controller\Frontend;
 use Ilch\Date;
 use Modules\Forum\Mappers\Forum as ForumMapper;
+use Modules\Forum\Mappers\Prefixes as PrefixMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Ilch\Validation;
+use Modules\Forum\Models\Prefix as PrefixModel;
 
 class Newtopic extends Frontend
 {
     public function indexAction()
     {
         $forumMapper = new ForumMapper();
+        $prefixMapper = new PrefixMapper();
         $id = $this->getRequest()->getParam('id');
 
         if (empty($id) || !is_numeric($id)) {
@@ -72,7 +75,9 @@ class Newtopic extends Frontend
                     $dateTime = new Date();
 
                     $topicModel = new ForumTopicModel();
-                    $topicModel->setTopicPrefix($this->getRequest()->getPost('topicPrefix') ?? '')
+                    $prefixModel = new PrefixModel();
+                    $prefixModel->setId($this->getRequest()->getPost('topicPrefix') ?? 0);
+                    $topicModel->setTopicPrefix($prefixModel)
                         ->setTopicTitle($this->getRequest()->getPost('topicTitle'))
                         ->setForumId($id)
                         ->setCreatorId($this->getUser()->getId())
@@ -102,5 +107,6 @@ class Newtopic extends Frontend
 
         $this->getView()->set('cat', $cat);
         $this->getView()->set('forum', $forum);
+        $this->getView()->set('prefixes', $prefixMapper->getPrefixes());
     }
 }
