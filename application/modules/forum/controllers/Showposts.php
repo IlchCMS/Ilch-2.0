@@ -66,8 +66,8 @@ class Showposts extends Frontend
         $topic = $topicMapper->getTopicById($topicId);
 
         $prefix = '';
-        if ($forum->getPrefix() != '' && $topic->getTopicPrefix()->getId() > 0) {
-            $prefixIds = explode(',', $forum->getPrefix());
+        if ($forum->getPrefixes() != '' && $topic->getTopicPrefix()->getId() > 0) {
+            $prefixIds = explode(',', $forum->getPrefixes());
             array_unshift($prefixIds, '');
 
             foreach ($prefixIds as $prefixId) {

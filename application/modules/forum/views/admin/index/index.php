@@ -21,7 +21,7 @@ function rec(ForumItem $item, \Ilch\View $obj)
             <input type="hidden" class="hidden_title" name="items[' . $item->getId() . '][title]" value="' . $item->getTitle() . '" />
             <input type="hidden" class="hidden_desc" name="items[' . $item->getId() . '][desc]" value="' . $item->getDesc() . '" />
             <input type="hidden" class="hidden_type" name="items[' . $item->getId() . '][type]" value="' . $item->getType() . '" />
-            <input type="hidden" class="hidden_prefixes" name="items[' . $item->getId() . '][prefixes]" value="' . $item->getPrefix() . '" />
+            <input type="hidden" class="hidden_prefixes" name="items[' . $item->getId() . '][prefixes]" value="' . $item->getPrefixes() . '" />
             <input type="hidden" class="hidden_read_access" name="items[' . $item->getId() . '][readAccess]" value="' . $item->getReadAccess() . '" />
             <input type="hidden" class="hidden_reply_access" name="items[' . $item->getId() . '][replyAccess]" value="' . $item->getReplyAccess() . '" />
             <input type="hidden" class="hidden_create_access" name="items[' . $item->getId() . '][createAccess]" value="' . $item->getCreateAccess() . '" />

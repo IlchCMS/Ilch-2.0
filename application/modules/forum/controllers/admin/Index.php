@@ -121,7 +121,7 @@ class Index extends Admin
                         $forumItem->setDesc($item['desc']);
                         // Don't try to store these values for a category. This avoids storing "undefined" from JS in the database.
                         if ($item['type'] != 0) {
-                            $forumItem->setPrefix($item['prefixes'] ?? '');
+                            $forumItem->setPrefixes($item['prefixes'] ?? '');
                             $forumItem->setReadAccess($item['readAccess']);
                             $forumItem->setReplyAccess($item['replyAccess']);
                             $forumItem->setCreateAccess($item['createAccess']);

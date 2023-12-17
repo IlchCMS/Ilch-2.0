@@ -93,7 +93,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -162,7 +162,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -242,7 +242,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -289,7 +289,7 @@ class Forum extends Mapper
         $itemModel->setTitle($itemRow['title']);
         $itemModel->setDesc($itemRow['description']);
         $itemModel->setParentId($itemRow['parent_id']);
-        $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+        $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
         $itemModel->setReadAccess($itemRow['read_access'] ?? '');
         $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
         $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -362,7 +362,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -404,7 +404,7 @@ class Forum extends Mapper
         $itemModel->setTitle($itemRow['title']);
         $itemModel->setDesc($itemRow['description']);
         $itemModel->setParentId($itemRow['parent_id']);
-        $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+        $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
         $itemModel->setReadAccess($itemRow['read_access'] ?? '');
         $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
         $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -450,7 +450,7 @@ class Forum extends Mapper
         $itemModel->setTitle($itemRow['title']);
         $itemModel->setDesc($itemRow['description']);
         $itemModel->setParentId($itemRow['parent_id']);
-        $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+        $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
         $itemModel->setReadAccess($itemRow['read_access'] ?? '');
         $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
         $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -590,7 +590,7 @@ class Forum extends Mapper
         $itemModel->setTitle($itemRows['title']);
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
-        $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+        $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
 
         return $itemModel;
     }
@@ -628,7 +628,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -676,7 +676,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefixes'] ?? '');
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -887,7 +887,7 @@ class Forum extends Mapper
                 ->where(['item_id' => $itemId])
                 ->execute();
 
-            $prefixIds = array_unique(explode(',', $forumItem->getPrefix() ?? ''));
+            $prefixIds = array_unique(explode(',', $forumItem->getPrefixes() ?? ''));
 
             $preparedRows = [];
             foreach ($prefixIds as $prefixId) {

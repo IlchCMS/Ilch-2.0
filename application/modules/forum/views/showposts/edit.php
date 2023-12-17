@@ -30,8 +30,8 @@ $prefixes = $this->get('prefixes');
                         <label for="topicTitle" class="col-lg-2 control-label">
                             <?=$this->getTrans('topicTitle') ?>
                         </label>
-                        <?php if ($forum->getPrefix() != '') : ?>
-                            <?php $prefixIds = explode(',', $forum->getPrefix()); ?>
+                        <?php if ($forum->getPrefixes() != '') : ?>
+                            <?php $prefixIds = explode(',', $forum->getPrefixes()); ?>
                             <?php array_unshift($prefixIds, ''); ?>
                             <div class="col-lg-2 prefix">
                                 <select class="form-control" id="topicPrefix" name="topicPrefix">

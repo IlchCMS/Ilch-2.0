@@ -91,13 +91,14 @@ $postsPerPage = $this->get('postsPerPage');
                             ">
                                 <dt>
                                     <?php
-                                    if ($forum->getPrefix() != '' && $topic->getTopicPrefix()->getId() > 0) {
-                                        $prefixIds = explode(',', $forum->getPrefix());
+                                    if ($forum->getPrefixes() != '' && $topic->getTopicPrefix()->getId() > 0) {
+                                        $prefixIds = explode(',', $forum->getPrefixes());
                                         array_unshift($prefixIds, '');
 
                                         foreach ($prefixIds as $prefixId) {
                                             if ($topic->getTopicPrefix()->getId() == $prefixId) {
                                                 echo '<span class="label label-default">' . $this->escape($topic->getTopicPrefix()->getPrefix()) . '</span>';
+                                                break;
                                             }
                                         }
                                     }

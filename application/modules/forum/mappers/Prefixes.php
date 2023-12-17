@@ -56,11 +56,11 @@ class Prefixes extends Mapper
             return null;
         }
 
-        $prefix = new PrefixModel();
-        $prefix->setId($prefixesRow['id']);
-        $prefix->setPrefix($prefixesRow['prefix']);
+        $prefixModel = new PrefixModel();
+        $prefixModel->setId($prefixesRow['id']);
+        $prefixModel->setPrefix($prefixesRow['prefix']);
 
-        return $prefix;
+        return $prefixModel;
     }
 
     /**

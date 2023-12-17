@@ -1,11 +1,14 @@
 <?php
 
-/** @var \Ilch\View $this */
+/** @var View $this */
 
 use Ilch\Date;
+use Ilch\View;
 use Modules\Forum\Mappers\Forum as ForumMapper;
+use Modules\Forum\Models\ForumItem;
+use Modules\Forum\Models\ForumStatistics;
 
-/** @var \Modules\Forum\Models\ForumItem[]|null $forumItems */
+/** @var ForumItem[]|null $forumItems */
 $forumItems = $this->get('forumItems');
 /** @var Modules\User\Models\User[] $usersOnlineList */
 $usersOnlineList = $this->get('usersOnlineList');
@@ -15,12 +18,12 @@ $usersWhoWasOnline = $this->get('usersWhoWasOnline');
 $usersOnline = $this->get('usersOnline');
 /** @var int $guestOnline */
 $guestOnline = $this->get('guestOnline');
-/** @var \Modules\Forum\Models\ForumStatistics $forumStatistics */
+/** @var ForumStatistics $forumStatistics */
 $forumStatistics = $this->get('forumStatics');
 /** @var array $onlineUsersHighestRankedGroup */
 $onlineUsersHighestRankedGroup = $this->get('onlineUsersHighestRankedGroup');
 
-function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
+function rec(ForumItem $item, View $obj, ?int $i)
 {
     $DESCPostorder = $obj->get('DESCPostorder');
     $postsPerPage = $obj->get('postsPerPage');
