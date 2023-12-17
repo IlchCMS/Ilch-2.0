@@ -195,7 +195,7 @@ $(document).ready (
                 $('.dyn').html(menuHtml);
                 <?php
                 $prefixes = [];
-                foreach ($this->get('prefixes') as $prefix) {
+                foreach ($this->get('prefixes') ?? [] as $prefix) {
                     $prefixes[] = ['value' => $prefix->getId(), 'label' => $prefix->getPrefix()];
                 }
                 ?>
