@@ -61,7 +61,7 @@ $readAccess = $this->get('readAccess');
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <?php foreach ($categories as $category) :
-                        $countFaqs = count($faqMapper->getFaqs(['f.cat_id' => $category->getId()], ['f.id' => 'ASC'], $readAccess));
+                        $countFaqs = count($faqMapper->getFaqs(['f.cat_id' => $category->getId()], ['f.id' => 'ASC'], $readAccess) ?? []);
                         if ($category->getId() == $this->getRequest()->getParam('catId')) {
                             $active = 'class="active"';
                         } else {
