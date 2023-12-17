@@ -891,7 +891,9 @@ class Forum extends Mapper
 
             $preparedRows = [];
             foreach ($prefixIds as $prefixId) {
-                $preparedRows[] = [$itemId, $prefixId];
+                if ($prefixId) {
+                    $preparedRows[] = [$itemId, $prefixId];
+                }
             }
 
             if (count($preparedRows)) {
