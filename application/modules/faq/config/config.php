@@ -89,20 +89,20 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_faqs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
-            // no break
+                // no break
             case "1.3.0":
             case "1.4.0":
             case "1.5.0":
                 // Add read_access column
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
-            // no break
+                // no break
             case "1.6.0":
             case "1.7.0":
                 // Update description
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'faq' AND `locale` = '%s';", $value['description'], $key));
                 }
-            // no break
+                // no break
             case "1.8.0":
                 $this->db()->update('modules')->values(['icon_small' => $this->config['icon_small']])->where(['key' => $this->config['key']])->execute();
 
@@ -185,6 +185,11 @@ class Config extends \Ilch\Config\Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_faqs` ADD INDEX `FK_[prefix]_faqs_[prefix]_faqs_cats` (`cat_id`) USING BTREE;');
                 $this->db()->query('ALTER TABLE `[prefix]_faqs` ADD CONSTRAINT `FK_[prefix]_faqs_[prefix]_faqs_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_faqs_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                // no break
+            case "1.9.0":
+                // no break
+            case "1.9.1":
+                // no break
         }
 
         return 'Update function executed.';
