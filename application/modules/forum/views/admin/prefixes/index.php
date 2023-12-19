@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 use Modules\Forum\Models\Prefix;
 
 ?>

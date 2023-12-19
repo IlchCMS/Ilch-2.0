@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -28,7 +29,7 @@ class Prefixes extends Mapper
         }
 
         $prefixes = [];
-        foreach($prefixesRows as $prefixesRow) {
+        foreach ($prefixesRows as $prefixesRow) {
             $prefixModel = new PrefixModel();
             $prefixModel->setId($prefixesRow['id']);
             $prefixModel->setPrefix($prefixesRow['prefix']);

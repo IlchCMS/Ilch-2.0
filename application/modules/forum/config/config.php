@@ -95,7 +95,7 @@ class Config extends \Ilch\Config\Install
             DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'forum';");
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_forum_groupranking` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -814,11 +814,8 @@ class Config extends \Ilch\Config\Install
 
                 // no break
             case "1.34.1":
-                // no break
             case "1.34.2":
-                // no break
             case "1.34.3":
-                // no break
             case "1.34.4":
                 // Create new tables 'forum_prefixes' and 'forum_prefixes_items'.
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_forum_prefixes` (
@@ -859,7 +856,7 @@ class Config extends \Ilch\Config\Install
                     $prefixes = explode(', ', $prefixes);
 
                     // Map the topic id to the used prefix.
-                    foreach($topicsWithPrefix as $topic) {
+                    foreach ($topicsWithPrefix as $topic) {
                         $mapTopicIdToPrefix[$topic['id']] = $prefixes[$topic['topic_prefix']] ?? '';
                     }
 
@@ -924,7 +921,6 @@ class Config extends \Ilch\Config\Install
 
                 // Delete the no longer used column 'prefix' of the 'forum_items' table.
                 $this->db()->query('ALTER TABLE `[prefix]_forum_items` DROP COLUMN `prefix`;');
-                // no break
         }
 
         return '"' . $this->config['key'] . '" Update function executed.';
