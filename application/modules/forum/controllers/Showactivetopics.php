@@ -47,7 +47,7 @@ class Showactivetopics extends Frontend
             if ($post->getDateCreated() < $date->format('Y-m-d H:i:s', true) && $post->getDateCreated() > $dateLessHours->format('Y-m-d H:i:s', true)) {
                 $topicsToShow[] = [
                     'topic' => $topics[$post->getTopicId()],
-                    'forumPrefix' => $forums[$topics[$post->getTopicId()]->getForumId()]->getPrefix(),
+                    'forumPrefix' => $forums[$topics[$post->getTopicId()]->getForumId()]->getPrefixes(),
                     'lastPost' => $post,
                 ];
             }

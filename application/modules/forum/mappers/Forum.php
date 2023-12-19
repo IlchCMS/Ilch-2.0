@@ -41,11 +41,13 @@ class Forum extends Mapper
      */
     public function getForumItemsByParentIds(array $itemIds, int $userId = null): array
     {
-        $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description', 'i.prefix'])
+        $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description'])
             ->from(['i' => 'forum_items'])
             ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
             ->join(['t' => 'forum_topics'], 'i.id = t.forum_id', 'LEFT', ['topicCount' => 'COUNT(DISTINCT t.id)'])
             ->join(['p' => 'forum_posts'], 'i.id = p.forum_id', 'LEFT', ['postCount' => 'COUNT(DISTINCT p.id)'])
             ->where(['i.parent_id' => $itemIds])
@@ -91,7 +93,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefix']);
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -117,11 +119,13 @@ class Forum extends Mapper
      */
     public function getForumItemsAdmincenterByParentIds(array $itemIds): array
     {
-        $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description', 'i.prefix'])
+        $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description'])
             ->from(['i' => 'forum_items'])
             ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
             ->where(['i.parent_id' => $itemIds])
             ->group(['i.id'])
             ->order(['i.sort' => 'ASC'])
@@ -158,7 +162,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefix']);
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -186,11 +190,13 @@ class Forum extends Mapper
             $groupIds[] = $group->getId();
         }
 
-        $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description', 'i.prefix'])
+        $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description'])
             ->from(['i' => 'forum_items'])
             ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0, 'aa.group_id' => $groupIds], 'LEFT', ['read_access' => 'aa.group_id'])
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1, 'ab.group_id' => $groupIds], 'LEFT', ['reply_access' => 'ab.group_id'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2, 'ac.group_id' => $groupIds], 'LEFT', ['create_access' => 'ac.group_id'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
             ->join(['t' => 'forum_topics'], 'i.id = t.forum_id', 'LEFT', ['topicCount' => 'COUNT(DISTINCT t.id)'])
             ->join(['p' => 'forum_posts'], 'i.id = p.forum_id', 'LEFT', ['postCount' => 'COUNT(DISTINCT p.id)'])
             ->where(['i.parent_id' => $itemIds], 'or')
@@ -236,7 +242,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefix']);
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -260,16 +266,18 @@ class Forum extends Mapper
      */
     public function getForumById(int $id): ?ForumItem
     {
-        $itemRow = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
-                ->from(['i' => 'forum_items'])
-                ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
-                ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
-                ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
-                ->where(['i.id' => $id])
-                ->group(['i.id'])
-                ->order(['i.sort' => 'DESC'])
-                ->execute()
-                ->fetchAssoc();
+        $itemRow = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id'])
+            ->from(['i' => 'forum_items'])
+            ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
+            ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
+            ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
+            ->where(['i.id' => $id])
+            ->group(['i.id'])
+            ->order(['i.sort' => 'DESC'])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($itemRow)) {
             return null;
@@ -281,7 +289,7 @@ class Forum extends Mapper
         $itemModel->setTitle($itemRow['title']);
         $itemModel->setDesc($itemRow['description']);
         $itemModel->setParentId($itemRow['parent_id']);
-        $itemModel->setPrefix($itemRow['prefix']);
+        $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
         $itemModel->setReadAccess($itemRow['read_access'] ?? '');
         $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
         $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -329,11 +337,13 @@ class Forum extends Mapper
             $groupIds[] = $group->getId();
         }
 
-        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
+        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id'])
             ->from(['i' => 'forum_items'])
             ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0, 'aa.group_id' => $groupIds], 'LEFT', ['read_access' => 'aa.group_id'])
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1, 'ab.group_id' => $groupIds], 'LEFT', ['reply_access' => 'ab.group_id'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2, 'ac.group_id' => $groupIds], 'LEFT', ['create_access' => 'ac.group_id'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
             ->where(['i.id' => $ids], 'or')
             ->group(['i.id'])
             ->order(['i.sort' => 'DESC'])
@@ -352,7 +362,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefix']);
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -373,10 +383,12 @@ class Forum extends Mapper
         $itemRow = $this->db()->select()
             ->fields(['t.id'])
             ->from(['t' => 'forum_topics'])
-            ->join(['i' => 'forum_items'], 'i.id = t.forum_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.prefix', 'i.parent_id'])
+            ->join(['i' => 'forum_items'], 'i.id = t.forum_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id'])
             ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
             ->where(['t.id' => $topicId])
             ->group(['i.id'])
             ->execute()
@@ -392,7 +404,7 @@ class Forum extends Mapper
         $itemModel->setTitle($itemRow['title']);
         $itemModel->setDesc($itemRow['description']);
         $itemModel->setParentId($itemRow['parent_id']);
-        $itemModel->setPrefix($itemRow['prefix']);
+        $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
         $itemModel->setReadAccess($itemRow['read_access'] ?? '');
         $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
         $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -417,10 +429,12 @@ class Forum extends Mapper
         $itemRow = $this->db()->select()
             ->fields(['t.id'])
             ->from(['t' => 'forum_topics'])
-            ->join(['i' => 'forum_items'], 'i.id = t.forum_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.prefix', 'i.parent_id'])
+            ->join(['i' => 'forum_items'], 'i.id = t.forum_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id'])
             ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0, 'aa.group_id' => $groupIds], 'LEFT', ['read_access' => 'aa.group_id'])
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1, 'ab.group_id' => $groupIds], 'LEFT', ['reply_access' => 'ab.group_id'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2, 'ac.group_id' => $groupIds], 'LEFT', ['create_access' => 'ac.group_id'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
             ->where(['t.id' => $topicId])
             ->group(['i.id'])
             ->execute()
@@ -436,7 +450,7 @@ class Forum extends Mapper
         $itemModel->setTitle($itemRow['title']);
         $itemModel->setDesc($itemRow['description']);
         $itemModel->setParentId($itemRow['parent_id']);
-        $itemModel->setPrefix($itemRow['prefix']);
+        $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
         $itemModel->setReadAccess($itemRow['read_access'] ?? '');
         $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
         $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -557,12 +571,14 @@ class Forum extends Mapper
      */
     public function getCatByParentId(int $id): ?ForumItem
     {
-        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
-                ->from(['i' => 'forum_items'])
-                ->where(['id' => $id])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchAssoc();
+        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id'])
+            ->from(['i' => 'forum_items'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
+            ->where(['i.id' => $id])
+            ->order(['i.sort' => 'ASC'])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($itemRows)) {
             return null;
@@ -574,7 +590,7 @@ class Forum extends Mapper
         $itemModel->setTitle($itemRows['title']);
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
-        $itemModel->setPrefix($itemRows['prefix']);
+        $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
 
         return $itemModel;
     }
@@ -589,11 +605,13 @@ class Forum extends Mapper
     public function getForumItems(): ?array
     {
         $items = [];
-        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
+        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id'])
             ->from(['i' => 'forum_items'])
             ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1], 'LEFT', ['reply_access' => 'GROUP_CONCAT(DISTINCT ab.group_id)'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2], 'LEFT', ['create_access' => 'GROUP_CONCAT(DISTINCT ac.group_id)'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
             ->group(['i.id'])
             ->order(['i.sort' => 'ASC'])
             ->execute()
@@ -610,7 +628,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefix']);
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -635,11 +653,13 @@ class Forum extends Mapper
         }
 
         $items = [];
-        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.prefix'])
+        $itemRows = $this->db()->select(['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id'])
             ->from(['i' => 'forum_items'])
             ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0, 'aa.group_id' => $groupIds], 'LEFT', ['read_access' => 'aa.group_id'])
             ->join(['ab' => 'forum_accesses'], ['i.id = ab.item_id', 'ab.access_type' => 1, 'ab.group_id' => $groupIds], 'LEFT', ['reply_access' => 'ab.group_id'])
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2, 'ac.group_id' => $groupIds], 'LEFT', ['create_access' => 'ac.group_id'])
+            ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
+            ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
             ->group(['i.id'])
             ->order(['i.sort' => 'ASC'])
             ->execute()
@@ -656,7 +676,7 @@ class Forum extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setPrefix($itemRow['prefix']);
+            $itemModel->setPrefixes($itemRow['prefixes'] ?? '');
             $itemModel->setReadAccess($itemRow['read_access'] ?? '');
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
@@ -836,7 +856,6 @@ class Forum extends Mapper
             'parent_id' => $forumItem->getParentId(),
             'type' => $forumItem->getType(),
             'description' => $forumItem->getDesc(),
-            'prefix' => $forumItem->getPrefix(),
         ];
 
         foreach ($fields as $key => $value) {
@@ -862,8 +881,33 @@ class Forum extends Mapper
                 ->execute();
         }
 
-        // Store access rights if the item is a forum and not a category.
         if ($forumItem->getType() == 1) {
+            // Store prefixes that are allowed for the forum item if the item is a forum and not a category.
+            $this->db()->delete('forum_prefixes_items')
+                ->where(['item_id' => $itemId])
+                ->execute();
+
+            $prefixIds = array_unique(explode(',', $forumItem->getPrefixes() ?? ''));
+
+            $preparedRows = [];
+            foreach ($prefixIds as $prefixId) {
+                if ($prefixId) {
+                    $preparedRows[] = [$itemId, $prefixId];
+                }
+            }
+
+            if (count($preparedRows)) {
+                // Add prefixes in chunks of 25 to the table.
+                $chunks = array_chunk($preparedRows, 25);
+                foreach ($chunks as $chunk) {
+                    $this->db()->insert('forum_prefixes_items')
+                        ->columns(['item_id', 'prefix_id'])
+                        ->values($chunk)
+                        ->execute();
+                }
+            }
+
+            // Store access rights if the item is a forum and not a category.
             $this->db()->delete('forum_accesses')
                 ->where(['item_id' => $itemId])
                 ->execute();

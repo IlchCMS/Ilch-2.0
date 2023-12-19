@@ -29,6 +29,12 @@ class Settings extends Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index'])
             ],
             [
+                'name' => 'menuPrefixes',
+                'active' => false,
+                'icon' => 'fa-solid fa-table-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'prefixes', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuReports',
                 'active' => false,
                 'icon' => 'fa-solid fa-flag',
@@ -49,9 +55,9 @@ class Settings extends Admin
         ];
 
         if ($this->getRequest()->getActionName() === 'groupappearance') {
-            $items[3][0]['active'] = true;
+            $items[4][0]['active'] = true;
         } else {
-            $items[3]['active'] = true;
+            $items[4]['active'] = true;
         }
 
         $this->getLayout()->addMenu(

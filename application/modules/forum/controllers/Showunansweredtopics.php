@@ -44,7 +44,7 @@ class Showunansweredtopics extends Frontend
         foreach ($posts ?? [] as $post) {
             $topicsToShow[] = [
                 'topic' => $topics[$post->getTopicId()],
-                'forumPrefix' => $forums[$topics[$post->getTopicId()]->getForumId()]->getPrefix(),
+                'forumPrefix' => $forums[$topics[$post->getTopicId()]->getForumId()]->getPrefixes(),
                 'lastPost' => $post,
             ];
         }

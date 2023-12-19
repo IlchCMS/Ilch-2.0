@@ -13,6 +13,7 @@ use Ilch\Pagination;
 use Modules\Forum\Models\ForumTopic as TopicModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Models\ForumPost as PostModel;
+use Modules\Forum\Models\Prefix as PrefixModel;
 
 class Topic extends Mapper
 {
@@ -42,6 +43,7 @@ class Topic extends Mapper
         $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)', 'countPosts' => 'COUNT(posts.id)'])
             ->from(['topics' => 'forum_topics'])
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
+            ->join(['prefix' => 'forum_prefixes'], 'topics.topic_prefix = prefix.id', 'LEFT', ['prefix.prefix'])
             ->where(['topics.forum_id' => $ids])
             ->group(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
             ->order(['topics.type' => 'DESC', 'latest_post' => 'DESC']);
@@ -81,7 +83,10 @@ class Topic extends Mapper
                 }
             }
 
-            $topicModel->setTopicPrefix($topicRow['topic_prefix']);
+            $prefixModel = new PrefixModel();
+            $prefixModel->setId($topicRow['topic_prefix']);
+            $prefixModel->setPrefix($topicRow['prefix'] ?? '');
+            $topicModel->setTopicPrefix($prefixModel);
             $topicModel->setTopicTitle($topicRow['topic_title']);
             $topicModel->setDateCreated($topicRow['date_created']);
             $topicModel->setCountPosts($topicRow['countPosts']);
@@ -124,6 +129,7 @@ class Topic extends Mapper
         $sql = $this->db()->select(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
             ->from(['topics' => 'forum_topics'])
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT', ['countPosts' => 'COUNT(posts.id)'])
+            ->join(['prefix' => 'forum_prefixes'], 'topics.topic_prefix = prefix.id', 'LEFT', ['prefix.prefix'])
             ->group(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
             ->order(['topics.type' => 'DESC', 'topics.id' => 'DESC']);
         if ($pagination !== null) {
@@ -165,7 +171,10 @@ class Topic extends Mapper
                 }
             }
 
-            $topicModel->setTopicPrefix($topicRow['topic_prefix']);
+            $prefixModel = new PrefixModel();
+            $prefixModel->setId($topicRow['topic_prefix']);
+            $prefixModel->setPrefix($topicRow['prefix']);
+            $topicModel->setTopicPrefix($prefixModel);
             $topicModel->setTopicTitle($topicRow['topic_title']);
             $topicModel->setDateCreated($topicRow['date_created']);
             $topicModel->setCountPosts($topicRow['countPosts']);
@@ -183,11 +192,13 @@ class Topic extends Mapper
      */
     public function getTopicById(int $id): ?TopicModel
     {
-        $topic = $this->db()->select('*')
-            ->from('forum_topics')
-            ->where(['id' => $id])
+        $topic = $this->db()->select(['topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.creator_id', 'topics.visits', 'topics.date_created', 'topics.status'])
+            ->from(['topics' => 'forum_topics'])
+            ->join(['prefix' => 'forum_prefixes'], 'topics.topic_prefix = prefix.id', 'LEFT', ['prefix.prefix'])
+            ->where(['topics.id' => $id])
             ->execute()
             ->fetchAssoc();
+
         if (empty($topic)) {
             return null;
         }
@@ -195,7 +206,10 @@ class Topic extends Mapper
         $topicModel = new TopicModel();
         $userMapper = new UserMapper();
         $topicModel->setId($topic['id']);
-        $topicModel->setTopicPrefix($topic['topic_prefix']);
+        $prefixModel = new PrefixModel();
+        $prefixModel->setId($topic['topic_prefix']);
+        $prefixModel->setPrefix($topic['prefix'] ?? '');
+        $topicModel->setTopicPrefix($prefixModel);
         $topicModel->setTopicTitle($topic['topic_title']);
         $topicModel->setCreatorId($topic['creator_id']);
         $topicModel->setVisits($topic['visits']);
@@ -299,7 +313,7 @@ class Topic extends Mapper
         } else {
             return $this->db()->insert('forum_topics')
                 ->values([
-                    'topic_prefix' => $model->getTopicPrefix(),
+                    'topic_prefix' => $model->getTopicPrefix()->getId(),
                     'topic_title' => $model->getTopicTitle(),
                     'forum_id' => $model->getForumId(),
                     'creator_id' => $model->getCreatorId(),

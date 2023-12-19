@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -28,7 +29,7 @@ class Rank extends Model
      * @var string
      */
     protected $title;
-    
+
     /**
      * The number of posts needed for this rank.
      *
@@ -55,7 +56,7 @@ class Rank extends Model
     {
         return $this->id;
     }
-    
+
     /**
      * Sets the title.
      *

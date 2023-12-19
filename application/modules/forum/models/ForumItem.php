@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -102,11 +103,11 @@ class ForumItem extends Model
     protected $posts;
 
     /**
-     * Prefix of the item.
+     * Prefixes of the item.
      *
      * @var string
      */
-    protected $prefix;
+    protected $prefixes;
 
     /**
      * Gets the id.
@@ -408,24 +409,24 @@ class ForumItem extends Model
     }
 
     /**
-     * Gets the prefix.
+     * Gets the prefixes.
      *
      * @return string|null
      */
-    public function getPrefix(): ?string
+    public function getPrefixes(): ?string
     {
-        return $this->prefix;
+        return $this->prefixes;
     }
 
     /**
-     * Sets the prefix.
+     * Sets the prefixes.
      *
-     * @param string $prefix
+     * @param string $prefixes
      * @return $this
      */
-    public function setPrefix(string $prefix): ForumItem
+    public function setPrefixes(string $prefixes): ForumItem
     {
-        $this->prefix = $prefix;
+        $this->prefixes = $prefixes;
 
         return $this;
     }

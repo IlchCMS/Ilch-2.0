@@ -8,11 +8,11 @@
 namespace Modules\Forum\Controllers\Admin;
 
 use Ilch\Controller\Admin;
-use Modules\Forum\Mappers\Rank as RankMapper;
-use Modules\Forum\Models\Rank as RankModel;
 use Ilch\Validation;
+use Modules\Forum\Mappers\Prefixes as PrefixMapper;
+use Modules\Forum\Models\Prefix as PrefixModel;
 
-class Ranks extends Admin
+class Prefixes extends Admin
 {
     public function init()
     {
@@ -27,19 +27,19 @@ class Ranks extends Admin
                 'name' => 'menuRanks',
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index']),
-                [
-                    'name' => 'add',
-                    'active' => false,
-                    'icon' => 'fa-solid fa-circle-plus',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'treat'])
-                ]
+                'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index'])
             ],
             [
                 'name' => 'menuPrefixes',
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'prefixes', 'action' => 'index'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'prefixes', 'action' => 'index']),
+                [
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa-solid fa-circle-plus',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'prefixes', 'action' => 'treat'])
+                ]
             ],
             [
                 'name' => 'menuReports',
@@ -56,9 +56,9 @@ class Ranks extends Admin
         ];
 
         if ($this->getRequest()->getActionName() === 'treat') {
-            $items[1][0]['active'] = true;
+            $items[2][0]['active'] = true;
         } else {
-            $items[1]['active'] = true;
+            $items[2]['active'] = true;
         }
 
         $this->getLayout()->addMenu(
@@ -71,47 +71,45 @@ class Ranks extends Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('ranks'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('prefixes'), ['action' => 'index']);
 
-        $rankMapper = new RankMapper();
+        $prefixMapper = new PrefixMapper();
 
-        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_forumRanks')) {
-            foreach ($this->getRequest()->getPost('check_forumRanks') as $rankId) {
-                $rankMapper->delete($rankId);
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_forumPrefixes')) {
+            foreach ($this->getRequest()->getPost('check_forumPrefixes') as $prefixId) {
+                $prefixMapper->deletebyId($prefixId);
             }
         }
 
-        $this->getView()->set('ranks', $rankMapper->getRanks());
+        $this->getView()->set('prefixes', $prefixMapper->getPrefixes());
     }
 
     public function treatAction()
     {
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
-                    ->add($this->getTranslator()->trans('ranks'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('prefixes'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
-                    ->add($this->getTranslator()->trans('ranks'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('prefixes'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        $rankModel = new RankModel();
-        $rankMapper = new RankMapper();
+        $prefixModel = new PrefixModel();
+        $prefixMapper = new PrefixMapper();
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'title' => 'required',
-                'posts' => 'required|numeric|integer|min:0|max:2147483647'
+                'prefix' => 'required'
             ]);
 
             if ($validation->isValid()) {
-                $rankModel->setId($this->getRequest()->getParam('id'));
-                $rankModel->setTitle($this->getRequest()->getPost('title'));
-                $rankModel->setPosts($this->getRequest()->getPost('posts'));
-                $rankMapper->save($rankModel);
+                $prefixModel->setId($this->getRequest()->getParam('id'));
+                $prefixModel->setPrefix($this->getRequest()->getPost('prefix'));
+                $prefixMapper->save($prefixModel);
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
@@ -125,14 +123,15 @@ class Ranks extends Admin
                 ->to(['action' => 'treat']);
         }
 
-        $this->getView()->set('rank', ($this->getRequest()->getParam('id')) ? $rankMapper->getRankById($this->getRequest()->getParam('id')) : null);
+        $this->getView()->set('prefix', ($this->getRequest()->getParam('id')) ? $prefixMapper->getPrefixById($this->getRequest()->getParam('id')) : null);
     }
 
     public function deleteAction()
     {
         if ($this->getRequest()->isSecure()) {
-            $rankMapper = new RankMapper();
-            $rankMapper->delete($this->getRequest()->getParam('id'));
+            $prefixMapper = new PrefixMapper();
+
+            $prefixMapper->deleteById($this->getRequest()->getParam('id'));
 
             $this->redirect()
                 ->withMessage('deleteSuccess')
