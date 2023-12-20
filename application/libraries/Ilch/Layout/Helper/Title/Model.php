@@ -41,15 +41,14 @@ class Model
             return $config->get('page_title');
         }
 
-        krsort($this->data);
+        asort($this->data);
 
         $html = '';
         foreach ($this->data as $value) {
             $html .= $value;
             $html .= ' | ';
         }
-        $configTitle = $config->get('page_title');
 
-        return $html . $configTitle;
+        return rtrim($html, ' | ');
     }
 }
