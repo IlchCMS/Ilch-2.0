@@ -1,5 +1,4 @@
 <link href="<?=$this->getModuleUrl('static/css/calendar.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_3/lib/main.min.css') ?>" rel="stylesheet">
 
 <div class="calendar">
     <div id="loading"></div>
@@ -7,8 +6,8 @@
     <div id='calendar'></div>
 </div>
 
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_3/lib/main.min.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar_5_11_3/lib/locales-all.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-6.1.10/dist/index.global.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-6.1.10/packages/core/locales-all.global.min.js') ?>"></script>
 <script>
     if (typeof languagecalendar === 'undefined') {
         var languagecalendar = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
@@ -42,7 +41,7 @@
             headerToolbar: {
                 left: 'prev,next today,list,listSevenDay',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay icalButton'
+                right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay icalButton'
             },
             views: {
                 listSevenDay: {
