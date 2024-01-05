@@ -7,6 +7,7 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Ilch\Validation;
 use Modules\Admin\Mappers\Module as ModuleMapper;
 use Modules\Admin\Mappers\LayoutAdvSettings as LayoutAdvSettingsMapper;
 use Modules\Admin\Models\Layout as LayoutModel;
@@ -217,15 +218,33 @@ class Layouts extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings']);
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('favicon', $this->getRequest()->getPost('favicon'))
-                ->set('apple_icon', $this->getRequest()->getPost('appleIcon'))
-                ->set('page_title', $this->getRequest()->getPost('pageTitle'))
-                ->set('page_title_order', $this->getRequest()->getPost('pageTitleOrder'))
-                ->set('page_title_moduldata_separator', $this->getRequest()->getPost('pageTitleModuldataSeparator'))
-                ->set('page_title_moduldata_order', $this->getRequest()->getPost('pageTitleModuldataOrder'))
-                ->set('keywords', $this->getRequest()->getPost('keywords'))
-                ->set('description', $this->getRequest()->getPost('description'));
-            $this->addMessage('saveSuccess');
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'pageTitle' => 'required',
+                'pageTitleOrder' => 'required',
+                'pageTitleModuldataSeparator' => 'required',
+                'pageTitleModuldataOrder' => 'required|numeric|min:0|max:1',
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('favicon', $this->getRequest()->getPost('favicon'))
+                    ->set('apple_icon', $this->getRequest()->getPost('appleIcon'))
+                    ->set('page_title', $this->getRequest()->getPost('pageTitle'))
+                    ->set('page_title_order', $this->getRequest()->getPost('pageTitleOrder'))
+                    ->set('page_title_moduldata_separator', $this->getRequest()->getPost('pageTitleModuldataSeparator'))
+                    ->set('page_title_moduldata_order', $this->getRequest()->getPost('pageTitleModuldataOrder'))
+                    ->set('keywords', $this->getRequest()->getPost('keywords'))
+                    ->set('description', $this->getRequest()->getPost('description'));
+
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'settings']);
+            }
+
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'settings']);
         }
 
         $this->getView()->set('favicon', $this->getConfig()->get('favicon'))
