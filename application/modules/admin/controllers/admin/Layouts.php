@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -42,7 +43,6 @@ class Layouts extends \Ilch\Controller\Admin
                 ]
             ]
         ];
-
         if ($this->getRequest()->getActionName() === 'index') {
             $items[0]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'search' || $this->getRequest()->getActionName() === 'show') {
@@ -55,24 +55,19 @@ class Layouts extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
-            'menuLayouts',
-            $items
-        );
+        $this->getLayout()->addMenu('menuLayouts', $items);
     }
 
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index']);
-
         $layouts = [];
         $versionsOfLayouts = [];
         $modulesNotInstalled = [];
-        foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
+        foreach (glob(APPLICATION_PATH . '/layouts/*') as $layoutPath) {
             if (is_dir($layoutPath)) {
-                $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
                 $model = new LayoutModel();
                 $model->setKey(basename($layoutPath));
@@ -101,7 +96,7 @@ class Layouts extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'layouts2.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'layouts2.php')
             ->set('defaultLayout', $this->getConfig()->get('default_layout'))
             ->set('layouts', $layouts)
             ->set('modulesNotInstalled', $modulesNotInstalled)
@@ -123,17 +118,14 @@ class Layouts extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
-
         try {
             if ($this->getRequest()->isSecure()) {
-                $layoutFilename = $this->getRequest()->getParam('key').'-v'.$this->getRequest()->getParam('version');
-
+                $layoutFilename = $this->getRequest()->getParam('key') . '-v' . $this->getRequest()->getParam('version');
                 $transfer = new Transfer();
-                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'layouts/'.$layoutFilename.'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'layouts/'.$layoutFilename.'.zip-signature.sig');
-
-                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                $transfer->setZipSavePath(ROOT_PATH . '/updates/');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver') . 'layouts/' . $layoutFilename . '.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver') . 'layouts/' . $layoutFilename . '.zip-signature.sig');
+                if (!$transfer->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
                     $this->addMessage('certMissingOrExpired', 'danger');
                     return;
@@ -154,9 +146,9 @@ class Layouts extends \Ilch\Controller\Admin
         } finally {
             $layoutsDir = [];
             $versionsOfLayouts = [];
-            foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
+            foreach (glob(ROOT_PATH . '/application/layouts/*') as $layoutPath) {
                 if (is_dir($layoutPath)) {
-                    $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                    $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
                     $config = new $configClass($this->getTranslator());
                     $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
                     $layoutsDir[] = basename($layoutPath);
@@ -174,14 +166,12 @@ class Layouts extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             try {
-                $layoutFilename = $this->getRequest()->getParam('key').'-v'.$this->getRequest()->getParam('newVersion');
-
+                $layoutFilename = $this->getRequest()->getParam('key') . '-v' . $this->getRequest()->getParam('newVersion');
                 $transfer = new Transfer();
-                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'layouts/'.$layoutFilename.'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'layouts/'.$layoutFilename.'.zip-signature.sig');
-
-                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                $transfer->setZipSavePath(ROOT_PATH . '/updates/');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver') . 'layouts/' . $layoutFilename . '.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver') . 'layouts/' . $layoutFilename . '.zip-signature.sig');
+                if (!$transfer->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
                     $this->addMessage('certMissingOrExpired', 'danger');
                     return;
@@ -191,7 +181,7 @@ class Layouts extends \Ilch\Controller\Admin
                     $this->addMessage('layoutVerificationFailed', 'danger');
                     return;
                 }
-                
+
                 if (!$transfer->update($this->getRequest()->getParam('version'))) {
                     $this->addMessage('layoutUpdateFailed', 'danger');
                     return;
@@ -209,10 +199,9 @@ class Layouts extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
-            ->add($this->getTranslator()->trans('menuLayout').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
-
+            ->add($this->getTranslator()->trans('menuLayout') . ' ' . $this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
         $layoutsDir = [];
-        foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
+        foreach (glob(ROOT_PATH . '/application/layouts/*') as $layoutPath) {
             if (is_dir($layoutPath)) {
                 $layoutsDir[] = basename($layoutPath);
             }
@@ -227,20 +216,24 @@ class Layouts extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings']);
-
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('favicon', $this->getRequest()->getPost('favicon'))
                 ->set('apple_icon', $this->getRequest()->getPost('appleIcon'))
                 ->set('page_title', $this->getRequest()->getPost('pageTitle'))
+                ->set('page_title_order', $this->getRequest()->getPost('pageTitleOrder'))
+                ->set('page_title_moduldata_separator', $this->getRequest()->getPost('pageTitleModuldataSeparator'))
+                ->set('page_title_moduldata_order', $this->getRequest()->getPost('pageTitleModuldataOrder'))
                 ->set('keywords', $this->getRequest()->getPost('keywords'))
                 ->set('description', $this->getRequest()->getPost('description'));
-
             $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('favicon', $this->getConfig()->get('favicon'))
             ->set('appleIcon', $this->getConfig()->get('apple_icon'))
             ->set('pageTitle', $this->getConfig()->get('page_title'))
+            ->set('pageTitleOrder', $this->getConfig()->get('page_title_order') ?? '%%moduldata%% | %%title%%')
+            ->set('pageTitleModuldataSeparator', $this->getConfig()->get('page_title_moduldata_separator') ?? ' | ')
+            ->set('pageTitleModuldataOrder', $this->getConfig()->get('page_title_moduldata_order') ?? '0')
             ->set('keywords', $this->getConfig()->get('keywords'))
             ->set('description', $this->getConfig()->get('description'));
     }
@@ -248,12 +241,10 @@ class Layouts extends \Ilch\Controller\Admin
     public function advSettingsAction()
     {
         $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
-
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings'])
             ->add($this->getTranslator()->trans('menuAdvSettings'), ['action' => 'advSettings']);
-
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_layouts')) {
             foreach ($this->getRequest()->getPost('check_layouts') as $advSettingsLayoutKey) {
                 $layoutAdvSettingsMapper->deleteSettings($advSettingsLayoutKey);
@@ -261,10 +252,10 @@ class Layouts extends \Ilch\Controller\Admin
         }
 
         $layouts = [];
-        foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
+        foreach (glob(APPLICATION_PATH . '/layouts/*') as $layoutPath) {
             if (is_dir($layoutPath)) {
                 $key = basename($layoutPath);
-                $configClass = '\\Layouts\\'.ucfirst($key).'\\Config\\Config';
+                $configClass = '\\Layouts\\' . ucfirst($key) . '\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
                 if (empty($config->config['modulekey']) && empty($config->config['settings'])) {
                     continue;
@@ -289,7 +280,7 @@ class Layouts extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->getPost('deleteOrphanedSettings')) {
-            foreach($orphanedSettings as $layoutKey) {
+            foreach ($orphanedSettings as $layoutKey) {
                 $layoutAdvSettingsMapper->deleteSettings($layoutKey);
             }
             $orphanedSettings = [];
@@ -305,30 +296,27 @@ class Layouts extends \Ilch\Controller\Admin
     public function advSettingsShowAction()
     {
         $layoutKey = $this->getRequest()->getParam('layoutKey');
-
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings'])
             ->add($this->getTranslator()->trans('menuAdvSettings'), ['action' => 'advSettings'])
             ->add($this->getTranslator()->trans('menuAdvSettingsShow'), ['action' => 'advSettings', 'layoutKey' => $layoutKey]);
-
         $settings = [];
-        $layoutPath = APPLICATION_PATH.'/layouts/'.$layoutKey;
+        $layoutPath = APPLICATION_PATH . '/layouts/' . $layoutKey;
         if (is_dir($layoutPath)) {
-            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+            $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             if (!empty($config->config['settings'])) {
                 $settings = $config->config['settings'];
             }
 
-            $this->getLayout()->getTranslator()->load($layoutPath.'/translations/');
+            $this->getLayout()->getTranslator()->load($layoutPath . '/translations/');
         }
 
         $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
-
         if ($this->getRequest()->isPost()) {
             $postedSettings = [];
-            foreach($this->getRequest()->getPost() as $key => $value) {
+            foreach ($this->getRequest()->getPost() as $key => $value) {
                 $layoutAdvSettingsModel = new LayoutAdvSettingsModel();
                 $layoutAdvSettingsModel->setLayoutKey($layoutKey);
                 $layoutAdvSettingsModel->setKey($key);
@@ -337,14 +325,12 @@ class Layouts extends \Ilch\Controller\Admin
             }
 
             $layoutAdvSettingsMapper->save($postedSettings);
-
             $this->redirect()
                 ->withMessage('saveSuccess')
                 ->to(['action' => 'advSettingsShow', 'layoutKey' => $layoutKey]);
         }
 
         $settingsValues = null;
-
         if (empty($settings)) {
             $layoutAdvSettingsMapper->deleteSettings($layoutKey);
         } else {
@@ -361,7 +347,6 @@ class Layouts extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
             $layoutAdvSettingsMapper->deleteSettings($this->getRequest()->getParam('layoutKey'));
-
             $this->redirect()
                 ->withMessage('deleteSuccess')
                 ->to(['action' => 'advSettings']);
@@ -374,33 +359,29 @@ class Layouts extends \Ilch\Controller\Admin
             if ($this->getConfig()->get('default_layout') === $this->getRequest()->getParam('key')) {
                 $this->addMessage('cantDeleteDefaultLayout', 'info');
             } else {
-                $configClass = '\\Layouts\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
+                $configClass = '\\Layouts\\' . ucfirst($this->getRequest()->getParam('key')) . '\\Config\\Config';
                 $config = new $configClass();
-
                 if (method_exists($config, 'uninstall')) {
                     $config->uninstall();
                 }
-                removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
-
+                removeDir(APPLICATION_PATH . '/layouts/' . $this->getRequest()->getParam('key'));
                 // Call uninstall() of module related to the layout if it is installed. Delete folder of module.
-                if (is_dir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'))) {
+                if (is_dir(APPLICATION_PATH . '/modules/' . $this->getRequest()->getParam('key'))) {
                     $modules = new ModuleMapper();
-
                     $isInstalled = $modules->getModuleByKey($this->getRequest()->getParam('key'));
                     if ($isInstalled) {
-                        $configClass = '\\Modules\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
+                        $configClass = '\\Modules\\' . ucfirst($this->getRequest()->getParam('key')) . '\\Config\\Config';
                         $config = new $configClass();
                         $config->uninstall();
                         $modules->delete($this->getRequest()->getParam('key'));
                     }
 
-                    removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
+                    removeDir(APPLICATION_PATH . '/modules/' . $this->getRequest()->getParam('key'));
                 }
 
                 // Delete advanced layout settings
                 $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
                 $layoutAdvSettingsMapper->deleteSettings($this->getRequest()->getParam('key'));
-
                 $this->addMessage('deleteSuccess');
             }
         }
@@ -410,7 +391,7 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function refreshURLAction()
     {
-        if (!empty(url_get_contents($this->getConfig()->get('updateserver').'layouts2.php', true, true))) {
+        if (!empty(url_get_contents($this->getConfig()->get('updateserver') . 'layouts2.php', true, true))) {
             $this->redirect()
                 ->withMessage('updateSuccess')
                 ->to(['action' => $this->getRequest()->getParam('from')]);

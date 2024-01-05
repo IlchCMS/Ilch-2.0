@@ -32,7 +32,7 @@ class Model
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         /** @var \Ilch\Config\Database $config */
         $config = \Ilch\Registry::get('config');
@@ -41,14 +41,14 @@ class Model
             return $config->get('page_title');
         }
 
-        asort($this->data);
+        $separator = $config->get('page_title_moduldata_separator') ?? ' | ';
 
-        $html = '';
-        foreach ($this->data as $value) {
-            $html .= $value;
-            $html .= ' | ';
+        if ((bool)($config->get('page_title_moduldata_order') ?? '0')) {
+            krsort($this->data);
+        } else {
+            ksort($this->data);
         }
 
-        return rtrim($html, ' | ');
+        return str_replace(['%%title%%', '%%moduldata%%'], [$config->get('page_title'), implode($separator, $this->data)], $config->get('page_title_order') ?? '%%moduldata%% | %%title%%');
     }
 }
