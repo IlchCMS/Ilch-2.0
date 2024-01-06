@@ -82,28 +82,28 @@
                    value="<?=$this->escape($this->originalInput('pageTitleOrder', $this->get('pageTitleOrder'))) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('pageTitleModuldataSeparator') ? 'has-error' : '' ?>">
-        <label for="pageTitleModuldataSeparator" class="col-lg-2 control-label">
-            <?=$this->getTrans('pageTitleModuldataSeparator') ?>:
+    <div class="form-group <?=$this->validation()->hasError('pageTitleModuledataSeparator') ? 'has-error' : '' ?>">
+        <label for="pageTitleModuledataSeparator" class="col-lg-2 control-label">
+            <?=$this->getTrans('pageTitleModuledataSeparator') ?>:
         </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
-                   id="pageTitleModuldataSeparator"
-                   name="pageTitleModuldataSeparator"
-                   value="<?=$this->escape($this->originalInput('pageTitleModuldataSeparator', $this->get('pageTitleModuldataSeparator'))) ?>" />
+                   id="pageTitleModuledataSeparator"
+                   name="pageTitleModuledataSeparator"
+                   value="<?=$this->escape($this->originalInput('pageTitleModuledataSeparator', $this->get('pageTitleModuledataSeparator'))) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('pageTitleModuldataOrder') ? 'has-error' : '' ?>">
-        <label for="pageTitleModuldataOrder" class="col-lg-2 control-label">
-            <?=$this->getTrans('pageTitleModuldataOrder') ?>:
+    <div class="form-group <?=$this->validation()->hasError('pageTitleModuledataOrder') ? 'has-error' : '' ?>">
+        <label for="pageTitleModuledataOrder" class="col-lg-2 control-label">
+            <?=$this->getTrans('pageTitleModuledataOrder') ?>:
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="pageTitleModuldataOrder-yes" name="pageTitleModuldataOrder" value="1" <?=($this->originalInput('pageTitleModuldataOrder', $this->get('pageTitleModuldataOrder'))) ? 'checked="checked"' : '' ?> />
-                <label for="pageTitleModuldataOrder-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('DESC') ?></label>
-                <input type="radio" class="flipswitch-input" id="pageTitleModuldataOrder-no" name="pageTitleModuldataOrder" value="0"  <?=(!$this->originalInput('pageTitleModuldataOrder', $this->get('pageTitleModuldataOrder'))) ? 'checked="checked"' : '' ?> />
-                <label for="pageTitleModuldataOrder-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('ASC') ?></label>
+                <input type="radio" class="flipswitch-input" id="pageTitleModuledataOrder-yes" name="pageTitleModuledataOrder" value="1" <?=($this->originalInput('pageTitleModuledataOrder', $this->get('pageTitleModuledataOrder'))) ? 'checked="checked"' : '' ?> />
+                <label for="pageTitleModuledataOrder-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('DESC') ?></label>
+                <input type="radio" class="flipswitch-input" id="pageTitleModuledataOrder-no" name="pageTitleModuledataOrder" value="0"  <?=(!$this->originalInput('pageTitleModuledataOrder', $this->get('pageTitleModuledataOrder'))) ? 'checked="checked"' : '' ?> />
+                <label for="pageTitleModuledataOrder-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('ASC') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>

@@ -221,8 +221,8 @@ class Layouts extends \Ilch\Controller\Admin
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'pageTitle' => 'required',
                 'pageTitleOrder' => 'required',
-                'pageTitleModuldataSeparator' => 'required',
-                'pageTitleModuldataOrder' => 'required|numeric|min:0|max:1',
+                'pageTitleModuledataSeparator' => 'required',
+                'pageTitleModuledataOrder' => 'required|numeric|min:0|max:1',
             ]);
 
             if ($validation->isValid()) {
@@ -230,8 +230,8 @@ class Layouts extends \Ilch\Controller\Admin
                     ->set('apple_icon', $this->getRequest()->getPost('appleIcon'))
                     ->set('page_title', $this->getRequest()->getPost('pageTitle'))
                     ->set('page_title_order', $this->getRequest()->getPost('pageTitleOrder'))
-                    ->set('page_title_moduledata_separator', $this->getRequest()->getPost('pageTitleModuldataSeparator'))
-                    ->set('page_title_moduledata_order', $this->getRequest()->getPost('pageTitleModuldataOrder'))
+                    ->set('page_title_moduledata_separator', $this->getRequest()->getPost('pageTitleModuledataSeparator'))
+                    ->set('page_title_moduledata_order', $this->getRequest()->getPost('pageTitleModuledataOrder'))
                     ->set('keywords', $this->getRequest()->getPost('keywords'))
                     ->set('description', $this->getRequest()->getPost('description'));
 
@@ -251,8 +251,8 @@ class Layouts extends \Ilch\Controller\Admin
             ->set('appleIcon', $this->getConfig()->get('apple_icon'))
             ->set('pageTitle', $this->getConfig()->get('page_title'))
             ->set('pageTitleOrder', $this->getConfig()->get('page_title_order') ?? '%%moduledata%% | %%title%%')
-            ->set('pageTitleModuldataSeparator', $this->getConfig()->get('page_title_moduledata_separator') ?? ' | ')
-            ->set('pageTitleModuldataOrder', $this->getConfig()->get('page_title_moduledata_order') ?? '0')
+            ->set('pageTitleModuledataSeparator', $this->getConfig()->get('page_title_moduledata_separator') ?? ' | ')
+            ->set('pageTitleModuledataOrder', $this->getConfig()->get('page_title_moduledata_order') ?? '0')
             ->set('keywords', $this->getConfig()->get('keywords'))
             ->set('description', $this->getConfig()->get('description'));
     }
