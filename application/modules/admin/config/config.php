@@ -943,12 +943,10 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
                 break;
             case "2.1.56":
-                break;
-            case "2.1.57":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->set('page_title_order', '%%moduldata%% | %%title%%');
-                $databaseConfig->set('page_title_moduldata_separator', ' | ');
-                $databaseConfig->set('page_title_moduldata_order', '0');
+                $databaseConfig->set('page_title_order', '%%moduledata%% | %%title%%');
+                $databaseConfig->set('page_title_moduledata_separator', ' | ');
+                $databaseConfig->set('page_title_moduledata_order', '0');
                 break;
         }
 
