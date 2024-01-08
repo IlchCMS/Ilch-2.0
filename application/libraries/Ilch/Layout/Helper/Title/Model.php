@@ -49,6 +49,6 @@ class Model
             ksort($this->data);
         }
 
-        return str_replace(['%%title%%', '%%moduldata%%'], [$config->get('page_title'), implode($separator, $this->data)], $config->get('page_title_order') ?? '%%moduldata%% | %%title%%');
+        return str_replace(['%%title%%', '%%moduledata%%'], [$config->get('page_title'), implode($separator, $this->data)], $config->get('page_title_order') ?? '%%moduldata%% | %%title%%');
     }
 }
