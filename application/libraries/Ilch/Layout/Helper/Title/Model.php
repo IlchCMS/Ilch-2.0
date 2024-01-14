@@ -41,14 +41,14 @@ class Model
             return $config->get('page_title');
         }
 
-        $separator = $config->get('page_title_moduldata_separator') ?? ' | ';
+        $separator = $config->get('page_title_moduledata_separator') ?? ' | ';
 
-        if ((bool)($config->get('page_title_moduldata_order') ?? '0')) {
+        if ((bool)($config->get('page_title_moduledata_order') ?? '0')) {
             krsort($this->data);
         } else {
             ksort($this->data);
         }
 
-        return str_replace(['%%title%%', '%%moduldata%%'], [$config->get('page_title'), implode($separator, $this->data)], $config->get('page_title_order') ?? '%%moduldata%% | %%title%%');
+        return str_replace(['%%title%%', '%%moduledata%%'], [$config->get('page_title'), implode($separator, $this->data)], $config->get('page_title_order') ?? '%%moduledata%% | %%title%%');
     }
 }
