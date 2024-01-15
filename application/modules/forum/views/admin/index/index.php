@@ -21,7 +21,7 @@ function rec(ForumItem $item, \Ilch\View $obj)
             <input type="hidden" class="hidden_title" name="items[' . $item->getId() . '][title]" value="' . $item->getTitle() . '" />
             <input type="hidden" class="hidden_desc" name="items[' . $item->getId() . '][desc]" value="' . $item->getDesc() . '" />
             <input type="hidden" class="hidden_type" name="items[' . $item->getId() . '][type]" value="' . $item->getType() . '" />
-            <input type="hidden" class="hidden_prefix" name="items[' . $item->getId() . '][prefix]" value="' . $item->getPrefix() . '" />
+            <input type="hidden" class="hidden_prefixes" name="items[' . $item->getId() . '][prefixes]" value="' . $item->getPrefixes() . '" />
             <input type="hidden" class="hidden_read_access" name="items[' . $item->getId() . '][readAccess]" value="' . $item->getReadAccess() . '" />
             <input type="hidden" class="hidden_reply_access" name="items[' . $item->getId() . '][replyAccess]" value="' . $item->getReplyAccess() . '" />
             <input type="hidden" class="hidden_create_access" name="items[' . $item->getId() . '][createAccess]" value="' . $item->getCreateAccess() . '" />
@@ -61,7 +61,7 @@ function rec(ForumItem $item, \Ilch\View $obj)
             ?>
         </ol>
     </div>
-    <div class="col-lg-6 changeBox">
+    <div class="col-xl-6 changeBox">
         <input type="hidden" id="id" value="" />
         <div class="row mb-3">
             <label for="title" class="col-xl-3 control-label">
@@ -100,7 +100,7 @@ function rec(ForumItem $item, \Ilch\View $obj)
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-    <?=$this->getSaveBar('saveButton') ?>
+    <?=$this->getSaveBar() ?>
 </form>
 
 <script>
@@ -169,6 +169,12 @@ $(document).ready (
                         <div class="col-xl-6"><input type="text" class="form-control" id="prefix"></div></div>\n\
                         <div class="row mb-3"><label for="assignedGroupsRead" class="col-xl-3 control-label"><?=$this->getTrans('see') ?></label>\n\
                         <div class="col-xl-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
+            menuHtml = '<div class="row mb-3"><label for="menukey" class="col-xl-3 control-label"><?=$this->getTrans('menuSelection') ?></label>\n\
+                        <div class="col-xl-6"><select class="form-control" id="menukey">'+options+'</select></div></div>\n\
+                        <div class="row mb-3"><label for="prefixes" class="col-xl-3 control-label"><?=$this->getTrans('prefixes') ?></label>\n\
+                        <div class="col-xl-6"><input type="text" class="form-control" id="prefixes" placeholder="<?=$this->getTrans('selectPrefixes') ?>"></div></div>\n\
+                        <div class="row mb-3"><label for="assignedGroupsRead" class="col-xl-3 control-label"><?=$this->getTrans('see') ?></label>\n\
+                        <div class="col-xl-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList) : ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
@@ -193,14 +199,45 @@ $(document).ready (
                 $('.dyn').html('');
             } else if ($(this).val() == '1') {
                 $('.dyn').html(menuHtml);
-                $('#prefix').tokenfield();
-                $('#prefix').on('tokenfield:createtoken', function (event) {
-                    var existingTokens = $(this).tokenfield('getTokens');
-                    $.each(existingTokens, function(index, token) {
-                        if (token.value === event.attrs.value)
-                            event.preventDefault();
-                    });
+                <?php
+                $prefixes = [];
+                foreach ($this->get('prefixes') ?? [] as $prefix) {
+                    $prefixes[] = ['value' => $prefix->getId(), 'label' => $prefix->getPrefix()];
+                }
+                ?>
+                const existingPrefixes = <?=json_encode($prefixes) ?>;
+
+                $('#prefixes').tokenfield({
+                    autocomplete: {
+                        source: existingPrefixes,
+                        delay: 100
+                    },
+                    showAutocompleteOnFocus: true,
+                    beautify: false
                 });
+                $('#prefixes').on('tokenfield:createtoken', function (event) {
+                    let exists = false;
+                    const existingTokens = $(this).tokenfield('getTokens');
+                    $.each(existingTokens, function(index, token) {
+                        if (token.value === event.attrs.value) {
+                            exists = true;
+                            event.preventDefault();
+                        }
+                    });
+                    if (!exists && (event.attrs.value === event.attrs.label)) {
+                        $.each(existingPrefixes, function(index, prefix) {
+                            if (prefix['value'].toString() === event.attrs.value) {
+                                event.attrs.label = prefix['label'];
+                                return false;
+                            }
+                        });
+                    }
+                    $('#prefixes-tokenfield').blur();
+                });
+                $('#prefixes-tokenfield').keydown(function() {
+                    return false;
+                });
+
                 $('#assignedGroupsRead').chosen();
                 $('#assignedGroupsReply').chosen();
                 $('#assignedGroupsCreate').chosen();
@@ -239,7 +276,7 @@ $(document).ready (
                 +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
                 +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
                 +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
-                +'<input type="hidden" class="hidden_prefix" name="items[tmp_'+itemId+'][prefix]" value="'+$('#prefix').val()+'" />'
+                +'<input type="hidden" class="hidden_prefixes" name="items[tmp_'+itemId+'][prefixes]" value="'+$('#prefixes').val()+'" />'
                 +'<input type="hidden" class="hidden_read_access" name="items[tmp_'+itemId+'][readAccess]" value="'+$('#assignedGroupsRead').val()+'" />'
                 +'<input type="hidden" class="hidden_reply_access" name="items[tmp_'+itemId+'][replyAccess]" value="'+$('#assignedGroupsReply').val()+'" />'
                 +'<input type="hidden" class="hidden_create_access" name="items[tmp_'+itemId+'][createAccess]" value="'+$('#assignedGroupsCreate').val()+'" />'
@@ -255,8 +292,8 @@ $(document).ready (
             $('#desc').val($(this).parent().find('.hidden_desc').val());
             $('#type').val($(this).parent().find('.hidden_type').val());
             $('#type').change();
-            $('#prefix').val($(this).parent().find('.hidden_prefix').val());
-            $('#prefix').tokenfield('setTokens', $(this).parent().find('.hidden_prefix').val());
+            $('#prefixes').val($(this).parent().find('.hidden_prefixes').val());
+            $('#prefixes').tokenfield('setTokens', $(this).parent().find('.hidden_prefixes').val());
 
             $.each($(this).parent().find('.hidden_read_access').val().split(","), function(index, element) {
                 if (element) {
@@ -292,7 +329,7 @@ $(document).ready (
             $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
             $('#'+$('#id').val()).find('.hidden_desc:first').val($('#desc').val());
             $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
-            $('#'+$('#id').val()).find('.hidden_prefix:first').val($('#prefix').val());
+            $('#'+$('#id').val()).find('.hidden_prefixes:first').val($('#prefixes').val());
             $('#'+$('#id').val()).find('.hidden_read_access:first').val($('#assignedGroupsRead').val());
             $('#'+$('#id').val()).find('.hidden_reply_access:first').val($('#assignedGroupsReply').val());
             $('#'+$('#id').val()).find('.hidden_create_access:first').val($('#assignedGroupsCreate').val());
@@ -408,9 +445,5 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 
 .placeholder {
     outline: 1px dashed #4183C4;
-    /*-webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    margin: -1px;*/
 }
 </style>

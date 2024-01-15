@@ -9,6 +9,7 @@ namespace Modules\Forum\Controllers\Admin;
 
 use Ilch\Controller\Admin;
 use Modules\Forum\Mappers\Forum as ForumMapper;
+use Modules\Forum\Mappers\Prefixes as PrefixMapper;
 use Modules\Forum\Models\ForumItem;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
@@ -29,6 +30,12 @@ class Index extends Admin
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'ranks', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuPrefixes',
+                'active' => false,
+                'icon' => 'fa-solid fa-table-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'prefixes', 'action' => 'index'])
             ],
             [
                 'name' => 'menuReports',
@@ -57,6 +64,7 @@ class Index extends Admin
 
         $forumMapper = new ForumMapper();
         $userGroupMapper = new UserGroupMapper();
+        $prefixMapper = new PrefixMapper();
 
         // Saves the item tree to database.
         if ($this->getRequest()->isPost()) {
@@ -113,7 +121,7 @@ class Index extends Admin
                         $forumItem->setDesc($item['desc']);
                         // Don't try to store these values for a category. This avoids storing "undefined" from JS in the database.
                         if ($item['type'] != 0) {
-                            $forumItem->setPrefix($item['prefix']);
+                            $forumItem->setPrefixes($item['prefixes'] ?? '');
                             $forumItem->setReadAccess($item['readAccess']);
                             $forumItem->setReplyAccess($item['replyAccess']);
                             $forumItem->setCreateAccess($item['createAccess']);
@@ -154,5 +162,6 @@ class Index extends Admin
 
         $this->getView()->set('forumItems', $forumMapper->getForumItemsAdmincenterByParentIds([0]));
         $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
+        $this->getView()->set('prefixes', $prefixMapper->getPrefixes());
     }
 }

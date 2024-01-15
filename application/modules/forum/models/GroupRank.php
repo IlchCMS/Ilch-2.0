@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -28,7 +29,7 @@ class GroupRank extends Model
      * @var int
      */
     protected $group_id;
-    
+
     /**
      * The rank of the group.
      *

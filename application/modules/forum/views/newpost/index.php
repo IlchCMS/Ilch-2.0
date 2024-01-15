@@ -14,8 +14,8 @@ $postTextAsQuote = $this->get('postTextAsQuote');
 $forum = $this->get('forum');
 $forumPrefix = $forumMapper->getForumByTopicId($topicpost->getId());
 $prefix = '';
-if ($forumPrefix->getPrefix() != '' && $topicpost->getTopicPrefix() > 0) {
-    $prefix = explode(',', $forumPrefix->getPrefix());
+if ($forumPrefix->getPrefixes() != '' && $topicpost->getTopicPrefix() > 0) {
+    $prefix = explode(',', $forumPrefix->getPrefixes());
     array_unshift($prefix, '');
     foreach ($prefix as $key => $value) {
         if ($topicpost->getTopicPrefix() == $key) {

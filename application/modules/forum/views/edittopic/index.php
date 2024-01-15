@@ -1,14 +1,18 @@
 <?php
 
-/** @var \Ilch\View $this */
+/** @var View $this */
+
+use Ilch\View;
+use Modules\Forum\Models\ForumItem;
+
 ?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 <?php
-/** @var \Modules\Forum\Models\ForumItem[]|null $forumItems */
+/** @var ForumItem[]|null $forumItems */
 $forumItems = $this->get('forumItems');
 $editTopicItems = $this->get('editTopicItems');
 
-function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj, ?int $i)
+function rec(ForumItem $item, View $obj, ?int $i)
 {
     $subItems = $item->getSubItems();
     $adminAccess = null;

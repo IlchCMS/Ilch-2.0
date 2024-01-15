@@ -46,7 +46,7 @@ class Shownewposts extends Frontend
                 if (!$post->getRead()) {
                     $topicsToShow[] = [
                         'topic' => $topics[$post->getTopicId()],
-                        'forumPrefix' => $forums[$topics[$post->getTopicId()]->getForumId()]->getPrefix(),
+                        'forumPrefix' => $forums[$topics[$post->getTopicId()]->getForumId()]->getPrefixes(),
                         'lastPost' => $post,
                     ];
                 }

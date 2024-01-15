@@ -90,7 +90,7 @@ class Cats extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $model = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
+            $model = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'), null);
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])

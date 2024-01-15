@@ -8,7 +8,7 @@
                 <col class="icon_width">
                 <col class="icon_width">
                 <col>
-                <?php if ($this->get('multilingual')): ?>
+                <?php if ($this->get('multilingual')) : ?>
                     <col class="col-xl-1">
                 <?php endif; ?>
             </colgroup>
@@ -22,24 +22,22 @@
                     <th>
                         <a href="<?=$this->getUrl($this->get('sorter')->getUrlArray('title')) ?>" title="<?=$this->getTrans('pageTitle') ?>"><?=$this->get('sorter')->getArrowHtml('title') ?> <?=$this->getTrans('pageTitle') ?></a>&nbsp;
                     </th>
-                    <?php
-                    if ($this->get('multilingual')) {
-                        echo '<th class="text-end">';
+                    <?php if ($this->get('multilingual')) : ?>
+                        <th class="text-end">
+                            <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value) : ?>
+                                <?php if ($key == $this->get('contentLanguage')) : ?>
+                                    <?php continue; ?>
+                                <?php endif; ?>
 
-                        foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                            if ($key == $this->get('contentLanguage')) {
-                                continue;
-                            }
-                            echo '<img src="'.$this->getStaticUrl('img/lang/'.$key.'.png').'"> ';
-                        }
-                        echo '</th>';
-                    }
-                    ?>
+                                <img src="<?=$this->getStaticUrl('img/lang/' . $key . '.png') ?>" alt="<?=$this->getTrans('multilingualContent') ?>" title="<?=$this->getTrans('multilingualContent') ?>">
+                            <?php endforeach; ?>
+                        </th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($this->get('pages'))): ?>
-                    <?php foreach ($this->get('pages') as $page): ?>
+                <?php if (!empty($this->get('pages'))) : ?>
+                    <?php foreach ($this->get('pages') as $page) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_pages', $page->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $page->getId()]) ?></td>
@@ -47,23 +45,21 @@
                             <td>
                                 <a target="_blank" href="<?=$this->getUrl().'index.php/'.$this->escape($page->getPerma()) ?>"><?=$this->escape($page->getTitle()) ?></a>
                             </td>
-                            <?php
-                            if ($this->get('multilingual')) {
-                                echo '<td class="text-end">';
-                                foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                                    if ($key == $this->get('contentLanguage')) {
-                                        continue;
-                                    }
+                            <?php if ($this->get('multilingual')) : ?>
+                                <td class="text-end">
+                                    <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value) : ?>
+                                        <?php if ($key == $this->get('contentLanguage')) : ?>
+                                            <?php continue; ?>
+                                        <?php endif; ?>
 
-                                    if ($this->get('pageMapper')->getPageByIdLocale($page->getId(), $key) != null) {
-                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa-regular fa-pen-to-square"></i></a>';
-                                    } else {
-                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa-solid fa-circle-plus"></i></a>';
-                                    }
-                                }
-                                echo '</td>';
-                            }
-                            ?>
+                                        <?php if ($this->get('pageMapper')->getPageByIdLocale($page->getId(), $key) != null) : ?>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]) ?>" title="<?=$this->getTrans('editContentLanguage') ?>"><i class="fa-regular fa-pen-to-square"></i></a>
+                                        <?php else: ?>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]) ?>" title="<?=$this->getTrans('addContentLanguage') ?>"><i class="fa-solid fa-circle-plus"></i></a>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

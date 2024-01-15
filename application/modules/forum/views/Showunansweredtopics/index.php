@@ -50,13 +50,14 @@ $postsPerPage = $this->get('postsPerPage');
                 ">
                         <dt>
                             <?php
-                            if ($topic['forumPrefix'] != '' && $topic['topic']->getTopicPrefix() > 0) {
-                                $prefix = explode(',', $topic['forumPrefix']);
-                                array_unshift($prefix, '');
+                            if ($topic['forumPrefix'] != '' && $topic['topic']->getTopicPrefix()->getId() > 0) {
+                                $prefixIds = explode(',', $topic['forumPrefix']);
+                                array_unshift($prefixIds, '');
 
-                                foreach ($prefix as $key => $value) {
-                                    if ($topic['topic']->getTopicPrefix() == $key) {
-                                        echo '<span class="label label-default">' . $value . '</span>';
+                                foreach ($prefixIds as $prefixId) {
+                                    if ($topic['topic']->getTopicPrefix()->getId() == $prefixId) {
+                                        echo '<span class="label label-default">' . $this->escape($topic['topic']->getTopicPrefix()->getPrefix()) . '</span>';
+                                        break;
                                     }
                                 }
                             }

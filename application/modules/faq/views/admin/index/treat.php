@@ -15,7 +15,7 @@ $cats = $this->get('cats');
 <?php if ($cats) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
+        <div class="chosen-select row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
             <label for="catId" class="col-xl-2 control-label">
                 <?=$this->getTrans('cat') ?>:
             </label>
@@ -54,7 +54,10 @@ $cats = $this->get('cats');
         </div>
         <?=($faq->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
     </form>
-    <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <?php else : ?>
     <?=$this->getTrans('noCategory') ?>
 <?php endif; ?>
+
+<script>
+    $('#catId').chosen();
+</script>
