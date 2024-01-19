@@ -1,0 +1,156 @@
+users:
+  -
+    id: 1
+    name: "admin"
+  -
+    id: 2
+    name: "User"
+
+groups:
+  -
+    id: 1
+    name: "Admin"
+  -
+    id: 2
+    name: "User"
+  -
+    id: 3
+    name: "Guest"
+
+poll:
+  -
+    id: 1
+    question: "Frage 1"
+    groups: "2"
+    status: 0
+    read_access_all: 0
+    multiple_reply: 0
+  -
+    id: 2
+    question: "Frage 2"
+    groups: "2"
+    status: 1
+    read_access_all: 0
+    multiple_reply: 0
+  -
+    id: 3
+    question: "Frage 3"
+    groups: "2"
+    status: 0
+    read_access_all: 1
+    multiple_reply: 0
+  -
+    id: 4
+    question: "Frage 4"
+    groups: "1"
+    status: 0
+    read_access_all: 0
+    multiple_reply: 0
+  -
+    id: 5
+    question: "Frage 5"
+    groups: "1"
+    status: 0
+    read_access_all: 0
+    multiple_reply: 1
+
+poll_access:
+  -
+    poll_id: 1
+    group_id: 1
+  -
+    poll_id: 1
+    group_id: 2
+  -
+    poll_id: 1
+    group_id: 3
+  -
+    poll_id: 2
+    group_id: 1
+  -
+    poll_id: 2
+    group_id: 2
+  -
+    poll_id: 3
+    group_id: 1
+  -
+    poll_id: 3
+    group_id: 2
+  -
+    poll_id: 3
+    group_id: 3
+  -
+    poll_id: 4
+    group_id: 1
+  -
+    poll_id: 4
+    group_id: 2
+  -
+    poll_id: 5
+    group_id: 1
+  -
+    poll_id: 5
+    group_id: 2
+  -
+    poll_id: 5
+    group_id: 3
+
+poll_res:
+  -
+    poll_id: 1
+    reply: "Antwort 1.1"
+    result: 0
+  -
+    poll_id: 1
+    reply: "Antwort 1.2"
+    result: 1
+  -
+    poll_id: 2
+    reply: "Antwort 2.1"
+    result: 1
+  -
+    poll_id: 2
+    reply: "Antwort 2.2"
+    result: 2
+  -
+    poll_id: 3
+    reply: "Antwort 3.1"
+    result: 0
+  -
+    poll_id: 3
+    reply: "Antwort 3.2"
+    result: 0
+  -
+    poll_id: 4
+    reply: "Antwort 4.1"
+    result: 0
+  -
+    poll_id: 4
+    reply: "Antwort 4.2"
+    result: 0
+  -
+    poll_id: 5
+    reply: "Antwort 5.1"
+    result: 0
+  -
+    poll_id: 5
+    reply: "Antwort 5.2"
+    result: 0
+
+poll_ip:
+  -
+    poll_id: 1
+    ip: "192.168.10.100"
+    user_id: 0
+  -
+    poll_id: 2
+    ip: "192.168.10.101"
+    user_id: 1
+  -
+    poll_id: 2
+    ip: "192.168.10.102"
+    user_id: 0
+  -
+    poll_id: 2
+    ip: "192.168.10.100"
+    user_id: 0
