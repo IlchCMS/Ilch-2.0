@@ -24,9 +24,7 @@ class PhpunitDataset extends DatabaseTestCase
     public function loadFromFiles(array $fullpaths)
     {
         foreach ($fullpaths as $table => $fullpath) {
-            // Only a table when it's an associative array.
-            $table = \is_int($table) ? null : $table;
-            $this->loadFromFile($fullpath, $table);
+            $this->loadFromFile($fullpath);
         }
     }
 
@@ -75,7 +73,7 @@ class PhpunitDataset extends DatabaseTestCase
      */
     public function sendToDatabase(array $tables)
     {
-        foreach($tables as $table => $rows) {
+        foreach ($tables as $table => $rows) {
             $tableNotEmpty = (bool) $this->db->select('*')
                 ->from($table)
                 ->execute()
@@ -87,8 +85,8 @@ class PhpunitDataset extends DatabaseTestCase
                 $this->db->query('SET FOREIGN_KEY_CHECKS = 1;');
             }
 
-            foreach($rows as $row => $columns) {
-                    $this->db->insert($table)
+            foreach ($rows as $columns) {
+                $this->db->insert($table)
                         ->values($columns)
                         ->execute();
             }

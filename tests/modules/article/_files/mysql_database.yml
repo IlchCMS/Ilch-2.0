@@ -1,3 +1,8 @@
+users:
+  -
+    id: 1
+    name: admin
+
 articles:
   -
     id: 1
@@ -81,8 +86,3 @@ articles_content:
     img: ""
     img_source: ""
     votes: ""
-
-users:
-  -
-    id: 1
-    name: admin

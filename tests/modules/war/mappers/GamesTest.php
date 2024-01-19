@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -6,7 +7,6 @@
 
 namespace Modules\War\Mappers;
 
-use Ilch\Pagination;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\War\Config\Config as ModuleConfig;
@@ -54,28 +54,28 @@ class GamesTest extends DatabaseTestCase
         self::assertEquals(2, $entrys[$i]->getMap());
         self::assertEquals(2, $entrys[$i]->getGroupPoints());
         self::assertEquals(2, $entrys[$i]->getEnemyPoints());
-        
+
         $i++;
         self::assertEquals(5, $entrys[$i]->getId());
         self::assertEquals(4, $entrys[$i]->getWarId());
         self::assertEquals(1, $entrys[$i]->getMap());
         self::assertEquals(1, $entrys[$i]->getGroupPoints());
         self::assertEquals(2, $entrys[$i]->getEnemyPoints());
-        
+
         $i++;
         self::assertEquals(3, $entrys[$i]->getId());
         self::assertEquals(3, $entrys[$i]->getWarId());
         self::assertEquals(1, $entrys[$i]->getMap());
         self::assertEquals(2, $entrys[$i]->getGroupPoints());
         self::assertEquals(2, $entrys[$i]->getEnemyPoints());
-        
+
         $i++;
         self::assertEquals(2, $entrys[$i]->getId());
         self::assertEquals(2, $entrys[$i]->getWarId());
         self::assertEquals(2, $entrys[$i]->getMap());
         self::assertEquals(2, $entrys[$i]->getGroupPoints());
         self::assertEquals(2, $entrys[$i]->getEnemyPoints());
-        
+
         $i++;
         self::assertEquals(1, $entrys[$i]->getId());
         self::assertEquals(1, $entrys[$i]->getWarId());
@@ -139,7 +139,7 @@ class GamesTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configUser = new UserConfig();

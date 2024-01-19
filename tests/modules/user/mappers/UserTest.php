@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -12,7 +13,6 @@ use PHPUnit\Ilch\DatabaseTestCase;
 use Modules\User\Config\Config as ModuleConfig;
 use Modules\Admin\Config\Config as AdminConfig;
 use Modules\User\Mappers\User as UserMapper;
-use Modules\User\Models\User as UserModel;
 use PHPUnit\Ilch\PhpunitDataset;
 
 /**
@@ -47,11 +47,11 @@ class UserTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configAdmin = new AdminConfig();
-        
-        return $configAdmin->getInstallSql().$config->getInstallSql();
+
+        return $configAdmin->getInstallSql() . $config->getInstallSql();
     }
 }

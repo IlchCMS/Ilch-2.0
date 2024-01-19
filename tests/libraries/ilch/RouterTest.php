@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package ilch_phpunit
  */
@@ -15,12 +16,12 @@ use PHPUnit\Ilch\TestCase;
 class RouterTest extends TestCase
 {
     /**
-     * @var \Ilch\Request
+     * @var Request
      */
     protected $request;
 
     /**
-     * @var \Ilch\Router
+     * @var Router
      */
     protected $router;
 
@@ -119,12 +120,12 @@ class RouterTest extends TestCase
      * @param array $expectedParams
      */
     public function testUpdateRequestByQuery(
-        $route,
-        $expectIsAdmin,
-        $expectedModule,
-        $expectedController,
-        $expectedAction,
-        $expectedParams
+        string $route,
+        bool $expectIsAdmin,
+        string $expectedModule,
+        string $expectedController,
+        string $expectedAction,
+        array $expectedParams
     ) {
         $result = $this->router->matchByQuery($route);
         $this->router->updateRequest($result);
@@ -139,7 +140,7 @@ class RouterTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestUpdateRequestByQuery()
+    public function dpForTestUpdateRequestByQuery(): array
     {
         return [
             'route without params' => [

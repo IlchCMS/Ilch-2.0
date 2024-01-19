@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package ilch_phpunit
  */
@@ -19,9 +20,9 @@ class TestHelper
      * The config variable which will be set for the tests.
      *
      * @static Static so we can dont have to connect for every test again.
-     * @var \Ilch\Config\File
+     * @var Config
      */
-    static private $config = null;
+    private static $config = null;
 
     /**
      * Filling the config object with individual testcase data and injecting it into the registry.
