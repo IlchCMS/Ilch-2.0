@@ -38,14 +38,14 @@ class IpTest extends DatabaseTestCase
     /**
      * All test routines
      */
-    public function testVoteIpgetAllRows()
+    public function testVoteIpGetAllRows()
     {
         $entries = $this->mapper->getEntriesBy();
 
         self::assertCount(4, $entries);
     }
 
-    public function testgetVoteIp()
+    public function testGetVoteIp()
     {
         $entries = $this->mapper->getEntriesBy();
 
@@ -77,7 +77,7 @@ class IpTest extends DatabaseTestCase
         self::assertEquals(0, $entry->getUserId());
     }
 
-    public function testsaveNewVoteIp()
+    public function testSaveNewVoteIp()
     {
         $model = new EntriesModel();
         $model->setIP('192.168.10.110');

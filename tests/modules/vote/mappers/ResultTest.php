@@ -38,14 +38,14 @@ class ResultTest extends DatabaseTestCase
     /**
      * All test routines
      */
-    public function testVoteResultgetAllRows()
+    public function testVoteResultGetAllRows()
     {
         $entries = $this->mapper->getEntriesBy();
 
         self::assertCount(10, $entries);
     }
 
-    public function testgetVoteResul()
+    public function testGetVoteResul()
     {
         $entries = $this->mapper->getEntriesBy();
 
@@ -113,7 +113,7 @@ class ResultTest extends DatabaseTestCase
         self::assertEquals(0, $entry->getResult());
     }
 
-    public function testsaveNewVoteResult()
+    public function testSaveNewVoteResult()
     {
         $model = new EntriesModel();
         $model->setResult(5);

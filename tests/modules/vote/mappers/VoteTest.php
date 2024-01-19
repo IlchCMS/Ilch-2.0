@@ -38,7 +38,7 @@ class VoteTest extends DatabaseTestCase
     /**
      * All test routines
      */
-    public function testgetVoteAllRows()
+    public function testGetVoteAllRows()
     {
         $entries = $this->mapper->getEntriesBy();
 
@@ -47,7 +47,7 @@ class VoteTest extends DatabaseTestCase
         self::assertEquals(5, $this->mapper->getLastId());
     }
 
-    public function testgetVote()
+    public function testGetVote()
     {
         $entries = $this->mapper->getEntriesBy();
 
@@ -120,7 +120,7 @@ class VoteTest extends DatabaseTestCase
         self::assertCount(3, $entries);
     }
 
-    public function testsaveNewVote()
+    public function testSaveNewVote()
     {
         $model = new EntriesModel();
         $model->setId(0);
@@ -155,7 +155,7 @@ class VoteTest extends DatabaseTestCase
         self::assertEquals($model->getStatus(), $entry->getStatus());
     }
 
-    public function testsaveUpdateExistingVote()
+    public function testSaveUpdateExistingVote()
     {
         $model = new EntriesModel();
         $model->setId(0);
@@ -195,7 +195,7 @@ class VoteTest extends DatabaseTestCase
         self::assertEquals('1,2,3', $entry->getReadAccess());
     }
 
-    public function testdeleteVote()
+    public function testDeleteVote()
     {
         self::assertSame(true, $this->mapper->delete(1));
 
