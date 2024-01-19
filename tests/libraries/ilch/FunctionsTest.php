@@ -63,10 +63,11 @@ class FunctionsTest extends TestCase
     public function dpForTestArrayDot(): array
     {
         return [
-            'test 1' => ['params' => ['data' => ['1', '2'], 'key' => null, 'default' => null], ['1', '2']],
-            'test 2' => ['params' => ['data' => ['1', '2'], 'key' => 0, 'default' => null], '1'],
-            'test 3' => ['params' => ['data' => ['1', '2'], 'key' => 1, 'default' => null], '2'],
-            'test 4' => ['params' => ['data' => ['1', '2'], 'key' => '1.0', 'default' => null], null],
+            'no key provided' => ['params' => ['data' => ['1', '2'], 'key' => null, 'default' => null], ['1', '2']],
+            'numeric key, first entry' => ['params' => ['data' => ['1', '2'], 'key' => 0, 'default' => null], '1'],
+            'numeric key, second entry' => ['params' => ['data' => ['1', '2'], 'key' => 1, 'default' => null], '2'],
+            'invalid key' => ['params' => ['data' => ['1', '2'], 'key' => '1.0', 'default' => null], null],
+            'invalid key, default' => ['params' => ['data' => ['1', '2'], 'key' => '1.0', 'default' => '3'], '3'],
         ];
     }
 
@@ -108,22 +109,35 @@ class FunctionsTest extends TestCase
     public function dpForTestIsInArray(): array
     {
         return [
-            'test 1' => ['params' => ['needle' => ['test'], 'haystack' => ['test']], true],
+            'is in array' => ['params' => ['needle' => ['test'], 'haystack' => ['test']], true],
+            'not in array' => ['params' => ['needle' => ['NotExisting'], 'haystack' => ['test']], false],
         ];
     }
 
     /**
      * Tests the url_get_contents function.
      *
+     * @dataProvider dpForTestUrlGetContents
      * @return void
      */
-    public function testUrlGetContents()
+    public function testUrlGetContents(array $params, $expected)
     {
-        self::assertSame('/vendor' . PHP_EOL . '/bin/*' . PHP_EOL, url_get_contents('https://raw.githubusercontent.com/IlchCMS/Ilch-2.0/master/development/.gitignore'));
+        self::assertSame($expected, url_get_contents($params['url']));
     }
 
     /**
-     * Tests the formatBytes function.
+     * @return array
+     */
+    public function dpForTestUrlGetContents(): array
+    {
+        return [
+            'valid url' => ['params' => ['url' => 'https://raw.githubusercontent.com/IlchCMS/Ilch-2.0/master/development/.gitignore'], '/vendor' . PHP_EOL . '/bin/*' . PHP_EOL],
+            'invalid url' => ['params' => ['url' => ''], false],
+        ];
+    }
+
+    /**
+     * Tests the var_export_short_syntax function.
      *
      * @dataProvider dpForTestVarExportShortSyntax
      * @return void
@@ -148,7 +162,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * Tests the url_get_contents function.
+     * Tests the loggedIn function.
      *
      * @return void
      */
@@ -172,7 +186,7 @@ class FunctionsTest extends TestCase
     }
 
     /**
-     * Tests the url_get_contents function.
+     * Tests the currentUser function.
      *
      * @return void
      */
