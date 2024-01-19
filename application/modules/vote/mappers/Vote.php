@@ -56,7 +56,7 @@ class Vote extends \Ilch\Mapper
         $select->fields(['p.id', 'p.question', 'p.key', 'p.groups', 'p.status', 'p.read_access_all', 'p.multiple_reply'])
             ->from(['p' => $this->tablename])
             ->join(['ra' => $this->tablenameReadAcces], 'p.id = ra.poll_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->where(array_merge($where, ($read_access ? [$select->orX(['ra.read_access' => $read_access, 'p.read_access_all' => '1'])] : [])))
+            ->where(array_merge($where, ($read_access ? [$select->orX(['ra.group_id' => $read_access, 'p.read_access_all' => '1'])] : [])))
             ->order($orderBy)
             ->group(['p.id']);
 
@@ -97,7 +97,7 @@ class Vote extends \Ilch\Mapper
             $readAccess = explode(',', $readAccess);
         }
 
-        return $this->getEntriesBy(array_merge($where, ($readAccess ? ['ra.group_id' => $readAccess] : [])), ['p.id' => 'DESC']);
+        return $this->getEntriesBy(array_merge($where, ($readAccess ? ['ra.read_access' => $readAccess] : [])), ['p.id' => 'DESC']);
     }
 
     /**
