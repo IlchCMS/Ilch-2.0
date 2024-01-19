@@ -31,7 +31,7 @@ class FunctionsTest extends TestCase
      *
      * @return void
      */
-    public function testbuildPath()
+    public function testBuildPath()
     {
         self::assertSame('1' . DIRECTORY_SEPARATOR . '2', buildPath('1', '2'));
     }
@@ -41,7 +41,7 @@ class FunctionsTest extends TestCase
      *
      * @return void
      */
-    public function testrelativePath()
+    public function testRelativePath()
     {
         self::assertSame(buildPath(__DIR__, 'test'), relativePath(buildPath(__DIR__, 'test')));
     }
@@ -49,10 +49,10 @@ class FunctionsTest extends TestCase
     /**
      * Tests the array_dot function.
      *
-     * @dataProvider dpForTestarraydot
+     * @dataProvider dpForTestArrayDot
      * @return void
      */
-    public function testarraydot(array $params, $expected)
+    public function testArrayDot(array $params, $expected)
     {
         self::assertSame($expected, array_dot($params['data'], $params['key'], $params['default']));
     }
@@ -60,7 +60,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestarraydot(): array
+    public function dpForTestArrayDot(): array
     {
         return [
             'test 1' => ['params' => ['data' => ['1', '2'], 'key' => null, 'default' => null], ['1', '2']],
@@ -73,10 +73,10 @@ class FunctionsTest extends TestCase
     /**
      * Tests the array_dot_set function.
      *
-     * @dataProvider dpForTestarraydotset
+     * @dataProvider dpForTestArrayDotSet
      * @return void
      */
-    public function testarraydotset(array $params, $expected)
+    public function testArrayDotSet(array $params, $expected)
     {
         self::assertSame($expected, array_dot_set($params['array'], $params['key'], $params['value']));
     }
@@ -84,7 +84,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestarraydotset(): array
+    public function dpForTestArrayDotSet(): array
     {
         return [
             'test 1' => ['params' => ['array' => [], 'key' => 'test.value', 'value' => 'admin'], ['value' => 'admin']],
@@ -94,10 +94,10 @@ class FunctionsTest extends TestCase
     /**
      * Tests the is_in_array function.
      *
-     * @dataProvider dpForTestisinarray
+     * @dataProvider dpForTestIsInArray
      * @return void
      */
-    public function testisinarray(array $params, $expected)
+    public function testIsInArray(array $params, $expected)
     {
         self::assertSame($expected, is_in_array($params['needle'], $params['haystack']));
     }
@@ -105,7 +105,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestisinarray(): array
+    public function dpForTestIsInArray(): array
     {
         return [
             'test 1' => ['params' => ['needle' => ['test'], 'haystack' => ['test']], true],
@@ -117,18 +117,18 @@ class FunctionsTest extends TestCase
      *
      * @return void
      */
-    public function testurlgetcontents()
+    public function testUrlGetContents()
     {
-        self::assertSame('beta', url_get_contents('https://www.ilch.de/ilch2_updates/beta/beta.txt'));
+        self::assertSame('/vendor' . PHP_EOL . '/bin/*' . PHP_EOL, url_get_contents('https://raw.githubusercontent.com/IlchCMS/Ilch-2.0/master/development/.gitignore'));
     }
 
     /**
      * Tests the formatBytes function.
      *
-     * @dataProvider dpForTestvarexportshortsyntax
+     * @dataProvider dpForTestVarExportShortSyntax
      * @return void
      */
-    public function testvarexportshortsyntax(array $params, $expected)
+    public function testVarExportShortSyntax(array $params, $expected)
     {
         self::assertSame($expected, var_export_short_syntax($params['var'], $params['indent']));
     }
@@ -136,7 +136,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestvarexportshortsyntax(): array
+    public function dpForTestVarExportShortSyntax(): array
     {
         return [
             'string' => ['params' => ['var' => 'test', 'indent' => ''], '"test"'],
@@ -152,7 +152,7 @@ class FunctionsTest extends TestCase
      *
      * @return void
      */
-    public function testloggedIn()
+    public function testLoggedIn()
     {
         if (!Registry::has('user')) {
             self::assertSame(false, loggedIn());
@@ -176,7 +176,7 @@ class FunctionsTest extends TestCase
      *
      * @return void
      */
-    public function testcurrentUser()
+    public function testCurrentUser()
     {
         if (!Registry::has('user')) {
             $this->testloggedIn();
