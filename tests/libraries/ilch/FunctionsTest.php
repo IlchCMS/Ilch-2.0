@@ -140,9 +140,7 @@ class FunctionsTest extends TestCase
     {
         return [
             'string' => ['params' => ['var' => 'test', 'indent' => ''], '"test"'],
-            'array' => ['params' => ['var' => ['test'], 'indent' => ''], '[
-    "test"
-]'],
+            'array' => ['params' => ['var' => ['test'], 'indent' => ''], '[' . PHP_EOL . '    "test"' . PHP_EOL . ']'],
             'booleantrue' => ['params' => ['var' => true, 'indent' => ''], 'TRUE'],
             'booleanfalse' => ['params' => ['var' => false, 'indent' => ''], 'FALSE'],
             'int' => ['params' => ['var' => 100, 'indent' => ''], '100'],

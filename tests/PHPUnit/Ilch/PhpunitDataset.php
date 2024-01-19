@@ -24,8 +24,6 @@ class PhpunitDataset extends DatabaseTestCase
     public function loadFromFiles(array $fullpaths)
     {
         foreach ($fullpaths as $table => $fullpath) {
-            // Only a table when it's an associative array.
-            $table = \is_int($table) ? null : $table;
             $this->loadFromFile($fullpath);
         }
     }
