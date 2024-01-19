@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package ilch_phpunit
  */
@@ -19,18 +20,18 @@ use Ilch\Database\Factory;
 abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
 {
     /** @var int don't automatically provision - for individual proovsioning */
-    const PROVISION_DISABLED = 0;
+    public const PROVISION_DISABLED = 0;
     /** @var int automatically setup and provision db in setUp - for every testMethod */
-    const PROVISION_ON_SETUP = 1;
+    public const PROVISION_ON_SETUP = 1;
     /** @var int automatically setup and provision db in setUpBeforeClass - just once per class - for reading tests*/
-    const PROVISION_ON_SETUP_BEFORE_CLASS = 2;
+    public const PROVISION_ON_SETUP_BEFORE_CLASS = 2;
 
     /**
      * A data array which will be used to create a config object for the registry.
      *
      * @var array
      */
-    static protected $configData = [];
+    protected static $configData = [];
 
     /**
      * Files used for creating the database schema
@@ -41,13 +42,13 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
     /**
      * @var bool
      */
-    static protected $dropTablesOnProvision = true;
+    protected static $dropTablesOnProvision = true;
 
     /**
      * Whether the db is provisioned in setUp (true) or setUpBeforeClass (false)
      * @var int
      */
-    static protected $fillDbOnSetUp = self::PROVISION_ON_SETUP;
+    protected static $fillDbOnSetUp = self::PROVISION_ON_SETUP;
 
     /**
      * The db instance to test with.
@@ -109,9 +110,9 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
-        return array_reduce(self::$dbSchemaFiles, static function($carry, $fileName) {
+        return array_reduce(self::$dbSchemaFiles, static function ($carry, $fileName) {
             $carry .= file_get_contents($fileName);
             return $carry;
         }, '');
@@ -129,7 +130,7 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
 
         $db->query('SET FOREIGN_KEY_CHECKS = 0;');
         foreach ($tableList as $table) {
-            $sql = 'DROP TABLE ' . $table;
+            $sql = 'DROP TABLE IF EXISTS ' . $table;
             $db->query($sql);
         }
         $db->query('SET FOREIGN_KEY_CHECKS = 1;');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -8,7 +9,6 @@ namespace Modules\Admin\Mappers;
 
 use PHPUnit\Ilch\DatabaseTestCase;
 use Modules\Admin\Config\Config as ModuleConfig;
-use Modules\Admin\Mappers\LayoutAdvSettings;
 use Modules\Admin\Models\LayoutAdvSettings as LayoutAdvSettingsModel;
 use PHPUnit\Ilch\PhpunitDataset;
 
@@ -41,7 +41,7 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         return $config->getInstallSql();
@@ -118,7 +118,7 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
         $layoutSettingsArray[] = $layoutSettingModel;
         $this->out->save($layoutSettingsArray);
 
-        $layoutSetting = $this->out->getSetting('testLayoutKey3','testKey5');
+        $layoutSetting = $this->out->getSetting('testLayoutKey3', 'testKey5');
         self::assertEquals(5, $layoutSetting->getId());
         self::assertSame($layoutSetting->getLayoutKey(), 'testLayoutKey3');
         self::assertSame($layoutSetting->getKey(), 'testKey5');
@@ -161,8 +161,8 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
      */
     public function testDeleteSetting()
     {
-        $this->out->deleteSetting('testLayoutKey1','testKey1');
-        self::assertEmpty($this->out->getSetting('testLayoutKey1','testKey1'));
+        $this->out->deleteSetting('testLayoutKey1', 'testKey1');
+        self::assertEmpty($this->out->getSetting('testLayoutKey1', 'testKey1'));
     }
 
     /**
@@ -171,7 +171,7 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     public function testDeleteSettingById()
     {
         $this->out->deleteSettingById(2);
-        self::assertEmpty($this->out->getSetting('testLayoutKey1','testKey2'));
+        self::assertEmpty($this->out->getSetting('testLayoutKey1', 'testKey2'));
     }
 
     /**

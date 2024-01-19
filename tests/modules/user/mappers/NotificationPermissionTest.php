@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -216,7 +217,7 @@ class NotificationPermissionTest extends DatabaseTestCase
         $permissionModels = [];
         $mapper = new NotificationPermissionMapper();
 
-        for($userId = 1; $userId <= 3; $userId++) {
+        for ($userId = 1; $userId <= 3; $userId++) {
             $permissionModel = new NotificationPermissionModel();
             $permissionModel->setUserId($userId);
             $permissionModel->setModule('forum');
@@ -296,11 +297,11 @@ class NotificationPermissionTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configAdmin = new AdminConfig();
 
-        return $configAdmin->getInstallSql().$config->getInstallSql();
+        return $configAdmin->getInstallSql() . $config->getInstallSql();
     }
 }

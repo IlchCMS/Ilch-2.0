@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -40,7 +41,7 @@ class ValidationTest extends TestCase
      */
     public function testValidationWithSingleValidator(array $params, bool $expected, bool $inverted)
     {
-        $validation = Validation::create($params, ['testField' => ($inverted ? 'NOT' : '').'integer']);
+        $validation = Validation::create($params, ['testField' => ($inverted ? 'NOT' : '') . 'integer']);
 
         self::assertSame($expected, $validation->isValid());
         if (!$expected) {
@@ -74,9 +75,9 @@ class ValidationTest extends TestCase
      */
     public function testValidationWithValidatorChainWithBreakingChain(
         string $validatorRules,
-        array  $params,
-        bool   $expected,
-        array  $expectedErrors = []
+        array $params,
+        bool $expected,
+        array $expectedErrors = []
     ) {
         $validation = Validation::create($params, ['testField' => $validatorRules]);
 
@@ -139,9 +140,9 @@ class ValidationTest extends TestCase
      */
     public function testValidationWithValidatorChainWithoutBreakingChain(
         string $validatorRules,
-        array  $params,
-        bool   $expected,
-        array  $expectedErrors = []
+        array $params,
+        bool $expected,
+        array $expectedErrors = []
     ) {
         $this->addTearDownCallback(
             function () {
@@ -203,9 +204,9 @@ class ValidationTest extends TestCase
      */
     public function testValidationWithVariousValidators(
         string $validatorRules,
-        array  $params,
-        bool   $expected,
-        array  $expectedErrors = []
+        array $params,
+        bool $expected,
+        array $expectedErrors = []
     ) {
         $_SESSION['captcha'] = 'test';
         // Needed for Url validator

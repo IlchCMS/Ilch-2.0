@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package ilch_phpunit
  */
@@ -61,7 +62,7 @@ class RequestTest extends TestCase
         ];
         $this->request->setParams($params);
 
-        self::assertEquals(123, $actualParam = $this->request->getParam('id'), 'Param got manipulated unexpectedly.');
+        self::assertEquals(123, $this->request->getParam('id'), 'Param got manipulated unexpectedly.');
     }
 
     /**
@@ -79,7 +80,7 @@ class RequestTest extends TestCase
 
         self::assertEquals(
             null,
-            $actualParam = $this->request->getParam('nullParam'),
+            $this->request->getParam('nullParam'),
             'Param got manipulated unexpectedly.'
         );
     }

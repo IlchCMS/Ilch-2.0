@@ -1,12 +1,12 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
-namespace Modules\Admin\Mappers;
+namespace Ilch\Validation\Validators;
 
-use Ilch\Validation\Validators\Unique;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use stdClass;
@@ -32,7 +32,7 @@ class UniqueTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_groups` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,

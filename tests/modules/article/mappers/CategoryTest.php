@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -62,7 +63,6 @@ class CategoryTest extends DatabaseTestCase
     public function testSortInvalidId()
     {
         $affectedRows = $this->categoryMapper->sort(-1, 2);
-        $categories = $this->categoryMapper->getCategories();
 
         self::assertSame(0, $affectedRows);
     }
@@ -117,7 +117,7 @@ class CategoryTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configUser = new UserConfig();

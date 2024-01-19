@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -6,7 +7,6 @@
 
 namespace Modules\Teams\Mappers;
 
-use Ilch\Pagination;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\Teams\Config\Config as ModuleConfig;
@@ -72,7 +72,7 @@ class TeamsTest extends DatabaseTestCase
         self::assertEquals(1, $entrys[$i]->getOptShow());
         self::assertEquals(1, $entrys[$i]->getOptIn());
         self::assertEquals(1, $entrys[$i]->getNotifyLeader());
-        
+
         $i++;
         self::assertEquals(2, $entrys[$i]->getId());
         self::assertEquals('Team 2', $entrys[$i]->getName());
@@ -160,7 +160,7 @@ class TeamsTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configUser = new UserConfig();
