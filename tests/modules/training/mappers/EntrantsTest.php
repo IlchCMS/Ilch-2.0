@@ -36,14 +36,14 @@ class EntrantsTest extends DatabaseTestCase
     /**
      * All test routines
      */
-    public function testgetEntrantsAllRows()
+    public function testGetEntrantsAllRows()
     {
         $entries = $this->mapper->getEntriesBy();
 
         self::assertCount(3, $entries);
     }
 
-    public function testgetEntrants()
+    public function testGetEntrants()
     {
         $entries = $this->mapper->getEntriesBy();
 
@@ -71,7 +71,7 @@ class EntrantsTest extends DatabaseTestCase
         self::assertEquals('', $entry->getNote());
     }
 
-    public function testsaveNewEntrants()
+    public function testSaveNewEntrants()
     {
         $model = new EntriesModel();
         $model->setTrainId(3);
@@ -84,7 +84,7 @@ class EntrantsTest extends DatabaseTestCase
         self::assertNotNull($entry);
     }
 
-    public function testdeleteTraining()
+    public function testDeleteTraining()
     {
         $this->mapper->deleteUserFromTrain(3, 1);
 

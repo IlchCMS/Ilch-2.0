@@ -38,14 +38,14 @@ class TrainingTest extends DatabaseTestCase
     /**
      * All test routines
      */
-    public function testTraininggetAllRows()
+    public function testTrainingGetAllRows()
     {
         $entries = $this->mapper->getEntriesBy();
 
         self::assertCount(3, $entries);
     }
 
-    public function testgetTraining()
+    public function testGetTraining()
     {
         $entries = $this->mapper->getEntriesBy();
 
@@ -107,7 +107,7 @@ class TrainingTest extends DatabaseTestCase
         self::assertEquals("all", $entry->getReadAccess());
     }
 
-    public function testsaveNewTraining()
+    public function testSaveNewTraining()
     {
         $model = new EntriesModel();
         $model->setId(0);
