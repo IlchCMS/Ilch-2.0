@@ -1,18 +1,19 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Training\Models\Training $training */
+$training = $this->get('training');
+?>
 <link href="<?=$this->getModuleUrl('static/css/training.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <h1>
-    <?php
-    if ($this->get('training') != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
+    <?=$this->getTrans($training->getId() ? 'edit' : 'add') ?>
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -21,26 +22,35 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTitle()); } ?>" />
+                   value="<?=$this->escape($this->originalInput('title', $training->getTitle())) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="date" class="col-md-2 control-label">
             <?=$this->getTrans('dateTime') ?>:
         </label>
         <div class="col-lg-2 input-group ilch-date date form_datetime">
+            <?php
+            $datecreate = '';
+            if ($training->getDate()) {
+                $date = new \Ilch\Date($training->getDate());
+            } else {
+                $date = new \Ilch\Date();
+            }
+            $datecreate = $date->format('d.m.Y H:i', true);
+            ?>
             <input type="text"
                    class="form-control"
                    id="date"
                    name="date"
-                   value="<?php if ($this->get('training') != '') { echo date('d.m.Y H:i', strtotime($this->get('training')->getDate())); } ?>"
+                   value="<?=$this->escape($this->originalInput('date', $datecreate)) ?>"
                    readonly>
             <span class="input-group-addon">
-                <span class="fa fa-calendar"></span>
+                <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="time" class="col-lg-2 control-label">
             <?=$this->getTrans('time') ?>:
         </label>
@@ -50,10 +60,10 @@
                    id="time"
                    name="time"
                    min="0"
-                   value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTime()); } else { echo '30'; } ?>">
+                   value="<?=$this->escape($this->originalInput('time', $training->getTime())) ?>">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="place" class="col-lg-2 control-label">
             <?=$this->getTrans('place') ?>:
         </label>
@@ -62,10 +72,10 @@
                    class="form-control"
                    id="place"
                    name="place"
-                   value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getPlace()); } ?>" />
+                   value="<?=$this->escape($this->originalInput('place', $training->getPlace())) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="contact" class="col-lg-2 control-label">
             <?=$this->getTrans('contactPerson') ?>:
         </label>
@@ -77,38 +87,35 @@
                     if ($this->get('training') != '' && $this->get('training')->getContact() == $user->getId()) {
                         $selected = 'selected="selected"';
                     }
-                    echo '<option '.$selected.' value="'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
+                    echo '<option ' . $selected . ' value="' . $user->getId() . '">' . $this->escape($user->getName()) . '</option>';
                 }
                 ?>
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="voiceServer" class="col-lg-2 control-label">
             <?=$this->getTrans('voiceServer') ?>:
         </label>
-        <div class="col-lg-2">
-            <input type="checkbox"
-                   id="voiceServer"
-                   name="voiceServer"
-                   value="1"
-                   onclick="showMe('voiceServerInfo', this)"
-                   <?php if ($this->get('training') != '' && $this->get('training')->getVoiceServer() == 1) { echo 'checked="checked"';} ?>>
+        <div class="col-lg-6">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="voiceServer-on" name="voiceServer" value="1" onclick="showMe('voiceServerInfo', this)" <?=$this->originalInput('voiceServer', $training->getVoiceServer()) ? 'checked="checked"' : '' ?> />
+                <label for="voiceServer-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="voiceServer-off" name="voiceServer" value="0" onclick="showMe('voiceServerInfo', this)" <?=!$this->originalInput('voiceServer', $training->getVoiceServer()) ? 'checked="checked"' : '' ?> />
+                <label for="voiceServer-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
         </div>
     </div>
     <?php
-    if ($this->get('training') != '') {
-        if ($this->get('training')->getVoiceServer() == 0) {
-            $voiceDisplay = 'style="display: none;"';
-        } else {
-            $voiceDisplay = '';
-        }
-    } else {
+    if (!$training->getVoiceServer()) {
         $voiceDisplay = 'style="display: none;"';
+    } else {
+        $voiceDisplay = '';
     }
     ?>
     <div id="voiceServerInfo" <?=$voiceDisplay ?>>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
             <label for="voiceServerIP" class="col-lg-2 control-label">
                 <?=$this->getTrans('voiceServerIP') ?>:
             </label>
@@ -118,10 +125,10 @@
                        id="voiceServerIP"
                        name="voiceServerIP"
                        placeholder="IP:Port"
-                       value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getVoiceServerIP()); } ?>" />
+                       value="<?=$this->escape($this->originalInput('voiceServerIP', $training->getVoiceServerIP())) ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
             <label for="voiceServerPW" class="col-lg-2 control-label">
                 <?=$this->getTrans('voiceServerPW') ?>:
             </label>
@@ -131,36 +138,33 @@
                        id="voiceServerPW"
                        name="voiceServerPW"
                        placeholder="********"
-                       value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getVoiceServerPW()); } ?>" />
+                       value="<?=$this->escape($this->originalInput('voiceServerPW', $training->getVoiceServerPW())) ?>" />
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="gameServer" class="col-lg-2 control-label">
             <?=$this->getTrans('gameServer') ?>:
         </label>
-        <div class="col-lg-2">
-            <input type="checkbox"
-                   id="gameServer"
-                   name="gameServer"
-                   value="1"
-                   onclick="showMe('gameServerInfo', this)"
-                   <?php if ($this->get('training') != '' && $this->get('training')->getGameServer() == 1) { echo 'checked="checked"';} ?>>
+        <div class="col-lg-6">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="gameServer-on" name="gameServer" value="1" onclick="showMe('gameServerInfo', this)" <?=$this->originalInput('gameServer', $training->getGameServer()) ? 'checked="checked"' : '' ?> />
+                <label for="gameServer-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="gameServer-off" name="gameServer" value="0" onclick="showMe('gameServerInfo', this)" <?=!$this->originalInput('gameServer', $training->getGameServer()) ? 'checked="checked"' : '' ?> />
+                <label for="gameServer-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
         </div>
     </div>
     <?php
-    if ($this->get('training') != '') {
-        if ($this->get('training')->getGameServer() == 0) {
-            $gameDisplay = 'style="display: none;"';
-        } else {
-            $gameDisplay = '';
-        }
-    } else {
+    if (!$training->getGameServer()) {
         $gameDisplay = 'style="display: none;"';
+    } else {
+        $gameDisplay = '';
     }
     ?>
     <div id="gameServerInfo" <?=$gameDisplay ?>>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
             <label for="gameServerIP" class="col-lg-2 control-label">
                 <?=$this->getTrans('gameServerIP') ?>:
             </label>
@@ -170,10 +174,10 @@
                        id="gameServerIP"
                        name="gameServerIP"
                        placeholder="IP:Port"
-                       value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getGameServerIP()); } ?>" />
+                       value="<?=$this->escape($this->originalInput('gameServerIP', $training->getGameServerIP())) ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
             <label for="gameServerPW" class="col-lg-2 control-label">
                 <?=$this->getTrans('gameServerPW') ?>:
             </label>
@@ -183,11 +187,11 @@
                        id="gameServerPW"
                        name="gameServerPW"
                        placeholder="********"
-                       value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getGameServerPW()); } ?>" />
+                       value="<?=$this->escape($this->originalInput('gameServerPW', $training->getGameServerPW())) ?>" />
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('otherInfo') ?>:
         </label>
@@ -196,67 +200,61 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getText()); } ?></textarea>
+                      rows="5"><?=$this->escape($this->originalInput('text', $training->getText())) ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="access" class="col-lg-2 control-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-lg-6">
             <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
-                <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <?php if ($groupList->getId() != 1): ?>
+                <?php foreach ($this->get('userGroupList') as $groupList) : ?>
+                    <?php if ($groupList->getId() != 1) : ?>
                         <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </select>
         </div>
     </div>
-    <?php if ($this->get('calendarShow') == 1): ?>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <input type="checkbox"
-                       id="calendarShow"
-                       name="calendarShow"
-                       value="1"
-                    <?php if (($this->get('training') != '' && $this->get('training')->getShow() == 1) || $this->originalInput('calendarShow') == 1) { echo 'checked'; } ?> />
-                <label for="calendarShow">
-                    <?=$this->getTrans('calendarShow') ?>
-                </label>
+    <?php if ($this->get('calendarShow')) : ?>
+        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+            <label for="calendarShow" class="col-lg-2 control-label">
+                <?=$this->getTrans('calendarShow') ?>
+            </label>
+            <div class="col-lg-6">
+                <div class="flipswitch">
+                    <input type="radio" class="flipswitch-input" id="calendarShow-on" name="calendarShow" value="1" <?=$this->originalInput('calendarShow', $training->getShow()) ? 'checked="checked"' : '' ?> />
+                    <label for="calendarShow-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                    <input type="radio" class="flipswitch-input" id="calendarShow-off" name="calendarShow" value="0" <?=!$this->originalInput('calendarShow', $training->getShow()) ? 'checked="checked"' : '' ?> />
+                    <label for="calendarShow-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                    <span class="flipswitch-selection"></span>
+                </div>
             </div>
         </div>
     <?php endif; ?>
-    <?php
-    if ($this->get('training') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?=$this->getSaveBar($training->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
-$('#access').chosen();
+    $('#access').chosen();
 
-$(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true
+    $(document).ready(function() {
+        $(".form_datetime").datetimepicker({
+            format: "dd.mm.yyyy hh:ii",
+            startDate: new Date(),
+            autoclose: true,
+            language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+            minuteStep: 15,
+            todayHighlight: true
+        });
     });
-});
 
-function showMe (it, box) { 
-    var vis = (box.checked) ? "block" : "none"; 
-    document.getElementById(it).style.display = vis;
-} 
+    function showMe (it, box) {
+        document.getElementById(it).style.display = (box.value === "1") ? "block" : "none";
+    }
 </script>

@@ -1,5 +1,12 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Training\Models\Training[]|null $training */
+$training = $this->get('training');
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if (!empty($this->get('training'))): ?>
+<?php if ($training) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -21,13 +28,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('training') as $training): ?>
+                    <?php foreach ($training as $model) :
+                        $datecreate = '';
+                        if ($model->getDate()) {
+                            $date = new \Ilch\Date($model->getDate());
+                        } else {
+                            $date = new \Ilch\Date();
+                        }
+                        $datecreate = $date->format('d.m.Y', true);
+                        ?>
                         <tr>
-                            <td><?=$this->getDeleteCheckbox('check_trainings', $training->getId()) ?></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $training->getId()]) ?></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $training->getId()]) ?></td>
-                            <td><?=date('d.m.Y - H:i', strtotime($training->getDate())) ?> </td>
-                            <td><?=$this->escape($training->getTitle()) ?></a</td>
+                            <td><?=$this->getDeleteCheckbox('check_trainings', $model->getId()) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $model->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $model->getId()]) ?></td>
+                            <td><?=date('d.m.Y - H:i', strtotime($model->getDate())) ?> </td>
+                            <td><?=$this->escape($model->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -35,6 +50,6 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noTraining') ?>
 <?php endif; ?>

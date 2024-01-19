@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,112 +14,171 @@ class Training extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The title of the training.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The date of the training.
      *
      * @var string
      */
-    protected $date;
+    protected $date = '';
 
     /**
      * The time of the training.
      *
-     * @var string
+     * @var int
      */
-    protected $time;
+    protected $time = 30;
 
     /**
      * The place of the training.
      *
      * @var string
      */
-    protected $place;
+    protected $place = '';
 
     /**
      * The contact of the training.
      *
      * @var int
      */
-    protected $contact;
+    protected $contact = 0;
 
     /**
      * The voice server of the training.
      *
-     * @var int
+     * @var bool
      */
-    protected $voiceServer;
+    protected $voiceServer = false;
 
     /**
      * The voice server ip of the training.
      *
      * @var string
      */
-    protected $voiceServerIP;
+    protected $voiceServerIP = '';
 
     /**
      * The voice server pw of the training.
      *
      * @var string
      */
-    protected $voiceServerPW;
+    protected $voiceServerPW = '';
 
     /**
      * The game server of the training.
      *
-     * @var int
+     * @var bool
      */
-    protected $gameServer;
+    protected $gameServer = false;
 
     /**
      * The game server ip of the training.
      *
      * @var string
      */
-    protected $gameServerIP;
+    protected $gameServerIP = '';
 
     /**
      * The game server pw of the training.
      *
      * @var string
      */
-    protected $gameServerPW;
+    protected $gameServerPW = '';
 
     /**
      * The text of the training.
      *
      * @var string
      */
-    protected $text;
+    protected $text = '';
 
     /**
      * The show value (hide or show in calendar) of the training.
      *
-     * @var int
+     * @var bool
      */
-    protected $show;
+    protected $show = false;
 
     /**
      * The readaccess of the training.
      *
      * @var string
      */
-    protected $readAccess;
+    protected $readAccess = '2,3';
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Training
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['date'])) {
+            $this->setDate($entries['date']);
+        }
+        if (isset($entries['time'])) {
+            $this->setTime($entries['time']);
+        }
+        if (isset($entries['place'])) {
+            $this->setPlace($entries['place']);
+        }
+        if (isset($entries['contact'])) {
+            $this->setContact($entries['contact']);
+        }
+        if (isset($entries['voice_server'])) {
+            $this->setVoiceServer($entries['voice_server']);
+        }
+        if (isset($entries['voice_server_ip'])) {
+            $this->setVoiceServerIP($entries['voice_server_ip']);
+        }
+        if (isset($entries['voice_server_pw'])) {
+            $this->setVoiceServerPW($entries['voice_server_pw']);
+        }
+        if (isset($entries['game_server'])) {
+            $this->setGameServer($entries['game_server']);
+        }
+        if (isset($entries['game_server_ip'])) {
+            $this->setGameServerIP($entries['game_server_ip']);
+        }
+        if (isset($entries['game_server_pw'])) {
+            $this->setGameServerPW($entries['game_server_pw']);
+        }
+        if (isset($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        if (isset($entries['show'])) {
+            $this->setShow($entries['show']);
+        }
+        if (isset($entries['read_access'])) {
+            $this->setReadAccess($entries['read_access']);
+        }
+        if (isset($entries['access_all'])) {
+            if ($entries['access_all']) {
+                $this->setReadAccess('all');
+            }
+        }
+        return $this;
+    }
 
     /**
      * Gets the id of the training.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -129,9 +189,9 @@ class Training extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Training
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -141,7 +201,7 @@ class Training extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -152,9 +212,9 @@ class Training extends \Ilch\Model
      * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Training
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -164,7 +224,7 @@ class Training extends \Ilch\Model
      *
      * @return string
      */
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
     }
@@ -175,9 +235,9 @@ class Training extends \Ilch\Model
      * @param string $date
      * @return $this
      */
-    public function setDate($date)
+    public function setDate(string $date): Training
     {
-        $this->date = (string)$date;
+        $this->date = $date;
 
         return $this;
     }
@@ -187,7 +247,7 @@ class Training extends \Ilch\Model
      *
      * @return int
      */
-    public function getTime()
+    public function getTime(): int
     {
         return $this->time;
     }
@@ -198,9 +258,9 @@ class Training extends \Ilch\Model
      * @param int $time
      * @return $this
      */
-    public function setTime($time)
+    public function setTime(int $time): Training
     {
-        $this->time = (int)$time;
+        $this->time = $time;
 
         return $this;
     }
@@ -210,7 +270,7 @@ class Training extends \Ilch\Model
      *
      * @return string
      */
-    public function getPlace()
+    public function getPlace(): string
     {
         return $this->place;
     }
@@ -221,9 +281,9 @@ class Training extends \Ilch\Model
      * @param string $place
      * @return $this
      */
-    public function setPlace($place)
+    public function setPlace(string $place): Training
     {
-        $this->place = (string)$place;
+        $this->place = $place;
 
         return $this;
     }
@@ -233,7 +293,7 @@ class Training extends \Ilch\Model
      *
      * @return int
      */
-    public function getContact()
+    public function getContact(): int
     {
         return $this->contact;
     }
@@ -241,12 +301,12 @@ class Training extends \Ilch\Model
     /**
      * Sets the contact of the training.
      *
-     * @param string $contact
+     * @param int $contact
      * @return $this
      */
-    public function setContact($contact)
+    public function setContact(int $contact): Training
     {
-        $this->contact = (int)$contact;
+        $this->contact = $contact;
 
         return $this;
     }
@@ -254,9 +314,9 @@ class Training extends \Ilch\Model
     /**
      * Gets the voice server of the training.
      *
-     * @return int
+     * @return bool
      */
-    public function getVoiceServer()
+    public function getVoiceServer(): bool
     {
         return $this->voiceServer;
     }
@@ -264,12 +324,12 @@ class Training extends \Ilch\Model
     /**
      * Sets the voice server of the training.
      *
-     * @param int $voiceServer
+     * @param bool $voiceServer
      * @return $this
      */
-    public function setVoiceServer($voiceServer)
+    public function setVoiceServer(bool $voiceServer): Training
     {
-        $this->voiceServer = (int)$voiceServer;
+        $this->voiceServer = $voiceServer;
 
         return $this;
     }
@@ -279,7 +339,7 @@ class Training extends \Ilch\Model
      *
      * @return string
      */
-    public function getVoiceServerIP()
+    public function getVoiceServerIP(): string
     {
         return $this->voiceServerIP;
     }
@@ -290,9 +350,9 @@ class Training extends \Ilch\Model
      * @param string $voiceServerIP
      * @return $this
      */
-    public function setVoiceServerIP($voiceServerIP)
+    public function setVoiceServerIP(string $voiceServerIP): Training
     {
-        $this->voiceServerIP = (string)$voiceServerIP;
+        $this->voiceServerIP = $voiceServerIP;
 
         return $this;
     }
@@ -302,7 +362,7 @@ class Training extends \Ilch\Model
      *
      * @return string
      */
-    public function getVoiceServerPW()
+    public function getVoiceServerPW(): string
     {
         return $this->voiceServerPW;
     }
@@ -313,9 +373,9 @@ class Training extends \Ilch\Model
      * @param string $voiceServerPW
      * @return $this
      */
-    public function setVoiceServerPW($voiceServerPW)
+    public function setVoiceServerPW(string $voiceServerPW): Training
     {
-        $this->voiceServerPW = (string)$voiceServerPW;
+        $this->voiceServerPW = $voiceServerPW;
 
         return $this;
     }
@@ -323,9 +383,9 @@ class Training extends \Ilch\Model
     /**
      * Gets the game server of the training.
      *
-     * @return int
+     * @return bool
      */
-    public function getGameServer()
+    public function getGameServer(): bool
     {
         return $this->gameServer;
     }
@@ -333,12 +393,12 @@ class Training extends \Ilch\Model
     /**
      * Sets the game server of the training.
      *
-     * @param int $gameServer
+     * @param bool $gameServer
      * @return $this
      */
-    public function setGameServer($gameServer)
+    public function setGameServer(bool $gameServer): Training
     {
-        $this->gameServer = (int)$gameServer;
+        $this->gameServer = $gameServer;
 
         return $this;
     }
@@ -348,7 +408,7 @@ class Training extends \Ilch\Model
      *
      * @return string
      */
-    public function getGameServerIP()
+    public function getGameServerIP(): string
     {
         return $this->gameServerIP;
     }
@@ -359,9 +419,9 @@ class Training extends \Ilch\Model
      * @param string $gameServerIP
      * @return $this
      */
-    public function setGameServerIP($gameServerIP)
+    public function setGameServerIP(string $gameServerIP): Training
     {
-        $this->gameServerIP = (string)$gameServerIP;
+        $this->gameServerIP = $gameServerIP;
 
         return $this;
     }
@@ -371,7 +431,7 @@ class Training extends \Ilch\Model
      *
      * @return string
      */
-    public function getGameServerPW()
+    public function getGameServerPW(): string
     {
         return $this->gameServerPW;
     }
@@ -382,9 +442,9 @@ class Training extends \Ilch\Model
      * @param string $gameServerPW
      * @return $this
      */
-    public function setGameServerPW($gameServerPW)
+    public function setGameServerPW(string $gameServerPW): Training
     {
-        $this->gameServerPW = (string)$gameServerPW;
+        $this->gameServerPW = $gameServerPW;
 
         return $this;
     }
@@ -394,7 +454,7 @@ class Training extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -405,9 +465,9 @@ class Training extends \Ilch\Model
      * @param string $text
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Training
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -415,9 +475,9 @@ class Training extends \Ilch\Model
     /**
      * Gets show of the training.
      *
-     * @return int
+     * @return bool
      */
-    public function getShow()
+    public function getShow(): bool
     {
         return $this->show;
     }
@@ -425,12 +485,12 @@ class Training extends \Ilch\Model
     /**
      * Sets show of the training.
      *
-     * @param int $show
+     * @param bool $show
      * @return $this
      */
-    public function setShow($show)
+    public function setShow(bool $show): Training
     {
-        $this->show = (int)$show;
+        $this->show = $show;
 
         return $this;
     }
@@ -438,9 +498,9 @@ class Training extends \Ilch\Model
     /**
      * Gets the read access of the training.
      *
-     * @return int
+     * @return string
      */
-    public function getReadAccess()
+    public function getReadAccess(): string
     {
         return $this->readAccess;
     }
@@ -452,10 +512,39 @@ class Training extends \Ilch\Model
      *
      * @return $this
      */
-    public function setReadAccess($readAccess)
+    public function setReadAccess(string $readAccess): Training
     {
-        $this->readAccess = (string)$readAccess;
+        $this->readAccess = $readAccess;
 
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'title' => $this->getTitle(),
+                'date' => $this->getDate(),
+                'time' => $this->getTime(),
+                'place' => $this->getPlace(),
+                'contact' => $this->getContact(),
+                'voice_server' => $this->getVoiceServer(),
+                'voice_server_ip' => $this->getVoiceServerIP(),
+                'voice_server_pw' => $this->getVoiceServerPW(),
+                'game_server' => $this->getGameServer(),
+                'game_server_ip' => $this->getGameServerIP(),
+                'game_server_pw' => $this->getGameServerPW(),
+                'text' => $this->getText(),
+                'show' => $this->getShow(),
+                'access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0)
+            ]
+        );
     }
 }

@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
@@ -13,7 +17,7 @@
                    id="limitNextTrainingInput"
                    name="boxNexttrainingLimit"
                    min="1"
-                   value="<?=(empty($this->originalInput('boxNexttrainingLimit'))) ? $this->escape($this->get('boxNexttrainingLimit')) : $this->originalInput('boxNexttrainingLimit') ?>" />
+                   value="<?=$this->originalInput('boxNexttrainingLimit', $this->get('boxNexttrainingLimit')) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

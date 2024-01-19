@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2.0
  * @package ilch
@@ -17,7 +18,7 @@ return [
     'otherInfo' => 'Other information',
     'visibleFor' => 'Visible for',
     'calendarShow' => 'Show training in calendar?',
-    'noOtherInfo'=> 'No other information available',
+    'noOtherInfo' => 'No other information available',
     'entrant' => 'Entrants',
     'trainDetails' => 'Training details',
     'options' => 'Options',
@@ -32,7 +33,7 @@ return [
     'gameServerPW' => 'Gameserver password',
     'note' => 'Note',
     'contactPerson' => 'Contact person',
-    
+
     'noTrainings' => 'No Trainings',
     'boxNexttrainingLimit' => 'Next Trainings Limit',
 ];
