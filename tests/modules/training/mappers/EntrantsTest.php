@@ -49,23 +49,20 @@ class EntrantsTest extends DatabaseTestCase
 
         self::assertCount(3, $entries);
 
-        $i = 0;
         /** @var EntriesModel $entry */
-        $entry = $entries[$i];
+        $entry = $entries[0];
         self::assertEquals(1, $entry->getTrainId());
         self::assertEquals(1, $entry->getUserId());
         self::assertEquals('', $entry->getNote());
 
-        $i++;
         /** @var EntriesModel $entry */
-        $entry = $entries[$i];
+        $entry = $entries[1];
         self::assertEquals(1, $entry->getTrainId());
         self::assertEquals(2, $entry->getUserId());
         self::assertEquals('', $entry->getNote());
 
-        $i++;
         /** @var EntriesModel $entry */
-        $entry = $entries[$i];
+        $entry = $entries[2];
         self::assertEquals(2, $entry->getTrainId());
         self::assertEquals(2, $entry->getUserId());
         self::assertEquals('', $entry->getNote());

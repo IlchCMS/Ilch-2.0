@@ -51,9 +51,8 @@ class TrainingTest extends DatabaseTestCase
 
         self::assertCount(3, $entries);
 
-        $i = 0;
         /** @var EntriesModel $entry */
-        $entry = $entries[$i];
+        $entry = $entries[0];
         self::assertEquals(1, $entry->getId());
         self::assertEquals('Tag 1', $entry->getTitle());
         self::assertEquals("2024-01-15 05:00:00", $entry->getDate());
@@ -70,8 +69,7 @@ class TrainingTest extends DatabaseTestCase
         self::assertEquals(0, $entry->getShow());
         self::assertEquals("1,2,3", $entry->getReadAccess());
 
-        $i++;
-        $entry = $entries[$i];
+        $entry = $entries[1];
         self::assertEquals(2, $entry->getId());
         self::assertEquals('Tag 2', $entry->getTitle());
         self::assertEquals("2024-02-15 05:00:00", $entry->getDate());
@@ -88,8 +86,7 @@ class TrainingTest extends DatabaseTestCase
         self::assertEquals(0, $entry->getShow());
         self::assertEquals("1,2", $entry->getReadAccess());
 
-        $i++;
-        $entry = $entries[$i];
+        $entry = $entries[2];
         self::assertEquals(3, $entry->getId());
         self::assertEquals('Tag 3', $entry->getTitle());
         self::assertEquals("2024-03-15 05:00:00", $entry->getDate());
