@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,28 +14,44 @@ class Entrants extends \Ilch\Model
      *
      * @var int
      */
-    protected $trainId;
-
+    protected $trainId = 0;
     /**
      * The userId of the training entrants.
      *
      * @var int
      */
-    protected $userId;
-
+    protected $userId = 0;
     /**
      * The note of the training entrants.
      *
      * @var string
      */
-    protected $note;
+    protected $note = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Entrants
+    {
+        if (isset($entries['train_id'])) {
+            $this->setTrainId($entries['train_id']);
+        }
+        if (isset($entries['user_id'])) {
+            $this->setUserId($entries['user_id']);
+        }
+        if (isset($entries['note'])) {
+            $this->setNote($entries['note']);
+        }
+        return $this;
+    }
 
     /**
      * Gets the trainId of the training entrants.
      *
      * @return int
      */
-    public function getTrainId()
+    public function getTrainId(): int
     {
         return $this->trainId;
     }
@@ -43,21 +60,20 @@ class Entrants extends \Ilch\Model
      * Sets the trainId of the training entrants.
      *
      * @param int $trainId
-     * @return this
+     * @return $this
      */
-    public function setTrainId($trainId)
+    public function setTrainId(int $trainId): Entrants
     {
-        $this->trainId = (int)$trainId;
-
+        $this->trainId = $trainId;
         return $this;
     }
 
     /**
      * Gets the user of the training entrants.
      *
-     * @return integer
+     * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -65,13 +81,12 @@ class Entrants extends \Ilch\Model
     /**
      * Sets the userid of the training entrants.
      *
-     * @param integer $userId
-     * @return this
+     * @param int $userId
+     * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Entrants
     {
-        $this->userId = (int)$userId;
-
+        $this->userId = $userId;
         return $this;
     }
 
@@ -80,7 +95,7 @@ class Entrants extends \Ilch\Model
      *
      * @return string
      */
-    public function getNote()
+    public function getNote(): string
     {
         return $this->note;
     }
@@ -89,12 +104,25 @@ class Entrants extends \Ilch\Model
      * Sets the note of the training entrants.
      *
      * @param string $note
-     * @return this
+     * @return $this
      */
-    public function setNote($note)
+    public function setNote(string $note): Entrants
     {
-        $this->note = (string)$note;
-
+        $this->note = $note;
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @return array
+     */
+    public function getArray(): array
+    {
+        return [
+            'train_id' => $this->getTrainId(),
+            'user_id' => $this->getUserId(),
+            'note' => $this->getNote()
+            ];
     }
 }

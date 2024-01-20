@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,12 +7,14 @@
 
 namespace Modules\Training\Config;
 
+use Modules\User\Mappers\User;
+
 class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'training',
-        'version' => '1.7.0',
-        'icon_small' => 'fa-graduation-cap',
+        'version' => '1.8.0',
+        'icon_small' => 'fa-solid fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'official' => true,
@@ -35,13 +38,17 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.26',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        if ($this->db()->ifTableExists('calendar_events')) {
+            $this->db()->insert('calendar_events', ['url' => 'training/trainings/index/']);
+        }
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('training_boxNexttrainingLimit', '5');
@@ -49,26 +56,27 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_training`;
-                                 DROP TABLE `[prefix]_training_entrants`;');
+        $this->db()->drop('training_access', true);
+        $this->db()->drop('training_entrants', true);
+        $this->db()->drop('training', true);
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            $this->db()->queryMulti('DELETE FROM `[prefix]_calendar_events` WHERE `url` = \'training/trainings/index/\';');
+            $this->db()->delete('calendar_events', ['url' => 'training/trainings/index/']);
         }
 
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'training_boxNexttrainingLimit'");
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('training_boxNexttrainingLimit');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
-        $installSql =
-            'CREATE TABLE IF NOT EXISTS `[prefix]_training` (
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_training` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(100) NOT NULL,
                 `date` DATETIME NOT NULL,
                 `time` INT(11) NOT NULL,
                 `place` VARCHAR(100) NOT NULL,
-                `contact` INT(11) NOT NULL,
+                `contact` INT(11) UNSIGNED NOT NULL,
                 `voice_server` INT(11) NOT NULL,
                 `voice_server_ip` VARCHAR(100) NOT NULL,
                 `voice_server_pw` VARCHAR(100) NOT NULL,
@@ -77,28 +85,41 @@ class Config extends \Ilch\Config\Install
                 `game_server_pw` VARCHAR(100) NOT NULL,
                 `text` MEDIUMTEXT NOT NULL,
                 `show` TINYINT(1) NOT NULL DEFAULT 0,
-                `read_access` VARCHAR(255) NOT NULL,
-                PRIMARY KEY (`id`)
+                `access_all` TINYINT(1) NOT NULL,
+                PRIMARY KEY (`id`),
+                INDEX `FK_[prefix]_training_[prefix]_users` (`contact`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_training_[prefix]_users` FOREIGN KEY (`contact`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+            CREATE TABLE IF NOT EXISTS `[prefix]_training_access` (
+                `training_id` INT(11) NOT NULL,
+                `group_id` INT(11) NOT NULL,
+                PRIMARY KEY (`training_id`, `group_id`) USING BTREE,
+                INDEX `FK_[prefix]_training_access_[prefix]_training` (`training_id`) USING BTREE,
+                INDEX `FK_[prefix]_training_access_[prefix]_groups` (`group_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_training_access_[prefix]_training` FOREIGN KEY (`training_id`) REFERENCES `[prefix]_training` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_training_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_training_entrants` (
               `train_id` INT(11) NOT NULL,
-              `user_id` INT(11) NOT NULL,
-              `note` VARCHAR(100) NOT NULL
+              `user_id` INT(11) UNSIGNED NOT NULL,
+              `note` VARCHAR(100) NOT NULL,
+              PRIMARY KEY (`train_id`, `user_id`) USING BTREE,
+              INDEX `FK_[prefix]_training_entrants_[prefix]_training` (`train_id`) USING BTREE,
+              INDEX `FK_[prefix]_training_entrants_[prefix]_users` (`user_id`) USING BTREE,
+              CONSTRAINT `FK_[prefix]_training_entrants_[prefix]_training` FOREIGN KEY (`train_id`) REFERENCES `[prefix]_training` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+              CONSTRAINT `FK_[prefix]_training_entrants_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
-
-        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            $installSql.='INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("training/trainings/index/");';
-        }
-        return $installSql;
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_training` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `text`;');
                 $this->db()->query('ALTER TABLE `[prefix]_training` ADD `read_access` VARCHAR(191) NOT NULL AFTER `show`;');
+                // no break
             case "1.1":
                 // On installation of Ilch adding this entry failed. Reinstalling or a later install of this module adds the entry.
                 // Add entry on update. Instead of checking if the entry exists, delete entry/entries and add it again.
@@ -106,10 +127,12 @@ class Config extends \Ilch\Config\Install
                     $this->db()->query("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'training/trainings/index/'");
                     $this->db()->query('INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("training/trainings/index/");');
                 }
+                // no break
             case "1.2":
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_training` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_training_entrants` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            // no break
             case "1.3.0":
             case "1.4.0":
             case "1.5.0":
@@ -126,9 +149,123 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('training_boxNexttrainingLimit', '5');
 
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'training' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
+            case "1.7.0":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
+
+                // Create new table for read access.
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_training_access` (
+                    `training_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    PRIMARY KEY (`training_id`, `group_id`) USING BTREE,
+                    INDEX `FK_[prefix]_training_access_[prefix]_training` (`training_id`) USING BTREE,
+                    INDEX `FK_[prefix]_training_access_[prefix]_groups` (`group_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_training_access_[prefix]_training` FOREIGN KEY (`training_id`) REFERENCES `[prefix]_training` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_training_access_[prefix]_users` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+
+                // Convert data from old read_access column of table training to the new training_access table.
+                $readAccessRows = $this->db()->select(['id', 'read_access', 'contact'])
+                    ->from(['training'])
+                    ->execute()
+                    ->fetchRows();
+
+                $existingGroups = $this->db()->select('id')
+                    ->from(['groups'])
+                    ->execute()
+                    ->fetchList();
+
+                $preparedRows = [];
+
+                $userMapper = new User();
+                $admins = $userMapper->getUserListByGroupId(1, 1);
+                /** @var \Modules\User\Models\User $admin */
+                $admin = reset($admins);
+
+                $contact = [];
+                $ids = [];
+                $accesall = [];
+                foreach ($readAccessRows as $readAccessRow) {
+                    if ($readAccessRow['contact']) {
+                        $contact[$readAccessRow['contact']] = $userMapper->getUserById($readAccessRow['contact']);
+                        if (!$contact[$readAccessRow['contact']]) {
+                            $this->db()->update('training', ['contact' => $admin->getId()], ['id' => $readAccessRow['id']]);
+                        }
+                    }
+                    $ids[] = $readAccessRow['id'];
+                    $readAccessArray = [];
+                    $readAccessArray[$readAccessRow['id']] = explode(',', $readAccessRow['read_access']);
+                    if (empty($readAccessRow['read_access'])) {
+                        $accesall[] = $readAccessRow['id'];
+                    } else {
+                        foreach ($readAccessArray as $trainingId => $groupIds) {
+                            $groupIds = array_intersect($existingGroups, $groupIds);
+                            foreach ($groupIds as $groupId) {
+                                $preparedRows[] = [$trainingId, (int)$groupId];
+                            }
+                        }
+                    }
+                }
+
+                if (count($preparedRows)) {
+                    // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+                    $chunks = array_chunk($preparedRows, 25);
+                    foreach ($chunks as $chunk) {
+                        $this->db()->insert('training_access')
+                            ->columns(['training_id', 'group_id'])
+                            ->values($chunk)
+                            ->execute();
+                    }
+                }
+
+                // Delete old read_access column of table training.
+                $this->db()->query('ALTER TABLE `[prefix]_training` DROP COLUMN `read_access`;');
+                $this->db()->query('ALTER TABLE `[prefix]_training` ADD `access_all` TINYINT(1) NOT NULL AFTER `show`;');
+
+                foreach ($accesall as $id) {
+                    $this->db()->update('training', ['access_all' => 1], ['id' => $id]);
+                }
+
+                $this->db()->query('ALTER TABLE `[prefix]_training` CHANGE `contact` `contact` INT(11) UNSIGNED NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_training` ADD INDEX `FK_[prefix]_training_[prefix]_users` (`contact`) USING BTREE;');
+                $this->db()->query('ALTER TABLE `[prefix]_training` ADD CONSTRAINT `FK_[prefix]_training_[prefix]_users` FOREIGN KEY (`contact`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                $usersRows = $this->db()->select(['train_id', 'user_id'])
+                    ->from(['training_entrants'])
+                    ->group(['user_id'])
+                    ->execute()
+                    ->fetchRows();
+                foreach ($usersRows as $usersRow) {
+                    if (!isset($contact[$usersRow['user_id']])) {
+                        $contact[$usersRow['user_id']] = $userMapper->getUserById($usersRow['user_id']);
+                    }
+                    if (!$contact[$usersRow['user_id']]) {
+                        $this->db()->delete('training_entrants', ['user_id' => $usersRow['user_id']]);
+                    }
+                }
+                $trainsRows = $this->db()->select(['train_id'])
+                    ->from(['training_entrants'])
+                    ->group(['train_id'])
+                    ->execute()
+                    ->fetchRows();
+                foreach ($trainsRows as $trainsRow) {
+                    if (!in_array($trainsRow['train_id'], $ids)) {
+                        $this->db()->delete('training_entrants', ['train_id' => $trainsRow['train_id']]);
+                    }
+                }
+
+                $this->db()->query('ALTER TABLE `[prefix]_training_entrants` CHANGE `user_id` `user_id` INT(11) UNSIGNED NOT NULL;');
+                $this->db()->query('ALTER TABLE `[prefix]_training_entrants` ADD PRIMARY KEY(`train_id`, `user_id`);');
+                $this->db()->query('ALTER TABLE `[prefix]_training_entrants` ADD INDEX `FK_[prefix]_training_entrants_[prefix]_training` (`train_id`) USING BTREE;');
+                $this->db()->query('ALTER TABLE `[prefix]_training_entrants` ADD INDEX `FK_[prefix]_training_entrants_[prefix]_users` (`user_id`) USING BTREE;');
+                $this->db()->query('ALTER TABLE `[prefix]_training_entrants` ADD CONSTRAINT `FK_[prefix]_training_entrants_[prefix]_training` FOREIGN KEY (`train_id`) REFERENCES `[prefix]_training` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                $this->db()->query('ALTER TABLE `[prefix]_training_entrants` ADD CONSTRAINT `FK_[prefix]_training_entrants_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+            // no break
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
