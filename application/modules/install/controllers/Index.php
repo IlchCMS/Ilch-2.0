@@ -304,16 +304,19 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $con = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
-        $result = mysqli_query($con, 'SHOW DATABASES');
+        try {
+            $result = mysqli_query($con, 'SHOW DATABASES');
 
-        $dbList = [];
-
-        if ($result !== false) {
-            while ($row = mysqli_fetch_row($result)) {
-                if (($row[0] !== 'information_schema') && ($row[0] !== 'performance_schema') && ($row[0] !== 'mysql')) {
-                    $dbList[] = $row[0];
+            $dbList = [];
+            if ($result !== false) {
+                while ($row = mysqli_fetch_row($result)) {
+                    if (($row[0] !== 'information_schema') && ($row[0] !== 'performance_schema') && ($row[0] !== 'mysql')) {
+                        $dbList[] = $row[0];
+                    }
                 }
             }
+        } catch (\Exception $e) {
+            $dbList = [];
         }
 
         if ($this->getRequest()->isPost()) {
