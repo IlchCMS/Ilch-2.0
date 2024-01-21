@@ -14,7 +14,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.9.2',
+        'version' => '1.10.0',
         'icon_small' => 'fa-solid fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -237,8 +237,8 @@ class Config extends \Ilch\Config\Install
                 removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar/');
                 // no break
             case "1.7.0":
-                // no break
                 removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar_5_11_0/');
+                // no break
             case "1.8.0":
                 // Add the uid column. This property defines the persistent, globally unique identifier for the calendar component.
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `uid` VARCHAR(36) NOT NULL AFTER `id`;');
@@ -247,6 +247,14 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_calendar` ADD COLUMN `repeat_until` DATETIME DEFAULT NULL AFTER `period_day`;');
 
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-calendar' WHERE `key` = 'calendar';");
+                // no break
+            case "1.9.0":
+                // no break
+            case "1.9.1":
+                // no break
+            case "1.9.2":
+                // Remove old version of fullcalendar as this version comes with version 6.1.10.
+                removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar_5_11_3/');
                 // no break
         }
     }

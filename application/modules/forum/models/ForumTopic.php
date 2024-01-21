@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -22,7 +23,7 @@ class ForumTopic extends Model
     /**
      * The Prefix of the topic.
      *
-     * @var string
+     * @var Prefix
      */
     protected $topic_prefix;
 
@@ -102,9 +103,9 @@ class ForumTopic extends Model
     /**
      * Gets the prefix of the topic.
      *
-     * @return string
+     * @return Prefix
      */
-    public function getTopicPrefix(): string
+    public function getTopicPrefix(): Prefix
     {
         return $this->topic_prefix;
     }
@@ -195,10 +196,10 @@ class ForumTopic extends Model
     /**
      * Sets the prefix of the topic.
      *
-     * @param string $topicPrefix
+     * @param Prefix $topicPrefix
      * @return $this
      */
-    public function setTopicPrefix(string $topicPrefix): ForumTopic
+    public function setTopicPrefix(Prefix $topicPrefix): ForumTopic
     {
         $this->topic_prefix = $topicPrefix;
 

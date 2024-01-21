@@ -12,6 +12,7 @@ use Ilch\Date;
 use Ilch\Mail;
 use Ilch\Pagination;
 use Modules\Forum\Mappers\Forum as ForumMapper;
+use Modules\Forum\Mappers\Prefixes as PrefixMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Rank as RankMapper;
@@ -62,17 +63,16 @@ class Showposts extends Frontend
 
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
         $posts = $postMapper->getPostsByTopicId($topicId, $pagination, $this->getConfig()->get('forum_DESCPostorder'), ($this->getUser()) ? $this->getUser()->getId() : null);
-        $post = $topicMapper->getTopicById($topicId);
+        $topic = $topicMapper->getTopicById($topicId);
 
         $prefix = '';
-        if ($forum->getPrefix() != '' && $post->getTopicPrefix() > 0) {
-            $prefixes = explode(',', $forum->getPrefix());
-            array_unshift($prefixes, '');
+        if ($forum->getPrefixes() != '' && $topic->getTopicPrefix()->getId() > 0) {
+            $prefixIds = explode(',', $forum->getPrefixes());
+            array_unshift($prefixIds, '');
 
-            foreach ($prefixes as $key => $value) {
-                if ($post->getTopicPrefix() == $key) {
-                    $value = trim($value);
-                    $prefix = '[' . $value . '] ';
+            foreach ($prefixIds as $prefixId) {
+                if ($topic->getTopicPrefix()->getId() == $prefixId) {
+                    $prefix = '[' . $topic->getTopicPrefix()->getPrefix() . '] ';
                 }
             }
         }
@@ -81,16 +81,16 @@ class Showposts extends Frontend
                 ->add($this->getTranslator()->trans('forum'))
                 ->add($cat->getTitle())
                 ->add($forum->getTitle())
-                ->add($prefix . $post->getTopicTitle());
+                ->add($prefix . $topic->getTopicTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum') . ' - ' . $forum->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                 ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
                 ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()])
-                ->add($prefix . $post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+                ->add($prefix . $topic->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
 
         $topicModel->setId($topicId);
-        $topicModel->setVisits($post->getVisits() + 1);
+        $topicModel->setVisits($topic->getVisits() + 1);
         $topicMapper->saveVisits($topicModel);
 
         $rememberedPostIds = [];
@@ -130,7 +130,7 @@ class Showposts extends Frontend
             $reportedPostsIds[] = $reportedPost->getPostId();
         }
 
-        $this->getView()->set('post', $post);
+        $this->getView()->set('post', $topic);
         $this->getView()->set('cat', $cat);
         $this->getView()->set('posts', $posts);
         $this->getView()->set('forum', $forum);
@@ -175,6 +175,7 @@ class Showposts extends Frontend
         $postMapper = new PostMapper();
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
+        $prefixMapper = new PrefixMapper();
 
         $postId = $this->getRequest()->getParam('id');
         $topicId = $this->getRequest()->getParam('topicid');
@@ -254,9 +255,7 @@ class Showposts extends Frontend
                         // This ensures that only the autor or an admin can change the topic title
                         if ($isFirstPost) {
                             $topicMapper->update($topicId, 'topic_title', $this->getRequest()->getPost('topicTitle'));
-                            if (!empty($this->getRequest()->getPost('topicPrefix'))) {
-                                $topicMapper->update($topicId, 'topic_prefix', $this->getRequest()->getPost('topicPrefix'));
-                            }
+                            $topicMapper->update($topicId, 'topic_prefix', $this->getRequest()->getPost('topicPrefix') ?? 0);
                         }
 
                         $this->redirect()
@@ -271,6 +270,7 @@ class Showposts extends Frontend
                         ->to(['controller' => 'showposts', 'action' => 'edit', 'id' => $postId, 'topicid' => $topicId]);
                 }
 
+                $this->getView()->set('prefixes', $prefixMapper->getPrefixes());
                 $this->getView()->set('forum', $forum);
                 $this->getView()->set('topic', $topic);
                 $this->getView()->set('post', $postMapper->getPostById($postId));

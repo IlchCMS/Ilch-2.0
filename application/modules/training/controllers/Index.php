@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -17,26 +18,21 @@ class Index extends \Ilch\Controller\Frontend
     {
         $trainingMapper = new TrainingMapper();
         $entrantsMapper = new EntrantsMapper();
-        $userMapper = new UserMapper;
-
+        $userMapper = new UserMapper();
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
-
-        $user = null;
+            ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
+        $groupIds = [3];
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
-        }
 
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
+            $groupIds = [];
+            foreach ($user->getGroups() as $groups) {
+                $groupIds[] = $groups->getId();
             }
         }
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('training', $trainingMapper->getTraining())
-            ->set('readAccess', $readAccess);
+            ->set('training', $trainingMapper->getTraining([], $groupIds));
     }
 
     public function showAction()
@@ -44,63 +40,51 @@ class Index extends \Ilch\Controller\Frontend
         $trainingMapper = new TrainingMapper();
         $entrantsMapper = new EntrantsMapper();
         $entrantsModel = new EntrantsModel();
-        $userMapper = new UserMapper;
+        $userMapper = new UserMapper();
 
-        $training = $trainingMapper->getTrainingById($this->getRequest()->getParam('id'));
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), ['controller' => 'index', 'action' => 'index']);
-
-        if (empty($training)) {
-            $this->getView()->set('hasReadAccess', false);
-            return;
-        }
-
-        if ($this->getRequest()->isPost()) {
-            if ($this->getRequest()->getPost('save')) {
-                $entrantsModel->setTrainId($this->getRequest()->getParam('id'));
-                $entrantsModel->setUserId($this->getUser()->getId());
-                $entrantsModel->setNote($this->getRequest()->getPost('train_textarea'));
-                $entrantsMapper->saveUserOnTrain($entrantsModel);
-
-                $this->addMessage('saveSuccess');
-            }
-            if ($this->getRequest()->getPost('del')) {
-                $entrantsMapper->deleteUserFromTrain($this->getRequest()->getParam('id'), $this->getUser()->getId());
-
-                $this->addMessage('deleteSuccess');
-            }
-        }
-
-        if ($this->getUser()) {
-            $this->getView()->set('trainEntrantUser', $entrantsMapper->getEntrants($this->getRequest()->getParam('id'), $this->getUser()->getId()));
-        }
-
-        $user = null;
+        $groupIds = [3];
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
-        }
 
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
+            $groupIds = [];
+            foreach ($user->getGroups() as $groups) {
+                $groupIds[] = $groups->getId();
             }
         }
 
-        $adminAccess = null;
+        $training = $trainingMapper->getTrainingById($this->getRequest()->getParam('id', 0), $groupIds);
+        if (!$training) {
+            $this->redirect(['action' => 'index'])
+                ->withMessage('noTraining', 'danger');
+        }
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), ['controller' => 'index', 'action' => 'index'])
+            ->add($training->getTitle(), ['controller' => 'index', 'action' => 'show', 'id' => $training->getId()]);
+
+        if ($this->getRequest()->isPost()) {
+            if ($this->getRequest()->getPost('save') && $this->getUser()) {
+                $entrantsModel->setTrainId($training->getId())
+                    ->setUserId($this->getUser()->getId())
+                    ->setNote($this->getRequest()->getPost('train_textarea'));
+                $entrantsMapper->saveUserOnTrain($entrantsModel);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
+            } elseif ($this->getRequest()->getPost('del') && $this->getUser()) {
+                $entrantsMapper->deleteUserFromTrain($training->getId(), $this->getUser()->getId());
+                $this->redirect()
+                    ->withMessage('deleteSuccess')
+                    ->to(['action' => 'index']);
+            }
+            $this->redirect()
+                ->to(['action' => 'index']);
+        }
+
         if ($this->getUser()) {
-            $adminAccess = $this->getUser()->isAdmin();
+            $this->getView()->set('trainEntrantUser', $entrantsMapper->getEntrants($training->getId(), $this->getUser()->getId()));
         }
 
-        $hasReadAccess = (is_in_array($readAccess, explode(',', $training->getReadAccess())) || $adminAccess == true);
-
-        if ($hasReadAccess) {
-            $this->getLayout()->getHmenu()->add($training->getTitle(), ['controller' => 'index', 'action' => 'show', 'id' => $training->getId()]);
-
-            $trainEntrantsUser = $entrantsMapper->getEntrantsById($this->getRequest()->getParam('id'));
-            $this->getView()->set('training', $trainingMapper->getTrainingById($this->getRequest()->getParam('id')))
-                ->set('trainEntrantsUserCount', count($trainEntrantsUser))
-                ->set('trainEntrantsUser', $trainEntrantsUser);
-        }
-        $this->getView()->set('hasReadAccess', $hasReadAccess);
+        $trainEntrantsUser = $entrantsMapper->getEntrantsById($training->getId());
+        $this->getView()->set('training', $training)
+            ->set('trainEntrantsUser', $trainEntrantsUser);
     }
 }

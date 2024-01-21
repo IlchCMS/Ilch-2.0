@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,6 +7,7 @@
 
 namespace Modules\Training\Controllers\Admin;
 
+use Ilch\Validation;
 use Modules\Training\Mappers\Training as TrainingMapper;
 use Modules\Training\Models\Training as TrainingModel;
 use Modules\Training\Mappers\Entrants as EntrantsMapper;
@@ -20,122 +22,113 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-gears',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
-
         if ($this->getRequest()->getActionName() === 'treat') {
             $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
-            'menuTraining',
-            $items
-        );
+        $this->getLayout()->addMenu('menuTraining', $items);
     }
 
     public function indexAction()
     {
         $trainingMapper = new TrainingMapper();
-
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
-
+            ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
         if ($this->getRequest()->getPost('check_training') && $this->getRequest()->getPost('action') === 'delete') {
             foreach ($this->getRequest()->getPost('check_training') as $trainingId) {
                 $trainingMapper->delete($trainingId);
             }
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('training', $trainingMapper->getTraining());
+        $this->getView()->set('training', $trainingMapper->getEntriesBy());
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $trainingMapper = new TrainingMapper();
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
 
+        $model = new TrainingModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('training', $trainingMapper->getTrainingById($this->getRequest()->getParam('id')));
+            $model =  $trainingMapper->getTrainingById($this->getRequest()->getParam('id'), null);
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('training', $model);
 
         if ($this->getRequest()->isPost()) {
-            $model = new TrainingModel();
+            $rules = [
+                'title' => 'required',
+                'contact' => 'required',
+                'groups' => 'required',
+                'time' => 'required|integer'
+            ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
+            $validation = Validation::create($this->getRequest()->getPost(), $rules);
+            if ($validation->isValid()) {
+                $model->setTitle($this->getRequest()->getPost('title'))
+                    ->setDate(new \Ilch\Date($this->getRequest()->getPost('date')))
+                    ->setTime($this->getRequest()->getPost('time'))
+                    ->setPlace($this->getRequest()->getPost('place'))
+                    ->setContact($this->getRequest()->getPost('contact'))
+                    ->setVoiceServer($this->getRequest()->getPost('voiceServer') ?? false)
+                    ->setVoiceServerIP($this->getRequest()->getPost('voiceServerIP'))
+                    ->setVoiceServerPW($this->getRequest()->getPost('voiceServerPW'))
+                    ->setGameServer($this->getRequest()->getPost('gameServer') ?? false)
+                    ->setGameServerIP($this->getRequest()->getPost('gameServerIP'))
+                    ->setGameServerPW($this->getRequest()->getPost('gameServerPW'))
+                    ->setText($this->getRequest()->getPost('text'))
+                    ->setShow($this->getRequest()->getPost('calendarShow'))
+                    ->setReadAccess(implode(',', $this->getRequest()->getPost('groups')));
 
-            $title = trim($this->getRequest()->getPost('title'));
-
-            if (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } else {
-                $groups = '';
-                if (!empty($this->getRequest()->getPost('groups'))) {
-                    $groups = implode(',', $this->getRequest()->getPost('groups'));
-                }
-
-                $model->setTitle($title);
-                $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'))));
-                $model->setTime($this->getRequest()->getPost('time'));
-                $model->setPlace($this->getRequest()->getPost('place'));
-                $model->setContact($this->getRequest()->getPost('contact'));
-                $model->setVoiceServer($this->getRequest()->getPost('voiceServer'));
-                $model->setVoiceServerIP($this->getRequest()->getPost('voiceServerIP'));
-                $model->setVoiceServerPW($this->getRequest()->getPost('voiceServerPW'));
-                $model->setGameServer($this->getRequest()->getPost('gameServer'));
-                $model->setGameServerIP($this->getRequest()->getPost('gameServerIP'));
-                $model->setGameServerPW($this->getRequest()->getPost('gameServerPW'));
-                $model->setText($this->getRequest()->getPost('text'));
-                $model->setShow($this->getRequest()->getPost('calendarShow'));
-                $model->setReadAccess($groups);
                 $trainingMapper->save($model);
 
-                $this->addMessage('saveSuccess');
-
-                $this->redirect(['action' => 'index']);
+                $this->redirect(['action' => 'index'])
+                    ->withMessage('saveSuccess');
             }
+
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         if ($trainingMapper->existsTable('calendar')) {
             $this->getView()->set('calendarShow', 1);
         }
 
-        if ($this->getRequest()->getParam('id')) {
-            $groups = explode(',', $trainingMapper->getTrainingById($this->getRequest()->getParam('id'))->getReadAccess());
-        } else {
-            $groups = [2,3];
-        }
-
         $this->getView()->set('users', $userMapper->getUserList(['confirmed' => 1]))
-                        ->set('userGroupList', $groupMapper->getGroupList())
-                        ->set('groups', $groups);
+            ->set('userGroupList', $groupMapper->getGroupList())
+            ->set('groups', explode(',', $model->getReadAccess()));
     }
 
     public function delAction()
@@ -143,10 +136,8 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             $trainingMapper = new TrainingMapper();
             $entrantsMapper = new EntrantsMapper();
-
-            $trainingMapper->delete($this->getRequest()->getParam('id'));
+            $trainingMapper->delete($this->getRequest()->getParam('id', 0));
             $entrantsMapper->deleteAllUser($this->getRequest()->getParam('id'));
-
             $this->addMessage('deleteSuccess');
         }
 

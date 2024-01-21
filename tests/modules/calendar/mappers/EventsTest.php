@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -6,7 +7,6 @@
 
 namespace Modules\Calendar\Mappers;
 
-use Ilch\Pagination;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\Calendar\Config\Config as ModuleConfig;
@@ -53,23 +53,23 @@ class EventsTest extends DatabaseTestCase
         $i = 0;
         self::assertEquals(1, $entrys[$i]->getId());
         self::assertSame('calendar/events/index/', $entrys[$i]->getUrl());
-        
+
         $i++;
         self::assertEquals(2, $entrys[$i]->getId());
         self::assertSame('war/wars/index/', $entrys[$i]->getUrl());
-        
+
         $i++;
         self::assertEquals(3, $entrys[$i]->getId());
         self::assertSame('training/trainings/index/', $entrys[$i]->getUrl());
-        
+
         $i++;
         self::assertEquals(4, $entrys[$i]->getId());
         self::assertSame('birthday/birthdays/index/', $entrys[$i]->getUrl());
-        
+
         $i++;
         self::assertEquals(5, $entrys[$i]->getId());
         self::assertSame('events/events/index/', $entrys[$i]->getUrl());
-        
+
         $i++;
         self::assertEquals(6, $entrys[$i]->getId());
         self::assertSame('away/aways/index/', $entrys[$i]->getUrl());
@@ -116,7 +116,7 @@ class EventsTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configUser = new UserConfig();

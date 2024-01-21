@@ -135,18 +135,21 @@ $accesses = $this->get('accesses');
                             $smallIcon = '<img style="padding-right: 5px;" src="' . $this->getStaticUrl('../application/modules/' . $module->getKey() . '/config/' . $module->getIconSmall()) . '" />';
                         }
 
-                        if ($module->getSystemModule()) {
-                            $systemModuleHtml .= '<a class="list-group-item" href="' . $this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) . '">
+
+                        if ($accesses && ($accesses->hasAccess('Admin_' . $module->getKey(), $module->getKey()))) {
+                            if ($module->getSystemModule()) {
+                                $systemModuleHtml .= '<a class="list-group-item" href="' . $this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) . '">
                                         ' . $smallIcon . $content['name'] . '
                                         </a>';
-                        } elseif ($module->getLayoutModule()) {
-                            $layoutModuleHtml .= '<a class="list-group-item" href="' . $this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) . '">
+                            } elseif ($module->getLayoutModule()) {
+                                $layoutModuleHtml .= '<a class="list-group-item" href="' . $this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) . '">
                                         ' . $smallIcon . $content['name'] . '
                                         </a>';
-                        } else {
-                            $modulesHtml .= '<a class="list-group-item" href="' . $this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) . '">
+                            } else {
+                                $modulesHtml .= '<a class="list-group-item" href="' . $this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) . '">
                                         ' . $smallIcon . $content['name'] . '
                                         </a>';
+                            }
                         }
                     }
                 }
@@ -168,7 +171,9 @@ $accesses = $this->get('accesses');
                                 <div class="list-group list-group-horizontal">
                                     <?=$systemModuleHtml ?>
                                 </div>
+                                <?php if (!empty($modulesHtml) && !empty($systemModuleHtml)) : ?>
                                 <div class="divider"></div>
+                                <?php endif; ?>
                                 <div class="list-group list-group-horizontal">
                                     <?=$modulesHtml ?>
                                 </div>
@@ -277,8 +282,8 @@ $accesses = $this->get('accesses');
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
                             <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default"><?=$this->getTrans('go') ?></button>
-                                    </span>
+                                <button type="button" class="btn btn-default"><?=$this->getTrans('go') ?></button>
+                            </span>
                         </div>
                     </div>
                 </li>

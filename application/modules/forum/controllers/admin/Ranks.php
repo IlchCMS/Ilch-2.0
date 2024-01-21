@@ -36,6 +36,12 @@ class Ranks extends Admin
                 ]
             ],
             [
+                'name' => 'menuPrefixes',
+                'active' => false,
+                'icon' => 'fa-solid fa-table-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'prefixes', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuReports',
                 'active' => false,
                 'icon' => 'fa-solid fa-flag',

@@ -5,7 +5,8 @@
  * @package ilch
  */
 
-if (!version_compare(PHP_VERSION, '7.3', '>=')) {
+define('PHPVERSION', '7.3');
+if (!version_compare(PHP_VERSION, PHPVERSION, '>=')) {
     die('Ilch CMS 2 needs at least php version 7.3');
 }
 
@@ -30,7 +31,7 @@ header('Content-Type: text/html; charset=utf-8');
 $serverTimeZone = @date_default_timezone_get();
 date_default_timezone_set('UTC');
 
-define('VERSION', '2.1.54');
+define('VERSION', '2.1.57');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
 define('DEFAULT_LAYOUT', 'index');

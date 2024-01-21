@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -62,7 +63,7 @@ class Config extends \Ilch\Config\Install
             ->set('disable_purifier', '0');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_config` (
                 `key` VARCHAR(191) NOT NULL,
@@ -215,7 +216,7 @@ class Config extends \Ilch\Config\Install
             INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "2.0.1":
@@ -266,10 +267,10 @@ class Config extends \Ilch\Config\Install
                     $visibilitySettings .= ',0,0';
                 }
 
-                $visibilitySettings .= ','.$databaseConfig->get('statistic_visits');
-                $visibilitySettings .= ','.$databaseConfig->get('statistic_browser');
-                $visibilitySettings .= ','.$databaseConfig->get('statistic_os');
-                $databaseConfig->set('statistic_visibleStats', $visibilitySettings, 0);
+                $visibilitySettings .= ',' . $databaseConfig->get('statistic_visits');
+                $visibilitySettings .= ',' . $databaseConfig->get('statistic_browser');
+                $visibilitySettings .= ',' . $databaseConfig->get('statistic_os');
+                $databaseConfig->set('statistic_visibleStats', $visibilitySettings);
 
                 // Remove the no longer needed settings of the statistic module
                 $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'statistic_site';
@@ -279,7 +280,7 @@ class Config extends \Ilch\Config\Install
 
                 // Add new default rule to the beginning of the current rules (DSGVO)
                 $databaseConfig->set('regist_rules', '<p>Mit der Registrierung auf dieser Webseite, akzeptieren Sie die Datenschutzbestimmungen und den Haftungsausschluss.</p>'
-                    .$databaseConfig->get('regist_rules'));
+                    . $databaseConfig->get('regist_rules'));
 
                 // Add default value for the captcha setting, which indicates that administrators should not need to solve captchas.
                 $databaseConfig->set('hideCaptchaFor', '1');
@@ -294,26 +295,26 @@ class Config extends \Ilch\Config\Install
                     ->from('imprint')
                     ->execute()
                     ->fetchAssoc();
-                $contentString = '<b>'.$content['paragraph'].'</b><br><br>';
-                $contentString .= $content['company'].'<br>';
-                $contentString .= $content['name'].'<br>';
-                $contentString .= $content['address'].'<br>';
-                $contentString .= $content['addressadd'].'<br><br>';
-                $contentString .= $content['city'].'<br><br>';
+                $contentString = '<b>' . $content['paragraph'] . '</b><br><br>';
+                $contentString .= $content['company'] . '<br>';
+                $contentString .= $content['name'] . '<br>';
+                $contentString .= $content['address'] . '<br>';
+                $contentString .= $content['addressadd'] . '<br><br>';
+                $contentString .= $content['city'] . '<br><br>';
 
                 $contentString .= '<b>Kontakt</b><br>';
-                $contentString .= 'Telefon: '.$content['phone'].'<br>';
-                $contentString .= 'Telefax: '.$content['fax'].'<br>';
-                $contentString .= 'E-Mail: '.$content['email'].'<br><br>';
+                $contentString .= 'Telefon: ' . $content['phone'] . '<br>';
+                $contentString .= 'Telefax: ' . $content['fax'] . '<br>';
+                $contentString .= 'E-Mail: ' . $content['email'] . '<br><br>';
 
-                $contentString .= 'Registergericht: '.$content['registration'].'<br>';
-                $contentString .= 'Handelsregisternummer: '.$content['commercialregister'].'<br>';
-                $contentString .= 'Umsatzsteuer-ID-Nummer: '.$content['vatid'].'<br>';
+                $contentString .= 'Registergericht: ' . $content['registration'] . '<br>';
+                $contentString .= 'Handelsregisternummer: ' . $content['commercialregister'] . '<br>';
+                $contentString .= 'Umsatzsteuer-ID-Nummer: ' . $content['vatid'] . '<br>';
 
-                $contentString .= $content['other'].'<br><br>';
-                $contentString .= $content['disclaimer'].'<br>';
+                $contentString .= $content['other'] . '<br><br>';
+                $contentString .= $content['disclaimer'] . '<br>';
 
-                $this->db()->query('UPDATE `[prefix]_imprint` SET `imprint` = \''.$contentString.'\';');
+                $this->db()->query('UPDATE `[prefix]_imprint` SET `imprint` = \'' . $contentString . '\';');
 
                 // Delete now unneeded old columns
                 $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `paragraph`;');
@@ -332,8 +333,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_imprint` DROP COLUMN `disclaimer`;');
 
                 // Delete unneeded files and folders
-                unlink(ROOT_PATH.'/application/modules/imprint/controllers/admin/Settings.php');
-                removeDir(ROOT_PATH.'/application/modules/imprint/views/admin/settings');
+                unlink(ROOT_PATH . '/application/modules/imprint/controllers/admin/Settings.php');
+                removeDir(ROOT_PATH . '/application/modules/imprint/views/admin/settings');
 
                 // Privacy module
                 // Insert new templates
@@ -355,7 +356,7 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $visibilitySettings = $databaseConfig->get('statistic_visibleStats');
                 if (empty($visibilitySettings)) {
-                    $databaseConfig->set('statistic_visibleStats', '1,1,1,1,1,1', 0);
+                    $databaseConfig->set('statistic_visibleStats', '1,1,1,1,1,1');
                 }
 
                 // Remove the no longer needed settings of the statistic module
@@ -369,15 +370,15 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.11":
                 // restore noavatar.jpg if it is missing due to a previous bug.
-                if (file_exists(ROOT_PATH.'/static/img/noavatar.jpg')) {
-                    unlink(ROOT_PATH.'/_q2E9CeHhA5cTNKpa/noavatar.jpg');
+                if (file_exists(ROOT_PATH . '/static/img/noavatar.jpg')) {
+                    unlink(ROOT_PATH . '/_q2E9CeHhA5cTNKpa/noavatar.jpg');
                 } else {
-                    rename(ROOT_PATH.'/_q2E9CeHhA5cTNKpa/noavatar.jpg', ROOT_PATH.'/static/img/noavatar.jpg');
+                    rename(ROOT_PATH . '/_q2E9CeHhA5cTNKpa/noavatar.jpg', ROOT_PATH . '/static/img/noavatar.jpg');
                 }
-                rmdir(ROOT_PATH.'/_q2E9CeHhA5cTNKpa');
+                rmdir(ROOT_PATH . '/_q2E9CeHhA5cTNKpa');
                 break;
             case "2.1.12":
-                mkdir(ROOT_PATH.'/cache');
+                mkdir(ROOT_PATH . '/cache');
                 break;
             case "2.1.13":
                 // Add new needed column "type" for the notifications.
@@ -390,58 +391,58 @@ class Config extends \Ilch\Config\Install
                 set_time_limit(300);
                 // Change VARCHAR length for new table character.
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_config` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;
-                ALTER TABLE `[prefix]_modules` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;
-                ALTER TABLE `[prefix]_groups_access` MODIFY COLUMN `module_key` VARCHAR(191) DEFAULT 0;');
+                        ALTER TABLE `[prefix]_modules` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;
+                        ALTER TABLE `[prefix]_groups_access` MODIFY COLUMN `module_key` VARCHAR(191) DEFAULT 0;');
 
                 // Convert all core and system module tables to new character and collate
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_admin_notifications` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_admin_notifications_permission` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_admin_updateservers` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_articles` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_articles_cats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_articles_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_auth_providers` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_auth_providers_modules` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_auth_tokens` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_backup` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_boxes` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_boxes_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_comments` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_config` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_contact_receivers` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_cookie_stolen` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_emails` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_groups` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_groups_access` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_imprint` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_logs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_media` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_media_cats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_menu` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_menu_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_modules` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_modules_boxes_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_modules_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_modules_folderrights` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_modules_php_extensions` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_pages` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_pages_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_privacy` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_profile_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_profile_fields` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_profile_trans` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_users` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_users_auth_providers` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_users_dialog` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_users_dialog_reply` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_users_gallery_imgs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_users_gallery_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_users_groups` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_users_media` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_user_menu` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_user_menu_settings_links` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_visits_online` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-                ALTER TABLE `[prefix]_visits_stats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                            ALTER TABLE `[prefix]_admin_notifications_permission` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_admin_updateservers` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_articles` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_articles_cats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_articles_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_auth_providers` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_auth_providers_modules` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_auth_tokens` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_backup` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_boxes` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_boxes_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_comments` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_config` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_contact_receivers` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_cookie_stolen` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_emails` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_groups` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_groups_access` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_imprint` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_logs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_media` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_media_cats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_menu` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_menu_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_modules` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_modules_boxes_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_modules_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_modules_folderrights` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_modules_php_extensions` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_pages` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_pages_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_privacy` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_profile_content` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_profile_fields` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_profile_trans` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_users` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_users_auth_providers` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_users_dialog` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_users_dialog_reply` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_users_gallery_imgs` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_users_gallery_items` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_users_groups` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_users_media` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_user_menu` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_user_menu_settings_links` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_visits_online` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+                            ALTER TABLE `[prefix]_visits_stats` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
                 // Change now no longer used smilies module to an optional module and set a few needed values so it can
                 // be uninstalled like a normal module. This is done so that the user can backup maybe needed smilies.
@@ -468,13 +469,13 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
                 break;
             case "2.1.17":
-                removeDir(ROOT_PATH.'/vendor');
+                removeDir(ROOT_PATH . '/vendor');
                 // Delete possible rest of update to 2.1.17.
-                if (file_exists(ROOT_PATH.'/_vendor')) {
-                    removeDir(ROOT_PATH.'/_vendor');
+                if (file_exists(ROOT_PATH . '/_vendor')) {
+                    removeDir(ROOT_PATH . '/_vendor');
                 }
 
-                rename(ROOT_PATH.'/__vendor', ROOT_PATH.'/vendor');
+                rename(ROOT_PATH . '/__vendor', ROOT_PATH . '/vendor');
                 break;
             case "2.1.18":
                 // Add "expires" column to let the confirm code expire after a specific time.
@@ -503,7 +504,7 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $smtpSecureSetting = $databaseConfig->get('smtp_secure');
                 if (!empty($smtpSecureSetting)) {
-                    switch($smtpSecureSetting) {
+                    switch ($smtpSecureSetting) {
                         case "TLS":
                         case "STARTTLS":
                             $databaseConfig->set('smtp_secure', 'tls');
@@ -525,10 +526,10 @@ class Config extends \Ilch\Config\Install
 
                 $installedModules = $moduleMapper->getModules();
                 $boxes = $boxMapper->getBoxList('de_DE');
-                foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+                foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
                     $installed = false;
                     $key = basename($modulesPath);
-                    foreach($installedModules as $installedModule) {
+                    foreach ($installedModules as $installedModule) {
                         if ($installedModule->getKey() == $key) {
                             $installed = true;
                             break;
@@ -539,7 +540,7 @@ class Config extends \Ilch\Config\Install
                         continue;
                     }
 
-                    $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+                    $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
                     if (class_exists($configClass)) {
                         $config = new $configClass($this->getTranslator());
                         if (!empty($config->config) && isset($config->config['boxes'])) {
@@ -616,10 +617,10 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
 
                 // Remove no longer needed files
-                unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.fileupload.js');
-                unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.iframe-transport.js');
-                unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.ui.widget.js');
-                unlink(APPLICATION_PATH.'/modules/media/static/js/jquery.knob.js');
+                unlink(APPLICATION_PATH . '/modules/media/static/js/jquery.fileupload.js');
+                unlink(APPLICATION_PATH . '/modules/media/static/js/jquery.iframe-transport.js');
+                unlink(APPLICATION_PATH . '/modules/media/static/js/jquery.ui.widget.js');
+                unlink(APPLICATION_PATH . '/modules/media/static/js/jquery.knob.js');
                 break;
             case "2.1.27":
                 replaceVendorDirectory();
@@ -637,7 +638,7 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
 
                 // Remove no longer needed file
-                unlink(APPLICATION_PATH.'/libraries/Ilch/Session.php');
+                unlink(APPLICATION_PATH . '/libraries/Ilch/Session.php');
                 break;
             case "2.1.30":
                 replaceVendorDirectory();
@@ -665,7 +666,7 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.36":
                 // Remove no longer needed file
-                unlink(APPLICATION_PATH.'/libraries/Ilch/Event.php');
+                unlink(APPLICATION_PATH . '/libraries/Ilch/Event.php');
 
                 // Update comment keys in the comments table to end with a slash.
                 $sqlCommands = '';
@@ -676,7 +677,7 @@ class Config extends \Ilch\Config\Install
                     ->fetchRows();
 
                 if (!empty($comments)) {
-                    foreach($comments as $comment) {
+                    foreach ($comments as $comment) {
                         $key = '';
                         if (!(\strlen($comment['key']) - (strrpos($comment['key'], '/')) === 0)) {
                             // Add missing slash at the end to usually terminate the id.
@@ -692,7 +693,7 @@ class Config extends \Ilch\Config\Install
                             $sqlCommands = '';
                         }
 
-                        $sqlCommands .= 'UPDATE `'.$this->db()->getPrefix().'comments` SET `key` = \''.$key.'\' WHERE `id` = '.$comment['id'].';';
+                        $sqlCommands .= 'UPDATE `' . $this->db()->getPrefix() . 'comments` SET `key` = \'' . $key . '\' WHERE `id` = ' . $comment['id'] . ';';
                         $counter++;
                     }
 
@@ -718,7 +719,7 @@ class Config extends \Ilch\Config\Install
             case "2.1.40":
                 $groupMapper = new \Modules\User\Mappers\Group();
                 $groups = $groupMapper->getGroupList();
-                
+
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
                 $modules = $moduleMapper->getModules();
 
@@ -738,13 +739,14 @@ class Config extends \Ilch\Config\Install
                     'box' => $boxes,
                 ];
 
-                foreach ($groups as $key => $group) {
+                $groupAccessList = [];
+                foreach ($groups as $group) {
                     if ($group->getId() !== 1) {
                         $groupAccessList[$group->getId()] = $groupMapper->getGroupAccessList($group->getId());
                     }
                 }
 
-                foreach($groupAccessList as $groupid => $groupData) {
+                foreach ($groupAccessList as $groupid => $groupData) {
                     foreach ($groupData['entries'] as $type => $accessData) {
                         $TypeData = $accessTypes[$type];
                         foreach ($TypeData as $TypeDataModel) {
@@ -769,7 +771,7 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('captcha', '0');
                 $databaseConfig->set('captcha_apikey', '');
                 $databaseConfig->set('captcha_seckey', '');
-                
+
                 replaceVendorDirectory();
                 break;
             case "2.1.43":
@@ -915,8 +917,8 @@ class Config extends \Ilch\Config\Install
                 // Set a default value if it hasn't a value for 'mod_rewrite' and 'multilingual_acp' as it is causing a lot of database queries if not set and therefore not gets cached.
                 // Example: Reduction of db queries from 218 to 124 ('multilingual_acp' set) and further down to 115 ('mod_rewrite' set) for the forum module index action in this dev environment.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->get('mod_rewrite') ?? $databaseConfig->set('mod_rewrite', '0');
-                $databaseConfig->get('multilingual_acp') ?? $databaseConfig->set('multilingual_acp', '0');
+                    $databaseConfig->get('mod_rewrite') ?? $databaseConfig->set('mod_rewrite', '0');
+                    $databaseConfig->get('multilingual_acp') ?? $databaseConfig->set('multilingual_acp', '0');
 
                 // Delete old version of harvesthq/chosen
                 removeDir(ROOT_PATH . '/static/js/chosen');
@@ -935,6 +937,16 @@ class Config extends \Ilch\Config\Install
             case "2.1.54":
                 // Update vendor folder
                 replaceVendorDirectory();
+                break;
+            case "2.1.55":
+                // Update vendor folder. Downgrade CKEditor to 4.22.1. Version 4.23 is an LTS version, which requires a license.
+                replaceVendorDirectory();
+                break;
+            case "2.1.56":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('page_title_order', '%%moduledata%% | %%title%%');
+                $databaseConfig->set('page_title_moduledata_separator', ' | ');
+                $databaseConfig->set('page_title_moduledata_order', '0');
                 break;
         }
 

@@ -8,7 +8,7 @@
                 <col class="icon_width">
                 <col class="icon_width">
                 <col>
-                <?php if ($this->get('multilingual')): ?>
+                <?php if ($this->get('multilingual')) : ?>
                     <col class="col-lg-1">
                 <?php endif; ?>
             </colgroup>
@@ -24,44 +24,44 @@
                     <th>
                         <a href="<?=$this->getUrl($this->get('sorter')->getUrlArray('title')) ?>" title="<?=$this->getTrans('boxTitle') ?>"><?=$this->get('sorter')->getArrowHtml('title') ?> <?=$this->getTrans('boxTitle') ?></a>&nbsp;
                     </th>
-                    <?php if ($this->get('multilingual')): ?>
+                    <?php if ($this->get('multilingual')) : ?>
                         <th class="text-right">
-                            <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
-                                <?php if ($key == $this->get('contentLanguage')): ?>
+                            <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value) : ?>
+                                <?php if ($key == $this->get('contentLanguage')) : ?>
                                     <?php continue; ?>
                                 <?php endif; ?>
 
-                                <img src="<?=$this->getStaticUrl('img/lang/'.$key.'.png') ?>">
+                                <img src="<?=$this->getStaticUrl('img/lang/' . $key . '.png') ?>" alt="<?=$this->getTrans('multilingualContent') ?>" title="<?=$this->getTrans('multilingualContent') ?>">
                             <?php endforeach; ?>
                         </th>
                     <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($this->get('boxes'))): ?>
-                    <?php foreach ($this->get('boxes') as $box): ?>
+                <?php if (!empty($this->get('boxes'))) : ?>
+                    <?php foreach ($this->get('boxes') as $box) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_boxes', $box->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $box->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $box->getId()]) ?> </td>
                             <td>
-                                <?php if ($box->getTitle() !== ''): ?>
+                                <?php if ($box->getTitle() !== '') : ?>
                                     <?=$this->escape($box->getTitle()) ?>
                                 <?php else: ?>
                                     <?=$this->getTrans('noTitleBox') ?>
                                 <?php endif; ?>
                             </td>
-                            <?php if ($this->get('multilingual')): ?>
+                            <?php if ($this->get('multilingual')) : ?>
                                 <td class="text-right">
-                                    <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
-                                        <?php if ($key == $this->get('contentLanguage')): ?>
+                                    <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value) : ?>
+                                        <?php if ($key == $this->get('contentLanguage')) : ?>
                                             <?php continue; ?>
                                         <?php endif; ?>
 
-                                        <?php if ($this->get('boxMapper')->getSelfBoxByIdLocale($box->getId(), $key) != null): ?>
-                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa-regular fa-pen-to-square"></i></a>
+                                        <?php if ($this->get('boxMapper')->getSelfBoxByIdLocale($box->getId(), $key) != null) : ?>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>" title="<?=$this->getTrans('editContentLanguage') ?>"><i class="fa-regular fa-pen-to-square"></i></a>
                                         <?php else: ?>
-                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa-solid fa-circle-plus"></i></a>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>" title="<?=$this->getTrans('addContentLanguage') ?>"><i class="fa-solid fa-circle-plus"></i></a>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </td>
