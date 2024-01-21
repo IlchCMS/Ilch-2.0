@@ -304,10 +304,11 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $con = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
+
+        $manualDatabase = false;
+        $dbList = [];
         try {
             $result = mysqli_query($con, 'SHOW DATABASES');
-
-            $dbList = [];
             if ($result !== false) {
                 while ($row = mysqli_fetch_row($result)) {
                     if (($row[0] !== 'information_schema') && ($row[0] !== 'performance_schema') && ($row[0] !== 'mysql')) {
@@ -316,7 +317,7 @@ class Index extends \Ilch\Controller\Frontend
                 }
             }
         } catch (\Exception $e) {
-            $dbList = [];
+            $manualDatabase = true;
         }
 
         if ($this->getRequest()->isPost()) {
@@ -326,7 +327,7 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             if ($validation->isValid()) {
-                if (in_array($this->getRequest()->getPost('dbName'), $dbList)) {
+                if ($manualDatabase || in_array($this->getRequest()->getPost('dbName'), $dbList)) {
                     try {
                         $ilch = new \Ilch\Database\Factory();
                         $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
