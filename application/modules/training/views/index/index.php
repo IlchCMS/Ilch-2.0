@@ -1,11 +1,12 @@
-<?php $entrantsMapper = $this->get('entrantsMapper');
-$adminAccess = null;
-if ($this->getUser()) {
-    $adminAccess = $this->getUser()->isAdmin();
-}
-$displayedTrainings = 0;
-?>
+<?php
 
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Training\Mappers\Entrants $entrantsMapper */
+$entrantsMapper = $this->get('entrantsMapper');
+/** @var \Modules\Training\Models\Training[]|null $training */
+$training = $this->get('training');
+?>
 <h1><?=$this->getTrans('menuTraining') ?></h1>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
@@ -24,27 +25,16 @@ $displayedTrainings = 0;
             </tr>
         </thead>
         <tbody>
-            <?php if ($this->get('training') != ''): ?>
-                <?php foreach ($this->get('training') as $training): ?>
-                    <?php
-                    if (!is_in_array($this->get('readAccess'), explode(',', $training->getReadAccess())) && $adminAccess == false) {
-                        continue;
-                    }
-                    $displayedTrainings++;
-                    ?>
+            <?php if ($training) : ?>
+                <?php foreach ($training as $model) : ?>
                     <tr>
-                        <td><?=date('d.m.Y', strtotime($training->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($training->getDate())) ?> <?=$this->getTrans('clock') ?></td>
-                        <td><a href="<?=$this->getUrl('training/index/show/id/' . $training->getId()) ?>"><?=$this->escape($training->getTitle()) ?></a></td>
-                        <td><?=$this->escape($training->getPlace()) ?></td>
-                        <td align="center"><?=count($entrantsMapper->getEntrantsById($training->getId())) ?></td>
+                        <td><?=date('d.m.Y', strtotime($model->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($model->getDate())) ?> <?=$this->getTrans('clock') ?></td>
+                        <td><a href="<?=$this->getUrl('training/index/show/id/' . $model->getId()) ?>"><?=$this->escape($model->getTitle()) ?></a></td>
+                        <td><?=$this->escape($model->getPlace()) ?></td>
+                        <td class="text-center"><?=count($entrantsMapper->getEntrantsById($model->getId())) ?></td>
                     </tr>
                 <?php endforeach; ?>
-                <?php if ($displayedTrainings == 0) : ?>
-                    <tr>
-                        <td colspan="4"><?=$this->getTrans('noTraining') ?></td>
-                    </tr>
-                <?php endif; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <tr>
                     <td colspan="4"><?=$this->getTrans('noTraining') ?></td>
                 </tr>

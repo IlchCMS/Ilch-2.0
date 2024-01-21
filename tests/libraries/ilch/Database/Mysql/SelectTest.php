@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -187,17 +188,17 @@ class SelectTest extends \PHPUnit\Framework\TestCase
             ],
             'or conditions with object'     => [
                 'where'           => function (Select $out) {
-                        return $out->orX(['field1' => 5, 'field2' => 'super']);
-                    },
+                    return $out->orX(['field1' => 5, 'field2' => 'super']);
+                },
                 'expectedSqlPart' => '(`field1` = "5" OR `field2` = "super")'
             ],
             'complex condition' => [
                 'where'           => function (Select $out) {
-                        return [
+                    return [
                             'field1' => 5,
                             $out->orX([$out->comp('field2', 'super'), $out->comp('field2', 'geil')])
                         ];
-                    },
+                },
                 'expectedSqlPart' => '(`field1` = "5" AND (`field2` = "super" OR `field2` = "geil"))'
             ],
             //array - positive

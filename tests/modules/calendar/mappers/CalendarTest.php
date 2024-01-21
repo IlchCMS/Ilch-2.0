@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -6,7 +7,6 @@
 
 namespace Modules\Calendar\Mappers;
 
-use Ilch\Pagination;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\Calendar\Config\Config as ModuleConfig;
@@ -61,7 +61,7 @@ class CalendarTest extends DatabaseTestCase
         self::assertSame('#32333B', $entrys[$i]->getColor());
         self::assertSame(0, $entrys[$i]->getPeriodDay());
         self::assertSame('1,3', $entrys[$i]->getReadAccess());
-        
+
         $i++;
         self::assertEquals(2, $entrys[$i]->getId());
         self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc2', $entrys[$i]->getUid());
@@ -73,7 +73,7 @@ class CalendarTest extends DatabaseTestCase
         self::assertSame('#32333B', $entrys[$i]->getColor());
         self::assertSame(0, $entrys[$i]->getPeriodDay());
         self::assertSame('1', $entrys[$i]->getReadAccess());
-        
+
         $i++;
         self::assertEquals(3, $entrys[$i]->getId());
         self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc3', $entrys[$i]->getUid());
@@ -193,7 +193,7 @@ class CalendarTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configUser = new UserConfig();

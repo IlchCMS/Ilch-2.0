@@ -1,0 +1,104 @@
+
+
+users:
+  -
+    id: 1
+    name: "admin"
+  -
+    id: 2
+    name: "User"
+
+groups:
+  -
+    id: 1
+    name: "Admin"
+  -
+    id: 2
+    name: "User"
+  -
+    id: 3
+    name: "Guest"
+
+training:
+  -
+    id: 1
+    title: "Tag 1"
+    date: "2024-01-15 05:00:00"
+    time: 30
+    place: ""
+    contact: 1
+    voice_server: 0
+    voice_server_ip: ""
+    voice_server_pw: ""
+    game_server: 0
+    game_server_ip: ""
+    game_server_pw: ""
+    text: ""
+    show: 0
+    access_all: 0
+  -
+    id: 2
+    title: "Tag 2"
+    date: "2024-02-15 05:00:00"
+    time: 30
+    place: ""
+    contact: 1
+    voice_server: 0
+    voice_server_ip: ""
+    voice_server_pw: ""
+    game_server: 0
+    game_server_ip: ""
+    game_server_pw: ""
+    text: ""
+    show: 0
+    access_all: 0
+  -
+    id: 3
+    title: "Tag 3"
+    date: "2024-03-15 05:00:00"
+    time: 30
+    place: ""
+    contact: 1
+    voice_server: 0
+    voice_server_ip: ""
+    voice_server_pw: ""
+    game_server: 0
+    game_server_ip: ""
+    game_server_pw: ""
+    text: ""
+    show: 0
+    access_all: 1
+
+training_access:
+  -
+    training_id: 1
+    group_id: 1
+  -
+    training_id: 1
+    group_id: 2
+  -
+    training_id: 1
+    group_id: 3
+  -
+    training_id: 2
+    group_id: 1
+  -
+    training_id: 2
+    group_id: 2
+  -
+    training_id: 3
+    group_id: 1
+
+training_entrants:
+  -
+    train_id: 1
+    user_id: 1
+    note: ""
+  -
+    train_id: 1
+    user_id: 2
+    note: ""
+  -
+    train_id: 2
+    user_id: 2
+    note: ""

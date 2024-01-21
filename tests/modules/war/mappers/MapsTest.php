@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -6,7 +7,6 @@
 
 namespace Modules\War\Mappers;
 
-use Ilch\Pagination;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\War\Config\Config as ModuleConfig;
@@ -51,7 +51,7 @@ class MapsTest extends DatabaseTestCase
         $i = 0;
         self::assertEquals(1, $entrys[$i]->getId());
         self::assertSame('Map1', $entrys[$i]->getName());
-        
+
         $i++;
         self::assertEquals(2, $entrys[$i]->getId());
         self::assertSame('Map2', $entrys[$i]->getName());
@@ -98,7 +98,7 @@ class MapsTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configUser = new UserConfig();

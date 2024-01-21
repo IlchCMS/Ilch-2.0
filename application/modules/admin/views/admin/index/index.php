@@ -1,32 +1,41 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 if ($this->getUser()->getFirstName() != '') {
-    $name = $this->getUser()->getFirstName().' '.$this->getUser()->getLastName();
+    $name = $this->getUser()->getFirstName() . ' ' . $this->getUser()->getLastName();
 } else {
     $name = $this->getUser()->getName();
 }
 
 $ilchNewsList = url_get_contents($this->get('ilchNewsList'), true, false, 120);
 $ilchNews = json_decode($ilchNewsList);
+
+/** @var \Modules\Admin\Models\Notification[] $notifications */
 $notifications = $this->get('notifications');
+/** @var string $version */
 $version = $this->get('version');
+
+/** @var \Ilch\Accesses $accesses */
+$accesses = $this->get('accesses');
 ?>
 
 <h3><?=$this->getTrans('welcomeBack', $this->escape($name)) ?> !</h3>
 <?=$this->getTrans('welcomeBackDescripton') ?>
 <br /><br /><br />
-<?php if (!empty($notifications)): ?>
+<?php if (!empty($notifications)) : ?>
 <form class="form-horizontal" method="POST">
-<?=$this->getTokenField() ?>
+    <?=$this->getTokenField() ?>
 <?php endif; ?>
 <div class="row">
     <div class="col-xl-6 col-lg-6">
         <h1>
             <?=$this->getTrans('system') ?>
-            <?php if ($this->get('foundNewVersions')): ?>
+            <?php if ($this->get('foundNewVersions')) : ?>
                 <span class="badge bg-danger"><?=$this->getTrans('notUpToDate') ?></span>
-            <?php elseif ($this->get('curlErrorOccured')): ?>
-                <span class="badge bg-warning text-dark"><?=$this->getTrans('versionQueryFailed') ?></span>
-            <?php else: ?>
+            <?php elseif ($this->get('curlErrorOccured')) : ?>
+                <span class="badge bg-warning"><?=$this->getTrans('versionQueryFailed') ?></span>
+            <?php else : ?>
                 <span class="badge bg-success"><?=$this->getTrans('upToDate') ?></span>
             <?php endif; ?>
         </h1>
@@ -48,16 +57,16 @@ $version = $this->get('version');
                     <tr>
                         <td><?=$this->getTrans('serverVersion') ?></td>
                         <td>
-                            <?php if ($this->get('newVersion')): ?>
+                            <?php if ($this->get('newVersion')) : ?>
                                 <?=$this->get('newVersion') ?>
-                            <?php elseif ($this->get('curlErrorOccured')): ?>
+                            <?php elseif ($this->get('curlErrorOccured')) : ?>
                                 <?=$this->getTrans('versionNA') ?>
-                            <?php else: ?>
+                            <?php else : ?>
                                 <?=$version ?>
                             <?php endif; ?>
                         </td>
                     </tr>
-                    <?php if ($this->get('foundNewVersions')): ?>
+                    <?php if ($this->get('foundNewVersions')) : ?>
                         <tr>
                             <td></td>
                             <td>
@@ -68,7 +77,7 @@ $version = $this->get('version');
                 </tbody>
             </table>
         </div>
-        <?php if (!empty($ilchNews)): ?>
+        <?php if (!empty($ilchNews)) : ?>
             <h1>ilch <?=$this->getTrans('news') ?></h1>
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
@@ -81,7 +90,7 @@ $version = $this->get('version');
                         <th><?=$this->getTrans('title') ?></th>
                     </thead>
                     <tbody>
-                        <?php foreach ($ilchNews as $news): ?>
+                        <?php foreach ($ilchNews as $news) : ?>
                             <?php $date = new \Ilch\Date($news->date); ?>
                             <tr>
                                 <td><?=$date->format('d.m.Y', true) ?></td>
@@ -92,7 +101,7 @@ $version = $this->get('version');
                 </table>
             </div>
         <?php endif; ?>
-        <?php if (!empty($notifications)): ?>
+        <?php if (!empty($notifications)) : ?>
             <h1><?=$this->getTrans('notifications') ?></h1>
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
@@ -115,8 +124,9 @@ $version = $this->get('version');
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($notifications as $notification): ?>
-                            <?php $date = new \Ilch\Date($notification->getTimestamp()); ?>
+                        <?php foreach ($notifications as $notification) : ?>
+                            <?php if (($accesses && $accesses->hasAccess('Admin_' . $notification->getModule(), $notification->getModule()))) : ?>
+                                <?php $date = new \Ilch\Date($notification->getTimestamp()); ?>
                             <tr>
                                 <td><?=$this->getDeleteCheckbox('check_notifications', $notification->getId()) ?></td>
                                 <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $notification->getId()]) ?></td>
@@ -125,6 +135,7 @@ $version = $this->get('version');
                                 <td><a href="<?=$notification->getURL() ?>" target="_blank" rel="noopener" title="<?=$this->escape($notification->getModule()) ?>"><?=$this->escape($notification->getModule()) ?></a></td>
                                 <td><?=$this->escape($notification->getMessage()) ?></td>
                             </tr>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -132,7 +143,7 @@ $version = $this->get('version');
         <?php endif; ?>
     </div>
 </div>
-<?php if (!empty($notifications)): ?>
-<?=$this->getListBar(['delete' => 'delete']) ?>
+<?php if (!empty($notifications)) : ?>
+    <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>
 <?php endif; ?>

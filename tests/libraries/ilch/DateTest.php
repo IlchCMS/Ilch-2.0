@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -19,7 +20,7 @@ class DateTest extends TestCase
     /**
      * Filling the timezone which the date object will use.
      *
-     * @var Array
+     * @var array
      */
     protected $configData = [
         'timezone' => 'Europe/Berlin'
@@ -31,7 +32,7 @@ class DateTest extends TestCase
     public function testNewEmptyDateWithoutRegistry()
     {
         Registry::remove('timezone');
-        $date = new \Ilch\Date();
+        $date = new Date();
         self::assertEquals(
             'UTC',
             $date->getTimeZone()->getName(),
@@ -44,7 +45,7 @@ class DateTest extends TestCase
      */
     public function testExtendFromDateTime()
     {
-        $ilchDate = new \Ilch\Date('2013-09-24 13:44:53');
+        $ilchDate = new Date('2013-09-24 13:44:53');
 
         self::assertInstanceOf('DateTime', $ilchDate, 'No DateTime object was created by the constructor.');
     }
@@ -54,7 +55,7 @@ class DateTest extends TestCase
      */
     public function testToDb()
     {
-        $ilchDate = new \Ilch\Date('2013-09-24 15:44:53');
+        $ilchDate = new Date('2013-09-24 15:44:53');
 
         self::assertEquals('2013-09-24 15:44:53', $ilchDate->toDb(), 'The date was not returned in UTC.');
     }
@@ -64,7 +65,7 @@ class DateTest extends TestCase
      */
     public function testToDbLocal()
     {
-        $ilchDate = new \Ilch\Date('2013-09-24 15:44:53');
+        $ilchDate = new Date('2013-09-24 15:44:53');
 
         self::assertEquals(
             '2013-09-24 17:44:53',
@@ -78,7 +79,7 @@ class DateTest extends TestCase
      */
     public function testToDbCustomFormat()
     {
-        $ilchDate = new \Ilch\Date('2013-09-24 15:44:53');
+        $ilchDate = new Date('2013-09-24 15:44:53');
         $ilchDate->setDbFormat('d.m.Y H:i:s');
 
         self::assertEquals(
@@ -95,7 +96,7 @@ class DateTest extends TestCase
      */
     public function testGetDateTimeAfterToDb()
     {
-        $ilchDate = new \Ilch\Date('2013-09-24 22:32:46');
+        $ilchDate = new Date('2013-09-24 22:32:46');
         $ilchDate->toDb();
 
         self::assertEquals(
@@ -110,7 +111,7 @@ class DateTest extends TestCase
      */
     public function testTypeCast()
     {
-        $ilchDate = new \Ilch\Date('2013-09-24 22:32:46');
+        $ilchDate = new Date('2013-09-24 22:32:46');
 
         self::assertEquals(
             '2013-09-24 22:32:46',
@@ -124,7 +125,7 @@ class DateTest extends TestCase
      */
     public function testTypeCastCustomFormat()
     {
-        $ilchDate = new \Ilch\Date('2013-09-24 22:32:46');
+        $ilchDate = new Date('2013-09-24 22:32:46');
         $ilchDate->setDefaultFormat('d.m.Y H:i:s');
 
         self::assertEquals(
@@ -139,7 +140,7 @@ class DateTest extends TestCase
      */
     public function testTimestampDoesNotChange()
     {
-        $date = new \Ilch\Date();
+        $date = new Date();
         $date->setTimestamp(1379521501);
 
         self::assertEquals(1379521501, $date->getTimestamp(), 'The timestamp was not returned in UTC.');
@@ -152,7 +153,7 @@ class DateTest extends TestCase
      */
     public function testFormatToLocal()
     {
-        $date = new \Ilch\Date();
+        $date = new Date();
         $date->setTimestamp(1379521501);
 
         self::assertEquals(
@@ -167,7 +168,7 @@ class DateTest extends TestCase
      */
     public function testFormatToUTC()
     {
-        $date = new \Ilch\Date();
+        $date = new Date();
         $date->setTimestamp(1379521501);
 
         self::assertEquals('2013-09-18 16:25:01', $date->format('Y-m-d H:i:s'), 'The time was not returned in UTC.');
@@ -178,7 +179,7 @@ class DateTest extends TestCase
      */
     public function testConstructLocalTime()
     {
-        $date = new \Ilch\Date('2013-09-18 18:25:01', 'Europe/Berlin');
+        $date = new Date('2013-09-18 18:25:01', 'Europe/Berlin');
 
         self::assertEquals(
             '2013-09-18 18:25:01',

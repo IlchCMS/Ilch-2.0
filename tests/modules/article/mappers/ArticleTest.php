@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -767,7 +768,6 @@ class ArticleTest extends DatabaseTestCase
     {
         self::assertTrue($this->articleMapper->keywordExists('keyword1'));
         self::assertTrue($this->articleMapper->keywordExists('keyword2'));
-
     }
 
     public function testKeywordExistsNotExisting()
@@ -1055,7 +1055,7 @@ class ArticleTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configUser = new UserConfig();

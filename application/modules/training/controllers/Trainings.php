@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -15,22 +16,17 @@ class Trainings extends \Ilch\Controller\Frontend
     {
         $trainingMapper = new TrainingMapper();
         $userMapper = new UserMapper();
-
         $this->getLayout()->setFile('modules/calendar/layouts/events');
-
-        $user = null;
+        $groupIds = [3];
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
-        }
 
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
+            $groupIds = [];
+            foreach ($user->getGroups() as $groups) {
+                $groupIds[] = $groups->getId();
             }
         }
 
-        $this->getView()->set('trainingList', $trainingMapper->getTrainingsForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')))
-            ->set('readAccess', $readAccess);
+        $this->getView()->set('trainingList', $trainingMapper->getTrainingsForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end'), $groupIds));
     }
 }

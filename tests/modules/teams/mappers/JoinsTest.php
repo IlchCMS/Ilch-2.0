@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -6,13 +7,11 @@
 
 namespace Modules\Teams\Mappers;
 
-use Ilch\Pagination;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\Teams\Config\Config as ModuleConfig;
 use Modules\User\Config\Config as UserConfig;
 use Modules\Admin\Config\Config as AdminConfig;
-use Modules\Media\Config\Config as MediaConfig;
 use Modules\Teams\Mappers\Joins as JoinsMapper;
 use Modules\Teams\Models\Joins as EntriesModel;
 
@@ -64,7 +63,7 @@ class JoinsTest extends DatabaseTestCase
         self::assertEquals('', $entrys[$i]->getText());
         self::assertEquals(0, $entrys[$i]->getDecision());
         self::assertEquals(1, $entrys[$i]->getUndecided());
-        
+
         $i++;
         self::assertEquals(2, $entrys[$i]->getId());
         self::assertEquals(4, $entrys[$i]->getUserId());
@@ -172,7 +171,7 @@ class JoinsTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configUser = new UserConfig();

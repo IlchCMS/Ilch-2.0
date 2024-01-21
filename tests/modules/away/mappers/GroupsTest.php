@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -68,12 +69,12 @@ class GroupsTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $userConfig = new UserConfig();
         $adminConfig = new AdminConfig();
 
-        return $adminConfig->getInstallSql().$userConfig->getInstallSql().$config->getInstallSql();
+        return $adminConfig->getInstallSql() . $userConfig->getInstallSql() . $config->getInstallSql();
     }
 }
