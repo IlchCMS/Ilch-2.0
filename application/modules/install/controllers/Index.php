@@ -328,28 +328,33 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 if ($manualDatabase || in_array($this->getRequest()->getPost('dbName'), $dbList)) {
-                    try {
-                        $ilch = new \Ilch\Database\Factory();
-                        $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
+                    if (preg_match('/^[a-zA-Z0-9_]{1,64}$/', $this->getRequest()->getPost('dbName'))) {
+                        try {
+                            $ilch = new \Ilch\Database\Factory();
+                            $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
 
-                        $db->connect(
-                            reset($hostParts),
-                            $_SESSION['install']['dbUser'],
-                            $_SESSION['install']['dbPassword'],
-                            $port
-                        );
+                            $db->connect(
+                                reset($hostParts),
+                                $_SESSION['install']['dbUser'],
+                                $_SESSION['install']['dbPassword'],
+                                $port
+                            );
 
-                        if ($db->setDatabase($this->getRequest()->getPost('dbName'))) {
-                            foreach ($fields as $name => $default) {
-                                $_SESSION['install'][$name] = $this->getRequest()->getPost($name);
+                            if ($db->setDatabase($this->getRequest()->getPost('dbName'))) {
+                                foreach ($fields as $name => $default) {
+                                    $_SESSION['install'][$name] = $this->getRequest()->getPost($name);
+                                }
+
+                                $this->redirect(['action' => 'configuration']);
+                            } else {
+                                $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
                             }
-                        } else {
-                            $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
-                        }
 
-                        $this->redirect(['action' => 'configuration']);
-                    } catch (\Exception $e) {
-                        $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseCouldNotConnect'));
+                        } catch (\Exception $e) {
+                            $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseCouldNotConnect'));
+                        }
+                    } else {
+                        $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseHasWrongFormat'));
                     }
                 } else {
                     $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
