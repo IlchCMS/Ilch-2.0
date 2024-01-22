@@ -412,7 +412,7 @@ class Index extends \Ilch\Controller\Frontend
                 $db = $dbFactory->getInstanceByConfig($fileConfig);
                 \Ilch\Registry::set('db', $db);
 
-                $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
+                $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']] ?? [];
                 if (!empty($modulesToInstall)) {
                     $modulesToInstall = array_merge($systemModules, $modulesToInstall);
                 } else {
