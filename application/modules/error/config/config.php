@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'error',
-        'icon_small' => 'fa-exclamation-triangle',
+        'icon_small' => 'fa-solid fa-triangle-exclamation',
         'system_module' => true,
         'languages' => [
             'de_DE' => [
@@ -26,16 +27,13 @@ class Config extends \Ilch\Config\Install
 
     public function install()
     {
-
     }
 
     public function getInstallSql()
     {
-
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion)
     {
-
     }
 }
