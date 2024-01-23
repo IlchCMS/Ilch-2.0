@@ -37,6 +37,7 @@ return [
     'dbConnectionError' => 'Konnte keine Verbindung zur Datenbank herstellen',
     'dbDatabaseError' => 'Bitte wähle eine Datenbank aus',
     'dbDatabaseDoesNotExist' => 'Die gewählte Datenbank existiert nicht.',
+    'dbDatabaseHasWrongFormat' => 'Der Datenbankname hat das falsche Format.',
     'dbDatabaseCouldNotConnect' => 'Konnte keine Verbindung zum Server herstellen.',
     'dbHostInfo' => 'Die Adresse des Datenbankservers meistens localhost',
     'dbUserInfo' => 'Dein MySQL Benutzername',
