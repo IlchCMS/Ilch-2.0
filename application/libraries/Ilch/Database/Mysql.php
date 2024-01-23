@@ -154,7 +154,9 @@ class Mysql
                 $sql
             );
         } else {
-            $sql = \preg_replace("/\[prefix\]_(\S+?)([\s\.,]|$)/", $this->prefix . "\\1\\2", $sql);
+            while (\preg_match("/\[prefix\]_(\S+?)([\s\.,]|$)/", $sql)) {
+                $sql = \preg_replace("/\[prefix\]_(\S+?)([\s\.,]|$)/", $this->prefix . "\\1\\2", $sql);
+            }
         }
 
         return $sql;
