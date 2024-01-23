@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -84,11 +85,11 @@ class CookieStolenTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configAdmin = new AdminConfig();
 
-        return $configAdmin->getInstallSql().$config->getInstallSql();
+        return $configAdmin->getInstallSql() . $config->getInstallSql();
     }
 }

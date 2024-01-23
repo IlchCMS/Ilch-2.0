@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -240,7 +241,8 @@ class NotificationsTest extends DatabaseTestCase
      * Tests if deleteAllNotifications() deletes all notifications.
      *
      */
-    public function testDeleteAllNotifications() {
+    public function testDeleteAllNotifications()
+    {
         $this->out->deleteAllNotifications();
         self::assertCount(0, $this->out->getNotifications());
     }
@@ -250,7 +252,7 @@ class NotificationsTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         return $config->getInstallSql();

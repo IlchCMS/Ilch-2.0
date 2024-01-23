@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -164,7 +165,7 @@ class RankTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $installSql = 'CREATE TABLE IF NOT EXISTS `[prefix]_emails` (
                 `moduleKey` VARCHAR(255) NOT NULL,
@@ -208,6 +209,6 @@ class RankTest extends DatabaseTestCase
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
 
         $config = new ModuleConfig();
-        return $installSql.$config->getInstallSql();
+        return $installSql . $config->getInstallSql();
     }
 }

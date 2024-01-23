@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -6,7 +7,6 @@
 
 namespace Ilch\Database;
 
-use Ilch\Database\Mysql as MySQL;
 use Modules\Admin\Config\Config as AdminConfig;
 use Modules\User\Config\Config as UserConfig;
 use PHPUnit\Ilch\PhpunitDataset;
@@ -20,7 +20,6 @@ use PHPUnit\Ilch\PhpunitDataset;
 class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
 {
     protected $phpunitDataset;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -28,10 +27,10 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
         $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
     }
 
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $configAdmin = new AdminConfig();
-        $configUser = new UserConfig;
+        $configUser = new UserConfig();
         return $configAdmin->getInstallSql() . $configUser->getInstallSql();
     }
 
@@ -45,7 +44,6 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
             ->where(['id' => 2])
             ->execute()
             ->fetchCell();
-
         self::assertEquals('2', $result, 'Wrong cell value was returned.');
     }
 
@@ -59,7 +57,6 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
             ->where(['name' => 'Clanleader'])
             ->execute()
             ->fetchCell();
-
         self::assertEquals('2', $result, 'Wrong cell value was returned.');
     }
 
@@ -72,13 +69,11 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
             ->values(['name' => ''])
             ->where(['id' => 2])
             ->execute();
-
         $result = $this->db->select('name')
             ->from('groups')
             ->where(['id' => 2])
             ->execute()
             ->fetchCell();
-
         self::assertEquals('', $result, 'The db entry has not being updated with an empty string.');
     }
 
@@ -88,13 +83,11 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
     public function testInsertWithEmptyValue()
     {
         $this->db->insert('groups')->values(['name' => ''])->execute();
-
         $result = $this->db->select('COUNT(*)')
             ->from('groups')
             ->where(['name' => ''])
             ->execute()
             ->fetchCell();
-
         self::assertEquals(1, $result, 'The db entry has not being inserted with an empty string.');
     }
 }

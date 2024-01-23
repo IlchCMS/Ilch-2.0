@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -19,21 +20,18 @@ class Nexttraining extends \Ilch\Box
         $userMapper = new UserMapper();
         $config = \Ilch\Registry::get('config');
 
-        $user = null;
+        $groupIds = [3];
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
-        }
 
-        $readAccess = [3];
-        if ($user) {
-            foreach ($user->getGroups() as $us) {
-                $readAccess[] = $us->getId();
+            $groupIds = [];
+            foreach ($user->getGroups() as $groups) {
+                $groupIds[] = $groups->getId();
             }
         }
 
         $this->getView()->set('trainingMapper', $trainingMapper)
             ->set('entrantsMapper', $entrantsMapper)
-            ->set('training', $trainingMapper->getTrainingsListWithLimt($config->get('training_boxNexttrainingLimit')?:5))
-            ->set('readAccess', $readAccess);
+            ->set('training', $trainingMapper->getTrainingsListWithLimt($config->get('training_boxNexttrainingLimit') ?: 5, $groupIds));
     }
 }

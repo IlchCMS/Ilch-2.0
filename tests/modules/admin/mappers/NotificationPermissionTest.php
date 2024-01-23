@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -20,7 +21,7 @@ use PHPUnit\Ilch\PhpunitDataset;
 class NotificationPermissionTest extends DatabaseTestCase
 {
     /**
-     * @var UserMapper
+     * @var NotificationPermissionMapper
      */
     protected $out;
     protected $phpunitDataset;
@@ -144,7 +145,7 @@ class NotificationPermissionTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         return $config->getInstallSql();

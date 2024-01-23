@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch_phpunit
  */
 
@@ -13,13 +14,12 @@ use Ilch\Translator;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\User\Config\Config as UserConfig;
-use Modules\User\Mappers\User as UserMapper;
 use Modules\Admin\Config\Config as AdminConfig;
 use Modules\Article\Config\Config as ArticleConfig;
 
 class GetMenuTest extends DatabaseTestCase
 {
-    static protected $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
+    protected static $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
 
     protected $phpunitDataset;
 
@@ -37,7 +37,7 @@ class GetMenuTest extends DatabaseTestCase
      * @param string $expected
      * @param string $currentUrlModule
      */
-    public function testGetMenu(array $options, $expected, $currentUrlModule = 'article')
+    public function testGetMenu(array $options, string $expected, string $currentUrlModule = 'article')
     {
         $request = new Request();
         $request->setModuleName($currentUrlModule);
@@ -50,7 +50,7 @@ class GetMenuTest extends DatabaseTestCase
         self::assertSame($expected, $out->getMenu(1, '<h2>%s</h2>%c', $options));
     }
 
-    public function dpForTestGetMenu()
+    public function dpForTestGetMenu(): array
     {
         $menuTitle = '<h2>Menue</h2>';
         $testBox = '<h2>Testbox</h2><p>Inhalt der Testbox</p>';

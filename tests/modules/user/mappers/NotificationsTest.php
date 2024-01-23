@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -8,7 +9,6 @@ namespace Modules\User\Mappers;
 
 use Modules\Admin\Config\Config as AdminConfig;
 use Modules\User\Config\Config as ModuleConfig;
-use Modules\User\Models\NotificationPermission as NotificationPermissionModel;
 use Modules\User\Models\Notification as NotificationModel;
 use PHPUnit\Ilch\PhpunitDataset;
 use PHPUnit\Ilch\DatabaseTestCase;
@@ -346,7 +346,7 @@ class NotificationsTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
         $configAdmin = new AdminConfig();

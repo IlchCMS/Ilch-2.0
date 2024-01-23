@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch_phpunit
@@ -14,7 +15,7 @@ use Modules\Admin\Config\Config as AdminConfig;
 
 class ResultTest extends DatabaseTestCase
 {
-    static protected $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
+    protected static $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
 
     protected $phpunitDataset;
 
@@ -25,10 +26,10 @@ class ResultTest extends DatabaseTestCase
         $this->phpunitDataset->loadFromFile(__DIR__ . '/../../_files/mysql_database.yml');
     }
 
-    protected static function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries(): string
     {
         $configAdmin = new AdminConfig();
-        $configUser = new UserConfig;
+        $configUser = new UserConfig();
         return $configAdmin->getInstallSql() . $configUser->getInstallSql();
     }
 
@@ -38,7 +39,7 @@ class ResultTest extends DatabaseTestCase
      * @param integer|string $cellParam
      * @param string $expected
      */
-    public function testFetchCell($cellParam, $expected)
+    public function testFetchCell($cellParam, string $expected)
     {
         $result = $this->db->select('*', 'groups')->execute();
         self::assertEquals($expected, $result->fetchCell($cellParam));
@@ -47,7 +48,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForFetchCell()
+    public function dpForFetchCell(): array
     {
         return [
             'null' => [
@@ -77,9 +78,9 @@ class ResultTest extends DatabaseTestCase
      * @dataProvider dpForFetchArray
      *
      * @param int $type
-     * @param string $expected
+     * @param array $expected
      */
-    public function testFetchArray($type, $expected)
+    public function testFetchArray(int $type, array $expected)
     {
         $result = $this->db->select('*', 'groups')->execute();
         self::assertEquals($expected, $result->fetchArray($type));
@@ -88,7 +89,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForFetchArray()
+    public function dpForFetchArray(): array
     {
         return [
             'both' => [
@@ -147,7 +148,7 @@ class ResultTest extends DatabaseTestCase
      * @param int $type
      * @param array $expectedRows
      */
-    public function testFetchRows($keyField, $type, $expectedRows)
+    public function testFetchRows($keyField, int $type, array $expectedRows)
     {
         $result = $this->db->select('*', 'groups')
             ->limit(2)
@@ -159,7 +160,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForFetchRows()
+    public function dpForFetchRows(): array
     {
         return [
             'simple assoc' => [
@@ -208,12 +209,12 @@ class ResultTest extends DatabaseTestCase
     /**
      * @dataProvider dpForFetchList
      *
-     * @param string[] $selectFields
+     * @param string[]|null $selectFields
      * @param int|string $field
      * @param int|string $keyField
      * @param $expectedList
      */
-    public function testFetchList($selectFields, $field, $keyField, $expectedList)
+    public function testFetchList(?array $selectFields, $field, $keyField, $expectedList)
     {
         $result = $this->db->select($selectFields, 'groups')
             ->limit(2)
@@ -225,7 +226,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForFetchList()
+    public function dpForFetchList(): array
     {
         return [
             'without args' => [
@@ -260,7 +261,7 @@ class ResultTest extends DatabaseTestCase
      *
      * @param int $limit
      */
-    public function testGetNumRows($limit)
+    public function testGetNumRows(int $limit)
     {
         $result = $this->db->select(null, 'groups')
             ->limit($limit)
@@ -272,7 +273,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForTestGetNumRows()
+    public function dpForTestGetNumRows(): array
     {
         return [[1], [4]];
     }
@@ -283,7 +284,7 @@ class ResultTest extends DatabaseTestCase
      * @param string[] $selectFields
      * @param int $expected
      */
-    public function testGetFieldCount($selectFields, $expected)
+    public function testGetFieldCount(array $selectFields, int $expected)
     {
         $result = $this->db->select($selectFields, 'groups')
             ->limit(1)
@@ -295,7 +296,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForGetFieldCount()
+    public function dpForGetFieldCount(): array
     {
         return [
             [
@@ -367,4 +368,4 @@ class ResultTest extends DatabaseTestCase
             self::assertSame($expectedRows[$key], $row);
         }
     }
-} 
+}
