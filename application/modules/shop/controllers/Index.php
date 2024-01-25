@@ -63,11 +63,15 @@ class Index extends Frontend
             }
 
             $this->getLayout()->header()->css('static/css/style_front.css');
+            $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('menuShops'));
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
 
             if (is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
                 $this->getLayout()->header()->css('static/css/style_front.css');
+                $this->getLayout()->getTitle()
+                    ->add($category->getTitle());
                 $this->getLayout()->getHmenu()
                     ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()]);
             } else {
@@ -77,6 +81,9 @@ class Index extends Frontend
             $shopItems = $itemsMapper->getShopItems(['cat_id' => $this->getRequest()->getParam('catId'), 'status' => 1]);
         } elseif ($this->getRequest()->getParam('catId') && $this->getRequest()->getParam('catId') == 'all') {
             $this->getLayout()->header()->css('static/css/style_front.css');
+            $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('menuShops'))
+                ->add($this->getTranslator()->trans('allProducts'));
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('allProducts'), ['action' => 'index', 'catId' => 'all']);
@@ -85,11 +92,17 @@ class Index extends Frontend
             $this->getLayout()->header()->css('static/css/style_front.css');
             $shopItems = $itemsMapper->getShopItems(['cat_id' => $categories[0]->getId(), 'status' => 1]);
             if (empty($shopItems)) {
+                $this->getLayout()->getTitle()
+                    ->add($this->getTranslator()->trans('menuShops'))
+                    ->add($this->getTranslator()->trans('allProducts'));
                 $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('allProducts'), ['action' => 'index', 'catId' => 'all']);
                 $shopItems = $itemsMapper->getShopItems(['status' => 1]);
             } else {
+                $this->getLayout()->getTitle()
+                    ->add($this->getTranslator()->trans('menuShops'))
+                    ->add($categories[0]->getTitle());
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                     ->add($categories[0]->getTitle(), ['action' => 'index', 'catId' => $categories[0]->getId()]);
@@ -97,6 +110,8 @@ class Index extends Frontend
             }
         } else {
             $this->getLayout()->header()->css('static/css/style_front.css');
+            $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('menuShops'));
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
             $shopItems = $itemsMapper->getShopItems(['status' => 1]);
         }
@@ -117,6 +132,9 @@ class Index extends Frontend
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
 
         $this->getLayout()->header()->css('static/css/style_front.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuCart'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuCart'), ['action' => 'cart']);
@@ -131,6 +149,9 @@ class Index extends Frontend
         $settingsMapper = new SettingsMapper();
 
         $this->getLayout()->header()->css('static/css/style_front.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuAGB'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuAGB'), ['action' => 'agb']);
@@ -154,6 +175,10 @@ class Index extends Frontend
         $customer = null;
 
         $this->getLayout()->header()->css('static/css/style_front.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuCart'))
+            ->add($this->getTranslator()->trans('menuOrder'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuCart'), ['action' => 'cart'])
@@ -423,6 +448,8 @@ class Index extends Frontend
     public function successAction()
     {
         $this->getLayout()->header()->css('static/css/style_front.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
     }
@@ -460,11 +487,16 @@ class Index extends Frontend
         }
 
         $this->getLayout()->header()->css('static/css/style_front.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
 
         if (is_in_array($readAccess, explode(',', $category->getReadAccess()))) {
             $this->getLayout()->header()->css('static/css/style_front.css');
+            $this->getLayout()->getTitle()
+                ->add($category->getTitle())
+                ->add($shopItem->getName());
             $this->getLayout()->getHmenu()
                 ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()])
                 ->add($shopItem->getName(), ['action' => 'show', 'id' => $shopItem->getId()]);

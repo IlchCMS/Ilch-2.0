@@ -78,6 +78,9 @@ class Customers extends Admin
     {
         $customerMapper = new CustomerMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuCustomers'));
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCustomers'), ['action' => 'index']);
@@ -102,6 +105,10 @@ class Customers extends Admin
         $ordersMapper = new OrdersMapper();
         $customer = null;
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuCustomers'))
+            ->add($this->getTranslator()->trans('menuCustomer'));
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCustomers'), ['action' => 'index'])

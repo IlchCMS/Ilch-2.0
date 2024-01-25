@@ -78,10 +78,14 @@ class Settings extends Admin
     {
         $settingsMapper = new SettingsMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuSettings'))
+            ->add($this->getTranslator()->trans('menuSettingShop'));
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettingShop'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettingShop'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -125,10 +129,14 @@ class Settings extends Admin
     {
         $settingsMapper = new SettingsMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuSettings'))
+            ->add($this->getTranslator()->trans('menuSettingBank'));
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettingBank'), ['action' => 'bank']);
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettingBank'), ['action' => 'bank']);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -165,10 +173,14 @@ class Settings extends Admin
 
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuSettings'))
+            ->add($this->getTranslator()->trans('menuSettingDefault'));
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettingDefault'), ['action' => 'default']);
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettingDefault'), ['action' => 'default']);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -212,6 +224,10 @@ class Settings extends Admin
     {
         $settingsMapper = new SettingsMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuSettings'))
+            ->add($this->getTranslator()->trans('menuSettingAGB'));
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
@@ -243,6 +259,10 @@ class Settings extends Admin
     {
         $settingsMapper = new SettingsMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuSettings'))
+            ->add($this->getTranslator()->trans('menuSettingPayment'));
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
