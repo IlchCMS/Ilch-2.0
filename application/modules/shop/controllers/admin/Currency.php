@@ -91,9 +91,6 @@ class Currency extends Admin
         $currencyMapper = new CurrencyMapper();
         $ordersMapper = new OrdersMapper();
 
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuShops'))
-            ->add($this->getTranslator()->trans('menuCurrencies'));
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCurrencies'), ['action' => 'index']);
@@ -137,14 +134,7 @@ class Currency extends Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuShops'))
-                ->add($this->getTranslator()->trans('menuCurrencies'))
-                ->add($this->getTranslator()->trans('edit'));
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuCurrencies'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => 'treat']);
 
             $orders = $ordersMapper->getOrders();
             $currencyIds = [];
@@ -154,14 +144,7 @@ class Currency extends Admin
             }
             $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('shop_currency'));
         } else {
-            $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuShops'))
-                ->add($this->getTranslator()->trans('menuCurrencies'))
-                ->add($this->getTranslator()->trans('add'));
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuCurrencies'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('add'), ['action' => 'treat', 'id' => 'treat']);
         }
 
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {

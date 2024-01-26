@@ -81,8 +81,6 @@ class Index extends Admin
         $ordersMapper = new OrdersMapper();
         $settingsMapper = new SettingsMapper();
 
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuShops'));
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
 
@@ -101,9 +99,6 @@ class Index extends Admin
 
     public function noteAction()
     {
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuShops'))
-            ->add($this->getTranslator()->trans('menuNote'));
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuNote'), ['action' => 'note']);

@@ -82,12 +82,7 @@ class Orders extends Admin
     {
         $ordersMapper = new OrdersMapper();
 
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuShops'))
-            ->add($this->getTranslator()->trans('menuOrders'));
         $this->getLayout()->getAdminHmenu()
-            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_orders')) {
             $orderInUse = 0;
@@ -115,10 +110,6 @@ class Orders extends Admin
         $ordersMapper = new OrdersMapper();
         $settingsMapper = new SettingsMapper();
 
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuShops'))
-            ->add($this->getTranslator()->trans('menuOrders'))
-            ->add($this->getTranslator()->trans('manage'));
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index'])

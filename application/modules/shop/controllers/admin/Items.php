@@ -98,9 +98,6 @@ class Items extends Admin
 
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
 
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuShops'))
-            ->add($this->getTranslator()->trans('menuItems'));
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index']);
@@ -148,24 +145,13 @@ class Items extends Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuShops'))
-                ->add($this->getTranslator()->trans('menuItems'))
-                ->add($this->getTranslator()->trans('edit'));
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
             $this->getView()->set('shopItem', $itemsMapper->getShopItemById($this->getRequest()->getParam('id')));
         } else {
-            $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuShops'))
-                ->add($this->getTranslator()->trans('menuItems'))
-                ->add($this->getTranslator()->trans('add'));
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
