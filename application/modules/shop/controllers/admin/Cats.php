@@ -91,9 +91,6 @@ class Cats extends Admin
         $categoryMapper = new CategoryMapper();
         $itemsMapper = new ItemsMapper();
 
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuShops'))
-            ->add($this->getTranslator()->trans('menuCats'));
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
@@ -142,10 +139,6 @@ class Cats extends Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuShops'))
-                ->add($this->getTranslator()->trans('menuCats'))
-                ->add($this->getTranslator()->trans('edit'));
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
@@ -153,10 +146,6 @@ class Cats extends Admin
 
             $this->getView()->set('cat', $categoryMapper->getCategoryById($this->getRequest()->getParam('id')));
         } else {
-            $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuShops'))
-                ->add($this->getTranslator()->trans('menuCats'))
-                ->add($this->getTranslator()->trans('add'));
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
