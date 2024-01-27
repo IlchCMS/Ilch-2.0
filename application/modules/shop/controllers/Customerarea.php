@@ -22,6 +22,9 @@ class Customerarea extends Frontend
         $orders = [];
 
         $this->getLayout()->header()->css('static/css/style_front.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuCustomerArea'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCustomerArea'), ['controller' => 'customerarea', 'action' => 'index']);
@@ -50,6 +53,10 @@ class Customerarea extends Frontend
         $order = [];
 
         $this->getLayout()->header()->css('static/css/style_front.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuCustomerArea'))
+            ->add($this->getTranslator()->trans('menuCustomerAreaOrderDetails'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCustomerArea'), ['controller' => 'customerarea', 'action' => 'index'])

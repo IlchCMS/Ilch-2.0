@@ -83,8 +83,8 @@ class Orders extends Admin
         $ordersMapper = new OrdersMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuOrders'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_orders')) {
             $orderInUse = 0;
