@@ -35,7 +35,7 @@ if (!empty($event)) {
     </h1>
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="event-head">
                 <?php if ($this->escape($event->getImage()) != ''): ?>
                     <img src="<?=$this->getBaseUrl().$this->escape($event->getImage()) ?>" class="headPic" alt="<?=$this->getTrans('headpic') ?>">
@@ -219,8 +219,10 @@ if (!empty($event)) {
                 <?=$this->alwaysPurify($event->getText()) ?>
             </div>
         </div>
-
-        <div class="col-lg-6">
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
             <div class="form-horizontal">
                 <?php if ($this->getUser() && (($eventEntrants != '' && $eventEntrants->getUserId() == $this->getUser()->getId()) || $event->getUserId() == $this->getUser()->getId())): ?>
                     <div class="form-group eventCommentSubmit">
