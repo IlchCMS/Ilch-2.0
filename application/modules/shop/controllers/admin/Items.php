@@ -146,15 +146,15 @@ class Items extends Admin
             }
 
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
             $this->getView()->set('shopItem', $itemsMapper->getShopItemById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {

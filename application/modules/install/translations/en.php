@@ -37,6 +37,7 @@ return [
     'dbConnectionError' => 'could not connect to database-server',
     'dbDatabaseError' => 'Please select a database',
     'dbDatabaseDoesNotExist' => 'The specified database does not exist',
+    'dbDatabaseHasWrongFormat' => 'The database name is in the wrong format.',
     'dbDatabaseCouldNotConnect' => 'Could not connect to server.',
     'dbHostInfo' => 'The address of the database server most localhost',
     'dbUserInfo' => 'Your MySQL username',

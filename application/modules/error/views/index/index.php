@@ -1,13 +1,17 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <div class="col-12">
     <div class="row">
         <div class="login_container">
             <div class="form_container">
-                <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>">
+                <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>" alt="ilch">
                 <div class="centering text-center error-container">
                     <h2 class="without-margin">
                         <?=$this->getTrans('error') ?>
                         <span class="text-warning">
-                            <big>404</big>
+                            <span style="font-size: larger;">404</span>
                         </span>
                     </h2>
                     <h4 class="text-warning"><?=$this->escape($this->get('error')) ?> "<?=$this->escape($this->get('errorText')) ?>" <?=$this->getTrans('notFound'); ?>!</h4>

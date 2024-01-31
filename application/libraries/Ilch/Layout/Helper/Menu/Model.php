@@ -157,6 +157,13 @@ class Model
                             continue;
                         }
                         $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale);
+
+                        if (!$box) {
+                            // Get box without locale if no box with the requested locale was found. Display an "unlocalized"
+                            // one instead of failing with an error or showing nothing.
+                            $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId());
+                        }
+
                         // purify content of user created box
                         $contentHtml = $this->layout->purify($box->getContent());
                     } else {

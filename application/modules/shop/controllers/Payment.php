@@ -23,6 +23,9 @@ class Payment extends Frontend
         $itemsMapper = new ItemsMapper();
 
         $this->getLayout()->header()->css('static/css/style_front.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuShops'))
+            ->add($this->getTranslator()->trans('menuPayment'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuPayment'), ['controller' => 'payment', 'action' => 'index']);

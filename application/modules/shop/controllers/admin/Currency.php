@@ -135,9 +135,9 @@ class Currency extends Admin
             }
 
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuCurrencies'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => 'treat']);
+                ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCurrencies'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => 'treat']);
 
             $orders = $ordersMapper->getOrders();
             $currencyIds = [];
@@ -148,9 +148,9 @@ class Currency extends Admin
             $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('shop_currency'));
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuCurrencies'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat', 'id' => 'treat']);
+                ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCurrencies'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat', 'id' => 'treat']);
         }
 
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {

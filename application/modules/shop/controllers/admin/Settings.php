@@ -79,9 +79,9 @@ class Settings extends Admin
         $settingsMapper = new SettingsMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettingShop'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettingShop'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -126,9 +126,9 @@ class Settings extends Admin
         $settingsMapper = new SettingsMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettingBank'), ['action' => 'bank']);
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettingBank'), ['action' => 'bank']);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -166,9 +166,9 @@ class Settings extends Admin
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettingDefault'), ['action' => 'default']);
+            ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettingDefault'), ['action' => 'default']);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [

@@ -33,16 +33,16 @@ class Training extends \Ilch\Mapper
     public function getEntriesBy(array $where = [], array $orderBy = ['t.date' => 'ASC'], ?Pagination $pagination = null): ?array
     {
         $access = '';
-        if (isset($where['ta.read_access'])) {
+        if (isset($where['ra.read_access'])) {
             $access = $where['ra.read_access'];
-            unset($where['ta.read_access']);
+            unset($where['ra.read_access']);
         }
 
         $select = $this->db()->select();
         $select->fields(['t.id', 't.title', 't.date', 't.time', 't.place', 't.contact', 't.voice_server', 't.voice_server_ip', 't.voice_server_pw', 't.game_server', 't.game_server_ip', 't.game_server_pw', 't.text', 't.show', 't.access_all'])
             ->from(['t' => $this->tablename])
             ->join(['ra' => $this->tablenameAccess], 't.id = ra.training_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->where(array_merge($where, ($access ? [$select->orX(['ta.group_id' => $access, 't.access_all' => '1'])] : [])))
+            ->where(array_merge($where, ($access ? [$select->orX(['ra.group_id' => $access, 't.access_all' => '1'])] : [])))
             ->order($orderBy)
             ->group(['t.id']);
 
@@ -83,7 +83,7 @@ class Training extends \Ilch\Mapper
             $groupIds = explode(',', $groupIds);
         }
 
-        return $this->getEntriesBy(array_merge($where, ($groupIds ? ['ta.group_id' => $groupIds] : [])));
+        return $this->getEntriesBy(array_merge($where, ($groupIds ? ['ra.read_access' => $groupIds] : [])));
     }
 
     /**
@@ -139,7 +139,7 @@ class Training extends \Ilch\Mapper
             $pagination->setRows($limit);
         }
 
-        return $this->getEntriesBy(($groupIds ? ['ta.group_id' => $groupIds] : []), ['t.date' => $order], $pagination ?? null);
+        return $this->getEntriesBy(($groupIds ? ['ra.read_access' => $groupIds] : []), ['t.date' => $order], $pagination ?? null);
     }
 
     /**

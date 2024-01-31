@@ -304,16 +304,20 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $con = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
-        $result = mysqli_query($con, 'SHOW DATABASES');
 
+        $manualDatabase = false;
         $dbList = [];
-
-        if ($result !== false) {
-            while ($row = mysqli_fetch_row($result)) {
-                if (($row[0] !== 'information_schema') && ($row[0] !== 'performance_schema') && ($row[0] !== 'mysql')) {
-                    $dbList[] = $row[0];
+        try {
+            $result = mysqli_query($con, 'SHOW DATABASES');
+            if ($result !== false) {
+                while ($row = mysqli_fetch_row($result)) {
+                    if (($row[0] !== 'information_schema') && ($row[0] !== 'performance_schema') && ($row[0] !== 'mysql')) {
+                        $dbList[] = $row[0];
+                    }
                 }
             }
+        } catch (\Exception $e) {
+            $manualDatabase = true;
         }
 
         if ($this->getRequest()->isPost()) {
@@ -323,29 +327,34 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             if ($validation->isValid()) {
-                if (in_array($this->getRequest()->getPost('dbName'), $dbList)) {
-                    try {
-                        $ilch = new \Ilch\Database\Factory();
-                        $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
+                if ($manualDatabase || in_array($this->getRequest()->getPost('dbName'), $dbList)) {
+                    if (preg_match('/^[a-zA-Z0-9_]{1,64}$/', $this->getRequest()->getPost('dbName'))) {
+                        try {
+                            $ilch = new \Ilch\Database\Factory();
+                            $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
 
-                        $db->connect(
-                            reset($hostParts),
-                            $_SESSION['install']['dbUser'],
-                            $_SESSION['install']['dbPassword'],
-                            $port
-                        );
+                            $db->connect(
+                                reset($hostParts),
+                                $_SESSION['install']['dbUser'],
+                                $_SESSION['install']['dbPassword'],
+                                $port
+                            );
 
-                        if ($db->setDatabase($this->getRequest()->getPost('dbName'))) {
-                            foreach ($fields as $name => $default) {
-                                $_SESSION['install'][$name] = $this->getRequest()->getPost($name);
+                            if ($db->setDatabase($this->getRequest()->getPost('dbName'))) {
+                                foreach ($fields as $name => $default) {
+                                    $_SESSION['install'][$name] = $this->getRequest()->getPost($name);
+                                }
+
+                                $this->redirect(['action' => 'configuration']);
+                            } else {
+                                $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
                             }
-                        } else {
-                            $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
-                        }
 
-                        $this->redirect(['action' => 'configuration']);
-                    } catch (\Exception $e) {
-                        $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseCouldNotConnect'));
+                        } catch (\Exception $e) {
+                            $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseCouldNotConnect'));
+                        }
+                    } else {
+                        $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseHasWrongFormat'));
                     }
                 } else {
                     $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
@@ -403,7 +412,7 @@ class Index extends \Ilch\Controller\Frontend
                 $db = $dbFactory->getInstanceByConfig($fileConfig);
                 \Ilch\Registry::set('db', $db);
 
-                $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
+                $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']] ?? [];
                 if (!empty($modulesToInstall)) {
                     $modulesToInstall = array_merge($systemModules, $modulesToInstall);
                 } else {
