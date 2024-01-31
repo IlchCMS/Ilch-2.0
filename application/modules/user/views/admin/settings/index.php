@@ -158,7 +158,7 @@
         <label for="picturesPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('picturesPerPage') ?>:
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="picturesPerPageInput"

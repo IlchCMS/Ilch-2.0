@@ -2,11 +2,11 @@
 <?php if ($this->get('war')): ?>
     <div id="filter-media">
         <div id="filter-panel" class="collapse filter-panel">
-            <div class="form-group">
-                <label class="col-lg-2 control-label" for="pref-perpage">
+            <div class="row mb-3">
+                <label class="col-xl-2 control-label" for="pref-perpage">
                     <?=$this->getTrans('showOnly') ?>
                 </label>
-                <div class="col-lg-2">
+                <div class="col-xl-2">
                     <select class="form-control" id="pref-perpage" name="filterLastNext">
                         <option value="0" <?=($this->getRequest()->getParam('filterLastNext') == 0)?'selected=""':'' ?>><?=$this->getTrans('all') ?></option>
                         <option value="1" <?=($this->getRequest()->getParam('filterLastNext') == 1)?'selected=""':'' ?>><?=$this->getTrans('warStatusOpen') ?></option>

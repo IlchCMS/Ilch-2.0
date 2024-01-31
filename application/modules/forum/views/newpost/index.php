@@ -46,8 +46,13 @@ if ($forumPrefix->getPrefixes() != '' && $topicpost->getTopicPrefix() > 0) {
             <div class="new-topic ilch-bg ilch-border">
                 <form class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
+<<<<<<< Updated upstream
                     <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
                         <div class="col-lg-12">
+=======
+                    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+                        <div class="col-xl-12">
+>>>>>>> Stashed changes
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
                                       name="text"

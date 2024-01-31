@@ -36,9 +36,15 @@ if ($this->getUser()) {
                     <form class="form-horizontal" method="POST">
                         <?=$this->getTokenField() ?>
                         <div class="row">
+<<<<<<< Updated upstream
                             <div class="col-lg-12">
                                 <div class="form-group <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
                                     <label for="topicTitle" class="col-lg-2 control-label">
+=======
+                            <div class="col-xl-12">
+                                <div class="row mb-3 <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
+                                    <label for="topicTitle" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
                                         <?=$this->getTrans('topicTitle') ?>
                                     </label>
                                     <?php if ($forum->getPrefixes() != '') : ?>

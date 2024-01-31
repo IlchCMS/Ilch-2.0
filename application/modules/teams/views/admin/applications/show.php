@@ -18,43 +18,68 @@ $userDeleted = $this->get('userDeleted');
 ?>
 <h1><?=$this->getTrans('application') ?></h1>
 <div class="form-horizontal">
+<<<<<<< Updated upstream
     <div class="form-group">
         <label class="col-lg-2">
+=======
+    <div class="row mb-3">
+        <label class="col-xl-2">
+>>>>>>> Stashed changes
             <?=$this->getTrans('name') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?=$this->escape($join->getName()) ?>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label class="col-lg-2">
+=======
+    <div class="row mb-3">
+        <label class="col-xl-2">
+>>>>>>> Stashed changes
             <?=$this->getTrans('team') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?=$this->escape($team->getName()) ?>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label class="col-lg-2">
+=======
+    <div class="row mb-3">
+        <label class="col-xl-2">
+>>>>>>> Stashed changes
             <?=$this->getTrans('email') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?=$this->escape($join->getEMail()) ?>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label class="col-lg-2">
+=======
+    <div class="row mb-3">
+        <label class="col-xl-2">
+>>>>>>> Stashed changes
             <?=$this->getTrans('dateTime') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?=$date->format('d.m.Y H:i', true) ?>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label class="col-lg-2">
+=======
+    <div class="row mb-3">
+        <label class="col-xl-2">
+>>>>>>> Stashed changes
             <?=$this->getTrans('gender') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?php
             if ($join->getGender() == 1) {
                 echo $this->getTrans('genderMale');
@@ -67,30 +92,45 @@ $userDeleted = $this->get('userDeleted');
         </div>
     </div>
     <?php if ($join->getBirthday()) : ?>
+<<<<<<< Updated upstream
         <div class="form-group">
             <label class="col-lg-2">
+=======
+        <div class="row mb-3">
+            <label class="col-xl-2">
+>>>>>>> Stashed changes
                 <?=$this->getTrans('birthday') ?>:
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <?=$birthday->format('d.m.Y') ?> (<?=$joinsMapper->getAge($birthday) ?>)
             </div>
         </div>
     <?php endif; ?>
     <?php if ($join->getPlace()) : ?>
+<<<<<<< Updated upstream
         <div class="form-group">
             <label class="col-lg-2">
+=======
+        <div class="row mb-3">
+            <label class="col-xl-2">
+>>>>>>> Stashed changes
                 <?=$this->getTrans('place') ?>:
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <?=$this->escape($join->getPlace()) ?>
             </div>
         </div>
     <?php endif; ?>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label class="col-lg-2">
+=======
+    <div class="row mb-3">
+        <label class="col-xl-2">
+>>>>>>> Stashed changes
             <?=$this->getTrans('skill') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <?php
             if ($join->getSkill() == 0) {
                 echo $this->getTrans('beginner');
@@ -104,11 +144,16 @@ $userDeleted = $this->get('userDeleted');
             ?>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label class="col-lg-2">
+=======
+    <div class="row mb-3">
+        <label class="col-xl-2">
+>>>>>>> Stashed changes
             <?=$this->getTrans('text') ?>:
         </label>
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <?=$this->alwaysPurify($join->getText()) ?>
         </div>
     </div>

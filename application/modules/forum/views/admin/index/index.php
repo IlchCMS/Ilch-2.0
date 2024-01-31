@@ -95,7 +95,11 @@ function rec(ForumItem $item, \Ilch\View $obj)
             </div>
         </div>
         <div class="dyn"></div>
+<<<<<<< Updated upstream
         <div class="col-lg-offset-3 actions">
+=======
+        <div class="offset-xl-3 actions">
+>>>>>>> Stashed changes
             <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd') ?>">
         </div>
     </div>

@@ -2,8 +2,13 @@
     <?php if ($this->getRequest()->getParam('type') === 'imageckeditor' || $this->getRequest()->getParam('type') === 'single'): ?>
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
+<<<<<<< Updated upstream
                 <div id="<?=$media->getId() ?>" class="col-lg-2 col-sm-3 col-xs-4 media_loader">
                     <img class="image thumbnail img-responsive"
+=======
+                <div id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-sm-4 media_loader">
+                    <img class="image img-thumbnail img-responsive"
+>>>>>>> Stashed changes
                          data-url="<?=$media->getUrl() ?>"
                          src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
                          alt="<?=$media->getName() ?>">

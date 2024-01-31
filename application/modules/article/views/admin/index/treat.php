@@ -27,8 +27,13 @@ if ($this->get('article')) {
             </select>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
         <label for="teaser" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
+        <label for="teaser" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('teaser') ?>:
         </label>
         <div class="col-lg-4">
@@ -104,8 +109,13 @@ if ($this->get('article')) {
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
+<<<<<<< Updated upstream
         <div class="form-group">
             <label for="language" class="col-lg-2 control-label">
+=======
+        <div class="row mb-3">
+            <label for="language" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
                 <?=$this->getTrans('language') ?>:
             </label>
             <div class="col-lg-8">
@@ -129,8 +139,13 @@ if ($this->get('article')) {
         </div>
     <?php endif; ?>
     <h1><?=$this->getTrans('options') ?></h1>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
         <label for="access" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
+        <label for="access" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-lg-4">
@@ -141,8 +156,13 @@ if ($this->get('article')) {
             </select>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="topArticle" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="topArticle" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('topArticle') ?>:
         </label>
         <div class="col-lg-4">
@@ -153,8 +173,13 @@ if ($this->get('article')) {
                    <?=($this->get('article') && $this->get('article')->getTopArticle()) ? 'checked="checked"' : '' ?> />
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="commentsDisabled" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="commentsDisabled" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('commentsDisabled') ?>:
         </label>
         <div class="col-lg-4">
@@ -165,8 +190,13 @@ if ($this->get('article')) {
                 <?=(($this->get('article') && $this->get('article')->getCommentsDisabled()) || (!$this->get('article') && $this->get('disableComments'))) ? 'checked="checked"' : '' ?> />
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="saveAsTemplate" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="saveAsTemplate" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('saveAsTemplate') ?>:
         </label>
         <div class="col-lg-4">
@@ -177,8 +207,13 @@ if ($this->get('article')) {
             />
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+        <label for="selectedImage" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('image') ?>:
         </label>
         <div class="col-lg-4">
@@ -192,8 +227,13 @@ if ($this->get('article')) {
             </div>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="imageSource" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="imageSource" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('imageSource') ?>:
         </label>
         <div class="col-lg-4">
@@ -204,8 +244,13 @@ if ($this->get('article')) {
                    value="<?=($this->get('article')) ? $this->escape($this->get('article')->getImageSource()) : $this->originalInput('imageSource') ?>" />
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="preview" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="preview" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('preview') ?>:
         </label>
         <div class="col-lg-4">
@@ -213,8 +258,13 @@ if ($this->get('article')) {
         </div>
     </div>
     <h1><?=$this->getTrans('seo') ?></h1>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="description" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="description" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('seoDescription') ?>:
         </label>
         <div class="col-lg-4">
@@ -223,8 +273,13 @@ if ($this->get('article')) {
                       name="description"><?=($this->get('article')) ? $this->escape($this->get('article')->getDescription()) : $this->originalInput('description') ?></textarea>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="keywords" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="keywords" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
         <div class="col-lg-4">
@@ -233,8 +288,13 @@ if ($this->get('article')) {
                       name="keywords"><?=($this->get('article')) ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords')?></textarea>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
         <label for="permaLink" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
+        <label for="permaLink" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-lg-8">

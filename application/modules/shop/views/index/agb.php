@@ -18,7 +18,7 @@ if (!empty($_SESSION['shopping_cart'])) {
 </h1>
 
 <?php if (!empty($shopAGB)) : ?>
-    <div class="col-lg-12"><?=$shopAGB ?></div>
+    <div class="col-xl-12"><?=$shopAGB ?></div>
 <?php else : ?>
     <?=$this->getTrans('noAGB') ?>
 <?php endif; ?>

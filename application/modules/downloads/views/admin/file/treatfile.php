@@ -20,8 +20,13 @@ if ($file->getFileImage() != '') {
                 </div>
                 <div class="col-md-8">
                     <?=$this->getTokenField() ?>
+<<<<<<< Updated upstream
                     <div class="form-group">
                         <label for="fileTitleInput" class="col-lg-2 control-label">
+=======
+                    <div class="row mb-3">
+                        <label for="fileTitleInput" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
                             <?=$this->getTrans('fileTitle') ?>:
                         </label>
                         <div class="col-lg-8">

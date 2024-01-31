@@ -8,8 +8,13 @@
             <h1><?=$this->getTrans('settingsPassword') ?></h1>
             <form class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
+<<<<<<< Updated upstream
                 <div class="form-group <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
+=======
+                <div class="row mb-3 <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
+                    <label class="col-xl-2 control-label">
+>>>>>>> Stashed changes
                         <?=$this->getTrans('profileNewPassword') ?>*
                     </label>
                     <div class="col-lg-8">

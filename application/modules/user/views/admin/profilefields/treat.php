@@ -69,8 +69,13 @@ $iconArray = [
     </div>
 
     <!-- field description -->
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="profileFieldDescription" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="profileFieldDescription" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('profileFieldDescription') ?>
         </label>
         <div class="col-lg-4">
@@ -144,7 +149,7 @@ $iconArray = [
         <div class="form-group" id="profileFieldTrans<?=$i ?>">
             <input type="hidden" name="profileFieldTrans<?=$i ?>[field_id]" value="<?=$profileField->getId() ?>" />
             <input type="hidden" name="profileFieldTrans<?=$i ?>[locale]" value="<?=$profileFieldTranslation->getLocale() ?>" />
-            <label for="profileFieldName<?=$i ?>" class="col-lg-2 control-label">
+            <label for="profileFieldName<?=$i ?>" class="col-xl-2 control-label">
                 <?=$this->getTrans('profileFieldName') ?>
             </label>
             <div class="col-lg-4">
@@ -189,8 +194,13 @@ $iconArray = [
     <div class="profileFieldsMulti <?=(in_array($profileField->getType(), $multiArr)) ? '' : 'hidden' ?>">
         <?php if ($profileField->getOptions()) : ?>
             <?php $options = json_decode($profileField->getOptions(), true); ?>
+<<<<<<< Updated upstream
             <div class="form-group">
                 <label for="profileFieldOptions" class="col-lg-2 control-label">
+=======
+            <div class="mb-3">
+                <label for="profileFieldOptions" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
                     <?=$this->getTrans('profileFieldOptions')  ?>
                 </label>
                 <div class="col-lg-4">
@@ -211,8 +221,13 @@ $iconArray = [
                 </div>    
             </div>
         <?php else : ?>
+<<<<<<< Updated upstream
         <div class="form-group">
             <label for="profileFieldOptions" class="col-lg-2 control-label">
+=======
+        <div class="row mb-3">
+            <label for="profileFieldOptions" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
                 <?=$this->getTrans('profileFieldOptions') ?>
             </label>
             <div class="col-lg-4">
@@ -322,8 +337,8 @@ function addTranslations() {
         '<input type="hidden"' +
         'name="profileFieldTrans' + index + '[field_id]"' +
         'value="<?=$profileField->getId() ?>" />' +
-        '<label for="" class="col-lg-2 control-label"><?=$this->getTrans('profileFieldName') ?></label>' +
-        '<div class="col-lg-4">' +
+        '<label for="" class="col-xl-2 control-label"><?=$this->getTrans('profileFieldName') ?></label>' +
+        '<div class="col-xl-4">' +
         '<div class="input-group">' +
         '<select class="form-control input-group-addon" name="profileFieldTrans' + index + '[locale]" onchange="isDuplicate()" required>' +
         '<option selected="true" disabled><?=$this->getTrans('pleaseSelect') ?></option>' +
@@ -382,7 +397,7 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
         let y;
         div = '<div class="row">';
         for (y = x; y < x + 6; y++) {
-            div += '<div class="icon col-lg-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
+            div += '<div class="icon col-xl-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
         }
         div += '</div>';
         x = y;

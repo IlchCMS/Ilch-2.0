@@ -78,8 +78,13 @@ use Ilch\Date;
                        value="<?=$this->escape($this->originalInput('warServer', ($entrie->getId()?$entrie->getWarServer():''))) ?>" />
             </div>
         </div>
+<<<<<<< Updated upstream
         <div class="form-group<?=$this->validation()->hasError('warPassword') ? ' has-error' : '' ?>">
             <label for="warPasswordInput" class="col-lg-2 control-label">
+=======
+        <div class="row mb-3 <?=$this->validation()->hasError('warPassword') ? ' has-error' : '' ?>">
+            <label for="warPasswordInput" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
                 <?=$this->getTrans('warPassword') ?>:
             </label>
             <div class="col-lg-4">

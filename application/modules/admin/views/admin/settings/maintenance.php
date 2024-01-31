@@ -17,8 +17,13 @@
             </div>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="maintenanceDateTime" class="col-md-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="maintenanceDateTime" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('maintenanceEndDateTime') ?>:
         </label>
         <div class="col-lg-2 input-group ilch-date date form_datetime">
@@ -32,8 +37,13 @@
             </span>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group">
         <label for="maintenanceStatus" class="col-md-2 control-label">
+=======
+    <div class="row mb-3">
+        <label for="maintenanceStatus" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('maintenanceStatus') ?>:
         </label>
         <div class="col-lg-4">

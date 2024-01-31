@@ -36,7 +36,7 @@ $userGroupList = $this->get('userGroupList');
         <label for="upl" class="col-lg-2 control-label">
             <?=$this->getTrans('img') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="row">
                 <?php if ($team->getImg() != '') : ?>
                     <div class="col-lg-12">
@@ -47,7 +47,7 @@ $userGroupList = $this->get('userGroupList');
                         </label>
                     </div>
                 <?php endif; ?>
-                <div class="col-lg-12 input-group">
+                <div class="col-xl-12 input-group">
                     <span class="input-group-btn">
                         <span class="btn btn-primary btn-file">
                             Browse&hellip; <input type="file" name="img" accept="image/*">

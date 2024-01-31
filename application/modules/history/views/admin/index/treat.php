@@ -13,11 +13,19 @@ $history = $this->get('history');
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
         <div class="col-lg-2 input-group ilch-date date form_datetime">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
+        <label for="date" class="col-xl-2 control-label">
+            <?=$this->getTrans('date') ?>:
+        </label>
+        <div id="date" class="col-xl-2 input-group ilch-date date form_datetime">
+>>>>>>> Stashed changes
             <?php
             $getDate = new \Ilch\Date($history->getDate() ?? 'now');
             ?>

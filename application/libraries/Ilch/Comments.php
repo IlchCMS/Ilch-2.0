@@ -217,7 +217,7 @@ class Comments
 
         $commentsHtml = '
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-xl-12">
         <h1 class="page-header" id="comment">'.$layout->getTrans('comments').'('.$commentsCount.')</h1>';
 
         if ($layout->getUser()) {

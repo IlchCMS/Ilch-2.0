@@ -189,8 +189,13 @@ $(document).ready (
                 return;
             }
 
+<<<<<<< Updated upstream
             menuHtml = '<div class="form-group"><label for="href" class="col-lg-4 control-label">Kategorie:</label>\n\
                         <div class="col-lg-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+=======
+            menuHtml = '<div class="row mb-3"><label for="href" class="col-xl-4 control-label">Kategorie:</label>\n\
+                        <div class="col-xl-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+>>>>>>> Stashed changes
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');

@@ -115,8 +115,13 @@ function buildMenu($parentId, $menuData, View $view) {
         </div>
         <div class="col-sm-5 col-lg-5 changeBox">
             <input type="hidden" id="id" value="" />
+<<<<<<< Updated upstream
             <div class="form-group">
                 <label for="title" class="col-lg-4 control-label">
+=======
+            <div class="row mb-3">
+                <label for="title" class="col-xl-4 control-label">
+>>>>>>> Stashed changes
                     <?=$this->getTrans('itemTitle') ?>
                 </label>
                 <div class="col-lg-8">
@@ -382,8 +387,13 @@ $(document).ready
                  $('.dyn').html('<div class="form-group"><label for="siteid" class="col-lg-4 control-label"><?=$this->getTrans('page') ?></label>\n\
                                 <div class="col-lg-8"><?php if (!empty($pages)) { echo '<select class="form-control" id="siteid">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$this->escape($page->getTitle()).'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
+<<<<<<< Updated upstream
                 $('.dyn').html('<div class="form-group"><label for="modulekey" class="col-lg-4 control-label"><?=$this->getTrans('module') ?></label>\n\
                                 <div class="col-lg-8"><?php if (!empty($modules)) { echo '<select class="form-control" id="modulekey">'; foreach ($modules as $module) { if ($module->getHideMenu() != true) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';}} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
+=======
+                $('.dyn').html('<div class="row mb-3"><label for="modulekey" class="col-xl-4 control-label"><?=$this->getTrans('module') ?></label>\n\
+                                <div class="col-xl-8"><?php if (!empty($modules)) { echo '<select class="form-control" id="modulekey">'; foreach ($modules as $module) { if ($module->getHideMenu() != true) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';}} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
+>>>>>>> Stashed changes
             } else if ($(this).val() == '4') {
                 $('.dyn').html('<div class="form-group"><label for="boxkey" class="col-lg-4 control-label"><?=$this->getTrans('box') ?></label>\n\
                                 <div class="col-lg-8"><?='<select class="form-control" id="boxkey">';

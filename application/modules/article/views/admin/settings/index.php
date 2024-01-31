@@ -1,11 +1,16 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('articlesPerPage') ? 'has-error' : '' ?>">
         <label for="articlesPerPageInput" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('articlesPerPage') ? 'has-error' : '' ?>">
+        <label for="articlesPerPageInput" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('articlesPerPage') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="articlesPerPageInput"
@@ -14,11 +19,16 @@
                    value="<?=($this->get('articlesPerPage') != '') ? $this->escape($this->get('articlesPerPage')) : $this->originalInput('articlesPerPage') ?>" />
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('articleRating') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('articleRating') ? 'has-error' : '' ?>">
+        <div class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('articleRating') ?>
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="articleRating-on" name="articleRating" value="1" <?=($this->get('articleRating') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="articleRating-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -28,11 +38,16 @@
             </div>
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('disableComments') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('disableComments') ? 'has-error' : '' ?>">
+        <div class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('disableComments') ?>
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="disableComments-on" name="disableComments" value="1" <?=($this->get('disableComments') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="disableComments-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -45,11 +60,16 @@
 
     <h2><?=$this->getTrans('boxSettings') ?></h2>
     <b><?=$this->getTrans('boxArticle') ?></b>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('boxArticleLimit') ? 'has-error' : '' ?>">
         <label for="boxArticleLimit" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('boxArticleLimit') ? 'has-error' : '' ?>">
+        <label for="boxArticleLimit" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('boxArticleLimit') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="boxArticleLimit"
@@ -59,11 +79,16 @@
         </div>
     </div>
     <b><?=$this->getTrans('boxArchive') ?></b>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('boxArchiveLimit') ? 'has-error' : '' ?>">
         <label for="boxArchiveLimit" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('boxArchiveLimit') ? 'has-error' : '' ?>">
+        <label for="boxArchiveLimit" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('boxArchiveLimit') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="boxArchiveLimit"
@@ -73,11 +98,16 @@
         </div>
     </div>
     <b><?=$this->getTrans('boxKeywords') ?></b>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('boxKeywordsH2') ? 'has-error' : '' ?>">
         <label for="boxKeywordsH2" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('boxKeywordsH2') ? 'has-error' : '' ?>">
+        <label for="boxKeywordsH2" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('boxKeywordsH2') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="boxKeywordsH2"
@@ -87,11 +117,16 @@
                    required />
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('boxKeywordsH3') ? 'has-error' : '' ?>">
         <label for="boxKeywordsH3" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('boxKeywordsH3') ? 'has-error' : '' ?>">
+        <label for="boxKeywordsH3" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('boxKeywordsH3') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="boxKeywordsH3"
@@ -101,11 +136,16 @@
                    required />
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('boxKeywordsH4') ? 'has-error' : '' ?>">
         <label for="boxKeywordsH4" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('boxKeywordsH4') ? 'has-error' : '' ?>">
+        <label for="boxKeywordsH4" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('boxKeywordsH4') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="boxKeywordsH4"
@@ -115,11 +155,16 @@
                    required />
         </div>
     </div>
+<<<<<<< Updated upstream
     <div class="form-group <?=$this->validation()->hasError('boxKeywordsH5') ? 'has-error' : '' ?>">
         <label for="boxKeywordsH5" class="col-lg-2 control-label">
+=======
+    <div class="row mb-3 <?=$this->validation()->hasError('boxKeywordsH5') ? 'has-error' : '' ?>">
+        <label for="boxKeywordsH5" class="col-xl-2 control-label">
+>>>>>>> Stashed changes
             <?=$this->getTrans('boxKeywordsH5') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="boxKeywordsH5"

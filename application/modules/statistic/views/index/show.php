@@ -55,11 +55,19 @@ $browser = $this->getRequest()->getParam('browser');
 <?php elseif ($this->get('statisticBrowserVersionList') != '' && $browser != '') : ?>
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('browserStatistic') ?> - <?=$this->escape($browser) ?></i></h1>
     <div class="row">
+<<<<<<< Updated upstream
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
+=======
+        <div class="col-xl-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('browserStatistic') ?></h4>
+                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+>>>>>>> Stashed changes
                 </div>
                 <div class="panel-footer">
                     <?=$this->getTrans('browser') ?>
@@ -95,11 +103,19 @@ $browser = $this->getRequest()->getParam('browser');
     <?php $date = new \Ilch\Date($year . '-' . $month . '-01'); ?>
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans($date->format('F', true)) . $date->format(' Y', true) ?></i></h1>
     <div class="row">
+<<<<<<< Updated upstream
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('visitsStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
+=======
+        <div class="col-xl-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('visitsStatistic') ?></h4>
+                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+>>>>>>> Stashed changes
                 </div>
 
                 <div class="panel-footer">
@@ -197,11 +213,19 @@ $browser = $this->getRequest()->getParam('browser');
     </div>
 
     <div class="row">
+<<<<<<< Updated upstream
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
+=======
+        <div class="col-xl-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('browserStatistic') ?></h4>
+                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+>>>>>>> Stashed changes
                 </div>
                 <div class="panel-footer">
                     <?=$this->getTrans('browser') ?>
@@ -263,9 +287,15 @@ $browser = $this->getRequest()->getParam('browser');
     </div>
 
     <div class="row">
+<<<<<<< Updated upstream
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
+=======
+        <div class="col-xl-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+>>>>>>> Stashed changes
                     <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
                 </div>
@@ -307,11 +337,19 @@ $browser = $this->getRequest()->getParam('browser');
     <?php $date = new \Ilch\Date($year . '-01-01'); ?>
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$date->format('Y', true) ?></i></h1>
     <div class="row">
+<<<<<<< Updated upstream
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('visitsStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
+=======
+        <div class="col-xl-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('visitsStatistic') ?></h4>
+                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+>>>>>>> Stashed changes
                 </div>
 
                 <div class="panel-footer">
@@ -409,11 +447,19 @@ $browser = $this->getRequest()->getParam('browser');
     </div>
 
     <div class="row">
+<<<<<<< Updated upstream
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
+=======
+        <div class="col-xl-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('browserStatistic') ?></h4>
+                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+>>>>>>> Stashed changes
                 </div>
                 <div class="panel-footer">
                     <?=$this->getTrans('browser') ?>
@@ -475,11 +521,19 @@ $browser = $this->getRequest()->getParam('browser');
     </div>
 
     <div class="row">
+<<<<<<< Updated upstream
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
                     <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
+=======
+        <div class="col-xl-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary">
+                    <h4 class="card-title"><?=$this->getTrans('osStatistic') ?></h4>
+                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+>>>>>>> Stashed changes
                 </div>
                 <div class="panel-footer">
                     <?=$this->getTrans('os') ?>

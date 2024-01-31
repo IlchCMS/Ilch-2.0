@@ -14,7 +14,7 @@ $articleMapper = $this->get('articleMapper');
                 <col class="icon_width" />
                 <col />
                 <?php if ($this->get('multilingual')): ?>
-                    <col class="col-lg-1">
+                    <col class="col-xl-1">
                 <?php endif; ?>
             </colgroup>
             <thead>
