@@ -126,7 +126,7 @@ if ($this->getUser()) {
             <label for="start" class="col-xl-2 control-label">
                 <?=$this->getTrans('when') ?>:
             </label>
-            <div id="start" class="col-xl-3 input-group ilch-date date form_datetime pull-left">
+            <div id="start" class="col-xl-3 input-group ilch-date date form_datetime float-start">
                 <input type="text"
                        class="form-control"
                        id="start"

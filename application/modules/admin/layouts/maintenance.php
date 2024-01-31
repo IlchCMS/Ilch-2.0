@@ -102,7 +102,7 @@ $date = new \Ilch\Date();
                 </div>
 
                 <div class="save_box">
-                    <a href="<?=$this->getUrl('admin/admin/login/index/') ?>" class="btn btn-primary pull-right">
+                    <a href="<?=$this->getUrl('admin/admin/login/index/') ?>" class="btn btn-primary float-end">
                         Admin Login
                     </a>
                 </div>

@@ -36,7 +36,7 @@ if (!empty($file)) {
             <?php $extension = pathinfo($file->getFileUrl(), PATHINFO_EXTENSION);
             $extension = (empty($extension)) ? '' : '.' . $extension; ?>
             <?php if ($file->getFileUrl()) : ?>
-                <a href="<?=$this->getUrl() . '/' . $file->getFileUrl() ?>" class="btn btn-primary pull-right" download="<?=$this->escape($file->getFileTitle()) . $extension ?>"><?=$this->getTrans('download') ?></a>
+                <a href="<?=$this->getUrl() . '/' . $file->getFileUrl() ?>" class="btn btn-primary float-end" download="<?=$this->escape($file->getFileTitle()) . $extension ?>"><?=$this->getTrans('download') ?></a>
             <?php else : ?>
                 <?=$this->getTrans('downloadNotFound') ?>
             <?php endif; ?>

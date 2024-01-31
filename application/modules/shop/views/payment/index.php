@@ -12,7 +12,7 @@ $invoiceSentDateTime = new Ilch\Date($order->getDatetimeInvoiceSent());
 </h1>
 
 <div class="card panel-default">
-    <div class="card-header" id="orderHeading" data-bs-toggle="collapse" data-bs-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(), 0, strrpos($order->getInvoiceFilename(), '_')), $invoiceSentDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock'), $orderDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock')) ?><span class="pull-right clickable"><i class="fa-solid fa-chevron-down"></i></span></div>
+    <div class="card-header" id="orderHeading" data-bs-toggle="collapse" data-bs-target="#orderDetails"><?=$this->getTrans('paymentPanelHeading', substr($order->getInvoiceFilename(), 0, strrpos($order->getInvoiceFilename(), '_')), $invoiceSentDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock'), $orderDateTime->format('d.m.Y | H:i ', true) . $this->getTrans('dateTimeoClock')) ?><span class="float-end clickable"><i class="fa-solid fa-chevron-down"></i></span></div>
     <div class="card-body collapse" id="orderDetails">
         <div class="table-responsive order">
             <table class="table table-striped">
