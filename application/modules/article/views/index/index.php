@@ -38,7 +38,7 @@ $commentMapper = $this->get('commentMapper');
             <?php $contentParts = explode('[PREVIEWSTOP]', $content); ?>
             <?=$this->purify(reset($contentParts)) ?>
             <br />
-            <a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId()]) ?>" class="pull-right"><?=$this->getTrans('readMore') ?></a>
+            <a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId()]) ?>" class="float-end"><?=$this->getTrans('readMore') ?></a>
         <?php else: ?>
             <?=$this->purify($content) ?>
         <?php endif; ?>
