@@ -122,7 +122,7 @@ $statistic_config = $this->get('statistic_config');
                                             <?=$this->get('CMSVersion') ?>
                                         </span>
                                     </div>
-                                    <div class="card-body ilch-body text-left">
+                                    <div class="card-body ilch-body text-start">
                                         <strong><?=$this->getTrans('IlchCMSVersion') ?></strong>
                                     </div>
                                 </div>

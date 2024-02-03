@@ -34,7 +34,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 <a href="'.$obj->getUrl(['action' => 'show', 'user' => $item->getUserId(), 'id' => $item->getId()]).'" >
                                     '.$obj->escape($item->getTitle()).'
                                 </a>
-                                <p class="text-left">'.$obj->getTrans('images').': '. $imageMapper->getCountImageById($item->getId()) .'</p>
+                                <p class="text-start">'.$obj->getTrans('images').': '. $imageMapper->getCountImageById($item->getId()) .'</p>
                                 <div class="lib-header-seperator"></div>
 
                             </div>

@@ -46,7 +46,7 @@
     box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
 }
 
-.text-left {
+.text-start {
     font-size: 15px;
 }
 </style>
@@ -86,7 +86,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                                 <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
                                     '.$obj->escape($item->getTitle()).'
                                 </a>
-                                <p class="text-left">'.$obj->getTrans('files').': '.$fileCount.'</p>
+                                <p class="text-start">'.$obj->getTrans('files').': '.$fileCount.'</p>
                                 <div class="lib-header-seperator"></div>
 
                             </div>
