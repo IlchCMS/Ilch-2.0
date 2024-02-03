@@ -141,7 +141,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
                     </span>
                     <input type="text"
-                           class="form-control text-right"
+                           class="form-control text-end"
                            id="price"
                            name="price"
                            pattern="^\d*(\.\d{2}$)?"
@@ -190,7 +190,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
                     </span>
                     <input type="text"
-                           class="form-control text-right"
+                           class="form-control text-end"
                            id="shippingCosts"
                            name="shippingCosts"
                            pattern="^\d*(\.\d{2}$)?"

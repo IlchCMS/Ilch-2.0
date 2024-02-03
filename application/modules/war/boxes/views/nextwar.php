@@ -38,7 +38,7 @@
                     <?php
                     $countdown = $warMapper->countdown($war->getWarTime());
                     ?>
-                    <div class="ellipsis-item text-right" title="<?=$countdown ?>">
+                    <div class="ellipsis-item text-end" title="<?=$countdown ?>">
                         <i><?=$countdown ?></i>
                     </div>
                 </div>

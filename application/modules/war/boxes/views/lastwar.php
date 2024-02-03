@@ -56,7 +56,7 @@
                     </div>
                 </a>
                 <div class="col-3 small nextwar-date">
-                    <div class="ellipsis-item text-right <?=$matchStatus ?>" title="<?=$groupPoints ?>:<?=$enemyPoints ?>">
+                    <div class="ellipsis-item text-end <?=$matchStatus ?>" title="<?=$groupPoints ?>:<?=$enemyPoints ?>">
                         <?=$groupPoints ?>:<?=$enemyPoints ?>
                     </div>
                 </div>

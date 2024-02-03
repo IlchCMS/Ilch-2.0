@@ -34,7 +34,7 @@ $training = $this->get('training');
                     </div>
                 </a>
                 <div class="col-3 small nexttraining-date">
-                    <div class="ellipsis-item text-right" title="<?=$countdown ?>">
+                    <div class="ellipsis-item text-end" title="<?=$countdown ?>">
                         <i><?=$countdown ?></i>
                     </div>
                 </div>
