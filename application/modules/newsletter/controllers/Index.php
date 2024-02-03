@@ -6,21 +6,23 @@
 
 namespace Modules\Newsletter\Controllers;
 
+use Ilch\Controller\Frontend;
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
-use Modules\Newsletter\Models\Newsletter as NewsletterModel;
+use Modules\Newsletter\Mappers\Subscriber as SubscriberMapper;
+use Modules\Newsletter\Models\Subscriber as SubscriberModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Usermenu as UserMenuMapper;
 use Ilch\Validation;
 
-class Index extends \Ilch\Controller\Frontend
+class Index extends Frontend
 {
     public function indexAction()
     {
         if ($this->getUser()) {
             $this->redirect(['action' => 'settings']);
         }
-        
-        $newsletterMapper = new NewsletterMapper();
+
+        $subscriberMapper = new SubscriberMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index']);
@@ -31,13 +33,13 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             if ($validation->isValid()) {
-                $countEmails = $newsletterMapper->countEmails($this->getRequest()->getPost('email'));
+                $countEmails = $subscriberMapper->countEmails($this->getRequest()->getPost('email'));
                 if ($countEmails == 0) {
-                    $newsletterModel = new NewsletterModel();
-                    $newsletterModel->setSelector(bin2hex(random_bytes(9)));
-                    $newsletterModel->setConfirmCode(bin2hex(random_bytes(32)));
-                    $newsletterModel->setEmail($this->getRequest()->getPost('email'));
-                    $newsletterMapper->saveEmail($newsletterModel);
+                    $subscriberModel = new SubscriberModel();
+                    $subscriberModel->setSelector(bin2hex(random_bytes(9)));
+                    $subscriberModel->setConfirmCode(bin2hex(random_bytes(32)));
+                    $subscriberModel->setEmail($this->getRequest()->getPost('email'));
+                    $subscriberMapper->saveEmail($subscriberModel);
                 }
 
                 $this->addMessage('subscribeSuccess');
@@ -52,8 +54,8 @@ class Index extends \Ilch\Controller\Frontend
     {
         $newsletterMapper = new NewsletterMapper();
 
-        if (file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/newsletter/layouts/show.php')) {
-            $this->getLayout()->setFile('layouts/'.$this->getConfig()->get('default_layout').'/views/modules/newsletter/layouts/show');
+        if (file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/newsletter/layouts/show.php')) {
+            $this->getLayout()->setFile('layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/newsletter/layouts/show');
         } else {
             $this->getLayout()->setFile('modules/newsletter/layouts/show');
         }
@@ -66,6 +68,42 @@ class Index extends \Ilch\Controller\Frontend
         }
     }
 
+    public function doubleoptinAction()
+    {
+        $selector = $this->getRequest()->getParam('selector');
+        $confirmCode = $this->getRequest()->getParam('code');
+
+        if (empty($confirmCode) || empty($selector)) {
+            $this->addMessage('incompleteDoubleOptInUrl', 'danger');
+        } else {
+            $subscriberMapper = new SubscriberMapper();
+
+            $subscriber = $subscriberMapper->getSubscriberBySelector($selector);
+            if (!empty($subscriber) && hash_equals($subscriber->getConfirmCode(), $confirmCode)) {
+                $countEmail = $subscriberMapper->countEmails($subscriber->getEmail());
+                if ($countEmail == 1) {
+                    // Create new selector and confirmedCode for a possible future unsubscribe action.
+                    $selector = bin2hex(random_bytes(9));
+                    $confirmedCode = bin2hex(random_bytes(32));
+
+                    $subscriberModel = new SubscriberModel();
+                    $subscriberModel->setId($subscriber->getId());
+                    $subscriberModel->setSelector($selector);
+                    $subscriberModel->setConfirmCode($confirmedCode);
+                    $subscriberModel->setEmail($subscriber->getEmail());
+                    $subscriberModel->setNewsletter(1);
+                    $subscriberModel->setDoubleOptInDate($subscriber->getDoubleOptInDate());
+                    $subscriberModel->setDoubleOptInConfirmed(true);
+                    $subscriberMapper->saveEmail($subscriberModel);
+
+                    $this->addMessage('doubleOptInSuccess');
+                }
+            }
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
+
     public function unsubscribeAction()
     {
         $selector = $this->getRequest()->getParam('selector');
@@ -74,13 +112,13 @@ class Index extends \Ilch\Controller\Frontend
         if (empty($confirmCode) || empty($selector)) {
             $this->addMessage('incompleteUnsubscribeUrl', 'danger');
         } else {
-            $newsletterMapper = new NewsletterMapper();
+            $subscriberMapper = new SubscriberMapper();
 
-            $subscriber = $newsletterMapper->getSubscriberBySelector($selector);
+            $subscriber = $subscriberMapper->getSubscriberBySelector($selector);
             if (!empty($subscriber) && hash_equals($subscriber->getConfirmCode(), $confirmCode)) {
-                $countEmail = $newsletterMapper->countEmails($subscriber->getEmail());
+                $countEmail = $subscriberMapper->countEmails($subscriber->getEmail());
                 if ($countEmail == 1) {
-                    $newsletterMapper->deleteEmail($subscriber->getEmail());
+                    $subscriberMapper->deleteEmail($subscriber->getEmail());
 
                     $this->addMessage('unsubscribeSuccess');
                 }
@@ -92,7 +130,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function settingsAction()
     {
-        $newsletterMapper = new NewsletterMapper();
+        $subscriberMapper = new SubscriberMapper();
         $userMapper = new UserMapper();
         $UserMenuMapper = new UserMenuMapper();
 
@@ -107,12 +145,13 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             if ($validation->isValid()) {
-                $newsletterModel = new NewsletterModel();
-                $newsletterModel->setSelector(bin2hex(random_bytes(9)));
-                $newsletterModel->setConfirmCode(bin2hex(random_bytes(32)));
-                $newsletterModel->setId($this->getUser()->getId());
-                $newsletterModel->setNewsletter($this->getRequest()->getPost('acceptNewsletter'));
-                $newsletterMapper->saveUserEmail($newsletterModel);
+                // No double-opt-in (if enabled) needed as the user needs to be logged in to subscribe from here.
+                $subscriberModel = new SubscriberModel();
+                $subscriberModel->setSelector(bin2hex(random_bytes(9)));
+                $subscriberModel->setConfirmCode(bin2hex(random_bytes(32)));
+                $subscriberModel->setId($this->getUser()->getId());
+                $subscriberModel->setNewsletter($this->getRequest()->getPost('acceptNewsletter'));
+                $subscriberMapper->saveUserEmail($subscriberModel);
 
                 $this->redirect(['action' => 'settings']);
             } else {
@@ -120,7 +159,7 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('countMail', $newsletterMapper->countEmails($this->getUser()->getEmail()));
+        $this->getView()->set('countMail', $subscriberMapper->countEmails($this->getUser()->getEmail()));
         $this->getView()->set('usermenu', $UserMenuMapper->getUserMenu());
         $this->getView()->set('profil', $userMapper->getUserById($this->getUser()->getId()));
         $this->getView()->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'));

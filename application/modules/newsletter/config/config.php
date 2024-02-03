@@ -6,12 +6,14 @@
 
 namespace Modules\Newsletter\Config;
 
-class Config extends \Ilch\Config\Install
+use Ilch\Config\Install;
+
+class Config extends Install
 {
     public $config = [
         'key' => 'newsletter',
-        'version' => '1.6.2',
-        'icon_small' => 'fa-newspaper-o',
+        'version' => '1.7.0',
+        'icon_small' => 'fa-regular fa-newspaper',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
         'languages' => [
@@ -34,8 +36,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.26',
-        'phpVersion' => '5.6'
+        'ilchCore' => '2.1.48',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -45,12 +47,12 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_newsletter`;
-                                 DROP TABLE `[prefix]_newsletter_mails`;');
+        $this->db()->drop('[prefix]_newsletter');
+        $this->db()->drop('[prefix]_newsletter_mails');
         $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'newsletter/index/settings'");
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_newsletter` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -66,12 +68,30 @@ class Config extends \Ilch\Config\Install
                   `email` VARCHAR(100) NOT NULL,
                   `selector` char(18),
                   `confirmCode` char(64),
+                  `doubleOptInDate` DATETIME NOT NULL,
+                  `doubleOptInConfirmed` TINYINT(1) NOT NULL DEFAULT 1,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `locale`, `description`, `name`) VALUES
                 ("newsletter/index/settings", "de_DE", "Hier kannst du deine Newsletter Einstellungen bearbeiten.", "Newsletter"),
-                ("newsletter/index/settings", "en_EN", "Here you can manage your newsletter settings.", "Newsletter");';
+                ("newsletter/index/settings", "en_EN", "Here you can manage your newsletter settings.", "Newsletter");
+
+                INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
+                    ("newsletter", "newsletter_doubleOptIn", "Bestätigung Newsletter", "<p>Vielen Dank für Ihr Interesse an den Newsletter von <i>{sitetitle}</i>.</p>
+                        <p>Um die Registrierung für den Newsletter zu bestätigen, klicken Sie bitte innerhalb von 24 Stunden auf folgenden Link:</p>
+                        <p>{confirm}</p>
+                        <p>Sollten Sie sich nicht für den Newsletter eingetragen haben, können Sie diese E-Mail ignorieren.
+                        <p>&nbsp;</p>
+                        <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                        <p>Administrator</p>", "de_DE"),
+                    ("newsletter", "newsletter_doubleOptIn", "Confirmation newsletter", "<p>Thank you for the interest in the newsletter of <i>{sitetitle}</i>.</p>
+                        <p>To confirm the registration for the newsletter, please click the following link within 24 hours:</p>
+                        <p>{confirm}</p>
+                        <p>You can ignore this e-mail if you haven\'t subscribed to the newsletter.
+                        <p>&nbsp;</p>
+                        <p>Best regards</p>
+                        <p>Administrator</p>", "en_EN");';
     }
 
     public function getUpdate($installedVersion)
@@ -93,6 +113,33 @@ class Config extends \Ilch\Config\Install
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'newsletter' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
+            case "1.6.2":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
+
+                // Add e-mail templates for newsletter double opt-in.
+                $this->db()->query('INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
+                    ("newsletter", "newsletter_doubleOptIn", "Bestätigung Newsletter", "<p>Vielen Dank für Ihr Interesse an den Newsletter von <i>{sitetitle}</i>.</p>
+                        <p>Um die Registrierung für den Newsletter zu bestätigen, klicken Sie bitte innerhalb von 24 Stunden auf folgenden Link:</p>
+                        <p>{confirm}</p>
+                        <p>Sollten Sie sich nicht für den Newsletter eingetragen haben, können Sie diese E-Mail ignorieren.
+                        <p>&nbsp;</p>
+                        <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                        <p>Administrator</p>", "de_DE"),
+                    ("newsletter", "newsletter_doubleOptIn", "Confirmation newsletter", "<p>Thank you for the interest in the newsletter of <i>{sitetitle}</i>.</p>
+                        <p>To confirm the registration for the newsletter, please click the following link within 24 hours:</p>
+                        <p>{confirm}</p>
+                        <p>You can ignore this e-mail if you haven\'t subscribed to the newsletter.
+                        <p>&nbsp;</p>
+                        <p>Best regards</p>
+                        <p>Administrator</p>", "en_EN");');
+
+                // Add new columns to 'newsletter_mails' table.
+                $this->db()->query('ALTER TABLE `[prefix]_newsletter_mails` ADD COLUMN `doubleOptInDate` DATETIME NOT NULL AFTER `confirmCode`;');
+                $this->db()->query('ALTER TABLE `[prefix]_newsletter_mails` ADD COLUMN `doubleOptInConfirmed` TINYINT(1) NOT NULL DEFAULT 1 AFTER `doubleOptInDate`;');
+                // no break
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
