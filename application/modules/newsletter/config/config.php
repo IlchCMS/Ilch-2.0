@@ -6,6 +6,7 @@
 
 namespace Modules\Newsletter\Config;
 
+use Ilch\Config\Database;
 use Ilch\Config\Install;
 
 class Config extends Install
@@ -49,7 +50,11 @@ class Config extends Install
     {
         $this->db()->drop('[prefix]_newsletter');
         $this->db()->drop('[prefix]_newsletter_mails');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'newsletter/index/settings'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'newsletter/index/settings';
+            DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'newsletter';");
+
+        $databaseConfig = new Database($this->db());
+        $databaseConfig->delete('newsletter_doubleOptIn');
     }
 
     public function getInstallSql(): string
