@@ -76,8 +76,8 @@ class Newsletter extends Box
                     $subscriberModel->setConfirmCode($confirmedCode);
                     $subscriberModel->setEmail($this->getRequest()->getPost('email'));
                     $subscriberModel->setDoubleOptInDate($date);
-                    $subscriberModel->setDoubleOptInConfirmed(false);
-                    $subscriberMapper->saveEmail($subscriberModel);
+                    $subscriberModel->setDoubleOptInConfirmed(!$this->getConfig()->get('newsletter_doubleOptIn'));
+                    $subscriberMapper->saveSubscriber($subscriberModel);
                 }
                 $this->getView()->set('success', 'true');
             } else {

@@ -54,20 +54,20 @@ class Receiver extends Admin
 
             if ($this->getRequest()->getPost('check_entries') && $this->getRequest()->getPost('action') === 'delete') {
                 foreach ($this->getRequest()->getPost('check_entries') as $email) {
-                    $subscriberMapper->deleteEmail($email);
+                    $subscriberMapper->deleteSubscriberByEmail($email);
                 }
             }
 
             foreach ($this->getRequest()->getPost('check_users') as $userEmail) {
                 if ($userEmail != '') {
                     $subscriberModel->setEmail($userEmail);
-                    $subscriberMapper->saveEmail($subscriberModel);
+                    $subscriberMapper->saveSubscriber($subscriberModel);
                 }
             }
             $this->addMessage('saveSuccess');
         }
 
-        $this->getView()->set('emails', $subscriberMapper->getMail());
+        $this->getView()->set('emails', $subscriberMapper->getSubscribers());
         $this->getView()->set('userList', $subscriberMapper->getSendMailUser());
     }
 

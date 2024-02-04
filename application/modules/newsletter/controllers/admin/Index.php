@@ -158,7 +158,7 @@ class Index extends Admin
                     $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/newsletter/layouts/mail/newsletter.php');
                 }
 
-                $emails = $subscriberMapper->getMail();
+                $emails = $subscriberMapper->getSubscribers();
                 foreach ($emails as $email) {
                     if (!$email->getDoubleOptInConfirmed()) {
                         continue;
@@ -197,6 +197,6 @@ class Index extends Admin
             }
         }
 
-        $this->getView()->set('emails', $subscriberMapper->getMail());
+        $this->getView()->set('emails', $subscriberMapper->getSubscribers());
     }
 }

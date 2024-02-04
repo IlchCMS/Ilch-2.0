@@ -39,7 +39,7 @@ class Index extends Frontend
                     $subscriberModel->setSelector(bin2hex(random_bytes(9)));
                     $subscriberModel->setConfirmCode(bin2hex(random_bytes(32)));
                     $subscriberModel->setEmail($this->getRequest()->getPost('email'));
-                    $subscriberMapper->saveEmail($subscriberModel);
+                    $subscriberMapper->saveSubscriber($subscriberModel);
                 }
 
                 $this->addMessage('subscribeSuccess');
@@ -94,7 +94,7 @@ class Index extends Frontend
                     $subscriberModel->setNewsletter(1);
                     $subscriberModel->setDoubleOptInDate($subscriber->getDoubleOptInDate());
                     $subscriberModel->setDoubleOptInConfirmed(true);
-                    $subscriberMapper->saveEmail($subscriberModel);
+                    $subscriberMapper->saveSubscriber($subscriberModel);
 
                     $this->addMessage('doubleOptInSuccess');
                 }
@@ -118,7 +118,7 @@ class Index extends Frontend
             if (!empty($subscriber) && hash_equals($subscriber->getConfirmCode(), $confirmCode)) {
                 $countEmail = $subscriberMapper->countEmails($subscriber->getEmail());
                 if ($countEmail == 1) {
-                    $subscriberMapper->deleteEmail($subscriber->getEmail());
+                    $subscriberMapper->deleteSubscriberByEmail($subscriber->getEmail());
 
                     $this->addMessage('unsubscribeSuccess');
                 }
@@ -151,7 +151,7 @@ class Index extends Frontend
                 $subscriberModel->setConfirmCode(bin2hex(random_bytes(32)));
                 $subscriberModel->setId($this->getUser()->getId());
                 $subscriberModel->setNewsletter($this->getRequest()->getPost('acceptNewsletter'));
-                $subscriberMapper->saveUserEmail($subscriberModel);
+                $subscriberMapper->saveUserAsSubscriber($subscriberModel);
 
                 $this->redirect(['action' => 'settings']);
             } else {

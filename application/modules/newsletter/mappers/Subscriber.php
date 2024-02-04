@@ -8,98 +8,106 @@ namespace Modules\Newsletter\Mappers;
 
 use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
-use Modules\Newsletter\Models\Newsletter as NewsletterModel;
 use Modules\Newsletter\Models\Subscriber as SubscriberModel;
 
 class Subscriber extends Mapper
 {
     /**
-     * Gets the Newsletter entries.
+     * Gets all subscribers.
      *
-     * @return NewsletterModel[]|array
+     * @return SubscriberModel[]|array
      */
-    public function getMail(): ?array
+    public function getSubscribers(): ?array
     {
-        $entryArray = $this->db()->select('*')
+        $subscribersArray = $this->db()->select('*')
                 ->from('newsletter_mails')
                 ->execute()
                 ->fetchRows();
 
-        if (empty($entryArray)) {
+        if (empty($subscribersArray)) {
             return null;
         }
 
-        $entry = [];
+        $subscribers = [];
 
-        foreach ($entryArray as $entries) {
-            $entryModel = new SubscriberModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setEmail($entries['email']);
-            $entryModel->setSelector($entries['selector']);
-            $entryModel->setConfirmCode($entries['confirmCode']);
-            $entryModel->setDoubleOptInDate($entries['doubleOptInDate']);
-            $entryModel->setDoubleOptInConfirmed($entries['doubleOptInConfirmed']);
-            $entry[] = $entryModel;
+        foreach ($subscribersArray as $subscriber) {
+            $subscriberModel = new SubscriberModel();
+            $subscriberModel->setId($subscriber['id']);
+            $subscriberModel->setEmail($subscriber['email']);
+            $subscriberModel->setSelector($subscriber['selector']);
+            $subscriberModel->setConfirmCode($subscriber['confirmCode']);
+            $subscriberModel->setDoubleOptInDate($subscriber['doubleOptInDate']);
+            $subscriberModel->setDoubleOptInConfirmed($subscriber['doubleOptInConfirmed']);
+            $subscribers[] = $subscriberModel;
         }
 
-        return $entry;
+        return $subscribers;
     }
 
     /**
-     * Gets the Newsletter subscriber by the email.
+     * Gets the subscriber by the email.
      *
      * @param string $email
      * @return SubscriberModel|null
      */
     public function getSubscriberByEMail(string $email): ?SubscriberModel
     {
-        $entryArray = $this->db()->select('*')
-            ->from('newsletter_mails')
-            ->where(['email' => $email])
-            ->execute()
-            ->fetchAssoc();
-
-        if (empty($entryArray)) {
-            return null;
-        }
-
-        $entryModel = new SubscriberModel();
-        $entryModel->setId($entryArray['id']);
-        $entryModel->setEmail($entryArray['email']);
-        $entryModel->setSelector($entryArray['selector']);
-        $entryModel->setConfirmCode($entryArray['confirmCode']);
-        $entryModel->setDoubleOptInDate($entryArray['doubleOptInDate']);
-        $entryModel->setDoubleOptInConfirmed($entryArray['doubleOptInConfirmed']);
-
-        return $entryModel;
+        return $this->getSubscriberBy(['email' => $email]);
     }
 
     /**
-     * Gets the Newsletter subscriber by the selector.
+     * Gets subscriber by the selector.
      *
      * @param string $selector
      * @return SubscriberModel|null
      */
     public function getSubscriberBySelector(string $selector): ?SubscriberModel
     {
-        $entryArray = $this->db()->select('*')
-                ->from('newsletter_mails')
-                ->where(['selector' => $selector])
-                ->execute()
-                ->fetchAssoc();
+        return $this->getSubscriberBy(['selector' => $selector]);
+    }
 
-        if (empty($entryArray)) {
+    /**
+     * Gets subscriber by supplied condition.
+     *
+     * @param array $where
+     * @return SubscriberModel|null
+     */
+    private function getSubscriberBy(array $where): ?SubscriberModel
+    {
+        $subscriberArray = $this->db()->select('*')
+            ->from('newsletter_mails')
+            ->where($where)
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($subscriberArray)) {
             return null;
         }
 
-        $entryModel = new SubscriberModel();
-        $entryModel->setId($entryArray['id']);
-        $entryModel->setEmail($entryArray['email']);
-        $entryModel->setConfirmCode($entryArray['confirmCode']);
-        $entryModel->setDoubleOptInDate($entryArray['doubleOptInDate']);
-        $entryModel->setDoubleOptInConfirmed($entryArray['doubleOptInConfirmed']);
+        $subscriberModel = new SubscriberModel();
+        $subscriberModel->setId($subscriberArray['id']);
+        $subscriberModel->setEmail($subscriberArray['email']);
+        $subscriberModel->setSelector($subscriberArray['selector']);
+        $subscriberModel->setConfirmCode($subscriberArray['confirmCode']);
+        $subscriberModel->setDoubleOptInDate($subscriberArray['doubleOptInDate']);
+        $subscriberModel->setDoubleOptInConfirmed($subscriberArray['doubleOptInConfirmed']);
 
-        return $entryModel;
+        return $subscriberModel;
+    }
+
+    /**
+     * Gets the Newsletter entries.
+     *
+     * @return array
+     */
+    public function getSendMailUser(): array
+    {
+        return $this->db()->select()
+            ->fields(['nm.email', 'nm.selector'])
+            ->from(['nm' => 'newsletter_mails'])
+            ->join(['u' => 'users'], 'u.email = nm.email', 'LEFT', ['name' => 'u.name'])
+            ->execute()
+            ->fetchRows();
     }
 
     /**
@@ -118,12 +126,46 @@ class Subscriber extends Mapper
     }
 
     /**
-     * Inserts newsletter mail model.
+     * Save or delete user as subscriber.
+     *
+     * @param SubscriberModel $subscriber
+     * @return int|Result
+     */
+    public function saveUserAsSubscriber(SubscriberModel $subscriber)
+    {
+        $userRow = $this->db()->select('email')
+            ->from('users')
+            ->where(['id' => $subscriber->getId()])
+            ->execute()
+            ->fetchRows();
+        $userMail = $userRow[0]['email'];
+
+        $newsletterMail = $this->countEmails($userMail);
+
+        if ($newsletterMail == '0') {
+            return $this->db()->insert('newsletter_mails')
+                ->values([
+                    'email' => $userMail,
+                    'selector' => $subscriber->getSelector(),
+                    'confirmCode' => $subscriber->getConfirmCode(),
+                    'doubleOptInDate' => $subscriber->getDoubleOptInDate(),
+                    'doubleOptInConfirmed' => $subscriber->getDoubleOptInConfirmed(),
+                ])
+                ->execute();
+        } else {
+            return $this->db()->delete('newsletter_mails')
+                ->where(['email' => $userMail])
+                ->execute();
+        }
+    }
+
+    /**
+     * Inserts or updates subscriber model.
      *
      * @param SubscriberModel $subscriber
      * @return int
      */
-    public function saveEmail(SubscriberModel $subscriber): int
+    public function saveSubscriber(SubscriberModel $subscriber): int
     {
         $values = [
             'email' => $subscriber->getEmail(),
@@ -146,11 +188,11 @@ class Subscriber extends Mapper
     }
 
     /**
-     * Deletes newsletter email with given email.
+     * Deletes subscriber with given email.
      *
      * @param string $email
      */
-    public function deleteEmail(string $email)
+    public function deleteSubscriberByEmail(string $email)
     {
         $this->db()->delete('newsletter_mails')
                 ->where(['email' => $email])
@@ -158,7 +200,7 @@ class Subscriber extends Mapper
     }
 
     /**
-     * Deletes newsletter email with given selector.
+     * Deletes subscriber with given selector.
      *
      * @param string $selector
      */
@@ -179,54 +221,5 @@ class Subscriber extends Mapper
         return $this->db()->delete('newsletter_mails')
             ->where(['doubleOptInDate <' => date('Y-m-d H:i:s', strtotime('-24 hours')), 'doubleOptInConfirmed' => 0])
             ->execute();
-    }
-
-    /**
-     * Gets the Newsletter entries.
-     *
-     * @return NewsletterModel[]|array
-     */
-    public function getSendMailUser(): array
-    {
-        return $this->db()->select()
-                ->fields(['nm.email', 'nm.selector'])
-                ->from(['nm' => 'newsletter_mails'])
-                ->join(['u' => 'users'], 'u.email = nm.email', 'LEFT', ['name' => 'u.name'])
-                ->execute()
-                ->fetchRows();
-    }
-
-    /**
-     * Insert Mail to Newsletter.
-     *
-     * @param SubscriberModel $subscriber
-     * @return void
-     */
-    public function saveUserEmail(SubscriberModel $subscriber)
-    {
-        $userRow = $this->db()->select('email')
-            ->from('users')
-            ->where(['id' => $subscriber->getId()])
-            ->execute()
-            ->fetchRows();
-        $userMail = $userRow[0]['email'];
-
-        $newsletterMail = $this->countEmails($userMail);
-
-        if ($newsletterMail == '0') {
-            $this->db()->insert('newsletter_mails')
-                ->values([
-                    'email' => $userMail,
-                    'selector' => $subscriber->getSelector(),
-                    'confirmCode' => $subscriber->getConfirmCode(),
-                    'doubleOptInDate' => $subscriber->getDoubleOptInDate(),
-                    'doubleOptInConfirmed' => $subscriber->getDoubleOptInConfirmed(),
-                ])
-                ->execute();
-        } else {
-            $this->db()->delete('newsletter_mails')
-                ->where(['email' => $userMail])
-                ->execute();
-        }
     }
 }
