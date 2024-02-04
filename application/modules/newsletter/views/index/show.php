@@ -1,6 +1,9 @@
 <?php
+
+use Ilch\Date;
+
 $newsletter = $this->get('newsletter');
-$date = new \Ilch\Date($newsletter->getDateCreated());
+$date = new Date($newsletter->getDateCreated());
 ?>
 
 <p class="small text-muted"><?=$date->format('l, d. F Y', true) ?></p>

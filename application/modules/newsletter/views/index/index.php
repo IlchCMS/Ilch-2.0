@@ -4,7 +4,7 @@
     <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope"></i></span>
+                <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
                 <input type="email"
                        class="form-control"
                        id="email"

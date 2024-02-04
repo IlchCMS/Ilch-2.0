@@ -1,8 +1,11 @@
 <?php
+
+use Ilch\Date;
+
 $newsletter = $this->get('newsletter');
 $userMapper = $this->get('userMapper');
 $user = $userMapper->getUserById($newsletter->getUserId());
-$date = new \Ilch\Date($newsletter->getDateCreated());
+$date = new Date($newsletter->getDateCreated());
 ?>
 
 <h1><?=$this->getTrans('show') ?></h1>
@@ -19,7 +22,7 @@ $date = new \Ilch\Date($newsletter->getDateCreated());
             <div class="col-lg-2">
                 <?=$this->getTrans('from') ?>:
             </div>
-            <div class="col-lg-4"><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></div>
+            <div class="col-lg-4"><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></div>
         </div>
         <div class="form-group">
             <div class="col-lg-2">
