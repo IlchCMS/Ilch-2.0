@@ -43,6 +43,8 @@ class Config extends Install
 
     public function install()
     {
+        $databaseConfig = new Database($this->db());
+        $databaseConfig->set('newsletter_doubleOptIn', '1');
         $this->db()->queryMulti($this->getInstallSql());
     }
 

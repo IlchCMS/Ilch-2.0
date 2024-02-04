@@ -19,6 +19,7 @@ return [
     'email' => 'E-Mail',
     'noEmails' => 'Keine E-Mail Adressen vorhanden',
     'subscribeSuccess' => 'E-Mail wurde erfolgreich eingetragen.',
+    'doubleOptInConfirm' => 'Bitte bestätigen Sie die Registrierung in der an Ihnen versandten E-Mail.',
     'unsubscribeSuccess' => 'E-Mail wurde erfolgreich ausgetragen.',
     'subscribeFailed' => 'Eintragen fehlgeschlagen.',
     'noReplyMailFooter' => 'Bitte antworten Sie nicht auf diese E-Mail. Dieses Postfach wird nicht überwacht, deshalb werden Sie keine Antwort erhalten.',

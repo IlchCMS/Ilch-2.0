@@ -80,6 +80,7 @@ class Newsletter extends Box
                     $subscriberMapper->saveSubscriber($subscriberModel);
                 }
                 $this->getView()->set('success', 'true');
+                $this->getView()->set('doubleOptIn', $this->getConfig()->get('newsletter_doubleOptIn'));
             } else {
                 $this->getView()->set('success', 'false');
             }

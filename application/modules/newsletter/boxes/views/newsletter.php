@@ -2,7 +2,7 @@
     <?php if ($this->get('success') === 'false') :?>
         <?='<div class="alert alert-danger">' . $this->getTrans('subscribeFailed') . '</div>' ?>
     <?php else : ?>
-        <?='<div class="alert alert-success">' . $this->getTrans('subscribeSuccess') . '</div>' ?>
+        <?='<div class="alert alert-success">' . $this->getTrans('subscribeSuccess') . (($this->get('doubleOptIn')) ? ' ' . $this->getTrans('doubleOptInConfirm') : '') . '</div>' ?>
     <?php endif ?>
 <?php endif; ?>
 

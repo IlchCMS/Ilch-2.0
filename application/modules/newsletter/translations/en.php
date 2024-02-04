@@ -19,6 +19,7 @@ return [
     'email' => 'E-Mail',
     'noEmails' => 'No e-mail addresses available',
     'subscribeSuccess' => 'E-Mail has been successfully added.',
+    'doubleOptInConfirm' => 'Please confirm your subscription in the email that got sent to you.',
     'unsubscribeSuccess' => 'E-Mail has been successfully removed.',
     'subscribeFailed' => 'Subscribing failed.',
     'noReplyMailFooter' => 'Please do not reply to this email. This mailbox is not monitored, so you will not receive a response.',
