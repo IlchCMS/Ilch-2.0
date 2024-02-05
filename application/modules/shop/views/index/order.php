@@ -310,7 +310,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                             <th scope="col" width="10%"><?=$this->getTrans('taxShort') ?><br />&nbsp;</th>
                             <th scope="col" width="15%"><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                             <th scope="col" width="10%" class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                            <th scope="col" width="15%" class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
+                            <th scope="col" width="15%" class="text-end"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                         </tr>
                     </thead>
                     <tbody>

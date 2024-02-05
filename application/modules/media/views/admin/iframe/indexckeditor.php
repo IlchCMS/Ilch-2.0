@@ -26,7 +26,7 @@
                          data-url="<?=$media->getUrl() ?>"
                          src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                          alt="<?=$media->getName() ?>">
-                    <div class="text-right">
+                    <div class="text-end">
                         <small class="text-info"><?=substr($media->getName(), 0, 20) ?></small>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                          data-url="<?=$media->getUrl() ?>"
                          src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                          alt="<?=$media->getName() ?>">
-                    <div class="text-right">
+                    <div class="text-end">
                         <small class="text-info"><?=substr($media->getName(), 0, 20) ?></small>
                     </div>
                 </div>

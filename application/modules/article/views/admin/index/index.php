@@ -25,7 +25,7 @@ $articleMapper = $this->get('articleMapper');
                     <th></th>
                     <th><?=$this->getTrans('title') ?></th>
                     <?php if ($this->get('multilingual')): ?>
-                        <th class="text-right">
+                        <th class="text-end">
                             <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
                                 <?php if ($key == $this->get('contentLanguage')): ?>
                                     <?php continue; ?>
@@ -47,7 +47,7 @@ $articleMapper = $this->get('articleMapper');
                             <td><?=($article->getTopArticle()) ? '<i class="fa fa-star-o" title="'.$this->getTrans('topArticle').'"></i>' : '' ?></td>
                             <td><a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($article->getPerma()) ?>"><?=$this->escape($article->getTitle()) ?></a></td>
                             <?php if ($this->get('multilingual')): ?>
-                                <td class="text-right">
+                                <td class="text-end">
                                     <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
                                         <?php if ($key == $this->get('contentLanguage')): ?>
                                             <?php continue; ?>

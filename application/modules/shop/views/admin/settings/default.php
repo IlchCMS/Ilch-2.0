@@ -81,7 +81,7 @@
                     <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
                 </span>
                 <input type="text"
-                       class="form-control text-right"
+                       class="form-control text-end"
                        id="fixShippingCosts"
                        name="fixShippingCosts"
                        pattern="^\d*(\.\d{2}$)?"

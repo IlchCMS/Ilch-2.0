@@ -85,7 +85,7 @@ $settingsMapper = $this->get('settingsMapper');
                     <th><?=$this->getTrans('taxShort') ?><br />&nbsp;</th>
                     <th><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                     <th class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                    <th class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
+                    <th class="text-end"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                 </tr>
             </thead>
             <tbody>
@@ -142,7 +142,7 @@ $settingsMapper = $this->get('settingsMapper');
                     <td class="text-center">
                         <b><?=$orderItem->getQuantity() ?></b>
                     </td>
-                    <td class="text-right">
+                    <td class="text-end">
                         <b><?=number_format($itemPrice * $orderItem->getQuantity(), 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>

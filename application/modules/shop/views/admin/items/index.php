@@ -39,8 +39,8 @@
                         <th class="sort"><?=$this->getTrans('productName') ?></th>
                         <th class="sort"><?=$this->getTrans('itemNumber') ?></th>
                         <th class="sort"><?=$this->getTrans('cat') ?></th>
-                        <th class="text-right"><?=$this->getTrans('stock') ?></th>
-                        <th class="text-right"><?=$this->getTrans('price') ?></th>
+                        <th class="text-end"><?=$this->getTrans('stock') ?></th>
+                        <th class="text-end"><?=$this->getTrans('price') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,7 @@
                             <td><?=$this->escape($shopItem->getName()) ?></td>
                             <td><?=$this->escape($shopItem->getItemnumber()) ?></td>
                             <td><?=($shopCats) ? $this->escape($shopCats->getTitle()) : ''; ?></td>
-                            <td class="text-right">
+                            <td class="text-end">
                             <?php if ($this->escape($shopItem->getStock()) < 1) { ?>
                                 <button class="btn btn-sm btn-danger stock"><?=$this->escape($shopItem->getStock()) ?></button>
                             <?php } elseif ($this->escape($shopItem->getStock()) <= 5) { ?>
@@ -80,7 +80,7 @@
                                 <button class="btn btn-sm btn-success stock"><?=$this->escape($shopItem->getStock()) ?></button>
                             <?php } ?>
                             </td>
-                            <td class="text-right"><?=$this->escape($shopItem->getPrice()) ?> <?=$this->escape($this->get('currency')) ?></td>
+                            <td class="text-end"><?=$this->escape($shopItem->getPrice()) ?> <?=$this->escape($this->get('currency')) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
