@@ -30,7 +30,7 @@ $job = $this->get('job');
         <?=$this->getTokenField() ?>
         <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
             <label for="title" class="col-xl-3 control-label">
-                <div class="text-left">
+                <div class="text-start">
                     <?=$this->getTrans('applyAs') ?>:
                 </div>
             </label>
