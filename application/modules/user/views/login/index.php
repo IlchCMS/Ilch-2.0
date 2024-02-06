@@ -94,8 +94,8 @@
         </p>
     <?php endif; ?>
 <?php else: ?>
-    <div class="center-block"><p><h4 class="text-center"><?=$this->getTrans('alreadyLoggedIn') ?></h4></p></div>
-    <div class="row text-center">
+    <div class="mx-auto"><h4 class="text-center"><?=$this->getTrans('alreadyLoggedIn') ?></h4></div>
+    <div class="text-center">
         <a class="btn btn-outline-secondary" href="<?=$this->getUrl() ?>"><?=$this->getTrans('back') ?></a>
     </div>
 <?php endif; ?>
