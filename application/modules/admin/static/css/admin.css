@@ -462,7 +462,7 @@ aside {
     bottom: 0;
     top: 40px;
 }
-.dropdown-menu .divider {
+.dropdown-menu .dropdown-divider {
     background-color: #ccc;
 }
 #main {
