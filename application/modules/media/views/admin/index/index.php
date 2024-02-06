@@ -152,7 +152,7 @@
                     <div class="modal-body">
                         <ul class="list-unstyled">
                             <?php foreach ($this->get('catnames') as $name): ?>
-                                <li><button name="assignedCategory" class="btn btn-default list-group-item" type="submit" value="<?=$name->getId() ?>"><?=$this->escape($name->getCatName()) ?></button></li>
+                                <li><button name="assignedCategory" class="btn btn-secondary list-group-item" type="submit" value="<?=$name->getId() ?>"><?=$this->escape($name->getCatName()) ?></button></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>

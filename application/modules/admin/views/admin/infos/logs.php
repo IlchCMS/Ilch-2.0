@@ -99,7 +99,7 @@ $userCache = [];
 <div class="content_savebox">
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
-        <button type="submit" name="clearLog" class="btn btn-default" value="1"><?=$this->getTrans('clearLog') ?></button>
+        <button type="submit" name="clearLog" class="btn btn-secondary" value="1"><?=$this->getTrans('clearLog') ?></button>
     </form>
 </div>
 
