@@ -261,7 +261,7 @@ aside nav ul .active > a {
     border-radius: 0;
     margin: 4px;
 }
-.navbar  .leftbar .navbar-toggle {
+.navbar  .leftbar .navbar-toggler {
     margin-right: 14px;
 }
 #toggleLeftMenu i {

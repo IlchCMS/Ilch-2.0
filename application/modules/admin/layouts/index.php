@@ -96,7 +96,7 @@ $accesses = $this->get('accesses');
                 <a class="float-start <?=($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') ? 'active' : ''?> home" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                     <i class="fa-solid fa-house"></i>
                 </a>
-                <button class="float-end" type="button" class="float-end navbar-toggle" data-bs-toggle="collapse" data-bs-target="#rightbar">
+                <button class="float-end" type="button" class="float-end navbar-toggler" data-bs-toggle="collapse" data-bs-target="#rightbar">
                     <i class="fa-solid fa-table-cells"></i>
                 </button>
             </div>
