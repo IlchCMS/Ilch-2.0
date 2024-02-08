@@ -26,7 +26,7 @@
                     </option>
                 <?php endforeach; ?>
             </select>
-            <span class="help-block"><?= $this->getTrans('providersModuleHelpText') ?></span>
+            <span class="form-text"><?= $this->getTrans('providersModuleHelpText') ?></span>
         </div>
     </div>
     <?=$this->getSaveBar() ?>
