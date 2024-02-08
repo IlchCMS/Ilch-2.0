@@ -45,7 +45,7 @@ foreach ($wars ?? [] as $war) {
     <div class="col-xl-12 no_padding">
         <div class="row">
             <div class="col-12 col-xl-6 text-center">
-                <img src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>" class="thumbnail img-responsive" />
+                <img src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>" class="thumbnail img-fluid" />
             </div>
             <div class="col-12 col-xl-6 section-box">
                 <h3>
