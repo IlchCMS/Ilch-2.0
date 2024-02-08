@@ -49,7 +49,7 @@
                 <li><a href="#" data-hiddenkey="delete" class="dropdown-item"><?=$this->getTrans('delete') ?></a></li>
             </ul>
         </div>
-        <button type="submit" class="save_button btn btn-default" name="saveCats" value="save">
+        <button type="submit" class="save_button btn btn-secondary" name="saveCats" value="save">
             <?=$this->getTrans('saveButton') ?>
         </button>
     </div>

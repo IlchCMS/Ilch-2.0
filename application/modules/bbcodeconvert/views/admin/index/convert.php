@@ -29,7 +29,7 @@
 
 <p id="result"><?=($this->get('workDone')) ? $this->getTrans('workDone') : '' ?></p>
 <?php if (!$this->get('workDone')) : ?>
-    <button id="cancelConversion" class="btn btn-default" onclick="cancel(this)"><?=$this->getTrans('cancel') ?></button>
+    <button id="cancelConversion" class="btn btn-secondary" onclick="cancel(this)"><?=$this->getTrans('cancel') ?></button>
 <?php endif; ?>
 
 <script>

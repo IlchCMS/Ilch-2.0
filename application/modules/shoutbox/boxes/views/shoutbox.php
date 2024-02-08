@@ -162,7 +162,7 @@ $config = \Ilch\Registry::get('config');
                         </div>
                         <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')) : ?>
                             <div class="float-end">
-                                <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
+                                <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-secondary"><?=$this->getTrans('archive') ?></a>
                             </div>
                         <?php endif; ?>
                     </div>

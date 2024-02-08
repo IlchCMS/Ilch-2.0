@@ -61,7 +61,7 @@ $teams = $this->get('teams');
                     <li><a class="dropdoen-item" href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
                 </ul>
             </div>
-            <button type="submit" class="save_button btn btn-default" name="saveTeams" value="save">
+            <button type="submit" class="save_button btn btn-secondary" name="saveTeams" value="save">
                 <?=$this->getTrans('saveButton') ?>
             </button>
         </div>

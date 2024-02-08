@@ -209,7 +209,7 @@ if ($this->get('article')) {
             <?=$this->getTrans('preview') ?>:
         </label>
         <div class="col-xl-4">
-            <a id="preview" class="btn btn-default"><?=$this->getTrans('show') ?></a>
+            <a id="preview" class="btn btn-secondary"><?=$this->getTrans('show') ?></a>
         </div>
     </div>
     <h1><?=$this->getTrans('seo') ?></h1>

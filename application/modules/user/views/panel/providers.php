@@ -29,7 +29,7 @@
                                 ]) ?>"
                             >
                                 <?=$this->getTokenField() ?>
-                                <button type="submit" class="btn btn-xs btn-default">
+                                <button type="submit" class="btn btn-sm btn-secondary">
                                     <i class="fa-solid fa-xmark fa-fw text-danger"></i> <?=$this->getTrans('providers.unlink') ?>
                                 </button>
                             </form>
@@ -39,7 +39,7 @@
                             <?=$this->getTrans('providers.notLinked') ?>
                         </li>
                         <li class="list-group-item">
-                            <a class="btn btn-xs btn-default" href="<?=$this->getUrl([
+                            <a class="btn btn-sm btn-secondary" href="<?=$this->getUrl([
                                 'module' => $provider->getModule(),
                                 'controller' => $provider->getAuthController(),
                                 'action' => $provider->getAuthAction()
