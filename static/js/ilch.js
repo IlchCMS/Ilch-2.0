@@ -44,7 +44,8 @@ $(document).ready(function(){
                         'fontSize',
                         'fontFamily',
                         'fontBackgroundColor',
-                        'fontColor'
+                        'fontColor',
+                        'ilchps'
                     ],
                     shouldNotGroupWhenFull: true
                 },
@@ -109,7 +110,8 @@ $(document).ready(function(){
                         'fontSize',
                         'fontFamily',
                         'fontBackgroundColor',
-                        'fontColor'
+                        'fontColor',
+                        'ilchps'
                     ],
                     shouldNotGroupWhenFull: true
                 },
