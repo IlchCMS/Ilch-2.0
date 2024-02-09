@@ -1,8 +1,8 @@
 <?php if ($this->get('success') !== '') : ?>
     <?php if ($this->get('success') === 'false') :?>
-        <?='<div class="alert alert-danger">'.$this->getTrans('subscribeFailed').'</div>' ?>
+        <?='<div class="alert alert-danger">' . $this->getTrans('subscribeFailed') . '</div>' ?>
     <?php else : ?>
-        <?='<div class="alert alert-success">'.$this->getTrans('subscribeSuccess').'</div>' ?>
+        <?='<div class="alert alert-success">' . $this->getTrans('subscribeSuccess') . (($this->get('doubleOptIn')) ? ' ' . $this->getTrans('doubleOptInConfirm') : '') . '</div>' ?>
     <?php endif ?>
 <?php endif; ?>
 
@@ -11,7 +11,7 @@
     <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
         <div class="col-xl-12">
             <div class="input-group">
-                <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope"></i></span>
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
                 <input type="email"
                        class="form-control"
                        id="email"

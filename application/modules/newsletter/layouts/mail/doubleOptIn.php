@@ -1,22 +1,10 @@
-<?php
-
-use Ilch\Registry;
-use Ilch\Translator;
-
-$config = Registry::get('config');
-$subscriberMapper = new Modules\Newsletter\Mappers\Subscriber();
-$subscriber = $subscriberMapper->getSubscriberByEMail($this->getRequest()->getParam('email'));
-$translator = new Translator();
-$translator->load(APPLICATION_PATH . '/modules/newsletter/translations/');
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><?=$config->get('page_title') ?></title>
-        <style>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{sitetitle}</title>
+    <style>
         /* -------------------------------------
             GLOBAL
         ------------------------------------- */
@@ -37,7 +25,6 @@ $translator->load(APPLICATION_PATH . '/modules/newsletter/translations/');
             -webkit-text-size-adjust: none;
             width: 100%!important;
             height: 100%;
-            background-color: #f6f6f6;
         }
 
         /* -------------------------------------
@@ -103,11 +90,9 @@ $translator->load(APPLICATION_PATH . '/modules/newsletter/translations/');
         table.body-wrap {
             width: 100%;
             padding: 20px;
-            background-color: #f6f6f6;
         }
 
         table.body-wrap .container {
-            background-color: #FFF;
             border: 1px solid #f0f0f0;
         }
 
@@ -190,45 +175,46 @@ $translator->load(APPLICATION_PATH . '/modules/newsletter/translations/');
         .content table {
             width: 100%;
         }
-        </style>
-    </head>
+    </style>
+</head>
 
-    <body>
-        <!-- body -->
-        <table class="body-wrap">
-            <tr>
-                <td></td>
-                <td class="container">
-                    <!-- content -->
-                    <div class="content">
-                        <table>
-                            <tr>
-                                <td>
-                                    <?=$this->getContent() ?>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <!-- /content -->
-                </td>
-                <td></td>
-            </tr>
-        </table>
-        <!-- /body -->
+<body bgcolor="#f6f6f6">
+<!-- body -->
+<table class="body-wrap" bgcolor="#f6f6f6">
+    <tr>
+        <td></td>
+        <td class="container" bgcolor="#FFFFFF">
+            <!-- content -->
+            <div class="content">
+                <table>
+                    <tr>
+                        <td>
+                            <p class="small text-muted">{date}</p>
+                            <p>&nbsp;</p>
+                            {content}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /content -->
+        </td>
+        <td></td>
+    </tr>
+</table>
+<!-- /body -->
 
-        <!-- footer -->
-        <table class="footer-wrap">
-            <tr>
-                <td></td>
-                <td class="container">
-                    <div class="content" align="center">
-                        <p><?=$translator->trans('noReplyMailFooter') ?></p>
-                        <p><?=$translator->trans('mailUnsubscribe', $subscriber->getSelector(), $subscriber->getConfirmCode()) ?></p>
-                    </div>
-                </td>
-                <td></td>
-            </tr>
-        </table>
-        <!-- /footer -->
-    </body>
+<!-- footer -->
+<table class="footer-wrap">
+    <tr>
+        <td></td>
+        <td class="container">
+            <div class="content" align="center">
+                <p>{footer}</p>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+</table>
+<!-- /footer -->
+</body>
 </html>

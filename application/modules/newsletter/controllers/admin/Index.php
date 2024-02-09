@@ -6,12 +6,16 @@
 
 namespace Modules\Newsletter\Controllers\Admin;
 
+use Ilch\Controller\Admin;
+use Ilch\Date;
+use Ilch\Mail;
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
+use Modules\Newsletter\Mappers\Subscriber as SubscriberMapper;
 use Modules\Newsletter\Models\Newsletter as NewsletterModel;
 use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
 
-class Index extends \Ilch\Controller\Admin
+class Index extends Admin
 {
     public function init()
     {
@@ -19,20 +23,26 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'manage',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
-                    'icon' => 'fa fa-plus-circle',
+                    'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
             ],
             [
                 'name' => 'receiver',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'receiver', 'action' => 'index'])
+            ],
+            [
+                'name' => 'settings',
+                'active' => false,
+                'icon' => 'fa-solid fa-gears',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
 
@@ -51,11 +61,15 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $newsletterMapper = new NewsletterMapper();
+        $subscriberMapper = new SubscriberMapper();
         $userMapper = new UserMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
+
+        // Another occasion to delete possible old unconfirmed entries of subscribers.
+        $subscriberMapper->deleteOldUnconfirmedDoubleOptIn();
 
         if ($this->getRequest()->getPost('check_entries') && $this->getRequest()->getPost('action') === 'delete') {
             foreach ($this->getRequest()->getPost('check_entries') as $newsletterId) {
@@ -91,7 +105,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('show'), ['action' => 'show']);
 
-        if ($this->getRequest()->isPost('delete')) {
+        if ($this->getRequest()->isPost()) {
             $newsletterMapper->delete($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
@@ -106,7 +120,8 @@ class Index extends \Ilch\Controller\Admin
     public function treatAction()
     {
         $newsletterMapper = new NewsletterMapper();
-        $date = new \Ilch\Date();
+        $subscriberMapper = new SubscriberMapper();
+        $date = new Date();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
@@ -137,14 +152,18 @@ class Index extends \Ilch\Controller\Admin
                     $layout = $_SESSION['layout'];
                 }
 
-                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/newsletter/layouts/mail/newsletter.php')) {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/newsletter/layouts/mail/newsletter.php');
+                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/newsletter/layouts/mail/newsletter.php')) {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/newsletter/layouts/mail/newsletter.php');
                 } else {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/newsletter/layouts/mail/newsletter.php');
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/newsletter/layouts/mail/newsletter.php');
                 }
 
-                $emails = $newsletterMapper->getMail();
+                $emails = $subscriberMapper->getSubscribers();
                 foreach ($emails as $email) {
+                    if (!$email->getDoubleOptInConfirmed()) {
+                        continue;
+                    }
+
                     $messageReplace = [
                         '{subject}' => $this->getLayout()->escape($post['subject']),
                         '{content}' => $this->getLayout()->purify($post['text']),
@@ -156,7 +175,7 @@ class Index extends \Ilch\Controller\Admin
                     ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
-                    $mail = new \Ilch\Mail();
+                    $mail = new Mail();
                     $mail->setFromName($this->getConfig()->get('page_title'))
                         ->setFromEmail($this->getConfig()->get('standardMail'))
                         ->setToName($email->getEmail())
@@ -178,6 +197,6 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('emails', $newsletterMapper->getMail());
+        $this->getView()->set('emails', $subscriberMapper->getSubscribers());
     }
 }

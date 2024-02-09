@@ -6,7 +6,9 @@
 
 namespace Modules\Newsletter\Models;
 
-class Newsletter extends \Ilch\Model
+use Ilch\Model;
+
+class Newsletter extends Model
 {
     /**
      * The id of the newsletter.
@@ -18,7 +20,7 @@ class Newsletter extends \Ilch\Model
     /**
      * The user of the newsletter.
      *
-     * @var integer
+     * @var int
      */
     protected $userId;
 
@@ -44,39 +46,11 @@ class Newsletter extends \Ilch\Model
     protected $text;
 
     /**
-     * The email of the newsletter.
-     *
-     * @var string
-     */
-    protected $email;
-
-    /**
-     * The selector of the subscription.
-     *
-     * @var string
-     */
-    protected $selector;
-
-    /**
-     * The confirmCode of the subscription.
-     *
-     * @var string
-     */
-    protected $confirmCode;
-
-    /**
-     * Newsletter user option
-     *
-     * @var string
-     */
-    protected $opt_newsletter;
-
-    /**
      * Gets the id of the newsletter.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -85,11 +59,11 @@ class Newsletter extends \Ilch\Model
      * Sets the id of the newsletter.
      *
      * @param int $id
-     * @return this
+     * @return Newsletter
      */
-    public function setId($id)
+    public function setId(int $id): Newsletter
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -97,9 +71,9 @@ class Newsletter extends \Ilch\Model
     /**
      * Gets the user of the newsletter.
      *
-     * @return integer
+     * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -107,12 +81,12 @@ class Newsletter extends \Ilch\Model
     /**
      * Sets the user of the newsletter.
      *
-     * @param integer $userId
-     * @return this
+     * @param int $userId
+     * @return Newsletter
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Newsletter
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -120,9 +94,9 @@ class Newsletter extends \Ilch\Model
     /**
      * Gets the date of the newsletter.
      *
-     * @return DateTime
+     * @return string
      */
-    public function getDateCreated()
+    public function getDateCreated(): string
     {
         return $this->dateCreated;
     }
@@ -130,12 +104,12 @@ class Newsletter extends \Ilch\Model
     /**
      * Sets the date of the newsletter.
      *
-     * @param DateTime $date
-     * @return this
+     * @param string $dateCreated
+     * @return Newsletter
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated(string $dateCreated): Newsletter
     {
-        $this->dateCreated = (string)$dateCreated;
+        $this->dateCreated = $dateCreated;
 
         return $this;
     }
@@ -145,7 +119,7 @@ class Newsletter extends \Ilch\Model
      *
      * @return string
      */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -154,11 +128,11 @@ class Newsletter extends \Ilch\Model
      * Sets the subject of the newsletter.
      *
      * @param string $subject
-     * @return this
+     * @return Newsletter
      */
-    public function setSubject($subject)
+    public function setSubject(string $subject): Newsletter
     {
-        $this->subject = (string)$subject;
+        $this->subject = $subject;
 
         return $this;
     }
@@ -168,7 +142,7 @@ class Newsletter extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -177,103 +151,11 @@ class Newsletter extends \Ilch\Model
      * Sets the text of the newsletter.
      *
      * @param string $text
-     * @return this
+     * @return Newsletter
      */
-    public function setText($text)
+    public function setText(string $text): Newsletter
     {
-        $this->text = (string)$text;
-
-        return $this;
-    }
-
-    /**
-     * Gets the email of the newsletter.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Sets the email of the newsletter.
-     *
-     * @param string $email
-     * @return this
-     */
-    public function setEmail($email)
-    {
-        $this->email = (string)$email;
-
-        return $this;
-    }
-
-    /**
-     * Gets the selector of the subscription.
-     *
-     * @return string
-     */
-    public function getSelector()
-    {
-        return $this->selector;
-    }
-
-    /**
-     * Sets the selector of the subscription.
-     *
-     * @param string $selector
-     * @return this
-     */
-    public function setSelector($selector)
-    {
-        $this->selector = (string)$selector;
-
-        return $this;
-    }
-
-    /**
-     * Gets the confirmCode of the subscription.
-     *
-     * @return string
-     */
-    public function getConfirmCode()
-    {
-        return $this->confirmCode;
-    }
-
-    /**
-     * Sets the confirmCode of the subscription.
-     *
-     * @param string $confirmCode
-     * @return this
-     */
-    public function setConfirmCode($confirmCode)
-    {
-        $this->confirmCode = (string)$confirmCode;
-
-        return $this;
-    }
-
-    /**
-     * Returns the opt_newsletter of the user.
-     *
-     * @return int
-     */
-    public function getNewsletter()
-    {
-        return $this->opt_newsletter;
-    }
-
-    /**
-     * Saves the opt_newsletter of the user.
-     *
-     * @param int $opt_newsletter
-     * @return User
-     */
-    public function setNewsletter($opt_newsletter)
-    {
-        $this->opt_newsletter = (string)$opt_newsletter;
+        $this->text = $text;
 
         return $this;
     }
