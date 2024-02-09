@@ -11,6 +11,7 @@ CKEDITOR.plugins.addExternal('ilchyoutubehtml', basePath+'application/modules/me
 
 CKEDITOR.editorConfig = function( config ) {
     config.extraPlugins = "justify,font,colorbutton,colordialog,codesnippet,tableresize,emojione,ilchyoutubehtml";
+    config.versionCheck = false;
     config.protectedSource.push(/<i[^>]*><\/i>/g);
     config.protectedSource.push(/<\?[\s\S]*?\?>/g);
     config.toolbarGroups = [

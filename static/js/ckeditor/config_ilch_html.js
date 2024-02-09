@@ -17,6 +17,7 @@ CKEDITOR.editorConfig = function( config ) {
         config.extraPlugins = "justify,font,colorbutton,colordialog,codesnippet,tableresize,emojione,ilchmedia";
     }
 
+    config.versionCheck = false;
     config.protectedSource.push(/<i[^>]*><\/i>/g);
     config.protectedSource.push(/<\?[\s\S]*?\?>/g);
     config.toolbar = 'ilch_html';
