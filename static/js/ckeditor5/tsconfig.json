@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "noImplicitAny": false,
+    "noImplicitOverride": true,
+    "strict": false,
+    "module": "es6",
+    "target": "es2019",
+    "sourceMap": true,
+    "allowJs": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true
+  },
+  "include": [
+    "./src"
+  ]
+}
