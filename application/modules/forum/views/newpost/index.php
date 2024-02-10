@@ -2,8 +2,6 @@
 
 /** @var \Ilch\View $this */
 
-/** @var \Modules\Forum\Mappers\Forum $forumMapper */
-$forumMapper = $this->get('forumMapper');
 /** @var \Modules\Forum\Models\ForumItem $cat */
 $cat = $this->get('cat');
 /** @var \Modules\Forum\Models\ForumTopic $topicpost */
@@ -12,18 +10,8 @@ $topicpost = $this->get('topicPost');
 $postTextAsQuote = $this->get('postTextAsQuote');
 /** @var \Modules\Forum\Models\ForumItem $forum */
 $forum = $this->get('forum');
-$forumPrefix = $forumMapper->getForumByTopicId($topicpost->getId());
-$prefix = '';
-if ($forumPrefix->getPrefixes() != '' && $topicpost->getTopicPrefix() > 0) {
-    $prefix = explode(',', $forumPrefix->getPrefixes());
-    array_unshift($prefix, '');
-    foreach ($prefix as $key => $value) {
-        if ($topicpost->getTopicPrefix() == $key) {
-            $value = trim($value);
-            $prefix = '[' . $value . '] ';
-        }
-    }
-}
+/** @var string $prefix */
+$prefix = $this->get('prefix');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
