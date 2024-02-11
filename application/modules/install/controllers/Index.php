@@ -327,8 +327,19 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             if ($validation->isValid()) {
-                if ($manualDatabase || in_array($this->getRequest()->getPost('dbName'), $dbList)) {
-                    if (preg_match('/^[a-zA-Z0-9_]{1,64}$/', $this->getRequest()->getPost('dbName'))) {
+                $otherValidationsPassed = true;
+                if ($manualDatabase && !preg_match('/^[a-zA-Z0-9_]{1,64}$/', $this->getRequest()->getPost('dbName'))) {
+                    $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbNameHasWrongFormat'));
+                    $otherValidationsPassed = false;
+                }
+
+                if (!preg_match('/^[a-zA-Z]+[a-zA-Z0-9_]*$/', $this->getRequest()->getPost('dbPrefix'))) {
+                    $validation->getErrorBag()->addError('dbPrefix', $this->getTranslator()->trans('dbPrefixHasWrongFormat'));
+                    $otherValidationsPassed = false;
+                }
+
+                if ($otherValidationsPassed) {
+                    if ($manualDatabase || in_array($this->getRequest()->getPost('dbName'), $dbList)) {
                         try {
                             $ilch = new \Ilch\Database\Factory();
                             $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
@@ -349,15 +360,12 @@ class Index extends \Ilch\Controller\Frontend
                             } else {
                                 $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
                             }
-
                         } catch (\Exception $e) {
                             $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseCouldNotConnect'));
                         }
                     } else {
-                        $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseHasWrongFormat'));
+                        $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
                     }
-                } else {
-                    $validation->getErrorBag()->addError('dbName', $this->getTranslator()->trans('dbDatabaseDoesNotExist'));
                 }
             }
 
