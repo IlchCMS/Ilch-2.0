@@ -13,7 +13,7 @@
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
                     <div class="row">
                         <div id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
-                            <img class="image img-thumbnail img-responsive"
+                            <img class="image img-thumbnail img-fluid"
                                  data-url="<?=$media->getUrl() ?>"
                                  <?php if (file_exists($media->getUrlThumb())): ?>
                                     src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
@@ -50,7 +50,7 @@
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
                     <div class="col-xl-2 col-md-3 col-4">
-                        <img class="image img-thumbnail img-responsive"
+                        <img class="image img-thumbnail img-fluid"
                              data-alt="<?=$media->getName() ?>"
                              data-url="<?=$this->getUrl().'/'.$media->getUrl() ?>"
                              src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"

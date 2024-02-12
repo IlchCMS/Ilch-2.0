@@ -23,7 +23,7 @@ function getTransKey($usermenuId)
         <i class="fa-solid fa-bars float-end"></i>
     </div>
     <div class="profile-userpic">
-        <img src="<?=$this->getStaticUrl() . '../' . $this->escape($profil->getAvatar()) ?>" class="img-circle" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
+        <img src="<?=$this->getStaticUrl() . '../' . $this->escape($profil->getAvatar()) ?>" class="rounded-circle" title="<?=$this->escape($profil->getName()) ?>" alt="<?=$this->getTrans('avatar') ?>">
     </div>
     <div class="profile-usertitle">
         <div class="profile-name">

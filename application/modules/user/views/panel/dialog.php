@@ -17,7 +17,7 @@
                         <div class="col-12 col-md-5 col-xl-4 <?=$this->get('dialog') ? 'hidden-list-message' : '' ?>">
                             <div class="chat-list-info">
                                 <span class="avatar">
-                                    <img src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" class="img-circle" alt="<?=$this->escape($this->getUser()->getName()) ?>" title="<?=$this->escape($this->getUser()->getName()) ?>">
+                                    <img src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" class="rounded-circle" alt="<?=$this->escape($this->getUser()->getName()) ?>" title="<?=$this->escape($this->getUser()->getName()) ?>">
                                 </span>
                             </div>
                             <div class="slimScrollDiv chat-list-scroll <?=$this->get('dialog') ? '' : 'noscroll' ?>">
@@ -41,7 +41,7 @@
                                                 <li class="<?=$class ?>">
                                                     <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialog', 'id' => $dialog->getCId()]) ?>" class="dialog-link">
                                                         <span class="avatar">
-                                                            <img src="<?=$this->getUrl().'/'.$dialog->getAvatar() ?>" class="img-circle" alt="<?=$this->escape($dialog->getName()) ?>" title="<?=$this->escape($dialog->getName()) ?>">
+                                                            <img src="<?=$this->getUrl().'/'.$dialog->getAvatar() ?>" class="rounded-circle" alt="<?=$this->escape($dialog->getName()) ?>" title="<?=$this->escape($dialog->getName()) ?>">
                                                         </span>
                                                         <div class="body">
                                                             <div class="header">
@@ -94,7 +94,7 @@
                                         </a>
                                     </span>
                                     <span class="avatar">
-                                        <img src="<?=$this->getUrl().'/'.$this->get('dialog')->getAvatar() ?>" class="img-circle" alt="<?=$this->escape($this->get('dialog')->getName()) ?>" title="<?=$this->escape($this->get('dialog')->getName()) ?>">
+                                        <img src="<?=$this->getUrl().'/'.$this->get('dialog')->getAvatar() ?>" class="rounded-circle" alt="<?=$this->escape($this->get('dialog')->getName()) ?>" title="<?=$this->escape($this->get('dialog')->getName()) ?>">
                                     </span>
                                     <span class="username">
                                         <?=$this->escape($this->get('dialog')->getName()) ?>

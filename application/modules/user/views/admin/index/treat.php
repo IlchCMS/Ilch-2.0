@@ -72,7 +72,7 @@ if ($user->getId()) {
                 <?=$this->getTrans('userDateCreated') ?>
             </label>
             <div class="col-xl-9">
-                <p class="form-control-static"><?=$this->escape($user->getDateCreated()) ?></p>
+                <p class="form-control-plaintext"><?=$this->escape($user->getDateCreated()) ?></p>
             </div>
         </div>
         <div class="row mb-3">
@@ -80,7 +80,7 @@ if ($user->getId()) {
                 <?=$this->getTrans('userDateConfirmed') ?>
             </label>
             <div class="col-xl-9">
-                <p class="form-control-static"><?=$this->escape($dateConfirmed) ?></p>
+                <p class="form-control-plaintext"><?=$this->escape($dateConfirmed) ?></p>
             </div>
         </div>
         <div class="row mb-3">
@@ -88,7 +88,7 @@ if ($user->getId()) {
                 <?=$this->getTrans('userDateLastActivity') ?>
             </label>
             <div class="col-xl-9">
-                <p class="form-control-static"><?=$this->escape($dateLastActivity) ?></p>
+                <p class="form-control-plaintext"><?=$this->escape($dateLastActivity) ?></p>
             </div>
         </div>
     <?php endif; ?>

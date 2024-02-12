@@ -80,10 +80,8 @@ class View extends Design\Base
     {
         $html = '<div class="content_savebox">
                     <input type="hidden" class="content_savebox_hidden" name="action" value="" />
-                        <div class="dropdown dropup">
-                            <button type="button" class="btn btn-outline-secondary dropdown-bs-toggle" data-bs-toggle="dropdown">'.
-                                $this->getTrans('selected').' <span class="caret"><i class="bi bi-caret-down"></i></span>
-                            </button>
+                        <div class="btn-group dropup">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">' . $this->getTrans('selected') . '</button>
                             <ul class="dropdown-menu listChooser" role="menu">';
         foreach ($actions as $key => $name) {
             $html .= '<li><a href="#" class="dropdown-item" data-hiddenkey="'.$key.'" id="'.$key.'">'.$this->getTrans($name).'</a></li>';
