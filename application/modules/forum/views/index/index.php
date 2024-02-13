@@ -93,7 +93,7 @@ function rec(ForumItem $item, View $obj, ?int $i)
                                 <br />
                                 <?=$obj->getTrans('posts') ?>:
                             </div>
-                            <div class="float-start text-justify">
+                            <div class="float-start">
                                 <?=$topics ?>
                                 <br />
                                 <?=$posts ?>

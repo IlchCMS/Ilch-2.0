@@ -126,7 +126,7 @@ $postsPerPage = $this->get('postsPerPage');
                                         <br />
                                         <?=$this->getTrans('views') ?>:
                                     </div>
-                                    <div class="float-start text-justify">
+                                    <div class="float-start">
                                         <?=$topic->getCountPosts() - 1 ?>
                                         <br />
                                         <?=$topic->getVisits() ?>
