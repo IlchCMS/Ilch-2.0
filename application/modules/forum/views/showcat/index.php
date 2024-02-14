@@ -74,7 +74,7 @@ function rec($item, \Ilch\View $obj)
                                 <br />
                                 <?=$obj->getTrans('posts') ?>:
                             </div>
-                            <div class="float-start text-justify">
+                            <div class="float-start">
                                 <?=$topics ?>
                                 <br />
                                 <?=$posts ?>
