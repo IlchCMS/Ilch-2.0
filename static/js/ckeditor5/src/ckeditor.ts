@@ -66,7 +66,7 @@ import { Base64UploadAdapter } from '@ckeditor/ckeditor5-upload';
 import {
 	Emoji, EmojiActivity, EmojiFlags, EmojiFood, EmojiNature, EmojiObjects, EmojiPeople,
 	EmojiPlaces, EmojiSymbols
-} from '@phudak/ckeditor5-emoji/src';
+} from './plugins/ckeditor5-emoji/src';
 import { IlchPs } from './plugins/ilchps/plugin';
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
