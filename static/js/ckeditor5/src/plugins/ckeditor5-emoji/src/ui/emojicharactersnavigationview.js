@@ -33,6 +33,13 @@ export default class EmojiCharactersNavigationView extends FormHeaderView {
 		return this.groupDropdownView.value;
 	}
 
+	/**
+	 * Focuses the character categories dropdown.
+	 */
+	focus() {
+		this.groupDropdownView.focus();
+	}
+
 	_createGroupDropdown( groupNames ) {
 		const locale = this.locale;
 		const t = locale.t;
