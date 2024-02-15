@@ -16,6 +16,7 @@ $(document).ready(function(){
                         'bold',
                         'italic',
                         'underline',
+                        'code',
                         'strikethrough',
                         'subscript',
                         'superscript',
@@ -33,7 +34,7 @@ $(document).ready(function(){
                         'specialCharacters',
                         'emoji',
                         '|',
-                        'imageUpload',
+                        'imageInsert',
                         'blockQuote',
                         'codeBlock',
                         'insertTable',
@@ -46,6 +47,8 @@ $(document).ready(function(){
                         'fontFamily',
                         'fontBackgroundColor',
                         'fontColor',
+                        'findAndReplace',
+                        'selectAll',
                         'ilchps'
                     ],
                     shouldNotGroupWhenFull: true
@@ -83,6 +86,7 @@ $(document).ready(function(){
                         'bold',
                         'italic',
                         'underline',
+                        'code',
                         'strikethrough',
                         'subscript',
                         'superscript',
@@ -100,7 +104,7 @@ $(document).ready(function(){
                         'specialCharacters',
                         'emoji',
                         '|',
-                        'imageUpload',
+                        'imageInsert',
                         'blockQuote',
                         'codeBlock',
                         'insertTable',
@@ -113,6 +117,8 @@ $(document).ready(function(){
                         'fontFamily',
                         'fontBackgroundColor',
                         'fontColor',
+                        'findAndReplace',
+                        'selectAll',
                         'ilchps'
                     ],
                     shouldNotGroupWhenFull: true
