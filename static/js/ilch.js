@@ -71,6 +71,9 @@ $(document).ready(function(){
                         'tableCellProperties',
                         'tableProperties'
                     ]
+                },
+                mediaEmbed: {
+                    previewsInData: true
                 }
             };
         } else if(toolbar === 'ilch_html_frontend') {
@@ -141,6 +144,9 @@ $(document).ready(function(){
                         'tableCellProperties',
                         'tableProperties'
                     ]
+                },
+                mediaEmbed: {
+                    previewsInData: true
                 }
             };
         };

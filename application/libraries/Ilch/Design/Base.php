@@ -7,6 +7,7 @@
 
 namespace Ilch\Design;
 
+use Ilch\HTMLPurifier\EmbedUrlDef;
 use Ilch\Layout\Helper\GetMedia;
 use Ilch\Request;
 use Ilch\Router;
@@ -170,12 +171,27 @@ abstract class Base
         $this->purifierConfig->set('Filter.YouTube', true);
         $this->purifierConfig->set('HTML.SafeIframe', true);
         $this->purifierConfig->set('URI.AllowedSchemes', ['data' => true, 'src' => true, 'http' => true, 'https' => true]);
-        $this->purifierConfig->set('URI.SafeIframeRegexp', '%^https://(www.youtube.com/embed/|www.youtube-nocookie.com/embed/|player.vimeo.com/video/|)%');
+        $this->purifierConfig->set('URI.SafeIframeRegexp', '%^https://(www.youtube.com/embed/|www.youtube-nocookie.com/embed/|player.vimeo.com/video/|open.spotify.com/embed/|www.dailymotion.com/embed/video/)%');
         $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
         $this->purifierConfig->set('Attr.EnableID', true);
         $this->purifierConfig->set('AutoFormat.Linkify', true);
         $def = $this->purifierConfig->getHTMLDefinition(true);
         $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
+        // Allow explicit attributes used and more for Media embed of CKEditor 5.
+        // https://github.com/ckeditor/ckeditor5/blob/v41.1.0/packages/ckeditor5-media-embed/src/mediaembedediting.ts
+        // https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#including-previews-in-data
+        $def->addAttribute('iframe', 'allow', 'Enum#autoplay; encrypted-media');
+        $def->addAttribute('iframe', 'style', 'Enum#position: absolute; width: 100%; height: 100%; top: 0; left: 0;');
+        $def->addAttribute('div', 'style', 'Enum#position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;');
+        $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
+        $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
+        $def->addAttribute('div', 'data-oembed-url', new EmbedUrlDef());
+        $def->addElement('oembed', 'Block', 'Inline', 'Common');
+        $def->addAttribute('oembed', 'url', new EmbedUrlDef());
+
+        // https://github.com/ezyang/htmlpurifier/issues/152#issuecomment-414192516
+        $def->addAttribute('a', 'download', 'URI');
+
         $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
             'autoplay' => 'Bool',
             'src' => 'URI',
