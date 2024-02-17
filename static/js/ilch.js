@@ -73,7 +73,29 @@ $(document).ready(function(){
                     ]
                 },
                 mediaEmbed: {
-                    previewsInData: true
+                    previewsInData: true,
+                    removeProviders: [ 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook' ]
+                },
+                fontSize: {
+                    options: [
+                        'default',
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        14,
+                        16,
+                        18,
+                        20,
+                        22,
+                        24,
+                        26,
+                        28,
+                        36,
+                        48,
+                        72
+                    ]
                 }
             };
         } else if(toolbar === 'ilch_html_frontend') {
@@ -146,7 +168,29 @@ $(document).ready(function(){
                     ]
                 },
                 mediaEmbed: {
-                    previewsInData: true
+                    previewsInData: true,
+                    removeProviders: [ 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook' ]
+                },
+                fontSize: {
+                    options: [
+                        'default',
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        14,
+                        16,
+                        18,
+                        20,
+                        22,
+                        24,
+                        26,
+                        28,
+                        36,
+                        48,
+                        72
+                    ]
                 }
             };
         };

@@ -173,7 +173,7 @@ abstract class Base
         $this->purifierConfig->set('Filter.YouTube', true);
         $this->purifierConfig->set('HTML.SafeIframe', true);
         $this->purifierConfig->set('URI.AllowedSchemes', ['data' => true, 'src' => true, 'http' => true, 'https' => true]);
-        $this->purifierConfig->set('URI.SafeIframeRegexp', '%^https://(www.youtube.com/embed/|www.youtube-nocookie.com/embed/|player.vimeo.com/video/|open.spotify.com/embed/|www.dailymotion.com/embed/video/)%');
+        $this->purifierConfig->set('URI.SafeIframeRegexp', '%^https://(youtube.com/|www.youtube.com/|www.youtube.com/embed/|www.youtube-nocookie.com/embed/|youtu.be/|vimeo.com/|player.vimeo.com/video/|open.spotify.com/artist/|open.spotify.com/album/|open.spotify.com/track/|open.spotify.com/embed/|www.dailymotion.com/video/|www.dailymotion.com/embed/video/|dai.ly/)%');
         $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
         $this->purifierConfig->set('Attr.EnableID', true);
         $this->purifierConfig->set('AutoFormat.Linkify', true);
