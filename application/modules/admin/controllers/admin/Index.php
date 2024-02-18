@@ -94,7 +94,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('ilchNewsList', $this->getConfig()->get('updateserver') . 'ilchNews.php');
         $this->getView()->set('version', $this->getConfig()->get('version'));
         $this->getView()->set('notifications', $notificationsMapper->getNotifications());
-        $this->getLayout()->set('accesses', $this->getAccesses());
+        $this->getView()->set('accesses', $this->getAccesses());
     }
 
     public function deleteAction()

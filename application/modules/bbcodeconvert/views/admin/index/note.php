@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getModuleUrl('static/css/bbcodeconvert_styles.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuNote') ?>
