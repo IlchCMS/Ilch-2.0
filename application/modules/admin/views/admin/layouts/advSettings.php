@@ -1,5 +1,9 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if (!empty($this->get('layouts'))): ?>
+<?php if (!empty($this->get('layouts'))) : ?>
     <form class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -21,7 +25,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($this->get('layouts') as $layout): ?>
+                <?php
+                /** @var \Modules\Admin\Models\Layout $layout */
+                foreach ($this->get('layouts') as $layout) : ?>
                     <tr>
                         <td><?=$this->getDeleteCheckbox('check_layouts', $layout->getKey()) ?></td>
                         <td><?=$this->getDeleteIcon(['action' => 'deleteAdvSettings', 'layoutKey' => $layout->getKey()]) ?></td>
@@ -51,6 +57,6 @@
             <?php endif; ?>
         </div>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noLayouts') ?>
 <?php endif; ?>

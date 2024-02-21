@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -11,40 +12,40 @@ class LayoutAdvSettings extends \Ilch\Model
     /**
      * @var int
      */
-    private $id;
+    private $id = 0;
 
     /**
      * @var string
      */
-    private $layoutKey;
+    private $layoutKey = '';
 
     /**
      * @var string
      */
-    private $key;
+    private $key = '';
 
     /**
      * @var string
      */
-    private $value;
+    private $value = '';
 
     /**
      * Get the id.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Set the id.
-     * 
+     *
      * @param int $id
      * @return LayoutAdvSettings
      */
-    public function setId($id)
+    public function setId(int $id): LayoutAdvSettings
     {
         $this->id = $id;
         return $this;
@@ -55,7 +56,7 @@ class LayoutAdvSettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getLayoutKey()
+    public function getLayoutKey(): string
     {
         return $this->layoutKey;
     }
@@ -66,7 +67,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * @param string $layoutKey
      * @return LayoutAdvSettings
      */
-    public function setLayoutKey($layoutKey)
+    public function setLayoutKey(string $layoutKey): LayoutAdvSettings
     {
         $this->layoutKey = $layoutKey;
         return $this;
@@ -77,7 +78,7 @@ class LayoutAdvSettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -88,7 +89,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * @param string $key
      * @return LayoutAdvSettings
      */
-    public function setKey($key)
+    public function setKey(string $key): LayoutAdvSettings
     {
         $this->key = $key;
         return $this;
@@ -99,7 +100,7 @@ class LayoutAdvSettings extends \Ilch\Model
      *
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -110,7 +111,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * @param string $value
      * @return LayoutAdvSettings
      */
-    public function setValue($value)
+    public function setValue(string $value): LayoutAdvSettings
     {
         $this->value = $value;
         return $this;

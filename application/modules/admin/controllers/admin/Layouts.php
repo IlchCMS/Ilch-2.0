@@ -335,12 +335,14 @@ class Layouts extends \Ilch\Controller\Admin
         $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
         if ($this->getRequest()->isPost()) {
             $postedSettings = [];
-            foreach ($this->getRequest()->getPost() as $key => $value) {
-                $layoutAdvSettingsModel = new LayoutAdvSettingsModel();
-                $layoutAdvSettingsModel->setLayoutKey($layoutKey);
-                $layoutAdvSettingsModel->setKey($key);
-                $layoutAdvSettingsModel->setValue($value);
-                $postedSettings[] = $layoutAdvSettingsModel;
+            foreach ($settings as $key => $value) {
+                if ($this->getRequest()->getPost($key) && $value['type'] !== 'separator') {
+                    $layoutAdvSettingsModel = new LayoutAdvSettingsModel();
+                    $layoutAdvSettingsModel->setLayoutKey($layoutKey)
+                        ->setKey($key)
+                        ->setValue($this->getRequest()->getPost($key));
+                    $postedSettings[] = $layoutAdvSettingsModel;
+                }
             }
 
             $layoutAdvSettingsMapper->save($postedSettings);
