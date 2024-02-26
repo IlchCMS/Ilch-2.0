@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div id="notifyGroupsDiv" class="row mb-3 <?=$this->validation()->hasError('notifyGroups') ? 'has-error' : '' ?> <?=($this->get('userNotification') !== '1') ? 'hidden' : '' ?>">
+    <div id="notifyGroupsDiv" class="row mb-3 <?=$this->validation()->hasError('notifyGroups') ? 'has-error' : '' ?>" <?=($this->get('userNotification') !== '1') ? 'hidden' : '' ?>>
         <label for="notifyGroups" class="col-xl-2 control-label">
             <?=$this->getTrans('notifyGroups') ?>
         </label>
@@ -49,9 +49,9 @@
 
     $('[name="userNotification"]').click(function () {
         if ($(this).val() == "1") {
-            $('#notifyGroupsDiv').removeClass('hidden');
+            $('#notifyGroupsDiv').removeAttr('hidden');
         } else {
-            $('#notifyGroupsDiv').addClass('hidden');
+            $('#notifyGroupsDiv').attr('hidden', '');
         }
     });
 </script>

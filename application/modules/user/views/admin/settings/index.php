@@ -15,9 +15,7 @@
             </div>
         </div>
     </div>
-    <div id="registRules" <?php if ($this->get('regist_accept') != '1') {
-    echo 'class="hidden"';
-} ?>>
+    <div id="registRules" <?=($this->get('regist_accept') != '1') ? 'hidden' : ''; } ?>>
         <div class="row mb-3">
             <div class="col-xl-2 control-label">
                 <?=$this->getTrans('confirmRegistrationEmail') ?>:
@@ -33,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div id="registSetfree" <?=($this->get('regist_accept') == '1' && $this->get('regist_confirm') == '1') ? 'class="hidden"' : '' ?>>
+    <div id="registSetfree" <?=($this->get('regist_accept') == '1' && $this->get('regist_confirm') == '1') ? 'hidden' : '' ?>>
         <div class="row mb-3">
             <div class="col-xl-2 control-label">
                 <?=$this->getTrans('setfreeRegistration') ?>:
@@ -207,22 +205,22 @@
 <script>
 $('[name="regist_accept"]').click(function () {
     if ($(this).val() == "1") {
-        $('#registSetfree').removeClass('hidden');
-        $('#registRules').removeClass('hidden');
-        $('#rulesForRegist').removeClass('hidden');
-        $('#registAccept').removeClass('hidden');
+        $('#registSetfree').removeAttr('hidden');
+        $('#registRules').removeAttr('hidden');
+        $('#rulesForRegist').removeAttr('hidden');
+        $('#registAccept').removeAttr('hidden');
     } else {
-        $('#registSetfree').addClass('hidden');
-        $('#registRules').addClass('hidden');
-        $('#rulesForRegist').addClass('hidden');
-        $('#registAccept').addClass('hidden');
+        $('#registSetfree').attr('hidden', '');
+        $('#registRules').attr('hidden', '');
+        $('#rulesForRegist').attr('hidden', '');
+        $('#registAccept').attr('hidden', '');
     }
 });
 $('[name="regist_confirm"]').click(function () {
     if ($(this).val() == "0") {
-        $('#registSetfree').removeClass('hidden');
+        $('#registSetfree').removeAttr('hidden');
     } else {
-        $('#registSetfree').addClass('hidden');
+        $('#registSetfree').attr('hidden', '');
     }
 });
 </script>

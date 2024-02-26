@@ -79,7 +79,7 @@ $iconArray = [
     </div>
 
     <!-- icon selection -->
-    <div class="row mb-3 <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldIcons">
+    <div class="row mb-3" id="profileFieldIcons" <?=($profileField->getType() == 2) ? '' : 'hidden' ?>>
         <?php $icon = '';
         if ($profileField->getType() == 2) {
             $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'];
@@ -124,7 +124,7 @@ $iconArray = [
     </div>
 
     <!-- icon addition -->
-    <div class="row mb-3 <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldAddition">
+    <div class="row mb-3" id="profileFieldAddition" <?=($profileField->getType() == 2) ? '' : 'hidden' ?>>
         <label for="profileFieldLinkAddition" class="col-xl-2 control-label">
             <?=$this->getTrans('profileFieldLinkAddition') ?>
         </label>
@@ -186,7 +186,7 @@ $iconArray = [
 
     <!-- multi options -->
     <?php $multiArr = [3, 4, 5]; ?>
-    <div class="profileFieldsMulti <?=(in_array($profileField->getType(), $multiArr)) ? '' : 'hidden' ?>">
+    <div class="profileFieldsMulti" <?=(in_array($profileField->getType(), $multiArr)) ? '' : 'hidden' ?>>
         <?php if ($profileField->getOptions()) : ?>
             <?php $options = json_decode($profileField->getOptions(), true); ?>
             <div class="mb-3">
@@ -258,16 +258,16 @@ $('[name="profileField[type]"]').click(function () {
     const keysArr = ['3', '4', '5'];
     const thisKey = $(this).val();
     if (thisKey == "2") {
-        $('#profileFieldIcons, #profileFieldAddition').removeClass('hidden');
+        $('#profileFieldIcons, #profileFieldAddition').removeAttr('hidden');
     } else {
-        $('#profileFieldIcons, #profileFieldAddition').addClass('hidden');
+        $('#profileFieldIcons, #profileFieldAddition').attr('hidden', '');
     }
     if (jQuery.inArray(thisKey, keysArr) !== -1) {
-        $('.profileFieldsSingle').addClass('hidden');
-        $('.profileFieldsMulti').removeClass('hidden');
+        $('.profileFieldsSingle').attr('hidden', '');
+        $('.profileFieldsMulti').removeAttr('hidden');
     } else {
-        $('.profileFieldsSingle').removeClass('hidden');
-        $('.profileFieldsMulti').addClass('hidden');
+        $('.profileFieldsSingle').removeAttr('hidden');
+        $('.profileFieldsMulti').attr('hidden', '');
     }
 });
 
