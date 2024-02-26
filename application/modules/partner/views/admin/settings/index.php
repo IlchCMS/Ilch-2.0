@@ -24,7 +24,7 @@ if ($this->validation()->hasErrors()) {
             </div>
         </div>
     </div>
-    <div id="contentHeight" class="<?=(!$slider) ? 'hidden' : '' ?>">
+    <div id="contentHeight" <?=(!$slider) ? 'hidden' : '' ?>>
         <div class="row mb-3 <?=$this->validation()->hasError('boxSliderMode') ? 'has-error' : '' ?>">
             <label for="boxSliderMode" class="col-xl-2 control-label">
                 <?=$this->getTrans('boxSliderMode') ?>:
@@ -70,9 +70,9 @@ if ($this->validation()->hasErrors()) {
 <script>
 $('[name="slider"]').click(function () {
     if ($(this).val() == "1") {
-        $('#contentHeight').removeClass('hidden');
+        $('#contentHeight').removeAttr('hidden');
     } else {
-        $('#contentHeight').addClass('hidden');
+        $('#contentHeight').attr('hidden', '');
     }
 });
 </script>

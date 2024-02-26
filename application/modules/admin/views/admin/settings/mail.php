@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div id="smtpSettings" class="smtpSettings <?=($this->get('smtp_mode') !== '1') ? 'hidden' : '' ?>">
+    <div id="smtpSettings" class="smtpSettings" <?=($this->get('smtp_mode') !== '1') ? 'hidden' : '' ?>>
         <div class="row mb-3">
             <label for="smtp_server" class="col-xl-2 control-label">
                 <?=$this->getTrans('smtp_server') ?>:
@@ -110,10 +110,10 @@
 <script>
     $('[name="smtp_mode"]').click(function () {
         if ($(this).val() == "1") {
-            $('#smtpSettings').removeClass('hidden');
+            $('#smtpSettings').removeAttr('hidden');
             $('#smtpModeDescription').html("<?=$this->getTrans('smtpModeEnabledDescription') ?>");
         } else {
-            $('#smtpSettings').addClass('hidden');
+            $('#smtpSettings').attr('hidden', '');
             $('#smtpModeDescription').html("<?=$this->getTrans('smtpModeDisabledDescription') ?>");
         }
     });

@@ -75,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div id="contentLanguage" class="row mb-3 <?php if ($this->get('multilingualAcp') != '1') { echo 'hidden'; } ?>">
+    <div id="contentLanguage" class="row mb-3" <?=($this->get('multilingualAcp') != '1') ? 'hidden' : ''; } ?>>
         <label for="languageInput" class="col-xl-2 control-label">
             <?=$this->getTrans('contentLanguage') ?>:
         </label>
@@ -303,21 +303,21 @@
 <script>
 $('[name="multilingualAcp"]').click(function () {
     if ($(this).val() == "1") {
-        $('#contentLanguage').removeClass('hidden');
+        $('#contentLanguage').removeAttr('hidden');
     } else {
-        $('#contentLanguage').addClass('hidden');
+        $('#contentLanguage').attr('hidden', '');
     }
 });
 
 $('[name="captcha"]').change(function () {
     if ($(this).val() == "2" || $(this).val() == "3") {
-        $('#captcha_apikey').removeClass('hidden');
-        $('#captcha_seckey').removeClass('hidden');
-        $('#captcha_apikey_info').removeClass('hidden');
+        $('#captcha_apikey').removeAttr('hidden');
+        $('#captcha_seckey').removeAttr('hidden');
+        $('#captcha_apikey_info').removeAttr('hidden');
     } else {
-        $('#captcha_apikey').addClass('hidden');
-        $('#captcha_seckey').addClass('hidden');
-        $('#captcha_apikey_info').addClass('hidden');
+        $('#captcha_apikey').attr('hidden', '');
+        $('#captcha_seckey').attr('hidden', '');
+        $('#captcha_apikey_info').attr('hidden', '');
     }
 });
 $('[name="captcha"]').change();
