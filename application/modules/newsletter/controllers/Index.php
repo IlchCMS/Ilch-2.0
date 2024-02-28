@@ -7,6 +7,7 @@
 namespace Modules\Newsletter\Controllers;
 
 use Ilch\Controller\Frontend;
+use Ilch\Date;
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
 use Modules\Newsletter\Mappers\Subscriber as SubscriberMapper;
 use Modules\Newsletter\Models\Subscriber as SubscriberModel;
@@ -91,7 +92,7 @@ class Index extends Frontend
                     $subscriberModel->setSelector($selector);
                     $subscriberModel->setConfirmCode($confirmedCode);
                     $subscriberModel->setEmail($subscriber->getEmail());
-                    $subscriberModel->setNewsletter(1);
+                    $subscriberModel->setNewsletter(true);
                     $subscriberModel->setDoubleOptInDate($subscriber->getDoubleOptInDate());
                     $subscriberModel->setDoubleOptInConfirmed(true);
                     $subscriberMapper->saveSubscriber($subscriberModel);
@@ -150,6 +151,8 @@ class Index extends Frontend
                 $subscriberModel->setSelector(bin2hex(random_bytes(9)));
                 $subscriberModel->setConfirmCode(bin2hex(random_bytes(32)));
                 $subscriberModel->setId($this->getUser()->getId());
+                $subscriberModel->setDoubleOptInDate(new Date());
+                $subscriberModel->setDoubleOptInConfirmed(true);
                 $subscriberModel->setNewsletter($this->getRequest()->getPost('acceptNewsletter'));
                 $subscriberMapper->saveUserAsSubscriber($subscriberModel);
 
