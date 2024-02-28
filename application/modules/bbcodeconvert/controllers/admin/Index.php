@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -99,7 +100,7 @@ class Index extends Admin
             }
         }
 
-        foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
+        foreach (glob(APPLICATION_PATH . '/layouts/*') as $layoutPath) {
             if (is_dir($layoutPath)) {
                 $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
@@ -165,7 +166,7 @@ class Index extends Admin
         }
 
         $converted = [];
-        foreach($_SESSION['bbcodeconvert_toConvert'] as $value) {
+        foreach ($_SESSION['bbcodeconvert_toConvert'] as $value) {
             $converted[$value['key']] = $value['completed'];
         }
 
@@ -270,7 +271,7 @@ class Index extends Admin
                 $textsMapper->table = 'events';
                 $texts = $textsMapper->getTexts($index, self::batch);
 
-                foreach($texts as $text) {
+                foreach ($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
                     if (strlen($convertedText) <= self::limitLongText) {
@@ -289,7 +290,7 @@ class Index extends Admin
                 $textsMapper->table = 'forum_posts';
                 $texts = $textsMapper->getTexts($index, self::batch);
 
-                foreach($texts as $text) {
+                foreach ($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
                     if (strlen($convertedText) <= self::limitText) {
@@ -308,7 +309,7 @@ class Index extends Admin
                 $textsMapper->table = 'gbook';
                 $texts = $textsMapper->getTexts($index, self::batch);
 
-                foreach($texts as $text) {
+                foreach ($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
                     if (strlen($convertedText) <= self::limitMediumText) {
@@ -327,7 +328,7 @@ class Index extends Admin
                 $textsMapper->table = 'jobs';
                 $texts = $textsMapper->getTexts($index, self::batch);
 
-                foreach($texts as $text) {
+                foreach ($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
                     if (strlen($convertedText) <= self::limitMediumText) {
@@ -346,7 +347,7 @@ class Index extends Admin
                 $textsMapper->table = 'kvticket';
                 $texts = $textsMapper->getTexts($index, self::batch);
 
-                foreach($texts as $text) {
+                foreach ($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
                     if (strlen($convertedText) <= self::limitMediumText) {
@@ -361,7 +362,7 @@ class Index extends Admin
                 return ['completed' => false, 'index' => $index + count($texts), 'progress' => $index + count($texts)];
             case 'radiohoerercharts':
                 // table: config, column: value, datatype: TEXT
-                foreach(['radio_hoerercharts_votetext_de', 'radio_hoerercharts_votetext_en'] as $voteTextKey) {
+                foreach (['radio_hoerercharts_votetext_de', 'radio_hoerercharts_votetext_en'] as $voteTextKey) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($this->getConfig()->get($voteTextKey));
 
                     if (strlen($convertedText) <= self::limitText) {
@@ -376,7 +377,7 @@ class Index extends Admin
                 $textsMapper->table = 'teams_joins';
                 $texts = $textsMapper->getTexts($index, self::batch);
 
-                foreach($texts as $text) {
+                foreach ($texts as $text) {
                     $convertedText = $this->getView()->getHtmlFromBBCode($text['text']);
 
                     if (strlen($convertedText) <= self::limitLongText) {
@@ -396,7 +397,7 @@ class Index extends Admin
                     // table: users, column: signature, datatype: VARCHAR(255)
                     $signatures = $userMapper->getSignatures($index, self::batch);
 
-                    foreach($signatures as $signature) {
+                    foreach ($signatures as $signature) {
                         $convertedSignature = $this->getView()->getHtmlFromBBCode($signature['signature']);
 
                         if (strlen($convertedSignature) <= 255) {
@@ -417,7 +418,7 @@ class Index extends Admin
                 // table: users_dialog_reply, column: reply, datatype: TEXT
                 $replies = $userMapper->getReplies($index, self::batch);
 
-                foreach($replies as $reply) {
+                foreach ($replies as $reply) {
                     $convertedReply = $this->getView()->getHtmlFromBBCode($reply['reply']);
 
                     if (strlen($convertedReply) <= self::limitText) {

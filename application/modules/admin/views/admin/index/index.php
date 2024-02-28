@@ -125,7 +125,7 @@ $accesses = $this->get('accesses');
                     </thead>
                     <tbody>
                         <?php foreach ($notifications as $notification) : ?>
-                            <?php if (($accesses && $accesses->hasAccess('Admin_' . $notification->getModule(), $notification->getModule()))) : ?>
+                            <?php if (($accesses && $accesses->hasAccess('Admin_' . $notification->getModule(), 'Admin_' . $notification->getModule()))) : ?>
                                 <?php $date = new \Ilch\Date($notification->getTimestamp()); ?>
                             <tr>
                                 <td><?=$this->getDeleteCheckbox('check_notifications', $notification->getId()) ?></td>

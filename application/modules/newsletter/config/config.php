@@ -13,7 +13,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'newsletter',
-        'version' => '1.7.0',
+        'version' => '1.7.1',
         'icon_small' => 'fa-regular fa-newspaper',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',

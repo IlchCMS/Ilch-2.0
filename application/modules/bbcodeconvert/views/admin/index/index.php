@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getModuleUrl('static/css/bbcodeconvert_styles.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuOverview') ?>
@@ -50,7 +54,9 @@
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($this->get('installedSupportedModules') as $module) : ?>
+            <?php
+            /** @var \Modules\Admin\Models\Module $module */
+            foreach ($this->get('installedSupportedModules') as $module) : ?>
                 <tr class="filter">
                     <td><?=$this->getDeleteCheckbox('check_modules', $module->getKey()) ?></td>
                     <td><?=$this->getTrans($module->getKey()) ?></td>
@@ -83,7 +89,9 @@
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($this->get('installedSupportedLayouts') as $layout) : ?>
+            <?php
+            /** @var \Modules\Admin\Models\Layout $layout */
+            foreach ($this->get('installedSupportedLayouts') as $layout) : ?>
                 <tr class="filter">
                     <td><?=$this->getDeleteCheckbox('check_layouts', $layout->getKey()) ?></td>
                     <td><?=$this->getTrans($layout->getKey()) ?></td>
