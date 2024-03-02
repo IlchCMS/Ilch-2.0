@@ -1,0 +1,52 @@
+msgid ""
+msgstr ""
+
+msgctxt "A category name."
+msgid "Pick image"
+msgstr "Wähle Bild"
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Pick image"
+msgstr "Wähle Bild"
+
+msgctxt "A category name."
+msgid "Upload image"
+msgstr "Lade Bild hoch"
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Upload image"
+msgstr "Lade Bild hoch"
+
+
+msgctxt "A category name."
+msgid "Pick file"
+msgstr "Wähle Datei"
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Pick file "
+msgstr "Wähle Datei"
+
+msgctxt "A category name."
+msgid "Upload file"
+msgstr "Lade Datei hoch"
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Upload file"
+msgstr "Lade Datei hoch"
+
+
+msgctxt "A category name."
+msgid "Pick video"
+msgstr "Wähle Video"
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Pick video"
+msgstr "Wähle Video"
+
+msgctxt "A category name."
+msgid "Upload video"
+msgstr "Lade Video hoch"
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Upload video"
+msgstr "Lade Video hoch"
