@@ -49,7 +49,8 @@ $(document).ready(function(){
                         'fontColor',
                         'findAndReplace',
                         'selectAll',
-                        'ilchps'
+                        'ilchps',
+                        'ilchmedia'
                     ],
                     shouldNotGroupWhenFull: true
                 },
@@ -74,7 +75,14 @@ $(document).ready(function(){
                 },
                 mediaEmbed: {
                     previewsInData: true,
-                    removeProviders: [ 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook' ]
+                    removeProviders: [ 'instagram', 'twitter', 'googleMaps', 'flickr', 'facebook' ],
+                    extraProviders: [
+                        {
+                            name: 'localhost',
+                            url: /^.+/,
+                            html: match => `<div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls src="${ match[ 0 ] }"></video></div>`
+                        }
+                    ]
                 },
                 fontSize: {
                     options: [

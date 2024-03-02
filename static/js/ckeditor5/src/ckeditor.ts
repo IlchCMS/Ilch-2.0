@@ -68,6 +68,7 @@ import {
 	EmojiPlaces, EmojiSymbols
 } from './plugins/ckeditor5-emoji/src';
 import { IlchPs } from './plugins/ilchps/plugin';
+import IlchMedia from './plugins/ilchmedia/ilchmedia';
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
@@ -102,6 +103,7 @@ class Editor extends ClassicEditor {
 		Heading,
 		HorizontalLine,
 		IlchPs,
+        IlchMedia,
 		Image,
 		ImageCaption,
 		ImageInsert,
