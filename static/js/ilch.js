@@ -79,7 +79,7 @@ $(document).ready(function(){
                     extraProviders: [
                         {
                             name: 'localhost',
-                            url: /^.+/,
+                            url: '^' + document.location.hostname + '.+',
                             html: match => `<div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls src="${ match[ 0 ] }"></video></div>`
                         }
                     ]
