@@ -3,8 +3,6 @@ import { ButtonView } from 'ckeditor5/src/ui';
 import ilchpsIcon from '/src/plugins/ilchps/icons/ilchps.svg';
 
 export function IlchPs( editor ) {
-    console.log( 'IlchPs plugin has been registered' );
-    
     editor.commands.add( 'ilchps', new IlchPsCommand( editor ) );
 
     editor.ui.componentFactory.add( 'ilchps', ( locale ) => {

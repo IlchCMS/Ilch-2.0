@@ -23,7 +23,7 @@ msgid "Pick file"
 msgstr "Wähle Datei"
 
 msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
-msgid "Pick file "
+msgid "Pick file"
 msgstr "Wähle Datei"
 
 msgctxt "A category name."

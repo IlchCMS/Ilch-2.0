@@ -6,11 +6,10 @@ import Collection from '@ckeditor/ckeditor5-utils/src/collection';
 import imageIcon from './icons/image.svg';
 import fileIcon from './icons/file.svg';
 import videoIcon from './icons/file-video.svg';
-// import '../styles.css';
 
 export default class IlchMediaUI extends Plugin {
     init() {
-		const editor = this.editor;
+        const editor = this.editor;
         // const t = editor.t;
         // const pickImageFromServer = t('Pick image from server');
 
@@ -25,12 +24,12 @@ export default class IlchMediaUI extends Plugin {
                 tooltip: true
             });
             dropdownView.extendTemplate( {
-				attributes: {
-					class: [
-						'ck-image-dropdown'
-					]
-				}
-			});
+                attributes: {
+                    class: [
+                        'ck-image-dropdown'
+                    ]
+                }
+            });
 
             // The collection of the list items.
             const items = new Collection();
