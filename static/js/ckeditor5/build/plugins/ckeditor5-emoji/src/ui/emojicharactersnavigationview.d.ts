@@ -11,6 +11,10 @@ export default class EmojiCharactersNavigationView extends FormHeaderView {
      * @returns {String}
      */
     get currentGroupName(): string;
+    /**
+     * Focuses the character categories dropdown.
+     */
+    focus(): void;
     _createGroupDropdown(groupNames: any): import("@ckeditor/ckeditor5-ui").DropdownView;
     /**
      * Returns list item definitions to be used in the character group dropdown

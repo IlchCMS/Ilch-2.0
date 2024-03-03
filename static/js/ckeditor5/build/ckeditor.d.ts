@@ -25,8 +25,9 @@ import { Table, TableCaption, TableCellProperties, TableColumnResize, TablePrope
 import { Undo } from '@ckeditor/ckeditor5-undo';
 import { EmojiActivity } from './plugins/ckeditor5-emoji/src';
 import { IlchPs } from './plugins/ilchps/plugin';
+import IlchMedia from './plugins/ilchmedia/ilchmedia';
 declare class Editor extends ClassicEditor {
-    static builtinPlugins: (typeof EmojiActivity | typeof Alignment | typeof Autoformat | typeof Superscript | typeof Subscript | typeof Bold | typeof Code | typeof Italic | typeof Strikethrough | typeof Underline | typeof BlockQuote | typeof CodeBlock | typeof SelectAll | typeof Undo | typeof Essentials | typeof FontBackgroundColor | typeof FontColor | typeof FontFamily | typeof FontSize | typeof Heading | typeof HorizontalLine | typeof Image | typeof ImageCaption | typeof ImageInsert | typeof ImageResize | typeof ImageStyle | typeof ImageToolbar | typeof ImageUpload | typeof Indent | typeof Link | typeof List | typeof MediaEmbed | typeof RemoveFormat | typeof SpecialCharactersEssentials | typeof Table | typeof TableCaption | typeof TableCellProperties | typeof TableColumnResize | typeof TableProperties | typeof TableToolbar | typeof IlchPs)[];
+    static builtinPlugins: (typeof EmojiActivity | typeof Alignment | typeof Autoformat | typeof Superscript | typeof Subscript | typeof Bold | typeof Code | typeof Italic | typeof Strikethrough | typeof Underline | typeof BlockQuote | typeof CodeBlock | typeof SelectAll | typeof Undo | typeof Essentials | typeof FontBackgroundColor | typeof FontColor | typeof FontFamily | typeof FontSize | typeof Heading | typeof HorizontalLine | typeof Image | typeof ImageCaption | typeof ImageInsert | typeof ImageResize | typeof ImageStyle | typeof ImageToolbar | typeof ImageUpload | typeof Indent | typeof Link | typeof List | typeof MediaEmbed | typeof RemoveFormat | typeof SpecialCharactersEssentials | typeof Table | typeof TableCaption | typeof TableCellProperties | typeof TableColumnResize | typeof TableProperties | typeof TableToolbar | typeof IlchMedia | typeof IlchPs)[];
     static defaultConfig: EditorConfig;
 }
 export default Editor;

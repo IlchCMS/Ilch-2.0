@@ -34,6 +34,9 @@
         <script src="<?=$this->getStaticUrl('js/validate/additional-methods.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/ckeditor5/build/ckeditor.js') ?>"></script>
+        <?php if (strncmp($this->getTranslator()->getLocale(), 'de', 2) !== 0) : ?>
+        <script src="<?=$this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>"></script>
+        <?php endif; ?>
         <script src="<?=$this->getStaticUrl('js/highlight/highlight.min.js') ?>"></script>
         <script>hljs.highlightAll();</script>
     </head>

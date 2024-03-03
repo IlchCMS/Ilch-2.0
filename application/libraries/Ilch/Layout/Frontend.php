@@ -552,6 +552,10 @@ class Frontend extends Base
                 <script src="' . $this->getStaticUrl('js/highlight/highlight.min.js') . '"></script>
                 <script>hljs.highlightAll();</script>';
 
+        if (strncmp($this->getTranslator()->getLocale(), 'de', 2) !== 0) {
+            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') . '" charset="UTF-8"></script>';
+        }
+
         if (is_array($this->get('scriptTags'))) {
             foreach ($this->get('scriptTags') as $key => $scriptTag) {
                 $html .= '

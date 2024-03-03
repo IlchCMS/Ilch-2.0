@@ -177,7 +177,7 @@ class Translator
     }
 
     /**
-     * Shortens the locale so only the first to characters get returned.
+     * Shortens the locale so only the first two characters get returned.
      *
      * @param string $locale
      * @return string
