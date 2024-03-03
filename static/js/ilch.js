@@ -54,7 +54,7 @@ $(document).ready(function(){
                     ],
                     shouldNotGroupWhenFull: true
                 },
-                language: 'de',
+                language: navigator.language.split("-")[0],
                 image: {
                     toolbar: [
                         'imageTextAlternative',
@@ -151,12 +151,11 @@ $(document).ready(function(){
                         'fontBackgroundColor',
                         'fontColor',
                         'findAndReplace',
-                        'selectAll',
-                        'ilchps'
+                        'selectAll'
                     ],
                     shouldNotGroupWhenFull: true
                 },
-                language: 'de',
+                language: navigator.language.split("-")[0],
                 image: {
                     toolbar: [
                         'imageTextAlternative',
