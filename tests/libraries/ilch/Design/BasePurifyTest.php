@@ -441,12 +441,34 @@ class BasePurifyTest extends TestCase
 
     /**
      * Media embed, but with not allowed URL. Should get filtered out. (CKEditor 5)
-     * 
+     *
      * @return void
      */
     public function testPurifyEmbedMediaNotAllowedURLCK5()
     {
         $output = $this->view->purify('<figure class="media"><div data-oembed-url="https://www.bad.url/watch?v=H08tGjXNHO4"><div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;"><iframe src="https://www.bad.url/embed/H08tGjXNHO4" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div></div></figure>');
         self::assertEquals('<figure class="media"><div><div style="position:relative;padding-bottom:56.2493%;height:0;"><iframe style="position:absolute;width:100%;height:100%;top:0;left:0;" frameborder="0" allowfullscreen=""></iframe></div></div></figure>', $output);
+    }
+
+    /**
+     * Making use of the media embed plugin in the ilchmedia plugin to embed locally hosted videos. (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyLocalVideoCK5()
+    {
+        $output = $this->view->purify('<figure class="media"><div data-oembed-url="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls="" src="localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"></video></div></div></figure>');
+        self::assertEquals('<figure class="media"><div data-oembed-url="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative;padding-bottom:100%;height:0;"><video style="position:absolute;width:100%;height:100%;top:0;left:0;" controls="" src="localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"></video></div></div></figure>', $output);
+    }
+
+    /**
+     * Making use of the media embed plugin in the ilchmedia plugin to embed videos. In this with an not allowed URL. Should be filtered out. (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyLocalVideoNotAllowedURLCK5()
+    {
+        $output = $this->view->purify('<figure class="media"><div data-oembed-url="http://bad.url/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls="" src="bad.url/65e2c095300cdDSCN0918.mov"></video></div></div></figure>');
+        self::assertEquals('<figure class="media"><div><div style="position:relative;padding-bottom:100%;height:0;"><video style="position:absolute;width:100%;height:100%;top:0;left:0;" controls=""></video></div></div></figure>', $output);
     }
 }
