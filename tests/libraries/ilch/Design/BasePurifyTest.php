@@ -457,8 +457,8 @@ class BasePurifyTest extends TestCase
      */
     public function testPurifyLocalVideoCK5()
     {
-        $output = $this->view->purify('<figure class="media"><div data-oembed-url="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls="" src="localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"></video></div></div></figure>');
-        self::assertEquals('<figure class="media"><div data-oembed-url="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative;padding-bottom:100%;height:0;"><video style="position:absolute;width:100%;height:100%;top:0;left:0;" controls="" src="localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"></video></div></div></figure>', $output);
+        $output = $this->view->purify('<figure class="media"><div data-oembed-url="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls="" src="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"></video></div></div></figure>');
+        self::assertEquals('<figure class="media"><div data-oembed-url="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative;padding-bottom:100%;height:0;"><video style="position:absolute;width:100%;height:100%;top:0;left:0;" controls="" src="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"></video></div></div></figure>', $output);
     }
 
     /**
@@ -468,7 +468,7 @@ class BasePurifyTest extends TestCase
      */
     public function testPurifyLocalVideoNotAllowedURLCK5()
     {
-        $output = $this->view->purify('<figure class="media"><div data-oembed-url="http://bad.url/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls="" src="bad.url/65e2c095300cdDSCN0918.mov"></video></div></div></figure>');
+        $output = $this->view->purify('<figure class="media"><div data-oembed-url="http://bad.url/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls="" src="http://bad.url/65e2c095300cdDSCN0918.mov"></video></div></div></figure>');
         self::assertEquals('<figure class="media"><div><div style="position:relative;padding-bottom:100%;height:0;"><video style="position:absolute;width:100%;height:100%;top:0;left:0;" controls=""></video></div></div></figure>', $output);
     }
 }
