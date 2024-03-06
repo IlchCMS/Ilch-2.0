@@ -14,7 +14,7 @@ const { CKEditorTranslationsPlugin } = require( '@ckeditor/ckeditor5-dev-transla
 const TerserWebpackPlugin = require( 'terser-webpack-plugin' );
 
 module.exports = {
-	devtool: 'source-map',
+	devtool: false,
 	performance: { hints: false },
 
 	entry: path.resolve( __dirname, 'src', 'ckeditor.ts' ),
@@ -32,7 +32,7 @@ module.exports = {
 	optimization: {
 		minimizer: [
 			new TerserWebpackPlugin( {
-				sourceMap: true,
+				sourceMap: false,
 				terserOptions: {
 					output: {
 						// Preserve CKEditor 5 license comments.
