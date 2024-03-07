@@ -111,6 +111,8 @@ if ($this->getUser()) {
             </div>
         </div>
     </div>
+    
+    <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <?php else : ?>
     <?php
     header('location: ' . $this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));

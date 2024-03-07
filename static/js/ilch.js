@@ -151,7 +151,8 @@ $(document).ready(function(){
                         'fontBackgroundColor',
                         'fontColor',
                         'findAndReplace',
-                        'selectAll'
+                        'selectAll',
+                        'ilchmedia'
                     ],
                     shouldNotGroupWhenFull: true
                 },

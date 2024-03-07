@@ -360,6 +360,7 @@ $accesses = $this->get('accesses');
     var iframeUrlVideoCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/videockeditor/') ?>";
     var iframeUrlFileCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/fileckeditor/') ?>";
     var iframeMediaUploadCkeditor = "<?=$this->getUrl('admin/media/iframe/uploadckeditor/') ?>";
+    var iframeUrlUserGallery = "<?=$this->getUrl('user/iframe/indexckeditor/type/imageckeditor/') ?>";
 </script>
 <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
 <?=(\Ilch\DebugBar::isInitialized()) ? \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->render() : ''?>

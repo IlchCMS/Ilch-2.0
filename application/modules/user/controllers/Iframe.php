@@ -77,4 +77,23 @@ class Iframe extends \Ilch\Controller\Frontend
             $mediaMapper->save($model);
         }
     }
+
+    public function indexckeditorAction() 
+    {
+        $this->getLayout()->setFile('modules/admin/layouts/iframe');
+        $mediaMapper = new MediaMapper();
+        
+        $pagination = new \Ilch\Pagination();
+        $pagination->setRowsPerPage(!$this->getConfig()->get('media_mediaPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('media_mediaPerPage'));
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
+        if ($this->getRequest()->getParam('type') === 'imageckeditor') {
+            $type = $this->getConfig()->get('media_ext_img');
+        }
+
+        $pagination->setRowsPerPage('40');
+
+        $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($this->getUser()->getId(), $type, $pagination));
+        $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
+    }
 }
