@@ -6,7 +6,7 @@
 </ul>
 
 <?php if ($this->get('medias') != ''): ?>
-    <div id="ilchmedia" class="container-flui rowd">
+    <div id="ilchmedia" class="container-fluid">
         <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'single'): ?>
             <div class="row">
             <?php foreach ($this->get('medias') as $media): ?>

@@ -2,10 +2,10 @@
 
 <?php if ($this->get('medias') != '') : ?>
 <div id="ilchmedia" class="container-fluid">
-    <?php if ($this->getRequest()->getParam('type') === 'imageckeditor'): ?>
+    <?php if ($this->getRequest()->getParam('type') === 'imageckeditor') : ?>
         <div class="row">
         <?php foreach ($this->get('medias') as $media): ?>
-            <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
+            <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))) : ?>
                     <div  id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
                         <img class="image img-thumbnail img-fluid"
                              data-url="<?=$media->getUrl() ?>"
@@ -21,7 +21,7 @@
     <?=$this->getTrans('noMedias') ?>
 <?php endif; ?>
 
-<?php if ($this->getRequest()->getParam('type') === 'imageckeditor'): ?>
+<?php if ($this->getRequest()->getParam('type') === 'imageckeditor') : ?>
     <script>
     $(".image").click(function() {
         window.top.$('#mediaModal').attr('url', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));

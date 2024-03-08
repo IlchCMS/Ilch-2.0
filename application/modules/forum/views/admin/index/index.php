@@ -165,12 +165,6 @@ $(document).ready (
 
             menuHtml = '<div class="row mb-3"><label for="menukey" class="col-xl-3 control-label"><?=$this->getTrans('menuSelection') ?></label>\n\
                         <div class="col-xl-6"><select class="form-control" id="menukey">'+options+'</select></div></div>\n\
-                        <div class="row mb-3"><label for="prefix" class="col-xl-3 control-label"><?=$this->getTrans('prefix') ?></label>\n\
-                        <div class="col-xl-6"><input type="text" class="form-control" id="prefix"></div></div>\n\
-                        <div class="row mb-3"><label for="assignedGroupsRead" class="col-xl-3 control-label"><?=$this->getTrans('see') ?></label>\n\
-                        <div class="col-xl-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
-            menuHtml = '<div class="row mb-3"><label for="menukey" class="col-xl-3 control-label"><?=$this->getTrans('menuSelection') ?></label>\n\
-                        <div class="col-xl-6"><select class="form-control" id="menukey">'+options+'</select></div></div>\n\
                         <div class="row mb-3"><label for="prefixes" class="col-xl-3 control-label"><?=$this->getTrans('prefixes') ?></label>\n\
                         <div class="col-xl-6"><input type="text" class="form-control" id="prefixes" placeholder="<?=$this->getTrans('selectPrefixes') ?>"></div></div>\n\
                         <div class="row mb-3"><label for="assignedGroupsRead" class="col-xl-3 control-label"><?=$this->getTrans('see') ?></label>\n\
