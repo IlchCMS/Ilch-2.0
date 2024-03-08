@@ -168,7 +168,6 @@ export default class IlchMediaUI extends Plugin {
                         break;
                     case 'pickUserGallery':
                         {
-                            console.log('executed');
                             $('#mediaModal').modal('show');
 
                             let src = iframeUrlUserGallery;
