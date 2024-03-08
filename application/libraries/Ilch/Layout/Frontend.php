@@ -550,7 +550,8 @@ class Frontend extends Base
                 <script src="' . $this->getStaticUrl('js/jquery.mjs.nestedSortable.js') . '"></script>
                 <script src="' . $this->getStaticUrl('../application/modules/admin/static/js/functions.js') . '"></script>
                 <script src="' . $this->getStaticUrl('js/highlight/highlight.min.js') . '"></script>
-                <script>hljs.highlightAll();</script>';
+                <script>hljs.highlightAll();</script>
+                <script>var iframeUrlUserGallery = "' . $this->getUrl('user/iframe/indexckeditor/type/imageckeditor/') . '";</script>';
 
         if (strncmp($this->getTranslator()->getLocale(), 'de', 2) !== 0) {
             $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') . '" charset="UTF-8"></script>';

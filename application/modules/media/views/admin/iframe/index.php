@@ -6,7 +6,7 @@
 </ul>
 
 <?php if ($this->get('medias') != ''): ?>
-    <div id="ilchmedia" class="container-flui rowd">
+    <div id="ilchmedia" class="container-fluid">
         <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'single'): ?>
             <div class="row">
             <?php foreach ($this->get('medias') as $media): ?>
@@ -67,32 +67,10 @@
     <?=$this->getTrans('noMedias') ?>
 <?php endif; ?>
 
-<?php if ($this->getRequest()->getParam('type') === 'image'): ?>
+<?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'file' || $this->getRequest()->getParam('type') === 'media') : ?>
     <script>
     $(".image").click(function() {
-        var dialog = window.top.CKEDITOR.dialog.getCurrent();
-        dialog.setValueOf('tab-basic','src', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
-        window.top.$('#mediaModal').modal('hide');
-    });
-    </script>
-<?php endif; ?>
-
-<?php if ($this->getRequest()->getParam('type') === 'file'): ?>
-    <script>
-    $(".image").click(function() {
-        var dialog = window.top.CKEDITOR.dialog.getCurrent();
-        dialog.setValueOf('tab-adv','file', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
-        dialog.setValueOf('tab-adv','alt', $(this).data('alt'));
-        window.top.$('#mediaModal').modal('hide');
-    });
-    </script>
-<?php endif; ?>
-
-<?php if ($this->getRequest()->getParam('type') === 'media'): ?>
-    <script>
-    $(".image").click(function() {
-        var dialog = window.top.CKEDITOR.dialog.getCurrent();
-        dialog.setValueOf('tab-mov','video', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
+        window.top.$('#mediaModal').attr('url', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
         window.top.$('#mediaModal').modal('hide');
     });
     </script>

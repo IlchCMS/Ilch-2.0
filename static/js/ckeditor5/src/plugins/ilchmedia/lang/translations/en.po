@@ -50,3 +50,11 @@ msgstr "Upload video"
 msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
 msgid "Upload video"
 msgstr "Upload video"
+
+msgctxt "A category name."
+msgid "Pick image from user gallery"
+msgstr "Pick image from user gallery"
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Pick image from user gallery"
+msgstr "Pick image from user gallery"

@@ -34,7 +34,7 @@ export default class IlchMediaUI extends Plugin {
             // The collection of the list items.
             const items = new Collection();
 
-            if (iframeUrlImageCkeditor) {
+            if (typeof iframeUrlImageCkeditor !== 'undefined' && iframeUrlImageCkeditor) {
                 items.add( {
                     type: 'button',
                     model: new ButtonView( {
@@ -46,7 +46,7 @@ export default class IlchMediaUI extends Plugin {
                 });
             }
 
-            if (iframeUrlFileCkeditor) {
+            if (typeof iframeUrlFileCkeditor !== 'undefined' && iframeUrlFileCkeditor) {
                 items.add( {
                     type: 'button',
                     model: new ButtonView( {
@@ -58,7 +58,7 @@ export default class IlchMediaUI extends Plugin {
                 });
             }
 
-            if (iframeUrlVideoCkeditor) {
+            if (typeof iframeUrlVideoCkeditor !== 'undefined' && iframeUrlVideoCkeditor) {
                 items.add( {
                     type: 'button',
                     model: new ButtonView( {
@@ -70,7 +70,7 @@ export default class IlchMediaUI extends Plugin {
                 });
             }
 
-            if (iframeMediaUploadCkeditor) {
+            if (typeof iframeMediaUploadCkeditor !== 'undefined' && iframeMediaUploadCkeditor) {
                 items.add( { type: 'separator', model: new ListSeparatorView() } );
                 
                 items.add( {
@@ -99,6 +99,20 @@ export default class IlchMediaUI extends Plugin {
                         id: 'uploadVideo',
                         label: 'Upload video',
                         icon: videoIcon,
+                        withText: true
+                    })
+                });
+            }
+
+            if (typeof iframeUrlUserGallery !== 'undefined' && iframeUrlUserGallery) {
+                items.add( { type: 'separator', model: new ListSeparatorView() } );
+
+                items.add( {
+                    type: 'button',
+                    model: new ButtonView( {
+                        id: 'pickUserGallery',
+                        label: 'Pick image from user gallery',
+                        icon: imageIcon,
                         withText: true
                     })
                 });
@@ -152,6 +166,19 @@ export default class IlchMediaUI extends Plugin {
                                 'width': width});
                         }
                         break;
+                    case 'pickUserGallery':
+                        {
+                            $('#mediaModal').modal('show');
+
+                            let src = iframeUrlUserGallery;
+                            let height = '100%';
+                            let width = '100%';
+
+                            $("#mediaModal iframe").attr({'src': src,
+                                'height': height,
+                                'width': width});
+                        }
+                        break;
                     case 'uploadImage':
                     case 'uploadFile':
                     case 'uploadVideo':
@@ -179,6 +206,7 @@ export default class IlchMediaUI extends Plugin {
                 if (url) {
                     switch (idButton) {
                         case 'pickImage':
+                        case 'pickUserGallery':
                             {
                                 // https://ckeditor.com/docs/ckeditor5/latest/api/module_image_image_insertimagecommand-InsertImageCommand.html
                                 editor.execute( 'insertImage', { source: url } );

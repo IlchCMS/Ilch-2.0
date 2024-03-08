@@ -55,3 +55,5 @@ $prefix = $this->get('prefix');
         </div>
     </div>
 </div>
+
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
