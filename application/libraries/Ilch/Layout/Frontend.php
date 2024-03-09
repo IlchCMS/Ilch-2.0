@@ -553,6 +553,13 @@ class Frontend extends Base
                 <script>hljs.highlightAll();</script>
                 <script>var iframeUrlUserGallery = "' . $this->getUrl('user/iframe/indexckeditor/type/imageckeditor/') . '";</script>';
 
+        if ($this->getUser() && $this->getUser()->isAdmin()) {
+            $html .= '<script>var iframeUrlImageCkeditor = "' . $this->getUrl('admin/media/iframe/indexckeditor/type/imageckeditor/') . '";</script>
+                <script>var iframeUrlVideoCkeditor = "' . $this->getUrl('admin/media/iframe/indexckeditor/type/videockeditor/') . '";</script>
+                <script>var iframeUrlFileCkeditor = "' . $this->getUrl('admin/media/iframe/indexckeditor/type/fileckeditor/') . '";</script>
+                <script>var iframeMediaUploadCkeditor = "' . $this->getUrl('admin/media/iframe/uploadckeditor/') . '";</script>';
+        }
+
         if (strncmp($this->getTranslator()->getLocale(), 'de', 2) !== 0) {
             $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') . '" charset="UTF-8"></script>';
         }

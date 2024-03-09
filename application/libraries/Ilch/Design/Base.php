@@ -681,7 +681,7 @@ abstract class Base
      */
     public function getMedia(?string $mediaButton = null, ?string $actionButton = null, ?string $inputId = null): GetMedia
     {
-        return  new GetMedia($mediaButton, $actionButton, $inputId);
+        return new GetMedia($mediaButton, $actionButton, $inputId);
     }
 
     /**
