@@ -118,6 +118,11 @@ export default class IlchMediaUI extends Plugin {
                 });
             }
 
+            // Disable ilchmedia button if items is empty.
+            if (!items.length) {
+                dropdownView.isEnabled = false;
+            }
+
             // Create a dropdown with a list inside the panel.
             addListToDropdown( dropdownView, items );
 
