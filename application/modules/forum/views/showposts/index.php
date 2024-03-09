@@ -40,7 +40,7 @@ if ($this->getUser()) {
             <div class="col-xl-12">
                 <?php if ($topicpost->getStatus() == 0) : ?>
                     <?php if ($this->getUser()): ?>
-                        <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))): ?>
+                        <?php if ($adminAccess || $forum->getReplyAccess()) : ?>
                             <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-sm btn-primary">
                                 <span class="badge">
                                     <i class="fa-solid fa-plus"></i>
@@ -225,7 +225,7 @@ if ($this->getUser()) {
         <div class="topic-actions">
             <?php if ($topicpost->getStatus() == 0) : ?>
                 <?php if ($this->getUser()) : ?>
-                    <?php if ($adminAccess || is_in_array($readAccess, explode(',', $forum->getReplyAccess()))) : ?>
+                    <?php if ($adminAccess || $forum->getReplyAccess()) : ?>
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-sm btn-primary">
                             <span class="badge">
                                 <i class="fa-solid fa-plus"></i>

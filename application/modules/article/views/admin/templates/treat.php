@@ -171,8 +171,6 @@ $('#preview').click(
     }
 );
 
-var ilchPsPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/ilchps/') ?>";
-
 $('#keywords').tokenfield();
 $('#keywords').on('tokenfield:createtoken', function (event) {
     var existingTokens = $(this).tokenfield('getTokens');
