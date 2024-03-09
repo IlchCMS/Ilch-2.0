@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div id="registRules" <?=($this->get('regist_accept') != '1') ? 'hidden' : ''; } ?>>
+    <div id="registRules" <?=($this->get('regist_accept') != '1') ? 'hidden' : '' ?>>
         <div class="row mb-3">
             <div class="col-xl-2 control-label">
                 <?=$this->getTrans('confirmRegistrationEmail') ?>:

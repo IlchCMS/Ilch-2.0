@@ -95,4 +95,5 @@ return [
     
     // Globally needed translations for media (often used for the media modal).
     'media' => 'Media',
+    'noMedias' => 'No media',
 ];
