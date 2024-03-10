@@ -256,7 +256,7 @@ class Topic extends Mapper
             return null;
         }
 
-        $select = $this->db()->select(['p.id', 'p.topic_id', 'date_created' => 'MAX(p.date_created)', 'p.user_id', 'p.forum_id'])
+        $select = $this->db()->select(['postId' => 'MAX(p.id)', 'p.topic_id', 'date_created' => 'MAX(p.date_created)', 'p.user_id', 'p.forum_id'])
             ->from(['p' => 'forum_posts']);
         if ($userId) {
             $select->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id', 'tr.datetime >= p.date_created'], 'LEFT', ['topic_read' => 'tr.datetime'])
@@ -276,7 +276,7 @@ class Topic extends Mapper
         foreach ($lastPostsRows as $lastPostRow) {
             $postModel = new PostModel();
             $userMapper = new UserMapper();
-            $postModel->setId($lastPostRow['id']);
+            $postModel->setId($lastPostRow['postId']);
             $user = $userMapper->getUserById($lastPostRow['user_id']);
             if ($user) {
                 $postModel->setAutor($user);
