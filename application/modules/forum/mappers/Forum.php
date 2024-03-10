@@ -519,7 +519,7 @@ class Forum extends Mapper
      */
     public function getLastPostsByForumIds(array $forumId, int $userId = null): ?array
     {
-        $select = $this->db()->select(['p.id', 'p.topic_id', 'p.user_id', 'date_created' => 'MAX(p.date_created)', 'p.forum_id'])
+        $select = $this->db()->select(['postId' => 'MAX(p.id)', 'p.topic_id', 'p.user_id', 'date_created' => 'MAX(p.date_created)', 'p.forum_id'])
             ->from(['p' => 'forum_posts'])
             ->join(['t' => 'forum_topics'], 't.id = p.topic_id', 'LEFT', ['t.topic_title']);
 
@@ -542,7 +542,7 @@ class Forum extends Mapper
         foreach ($lastPostRows as $lastPostRow) {
             $postModel = new PostModel();
             $userMapper = new UserMapper();
-            $postModel->setId($lastPostRow['id']);
+            $postModel->setId($lastPostRow['postId']);
             $user = $userMapper->getUserById($lastPostRow['user_id']);
 
             if ($user) {
@@ -563,6 +563,7 @@ class Forum extends Mapper
 
         return $lastPosts;
     }
+
     /**
      * Get category by parent id.
      *
