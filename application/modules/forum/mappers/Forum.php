@@ -757,7 +757,7 @@ class Forum extends Mapper
         $countOfPostsRows = $this->db()->select(['count' => 'COUNT(id)', 'topic_id'])
             ->from('forum_posts')
             ->where(['topic_id' => $topicIds], 'or')
-            ->group(['id'])
+            ->group(['topic_id'])
             ->execute()
             ->fetchList('count', 'topic_id');
 
