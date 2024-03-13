@@ -26,14 +26,14 @@ if (isset($_POST['code']) && $_POST['code'] != '' && isset($_POST['itemid']) && 
 
         if (empty($_SESSION['shopping_cart'])) {
             $_SESSION['shopping_cart'] = $cartArray;
-            $status = '<div id="infobox" class="alert alert-success" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('addToCart').'</div>';
+            $status = '<div id="infobox" class="alert alert-success" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $name . '</b> ' . $this->getTrans('addToCart') . '</div>';
         } else {
             $array_keys = array_keys($_SESSION['shopping_cart']);
             if(in_array($code,$array_keys)) {
-                $status = '<div id="infobox" class="alert alert-danger" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('alreadyInCart').'</div>';
+                $status = '<div id="infobox" class="alert alert-danger" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $name . '</b> ' . $this->getTrans('alreadyInCart') . '</div>';
             } else {
                 $_SESSION['shopping_cart'] = array_merge($_SESSION['shopping_cart'],$cartArray);
-                $status = '<div id="infobox" class="alert alert-success" role="alert">'.$this->getTrans('theProduct').' <b>'.$name.'</b> '.$this->getTrans('addToCart').'</div>';
+                $status = '<div id="infobox" class="alert alert-success" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $name . '</b> ' . $this->getTrans('addToCart') . '</div>';
             }
         }
     } else {
