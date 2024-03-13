@@ -316,15 +316,23 @@ if (!empty($_SESSION['shopping_cart'])) {
                     <tbody>
                         <?php
                         $subtotal_price = 0;
-                        foreach ($_SESSION['shopping_cart'] as $product) {
+                        foreach ($_SESSION['shopping_cart'] as $key => $product) {
                             $itemId = $product['id'];
-                            $itemImg = $itemsMapper->getShopItemById($itemId)->getImage();
-                            $itemName = $itemsMapper->getShopItemById($itemId)->getName();
-                            $itemNumber = $itemsMapper->getShopItemById($itemId)->getItemnumber();
-                            $itemPrice = $itemsMapper->getShopItemById($itemId)->getPrice();
-                            $itemTax = $itemsMapper->getShopItemById($itemId)->getTax();
+                            $item = $itemsMapper->getShopItemById($itemId);
+
+                            if (!$item) {
+                                unset($_SESSION['shopping_cart'][$key]);
+                                $_SESSION['messages'][] = ['text' => $this->getTrans('aProduct') . ' ' . $this->getTrans('removedFromCart') . ' ' . $this->getTrans('noLongerSold'), 'type' => 'danger'];
+                                continue;
+                            }
+
+                            $itemImg = $item->getImage();
+                            $itemName = $item->getName();
+                            $itemNumber = $item->getItemnumber();
+                            $itemPrice = $item->getPrice();
+                            $itemTax = $item->getTax();
                             $itemPriceWithoutTax = round(($itemPrice / (100 + $itemTax)) * 100, 2);
-                            $arrayShippingCosts[] = $itemsMapper->getShopItemById($itemId)->getShippingCosts();
+                            $arrayShippingCosts[] = $item->getShippingCosts();
                             $arrayTaxes[] = $itemTax;
                             $arrayPrices[] = $itemPrice * $product['quantity'];
                             $arrayPricesWithoutTax[] = $itemPriceWithoutTax * $product['quantity'];
@@ -361,6 +369,8 @@ if (!empty($_SESSION['shopping_cart'])) {
                         ?>
                     </tbody>
                 </table>
+
+                <?php if (!empty($_SESSION['shopping_cart'])) : ?>
                 <table class="sum">
                     <tr>
                         <th>
@@ -407,8 +417,17 @@ if (!empty($_SESSION['shopping_cart'])) {
                         </td>
                     </tr>
                 </table>
+                <?php else : ?>
+                    <?php unset($_SESSION['shopping_cart']); ?>
+                    <?=$this->getTrans('noProductInCart') ?>
+                    <div class="row space20"></div>
+                    <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-default">
+                        <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
+                    </a>
+                <?php endif; ?>
             </div>
 
+        <?php if (isset($_SESSION['shopping_cart'])) : ?>
             <h4><?=$this->getTrans('confirmation') ?></h4>
             <div class="row space20"></div>
 
@@ -422,7 +441,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                            id="acceptOrder"
                            name="acceptOrder"
                            value="1"
-                           <?=($this->originalInput('acceptOrder') != '' ? 'checked' : '') ?> />
+                        <?=($this->originalInput('acceptOrder') != '' ? 'checked' : '') ?> />
                 </div>
             </div>
 
@@ -448,6 +467,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                     <?=$this->getTrans('completePurchase') ?> <i class="fa-solid fa-forward"></i>
                 </button>
             </div>
+        <?php endif; ?>
         </form>
 
     <?php } else { ?>
