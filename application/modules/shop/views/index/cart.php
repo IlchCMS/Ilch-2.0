@@ -86,9 +86,9 @@ if (!empty($_SESSION['shopping_cart'])) {
             $itemsAssoc[$item->getId()] = $item;
         }
 
-        foreach ($_SESSION['shopping_cart'] as $product) {
+        foreach ($_SESSION['shopping_cart'] as $key => $product) {
             $itemId = $product['id'];
-            $item = $itemsAssoc[$itemId];
+            $item = $itemsAssoc[$itemId] ?? null;
             $itemCode = '';
             $itemName = '';
             $itemPrice = 0;
@@ -104,6 +104,10 @@ if (!empty($_SESSION['shopping_cart'])) {
                 $itemImg = $item->getImage();
                 $itemMaxStock = $item->getStock();
                 $arrayShippingCosts[] = $item->getShippingCosts();
+            } else {
+                unset($_SESSION['shopping_cart'][$key]);
+                $_SESSION['messages'][] = ['text' => $this->getTrans('aProduct') . ' ' . $this->getTrans('removedFromCart') . ' ' . $this->getTrans('noLongerSold'), 'type' => 'danger'];
+                continue;
             }
 
             $shopImgPath = '/application/modules/shop/static/img/';
@@ -205,7 +209,12 @@ if (!empty($_SESSION['shopping_cart'])) {
         <form method="post" action="order#shopAnker" class="text-end">
             <div class="btn-group btn-group-sm">
                 <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
-                <button class="btn btn-warning"><?=$this->getTrans('completePurchase') ?> <i class="fa-solid fa-forward"></i></button>
+                <?php if (empty($_SESSION['shopping_cart'])) : ?>
+                    <?php unset($_SESSION['shopping_cart']); ?>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['shopping_cart'])) : ?>
+                    <button class="btn btn-warning"><?=$this->getTrans('completePurchase') ?> <i class="fa-solid fa-forward"></i></button>
+                <?php endif; ?>
             </div>
         </form>
         <?php
