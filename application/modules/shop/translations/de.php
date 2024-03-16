@@ -173,6 +173,7 @@ return [
     'ordersInUse' => 'Bestellungen die noch nicht abgeschlossen wurden können nicht gelöscht werden.',
     'orderSuccessText' => 'Ihre Bestellung wurde erfolgreich ausgeführt. Sie erhalten eine Bestätigung per E-Mail. Vielen Dank für Ihren Einkauf.',
     'password' => 'Passwort',
+    'forgotPassword' => 'Passwort vergessen?',
     'popoverInfo' => 'Info',
     'postcode' => 'Postleitzahl',
     'postCode' => 'Postleitzahl',
