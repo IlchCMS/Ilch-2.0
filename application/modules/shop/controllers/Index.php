@@ -443,6 +443,7 @@ class Index extends Frontend
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('itemsMapper', $itemsMapper);
         $this->getView()->set('allowWillCollect', $settingsMapper->getSettings()->getAllowWillCollect());
+        $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
     }
 
     public function successAction()
