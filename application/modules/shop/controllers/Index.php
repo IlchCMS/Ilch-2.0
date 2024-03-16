@@ -297,6 +297,13 @@ class Index extends Frontend
 
                     $orderdetails = [];
                     foreach ($arrayOrder as $orderItem) {
+                        if (!isset($itemDetails[$orderItem['id']])) {
+                            // Looks like details for this product are missing. Product likely got deleted.
+                            $this->redirect()
+                                ->withInput()
+                                ->to(['action' => 'order']);
+                        }
+
                         $orderdetail = new OrderdetailsModel();
                         // orderId is unknown at this point and gets added in the save function of the order mapper.
                         $orderdetail->setItemId($orderItem['id']);
