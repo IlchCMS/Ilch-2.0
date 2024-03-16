@@ -518,6 +518,10 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
             </div>
         </form>
+        <?php if ($this->get('regist_accept') == '1'): ?>
+            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']) ?>"><?=$this->getTrans('register') ?></a><br />
+        <?php endif; ?>
+        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a>
     <?php } ?>
     <?php
 } else { ?>

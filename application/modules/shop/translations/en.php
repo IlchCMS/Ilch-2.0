@@ -173,6 +173,7 @@ return [
     'ordersInUse' => 'Orders that have not yet been completed cannot be deleted.',
     'orderSuccessText' => 'Your order has been completed successfully. You will receive a confirmation email. Thanks for your purchase.',
     'password' => 'Password',
+    'forgotPassword' => 'Forgot password?',
     'popoverInfo' => 'Info',
     'postcode' => 'Post Code',
     'postCode' => 'Post Code',
