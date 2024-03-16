@@ -948,6 +948,10 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('page_title_moduledata_separator', ' | ');
                 $databaseConfig->set('page_title_moduledata_order', '0');
                 break;
+            case "2.1.57":
+                break;
+            case "2.1.58":
+                break;
         }
 
         return 'Update function executed.';
