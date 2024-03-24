@@ -2,6 +2,7 @@
 .chat .chat-wrapper {
     display: flex;
     height: 800px;
+    border: 1px solid #ddd;
 }
 .chat .chat-wrapper .right-column {
     display: flex;
@@ -11,25 +12,17 @@
     position: relative;
     overflow: hidden;
     width: auto;
-    height: calc(100% - 57px);
-}
-.chat .chat-wrapper .chat-list-scroll.noscroll {
-    height: calc(100% - 52px);
 }
 .chat .chat-wrapper .message-list-scroll {
     position: relative;
     overflow: hidden;
     width: auto;
-    height: calc(100% - 52px);
 }
 .chat .chat-wrapper .message-list-scroll {
     position: relative;
     overflow: hidden;
     width: auto;
     height: 100%
-}
-.chat .chat-wrapper .message-list-scroll.noscroll {
-    height: calc(100% - 396px)
 }
 
 .chat .chat-wrapper .chat-textarea {
@@ -51,7 +44,6 @@
 }
 
 .chat .chat-wrapper .chat-list-wrapper {
-    border: 1px solid #ddd;
     border-right: 0;
     overflow-y: auto;
     width: auto;
