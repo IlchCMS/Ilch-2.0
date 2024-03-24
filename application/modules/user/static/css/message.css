@@ -3,17 +3,15 @@
     display: flex;
     height: 800px;
 }
-.chat .chat-wrapper .chat-list-scroll {
-    position: relative;
-    overflow: hidden;
-    width: auto;
-    height: calc(100% - 52px);
+.chat .chat-wrapper .right-column {
+    display: flex;
+    flex-direction: column;
 }
 .chat .chat-wrapper .chat-list-scroll {
     position: relative;
     overflow: hidden;
     width: auto;
-    height: calc(100% - 92px);
+    height: calc(100% - 52px);
 }
 .chat .chat-wrapper .chat-list-scroll.noscroll {
     height: calc(100% - 52px);

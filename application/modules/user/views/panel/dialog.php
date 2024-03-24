@@ -85,7 +85,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-12 col-md-7 col-lg-8 <?=$this->get('dialog') ? '' : 'hidden-list-message' ?>">
+                        <div class="col-xs-12 col-md-7 col-lg-8 right-column<?=$this->get('dialog') ? '' : ' hidden-list-message' ?>">
                             <?php if ($this->get('dialog')): ?>
                                 <div class="message-info">
                                     <span class="back-chat-list">
