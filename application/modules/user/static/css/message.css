@@ -11,7 +11,7 @@
     position: relative;
     overflow: hidden;
     width: auto;
-    height: calc(100% - 52px);
+    height: calc(100% - 57px);
 }
 .chat .chat-wrapper .chat-list-scroll.noscroll {
     height: calc(100% - 52px);
@@ -55,7 +55,7 @@
     border-right: 0;
     overflow-y: auto;
     width: auto;
-    height: 100%;"
+    height: 100%;
 }
 .chat .chat-wrapper .chat-list-wrapper .chat-list {
     padding: 0;
