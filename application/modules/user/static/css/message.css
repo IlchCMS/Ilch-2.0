@@ -44,7 +44,6 @@
 }
 
 .chat .chat-wrapper .chat-list-wrapper {
-    border-right: 0;
     overflow-y: auto;
     width: auto;
     height: 100%;
