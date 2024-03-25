@@ -25,7 +25,7 @@ $database = $this->get('database')
                    id="dbName"
                    name="dbName"
                    value="<?=$this->escape($this->originalInput('dbName', $this->get('dbName'))) ?>" />
-            <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbNameInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" title="<?=$this->getTrans('dbNameInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
         </div>
     <?php endif; ?>
 </div>
@@ -39,6 +39,6 @@ $database = $this->get('database')
                id="dbPrefix"
                name="dbPrefix"
                value="<?=$this->escape($this->originalInput('dbPrefix', $this->get('dbPrefix'))) ?>" />
-        <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbPrefixInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
+        <div class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" title="<?=$this->getTrans('dbPrefixInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
     </div>
 </div>
