@@ -14,13 +14,13 @@
             <div id="uMessenger">
                 <div class="chat">
                     <div class="row chat-wrapper">
-                        <div class="col-12 col-md-5 col-xl-4 <?=$this->get('dialog') ? 'hidden-list-message' : '' ?>">
+                        <div class="col-12 col-md-5 col-xl-4<?=$this->get('dialog') ? ' hidden-list-message' : '' ?>">
                             <div class="chat-list-info">
                                 <span class="avatar">
                                     <img src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" class="rounded-circle" alt="<?=$this->escape($this->getUser()->getName()) ?>" title="<?=$this->escape($this->getUser()->getName()) ?>">
                                 </span>
                             </div>
-                            <div class="slimScrollDiv chat-list-scroll <?=$this->get('dialog') ? '' : 'noscroll' ?>">
+                            <div class="slimScrollDiv chat-list-scroll<?=$this->get('dialog') ? '' : ' noscroll' ?>">
                                 <div class="chat-list-wrapper">
                                     <ul class="chat-list">
                                         <?php if ($this->get('dialogs') != ''): ?>
@@ -85,7 +85,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-7 col-xl-8 <?=$this->get('dialog') ? '' : 'hidden-list-message' ?>">
+                        <div class="col-12 col-md-7 col-xl-8 right-column<?=$this->get('dialog') ? '' : ' hidden-list-message' ?>">
                             <?php if ($this->get('dialog')): ?>
                                 <div class="message-info">
                                     <span class="back-chat-list">
@@ -101,7 +101,7 @@
                                     </span>
                                 </div>
                             <?php endif; ?>
-                            <div class="slimScrollDiv message-list-scroll <?=$this->get('dialog') ? 'noscroll' : '' ?>">
+                            <div class="slimScrollDiv message-list-scroll<?=$this->get('dialog') ? ' noscroll' : '' ?>">
                                 <div class="message-list-wrapper" style="overflow: hidden; width: auto; height: 100%;">
                                     <ul class="message-list">
                                         <?php if ($this->get('dialog') != ''): ?>

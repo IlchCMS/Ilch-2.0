@@ -1,37 +1,30 @@
 /* Profile Chat */
+.chat {
+    border: 1px solid #ddd;
+}
 .chat .chat-wrapper {
     display: flex;
     height: 800px;
 }
-.chat .chat-wrapper .chat-list-scroll {
-    position: relative;
-    overflow: hidden;
-    width: auto;
-    height: calc(100% - 52px);
+.chat .chat-wrapper .right-column {
+    display: flex;
+    flex-direction: column;
 }
 .chat .chat-wrapper .chat-list-scroll {
     position: relative;
     overflow: hidden;
     width: auto;
-    height: calc(100% - 92px);
-}
-.chat .chat-wrapper .chat-list-scroll.noscroll {
-    height: calc(100% - 52px);
 }
 .chat .chat-wrapper .message-list-scroll {
     position: relative;
     overflow: hidden;
     width: auto;
-    height: calc(100% - 52px);
 }
 .chat .chat-wrapper .message-list-scroll {
     position: relative;
     overflow: hidden;
     width: auto;
     height: 100%
-}
-.chat .chat-wrapper .message-list-scroll.noscroll {
-    height: calc(100% - 396px)
 }
 
 .chat .chat-wrapper .chat-textarea {
@@ -53,11 +46,9 @@
 }
 
 .chat .chat-wrapper .chat-list-wrapper {
-    border: 1px solid #ddd;
-    border-right: 0;
     overflow-y: auto;
     width: auto;
-    height: 100%;"
+    height: 100%;
 }
 .chat .chat-wrapper .chat-list-wrapper .chat-list {
     padding: 0;
@@ -145,6 +136,11 @@
     padding: 5px;
     background-color: #eee;
     border: 1px solid #ddd;
+    border-right: 0;
+    border-top: 0;
+}
+.chat .chat-wrapper .chat-list-info {
+    border-left: 0;
 }
 .chat .chat-wrapper .chat-list-info .avatar img,
 .chat .chat-wrapper .message-info .avatar img {
@@ -161,6 +157,9 @@
 }
 .chat .chat-wrapper .message-list-wrapper {
     border: 1px solid #ddd;
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 0;
     height: 452px;
     position: relative;
     overflow-y: auto;
