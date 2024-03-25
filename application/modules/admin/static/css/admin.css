@@ -15,6 +15,10 @@ body {
     /*! overflow-x: hidden; */
 }
 
+body.modal-open {
+    overflow: hidden !important;
+}
+
 h1, h2 {
     font-size: 21px;
     line-height: inherit;
@@ -24,8 +28,13 @@ h1, h2 {
     border-bottom: 1px solid #e5e5e5;
 }
 
-body.modal-open {
-    overflow: hidden !important;
+h3 {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
 }
 
 .nounderline, .nounderline:hover{
@@ -34,6 +43,12 @@ body.modal-open {
 
 header .rightbar .opens {
     width: 330px;
+}
+
+#search-div {
+    position: relative;
+    top: 0;
+    width: 100%;
 }
 
 header .rightbar li > #search-header {
@@ -56,10 +71,9 @@ header .rightbar li > #search-header .search-text {
     margin-left: 9px;
 }
 
-#search-div{
-    position: relative;
-    top: 0;
-    width: 100%;
+header .rightbar > li > #search-header:hover {
+    color: #fff !important;
+    background: #5fb611;
 }
 
 header .rightbar .opens {
@@ -79,11 +93,6 @@ header .rightbar .search-close {
 
 header .rightbar .search-opens form {
     margin: 0;
-}
-
-header .rightbar > li > #search-header:hover {
-    color: #fff !important;
-    background: #5fb611;
 }
 
 header .rightbar .search-opens .input-group {
@@ -214,6 +223,7 @@ aside > nav > ul > li.active > a:before, aside > nav > ul > li > ul > li.active 
     margin-right: -3px;
     font-size: 42px;
     color: #fff;
+    line-height: normal;
 }
 
 aside > nav > ul > li a,
@@ -264,6 +274,9 @@ aside nav ul .active > a {
 
 #rightbar ul li.active > a:before {
     color: #000;
+}
+#rightbar ul li {
+    margin:0 5px 0 0 !important;
 }
 
 .logo {
@@ -410,12 +423,26 @@ header i {
     color: black;
 }
 
-hr {
-    margin: 10px 0;
+li.dropdown ul li {
+    margin: 0 !important;
+    display: block !important;
 }
 
-hr.dropdown-divider {
-    color: #333;
+li.dropdown ul li a {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #777 !important;
+}
+
+li.dropdown ul li hr.dropdown-divider {
+    height: 0 !important;
+    margin: 10px 0 !important;
+    overflow: hidden !important;
+    border-top: 1px solid #ddd !important;
+}
+
+hr {
+    margin: 10px 0;
 }
 
 .clickable {
@@ -513,10 +540,6 @@ aside {
     top: 40px;
 }
 
-.dropdown-menu .dropdown-divider {
-    background-color: #ccc;
-}
-
 #main {
     margin-left: 220px;
     padding-bottom: 80px;
@@ -562,10 +585,9 @@ aside {
 }
 
 #ribbon .breadcrumb {
-
     margin: 0;
     margin-top: 3px;
-    padding: 7px 0 !important;
+    padding: 5px 0 !important;
     background: 0 0;
 }
 
@@ -597,9 +619,9 @@ nav ul li.active > a:before {
     content: "\f0d9";
     display: block;
     height: 27px;
-    line-height: normal;
+    line-height: 18px;
     position: absolute;
-    right: -16px;
+    right: -8px;
     font-size: 20px;
 }
 
@@ -613,6 +635,10 @@ nav ul li a {
     display: block;
     text-decoration: none !important;
     position: relative;
+}
+
+nav ul li.logout a {
+    padding: 10px !important;
 }
 
 nav ul li a:focus {
@@ -752,6 +778,20 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     text-decoration: none !important;
 }
 
+#search-div input::placeholder {
+    font-size: 14px !important;
+    color: #777 !important;
+}
+
+#search-div .btn-secondary {
+    color: #333 !important;
+    background-color: #fff !important;
+}
+
+#search-div .btn-secondary:hover {
+    background-color: #e7e7e7 !important;
+}
+
 @media (min-width:991px) {
     #left-panel, #main {
         transition: 500ms cubic-bezier(0, 0, 1, 1);
@@ -827,6 +867,11 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
 
 #ilch_dropdown .list-group {
     margin-bottom: 0 !important;
+}
+
+ul#menu.admin-info,
+ul#dropdown-user:has(.logout) {
+    right: -5px;
 }
 
 .dropdown #menu {
@@ -957,16 +1002,20 @@ table tbody i.fa.fa-sort {
         border-left: 1px solid silver;
     }
     header .rightbar .navbar-nav > li:last-of-type {
-        padding-right: 14px;
+        padding-right: 5px;
         border-right: 1px solid silver;
     }
+    header .rightbar .navbar-nav.navbar-right > li:last-of-type {
+        padding-right: 0;
+        border-right: 0;
+    }
     header .rightbar li > #search-header {
-        padding: 10px;
+        padding: 10px 5px 10px 10px;
     }
     #search-div{
         position: absolute;
         top: 40px;
-        right: -1px;
+        right: 0px;
         width: 330px;
     }
     .logout {

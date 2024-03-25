@@ -232,7 +232,7 @@ $accesses = $this->get('accesses');
                     <a data-toggle="dropdown" class="dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#menu" href="#" target="_blank" href="<?=$this->getUrl() ?>">
                         <i class="fa-solid fa-circle-question"></i> <span class="d-lg-none"><?=$this->getTrans('menuInfos') ?></span> <b class="caret"></b>
                     </a>
-                    <ul id="menu" class="dropdown-menu" style="right:0;">
+                    <ul id="menu" class="dropdown-menu admin-info">
                         <li>
                             <a href="https://www.ilch.de" target="_blank" rel="noopener">
                                 <i class="fa-solid fa-house"></i>
@@ -273,7 +273,7 @@ $accesses = $this->get('accesses');
                         <i class="fa-solid fa-user hidden-sm hidden-md"></i> <?=$this->escape($name) ?>
                         <b class="caret"></b>
                     </a>
-                    <ul id="dropdown-user" class="dropdown-menu" style="right:0;">
+                    <ul id="dropdown-user" class="dropdown-menu">
                         <li class="logout">
                             <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'logout']) ?>">
                                 <i class="fa-solid fa-power-off"></i> <?=$this->getTrans('logout') ?>
