@@ -137,13 +137,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#353535', end
     cursor: default;
 }
 
-#ilchmedia{
-    margin-top: 60px;
+#ilchmedia {
+    margin-top: 5px;
 }
 
 #ilchmedia .thumbnail {
-    margin-bottom:7px;
-    width: 100%;
+    margin-bottom: 5px;
+    /* width: 100%; */
 }
 
 #ilchmedia .chacked {

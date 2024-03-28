@@ -7,7 +7,7 @@
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))) : ?>
                     <div  id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
-                        <img class="image img-thumbnail img-fluid"
+                        <img class="image img-thumbnail img-fluid thumbnail"
                              data-url="<?=$media->getUrl() ?>"
                              src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
                              alt="<?=$media->getName() ?>">

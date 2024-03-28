@@ -31,9 +31,9 @@
                     <label for="<?=$media->getId() ?> test"></label>
                 </div>
                 <input type="text"
-                       class="hidden"
                        name="check_url[]"
-                       value="<?=$media->getUrl() ?>" />
+                       value="<?=$media->getUrl() ?>"
+                       hidden />
             <?php endif; ?>
         <?php endforeach; ?>
         </div>
@@ -44,7 +44,7 @@
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
                 <div class="col-xl-2 col-md-3 col-4">
-                    <img class="image img-thumbnail img-fluid"
+                    <img class="image img-thumbnail img-fluid thumbnail"
                          data-url="<?=$media->getUrl() ?>"
                          src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                          alt="<?=$media->getName() ?>">
@@ -61,7 +61,7 @@
         <?php foreach ($this->get('medias') as $media): ?>
             <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
                <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
-                    <img class="image img-thumbnail img-fluid"
+                    <img class="image img-thumbnail img-fluid thumbnail"
                          data-url="<?=$media->getUrl() ?>"
                          src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                          alt="<?=$media->getName() ?>">
@@ -76,9 +76,9 @@
                     <label for="<?=$media->getId() ?> test"></label>
                 </div>
                 <input type="text"
-                       class="hidden"
                        name="check_url[]"
-                       value="<?=$media->getUrl() ?>" />
+                       value="<?=$media->getUrl() ?>"
+                       hidden />
             <?php endif; ?>
         <?php endforeach; ?>
         </div>

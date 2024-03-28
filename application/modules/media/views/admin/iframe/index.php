@@ -11,17 +11,15 @@
             <div class="row">
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
-                    <div class="row">
-                        <div id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
-                            <img class="image img-thumbnail img-fluid"
-                                 data-url="<?=$media->getUrl() ?>"
-                                 <?php if (file_exists($media->getUrlThumb())): ?>
-                                    src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
-                                 <?php else: ?>
-                                    src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                                 <?php endif; ?>
-                                 alt="<?=$media->getName() ?>">
-                        </div>
+                    <div id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
+                        <img class="image img-thumbnail img-fluid thumbnail"
+                             data-url="<?=$media->getUrl() ?>"
+                             <?php if (file_exists($media->getUrlThumb())): ?>
+                                src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
+                             <?php else: ?>
+                                src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                             <?php endif; ?>
+                             alt="<?=$media->getName() ?>">
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>
@@ -33,7 +31,7 @@
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
                     <div class="col-xl-2 col-md-3 col-4">
-                        <img class="image img-thumbnail img-fluid"
+                        <img class="image img-thumbnail img-fluid thumbnail"
                              data-url="<?=$media->getUrl() ?>"
                              src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                              alt="<?=$media->getName() ?>">
@@ -50,7 +48,7 @@
             <?php foreach ($this->get('medias') as $media): ?>
                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
                     <div class="col-xl-2 col-md-3 col-4">
-                        <img class="image img-thumbnail img-fluid"
+                        <img class="image img-thumbnail img-fluid thumbnail"
                              data-alt="<?=$media->getName() ?>"
                              data-url="<?=$this->getUrl().'/'.$media->getUrl() ?>"
                              src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"

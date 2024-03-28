@@ -29,7 +29,7 @@
                     <?php foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
                             <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
-                                <img class="image img-thumbnail img-fluid"
+                                <img class="image img-thumbnail img-fluid thumbnail"
                                      data-url="<?=$media->getUrl() ?>"
                                      <?php if (file_exists($media->getUrlThumb())): ?>
                                         src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
@@ -45,9 +45,9 @@
                                 <label for="<?=$media->getId() ?>_img"></label>
                             </div>
                             <input type="text"
-                                   class="hidden"
                                    name="check_url[]"
-                                   value="<?=$media->getUrl() ?>" />
+                                   value="<?=$media->getUrl() ?>"
+                                   hidden />
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </div>
