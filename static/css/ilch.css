@@ -155,9 +155,8 @@ img {
 #mediaModal .modal-footer {
     display: none;
 }
-#main, #mediaModal .modal-header .btn-close {
+.modal-header .btn-close {
     position: absolute;
     right: 0;
     margin-right: 10px;
-    margin-top: 0px;
 }
