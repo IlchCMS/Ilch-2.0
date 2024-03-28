@@ -111,7 +111,7 @@ $accesses = $this->get('accesses');
         <!-- TOP NAVBAR RIGHT -->
         <nav id="rightbar" class="rightbar navbar-collapse collapse">
             <ul class="nav navbar-nav me-auto">
-                <li class="<?=($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') ? 'active' : '' ?> d-none d-lg-block">
+                <li class="d-none d-lg-block<?=($this->getRequest()->getModuleName() === 'admin' && $this->getRequest()->getControllerName() === 'index') ? ' active' : '' ?>">
                     <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                         <i class="fa-solid fa-house"></i>
                     </a>
@@ -158,7 +158,7 @@ $accesses = $this->get('accesses');
                 }
                 ?>
                 <?php if (!empty($modulesHtml) || !empty($systemModuleHtml) || !empty($layoutModuleHtml)) : ?>
-                    <li id="ilch_dropdown" class="dropdown <?=($this->getRequest()->getModuleName() !== 'admin') ? 'active' : '' ?>">
+                    <li id="ilch_dropdown" class="dropdown<?=($this->getRequest()->getModuleName() !== 'admin') ? ' active' : '' ?>">
                          <a class="list-group-item nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#navbar" href="#">
                             <i class="fa-solid fa-puzzle-piece hidden-sm hidden-md"></i> <?=$this->getTrans('modules') ?>
                         </a>
@@ -228,7 +228,7 @@ $accesses = $this->get('accesses');
                         <i class="fa-solid fa-share"></i> <span class="d-lg-none"><?=$this->getTrans('menuFrontend') ?></span>
                     </a>
                 </li>
-                <li class="dropdown <?=($this->getRequest()->getModuleName() === 'admin' &&  $this->getRequest()->getControllerName() === 'infos') ? 'active' : '' ?>">
+                <li class="dropdown<?=($this->getRequest()->getModuleName() === 'admin' &&  $this->getRequest()->getControllerName() === 'infos') ? ' active' : '' ?>">
                     <a data-toggle="dropdown" class="dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#menu" href="#" target="_blank" href="<?=$this->getUrl() ?>">
                         <i class="fa-solid fa-circle-question"></i> <span class="d-lg-none"><?=$this->getTrans('menuInfos') ?></span> <b class="caret"></b>
                     </a>
