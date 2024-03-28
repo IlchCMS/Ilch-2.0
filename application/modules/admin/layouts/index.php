@@ -159,7 +159,7 @@ $accesses = $this->get('accesses');
                 ?>
                 <?php if (!empty($modulesHtml) || !empty($systemModuleHtml) || !empty($layoutModuleHtml)) : ?>
                     <li id="ilch_dropdown" class="dropdown<?=($this->getRequest()->getModuleName() !== 'admin') ? ' active' : '' ?>">
-                         <a class="list-group-item nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#navbar" href="#">
+                        <a class="list-group-item nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#navbar" href="#">
                             <i class="fa-solid fa-puzzle-piece hidden-sm hidden-md"></i> <?=$this->getTrans('modules') ?>
                         </a>
                         <ul class="dropdown-menu full" id="navbar">
