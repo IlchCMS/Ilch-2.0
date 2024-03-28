@@ -4,26 +4,26 @@
     $isHTTPS = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
     $pages = (empty($this->get('pages')) ? [] : $this->get('pages'));
 ?>
-<h1><?=$this->getTrans('settings') ?></h1>
+<h1><?= $this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST">
-    <?=$this->getTokenField() ?>
+    <?= $this->getTokenField() ?>
     <div class="row mb-3">
         <label for="startPage" class="col-xl-2 control-label">
-            <?=$this->getTrans('startPage') ?>:
+            <?= $this->getTrans('startPage') ?>:
         </label>
         <div class="col-xl-4">
             <select class="form-control" id="startPage" name="startPage">
-                <optgroup label="<?=$this->getTrans('pages') ?>">
+                <optgroup label="<?= $this->getTrans('pages') ?>">
                     <?php foreach ($pages as $page): ?>
                         <?php $selected = ''; ?>
                         <?php if ($this->get('startPage') == 'page_'.$page->getID()): ?>
                             <?php $selected = 'selected="selected"'; ?>
                         <?php endif; ?>
 
-                        <option <?=$selected ?> value="page_<?=$page->getID() ?>"><?=$this->escape($page->getTitle()) ?></option>
+                        <option <?= $selected ?> value="page_<?= $page->getID() ?>"><?= $this->escape($page->getTitle()) ?></option>
                     <?php endforeach; ?>
                 </optgroup>
-                <optgroup label="<?=$this->getTrans('modules') ?>">
+                <optgroup label="<?= $this->getTrans('modules') ?>">
                     <?php $moduleMapper = new \Modules\Admin\Mappers\Module(); ?>
                     <?php foreach ($this->get('modules') as $module): ?>
                         <?php $content = $module->getContentForLocale($this->getTranslator()->getLocale()); ?>
@@ -32,10 +32,10 @@
                             <?php $selected = 'selected="selected"'; ?>
                         <?php endif; ?>
 
-                        <option <?=$selected ?> value="module_<?=$module->getKey() ?>"><?=$this->escape($content['name']) ?></option>
+                        <option <?= $selected ?> value="module_<?= $module->getKey() ?>"><?= $this->escape($content['name']) ?></option>
                     <?php endforeach; ?>
                 </optgroup>
-                <optgroup label="<?=$this->getTrans('layouts') ?>">
+                <optgroup label="<?= $this->getTrans('layouts') ?>">
                 <?php $layouts = []; ?>
                 <?php foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath): ?>
                     <?php if (is_dir($layoutPath)): ?>
@@ -53,7 +53,7 @@
                         <?php endif; ?>
 
                         <?php if (!empty($module)): ?>
-                            <option <?=$selected ?> value="layouts_<?=$module ?>"><?=$module ?></option>
+                            <option <?= $selected ?> value="layouts_<?= $module ?>"><?= $module ?></option>
                         <?php endif; ?>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -61,23 +61,23 @@
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('multilingualAcp') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?= $this->validation()->hasError('multilingualAcp') ? ' has-error' : '' ?>">
         <div class="col-xl-2 control-label">
-            <?=$this->getTrans('multilingualAcp') ?>:
+            <?= $this->getTrans('multilingualAcp') ?>:
         </div>
         <div class="col-xl-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="multilingualAcp-on" name="multilingualAcp" value="1" <?php if ($this->get('multilingualAcp') == '1') { echo 'checked="checked"'; } ?> />
-                <label for="multilingualAcp-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="multilingualAcp-off" name="multilingualAcp" value="0" <?php if ($this->get('multilingualAcp') != '1') { echo 'checked="checked"'; } ?> />
-                <label for="multilingualAcp-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <input type="radio" class="flipswitch-input" id="multilingualAcp-on" name="multilingualAcp" value="1" <?= $this->get('multilingualAcp') == '1' ? 'checked="checked"' : '' ?> />
+                <label for="multilingualAcp-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="multilingualAcp-off" name="multilingualAcp" value="0" <?= $this->get('multilingualAcp') != '1' ? 'checked="checked"' : '' ?> />
+                <label for="multilingualAcp-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
-    <div id="contentLanguage" class="row mb-3" <?=($this->get('multilingualAcp') != '1') ? 'hidden' : ''; } ?>>
+    <div id="contentLanguage" class="row mb-3"<?= ($this->get('multilingualAcp') != '1') ? ' hidden' : ''; ?>>
         <label for="languageInput" class="col-xl-2 control-label">
-            <?=$this->getTrans('contentLanguage') ?>:
+            <?= $this->getTrans('contentLanguage') ?>:
         </label>
         <div class="col-xl-4">
             <select class="form-control" id="languageInput" name="contentLanguage">
@@ -87,14 +87,14 @@
                         <?php $selected = 'selected="selected"'; ?>
                     <?php endif; ?>
 
-                    <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
+                    <option <?= $selected ?> value="<?= $key ?>"><?= $this->escape($value) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
     </div>
     <div id="contentLanguage" class="row mb-3">
         <label for="localeInput" class="col-xl-2 control-label">
-            <?=$this->getTrans('locale') ?>:
+            <?= $this->getTrans('locale') ?>:
         </label>
         <div class="col-xl-4">
             <select class="form-control" id="languageInput" name="locale">
@@ -104,14 +104,14 @@
                         <?php $selected = 'selected="selected"'; ?>
                     <?php endif; ?>
 
-                    <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
+                    <option <?= $selected ?> value="<?= $key ?>"><?= $this->escape($value) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
     </div>
     <div class="row mb-3">
         <label for="timezone" class="col-xl-2 control-label">
-            <?=$this->getTrans('timezone') ?>:
+            <?= $this->getTrans('timezone') ?>:
         </label>
         <div class="col-xl-4">
             <select class="form-control" id="timezone" name="timezone">
@@ -122,27 +122,27 @@
                         <?php $sel = 'selected="selected"'; ?>
                     <?php endif; ?>
 
-                    <option <?=$sel ?> value="<?=$this->escape($timezones[$i]) ?>"><?=$this->escape($timezones[$i]) ?></option>
+                    <option <?= $sel ?> value="<?= $this->escape($timezones[$i]) ?>"><?= $this->escape($timezones[$i]) ?></option>
                <?php endfor; ?>
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('standardMail') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?= $this->validation()->hasError('standardMail') ? ' has-error' : '' ?>">
         <label for="standardMailInput" class="col-xl-2 control-label">
-            <?=$this->getTrans('standardMail') ?>:
+            <?= $this->getTrans('standardMail') ?>:
         </label>
         <div class="col-xl-4">
             <input type="email"
                    class="form-control"
                    id="standardMailInput"
                    name="standardMail"
-                   value="<?=$this->escape($this->get('standardMail')) ?>"
+                   value="<?= $this->escape($this->get('standardMail')) ?>"
                    required />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('defaultPaginationObjects') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?= $this->validation()->hasError('defaultPaginationObjects') ? ' has-error' : '' ?>">
         <label for="defaultPaginationObjectsInput" class="col-xl-2 control-label">
-            <?=$this->getTrans('defaultPaginationObjects') ?>:
+            <?= $this->getTrans('defaultPaginationObjects') ?>:
         </label>
         <div class="col-xl-1">
             <input type="number"
@@ -150,70 +150,70 @@
                    id="defaultPaginationObjectsInput"
                    name="defaultPaginationObjects"
                    min="1"
-                   value="<?=$this->escape($this->get('defaultPaginationObjects')) ?>" />
+                   value="<?= $this->escape($this->get('defaultPaginationObjects')) ?>" />
         </div>
     </div>
 
-    <h1><?=$this->getTrans('captcha') ?></h1>
+    <h1><?= $this->getTrans('captcha') ?></h1>
     <div class="row mb-3">
         <div for="captcha" class="col-xl-2 control-label">
-            <?=$this->getTrans('captcha') ?>:
+            <?= $this->getTrans('captcha') ?>:
         </div>
         <div class="col-xl-4">
             <select class="form-control" id="captcha" name="captcha">
-                <option <?=($this->get('captcha') == 0 || !$this->get('captcha') ? 'selected="selected"' : '') ?> value="0"><?=$this->getTrans('default') ?></option>
-                <option <?=($this->get('captcha') == 2 ? 'selected="selected"' : '') ?> value="2"><?=$this->getTrans('grecaptcha') ?> V2</option>
-                <option <?=($this->get('captcha') == 3 ? 'selected="selected"' : '') ?> value="3"><?=$this->getTrans('grecaptcha') ?> V3</option>
+                <option <?= ($this->get('captcha') == 0 || !$this->get('captcha') ? 'selected="selected"' : '') ?> value="0"><?= $this->getTrans('default') ?></option>
+                <option <?= ($this->get('captcha') == 2 ? 'selected="selected"' : '') ?> value="2"><?= $this->getTrans('grecaptcha') ?> V2</option>
+                <option <?= ($this->get('captcha') == 3 ? 'selected="selected"' : '') ?> value="3"><?= $this->getTrans('grecaptcha') ?> V3</option>
             </select>
         </div>
     </div>
     <div id="captcha_apikey_info" class="row mb-3">
         <div class="col-xl-6 alert alert-info">
-            <?=$this->getTrans('captcha_apikey_info', '<a href="https://www.google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>') ?>
+            <?= $this->getTrans('captcha_apikey_info', '<a href="https://www.google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>') ?>
         </div>
     </div>
     <div id="captcha_apikey" class="">
         <div class="row mb-3">
             <label for="captcha_apikey" class="col-xl-2 control-label">
-                    <?=$this->getTrans('captcha_apikey') ?>:
+                    <?= $this->getTrans('captcha_apikey') ?>:
             </label>
             <div class="col-xl-4">
                 <input class="form-control"
                        type="text"
                        id="captcha_apikey"
                        name="captcha_apikey"
-                       value="<?=$this->get('captcha_apikey') ?>" />
+                       value="<?= $this->get('captcha_apikey') ?>" />
             </div>
         </div>
     </div>
     <div id="captcha_seckey" class="">
         <div class="row mb-3">
             <label for="captcha_seckey" class="col-xl-2 control-label">
-                    <?=$this->getTrans('captcha_seckey') ?>:
+                    <?= $this->getTrans('captcha_seckey') ?>:
             </label>
             <div class="col-xl-4">
                 <input class="form-control"
                        type="text"
                        id="captcha_seckey"
                        name="captcha_seckey"
-                       value="<?=$this->get('captcha_seckey') ?>" />
+                       value="<?= $this->get('captcha_seckey') ?>" />
             </div>
         </div>
     </div>
     <div class="row mb-3">
         <label for="hideCaptchaFor" class="col-xl-2 control-label">
-            <?=$this->getTrans('hideCaptchaFor') ?>:
+            <?= $this->getTrans('hideCaptchaFor') ?>:
         </label>
         <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="hideCaptchaFor"
                     name="groups[]"
-                    data-placeholder="<?=$this->getTrans('hideCaptchaFor') ?>"
+                    data-placeholder="<?= $this->getTrans('hideCaptchaFor') ?>"
                     multiple>
                 <?php
                 foreach ($this->get('groupList') as $group) {
                     ?>
-                    <option value="<?=$group->getId() ?>"
+                    <option value="<?= $group->getId() ?>"
                         <?php
                         foreach ($this->get('hideCaptchaFor') as $assignedGroup) {
                             if ($group->getId() == $assignedGroup) {
@@ -222,7 +222,7 @@
                             }
                         }
                         ?>>
-                        <?=$this->escape($group->getName()) ?>
+                        <?= $this->escape($group->getName()) ?>
                     </option>
                     <?php
                 }
@@ -231,40 +231,40 @@
         </div>
     </div>
 
-    <h1><?=$this->getTrans('htmlPurifier') ?></h1>
-    <p><?=$this->getTrans('htmlPurifierDescription') ?></p>
+    <h1><?= $this->getTrans('htmlPurifier') ?></h1>
+    <p><?= $this->getTrans('htmlPurifierDescription') ?></p>
     <div id="htmlPurifier" class="row mb-3">
         <div class="col-xl-2 control-label">
-            <?=$this->getTrans('htmlPurifier') ?>:
+            <?= $this->getTrans('htmlPurifier') ?>:
         </div>
         <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="htmlPurifier-on" name="htmlPurifier" value="1" <?= ($this->get('htmlPurifier')) ? 'checked="checked"' : '' ?> />
-                <label for="htmlPurifier-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <label for="htmlPurifier-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
                 <input type="radio" class="flipswitch-input" id="htmlPurifier-off" name="htmlPurifier" value="0" <?= (!$this->get('htmlPurifier')) ? 'checked="checked"' : '' ?> />
-                <label for="htmlPurifier-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <label for="htmlPurifier-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
 
-    <h1><?=$this->getTrans('backendFunctions') ?></h1>
+    <h1><?= $this->getTrans('backendFunctions') ?></h1>
     <div id="hmenuFixed" class="row mb-3">
         <div class="col-xl-2 control-label">
-            <?=$this->getTrans('hmenuFixed') ?>:
+            <?= $this->getTrans('hmenuFixed') ?>:
         </div>
         <div class="col-xl-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="hmenuFixed-on" name="hmenuFixed" value="1" <?php if ($this->get('hmenuFixed') === 'hmenu-fixed') { echo 'checked="checked"'; } ?> />
-                <label for="hmenuFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="hmenuFixed-off" name="hmenuFixed" value="0" <?php if ($this->get('hmenuFixed') == '') { echo 'checked="checked"'; } ?> />
-                <label for="hmenuFixed-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <input type="radio" class="flipswitch-input" id="hmenuFixed-on" name="hmenuFixed" value="1" <?= $this->get('hmenuFixed') === 'hmenu-fixed' ? 'checked="checked"' : '' ?> />
+                <label for="hmenuFixed-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="hmenuFixed-off" name="hmenuFixed" value="0" <?= $this->get('hmenuFixed') == '' ? 'checked="checked"' : '' ?> />
+                <label for="hmenuFixed-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
 
-    <h1><?=$this->getTrans('updateserver') ?></h1>
+    <h1><?= $this->getTrans('updateserver') ?></h1>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -277,9 +277,9 @@
             <thead>
                 <th></th>
                 <th></th>
-                <th><?=$this->getTrans('url') ?></th>
-                <th><?=$this->getTrans('operator') ?></th>
-                <th><?=$this->getTrans('country') ?></th>
+                <th><?= $this->getTrans('url') ?></th>
+                <th><?= $this->getTrans('operator') ?></th>
+                <th><?= $this->getTrans('country') ?></th>
             </thead>
             <tbody>
                 <?php foreach ($updateservers as $updateserver): ?>
@@ -287,17 +287,17 @@
                         continue;
                     } ?>
                     <tr>
-                        <td><input type="radio" id="updateserver<?=$index ?>" name="updateserver" value="<?=$updateserver->getURL() ?>" <?=($updateserver->getURL() == $this->get('updateserver')) ? ' checked="checked"' : '' ?>></td>
-                        <td><?=(strpos($updateserver->getURL(), 'https://') !== false) ? '<span class="fa-solid fa-lock"></span>': '<span class="fa-solid fa-unlock"></span>' ?></td>
-                        <td><?=$this->escape($updateserver->getURL()) ?></td>
-                        <td><?=$this->escape($updateserver->getOperator()) ?></td>
-                        <td><?=$this->escape($updateserver->getCountry()) ?></td>
+                        <td><input type="radio" id="updateserver<?= $index ?>" name="updateserver" value="<?= $updateserver->getURL() ?>" <?= ($updateserver->getURL() == $this->get('updateserver')) ? ' checked="checked"' : '' ?>></td>
+                        <td><?= (strpos($updateserver->getURL(), 'https://') !== false) ? '<span class="fa-solid fa-lock"></span>': '<span class="fa-solid fa-unlock"></span>' ?></td>
+                        <td><?= $this->escape($updateserver->getURL()) ?></td>
+                        <td><?= $this->escape($updateserver->getOperator()) ?></td>
+                        <td><?= $this->escape($updateserver->getCountry()) ?></td>
                     </tr>
                 <?php $index++; endforeach; ?>
             </tbody>
         </table>
     </div>
-    <?=$this->getSaveBar() ?>
+    <?= $this->getSaveBar() ?>
 </form>
 
 <script>
