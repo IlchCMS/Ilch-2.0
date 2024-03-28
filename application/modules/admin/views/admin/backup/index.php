@@ -1,6 +1,7 @@
 <h1><?=$this->getTrans('menuBackup') ?></h1>
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
+    <?php if ($this->get('backups') != ''): ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -22,24 +23,23 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if ($this->get('backups') != ''): ?>
-                    <?php foreach ($this->get('backups') as $backup): ?>
-                        <tr>
-                            <td><?=$this->getDeleteCheckbox('id', $backup->getId()) ?></td>
-                            <td><a href="<?=$this->getUrl(['action' => 'download', 'id' => $backup->getId()], null, true) ?>" title="<?=$this->getTrans('download') ?>"><span class="fa-solid fa-download"></span></a></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
-                            <td><?=$this->escape($backup->getDate()) ?></td>
-                            <td><?=formatBytes(filesize(ROOT_PATH . '/backups/' . $backup->getName())) ?></td>
-                            <td><?=$this->escape(preg_replace('/_[^_.]*\./', '.', $backup->getName())) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5"><?=$this->getTrans('noBackups') ?></td>
-                    </tr>
-                <?php endif; ?>
+            <?php foreach ($this->get('backups') as $backup): ?>
+                <tr>
+                    <td><?=$this->getDeleteCheckbox('id', $backup->getId()) ?></td>
+                    <td><a href="<?=$this->getUrl(['action' => 'download', 'id' => $backup->getId()], null, true) ?>" title="<?=$this->getTrans('download') ?>"><span class="fa-solid fa-download"></span></a></td>
+                    <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
+                    <td><?=$this->escape($backup->getDate()) ?></td>
+                    <td><?=formatBytes(filesize(ROOT_PATH . '/backups/' . $backup->getName())) ?></td>
+                    <td><?=$this->escape(preg_replace('/_[^_.]*\./', '.', $backup->getName())) ?></td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+    <?php else: ?>
+        <tr>
+            <td colspan="5"><?=$this->getTrans('noBackups') ?></td>
+        </tr>
+    <?php endif; ?>
     <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>
