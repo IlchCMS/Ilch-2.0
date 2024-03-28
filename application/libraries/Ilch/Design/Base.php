@@ -781,8 +781,8 @@ abstract class Base
     public function getDialog(string $id, string $name, string $content, $submit = null): string
     {
         $html = '<div class="modal fade" id="' . $id . '">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content modal-xl">
+            <div class="modal-dialog">
+                <div class="modal-content">
                     <div class="modal-header">
                         <button type="button"
                                 class="btn-close"

@@ -133,6 +133,8 @@ img {
     z-index: 100000 !important;
     visibility: visible;
     overflow: hidden;
+    padding: 1%;
+    --bs-modal-width: 100%;
 }
 #mediaModal .modal-dialog {
     width: 100%;
@@ -143,7 +145,6 @@ img {
 #mediaModal .modal-content {
     height: 96%;
     border-radius: 0;
-    margin: 1%;
     overflow: hidden;
 }
 #mediaModal .modal-body {
@@ -153,10 +154,6 @@ img {
 }
 #mediaModal .modal-footer {
     display: none;
-}
-
-#main, #mediaModal .modal-header {
-
 }
 #main, #mediaModal .modal-header .btn-close {
     position: absolute;
