@@ -13,7 +13,7 @@ $training = $this->get('training');
 </h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="title" class="col-xl-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -25,11 +25,11 @@ $training = $this->get('training');
                    value="<?=$this->escape($this->originalInput('title', $training->getTitle())) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="date" class="col-md-2 control-label">
             <?=$this->getTrans('dateTime') ?>:
         </label>
-        <div class="col-xl-2 input-group ilch-date date form_datetime">
+        <div class="col-xl-2 input-group ilch-date date form_datetime" id="date">
             <?php
             $datecreate = '';
             if ($training->getDate()) {
@@ -45,12 +45,12 @@ $training = $this->get('training');
                    name="date"
                    value="<?=$this->escape($this->originalInput('date', $datecreate)) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="time" class="col-xl-2 control-label">
             <?=$this->getTrans('time') ?>:
         </label>
@@ -63,7 +63,7 @@ $training = $this->get('training');
                    value="<?=$this->escape($this->originalInput('time', $training->getTime())) ?>">
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="place" class="col-xl-2 control-label">
             <?=$this->getTrans('place') ?>:
         </label>
@@ -75,7 +75,7 @@ $training = $this->get('training');
                    value="<?=$this->escape($this->originalInput('place', $training->getPlace())) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="contact" class="col-xl-2 control-label">
             <?=$this->getTrans('contactPerson') ?>:
         </label>
@@ -93,7 +93,7 @@ $training = $this->get('training');
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="voiceServer" class="col-xl-2 control-label">
             <?=$this->getTrans('voiceServer') ?>:
         </label>
@@ -115,7 +115,7 @@ $training = $this->get('training');
     }
     ?>
     <div id="voiceServerInfo" <?=$voiceDisplay ?>>
-        <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="voiceServerIP" class="col-xl-2 control-label">
                 <?=$this->getTrans('voiceServerIP') ?>:
             </label>
@@ -128,7 +128,7 @@ $training = $this->get('training');
                        value="<?=$this->escape($this->originalInput('voiceServerIP', $training->getVoiceServerIP())) ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="voiceServerPW" class="col-xl-2 control-label">
                 <?=$this->getTrans('voiceServerPW') ?>:
             </label>
@@ -142,7 +142,7 @@ $training = $this->get('training');
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="gameServer" class="col-xl-2 control-label">
             <?=$this->getTrans('gameServer') ?>:
         </label>
@@ -164,7 +164,7 @@ $training = $this->get('training');
     }
     ?>
     <div id="gameServerInfo" <?=$gameDisplay ?>>
-        <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="gameServerIP" class="col-xl-2 control-label">
                 <?=$this->getTrans('gameServerIP') ?>:
             </label>
@@ -177,7 +177,7 @@ $training = $this->get('training');
                        value="<?=$this->escape($this->originalInput('gameServerIP', $training->getGameServerIP())) ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="gameServerPW" class="col-xl-2 control-label">
                 <?=$this->getTrans('gameServerPW') ?>:
             </label>
@@ -191,7 +191,7 @@ $training = $this->get('training');
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-xl-2 control-label">
             <?=$this->getTrans('otherInfo') ?>:
         </label>
@@ -203,7 +203,7 @@ $training = $this->get('training');
                       rows="5"><?=$this->escape($this->originalInput('text', $training->getText())) ?></textarea>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="access" class="col-xl-2 control-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
@@ -218,7 +218,7 @@ $training = $this->get('training');
         </div>
     </div>
     <?php if ($this->get('calendarShow')) : ?>
-        <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="calendarShow" class="col-xl-2 control-label">
                 <?=$this->getTrans('calendarShow') ?>
             </label>
@@ -236,21 +236,33 @@ $training = $this->get('training');
     <?=$this->getSaveBar($training->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
     $('#access').chosen();
 
     $(document).ready(function() {
-        $(".form_datetime").datetimepicker({
-            format: "dd.mm.yyyy hh:ii",
-            startDate: new Date(),
-            autoclose: true,
-            language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-            minuteStep: 15,
-            todayHighlight: true
+        new tempusDominus.TempusDominus(document.getElementById('date'), {
+            restrictions: {
+              minDate: new Date()
+            },
+            display: {
+                sideBySide: true,
+                calendarWeeks: true,
+                buttons: {
+                    today: true,
+                    close: true
+                }
+            },
+            localization: {
+                locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+                startOfTheWeek: 1,
+                format: "dd.MM.yyyy HH:mm"
+            },
+            stepping: 15
         });
     });
 
