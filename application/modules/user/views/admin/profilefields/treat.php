@@ -149,7 +149,7 @@ $iconArray = [
             </label>
             <div class="col-xl-4">
                 <div class="input-group">
-                    <select class="form-control input-group-addon" name="profileFieldTrans<?=$i ?>[locale]" id="profileFieldName<?=$i ?>" onchange="isDuplicate()">
+                    <select class="form-select" name="profileFieldTrans<?=$i ?>[locale]" id="profileFieldName<?=$i ?>" onchange="isDuplicate()">
                         <option selected="selected" disabled><?=$this->getTrans('pleaseSelect') ?></option>
                         <?php foreach ($localeList as $key => $locale) :?>
                             <option value="<?=$key ?>"
@@ -158,9 +158,7 @@ $iconArray = [
                         <?php next($localeList);
                         endforeach; ?>
                     </select>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-outline-secondary" onclick="deleteTranslation(<?=$i ?>)">-</button>
-                    </span>
+                    <button type="button" class="btn btn-outline-secondary" onclick="deleteTranslation(<?=$i ?>)"><i class="fa-solid fa-minus"></i></button>
                     <input type="text"
                            class="form-control"
                            id="profileFieldName<?=$i ?>"
@@ -179,7 +177,7 @@ $iconArray = [
                 <?=$this->getTrans('addProfileFieldTranslation') ?>
             </label>
             <div class="col-xl-4">
-                <button type="button" class="btn btn-outline-secondary" onclick="addTranslations()">+</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="addTranslations()"><i class="fa-solid fa-plus"></i></button>
             </div>
         </div>
     </div>
@@ -323,7 +321,7 @@ function addTranslations() {
         '<label for="" class="col-lg-2 control-label"><?=$this->getTrans('profileFieldName') ?></label>' +
         '<div class="col-lg-4">' +
         '<div class="input-group">' +
-        '<select class="form-control input-group-text" name="profileFieldTrans' + index + '[locale]" onchange="isDuplicate()" required>' +
+        '<select class="form-select" name="profileFieldTrans' + index + '[locale]" onchange="isDuplicate()" required>' +
         '<option selected="true" disabled><?=$this->getTrans('pleaseSelect') ?></option>' +
         <?php
         foreach ($localeList as $key => $locale) :?>
@@ -331,9 +329,7 @@ function addTranslations() {
         <?php next($localeList);
         endforeach; ?>
         '</select>' +
-        '<span class="input-group-btn">' +
-        '<button type="button" class="btn btn-outline-secondary" onclick="deleteTranslation(' + index + ')">-</button>' +
-        '</span>' +
+        '<button type="button" class="btn btn-outline-secondary" onclick="deleteTranslation(' + index + ')"><i class="fa-solid fa-minus"></i></button>' +
         '<input type="text"' +
         'class="form-control"' +
         'id="profileFieldName' + index + '"' +
