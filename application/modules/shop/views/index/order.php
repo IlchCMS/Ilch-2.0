@@ -482,7 +482,7 @@ if (!empty($_SESSION['shopping_cart'])) {
             <div class="row mb-3">
                 <div class="col-xl-8">
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
                         <input type="text"
                                class="form-control"
                                name="login_emailname"
@@ -493,7 +493,7 @@ if (!empty($_SESSION['shopping_cart'])) {
             <div class="row mb-3">
                 <div class="col-xl-8">
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
+                        <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
                         <input type="password"
                                class="form-control"
                                name="login_password"
