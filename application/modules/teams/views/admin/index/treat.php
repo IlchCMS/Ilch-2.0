@@ -20,7 +20,7 @@ $userGroupList = $this->get('userGroupList');
 </h1>
 <form class="form-horizontal" method="POST" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-2 control-label">
             <?=$this->getTrans('teamName') ?>
         </label>
@@ -32,37 +32,33 @@ $userGroupList = $this->get('userGroupList');
                    value="<?=$this->escape($this->originalInput('name', $team->getName())) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('upl') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('upl') ? ' has-error' : '' ?>">
         <label for="upl" class="col-xl-2 control-label">
             <?=$this->getTrans('img') ?>:
         </label>
         <div class="col-lg-4">
-            <div class="row">
-                <?php if ($team->getImg() != '') : ?>
-                    <div class="col-xl-12">
-                        <img src="<?=$this->getBaseUrl($team->getImg()) ?>" alt="<?=$this->getTrans('img') . ' ' . $this->escape($team->getName()) ?>">
+            <?php if ($team->getImg() != '') : ?>
+                <div class="col-xl-12">
+                    <img src="<?=$this->getBaseUrl($team->getImg()) ?>" alt="<?=$this->getTrans('img') . ' ' . $this->escape($team->getName()) ?>">
 
-                        <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
-                            <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('imageDelete') ?>
-                        </label>
-                    </div>
-                <?php endif; ?>
-                <div class="col-lg-12 input-group">
-                    <span class="input-group-btn">
-                        <span class="btn btn-primary btn-file">
-                            Browse&hellip; <input type="file" name="img" accept="image/*">
-                        </span>
-                    </span>
-                    <input type="text"
-                           name="upl"
-                           id="upl"
-                           class="form-control"
-                           readonly />
+                    <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
+                        <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('imageDelete') ?>
+                    </label>
                 </div>
+            <?php endif; ?>
+            <div class="col-lg-12 input-group">
+                <span class="btn btn-primary btn-file">
+                    <?=$this->getTrans('browse') ?> <input type="file" name="img" accept="image/*">
+                </span>
+                <input type="text"
+                       name="upl"
+                       id="upl"
+                       class="form-control"
+                       readonly />
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('leader') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('leader') ? ' has-error' : '' ?>">
         <label for="leader" class="col-xl-2 control-label">
             <?=$this->getTrans('leader') ?>
         </label>
@@ -84,7 +80,7 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('coLeader') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('coLeader') ? ' has-error' : '' ?>">
         <label for="coLeader" class="col-xl-2 control-label">
             <?=$this->getTrans('coLeader') ?>
         </label>
@@ -106,12 +102,12 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('members') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('members') ? ' has-error' : '' ?>">
         <label for="groupId" class="col-xl-2 control-label">
             <?=$this->getTrans('group') ?>
         </label>
         <div class="col-xl-4">
-            <select class="form-control" id="groupId" name="groupId">
+            <select class="form-select" id="groupId" name="groupId">
                 <optgroup label="<?=$this->getTrans('groups') ?>">
                     <?php
                     /** @var \Modules\User\Models\Group $group */
@@ -125,7 +121,7 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('optShow') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('optShow') ? ' has-error' : '' ?>">
         <label for="optShow" class="col-xl-2 control-label">
             <?=$this->getTrans('optShow') ?>:
         </label>
@@ -139,7 +135,7 @@ $userGroupList = $this->get('userGroupList');
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('optIn') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('optIn') ? ' has-error' : '' ?>">
         <label for="optIn" class="col-xl-2 control-label">
             <?=$this->getTrans('optIn') ?>:
         </label>
@@ -153,7 +149,7 @@ $userGroupList = $this->get('userGroupList');
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('notifyLeader') ? 'has-error' : '' ?>" id="notifyLeader">
+    <div class="row mb-3<?=$this->validation()->hasError('notifyLeader') ? ' has-error' : '' ?>" id="notifyLeader">
         <label for="notifyLeader" class="col-xl-2 control-label">
             <?=$this->getTrans('notifyLeader') ?>:
         </label>

@@ -28,10 +28,8 @@ $settingMapper = $this->get('settingMapper');
                         <p><?=$this->getTrans('maxFilesize') ?>: <?=$settingMapper->getNicebytes($this->get('avatar_size')) ?>.</p>
                         <p><?=$this->getTrans('allowedFileExtensions') ?>: <?=str_replace(' ', ', ', $this->get('avatar_filetypes')) ?></p>
                         <div class="input-group col-xl-6">
-                            <span class="input-group-btn">
-                                <span class="btn btn-primary btn-file">
-                                    <?=$this->getTrans('browse') ?> <input type="file" name="avatar" accept="image/*">
-                                </span>
+                            <span class="btn btn-primary btn-file">
+                                <?=$this->getTrans('browse') ?> <input type="file" name="avatar" accept="image/*">
                             </span>
                             <input type="text"
                                    class="form-control"

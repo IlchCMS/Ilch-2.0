@@ -195,16 +195,12 @@ $iconArray = [
                     <?php foreach ($options as $key => $value): ?>
                         <div class="mb-3 input-group">
                             <input type="text" name="profileFieldOptions[<?=$key ?>]" class="form-control required" value="<?=$this->escape($value) ?>" />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-danger btn-remove">-</button>
-                            </span>
+                            <button type="button" class="btn btn-danger btn-remove"><i class="fa-solid fa-minus"></i></button>
                         </div>
                     <?php endforeach; ?>
                     <div class="mb-3 input-group">
                         <input type="text" name="profileFieldOptions[]" class="form-control">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-success btn-add">+</button>
-                        </span>
+                        <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
             </div>
@@ -216,9 +212,7 @@ $iconArray = [
             <div class="col-xl-4">
                 <div class="mb-3 input-group">
                     <input type="text" name="profileFieldOptions[]" id="profileFieldOptions" class="form-control">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-success btn-add">+</button>
-                    </span>
+                    <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
                 </div>
             </div>
         </div>

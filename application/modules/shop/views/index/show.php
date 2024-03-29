@@ -177,18 +177,14 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                             <?=$this->getTokenField() ?>
                             <input type="hidden" name="code" value="<?=$shopItem->getCode() ?>" />
                                 <div class="input-group input-group-sm quantity">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-outline-secondary plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
-                                    </span>
+                                    <button class="btn btn-outline-secondary plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
                                     <input class="form-control item-quantity"
                                         type="text"
                                         id="quantity"
                                         name="quantity"
                                         value="1"
                                         readonly>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-outline-secondary minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
-                                    </span>
+                                    <button class="btn btn-outline-secondary minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
                                 </div>
                                 <button type="submit" class="btn btn-sm btn-warning"><i class="fa-solid fa-shopping-cart"></i> <?=$this->getTrans('inToCart') ?></button>
                             </form>

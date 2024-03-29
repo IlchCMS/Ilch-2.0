@@ -287,9 +287,7 @@ $accesses = $this->get('accesses');
                     <div id="search-div" class="search-close">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-secondary"><?=$this->getTrans('go') ?></button>
-                            </span>
+                            <button type="button" class="btn btn-secondary"><?=$this->getTrans('go') ?></button>
                         </div>
                     </div>
                 </li>
