@@ -1,12 +1,12 @@
 <style>
-div.input-group-option:last-child span.input-group-addon-remove{
+div.input-group-option:last-child span.input-group-text-remove{
     display: none;
 }
 div.input-group-option:last-child input.form-control{
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
 }
-div.input-group-option span.input-group-addon-remove{
+div.input-group-option span.input-group-text-remove{
     cursor: pointer;
 }
 div.input-group-option{
@@ -21,7 +21,7 @@ div.input-group-option{
     <div class="row mb-3 form-group-options">
         <div class="input-group-option col-xl-6 col-lg-6 col-xs-12">
             <input type="text" class="form-control" name="title_option[]" placeholder="<?=$this->getTrans('catTitle') ?>">
-            <span class="input-group-addon input-group-addon-remove">
+            <span class="input-group-text input-group-text-remove">
                 <span class="fa fa-times"></span>
             </span>
         </div>
@@ -37,7 +37,7 @@ $(function() {
         $(this).parent().parent().append('<div class="'+sInputGroupClasses+'">'+sInputGroupHtml+'</div>');
     });
 
-    $(document).on('click', 'div.form-group-options .input-group-addon-remove', function() {
+    $(document).on('click', 'div.form-group-options .input-group-text-remove', function() {
         $(this).parent().remove();
     });
 });

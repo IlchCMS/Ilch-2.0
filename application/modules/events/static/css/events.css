@@ -368,10 +368,10 @@ input[readonly] {
 }
 
 
-.input-group > .input-group-addon:not(:last-child):not(:nth-last-child(2)) {
+.input-group > .input-group-text:not(:last-child):not(:nth-last-child(2)) {
     border-right-width: 0;
 }
-.input-group > :not(.input-group-addon):not(.input-group-btn) + .input-group-addon {
+.input-group > :not(.input-group-text):not(.input-group-btn) + .input-group-text {
     border-left-width: 0;
 }
 .input-group > .input-group-btn:not(:first-child) > .btn,

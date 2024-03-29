@@ -133,7 +133,7 @@ $types = $this->get('types');
                 <?=$this->getTrans('type') ?>
             </label>
             <div class="col-xl-6">
-                <select class="form-control typeselection mb-3" name="typeselection" id="typeselection">
+                <select class="form-select typeselection mb-3" name="typeselection" id="typeselection">
                     <option value=""><?=$this->getTrans('otherOrNone') ?></option>
                     <?php foreach ($types as $type) : ?>
                         <?php if (empty($type)) {
