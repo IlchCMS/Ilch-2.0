@@ -12,7 +12,7 @@
             <?= $this->getTrans('startPage') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="form-control" id="startPage" name="startPage">
+            <select class="form-control form-select" id="startPage" name="startPage">
                 <optgroup label="<?= $this->getTrans('pages') ?>">
                     <?php foreach ($pages as $page): ?>
                         <?php $selected = ''; ?>
@@ -80,7 +80,7 @@
             <?= $this->getTrans('contentLanguage') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="form-control" id="languageInput" name="contentLanguage">
+            <select class="form-control form-select" id="languageInput" name="contentLanguage">
                 <?php foreach ($this->get('languages') as $key => $value): ?>
                     <?php $selected = ''; ?>
                     <?php if ($this->get('contentLanguage') == $key): ?>
@@ -97,7 +97,7 @@
             <?= $this->getTrans('locale') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="form-control" id="languageInput" name="locale">
+            <select class="form-control form-select" id="languageInput" name="locale">
                 <?php foreach ($this->get('languages') as $key => $value): ?>
                     <?php $selected = ''; ?>
                     <?php if ($this->get('locale') == $key): ?>
@@ -114,7 +114,7 @@
             <?= $this->getTrans('timezone') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="form-control" id="timezone" name="timezone">
+            <select class="form-control form-select" id="timezone" name="timezone">
                 <?php $timezones = $this->get('timezones'); ?>
                 <?php for ($i = 0, $iMax = count($timezones); $i < $iMax; $i++): ?>
                     <?php $sel = ''; ?>
@@ -160,7 +160,7 @@
             <?= $this->getTrans('captcha') ?>:
         </div>
         <div class="col-xl-4">
-            <select class="form-control" id="captcha" name="captcha">
+            <select class="form-control form-select" id="captcha" name="captcha">
                 <option <?= ($this->get('captcha') == 0 || !$this->get('captcha') ? 'selected="selected"' : '') ?> value="0"><?= $this->getTrans('default') ?></option>
                 <option <?= ($this->get('captcha') == 2 ? 'selected="selected"' : '') ?> value="2"><?= $this->getTrans('grecaptcha') ?> V2</option>
                 <option <?= ($this->get('captcha') == 3 ? 'selected="selected"' : '') ?> value="3"><?= $this->getTrans('grecaptcha') ?> V3</option>

@@ -55,12 +55,12 @@ class View extends Design\Base
     public function getSaveBar($saveKey = 'saveButton', $nameKey = null, $deleteKey = '')
     {
         $html = '<div class="content_savebox">
-                    <button type="submit" class="save_button btn btn-outline-secondary" name="save'.$nameKey.'" value="save">
+                    <button type="submit" class="save_button btn" name="save'.$nameKey.'" value="save">
                         '.$this->getTrans($saveKey).'
                     </button>';
 
         if (!empty($deleteKey)) {
-            $html .= '<button type="submit" class="delete_button float-end btn" name="delete" value="delete">
+            $html .= '<button type="submit" class="delete_button btn float-end" name="delete" value="delete">
                         '.$this->getTrans($deleteKey).'
                       </button>';
         }
