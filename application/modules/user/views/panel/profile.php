@@ -10,7 +10,6 @@ if (!empty($profil->getBirthday())) {
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
-<style>.input-group-addon.check {border-left: 1px solid #ccc !important; border-top-left-radius: 4px; border-bottom-left-radius: 4px;}</style>
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <div class="row">
@@ -63,7 +62,7 @@ if (!empty($profil->getBirthday())) {
                         <?=$this->getTrans('profileGender') ?>
                     </label>
                     <div class="col-xl-8">
-                        <select class="form-control" id="gender" name="gender">
+                        <select class="form-select" id="gender" name="gender">
                             <option value="0" <?=(($this->originalInput('gender') != '' && $this->originalInput('gender') == 0) || $profil->getGender() == 0) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderUnknown') ?></option>
                             <option value="1" <?=(($this->originalInput('gender') != '' && $this->originalInput('gender') == 1) || $profil->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderMale') ?></option>
                             <option value="2" <?=(($this->originalInput('gender') != '' && $this->originalInput('gender') == 2) || $profil->getGender() == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderFemale') ?></option>
