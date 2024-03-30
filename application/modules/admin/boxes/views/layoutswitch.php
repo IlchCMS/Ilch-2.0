@@ -1,5 +1,5 @@
 <form action="get">
-    <select class="form-control layoutInput" name="language">
+    <select class="form-select layoutInput" name="language">
     <?php foreach ($this->get('layouts') as $key => $name): ?>
         <?php $sel = ''; ?>
         <?php if ((!isset($_SESSION['layout']) && $key == $this->get('defaultLayout')) || (isset($_SESSION['layout']) && $_SESSION['layout'] == $key)): ?>

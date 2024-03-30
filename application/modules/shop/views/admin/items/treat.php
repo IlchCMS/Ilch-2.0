@@ -119,7 +119,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                            name="cordonText"
                            maxlength="10"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getCordonText()) : $this->escape($this->originalInput('cordonText')) ?>" />
-                    <select class="form-control selectpicker cordon-color" id="cordonColor" name="cordonColor">
+                    <select class="form-select selectpicker cordon-color" id="cordonColor" name="cordonColor">
                         <option selected disabled><?=$this->getTrans('chooseColor') ?></option>
                         <option value="grey" class="grey" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'grey') ? 'selected="selected"' : ''; ?>><?=$this->getTrans('grey') ?></option>
                         <option value="green" class="green" <?=($this->get('shopItem') != '' && $this->get('shopItem')->getCordonColor() == 'green') ? 'selected="selected"' : ''; ?>><?=$this->getTrans('green') ?></option>
