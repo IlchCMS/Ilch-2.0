@@ -784,12 +784,12 @@ abstract class Base
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title" id="modalLabel">' . $name . '</h4>
                         <button type="button"
                                 class="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close">
                         </button>
-                        <h4 class="modal-title" id="modalLabel">' . $name . '</h4>
                     </div>
                     <div class="modal-body">
                         ' . $content . '
