@@ -87,25 +87,21 @@ $vote = $this->get('vote');
             <div class="col-xl-4">
                 <?php foreach ($voteRes as $voteResModel) : ?>
                     <?php $i++; ?>
-                    <div class="row mb-3 input-group">
-                        <input type="text" name="reply[]" class="form-control col-xl-11" value="<?=$this->escape($voteResModel->getReply()) ?>">
-                        <span class="input-group-btn col-xl-1 p-0">
-                            <?php if ($i == $countRes) : ?>
-                                <button type="button" class="btn btn-success btn-add">+</button>
-                            <?php else : ?>
-                                <button type="button" class="btn btn-danger btn-remove">-</button>
-                            <?php endif; ?>
-                        </span>
+                    <div class="mb-3 input-group">
+                        <input type="text" name="reply[]" class="form-control" value="<?=$this->escape($voteResModel->getReply()) ?>">
+                        <?php if ($i == $countRes) : ?>
+                            <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
+                        <?php else : ?>
+                            <button type="button" class="btn btn-danger btn-remove"><i class="fa-solid fa-minus"></i></button>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
         <?php else : ?>
             <div class="col-xl-4">
-                <div class="row mb-3 input-group">
-                    <input type="text" name="reply[]" class="form-control col-xl-11">
-                    <span class="input-group-btn col-xl-1 p-0">
-                        <button type="button" class="btn btn-success btn-add">+</button>
-                    </span>
+                <div class="input-group">
+                    <input type="text" name="reply[]" class="form-control">
+                    <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
                 </div>
             </div>
         <?php endif; ?>

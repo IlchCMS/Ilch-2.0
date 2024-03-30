@@ -11,7 +11,7 @@
             <?=$this->getTrans('compress') ?>:
         </label>
         <div class="col-xl-2">
-            <select class="form-control form-select" id="compress" name="compress">
+            <select class="form-select" id="compress" name="compress">
                 <option><?=$this->getTrans('compressNone') ?></option>
                 <option value="gzip">Gzip</option>
             </select>

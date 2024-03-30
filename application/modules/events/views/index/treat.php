@@ -43,10 +43,8 @@ $types = $this->get('types');
                     </div>
                 </div>
                 <div class="input-group col-xl-7">
-                    <span class="input-group-btn">
-                        <span class="btn btn-primary btn-file">
-                            <?=$this->getTrans('browse') ?>&hellip; <input type="file" name="image" accept="image/*">
-                        </span>
+                    <span class="btn btn-primary btn-file">
+                        <?=$this->getTrans('browse') ?> <input type="file" name="image" accept="image/*">
                     </span>
                     <input type="text"
                            class="form-control"
@@ -196,7 +194,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPrice()) : $this->originalInput('price') ?>" />
             </div>
             <div class="col-xl-2">
-                <select class="form-control form-select" id="currency" name="currency">
+                <select class="form-select" id="currency" name="currency">
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
                     <?php foreach ($this->get('currencies') as $currency) {
                         if ($this->get('event') != '' && $this->get('event')->getCurrency() == $currency->getId()) {
