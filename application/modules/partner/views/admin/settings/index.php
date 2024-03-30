@@ -30,7 +30,7 @@ if ($this->validation()->hasErrors()) {
                 <?=$this->getTrans('boxSliderMode') ?>:
             </label>
             <div class="col-xl-2">
-                <select class="form-control" name="boxSliderMode">
+                <select class="form-select" name="boxSliderMode">
                     <option <?=($this->get('boxSliderMode') === 'vertical') ? 'selected="selected"' : '' ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
                     <option <?=($this->get('boxSliderMode') === 'horizontal') ? 'selected="selected"' : '' ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
                 </select>

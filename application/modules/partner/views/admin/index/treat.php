@@ -27,7 +27,7 @@
                    value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getLink()) : $this->escape($this->originalInput('link')) ?>" />
         </div>
         <div class="col-xl-3">
-            <select class="form-control" id="target" name="target">
+            <select class="form-select" id="target" name="target">
                 <option value="0"<?=($this->get('partner') != '' and $this->get('partner')->getTarget() == 0) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetBlank') ?></option>
                 <option value="1"<?=($this->get('partner') != '' and $this->get('partner')->getTarget() == 1) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetSelf') ?></option>
             </select>

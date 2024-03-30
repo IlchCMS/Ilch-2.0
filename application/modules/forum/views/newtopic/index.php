@@ -45,7 +45,7 @@ if ($this->getUser()) {
                                         <?php $prefixIds = explode(',', $forum->getPrefixes()); ?>
                                         <?php array_unshift($prefixIds, ''); ?>
                                         <div class="col-xl-2 prefix">
-                                            <select class="form-control" id="topicPrefix" name="topicPrefix">
+                                            <select class="form-select" id="topicPrefix" name="topicPrefix">
                                                 <?php foreach ($prefixIds as $prefixId) : ?>
                                                     <?php $selected = ''; ?>
                                                     <?php if ($prefixId == $this->originalInput('topicPrefix')) : ?>

@@ -7,7 +7,7 @@
                     <?=$this->getTrans('showOnly') ?>
                 </label>
                 <div class="col-lg-2">
-                    <select class="form-control" id="pref-perpage" name="filterLastNext">
+                    <select class="form-select" id="pref-perpage" name="filterLastNext">
                         <option value="0" <?=($this->getRequest()->getParam('filterLastNext') == 0)?'selected=""':'' ?>><?=$this->getTrans('all') ?></option>
                         <option value="1" <?=($this->getRequest()->getParam('filterLastNext') == 1)?'selected=""':'' ?>><?=$this->getTrans('warStatusOpen') ?></option>
                         <option value="2" <?=($this->getRequest()->getParam('filterLastNext') == 2)?'selected=""':'' ?>><?=$this->getTrans('warStatusClose') ?></option>

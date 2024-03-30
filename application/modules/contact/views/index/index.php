@@ -23,7 +23,7 @@
                 <?=$this->getTrans('receiver') ?>
             </label>
             <div class="col-xl-8">
-                <select class="form-control" id="receiver" name="receiver">
+                <select class="form-select" id="receiver" name="receiver">
                     <?php foreach ($this->get('receivers') as $receiver): ?>
                         <option value="<?=$receiver->getId() ?>"><?=$this->escape($receiver->getName()) ?></option>
                     <?php endforeach; ?>

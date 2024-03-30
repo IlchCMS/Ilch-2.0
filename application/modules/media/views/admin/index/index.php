@@ -9,7 +9,7 @@
                 <div class="row mb-3">
                     <label class="col-xl-2 control-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage') ?>:</label>
                     <div class="col-xl-2">
-                        <select class="form-control" id="pref-perpage" name="rows">
+                        <select class="form-select" id="pref-perpage" name="rows">
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
@@ -36,7 +36,7 @@
                 <div class="row mb-3">
                     <label class="col-xl-2 control-label" for="pref-orderby"><?=$this->getTrans('orderBy') ?>:</label>
                     <div class="col-xl-2">
-                        <select class="form-control" id="pref-orderby" name="order">
+                        <select class="form-select" id="pref-orderby" name="order">
                             <option value="ASC"><?=$this->getTrans('ascending') ?></option>
                             <option value="DESC"><?=$this->getTrans('descending') ?></option>
                         </select>
@@ -45,7 +45,7 @@
                 <div class="row mb-3">
                     <label class="col-xl-2 control-label" for="pref-orderbytype"><?=$this->getTrans('mediaType') ?>:</label>
                     <div class="col-xl-2">
-                        <select class="form-control" id="pref-orderbytype" name="orderbytype">
+                        <select class="form-select" id="pref-orderbytype" name="orderbytype">
                             <option value="all"><?=$this->getTrans('all') ?></option>
                             <option value="image"><?=$this->getTrans('image') ?></option>
                             <option value="video"><?=$this->getTrans('video') ?></option>

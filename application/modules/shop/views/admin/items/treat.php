@@ -32,7 +32,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 <?=$this->getTrans('cat') ?>:
             </label>
             <div class="col-xl-5">
-                <select class="form-control" id="catId" name="catId">
+                <select class="form-select" id="catId" name="catId">
                     <?php
                     foreach ($this->get('cats') as $model) {
                         $selected = '';

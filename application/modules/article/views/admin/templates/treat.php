@@ -45,7 +45,7 @@ if ($this->get('article') != '') {
                 <?=$this->getTrans('language') ?>:
             </label>
             <div class="col-xl-8">
-                <select class="form-control" id="language" name="language">
+                <select class="form-select" id="language" name="language">
                     <?php
                     foreach ($this->get('languages') as $key => $value) {
                         $selected = '';

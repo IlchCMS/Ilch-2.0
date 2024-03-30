@@ -70,7 +70,7 @@ $cats = $this->get('cats');
             <?=$this->getTrans('category') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="form-control" id="catId" name="catId">
+            <select class="form-select" id="catId" name="catId">
                 <option value="0" <?=($this->originalInput('catId', $link->getCatId()) == 0) ? ' selected' : '' ?>>-- <?=$this->getTrans('optionNoCategory') ?> --</option>
             <?php foreach ($cats as $model) : ?>
                 <option value="<?=$model->getId() ?>"<?=($this->originalInput('catId', $link->getCatId()) == $model->getId()) ? ' selected' : '' ?>><?=$this->escape($model->getName()) ?></option>

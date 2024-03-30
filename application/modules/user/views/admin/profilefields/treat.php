@@ -51,7 +51,7 @@ $iconArray = [
         </label>
         <div class="col-xl-4">
             <div class="input-group">
-                <select class="form-control" id="profileFieldType" name="profileField[type]">
+                <select class="form-select" id="profileFieldType" name="profileField[type]">
                     <?php foreach ($type as $key => $value): ?>
                         <option value="<?=$key ?>"
                             <?=($profileField->getId() && $profileField->getType() == $key) ? ' selected' : '' ?>

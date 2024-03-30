@@ -80,7 +80,7 @@ $training = $this->get('training');
             <?=$this->getTrans('contactPerson') ?>:
         </label>
         <div class="col-xl-2">
-            <select class="form-control" id="contact" name="contact">
+            <select class="form-select" id="contact" name="contact">
                 <?php
                 foreach ($this->get('users') as $user) {
                     $selected = '';

@@ -159,7 +159,7 @@ if (!empty($profil->getBirthday())) {
                             <?php elseif ($profileField->getType() == 5) :
                                 $options = json_decode($profileField->getOptions(), true);?>
                                 <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '<div class="form-check">' ?>
-                                    <select class="form-control" id="<?=$index ?>" name="<?=$index ?>">
+                                    <select class="form-select" id="<?=$index ?>" name="<?=$index ?>">
                                         <?php foreach ($options as $optValue) : ?>
                                             <option value="<?=$optValue ?>" <?=($optValue == $value) ? 'selected' : '' ?>><?=$this->escape($optValue) ?></option>
                                         <?php endforeach; ?>

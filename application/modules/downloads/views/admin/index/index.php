@@ -96,7 +96,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                   <?=$this->getTrans('type') ?>
               </label>
               <div class="col-xl-6">
-                  <select class="form-control" id="type">
+                  <select class="form-select" id="type">
                       <option value="0"><?=$this->getTrans('cat') ?></option>
                       <option value="1"><?=$this->getTrans('downloads') ?></option>
                   </select>
@@ -173,7 +173,7 @@ $(document).ready (
             }
 
             const menuHtml = '<div class="row mb-3"><label for="href" class="col-xl-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
-                              <div class="col-xl-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+                              <div class="col-xl-6"><select class="form-select" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');

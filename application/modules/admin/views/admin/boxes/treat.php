@@ -36,7 +36,7 @@ $entrie = $this->get('box');
                 <?=$this->getTrans('boxLanguage') ?>:
             </label>
             <div class="col-xl-2">
-                <select class="form-control" id="boxLanguage" name="boxLanguage">
+                <select class="form-select" id="boxLanguage" name="boxLanguage">
                     <?php foreach ($this->get('languages') as $key => $value): ?>
                         <?php if ($key == $this->get('contentLanguage')): ?>
                             <?php continue; ?>

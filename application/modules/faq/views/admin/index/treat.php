@@ -20,7 +20,7 @@ $cats = $this->get('cats');
                 <?=$this->getTrans('cat') ?>:
             </label>
             <div class="col-xl-2">
-                <select class="form-control" id="catId" name="catId">
+                <select class="form-select" id="catId" name="catId">
                     <?php foreach ($cats as $model) : ?>
                         <option value="<?=$model->getId() ?>" <?=($this->originalInput('catId', ($faq->getId() ? $faq->getCatId() : 0))) == $model->getId() ? 'selected=""' : '' ?>><?=$this->escape($model->getTitle()) ?></option>
                     <?php endforeach; ?>

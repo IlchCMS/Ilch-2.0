@@ -49,7 +49,7 @@
                 <?=$this->getTrans('smtp_secure') ?>:
             </label>
             <div class="col-xl-2">
-                <select class="form-control" id="smtp_secure" name="smtp_secure">
+                <select class="form-select" id="smtp_secure" name="smtp_secure">
                     <optgroup label="<?=$this->getTrans('smtp_secure') ?>">
                         <?php
                         $values = ['', 'ssl', 'tsl'];

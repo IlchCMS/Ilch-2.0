@@ -96,7 +96,7 @@ $entry = $this->get('calendar');
             <?=$this->getTrans('periodEntry') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="form-control" name="periodType" id="periodType">
+            <select class="form-select" name="periodType" id="periodType">
                 <option value="" <?=($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodTypes as $key => $value): ?>
                     <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
@@ -108,7 +108,7 @@ $entry = $this->get('calendar');
       <div class="row mb-3">
         <label for="periodDays" class="col-xl-2 control-label"></label>
         <div class="col-xl-4">
-            <select class="form-control" name="periodDays" id="periodDays">
+            <select class="form-select" name="periodDays" id="periodDays">
                 <option value="0" <?=($this->originalInput('periodDay', ($entry->getId()?$entry->getPeriodDay():'0'))) == '0' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodDays as $key => $value): ?>
                     <option value="<?=$key ?>" <?=($this->originalInput('periodDay', ($entry->getId()?$entry->getPeriodDay():'0'))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>

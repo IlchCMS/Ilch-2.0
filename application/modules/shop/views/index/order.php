@@ -51,7 +51,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                         <?=$this->getTrans('dropdownDeliveryAddress') ?>
                     </label>
                     <div class="col-xl-9">
-                        <select class="form-control" id="dropdownDeliveryAddress" name="dropdownDeliveryAddress" data-placeholder="<?=$this->getTrans('selectAddress') ?>">
+                        <select class="form-select" id="dropdownDeliveryAddress" name="dropdownDeliveryAddress" data-placeholder="<?=$this->getTrans('selectAddress') ?>">
                             <option value=""><?=$this->getTrans('selectAddress') ?></option>
                             <?php foreach ($this->get('addresses') as $address) : ?>
                                 <option value="<?=$address->getId() ?>"><?=$this->escape(sprintf('%s, %s (%s, %s %s, %s)', $address->getPrename(), $address->getLastname(), $address->getStreet(), $address->getPostcode(), $address->getCity(), $address->getCountry())) ?></option>
@@ -172,7 +172,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                         <?=$this->getTrans('dropdownInvoiceAddress') ?>
                     </label>
                     <div class="col-xl-9">
-                        <select class="form-control" id="dropdownInvoiceAddress" name="dropdownInvoiceAddress" data-placeholder="<?=$this->getTrans('selectAddress') ?>">
+                        <select class="form-select" id="dropdownInvoiceAddress" name="dropdownInvoiceAddress" data-placeholder="<?=$this->getTrans('selectAddress') ?>">
                             <option value=""><?=$this->getTrans('selectAddress') ?></option>
                         <?php foreach ($this->get('addresses') as $address) : ?>
                             <option value="<?=$address->getId() ?>"><?=$this->escape(sprintf('%s, %s (%s, %s %s, %s)', $address->getPrename(), $address->getLastname(), $address->getStreet(), $address->getPostcode(), $address->getCity(), $address->getCountry())) ?></option>

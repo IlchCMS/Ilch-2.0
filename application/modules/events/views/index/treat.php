@@ -57,7 +57,7 @@ $types = $this->get('types');
                 <?=$this->getTrans('by') ?>
             </label>
             <div class="col-xl-4">
-                <select class="form-control" name="creator" id="creator">
+                <select class="form-select" name="creator" id="creator">
                     <option selected="selected"><?=$this->getTrans('noSelection') ?></option>
                     <?php foreach ($users as $user): ?>
                         <option value="<?=$user->getId() ?>" <?php if (($this->get('event') != '' && $this->get('event')->getUserId() == $user->getId()) || $this->originalInput('creator') == $user->getId()) { echo 'selected="selected"'; } ?>><?=$user->getName() ?></option>
@@ -178,7 +178,7 @@ $types = $this->get('types');
                 <?=$this->getTrans('price') ?>
             </label>
             <div class="col-xl-2">
-                <select class="form-control" id="priceArt" name="priceArt">
+                <select class="form-select" id="priceArt" name="priceArt">
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 1) { echo 'selected="selected"'; } ?> value="1"><?=$this->getTrans('ticket') ?></option>
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 2) { echo 'selected="selected"'; } ?> value="2"><?=$this->getTrans('entry') ?></option>

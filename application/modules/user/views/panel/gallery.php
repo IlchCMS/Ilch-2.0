@@ -105,7 +105,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                     <?=$this->getTrans('type') ?>:
                                 </label>
                                 <div class="col-xl-8">
-                                    <select class="form-control" id="type">
+                                    <select class="form-select" id="type">
                                         <option value="0"><?=$this->getTrans('cat') ?></option>
                                         <option value="1"><?=$this->getTrans('gallery') ?></option>
                                     </select>
@@ -190,7 +190,7 @@ $(document).ready (
             }
 
             menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 control-label">Kategorie:</label>\n\
-                        <div class="col-xl-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+                        <div class="col-xl-8"><select class="form-select" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');

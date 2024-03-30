@@ -20,7 +20,7 @@
                             <?=$this->getTrans('reason') ?>
                         </label>
                         <div class="col-xl-10">
-                            <select class="form-control" name="reason" id="reason">
+                            <select class="form-select" name="reason" id="reason">
                                 <option value="1"><?=$this->getTrans('illegalContent') ?></option>
                                 <option value="2"><?=$this->getTrans('spam') ?></option>
                                 <option value="3"><?=$this->getTrans('wrongTopic') ?></option>

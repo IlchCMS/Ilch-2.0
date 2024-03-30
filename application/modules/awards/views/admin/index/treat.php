@@ -70,7 +70,7 @@ if ($awards != '') {
             <?=$this->getTrans('userTeam') ?>:
         </label>
         <div class="col-xl-2">
-            <select class="form-control" id="user" name="utId[]" multiple>
+            <select class="form-select" id="user" name="utId[]" multiple>
                 <optgroup label="<?=$this->getTrans('user') ?>">
                     <?php foreach ($this->get('users') as $user) {
                             $selected = '';

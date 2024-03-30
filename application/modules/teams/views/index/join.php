@@ -39,7 +39,7 @@ $teams = $this->get('teams');
                 <?=$this->getTrans('team') ?>
             </label>
             <div class="col-xl-4">
-                <select class="form-control" id="teamId" name="teamId">
+                <select class="form-select" id="teamId" name="teamId">
                     <optgroup label="<?=$this->getTrans('teams') ?>">
                         <?php
                         foreach ($teams as $team) {
@@ -109,13 +109,13 @@ $teams = $this->get('teams');
             </label>
             <div class="col-xl-2">
                 <?php if ($this->getUser()) : ?>
-                    <select class="form-control" id="gender" name="gender" <?=($this->getUser()->getGender() == 0) ? '' : 'disabled="disabled"' ?>>
+                    <select class="form-select" id="gender" name="gender" <?=($this->getUser()->getGender() == 0) ? '' : 'disabled="disabled"' ?>>
                         <option value="1" <?=($this->getUser()->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
                         <option value="2" <?=($this->getUser()->getGender() == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
                         <option value="3" <?=($this->getUser()->getGender() == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderNonBinary') ?></option>
                     </select>
                 <?php else : ?>
-                    <select class="form-control" id="gender" name="gender">
+                    <select class="form-select" id="gender" name="gender">
                         <option value="1" <?=($this->originalInput('gender') != '' && $this->originalInput('gender') == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
                         <option value="2" <?=($this->originalInput('gender') != '' && $this->originalInput('gender') == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
                         <option value="3" <?=($this->originalInput('gender') != '' && $this->originalInput('gender') == 3) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderNonBinary') ?></option>
@@ -170,7 +170,7 @@ $teams = $this->get('teams');
                 <?=$this->getTrans('skill') ?>
             </label>
             <div class="col-xl-2">
-                <select class="form-control" id="skill" name="skill">
+                <select class="form-select" id="skill" name="skill">
                     <option value="0" <?=($this->originalInput('skill') == 0) ? 'selected="selected"' : '' ?>><?=$this->getTrans('beginner') ?></option>
                     <option value="1" <?=($this->originalInput('skill') == 1) ? 'selected="selected"' : '' ?>><?=$this->getTrans('experience') ?></option>
                     <option value="2" <?=($this->originalInput('skill') == 2) ? 'selected="selected"' : '' ?>><?=$this->getTrans('expert') ?></option>

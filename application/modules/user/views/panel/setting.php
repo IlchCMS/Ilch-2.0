@@ -13,7 +13,7 @@
                         <?=$this->getTrans('locale') ?>
                     </div>
                     <div class="col-xl-2">
-                        <select class="form-control" id="locale" name="locale">
+                        <select class="form-select" id="locale" name="locale">
                             <?php foreach ($this->get('languages') as $key => $value): ?>
                                 <?php $selected = ''; ?>
                                 <?php if ($this->getUser()->getLocale() == $key): ?>

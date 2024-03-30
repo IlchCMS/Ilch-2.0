@@ -14,7 +14,7 @@ use Ilch\Date;
                 <?=$this->getTrans('warEnemy') ?>:
             </label>
             <div class="col-xl-4">
-                <select class="form-control" id="warEnemy" name="warEnemy">
+                <select class="form-select" id="warEnemy" name="warEnemy">
                     <optgroup label="<?=$this->getTrans('enemysName') ?>">
                         <?php foreach ($this->get('enemy') as $enemy): ?>
                             <option value="<?=$enemy->getId() ?>" <?=($this->originalInput('warEnemy', ($entrie->getId()?$entrie->getWarEnemy():0))) == $enemy->getId() ? 'selected=""' : '' ?>><?=$this->escape($enemy->getEnemyName()) ?></option>
@@ -28,7 +28,7 @@ use Ilch\Date;
                 <?=$this->getTrans('warGroup') ?>:
             </label>
             <div class="col-xl-4">
-                <select class="form-control" id="warGroup" name="warGroup">
+                <select class="form-select" id="warGroup" name="warGroup">
                     <optgroup label="<?=$this->getTrans('groupsName') ?>">
                         <?php foreach ($this->get('group') as $group): ?>
                             <option value="<?=$group->getId() ?>" <?=($this->originalInput('warGroup', ($entrie->getId()?$entrie->getWarGroup():0))) == $group->getId() ? 'selected=""' : '' ?>><?=$this->escape($group->getGroupName()) ?></option>
@@ -95,7 +95,7 @@ use Ilch\Date;
                 <?=$this->getTrans('warXonx') ?>:
             </label>
             <div class="col-xl-2">
-                <select class="form-control" id="warXonx" name="warXonx">
+                <select class="form-select" id="warXonx" name="warXonx">
                     <optgroup label="<?=$this->getTrans('warXonx') ?>">
                         <option value="neu" <?=($this->originalInput('warXonx', ($entrie->getId()?$entrie->getWarXonx():'neu'))) == 'neu' ? 'selected=""' : '' ?>><?=$this->getTrans('new') ?></option>
                         <?php if ($this->get('warOptXonx') != ''): ?>
@@ -120,7 +120,7 @@ use Ilch\Date;
                 <?=$this->getTrans('warGame') ?>:
             </label>
             <div class="col-xl-2">
-                <select class="form-control" id="warGame" name="warGame">
+                <select class="form-select" id="warGame" name="warGame">
                     <optgroup label="<?=$this->getTrans('warGame') ?>">
                         <option value="neu" <?=($this->originalInput('warGame', ($entrie->getId()?$entrie->getWarGame():'neu'))) == 'neu' ? 'selected=""' : '' ?>><?=$this->getTrans('warNew') ?></option>
                         <?php if ($this->get('warOptGame') != ''): ?>
@@ -145,7 +145,7 @@ use Ilch\Date;
                 <?=$this->getTrans('warMatchtype') ?>:
             </label>
             <div class="col-xl-2">
-                <select class="form-control" id="warMatchtype" name="warMatchtype">
+                <select class="form-select" id="warMatchtype" name="warMatchtype">
                     <optgroup label="<?=$this->getTrans('warMatchtype') ?>">
                         <option value="neu" <?=($this->originalInput('warMatchtype', ($entrie->getId()?$entrie->getWarMatchtype():'neu'))) == 'neu' ? 'selected=""' : '' ?>><?=$this->getTrans('new') ?></option>
                         <?php if ($this->get('warOptMatchtype') != ''): ?>

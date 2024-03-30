@@ -66,7 +66,7 @@ function rec(ForumItem $item, View $obj, ?int $i)
                             <?=$this->getTrans('selectForum') ?>
                         </label>
                         <div class="col-xl-6">
-                            <select class="form-control" id="selectForum" name="edit">
+                            <select class="form-select" id="selectForum" name="edit">
                                 <?php foreach ($forumItems as $item) : ?>
                                     <?php rec($item, $this, $i = null) ?>
                                 <?php endforeach; ?>

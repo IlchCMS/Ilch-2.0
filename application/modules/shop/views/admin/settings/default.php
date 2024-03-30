@@ -37,7 +37,7 @@
             <?=$this->getTrans('shopCurrency') ?>:
         </label>
         <div class="col-xl-3">
-            <select class="form-control"
+            <select class="form-select"
                     name="shopCurrency"
                     id="shopCurrency">
                 <?php
