@@ -9,6 +9,8 @@ namespace Ilch\Design;
 
 use Ilch\HTMLPurifier\EmbedUrlDef;
 use Ilch\Layout\Helper\GetMedia;
+use Ilch\Layout\Helper\GetModalDialog;
+use Ilch\Layout\Helper\ModalDialog\Model as ModalDialogModel;
 use Ilch\Request;
 use Ilch\Router;
 use Ilch\Translator;
@@ -771,6 +773,7 @@ abstract class Base
 
     /**
      * Gets the dialog.
+     * getModalDialog() offers more flexibilty by providing the ModalDialogModel for options.
      *
      * @param string $id
      * @param string $name
@@ -780,42 +783,23 @@ abstract class Base
      */
     public function getDialog(string $id, string $name, string $content, $submit = null): string
     {
-        $html = '<div class="modal fade" id="' . $id . '">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="modalLabel">' . $name . '</h4>
-                        <button type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ' . $content . '
-                    </div>
-                    <div class="modal-footer">';
-        if ($submit != null) {
-            $html .= '<button type="button"
-                                 class="btn btn-primary"
-                                 id="modalButton">' . $this->getTrans('ack') . '
-                            </button>
-                            <button type="button"
-                                    class="btn btn-outline-secondary"
-                                    data-bs-dismiss="modal">' . $this->getTrans('cancel') . '
-                            </button>';
-        } else {
-            $html .= '<button type="button"
-                                class="btn btn-primary"
-                                data-bs-dismiss="modal">
-                            ' . $this->getTrans('close') . '
-                            </button>';
-        }
-        $html .= '</div>
-                </div>
-            </div>
-        </div>';
+        $modalDialogModel = new ModalDialogModel();
+        $modalDialogModel->setId($id)
+            ->setTitle($name)
+            ->setContent($content);
+        return $this->getModalDialog($modalDialogModel);
+    }
 
-        return $html;
+    /**
+     * Gets a modal dialog.
+     *
+     * @see https://getbootstrap.com/docs/5.3/components/modal/
+     * @param ModalDialogModel $modalDialogModel Used to pass options (like size) and content (title, ...).
+     * @return GetModalDialog
+     * @since Ilch 2.2.0
+     */
+    public function getModalDialog(ModalDialogModel $modalDialogModel): GetModalDialog
+    {
+        return new GetModalDialog($modalDialogModel, $this);
     }
 }
