@@ -138,7 +138,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             <div class="col-xl-5">
                 <div class="input-group">
                     <span class="input-group-text">
-                        <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
+                        <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-title="<?=$this->getTrans('priceInfo') ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control text-end"
@@ -187,7 +187,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             <div class="col-xl-5">
                 <div class="input-group">
                     <span class="input-group-text">
-                        <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
+                        <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-title="<?=$this->getTrans('priceInfo') ?>"></span>
                     </span>
                     <input type="text"
                            class="form-control text-end"
@@ -248,7 +248,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         } else {
                             $img = BASE_URL . $shopImgPath . 'noimg.jpg';
                         } ?>
-                        <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img ?>"></span>
+                        <span class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="<img src='<?=$img ?>' width='200' />"></span>
                     </span>
                     <input type="text"
                            class="form-control"
@@ -285,7 +285,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         } else {
                             $img1 = BASE_URL . $shopImgPath . 'noimg.jpg';
                         } ?>
-                        <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img1 ?>"></span>
+                        <span class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="<img src='<?=$img1 ?>' width='200' />"></span>
                     </span>
                     <input type="text"
                            class="form-control"
@@ -322,7 +322,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         } else {
                             $img2 = BASE_URL . $shopImgPath . 'noimg.jpg';
                         } ?>
-                        <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img2 ?>"></span>
+                        <span class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="<img src='<?=$img2 ?>' width='200' />"></span>
                     </span>
                     <input type="text"
                            class="form-control"
@@ -359,7 +359,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                         } else {
                             $img3 = BASE_URL . $shopImgPath . 'noimg.jpg';
                         } ?>
-                        <span class="fa-solid fa-eye" data-toggle="event-image" data-img="<?=$img3 ?>"></span>
+                        <span class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="<img src='<?=$img3 ?>' width='200' />"></span>
                     </span>
                     <input type="text"
                            class="form-control"
@@ -424,17 +424,9 @@ $shopImgPath = '/application/modules/shop/static/img/';
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 $(function () {
-    $('[data-toggle="event-popover"]').popover({
-        container: 'body',
-        trigger: 'hover',
-        placement: 'top',
-    });
-    $('[data-toggle="event-image"]').popover({
-        html: true,
-        trigger: 'hover',
-        placement: 'top',
-        content: function () { return '<img src="' + $(this).data('img') + '" width="200" />'; }
-    });
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
     $("span .clearImage").click(function(){
         $(this).parent().siblings('input[type="text"]').val('');
     });

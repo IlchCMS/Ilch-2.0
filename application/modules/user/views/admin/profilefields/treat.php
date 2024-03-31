@@ -116,8 +116,8 @@ $iconArray = [
                        id="profileFieldKey"
                        name="profileField[key]"
                        value="<?=$this->escape($profileField->getKey()) ?>" />
-                <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="right" title="<?=$this->getTrans('profileFieldKeyDesc') ?>" data-content="<?=$this->getTrans('profileFieldKeyDesc') ?>" data-original-title="Info">
-                    <span class="fa-solid fa-info"></span>
+                <span class="input-group-text">
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<?=$this->getTrans('profileFieldKeyDesc') ?>"></span>
                 </span>
             </div>
         </div>
@@ -433,11 +433,8 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
     });
 
     $(function () {
-        $('[data-toggle="event-popover"]').popover({
-            container: 'body',
-            trigger: 'hover',
-            placement: 'top',
-        });
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     });
 
 })(jQuery);

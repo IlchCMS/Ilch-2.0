@@ -78,7 +78,7 @@
         <div class="col-xl-3">
             <div class="input-group">
                 <span class="input-group-text">
-                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('priceInfo') ?>"></span>
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-title="<?=$this->getTrans('priceInfo') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control text-end"
@@ -134,7 +134,7 @@
         <div class="col-xl-10">
             <div class="input-group">
                 <span class="input-group-text">
-                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextTop') ?>"></span>
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-title="<?=$this->getTrans('infoInvoiceTextTop') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"
@@ -151,7 +151,7 @@
         <div class="col-xl-10">
             <div class="input-group">
                 <span class="input-group-text">
-                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoInvoiceTextBottom') ?>"></span>
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-title="<?=$this->getTrans('infoInvoiceTextBottom') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"
@@ -168,7 +168,7 @@
         <div class="col-xl-10">
             <div class="input-group">
                 <span class="input-group-text">
-                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('infoDeliveryTextTop') ?>"></span>
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-title="<?=$this->getTrans('infoDeliveryTextTop') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"
@@ -183,10 +183,7 @@
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 $(function () {
-    $('[data-toggle="event-popover"]').popover({
-        container: 'body',
-        trigger: 'hover',
-        placement: 'top',
-    });
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 });
 </script>
