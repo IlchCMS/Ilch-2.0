@@ -1,7 +1,10 @@
 $(document).ready(function(){
+    let index = 1;
+
     $('.ckeditor').each(function() {
         let toolbar = $(this).attr('toolbar');
         let config = {};
+        let indexStr = (index > 1) ? index : '';
 
         if (toolbar === 'ilch_html') {
             // ilch_html configuration
@@ -204,13 +207,14 @@ $(document).ready(function(){
         };
 
         ClassicEditor
-            .create( document.querySelector( '.ckeditor' ), config )
+            .create( document.querySelector( '.ckeditor' + indexStr), config )
             .then( ckeditor => {
-                window.editor = ckeditor;
+                window['editor' + indexStr] = ckeditor;
             } )
             .catch( err => {
                 console.error( err.stack );
             } );
+        index++;
     });
 
     // Remove input value on click
