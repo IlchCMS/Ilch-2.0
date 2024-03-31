@@ -206,6 +206,10 @@ $(document).ready(function(){
             };
         };
 
+        if (index > 1) {
+            $(this).addClass('ckeditor' + indexStr)
+        }
+
         ClassicEditor
             .create( document.querySelector( '.ckeditor' + indexStr), config )
             .then( ckeditor => {
@@ -214,6 +218,7 @@ $(document).ready(function(){
             .catch( err => {
                 console.error( err.stack );
             } );
+
         index++;
     });
 

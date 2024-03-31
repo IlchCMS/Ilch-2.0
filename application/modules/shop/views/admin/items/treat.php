@@ -404,7 +404,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
                 <?=$this->getTrans('description') ?>:
             </label>
             <div class="col-xl-10">
-                <textarea class="form-control ckeditor ckeditor2"
+                <textarea class="form-control ckeditor"
                           id="desc"
                           name="desc"
                           cols="50"
