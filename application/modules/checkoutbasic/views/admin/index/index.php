@@ -11,7 +11,7 @@ $checkouts = $this->get('checkout');
 <h1><?=$this->getTrans('bookings') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3<?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-2 control-label">
             <?=$this->getTrans('name') ?>
         </label>
@@ -24,7 +24,7 @@ $checkouts = $this->get('checkout');
                    value="<?=$this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('checkoutdate') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('checkoutdate') ? ' has-error' : '' ?>">
         <label for="datetime" class="col-xl-2 control-label">
             <?=$this->getTrans('datetime') ?>
         </label>
@@ -37,7 +37,7 @@ $checkouts = $this->get('checkout');
                    value="<?=($this->get('checkoutdate') != '') ? $this->get('checkoutdate') : '' ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('usage') ? ' has-error' : '' ?>">
         <label for="usage" class="col-xl-2 control-label">
             <?=$this->getTrans('usage') ?>
         </label>
@@ -50,7 +50,7 @@ $checkouts = $this->get('checkout');
                    value="<?=$this->escape($this->originalInput('usage')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('amount') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('amount') ? ' has-error' : '' ?>">
         <label for="amount" class="col-xl-2 control-label">
             <?=$this->getTrans('amount') ?>
         </label>
