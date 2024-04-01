@@ -34,16 +34,11 @@ $settingMapper = $this->get('settingMapper');
                             <input type="text"
                                    class="form-control"
                                    readonly />
+                            <input type="submit"
+                                   class="btn btn-outline-secondary"
+                                   name="saveEntry"
+                                   value="<?=$this->getTrans('profileSubmit') ?>" />
                         </div>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="offset-xl-2 col-xl-12">
-                        <input type="submit"
-                               class="btn btn-outline-secondary"
-                               name="saveEntry"
-                               value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>
                 </div>
             </form>

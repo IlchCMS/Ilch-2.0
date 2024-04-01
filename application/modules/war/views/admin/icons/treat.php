@@ -6,7 +6,7 @@
         <label for="gameNameInput" class="col-xl-2 control-label">
             <?=$this->getTrans('gameName') ?>:
         </label>
-        <div class="col-xl-4">
+        <div class="col-xl-6">
             <input type="text"
                    class="form-control"
                    id="gameNameInput"
@@ -18,7 +18,7 @@
         <label for="gameIcon" class="col-xl-2 control-label">
             <?=$this->getTrans('gameIcon') ?><br>
         </label>
-        <div class="col-xl-2">
+        <div class="col-xl-6">
             <div class="input-group">
                 <span class="btn btn-primary btn-file">
                     <input type="file" name="icon" accept="image/png">
@@ -30,9 +30,9 @@
                        aria-describedby="iconHelpBlock"
                        readonly />
                 <?php if ($icon && file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$icon.'.png')): ?>
-                <div>
-                    <img src="<?=$this->getBaseUrl().'application/modules/war/static/img/'.$icon.'.png' ?>" title="<?=$this->escape($icon) ?>" alt="<?=$this->escape($icon) ?>">
-                </div>
+                    <div class="btn btn-outline-secondary">
+                        <img src="<?=$this->getBaseUrl().'application/modules/war/static/img/'.$icon.'.png' ?>" title="<?=$this->escape($icon) ?>" alt="<?=$this->escape($icon) ?>">
+                    </div>
                 <?php endif; ?>
             </div>
             <div class="form-text" id="iconHelpBlock"><?=$this->getTrans('iconSize') ?>: 16 Pixel <?=$this->getTrans('iconWidth') ?>, 16 Pixel <?=$this->getTrans('iconHeight') ?>. <?=$this->getTrans('allowedFileExtensions') ?>: png</div>

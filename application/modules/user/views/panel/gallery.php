@@ -112,8 +112,11 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 </div>
                             </div>
                             <div class="dyn"></div>
-                            <div class="offset-xl-4 actions">
-                                <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
+                            <div class="row mb-3">
+                                <label class="col-xl-4 control-label"></label>
+                                <div class="col-xl-8 actions">
+                                    <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
+                                </div>
                             </div>
                         </div>
                         <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />

@@ -5,7 +5,7 @@
  */
 
 return [
-    'header' => 'Header',
+    'headertext' => 'Header',
     'slider1' => 'Slider 1',
     'slider2' => 'Slider 2',
     'slider3' => 'Slider 3',

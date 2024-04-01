@@ -7,8 +7,13 @@ body {
 }
 
 img {
-    height: auto !important;
-    max-width: 100% !important;
+    height: auto;
+    max-width: 100%;
+}
+
+div.carousel-item img {
+    object-fit: fill;
+    width: 100%;
 }
 
 a {
@@ -293,6 +298,9 @@ header .container .gaming .gaming-name {
     .footer .container .gaming .nav {
         display:block;
     }
+}
+.btn {
+    text-decoration: none !important;
 }
 .btn-primary,
 .bg-primary{
