@@ -135,7 +135,7 @@ a.badge.bg-secondary {
     font-size: 12px;
     color: #fff !important;
     background-color: #777 !important;
-    cursor: pointer;  
+    cursor: pointer;
 }
 
 a.badge.bg-secondary:hover {
@@ -754,6 +754,7 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     border-radius: 2px !important;
     -webkit-border-radius: 2px !important;
     -moz-border-radius: 2px !important;
+    text-decoration: none !important;
 }
 
 .btn.disabled {
@@ -771,6 +772,17 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
 
 .btn.btn-primary:hover {
     background-color: #286090;
+    border-color: #204d74;
+}
+
+.btn.btn-danger {
+    color: #fff !important;
+    background-color: #dc3545;
+    text-decoration: none;
+}
+
+.btn.btn-danger:hover {
+    background-color: #bb2d3b;
     border-color: #204d74;
 }
 
@@ -1508,22 +1520,18 @@ table tbody i.fa.fa-sort {
 
 /* tokenfield */
 .tokenfield.form-control {
-    padding: 2px 2px;
-    padding-bottom: 0;
+    padding: 2px;
 }
 
 .tokenfield .token {
     background-color: #fff;
-    height: 28px;
+    height: auto;
     border-radius: 4px;
-    margin: 0 6px 2px 0;
+    margin: 0 6px 0 0;
     border: 1px solid #ccc;
     color: #333;
     cursor: pointer;
-}
-
-.tokenfield .token:hover {
-    border-color: #ccc;
+    vertical-align: middle;
 }
 
 .tokenfield .token .token-label {
@@ -1531,21 +1539,22 @@ table tbody i.fa.fa-sort {
 }
 
 .tokenfield .token .close {
-    padding: 0 7px 0 1px;
+    padding: 3px 7px 0 1px;
     font-size: 19px;
-    color: #888;
+    color: #888 !important;
+    font-weight: bold;
     opacity: 1;
     text-shadow: none;
+    text-decoration: none;
 }
 
 .tokenfield .token .close:hover {
-    color: #464646;
+    color: #464646 !important;
 }
 
 .tokenfield .token-input {
     margin: 0;
     height: auto;
-    padding: 4px 6px;
 }
 
 /* Module and Layout search carousel */

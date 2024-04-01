@@ -57,59 +57,62 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
 <form class="form-horizontal" id="downloadsForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row">
-      <h1><?=$this->getTrans('downloads') ?></h1>
-      <div class="col-xl-6">
-          <ol id="sortable" class="sortable">
-              <?php
-                  if (!empty($downloadsItems)) {
-                      foreach ($downloadsItems as $item) {
-                          rec($item, $downloadsMapper, $this, $fileMapper);
-                      }
-                  }
-              ?>
-          </ol>
-      </div>
-      <div class="col-xl-6 changeBox">
-          <input type="hidden" id="id" value="" />
-          <div class="row mb-3">
-              <label for="title" class="col-xl-3 control-label">
-                  <?=$this->getTrans('title') ?>
-              </label>
-              <div class="col-xl-6">
-                  <input type="text" class="form-control" id="title" />
-              </div>
-          </div>
-          <div class="row mb-3">
-              <label for="desc" class="col-xl-3 control-label">
-                  <?=$this->getTrans('description') ?>
-              </label>
-              <div class="col-xl-6">
-                  <textarea class="form-control"
-                            id="desc"
-                            name="desc"
-                            rows="3"
-                            cols="45"></textarea>
-              </div>
-          </div>
-          <div class="row mb-3">
-              <label for="type" class="col-xl-3 control-label">
-                  <?=$this->getTrans('type') ?>
-              </label>
-              <div class="col-xl-6">
-                  <select class="form-select" id="type">
-                      <option value="0"><?=$this->getTrans('cat') ?></option>
-                      <option value="1"><?=$this->getTrans('downloads') ?></option>
-                  </select>
-              </div>
-          </div>
-          <div class="dyn"></div>
-          <div class="offset-xl-3 actions">
-              <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('downloadsItemAdd') ?>">
-          </div>
-      </div>
-      <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-      <?=$this->getSaveBar('saveButton') ?>
-  </div>
+        <h1><?=$this->getTrans('downloads') ?></h1>
+        <div class="col-xl-6">
+            <ol id="sortable" class="sortable">
+                <?php
+                if (!empty($downloadsItems)) {
+                    foreach ($downloadsItems as $item) {
+                        rec($item, $downloadsMapper, $this, $fileMapper);
+                    }
+                }
+                ?>
+            </ol>
+        </div>
+        <div class="col-xl-6 changeBox">
+            <input type="hidden" id="id" value="" />
+            <div class="row mb-3">
+                <label for="title" class="col-xl-3 control-label">
+                    <?=$this->getTrans('title') ?>
+                </label>
+                <div class="col-xl-6">
+                    <input type="text" class="form-control" id="title" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="desc" class="col-xl-3 control-label">
+                    <?=$this->getTrans('description') ?>
+                </label>
+                <div class="col-xl-6">
+                    <textarea class="form-control"
+                        id="desc"
+                        name="desc"
+                        rows="3"
+                        cols="45"></textarea>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="type" class="col-xl-3 control-label">
+                    <?=$this->getTrans('type') ?>
+                </label>
+                <div class="col-xl-6">
+                    <select class="form-select" id="type">
+                        <option value="0"><?=$this->getTrans('cat') ?></option>
+                        <option value="1"><?=$this->getTrans('downloads') ?></option>
+                    </select>
+                </div>
+            </div>
+            <div class="dyn"></div>
+            <div class="row mb-3">
+                <label class="col-xl-3 control-label"></label>
+                <div class="col-xl-6 actions">
+                    <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('downloadsItemAdd') ?>">
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
+        <?=$this->getSaveBar('saveButton') ?>
+    </div>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>

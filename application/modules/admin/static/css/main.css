@@ -105,6 +105,13 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 	background-size: 12.00px 12.00px;
 }
 
+.ui-sortable-placeholder {
+    width: 100%;
+    outline: 0;
+	background-image: linear-gradient(135deg, #d4d4d4 8.33%, #ffffff 8.33%, #ffffff 50%, #d4d4d4 50%, #d4d4d4 58.33%, #ffffff 58.33%, #ffffff 100%);
+	background-size: 12.00px 12.00px;
+}
+
 .ui-sortable-helper {
     border: none;
     background: transparent;

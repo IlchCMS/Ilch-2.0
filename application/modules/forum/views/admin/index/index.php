@@ -95,8 +95,11 @@ function rec(ForumItem $item, \Ilch\View $obj)
             </div>
         </div>
         <div class="dyn"></div>
-        <div class="offset-lg-3 actions">
-            <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd') ?>">
+        <div class="row mb-3">
+            <label class="col-xl-3 control-label"></label>
+            <div class="col-xl-6 actions">
+                <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd') ?>">
+            </div>
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />

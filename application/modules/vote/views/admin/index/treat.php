@@ -125,7 +125,7 @@ $('#group').chosen();
 
             $(this)
                 .toggleClass('btn-success btn-add btn-danger btn-remove')
-                .html('–');
+                .html('<i class="fa-solid fa-minus"></i>');
 
             $formGroupClone.find('input').val('');
             $formGroupClone.insertAfter($formGroup);

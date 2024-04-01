@@ -115,8 +115,11 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
             </div>
         </div>
         <div class="dyn"></div>
-        <div class="offset-xl-3 actions">
-            <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
+        <div class="row mb-3">
+            <label class="col-xl-3 control-label"></label>
+            <div class="col-xl-6 actions">
+                <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
+            </div>
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />

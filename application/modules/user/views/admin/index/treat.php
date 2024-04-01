@@ -167,7 +167,7 @@ if ($user->getId()) {
             <?=$this->getTrans('userProfile') ?>
         </label>
         <div class="col-xl-4">
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treatProfile', 'user' => $user->getId()]) ?>" class="btn"><?=$this->getTrans('editUserProfile') ?></a>
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treatProfile', 'user' => $user->getId()]) ?>" class="btn btn-outline-secondary"><?=$this->getTrans('editUserProfile') ?></a>
         </div>
     </div>
     <?php endif; ?>

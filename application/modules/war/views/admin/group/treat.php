@@ -63,7 +63,7 @@
         <label for="warGroup" class="col-xl-2 control-label">
             <?=$this->getTrans('assignedMember') ?>
         </label>
-        <div class="col-xl-8">
+        <div class="col-xl-4">
             <select class="form-select" id="warGroup" name="userGroup">
                 <optgroup label="<?=$this->getTrans('groupsName') ?>">
                     <?php foreach ($this->get('userGroupList') as $groupList): ?>

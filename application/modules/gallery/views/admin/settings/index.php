@@ -43,7 +43,7 @@
             <?=$this->getTrans('pictureOfXInterval') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="form-select"
                     id="pictureOfXInterval"
                     name="pictureOfXInterval"
                     data-placeholder="<?=$this->getTrans('selectPictureOfXInterval') ?>">
@@ -142,7 +142,7 @@
                    name="venoboxBorder"
                    pattern="[0-9]+px"
                    value="<?=$this->escape($this->originalInput('venoboxBorder', $this->get('venoboxBorder'))) ?>" />
-            <div class="form-text"><?=$this->getTrans('venoboxExampleText') ?></div>
+            <div class="form-text"> &nbsp; <?=$this->getTrans('venoboxExampleText') ?></div>
         </div>
     </div>
 

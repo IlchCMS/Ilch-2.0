@@ -2,7 +2,12 @@
 
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
-<h1><?=$this->getTrans('mediaUpload') ?> <a title='<?='post_max_size = '.ini_get('post_max_size') ?><br/><?='max_execution_time = '.ini_get('max_execution_time') ?>' data-bs-toggle='tooltip' data-bs-html='true' data-bs-placement='bottom'><i class="fa fa-info-circle"></i></a></h1>
+<h1><?=$this->getTrans('mediaUpload') ?> 
+    <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
+        <i class="fa fa-info"></i>
+    </a>
+</h1>
+
 <form id="upload" method="post" action="<?=$this->getUrl('admin/media/index/upload') ?>" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div id="drop">
@@ -14,6 +19,15 @@
     </div>
     <ul><!-- Uploads --></ul>
 </form>
+
+
+
+<?php
+$desc  = '<strong>' . $this->getTrans('post_max_size') . ' = ' . ini_get('post_max_size') . '</strong><br><i>' . $this->getTrans('post_max_size_desc') . '</i><br><br>';
+$desc .= '<strong>' . $this->getTrans('max_execution_time') . ' = ' . ini_get('max_execution_time') . '</strong><br><i>' . $this->getTrans('max_execution_time_desc') . '</i>';
+?>
+
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $desc) ?>
 
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.knob.min.js') ?>"></script>
 <script src="<?=$this->getVendorUrl('blueimp/jquery-file-upload/js/vendor/jquery.ui.widget.js') ?>"></script>

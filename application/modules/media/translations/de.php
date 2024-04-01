@@ -47,6 +47,11 @@ return [
     'refreshSuccess' => 'Vorschaubild neu generiert.',
     'refreshFailure' => 'Fehlgeschlagen. Kein Vorschaubild generiert.',
 
+    'post_max_size' => 'post_max_size',
+    'post_max_size_desc' => 'Mit "post_max_size" wird die maximale Größe für einen einzelnen Upload auf den Server festgelegt. Dieser Wert kann in der php.ini geändert werden.',
+    'max_execution_time' => 'max_execution_time',
+    'max_execution_time_desc' => 'Der Wert "max_execution_time" definiert die maximale erlaubte Laufzeit für PHP-Scripts. Dieser Wert ist frei definierbar und wird in der Einheit Sekunden angegeben.',
+
     'cats' => 'Kategorien',
     'cat' => 'Kategorie',
     'catTitle' => 'Titel',
