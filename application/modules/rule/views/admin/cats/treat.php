@@ -43,7 +43,7 @@ $userGroupList = $this->get('userGroupList');
     <div class="row mb-3">
         <label for="assignedGroupsRead" class="col-xl-2 control-label">
             <?=$this->getTrans('see') ?>
-            <a href="#" title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
+            <a href="#" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
         </label>
         <div class="col-xl-4">
             <select class="chosen-select form-control" id="assignedGroupsRead" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>

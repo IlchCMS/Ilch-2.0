@@ -161,7 +161,7 @@ $commentsClass = new Ilch\Comments();
                         ?>
                         <li class="list-group-item<?=$class ?>">
                             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>:
-                            <?=$text ?><?=$comment ?> <span class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-title="<?=(new Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></span>
+                            <?=$text ?><?=$comment ?> <span class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=(new Date($acceptCheck->getDateCreated()))->format('d.m.Y H:i') ?>"></span>
                         </li>
                     <?php endforeach; ?>
                     </ul>
@@ -215,7 +215,3 @@ $commentsClass = new Ilch\Comments();
 </div>
 
 <?= $commentsClass->getComments($this->get('commentsKey'), $war, $this) ?>
-<script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>

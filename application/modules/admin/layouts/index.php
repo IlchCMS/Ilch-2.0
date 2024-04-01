@@ -66,6 +66,11 @@ $accesses = $this->get('accesses');
         $.key('alt+h', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'index']) ?>'; });
         $.key('alt+k', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts']) ?>'; });
         $.key('alt+i', function() { window.open('https://ilch.de/', '_blank'); });
+
+        $(function () {
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        });
     </script>
     <?php
     if (\Ilch\DebugBar::isInitialized()) {

@@ -25,7 +25,7 @@ $database = $this->get('database')
                    id="dbName"
                    name="dbName"
                    value="<?=$this->escape($this->originalInput('dbName', $this->get('dbName'))) ?>" />
-            <div class="input-group-text" data-bs-toggle="tooltip" title="<?=$this->getTrans('dbNameInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="input-group-text" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="<?=$this->getTrans('dbNameInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
         </div>
     <?php endif; ?>
 </div>
@@ -39,11 +39,6 @@ $database = $this->get('database')
                id="dbPrefix"
                name="dbPrefix"
                value="<?=$this->escape($this->originalInput('dbPrefix', $this->get('dbPrefix'))) ?>" />
-        <div class="input-group-text" data-bs-toggle="tooltip" title="<?=$this->getTrans('dbPrefixInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
+        <div class="input-group-text" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="<?=$this->getTrans('dbPrefixInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
     </div>
 </div>
-
-<script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>

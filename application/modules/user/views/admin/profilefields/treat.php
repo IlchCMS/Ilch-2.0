@@ -117,7 +117,7 @@ $iconArray = [
                        name="profileField[key]"
                        value="<?=$this->escape($profileField->getKey()) ?>" />
                 <span class="input-group-text">
-                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<?=$this->getTrans('profileFieldKeyDesc') ?>"></span>
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-placement="right" data-bs-title="<?=$this->getTrans('profileFieldKeyDesc') ?>"></span>
                 </span>
             </div>
         </div>
@@ -431,12 +431,5 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
         $(document).on('click', '.btn-add', addFormGroup);
         $(document).on('click', '.btn-remove', removeFormGroup);
     });
-
-    $(function () {
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    });
-
 })(jQuery);
-
 </script>

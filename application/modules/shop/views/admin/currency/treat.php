@@ -27,7 +27,7 @@
         <div class="col-xl-4">
             <div class="input-group">
                 <span class="input-group-text">
-                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-title="<?=$this->getTrans('currencyCodeInfo') ?>"></span>
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('currencyCodeInfo') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"
@@ -51,10 +51,3 @@
     </div>
     <?=$this->getSaveBar() ?>
 </form>
-
-<script>
-    $(function () {
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    });
-</script>

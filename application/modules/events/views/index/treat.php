@@ -209,7 +209,7 @@ $types = $this->get('types');
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
             <label for="userLimit" class="col-xl-2 control-label">
-                <?=$this->getTrans('userLimit') ?> <div class="badge rounded-pill bg-secondary" data-bs-toggle="tooltip" data-bs-title="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
+                <?=$this->getTrans('userLimit') ?> <div class="badge rounded-pill bg-secondary" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
             </label>
             <div class="col-xl-2">
                 <input type="number"
@@ -351,11 +351,6 @@ $(document).ready(function() {
             if (log) alert(log);
         }
     });
-});
-
-$(function () {
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 });
 
 $(document).ready(function() {

@@ -98,7 +98,7 @@
                     } else {
                         $img = BASE_URL.$shopImgPath.'ilchShop_logo.jpg';
                     } ?>
-                    <span class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="<img src='<?=$img ?>' width='150' />"></span>
+                    <span class="fa-solid fa-eye" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-html="true" data-bs-title="<img src='<?=$img ?>' width='150' />"></span>
                 </span>
                 <input type="text"
                        class="form-control"
@@ -191,7 +191,3 @@
     <?=$this->getSaveBar('saveButton') ?>
 </form>
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>

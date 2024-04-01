@@ -38,7 +38,13 @@
         <script src="<?=$this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>"></script>
         <?php endif; ?>
         <script src="<?=$this->getStaticUrl('js/highlight/highlight.min.js') ?>"></script>
-        <script>hljs.highlightAll();</script>
+        <script>
+            hljs.highlightAll();
+            $(function () {
+                const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+                const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+            });
+        </script>
     </head>
     <body>
         <?=$this->getContent() ?>

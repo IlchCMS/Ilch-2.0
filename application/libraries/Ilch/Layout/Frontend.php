@@ -553,6 +553,10 @@ class Frontend extends Base
             <script>
                 hljs.highlightAll();
                 var iframeUrlUserGallery = "' . $this->getUrl('user/iframe/indexckeditor/type/imageckeditor/') . '";
+                $(function () {
+                    const tooltipTriggerList = document.querySelectorAll(\'[data-bs-toggle="tooltip"]\')
+                    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+                });
             </script>';
 
         if ($this->getUser() && $this->getUser()->isAdmin()) {
