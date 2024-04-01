@@ -111,7 +111,7 @@
         <input type="hidden" class="content_savebox_hidden" name="action" value="convert" />
         <div class="btn-group dropup">
             <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"<?=($this->get('getHtmlFromBBCodeExists')) ? '' : ' disabled' ?>>
-                <?=$this->getTrans('selected') ?> <span class="caret"></span>
+                <?=$this->getTrans('selected') ?>
             </button>
             <ul class="dropdown-menu listConvert" role="menu">
                 <li clas="dropdown-item"><a href="#" data-hiddenkey="convert" id="convert"><?=$this->getTrans('convert') ?></a></li>

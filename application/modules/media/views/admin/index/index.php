@@ -124,7 +124,6 @@
                                             class="btn btn-outline-secondary dropdown-toggle"
                                             aria-expanded="false"
                                             data-bs-toggle="dropdown"><?=$this->escape($media->getCatName()) ?>
-                                        <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu listChooser" role="menu">
                                         <?php if ($this->get('catnames') != ''): ?>

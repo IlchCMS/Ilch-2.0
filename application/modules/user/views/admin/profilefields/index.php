@@ -99,7 +99,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
         <input type="hidden" class="content_savebox_hidden" name="action" value="" />
         <div class="btn-group dropup">
             <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                <?=$this->getTrans('selected') ?> <span class="caret"></span>
+                <?=$this->getTrans('selected') ?>
             </button>
             <ul class="dropdown-menu listChooser" role="menu">
                 <li class="dropdown-item"><a href="#" data-hiddenkey="delete" class="dropdown-item"><?=$this->getTrans('delete') ?></a></li>

@@ -66,7 +66,7 @@ if(!empty($_SESSION['shopping_cart'])) {
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="nav-item dropdown">
-                        <a href="#" class="dropdown-toggle nav-link" id="navbarDropdown" data-bs-toggle="dropdown"><?=$this->getTrans('menuCats') ?> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle nav-link" id="navbarDropdown" data-bs-toggle="dropdown"><?=$this->getTrans('menuCats') ?></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="navbarDropdown">
                             <li <?=($this->getRequest()->getParam('catId') == 'all') ? 'class="active"' : ''; ?>>
                                 <a href="<?=$this->getUrl('shop/index/index/catId/all')?>#shopAnker" class="dropdown-item">
