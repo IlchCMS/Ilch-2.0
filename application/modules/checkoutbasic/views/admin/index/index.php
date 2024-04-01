@@ -101,6 +101,8 @@ $checkouts = $this->get('checkout');
             </div>
         </div>
     </div>
+    <br>
+    <br>
     <div class="col-xl-12">
         <h1><?=$this->getTrans('bookedpayments') ?></h1>
         <table class="table table-hover table-striped">
