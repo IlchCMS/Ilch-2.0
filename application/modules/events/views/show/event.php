@@ -134,7 +134,7 @@ if (!empty($event)) {
                 ?>
                 <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
                     <div id="googleMap" style="display: none">
-                        <div id="map-canvas" data-toggle="modal" data-target="#showBigGoogleMapsModal"></div>
+                        <div id="map-canvas" data-bs-toggle="modal" data-bs-target="#showBigGoogleMapsModal"></div>
                     </div>
                 <?php endif; ?>
             </div>

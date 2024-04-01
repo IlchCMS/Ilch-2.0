@@ -155,8 +155,8 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                                     </button>
                                 <?php elseif (!empty(checkOthersDependencies([$moduleUpdateInformation->key => $moduleUpdateInformation->version], $dependencies))): ?>
                                     <button class="btn disabled"
-                                            data-toggle="modal"
-                                            data-target="#dependencyInfoModal<?=$moduleUpdateInformation->key ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#dependencyInfoModal<?=$moduleUpdateInformation->key ?>"
                                             title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>

@@ -74,6 +74,7 @@ return [
     'url' => 'URL',
     'operator' => 'Betreiber',
     'country' => 'Land',
+    'toggleMenu' => 'Menü umschalten',
     'navigation' => 'Menüs',
     'modules' => 'Module',
     'layouts' => 'Layouts',

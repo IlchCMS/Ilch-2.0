@@ -60,11 +60,10 @@ $checkouts = $this->get('checkout');
                    id="amount"
                    name="amount"
                    placeholder="<?=$this->getTrans('amount') ?>"
-                   data-content="<?=$this->getTrans('amountinfo') ?>"
-                   rel="popover"
-                   data-placement="bottom"
-                   data-original-title="<?=$this->getTrans('amount') ?>"
-                   data-trigger="hover"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="bottom"
+                   data-bs-custom-class="custom-tooltip"
+                   data-bs-title="<?=$this->getTrans('amountinfo') ?>"
                    value="<?=$this->escape($this->originalInput('amount')) ?>" />
         </div>
     </div>
@@ -140,7 +139,3 @@ $checkouts = $this->get('checkout');
     </div>
     <?=$this->getSaveBar($this->getTrans('book')) ?>
 </form>
-
-<script>
-$('#amount').popover();
-</script>

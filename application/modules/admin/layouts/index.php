@@ -97,7 +97,7 @@ $accesses = $this->get('accesses');
         <div class="navbar-header leftbar">
             <?php if ($this->hasSidebar()) : ?>
                 <div id="hide-menu" class="btn-header float-start">
-                    <a id="toggleLeftMenu" title="Collapse Menu" data-toggle="collapse" data-target="#left-panel">
+                    <a id="toggleLeftMenu" title="<?=$this->getTrans('toggleMenu') ?>" data-bs-toggle="collapse" data-bs-target="#left-panel">
                         <i class="fa-solid fa-outdent"></i>
                     </a>
                 </div>
@@ -142,7 +142,6 @@ $accesses = $this->get('accesses');
                         } else {
                             $smallIcon = '<img style="padding-right: 5px;" src="' . $this->getStaticUrl('../application/modules/' . $module->getKey() . '/config/' . $module->getIconSmall()) . '" />';
                         }
-
 
                         if ($accesses && ($accesses->hasAccess('Admin_' . $module->getKey(), $module->getKey()))) {
                             if ($module->getSystemModule()) {
@@ -234,7 +233,7 @@ $accesses = $this->get('accesses');
                     </a>
                 </li>
                 <li class="dropdown<?=($this->getRequest()->getModuleName() === 'admin' &&  $this->getRequest()->getControllerName() === 'infos') ? ' active' : '' ?>">
-                    <a data-toggle="dropdown" class="dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#menu" target="_blank" href="<?=$this->getUrl() ?>">
+                    <a class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#menu" target="_blank" href="<?=$this->getUrl() ?>">
                         <i class="fa-solid fa-circle-question"></i> <span class="d-lg-none"><?=$this->getTrans('menuInfos') ?></span> <b class="caret"></b>
                     </a>
                     <ul id="menu" class="dropdown-menu admin-info">
@@ -274,7 +273,7 @@ $accesses = $this->get('accesses');
                     <?php $name = $this->getUser()->getName(); ?>
                 <?php endif; ?>
                 <li class="dropdown dropdown-user">
-                    <a data-toggle="dropdown" class="dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#dropdown-user" target="_blank" href="<?=$this->getUrl() ?>">
+                    <a class="dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#dropdown-user" target="_blank" href="<?=$this->getUrl() ?>">
                         <i class="fa-solid fa-user hidden-sm hidden-md"></i> <?=$this->escape($name) ?>
                         <b class="caret"></b>
                     </a>

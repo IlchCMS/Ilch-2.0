@@ -58,17 +58,12 @@ $checkout = $this->get('checkout');
                    id="amount"
                    name="amount"
                    placeholder="<?=$this->getTrans('amount') ?>"
-                   data-content="<?=$this->getTrans('amountinfo') ?>"
-                   rel="popover"
-                   data-placement="bottom"
-                   data-original-title="<?=$this->getTrans('amount') ?>"
-                   data-trigger="hover"
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="bottom"
+                   data-bs-custom-class="custom-tooltip"
+                   data-bs-title="<?=$this->getTrans('amountinfo') ?>"
                    value="<?=($this->originalInput('amount') != '') ? $this->escape($this->originalInput('amount')) : $this->escape($checkout->getAmount()) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar('updateButton') ?>
 </form>
-
-<script>
-$('#amount').popover();
-</script>

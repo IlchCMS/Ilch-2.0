@@ -74,6 +74,7 @@ return [
     'url' => 'URL',
     'operator' => 'Operator',
     'country' => 'Country',
+    'toggleMenu' => 'Toggle menu',
     'navigation' => 'Navigation',
     'modules' => 'Modules',
     'layouts' => 'Layouts',
