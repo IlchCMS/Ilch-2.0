@@ -23,7 +23,7 @@
                id="dbHost"
                name="dbHost"
                value="<?=$this->escape($this->originalInput('dbHost', $this->get('dbHost'))) ?>" />
-            <div class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" title="<?=$this->getTrans('dbHostInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="input-group-text" data-bs-toggle="tooltip" title="<?=$this->getTrans('dbHostInfo') ?>"><i class="fa-solid fa-circle-info"></i></div>
         </div>
     </div>
 </div>
@@ -38,7 +38,7 @@
                id="dbUser"
                name="dbUser"
                value="<?=$this->escape($this->originalInput('dbUser', $this->get('dbUser'))) ?>" />
-            <div class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" title="<?=$this->getTrans('dbUserInfo') ?>" ><i class="fa-solid fa-circle-info"></i></div>
+            <div class="input-group-text" data-bs-toggle="tooltip" title="<?=$this->getTrans('dbUserInfo') ?>" ><i class="fa-solid fa-circle-info"></i></div>
         </div>
     </div>
 </div>
@@ -56,9 +56,6 @@
 </div>
 
 <script>
-// Initialize tooltips
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 </script>
