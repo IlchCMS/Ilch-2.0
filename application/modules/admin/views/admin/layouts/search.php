@@ -21,8 +21,8 @@ if (empty($layoutsOnUpdateServer)) {
 <div class="row">
 <?php foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer): ?>
     <div id="layouts" class="col-xl-3 col-md-6">
-        <div class="card panel-ilch mb-3">
-            <div class="card-heading">
+        <div class="card mb-3">
+            <div class="card-header">
                 <div class="clearfix">
                     <div class="float-start">
                         <b><?=$this->escape($layoutOnUpdateServer->name) ?></b>

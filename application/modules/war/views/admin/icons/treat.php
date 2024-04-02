@@ -20,9 +20,7 @@
         </label>
         <div class="col-xl-6">
             <div class="input-group">
-                <span class="btn btn-primary btn-file">
-                    <input type="file" name="icon" accept="image/png">
-                </span>
+                <input type="file" class="form-control" name="icon" accept="image/png">
                 <input type="text"
                        class="form-control"
                        id="gameIcon"
@@ -30,9 +28,9 @@
                        aria-describedby="iconHelpBlock"
                        readonly />
                 <?php if ($icon && file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$icon.'.png')): ?>
-                    <div class="btn btn-outline-secondary">
+                    <span class="input-group-text">
                         <img src="<?=$this->getBaseUrl().'application/modules/war/static/img/'.$icon.'.png' ?>" title="<?=$this->escape($icon) ?>" alt="<?=$this->escape($icon) ?>">
-                    </div>
+                    </span>
                 <?php endif; ?>
             </div>
             <div class="form-text" id="iconHelpBlock"><?=$this->getTrans('iconSize') ?>: 16 Pixel <?=$this->getTrans('iconWidth') ?>, 16 Pixel <?=$this->getTrans('iconHeight') ?>. <?=$this->getTrans('allowedFileExtensions') ?>: png</div>
@@ -42,7 +40,7 @@
 </form>
 
 <script>
-$(document).on('change', '.btn-file :file', function() {
+$(document).on('change', '.input-group :file', function() {
     let input = $(this),
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
         label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -50,7 +48,7 @@ $(document).on('change', '.btn-file :file', function() {
 });
 
 $(document).ready( function() {
-    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+    $('.input-group :file').on('fileselect', function(event, numFiles, label) {
         let input = $(this).parents('.input-group').find(':text'),
             log = numFiles > 1 ? numFiles + ' files selected' : label;
 

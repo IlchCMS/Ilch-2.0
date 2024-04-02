@@ -134,8 +134,9 @@ a.nav-link {
 a.badge.bg-secondary {
     font-size: 12px;
     color: #fff !important;
-    background-color: #777 !important;
+    background-color: #8a8a8a !important;
     cursor: pointer;
+    vertical-align: middle;
 }
 
 a.badge.bg-secondary:hover {
@@ -1523,12 +1524,20 @@ table tbody i.fa.fa-sort {
     padding: 2px;
 }
 
+.tokenfield:has(.token-input:focus) {
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+}
+
 .tokenfield .token {
-    background-color: #fff;
+    background-color: #f8f9fa;
     height: auto;
     border-radius: 4px;
-    margin: 0 6px 0 0;
-    border: 1px solid #ccc;
+    margin: 0 2px 0 0;
+    border: 1px solid #dee2e6;
     color: #333;
     cursor: pointer;
     vertical-align: middle;
@@ -1553,8 +1562,53 @@ table tbody i.fa.fa-sort {
 }
 
 .tokenfield .token-input {
-    margin: 0;
-    height: auto;
+    margin: 0 0 0 5px;
+    height: 28px;
+}
+
+/* chosenfield */
+.chosen-container {
+    padding: 2px!important;
+}
+
+.chosen-choices:has(input:focus) {
+    color: var(--bs-body-color) !important;
+    background-color: var(--bs-body-bg) !important;
+    border-color: #86b7fe !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25) !important;
+}
+
+.chosen-choices {
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+    border-radius: var(--bs-border-radius) !important;
+    box-shadow: none !important;
+}
+
+.search-choice {
+    background-color: #f8f9fa !important;
+    height: auto !important;
+    border-radius: 4px !important;
+    margin: 0 2px 0 0 !important;
+    border: 1px solid #dee2e6 !important;
+    color: #333 !important;
+    cursor: pointer !important;
+    vertical-align: middle !important;
+    box-shadow: none !important;
+}
+
+.search-choice:hover {
+    border-color: #b9b9b9 !important;
+}
+
+.search-choice span {
+    font-size: 1rem !important;
+    font-weight: 400!important;
+    line-height: 1.5!important;
+}
+
+.search-choice-close {
+    top: 10px !important;
 }
 
 /* Module and Layout search carousel */
