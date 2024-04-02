@@ -34,7 +34,7 @@
                    class="form-control"
                    id="link"
                    name="link"
-                   placeholder="http://"
+                   placeholder="https://"
                    value="<?=($this->originalInput('link') != '' ? $this->escape($this->originalInput('link')) : '') ?>" />
         </div>
     </div>
@@ -47,7 +47,7 @@
                    class="form-control"
                    id="banner"
                    name="banner"
-                   placeholder="http://"
+                   placeholder="https://"
                    value="<?=($this->originalInput('banner') != '' ? $this->escape($this->originalInput('banner')) : '') ?>" />
         </div>
     </div>

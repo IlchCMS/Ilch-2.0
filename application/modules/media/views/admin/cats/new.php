@@ -8,8 +8,7 @@ div.input-group span.input-group-text-remove {
 }
 
 div.input-group {
-    margin-bottom: 3px;
-    width: 55% !important;
+    margin-bottom: 5px;
 }
 </style>
 
@@ -17,11 +16,13 @@ div.input-group {
 <form class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 form-group-options">
-        <div class="input-group col-12">
-            <input type="text" class="form-control" name="title_option[]" placeholder="<?=$this->getTrans('catTitle') ?>">
-            <span class="input-group-text input-group-text-remove">
-                <span class="fa fa-times"></span>
-            </span>
+        <div class="col-xl-6">
+            <div class="input-group">
+                <input type="text" class="form-control" name="title_option[]" placeholder="<?=$this->getTrans('catTitle') ?>">
+                <span class="input-group-text input-group-text-remove">
+                    <span class="fa fa-times"></span>
+                </span>
+            </div>
         </div>
     </div>
     <?=$this->getSaveBar('saveButton') ?>

@@ -42,6 +42,10 @@ img {
     padding-right: 15px !important;
 }
 
+.badge {
+    vertical-align: middle !important;
+}
+
 
 /* ilch Standard */
 .ilch-border {
@@ -159,11 +163,24 @@ img {
 
 /* custom tooltip for BS5 */
 .custom-tooltip {
-    --bs-tooltip-bg: #fff;
-    --bs-tooltip-color: #333;
-    --bs-tooltip-padding-x: 15px;
-    --bs-tooltip-padding-y: 10px;
-    --bs-tooltip-opacity: 1;
-    border-radius: 5px;
-    box-shadow: rgba(60, 80, 100, 0.5) 0px 1px 3px;
+    font-family: var(--bs-body-font-family) !important;
+    font-size: var(--bs-body-font-size) !important;
+    --bs-tooltip-bg: #fff !important;
+    --bs-tooltip-color: #333 !important;
+    --bs-tooltip-padding-x: 15px !important;
+    --bs-tooltip-padding-y: 10px !important;
+    --bs-tooltip-opacity: 1 !important;
+    border-radius: 5px !important;
+    box-shadow: rgba(60, 80, 100, 0.5) 0px 1px 3px !important;
+}
+
+/* navbar */
+.navbar a.nav-link {
+    color: #777;
+}
+
+.navbar a.nav-link:hover,
+.navbar a.navbar-brand:hover {
+    color: #000;
+    text-decoration: none;
 }

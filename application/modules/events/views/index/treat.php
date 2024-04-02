@@ -43,7 +43,7 @@ $types = $this->get('types');
                     </div>
                 </div>
                 <div class="input-group col-xl-7">
-                    <span class="btn btn-primary btn-file">
+                    <span class="btn btn-outline-secondary btn-file">
                         <?=$this->getTrans('browse') ?> <input type="file" name="image" accept="image/*">
                     </span>
                     <input type="text"
