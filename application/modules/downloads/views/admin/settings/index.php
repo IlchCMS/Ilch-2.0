@@ -3,7 +3,7 @@
     <div class="row">
         <?=$this->getTokenField() ?>
         <div class="row mb-3">
-            <label for="downloadsPerPageInput" class="col-xl-2 control-label">
+            <label for="downloadsPerPageInput" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('downloadsPerPage') ?>:
             </label>
             <div class="col-xl-1">
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-xl-2 control-label"></label>
+            <label class="col-xl-2 col-form-label"></label>
             <div class="col-xl-6">
                 <a class="btn btn-outline-secondary" href="<?=$this->getUrl(['module' => 'media', 'controller' => 'settings', 'action' => 'index'], 'admin') ?>"><?=$this->getTrans('moreSettings') ?></a>
             </div>

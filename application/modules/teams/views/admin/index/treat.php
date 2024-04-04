@@ -21,7 +21,7 @@ $userGroupList = $this->get('userGroupList');
 <form method="POST" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
-        <label for="name" class="col-xl-2 control-label">
+        <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('teamName') ?>
         </label>
         <div class="col-xl-4">
@@ -33,7 +33,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('upl') ? ' has-error' : '' ?>">
-        <label for="upl" class="col-xl-2 control-label">
+        <label for="upl" class="col-xl-2 col-form-label">
             <?=$this->getTrans('img') ?>:
         </label>
         <div class="col-lg-4">
@@ -59,7 +59,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('leader') ? ' has-error' : '' ?>">
-        <label for="leader" class="col-xl-2 control-label">
+        <label for="leader" class="col-xl-2 col-form-label">
             <?=$this->getTrans('leader') ?>
         </label>
         <div class="col-xl-4">
@@ -81,7 +81,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('coLeader') ? ' has-error' : '' ?>">
-        <label for="coLeader" class="col-xl-2 control-label">
+        <label for="coLeader" class="col-xl-2 col-form-label">
             <?=$this->getTrans('coLeader') ?>
         </label>
         <div class="col-xl-4">
@@ -103,7 +103,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('members') ? ' has-error' : '' ?>">
-        <label for="groupId" class="col-xl-2 control-label">
+        <label for="groupId" class="col-xl-2 col-form-label">
             <?=$this->getTrans('group') ?>
         </label>
         <div class="col-xl-4">
@@ -122,7 +122,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('optShow') ? ' has-error' : '' ?>">
-        <label for="optShow" class="col-xl-2 control-label">
+        <label for="optShow" class="col-xl-2 col-form-label">
             <?=$this->getTrans('optShow') ?>:
         </label>
         <div class="col-xl-4">
@@ -136,7 +136,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('optIn') ? ' has-error' : '' ?>">
-        <label for="optIn" class="col-xl-2 control-label">
+        <label for="optIn" class="col-xl-2 col-form-label">
             <?=$this->getTrans('optIn') ?>:
         </label>
         <div class="col-xl-4">
@@ -150,7 +150,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('notifyLeader') ? ' has-error' : '' ?>" id="notifyLeader">
-        <label for="notifyLeader" class="col-xl-2 control-label">
+        <label for="notifyLeader" class="col-xl-2 col-form-label">
             <?=$this->getTrans('notifyLeader') ?>:
         </label>
         <div class="col-xl-4">

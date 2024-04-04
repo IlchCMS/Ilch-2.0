@@ -6,7 +6,7 @@ body {
 .control-group {
     margin-bottom: 10px;
 }
-.control-group .control-label {
+.control-group {
     text-align: left;
 }
 .mobile {

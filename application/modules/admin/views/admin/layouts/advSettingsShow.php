@@ -96,7 +96,7 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
             <h2><?=$this->getOtherLayoutTrans($this->get('layoutKey'), $key) ?></h2>
         <?php else : ?>
             <div class="row mb-3">
-                <label for="<?=$key ?>" class="col-xl-2 control-label">
+                <label for="<?=$key ?>" class="col-xl-2 col-form-label">
                     <?=$this->getOtherLayoutTrans($this->get('layoutKey'), $key) ?>:
                 </label>
                 <div class="col-xl-10">

@@ -2,7 +2,7 @@
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('warsPerPage') ? 'has-error' : '' ?>">
-        <label for="warsPerPageInput" class="col-xl-2 control-label">
+        <label for="warsPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('warsPerPage') ?>:
         </label>
         <div class="col-xl-1">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('enemiesPerPage') ? 'has-error' : '' ?>">
-        <label for="enemiesPerPageInput" class="col-xl-2 control-label">
+        <label for="enemiesPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemiesPerPage') ?>:
         </label>
         <div class="col-xl-1">
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('groupsPerPage') ? 'has-error' : '' ?>">
-        <label for="groupsPerPageInput" class="col-xl-2 control-label">
+        <label for="groupsPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('groupsPerPage') ?>:
         </label>
         <div class="col-xl-1">
@@ -43,7 +43,7 @@
 
     <h1><?=$this->getTrans('boxSettings') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('boxNextWarLimit') ? 'has-error' : '' ?>">
-        <label for="limitNextWarInput" class="col-xl-2 control-label">
+        <label for="limitNextWarInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('nextWarLimit') ?>:
         </label>
         <div class="col-xl-1">
@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('boxLastWarLimit') ? 'has-error' : '' ?>">
-        <label for="limitLastWarInput" class="col-xl-2 control-label">
+        <label for="limitLastWarInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('lastWarLimit') ?>:
         </label>
         <div class="col-xl-1">

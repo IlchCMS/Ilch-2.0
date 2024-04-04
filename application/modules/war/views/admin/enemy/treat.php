@@ -3,7 +3,7 @@
 <form id="article_form" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('enemyName') ? ' has-error' : '' ?>">
-        <label for="enemyNameInput" class="col-xl-2 control-label">
+        <label for="enemyNameInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyName') ?>:
         </label>
         <div class="col-xl-4">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('enemyTag') ? ' has-error' : '' ?>">
-        <label for="enemyTagInput" class="col-xl-2 control-label">
+        <label for="enemyTagInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyTag') ?>:
         </label>
         <div class="col-xl-4">
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('enemyHomepage') ? ' has-error' : '' ?>">
-        <label for="enemyHomepageInput" class="col-xl-2 control-label">
+        <label for="enemyHomepageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyHomepage') ?>:
         </label>
         <div class="col-xl-4">
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('enemyImage') ? ' has-error' : '' ?>">
-        <label for="selectedImage" class="col-xl-2 control-label">
+        <label for="selectedImage" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyImage') ?>:
         </label>
         <div class="col-xl-4">
@@ -57,7 +57,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('enemyContactName') ? ' has-error' : '' ?>">
-        <label for="enemyContactNameInput" class="col-xl-2 control-label">
+        <label for="enemyContactNameInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyContactName') ?>:
         </label>
         <div class="col-xl-4">
@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('enemyContactEmail') ? ' has-error' : '' ?>">
-        <label for="enemyContactEmailInput" class="col-xl-2 control-label">
+        <label for="enemyContactEmailInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyContactEmail') ?>:
         </label>
         <div class="col-xl-4">

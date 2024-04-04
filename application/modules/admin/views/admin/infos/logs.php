@@ -14,7 +14,7 @@ $userCache = [];
         <?=$this->getTokenField() ?>
         <div class="panel-body">
             <div class="row mb-3">
-                <label for="startDate" class="col-xl-2 control-label">
+                <label for="startDate" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('startDate') ?>:
                 </label>
                 <div id="startDate" class="col-xl-4 input-group ilch-date date form_datetime">
@@ -30,7 +30,7 @@ $userCache = [];
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="endDate" class="col-xl-2 control-label">
+                <label for="endDate" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('endDate') ?>:
                 </label>
                 <div id="endDate" class="col-xl-4 input-group ilch-date date form_datetime">

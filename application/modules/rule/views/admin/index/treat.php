@@ -18,7 +18,7 @@ $userGroupList = $this->get('userGroupList');
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
-        <label for="paragraph" class="col-xl-2 control-label">
+        <label for="paragraph" class="col-xl-2 col-form-label">
             <?=$this->getTrans('paragraph') ?>
         </label>
         <div class="col-xl-1">
@@ -31,7 +31,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>
         </label>
         <div class="col-xl-4">
@@ -44,7 +44,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('cat') ? 'has-error' : '' ?>">
-        <label for="cat" class="col-xl-2 control-label">
+        <label for="cat" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cat') ?>
         </label>
         <div class="col-xl-4">
@@ -56,7 +56,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
-        <label for="assignedGroupsRead" class="col-xl-2 control-label">
+        <label for="assignedGroupsRead" class="col-xl-2 col-form-label">
             <?=$this->getTrans('see') ?>
             <a href="#" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
         </label>
@@ -72,7 +72,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label for="ck_1" class="col-xl-2 control-label">
+        <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('text') ?>
         </label>
         <div class="col-xl-10">

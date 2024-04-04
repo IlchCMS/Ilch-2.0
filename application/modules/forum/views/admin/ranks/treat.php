@@ -6,7 +6,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-xl-2">
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('posts') ? 'has-error' : '' ?>">
-        <label for="posts" class="col-xl-2 control-label">
+        <label for="posts" class="col-xl-2 col-form-label">
             <?=$this->getTrans('posts') ?>:
         </label>
         <div class="col-xl-2">

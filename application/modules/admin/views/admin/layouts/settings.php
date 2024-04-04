@@ -6,7 +6,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('favicon') ? 'has-error' : '' ?>">
-        <label for="selectedImage_1" class="col-xl-2 control-label">
+        <label for="selectedImage_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('favicon') ?>:
         </label>
         <div class="col-xl-4">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('appleIcon') ? 'has-error' : '' ?>">
-        <label for="selectedImage_2" class="col-xl-2 control-label">
+        <label for="selectedImage_2" class="col-xl-2 col-form-label">
             <?=$this->getTrans('appleIcon') ?>:
         </label>
         <div class="col-xl-4">
@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('pageTitle') ? 'has-error' : '' ?>">
-        <label for="pageTitle" class="col-xl-2 control-label">
+        <label for="pageTitle" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pageTitle') ?>:
         </label>
         <div class="col-xl-4">
@@ -70,7 +70,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('pageTitleOrder') ? 'has-error' : '' ?>">
-        <label for="pageTitleOrder" class="col-xl-2 control-label">
+        <label for="pageTitleOrder" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pageTitleOrder') ?>:<br>
             <h6><?=$this->getTrans('pageTitleOrderInfo') ?></h6>
         </label>
@@ -83,7 +83,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('pageTitleModuledataSeparator') ? 'has-error' : '' ?>">
-        <label for="pageTitleModuledataSeparator" class="col-xl-2 control-label">
+        <label for="pageTitleModuledataSeparator" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pageTitleModuledataSeparator') ?>:
         </label>
         <div class="col-xl-4">
@@ -95,7 +95,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('pageTitleModuledataOrder') ? 'has-error' : '' ?>">
-        <label for="pageTitleModuledataOrder" class="col-xl-2 control-label">
+        <label for="pageTitleModuledataOrder" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pageTitleModuledataOrder') ?>:
         </label>
         <div class="col-xl-4">
@@ -109,7 +109,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('keywords') ? 'has-error' : '' ?>">
-        <label for="keywords" class="col-xl-2 control-label">
+        <label for="keywords" class="col-xl-2 col-form-label">
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
         <div class="col-xl-4">
@@ -119,7 +119,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('description') ? 'has-error' : '' ?>">
-        <label for="description" class="col-xl-2 control-label">
+        <label for="description" class="col-xl-2 col-form-label">
             <?=$this->getTrans('seoDescription') ?>:
         </label>
         <div class="col-xl-4">

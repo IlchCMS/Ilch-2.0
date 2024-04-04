@@ -8,7 +8,7 @@
     <form id="contactForm" name="contactForm" method="POST">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 d-none">
-            <label class="col-xl-2 control-label">
+            <label class="col-xl-2 col-form-label">
                 <?=$this->getTrans('bot') ?>*
             </label>
             <div class="col-xl-8">
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('receiver') ? 'has-error' : '' ?>">
-            <label for="receiver" class="col-xl-2 control-label">
+            <label for="receiver" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('receiver') ?>
             </label>
             <div class="col-xl-8">
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('senderName') ? 'has-error' : '' ?>">
-            <label for="name" class="col-xl-2 control-label">
+            <label for="name" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('name') ?>
             </label>
             <div class="col-xl-8">
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('senderEmail') ? 'has-error' : '' ?>">
-            <label for="email" class="col-xl-2 control-label">
+            <label for="email" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('email') ?>
             </label>
             <div class="col-xl-8">
@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('message') ? 'has-error' : '' ?>">
-            <label for="message" class="col-xl-2 control-label">
+            <label for="message" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('message') ?>
             </label>
             <div class="col-xl-8">

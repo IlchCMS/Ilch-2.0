@@ -15,7 +15,7 @@ if ($user->getId()) {
            name="id"
            value="<?=$user->getId() ?>" />
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-xl-3 control-label">
+        <label for="name" class="col-xl-3 col-form-label">
             <?=$this->getTrans('userName') ?>
         </label>
         <div class="col-xl-9">
@@ -28,7 +28,7 @@ if ($user->getId()) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-        <label for="email" class="col-xl-3 control-label">
+        <label for="email" class="col-xl-3 col-form-label">
             <?=$this->getTrans('userEmail') ?>
         </label>
         <div class="col-xl-9">
@@ -41,7 +41,7 @@ if ($user->getId()) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('userPassword') ? 'has-error' : '' ?>">
-        <label for="password" class="col-xl-3 control-label">
+        <label for="password" class="col-xl-3 col-form-label">
             <?=$this->getTrans('userPassword') ?>
         </label>
         <div class="col-xl-9">
@@ -68,7 +68,7 @@ if ($user->getId()) {
         }
     ?>
         <div class="row mb-3">
-            <label class="col-xl-3 control-label">
+            <label class="col-xl-3 col-form-label">
                 <?=$this->getTrans('userDateCreated') ?>
             </label>
             <div class="col-xl-9">
@@ -76,7 +76,7 @@ if ($user->getId()) {
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-xl-3 control-label">
+            <label class="col-xl-3 col-form-label">
                 <?=$this->getTrans('userDateConfirmed') ?>
             </label>
             <div class="col-xl-9">
@@ -84,7 +84,7 @@ if ($user->getId()) {
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-xl-3 control-label">
+            <label class="col-xl-3 col-form-label">
                 <?=$this->getTrans('userDateLastActivity') ?>
             </label>
             <div class="col-xl-9">
@@ -93,7 +93,7 @@ if ($user->getId()) {
         </div>
     <?php endif; ?>
     <div class="row mb-3">
-        <div class="col-xl-3 control-label">
+        <div class="col-xl-3 col-form-label">
             <?=$this->getTrans('usergalleryAllowed') ?>
         </div>
         <div class="col-xl-9">
@@ -112,7 +112,7 @@ if ($user->getId()) {
     </div>
     <?php if ($user->getId()) : ?>
     <div class="row mb-3">
-        <div class="col-xl-3 control-label">
+        <div class="col-xl-3 col-form-label">
             <?=$this->getTrans('lockUser') ?>
         </div>
         <div class="col-xl-9">
@@ -131,7 +131,7 @@ if ($user->getId()) {
     </div>
     <?php endif; ?>
     <div class="row mb-3">
-        <label for="assignedGroups" class="col-xl-3 control-label">
+        <label for="assignedGroups" class="col-xl-3 col-form-label">
                 <?=$this->getTrans('assignedGroups') ?>
         </label>
         <div class="col-xl-9">
@@ -163,7 +163,7 @@ if ($user->getId()) {
     </div>
     <?php if ($user->getId()) : ?>
     <div class="row mb-3">
-        <label for="assignedGroups" class="col-xl-3 control-label">
+        <label for="assignedGroups" class="col-xl-3 col-form-label">
             <?=$this->getTrans('userProfile') ?>
         </label>
         <div class="col-xl-4">

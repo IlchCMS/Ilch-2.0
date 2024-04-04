@@ -3,7 +3,7 @@
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
-            <label for="subject" class="col-xl-2 control-label">
+            <label for="subject" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('subject') ?>:
             </label>
             <div class="col-xl-4">
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-            <label for="ck_1" class="col-xl-2 control-label">
+            <label for="ck_1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('text') ?>:
             </label>
             <div class="col-xl-10">

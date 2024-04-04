@@ -16,7 +16,7 @@ if ($group->getId()) {
            name="group[id]"
            value="<?=$group->getId() ?>" />
     <div class="row mb-3">
-        <label for="groupName" class="col-xl-3 control-label">
+        <label for="groupName" class="col-xl-3 col-form-label">
             <?=$this->getTrans('groupName') ?>
         </label>
         <div class="col-xl-9">

@@ -33,7 +33,7 @@
     </ul>
     <br />
     <div class="row mb-3 <?=$this->validation()->hasError('settingsAGB') ? 'has-error' : '' ?>">
-        <label for="settingsAGB" class="col-xl-2 control-label">
+        <label for="settingsAGB" class="col-xl-2 col-form-label">
             <?=$this->getTrans('AGB') ?>:
         </label>
         <div class="col-xl-10">

@@ -8,7 +8,7 @@ $entrie = $this->get('page');
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('pageTitle') ? 'has-error' : '' ?>">
-        <label for="pageTitle" class="col-xl-2 control-label">
+        <label for="pageTitle" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pageTitle') ?>:
         </label>
         <div class="col-xl-4">
@@ -20,7 +20,7 @@ $entrie = $this->get('page');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('pageContent') ? 'has-error' : '' ?>">
-        <label for="pageContent" class="col-xl-2 control-label">
+        <label for="pageContent" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pageContent') ?>:
         </label>
         <div class="col-xl-8">
@@ -31,7 +31,7 @@ $entrie = $this->get('page');
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale')): ?>
         <div class="row mb-3">
-            <label for="pageLanguage" class="col-xl-2 control-label">
+            <label for="pageLanguage" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('pageLanguage') ?>:
             </label>
             <div class="col-xl-2">
@@ -48,7 +48,7 @@ $entrie = $this->get('page');
     <?php endif; ?>
     <h1><?=$this->getTrans('seo') ?></h1>
     <div class="row mb-3">
-        <label for="description" class="col-xl-2 control-label">
+        <label for="description" class="col-xl-2 col-form-label">
             <?=$this->getTrans('seoDescription') ?>:
         </label>
         <div class="col-xl-4">
@@ -58,7 +58,7 @@ $entrie = $this->get('page');
         </div>
     </div>
     <div class="row mb-3">
-        <label for="keywords" class="col-xl-2 control-label">
+        <label for="keywords" class="col-xl-2 col-form-label">
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
         <div class="col-xl-4">

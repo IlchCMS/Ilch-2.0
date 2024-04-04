@@ -5,7 +5,7 @@
         <form method="POST">
             <?=$this->getTokenField() ?>
             <div class="row mb-3 <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
-                <label for="subject" class="col-xl-2 control-label">
+                <label for="subject" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('subject') ?>:
                 </label>
                 <div class="col-xl-8">
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="row mb-3 <?=$this->validation()->hasError('message') ? 'has-error' : '' ?>">
-                <label for="message" class="col-xl-2 control-label">
+                <label for="message" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('message') ?>:
                 </label>
                 <div class="col-xl-8">

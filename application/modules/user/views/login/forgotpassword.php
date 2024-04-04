@@ -2,7 +2,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-        <label for="email" class="control-label col-xl-2">
+        <label for="email" class="col-form-label col-xl-2">
             <?=$this->getTrans('email') ?>:
         </label>
         <div class="col-xl-8">

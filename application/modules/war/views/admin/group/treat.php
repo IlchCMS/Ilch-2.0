@@ -3,7 +3,7 @@
 <form id="article_form" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('groupName') ? ' has-error' : '' ?>">
-        <label for="groupNameInput" class="col-xl-2 control-label">
+        <label for="groupNameInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('groupName') ?>:
         </label>
         <div class="col-xl-4">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('groupTag') ? ' has-error' : '' ?>">
-        <label for="groupTagInput" class="col-xl-2 control-label">
+        <label for="groupTagInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('groupTag') ?>:
         </label>
         <div class="col-xl-4">
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('groupImage') ? ' has-error' : '' ?>">
-        <label for="selectedImage_1" class="col-xl-2 control-label">
+        <label for="selectedImage_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('groupImage') ?>:
         </label>
         <div class="col-xl-4">
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('groupDesc') ? ' has-error' : '' ?>">
-        <label for="groupDesc" class="col-xl-2 control-label">
+        <label for="groupDesc" class="col-xl-2 col-form-label">
             <?=$this->getTrans('groupDesc') ?>:
         </label>
         <div class="col-xl-4">
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('userGroup') ? ' has-error' : '' ?>">
-        <label for="warGroup" class="col-xl-2 control-label">
+        <label for="warGroup" class="col-xl-2 col-form-label">
             <?=$this->getTrans('assignedMember') ?>
         </label>
         <div class="col-xl-4">

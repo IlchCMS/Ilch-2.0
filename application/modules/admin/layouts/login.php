@@ -61,7 +61,7 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                 </div>
                             </div>
                             <div class="row mb-3" style="padding: 0px 13px;">
-                                <label for="language" class="control-label p-0"><?=$this->getTrans('language') ?></label>
+                                <label for="language" class="col-form-label p-0"><?=$this->getTrans('language') ?></label>
                                 <select class="form-select" name="language" id="language">
                                     <option value="">Standard</option>
                                     <?php foreach ($languages as $key => $value): ?>

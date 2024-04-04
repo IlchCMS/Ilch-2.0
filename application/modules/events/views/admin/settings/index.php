@@ -4,7 +4,7 @@
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <label for="event_add_entries_accesses" class="col-xl-2 control-label">
+        <label for="event_add_entries_accesses" class="col-xl-2 col-form-label">
             <?=$this->getTrans('addEntriesGroupAccesses') ?>
         </label>
         <div class="col-xl-3">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="event_show_members_accesses" class="col-xl-2 control-label">
+        <label for="event_show_members_accesses" class="col-xl-2 col-form-label">
             <?=$this->getTrans('showEntryMembersAccesses') ?>
         </label>
         <div class="col-xl-3">
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('event_upcoming_event_limit') ? 'has-error' : '' ?>">
-        <label for="event_upcoming_event_limit" class="col-xl-2 control-label">
+        <label for="event_upcoming_event_limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('upcomingEventLimit') ?>:
         </label>
         <div class="col-xl-1">
@@ -74,7 +74,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('event_current_event_limit') ? 'has-error' : '' ?>">
-        <label for="event_current_event_limit" class="col-xl-2 control-label">
+        <label for="event_current_event_limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('currentEventLimit') ?>:
         </label>
         <div class="col-xl-1">
@@ -88,7 +88,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('event_past_event_limit') ? 'has-error' : '' ?>">
-        <label for="event_past_event_limit" class="col-xl-2 control-label">
+        <label for="event_past_event_limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pastEventLimit') ?>:
         </label>
         <div class="col-xl-1">
@@ -102,7 +102,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('event_height') ? 'has-error' : '' ?>">
-        <label for="event_height" class="col-xl-2 control-label">
+        <label for="event_height" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageHeight') ?>:
         </label>
         <div class="col-xl-2">
@@ -116,7 +116,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('event_width') ? 'has-error' : '' ?>">
-        <label for="event_width" class="col-xl-2 control-label">
+        <label for="event_width" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageWidth') ?>:
         </label>
         <div class="col-xl-2">
@@ -130,7 +130,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('event_size') ? 'has-error' : '' ?>">
-        <label for="event_size" class="col-xl-2 control-label">
+        <label for="event_size" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageSizeBytes') ?>:
         </label>
         <div class="col-xl-2">
@@ -144,7 +144,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('event_filetypes') ? 'has-error' : '' ?>">
-        <label for="event_filetypes" class="col-xl-2 control-label">
+        <label for="event_filetypes" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageAllowedFileExtensions') ?>:
         </label>
         <div class="col-xl-2">
@@ -159,7 +159,7 @@
 
     <h1><?=$this->getTrans('menuGoogleMaps') ?></h1>
     <div class="row mb-3">
-        <label for="event_google_maps_api_key" class="col-xl-2 control-label">
+        <label for="event_google_maps_api_key" class="col-xl-2 col-form-label">
             <?=$this->getTrans('googleMapsAPIKey') ?>:
             <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#googleMapsAPIInfoModal">
                 <i class="fa-solid fa-info"></i>
@@ -174,7 +174,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('event_google_maps_map_typ') ? 'has-error' : '' ?>">
-        <label for="event_google_maps_map_typ" class="col-xl-2 control-label">
+        <label for="event_google_maps_map_typ" class="col-xl-2 col-form-label">
             <?=$this->getTrans('googleMapsMapTyp') ?>:
         </label>
         <div class="col-xl-2">
@@ -187,7 +187,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('event_google_maps_zoom') ? 'has-error' : '' ?>">
-        <label for="event_google_maps_zoom" class="col-xl-2 control-label">
+        <label for="event_google_maps_zoom" class="col-xl-2 col-form-label">
             <?=$this->getTrans('googleMapsZoom') ?>:
         </label>
         <div class="col-xl-1">
@@ -203,7 +203,7 @@
 
     <h1><?=$this->getTrans('menuBoxes') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('event_box_event_limit') ? 'has-error' : '' ?>">
-        <label for="event_box_event_limit" class="col-xl-2 control-label">
+        <label for="event_box_event_limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxEventLimit') ?>:
         </label>
         <div class="col-xl-1">

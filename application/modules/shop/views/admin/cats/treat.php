@@ -5,7 +5,7 @@
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('catTitle') ?>:
         </label>
         <div class="col-xl-4">
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="access" class="col-xl-2 control-label">
+        <label for="access" class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>:
         </label>
         <div class="col-xl-4">

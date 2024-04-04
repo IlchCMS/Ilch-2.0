@@ -23,7 +23,7 @@ $teams = $this->get('teams');
     <form id="joinForm" name="joinForm" method="POST">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 d-none">
-            <label class="col-xl-2 control-label" for="bot">
+            <label class="col-xl-2 col-form-label" for="bot">
                 <?=$this->getTrans('bot') ?>*
             </label>
             <div class="col-xl-8">
@@ -35,7 +35,7 @@ $teams = $this->get('teams');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('teamId') ? 'has-error' : '' ?>">
-            <label for="teamId" class="col-xl-2 control-label">
+            <label for="teamId" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('team') ?>
             </label>
             <div class="col-xl-4">
@@ -62,7 +62,7 @@ $teams = $this->get('teams');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-            <label for="name" class="col-lg-2 control-label">
+            <label for="name" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('name') ?>
             </label>
             <div class="col-xl-6">
@@ -83,7 +83,7 @@ $teams = $this->get('teams');
         </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-            <label for="email" class="col-xl-2 control-label">
+            <label for="email" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('email') ?>
             </label>
             <div class="col-xl-6">
@@ -104,7 +104,7 @@ $teams = $this->get('teams');
             </div>
         </div>
         <div class="row mb-3">
-            <label class="col-xl-2 control-label" for="gender">
+            <label class="col-xl-2 col-form-label" for="gender">
                 <?=$this->getTrans('gender') ?>
             </label>
             <div class="col-xl-2">
@@ -124,7 +124,7 @@ $teams = $this->get('teams');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('birthday') ? 'has-error' : '' ?>">
-            <label for="age" class="col-xl-2 control-label" for="birthday">
+            <label for="age" class="col-xl-2 col-form-label" for="birthday">
                 <?=$this->getTrans('birthday') ?>
             </label>
             <?php if ($this->getUser() && $this->getUser()->getBirthday() && $this->getUser()->getBirthday() != '0000-00-00') : ?>
@@ -154,7 +154,7 @@ $teams = $this->get('teams');
             <?php endif; ?>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
-            <label for="place" class="col-xl-2 control-label">
+            <label for="place" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('place') ?>
             </label>
             <div class="col-xl-6">
@@ -166,7 +166,7 @@ $teams = $this->get('teams');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('skill') ? 'has-error' : '' ?>">
-            <label for="skill" class="col-xl-2 control-label">
+            <label for="skill" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('skill') ?>
             </label>
             <div class="col-xl-2">
@@ -179,7 +179,7 @@ $teams = $this->get('teams');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-            <label for="ck_1" class="col-xl-2 control-label">
+            <label for="ck_1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('text') ?>
             </label>
             <div class="col-xl-10">

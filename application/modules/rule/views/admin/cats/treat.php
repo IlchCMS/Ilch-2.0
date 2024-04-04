@@ -15,7 +15,7 @@ $userGroupList = $this->get('userGroupList');
 <form method="POST">
     <?=$this->getTokenField(); ?>
     <div class="row mb-3 <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
-        <label for="paragraph" class="col-xl-2 control-label">
+        <label for="paragraph" class="col-xl-2 col-form-label">
             <?=$this->getTrans('art') ?>
         </label>
         <div class="col-xl-1">
@@ -28,7 +28,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-xl-2 control-label">
+        <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-xl-3">
@@ -41,7 +41,7 @@ $userGroupList = $this->get('userGroupList');
         </div>
     </div>
     <div class="row mb-3">
-        <label for="assignedGroupsRead" class="col-xl-2 control-label">
+        <label for="assignedGroupsRead" class="col-xl-2 col-form-label">
             <?=$this->getTrans('see') ?>
             <a href="#" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
         </label>

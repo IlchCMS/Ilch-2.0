@@ -60,7 +60,7 @@ class DefaultCaptcha
     public function getCaptcha(View $view): string
     {
         return '<div class="form-group row mb-15 ' . ($view->validation()->hasError('captcha') ? 'has-error' : '') . '">
-            <label class="col-xl-2 control-label">
+            <label class="col-xl-2 col-form-label">
                 ' . $view->getTrans('captcha') . '
             </label>
             <div class="col-xl-8">

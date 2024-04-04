@@ -6,7 +6,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('prefix') ? 'has-error' : '' ?>">
-        <label for="prefix" class="col-lg-2 control-label">
+        <label for="prefix" class="col-lg-2 col-form-label">
             <?=$this->getTrans('prefix') ?>:
         </label>
         <div class="col-lg-2">

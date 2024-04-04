@@ -6,7 +6,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('showallonstart') ? 'has-error' : '' ?>">
-        <label for="threadsPerPageInput" class="col-xl-2 control-label">
+        <label for="threadsPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('showallonstart') ?>:
         </label>
         <div class="col-xl-4">

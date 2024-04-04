@@ -6,7 +6,7 @@
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('acceptReply') ?>:
         </div>
         <div class="col-xl-4">
@@ -20,7 +20,7 @@
          </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('nesting') ? 'has-error' : '' ?>">
-        <label for="nesting" class="col-xl-2 control-label">
+        <label for="nesting" class="col-xl-2 col-form-label">
             <?=$this->getTrans('nesting') ?>:
         </label>
         <div class="col-xl-1">
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="floodIntervalInput" class="col-xl-2 control-label">
+        <label for="floodIntervalInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('floodInterval') ?>:
         </label>
         <div class="col-xl-1">
@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="excludeFloodProtection" class="col-xl-2 control-label">
+        <label for="excludeFloodProtection" class="col-xl-2 col-form-label">
             <?=$this->getTrans('excludeFloodProtection') ?>:
         </label>
         <div class="col-xl-4">
@@ -76,7 +76,7 @@
     </div>
     <h2><?=$this->getTrans('boxSettings') ?></h2>
     <div class="row mb-3">
-        <label for="boxCommentsLimit" class="col-xl-2 control-label">
+        <label for="boxCommentsLimit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxCommentsLimit') ?>
         </label>
         <div class="col-xl-1">

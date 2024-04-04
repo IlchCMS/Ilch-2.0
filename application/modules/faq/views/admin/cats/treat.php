@@ -12,7 +12,7 @@ $cat = $this->get('cat');
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-xl-3">
@@ -24,7 +24,7 @@ $cat = $this->get('cat');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
-        <label for="access" class="col-xl-2 control-label">
+        <label for="access" class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>:
         </label>
         <div class="col-xl-3">

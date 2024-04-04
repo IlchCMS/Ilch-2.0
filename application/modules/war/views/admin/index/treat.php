@@ -10,7 +10,7 @@ use Ilch\Date;
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 <?=$this->validation()->hasError('warEnemy') ? ' has-error' : '' ?>">
-            <label for="warEnemy" class="col-xl-2 control-label">
+            <label for="warEnemy" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('warEnemy') ?>:
             </label>
             <div class="col-xl-4">
@@ -24,7 +24,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('warGroup') ? ' has-error' : '' ?>">
-            <label for="warGroup" class="col-xl-2 control-label">
+            <label for="warGroup" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('warGroup') ?>:
             </label>
             <div class="col-xl-4">
@@ -38,7 +38,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('warTime') ? ' has-error' : '' ?>">
-            <label for="warTimeInput" class="col-lg-2 control-label">
+            <label for="warTimeInput" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
             <div id="warTime" class="input-group ilch-date date form_datetime col-xl-4">
@@ -55,7 +55,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('warMap') ? ' has-error' : '' ?>">
-            <label for="warMapInput" class="col-xl-2 control-label">
+            <label for="warMapInput" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('warMap') ?>
             </label>
             <div class="col-xl-4">
@@ -67,7 +67,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('warServer') ? ' has-error' : '' ?>">
-            <label for="warServerInput" class="col-xl-2 control-label">
+            <label for="warServerInput" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('warServer') ?>:
             </label>
             <div class="col-xl-4">
@@ -79,7 +79,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('warPassword') ? ' has-error' : '' ?>">
-            <label for="warPasswordInput" class="col-lg-2 control-label">
+            <label for="warPasswordInput" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('warPassword') ?>:
             </label>
             <div class="col-xl-4">
@@ -91,7 +91,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('warXonx') ? ' has-error' : '' ?>">
-            <label for="warXonx" class="col-xl-2 control-label">
+            <label for="warXonx" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('warXonx') ?>:
             </label>
             <div class="col-xl-2">
@@ -116,7 +116,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('warGame') ? ' has-error' : '' ?>">
-            <label for="warGame" class="col-xl-2 control-label">
+            <label for="warGame" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('warGame') ?>:
             </label>
             <div class="col-xl-2">
@@ -141,7 +141,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('warMatchtype') ? ' has-error' : '' ?>">
-            <label for="warMatchtype" class="col-xl-2 control-label">
+            <label for="warMatchtype" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('warMatchtype') ?>:
             </label>
             <div class="col-xl-2">
@@ -166,7 +166,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('lastAcceptTime') ? ' has-error' : '' ?>">
-            <label for="lastAcceptTimeInput" class="col-xl-2 control-label">
+            <label for="lastAcceptTimeInput" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('lastAcceptTime') ?>:
             </label>
             <div class="col-xl-4">
@@ -201,7 +201,7 @@ use Ilch\Date;
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
-            <label for="access" class="col-xl-2 control-label">
+            <label for="access" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('visibleFor') ?>
             </label>
             <div class="col-xl-6">
@@ -217,7 +217,7 @@ use Ilch\Date;
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
         <div class="row mb-3 <?=$this->validation()->hasError('calendarShow') ? ' has-error' : '' ?>">
-            <label for="calendarShow" class="col-xl-2 control-label">
+            <label for="calendarShow" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('calendarShow') ?>:
             </label>
             <div class="col-xl-4">
@@ -233,7 +233,7 @@ use Ilch\Date;
         <?php endif; ?>
         <h1><?=$this->getTrans('warStatus') ?></h1>
         <div class="row mb-3 <?=$this->validation()->hasError('warStatus') ? ' has-error' : '' ?>">
-            <label for="warStatus" class="col-xl-2 control-label">
+            <label for="warStatus" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('warStatus') ?>:
             </label>
             <div class="col-xl-4">

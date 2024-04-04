@@ -9,7 +9,7 @@ if ($this->get('article')) {
 <form id="article_form" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('template') ? 'has-error' : '' ?>">
-        <label for="template" class="col-xl-2 control-label">
+        <label for="template" class="col-xl-2 col-form-label">
             <?=$this->getTrans('template') ?>:
         </label>
         <div class="col-xl-4">
@@ -28,7 +28,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
-        <label for="teaser" class="col-lg-2 control-label">
+        <label for="teaser" class="col-lg-2 col-form-label">
             <?=$this->getTrans('teaser') ?>:
         </label>
         <div class="col-xl-4">
@@ -40,7 +40,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-xl-4">
@@ -52,7 +52,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3">
-        <label for="date_created" class="col-xl-2 control-label">
+        <label for="date_created" class="col-xl-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
         <div id="date_created" class="col-xl-4 input-group ilch-date date form_datetime">
@@ -68,7 +68,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">
-        <label for="cats" class="col-xl-2 control-label">
+        <label for="cats" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cats') ?>:
         </label>
         <div class="col-xl-4">
@@ -105,7 +105,7 @@ if ($this->get('article')) {
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
         <div class="row mb-3">
-            <label for="language" class="col-lg-2 control-label">
+            <label for="language" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('language') ?>:
             </label>
             <div class="col-xl-8">
@@ -130,7 +130,7 @@ if ($this->get('article')) {
     <?php endif; ?>
     <h1><?=$this->getTrans('options') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
-        <label for="access" class="col-lg-2 control-label">
+        <label for="access" class="col-lg-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-xl-4">
@@ -142,7 +142,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3">
-        <label for="topArticle" class="col-lg-2 control-label">
+        <label for="topArticle" class="col-lg-2 col-form-label">
             <?=$this->getTrans('topArticle') ?>:
         </label>
         <div class="col-xl-4">
@@ -154,7 +154,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3">
-        <label for="commentsDisabled" class="col-lg-2 control-label">
+        <label for="commentsDisabled" class="col-lg-2 col-form-label">
             <?=$this->getTrans('commentsDisabled') ?>:
         </label>
         <div class="col-xl-4">
@@ -166,7 +166,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3">
-        <label for="saveAsTemplate" class="col-lg-2 control-label">
+        <label for="saveAsTemplate" class="col-lg-2 col-form-label">
             <?=$this->getTrans('saveAsTemplate') ?>:
         </label>
         <div class="col-xl-4">
@@ -178,7 +178,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
-        <label for="selectedImage" class="col-lg-2 control-label">
+        <label for="selectedImage" class="col-lg-2 col-form-label">
             <?=$this->getTrans('image') ?>:
         </label>
         <div class="col-xl-4">
@@ -193,7 +193,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3">
-        <label for="imageSource" class="col-lg-2 control-label">
+        <label for="imageSource" class="col-lg-2 col-form-label">
             <?=$this->getTrans('imageSource') ?>:
         </label>
         <div class="col-xl-4">
@@ -205,7 +205,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3">
-        <label for="preview" class="col-lg-2 control-label">
+        <label for="preview" class="col-lg-2 col-form-label">
             <?=$this->getTrans('preview') ?>:
         </label>
         <div class="col-xl-4">
@@ -214,7 +214,7 @@ if ($this->get('article')) {
     </div>
     <h1><?=$this->getTrans('seo') ?></h1>
     <div class="row mb-3">
-        <label for="description" class="col-lg-2 control-label">
+        <label for="description" class="col-lg-2 col-form-label">
             <?=$this->getTrans('seoDescription') ?>:
         </label>
         <div class="col-xl-4">
@@ -224,7 +224,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3">
-        <label for="keywords" class="col-lg-2 control-label">
+        <label for="keywords" class="col-lg-2 col-form-label">
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
         <div class="col-xl-4">
@@ -234,7 +234,7 @@ if ($this->get('article')) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
-        <label for="permaLink" class="col-lg-2 control-label">
+        <label for="permaLink" class="col-lg-2 col-form-label">
             <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-xl-8">

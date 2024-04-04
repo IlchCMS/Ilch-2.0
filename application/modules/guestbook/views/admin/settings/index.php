@@ -2,7 +2,7 @@
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('entrySettings') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('entrySettings') ?>:
         </div>
         <div class="col-xl-2">
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('notificationOnNewEntry') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('notificationOnNewEntry') ?>:
         </div>
         <div class="col-xl-2">
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('entriesPerPage') ? 'has-error' : '' ?>">
-        <label for="entriesPerPageInput" class="col-xl-2 control-label">
+        <label for="entriesPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('entriesPerPage') ?>:
         </label>
         <div class="col-xl-1">
@@ -43,7 +43,7 @@
         </div>
     </div>
     <div class="row mb-3 <?= $this->validation()->hasError('welcomeMessage') ? 'has-error' : '' ?>" data-bs-toggle="dropdown" aria-expanded="false">
-        <label for="ck_1" class="col-xl-2 control-label">
+        <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('welcomeMessage') ?>:
         </label>
         <div class="col-xl-8">

@@ -14,7 +14,7 @@ $history = $this->get('history');
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
-        <label for="date" class="col-lg-2 control-label">
+        <label for="date" class="col-lg-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
         <div id="date" class="col-lg-2 input-group ilch-date date form_datetime">
@@ -33,7 +33,7 @@ $history = $this->get('history');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-xl-4">
@@ -45,7 +45,7 @@ $history = $this->get('history');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label for="ck_1" class="col-xl-2 control-label">
+        <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-xl-10">
@@ -57,7 +57,7 @@ $history = $this->get('history');
         </div>
     </div>
     <div class="row mb-3">
-        <label for="symbol" class="col-xl-2 control-label">
+        <label for="symbol" class="col-xl-2 col-form-label">
             <?=$this->getTrans('symbol') ?>:
         </label>
         <div class="col-xl-2 input-group ilch-date">
@@ -76,7 +76,7 @@ $history = $this->get('history');
         </div>
     </div>
     <div class="row mb-3">
-        <label for="color" class="col-xl-2 control-label">
+        <label for="color" class="col-xl-2 col-form-label">
             <?=$this->getTrans('color') ?>:
         </label>
         <div class="col-xl-2 input-group ilch-date">

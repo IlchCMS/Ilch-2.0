@@ -8,7 +8,7 @@
 <form method="POST">
     <?= $this->getTokenField() ?>
     <div class="row mb-3">
-        <label for="startPage" class="col-xl-2 control-label">
+        <label for="startPage" class="col-xl-2 col-form-label">
             <?= $this->getTrans('startPage') ?>:
         </label>
         <div class="col-xl-4">
@@ -62,7 +62,7 @@
         </div>
     </div>
     <div class="row mb-3<?= $this->validation()->hasError('multilingualAcp') ? ' has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?= $this->getTrans('multilingualAcp') ?>:
         </div>
         <div class="col-xl-4">
@@ -76,7 +76,7 @@
         </div>
     </div>
     <div id="contentLanguage" class="row mb-3"<?= ($this->get('multilingualAcp') != '1') ? ' hidden' : ''; ?>>
-        <label for="languageInput" class="col-xl-2 control-label">
+        <label for="languageInput" class="col-xl-2 col-form-label">
             <?= $this->getTrans('contentLanguage') ?>:
         </label>
         <div class="col-xl-4">
@@ -93,7 +93,7 @@
         </div>
     </div>
     <div id="contentLanguage" class="row mb-3">
-        <label for="localeInput" class="col-xl-2 control-label">
+        <label for="localeInput" class="col-xl-2 col-form-label">
             <?= $this->getTrans('locale') ?>:
         </label>
         <div class="col-xl-4">
@@ -110,7 +110,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="timezone" class="col-xl-2 control-label">
+        <label for="timezone" class="col-xl-2 col-form-label">
             <?= $this->getTrans('timezone') ?>:
         </label>
         <div class="col-xl-4">
@@ -128,7 +128,7 @@
         </div>
     </div>
     <div class="row mb-3<?= $this->validation()->hasError('standardMail') ? ' has-error' : '' ?>">
-        <label for="standardMailInput" class="col-xl-2 control-label">
+        <label for="standardMailInput" class="col-xl-2 col-form-label">
             <?= $this->getTrans('standardMail') ?>:
         </label>
         <div class="col-xl-4">
@@ -141,7 +141,7 @@
         </div>
     </div>
     <div class="row mb-3<?= $this->validation()->hasError('defaultPaginationObjects') ? ' has-error' : '' ?>">
-        <label for="defaultPaginationObjectsInput" class="col-xl-2 control-label">
+        <label for="defaultPaginationObjectsInput" class="col-xl-2 col-form-label">
             <?= $this->getTrans('defaultPaginationObjects') ?>:
         </label>
         <div class="col-xl-1">
@@ -156,7 +156,7 @@
 
     <h1><?= $this->getTrans('captcha') ?></h1>
     <div class="row mb-3">
-        <div for="captcha" class="col-xl-2 control-label">
+        <div for="captcha" class="col-xl-2 col-form-label">
             <?= $this->getTrans('captcha') ?>:
         </div>
         <div class="col-xl-4">
@@ -174,7 +174,7 @@
     </div>
     <div id="captcha_apikey" class="">
         <div class="row mb-3">
-            <label for="captcha_apikey" class="col-xl-2 control-label">
+            <label for="captcha_apikey" class="col-xl-2 col-form-label">
                     <?= $this->getTrans('captcha_apikey') ?>:
             </label>
             <div class="col-xl-4">
@@ -188,7 +188,7 @@
     </div>
     <div id="captcha_seckey" class="">
         <div class="row mb-3">
-            <label for="captcha_seckey" class="col-xl-2 control-label">
+            <label for="captcha_seckey" class="col-xl-2 col-form-label">
                     <?= $this->getTrans('captcha_seckey') ?>:
             </label>
             <div class="col-xl-4">
@@ -201,7 +201,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="hideCaptchaFor" class="col-xl-2 control-label">
+        <label for="hideCaptchaFor" class="col-xl-2 col-form-label">
             <?= $this->getTrans('hideCaptchaFor') ?>:
         </label>
         <div class="col-xl-4">
@@ -234,7 +234,7 @@
     <h1><?= $this->getTrans('htmlPurifier') ?></h1>
     <p><?= $this->getTrans('htmlPurifierDescription') ?></p>
     <div id="htmlPurifier" class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?= $this->getTrans('htmlPurifier') ?>:
         </div>
         <div class="col-xl-4">
@@ -250,7 +250,7 @@
 
     <h1><?= $this->getTrans('backendFunctions') ?></h1>
     <div id="hmenuFixed" class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?= $this->getTrans('hmenuFixed') ?>:
         </div>
         <div class="col-xl-4">

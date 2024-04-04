@@ -21,7 +21,7 @@ if (!empty($profil->getBirthday())) {
             <form method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-                    <label class="col-xl-2 control-label">
+                    <label class="col-xl-2 col-form-label">
                         <?=$this->getTrans('profileEmail') ?>*
                     </label>
                     <div class="col-xl-8">
@@ -34,7 +34,7 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 control-label">
+                    <label class="col-xl-2 col-form-label">
                         <?=$this->getTrans('profileFirstName') ?>
                     </label>
                     <div class="col-xl-8">
@@ -46,7 +46,7 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 control-label">
+                    <label class="col-xl-2 col-form-label">
                         <?=$this->getTrans('profileLastName') ?>
                     </label>
                     <div class="col-xl-8">
@@ -58,7 +58,7 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 control-label">
+                    <label class="col-xl-2 col-form-label">
                         <?=$this->getTrans('profileGender') ?>
                     </label>
                     <div class="col-xl-8">
@@ -71,7 +71,7 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 control-label">
+                    <label class="col-xl-2 col-form-label">
                         <?=$this->getTrans('profileCity') ?>
                     </label>
                     <div class="col-xl-8">
@@ -83,7 +83,7 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 control-label">
+                    <label class="col-xl-2 col-form-label">
                         <?=$this->getTrans('profileBirthday') ?>
                     </label>
                     <div id="birthday" class="col-xl-8 input-group ilch-date date form_datetime">
@@ -123,7 +123,7 @@ if (!empty($profil->getBirthday())) {
                             }
                         } ?>
                         <div class="row mb-3">
-                            <label class="col-xl-2 control-label">
+                            <label class="col-xl-2 col-form-label">
                                 <?=$this->escape($profileFieldName) ?>
                             </label>
                             <div class="col-xl-8">
