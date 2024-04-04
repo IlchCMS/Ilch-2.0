@@ -156,7 +156,7 @@ li.nav-item a.nav-link:hover {
     margin-right: 0 !important;
 }
 
-#content .form-horizontal .form-group {
+#content .form-group {
     margin-left: 0;
     margin-right: 0;
 }
@@ -432,7 +432,7 @@ ul > .heading {
     margin-left: -15px;
 }
 
-.form-horizontal .form-group .control-label {
+.form-group .control-label {
     text-align: left;
 }
 

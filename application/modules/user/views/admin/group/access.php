@@ -1,7 +1,6 @@
 <h1><?=$this->getTrans('menuAccess') ?></h1>
 <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'saveAccess']) ?>"
       method="POST"
-      class="form-horizontal"
       role="form"
       id="groupAccessForm">
     <?=$this->getTokenField() ?>

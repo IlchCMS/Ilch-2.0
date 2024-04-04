@@ -67,7 +67,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
 }
 ?>
 
-<form class="form-horizontal row" id="galleryForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form class="row" id="galleryForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <h1><?=$this->getTrans('gallery') ?></h1>
     <div class="col-xl-6">

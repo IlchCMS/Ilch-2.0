@@ -86,7 +86,7 @@ $config = \Ilch\Registry::get('config');
     });
 </script>
 <div id="shoutbox-container<?=$this->get('uniqid') ?>">
-    <div id="shoutbox-button-container<?=$this->get('uniqid') ?>" class="form-horizontal">
+    <div id="shoutbox-button-container<?=$this->get('uniqid') ?>">
         <div class="row mb-3">
             <div class="col-xl-12">
                 <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))) : ?>

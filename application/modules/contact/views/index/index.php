@@ -5,7 +5,7 @@
 </div>
 <?php endif; ?>
 <?php if ($this->get('receivers') != ''): ?>
-    <form id="contactForm" name="contactForm" method="POST" class="form-horizontal">
+    <form id="contactForm" name="contactForm" method="POST">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 d-none">
             <label class="col-xl-2 control-label">

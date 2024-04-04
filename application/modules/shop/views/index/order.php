@@ -29,7 +29,7 @@ if (!empty($_SESSION['shopping_cart'])) {
         <p><?=$this->getTrans('infoFormOrderWillCollect') ?></p>
         <?php endif; ?>
 
-        <form class="form-horizontal order" action="#shopAnker" method="POST">
+        <form class="order" action="#shopAnker" method="POST">
             <?=$this->getTokenField() ?>
             <?php $order = str_replace('"', "'", json_encode($_SESSION['shopping_cart'])); ?>
             <input type="hidden" name="order" value="<?=$order ?>" />

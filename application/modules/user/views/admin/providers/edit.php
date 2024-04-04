@@ -6,7 +6,6 @@
         'key' => $this->get('provider')->getKey()
     ]) ?>"
     method="POST"
-    class="form-horizontal"
 >
     <h1><?= $this->getTrans('authProvider') ?> <?= $this->get('provider')->getName() ?></h1>
     <?=$this->getTokenField() ?>

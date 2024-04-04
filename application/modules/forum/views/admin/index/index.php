@@ -49,7 +49,7 @@ function rec(ForumItem $item, \Ilch\View $obj)
 }
 ?>
 
-<form class="form-horizontal row" id="forumForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form class="row" id="forumForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <h1><?=$this->getTrans('forum') ?></h1>
     <div class="col-xl-6">

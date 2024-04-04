@@ -622,11 +622,11 @@ legend .forum.fa {
     direction: ltr;
     overflow-x: hidden;
 }
-#editRememberedPost .form-horizontal .form-group {
+#editRememberedPost .form-group {
     margin-left: 0;
     margin-right: 0;
 }
-#editRememberedPost .form-horizontal .form-group .control-label {
+#editRememberedPost .form-group .control-label {
     text-align: left;
 }
 

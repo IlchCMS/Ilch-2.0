@@ -223,54 +223,52 @@ if (!empty($event)) {
     <br />
     <div class="row">
         <div class="col-xl-12">
-            <div class="form-horizontal">
-                <?php if ($this->getUser() && (($eventEntrants != '' && $eventEntrants->getUserId() == $this->getUser()->getId()) || $event->getUserId() == $this->getUser()->getId())): ?>
-                    <div class="row mb-3 eventCommentSubmit">
-                        <form action="" method="POST">
-                            <?=$this->getTokenField() ?>
-                            <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
-                            <div style="margin-bottom: 10px; margin-top: 10px;">
-                                <div class="col-xl-12">
-                                    <textarea class="eventTextarea"
-                                              name="commentEvent"
-                                              placeholder="<?=$this->getTrans('writeToEvent') ?>"
-                                              required></textarea>
-                                </div>
+            <?php if ($this->getUser() && (($eventEntrants != '' && $eventEntrants->getUserId() == $this->getUser()->getId()) || $event->getUserId() == $this->getUser()->getId())): ?>
+                <div class="row mb-3 eventCommentSubmit">
+                    <form action="" method="POST">
+                        <?=$this->getTokenField() ?>
+                        <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
+                        <div style="margin-bottom: 10px; margin-top: 10px;">
+                            <div class="col-xl-12">
+                                <textarea class="eventTextarea"
+                                          name="commentEvent"
+                                          placeholder="<?=$this->getTrans('writeToEvent') ?>"
+                                          required></textarea>
                             </div>
-                            <div class="col-xl-12 eventSubmit">
-                                <button type="submit" class="float-end btn btn-secondary btn-sm" name="saveEntry">
-                                    <?=$this->getTrans('write') ?>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                <?php endif; ?>
-
-                <?php if ($this->get('eventComments') != ''): ?>
-                    <div class="eventBoxHead">
-                        <strong><?=$this->getTrans('comments') ?></strong>
-                    </div>
-                    <?php foreach ($this->get('eventComments') as $eventComments): ?>
-                        <?php $commentUser = (isset($userDetails[$eventComments->getUserId()])) ? $userDetails[$eventComments->getUserId()] : $userMapper->getUserById($eventComments->getUserId()); ?>
-                        <?php $commentUser = (empty($commentUser)) ? $userMapper->getDummyUser() : $commentUser; ?>
-                        <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
-                        <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
-                            <?php if ($this->getUser()): ?>
-                                <?php if ($event->getUserId() == $this->getUser()->getId() || $commentUser->getId() == $this->getUser()->getId()): ?>
-                                    <div class="float-end" style="height: 40px; top: 0;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                            <div class="float-start"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
-                            <div class="userEventInfo">
-                                <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
-                                <span class="small"><?=$commentDate->format('Y.m.d H:i', true) ?></span>
-                            </div>
-                            <div class="commentEventText"><?=nl2br($this->escape($eventComments->getText())) ?></div>
                         </div>
-                        <br />
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
+                        <div class="col-xl-12 eventSubmit">
+                            <button type="submit" class="float-end btn btn-secondary btn-sm" name="saveEntry">
+                                <?=$this->getTrans('write') ?>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($this->get('eventComments') != ''): ?>
+                <div class="eventBoxHead">
+                    <strong><?=$this->getTrans('comments') ?></strong>
+                </div>
+                <?php foreach ($this->get('eventComments') as $eventComments): ?>
+                    <?php $commentUser = (isset($userDetails[$eventComments->getUserId()])) ? $userDetails[$eventComments->getUserId()] : $userMapper->getUserById($eventComments->getUserId()); ?>
+                    <?php $commentUser = (empty($commentUser)) ? $userMapper->getDummyUser() : $commentUser; ?>
+                    <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
+                    <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
+                        <?php if ($this->getUser()): ?>
+                            <?php if ($event->getUserId() == $this->getUser()->getId() || $commentUser->getId() == $this->getUser()->getId()): ?>
+                                <div class="float-end" style="height: 40px; top: 0;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <div class="float-start"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
+                        <div class="userEventInfo">
+                            <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
+                            <span class="small"><?=$commentDate->format('Y.m.d H:i', true) ?></span>
+                        </div>
+                        <div class="commentEventText"><?=nl2br($this->escape($eventComments->getText())) ?></div>
+                    </div>
+                    <br />
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 

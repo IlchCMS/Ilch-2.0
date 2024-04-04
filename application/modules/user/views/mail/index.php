@@ -2,7 +2,7 @@
     <?php $user = $this->get('user'); ?>
     <?php if ($user->getOptMail() == 1): ?>
         <h1><?=$this->getTrans('mailTo') ?> <?=$user->getName() ?></h1>
-        <form method="POST" class="form-horizontal">
+        <form method="POST">
             <?=$this->getTokenField() ?>
             <div class="row mb-3 <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
                 <label for="subject" class="col-xl-2 control-label">

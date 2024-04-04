@@ -3,10 +3,10 @@ body {
     padding: 0;
     height: 100%;
 }
-.form-horizontal .control-group {
+.control-group {
     margin-bottom: 10px;
 }
-.form-horizontal .control-group .control-label {
+.control-group .control-label {
     text-align: left;
 }
 .mobile {

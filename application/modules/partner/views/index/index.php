@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('menuPartnerAdd') ?></h1>
-<form id="partnerForm" name="partnerForm" method="POST" class="form-horizontal">
+<form id="partnerForm" name="partnerForm" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 d-none">
         <label class="col-xl-2 control-label">
