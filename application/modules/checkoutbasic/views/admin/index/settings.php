@@ -3,7 +3,7 @@
 /** @var \Ilch\View $this */
 ?>
 <h1><?=$this->getTrans('accountdata') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('checkoutContact') ? 'has-error' : '' ?>">
         <textarea class="form-control ckeditor"

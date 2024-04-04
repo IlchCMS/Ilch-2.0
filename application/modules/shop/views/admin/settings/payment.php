@@ -33,7 +33,7 @@
 
 <div class="alert alert-info"><?=$this->getTrans('infoPayPalBusiness') ?></div>
 
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
 
     <div class="row mb-3">

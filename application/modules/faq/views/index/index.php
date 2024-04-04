@@ -36,7 +36,7 @@ $readAccess = $this->get('readAccess');
 <?php endif; ?>
 
 <?php if ($faqs) : ?>
-    <form class="form-horizontal" role="search" method="POST">
+    <form role="search" method="POST">
         <?=$this->getTokenField() ?>
         <div class="row mb-3">
             <div class="col-xl-6">

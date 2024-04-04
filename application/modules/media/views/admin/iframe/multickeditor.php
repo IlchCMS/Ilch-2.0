@@ -14,7 +14,7 @@
 }
 </style>
 
-<form class="form-horizontal" method="POST" action="<?=$_SESSION['media-url-action-button'] ?>">
+<form method="POST" action="<?=$_SESSION['media-url-action-button'] ?>">
     <?=$this->getTokenField() ?>
     <?php if ($this->get('medias') != ''): ?>
         <div id="ilchmedia">

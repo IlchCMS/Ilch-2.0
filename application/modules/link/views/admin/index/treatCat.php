@@ -6,7 +6,7 @@
 $cat = $this->get('category');
 ?>
 <h1><?=($cat->getId()) ? $this->getTrans('menuActionEditCategory') : $this->getTrans('menuActionNewCategory') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-xl-2 control-label">

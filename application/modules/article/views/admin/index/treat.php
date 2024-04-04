@@ -6,7 +6,7 @@ if ($this->get('article')) {
 ?>
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <h1><?=($this->get('article')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form id="article_form" class="form-horizontal" method="POST">
+<form id="article_form" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('template') ? 'has-error' : '' ?>">
         <label for="template" class="col-xl-2 control-label">

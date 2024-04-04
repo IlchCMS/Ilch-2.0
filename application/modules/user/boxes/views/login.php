@@ -27,7 +27,7 @@
         return false; // cancel the actual link
     });
     });</script>
-    <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="form-horizontal" method="post">
+    <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" method="post">
         <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl')) ?>" />
         <?php
         echo $this->getTokenField();

@@ -14,7 +14,7 @@ $links = $this->get('links');
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
-<form class="form-horizontal" id="downloadsForm" method="POST" action="">
+<form id="downloadsForm" method="POST" action="">
     <?=$this->getTokenField() ?>
     <?php if ($categorys) : ?>
         <div class="table-responsive">

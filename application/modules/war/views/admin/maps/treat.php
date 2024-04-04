@@ -1,6 +1,6 @@
 <?php $entrie = $this->get('maps'); ?>
 <h1><?=(!$entrie->getId()) ? $this->getTrans('manageNewMaps') : $this->getTrans('treatMaps') ?></h1>
-<form id="article_form" class="form-horizontal" method="POST" action="">
+<form id="article_form" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('mapsName') ? ' has-error' : '' ?>">
         <label for="mapsNameInput" class="col-xl-2 control-label">

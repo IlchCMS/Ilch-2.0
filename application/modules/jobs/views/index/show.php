@@ -26,7 +26,7 @@ $job = $this->get('job');
 
 <?php if ($this->getUser()) : ?>
     <h1><?=$this->getTrans('apply') ?></h1>
-    <form action="" class="form-horizontal" method="POST">
+    <form action="" method="POST">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
             <label for="title" class="col-xl-3 control-label">

@@ -3,7 +3,7 @@
 /** @var \Ilch\View $this */
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('limit') ? 'has-error' : '' ?>">
         <label for="limit" class="col-xl-2 control-label">

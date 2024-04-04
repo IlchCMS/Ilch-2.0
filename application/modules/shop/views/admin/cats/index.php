@@ -8,7 +8,7 @@
     </a>
 </h1>
 <?php if (!empty($this->get('cats'))) : ?>
-    <form class="form-horizontal" id="catsIndexForm" method="POST" action="">
+    <form id="catsIndexForm" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">

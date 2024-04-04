@@ -1,5 +1,5 @@
 <h1><?=($this->get('cat') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-xl-2 control-label">

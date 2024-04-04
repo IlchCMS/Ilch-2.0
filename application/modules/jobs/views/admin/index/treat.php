@@ -8,7 +8,7 @@ $job = $this->get('job');
 <h1>
     <?=$this->getTrans($job->getId() ? 'edit' : 'add') ?>
 </h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('show') ? 'has-error' : '' ?>">
         <div class="col-xl-2 control-label">

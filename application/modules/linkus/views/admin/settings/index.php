@@ -9,7 +9,7 @@ if (!$this->validation()->hasErrors()) {
 ?>
 
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('showHtml') ? 'has-error' : '' ?>">
         <div class="col-xl-2 control-label">

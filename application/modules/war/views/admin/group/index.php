@@ -9,7 +9,7 @@
 <h1><?=$this->getTrans('manageGroups') ?></h1>
 <?php if ($this->get('groups')): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-striped table-hover">

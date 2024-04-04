@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('menuBackup') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <?php if ($this->get('backups') != ''): ?>
     <div class="table-responsive">

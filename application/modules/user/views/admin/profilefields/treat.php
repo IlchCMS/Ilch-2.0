@@ -35,7 +35,7 @@ $iconArray = [
     </a>
 </h1>
 
-<form action="" method="POST" class="form-horizontal" id="profileFieldForm">
+<form action="" method="POST" id="profileFieldForm">
     <?=$this->getTokenField() ?>
     <input type="hidden"
            name="profileField[id]"

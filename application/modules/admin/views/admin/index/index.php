@@ -24,7 +24,7 @@ $accesses = $this->get('accesses');
 <?=$this->getTrans('welcomeBackDescripton') ?>
 <br /><br /><br />
 <?php if (!empty($notifications)) : ?>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
 <?php endif; ?>
 <div class="row">

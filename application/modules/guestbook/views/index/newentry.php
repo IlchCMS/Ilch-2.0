@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('menuGuestbook') ?></h1>
 
-<form id="guestbookForm" name="guestbookForm" class="form-horizontal" method="POST">
+<form id="guestbookForm" name="guestbookForm" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 d-none Entries">
         <label for="bot" class="col-xl-2 control-label">

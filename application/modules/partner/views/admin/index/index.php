@@ -5,7 +5,7 @@
     </a>
 </h1>
 <?php if ($this->get('entries') != ''): ?>
-    <form class="form-horizontal" id="partnerIndexForm" method="POST">
+    <form id="partnerIndexForm" method="POST">
         <?=$this->getTokenField() ?>
         <ul class="nav nav-tabs">
             <li class="nav-item <?=(!$this->getRequest()->getParam('showsetfree')) ? 'active' : '' ?>">

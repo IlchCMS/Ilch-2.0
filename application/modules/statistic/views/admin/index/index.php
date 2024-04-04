@@ -6,7 +6,7 @@
 $statistic_config = $this->get('statistic_config');
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <?php foreach ($statistic_config->configNames as $names) : ?>
     <div class="row mb-3 <?=$this->validation()->hasError($names) ? 'has-error' : '' ?>">

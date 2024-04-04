@@ -1,7 +1,7 @@
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuSettings') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
         <label for="event_add_entries_accesses" class="col-xl-2 control-label">

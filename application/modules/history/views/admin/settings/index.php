@@ -3,7 +3,7 @@
 /** @var \Ilch\View $this */
 ?>
 <h1><?=$this->getTrans('menuSettings') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <h1><?=$this->getTrans('desc_order') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('desc_order') ? 'has-error' : '' ?>">

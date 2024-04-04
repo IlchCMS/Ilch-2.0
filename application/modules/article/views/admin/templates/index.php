@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('manageTemplates') ?></h1>
 <?php if (!empty($this->get('articles'))): ?>
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">

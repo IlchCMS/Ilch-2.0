@@ -9,7 +9,7 @@ $link = $this->get('link');
 $cats = $this->get('cats');
 ?>
 <h1><?=($link->getId()) ? $this->getTrans('menuActionEditLink') : $this->getTrans('menuActionNewLink') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-xl-2 control-label">

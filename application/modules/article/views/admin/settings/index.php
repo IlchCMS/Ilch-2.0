@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('articlesPerPage') ? 'has-error' : '' ?>">
         <label for="articlesPerPageInput" class="col-lg-2 control-label">

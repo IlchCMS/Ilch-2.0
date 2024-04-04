@@ -1,6 +1,6 @@
 <?php $icon = $this->get('icon'); ?>
 <h1><?=(!$icon) ? $this->getTrans('createNewGameIcon') : $this->getTrans('treatGameIcon') ?></h1>
-<form id="warIcon_form" class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
+<form id="warIcon_form" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
         <label for="gameNameInput" class="col-xl-2 control-label">

@@ -5,7 +5,7 @@ $userMapper = $this->get('userMapper'); ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($this->get('entries') != ''): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">

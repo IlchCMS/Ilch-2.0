@@ -3,7 +3,7 @@
         <i class="fa-solid fa-info" ></i>
     </a>
 </h1>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
         <div class="col-xl-2 control-label">

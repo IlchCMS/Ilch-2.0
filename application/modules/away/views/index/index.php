@@ -25,7 +25,7 @@ if ($this->getUser()) {
             </tr>
         </thead>
         <?php if (!empty($this->get('aways'))): ?>
-            <form class="form-horizontal" method="POST" action="">
+            <form method="POST" action="">
                 <?=$this->getTokenField() ?>
                 <tbody>
                     <?php foreach ($this->get('aways') as $away): ?>
@@ -106,7 +106,7 @@ if ($this->getUser()) {
 </div>
 
 <?php if ($this->getUser()): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <h1><?=$this->getTrans('menuEntry') ?></h1>
 

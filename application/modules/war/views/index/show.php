@@ -131,7 +131,7 @@ $commentsClass = new Ilch\Comments();
             </div>
             <div class="card-body">
             <?php if ($userGroupIds): ?>
-                <form id="accept_form" class="form-horizontal" method="POST" action="">
+                <form id="accept_form" method="POST" action="">
                     <?=$this->getTokenField() ?>
                     <ul class="list-group">
                     <?php foreach ($acceptCheckArray ?? [] as $acceptCheck): ?>

@@ -7,7 +7,7 @@ $image = $this->get('image');
 ?>
 
 <h1><?=$this->getTrans('treatImage') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div id="gallery">
         <div class="row">

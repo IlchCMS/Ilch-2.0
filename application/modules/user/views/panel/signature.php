@@ -8,7 +8,7 @@
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('settingsSignature') ?></h1>
-            <form class="form-horizontal" method="POST">
+            <form method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3">
                     <div class="col-xl-12">

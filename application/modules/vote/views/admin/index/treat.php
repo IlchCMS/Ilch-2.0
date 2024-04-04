@@ -7,7 +7,7 @@ $vote = $this->get('vote');
 ?>
 
 <h1><?=($vote->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form role="form" class="form-horizontal" method="POST">
+<form role="form" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
         <label for="group" class="col-xl-2 control-label">

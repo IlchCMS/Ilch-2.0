@@ -8,7 +8,7 @@ $privacy = $this->get('privacy');
 <h1>
     <?=($privacy->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('show') ? 'has-error' : '' ?>">
         <div class="col-xl-2 control-label">

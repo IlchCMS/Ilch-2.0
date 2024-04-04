@@ -15,7 +15,7 @@ $types = $this->get('types');
 
 <h1><?=($this->get('event') != '' ? $this->getTrans('edit') : $this->getTrans('add')) ?></h1>
 <?php if ($this->getUser() && (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->hasAccess('module_events'))): ?>
-    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
+    <form method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3">
             <div class="col-xl-2 control-label"><?=$this->getTrans('image') ?></div>

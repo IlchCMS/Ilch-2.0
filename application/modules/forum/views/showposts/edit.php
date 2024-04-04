@@ -23,7 +23,7 @@ $prefixes = $this->get('prefixes');
         </div>
         <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
-                <form class="form-horizontal" method="POST">
+                <form method="POST">
                     <?=$this->getTokenField() ?>
                     <?php if ($this->get('isFirstPost')) : ?>
                     <div class="row mb-3 <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">

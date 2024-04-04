@@ -2,7 +2,7 @@
 
 <h1><?=$this->getTrans('menuCurrencies') ?></h1>
 
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <table class="table table-hover table-striped">
         <colgroup>

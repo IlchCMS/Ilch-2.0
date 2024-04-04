@@ -5,7 +5,7 @@ if ($this->get('article') != '') {
 }
 ?>
 <h1><?=$this->getTrans('editTemplate') ?></h1>
-<form id="article_form" class="form-horizontal" method="POST">
+<form id="article_form" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
         <label for="teaser" class="col-xl-2 control-label">

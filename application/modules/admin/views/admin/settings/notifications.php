@@ -10,7 +10,7 @@
     </a>
 </h1>
 <?php if ($notificationPermissions) : ?>
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">

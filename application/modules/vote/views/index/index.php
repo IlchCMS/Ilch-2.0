@@ -37,7 +37,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
     <?php foreach ($votes as $groupVote) : ?>
             <div class="row">
                 <div class="col-xl-12">
-                    <form class="form-horizontal" method="POST">
+                    <form method="POST">
                         <?=$this->getTokenField() ?>
                         <div class="card border-primary">
                             <div class="card-header bg-primary">

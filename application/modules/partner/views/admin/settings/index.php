@@ -8,7 +8,7 @@ if ($this->validation()->hasErrors()) {
     $slider = (bool)$this->get('slider') == '1';
 }
 ?>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('slider') ? 'has-error' : '' ?>">
         <div class="col-xl-2 control-label">

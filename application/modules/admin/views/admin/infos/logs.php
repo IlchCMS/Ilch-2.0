@@ -10,7 +10,7 @@ $userCache = [];
     </a>
 </p>
 <div class="panel panel-default collapse" id="collapseExample">
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="panel-body">
             <div class="row mb-3">
@@ -97,7 +97,7 @@ $userCache = [];
 <?php endif; ?>
 
 <div class="content_savebox">
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
         <button type="submit" name="clearLog" class="btn btn-secondary" value="1"><?=$this->getTrans('clearLog') ?></button>
     </form>

@@ -31,7 +31,7 @@ $entry = $this->get('calendar');
 
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <h1>
         <?=($entry->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>

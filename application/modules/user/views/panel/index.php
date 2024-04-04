@@ -44,7 +44,7 @@ $openFriendRequests = $this->get('openFriendRequests');
 
             <?php if (!empty($notifications)): ?>
                 <h1><?=$this->getTrans('notifications') ?></h1>
-                <form class="form-horizontal" method="POST">
+                <form method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">

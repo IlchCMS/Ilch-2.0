@@ -3,7 +3,7 @@
         <i class="fa fa-info"></i>
     </a>
 </h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
         <label for="allowedImagesInput" class="col-xl-2 control-label">

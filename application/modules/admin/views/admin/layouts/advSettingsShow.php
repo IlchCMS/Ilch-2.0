@@ -89,7 +89,7 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
 ?>
 
 <h1><?=$this->getTrans('menuAdvSettings') ?></h1>
-<form id="advsettings_form" class="form-horizontal" method="POST">
+<form id="advsettings_form" method="POST">
     <?=$this->getTokenField() ?>
     <?php foreach ($this->get('settings') as $key => $value) : ?>
         <?php if (!empty($value['type']) && $value['type'] === 'separator') : ?>

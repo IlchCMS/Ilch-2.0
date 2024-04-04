@@ -12,7 +12,7 @@ $rememberedPosts = $this->get('rememberedPosts');
 
 <h1><?=$this->getTrans('rememberedPosts') ?></h1>
 <?php if (!empty($rememberedPosts)) : ?>
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
         <div id="rememberedPosts" class="table-responsive">
             <table class="table table-hover table-striped">

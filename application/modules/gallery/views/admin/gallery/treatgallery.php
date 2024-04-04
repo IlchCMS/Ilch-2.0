@@ -8,7 +8,7 @@ $pagination = $this->get('pagination');
 <h1><?=$this->getTrans('gallery') ?>: <?=$this->get('galleryTitle') ?></h1>
 <?=$pagination->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>
 <?php if ($this->get('image')) : ?>
-    <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
+    <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">

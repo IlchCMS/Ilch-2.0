@@ -105,7 +105,7 @@ $config = \Ilch\Registry::get('config');
 
     <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))) : ?>
         <div id="shoutbox-form-container<?=$this->get('uniqid') ?>" style="display: none;">
-            <form id="shoutboxForm_<?=$this->get('uniqid') ?>" name="shoutboxForm_<?=$this->get('uniqid') ?>" class="form-horizontal" method="post">
+            <form id="shoutboxForm_<?=$this->get('uniqid') ?>" name="shoutboxForm_<?=$this->get('uniqid') ?>" method="post">
                 <input type="hidden" name="uniqid" value="<?=$this->get('uniqid') ?>">
                <?=$this->getTokenField() ?>
                 <div class="row mb-3 d-none">

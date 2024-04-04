@@ -20,7 +20,7 @@ $teams = $this->get('teams');
 
 <h1><?=$this->getTrans('menuJoin') ?></h1>
 <?php if ($teams) : ?>
-    <form id="joinForm" name="joinForm" class="form-horizontal" method="POST">
+    <form id="joinForm" name="joinForm" method="POST">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 d-none">
             <label class="col-xl-2 control-label" for="bot">

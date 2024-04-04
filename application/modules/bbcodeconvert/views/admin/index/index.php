@@ -34,7 +34,7 @@
 
 <p><strong><?=$this->getTrans('infoMessage') ?></strong></p>
 
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <?php if (!empty($this->get('installedSupportedModules'))) : ?>
     <div class="table-responsive">

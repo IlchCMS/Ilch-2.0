@@ -6,7 +6,7 @@
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('settingsSetting') ?></h1>
-            <form class="form-horizontal" method="POST">
+            <form method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('locale') ? 'has-error' : '' ?>">
                     <div class="col-xl-3 control-label">

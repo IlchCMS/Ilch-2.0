@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('menuSettings') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('sortCategoriesAlphabetically') ? 'has-error' : '' ?>">
         <div class="col-xl-2 control-label">

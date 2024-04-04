@@ -11,7 +11,7 @@ $training = $this->get('training');
 <h1>
     <?=$this->getTrans($training->getId() ? 'edit' : 'add') ?>
 </h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="title" class="col-xl-2 control-label">

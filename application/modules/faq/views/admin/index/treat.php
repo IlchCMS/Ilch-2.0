@@ -13,7 +13,7 @@ $cats = $this->get('cats');
     <?=($faq) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
 <?php if ($cats) : ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="chosen-select row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
             <label for="catId" class="col-xl-2 control-label">

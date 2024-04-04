@@ -11,7 +11,7 @@ $history = $this->get('history');
 <h1>
     <?=($history->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
         <label for="date" class="col-lg-2 control-label">

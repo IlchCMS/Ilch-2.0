@@ -5,7 +5,7 @@
     $pages = (empty($this->get('pages')) ? [] : $this->get('pages'));
 ?>
 <h1><?= $this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?= $this->getTokenField() ?>
     <div class="row mb-3">
         <label for="startPage" class="col-xl-2 control-label">

@@ -13,7 +13,7 @@
 </h1>
 
 <?php if ($this->get('ordersMapper')) : ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table id="sortTable" class="table table-hover table-striped">

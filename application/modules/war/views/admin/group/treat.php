@@ -1,6 +1,6 @@
 <?php $entrie = $this->get('groups'); ?>
 <h1><?=(!$entrie->getId()) ? $this->getTrans('manageNewGroup') : $this->getTrans('treatGroup') ?></h1>
-<form id="article_form" class="form-horizontal" method="POST" action="">
+<form id="article_form" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('groupName') ? ' has-error' : '' ?>">
         <label for="groupNameInput" class="col-xl-2 control-label">

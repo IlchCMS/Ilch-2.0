@@ -5,7 +5,7 @@ $entrie = $this->get('box');
     <?=($entrie->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
 
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('boxTitle') ? 'has-error' : '' ?>">
         <label for="boxTitle" class="col-xl-2 control-label">

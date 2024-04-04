@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('manage') ?></h1>
 <?=$this->get('pagination')->getHtml($this, array_merge(['action' => 'index'], ($this->getRequest()->getParam('showsetfree') ? ['showsetfree' => 1] : []))) ?>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
         <li <?=(!$this->getRequest()->getParam('showsetfree')) ? 'class="nav-item"' : '' ?>>

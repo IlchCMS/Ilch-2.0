@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('menuMail') ?></legend>
     <div id="infobox" class="mailSettingsInfobox alert alert-info">

@@ -7,7 +7,7 @@
 <h1><?=$this->getTrans('editRememberedPost') ?></h1>
 
 <div id="editRememberedPost">
-    <form id="editRememberedPost_form" class="form-horizontal" method="POST">
+    <form id="editRememberedPost_form" method="POST">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 <?=$this->validation()->hasError('note') ? 'has-error' : '' ?>">
             <label for="note" class="col-xl-2 control-label">

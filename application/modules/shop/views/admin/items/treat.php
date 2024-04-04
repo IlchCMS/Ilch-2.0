@@ -9,7 +9,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
 </h1>
 
 <?php if ($this->get('cats') != '') : ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
 
         <div class="row mb-3 <?=$this->validation()->hasError('status') ? 'has-error' : '' ?>">

@@ -32,7 +32,7 @@ $prefix = $this->get('prefix');
         </div>
         <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
-                <form class="form-horizontal" method="POST">
+                <form method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
                         <div class="col-lg-12">

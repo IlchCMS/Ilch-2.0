@@ -6,7 +6,7 @@
 $imprint = $this->get('imprint');
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('imprint') ? 'has-error' : '' ?>">
         <label for="ck_2" class="col-xl-2 control-label">

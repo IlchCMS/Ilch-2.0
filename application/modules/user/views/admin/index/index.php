@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
         <li class="nav-item">

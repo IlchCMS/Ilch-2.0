@@ -13,7 +13,7 @@ div.input-group {
 </style>
 
 <h1><?=$this->getTrans('newCat') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 form-group-options">
         <div class="col-xl-6">

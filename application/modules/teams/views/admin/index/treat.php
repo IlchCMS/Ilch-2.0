@@ -18,7 +18,7 @@ $userGroupList = $this->get('userGroupList');
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
-<form class="form-horizontal" method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-2 control-label">

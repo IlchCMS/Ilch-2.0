@@ -7,7 +7,7 @@ use Ilch\Date;
 <?php $entrie = $this->get('war'); ?>
 <h1><?=(!$entrie->getId()) ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
 <?php if ($this->get('group') != '' && $this->get('enemy') != ''): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3 <?=$this->validation()->hasError('warEnemy') ? ' has-error' : '' ?>">
             <label for="warEnemy" class="col-xl-2 control-label">

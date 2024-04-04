@@ -13,7 +13,7 @@ $index = 0;
             <h1><?=$this->getTrans('settingsNotifications') ?></h1>
             <?php if ($notificationPermissions) : ?>
                 <h1><?=$this->getTrans('settingsNotificationPermissions') ?></h1>
-                <form class="form-horizontal" method="POST">
+                <form method="POST">
                     <?=$this->getTokenField() ?>
 
                     <div class="table-responsive">

@@ -9,7 +9,7 @@ if ($user->getId()) {
 ?>
 
 <h1><?=$fieldsetLegend ?></h1>
-<form action="<?=$this->getUrl(['action' => 'treat']) ?>" method="POST" class="form-horizontal" id="userForm">
+<form action="<?=$this->getUrl(['action' => 'treat']) ?>" method="POST" id="userForm">
     <?=$this->getTokenField() ?>
     <input type="hidden"
            name="id"

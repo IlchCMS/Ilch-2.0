@@ -8,7 +8,7 @@
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('setting') ?></h1>
-            <form action="" class="form-horizontal" method="POST">
+            <form action="" method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('acceptNewsletter') ? 'has-error' : '' ?>">
                     <div class="col-xl-3 control-label">

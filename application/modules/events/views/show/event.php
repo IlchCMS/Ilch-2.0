@@ -56,7 +56,7 @@ if (!empty($event)) {
                 <?php endif; ?>
                 <div class="naviButtons">
                     <?php if ($this->getUser() && $event->getStart() > new \Ilch\Date()): ?>
-                        <form class="form-horizontal" method="POST" action="">
+                        <form method="POST" action="">
                             <?=$this->getTokenField() ?>
                             <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
                             <?php if ($eventEntrants != ''): ?>
@@ -226,7 +226,7 @@ if (!empty($event)) {
             <div class="form-horizontal">
                 <?php if ($this->getUser() && (($eventEntrants != '' && $eventEntrants->getUserId() == $this->getUser()->getId()) || $event->getUserId() == $this->getUser()->getId())): ?>
                     <div class="row mb-3 eventCommentSubmit">
-                        <form action="" class="form-horizontal" method="POST">
+                        <form action="" method="POST">
                             <?=$this->getTokenField() ?>
                             <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
                             <div style="margin-bottom: 10px; margin-top: 10px;">

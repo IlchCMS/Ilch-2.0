@@ -9,7 +9,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
-<form class="form-horizontal" id="catsIndexForm" method="POST">
+<form id="catsIndexForm" method="POST">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">

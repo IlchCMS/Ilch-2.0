@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <div class="row">
         <?=$this->getTokenField() ?>
         <div class="row mb-3">

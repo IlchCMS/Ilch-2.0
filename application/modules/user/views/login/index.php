@@ -10,7 +10,7 @@
         return false; // cancel the actual link
     });
     });</script>
-    <form class="form-horizontal" method="post">
+    <form method="post">
         <h1><?=$this->getTrans('menuLogin') ?></h1>
         <?=$this->getTokenField() ?>
         <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl')) ?>" />

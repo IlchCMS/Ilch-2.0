@@ -54,7 +54,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
 }
 ?>
 
-<form class="form-horizontal" id="downloadsForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form id="downloadsForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row">
         <h1><?=$this->getTrans('downloads') ?></h1>

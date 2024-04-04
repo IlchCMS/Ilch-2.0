@@ -33,7 +33,7 @@ if ($this->getUser()) {
             </div>
             <div class="col-xl-12">
                 <div class="new-topic ilch-bg ilch-border">
-                    <form class="form-horizontal" method="POST">
+                    <form method="POST">
                         <?=$this->getTokenField() ?>
                         <div class="row">
                             <div class="col-xl-12">

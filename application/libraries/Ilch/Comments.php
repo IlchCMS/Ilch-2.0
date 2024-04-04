@@ -126,7 +126,7 @@ class Comments
             if ($obj->getUser()) {
                 $commentsHtml .= '
                         <div class="replyHidden" id="reply_'.$fk_comment->getId().'">
-                            <form class="form-horizontal" method="POST">'.
+                            <form method="POST">'.
                                 $obj->getTokenField().'
                                 <div>
                                     <div class="media-block">
@@ -223,7 +223,7 @@ class Comments
         if ($layout->getUser()) {
             $commentsHtml .= '
         <div class="reply">
-            <form class="form-horizontal" method="POST">'.
+            <form method="POST">'.
                 $layout->getTokenField().'
                 <section class="comment-list">
                     <div class="card">
@@ -323,7 +323,7 @@ class Comments
             if ($layout->getUser()) {
                 $commentsHtml .= '
                                 <div class="replyHidden" id="reply_'.$comment->getId().'">
-                                    <form class="form-horizontal" method="POST">'.
+                                    <form method="POST">'.
                                         $layout->getTokenField().'
                                         <div>
                                             <div class="media-block">

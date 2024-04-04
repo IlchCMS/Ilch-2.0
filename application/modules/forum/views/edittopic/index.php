@@ -59,7 +59,7 @@ function rec(ForumItem $item, View $obj, ?int $i)
         </div>
         <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
-                <form class="form-horizontal" method="POST">
+                <form method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="row mb-3">
                         <label for="selectForum" class="col-xl-2 control-label">

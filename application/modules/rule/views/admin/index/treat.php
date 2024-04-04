@@ -15,7 +15,7 @@ $rulesparents = $this->get('rulesparents');
 $userGroupList = $this->get('userGroupList');
 ?>
 <h1><?=($rule->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
         <label for="paragraph" class="col-xl-2 control-label">

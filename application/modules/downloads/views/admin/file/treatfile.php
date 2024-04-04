@@ -10,7 +10,7 @@ if ($file->getFileImage() != '') {
 
 <h1><?=$this->getTrans('treatFile') ?></h1>
 <?php if ($file != ''): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <div id="gallery">
             <div class="row">
                 <div class="col-lg-4">

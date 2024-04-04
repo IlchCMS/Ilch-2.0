@@ -4,7 +4,7 @@
 <?php if ($this->get('medias') != ''): ?>
     <div id="filter-media" >
         <div id="filter-panel" class="collapse filter-panel">
-            <form class="form-horizontal" method="POST">
+            <form method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3">
                     <label class="col-xl-2 control-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage') ?>:</label>
@@ -67,7 +67,7 @@
         </button>
     </div>
     <?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">

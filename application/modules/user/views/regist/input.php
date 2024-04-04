@@ -4,7 +4,7 @@ $errors = $this->get('errors');
 
 <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
 
-<form id="registForm" name="registForm" class="form-horizontal" method="POST">
+<form id="registForm" name="registForm" method="POST">
     <?=$this->getTokenField() ?>
     <div class="regist card panel-default">
         <div class="card-header">

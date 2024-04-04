@@ -51,7 +51,7 @@ $postsPerPage = $this->get('postsPerPage');
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>
         <?php if ($forumEdit) : ?>
-            <form class="form-horizontal" name="editForm" method="POST">
+            <form name="editForm" method="POST">
                 <?=$this->getTokenField() ?>
         <?php endif; ?>
         <div class="forabg">

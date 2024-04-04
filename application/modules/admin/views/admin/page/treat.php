@@ -5,7 +5,7 @@ $entrie = $this->get('page');
     <?=($entrie->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
 
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('pageTitle') ? 'has-error' : '' ?>">
         <label for="pageTitle" class="col-xl-2 control-label">

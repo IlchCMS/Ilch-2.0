@@ -125,7 +125,7 @@ $trainEntrantsUser = $this->get('trainEntrantsUser');
     <?php if ($this->getUser()) : ?>
         <br />
         <h1><?=$this->getTrans('options') ?></h1>
-        <form class="form-horizontal" method="POST" action="">
+        <form method="POST" action="">
             <?=$this->getTokenField() ?>
             <?php if ($this->get('trainEntrantUser') != '') : ?>
                 <button type="submit" class="btn btn-sm btn-danger" name="del" value="del">

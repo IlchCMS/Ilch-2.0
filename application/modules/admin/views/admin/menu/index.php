@@ -86,7 +86,7 @@ function buildMenu($parentId, $menuData, View $view) {
 
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/main.css') ?>">
 
-<form class="form-horizontal" id="menuForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId()]) ?>">
+<form id="menuForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId()]) ?>">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
         <?php $iMenu = 1; ?>

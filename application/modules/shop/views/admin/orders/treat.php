@@ -196,7 +196,7 @@ $settingsMapper = $this->get('settingsMapper');
         </table>
     </div>
     <h4><?=$this->getTrans('administration') ?></h4>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <input type="hidden" name="id" value="<?=$order->getId() ?>" />
     <input type="hidden" name="confirmTransferBackToStock" value="false" />
@@ -232,7 +232,7 @@ $settingsMapper = $this->get('settingsMapper');
                         <?php $ilchDate = new Ilch\Date($order->getDateTimeInvoiceSent()); ?>
                         <p><?=$this->getTrans('invoiceLastSent') . $ilchDate->format('d.m.Y H:i ', true) . $this->getTrans('dateTimeoClock') ?></p>
                     <?php endif ?>
-                    <form class="form-horizontal" method="POST" action="">
+                    <form method="POST" action="">
                         <?php
                         $invoiceFilename = '';
                         $nameInvoice = mb_convert_encoding($this->getTrans('invoice'), 'ISO-8859-1', 'UTF-8');

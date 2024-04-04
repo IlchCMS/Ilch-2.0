@@ -18,7 +18,7 @@ if (!empty($profil->getBirthday())) {
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('profileSettings') ?></h1>
-            <form class="form-horizontal" method="POST">
+            <form method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
                     <label class="col-xl-2 control-label">

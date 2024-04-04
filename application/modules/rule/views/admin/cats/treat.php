@@ -12,7 +12,7 @@ $rulesparents = $this->get('rulesparents');
 $userGroupList = $this->get('userGroupList');
 ?>
 <h1><?=($cat) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField(); ?>
     <div class="row mb-3 <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
         <label for="paragraph" class="col-xl-2 control-label">

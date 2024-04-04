@@ -68,7 +68,7 @@ $countDoneOrders = count($this->get('orders')->getOrders(['status' => '3']));
     </div>
     <?php if ($this->get('settings')->getIfSampleData() == 1) : ?>
     <div class="col-lg-12" style="text-align:right">
-        <form class="form-horizontal" id="delSamplaDataForm" method="POST" action="">
+        <form id="delSamplaDataForm" method="POST" action="">
             <?=$this->getTokenField() ?>
             <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
                 <i class="fa-solid fa-info"></i>

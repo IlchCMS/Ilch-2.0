@@ -9,7 +9,7 @@ $date = new Date($newsletter->getDateCreated());
 ?>
 
 <h1><?=$this->getTrans('show') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-horizontal">
         <div class="row mb-3">

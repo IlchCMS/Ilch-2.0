@@ -473,7 +473,7 @@ if (!empty($_SESSION['shopping_cart'])) {
     <?php } else { ?>
         <?=$this->getTrans('infoLogin') ?><br />
         <div class="row space20"></div>
-        <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="form-horizontal" method="post">
+        <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" method="post">
             <input type="hidden" name="login_redirect_url" value="<?=$this->getUrl(['module' => 'shop', 'controller' => 'index', 'action' => 'order']) ?>" />
             <?php
             echo $this->getTokenField();

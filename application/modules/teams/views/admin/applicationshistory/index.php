@@ -62,7 +62,7 @@ $pagination = $this->get('pagination');
 
     <?=$pagination->getHtml($this, ['action' => 'index']) ?>
     <div class="content_savebox">
-        <form class="form-horizontal" method="POST">
+        <form method="POST">
             <?=$this->getTokenField() ?>
             <button type="submit" name="clearHistory" class="btn btn-outline-secondary"><?=$this->getTrans('clearHistory') ?></button>
         </form>

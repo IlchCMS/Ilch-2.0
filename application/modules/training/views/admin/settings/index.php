@@ -3,7 +3,7 @@
 /** @var \Ilch\View $this */
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
 
     <h1><?=$this->getTrans('boxSettings') ?></h1>
