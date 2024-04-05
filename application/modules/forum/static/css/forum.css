@@ -622,13 +622,6 @@ legend .forum.fa {
     direction: ltr;
     overflow-x: hidden;
 }
-#editRememberedPost .form-group {
-    margin-left: 0;
-    margin-right: 0;
-}
-#editRememberedPost .form-group {
-    text-align: left;
-}
 
 #forum .statistics,
 #forum h5 {

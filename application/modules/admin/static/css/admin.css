@@ -156,11 +156,6 @@ li.nav-item a.nav-link:hover {
     margin-right: 0 !important;
 }
 
-#content .form-group {
-    margin-left: 0;
-    margin-right: 0;
-}
-
 #content .table > thead > tr > th {
   border-bottom: 2px solid #ddd;
 }
@@ -430,10 +425,6 @@ ul > .heading {
 
 .hidden-menu .content_savebox {
     margin-left: -15px;
-}
-
-.form-group {
-    text-align: left;
 }
 
 label {
