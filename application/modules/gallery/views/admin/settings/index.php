@@ -6,7 +6,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('picturesPerPage') ? 'has-error' : '' ?>">
-        <label for="picturesPerPageInput" class="col-xl-2 control-label">
+        <label for="picturesPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('picturesPerPage') ?>:
         </label>
         <div class="col-xl-1">
@@ -20,7 +20,7 @@
     </div>
     <h1><?=$this->getTrans('box') ?>: <?=$this->getTrans('pictureOfX') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('pictureOfXSource') ? 'has-error' : '' ?>">
-        <label for="pictureOfXSource" class="col-xl-2 control-label">
+        <label for="pictureOfXSource" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pictureOfXSource') ?>:
         </label>
         <div class="col-xl-4">
@@ -39,7 +39,7 @@
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('pictureOfXInterval') ? 'has-error' : '' ?>">
         <?php $selected = ($this->get('pictureOfXInterval')) ? 'selected="selected"' : ''?>
-        <label for="pictureOfXInterval" class="col-xl-2 control-label">
+        <label for="pictureOfXInterval" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pictureOfXInterval') ?>:
         </label>
         <div class="col-xl-4">
@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('pictureOfXRandom') ? 'has-error' : '' ?>">
-        <label for="pictureOfXRandom" class="col-xl-2 control-label">
+        <label for="pictureOfXRandom" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pictureOfXRandom') ?>:
         </label>
         <div class="col-xl-4">
@@ -72,7 +72,7 @@
 
     <h1><?=$this->getTrans('venoboxSetting') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxNumeration') ? 'has-error' : '' ?>">
-        <label for="venoboxNumeration" class="col-xl-2 control-label">
+        <label for="venoboxNumeration" class="col-xl-2 col-form-label">
             <?=$this->getTrans('venoboxNumeration') ?>:
         </label>
         <div class="col-xl-4">
@@ -87,7 +87,7 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxOverlayColor') ? 'has-error' : '' ?>">
-        <label for="venoboxOverlayColor" class="col-xl-2 control-label">
+        <label for="venoboxOverlayColor" class="col-xl-2 col-form-label">
             <?=$this->getTrans('venoboxOverlayColor') ?>:
         </label>
         <div class="col-xl-2 input-group">
@@ -102,7 +102,7 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxInfiniteGallery') ? 'has-error' : '' ?>">
-        <label for="venoboxInfiniteGallery" class="col-xl-2 control-label">
+        <label for="venoboxInfiniteGallery" class="col-xl-2 col-form-label">
             <?=$this->getTrans('venoboxInfiniteGallery') ?>:
         </label>
         <div class="col-xl-4">
@@ -117,7 +117,7 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxBgcolor') ? 'has-error' : '' ?>">
-        <label for="venoboxBgcolor" class="col-xl-2 control-label">
+        <label for="venoboxBgcolor" class="col-xl-2 col-form-label">
             <?=$this->getTrans('venoboxBgcolor') ?>:
         </label>
         <div class="col-xl-2 input-group">
@@ -132,7 +132,7 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxBorder') ? 'has-error' : '' ?>">
-        <label for="venoboxBorder" class="col-xl-2 control-label">
+        <label for="venoboxBorder" class="col-xl-2 col-form-label">
             <?=$this->getTrans('venoboxBorder') ?>:
         </label>
         <div class="col-xl-2 input-group">
@@ -147,7 +147,7 @@
     </div>
 
     <div class="row mb-3 <?=$this->validation()->hasError('venoboxTitleattr') ? 'has-error' : '' ?>">
-        <label for="venoboxTitleattr" class="col-xl-2 control-label">
+        <label for="venoboxTitleattr" class="col-xl-2 col-form-label">
             <?=$this->getTrans('venoboxTitleattr') ?>:
         </label>
         <div class="col-xl-4">

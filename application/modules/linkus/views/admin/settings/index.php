@@ -12,7 +12,7 @@ if (!$this->validation()->hasErrors()) {
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('showHtml') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('showHtml') ?>:
         </div>
         <div class="col-xl-4">
@@ -26,7 +26,7 @@ if (!$this->validation()->hasErrors()) {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('showBBCode') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('showBBCode') ?>:
         </div>
         <div class="col-xl-4">

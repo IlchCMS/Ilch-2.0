@@ -15,7 +15,7 @@ if ($awards != '') {
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
-        <label for="date" class="col-xl-2 control-label">
+        <label for="date" class="col-xl-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
         <div id="date" class="col-xl-2 input-group ilch-date date form_datetime">
@@ -31,7 +31,7 @@ if ($awards != '') {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('rank') ? 'has-error' : '' ?>">
-        <label for="rank" class="col-xl-2 control-label">
+        <label for="rank" class="col-xl-2 col-form-label">
             <?=$this->getTrans('rank') ?>:
         </label>
         <div class="col-xl-1">
@@ -45,7 +45,7 @@ if ($awards != '') {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
-        <label for="selectedImage" class="col-xl-2 control-label">
+        <label for="selectedImage" class="col-xl-2 col-form-label">
             <?=$this->getTrans('image') ?>:
         </label>
         <div class="col-xl-4">
@@ -66,7 +66,7 @@ if ($awards != '') {
         </div>
     </div>
     <div class="row mb-3 <?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
-        <label for="user" class="col-xl-2 control-label">
+        <label for="user" class="col-xl-2 col-form-label">
             <?=$this->getTrans('userTeam') ?>:
         </label>
         <div class="col-xl-2">
@@ -113,7 +113,7 @@ if ($awards != '') {
         </div>
     </div>
     <div class="row mb-3 <?=($this->validation()->hasError('event')) ? 'has-error' : '' ?>">
-        <label for="event" class="col-xl-2 control-label">
+        <label for="event" class="col-xl-2 col-form-label">
             <?=$this->getTrans('event') ?>:
         </label>
         <div class="col-xl-4">
@@ -125,7 +125,7 @@ if ($awards != '') {
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
-        <label for="page" class="col-xl-2 control-label">
+        <label for="page" class="col-xl-2 col-form-label">
             <?=$this->getTrans('page') ?>:
         </label>
         <div class="col-xl-4">

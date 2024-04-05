@@ -11,7 +11,7 @@
             <form action="" method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('acceptNewsletter') ? 'has-error' : '' ?>">
-                    <div class="col-xl-3 control-label">
+                    <div class="col-xl-3 col-form-label">
                         <?=$this->getTrans('acceptNewsletter') ?>:
                     </div>
                     <div class="col-xl-4">

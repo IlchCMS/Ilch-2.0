@@ -18,7 +18,7 @@ $image = $this->get('image');
             </div>
             <div class="col-lg-8">
                 <div class="row mb-3">
-                    <label for="imageTitleInput" class="col-xl-2 control-label">
+                    <label for="imageTitleInput" class="col-xl-2 col-form-label">
                         <?=$this->getTrans('imageTitle') ?>:
                     </label>
                     <div class="col-xl-8">
@@ -30,7 +30,7 @@ $image = $this->get('image');
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="imageDescInput" class="col-xl-2 control-label">
+                    <label for="imageDescInput" class="col-xl-2 col-form-label">
                         <?=$this->getTrans('imageDesc') ?>:
                     </label>
                     <div class="col-xl-8">

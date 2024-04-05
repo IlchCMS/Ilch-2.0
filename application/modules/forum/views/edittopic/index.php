@@ -62,7 +62,7 @@ function rec(ForumItem $item, View $obj, ?int $i)
                 <form method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="row mb-3">
-                        <label for="selectForum" class="col-xl-2 control-label">
+                        <label for="selectForum" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('selectForum') ?>
                         </label>
                         <div class="col-xl-6">

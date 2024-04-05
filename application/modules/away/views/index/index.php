@@ -111,7 +111,7 @@ if ($this->getUser()) {
         <h1><?=$this->getTrans('menuEntry') ?></h1>
 
         <div class="row mb-3 <?=in_array('reason', $this->get('errorFields')) ? 'has-error' : '' ?>">
-            <label for="reason" class="col-xl-2 control-label">
+            <label for="reason" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('reason') ?>:
             </label>
             <div class="col-xl-6">
@@ -123,7 +123,7 @@ if ($this->getUser()) {
             </div>
         </div>
         <div class="row mb-3 <?=in_array('when', $this->get('errorFields')) ? 'has-error' : '' ?>">
-            <label for="start" class="col-xl-2 control-label">
+            <label for="start" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('when') ?>:
             </label>
             <div id="start" class="col-xl-3 input-group ilch-date date form_datetime float-start">
@@ -150,7 +150,7 @@ if ($this->getUser()) {
             </div>
         </div>
         <div class="row mb-3 <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
-            <label for="text" class="col-xl-2 control-label">
+            <label for="text" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('description') ?>:
             </label>
             <div class="col-xl-6">

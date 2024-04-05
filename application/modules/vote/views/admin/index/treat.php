@@ -10,7 +10,7 @@ $vote = $this->get('vote');
 <form role="form" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
-        <label for="group" class="col-xl-2 control-label">
+        <label for="group" class="col-xl-2 col-form-label">
             <?=$this->getTrans('participationGroup') ?>
         </label>
         <div class="col-xl-4">
@@ -30,7 +30,7 @@ $vote = $this->get('vote');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('access') ? 'has-error' : '' ?>">
-        <label for="access" class="col-xl-2 control-label">
+        <label for="access" class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-xl-4">
@@ -50,7 +50,7 @@ $vote = $this->get('vote');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
-        <label for="question" class="col-xl-2 control-label">
+        <label for="question" class="col-xl-2 col-form-label">
             <?=$this->getTrans('question') ?>
         </label>
         <div class="col-xl-4">
@@ -62,7 +62,7 @@ $vote = $this->get('vote');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('multiplereply') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('multiplereply') ?>
         </div>
         <div class="col-xl-4">
@@ -76,7 +76,7 @@ $vote = $this->get('vote');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
-        <label for="reply" class="col-xl-2 control-label">
+        <label for="reply" class="col-xl-2 col-form-label">
             <?=$this->getTrans('reply') ?>
         </label>
         <?php if ($vote->getId()) : ?>

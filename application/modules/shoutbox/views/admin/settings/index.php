@@ -6,7 +6,7 @@
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('limit') ? 'has-error' : '' ?>">
-        <label for="limit" class="col-xl-2 control-label">
+        <label for="limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('numberOfMessagesDisplayed') ?>
         </label>
         <div class="col-xl-1">
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('maxtextlength') ? 'has-error' : '' ?>">
-        <label for="maxtextlength" class="col-xl-2 control-label">
+        <label for="maxtextlength" class="col-xl-2 col-form-label">
             <?=$this->getTrans('maximumTextLength') ?>
         </label>
         <div class="col-xl-1">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('writeAccess') ? 'has-error' : '' ?>">
-        <label for="writeAccess" class="col-xl-2 control-label">
+        <label for="writeAccess" class="col-xl-2 col-form-label">
             <?=$this->getTrans('writeAccess') ?>
         </label>
         <div class="col-xl-3">

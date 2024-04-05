@@ -7,7 +7,7 @@
     <?=$this->getTokenField() ?>
     <p><?=$this->getTrans('doubleOptInInfo') ?></p>
     <div class="form-group">
-        <div class="col-lg-2 control-label">
+        <div class="col-lg-2 col-form-label">
             <?=$this->getTrans('doubleOptIn') ?>:
         </div>
         <div class="col-lg-4">

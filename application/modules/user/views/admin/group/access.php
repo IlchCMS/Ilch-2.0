@@ -5,7 +5,7 @@
       id="groupAccessForm">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <label for="groupId" class="control-label col-md-2"><?=$this->getTrans('group') ?></label>
+        <label for="groupId" class="col-form-label col-md-2"><?=$this->getTrans('group') ?></label>
         <div class="col-md-10">
             <select class="form-select" id="groupId" name="groupId">
                 <option value="0"
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="accessId" class="control-label col-md-2">
+        <label for="accessId" class="col-form-label col-md-2">
         <?php
         $accessTypes = $this->get('accessTypes');
         foreach ($accessTypes as $accessType => $typeData) {

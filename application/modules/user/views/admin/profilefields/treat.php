@@ -46,7 +46,7 @@ $iconArray = [
 
     <!-- select profilefield -->
     <div class="row mb-3">
-        <label for="profileFieldType" class="col-xl-2 control-label">
+        <label for="profileFieldType" class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileFieldType') ?>
         </label>
         <div class="col-xl-4">
@@ -70,7 +70,7 @@ $iconArray = [
 
     <!-- field description -->
     <div class="row mb-3">
-        <label for="profileFieldDescription" class="col-lg-2 control-label">
+        <label for="profileFieldDescription" class="col-lg-2 col-form-label">
             <?=$this->getTrans('profileFieldDescription') ?>
         </label>
         <div class="col-xl-4">
@@ -85,7 +85,7 @@ $iconArray = [
             $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'];
         }
         ?>
-        <label for="profileFieldIcon" class="col-xl-2 control-label">
+        <label for="profileFieldIcon" class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileFieldIcon') ?>:
         </label>
         <div class="col-xl-4 input-group ilch-date">
@@ -106,7 +106,7 @@ $iconArray = [
 
     <!-- db key -->
     <div class="row mb-3">
-        <label for="profileFieldKey" class="col-xl-2 control-label">
+        <label for="profileFieldKey" class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileFieldKey') ?>
         </label>
         <div class="col-xl-4">
@@ -125,7 +125,7 @@ $iconArray = [
 
     <!-- icon addition -->
     <div class="row mb-3" id="profileFieldAddition" <?=($profileField->getType() == 2) ? '' : 'hidden' ?>>
-        <label for="profileFieldLinkAddition" class="col-xl-2 control-label">
+        <label for="profileFieldLinkAddition" class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileFieldLinkAddition') ?>
         </label>
         <div class="col-xl-4">
@@ -144,7 +144,7 @@ $iconArray = [
         <div class="row mb-3" id="profileFieldTrans<?=$i ?>">
             <input type="hidden" name="profileFieldTrans<?=$i ?>[field_id]" value="<?=$profileField->getId() ?>" />
             <input type="hidden" name="profileFieldTrans<?=$i ?>[locale]" value="<?=$profileFieldTranslation->getLocale() ?>" />
-            <label for="profileFieldName<?=$i ?>" class="col-lg-2 control-label">
+            <label for="profileFieldName<?=$i ?>" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('profileFieldName') ?>
             </label>
             <div class="col-xl-4">
@@ -173,7 +173,7 @@ $iconArray = [
         <?php endforeach; ?>
         <div id="addTranslations"></div>
         <div class="row mb-3">
-            <label for="profileFieldTranslation" class="col-xl-2 control-label">
+            <label for="profileFieldTranslation" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('addProfileFieldTranslation') ?>
             </label>
             <div class="col-xl-4">
@@ -188,7 +188,7 @@ $iconArray = [
         <?php if ($profileField->getOptions()) : ?>
             <?php $options = json_decode($profileField->getOptions(), true); ?>
             <div class="mb-3">
-                <label for="profileFieldOptions" class="col-lg-2 control-label">
+                <label for="profileFieldOptions" class="col-lg-2 col-form-label">
                     <?=$this->getTrans('profileFieldOptions')  ?>
                 </label>
                 <div class="col-xl-4">
@@ -206,7 +206,7 @@ $iconArray = [
             </div>
         <?php else : ?>
         <div class="row mb-3">
-            <label for="profileFieldOptions" class="col-lg-2 control-label">
+            <label for="profileFieldOptions" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('profileFieldOptions') ?>
             </label>
             <div class="col-xl-4">
@@ -312,7 +312,7 @@ function addTranslations() {
         '<input type="hidden"' +
         'name="profileFieldTrans' + index + '[field_id]"' +
         'value="<?=$profileField->getId() ?>" />' +
-        '<label for="" class="col-lg-2 control-label"><?=$this->getTrans('profileFieldName') ?></label>' +
+        '<label for="" class="col-lg-2 col-form-label"><?=$this->getTrans('profileFieldName') ?></label>' +
         '<div class="col-lg-4">' +
         '<div class="input-group">' +
         '<select class="form-select" name="profileFieldTrans' + index + '[locale]" onchange="isDuplicate()" required>' +

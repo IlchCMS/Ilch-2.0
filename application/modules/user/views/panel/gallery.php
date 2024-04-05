@@ -79,7 +79,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                         <div class="col-xl-7 changeBox">
                             <input type="hidden" id="id" value="" />
                             <div class="row mb-3">
-                                <label for="title" class="col-xl-4 control-label">
+                                <label for="title" class="col-xl-4 col-form-label">
                                     <?=$this->getTrans('title') ?>:
                                 </label>
                                 <div class="col-xl-8">
@@ -90,7 +90,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="desc" class="col-xl-4 control-label">
+                                <label for="desc" class="col-xl-4 col-form-label">
                                     <?=$this->getTrans('description') ?>:
                                 </label>
                                 <div class="col-xl-8">
@@ -101,7 +101,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="type" class="col-xl-4 control-label">
+                                <label for="type" class="col-xl-4 col-form-label">
                                     <?=$this->getTrans('type') ?>:
                                 </label>
                                 <div class="col-xl-8">
@@ -113,7 +113,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                             </div>
                             <div class="dyn"></div>
                             <div class="row mb-3">
-                                <label class="col-xl-4 control-label"></label>
+                                <label class="col-xl-4 col-form-label"></label>
                                 <div class="col-xl-8 actions">
                                     <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
                                 </div>
@@ -192,7 +192,7 @@ $(document).ready (
                 return;
             }
 
-            menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 control-label">Kategorie:</label>\n\
+            menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 col-form-label">Kategorie:</label>\n\
                         <div class="col-xl-8"><select class="form-select" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {

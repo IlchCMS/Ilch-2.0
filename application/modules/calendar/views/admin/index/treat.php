@@ -37,7 +37,7 @@ $entry = $this->get('calendar');
         <?=($entry->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
     </h1>
     <div class="row mb-3 <?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
-        <label for="start" class="col-xl-2 control-label">
+        <label for="start" class="col-xl-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
         <div id="start" class="col-xl-4 input-group ilch-date date form_datetime_1">
@@ -53,7 +53,7 @@ $entry = $this->get('calendar');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
-        <label for="end" class="col-xl-2 control-label">
+        <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
         <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
@@ -68,7 +68,7 @@ $entry = $this->get('calendar');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-xl-4">
@@ -80,7 +80,7 @@ $entry = $this->get('calendar');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
-        <label for="place" class="col-xl-2 control-label">
+        <label for="place" class="col-xl-2 col-form-label">
             <?=$this->getTrans('place') ?>:
         </label>
         <div class="col-xl-4">
@@ -92,7 +92,7 @@ $entry = $this->get('calendar');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
-        <label for="periodType" class="col-xl-2 control-label">
+        <label for="periodType" class="col-xl-2 col-form-label">
             <?=$this->getTrans('periodEntry') ?>:
         </label>
         <div class="col-xl-4">
@@ -106,7 +106,7 @@ $entry = $this->get('calendar');
     </div>
     <div class="<?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
       <div class="row mb-3">
-        <label for="periodDays" class="col-xl-2 control-label"></label>
+        <label for="periodDays" class="col-xl-2 col-form-label"></label>
         <div class="col-xl-4">
             <select class="form-select" name="periodDays" id="periodDays">
                 <option value="0" <?=($this->originalInput('periodDay', ($entry->getId()?$entry->getPeriodDay():'0'))) == '0' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
@@ -119,7 +119,7 @@ $entry = $this->get('calendar');
     </div>
     <div class="<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
       <div class="row mb-3">
-        <label for="periodDay" class="col-xl-2 control-label"></label>
+        <label for="periodDay" class="col-xl-2 col-form-label"></label>
         <div class="col-xl-4 input-group">
             <span class="input-group-text"><?=$this->getTrans('periodEvery') ?></span>
             <input type="text"
@@ -134,7 +134,7 @@ $entry = $this->get('calendar');
 
     <div class="<?=$this->validation()->hasError('repeatUntil') ? ' has-error' : '' ?>" id="repeatUntil_div">
       <div class="row mb-3">
-        <label for="repeatUntil" class="col-xl-2 control-label">
+        <label for="repeatUntil" class="col-xl-2 col-form-label">
             <?=$this->getTrans('repeatUntil') ?>:
         </label>
         <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
@@ -152,7 +152,7 @@ $entry = $this->get('calendar');
     </div>
 
     <div class="row mb-3<?=$this->validation()->hasError('color') ? ' has-error' : '' ?>">
-        <label for="color" class="col-xl-2 control-label">
+        <label for="color" class="col-xl-2 col-form-label">
             <?=$this->getTrans('color') ?>:
         </label>
         <div class="col-xl-4 input-group date">
@@ -166,7 +166,7 @@ $entry = $this->get('calendar');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
-        <label for="access" class="col-xl-2 control-label">
+        <label for="access" class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-xl-4">
@@ -181,7 +181,7 @@ $entry = $this->get('calendar');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
-        <label for="ck_1" class="col-xl-2 control-label">
+        <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-xl-10">

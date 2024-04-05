@@ -47,7 +47,7 @@ if (!empty($_SESSION['shopping_cart'])) {
             <div id="deliveryAddress">
                 <?php if ($this->get('addresses')) : ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('dropdownDeliveryAddress') ? 'has-error' : '' ?>">
-                    <label for="dropdownDeliveryAddress" class="control-label col-xl-2">
+                    <label for="dropdownDeliveryAddress" class="col-form-label col-xl-2">
                         <?=$this->getTrans('dropdownDeliveryAddress') ?>
                     </label>
                     <div class="col-xl-9">
@@ -62,7 +62,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 <?php endif; ?>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('prename') ? 'has-error' : '' ?>">
-                    <label for="prename" class="control-label col-xl-2">
+                    <label for="prename" class="col-form-label col-xl-2">
                         <?=$this->getTrans('preName') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -76,7 +76,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('lastname') ? 'has-error' : '' ?>">
-                    <label for="lastname" class="control-label col-xl-2">
+                    <label for="lastname" class="col-form-label col-xl-2">
                         <?=$this->getTrans('lastName') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -90,7 +90,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('street') ? 'has-error' : '' ?>">
-                    <label for="street" class="control-label col-xl-2">
+                    <label for="street" class="col-form-label col-xl-2">
                         <?=$this->getTrans('street') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -104,7 +104,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('postcode') ? 'has-error' : '' ?>">
-                    <label for="postcode" class="control-label col-xl-2">
+                    <label for="postcode" class="col-form-label col-xl-2">
                         <?=$this->getTrans('postCode') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -118,7 +118,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('city') ? 'has-error' : '' ?>">
-                    <label for="city" class="control-label col-xl-2">
+                    <label for="city" class="col-form-label col-xl-2">
                         <?=$this->getTrans('city') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -132,7 +132,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('country') ? 'has-error' : '' ?>">
-                    <label for="country" class="control-label col-xl-2">
+                    <label for="country" class="col-form-label col-xl-2">
                         <?=$this->getTrans('country') ?>&nbsp;&nbsp;
                     </label>
                     <div class="col-xl-9">
@@ -146,7 +146,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-                    <label for="email" class="control-label col-xl-2">
+                    <label for="email" class="col-form-label col-xl-2">
                         <?=$this->getTrans('emailAddress') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -168,7 +168,7 @@ if (!empty($_SESSION['shopping_cart'])) {
 
                 <?php if ($this->get('addresses')) : ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('dropdownInvoiceAddress') ? 'has-error' : '' ?>">
-                    <label for="dropdownInvoiceAddress" class="control-label col-xl-2">
+                    <label for="dropdownInvoiceAddress" class="col-form-label col-xl-2">
                         <?=$this->getTrans('dropdownInvoiceAddress') ?>
                     </label>
                     <div class="col-xl-9">
@@ -183,7 +183,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 <?php endif; ?>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('invoiceAddressPrename') ? 'has-error' : '' ?>">
-                    <label for="invoiceAddressPrename" class="control-label col-xl-2">
+                    <label for="invoiceAddressPrename" class="col-form-label col-xl-2">
                         <?=$this->getTrans('preName') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -197,7 +197,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('invoiceAddressLastname') ? 'has-error' : '' ?>">
-                    <label for="invoiceAddressLastname" class="control-label col-xl-2">
+                    <label for="invoiceAddressLastname" class="col-form-label col-xl-2">
                         <?=$this->getTrans('lastName') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -211,7 +211,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('invoiceAddressStreet') ? 'has-error' : '' ?>">
-                    <label for="invoiceAddressStreet" class="control-label col-xl-2">
+                    <label for="invoiceAddressStreet" class="col-form-label col-xl-2">
                         <?=$this->getTrans('street') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -225,7 +225,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('invoiceAddressPostcode') ? 'has-error' : '' ?>">
-                    <label for="invoiceAddressPostcode" class="control-label col-xl-2">
+                    <label for="invoiceAddressPostcode" class="col-form-label col-xl-2">
                         <?=$this->getTrans('postCode') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -239,7 +239,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('invoiceAddressCity') ? 'has-error' : '' ?>">
-                    <label for="invoiceAddressCity" class="control-label col-xl-2">
+                    <label for="invoiceAddressCity" class="col-form-label col-xl-2">
                         <?=$this->getTrans('city') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -253,7 +253,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </div>
 
                 <div class="row mb-3 <?=$this->validation()->hasError('invoiceAddressCountry') ? 'has-error' : '' ?>">
-                    <label for="invoiceAddressCountry" class="control-label col-xl-2">
+                    <label for="invoiceAddressCountry" class="col-form-label col-xl-2">
                         <?=$this->getTrans('country') ?>&nbsp;&nbsp;
                     </label>
                     <div class="col-xl-9">
@@ -269,7 +269,7 @@ if (!empty($_SESSION['shopping_cart'])) {
 
             <?php if ($this->get('captchaNeeded')) : ?>
                 <div class="row mb-3 <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
-                    <label class="col-xl-2 control-label">
+                    <label class="col-xl-2 col-form-label">
                         <?=$this->getTrans('captcha') ?>&nbsp;*
                     </label>
                     <div class="col-xl-9">
@@ -432,7 +432,7 @@ if (!empty($_SESSION['shopping_cart'])) {
             <div class="row space20"></div>
 
             <div class="row mb-3 <?=$this->validation()->hasError('acceptOrder') ? 'has-error' : '' ?>">
-                <label for="acceptOrder" class="col-xl-2 control-label">
+                <label for="acceptOrder" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('acceptOrder') ?>&nbsp;*
                 </label>
                 <div class="col-xl-9" style="position:relative;">

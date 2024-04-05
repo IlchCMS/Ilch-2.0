@@ -12,7 +12,7 @@ $errors = $this->get('errors');
         </div>
         <div class="card-body">
             <div class="row mb-3 d-none">
-                <label class="col-xl-2 control-label">
+                <label class="col-xl-2 col-form-label">
                     <?=$this->getTrans('bot') ?>*
                 </label>
                 <div class="col-xl-8">
@@ -23,7 +23,7 @@ $errors = $this->get('errors');
                 </div>
             </div>
             <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-                <label for="name" class="control-label col-xl-2">
+                <label for="name" class="col-form-label col-xl-2">
                     <?=$this->getTrans('name') ?>:
                 </label>
                 <div class="col-xl-8">
@@ -36,7 +36,7 @@ $errors = $this->get('errors');
                 </div>
             </div>
             <div class="row mb-3 <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
-                <label for="password" class="control-label col-xl-2">
+                <label for="password" class="col-form-label col-xl-2">
                     <?=$this->getTrans('password') ?>:
                 </label>
                 <div class="col-xl-8">
@@ -49,7 +49,7 @@ $errors = $this->get('errors');
                 </div>
             </div>
             <div class="row mb-3 <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
-                <label for="password2" class="control-label col-xl-2">
+                <label for="password2" class="col-form-label col-xl-2">
                     <?=$this->getTrans('password2') ?>:
                 </label>
                 <div class="col-xl-8">
@@ -62,7 +62,7 @@ $errors = $this->get('errors');
                 </div>
             </div>
             <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-                <label for="email" class="control-label col-xl-2">
+                <label for="email" class="col-form-label col-xl-2">
                     <?=$this->getTrans('emailAdress') ?>:
                 </label>
                 <div class="col-xl-8">

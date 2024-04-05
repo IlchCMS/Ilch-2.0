@@ -11,7 +11,7 @@ $privacy = $this->get('privacy');
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('show') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('show') ?>
         </div>
         <div class="col-xl-4">
@@ -25,7 +25,7 @@ $privacy = $this->get('privacy');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>
         </label>
         <div class="col-xl-4">
@@ -37,7 +37,7 @@ $privacy = $this->get('privacy');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label for="ck_1" class="col-xl-2 control-label">
+        <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('text') ?>
         </label>
         <div class="col-xl-10">
@@ -49,7 +49,7 @@ $privacy = $this->get('privacy');
         </div>
     </div>
     <div class="row mb-3">
-        <label for="urltitle" class="col-xl-2 control-label">
+        <label for="urltitle" class="col-xl-2 col-form-label">
             <?=$this->getTrans('urlTitle') ?>
         </label>
         <div class="col-xl-4">
@@ -61,7 +61,7 @@ $privacy = $this->get('privacy');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('url') ? 'has-error' : '' ?>">
-        <label for="url" class="col-xl-2 control-label">
+        <label for="url" class="col-xl-2 col-form-label">
             <?=$this->getTrans('url') ?>
         </label>
         <div class="col-xl-4">

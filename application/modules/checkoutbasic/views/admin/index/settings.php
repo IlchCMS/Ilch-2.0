@@ -12,7 +12,7 @@
                   name="checkoutContact"><?=$this->get('checkoutContact') ?></textarea>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('checkoutCurrency') ? 'has-error' : '' ?>">
-        <label for="checkoutCurrency" class="control-label col-xl-2">
+        <label for="checkoutCurrency" class="col-form-label col-xl-2">
             <?=$this->getTrans('checkoutCurrency') ?>:
         </label>
         <div class="col-2">

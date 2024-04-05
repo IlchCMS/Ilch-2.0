@@ -6,7 +6,7 @@
         <p id="smtpModeDescription"><?=($this->get('smtp_mode') === '1') ? $this->getTrans('smtpModeEnabledDescription') : $this->getTrans('smtpModeDisabledDescription') ?></p>
     </div>
     <div class="row mb-3">
-        <label for="navbarFixed" class="col-xl-2 control-label">
+        <label for="navbarFixed" class="col-xl-2 col-form-label">
             <?=$this->getTrans('smtpMode') ?>:
         </label>
         <div class="col-xl-8">
@@ -21,7 +21,7 @@
     </div>
     <div id="smtpSettings" class="smtpSettings" <?=($this->get('smtp_mode') !== '1') ? 'hidden' : '' ?>>
         <div class="row mb-3">
-            <label for="smtp_server" class="col-xl-2 control-label">
+            <label for="smtp_server" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_server') ?>:
             </label>
             <div class="col-xl-6">
@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <label for="smtp_port" class="col-xl-2 control-label">
+            <label for="smtp_port" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_port') ?>:
             </label>
             <div class="col-xl-2">
@@ -45,7 +45,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <label for="smtp_secure" class="col-xl-2 control-label">
+            <label for="smtp_secure" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_secure') ?>:
             </label>
             <div class="col-xl-2">
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <label for="smtp_user" class="col-xl-2 control-label">
+            <label for="smtp_user" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_user') ?>:
             </label>
             <div class="col-xl-6">
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <label for="smtp_pass" class="col-xl-2 control-label">
+            <label for="smtp_pass" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_pass') ?>:
             </label>
             <div class="col-xl-6">
@@ -93,7 +93,7 @@
     </div>
     <legend><?=$this->getTrans('emailBlacklist') ?></legend>
     <div class="row mb-3">
-        <label for="emailBlacklist" class="col-xl-2 control-label">
+        <label for="emailBlacklist" class="col-xl-2 col-form-label">
             <?=$this->getTrans('emailBlacklist') ?>:
         </label>
         <div class="col-xl-6">

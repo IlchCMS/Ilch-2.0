@@ -7,7 +7,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <label for="compress" class="col-xl-2 control-label">
+        <label for="compress" class="col-xl-2 col-form-label">
             <?=$this->getTrans('compress') ?>:
         </label>
         <div class="col-xl-2">
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('skipComments') ?>:
         </div>
         <div class="col-xl-2">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('addDatabases') ?>:
         </div>
         <div class="col-xl-2">
@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('dropTable') ?>:
         </div>
         <div class="col-xl-2">

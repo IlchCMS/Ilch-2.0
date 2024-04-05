@@ -8,7 +8,7 @@
         <input type="hidden" name="warGameIds[]" value="<?=$game->getId() ?>">
         <?php endif; ?>
         <div class=" row mb-3 ">
-            <label class="col-xl-2 control-label" for="warMapPlayed[]">
+            <label class="col-xl-2 col-form-label" for="warMapPlayed[]">
                 <?=$this->getTrans('warMapName') ?>
                 <?php if ($game->getId()): ?>
                 <a id="<?=$game->getId() ?>"
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="row mb-3 ">
-            <label class="col-xl-2 control-label" for="warErgebnis[]">
+            <label class="col-xl-2 col-form-label" for="warErgebnis[]">
                 <?=$this->getTrans('warResult') ?>
             </label>
             <div class="col-xl-2">
@@ -61,7 +61,7 @@
 <?php endforeach; ?>
 </div>
 <div class="row mb-3 ">
-    <label class="col-xl-2 control-label" for="textinput"></label>
+    <label class="col-xl-2 col-form-label" for="textinput"></label>
     <div class="col-xl-2">
         <a id="button-duplicater" class="btn btn-outline-secondary"><?=$this->getTrans('warMoreMaps') ?></a>
     </div>

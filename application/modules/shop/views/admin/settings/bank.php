@@ -33,7 +33,7 @@
     </ul>
     <br />
     <div class="row mb-3 <?=$this->validation()->hasError('bankName') ? 'has-error' : '' ?>">
-        <label for="bankName" class="col-xl-2 control-label">
+        <label for="bankName" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bankName') ?>:
         </label>
         <div class="col-xl-3">
@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('bankOwner') ? 'has-error' : '' ?>">
-        <label for="bankOwner" class="col-xl-2 control-label">
+        <label for="bankOwner" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bankOwner') ?>:
         </label>
         <div class="col-xl-3">
@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('bankIBAN') ? 'has-error' : '' ?>">
-        <label for="bankIBAN" class="col-xl-2 control-label">
+        <label for="bankIBAN" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bankIBAN') ?>:
         </label>
         <div class="col-xl-3">
@@ -72,7 +72,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('bankBIC') ? 'has-error' : '' ?>">
-        <label for="bankBIC" class="col-xl-2 control-label">
+        <label for="bankBIC" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bankBIC') ?>:
         </label>
         <div class="col-xl-3">

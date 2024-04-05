@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-lg-7">
                         <div class="row lg-3">
-                            <label for="imageTitleInput" class="col-lg-4 control-label">
+                            <label for="imageTitleInput" class="col-lg-4 col-form-label">
                                 <?=$this->getTrans('title') ?>:
                             </label>
                             <div class="col-xl-8">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="row lg-3">
-                            <label for="imageDescInput" class="col-lg-4 control-label">
+                            <label for="imageDescInput" class="col-lg-4 col-form-label">
                                 <?=$this->getTrans('description') ?>:
                             </label>
                             <div class="col-xl-8">

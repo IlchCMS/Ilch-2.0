@@ -2,7 +2,7 @@
 <form id="partnerForm" name="partnerForm" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 d-none">
-        <label class="col-xl-2 control-label">
+        <label class="col-xl-2 col-form-label">
             <?=$this->getTrans('bot') ?>*
         </label>
         <div class="col-xl-8">
@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-xl-2 control-label">
+        <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-xl-8">
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
-        <label for="link" class="col-xl-2 control-label">
+        <label for="link" class="col-xl-2 col-form-label">
             <?=$this->getTrans('link') ?>:
         </label>
         <div class="col-xl-8">
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
-        <label for="banner" class="col-xl-2 control-label">
+        <label for="banner" class="col-xl-2 col-form-label">
             <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-xl-8">

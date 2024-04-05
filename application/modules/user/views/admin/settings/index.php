@@ -2,7 +2,7 @@
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('acceptUserRegis') ?>:
         </div>
         <div class="col-xl-4">
@@ -17,7 +17,7 @@
     </div>
     <div id="registRules" <?=($this->get('regist_accept') != '1') ? 'hidden' : '' ?>>
         <div class="row mb-3">
-            <div class="col-xl-2 control-label">
+            <div class="col-xl-2 col-form-label">
                 <?=$this->getTrans('confirmRegistrationEmail') ?>:
             </div>
             <div class="col-xl-4">
@@ -33,7 +33,7 @@
     </div>
     <div id="registSetfree" <?=($this->get('regist_accept') == '1' && $this->get('regist_confirm') == '1') ? 'hidden' : '' ?>>
         <div class="row mb-3">
-            <div class="col-xl-2 control-label">
+            <div class="col-xl-2 col-form-label">
                 <?=$this->getTrans('setfreeRegistration') ?>:
             </div>
             <div class="col-xl-4">
@@ -49,7 +49,7 @@
     </div>
     <div id="rulesForRegist" <?=($this->get('regist_accept') != '1') ? 'class="hidden"' : '' ?>>
         <div class="row mb-3">
-            <label for="ck_1" class="col-xl-2 control-label">
+            <label for="ck_1" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('rulesForRegist') ?>:
             </label>
             <div class="col-xl-10">
@@ -63,7 +63,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="delete_time" class="col-xl-2 control-label">
+        <label for="delete_time" class="col-xl-2 col-form-label">
             <?=$this->getTrans('deletetime') ?>
         </label>
         <div class="col-xl-2">
@@ -77,7 +77,7 @@
 
     <h1><?=$this->getTrans('menuSettingsAvatar') ?></h1>
     <div class="row mb-3">
-        <label for="avatar_height" class="col-xl-2 control-label">
+        <label for="avatar_height" class="col-xl-2 col-form-label">
             <?=$this->getTrans('avatarHeight') ?>
         </label>
         <div class="col-xl-2">
@@ -89,7 +89,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="avatar_width" class="col-xl-2 control-label">
+        <label for="avatar_width" class="col-xl-2 col-form-label">
             <?=$this->getTrans('avatarWidth') ?>
         </label>
         <div class="col-xl-2">
@@ -101,7 +101,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="avatar_size" class="col-xl-2 control-label">
+        <label for="avatar_size" class="col-xl-2 col-form-label">
             <?=$this->getTrans('avatarSizeBytes') ?>
         </label>
         <div class="col-xl-2">
@@ -113,7 +113,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="avatar_filetypes" class="col-xl-2 control-label">
+        <label for="avatar_filetypes" class="col-xl-2 col-form-label">
             <?=$this->getTrans('allowedFileExtensions') ?>
         </label>
         <div class="col-xl-2">
@@ -127,7 +127,7 @@
 
     <h1><?=$this->getTrans('menuSettingsGallery') ?></h1>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('usergalleryAllowed') ?>:
         </div>
         <div class="col-xl-4">
@@ -141,7 +141,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="usergallery_filetypes" class="col-xl-2 control-label">
+        <label for="usergallery_filetypes" class="col-xl-2 col-form-label">
             <?=$this->getTrans('allowedFileExtensions') ?>
         </label>
         <div class="col-xl-2">
@@ -153,7 +153,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="picturesPerPageInput" class="col-xl-2 control-label">
+        <label for="picturesPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('picturesPerPage') ?>:
         </label>
         <div class="col-lg-1">
@@ -168,7 +168,7 @@
 
     <h1><?=$this->getTrans('UserGroupsList') ?></h1>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('userGroupsAllowed') ?>:
         </div>
         <div class="col-xl-4">
@@ -184,7 +184,7 @@
     </div>
 
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('userAvatarsAllowed') ?>:
         </div>
         <div class="col-xl-4">

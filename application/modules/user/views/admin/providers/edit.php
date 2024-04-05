@@ -10,7 +10,7 @@
     <h1><?= $this->getTrans('authProvider') ?> <?= $this->get('provider')->getName() ?></h1>
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <label for="moduleInput" class="col-xl-3 control-label">
+        <label for="moduleInput" class="col-xl-3 col-form-label">
             <?=$this->getTrans('module') ?>
         </label>
         <div class="col-xl-9">

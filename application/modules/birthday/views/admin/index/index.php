@@ -5,7 +5,7 @@
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('numberOfBirthdaysShow') ? 'has-error' : '' ?>">
-        <label for="numberOfBirthdaysShow" class="col-xl-2 control-label">
+        <label for="numberOfBirthdaysShow" class="col-xl-2 col-form-label">
             <?=$this->getTrans('numberOfBirthdaysShow') ?>:
         </label>
         <div class="col-xl-1">
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('visibleForGuest') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleForGuest') ?>:
         </div>
         <div class="col-xl-2">

@@ -2,7 +2,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('sortCategoriesAlphabetically') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('sortCategoriesAlphabetically') ?>
         </div>
         <div class="col-xl-4">
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('sortQuestionsAlphabetically') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('sortQuestionsAlphabetically') ?>
         </div>
         <div class="col-xl-4">

@@ -10,7 +10,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-xl-2 control-label">
+        <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-xl-2">
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-        <label for="email" class="col-xl-2 control-label">
+        <label for="email" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('email') ?>:
         </label>
         <div class="col-xl-2">

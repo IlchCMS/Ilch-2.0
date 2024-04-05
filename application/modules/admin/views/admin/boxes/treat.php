@@ -8,7 +8,7 @@ $entrie = $this->get('box');
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('boxTitle') ? 'has-error' : '' ?>">
-        <label for="boxTitle" class="col-xl-2 control-label">
+        <label for="boxTitle" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxTitle') ?>:
         </label>
         <div class="col-xl-4">
@@ -20,7 +20,7 @@ $entrie = $this->get('box');
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('boxContent') ? 'has-error' : '' ?>">
-        <label for="boxContent" class="col-xl-2 control-label">
+        <label for="boxContent" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxContent') ?>:
         </label>
         <div class="col-xl-8">
@@ -32,7 +32,7 @@ $entrie = $this->get('box');
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale')): ?>
         <div class="row mb-3">
-            <label for="boxLanguage" class="col-xl-2 control-label">
+            <label for="boxLanguage" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('boxLanguage') ?>:
             </label>
             <div class="col-xl-2">

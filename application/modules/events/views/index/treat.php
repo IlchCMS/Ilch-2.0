@@ -18,7 +18,7 @@ $types = $this->get('types');
     <form method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3">
-            <div class="col-xl-2 control-label"><?=$this->getTrans('image') ?></div>
+            <div class="col-xl-2 col-form-label"><?=$this->getTrans('image') ?></div>
             <div class="col-xl-10">
                 <?php if ($this->get('event') != '' && $this->escape($this->get('event')->getImage()) != ''): ?>
                     <div class="col-xl-7 col-md-7 col-7">
@@ -53,7 +53,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('creator') ? 'has-error' : '' ?>">
-            <label for="creator" class="col-xl-2 control-label">
+            <label for="creator" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('by') ?>
             </label>
             <div class="col-xl-4">
@@ -66,7 +66,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('start') ? 'has-error' : '' ?>">
-            <label for="start" class="col-lg-2 control-label">
+            <label for="start" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('startTime') ?>
             </label>
             <div id="start" class="col-xl-4 input-group ilch-date date form_datetime">
@@ -83,7 +83,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('end') ? 'has-error' : '' ?>">
-            <label for="end" class="col-lg-2 control-label">
+            <label for="end" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('endTime') ?>
             </label>
             <div id="end" class="col-xl-4 input-group ilch-date date form_datetime">
@@ -103,7 +103,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-            <label for="title" class="col-xl-2 control-label">
+            <label for="title" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('title') ?>
             </label>
             <div class="col-xl-6">
@@ -115,7 +115,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
-            <label for="place" class="col-xl-2 control-label">
+            <label for="place" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('place') ?>
             </label>
             <div class="col-xl-6">
@@ -127,7 +127,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('type') ? 'has-error' : '' ?>">
-            <label for="place" class="col-xl-2 control-label">
+            <label for="place" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('type') ?>
             </label>
             <div class="col-xl-6">
@@ -149,7 +149,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
-            <label for="website" class="col-xl-2 control-label">
+            <label for="website" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('website') ?>
             </label>
             <div class="col-xl-6">
@@ -162,7 +162,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-            <label for="ck_1" class="col-xl-2 control-label">
+            <label for="ck_1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('text') ?>
             </label>
             <div class="col-xl-10">
@@ -174,7 +174,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
-            <label for="price" class="col-xl-2 control-label">
+            <label for="price" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('price') ?>
             </label>
             <div class="col-xl-2">
@@ -208,7 +208,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
-            <label for="userLimit" class="col-xl-2 control-label">
+            <label for="userLimit" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('userLimit') ?> <div class="badge rounded-pill bg-secondary" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
             </label>
             <div class="col-xl-2">
@@ -222,7 +222,7 @@ $types = $this->get('types');
             </div>
         </div>
         <div class="row mb-3">
-            <label for="access" class="col-xl-2 control-label">
+            <label for="access" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('visibleFor') ?>
             </label>
             <div class="col-xl-6">

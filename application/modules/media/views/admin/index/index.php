@@ -7,7 +7,7 @@
             <form method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3">
-                    <label class="col-xl-2 control-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage') ?>:</label>
+                    <label class="col-xl-2 col-form-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage') ?>:</label>
                     <div class="col-xl-2">
                         <select class="form-select" id="pref-perpage" name="rows">
                             <option value="2">2</option>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 control-label" for="pref-orderby"><?=$this->getTrans('orderBy') ?>:</label>
+                    <label class="col-xl-2 col-form-label" for="pref-orderby"><?=$this->getTrans('orderBy') ?>:</label>
                     <div class="col-xl-2">
                         <select class="form-select" id="pref-orderby" name="order">
                             <option value="ASC"><?=$this->getTrans('ascending') ?></option>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 control-label" for="pref-orderbytype"><?=$this->getTrans('mediaType') ?>:</label>
+                    <label class="col-xl-2 col-form-label" for="pref-orderbytype"><?=$this->getTrans('mediaType') ?>:</label>
                     <div class="col-xl-2">
                         <select class="form-select" id="pref-orderbytype" name="orderbytype">
                             <option value="all"><?=$this->getTrans('all') ?></option>

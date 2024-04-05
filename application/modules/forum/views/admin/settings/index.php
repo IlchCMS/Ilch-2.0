@@ -6,7 +6,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <label for="threadsPerPageInput" class="col-xl-2 control-label">
+        <label for="threadsPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('threadsPerPage') ?>:
         </label>
         <div class="col-xl-1">
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="postsPerPageInput" class="col-xl-2 control-label">
+        <label for="postsPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('postsPerPage') ?>:
         </label>
         <div class="col-xl-1">
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="floodIntervalInput" class="col-xl-2 control-label">
+        <label for="floodIntervalInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('floodInterval') ?>:
         </label>
         <div class="col-xl-1">
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="excludeFloodProtection" class="col-xl-2 control-label">
+        <label for="excludeFloodProtection" class="col-xl-2 col-form-label">
             <?=$this->getTrans('excludeFloodProtection') ?>:
         </label>
         <div class="col-xl-4">
@@ -75,7 +75,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('postVoting') ?>:
         </div>
         <div class="col-xl-4">
@@ -89,7 +89,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('topicSubscription') ?>:
         </div>
         <div class="col-xl-4">
@@ -103,7 +103,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('DESCPostorder') ?>:
         </div>
         <div class="col-xl-4">
@@ -118,7 +118,7 @@
     </div>
     <h2><?=$this->getTrans('boxSettings') ?></h2>
     <div class="row mb-3">
-        <label for="boxForumLimit" class="col-xl-2 control-label">
+        <label for="boxForumLimit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxForumLimit') ?>
         </label>
         <div class="col-xl-1">
@@ -132,7 +132,7 @@
     </div>
     <h2><?=$this->getTrans('reportSettings') ?></h2>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('reportingPosts') ?>:
         </div>
         <div class="col-xl-4">
@@ -146,7 +146,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('reportNotificationEMail') ?>:
         </div>
         <div class="col-xl-4">

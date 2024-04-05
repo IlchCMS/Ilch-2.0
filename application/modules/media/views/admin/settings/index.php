@@ -6,7 +6,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <label for="allowedImagesInput" class="col-xl-2 control-label">
+        <label for="allowedImagesInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('allowedImages') ?>:
         </label>
         <div class="col-xl-8">
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="allowedVideosInput" class="col-xl-2 control-label">
+        <label for="allowedVideosInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('allowedVideos') ?>:
         </label>
         <div class="col-xl-8">
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="allowedFilesInput" class="col-xl-2 control-label">
+        <label for="allowedFilesInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('allowedFiles') ?>:
         </label>
         <div class="col-xl-8">
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="mediaPerPageInput" class="col-xl-2 control-label">
+        <label for="mediaPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('mediaPerPage') ?>:
         </label>
         <div class="col-xl-1">
@@ -49,7 +49,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('directoriesAsCategories') ?>
         </div>
         <div class="col-xl-4">

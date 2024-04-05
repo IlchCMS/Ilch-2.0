@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('manageWarOverview') ?></h1>
 <?php if ($this->get('war')): ?>
     <div class="row mb-3">
-        <label class="col-lg-2 control-label" for="filterLastNext">
+        <label class="col-lg-2 col-form-label" for="filterLastNext">
             <?=$this->getTrans('showOnly') ?>
         </label>
         <div class="col-lg-2">

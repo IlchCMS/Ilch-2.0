@@ -12,7 +12,7 @@ $currency = $this->get('currency');
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-xl-2 control-label">
+        <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>
         </label>
         <div class="col-xl-4">

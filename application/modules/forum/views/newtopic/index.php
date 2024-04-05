@@ -38,7 +38,7 @@ if ($this->getUser()) {
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="row mb-3 <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
-                                    <label for="topicTitle" class="col-lg-2 control-label">
+                                    <label for="topicTitle" class="col-lg-2 col-form-label">
                                         <?=$this->getTrans('topicTitle') ?>
                                     </label>
                                     <?php if ($forum->getPrefixes() != '') : ?>
@@ -69,7 +69,7 @@ if ($this->getUser()) {
                                     </div>
                                 </div>
                                 <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-                                    <label class="col-xl-2 control-label">
+                                    <label class="col-xl-2 col-form-label">
                                         <?=$this->getTrans('text') ?>
                                     </label>
                                     <div class="col-xl-10">
@@ -81,7 +81,7 @@ if ($this->getUser()) {
                                 </div>
                                 <?php if ($this->getUser()->isAdmin()) : ?>
                                     <div class="row mb-3">
-                                        <div class="col-xl-2 control-label">
+                                        <div class="col-xl-2 col-form-label">
                                             <?=$this->getTrans('forumOptions') ?>
                                         </div>
                                         <div class="col-xl-10">

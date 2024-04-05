@@ -109,7 +109,7 @@ $config = \Ilch\Registry::get('config');
                 <input type="hidden" name="uniqid" value="<?=$this->get('uniqid') ?>">
                <?=$this->getTokenField() ?>
                 <div class="row mb-3 d-none">
-                    <label class="col-xl-2 control-label" for="bot">
+                    <label class="col-xl-2 col-form-label" for="bot">
                         <?=$this->getTrans('bot') ?>
                     </label>
                     <div class="col-xl-8">

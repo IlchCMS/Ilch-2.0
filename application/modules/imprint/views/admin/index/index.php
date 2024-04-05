@@ -9,7 +9,7 @@ $imprint = $this->get('imprint');
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('imprint') ? 'has-error' : '' ?>">
-        <label for="ck_2" class="col-xl-2 control-label">
+        <label for="ck_2" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imprint') ?>:
         </label>
         <div class="col-xl-12">

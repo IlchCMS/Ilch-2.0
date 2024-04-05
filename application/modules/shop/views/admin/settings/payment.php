@@ -37,7 +37,7 @@
     <?=$this->getTokenField() ?>
 
     <div class="row mb-3">
-        <label for="clientID" class="col-xl-2 control-label">
+        <label for="clientID" class="col-xl-2 col-form-label">
             <?=$this->getTrans('clientID') ?>:
         </label>
         <div class="col-xl-4">
@@ -57,7 +57,7 @@
     <hr>
     <p><?=$this->getTrans('paypalMeDesc') ?></p>
     <div class="row mb-3">
-        <label for="paypalMe" class="col-xl-2 control-label">
+        <label for="paypalMe" class="col-xl-2 col-form-label">
             <?=$this->getTrans('paypalMe') ?>:
         </label>
         <div class="col-xl-4">
@@ -75,7 +75,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('paypalMePresetAmount') ? 'has-error' : '' ?>">
-        <label for="paypalMePresetAmount" class="col-xl-2 control-label">
+        <label for="paypalMePresetAmount" class="col-xl-2 col-form-label">
             <?=$this->getTrans('paypalMePresetAmount') ?>:
         </label>
         <div class="col-xl-4">

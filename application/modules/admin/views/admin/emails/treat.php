@@ -24,7 +24,7 @@ $module = $moduleMapper->getModulesByKey($this->getRequest()->getParam('key'), $
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('desc') ? 'has-error' : '' ?>">
-        <label for="desc" class="col-xl-2 control-label">
+        <label for="desc" class="col-xl-2 col-form-label">
             <?=$this->getTrans('emailDesc') ?>
         </label>
         <div class="col-xl-3">
@@ -36,7 +36,7 @@ $module = $moduleMapper->getModulesByKey($this->getRequest()->getParam('key'), $
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label for="text" class="col-xl-2 control-label">
+        <label for="text" class="col-xl-2 col-form-label">
             <?=$this->getTrans('emailText') ?>
         </label>
         <div class="col-xl-10">

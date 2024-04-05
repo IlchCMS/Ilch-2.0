@@ -3,7 +3,7 @@
 <form id="guestbookForm" name="guestbookForm" method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 d-none Entries">
-        <label for="bot" class="col-xl-2 control-label">
+        <label for="bot" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bot') ?>*
         </label>
         <div class="col-xl-8">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-xl-2 control-label">
+        <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>*
         </label>
         <div class="col-xl-8">
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="row mb-3 <?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
-        <label for="email" class="col-xl-2 control-label">
+        <label for="email" class="col-xl-2 col-form-label">
             <?=$this->getTrans('email') ?>*
         </label>
         <div class="col-xl-8">
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="row mb-3 <?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
-        <label for="homepage" class="col-xl-2 control-label">
+        <label for="homepage" class="col-xl-2 col-form-label">
             <?=$this->getTrans('page') ?>
         </label>
         <div class="col-xl-8">
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="row mb-3 <?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label for="text" class="col-xl-2 control-label">
+        <label for="text" class="col-xl-2 col-form-label">
             <?=$this->getTrans('message') ?>*
         </label>
         <div class="col-xl-8">

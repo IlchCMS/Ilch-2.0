@@ -21,7 +21,7 @@ if ($file->getFileImage() != '') {
                 <div class="col-lg-8">
                     <?=$this->getTokenField() ?>
                     <div class="row mb-3">
-                        <label for="fileTitleInput" class="col-lg-2 control-label">
+                        <label for="fileTitleInput" class="col-lg-2 col-form-label">
                             <?=$this->getTrans('fileTitle') ?>:
                         </label>
                         <div class="col-xl-8">
@@ -33,7 +33,7 @@ if ($file->getFileImage() != '') {
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="selectedImage" class="col-xl-2 control-label">
+                        <label for="selectedImage" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('fileImage') ?>:
                         </label>
                         <div class="col-xl-8">
@@ -49,7 +49,7 @@ if ($file->getFileImage() != '') {
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="fileDescInput" class="col-xl-2 control-label">
+                        <label for="fileDescInput" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('fileDesc') ?>:
                         </label>
                         <div class="col-xl-8">

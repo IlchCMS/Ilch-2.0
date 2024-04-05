@@ -16,7 +16,7 @@ $cats = $this->get('cats');
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="chosen-select row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
-            <label for="catId" class="col-xl-2 control-label">
+            <label for="catId" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('cat') ?>:
             </label>
             <div class="col-xl-2">
@@ -28,7 +28,7 @@ $cats = $this->get('cats');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
-            <label for="question" class="col-xl-2 control-label">
+            <label for="question" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('question') ?>:
             </label>
             <div class="col-xl-4">
@@ -40,7 +40,7 @@ $cats = $this->get('cats');
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('answer') ? 'has-error' : '' ?>">
-            <label for="ck_1" class="col-xl-2 control-label">
+            <label for="ck_1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('answer') ?>:
             </label>
             <div class="col-xl-10">

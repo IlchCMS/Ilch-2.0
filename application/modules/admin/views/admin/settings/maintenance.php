@@ -4,7 +4,7 @@
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('maintenanceMode') ?>:
         </div>
         <div class="col-xl-2">
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="maintenanceDateTime" class="col-lg-2 control-label">
+        <label for="maintenanceDateTime" class="col-lg-2 col-form-label">
             <?=$this->getTrans('maintenanceEndDateTime') ?>:
         </label>
         <div id="maintenanceEndDateTime" class="col-xl-2 input-group ilch-date date form_datetime">
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="maintenanceStatus" class="col-lg-2 control-label">
+        <label for="maintenanceStatus" class="col-lg-2 col-form-label">
             <?=$this->getTrans('maintenanceStatus') ?>:
         </label>
         <div class="col-xl-4">
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="maintenanceText" class="col-xl-2 control-label">
+        <label for="maintenanceText" class="col-xl-2 col-form-label">
             <?=$this->getTrans('maintenanceText') ?>:
         </label>
         <div class="col-xl-10">

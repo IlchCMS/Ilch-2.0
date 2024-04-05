@@ -72,7 +72,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
         <div class="col-xl-6 changeBox">
             <input type="hidden" id="id" value="" />
             <div class="row mb-3">
-                <label for="title" class="col-xl-3 control-label">
+                <label for="title" class="col-xl-3 col-form-label">
                     <?=$this->getTrans('title') ?>
                 </label>
                 <div class="col-xl-6">
@@ -80,7 +80,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="desc" class="col-xl-3 control-label">
+                <label for="desc" class="col-xl-3 col-form-label">
                     <?=$this->getTrans('description') ?>
                 </label>
                 <div class="col-xl-6">
@@ -92,7 +92,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="type" class="col-xl-3 control-label">
+                <label for="type" class="col-xl-3 col-form-label">
                     <?=$this->getTrans('type') ?>
                 </label>
                 <div class="col-xl-6">
@@ -104,7 +104,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
             </div>
             <div class="dyn"></div>
             <div class="row mb-3">
-                <label class="col-xl-3 control-label"></label>
+                <label class="col-xl-3 col-form-label"></label>
                 <div class="col-xl-6 actions">
                     <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('downloadsItemAdd') ?>">
                 </div>
@@ -175,7 +175,7 @@ $(document).ready (
                 return;
             }
 
-            const menuHtml = '<div class="row mb-3"><label for="href" class="col-xl-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
+            const menuHtml = '<div class="row mb-3"><label for="href" class="col-xl-3 col-form-label"><?=$this->getTrans('cat') ?></label>\n\
                               <div class="col-xl-6"><select class="form-select" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {

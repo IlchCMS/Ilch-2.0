@@ -15,7 +15,7 @@
         <?=$this->getTokenField() ?>
         <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl')) ?>" />
         <div class="row mb-3 <?=$this->validation()->hasError('login_emailname') ? 'has-error' : '' ?>">
-            <label for="login_emailname" class="col-xl-2 control-label">
+            <label for="login_emailname" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('nameEmail') ?>:
             </label>
             <div class="col-xl-10">
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="row mb-3 <?=$this->validation()->hasError('login_password') ? 'has-error' : '' ?>">
-            <label for="login_password" class="col-xl-2 control-label">
+            <label for="login_password" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('password') ?>:
             </label>
             <div class="col-xl-10">

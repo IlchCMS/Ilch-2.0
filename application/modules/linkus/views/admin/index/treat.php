@@ -10,7 +10,7 @@
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-xl-2 control-label">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-xl-4">
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
-        <label for="selectedImage_1" class="col-xl-2 control-label">
+        <label for="selectedImage_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-xl-4">

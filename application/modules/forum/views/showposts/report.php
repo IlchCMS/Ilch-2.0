@@ -16,7 +16,7 @@
                 <form method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="row mb-3 <?=$this->validation()->hasError('reason') ? 'has-error' : '' ?>">
-                        <label for="reason" class="col-xl-2 control-label">
+                        <label for="reason" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('reason') ?>
                         </label>
                         <div class="col-xl-10">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="details" class="col-xl-2 control-label">
+                        <label for="details" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('details') ?>
                         </label>
                         <div class="col-xl-10">

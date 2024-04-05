@@ -2,7 +2,7 @@
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3 <?=$this->validation()->hasError('cookieConsent') ? 'has-error' : '' ?>">
-        <div class="col-xl-2 control-label">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('cookieConsentShow') ?>:
         </div>
         <div class="col-xl-2">
@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('cookieConsentLayout') ? 'has-error' : '' ?>">
-        <label for="cookieConsentLayout" class="col-xl-2 control-label">
+        <label for="cookieConsentLayout" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cookieConsentLayout') ?>:
         </label>
         <div class="col-xl-2">
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('cookieConsentPos') ? 'has-error' : '' ?>">
-        <label for="cookieConsentPos" class="col-xl-2 control-label">
+        <label for="cookieConsentPos" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cookieConsentPos') ?>:
         </label>
         <div class="col-xl-2">
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('cookieConsentType') ? 'has-error' : '' ?>">
-        <label for="cookieConsentType" class="col-xl-2 control-label">
+        <label for="cookieConsentType" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cookieConsentType') ?>:
         </label>
         <div class="col-xl-2">
@@ -55,7 +55,7 @@
 
     <h1><?=$this->getTrans('cookieConsentPopUp') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('cookieConsentPopUpBGColor') ? 'has-error' : '' ?>">
-        <label for="color" class="col-xl-2 control-label">
+        <label for="color" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cookieConsentPopUpBGColor') ?>:
         </label>
         <div class="col-xl-2 input-group ilch-date">
@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('cookieConsentPopUpTextColor') ? 'has-error' : '' ?>">
-        <label for="color" class="col-xl-2 control-label">
+        <label for="color" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cookieConsentPopUpTextColor') ?>:
         </label>
         <div class="col-xl-2 input-group ilch-date">
@@ -85,7 +85,7 @@
 
     <h1><?=$this->getTrans('cookieConsentBtn') ?></h1>
     <div class="row mb-3 <?=$this->validation()->hasError('cookieConsentBtnBGColor') ? 'has-error' : '' ?>">
-        <label for="color" class="col-xl-2 control-label">
+        <label for="color" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cookieConsentBtnBGColor') ?>:
         </label>
         <div class="col-xl-2 input-group ilch-date">
@@ -99,7 +99,7 @@
         </div>
     </div>
     <div class="row mb-3 <?=$this->validation()->hasError('cookieConsentBtnTextColor') ? 'has-error' : '' ?>">
-        <label for="color" class="col-xl-2 control-label">
+        <label for="color" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cookieConsentBtnTextColor') ?>:
         </label>
         <div class="col-xl-2 input-group ilch-date">

@@ -3,7 +3,7 @@
 <form id="warIcon_form" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
-        <label for="gameNameInput" class="col-xl-2 control-label">
+        <label for="gameNameInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('gameName') ?>:
         </label>
         <div class="col-xl-6">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('gameIcon') ? ' has-error' : '' ?>">
-        <label for="gameIcon" class="col-xl-2 control-label">
+        <label for="gameIcon" class="col-xl-2 col-form-label">
             <?=$this->getTrans('gameIcon') ?><br>
         </label>
         <div class="col-xl-6">
