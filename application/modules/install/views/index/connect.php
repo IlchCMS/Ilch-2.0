@@ -3,7 +3,7 @@
 /** @var \Ilch\View $this */
 ?>
 <div class="row mb-3">
-    <label for="dbEngine" class="col-xl-3 form-label <?=$this->validation()->hasError('dbEngine') ? 'text-danger' : '' ?>">
+    <label for="dbEngine" class="col-xl-3 col-form-label<?=$this->validation()->hasError('dbEngine') ? ' text-danger' : '' ?>">
         <?=$this->getTrans('dbEngine') ?>:
     </label>
     <div class="col-xl-9">
@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="row mb-3">
-    <label for="dbHost" class="col-xl-3 form-label <?=$this->validation()->hasError('dbHost') ? 'text-danger' : '' ?>">
+    <label for="dbHost" class="col-xl-3 col-form-label<?=$this->validation()->hasError('dbHost') ? ' text-danger' : '' ?>">
         <?=$this->getTrans('dbHost') ?>:
     </label>
     <div class="col-xl-9">
@@ -28,7 +28,7 @@
     </div>
 </div>
 <div class="row mb-3">
-    <label for="dbUser" class="col-xl-3 form-label <?=$this->validation()->hasError('dbUser') ? 'text-danger' : '' ?>">
+    <label for="dbUser" class="col-xl-3 col-form-label<?=$this->validation()->hasError('dbUser') ? ' text-danger' : '' ?>">
         <?=$this->getTrans('dbUser') ?>:
     </label>
     <div class="col-xl-9">
@@ -43,7 +43,7 @@
     </div>
 </div>
 <div class="row mb-3">
-    <label for="dbPassword" class="col-xl-3 form-label <?=$this->validation()->hasError('dbPassword') ? 'text-danger' : '' ?>">
+    <label for="dbPassword" class="col-xl-3 col-form-label<?=$this->validation()->hasError('dbPassword') ? ' text-danger' : '' ?>">
         <?=$this->getTrans('dbPassword') ?>:
     </label>
     <div class="col-xl-9">

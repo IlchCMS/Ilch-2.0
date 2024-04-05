@@ -6,7 +6,7 @@
 $database = $this->get('database')
 ?>
 <div class="row mb-3">
-    <label for="dbName" class="col-xl-3 form-label <?=$this->validation()->hasError('dbName') ? 'text-danger' : '' ?>">
+    <label for="dbName" class="col-xl-3 col-form-label<?=$this->validation()->hasError('dbName') ? ' text-danger' : '' ?>">
         <?=$this->getTrans('dbName') ?>:
     </label>
     <?php if (count($database) > 0) : ?>
@@ -30,7 +30,7 @@ $database = $this->get('database')
     <?php endif; ?>
 </div>
 <div class="row mb-3">
-    <label for="dbPrefix" class="col-xl-3 form-label <?=$this->validation()->hasError('dbPrefix') ? 'text-danger' : '' ?>">
+    <label for="dbPrefix" class="col-xl-3 col-form-label<?=$this->validation()->hasError('dbPrefix') ? ' text-danger' : '' ?>">
         <?=$this->getTrans('dbPrefix') ?>:
     </label>
     <div class="col-xl-9 input-group">

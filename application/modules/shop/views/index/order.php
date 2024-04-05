@@ -437,7 +437,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 </label>
                 <div class="col-xl-9" style="position:relative;">
                     <input type="checkbox"
-                           class="form-label acceptcheckbox"
+                           class="acceptcheckbox"
                            id="acceptOrder"
                            name="acceptOrder"
                            value="1"

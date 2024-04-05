@@ -9,7 +9,7 @@ $languages = $this->get('languages');
 $timezones = $this->get('timezones') ?? [];
 ?>
 <div class="row mb-3">
-    <label for="languageInput" class="col-xl-3 form-label">
+    <label for="languageInput" class="col-xl-3 col-form-label">
         <?=$this->getTrans('chooseLanguage') ?>:
     </label>
     <div class="col-xl-4">
@@ -21,7 +21,7 @@ $timezones = $this->get('timezones') ?? [];
     </div>
 </div>
 <div class="row mb-3">
-    <label for="timezone" class="col-xl-3 form-label <?=$this->validation()->hasError('timezone') ? 'text-danger' : '' ?>">
+    <label for="timezone" class="col-xl-3 col-form-label<?=$this->validation()->hasError('timezone') ? ' text-danger' : '' ?>">
         <?=$this->getTrans('timezone') ?>:
     </label>
     <div class="col-xl-4">
