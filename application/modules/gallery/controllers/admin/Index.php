@@ -62,7 +62,7 @@ class Index extends Admin
                     }
                 }
 
-                $oldItems = $galleryMapper->getGalleryItems();
+                $oldItems = $galleryMapper->getGalleryItems() ?? [];
 
                 // Delete no longer existing items.
                 foreach ($oldItems ?? [] as $oldItem) {

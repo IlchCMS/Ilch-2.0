@@ -19,11 +19,11 @@ class Pictureofx extends Box
     public function render()
     {
         $imageMapper = new ImageMapper();
-        $galleries = explode(',', $this->getConfig()->get('gallery_pictureOfXSource'));
+        $galleries = explode(',', $this->getConfig()->get('gallery_pictureOfXSource') ?? '');
         $imageIds = $imageMapper->getListOfValidIds(['gallery_id' => $galleries]);
 
         if (!empty($imageIds)) {
-            $currentPicOfX = explode(',', $this->getConfig()->get('gallery_currentPicOfX'));
+            $currentPicOfX = explode(',', $this->getConfig()->get('gallery_currentPicOfX') ?? '');
 
             switch ($this->getConfig()->get('gallery_pictureOfXInterval')) {
                 case '1':
@@ -45,7 +45,7 @@ class Pictureofx extends Box
             $currentTime = new DateTime();
             $currentIndex = (!empty($currentPicOfX[0])) ? $currentPicOfX[0] : 0;
             $setAt = (!empty($currentPicOfX[1])) ? $currentPicOfX[1] : null;
-            $date = new DateTime($setAt);
+            $date = ($setAt) ? new DateTime($setAt) : $currentTime;
 
             if (!empty($add)) {
                 $date->add(new DateInterval($add));
