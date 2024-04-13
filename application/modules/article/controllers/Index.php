@@ -115,7 +115,8 @@ class Index extends \Ilch\Controller\Frontend
                 ->setReadAccess($groups)
                 ->setImage($this->getRequest()->getPost('image'))
                 ->setImageSource($this->getRequest()->getPost('imageSource'))
-                ->setVisits(0);
+                ->setVisits(0)
+                ->setVotes('');
         } else {
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), $this->locale);
         }
