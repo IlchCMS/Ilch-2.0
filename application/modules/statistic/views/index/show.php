@@ -11,7 +11,6 @@ $browser = $this->getRequest()->getParam('browser');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <?php if ($this->get('statisticOSVersionList') != '' && $os != '') : ?>
     <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?></i></h1>
@@ -31,18 +30,15 @@ $browser = $this->getRequest()->getParam('browser');
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
                         foreach ($this->get('statisticOSVersionList') as $statisticList) : ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <?php $barLabel = ($statisticList->getOS()) ? $statisticList->getOS() . ' ' . $statisticList->getOSVersion() : $this->getTrans('unknown') ?>
                             <div class="list-group-item">
                                 <strong>
-                                    <?php if (!$statisticList->getOS()) : ?>
-                                        <?=$this->getTrans('unknown') ?>
-                                    <?php else : ?>
-                                        <?=$statisticList->getOS() ?> <?=$statisticList->getOSVersion() ?>
-                                    <?php endif; ?>
+                                    <?=$barLabel ?>
                                 </strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -70,18 +66,15 @@ $browser = $this->getRequest()->getParam('browser');
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
                         foreach ($this->get('statisticBrowserVersionList') as $statisticList) : ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <?php $barLabel = ($statisticList->getBrowser()) ? $statisticList->getBrowser() . ' ' . $statisticList->getBrowserVersion() : $this->getTrans('unknown') ?>
                             <div class="list-group-item">
                                 <strong>
-                                    <?php if (!$statisticList->getBrowser()) : ?>
-                                        <?=$this->getTrans('unknown') ?>
-                                    <?php else : ?>
-                                        <?=$statisticList->getBrowser() ?> <?=$statisticList->getBrowserVersion() ?>
-                                    <?php endif; ?>
+                                    <?=$barLabel ?>
                                 </strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -115,8 +108,8 @@ $browser = $this->getRequest()->getParam('browser');
                                 <strong><?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?></strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -138,8 +131,8 @@ $browser = $this->getRequest()->getParam('browser');
                                 <strong><?=$this->getTrans($date->format('l')) ?></strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$this->getTrans($date->format('l')) ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -161,8 +154,8 @@ $browser = $this->getRequest()->getParam('browser');
                                 <strong><?=$date->format('Y-m-d', true) ?></strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$date->format('Y-m-d', true) ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -184,8 +177,8 @@ $browser = $this->getRequest()->getParam('browser');
                                 <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true)]) ?>"><?=$date->format('Y', true) ?></a></strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$date->format('Y', true) ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -212,6 +205,7 @@ $browser = $this->getRequest()->getParam('browser');
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
                         foreach ($this->get('statisticBrowserList') as $statisticList) : ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <?php $barLabel = ($statisticList->getBrowser() == '0') ? $this->getTrans('unknown') : $statisticList->getBrowser() ?>
                             <div class="list-group-item">
                                 <strong>
                                     <?php if ($statisticList->getBrowser() == '0') : ?>
@@ -222,8 +216,8 @@ $browser = $this->getRequest()->getParam('browser');
                                 </strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -240,18 +234,21 @@ $browser = $this->getRequest()->getParam('browser');
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
                         foreach ($this->get('statisticLanguageList') as $statisticList) : ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <?php if ($statisticList->getLang() == '') : ?>
+                                <?=$this->getTrans('unknown') ?>
+                                <?php $barLabel = $this->getTrans('unknown') ?>
+                            <?php else : ?>
+                                <?php $barLabel = $languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()) ?>
+                                <?=$barLabel ?>
+                            <?php endif; ?>
                             <div class="list-group-item">
                                 <strong>
-                                    <?php if ($statisticList->getLang() == '') : ?>
-                                        <?=$this->getTrans('unknown') ?>
-                                    <?php else : ?>
-                                        <?=$languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()) ?>
-                                    <?php endif; ?>
+                                    <?=$barLabel ?>
                                 </strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -278,22 +275,26 @@ $browser = $this->getRequest()->getParam('browser');
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
                         foreach ($this->get('statisticOSList') as $statisticList) : ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <?php $barLabel = ''; ?>
                             <div class="list-group-item">
                                 <strong>
                                     <?php if (!$statisticList->getOS()) : ?>
                                         <?=$this->getTrans('unknown') ?>
+                                        <?php $barLabel = $this->getTrans('unknown'); ?>
                                     <?php else : ?>
                                         <?php if ($statisticList->getOS() == 'Windows') : ?>
-                                            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'month' => $month, 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS() . ' ' . $statisticList->getOSVersion() ?></a>
+                                            <?php $barLabel = $statisticList->getOS() . ' ' . $statisticList->getOSVersion(); ?>
+                                            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'month' => $month, 'os' => $statisticList->getOS()]) ?>"><?=$barLabel ?></a>
                                         <?php else : ?>
-                                            <?=$statisticList->getOS() ?>
+                                            <?php $barLabel = $statisticList->getOS(); ?>
+                                            <?=$barLabel ?>
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -327,8 +328,8 @@ $browser = $this->getRequest()->getParam('browser');
                                 <strong><?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?></strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -350,8 +351,8 @@ $browser = $this->getRequest()->getParam('browser');
                                 <strong><?=$this->getTrans($date->format('l')) ?></strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$this->getTrans($date->format('l')) ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -359,22 +360,23 @@ $browser = $this->getRequest()->getParam('browser');
                     </div>
                 </div>
 
-                <div class="panel-footer">
-                    <h4 class="panel-title"><?=$this->getTrans('yearMonth') ?></h4>
+                <div class="card-footer">
+                    <h4 class="card-title"><?=$this->getTrans('yearMonth') ?></h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div class="list-group">
                         <?php
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
                         foreach ($this->get('statisticYearMonthList') as $statisticList) : ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
+                            <?php $barLabel = $date->format('Y - ', true) . $this->getTrans($date->format('F', true)) ?>
                             <div class="list-group-item">
-                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true), 'month' => $date->format('m', true)]) ?>"><?=$date->format('Y - ', true) . $this->getTrans($date->format('F', true)) ?></a></strong>
+                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true), 'month' => $date->format('m', true)]) ?>"><?=$barLabel ?></a></strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -396,8 +398,8 @@ $browser = $this->getRequest()->getParam('browser');
                                 <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format('Y', true)]) ?>"><?=$date->format('Y', true) ?></a></strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$date->format('Y', true) ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -424,6 +426,7 @@ $browser = $this->getRequest()->getParam('browser');
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
                         foreach ($this->get('statisticBrowserList') as $statisticList) : ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <?php $barLabel = ($statisticList->getBrowser() == '0') ? $this->getTrans('unknown') : $statisticList->getBrowser() ?>
                             <div class="list-group-item">
                                 <strong>
                                     <?php if ($statisticList->getBrowser() == '0') : ?>
@@ -434,8 +437,8 @@ $browser = $this->getRequest()->getParam('browser');
                                 </strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -452,18 +455,19 @@ $browser = $this->getRequest()->getParam('browser');
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
                         foreach ($this->get('statisticLanguageList') as $statisticList) : ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <?php if ($statisticList->getLang() == '') : ?>
+                                <?php $barLabel = $this->getTrans('unknown') ?>
+                            <?php else : ?>
+                                <?php $barLabel = $languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()) ?>
+                            <?php endif; ?>
                             <div class="list-group-item">
                                 <strong>
-                                    <?php if ($statisticList->getLang() == '') : ?>
-                                        <?=$this->getTrans('unknown') ?>
-                                    <?php else : ?>
-                                        <?=$languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()) ?>
-                                    <?php endif; ?>
+                                    <?=$barLabel ?>
                                 </strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -490,22 +494,24 @@ $browser = $this->getRequest()->getParam('browser');
                         /** @var Modules\Statistic\Models\Statistic $statisticList */
                         foreach ($this->get('statisticOSList') as $statisticList) : ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <?php $barLabel = ($statisticList->getOS()) ? $statisticList->getOS() . ' ' . $statisticList->getOSVersion() : $this->getTrans('unknown') ?>
                             <div class="list-group-item">
                                 <strong>
                                     <?php if (!$statisticList->getOS()) : ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else : ?>
-                                        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS() . ' ' . $statisticList->getOSVersion() ?></a>
+                                        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'os' => $statisticList->getOS()]) ?>"><?=$barLabel ?></a>
                                     <?php endif; ?>
                                 </strong>
                                 <span class="float-end"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
-                                    <div class="progress" style="margin-bottom: 0;">
-                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
                                     </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                        
                     </div>
                 </div>
             </div>
@@ -513,12 +519,7 @@ $browser = $this->getRequest()->getParam('browser');
     </div>
 <?php endif; ?>
 
-<script src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
 <script>
-$(document).ready(function() {
-    $('.progress .progress-bar').progressbar();
-});
-
 $(document).on('click', '.card-header span.clickable', function() {
     if (!$(this).hasClass('panel-collapsed')) {
         $(this).closest('.card').find('.card-body').slideUp();
