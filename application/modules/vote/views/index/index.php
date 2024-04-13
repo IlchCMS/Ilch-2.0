@@ -24,7 +24,6 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/vote.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuVote') ?></h1>
 <?php if ($votes) :
@@ -59,11 +58,12 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                                             <?php else : ?>
                                                 <?php $percent = 0; ?>
                                             <?php endif; ?>
+                                            <?php $barLabel = $this->escape($voteResModel->getReply()) . ' (' . $result . ')'; ?>
                                             <div class="list-group-item">
                                                 <?=$this->escape($voteResModel->getReply()) ?> (<?=$result ?>)
                                                 <div class="radio">
-                                                    <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$percent ?>"></div>
+                                                    <div class="progress" role="progressbar" aria-label="<?=$barLabel ?>" aria-valuenow="<?=$percent ?>" aria-valuemin="0" aria-valuemax="100">
+                                                        <div class="progress-bar" style="width: <?=$percent ?>%"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -111,10 +111,3 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 <?php else : ?>
     <?=$this->getTrans('noVote') ?>
 <?php endif; ?>
-
-<script src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
-<script>
-$(document).ready(function() {
-    $('.progress .progress-bar').progressbar();
-});
-</script>
