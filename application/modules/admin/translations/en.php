@@ -356,6 +356,7 @@ return [
     'moduleInstallationFailed' => 'The installation of the module failed.',
     'layoutUpdateFailed' => 'The update of the layout failed.',
     'moduleUpdateFailed' => 'The update of the module failed.',
+    'processingPleaseWait' => 'Processing. Please wait.',
 
     'enableSelectedEntries' => 'Enable the selected entries?',
     'deleteSelectedEntries' => 'Delete the selected entries?',

@@ -356,6 +356,7 @@ return [
     'moduleInstallationFailed' => 'Modul konnte nicht installiert werden.',
     'layoutUpdateFailed' => 'Layout konnte nicht aktualisiert werden.',
     'moduleUpdateFailed' => 'Modul konnte nicht aktualisiert werden.',
+    'processingPleaseWait' => 'Verarbeite. Bitte warten.',
 
     'enableSelectedEntries' => 'Sollen die markierten Einträge wirklich freigeschaltet werden?',
     'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
