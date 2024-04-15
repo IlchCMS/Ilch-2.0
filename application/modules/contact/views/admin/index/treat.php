@@ -9,7 +9,7 @@
 </h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -21,7 +21,7 @@
                    value="<?=($this->get('receiver') != '') ? $this->escape($this->get('receiver')->getName()) : $this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
         <label for="email" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('email') ?>:
         </label>

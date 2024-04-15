@@ -18,7 +18,7 @@
                        placeholder="Bot" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('receiver') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('receiver') ? ' has-error' : '' ?>">
             <label for="receiver" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('receiver') ?>
             </label>
@@ -30,7 +30,7 @@
                 </select>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('senderName') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('senderName') ? ' has-error' : '' ?>">
             <label for="name" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('name') ?>
             </label>
@@ -42,7 +42,7 @@
                        value="<?=$this->escape($this->originalInput('senderName')) ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('senderEmail') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('senderEmail') ? ' has-error' : '' ?>">
             <label for="email" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('email') ?>
             </label>
@@ -54,7 +54,7 @@
                        value="<?=$this->originalInput('senderEmail') ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('message') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('message') ? ' has-error' : '' ?>">
             <label for="message" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('message') ?>
             </label>
@@ -65,9 +65,9 @@
                           rows="5"><?=$this->escape($this->originalInput('message')) ?></textarea>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('privacy') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('privacy') ? ' has-error' : '' ?>">
             <div class="offset-xl-2 col-xl-8">
-                <div class="checkbox inline <?=$this->validation()->hasError('privacy') ? 'has-error' : '' ?>">
+                <div class="checkbox inline<?=$this->validation()->hasError('privacy') ? ' has-error' : '' ?>">
                     <input type="checkbox" style="margin-left: 0;" id="privacy" name="privacy" value="1"<?=($this->originalInput('privacy')) ? ' checked' : '' ?>> <label for="privacy"><?=$this->getTrans('acceptPrivacy') ?></label>
                 </div>
             </div>
