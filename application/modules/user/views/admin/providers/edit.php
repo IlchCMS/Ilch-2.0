@@ -14,7 +14,7 @@
             <?=$this->getTrans('module') ?>
         </label>
         <div class="col-xl-9">
-            <select id="moduleInput" name="module" class="form-control">
+            <select id="moduleInput" name="module" class="form-select">
                 <option value=""><?= $this->getTrans('deactivateAuthProvider') ?></option>
                 <?php foreach ($this->get('modules') as $module): ?>
                     <option
