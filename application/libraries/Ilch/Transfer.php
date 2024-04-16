@@ -493,6 +493,10 @@ class Transfer
      */
     public function checkIfDestinationIsWritable(string $pathZipFile)
     {
+        if (!is_file($pathZipFile)) {
+            return false;
+        }
+
         $zip = new \ZipArchive();
         if ($zip->open($pathZipFile) !== true) {
             return false;
@@ -523,6 +527,10 @@ class Transfer
         $zip = new \ZipArchive();
         $content = [];
         try {
+            if (!is_file($this->getZipFile())) {
+                return false;
+            }
+
             if ($checkSig) {
                 $signature = file_get_contents($this->getZipFile() . '-signature.sig');
                 $pubKeyfile = ROOT_PATH . '/certificate/Certificate.crt';
@@ -615,6 +623,10 @@ class Transfer
 
         $zip = new \ZipArchive();
         try {
+            if (!is_file($this->getZipFile())) {
+                return false;
+            }
+
             if ($checkSig) {
                 $signature = file_get_contents($this->getZipFile() . '-signature.sig');
                 $pubKeyfile = ROOT_PATH . '/certificate/Certificate.crt';
