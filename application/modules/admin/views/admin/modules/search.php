@@ -205,18 +205,6 @@ usort($modulesOnUpdateServer, 'custom_sort');
 <script>
 let delayedShow;
 
-$(window).on('load', function() {
-    $loadingOverlay = $(".loadingoverlay");
-
-    delayedShow = setTimeout(function(){
-        $loadingOverlay.removeAttr('hidden');
-    }, 500);
-
-    setTimeout(function(){
-        $loadingOverlay.attr('hidden', '');
-    }, 30000);
-});
-
 function gotokeyAll() {
    $("[name='gotokey']").each(function() {
         if ($("[name='setgotokey']").prop('checked')) {
@@ -228,6 +216,18 @@ function gotokeyAll() {
 }
 // search
 $(document).ready(function() {
+    $(".showOverlay").on('click', function(event){
+        $loadingOverlay = $(".loadingoverlay");
+
+        delayedShow = setTimeout(function(){
+            $loadingOverlay.removeAttr('hidden');
+        }, 200);
+
+        setTimeout(function(){
+            $loadingOverlay.attr('hidden', '');
+        }, 30000);
+    });
+
     clearTimeout(delayedShow);
     $(".loadingoverlay").attr('hidden', '');
 
