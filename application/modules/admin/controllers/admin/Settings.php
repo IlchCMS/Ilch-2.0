@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -73,9 +74,8 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'mail'])
             ]
         ];
-
         if ($this->getRequest()->getActionName() === 'maintenance') {
-            $items[1]['active'] = true;  
+            $items[1]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'customcss') {
             $items[2]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'htaccess') {
@@ -87,14 +87,10 @@ class Settings extends \Ilch\Controller\Admin
         } elseif ($this->getRequest()->getActionName() === 'mail') {
             $items[8]['active'] = true;
         } else {
-            $items[0]['active'] = true; 
+            $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
-            'menuSettings',
-            $items
-        );
+        $this->getLayout()->addMenu('menuSettings', $items);
     }
 
     public function indexAction()
@@ -103,10 +99,8 @@ class Settings extends \Ilch\Controller\Admin
         $pageMapper = new \Modules\Admin\Mappers\Page();
         $updateserversMapper = new UpdateserversMapper();
         $groupMapper = new GroupMapper();
-
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
-
         if ($this->getRequest()->isPost()) {
             $validationRules = [
                 'multilingualAcp' => 'required|numeric|integer|min:0|max:1',
@@ -117,14 +111,12 @@ class Settings extends \Ilch\Controller\Admin
                 'updateserver' => 'required|url',
                 'captcha' => 'required|numeric|integer|min:0|max:3'
             ];
-
-            if ((int)$this->getRequest()->getPost('captcha') >= 1){
+            if ((int)$this->getRequest()->getPost('captcha') >= 1) {
                 $validationRules['captcha_apikey'] = 'required';
                 $validationRules['captcha_seckey'] = 'required';
             }
 
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
-
             if ($validation->isValid()) {
                 $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
                 $this->getConfig()->set('content_language', $this->getRequest()->getPost('contentLanguage'));
@@ -144,7 +136,6 @@ class Settings extends \Ilch\Controller\Admin
                 }
                 $this->getConfig()->set('disable_purifier', !$this->getRequest()->getPost('htmlPurifier'));
                 $this->getConfig()->set('updateserver', $this->getRequest()->getPost('updateserver'));
-
                 $this->addMessage('saveSuccess');
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
@@ -182,13 +173,11 @@ class Settings extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuMaintenance'), ['action' => 'maintenance']);
-
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
             $this->getConfig()->set('maintenance_date', new \Ilch\Date(trim($this->getRequest()->getPost('maintenanceDateTime'))));
             $this->getConfig()->set('maintenance_status', $this->getRequest()->getPost('maintenanceStatus'));
             $this->getConfig()->set('maintenance_text', $this->getRequest()->getPost('maintenanceText'));
-
             $this->addMessage('saveSuccess');
         }
 
@@ -203,10 +192,8 @@ class Settings extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCustomCSS'), ['action' => 'customcss']);
-
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('custom_css', strip_tags($this->getRequest()->getPost('customCSS')));
-
             $this->addMessage('saveSuccess');
         }
 
@@ -218,18 +205,15 @@ class Settings extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuHtaccess'), ['action' => 'htaccess']);
-
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'modRewrite' => 'required|numeric|integer|min:0|max:1',
             ]);
-
             if ($validation->isValid()) {
                 $htaccess = $this->getRequest()->getPost('htaccess');
                 // true if mod rewrite got toggled from on to off
                 $removeModRewrite = ($this->getConfig()->get('mod_rewrite') && !(int)$this->getRequest()->getPost('modRewrite'));
                 $remove = false;
-
                 if (!$this->getConfig()->get('mod_rewrite') && (int)$this->getRequest()->getPost('modRewrite')) {
                     // Mod rewrite got toggled from off to on.
                     $temp = <<<'HTACCESS'
@@ -251,8 +235,8 @@ HTACCESS;
 
                 $htaccess = explode(PHP_EOL, $htaccess);
                 // Writing the htaccess file and removing the mod rewrite default lines if necessary
-                $filePointer = fopen(ROOT_PATH.'/.htaccess', 'wb');
-                foreach($htaccess as $line) {
+                $filePointer = fopen(ROOT_PATH . '/.htaccess', 'wb');
+                foreach ($htaccess as $line) {
                     if ($removeModRewrite && (strpos($line, '# Begin Mod Rewrite default lines') !== false)) {
                         $this->addMessage('modrewriteLinesRemoved', 'info');
                         $remove = true;
@@ -263,13 +247,11 @@ HTACCESS;
                     }
 
                     fwrite($filePointer, $line);
-
                     if ($removeModRewrite && (strpos($line, '# End Mod Rewrite default lines') !== false)) {
                         $remove = false;
                     }
                 }
                 fclose($filePointer);
-
                 $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
                 $this->addMessage('saveSuccess');
             } else {
@@ -278,7 +260,7 @@ HTACCESS;
         }
 
         $this->getView()->set('modRewrite', $this->getConfig()->get('mod_rewrite'));
-        $this->getView()->set('htaccess', file_get_contents(ROOT_PATH.'/.htaccess'));
+        $this->getView()->set('htaccess', file_get_contents(ROOT_PATH . '/.htaccess'));
     }
 
     public function updateAction()
@@ -286,54 +268,48 @@ HTACCESS;
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuUpdate'), ['action' => 'update']);
-
         $this->addMessage('backupBeforeUpdate', 'danger');
-
         $doUpdate = $this->getRequest()->getParam('doupdate');
         $doSave = $this->getRequest()->getParam('dosave');
         $version = $this->getConfig()->get('version');
         $this->getView()->set('version', $version);
-
         $update = new IlchTransfer();
-        $update->setTransferUrl($this->getConfig()->get('updateserver').'updates2.php');
+        $update->setTransferUrl($this->getConfig()->get('updateserver') . 'updates2.php');
         $update->setVersionNow($version);
-        $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
-        $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 
-        $update->setCurlOpt(CURLOPT_CAINFO, ROOT_PATH.'/certificate/cacert.pem');
+        $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, true);
+        $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2);
+        $update->setCurlOpt(CURLOPT_CAINFO, ROOT_PATH . '/certificate/cacert.pem');
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
         $update->setCurlOpt(CURLOPT_CONNECTTIMEOUT, 10);
-        $update->setZipSavePath(ROOT_PATH.'/updates/');
-
+        $update->setZipSavePath(ROOT_PATH . '/updates/');
         $result = $update->getVersions();
         if ($result == '') {
             $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
         }
 
         $this->getView()->set('versions', $result);
-
         if ($update->newVersionFound() == true) {
-            $update->setDownloadUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip');
-            $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip-signature.sig');
+            $update->setDownloadUrl($this->getConfig()->get('updateserver') . 'updates/Master-' . $update->getNewVersion() . '.zip');
+            $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver') . 'updates/Master-' . $update->getNewVersion() . '.zip-signature.sig');
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);
-
             if (!empty($update->getMissingRequirements())) {
                 // Add details of missingRequirements to the error message.
                 $missingRequirementsMessages = [];
                 if (!empty($update->getMissingRequirements()['phpVersion'])) {
-                    $missingRequirementsMessages[] = $this->getTranslator()->trans('phpVersionError').' (<'.$update->getMissingRequirements()['phpVersion'].')';
+                    $missingRequirementsMessages[] = $this->getTranslator()->trans('phpVersionError') . ' (<' . $update->getMissingRequirements()['phpVersion'] . ')';
                 }
                 if (!empty($update->getMissingRequirements()['mysqlVersion'])) {
-                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError').' (<'.$update->getMissingRequirements()['mysqlVersion'].')';
+                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError') . ' (<' . $update->getMissingRequirements()['mysqlVersion'] . ')';
                 }
                 if (!empty($update->getMissingRequirements()['mariadbVersion'])) {
-                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError').' (<'.$update->getMissingRequirements()['mariadbVersion'].')';
+                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError') . ' (<' . $update->getMissingRequirements()['mariadbVersion'] . ')';
                 }
                 if (!empty($update->getMissingRequirements()['phpExtensions'])) {
                     $messageString = $this->getTranslator()->trans('phpExtensionError');
-                    $messageString .= ' ('.implode(', ', $update->getMissingRequirements()['phpExtensions']).')';
+                    $messageString .= ' (' . implode(', ', $update->getMissingRequirements()['phpExtensions']) . ')';
                     $missingRequirementsMessages[] = $messageString;
                 }
                 $this->getView()->set('missingRequirements', true);
@@ -342,18 +318,18 @@ HTACCESS;
             }
 
             if ($doSave == true) {
-                if (!$update->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                if (!$update->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
                     $this->getView()->set('certMissingOrExpired', true);
                     return false;
                 }
                 if (!$update->save()) {
                     $this->getView()->set('verificationFailed', true);
-                    return;
+                    return false;
                 }
             }
             if ($doUpdate == true) {
-                if ($update->update($version)) {
+                if ($update->update($version, true)) {
                     $this->getConfig()->set('version', $newVersion);
                     $this->getView()->set('updateSuccessfull', true);
                 }
@@ -368,7 +344,7 @@ HTACCESS;
     {
         // Delete downloaded updates
         $files = glob('updates/*');
-        foreach($files as $file) {
+        foreach ($files as $file) {
             if (is_file($file)) {
                 unlink($file);
             }
@@ -383,9 +359,7 @@ HTACCESS;
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuNotifications'), ['action' => 'notifications']);
-
         $notificationPermissionMapper = new NotificationPermissionMapper();
-
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_notificationPermissions')) {
             foreach ($this->getRequest()->getPost('check_notificationPermissions') as $notificationPermissionKey) {
                 $notificationPermissionMapper->deletePermissionOfModule($notificationPermissionKey);
@@ -399,7 +373,6 @@ HTACCESS;
                     'key' => 'required',
                     'limit' => 'required|numeric|integer|min:0|max:5'
                 ]);
-
                 if ($validation->isValid()) {
                     $notificationPermissionMapper->updateLimitOfModule($data['key'], $data['limit']);
                 } else {
@@ -423,9 +396,7 @@ HTACCESS;
     {
         if ($this->getRequest()->isSecure()) {
             $notificationPermissionMapper = new NotificationPermissionMapper();
-
             $notificationPermissionMapper->deletePermissionOfModule($this->getRequest()->getParam('key'));
-
             $this->addMessage('deleteSuccess');
         }
 
@@ -437,11 +408,9 @@ HTACCESS;
         if ($this->getRequest()->isSecure()) {
             $notificationPermissionMapper = new NotificationPermissionMapper();
             $notificationsMapper = new NotificationsMapper();
-
             if ($this->getRequest()->getParam('revoke') === 'true') {
                 $notificationPermissionMapper->updatePermissionGrantedOfModule($this->getRequest()->getParam('key'), 0);
                 $notificationsMapper->deleteNotificationsByModule($this->getRequest()->getParam('key'));
-
                 $this->addMessage('revokePermissionSuccess');
             } else {
                 $notificationPermissionMapper->updatePermissionGrantedOfModule($this->getRequest()->getParam('key'), 1);
@@ -457,7 +426,6 @@ HTACCESS;
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuMail'), ['action' => 'mail']);
-
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('smtp_mode', $this->getRequest()->getPost('smtp_mode'));
             $this->getConfig()->set('smtp_server', $this->getRequest()->getPost('smtp_server'));

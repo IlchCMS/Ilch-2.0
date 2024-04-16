@@ -1,62 +1,49 @@
 <?php
-$modulesList = url_get_contents($this->get('updateserver'));
-$modulesOnUpdateServer = json_decode($modulesList);
-$versionsOfModules = $this->get('versionsOfModules');
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Admin\Mappers\Module $moduleMapper */
+$moduleMapper = $this->get('moduleMapper');
+
+/** @var \Modules\Admin\Models\Module[] $modules */
+$modules = $this->get('modules');
+
+/** @var \Modules\Admin\Models\Module[] $configurations */
+$configurations = $this->get('configurations');
+/** @var string $coreVersion */
 $coreVersion = $this->get('coreVersion');
+/** @var array $dependencies */
 $dependencies = $this->get('dependencies');
-$cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
+
+$modulesList = url_get_contents($this->get('updateserver'));
+$modulesOnUpdateServer = json_decode($modulesList, true);
+$cacheFilename = ROOT_PATH . '/cache/' . md5($this->get('updateserver')) . '.cache';
 $cacheFileDate = null;
 if (file_exists($cacheFilename)) {
     $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 }
 
-// Define the custom sort function
-function custom_sort($a,$b)
+/**
+ * Define the custom sort function
+ *
+ * @param array $a
+ * @param array $b
+ * @return int
+ */
+function custom_sort(array $a, array $b): int
 {
-    return strcmp($a->name, $b->name);
+    return strcmp($a['name'], $b['name']);
 }
 
-function checkOthersDependencies($module, $dependencies)
-{
-    $dependencyCheck = [];
-    foreach ($dependencies as $dependency) {
-        $key = key($module);
-        if (array_key_exists($key, $dependency)) {
-            $parsed = explode(',', $dependency[$key]);
-            if (!version_compare($module[$key], $parsed[1], $parsed[0])) {
-                $dependencyCheck[array_search(array($key => $dependency[$key]), $dependencies)] = [$key => str_replace(',','', $dependency[$key])];
-            }
-        }
-    }
-
-    return $dependencyCheck;
-}
-
-function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
-{
-    if (empty($moduleOnUpdateServer->depends)) {
-        return true;
-    }
-
-    foreach ($moduleOnUpdateServer->depends as $key => $value) {
-        if (array_key_exists($key, $versionsOfModules)) {
-            $parsed = explode(',', $value);
-            if (!version_compare($versionsOfModules[$key]['version'], $parsed[1], $parsed[0])) {
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
+$content = [];
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('search') ?></h1>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">'.$this->getTrans('lastUpdateOn').' '.$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true).'</span>' : $this->getTrans('lastUpdateOn').': '.$this->getTrans('lastUpdateUnknown') ?></p>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">' . $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) . '</span>' : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></p>
 <div class="checkbox">
-    <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
+    <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey') ? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
 </div>
 <?php
 if (empty($modulesOnUpdateServer)) {
@@ -88,78 +75,77 @@ usort($modulesOnUpdateServer, 'custom_sort');
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($modulesOnUpdateServer as $moduleOnUpdateServer):  ?>
+            <?php foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) : ?>
                 <?php
-                if (!empty($moduleOnUpdateServer->phpExtensions)) {
-                    $extensionCheck = [];
-                    foreach ($moduleOnUpdateServer->phpExtensions as $extension) {
-                        $extensionCheck[] = extension_loaded($extension);
-                    }
-                }
+                $moduleModel = new \Modules\Admin\Models\Module();
+                $moduleModel->setByArray($moduleOnUpdateServer);
+
+                $module = $modules[$moduleModel->getKey()];
+                $moduleLocal = $configurations[$moduleModel->getKey()];
                 ?>
-                <tr id="Module_<?=$moduleOnUpdateServer->key ?>">
+                <tr id="Module_<?=$moduleModel->getKey() ?>">
                     <td>
-                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>"><?=$this->escape($moduleOnUpdateServer->name) ?></a>
+                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer['id']]) ?>" title="<?=$this->getTrans('info') ?>"><?=$this->escape($moduleModel->getName()) ?></a>
                         <br />
                         <small>
                             <?=$this->getTrans('author') ?>: 
-                            <?php if ($moduleOnUpdateServer->link != ''): ?>
-                                <a href="<?=$moduleOnUpdateServer->link ?>" alt="<?=$this->escape($moduleOnUpdateServer->author) ?>" title="<?=$this->escape($moduleOnUpdateServer->author) ?>" target="_blank" rel="noopener"><i><?=$this->escape($moduleOnUpdateServer->author) ?></i></a>
-                            <?php else: ?>
-                                <i><?=$this->escape($moduleOnUpdateServer->author) ?></i>
+                            <?php if ($moduleModel->getLink() != '') : ?>
+                                <a href="<?=$moduleModel->getLink() ?>" alt="<?=$this->escape($moduleModel->getAuthor()) ?>" title="<?=$this->escape($moduleModel->getAuthor()) ?>" target="_blank" rel="noopener"><i><?=$this->escape($moduleModel->getAuthor()) ?></i></a>
+                            <?php else : ?>
+                                <i><?=$this->escape($moduleModel->getAuthor()) ?></i>
                             <?php endif; ?>
                         </small>
                         <br /><br />
                         <?php
-                        $isInstalled = in_array($moduleOnUpdateServer->key, $this->get('modules'));
+                        $isInstalled = isset($modules[$moduleModel->getKey()]);
                         $iconClass = ($isInstalled) ? 'fa-solid fa-arrows-rotate' : 'fa-solid fa-download';
 
-                        if (!empty($moduleOnUpdateServer->phpExtensions) && in_array(false, $extensionCheck)): ?>
+                        if (!$moduleModel->hasPHPExtension()) : ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('phpExtensionError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif (version_compare(PHP_VERSION, $moduleOnUpdateServer->phpVersion, '<')): ?>
+                        <?php elseif (!$moduleModel->hasPHPVersion()) : ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('phpVersionError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif (version_compare($coreVersion, $moduleOnUpdateServer->ilchCore, '<')): ?>
+                        <?php elseif (!$moduleModel->hasCoreVersion($this->get('coreVersion'))) : ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '>=')): ?>
+                        <?php elseif ($isInstalled && !$module->isNewVersion($moduleModel->getVersion())) : ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa-solid fa-check text-success"></i>
                             </button>
-                        <?php elseif ($isInstalled && !empty(checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies))): ?>
+                        <?php elseif ($isInstalled && !$moduleMapper->checkOthersDependenciesVersion($module->getKey(), $dependencies)) : ?>
                             <button class="btn disabled"
                                     data-toggle="modal"
-                                    data-target="#infoModal<?=$moduleOnUpdateServer->key ?>"
+                                    data-target="#infoModal<?=$moduleModel->getKey() ?>"
                                     title="<?=$this->getTrans('dependencyError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif (!checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)): ?>
+                        <?php elseif (!$moduleModel->checkOwnDependencies()) : ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('dependencyError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version, 'from' => 'search']) ?>">
+                        <?php elseif ($isInstalled && $module->isNewVersion($moduleModel->getVersion())) : ?>
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $module->getKey(), 'version' => $moduleModel->getVersion(), 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
-                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')? '1' : '0' ?>" />
+                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey') ? '1' : '0' ?>" />
                                 <button type="submit"
                                         class="btn btn-default showOverlay"
                                         title="<?=$this->getTrans('moduleUpdate') ?>">
                                     <i class="fa-solid fa-arrows-rotate"></i>
                                 </button>
                             </form>
-                        <?php else: ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version, 'from' => 'search']) ?>">
+                        <?php else : ?>
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $moduleModel->getKey(), 'version' => $moduleModel->getVersion(), 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
-                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')? '1' : '0' ?>" />
+                                <input type="hidden" name="gotokey" value="<?=$this->get('gotokey') ? '1' : '0' ?>" />
                                 <button type="submit"
                                         class="btn btn-default showOverlay"
                                         title="<?=$this->getTrans('moduleDownload') ?>">
@@ -168,84 +154,84 @@ usort($modulesOnUpdateServer, 'custom_sort');
                             </form>
                         <?php endif; ?>
 
-                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
+                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer['id']]) ?>" title="<?=$this->getTrans('info') ?>">
                             <span class="btn btn-default">
                                 <i class="fa-solid fa-info text-info"></i>
                             </span>
                         </a>
                     </td>
-                    <td><?=$moduleOnUpdateServer->version?></td>
+                    <td><?=$moduleModel->getVersion()?></td>
                     <td>
-                        <?=$moduleOnUpdateServer->desc ?>
-                        <?=(!empty($moduleOnUpdateServer->official) && $moduleOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
+                        <?=$moduleOnUpdateServer['desc'] ?>
+                        <?=$moduleModel->getOfficial() ? '<span class="ilch-official">ilch</span>' : '' ?>
                     </td>
                 </tr>
                 <?php
-                    $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
-                    foreach (checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies) as $key => $value) {
-                        $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
-                    }
+                $dependencyInfo = '<p>' . $this->getTrans('dependencyInfo') . '</p>';
+                foreach ($moduleMapper->checkOthersDependencies($moduleModel->getKey(), $dependencies) as $dependenciesKey => $dependenciesVersion) {
+                    $dependencyInfo .= '<b>' . $dependenciesKey . ':</b> ' . str_replace(',', '', $dependenciesVersion) . '<br />';
+                }
                 ?>
-                <?=$this->getDialog('infoModal'.$moduleOnUpdateServer->key, $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo) ?>
+                <?=$this->getDialog('infoModal' . $moduleOnUpdateServer->key, $this->getTrans('dependencies') . ' ' . $this->getTrans('info'), $dependencyInfo) ?>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
 <script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
 <script>
-function gotokeyAll() {
-   $("[name='gotokey']").each(function() {
-        if ($("[name='setgotokey']").prop('checked')) {
-            $(this).prop('value',"1");
-        } else {
-            $(this).prop('value',"0");
-        }
-   });
-}
-// search
-$(document).ready(function() {
-        $(".showOverlay").on('click', function(event){
-        $.LoadingOverlay("show");
-        setTimeout(function(){
-            $.LoadingOverlay("hide");
-        }, 30000);
-    });
-
-    // something is entered in search form
-    $('#user-search').keyup( function() {
-        var that = this,
-            tableBody = $('.table-list-search tbody'),
-            tableRowsClass = $('.table-list-search tbody tr');
-
-        $('.search-sf').remove();
-        tableRowsClass.each( function(i, val) {
-
-            // lower text for case insensitive
-            var rowText = $(val).text().toLowerCase(),
-                inputText = $(that).val().toLowerCase();
-
-            if(inputText != '') {
-                $('.search-query-sf').remove();
-                tableBody.prepend('<tr class="search-query-sf"><td colspan="3"><strong><?=$this->getTrans('searchingFor') ?>: "'
-                    + $(that).val()
-                    + '"</strong></td></tr>');
+    function gotokeyAll() {
+       $("[name='gotokey']").each(function() {
+            if ($("[name='setgotokey']").prop('checked')) {
+                $(this).prop('value',"1");
             } else {
-                $('.search-query-sf').remove();
+                $(this).prop('value',"0");
             }
-
-            if( rowText.indexOf( inputText ) == -1 ) {
-                // hide rows
-                tableRowsClass.eq(i).hide();
-            } else {
-                $('.search-sf').remove();
-                tableRowsClass.eq(i).show();
-            }
+       });
+    }
+    // search
+    $(document).ready(function() {
+            $(".showOverlay").on('click', function(){
+            $.LoadingOverlay("show");
+            setTimeout(function(){
+                $.LoadingOverlay("hide");
+            }, 30000);
         });
 
-        // all tr elements are hidden
-        if(tableRowsClass.children(':visible').length == 0) {
-            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="3"><?=$this->getTrans('noResultFound') ?></td></tr>');
-        }
+        // something is entered in search form
+        $('#user-search').keyup( function() {
+            var that = this,
+                tableBody = $('.table-list-search tbody'),
+                tableRowsClass = $('.table-list-search tbody tr');
+
+            $('.search-sf').remove();
+            tableRowsClass.each( function(i, val) {
+
+                // lower text for case insensitive
+                var rowText = $(val).text().toLowerCase(),
+                    inputText = $(that).val().toLowerCase();
+
+                if(inputText !== '') {
+                    $('.search-query-sf').remove();
+                    tableBody.prepend('<tr class="search-query-sf"><td colspan="3"><strong><?=$this->getTrans('searchingFor') ?>: "'
+                        + $(that).val()
+                        + '"</strong></td></tr>');
+                } else {
+                    $('.search-query-sf').remove();
+                }
+
+                if( rowText.indexOf( inputText ) === -1 ) {
+                    // hide rows
+                    tableRowsClass.eq(i).hide();
+                } else {
+                    $('.search-sf').remove();
+                    tableRowsClass.eq(i).show();
+                }
+            });
+
+            // all tr elements are hidden
+            if(tableRowsClass.children(':visible').length === 0) {
+                tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="3"><?=$this->getTrans('noResultFound') ?></td></tr>');
+            }
+        });
     });
-});
 </script>

@@ -1,8 +1,14 @@
 <?php
-$modulesList = url_get_contents($this->get('updateserver').'modules.php');
-$modules = json_decode($modulesList);
-$versionsOfModules = $this->get('versionsOfModules');
+
+/** @var \Ilch\View $this */
+
+/** @var string $coreVersion */
 $coreVersion = $this->get('coreVersion');
+/** @var array $versionsOfModules */
+$versionsOfModules = $this->get('versionsOfModules');
+
+$modulesList = url_get_contents($this->get('updateserver') . 'modules.php');
+$modules = json_decode($modulesList, true);
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
@@ -14,71 +20,65 @@ if (empty($modules)) {
     return;
 }
 
-foreach ($modules as $module): ?>
-    <?php if ($module->id == $this->getRequest()->getParam('id')): ?>
+foreach ($modules as $module) : ?>
+    <?php if ($module['id'] == $this->getRequest()->getParam('id')) : ?>
         <?php
-        if (!empty($module->phpExtensions)) {
-            $extensionCheck = [];
-            foreach ($module->phpExtensions as $extension) {
-                $extensionCheck[] = extension_loaded($extension);
-            }
+        $moduleModel = new \Modules\Admin\Models\Module();
+        $moduleModel->setByArray($module);
 
-            $phpExtensions = array_combine($module->phpExtensions, $extensionCheck);
-            foreach ($phpExtensions as $key => $value) {
-                if ($value == true) {
-                    $phpExtension[] = '<font color="#3c763d">'.$key.'</font>';
+        $hasPHPExtension = $moduleModel->hasPHPExtension();
+        $hasDependencies = $moduleModel->checkOwnDependencies();
+
+        $phpExtension = [];
+        if (count($moduleModel->getPHPExtension())) {
+            foreach ($moduleModel->getPHPExtension() as $extension => $state) {
+                if ($state) {
+                    $phpExtension[] = '<font color="#3c763d">' . $extension . '</font>';
                 } else {
-                    $phpExtension[] = '<font color="#a94442">'.$key.'</font>';
+                    $phpExtension[] = '<font color="#a94442">' . $extension . '</font>';
                 }
             }
-
-            $phpExtension = implode(', ', $phpExtension);
         }
+        $phpExtension = implode(', ', $phpExtension);
 
-        if (!empty($module->depends)) {
-            $dependencyCheck = [];
-            foreach ($module->depends as $key => $value) {
-                $parsed = explode(',', $value);
-                $dependencyCheck[$key] = ['condition' => str_replace(',','', $value), 'result' => version_compare($versionsOfModules[$key]['version'], $parsed[1], $parsed[0])];
-            }
-
-            foreach ($dependencyCheck as $key => $value) {
-                if ($value['result'] == true) {
-                    $dependency[] = '<font color="#3c763d">'.$key.' '.$value['condition'].'</font>';
+        $dependency = [];
+        if (count($moduleModel->getDepends())) {
+            foreach ($moduleModel->getDepends() as $key => $value) {
+                if ($moduleModel[$module->getKey()]->dependsCheck[$key]) {
+                    $dependency[] = '<font color="#3c763d">' . $key . ' ' . str_replace(',', '', $value) . '</font><br />';
                 } else {
-                    $dependency[] = '<font color="#a94442">'.$key.' '.$value['condition'].'</font>';
+                    $dependency[] = '<font color="#a94442">' . $key . ' ' . str_replace(',', '', $value) . '</font><br />';
                 }
             }
+        }
+        $dependency = implode(', ', $dependency);
 
-            $dependency = implode(', ', $dependency);
+        if ($moduleModel->hasPHPVersion()) {
+            $phpVersion = '<font color="#3c763d">' . $moduleModel->getPHPVersion() . '</font>';
+        } else {
+            $phpVersion = '<font color="#a94442">' . $moduleModel->getPHPVersion() . '</font>';
         }
 
-        if (version_compare(PHP_VERSION, $module->phpVersion, '>=')) {
-            $phpVersion = '<font color="#3c763d">'.$module->phpVersion.'</font>';
+        if ($moduleModel->hasCoreVersion()) {
+            $ilchCore = '<font color="#3c763d">' . $moduleModel->getIlchCore() . '</font>';
         } else {
-            $phpVersion = '<font color="#a94442">'.$module->phpVersion.'</font>';
-        }
-
-        if (version_compare($coreVersion, $module->ilchCore, '>=')) {
-            $ilchCore = '<font color="#3c763d">'.$module->ilchCore.'</font>';
-        } else {
-            $ilchCore = '<font color="#a94442">'.$module->ilchCore.'</font>';
+            $ilchCore = '<font color="#a94442">' . $moduleModel->getIlchCore() . '</font>';
         }
         ?>
         <div id="module" class="tab-content">
 
-            <?php if (!empty($module->thumbs)): ?>
+            <?php if (!empty($module['thumbs'])) : ?>
                 <div id="module-search-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner" role="listbox">
                         <?php $itemI = 0; ?>
-                        <?php foreach ($module->thumbs as $thumb): ?>
+                        <?php foreach ($module['thumbs'] as $thumb) : ?>
                             <div class="item <?=$itemI == 0 ? 'active' : '' ?>">
-                                <img src="<?=$this->get('updateserver').'modules/images/'.$module->id.'/'.$thumb->img ?>" alt="<?=$this->escape($module->name) ?>">
+                                <img src="<?=$this->get('updateserver') . 'modules/images/' . $module['id'] . '/' . $thumb['img'] ?>" alt="<?=$this->escape($moduleModel->getName()) ?>">
                                 <div class="carousel-caption">
-                                    <?php if ($thumb->desc != ''): ?>
-                                        <?=$this->escape($thumb->desc) ?>
-                                    <?php else: ?>
-                                        <?=$this->escape($module->name) ?>
+                                    <?php if ($thumb['desc'] != '') : ?>
+                                        <?=$this->escape($thumb['desc']) ?>
+                                    <?php else : ?>
+                                        <?=$this->escape($moduleModel->getName()) ?>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@ foreach ($modules as $module): ?>
                         <?php endforeach; ?>
                     </div>
 
-                    <?php if(count($module->thumbs) > 1): ?>
+                    <?php if (count($module['thumbs']) > 1) : ?>
                         <a class="left carousel-control" href="#module-search-carousel" role="button" data-slide="prev">
                             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
@@ -112,50 +112,50 @@ foreach ($modules as $module): ?>
                             <b><?=$this->getTrans('name') ?>:</b>
                         </div>
                         <div class="col-sm-9 col-xs-6">
-                            <?=$this->escape($module->name) ?>
+                            <?=$this->escape($moduleModel->getName()) ?>
                         </div>
                         <div class="col-sm-3 col-xs-6">
                             <b><?=$this->getTrans('version') ?>:</b>
                         </div>
                         <div class="col-sm-9 col-xs-6">
-                            <?=$module->version ?>
+                            <?=$moduleModel->getVersion() ?>
                         </div>
                         <div class="col-sm-3 col-xs-6">
                             <b><?=$this->getTrans('author') ?>:</b>
                         </div>
                         <div class="col-sm-9 col-xs-6">
-                            <?php if ($module->link != ''): ?>
-                                <a href="<?=$module->link ?>" alt="<?=$this->escape($module->author) ?>" title="<?=$this->escape($module->author) ?>" target="_blank" rel="noopener">
-                                    <i><?=$this->escape($module->author) ?></i>
+                            <?php if ($moduleModel->getLink() != '') : ?>
+                                <a href="<?=$moduleModel->getLink() ?>" alt="<?=$this->escape($moduleModel->getAuthor()) ?>" title="<?=$this->escape($moduleModel->getAuthor()) ?>" target="_blank" rel="noopener">
+                                    <i><?=$this->escape($moduleModel->getAuthor()) ?></i>
                                 </a>
-                            <?php else: ?>
-                                <i><?=$this->escape($module->author) ?></i>
+                            <?php else : ?>
+                                <i><?=$this->escape($moduleModel->getAuthor()) ?></i>
                             <?php endif; ?>
                         </div>
                         <div class="col-sm-3 col-xs-6">
                             <b><?=$this->getTrans('hits') ?>:</b>
                         </div>
                         <div class="col-sm-9 col-xs-6">
-                            <?=$module->hits ?>
+                            <?=$module['hits'] ?>
                         </div>
                         <div class="col-sm-3 col-xs-6">
                             <b><?=$this->getTrans('downloads') ?>:</b>
                         </div>
                         <div class="col-sm-9 col-xs-6">
-                            <?=$module->downs ?>
+                            <?=$module['downs'] ?>
                         </div>
                         <div class="col-sm-3 col-xs-6">
-                            <b><?=$this->getTrans('rating') ?>:</b>
+                            <label for="rating" class="control-label"><b><?=$this->getTrans('rating') ?>:</b></label>
                         </div>
                         <div class="col-sm-9 col-xs-6">
-                            <span title="<?=$module->rating ?> <?php if ($module->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
-                                <input type="number"
-                                       class="rating"
-                                       value="<?=$module->rating ?>"
-                                       data-size="xs"
-                                       data-readonly="true"
-                                       data-show-clear="false"
-                                       data-show-caption="false">
+                            <span title="<?=$module['rating'] ?> <?php
+                            if ($module['rating'] == 1) {
+                                echo $this->getTrans('star');
+                            } else {
+                                echo $this->getTrans('stars');
+                            }
+                            ?>">
+                                <input id="rating" name="rating" type="number" class="rating" value="<?=$module['rating'] ?>">
                             </span>
                         </div>
                     </div>
@@ -176,7 +176,7 @@ foreach ($modules as $module): ?>
                         <div class="col-sm-9 col-xs-6">
                             <?=$phpVersion ?>
                         </div>
-                        <?php if (!empty($module->phpExtensions)): ?>
+                        <?php if (!empty($phpExtension)) : ?>
                             <div class="col-sm-3 col-xs-6">
                                 <b><?=$this->getTrans('phpExtensions') ?>:</b>
                             </div>
@@ -184,7 +184,7 @@ foreach ($modules as $module): ?>
                                 <?=$phpExtension ?>
                             </div>
                         <?php endif; ?>
-                        <?php if (!empty($module->depends)): ?>
+                        <?php if (!empty($dependency)) : ?>
                             <div class="col-sm-3 col-xs-6">
                                 <b><?=$this->getTrans('dependencies') ?>:</b>
                             </div>
@@ -198,44 +198,46 @@ foreach ($modules as $module): ?>
                         <b><?=$this->getTrans('desc') ?>:</b>
                     </div>
                     <div class="col-xs-12">
-                        <?=$this->escape($module->desc) ?>
+                        <?=$this->escape($module['desc']) ?>
                     </div>
                 </div>
             </div>
             <div class="tab-pane" id="changelog">
                 <div class="col-xs-12">
-                    <?php if (!empty($module->changelog)) {
-                        echo $module->changelog;
+                    <?php
+                    if (!empty($module['changelog'])) {
+                        echo $module['changelog'];
                     } else {
                         echo $this->getTrans('noChangelog');
-                    } ?>
+                    }
+                    ?>
                 </div>
             </div>
         </div>
 
         <div class="content_savebox">
-            <?php if (!empty($module->phpextensions) && in_array(false, $extensionCheck)): ?>
+            <?php if (!$hasPHPExtension) : ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
                     <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
-            <?php elseif (!version_compare(PHP_VERSION, $module->phpVersion, '>=')): ?>
+            <?php elseif (!$moduleModel->hasPHPVersion()) : ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpVersionError') ?>">
                     <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
-            <?php elseif (!version_compare($coreVersion, $module->ilchCore, '>=')): ?>
+            <?php elseif (!$moduleModel->hasCoreVersion($this->get('coreVersion'))) : ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('ilchCoreError') ?>">
                     <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
-            <?php elseif (!empty($dependencyCheck)): ?>
+            <?php elseif (!$hasDependencies) : ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('dependencyError') ?>">
                     <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
-            <?php elseif (in_array($module->key, $this->get('modules'))): ?>
+            <?php elseif (in_array($moduleModel->getKey(), $this->get('modules'))) : ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                     <i class="fa-solid fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
-            <?php else: ?>
-                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'search', 'key' => $module->key]) ?>">
+            <?php else : ?>
+                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'search', 'key' => $moduleModel->getKey()]) ?>">
                     <?=$this->getTokenField() ?>
                     <button type="submit" class="btn btn-default">
                         <i class="fa-solid fa-download"></i> <?=$this->getTrans('download') ?>
@@ -248,8 +250,16 @@ foreach ($modules as $module): ?>
 
 <script src="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/js/star-rating.min.js') ?>"></script>
 <script>
-$(document).ready(function(){
-    $('#module-search-carousel').carousel();
-});
+    $('#rating').rating({
+        theme: 'krajee-fa',
+        filledStar: '<i class="fa-solid fa-star"></i>',
+        emptyStar: '<i class="fa-solid fa-star-o"></i>',
+        stars: 5,
+        min: 0,
+        max: 5,
+        step: 0.5,
+        size: 'xs'
+    }).on('rating:change', function(event, value, caption) {
+        window.open("<?=$this->getUrl(['action' => 'vote', 'id' => $this->getRequest()->getParam('id')], null, true) ?>/rating/" + value, "_self")
+    });
 </script>
-

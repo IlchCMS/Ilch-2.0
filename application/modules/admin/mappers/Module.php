@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  */
 
 namespace Modules\Admin\Mappers;
@@ -10,12 +11,14 @@ use Modules\Admin\Mappers\Menu as MenuMapper;
 
 class Module extends \Ilch\Mapper
 {
+    protected $cache = [];
+
     /**
      * Gets all modules.
      *
      * @return array|ModuleModel[]
      */
-    public function getModules()
+    public function getModules(): array
     {
         $modulesRows = $this->db()->select()
             ->fields(['m.key', 'm.system', 'm.layout', 'm.hide_menu', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
@@ -29,14 +32,7 @@ class Module extends \Ilch\Mapper
         $modules = [];
         foreach ($modulesRows as $moduleRow) {
             $moduleModel = new ModuleModel();
-            $moduleModel->setKey($moduleRow['key']);
-            $moduleModel->setSystemModule($moduleRow['system']);
-            $moduleModel->setLayoutModule($moduleRow['layout']);
-            $moduleModel->setHideMenu($moduleRow['hide_menu']);
-            $moduleModel->setVersion($moduleRow['version']);
-            $moduleModel->setLink($moduleRow['link']);
-            $moduleModel->setIconSmall($moduleRow['icon_small']);
-            $moduleModel->setAuthor($moduleRow['author']);
+            $moduleModel->setByArray($moduleRow);
             $moduleModel->addContent($moduleRow['locale'], ['name' => $moduleRow['name'], 'description' => $moduleRow['description']]);
 
             $modules[] = $moduleModel;
@@ -46,28 +42,42 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Gets all not installed modules.
+     * Gets all modules.
      *
-     * @return ModuleModel[]|Array[]
+     * @return array
      */
-    public function getModulesNotInstalled()
+    public function getLocalModules(): array
     {
-        foreach (glob(APPLICATION_PATH.'/modules/*') as $modulePath) {
-            if (is_dir($modulePath)) {
-                $moduleModel = new ModuleModel();
-                $moduleModel->setKey(basename($modulePath));
-                $modulesDir[] = $moduleModel->getKey();
+        $modules = [];
+        foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
+            if (is_dir($modulesPath)) {
+                $key = basename($modulesPath);
+
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
+                if (class_exists($configClass)) {
+                    $modules[] = $key;
+                }
             }
         }
+
+        return $modules;
+    }
+
+    /**
+     * Gets all not installed modules.
+     *
+     * @return ModuleModel[]
+     */
+    public function getModulesNotInstalled(): array
+    {
+        $modulesDir = $this->getLocalModules();
 
         $removeModule = ['admin', 'install', 'sample', 'error'];
         $modulesDir = array_diff($modulesDir, $removeModule);
 
+        $modulesDB = [];
         foreach ($this->getModules() as $module) {
-            $moduleModel = new ModuleModel();
-            $moduleModel->setKey($module->getKey());
-
-            $modulesDB[] = $moduleModel->getKey();
+            $modulesDB[] = $module->getKey();
         }
 
         $modulesNotInstalled = array_diff($modulesDir, $modulesDB);
@@ -76,36 +86,13 @@ class Module extends \Ilch\Mapper
             return [];
         }
 
+        $modules = [];
         foreach ($modulesNotInstalled as $module) {
             $moduleModel = new ModuleModel();
-            $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($module) . '\\Config\\Config';
             $config = new $configClass();
 
-            $moduleModel->setKey($config->config['key']);
-            $moduleModel->setIconSmall($config->config['icon_small']);
-            $moduleModel->setVersion($config->config['version']);
-
-            if (isset($config->config['link'])) {
-                $moduleModel->setLink($config->config['link']);
-            }
-            if (isset($config->config['author'])) {
-                $moduleModel->setAuthor($config->config['author']);
-            }
-            if (isset($config->config['languages'])) {
-                foreach ($config->config['languages'] as $key => $value) {
-                    $moduleModel->addContent($key, $value);
-                }
-            }
-            $moduleModel->setIlchCore($config->config['ilchCore']);
-            $moduleModel->setPHPVersion($config->config['phpVersion']);
-            if (isset($config->config['phpExtensions'])) {
-                $moduleModel->setPHPExtension($config->config['phpExtensions']);
-            }
-            if (isset($config->config['depends'])) {
-                $moduleModel->setDepends($config->config['depends']);
-            } else {
-                $moduleModel->setDepends([]);
-            }
+            $moduleModel->setByArray($config->config);
 
             $modules[] = $moduleModel;
         }
@@ -120,7 +107,7 @@ class Module extends \Ilch\Mapper
      * @param string $locale
      * @return ModuleModel|void
      */
-    public function getModulesByKey($key, $locale)
+    public function getModulesByKey(string $key, string $locale)
     {
         $modulesRows = $this->db()->select('*')
             ->from('modules_content')
@@ -144,7 +131,12 @@ class Module extends \Ilch\Mapper
      * @param string $key
      * @return ModuleModel|null
      */
-    public function getModuleByKey($key) {
+    public function getModuleByKey(string $key, bool $force = false): ?ModuleModel
+    {
+        if ($this->cache[$key] && !$force) {
+            return $this->cache[$key];
+        }
+
         $moduleRow = $this->db()->select('*')
             ->from('modules')
             ->where(['key' => $key])
@@ -156,14 +148,9 @@ class Module extends \Ilch\Mapper
         }
 
         $moduleModel = new ModuleModel();
-        $moduleModel->setKey($moduleRow['key']);
-        $moduleModel->setSystemModule($moduleRow['system']);
-        $moduleModel->setLayoutModule($moduleRow['layout']);
-        $moduleModel->setHideMenu($moduleRow['hide_menu']);
-        $moduleModel->setVersion($moduleRow['version']);
-        $moduleModel->setLink($moduleRow['link']);
-        $moduleModel->setIconSmall($moduleRow['icon_small']);
-        $moduleModel->setAuthor($moduleRow['author']);
+        $moduleModel->setByArray($moduleRow);
+
+        $this->cache[$key] = $moduleModel;
 
         return $moduleModel;
     }
@@ -173,7 +160,7 @@ class Module extends \Ilch\Mapper
      *
      * @return array|string[]
      */
-    public function getKeysInstalledModules()
+    public function getKeysInstalledModules(): array
     {
         $modulesRows = $this->db()->select('key')
             ->from('modules')
@@ -187,7 +174,8 @@ class Module extends \Ilch\Mapper
         return $modulesRows;
     }
 
-    public function getVersionsOfModules() {
+    public function getVersionsOfModules(): array
+    {
         $modulesRows = $this->db()->select(['key','version'])
             ->from('modules')
             ->execute()
@@ -197,7 +185,7 @@ class Module extends \Ilch\Mapper
 
         foreach ($modulesNotInstalled as $moduleNotInstalled) {
             $key = $moduleNotInstalled->getKey();
-            $modulesRows[$key] = array('key' => $key, 'version' => $moduleNotInstalled->getVersion());
+            $modulesRows[$key] = ['key' => $key, 'version' => $moduleNotInstalled->getVersion()];
         }
 
         if (empty($modulesRows)) {
@@ -214,7 +202,8 @@ class Module extends \Ilch\Mapper
      * @param string $version
      *
      */
-    public function updateVersion($key, $version) {
+    public function updateVersion(string $key, string $version)
+    {
         $this->db()->update('modules')
             ->values(['version' => $version])
             ->where(['key' => $key])
@@ -225,32 +214,47 @@ class Module extends \Ilch\Mapper
      * Inserts a module model in the database.
      *
      * @param ModuleModel $module
-     * @return int
+     * @return bool
      */
-    public function save(ModuleModel $module)
+    public function save(ModuleModel $module): bool
     {
-        $moduleId = $this->db()->insert('modules')
-            ->values([
-                'key' => $module->getKey(),
-                'system' => (int) $module->getSystemModule(),
-                'layout' => (int) $module->getLayoutModule(),
-                'hide_menu' => (int) $module->getHideMenu(),
-                'icon_small' => $module->getIconSmall(),
-                'version' => $module->getVersion(),
-                'link' => $module->getLink(),
-                'author' => $module->getAuthor()
-            ])
-            ->execute();
+        $fields = $module->getArray();
 
-        foreach ($module->getContent() as $key => $value) {
-            $this->db()->insert('modules_content')
-                ->values([
-                    'key' => $module->getKey(),
-                    'locale' => $key,
-                    'name' => $value['name'],
-                    'description' => $value['description']
-                ])
+        if ($this->getModuleByKey($module->getKey())) {
+            $moduleId = $module->getKey();
+            $this->db()->update('modules')
+                ->where(['key' => $module->getKey()])
+                ->values($fields)
                 ->execute();
+        } else {
+            $moduleId = $this->db()->insert('modules')
+                ->values($fields)
+                ->execute();
+        }
+
+        if ($moduleId) {
+            foreach ($module->getContent() as $locale => $value) {
+                if ($this->getModulesByKey($module->getKey(), $locale)) {
+                    $this->db()->update('modules_content')
+                        ->where(['key' => $module->getKey(), 'locale' => $locale])
+                        ->values([
+                            'key' => $module->getKey(),
+                            'locale' => $locale,
+                            'name' => $value['name'],
+                            'description' => $value['description']
+                        ])
+                        ->execute();
+                } else {
+                    $this->db()->insert('modules_content')
+                        ->values([
+                            'key' => $module->getKey(),
+                            'locale' => $locale,
+                            'name' => $value['name'],
+                            'description' => $value['description']
+                        ])
+                        ->execute();
+                }
+            }
         }
 
         return $moduleId;
@@ -261,7 +265,7 @@ class Module extends \Ilch\Mapper
      *
      * @param string $key
      */
-    public function delete($key)
+    public function delete(string $key)
     {
         $menuMapper = new MenuMapper();
         $menuMapper->deleteItemsByModuleKey($key);
@@ -276,5 +280,48 @@ class Module extends \Ilch\Mapper
         $this->db()->delete('modules_boxes_content')
             ->where(['module' => $key])
             ->execute();
+    }
+
+    /**
+     * @param string $key
+     * @param array $dependencies
+     * @return array
+     */
+    public function checkOthersDependencies(string $key, array $dependencies): array
+    {
+        $dependencyCheck = [];
+        if (count($dependencies[$key])) {
+            $dependencyCheck = $dependencies[$key];
+            unset($dependencyCheck['version']);
+        }
+        return $dependencyCheck;
+    }
+
+    /**
+     * @param string $modulKey
+     * @param array|null $dependencies
+     * @return bool
+     */
+    public function checkOthersDependenciesVersion(string $modulKey, array $dependencies): bool
+    {
+        $dependencyCheck = true;
+        foreach ($dependencies[$modulKey] as $key => $version) {
+            if ($key != 'version') {
+                $modulVersion = '';
+                if ($dependencies[$key]) {
+                    $modul = $this->getModuleByKey($key);
+                    if ($modul) {
+                        $modulVersion = $dependencies[$key]['version'];
+                    }
+                }
+
+                $parsed = explode(',', $version);
+                if (!empty($modulVersion) && !version_compare($modulVersion, $parsed[1], $parsed[0])) {
+                    $dependencyCheck = false;
+                }
+            }
+        }
+
+        return $dependencyCheck;
     }
 }

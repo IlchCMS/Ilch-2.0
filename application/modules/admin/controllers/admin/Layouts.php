@@ -8,6 +8,7 @@
 namespace Modules\Admin\Controllers\Admin;
 
 use Ilch\Validation;
+use Modules\Admin\Mappers\Layouts as LayoutsMapper;
 use Modules\Admin\Mappers\Module as ModuleMapper;
 use Modules\Admin\Mappers\LayoutAdvSettings as LayoutAdvSettingsMapper;
 use Modules\Admin\Models\Layout as LayoutModel;
@@ -61,48 +62,26 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $layoutsMapper = new LayoutsMapper();
+
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index']);
         $layouts = [];
-        $versionsOfLayouts = [];
-        $modulesNotInstalled = [];
-        foreach (glob(APPLICATION_PATH . '/layouts/*') as $layoutPath) {
-            if (is_dir($layoutPath)) {
-                $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
-                $config = new $configClass($this->getTranslator());
-                $model = new LayoutModel();
-                $model->setKey(basename($layoutPath));
-                $model->setName($config->config['name']);
-                $model->setVersion($config->config['version']);
-                $model->setAuthor($config->config['author']);
-                if (!empty($config->config['link'])) {
-                    $model->setLink($config->config['link']);
-                }
-                $model->setDesc($config->config['desc']);
-                if (!empty($config->config['modulekey'])) {
-                    $moduleMapper = new ModuleMapper();
-                    if ($moduleMapper->getModuleByKey($config->config['modulekey']) === null) {
-                        $modulesNotInstalled[$config->config['modulekey']] = $config->config['modulekey'];
-                    }
-                    $model->setModulekey($config->config['modulekey']);
-                }
-                if (!empty($config->config['settings'])) {
-                    $model->setSettings($config->config['settings']);
-                }
-                if (!empty($config->config['ilchCore'])) {
-                    $model->setIlchCore($config->config['ilchCore']);
-                }
-                $layouts[] = $model;
-                $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
-            }
+        foreach ($layoutsMapper->getLocalModules() as $key) {
+            $configClass = '\\Layouts\\' . ucfirst($key) . '\\Config\\Config';
+            $config = new $configClass($this->getTranslator());
+            $model = new LayoutModel();
+
+            $model->setKey($key)
+                ->setByArray($config->config);
+
+            $layouts[] = $model;
         }
 
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'layouts2.php')
             ->set('defaultLayout', $this->getConfig()->get('default_layout'))
             ->set('layouts', $layouts)
-            ->set('modulesNotInstalled', $modulesNotInstalled)
-            ->set('coreVersion', $this->getConfig()->get('version'))
-            ->set('versionsOfLayouts', $versionsOfLayouts);
+            ->set('coreVersion', $this->getConfig()->get('version'));
     }
 
     public function defaultAction()
@@ -116,6 +95,8 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function searchAction()
     {
+        $layoutsMapper = new LayoutsMapper();
+
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
@@ -145,21 +126,21 @@ class Layouts extends \Ilch\Controller\Admin
                 $this->addMessage('downSuccess');
             }
         } finally {
-            $layoutsDir = [];
-            $versionsOfLayouts = [];
-            foreach (glob(ROOT_PATH . '/application/layouts/*') as $layoutPath) {
-                if (is_dir($layoutPath)) {
-                    $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
-                    $config = new $configClass($this->getTranslator());
-                    $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
-                    $layoutsDir[] = basename($layoutPath);
-                }
+            $layouts = [];
+            foreach ($layoutsMapper->getLocalModules() as $key) {
+                $configClass = '\\Layouts\\' . ucfirst($key) . '\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                $model = new LayoutModel();
+
+                $model->setKey($key)
+                    ->setByArray($config->config);
+
+                $layouts[$model->getKey()] = $model;
             }
 
             $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'))
                 ->set('coreVersion', $this->getConfig()->get('version'))
-                ->set('versionsOfLayouts', $versionsOfLayouts)
-                ->set('layouts', $layoutsDir);
+                ->set('layouts', $layouts);
         }
     }
 
@@ -197,19 +178,39 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function showAction()
     {
+        $layoutsMapper = new LayoutsMapper();
+
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
             ->add($this->getTranslator()->trans('menuLayout') . ' ' . $this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
-        $layoutsDir = [];
-        foreach (glob(ROOT_PATH . '/application/layouts/*') as $layoutPath) {
-            if (is_dir($layoutPath)) {
-                $layoutsDir[] = basename($layoutPath);
-            }
-        }
+        $layoutsDir = $layoutsMapper->getLocalModules(true);
 
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'))
             ->set('layouts', $layoutsDir);
+    }
+
+    public function voteAction()
+    {
+        $id = $this->getRequest()->getParam('id');
+
+        if ($this->getRequest()->isSecure()) {
+            $validationrules = [
+                'id'      => 'required|numeric|min:1',
+                'rating'  => 'required|numeric|min:0|max:5',
+            ];
+
+            $validation = Validation::create($this->getRequest()->getParams(), $validationrules);
+
+            if ($validation->isValid()) {
+                url_get_contents($this->getConfig()->get('updateserver') . 'vote.php?mode=layouts&vid=' . $id . '&rating=' . $this->getRequest()->getParam('rating'));
+                url_get_contents($this->getConfig()->get('updateserver') . 'modules.php', true, true);
+
+                $this->addMessage('updateSuccess');
+            }
+        }
+
+        $this->redirect(['action' => 'show', 'id' => $id]);
     }
 
     public function settingsAction()
@@ -259,6 +260,8 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function advSettingsAction()
     {
+        $layoutsMapper = new LayoutsMapper();
+
         $layoutAdvSettingsMapper = new LayoutAdvSettingsMapper();
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
@@ -271,23 +274,20 @@ class Layouts extends \Ilch\Controller\Admin
         }
 
         $layouts = [];
-        foreach (glob(APPLICATION_PATH . '/layouts/*') as $layoutPath) {
-            if (is_dir($layoutPath)) {
-                $key = basename($layoutPath);
-                $configClass = '\\Layouts\\' . ucfirst($key) . '\\Config\\Config';
-                $config = new $configClass($this->getTranslator());
-                if (empty($config->config['modulekey']) && empty($config->config['settings'])) {
-                    continue;
-                }
-                $model = new LayoutModel();
-                $model->setKey($key);
-                $model->setName($config->config['name']);
-                $model->setAuthor($config->config['author']);
-                if (!empty($config->config['modulekey'])) {
-                    $model->setModulekey($config->config['modulekey']);
-                }
-                $layouts[$key] = $model;
+        foreach ($layoutsMapper->getLocalModules() as $key) {
+            $configClass = '\\Layouts\\' . ucfirst($key) . '\\Config\\Config';
+            $config = new $configClass($this->getTranslator());
+
+            if (empty($config->config['modulekey']) && empty($config->config['settings'])) {
+                continue;
             }
+
+            $model = new LayoutModel();
+
+            $model->setKey($key)
+                ->setByArray($config->config);
+
+            $layouts[$key] = $model;
         }
 
         $layoutKeys = $layoutAdvSettingsMapper->getListOfLayoutKeys();

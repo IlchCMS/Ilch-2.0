@@ -133,26 +133,26 @@
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script>
-<?=$this->getMedia()
-        ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
-        ->addInputId('_1')
-        ->addUploadController($this->getUrl('admin/media/index/upload'))
-?>
-<?=$this->getMedia()
-        ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_2/'))
-        ->addInputId('_2')
-        ->addUploadController($this->getUrl('admin/media/index/upload'))
-?>
+    <?=$this->getMedia()
+            ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
+            ->addInputId('_1')
+            ->addUploadController($this->getUrl('admin/media/index/upload'))
+    ?>
+    <?=$this->getMedia()
+            ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_2/'))
+            ->addInputId('_2')
+            ->addUploadController($this->getUrl('admin/media/index/upload'))
+    ?>
 
-function eraseValue(id) {
-    document.getElementById(id).value = "";
-}
-$('#keywords').tokenfield();
-$('#keywords').on('tokenfield:createtoken', function (event) {
-    let existingTokens = $(this).tokenfield('getTokens');
-    $.each(existingTokens, function(index, token) {
-        if (token.value === event.attrs.value)
-            event.preventDefault();
+    function eraseValue(id) {
+        document.getElementById(id).value = "";
+    }
+    $('#keywords').tokenfield();
+    $('#keywords').on('tokenfield:createtoken', function (event) {
+        let existingTokens = $(this).tokenfield('getTokens');
+        $.each(existingTokens, function(index, token) {
+            if (token.value === event.attrs.value)
+                event.preventDefault();
+        });
     });
-});
 </script>

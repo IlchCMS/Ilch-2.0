@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,7 +7,9 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Ilch\Validation;
 use Modules\Admin\Mappers\Module as ModuleMapper;
+use Modules\Admin\Models\Module;
 use Modules\Admin\Models\Module as ModuleModel;
 use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
@@ -46,17 +49,16 @@ class Modules extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->getActionName() === 'notinstalled') {
-            $items[1]['active'] = true; 
+            $items[1]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'updates') {
             $items[2]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'search' || $this->getRequest()->getActionName() === 'show') {
             $items[3]['active'] = true;
         } else {
-            $items[0]['active'] = true; 
+            $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuModules',
             $items
         );
@@ -77,21 +79,27 @@ class Modules extends \Ilch\Controller\Admin
 
         $dependencies = [];
         $configurations = [];
-
-        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+        foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
             $key = basename($modulesPath);
 
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
             if (class_exists($configClass)) {
                 $config = new $configClass($this->getTranslator());
-                $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
-                $configurations[$key] = $config->config;
+                $moduleModel = new Module();
+                $moduleModel->setByArray($config->config);
+
+                $configurations[$key] = $moduleModel;
+
+                $dependencies[$key]['version'] = $moduleModel->getVersion();
+                foreach ($moduleModel->getDepends() as $dependsKey => $value) {
+                    $dependencies[$dependsKey][$key] = $value;
+                }
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'modules.php')
+            ->set('moduleMapper', $moduleMapper)
             ->set('modules', $moduleMapper->getModules())
-            ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('dependencies', $dependencies)
             ->set('configurations', $configurations)
             ->set('coreVersion', $this->getConfig()->get('version'))
@@ -118,21 +126,9 @@ class Modules extends \Ilch\Controller\Admin
             return;
         }
 
-        $dependencies = [];
-
-        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
-            $key = basename($modulesPath);
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
-            if (class_exists($configClass)) {
-                $config = new $configClass($this->getTranslator());
-                $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
-            }
-        }
-
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'modules.php')
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('modulesNotInstalled', $modulesNotInstalled)
-            ->set('dependencies', $dependencies)
             ->set('coreVersion', $this->getConfig()->get('version'))
             ->set('gotokey', $gotokey);
     }
@@ -155,14 +151,14 @@ class Modules extends \Ilch\Controller\Admin
 
         try {
             if ($this->getRequest()->isSecure()) {
-                $moduleFilename = $this->getRequest()->getParam('key').'-v'.$this->getRequest()->getParam('version');
+                $moduleFilename = $this->getRequest()->getParam('key') . '-v' . $this->getRequest()->getParam('version');
 
                 $transfer = new \Ilch\Transfer();
-                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip-signature.sig');
+                $transfer->setZipSavePath(ROOT_PATH . '/updates/');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver') . 'modules/' . $moduleFilename . '.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver') . 'modules/' . $moduleFilename . '.zip-signature.sig');
 
-                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                if (!$transfer->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
                     $this->addMessage('certMissingOrExpired', 'danger');
                     return;
@@ -178,7 +174,7 @@ class Modules extends \Ilch\Controller\Admin
                     return;
                 }
 
-                foreach ($groups as $key => $group) {
+                foreach ($groups as $group) {
                     if ($group->getId() !== 1) {
                         $groupMapper->saveAccessData($group->getId(), $this->getRequest()->getParam('key'), 1, 'module');
                     }
@@ -195,21 +191,28 @@ class Modules extends \Ilch\Controller\Admin
                 }
             }
             $dependencies = [];
-            $modulesDir = [];
-            foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
-                $key = basename($modulesPath);
-                $modulesDir[] = $key;
+            $configurations = [];
+            $modules = [];
+            foreach ($moduleMapper->getLocalModules() as $key) {
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                $moduleModel = new Module();
+                $moduleModel->setByArray($config->config);
 
-                $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
-                if (class_exists($configClass)) {
-                    $config = new $configClass($this->getTranslator());
-                    $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
+                $configurations[$key] = $moduleModel;
+
+                $modules[$moduleModel->getKey()] = $moduleMapper->getModuleByKey($moduleModel->getKey());
+
+                $dependencies[$key]['version'] = $moduleModel->getVersion();
+                foreach ($moduleModel->getDepends() as $dependsKey => $value) {
+                    $dependencies[$dependsKey][$key] = $value;
                 }
             }
 
-            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
-                ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
-                ->set('modules', $modulesDir)
+            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'modules.php')
+                ->set('moduleMapper', $moduleMapper)
+                ->set('modules', $modules)
+                ->set('configurations', $configurations)
                 ->set('dependencies', $dependencies)
                 ->set('coreVersion', $this->getConfig()->get('version'))
                 ->set('gotokey', $gotokey);
@@ -231,41 +234,43 @@ class Modules extends \Ilch\Controller\Admin
 
         $dependencies = [];
         $configurations = [];
+        foreach ($moduleMapper->getLocalModules() as $key) {
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
+            $config = new $configClass($this->getTranslator());
+            $moduleModel = new Module();
+            $moduleModel->setByArray($config->config);
 
-        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
-            $key = basename($modulesPath);
-            $modulesDir[] = $key;
+            $configurations[$key] = $moduleModel;
 
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
-            if (class_exists($configClass)) {
-                $config = new $configClass($this->getTranslator());
-                $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
-                $configurations[$key] = $config->config;
+            $dependencies[$key]['version'] = $moduleModel->getVersion();
+            foreach ($moduleModel->getDepends() as $dependsKey => $value) {
+                $dependencies[$dependsKey][$key] = $value;
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'modules.php')
+            ->set('moduleMapper', $moduleMapper)
             ->set('modules', $moduleMapper->getModules())
-            ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
-            ->set('dependencies', $dependencies)
             ->set('configurations', $configurations)
+            ->set('dependencies', $dependencies)
             ->set('coreVersion', $this->getConfig()->get('version'))
             ->set('gotokey', $gotokey);
     }
 
     public function updateAction()
     {
+        $key = $this->getRequest()->getParam('key');
+        $fail = true;
         if ($this->getRequest()->isSecure()) {
             try {
-                $key = $this->getRequest()->getParam('key');
-                $moduleFilename = $key.'-v'.$this->getRequest()->getParam('version');
+                $moduleFilename = $key . '-v' . $this->getRequest()->getParam('version');
 
                 $transfer = new \Ilch\Transfer();
-                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip-signature.sig');
+                $transfer->setZipSavePath(ROOT_PATH . '/updates/');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver') . 'modules/' . $moduleFilename . '.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver') . 'modules/' . $moduleFilename . '.zip-signature.sig');
 
-                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                if (!$transfer->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
                     $this->addMessage('certMissingOrExpired', 'danger');
                     return;
@@ -279,45 +284,61 @@ class Modules extends \Ilch\Controller\Admin
                 $moduleMapper = new ModuleMapper();
                 $moduleModel = $moduleMapper->getModuleByKey($key);
 
+
+                // TODO: Check if update failed to display moduleUpdateFailed etc.
                 if (!$transfer->update($moduleModel->getVersion())) {
                     $this->addMessage('moduleUpdateFailed', 'danger');
                     return;
                 }
 
-                $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
+
                 $moduleMapper->updateVersion($key, $config->config['version']);
                 $this->addMessage('updateSuccess');
-            } finally {
-                if ($this->getRequest()->getPost('gotokey')) {
-                    $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_' . $key]);
-                } else {
-                    $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
-                }
+                $fail = false;
+            } catch (\Exception $e) {
             }
+        }
+        if ($this->getRequest()->getPost('gotokey') && !$fail) {
+            $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_' . $key]);
+        } else {
+            $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
         }
     }
 
     public function localUpdateAction()
     {
+        $fail = false;
+        $key = '';
         try {
             $moduleMapper = new ModuleMapper();
 
             $key = $this->getRequest()->getParam('key');
             $moduleModel = $moduleMapper->getModuleByKey($key);
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
-            $config = new $configClass($this->getTranslator());
-            // TODO: Check if update failed to display moduleUpdateFailed etc.
-            $config->getUpdate($moduleModel->getVersion());
-            $moduleMapper->updateVersion($key, $config->config['version']);
-            $this->addMessage('updateSuccess');
-        } catch (\Exception $e) {
-            $this->addMessage('moduleUpdateFailed', 'danger');
-        } finally {
-            if ($this->getRequest()->getPost('gotokey')) {
-                $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_' . $key]);
+            if ($moduleModel && $moduleModel->canExecute($this->getConfig()->get('version'))) {
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                // TODO: Check if update failed to display moduleUpdateFailed etc.
+                $msg = $config->getUpdate($moduleModel->getVersion());
+                $moduleMapper->updateVersion($key, $config->config['version']);
+                if (!empty($msg)) {
+                    $this->addMessage($msg);
+                }
+                $this->addMessage('updateSuccess');
             } else {
-                $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
+                $fail = true;
+            }
+        } catch (\Exception $e) {
+            $fail = true;
+        } finally {
+            if ($fail) {
+                $this->addMessage('moduleUpdateFailed', 'danger');
+            }
+            if ($this->getRequest()->getPost('gotokey') && !$fail) {
+                $this->redirect(['action' => $this->getRequest()->getParam('from') ?? 'index', 'anchor' => '#Module_' . $key]);
+            } else {
+                $this->redirect(['action' => $this->getRequest()->getParam('from') ?? 'index', 'anchor' => 'false']);
             }
         }
     }
@@ -329,18 +350,38 @@ class Modules extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
-            ->add($this->getTranslator()->trans('menuModules').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+            ->add($this->getTranslator()->trans('menuModules') . ' ' . $this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
-        $modulesDir = [];
-        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
-            $modulesDir[] = basename($modulesPath);
-        }
+        $modulesDir = $moduleMapper->getLocalModules();
 
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'))
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('moduleMapper', $moduleMapper)
             ->set('modules', $modulesDir)
             ->set('coreVersion', $this->getConfig()->get('version'));
+    }
+
+    public function voteAction()
+    {
+        $id = $this->getRequest()->getParam('id');
+
+        if ($this->getRequest()->isSecure()) {
+            $validationrules = [
+                'id'      => 'required|numeric|min:1',
+                'rating'  => 'required|numeric|min:0|max:5',
+            ];
+
+            $validation = Validation::create($this->getRequest()->getParams(), $validationrules);
+
+            if ($validation->isValid()) {
+                url_get_contents($this->getConfig()->get('updateserver') . 'vote.php?mode=modules&vid=' . $id . '&rating=' . $this->getRequest()->getParam('rating'));
+                url_get_contents($this->getConfig()->get('updateserver') . 'modules.php', true, true);
+
+                $this->addMessage('updateSuccess');
+            }
+        }
+
+        $this->redirect(['action' => 'show', 'id' => $id]);
     }
 
     public function installAction()
@@ -351,83 +392,88 @@ class Modules extends \Ilch\Controller\Admin
 
         $groups = $groupMapper->getGroupList();
         $key = $this->getRequest()->getParam('key');
+        $fail = true;
 
         if ($this->getRequest()->isSecure()) {
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
-            $config = new $configClass($this->getTranslator());
-            $config->install();
+            try {
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
 
-            if (!empty($config->config)) {
-                $moduleModel = new ModuleModel();
-                $moduleModel->setKey($config->config['key']);
-
-                if (isset($config->config['author'])) {
-                    $moduleModel->setAuthor($config->config['author']);
+                $moduleModel = null;
+                if (!empty($config->config)) {
+                    $moduleModel = new ModuleModel();
+                    $moduleModel->setByArray($config->config);
                 }
-                if (isset($config->config['languages'])) {
-                    foreach ($config->config['languages'] as $key => $value) {
-                        $moduleModel->addContent($key, $value);
+
+                if ($moduleModel === null || $moduleModel && $moduleModel->canExecute($this->getConfig()->get('version'))) {
+                    $config->install();
+                }
+
+                if ($moduleModel) {
+                    if ($moduleMapper->save($moduleModel) && isset($config->config['boxes'])) {
+                        $boxModel = new BoxModel();
+                        $boxModel->setModule($config->config['key']);
+                        foreach ($config->config['boxes'] as $key => $value) {
+                            $boxModel->addContent($key, $value);
+                        }
+                        $boxMapper->install($boxModel);
+                    }
+
+                    foreach ($groups as $key => $group) {
+                        if ($group->getId() !== 1) {
+                            $groupMapper->saveAccessData($group->getId(), $key, 1, 'module');
+                        }
                     }
                 }
-                if (isset($config->config['system_module'])) {
-                    $moduleModel->setSystemModule(true);
-                }
-                if (isset($config->config['isLayout'])) {
-                    $moduleModel->setLayoutModule(true);
-                }
-                if (isset($config->config['hide_menu'])) {
-                    $moduleModel->setHideMenu(true);
-                }
-                if (isset($config->config['link'])) {
-                    $moduleModel->setLink($config->config['link']);
-                }
-                if (isset($config->config['version'])) {
-                    $moduleModel->setVersion($config->config['version']);
-                }
+                $fail = false;
 
-                $moduleModel->setIconSmall($config->config['icon_small']);
-                $moduleMapper->save($moduleModel);
-
-                if (isset($config->config['boxes'])) {
-                    $boxModel = new BoxModel();
-                    $boxModel->setModule($config->config['key']);
-                    foreach ($config->config['boxes'] as $key => $value) {
-                        $boxModel->addContent($key, $value);
-                    }
-                    $boxMapper->install($boxModel);
-                }
-
-                foreach ($groups as $key => $group) {
-                    if ($group->getId() !== 1) {
-                        $groupMapper->saveAccessData($group->getId(), $key, 1, 'module');
-                    }
-                }
+                $this->addMessage('installSuccess');
+            } catch (\Exception $e) {
             }
-
-            $this->addMessage('installSuccess');
+        }
+        if ($fail) {
+            $this->addMessage('moduleInstallFailed', 'danger');
         }
 
-        if ($this->getRequest()->getPost('gotokey')) {
+        if ($this->getRequest()->getPost('gotokey') && !$fail) {
             $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_' . $this->getRequest()->getParam('key')]);
         } elseif ($this->getRequest()->getParam('from') === 'notinstalled') {
-                $this->redirect(['action' => $this->getRequest()->getParam('from')]);
-            } else {
-                $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
-            }
+            $this->redirect(['action' => $this->getRequest()->getParam('from')]);
+        } else {
+            $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
+        }
     }
 
     public function uninstallAction()
     {
         $moduleMapper = new ModuleMapper();
-        $key = $this->getRequest()->getParam('key');
+        $delkey = $this->getRequest()->getParam('key');
+
+        $dependencies = [];
+        foreach ($moduleMapper->getLocalModules() as $key) {
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
+            $config = new $configClass($this->getTranslator());
+            $moduleModel = new Module();
+            $moduleModel->setByArray($config->config);
+
+            $dependencies[$key]['version'] = $moduleModel->getVersion();
+            foreach ($moduleModel->getDepends() as $dependsKey => $value) {
+                $dependencies[$dependsKey][$key] = $value;
+            }
+        }
 
         if ($this->getRequest()->isSecure()) {
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($delkey) . '\\Config\\Config';
             $config = new $configClass($this->getTranslator());
-            $config->uninstall();
-            $moduleMapper->delete($key);
 
-            $this->addMessage('deleteSuccess');
+            if (empty($moduleMapper->checkOthersDependencies($delkey, $dependencies))) {
+                $config->uninstall();
+                $moduleMapper->delete($delkey);
+
+                $this->addMessage('deleteSuccess');
+            } else {
+                $this->addMessage('deleteFailed');
+            }
         }
 
         $this->redirect(['action' => 'index']);
@@ -435,16 +481,20 @@ class Modules extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        $moduleMapper = new ModuleMapper();
+
+        if ($this->getRequest()->isSecure() && !$moduleMapper->getModuleByKey($this->getRequest()->getParam('key'))) {
             $notificationPermissionMapper = new NotificationPermissionMapper();
             $notificationsMapper = new NotificationsMapper();
 
-            removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
+            removeDir(APPLICATION_PATH . '/modules/' . $this->getRequest()->getParam('key'));
 
             $notificationPermissionMapper->deletePermissionOfModule($this->getRequest()->getParam('key'));
             $notificationsMapper->deleteNotificationsByModule($this->getRequest()->getParam('key'));
 
             $this->addMessage('deleteSuccess');
+        } else {
+            $this->addMessage('deleteFailed');
         }
 
         $this->redirect(['action' => 'notinstalled']);
@@ -452,7 +502,7 @@ class Modules extends \Ilch\Controller\Admin
 
     public function refreshURLAction()
     {
-        if (!empty(url_get_contents($this->getConfig()->get('updateserver').'modules.php', true, true))) {
+        if (!empty(url_get_contents($this->getConfig()->get('updateserver') . 'modules.php', true, true))) {
             $this->redirect()
                 ->withMessage('updateSuccess')
                 ->to(['action' => $this->getRequest()->getParam('from')]);

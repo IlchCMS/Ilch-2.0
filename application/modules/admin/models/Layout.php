@@ -1,10 +1,13 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Admin\Models;
+
+use Modules\Admin\Mappers\Module as ModuleMapper;
 
 class Layout extends \Ilch\Model
 {
@@ -13,78 +16,123 @@ class Layout extends \Ilch\Model
      *
      * @var string
      */
-    protected $key;
+    protected $key = '';
 
     /**
      * Name of the layout.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * Version of the layout.
      *
      * @var string
      */
-    protected $version;
+    protected $version = '';
 
     /**
      * Author of the layout.
      *
      * @var string
      */
-    protected $author;
+    protected $author = '';
 
     /**
      * Link of the layout.
      *
      * @var string
      */
-    protected $link;
+    protected $link = '';
 
     /**
      * Ilch official label of the layout.
      *
      * @var bool
      */
-    protected $official;
+    protected $official = false;
 
     /**
      * Description of the layout.
      *
      * @var string
      */
-    protected $desc;
+    protected $desc = '';
 
     /**
      * Module of the layout.
      *
      * @var string
      */
-    protected $modulekey;
+    protected $modulekey = '';
+
+    /**
+     * Module of the layout Checked.
+     *
+     * @var bool
+     */
+    public $hasModul = true;
 
     /**
      * Settings of the layout.
      *
      * @var array
      */
-    protected $settings;
+    protected $settings = [];
 
+    /**
+     * @param array $entries
+     * @return Layout
+     * @since 2.1.60
+     */
+    public function setByArray(array $entries): Layout
+    {
+        if (isset($entries['key'])) {
+            $this->setKey($entries['key']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (isset($entries['version'])) {
+            $this->setVersion($entries['version']);
+        }
+        if (isset($entries['author'])) {
+            $this->setAuthor($entries['author']);
+        }
+        if (!empty($entries['link'])) {
+            $this->setLink($entries['link']);
+        }
+        if (isset($entries['desc'])) {
+            $this->setDesc($entries['desc']);
+        }
+        if (isset($entries['modulekey'])) {
+            $this->setModulekey($entries['modulekey'])
+                ->hasModul();
+        }
+        if (isset($entries['settings'])) {
+            $this->setSettings($entries['settings']);
+        }
+        if (isset($entries['ilchCore'])) {
+            $this->setIlchCore($entries['ilchCore']);
+        }
+
+        return $this;
+    }
 
     /**
      * The required ilch version if needed.
      *
      * @var string
      */
-    protected $ilchCore;
+    protected $ilchCore = '';
 
     /**
      * Gets the key.
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -93,10 +141,12 @@ class Layout extends \Ilch\Model
      * Sets the key.
      *
      * @param string $key
+     * @return Layout
      */
-    public function setKey($key)
+    public function setKey(string $key): Layout
     {
-        $this->key = (string)$key;
+        $this->key = $key;
+        return $this;
     }
 
     /**
@@ -104,7 +154,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -113,10 +163,12 @@ class Layout extends \Ilch\Model
      * Sets the name.
      *
      * @param string $name
+     * @return Layout
      */
-    public function setName($name)
+    public function setName(string $name): Layout
     {
-        $this->name = (string)$name;
+        $this->name = $name;
+        return $this;
     }
 
     /**
@@ -124,7 +176,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -133,10 +185,12 @@ class Layout extends \Ilch\Model
      * Sets the version.
      *
      * @param string $version
+     * @return Layout
      */
-    public function setVersion($version)
+    public function setVersion(string $version): Layout
     {
-        $this->version = (string)$version;
+        $this->version = $version;
+        return $this;
     }
 
     /**
@@ -144,7 +198,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
@@ -153,10 +207,12 @@ class Layout extends \Ilch\Model
      * Sets the author.
      *
      * @param string $author
+     * @return Layout
      */
-    public function setAuthor($author)
+    public function setAuthor(string $author): Layout
     {
-        $this->author = (string)$author;
+        $this->author = $author;
+        return $this;
     }
 
     /**
@@ -164,7 +220,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -173,10 +229,12 @@ class Layout extends \Ilch\Model
      * Sets the link.
      *
      * @param string $link
+     * @return Layout
      */
-    public function setLink($link)
+    public function setLink(string $link): Layout
     {
-        $this->link = (string)$link;
+        $this->link = $link;
+        return $this;
     }
 
     /**
@@ -184,7 +242,7 @@ class Layout extends \Ilch\Model
      *
      * @return bool
      */
-    public function getOfficial()
+    public function getOfficial(): bool
     {
         return $this->official;
     }
@@ -193,18 +251,20 @@ class Layout extends \Ilch\Model
      * Sets the official flag.
      *
      * @param bool $official
+     * @return Layout
      */
-    public function setOfficial($official)
+    public function setOfficial(bool $official): Layout
     {
-        $this->official = (bool)$official;
+        $this->official = $official;
+        return $this;
     }
-    
+
     /**
      * Gets the desc.
      *
      * @return string
      */
-    public function getDesc()
+    public function getDesc(): string
     {
         return $this->desc;
     }
@@ -213,10 +273,12 @@ class Layout extends \Ilch\Model
      * Sets the author.
      *
      * @param string $desc
+     * @return Layout
      */
-    public function setDesc($desc)
+    public function setDesc(string $desc): Layout
     {
-        $this->desc = (string)$desc;
+        $this->desc = $desc;
+        return $this;
     }
 
     /**
@@ -224,7 +286,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getModulekey()
+    public function getModulekey(): string
     {
         return $this->modulekey;
     }
@@ -233,10 +295,28 @@ class Layout extends \Ilch\Model
      * Sets the modulekey.
      *
      * @param string $modulekey
+     * @return Layout
      */
-    public function setModulekey($modulekey)
+    public function setModulekey(string $modulekey): Layout
     {
-        $this->modulekey = (string)$modulekey;
+        $this->modulekey = $modulekey;
+        return $this;
+    }
+
+    /**
+     * Sets the modulekey checked.
+     *
+     * @return Layout
+     */
+    public function hasModule(): Layout
+    {
+        if (!empty($this->getModulekey())) {
+            $moduleMapper = new ModuleMapper();
+            if ($moduleMapper->getModuleByKey($this->getModulekey()) === null) {
+                $this->hasModul = false;
+            }
+        }
+        return $this;
     }
 
     /**
@@ -244,7 +324,7 @@ class Layout extends \Ilch\Model
      *
      * @return array
      */
-    public function getSettings()
+    public function getSettings(): array
     {
         return $this->settings;
     }
@@ -255,7 +335,7 @@ class Layout extends \Ilch\Model
      * @param array $settings
      * @return Layout
      */
-    public function setSettings($settings)
+    public function setSettings(array $settings): Layout
     {
         $this->settings = $settings;
         return $this;
@@ -266,7 +346,7 @@ class Layout extends \Ilch\Model
      *
      * @return string
      */
-    public function getIlchCore()
+    public function getIlchCore(): string
     {
         return $this->ilchCore;
     }
@@ -277,11 +357,52 @@ class Layout extends \Ilch\Model
      * @param string $ilchCore
      * @return Layout
      */
-    public function setIlchCore($ilchCore)
+    public function setIlchCore(string $ilchCore): Layout
     {
         $this->ilchCore = $ilchCore;
         return $this;
     }
 
+    /**
+     * @param string|null $coreVersion
+     * @return bool
+     * @since 2.1.60
+     */
+    public function hasCoreVersion(?string $coreVersion = null): bool
+    {
+        if (version_compare($coreVersion ?? VERSION, '2.2', '>=')) { //BS5 Check
+            if (version_compare($this->getIlchCore(), '2.2', '<')) {
+                return false;
+            }
+        }
 
+        if (empty($this->getIlchCore())) {
+            return true;
+        }
+
+        return version_compare($coreVersion ?? VERSION, $this->getIlchCore(), '>=');
+    }
+
+    /**
+     * @param string|null $coreVersion
+     * @return bool
+     * @since 2.1.60
+     */
+    public function canExecute(?string $coreVersion = null): bool
+    {
+        return $this->hasPHPVersion() && $this->hasCoreVersion($coreVersion);
+    }
+
+    /**
+     * @param string|null $newVersion
+     * @return bool
+     * @since 2.1.60
+     */
+    public function isNewVersion(?string $newVersion = null): bool
+    {
+        if (empty($newVersion)) {
+            return false;
+        }
+        return version_compare($this->getVersion(), $newVersion, '<');
+    }
 }
