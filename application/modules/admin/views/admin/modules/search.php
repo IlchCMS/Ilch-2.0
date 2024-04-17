@@ -193,8 +193,18 @@ usort($modulesOnUpdateServer, 'custom_sort');
         </tbody>
     </table>
 </div>
-<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
+
+<div class="loadingoverlay" hidden>
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" style="width: 6rem; height: 6rem;" role="status">
+        <span class="visually-hidden"><?=$this->getTrans('processingPleaseWait') ?></span>
+      </div>
+    </div>
+</div>
+
 <script>
+let delayedShow;
+
 function gotokeyAll() {
    $("[name='gotokey']").each(function() {
         if ($("[name='setgotokey']").prop('checked')) {
@@ -206,12 +216,20 @@ function gotokeyAll() {
 }
 // search
 $(document).ready(function() {
-        $(".showOverlay").on('click', function(event){
-        $.LoadingOverlay("show");
+    $(".showOverlay").on('click', function(event){
+        $loadingOverlay = $(".loadingoverlay");
+
+        delayedShow = setTimeout(function(){
+            $loadingOverlay.removeAttr('hidden');
+        }, 200);
+
         setTimeout(function(){
-            $.LoadingOverlay("hide");
+            $loadingOverlay.attr('hidden', '');
         }, 30000);
     });
+
+    clearTimeout(delayedShow);
+    $(".loadingoverlay").attr('hidden', '');
 
     // something is entered in search form
     $('#user-search').keyup( function() {
