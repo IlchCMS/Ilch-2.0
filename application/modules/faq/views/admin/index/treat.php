@@ -15,19 +15,19 @@ $cats = $this->get('cats');
 <?php if ($cats) : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="chosen-select row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
+        <div class="chosen-select row mb-3<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
             <label for="catId" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('cat') ?>:
             </label>
             <div class="col-xl-2">
-                <select class="form-select" id="catId" name="catId">
+                <select class="form-control form-select" id="catId" name="catId">
                     <?php foreach ($cats as $model) : ?>
                         <option value="<?=$model->getId() ?>" <?=($this->originalInput('catId', ($faq->getId() ? $faq->getCatId() : 0))) == $model->getId() ? 'selected=""' : '' ?>><?=$this->escape($model->getTitle()) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('question') ? ' has-error' : '' ?>">
             <label for="question" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('question') ?>:
             </label>
@@ -39,7 +39,7 @@ $cats = $this->get('cats');
                        value="<?=$this->escape($this->originalInput('question', $faq->getQuestion())) ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('answer') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('answer') ? ' has-error' : '' ?>">
             <label for="ck_1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('answer') ?>:
             </label>
