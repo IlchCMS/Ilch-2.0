@@ -37,12 +37,14 @@
                                         src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                                      <?php endif; ?>
                                      alt="<?=$media->getName() ?>">
-                                <input type="checkbox"
-                                       class="regular-checkbox big-checkbox"
-                                       id="<?=$media->getId() ?>_img"
-                                       name="check_image[]"
-                                       value="<?=$media->getId() ?>" />
-                                <label for="<?=$media->getId() ?>_img"></label>
+                                <div class="form-check">
+                                    <input type="checkbox"
+                                           class="form-check-input regular-checkbox big-checkbox"
+                                           id="<?=$media->getId() ?>_img"
+                                           name="check_image[]"
+                                           value="<?=$media->getId() ?>" />
+                                    <label class="form-check-label" for="<?=$media->getId() ?>_img"></label>
+                                </div>
                             </div>
                             <input type="text"
                                    name="check_url[]"
@@ -67,10 +69,10 @@ $(".btn").click(function() {
 $(document).on("click", "img.image", function() {
     $(this).closest('div').find('input[type="checkbox"]').click();
     elem = $(this).closest('div').find('img');
-    if (elem.hasClass('chacked')) {
-        $(this).closest('div').find('img').removeClass("chacked");
+    if (elem.hasClass('checked')) {
+        $(this).closest('div').find('img').removeClass("checked");
     } else {
-        $(this).closest('div').find('img').addClass("chacked");
+        $(this).closest('div').find('img').addClass("checked");
     };
 });
 
