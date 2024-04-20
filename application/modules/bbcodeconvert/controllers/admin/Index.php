@@ -18,7 +18,7 @@ use Modules\Admin\Mappers\LayoutAdvSettings;
 class Index extends Admin
 {
     private const supportedModules = [
-        'contact' => ['2.1.52', '2.1.53', '2.1.54', '2.1.55', '2.1.56', '2.1.57', '2.1.58', '2.1.59'],
+        'contact' => ['2.1.52', '2.1.53', '2.1.54', '2.1.55', '2.1.56', '2.1.57', '2.1.58', '2.1.59', '2.1.60'],
         'events' => ['1.22.0', '1.22.1', '1.22.2'],
         'forum' => ['1.33.0', '1.34.0', '1.34.1', '1.34.2', '1.34.3', '1.34.4', '1.34.5', '1.34.6', '1.34.7'],
         'guestbook' => ['1.13.0', '1.13.1'],
@@ -26,14 +26,14 @@ class Index extends Admin
         'kvticket' => ['1.5.0'],
         'radiohoerercharts' => ['1.8.0', '1.8.1', '1.8.2'],
         'teams' => ['1.23.0', '1.23.1'],
-        'user' => ['2.1.52', '2.1.53', '2.1.54', '2.1.55', '2.1.56', '2.1.57', '2.1.58', '2.1.59']
+        'user' => ['2.1.52', '2.1.53', '2.1.54', '2.1.55', '2.1.56', '2.1.57', '2.1.58', '2.1.59', '2.1.60']
     ];
 
     private const supportedLayouts = [
         'privatlayout' => ['1.1.0', '1.1.1', '1.1.2']
     ];
 
-    // Number of items per batch (work is splitted up).
+    // Number of items per batch (work is split up).
     private const batch = 100;
 
     // Worst case character limits for utf8mb4 (all asian characters or emojis). An utf8mb4 character set can require up to four bytes per character.
