@@ -62,3 +62,4 @@ $job = $this->get('job');
     </div>
     <?=$this->getSaveBar($job->getId() ? 'updateButton' : 'addButton') ?>
 </form>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>

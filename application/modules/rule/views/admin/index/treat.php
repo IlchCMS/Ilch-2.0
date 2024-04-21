@@ -87,6 +87,7 @@ $userGroupList = $this->get('userGroupList');
     <?=($rule->getId()) ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
 
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script>
     $('#cat').chosen();
     $('#assignedGroupsRead').chosen();

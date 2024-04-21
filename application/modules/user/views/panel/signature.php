@@ -30,3 +30,4 @@
         </div>
     </div>
 </div>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>

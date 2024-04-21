@@ -58,6 +58,7 @@ $cats = $this->get('cats');
     <?=$this->getTrans('noCategory') ?>
 <?php endif; ?>
 
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
     $('#catId').chosen();
 </script>

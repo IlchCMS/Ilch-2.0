@@ -139,6 +139,7 @@
     </div>
 </div>
 
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script src="<?=$this->getModuleUrl('static/js/jquery.nicescroll.min.js') ?>"></script>
 <script>
     let urlPathArray = window.location.pathname.split('/');

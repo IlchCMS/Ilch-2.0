@@ -15,3 +15,4 @@
     </div>
     <?=$this->getSaveBar() ?>
 </form>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>

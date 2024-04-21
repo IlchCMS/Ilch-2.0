@@ -209,6 +209,7 @@ $teams = $this->get('teams');
             </div>
         </div>
     </form>
+    <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <?php else : ?>
     <?=$this->getTrans('noTeams') ?>
 <?php endif; ?>

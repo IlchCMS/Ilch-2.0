@@ -75,3 +75,4 @@ $privacy = $this->get('privacy');
     </div>
     <?=($privacy) ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>

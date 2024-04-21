@@ -57,4 +57,5 @@ $job = $this->get('job');
             <?=$this->getSaveBar('apply', 'Apply') ?>
         </div>
     </form>
+    <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <?php endif; ?>

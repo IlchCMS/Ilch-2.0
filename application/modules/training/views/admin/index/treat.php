@@ -236,6 +236,7 @@ $training = $this->get('training');
     <?=$this->getSaveBar($training->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
 <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
 <?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
