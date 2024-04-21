@@ -974,6 +974,9 @@ class Config extends \Ilch\Config\Install
                 removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchps');
                 removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchyoutube');
                 removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchyoutubehtml');
+                
+                // Remove bootstrap datetimepicker as we use "Tempus Dominus" now. datetimepicker was no longer compatible with Bootstrap 5.
+                removeDir(ROOT_PATH . '/static/js/datetimepicker');
                 break;
         }
 
