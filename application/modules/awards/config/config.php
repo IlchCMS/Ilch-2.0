@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can award users or teams an award.',
             ],
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 

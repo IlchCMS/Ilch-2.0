@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'You can create downloads and add information to them. Further you can add them to categories.',
             ],
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 

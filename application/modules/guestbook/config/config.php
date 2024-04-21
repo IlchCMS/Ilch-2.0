@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'A guestbook with optional welcome message. New entries can be shown only after approval if wished.',
             ],
         ],
-        'ilchCore' => '2.1.52',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 

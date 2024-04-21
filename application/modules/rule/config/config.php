@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Can be used to write down a ruleset, which can be shown on the websites. Supports paragraphs, easy changing the order and adjusting read access.',
             ],
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 
