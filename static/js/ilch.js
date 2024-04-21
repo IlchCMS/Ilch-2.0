@@ -115,8 +115,6 @@ $(document).ready(function(){
                 allowedContent: true,
                 toolbar: {
                     items: [
-                        'sourceEditing',
-                        '|',
                         'heading',
                         '|',
                         'bold',
