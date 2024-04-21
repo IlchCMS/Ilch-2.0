@@ -11,6 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config = [
         'name' => 'Ilch-Clan',
         'version' => '1.1.0',
+        'ilchCore' => '2.2.0',
         'author' => 'Ilch.de',
         'link' => 'https://ilch.de',
         'desc' => '3 Spalten Clan Layout',
