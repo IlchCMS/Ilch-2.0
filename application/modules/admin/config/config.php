@@ -952,6 +952,8 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.58":
                 break;
+            case "2.1.59":
+                break;
         }
 
         return 'Update function executed.';
