@@ -2,7 +2,7 @@
 
 <form id="guestbookForm" name="guestbookForm" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 d-none Entries">
+    <div class="row mb-3 d-none">
         <label for="bot" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bot') ?>*
         </label>
@@ -14,7 +14,7 @@
                    placeholder="Bot" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>*
         </label>
@@ -27,7 +27,7 @@
                    value="<?=$this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?= $this->validation()->hasError('email') ? ' has-error' : '' ?>">
         <label for="email" class="col-xl-2 col-form-label">
             <?=$this->getTrans('email') ?>*
         </label>
@@ -40,7 +40,7 @@
                    value="<?=$this->escape($this->originalInput('email')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?= $this->validation()->hasError('homepage') ? ' has-error' : '' ?>">
         <label for="homepage" class="col-xl-2 col-form-label">
             <?=$this->getTrans('page') ?>
         </label>
@@ -53,7 +53,7 @@
                   value="<?=$this->escape($this->originalInput('homepage')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?= $this->validation()->hasError('text') ? ' has-error' : '' ?>">
         <label for="text" class="col-xl-2 col-form-label">
             <?=$this->getTrans('message') ?>*
         </label>
@@ -62,8 +62,7 @@
                       id="ck_1"
                       name="text"
                       id="text"
-                      toolbar="ilch_html_frontend"
-                      required><?=$this->escape($this->originalInput('text')) ?></textarea>
+                      toolbar="ilch_html_frontend"><?=$this->escape($this->originalInput('text')) ?></textarea>
         </div>
     </div>
     <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
