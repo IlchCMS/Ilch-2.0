@@ -1,3 +1,9 @@
+/* buttons */
+a.btn,
+a.btn:hover {
+    text-decoration: none;
+}
+
 /* Gallery and Download */
 #gallery, #downloads {
     float: none;
