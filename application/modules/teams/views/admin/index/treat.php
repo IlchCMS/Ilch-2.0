@@ -37,24 +37,16 @@ $userGroupList = $this->get('userGroupList');
             <?=$this->getTrans('img') ?>:
         </label>
         <div class="col-lg-4">
-            <?php if ($team->getImg() != '') : ?>
-                <div class="col-xl-12">
+            <?php if (file_exists($team->getImg())) : ?>
+                <div class="col-xl-12 mb-3">
                     <img src="<?=$this->getBaseUrl($team->getImg()) ?>" alt="<?=$this->getTrans('img') . ' ' . $this->escape($team->getName()) ?>">
-
                     <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
                         <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('imageDelete') ?>
                     </label>
                 </div>
             <?php endif; ?>
-            <div class="col-lg-12 input-group">
-                <span class="btn btn-primary btn-file">
-                    <?=$this->getTrans('browse') ?> <input type="file" name="img" accept="image/*">
-                </span>
-                <input type="text"
-                       name="upl"
-                       id="upl"
-                       class="form-control"
-                       readonly />
+            <div class="col-lg-12">
+                <input class="form-control" type="file" id="upl" name="img" accept="image/*">
             </div>
         </div>
     </div>
