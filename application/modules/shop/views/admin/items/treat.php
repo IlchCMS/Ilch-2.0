@@ -80,16 +80,14 @@ $shopImgPath = '/application/modules/shop/static/img/';
             <label for="stock" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('stock') ?> / <?=$this->getTrans('salesUnit') ?>:
             </label>
-            <div class="col-xl-5 input-group">
-                <div class="mb-3">
+            <div class="col-xl-5">
+                <div class="input-group">
                     <input type="number"
                            class="form-control"
                            id="stock"
                            name="stock"
                            min="0"
                            value="<?=($this->get('shopItem') != '') ? $this->escape($this->get('shopItem')->getStock()) : $this->escape($this->originalInput('stock')) ?>" />
-                </div>
-                <div class="mb-3">
                     <input type="text"
                            class="form-control"
                            id="unitName"
