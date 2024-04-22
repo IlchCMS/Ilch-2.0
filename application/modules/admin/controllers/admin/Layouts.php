@@ -336,7 +336,7 @@ class Layouts extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $postedSettings = [];
             foreach ($settings as $key => $value) {
-                if ($this->getRequest()->getPost($key) && $value['type'] !== 'separator') {
+                if ($value['type'] !== 'separator') {
                     $layoutAdvSettingsModel = new LayoutAdvSettingsModel();
                     $layoutAdvSettingsModel->setLayoutKey($layoutKey)
                         ->setKey($key)
