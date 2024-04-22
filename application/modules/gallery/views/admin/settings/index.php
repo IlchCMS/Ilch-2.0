@@ -135,7 +135,7 @@
         <label for="venoboxBorder" class="col-xl-2 col-form-label">
             <?=$this->getTrans('venoboxBorder') ?>:
         </label>
-        <div class="col-xl-2 input-group">
+        <div class="col-xl-2">
             <input type="text"
                    class="form-control"
                    id="venoboxBorder"
