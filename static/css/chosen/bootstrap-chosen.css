@@ -1,6 +1,10 @@
 /**
  * Style customization of chosen for bootstrap 5
  */
+select.form-control + .chosen-container {
+   width: 100% !important;
+}
+
 select.form-control + .chosen-container.chosen-container-single .chosen-single {
     display: block;
     width: 100%;
